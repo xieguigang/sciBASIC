@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec2fbdf09074e4d6bc770b607c399456, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\MMFProtocol\WorkFlow.vb"
+﻿#Region "Microsoft.VisualBasic::ec2fbdf09074e4d6bc770b607c399456, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\WorkFlow.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

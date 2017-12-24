@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8869747bc8bed318cf539f9063684b5c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Actives.vb"
+﻿#Region "Microsoft.VisualBasic::8869747bc8bed318cf539f9063684b5c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Actives.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

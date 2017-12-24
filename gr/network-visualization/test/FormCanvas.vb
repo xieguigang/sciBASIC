@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6b93f3b7cfbd61a165c21e2bcce8385, ..\sciBASIC#\gr\Datavisualization.Network\Test\FormCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::b6b93f3b7cfbd61a165c21e2bcce8385, ..\sciBASIC#\gr\network-visualization\test\FormCanvas.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

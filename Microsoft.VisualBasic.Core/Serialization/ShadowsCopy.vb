@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1ca747bde173dcbf510af436c988de4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\ShadowsCopy.vb"
+﻿#Region "Microsoft.VisualBasic::e1ca747bde173dcbf510af436c988de4, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\ShadowsCopy.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

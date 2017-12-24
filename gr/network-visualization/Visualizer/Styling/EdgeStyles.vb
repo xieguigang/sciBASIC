@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9e257045619f80cc39de20da93053ef, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\Styling\EdgeStyles.vb"
+﻿#Region "Microsoft.VisualBasic::e9e257045619f80cc39de20da93053ef, ..\sciBASIC#\gr\network-visualization\Visualizer\Styling\EdgeStyles.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

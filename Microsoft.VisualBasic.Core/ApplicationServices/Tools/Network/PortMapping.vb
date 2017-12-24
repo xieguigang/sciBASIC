@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d9161140ee90f4abb7f8668c65da11d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\PortMapping.vb"
+﻿#Region "Microsoft.VisualBasic::6d9161140ee90f4abb7f8668c65da11d, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\PortMapping.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

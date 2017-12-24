@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6ec7bef4c88e217265d0a358da1fd20, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\Attributes\Flags.vb"
+﻿#Region "Microsoft.VisualBasic::e6ec7bef4c88e217265d0a358da1fd20, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\Flags.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

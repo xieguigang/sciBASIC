@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94721e54d1409343e4209f049bee9bc5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Http\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::94721e54d1409343e4209f049bee9bc5, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\WebServices\Http\Base64Codec.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

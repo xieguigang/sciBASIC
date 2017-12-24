@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cd796ead2b6eec2ebc29c8a427c84e4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Expressions\Selector.vb"
+﻿#Region "Microsoft.VisualBasic::9cd796ead2b6eec2ebc29c8a427c84e4, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Expressions\Selector.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

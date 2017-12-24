@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4160b0cb3e10b50a1fd4239a40633bba, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::4160b0cb3e10b50a1fd4239a40633bba, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7288f99b2166f83d07ff9689d03060b, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\AbstractVector.vb"
+﻿#Region "Microsoft.VisualBasic::e7288f99b2166f83d07ff9689d03060b, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\AbstractVector.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ef807ce8fea15d5460ac6a486ebe2a6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::a6662552e1367655d8bc7abffe981fee, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

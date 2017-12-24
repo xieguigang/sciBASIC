@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d9d9af82ad13243dfeea72500e90966, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::8d9d9af82ad13243dfeea72500e90966, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Runtime.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

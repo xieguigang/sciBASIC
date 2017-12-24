@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::557647e80219f28baaafa8160252ef5b, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Styling\UI\ColorMaps.vb"
+﻿#Region "Microsoft.VisualBasic::557647e80219f28baaafa8160252ef5b, ..\sciBASIC#\gr\network-visualization\NetworkCanvas\Styling\UI\ColorMaps.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

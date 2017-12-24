@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dacd296a4dcdcebba75e9fb16fa9e583, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Math\VecMath2D.vb"
+﻿#Region "Microsoft.VisualBasic::dacd296a4dcdcebba75e9fb16fa9e583, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Math\VecMath2D.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

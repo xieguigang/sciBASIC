@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b17b4b315d78ce28639d9ea38afce14, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\AnonymousTypeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::e6db64a7ce6f5f36f90346656404429d, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\AnonymousTypeHelper.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -60,4 +60,3 @@ Public Module AnonymousTypeHelper
         Return table
     End Function
 End Module
-

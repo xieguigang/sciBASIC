@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f907f2072d9c4db9369402874903414, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Linq\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::7f907f2072d9c4db9369402874903414, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Xml\Linq\Entity.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

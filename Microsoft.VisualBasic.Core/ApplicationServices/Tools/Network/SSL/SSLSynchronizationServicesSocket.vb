@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21658a0aca1119ab3cd31c6a84e96494, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\SSL\SSLSynchronizationServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::21658a0aca1119ab3cd31c6a84e96494, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\SSL\SSLSynchronizationServicesSocket.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

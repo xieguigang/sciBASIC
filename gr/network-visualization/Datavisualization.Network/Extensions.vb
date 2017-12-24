@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea27b60c8ce2a290ac3e5d558873db4a, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ea27b60c8ce2a290ac3e5d558873db4a, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

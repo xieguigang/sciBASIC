@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e21ab1839f3e8e938e3801e9aaa66f8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\Perl\Tools.vb"
+﻿#Region "Microsoft.VisualBasic::1e21ab1839f3e8e938e3801e9aaa66f8, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\Perl\Tools.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

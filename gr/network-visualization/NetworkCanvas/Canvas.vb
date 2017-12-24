@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a3f6fb328b6ff3e360418f6dba7a8b5, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Canvas.vb"
+﻿#Region "Microsoft.VisualBasic::1a3f6fb328b6ff3e360418f6dba7a8b5, ..\sciBASIC#\gr\network-visualization\NetworkCanvas\Canvas.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

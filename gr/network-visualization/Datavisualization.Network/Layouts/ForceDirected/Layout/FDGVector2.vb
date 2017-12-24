@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0ccf6fdaa270398907d4b7701547c2a, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\FDGVector2.vb"
+﻿#Region "Microsoft.VisualBasic::f0ccf6fdaa270398907d4b7701547c2a, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\FDGVector2.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

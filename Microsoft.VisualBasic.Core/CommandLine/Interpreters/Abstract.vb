@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dc34b90e4cc94e531907979f16b71ba, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Interpreters\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::5dc34b90e4cc94e531907979f16b71ba, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Interpreters\Abstract.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

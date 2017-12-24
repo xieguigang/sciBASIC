@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66294ad26695fc8de6d4aa3bd8878c79, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\Shell\Text\Grep.vb"
+﻿#Region "Microsoft.VisualBasic::66294ad26695fc8de6d4aa3bd8878c79, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\UnixBash\Shell\Text\Grep.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

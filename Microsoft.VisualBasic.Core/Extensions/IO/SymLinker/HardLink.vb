@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11141ac6b69c11c3cc556ac585589f7e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\HardLink.vb"
+﻿#Region "Microsoft.VisualBasic::11141ac6b69c11c3cc556ac585589f7e, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\SymLinker\HardLink.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

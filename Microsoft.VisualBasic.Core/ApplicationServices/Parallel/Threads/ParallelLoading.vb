@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8f9d96b5fc8a1142785fa150877cdb8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Threads\ParallelLoading.vb"
+﻿#Region "Microsoft.VisualBasic::d8f9d96b5fc8a1142785fa150877cdb8, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ParallelLoading.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

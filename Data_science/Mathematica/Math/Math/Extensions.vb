@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0092a25ffb7df0514f8d6cf15888f1f7, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2fde1e11cb9678fdecf5c5c3485e3dbf, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

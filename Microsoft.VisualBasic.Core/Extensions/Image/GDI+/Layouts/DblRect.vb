@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c91a34f87a4b39b7f5618ef47eb3f0be, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\GDI+\Layouts\DblRect.vb"
+﻿#Region "Microsoft.VisualBasic::c91a34f87a4b39b7f5618ef47eb3f0be, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\DblRect.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

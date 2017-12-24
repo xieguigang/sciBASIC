@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0934f3d9ce0c1a2d09535854afeaa523, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\VBDev\LicenseMgr.vb"
+﻿#Region "Microsoft.VisualBasic::0934f3d9ce0c1a2d09535854afeaa523, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\LicenseMgr.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

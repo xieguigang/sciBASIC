@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::923d8969616415108d9842f4375482e3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\SingletonHolder.vb"
+﻿#Region "Microsoft.VisualBasic::923d8969616415108d9842f4375482e3, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\SingletonHolder.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

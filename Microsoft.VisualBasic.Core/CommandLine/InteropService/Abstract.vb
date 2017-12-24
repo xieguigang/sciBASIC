@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1943ee6a4fb288b6211e70a80569f73a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::0d80f2526ce3dc38d41616f7bc3c7360, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

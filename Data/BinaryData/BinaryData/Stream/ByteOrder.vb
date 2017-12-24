@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b77a98a0c261ad51ee6f1144ee680d4, ..\sciBASIC#\Data\BinaryData\BinaryData\ByteOrder.vb"
+﻿#Region "Microsoft.VisualBasic::9b77a98a0c261ad51ee6f1144ee680d4, ..\sciBASIC#\Data\BinaryData\BinaryData\Stream\ByteOrder.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

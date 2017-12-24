@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccd512b813fadddfb3e2b4436a5b98c9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::9893a8195fc04ded2108c9ac58aedb3f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

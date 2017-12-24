@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fade53eeedb692794f8fe2db2b9961e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::22a1a7aa092ec0a1f6a8829cca8d542e, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Ranges\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

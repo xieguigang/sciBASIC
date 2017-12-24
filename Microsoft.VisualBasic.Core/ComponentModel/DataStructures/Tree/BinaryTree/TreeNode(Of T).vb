@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a3c74afcfd3be1eaf426fa047e045db, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Tree\BinaryTree\TreeNode(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::8a3c74afcfd3be1eaf426fa047e045db, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\TreeNode(Of T).vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7de3b38abe167002542f089ac0bcd767, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Delegate\DelegateFactory.vb"
+﻿#Region "Microsoft.VisualBasic::7de3b38abe167002542f089ac0bcd767, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DelegateFactory.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dac82a5a59fa93194bba41263b84e65, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Win32\TaskManager.vb"
+﻿#Region "Microsoft.VisualBasic::6dac82a5a59fa93194bba41263b84e65, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Win32\TaskManager.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

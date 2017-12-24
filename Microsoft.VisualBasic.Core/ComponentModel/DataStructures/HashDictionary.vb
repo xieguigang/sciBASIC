@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a85c68ec7dde72b8386e325bb6946b13, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HashDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::a85c68ec7dde72b8386e325bb6946b13, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashDictionary.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

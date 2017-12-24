@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55a790660ed902df3bcfba8a2f523fcb, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4adf6181538e1c636c485e114870e1a5, ..\sciBASIC#\gr\network-visualization\Visualizer\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -41,4 +41,3 @@ Module Extensions
                End Function
     End Function
 End Module
-

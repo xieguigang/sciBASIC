@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1949dc0dd55a5a4f0a9cc72039bcdbc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Tasks\IParallelTask.vb"
+﻿#Region "Microsoft.VisualBasic::f1949dc0dd55a5a4f0a9cc72039bcdbc, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\IParallelTask.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

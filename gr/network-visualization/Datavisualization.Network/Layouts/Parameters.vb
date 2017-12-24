@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7683e904bbd6bef66ef310c4d0662bc, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\Parameters.vb"
+﻿#Region "Microsoft.VisualBasic::e7683e904bbd6bef66ef310c4d0662bc, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\Parameters.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

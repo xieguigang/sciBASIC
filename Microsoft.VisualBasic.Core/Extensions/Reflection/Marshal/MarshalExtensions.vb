@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a810b6c4ba107323a3ec2d0a908a1d7c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\MarshalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a810b6c4ba107323a3ec2d0a908a1d7c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\MarshalExtensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

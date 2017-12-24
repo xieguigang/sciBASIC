@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::687ac41e4911b380ab277a65643ddc65, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Wildcards.vb"
+﻿#Region "Microsoft.VisualBasic::687ac41e4911b380ab277a65643ddc65, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\StringSimilarity\Wildcards.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

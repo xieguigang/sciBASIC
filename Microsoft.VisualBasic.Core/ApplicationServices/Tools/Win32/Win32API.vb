@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8249973c8caf43e37764fb9bbd8e1f2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Win32\Win32API.vb"
+﻿#Region "Microsoft.VisualBasic::a8249973c8caf43e37764fb9bbd8e1f2, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Win32\Win32API.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce95daf644439f5b9e74bb5af16d068d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CliResCommon.vb"
+﻿#Region "Microsoft.VisualBasic::ce95daf644439f5b9e74bb5af16d068d, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\CliResCommon.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1046fc72d01ff1f8948d4a42120165af, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\TreeAPI\TREE.vb"
+﻿#Region "Microsoft.VisualBasic::1046fc72d01ff1f8948d4a42120165af, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\TreeAPI\TREE.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

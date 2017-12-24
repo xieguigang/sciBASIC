@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afb02982ac0178b827bb2e0d041591f0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Tasks\Actor(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::afb02982ac0178b827bb2e0d041591f0, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\Actor(Of T, V).vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

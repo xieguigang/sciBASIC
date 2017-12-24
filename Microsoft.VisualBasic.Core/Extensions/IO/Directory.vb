@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ba627325ccb94b8f87991aa386d1838, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::3ba627325ccb94b8f87991aa386d1838, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\Directory.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

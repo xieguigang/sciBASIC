@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5a222b781d498a1d810a60f4396b7ea, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\Attributes\Grouping.vb"
+﻿#Region "Microsoft.VisualBasic::e5a222b781d498a1d810a60f4396b7ea, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\Grouping.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

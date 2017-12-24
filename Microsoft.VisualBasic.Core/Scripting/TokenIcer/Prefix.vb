@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15fc77159c2eab47d16a458c8b95cfcb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\Prefix.vb"
+﻿#Region "Microsoft.VisualBasic::15fc77159c2eab47d16a458c8b95cfcb, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\TokenIcer\Prefix.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0288dbd4670bf6f5c270d4fd398d497c, ..\sciBASIC#\Data\DataFrame.Extensions\Math.vb"
+﻿#Region "Microsoft.VisualBasic::4f850c0e1028f3fbe2f7d9ea14b3b9ca, ..\sciBASIC#\Data\DataFrame.Extensions\Math.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -57,4 +57,3 @@ Public Module DataSetMath
         Return data.Log(base:=2)
     End Function
 End Module
-

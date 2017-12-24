@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b316170a7cdd4d2b3a19cc0985b9022, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Tcp\Persistent\MessagePushServices\MessagePushServer.vb"
+﻿#Region "Microsoft.VisualBasic::0b316170a7cdd4d2b3a19cc0985b9022, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\MessagePushServices\MessagePushServer.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

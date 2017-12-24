@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab797db8f8d4be8697911e311fa88785, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\JsonFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::ab797db8f8d4be8697911e311fa88785, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\JSON\JsonFormatter.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

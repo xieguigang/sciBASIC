@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5a87ff1247563c2eb0d404bbf3c6774, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb"
+﻿#Region "Microsoft.VisualBasic::a5a87ff1247563c2eb0d404bbf3c6774, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\MSG_TYPES.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

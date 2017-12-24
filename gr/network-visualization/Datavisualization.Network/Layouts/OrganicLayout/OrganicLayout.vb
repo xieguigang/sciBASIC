@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abe553f7dd21d4c40a98e949b07d1c8a, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\OrganicLayout\OrganicLayout.vb"
+﻿#Region "Microsoft.VisualBasic::abe553f7dd21d4c40a98e949b07d1c8a, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\OrganicLayout.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

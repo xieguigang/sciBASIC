@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f60096c54a5403d9f534e4e7884a573b, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::f60096c54a5403d9f534e4e7884a573b, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IRenderer.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

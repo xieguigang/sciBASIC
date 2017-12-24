@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f1dc2fcde41554eed79153f3ec1b473, ..\sciBASIC#\tutorials\core.test\PriorityQueueTest.vb"
+﻿#Region "Microsoft.VisualBasic::5f1dc2fcde41554eed79153f3ec1b473, ..\sciBASIC#\vs_solutions\tutorials\core.test\PriorityQueueTest.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

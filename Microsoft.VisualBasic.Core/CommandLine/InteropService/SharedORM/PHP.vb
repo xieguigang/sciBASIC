@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0288d0bb5b1e1276578f59b45c3a32af, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\SharedORM\PHP.vb"
+﻿#Region "Microsoft.VisualBasic::0288d0bb5b1e1276578f59b45c3a32af, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\PHP.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

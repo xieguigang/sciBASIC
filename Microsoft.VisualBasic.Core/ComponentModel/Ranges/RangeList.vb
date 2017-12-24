@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c4b41ad226591b6dec4a4f78a9f810a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\RangeList.vb"
+﻿#Region "Microsoft.VisualBasic::2c4b41ad226591b6dec4a4f78a9f810a, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeList.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

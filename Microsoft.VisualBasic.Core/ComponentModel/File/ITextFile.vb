@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a8d53bceb674239c349fbecda1c778df, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\ITextFile.vb"
+﻿#Region "Microsoft.VisualBasic::a8d53bceb674239c349fbecda1c778df, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\File\ITextFile.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

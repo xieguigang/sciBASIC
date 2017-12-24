@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f2492c0796ad85ab891091031fad3f0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\LazyLoader.vb"
+﻿#Region "Microsoft.VisualBasic::5f2492c0796ad85ab891091031fad3f0, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\LazyLoader.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

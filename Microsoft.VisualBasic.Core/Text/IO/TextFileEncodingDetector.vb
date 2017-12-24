@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0965289e3eaf0038712d540a7382413e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\IO\TextFileEncodingDetector.vb"
+﻿#Region "Microsoft.VisualBasic::0965289e3eaf0038712d540a7382413e, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\IO\TextFileEncodingDetector.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

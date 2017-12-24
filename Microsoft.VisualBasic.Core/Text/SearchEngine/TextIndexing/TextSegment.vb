@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1e5abfe25fa2913a9c4217e54b9952c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\SearchEngine\TextIndexing\TextSegment.vb"
+﻿#Region "Microsoft.VisualBasic::b1e5abfe25fa2913a9c4217e54b9952c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\SearchEngine\TextIndexing\TextSegment.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

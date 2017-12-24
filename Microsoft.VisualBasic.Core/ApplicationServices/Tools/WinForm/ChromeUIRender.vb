@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a52f224044e46fb7dcafc4ecf1739dbf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\WinForm\ChromeUIRender.vb"
+﻿#Region "Microsoft.VisualBasic::a52f224044e46fb7dcafc4ecf1739dbf, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\WinForm\ChromeUIRender.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

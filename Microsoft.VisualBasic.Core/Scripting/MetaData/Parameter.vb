@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e079b2e518e7715ae5eabe2b0754b2f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Parameter.vb"
+﻿#Region "Microsoft.VisualBasic::0e079b2e518e7715ae5eabe2b0754b2f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\MetaData\Parameter.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

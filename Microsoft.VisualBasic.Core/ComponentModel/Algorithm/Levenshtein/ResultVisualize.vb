@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08ea5c7237abc19bd95da3aca099d9bb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Levenshtein\ResultVisualize.vb"
+﻿#Region "Microsoft.VisualBasic::08ea5c7237abc19bd95da3aca099d9bb, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Algorithm\Levenshtein\ResultVisualize.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

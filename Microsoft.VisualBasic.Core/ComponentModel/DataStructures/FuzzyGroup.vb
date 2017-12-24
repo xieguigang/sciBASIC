@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0323a2e4b02c9b1ed8612023cc187b2d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\FuzzyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::0323a2e4b02c9b1ed8612023cc187b2d, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\FuzzyGroup.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

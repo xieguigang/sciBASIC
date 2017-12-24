@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15bd0d1750315d9e25333681a197bbec, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\BucketDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::f75d2f33ac4ac1a36e313aad67ca0b54, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\BucketDictionary.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

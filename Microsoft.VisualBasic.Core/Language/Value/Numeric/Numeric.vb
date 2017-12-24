@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58c139604571df4a130daf3b382801ea, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Numeric\Numeric.vb"
+﻿#Region "Microsoft.VisualBasic::58c139604571df4a130daf3b382801ea, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\Numeric\Numeric.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59977a9c900507a5f0853d0906dae6cd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Similarity.vb"
+﻿#Region "Microsoft.VisualBasic::59977a9c900507a5f0853d0906dae6cd, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\StringSimilarity\Similarity.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

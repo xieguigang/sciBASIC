@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3baee56c270480ef562d622d3cba3b96, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\SimpleConfig.vb"
+﻿#Region "Microsoft.VisualBasic::3baee56c270480ef562d622d3cba3b96, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Settings\SimpleConfig.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

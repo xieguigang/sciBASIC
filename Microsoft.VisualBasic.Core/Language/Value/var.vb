@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27579ccb20e6051398794740ba47a9a7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\var.vb"
+﻿#Region "Microsoft.VisualBasic::27579ccb20e6051398794740ba47a9a7, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\var.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

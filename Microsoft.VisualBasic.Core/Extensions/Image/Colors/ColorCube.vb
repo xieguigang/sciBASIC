@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd36d3ab4ddefc487b00cea0e137e762, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorCube.vb"
+﻿#Region "Microsoft.VisualBasic::fd36d3ab4ddefc487b00cea0e137e762, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Colors\ColorCube.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

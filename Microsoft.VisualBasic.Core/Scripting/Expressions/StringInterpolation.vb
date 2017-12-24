@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac221503a7b145f4aedaa2a6cac6b32d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Expressions\StringInterpolation.vb"
+﻿#Region "Microsoft.VisualBasic::7a32b73c6d512eee094594e93544b2cd, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Expressions\StringInterpolation.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

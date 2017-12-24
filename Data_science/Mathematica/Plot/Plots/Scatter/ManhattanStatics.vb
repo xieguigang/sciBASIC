@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57871e768ed4640544497c203ebdf9d2, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\ManhattanStatics.vb"
+﻿#Region "Microsoft.VisualBasic::4e72280222f8ef34bfd36e1b570af004, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\ManhattanStatics.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -184,4 +184,3 @@
 '            End Sub)
 '    End Function
 'End Module
-

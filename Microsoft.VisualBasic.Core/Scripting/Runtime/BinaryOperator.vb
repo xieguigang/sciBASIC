@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b78c275b4a9348fc00ecfb15990c859c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\BinaryOperator.vb"
+﻿#Region "Microsoft.VisualBasic::b78c275b4a9348fc00ecfb15990c859c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Runtime\BinaryOperator.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

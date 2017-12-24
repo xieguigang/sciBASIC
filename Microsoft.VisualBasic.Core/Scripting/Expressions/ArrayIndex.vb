@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b6226b1eef6db682e0798b5b09dee22, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Expressions\ArrayIndex.vb"
+﻿#Region "Microsoft.VisualBasic::2b6226b1eef6db682e0798b5b09dee22, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Expressions\ArrayIndex.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

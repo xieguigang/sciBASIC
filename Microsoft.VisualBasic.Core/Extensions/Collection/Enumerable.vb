@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c36e34c195ac3833eba6b8642e829137, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::c36e34c195ac3833eba6b8642e829137, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

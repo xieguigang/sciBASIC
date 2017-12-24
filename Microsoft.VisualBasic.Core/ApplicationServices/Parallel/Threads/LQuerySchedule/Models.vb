@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3be5c17214536ce52cfb48a329ec834f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Threads\LQuerySchedule\Models.vb"
+﻿#Region "Microsoft.VisualBasic::3be5c17214536ce52cfb48a329ec834f, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\LQuerySchedule\Models.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

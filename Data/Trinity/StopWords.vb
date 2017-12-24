@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::acf472132e871c34913cb8f5313d72b2, ..\sciBASIC#\Data\Trinity\StopWords.vb"
+﻿#Region "Microsoft.VisualBasic::a9f0f03357852ee6d1de1a06768c0f74, ..\sciBASIC#\Data\Trinity\StopWords.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -437,4 +437,3 @@ Public Class StopWords : Implements IEnumerable(Of String)
         Yield GetEnumerator()
     End Function
 End Class
-

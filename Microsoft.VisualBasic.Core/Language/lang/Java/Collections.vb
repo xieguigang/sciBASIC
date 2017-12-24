@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05ed8542e0bde23290ea9842fb090118, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\Java\Collections.vb"
+﻿#Region "Microsoft.VisualBasic::05ed8542e0bde23290ea9842fb090118, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\Java\Collections.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

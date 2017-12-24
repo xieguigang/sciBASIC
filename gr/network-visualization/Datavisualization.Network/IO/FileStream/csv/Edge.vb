@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10c42c1150cfcbfe9fc09db806a4decd, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\csv\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::10c42c1150cfcbfe9fc09db806a4decd, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Edge.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

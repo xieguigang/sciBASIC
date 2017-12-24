@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3d7aad63a34c955f35590659dbb5e71, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\Styling\StyleMappings.vb"
+﻿#Region "Microsoft.VisualBasic::a3d7aad63a34c955f35590659dbb5e71, ..\sciBASIC#\gr\network-visualization\Visualizer\Styling\StyleMappings.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

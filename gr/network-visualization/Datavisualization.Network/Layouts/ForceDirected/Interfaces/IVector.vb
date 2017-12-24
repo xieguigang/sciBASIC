@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc5ccabd214545668bc349bde15dd225, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IVector.vb"
+﻿#Region "Microsoft.VisualBasic::bc5ccabd214545668bc349bde15dd225, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IVector.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

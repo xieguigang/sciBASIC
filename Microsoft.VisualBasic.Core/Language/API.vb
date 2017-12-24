@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c3ebee8124a0e5f9f4ac84f25ed9e40, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\API.vb"
+﻿#Region "Microsoft.VisualBasic::b11fb99bd6ff2f08b8dfbed4b24409fd, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\API.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

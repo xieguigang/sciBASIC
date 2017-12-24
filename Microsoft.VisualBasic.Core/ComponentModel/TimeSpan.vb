@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdf4edfa1d484a1bfe9c77f0aab04e58, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\TimeSpan.vb"
+﻿#Region "Microsoft.VisualBasic::cdf4edfa1d484a1bfe9c77f0aab04e58, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\TimeSpan.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

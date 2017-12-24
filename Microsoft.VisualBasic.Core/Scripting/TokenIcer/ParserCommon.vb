@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ddd40304d5281d706a88f0a9ff9381c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\ParserCommon.vb"
+﻿#Region "Microsoft.VisualBasic::8ddd40304d5281d706a88f0a9ff9381c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\TokenIcer\ParserCommon.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

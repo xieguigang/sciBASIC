@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0f04ba4a368e85f6d19aa3268681428, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::c0f04ba4a368e85f6d19aa3268681428, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Utils.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

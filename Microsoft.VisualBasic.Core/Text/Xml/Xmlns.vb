@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23e0d5d2f798dd9a059be5dfc990e3c2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Xmlns.vb"
+﻿#Region "Microsoft.VisualBasic::23e0d5d2f798dd9a059be5dfc990e3c2, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Xml\Xmlns.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

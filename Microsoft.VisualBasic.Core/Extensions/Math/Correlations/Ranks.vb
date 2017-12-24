@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ab71e1926ee35b1f05651004bfd8ca3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations\Ranks.vb"
+﻿#Region "Microsoft.VisualBasic::7ab71e1926ee35b1f05651004bfd8ca3, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Ranks.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

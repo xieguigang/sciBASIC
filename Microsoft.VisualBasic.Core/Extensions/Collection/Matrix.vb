@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b698869bf6a4e69f72427ecf758b1a4c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::b698869bf6a4e69f72427ecf758b1a4c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

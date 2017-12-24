@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd20f5bcd1d85cfbb30980c437ecdbb1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Win32\GetLastErrorAPI.vb"
+﻿#Region "Microsoft.VisualBasic::dd20f5bcd1d85cfbb30980c437ecdbb1, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Win32\GetLastErrorAPI.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

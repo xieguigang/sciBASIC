@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ff5e211f39cd3311812d147e5b3ca43, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Testing\DBSCAN\Program.vb"
+﻿#Region "Microsoft.VisualBasic::2ff5e211f39cd3311812d147e5b3ca43, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\DBSCAN\Program.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

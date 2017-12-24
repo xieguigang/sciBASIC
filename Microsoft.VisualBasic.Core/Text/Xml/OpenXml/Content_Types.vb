@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cd16e63540b8754b215831f05c7c152, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\OpenXml\Content_Types.vb"
+﻿#Region "Microsoft.VisualBasic::7cd16e63540b8754b215831f05c7c152, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Xml\OpenXml\Content_Types.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

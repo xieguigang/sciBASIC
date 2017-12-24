@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1834e41168153f6995e4f03ff05d7485, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\EntryPointMetaData.vb"
+﻿#Region "Microsoft.VisualBasic::1834e41168153f6995e4f03ff05d7485, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\MetaData\EntryPointMetaData.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

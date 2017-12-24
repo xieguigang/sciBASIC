@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa2ce89be28d9bbb102c6c1ba1c87a7a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\LanguageHelper\LanguageHelper.vb"
+﻿#Region "Microsoft.VisualBasic::aa2ce89be28d9bbb102c6c1ba1c87a7a, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\LanguageHelper\LanguageHelper.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

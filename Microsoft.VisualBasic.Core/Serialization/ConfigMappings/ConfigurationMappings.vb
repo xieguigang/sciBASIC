@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ecd2229c267c6f208a59d6c70edc280, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\ConfigurationMappings.vb"
+﻿#Region "Microsoft.VisualBasic::5ecd2229c267c6f208a59d6c70edc280, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\ConfigMappings\ConfigurationMappings.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

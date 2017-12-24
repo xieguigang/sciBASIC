@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4e6823b9373fdd84311f2b08fb328ff, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\sitemap.xml.vb"
+﻿#Region "Microsoft.VisualBasic::f4e6823b9373fdd84311f2b08fb328ff, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\WebServices\sitemap.xml.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

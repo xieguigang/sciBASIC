@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9564ff8bf8de96ee011a14e25602ba91, ..\sciBASIC#\mime\text%html\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c95dadb2e8487ec67bdacb22346da3d2, ..\sciBASIC#\mime\text%html\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -37,4 +37,3 @@ Public Module Extensions
         Return New MarkdownHTML(opt Or MarkdownOptions.DefaultOption).Transform(text:=markdown)
     End Function
 End Module
-

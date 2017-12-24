@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e220ce66ccd73ecb967442fcabdca8d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\Python\Collection.vb"
+﻿#Region "Microsoft.VisualBasic::8e220ce66ccd73ecb967442fcabdca8d, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\Python\Collection.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

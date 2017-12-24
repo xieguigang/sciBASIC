@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::765d3616374e97c0d4ce0e6392c22f29, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\NetFile.vb"
+﻿#Region "Microsoft.VisualBasic::765d3616374e97c0d4ce0e6392c22f29, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\NetFile.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

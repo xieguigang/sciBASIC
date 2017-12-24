@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07f5fac2f3041e7e554f2117d54e25ca, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Parameters\Simple.vb"
+﻿#Region "Microsoft.VisualBasic::07f5fac2f3041e7e554f2117d54e25ca, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Reflection\Parameters\Simple.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

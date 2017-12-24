@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f378b24487000a1815b02881967f9ad, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Webpage.vb"
+﻿#Region "Microsoft.VisualBasic::7f378b24487000a1815b02881967f9ad, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Webpage.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

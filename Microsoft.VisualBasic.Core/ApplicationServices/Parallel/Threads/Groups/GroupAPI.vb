@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91c0c7bf05f5cc78570c51304351cd2d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Threads\Groups\GroupAPI.vb"
+﻿#Region "Microsoft.VisualBasic::91c0c7bf05f5cc78570c51304351cd2d, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\Groups\GroupAPI.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

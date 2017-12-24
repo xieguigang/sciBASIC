@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b191b9ac322c3bf2a7b7b816ba148a0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\BinaryWriter.vb"
+﻿#Region "Microsoft.VisualBasic::0b191b9ac322c3bf2a7b7b816ba148a0, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\BinaryDumping\BinaryWriter.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

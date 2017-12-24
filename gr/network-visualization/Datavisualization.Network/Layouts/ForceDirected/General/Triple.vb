@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ac0a2f658932b9061e26c4e882a7105, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\General\Triple.vb"
+﻿#Region "Microsoft.VisualBasic::1ac0a2f658932b9061e26c4e882a7105, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\General\Triple.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

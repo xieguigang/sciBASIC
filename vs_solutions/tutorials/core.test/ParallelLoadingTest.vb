@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b493f08649bb3120eb1d418929d10925, ..\sciBASIC#\tutorials\core.test\ParallelLoadingTest.vb"
+﻿#Region "Microsoft.VisualBasic::b493f08649bb3120eb1d418929d10925, ..\sciBASIC#\vs_solutions\tutorials\core.test\ParallelLoadingTest.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b7127a7d070a01aec8e63d927e6d0ca, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\csv\Node.vb"
+﻿#Region "Microsoft.VisualBasic::0b7127a7d070a01aec8e63d927e6d0ca, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Node.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

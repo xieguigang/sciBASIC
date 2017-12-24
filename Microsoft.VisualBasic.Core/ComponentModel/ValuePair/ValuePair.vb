@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cde9800d7655a7c378de44183ab63c3e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\ValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::cde9800d7655a7c378de44183ab63c3e, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\ValuePair\ValuePair.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

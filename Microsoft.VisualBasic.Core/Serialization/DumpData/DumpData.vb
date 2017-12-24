@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9004d0f648faadf51b3390b67a180512, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\DumpData\DumpData.vb"
+﻿#Region "Microsoft.VisualBasic::9004d0f648faadf51b3390b67a180512, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\DumpData\DumpData.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

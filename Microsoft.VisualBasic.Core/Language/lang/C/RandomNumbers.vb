@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86bf442bb41ea4eee0d47035b9175240, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\C\RandomNumbers.vb"
+﻿#Region "Microsoft.VisualBasic::86bf442bb41ea4eee0d47035b9175240, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\C\RandomNumbers.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

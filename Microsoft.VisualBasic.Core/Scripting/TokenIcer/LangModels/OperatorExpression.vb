@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7264459fc432f41ff7af91c66598588, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LangModels\OperatorExpression.vb"
+﻿#Region "Microsoft.VisualBasic::b7264459fc432f41ff7af91c66598588, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\OperatorExpression.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

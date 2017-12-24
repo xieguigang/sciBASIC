@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1fa349c39a9d69be41a9eea171ac834, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\Model\Node.vb"
+﻿#Region "Microsoft.VisualBasic::d1fa349c39a9d69be41a9eea171ac834, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

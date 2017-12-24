@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71c92b8b60e8518345f9d0cb949f6090, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\Buffer.vb"
+﻿#Region "Microsoft.VisualBasic::71c92b8b60e8518345f9d0cb949f6090, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\BinaryDumping\Buffer.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

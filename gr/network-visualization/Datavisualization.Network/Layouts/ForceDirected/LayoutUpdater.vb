@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e52f3611a0b15cccbe78b1f14113789e, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\LayoutUpdater.vb"
+﻿#Region "Microsoft.VisualBasic::e52f3611a0b15cccbe78b1f14113789e, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\LayoutUpdater.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

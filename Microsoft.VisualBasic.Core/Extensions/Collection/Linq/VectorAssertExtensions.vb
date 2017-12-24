@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27e0d43c6a03513c1c8dddbd42d59a79, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\VectorAssertExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::27e0d43c6a03513c1c8dddbd42d59a79, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\VectorAssertExtensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

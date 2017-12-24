@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98b0201d2f81207d372ae1e0efdf3335, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\Model\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::98b0201d2f81207d372ae1e0efdf3335, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5af56f2dc28939b61c9be6a21c70e9ab, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\ICharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::5af56f2dc28939b61c9be6a21c70e9ab, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\ICharacterStrategy.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

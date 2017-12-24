@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fa30c8852a4b75e9104ce0185cb78f3, ..\sciBASIC#\Data_science\algorithms\PageRank\PR_test\test.vb"
+﻿#Region "Microsoft.VisualBasic::d250671dc7296ceef03002ac0a47e618, ..\sciBASIC#\Data_science\algorithms\PageRank\PR_test\test.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -82,4 +82,3 @@ Module test
         Call ranks.GetJson(True).EchoLine
     End Sub
 End Module
-

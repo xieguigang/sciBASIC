@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdb9cc942f7123775b83eb9ecf8cd4d5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::bdb9cc942f7123775b83eb9ecf8cd4d5, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bed11e068fc896e1e7f8d9a91311ec0a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\LinuxRunHelper.vb"
+﻿#Region "Microsoft.VisualBasic::bed11e068fc896e1e7f8d9a91311ec0a, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\UnixBash\LinuxRunHelper.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

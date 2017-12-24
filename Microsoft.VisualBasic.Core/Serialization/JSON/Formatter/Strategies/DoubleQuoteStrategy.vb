@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d813ef73df179417ef25e8c374add697, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\DoubleQuoteStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::d813ef73df179417ef25e8c374add697, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\DoubleQuoteStrategy.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

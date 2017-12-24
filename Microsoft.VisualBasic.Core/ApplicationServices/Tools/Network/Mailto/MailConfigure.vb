@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41455e122c4a369aead946810ce9f74f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Mailto\MailConfigure.vb"
+﻿#Region "Microsoft.VisualBasic::41455e122c4a369aead946810ce9f74f, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Mailto\MailConfigure.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

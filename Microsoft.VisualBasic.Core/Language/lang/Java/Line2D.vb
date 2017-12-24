@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8438b50cf0c35b3c4604bac41fcce12, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\Java\Line2D.vb"
+﻿#Region "Microsoft.VisualBasic::f8438b50cf0c35b3c4604bac41fcce12, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\Java\Line2D.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

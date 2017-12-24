@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba0350705be0bc07ae8d0229ffdc1888, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::ba0350705be0bc07ae8d0229ffdc1888, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\Vector.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

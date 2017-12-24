@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c118f269e92d3295ecf727bc3e30ca3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Pointer.vb"
+﻿#Region "Microsoft.VisualBasic::0c118f269e92d3295ecf727bc3e30ca3, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Pointer.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

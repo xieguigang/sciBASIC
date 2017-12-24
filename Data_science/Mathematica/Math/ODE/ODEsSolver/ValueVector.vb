@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ab388ad4564fbfe6309622c4d8b8a63, ..\sciBASIC#\Data_science\Mathematica\Math\ODE\ODEsSolver\ValueVector.vb"
+﻿#Region "Microsoft.VisualBasic::729be3174e897d89aae674ff804b290c, ..\sciBASIC#\Data_science\Mathematica\Math\ODE\ODEsSolver\ValueVector.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

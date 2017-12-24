@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e8074e94386ad06ad5689987c546916, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Models\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::0ffe4f0e473b6530bf7b906338514edd, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Xml\Models\Vector.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fea2bf71fc2b3d64aa962a24d5ece4c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::540ddb34ff4b0d54470a9b79801f146a, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

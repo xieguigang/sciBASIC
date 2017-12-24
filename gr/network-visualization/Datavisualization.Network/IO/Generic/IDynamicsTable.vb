@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4bb460cea8150dbec72af12b2a03dee, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\Generic\IDynamicsTable.vb"
+﻿#Region "Microsoft.VisualBasic::c4bb460cea8150dbec72af12b2a03dee, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\IO\Generic\IDynamicsTable.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

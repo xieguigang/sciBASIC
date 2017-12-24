@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d01874a645984fff4bd2c86422f44be5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Mailto\GMailClient.vb"
+﻿#Region "Microsoft.VisualBasic::d01874a645984fff4bd2c86422f44be5, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Mailto\GMailClient.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

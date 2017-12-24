@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::202cbeac04ddff09f59403f6d7187b9c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\Python\Regexp.vb"
+﻿#Region "Microsoft.VisualBasic::202cbeac04ddff09f59403f6d7187b9c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\Python\Regexp.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

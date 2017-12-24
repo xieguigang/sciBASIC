@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::569e94a0eee2f4b49b160f19eb302c50, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Win32\HardwareInfo.vb"
+﻿#Region "Microsoft.VisualBasic::569e94a0eee2f4b49b160f19eb302c50, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Win32\HardwareInfo.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

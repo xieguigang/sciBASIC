@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d6786f72ebfd4475e7c88b79cf84fb0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\OverloadsFunction.vb"
+﻿#Region "Microsoft.VisualBasic::9d6786f72ebfd4475e7c88b79cf84fb0, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Runtime\OverloadsFunction.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

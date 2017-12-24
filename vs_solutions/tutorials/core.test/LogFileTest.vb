@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c1cd81775190ffd703fa8965031ade9, ..\sciBASIC#\tutorials\core.test\LogFileTest.vb"
+﻿#Region "Microsoft.VisualBasic::32bf033d93b65934e75dc90194c7a96a, ..\sciBASIC#\vs_solutions\tutorials\core.test\LogFileTest.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -47,4 +47,3 @@ Module LogFileTest
 
     End Sub
 End Module
-

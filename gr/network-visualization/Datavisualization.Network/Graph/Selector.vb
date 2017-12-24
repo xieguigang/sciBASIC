@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5ba5532ccc589af03a1e7669766b51a, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\Selector.vb"
+﻿#Region "Microsoft.VisualBasic::d5ba5532ccc589af03a1e7669766b51a, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\Selector.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0a9595bc0b1c257b7653e2b0eaef4a9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\DataModels\BindMapping.vb"
+﻿#Region "Microsoft.VisualBasic::e0a9595bc0b1c257b7653e2b0eaef4a9, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\BindMapping.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

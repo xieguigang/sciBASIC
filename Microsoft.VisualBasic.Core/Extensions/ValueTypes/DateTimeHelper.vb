@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac4c164f25c967e7d69690aae9b8ae02, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\ValueTypes\DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::ac4c164f25c967e7d69690aae9b8ae02, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

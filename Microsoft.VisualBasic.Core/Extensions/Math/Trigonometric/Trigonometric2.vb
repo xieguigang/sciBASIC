@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b040327637042e7f47b204fa6b7081ca, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Trigonometric\Trigonometric2.vb"
+﻿#Region "Microsoft.VisualBasic::b040327637042e7f47b204fa6b7081ca, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Trigonometric2.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

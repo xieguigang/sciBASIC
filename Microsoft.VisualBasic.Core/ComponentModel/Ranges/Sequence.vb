@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1354953c0a4661fa1da725e59c65776, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\Sequence.vb"
+﻿#Region "Microsoft.VisualBasic::3f7d89498be9011079e07a7a07e5ad53, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Ranges\Sequence.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization

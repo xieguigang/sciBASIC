@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fc41c382a09c0f1699efda28e8ddf48, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::b748372c24d856e66fbf50276f953614, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\ZipLib.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

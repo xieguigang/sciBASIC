@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8442b5511d4d38c00b4606303d901d89, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LangModels\Token.vb"
+﻿#Region "Microsoft.VisualBasic::8442b5511d4d38c00b4606303d901d89, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\Token.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f280b6e0cbef2727111737ae6fd3e5a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Inf\Section.vb"
+﻿#Region "Microsoft.VisualBasic::0f280b6e0cbef2727111737ae6fd3e5a, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Section.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

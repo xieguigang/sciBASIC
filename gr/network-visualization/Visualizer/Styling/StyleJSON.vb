@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f145c2473f3da02478bed8a21815c23f, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\Styling\StyleJSON.vb"
+﻿#Region "Microsoft.VisualBasic::f145c2473f3da02478bed8a21815c23f, ..\sciBASIC#\gr\network-visualization\Visualizer\Styling\StyleJSON.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

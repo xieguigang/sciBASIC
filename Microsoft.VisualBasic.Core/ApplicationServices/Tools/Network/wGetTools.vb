@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d123268ab48cb110ebd63048c445139e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\wGetTools.vb"
+﻿#Region "Microsoft.VisualBasic::d123268ab48cb110ebd63048c445139e, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\wGetTools.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

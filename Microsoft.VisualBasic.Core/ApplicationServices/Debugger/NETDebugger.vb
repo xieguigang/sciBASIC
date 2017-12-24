@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2973138edf1beb9688e7277ff9156880, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Debugger\NETDebugger.vb"
+﻿#Region "Microsoft.VisualBasic::2973138edf1beb9688e7277ff9156880, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Debugger\NETDebugger.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

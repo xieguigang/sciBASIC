@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d28ff8281acb4bbd422c6407b62ff6a6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\Shell\tree.vb"
+﻿#Region "Microsoft.VisualBasic::d28ff8281acb4bbd422c6407b62ff6a6, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\UnixBash\Shell\tree.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

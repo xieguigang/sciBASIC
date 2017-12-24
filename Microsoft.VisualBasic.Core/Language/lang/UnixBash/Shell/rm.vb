@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed5c63b298fc2b051b5de076932172ae, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\Shell\rm.vb"
+﻿#Region "Microsoft.VisualBasic::ed5c63b298fc2b051b5de076932172ae, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\UnixBash\Shell\rm.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

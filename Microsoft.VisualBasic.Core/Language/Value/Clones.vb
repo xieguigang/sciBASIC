@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::873437ad1fdc6ecd2a1ebe4369dd76dc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Clones.vb"
+﻿#Region "Microsoft.VisualBasic::873437ad1fdc6ecd2a1ebe4369dd76dc, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\Clones.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

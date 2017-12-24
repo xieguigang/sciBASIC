@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c19d9afbea7939cd4653efe57faa2e37, ..\sciBASIC#\Data\DataFrame\test\MySQLImportsTest.vb"
+﻿#Region "Microsoft.VisualBasic::17ed0afe998827fe008da60b118e5705, ..\sciBASIC#\Data\DataFrame\test\MySQLImportsTest.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -37,4 +37,3 @@ Module MySQLImportsTest
         Pause()
     End Sub
 End Module
-

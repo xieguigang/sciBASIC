@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3aca41c93858807ecf374c47f88bfeb7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\NumericSequence.vb"
+﻿#Region "Microsoft.VisualBasic::3aca41c93858807ecf374c47f88bfeb7, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\NumericSequence.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

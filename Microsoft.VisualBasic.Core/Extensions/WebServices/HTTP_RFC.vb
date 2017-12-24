@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61425b732450b4a9e6446347bd269581, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\HTTP_RFC.vb"
+﻿#Region "Microsoft.VisualBasic::61425b732450b4a9e6446347bd269581, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\WebServices\HTTP_RFC.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

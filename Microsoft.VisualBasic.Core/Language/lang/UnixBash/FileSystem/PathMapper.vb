@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a607bc785b695f6fd2a7934d8db2e268, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\FileSystem\PathMapper.vb"
+﻿#Region "Microsoft.VisualBasic::a607bc785b695f6fd2a7934d8db2e268, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\UnixBash\FileSystem\PathMapper.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

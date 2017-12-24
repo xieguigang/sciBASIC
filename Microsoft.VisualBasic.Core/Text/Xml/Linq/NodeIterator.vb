@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40fa4529e4213ae990afb1a33cfa9a29, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\Linq\NodeIterator.vb"
+﻿#Region "Microsoft.VisualBasic::14a0f2801edc83c85c1320e092067316, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Xml\Linq\NodeIterator.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

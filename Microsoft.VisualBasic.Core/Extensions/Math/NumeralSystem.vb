@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19de6bd9898c3ec432f52570db8e30c0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\NumeralSystem.vb"
+﻿#Region "Microsoft.VisualBasic::19de6bd9898c3ec432f52570db8e30c0, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\NumeralSystem.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
