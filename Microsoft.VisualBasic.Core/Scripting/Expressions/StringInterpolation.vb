@@ -76,6 +76,13 @@ Namespace Scripting.Expressions
             End With
         End Function
 
+        ''' <summary>
+        ''' 在解析出variable之后，variable前面的``$``是会被清除掉的，所以variable的source <paramref name="getValue"/>里面的变量名称应该是没有``$``前缀的
+        ''' </summary>
+        ''' <param name="sb"></param>
+        ''' <param name="getValue"></param>
+        ''' <param name="nullAsEmpty"></param>
+        ''' <param name="escape"></param>
         <Extension>
         Public Sub Interpolate(ByRef sb As StringBuilder, getValue As Func(Of String, String),
                                Optional nullAsEmpty As Boolean = False,

@@ -137,18 +137,16 @@ Namespace Language.UnixBash
         ''' Search the files in the specific directory
         ''' </summary>
         ''' <param name="ls"></param>
-        ''' <param name="DIR"></param>
+        ''' <param name="directory"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator <=(ls As Search, DIR As String) As IEnumerable(Of String)
+        Public Overloads Shared Operator <=(ls As Search, directory$) As IEnumerable(Of String)
             Dim l As Boolean = ls.__opts.ContainsKey(SearchOpt.Options.LongName)
-            'Dim wc As String() =
-            '    ls.wildcards.Select(Function(x) x.Replace(".", "\."))
-            'For i As Integer = 0 To wc.Length - 1
-            '    If wc(i).Last <> "*"c Then
-            '        wc(i) = wc(i) & "$"
-            '    End If
-            '    wc(i) = wc(i).Replace("*", ".+")
-            'Next
+
+            If Not directory.DirectoryExists Then
+                Call $"Directory {directory} is not valid on your file system!".Warning
+                Return {}
+            End If
+
             Dim wc$() = ls.wildcards
             Dim isMatch As Func(Of String, Boolean) =
                 AddressOf New wildcardsCompatible With {
@@ -158,9 +156,9 @@ Namespace Language.UnixBash
 
             With ls
                 If .__opts.ContainsKey(SearchOpt.Options.Directory) Then
-                    list = DIR.ListDirectory(.SearchType)
+                    list = directory.ListDirectory(.SearchType)
                 Else
-                    list = DIR.ReadDirectory(.SearchType)
+                    list = directory.ReadDirectory(.SearchType)
                 End If
 
                 If .__opts.ContainsKey(SearchOpt.Options.Directory) Then

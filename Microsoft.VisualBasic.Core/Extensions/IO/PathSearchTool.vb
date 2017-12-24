@@ -385,7 +385,7 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' Safe file copy operation
+    ''' Safe file copy operation.(请注意，<paramref name="copyTo"/>参数的字符串最末尾必须是``/``或者``\``才会被认作为目录路径)
     ''' </summary>
     ''' <param name="source$"></param>
     ''' <param name="copyTo$">Can be file name or directory name</param>
