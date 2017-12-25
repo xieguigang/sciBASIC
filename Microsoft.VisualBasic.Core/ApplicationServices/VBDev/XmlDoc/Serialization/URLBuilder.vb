@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd06b1574ce20bc2c7f091f361fe4921, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\VBDev\XmlDoc\Serialization\URLBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::dd06b1574ce20bc2c7f091f361fe4921, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\URLBuilder.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

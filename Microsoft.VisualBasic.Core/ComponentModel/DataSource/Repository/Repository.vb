@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb2dc61814a9ef8c6094f2a3d1b9516a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Repository\Repository.vb"
+﻿#Region "Microsoft.VisualBasic::bb2dc61814a9ef8c6094f2a3d1b9516a, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\Repository\Repository.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ecc3ff85482cc46d0a0b91a53b74e2d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\Http\GZStream.vb"
+﻿#Region "Microsoft.VisualBasic::5ecc3ff85482cc46d0a0b91a53b74e2d, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\WebServices\Http\GZStream.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::634dbe616b698b47e77bc25d42608aa9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\UnixBash\PS1.vb"
+﻿#Region "Microsoft.VisualBasic::634dbe616b698b47e77bc25d42608aa9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\UnixBash\PS1.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

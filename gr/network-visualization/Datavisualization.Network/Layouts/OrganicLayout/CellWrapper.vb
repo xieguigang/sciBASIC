@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd75460b1dc737cf591d83641a9a60ce, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\OrganicLayout\CellWrapper.vb"
+﻿#Region "Microsoft.VisualBasic::bd75460b1dc737cf591d83641a9a60ce, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\CellWrapper.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

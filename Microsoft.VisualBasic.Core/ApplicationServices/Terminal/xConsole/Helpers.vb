@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4efecaebf76db9799527811db18dd578, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\xConsole\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::4efecaebf76db9799527811db18dd578, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Helpers.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

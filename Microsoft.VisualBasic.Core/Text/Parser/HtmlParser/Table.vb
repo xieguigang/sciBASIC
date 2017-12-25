@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4494537fabd04dcbb6c56a3906c9591b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\HtmlParser\Table.vb"
+﻿#Region "Microsoft.VisualBasic::4494537fabd04dcbb6c56a3906c9591b, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\Table.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

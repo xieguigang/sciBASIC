@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9faabc7b147a74460a2deb2f0898c462, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\BufferedStream.vb"
+﻿#Region "Microsoft.VisualBasic::9faabc7b147a74460a2deb2f0898c462, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\File\BufferedStream.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

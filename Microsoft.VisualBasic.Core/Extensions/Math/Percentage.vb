@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::535f15faf7150c7ea2d67ee9ce14ba24, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Percentage.vb"
+﻿#Region "Microsoft.VisualBasic::d9fd50be9a2c1b03365d0763699f16d9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\Percentage.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

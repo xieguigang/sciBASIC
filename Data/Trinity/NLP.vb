@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24df1ca90c54fce696264cf265788766, ..\sciBASIC#\Data\Trinity\NLP.vb"
+﻿#Region "Microsoft.VisualBasic::2be8bee7d8563decad63f0c0ebe9b0b0, ..\sciBASIC#\Data\Trinity\NLP.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

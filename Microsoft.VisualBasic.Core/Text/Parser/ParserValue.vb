@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5481ec438fe81a7a303ad3ba53495d3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Parser\ParserValue.vb"
+﻿#Region "Microsoft.VisualBasic::f5481ec438fe81a7a303ad3ba53495d3, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Parser\ParserValue.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

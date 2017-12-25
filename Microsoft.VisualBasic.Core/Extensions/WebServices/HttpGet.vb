@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4930905cdefb8671bb769c5a9e229783, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::f49cd1923f4ab42695c80e6eb7057b29, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -166,4 +166,3 @@ RETRY:      Return __get(url, headers, proxy, UA)
         End Using
     End Function
 End Module
-

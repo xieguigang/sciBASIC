@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::310562f7fb886dd95e87a64064f100cb, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::310562f7fb886dd95e87a64064f100cb, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

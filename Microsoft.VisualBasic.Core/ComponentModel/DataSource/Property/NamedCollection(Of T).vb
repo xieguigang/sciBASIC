@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f6274137ba7a7989b41c6d3fd3b3ecc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\NamedCollection(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::08d6e18b64d878f41024814b367a7a88, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedCollection(Of T).vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,10 +26,12 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
@@ -71,6 +73,7 @@ Namespace ComponentModel.DataSourceModel
         Implements Value(Of T()).IValueOf
         Implements IEnumerable(Of T)
         Implements IGrouping(Of String, T)
+        Implements IsEmpty
 
         ''' <summary>
         ''' 这个集合对象的标识符名称
@@ -85,7 +88,7 @@ Namespace ComponentModel.DataSourceModel
         ''' 目标集合对象
         ''' </summary>
         ''' <returns></returns>
-        Public Property Value As T() Implements IKeyValuePairObject(Of String, T()).Value, Value(Of T()).IValueOf.value
+        Public Property Value As T() Implements IKeyValuePairObject(Of String, T()).Value, Value(Of T()).IValueOf.Value
 
         ''' <summary>
         ''' 目标集合对象的描述信息
@@ -97,16 +100,19 @@ Namespace ComponentModel.DataSourceModel
         ''' 当前的这个命名的目标集合对象是否是空对象？
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property IsEmpty As Boolean
+        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Name Is Nothing AndAlso Value Is Nothing
             End Get
         End Property
 
         Default Public Property Item(index As Integer) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Value(index)
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As T)
                 Me.Value(index) = value
             End Set
@@ -117,6 +123,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Length As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Value.Length
             End Get
@@ -140,8 +147,8 @@ Namespace ComponentModel.DataSourceModel
 
         Sub New(xmlNode As NamedVector(Of T))
             With xmlNode
-                Name = .Name
-                Value = .Vector
+                Name = .name
+                Value = .vector
             End With
         End Sub
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3772c04517d8acef596a4a90d56e9935, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\StructFormatter.vb"
+﻿#Region "Microsoft.VisualBasic::3772c04517d8acef596a4a90d56e9935, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\BinaryDumping\StructFormatter.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

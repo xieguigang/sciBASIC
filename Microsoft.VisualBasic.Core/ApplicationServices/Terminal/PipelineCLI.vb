@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec7a5f11d029d9d601eff724831fde95, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\PipelineCLI.vb"
+﻿#Region "Microsoft.VisualBasic::ec7a5f11d029d9d601eff724831fde95, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PipelineCLI.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

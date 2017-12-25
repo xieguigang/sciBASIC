@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b3827446fc900809b2eb22ff43ea695, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\Which.vb"
+﻿#Region "Microsoft.VisualBasic::2b3827446fc900809b2eb22ff43ea695, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Which.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

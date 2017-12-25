@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::800e31560b0c188e953893216e2f677e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\DomainParser.vb"
+﻿#Region "Microsoft.VisualBasic::800e31560b0c188e953893216e2f677e, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\DomainParser.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

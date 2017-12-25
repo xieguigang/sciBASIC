@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd1da9c15ad7480818e8fe5489594bc5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Protocol\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::fd1da9c15ad7480818e8fe5489594bc5, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\Abstract.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

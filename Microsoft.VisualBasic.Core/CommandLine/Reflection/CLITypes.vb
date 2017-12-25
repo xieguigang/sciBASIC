@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3ef09c8545f175c3a8c9566d2f571fc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLITypes.vb"
+﻿#Region "Microsoft.VisualBasic::f3ef09c8545f175c3a8c9566d2f571fc, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\CLITypes.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::048de01f3a96fdf7e31b42eb1bdd969c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\HashList\HashHandle.vb"
+﻿#Region "Microsoft.VisualBasic::048de01f3a96fdf7e31b42eb1bdd969c, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashList\HashHandle.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

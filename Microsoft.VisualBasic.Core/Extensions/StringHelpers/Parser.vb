@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab89de9c4ad7a4b5f44c73fc7d7131b0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::ab89de9c4ad7a4b5f44c73fc7d7131b0, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5fc3b4582f51620b3c924037a64eaef, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\FormatterScopeState.vb"
+﻿#Region "Microsoft.VisualBasic::b5fc3b4582f51620b3c924037a64eaef, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\FormatterScopeState.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

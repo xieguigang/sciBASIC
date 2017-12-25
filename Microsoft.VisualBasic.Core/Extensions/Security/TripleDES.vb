@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d65684dc5d5f8fecadfeac41e2e710a2, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\TripleDES.vb"
+﻿#Region "Microsoft.VisualBasic::d65684dc5d5f8fecadfeac41e2e710a2, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Security\TripleDES.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

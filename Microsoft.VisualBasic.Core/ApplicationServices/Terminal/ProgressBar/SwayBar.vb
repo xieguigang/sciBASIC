@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a646fb97d850a9e813b641b202002cf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\ProgressBar\SwayBar.vb"
+﻿#Region "Microsoft.VisualBasic::2a646fb97d850a9e813b641b202002cf, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\SwayBar.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

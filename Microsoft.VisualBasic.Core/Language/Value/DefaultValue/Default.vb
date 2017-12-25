@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccd512b813fadddfb3e2b4436a5b98c9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::9893a8195fc04ded2108c9ac58aedb3f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -28,7 +28,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Perl
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language.Default
 
@@ -36,6 +35,10 @@ Namespace Language.Default
 
     Public Interface IDefaultValue(Of T)
         ReadOnly Property DefaultValue As T
+    End Interface
+
+    Public Interface IsEmpty
+        ReadOnly Property IsEmpty As Boolean
     End Interface
 
     ''' <summary>

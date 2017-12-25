@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab787a6c262c729d299513ea74b46534, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Pointer.vb"
+﻿#Region "Microsoft.VisualBasic::ab787a6c262c729d299513ea74b46534, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\Pointer.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5119d8d8de1b620492f979ed09180d9e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::5119d8d8de1b620492f979ed09180d9e, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\IntPtr(Of T).vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

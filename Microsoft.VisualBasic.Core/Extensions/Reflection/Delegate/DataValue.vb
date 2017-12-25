@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd701ddeb4c45ada871fa16dc42ffee5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Delegate\DataValue.vb"
+﻿#Region "Microsoft.VisualBasic::cd701ddeb4c45ada871fa16dc42ffee5, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DataValue.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

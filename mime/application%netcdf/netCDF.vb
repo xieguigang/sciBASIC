@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5df186f8aa73a93908865d9b9012791, ..\sciBASIC#\mime\application%netcdf\netCDF.vb"
+﻿#Region "Microsoft.VisualBasic::fe87496961f51cb31f525c6d0ab9e3b9, ..\sciBASIC#\mime\application%netcdf\netCDF.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -29,4 +29,3 @@
 Public Class netCDF
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::649655c0eed7835760ae2ad4d7918836, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::db3fd278021f28063ad590cc7cb90538, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -36,7 +36,7 @@ Namespace Terminal.ProgressBar
     ''' <summary>
     ''' The <see cref="ConsoleColor"/> theme for the <see cref="ProgressBar"/>
     ''' </summary>
-    Public Structure ColorTheme
+    Public Structure ColorTheme : Implements IsEmpty
 
         ' [ERROR 2017/11/5 下午 0704:37] <Print>:System.Exception: Print 
         '  ---> System.Reflection.TargetInvocationException: 调用的目标发生了异常。 
@@ -70,7 +70,8 @@ Namespace Terminal.ProgressBar
         ''' Test if all of the property value is equals to ZERO(<see cref="ConsoleColor.Black"/>).
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property IsEmpty As Boolean
+        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return BackgroundColor = 0 AndAlso
                     ProgressBarColor = 0 AndAlso

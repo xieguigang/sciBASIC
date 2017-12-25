@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d7628a480f03c9b018528c12fbae40a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Math\GeometryMath.vb"
+﻿#Region "Microsoft.VisualBasic::0d7628a480f03c9b018528c12fbae40a, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db866b45b35db2358acd6432fad8fd2e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\MIME\ContentType.vb"
+﻿#Region "Microsoft.VisualBasic::ce369c6ea9777cc9a41245f2aa26840e, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\MIME\ContentType.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -27,6 +27,8 @@
 #End Region
 
 Imports System.Data.Linq.Mapping
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Text
 
 Namespace Net.Protocols.ContentTypes
@@ -34,7 +36,7 @@ Namespace Net.Protocols.ContentTypes
     ''' <summary>
     ''' MIME types / Internet Media Types
     ''' </summary>
-    Public Structure ContentType
+    Public Structure ContentType : Implements IsEmpty
 
         ''' <summary>
         ''' Type name or brief info
@@ -60,9 +62,15 @@ Namespace Net.Protocols.ContentTypes
         ''' <returns></returns>
         <Column(Name:="More Details")> Public Property Details As String
 
-        Public Function IsEmpty() As Boolean
-            Return Name Is Nothing AndAlso MIMEType Is Nothing AndAlso FileExt Is Nothing AndAlso Details Is Nothing
-        End Function
+        Public ReadOnly Property IsEmpty() As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Name Is Nothing AndAlso
+                    MIMEType Is Nothing AndAlso
+                    FileExt Is Nothing AndAlso
+                    Details Is Nothing
+            End Get
+        End Property
 
         Public Overrides Function ToString() As String
             Return $"{MIMEType} (*{FileExt})"

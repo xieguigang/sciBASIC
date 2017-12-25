@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a400696d779fb1627c44851b354c3e5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Xml\XmlBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::9a400696d779fb1627c44851b354c3e5, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Xml\XmlBuilder.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

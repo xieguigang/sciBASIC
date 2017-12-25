@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cfd9e1bdd03ae6d86a0d9d35b85b6e4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\Md5HashProvider.vb"
+﻿#Region "Microsoft.VisualBasic::5cfd9e1bdd03ae6d86a0d9d35b85b6e4, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Security\Md5HashProvider.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

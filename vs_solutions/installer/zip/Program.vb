@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb99b408254ffd2f867e273ffd2b583f, ..\sciBASIC#\vs_solutions\installer\zip\Program.vb"
+﻿#Region "Microsoft.VisualBasic::5c8899bf964aa495f89a4cf15fbbdbdb, ..\sciBASIC#\vs_solutions\installer\zip\Program.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -80,4 +80,3 @@ Module Program
         Return 0
     End Function
 End Module
-

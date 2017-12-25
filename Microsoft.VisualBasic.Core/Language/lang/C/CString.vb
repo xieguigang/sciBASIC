@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0f9ebce27978db239c045ecba1fc41a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\C\CString.vb"
+﻿#Region "Microsoft.VisualBasic::b0f9ebce27978db239c045ecba1fc41a, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\C\CString.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfa5e9bdb2a53100de723fd333a6c2c0, ..\sciBASIC#\tutorials\core.test\LinuxRunTest\child\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::bfa5e9bdb2a53100de723fd333a6c2c0, ..\sciBASIC#\vs_solutions\tutorials\core.test\LinuxRunTest\child\Module1.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

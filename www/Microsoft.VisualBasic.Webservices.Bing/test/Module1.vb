@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1ddeffb0041f52f92a8da3fbc0d871d, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::50c6ea33bfbbc9a7c61974bf99ad5a2f, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\test\Module1.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -33,4 +33,3 @@ Module Module1
     End Sub
 
 End Module
-

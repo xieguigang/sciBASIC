@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae5886bdee1b150a22ab337c8978e358, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Trigger.vb"
+﻿#Region "Microsoft.VisualBasic::ae5886bdee1b150a22ab337c8978e358, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Trigger.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

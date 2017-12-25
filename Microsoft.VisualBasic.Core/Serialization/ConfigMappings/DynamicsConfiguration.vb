@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2db448638a6c057a3be9f94b0bd55590, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\ConfigMappings\DynamicsConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::62eeaf8e27a3cb53c7e82e79da5c4304, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\ConfigMappings\DynamicsConfiguration.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

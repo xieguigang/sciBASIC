@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2aeb0fdc2ca47b8228145e42599e411, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Debugger\Logging\EventLog.vb"
+﻿#Region "Microsoft.VisualBasic::a2aeb0fdc2ca47b8228145e42599e411, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\EventLog.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

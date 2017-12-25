@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::862086ab4ce3fd7c227ad28f1aea6b0c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\Indexer.vb"
+﻿#Region "Microsoft.VisualBasic::1eba753adaab5a6a5d83b3bbbb93732f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\Indexer.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

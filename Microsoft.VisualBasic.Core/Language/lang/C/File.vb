@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2460ab5907996636f333af293e0c332, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\C\File.vb"
+﻿#Region "Microsoft.VisualBasic::b2460ab5907996636f333af293e0c332, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\C\File.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

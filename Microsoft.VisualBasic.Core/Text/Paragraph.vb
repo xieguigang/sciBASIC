@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1024636aadb2f79749b14b4f4f1491d1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::1024636aadb2f79749b14b4f4f1491d1, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Paragraph.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed6b97fc29c5ecafbbde6e0d4dc667ac, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::ed6b97fc29c5ecafbbde6e0d4dc667ac, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\Matrix.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

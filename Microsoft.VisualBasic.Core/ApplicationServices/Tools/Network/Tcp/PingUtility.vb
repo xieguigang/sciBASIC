@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6c07b21d04f75b05dedf7024803d15c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Tcp\PingUtility.vb"
+﻿#Region "Microsoft.VisualBasic::e6c07b21d04f75b05dedf7024803d15c, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\PingUtility.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

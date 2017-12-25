@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5010339498287689595eba55f758743f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\PartitionedStream.vb"
+﻿#Region "Microsoft.VisualBasic::5010339498287689595eba55f758743f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Doc\PartitionedStream.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

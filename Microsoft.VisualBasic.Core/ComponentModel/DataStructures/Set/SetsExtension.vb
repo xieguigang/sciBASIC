@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b2af080a8a269106c4d9b2c3105a2e3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\SetsExtension.vb"
+﻿#Region "Microsoft.VisualBasic::c8b02c7c45176a14214621c7f9027112, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Set\SetsExtension.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -108,4 +108,3 @@ Public Module SetsExtension
     End Function
 #End Region
 End Module
-

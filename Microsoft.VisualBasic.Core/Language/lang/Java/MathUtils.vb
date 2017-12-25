@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0b81c7bf726d3d5a37a601762bcb6d0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\Java\MathUtils.vb"
+﻿#Region "Microsoft.VisualBasic::b0b81c7bf726d3d5a37a601762bcb6d0, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\Java\MathUtils.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

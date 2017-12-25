@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::654d9007758acf8d684000160fa8cb6a, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\GraphTesting\subnetworkTest.vb"
+﻿#Region "Microsoft.VisualBasic::6059518711c141d108dcf146445bbc06, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\GraphTesting\subnetworkTest.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -39,4 +39,3 @@ Module subnetworkTest
         Pause()
     End Sub
 End Module
-

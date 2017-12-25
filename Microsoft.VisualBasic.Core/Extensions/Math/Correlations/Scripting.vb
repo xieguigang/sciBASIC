@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::529ef937f9a73e22edebef9c23f1bcd8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Correlations\Scripting.vb"
+﻿#Region "Microsoft.VisualBasic::529ef937f9a73e22edebef9c23f1bcd8, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Scripting.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6641f5239ef62eb6814e59d2f9fe32f0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\HexColor.vb"
+﻿#Region "Microsoft.VisualBasic::6641f5239ef62eb6814e59d2f9fe32f0, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Colors\HexColor.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

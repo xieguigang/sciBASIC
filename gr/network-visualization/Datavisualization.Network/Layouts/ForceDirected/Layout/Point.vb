@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79d1fdc499b1bca4dcc921f52ce1b798, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\Point.vb"
+﻿#Region "Microsoft.VisualBasic::79d1fdc499b1bca4dcc921f52ce1b798, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Point.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

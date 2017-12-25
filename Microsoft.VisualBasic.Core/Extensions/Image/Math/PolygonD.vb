@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fda1bc37e8674386c1df752ce8fc55b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Math\PolygonD.vb"
+﻿#Region "Microsoft.VisualBasic::2fda1bc37e8674386c1df752ce8fc55b, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Math\PolygonD.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

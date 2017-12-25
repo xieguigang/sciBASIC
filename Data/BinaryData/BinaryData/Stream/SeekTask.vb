@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a3af42995efb4562bcc9fd857a10e38, ..\sciBASIC#\Data\BinaryData\BinaryData\SeekTask.vb"
+﻿#Region "Microsoft.VisualBasic::d8e3e0b0588161caa6ec7f26db80a1b2, ..\sciBASIC#\Data\BinaryData\BinaryData\Stream\SeekTask.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

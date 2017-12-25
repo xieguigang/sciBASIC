@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a210d5a7147393b6f34ab1712d990907, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\CType\NumberConversionRoutines.vb"
+﻿#Region "Microsoft.VisualBasic::a210d5a7147393b6f34ab1712d990907, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Runtime\CType\NumberConversionRoutines.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

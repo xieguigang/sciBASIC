@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b561929ac8aa841e80923efc6860ee8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\RelayCommand.vb"
+﻿#Region "Microsoft.VisualBasic::4b561929ac8aa841e80923efc6860ee8, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\RelayCommand.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

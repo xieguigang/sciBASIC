@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f534f371ba738e6c57ec5c426c6d57f, ..\sciBASIC#\Data\BinaryData\BinaryData\Extensions\ReaderProvider.vb"
+﻿#Region "Microsoft.VisualBasic::c6f59b69b73ceeaa4ffb594e32c759c8, ..\sciBASIC#\Data\BinaryData\BinaryData\Extensions\ReaderProvider.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

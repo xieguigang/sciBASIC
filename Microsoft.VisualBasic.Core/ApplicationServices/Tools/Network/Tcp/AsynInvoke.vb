@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::769446369ecfa54198379a0e2a6dede1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Tcp\AsynInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::769446369ecfa54198379a0e2a6dede1, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\AsynInvoke.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

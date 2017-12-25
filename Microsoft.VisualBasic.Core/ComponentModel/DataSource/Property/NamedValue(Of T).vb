@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93635673d157d017d442597e1b45ca01, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\NamedValue(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::dda63bd0a042fa4c713380d32ada3fe1, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedValue(Of T).vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,9 +26,11 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.DataSourceModel
@@ -39,6 +41,7 @@ Namespace ComponentModel.DataSourceModel
     ''' <typeparam name="T"></typeparam>
     Public Structure NamedValue(Of T) : Implements INamedValue
         Implements IKeyValuePairObject(Of String, T)
+        Implements IsEmpty
 
         ''' <summary>
         ''' Identifier tag data. you can using this property value as a dictionary key.
@@ -65,7 +68,8 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         <XmlIgnore, ScriptIgnore, DataIgnored>
-        Public ReadOnly Property IsEmpty As Boolean
+        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return String.IsNullOrEmpty(Name) AndAlso Value Is Nothing
             End Get
@@ -76,6 +80,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ValueType As Type
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 ' 假若类型参数T是基类型的话，则直接使用GetType(T)只能够得到基类型的信息，无法得到当前的实现类型的信息
                 ' 故而要在这里使用对象自身的GetType方法来获取真正的类型信息

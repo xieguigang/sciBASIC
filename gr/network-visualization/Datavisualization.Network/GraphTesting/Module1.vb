@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::345fbff285748351ce8c5ff011f25344, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\GraphTesting\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::345fbff285748351ce8c5ff011f25344, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\GraphTesting\Module1.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

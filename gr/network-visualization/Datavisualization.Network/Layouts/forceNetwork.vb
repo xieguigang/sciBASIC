@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bf7d1500902e14a80ffc40ccd29e9fb, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\forceNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::8bf7d1500902e14a80ffc40ccd29e9fb, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\forceNetwork.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

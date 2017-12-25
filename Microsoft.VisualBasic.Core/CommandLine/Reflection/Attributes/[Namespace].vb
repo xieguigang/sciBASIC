@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c08f8c87bbd2e2b37b576bb3d33b755, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\Attributes\[Namespace].vb"
+﻿#Region "Microsoft.VisualBasic::6c08f8c87bbd2e2b37b576bb3d33b755, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\[Namespace].vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

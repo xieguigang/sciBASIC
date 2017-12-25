@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f6a55582777489b9e5e92d7452ff362, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Threads\CodeThread.vb"
+﻿#Region "Microsoft.VisualBasic::2f6a55582777489b9e5e92d7452ff362, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\CodeThread.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

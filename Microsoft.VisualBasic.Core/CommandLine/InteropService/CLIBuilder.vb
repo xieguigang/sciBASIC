@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b04ddfc7f6c130f5da839ab2fd9786d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\CLIBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::8b04ddfc7f6c130f5da839ab2fd9786d, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\InteropService\CLIBuilder.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

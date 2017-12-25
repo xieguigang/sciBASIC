@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b28acecbf305e4db101b0452f5ed115e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Enumerable\NamedValueList.vb"
+﻿#Region "Microsoft.VisualBasic::b28acecbf305e4db101b0452f5ed115e, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Enumerable\NamedValueList.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

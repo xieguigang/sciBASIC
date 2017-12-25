@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::518a5f2efaa8f05b13bf4102d0526fdc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Collection\Linq\SetValue.vb"
+﻿#Region "Microsoft.VisualBasic::fb23f87e901dbe3b09902ba28ad2c6d1, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SetValue.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

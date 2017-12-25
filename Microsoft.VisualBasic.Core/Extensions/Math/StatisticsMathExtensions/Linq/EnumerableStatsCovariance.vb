@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::707b5f73e947c80a4efc25ff8b059224, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsCovariance.vb"
+﻿#Region "Microsoft.VisualBasic::707b5f73e947c80a4efc25ff8b059224, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsCovariance.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

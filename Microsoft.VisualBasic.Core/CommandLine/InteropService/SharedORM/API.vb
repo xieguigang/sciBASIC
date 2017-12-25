@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63a7aa425e88f888a9ef228616030b27, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\SharedORM\API.vb"
+﻿#Region "Microsoft.VisualBasic::794da5dc2dae975321dae2be84c70b76, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\API.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.InteropService.SharedORM
@@ -63,7 +63,22 @@ Namespace CommandLine.InteropService.SharedORM
 
             ' 逻辑符号只存在于optional之中
             Dim booleans$() = Nothing
-            Dim params As NamedValue(Of String)() = arguments.BuildArguments(optionals, booleans)
+            Dim params As NamedValue(Of String)()
+
+            Try
+                params = arguments.BuildArguments(optionals, booleans)
+            Catch ex As Exception
+                Dim msg$ = $"Invalid commandline usage({usage})!" & vbCrLf & vbCrLf
+                Dim details = New Dictionary(Of String, String()) From {
+                    {NameOf(arguments), arguments},
+                    {NameOf(optionals), optionals},
+                    {NameOf(booleans), booleans}
+                }.GetJson
+
+                msg = msg & details
+
+                Throw New ArgumentException(msg, ex)
+            End Try
 
             Dim model As New CommandLine With {
                 .Name = name,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b5ac593f2ae351f607a28162b8751ea, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\GraphTesting\endPointTest.vb"
+﻿#Region "Microsoft.VisualBasic::c5a543090332e6a41cd38f895f8df79b, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\GraphTesting\endPointTest.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -45,4 +45,3 @@ Module endPointTest
         Pause()
     End Sub
 End Module
-

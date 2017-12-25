@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a14747f40e78a09ce9901f39f752df5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\MMFProtocol\ProcessLock.vb"
+﻿#Region "Microsoft.VisualBasic::0a14747f40e78a09ce9901f39f752df5, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\ProcessLock.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

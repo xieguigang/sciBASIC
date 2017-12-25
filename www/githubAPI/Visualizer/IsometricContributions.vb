@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64a8ffea58335c99a006e5623b2080b0, ..\sciBASIC#\www\githubAPI\Visualizer\IsometricContributions.vb"
+﻿#Region "Microsoft.VisualBasic::3201436b9bd47b1cdd93f137bfb8a514, ..\sciBASIC#\www\githubAPI\Visualizer\IsometricContributions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

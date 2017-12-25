@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6590f0ef59bf87cce8a3dcc35af5dc9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\AES.vb"
+﻿#Region "Microsoft.VisualBasic::e6590f0ef59bf87cce8a3dcc35af5dc9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Security\AES.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

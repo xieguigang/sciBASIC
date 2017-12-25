@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b851693286f3bddf9b61e9c46d051e6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\CopyDirectory.vb"
+﻿#Region "Microsoft.VisualBasic::806df24a72c2d82c573948ee8e9e9101, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\CopyDirectory.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -40,7 +40,7 @@ Namespace FileIO
         End Sub
 
         ''' <summary>
-        ''' ��Դ�ļ����е��������ݶ����Ƶ�Ŀ���ļ���֮��
+        ''' 
         ''' </summary>
         ''' <param name="src$"></param>
         ''' <param name="destination$"></param>
@@ -48,10 +48,10 @@ Namespace FileIO
             Dim directory As New DirectoryInfo(src)
 
             If FileIO.Directory.Exists(Path.Combine(destination, directory.Name)) Then
-                Throw New IOException($"Directory '{directory.Name}' already exists in '{destination}'")
-            Else
-                destination = CreateDestinationFolderAndReturnNewPath(src, destination)
+                Call $"Directory '{directory.Name}' already exists in '{destination}'".Warning
             End If
+
+            destination = CreateDestinationFolderAndReturnNewPath(src, destination)
 
             Call CopyFilesToTargetDirectory(src, destination)
             Call CopySubDirectoriesWithFiles(src, destination)
@@ -67,13 +67,15 @@ Namespace FileIO
         Private Sub CopyFilesToTargetDirectory(src As String, destinationFolder$)
             Dim resultFilePath$
 
-            For Each path As String In ls - l - r - "*.*" <= src
+            ' 2017-12-24
+            ' 因为只是复制当前的文件夹的文件，所以在这里就不需要添加-r递归参数了
+            For Each path As String In ls - l - "*.*" <= src
                 With New FileInfo(path)
                     resultFilePath = IO.Path.Combine(destinationFolder, IO.Path.GetFileName(.Name))
                 End With
 
                 Call progress.Report(resultFilePath)
-                Call File.Copy(path, resultFilePath)
+                Call path.FileCopy(resultFilePath)
             Next
         End Sub
 

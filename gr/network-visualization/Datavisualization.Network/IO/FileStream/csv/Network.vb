@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3eb72024f3b6f489009315710a520d0c, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\csv\Network.vb"
+﻿#Region "Microsoft.VisualBasic::3eb72024f3b6f489009315710a520d0c, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Network.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

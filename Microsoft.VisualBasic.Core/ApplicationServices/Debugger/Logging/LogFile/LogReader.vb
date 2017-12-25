@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeac6967faadad97a2c9eea28aa83cc1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Debugger\Logging\LogFile\LogReader.vb"
+﻿#Region "Microsoft.VisualBasic::aeac6967faadad97a2c9eea28aa83cc1, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogReader.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

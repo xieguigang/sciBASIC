@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58b38fdf2f46c9213133d31e8dd00bbe, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataStructures\Set\Set.vb"
+﻿#Region "Microsoft.VisualBasic::1e1f540c8958c327fd5c75b7ef0d34fa, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Set\Set.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,12 +26,9 @@
 
 #End Region
 
-Imports System.Text
-Imports System.Collections
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace ComponentModel.DataStructures
 
@@ -48,6 +45,7 @@ Namespace ComponentModel.DataStructures
     Public Class [Set]
         Implements IEnumerable
         Implements IDisposable
+        Implements IsEmpty
 
         ''' <summary>
         ''' Enum of values to determine the aggressiveness of the response of the
@@ -124,9 +122,12 @@ Namespace ComponentModel.DataStructures
         ''' A method to determine whether the <see cref="[Set]">Set</see> has members.
         ''' </summary>
         ''' <returns>True is there are members, false if there are 0 members.</returns>
-        Public Function IsEmpty() As Boolean
-            Return _members.Count = 0
-        End Function
+        Public ReadOnly Property IsEmpty() As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _members.Count = 0
+            End Get
+        End Property
 
         ''' <summary>
         ''' Remove a member from the <see cref="[Set]">Set</see>.

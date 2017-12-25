@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bb9fd26f202c74337bdba4b89683c21, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\WinForm\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9bb9fd26f202c74337bdba4b89683c21, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\WinForm\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

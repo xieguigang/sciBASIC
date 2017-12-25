@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95f725c3216ea3db06f0ede28f2d80fd, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\ColonCharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::95f725c3216ea3db06f0ede28f2d80fd, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\ColonCharacterStrategy.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

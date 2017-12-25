@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ecc7823d5528014644c89ff4154d18f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\MMFProtocol\Pipeline\API.vb"
+﻿#Region "Microsoft.VisualBasic::3ecc7823d5528014644c89ff4154d18f, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\Pipeline\API.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8c88f2814f68448a420af814bbfb1f9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\SchemaMaps\PropertyValue.vb"
+﻿#Region "Microsoft.VisualBasic::d8c88f2814f68448a420af814bbfb1f9, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\PropertyValue.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

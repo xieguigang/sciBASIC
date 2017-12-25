@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db9f5269029f591c99930ac9cf93e10f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Trinity\NLP\TextTokens.vb"
+﻿#Region "Microsoft.VisualBasic::db9f5269029f591c99930ac9cf93e10f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Trinity\NLP\TextTokens.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

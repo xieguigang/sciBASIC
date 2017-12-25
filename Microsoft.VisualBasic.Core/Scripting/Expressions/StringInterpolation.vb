@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac221503a7b145f4aedaa2a6cac6b32d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Expressions\StringInterpolation.vb"
+﻿#Region "Microsoft.VisualBasic::7a32b73c6d512eee094594e93544b2cd, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Expressions\StringInterpolation.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -40,7 +40,10 @@ Namespace Scripting.Expressions
         ' "abcdefg$h$i is $k \$a"
 
         Const VB_str$ = "&VB_str"
-        Const VariablePattern$ = "[$][a-z][a-z0-9]*(\.[a-z][a-z0-9]*)*"
+        ''' <summary>
+        ''' 允许下换线，点号，ASCII字母，以及数字作为标识符
+        ''' </summary>
+        Const VariablePattern$ = "[$][_a-z][_a-z0-9]*(_\.[a-z][a-z0-9]*)*"
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -76,6 +79,13 @@ Namespace Scripting.Expressions
             End With
         End Function
 
+        ''' <summary>
+        ''' 在解析出variable之后，variable前面的``$``是会被清除掉的，所以variable的source <paramref name="getValue"/>里面的变量名称应该是没有``$``前缀的
+        ''' </summary>
+        ''' <param name="sb"></param>
+        ''' <param name="getValue"></param>
+        ''' <param name="nullAsEmpty"></param>
+        ''' <param name="escape"></param>
         <Extension>
         Public Sub Interpolate(ByRef sb As StringBuilder, getValue As Func(Of String, String),
                                Optional nullAsEmpty As Boolean = False,

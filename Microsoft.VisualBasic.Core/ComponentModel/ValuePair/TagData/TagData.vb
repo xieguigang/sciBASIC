@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf207431c3b5e09a290a4d58b648dbbf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\TagData\TagData.vb"
+﻿#Region "Microsoft.VisualBasic::bf207431c3b5e09a290a4d58b648dbbf, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\TagData.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

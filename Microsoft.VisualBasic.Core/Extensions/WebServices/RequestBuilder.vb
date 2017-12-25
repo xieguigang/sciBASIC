@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10b422e11f0a2cb032ffd4e2a0303e72, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\RequestBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::10b422e11f0a2cb032ffd4e2a0303e72, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\WebServices\RequestBuilder.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

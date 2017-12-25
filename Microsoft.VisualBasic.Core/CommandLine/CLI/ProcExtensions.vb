@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d392c32a1602f5d210f95a3e4e5f784, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLI\ProcExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::0c5d4db15b39642422e000842d5f6b9b, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\CLI\ProcExtensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

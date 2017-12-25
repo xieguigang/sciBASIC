@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28d79c9a315dcebdf9f61f5c995d5405, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\Levenshtein\LevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::28d79c9a315dcebdf9f61f5c995d5405, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Algorithm\Levenshtein\LevenshteinDistance.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

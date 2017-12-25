@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7deacbacbe45ff501aee967090fc664, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\IO\EncodingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::c7deacbacbe45ff501aee967090fc664, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\IO\EncodingHelper.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

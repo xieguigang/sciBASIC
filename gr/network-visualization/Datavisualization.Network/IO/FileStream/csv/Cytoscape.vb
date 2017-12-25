@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9c53c55eb8945e520360e651fc211f0, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\csv\Cytoscape.vb"
+﻿#Region "Microsoft.VisualBasic::d9c53c55eb8945e520360e651fc211f0, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\Cytoscape.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

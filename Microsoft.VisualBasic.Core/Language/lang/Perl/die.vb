@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb75ad45d84a03979980079e0a0f4b01, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\Perl\die.vb"
+﻿#Region "Microsoft.VisualBasic::3baf0fa2864e286cb6e73df3c71a75c9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\Perl\die.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -56,11 +56,14 @@ Namespace Language.Perl
                 ElseIf .ref Is GetType(String) Then
                     Return String.IsNullOrEmpty(DirectCast(obj, String))
 
-                ElseIf .ref.IsInheritsFrom(GetType(Array)) Then
+                ElseIf .IsInheritsFrom(GetType(Array)) Then
                     Return DirectCast(obj, Array).Length = 0
 
-                ElseIf .ref.ImplementInterface(GetType(IEnumerable)) Then
+                ElseIf .ImplementInterface(GetType(IEnumerable)) Then
                     Return DirectCast(obj, IEnumerable).ToArray(Of Object).Length = 0
+
+                ElseIf .ImplementInterface(GetType(IsEmpty)) Then
+                    Return DirectCast(obj, IsEmpty).IsEmpty
 
                 Else
                     Return False ' False表示没有错误

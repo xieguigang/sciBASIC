@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::274f12e6ed9f6f3adf2e862cd15cd5df, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\StringSimilarity\IEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::274f12e6ed9f6f3adf2e862cd15cd5df, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\StringSimilarity\IEqualityComparer.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a462bff1bf49a4d4e6d3cd3fb13203f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\IOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::0a462bff1bf49a4d4e6d3cd3fb13203f, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\IOHandler.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f94dc699ea45c206434b727258edc9b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\WinForm\MockForm.vb"
+﻿#Region "Microsoft.VisualBasic::1f94dc699ea45c206434b727258edc9b, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\WinForm\MockForm.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,34 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::001b8cce47ecce5f7b8273fbd965f952, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\Repository\QueryCache.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+#End Region
+
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.DataSourceModel.Repository
@@ -12,10 +42,18 @@ Namespace ComponentModel.DataSourceModel.Repository
 
         Dim cache As New Dictionary(Of String, T)
         Dim factory As Func(Of String, T)
+        Dim assertIsNothing As Assert(Of Object)
 
-        Sub New(factory As Func(Of String, T), Optional cache As IReadOnlyDictionary(Of String, T) = Nothing)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="factory"></param>
+        ''' <param name="cache"></param>
+        ''' <param name="assertIsNothing">如果这个函数返回的结果是True，说明目标为空值，这个主要是针对于structure类型而言的</param>
+        Sub New(factory As Func(Of String, T), Optional cache As IReadOnlyDictionary(Of String, T) = Nothing, Optional assertIsNothing As Assert(Of Object) = Nothing)
             Me.factory = factory
             Me.cache = cache.SafeQuery.ToDictionary
+            Me.assertIsNothing = assertIsNothing Or defaultAssert
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -36,7 +74,7 @@ Namespace ComponentModel.DataSourceModel.Repository
             If cache.ContainsKey(key) Then
                 Return True
             Else
-                Return Not GetByKey(key) Is Nothing
+                Return Not assertIsNothing(GetByKey(key))
             End If
         End Function
 
@@ -52,7 +90,7 @@ Namespace ComponentModel.DataSourceModel.Repository
             Else
                 Dim entity As T = factory(key)
 
-                If entity Is Nothing Then
+                If assertIsNothing(entity) = True Then
                     Return Nothing
                 Else
                     cache.Add(entity.Key, entity)

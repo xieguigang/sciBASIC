@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce2ae85a37031d68ac38ccf6dab0b9d3, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\OSVersionInfo.vb"
+﻿#Region "Microsoft.VisualBasic::ce2ae85a37031d68ac38ccf6dab0b9d3, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\OSVersionInfo.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

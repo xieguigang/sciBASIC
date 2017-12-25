@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7d8ce221c223de31aa246e98dbff302, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\MIME\Type.vb"
+﻿#Region "Microsoft.VisualBasic::b7d8ce221c223de31aa246e98dbff302, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\MIME\Type.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

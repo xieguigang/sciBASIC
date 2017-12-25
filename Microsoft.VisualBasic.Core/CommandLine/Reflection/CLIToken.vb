@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90eeeaafe2d336bfd94011643d04ef2b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\CLIToken.vb"
+﻿#Region "Microsoft.VisualBasic::90eeeaafe2d336bfd94011643d04ef2b, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\CLIToken.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

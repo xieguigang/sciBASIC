@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::924fc1b8663c4354b3c9e32903e8a169, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::924fc1b8663c4354b3c9e32903e8a169, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\LogFile.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

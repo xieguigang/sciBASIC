@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0227c1cb188e972dc4201a5a1e2b6101, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\VectorShadows.vb"
+﻿#Region "Microsoft.VisualBasic::0227c1cb188e972dc4201a5a1e2b6101, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\VectorShadows.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

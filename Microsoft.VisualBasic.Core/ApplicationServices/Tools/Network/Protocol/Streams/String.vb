@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf4a065ef2acf0edb74022a8058c46e9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Protocol\Streams\String.vb"
+﻿#Region "Microsoft.VisualBasic::bf4a065ef2acf0edb74022a8058c46e9, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\Streams\String.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3657912b74e191d47455cc60f5792cc7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\SymLinker\SymbolicLink.vb"
+﻿#Region "Microsoft.VisualBasic::3657912b74e191d47455cc60f5792cc7, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\SymLinker\SymbolicLink.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

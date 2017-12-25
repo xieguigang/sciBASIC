@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfcf0da1a93b0d25fe5e7ea1d5c01443, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Namespace.vb"
+﻿#Region "Microsoft.VisualBasic::dfcf0da1a93b0d25fe5e7ea1d5c01443, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\MetaData\Namespace.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

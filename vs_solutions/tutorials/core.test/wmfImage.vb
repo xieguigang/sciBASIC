@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::967f9e48e0f4f536f2edcac9f9b99349, ..\sciBASIC#\tutorials\core.test\wmfImage.vb"
+﻿#Region "Microsoft.VisualBasic::1be04f96bf1e0ee3fedc9390bfca589f, ..\sciBASIC#\vs_solutions\tutorials\core.test\wmfImage.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -87,4 +87,3 @@ Module wmfImage
         Pause()
     End Sub
 End Module
-

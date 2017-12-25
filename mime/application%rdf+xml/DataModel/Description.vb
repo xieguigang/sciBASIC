@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06c3e3af2fb4d2501e7cbca11e82c7e7, ..\sciBASIC#\mime\application%rdf+xml\DataModel\Description.vb"
+﻿#Region "Microsoft.VisualBasic::194870d454153b4e2c6e2490c39ae3b1, ..\sciBASIC#\mime\application%rdf+xml\DataModel\Description.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -41,4 +41,3 @@ Public Class Description
     <XmlAttribute("about", [Namespace]:=RDF.Namespace)>
     Public Property about As String
 End Class
-

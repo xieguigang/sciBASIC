@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b3b780cceb518bd7209ca6e519fcbbf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::2bc4f31e04fbd17458e501a88eeb91f0, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Settings\Settings.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

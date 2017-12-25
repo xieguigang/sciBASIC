@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::789706b42533a1753c01bc35b32bdc75, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\MetaData\Author.vb"
+﻿#Region "Microsoft.VisualBasic::789706b42533a1753c01bc35b32bdc75, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\MetaData\Author.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

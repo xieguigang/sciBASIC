@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19a9c5758f933d354450e224ed19a777, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::24b790a7413475d5515ac411376bfb1b, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -347,15 +347,28 @@ Public Module XmlExtensions
     ''' 使用一个XML文本内容的一个片段创建一个XML映射对象
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="xml">是Xml文件的文件内容而非文件路径</param>
+    ''' <param name="Xml">是Xml文件的文件内容而非文件路径</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function CreateObjectFromXmlFragment(Of T)(xml As String) As T
-        Using s As New StringReader(s:="<?xml version=""1.0""?>" & ASCII.LF & xml)
-            Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(s), T)
-        End Using
+    <Extension> Public Function CreateObjectFromXmlFragment(Of T)(Xml As String) As T
+        Dim docText$ =
+            "<?xml version=""1.0"" encoding=""UTF-8""?>" &
+            ASCII.LF &
+            Xml
+        Try
+            Using s As New StringReader(s:=docText)
+                Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(s), T)
+            End Using
+        Catch ex As Exception
+            Dim root$ = Xml.GetBetween("<", ">").Split.First
+            Dim file$ = App.LogErrDIR & "/" & $"{root}-{Path.GetTempFileName.BaseName}.Xml"
+
+            Call docText.SaveTo(file)
+
+            Throw New Exception("Details at file dump: " & file, ex)
+        End Try
     End Function
 
     <Extension>

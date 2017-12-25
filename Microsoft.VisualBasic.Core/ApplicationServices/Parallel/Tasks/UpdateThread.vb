@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d600fc3bc5d544d05801c901e154e033, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Tasks\UpdateThread.vb"
+﻿#Region "Microsoft.VisualBasic::d600fc3bc5d544d05801c901e154e033, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\UpdateThread.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4d9cb403fc0c5a95a79939235aca01c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Random\PreciseRandom.vb"
+﻿#Region "Microsoft.VisualBasic::a4d9cb403fc0c5a95a79939235aca01c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\Random\PreciseRandom.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

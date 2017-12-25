@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::375a4cb017640027d375913eac94e87e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\TcpClient.vb"
+﻿#Region "Microsoft.VisualBasic::375a4cb017640027d375913eac94e87e, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\TcpClient.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

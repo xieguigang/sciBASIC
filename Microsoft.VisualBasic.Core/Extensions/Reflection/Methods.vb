@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52d29e96e84deac7ab78ca926ec61b6d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Reflection\Methods.vb"
+﻿#Region "Microsoft.VisualBasic::52d29e96e84deac7ab78ca926ec61b6d, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Reflection\Methods.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

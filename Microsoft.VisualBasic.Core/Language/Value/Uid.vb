@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34278e2f17d90c572007b17f53677f36, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Uid.vb"
+﻿#Region "Microsoft.VisualBasic::34278e2f17d90c572007b17f53677f36, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\Uid.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

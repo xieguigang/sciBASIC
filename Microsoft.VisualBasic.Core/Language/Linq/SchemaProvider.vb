@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50eb4e68e7bee4a4903075f200fa275f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Linq\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::50eb4e68e7bee4a4903075f200fa275f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

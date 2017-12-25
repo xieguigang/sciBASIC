@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cabf9120e06ef9e0c4b58c902c400c5a, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Layout\Spring.vb"
+﻿#Region "Microsoft.VisualBasic::cabf9120e06ef9e0c4b58c902c400c5a, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\Spring.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

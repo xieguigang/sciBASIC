@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7d000e655eeff168dfa4f42e4248053, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\SchemaProvider\Markdown.vb"
+﻿#Region "Microsoft.VisualBasic::f7d000e655eeff168dfa4f42e4248053, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\JSON\SchemaProvider\Markdown.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

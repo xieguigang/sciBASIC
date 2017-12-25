@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe0e195744016013d6bc30ab975104cc, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\Runtime\Where.vb"
+﻿#Region "Microsoft.VisualBasic::fe0e195744016013d6bc30ab975104cc, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Runtime\Where.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

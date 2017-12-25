@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff05fb0b3da4b5b58b11bd4c7a53a712, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ff05fb0b3da4b5b58b11bd4c7a53a712, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\TCPExtensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

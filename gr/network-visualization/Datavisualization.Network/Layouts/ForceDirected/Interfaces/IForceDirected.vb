@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15ca8b146eacf0ec7aab16b515c5ab10, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IForceDirected.vb"
+﻿#Region "Microsoft.VisualBasic::15ca8b146eacf0ec7aab16b515c5ab10, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IForceDirected.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

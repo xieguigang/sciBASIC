@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e14a4dc536b4bb4c499f16e53b69d5d, ..\sciBASIC#\gr\Datavisualization.Network\NetworkCanvas\Canvas3D\Input3D.vb"
+﻿#Region "Microsoft.VisualBasic::9e14a4dc536b4bb4c499f16e53b69d5d, ..\sciBASIC#\gr\network-visualization\NetworkCanvas\Canvas3D\Input3D.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bca0d86dd22bc409d262feb73d47f50b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::bca0d86dd22bc409d262feb73d47f50b, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

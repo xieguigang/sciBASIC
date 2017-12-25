@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cf672adab6cb3663fc2c361c3ea4a9e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathMatch.vb"
+﻿#Region "Microsoft.VisualBasic::2cf672adab6cb3663fc2c361c3ea4a9e, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\PathMatch.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

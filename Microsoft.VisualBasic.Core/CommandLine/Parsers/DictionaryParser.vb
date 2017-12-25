@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea86ff9e843facd124b362478be0bb71, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Parsers\DictionaryParser.vb"
+﻿#Region "Microsoft.VisualBasic::ea86ff9e843facd124b362478be0bb71, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Parsers\DictionaryParser.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

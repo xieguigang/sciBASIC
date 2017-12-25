@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94b7d2f657850e09829efe2af1c54eab, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\TagData\LineValue.vb"
+﻿#Region "Microsoft.VisualBasic::94b7d2f657850e09829efe2af1c54eab, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

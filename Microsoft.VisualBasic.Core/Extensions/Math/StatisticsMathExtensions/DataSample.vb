@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5e2b6f2a8202b2d24840418b8c8a98b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\StatisticsMathExtensions\DataSample.vb"
+﻿#Region "Microsoft.VisualBasic::e5e2b6f2a8202b2d24840418b8c8a98b, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\DataSample.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

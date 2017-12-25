@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::227b4b282bbf0e30f27f1423092b4d68, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Testing\DBSCAN\MyCustomDatasetItem.vb"
+﻿#Region "Microsoft.VisualBasic::227b4b282bbf0e30f27f1423092b4d68, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\DBSCAN\MyCustomDatasetItem.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

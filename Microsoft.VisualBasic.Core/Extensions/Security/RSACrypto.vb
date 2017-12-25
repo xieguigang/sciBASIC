@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1396ba92c7a38baee7781ef0e8edcfde, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Security\RSACrypto.vb"
+﻿#Region "Microsoft.VisualBasic::1396ba92c7a38baee7781ef0e8edcfde, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Security\RSACrypto.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

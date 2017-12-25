@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e933c535623377918a8c6a0f6d714d80, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LangModels\PeekToken.vb"
+﻿#Region "Microsoft.VisualBasic::e933c535623377918a8c6a0f6d714d80, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\PeekToken.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

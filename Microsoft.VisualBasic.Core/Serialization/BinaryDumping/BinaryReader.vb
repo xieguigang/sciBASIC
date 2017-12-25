@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72c30d405799c84b5d94d83c62d7948d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\BinaryDumping\BinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::72c30d405799c84b5d94d83c62d7948d, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\BinaryDumping\BinaryReader.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

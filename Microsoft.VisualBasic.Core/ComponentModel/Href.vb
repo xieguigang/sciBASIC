@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba6e5120037f73fdef4618370b4f2d3d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Href.vb"
+﻿#Region "Microsoft.VisualBasic::ba6e5120037f73fdef4618370b4f2d3d, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Href.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

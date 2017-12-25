@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1696f908c778b7346677fded1a4d746b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Algorithm\base\Combination\Comb.vb"
+﻿#Region "Microsoft.VisualBasic::1696f908c778b7346677fded1a4d746b, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\Combination\Comb.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

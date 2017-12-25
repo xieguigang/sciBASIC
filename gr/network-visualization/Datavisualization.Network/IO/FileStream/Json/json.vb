@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74f4cf58c885fcfdef95af796520d1d1, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\Json\json.vb"
+﻿#Region "Microsoft.VisualBasic::74f4cf58c885fcfdef95af796520d1d1, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\IO\FileStream\Json\json.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

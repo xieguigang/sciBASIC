@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed9e78f8402e7b69a96018e798118d3c, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\ScatterExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ccaf2d8b5ec9b14915ab4a437514e7f0, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\ScatterExtensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -203,4 +203,3 @@ Public Module ScatterExtensions
                    }
     End Function
 End Module
-

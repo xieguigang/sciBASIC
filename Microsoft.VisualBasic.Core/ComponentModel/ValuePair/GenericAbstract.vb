@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6bac3abad158dee19713f863974f75ae, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\GenericAbstract.vb"
+﻿#Region "Microsoft.VisualBasic::6bac3abad158dee19713f863974f75ae, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\ValuePair\GenericAbstract.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d9144da40f5456abf6e070c0204393c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\IndexSelector.vb"
+﻿#Region "Microsoft.VisualBasic::1d9144da40f5456abf6e070c0204393c, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Ranges\IndexSelector.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

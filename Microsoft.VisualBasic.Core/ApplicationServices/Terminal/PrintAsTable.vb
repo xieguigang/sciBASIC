@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2d44df29c92e1b2ac66820c12035fac, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Terminal\PrintAsTable.vb"
+﻿#Region "Microsoft.VisualBasic::a2d44df29c92e1b2ac66820c12035fac, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PrintAsTable.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02d5b60d5fa4a605e5857a41adc3f4ec, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\Graph\GraphTree.vb"
+﻿#Region "Microsoft.VisualBasic::02d5b60d5fa4a605e5857a41adc3f4ec, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\GraphTree.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

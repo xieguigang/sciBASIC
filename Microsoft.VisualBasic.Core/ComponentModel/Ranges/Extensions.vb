@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::a1d630ebc36065be0d4cd70b8cdf131c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Ranges\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5346fb81cb3902215f722be1084985d3, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Ranges\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -72,6 +72,15 @@ Namespace ComponentModel.Ranges
             ElseIf InStr(exp, "—") > 0 Then
                 ' 使用的是中文的分隔符
                 t = Strings.Split(exp, "—")
+            ElseIf exp.IsPattern(RegexpDouble & "\s*[-]\s*" & RegexpDouble) Then
+                ' 使用的是英文的分隔符
+                ' 因为可能会和负号弄混，所以在这里需要使用正则表达式来匹配出这个分隔符
+                ' 因为是这种格式的range： dd-dd
+                ' 故而分隔符的pattern肯定是数字加连接符本身，将这个pattern匹配出来，然后利用这个pattern进行分割即可
+                Dim del$ = r.Match(exp, "\d\s*[-]").Value
+                t = Strings.Split(exp, del)
+                ' 需要将存在于del的pattern之中的前面的数字的最后一个数值补回来
+                t(0) = t(0) & del.Trim("-"c)
             Else
                 exp = r _
                     .Match(exp, RegexpFloatRange, RegexOptions.Singleline) _

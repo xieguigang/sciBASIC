@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de1a6b667a790c3924fef62083634c1e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\InteropService\CLIAbstractor.vb"
+﻿#Region "Microsoft.VisualBasic::620a74df1490b707ca723085e2996b2e, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\InteropService\CLIAbstractor.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

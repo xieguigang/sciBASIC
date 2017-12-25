@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03039aa4ca689de63604b6c9fbe15425, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Parsers\CLIParser.vb"
+﻿#Region "Microsoft.VisualBasic::03039aa4ca689de63604b6c9fbe15425, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Parsers\CLIParser.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

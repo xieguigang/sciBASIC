@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db6af0fd295df87d465dddf59e6b4d78, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\ValuePair\Binding.vb"
+﻿#Region "Microsoft.VisualBasic::00ff821a099908e75295b177c069fae6, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\ValuePair\Binding.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,6 +26,9 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
+
 Namespace ComponentModel
 
     ''' <summary>
@@ -36,6 +39,7 @@ Namespace ComponentModel
     ''' <typeparam name="T"></typeparam>
     ''' <typeparam name="K"></typeparam>
     Public Structure Binding(Of T, K)
+        Implements IsEmpty
 
         Dim Bind As T
         Dim Target As K
@@ -45,7 +49,8 @@ Namespace ComponentModel
         ''' (当<see cref="Bind"/>以及<see cref="Target"/>都同时为空值的时候这个参数才会为真)
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property IsEmpty As Boolean
+        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Bind Is Nothing AndAlso Target Is Nothing
             End Get
@@ -68,8 +73,14 @@ Namespace ComponentModel
         ''' Convert this binding to tuple
         ''' </summary>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Tuple() As Tuple(Of T, K)
             Return Me
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ValueTuple() As (bind As T, target As K)
+            Return (Bind, Target)
         End Function
 
         ''' <summary>
@@ -77,6 +88,8 @@ Namespace ComponentModel
         ''' </summary>
         ''' <param name="b"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(b As Binding(Of T, K)) As Tuple(Of T, K)
             Return New Tuple(Of T, K)(b.Bind, b.Target)
         End Operator

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a98e002e3371e9fe2671b45c56f73fb, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Math2DHelper.vb"
+﻿#Region "Microsoft.VisualBasic::b20d146fd0c8ab9b886d43673607cf34, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Math2DHelper.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d898980449d57303d7415a954794fb6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\StringHelpers\NumericFormatHelper.vb"
+﻿#Region "Microsoft.VisualBasic::0d898980449d57303d7415a954794fb6, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\StringHelpers\NumericFormatHelper.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

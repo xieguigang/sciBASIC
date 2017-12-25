@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4258934fdefbc5f3f2c43648384e8121, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\UserAgent.vb"
+﻿#Region "Microsoft.VisualBasic::4258934fdefbc5f3f2c43648384e8121, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\WebServices\UserAgent.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

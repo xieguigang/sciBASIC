@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17fb9b3d17c8919d3b11a0521564013d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\References.vb"
+﻿#Region "Microsoft.VisualBasic::17fb9b3d17c8919d3b11a0521564013d, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\CodeDOM\References.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

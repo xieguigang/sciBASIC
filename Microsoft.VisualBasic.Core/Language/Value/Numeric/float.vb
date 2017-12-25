@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f40ff0c8221f5dd1f693f374e0df200, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\Numeric\float.vb"
+﻿#Region "Microsoft.VisualBasic::1f40ff0c8221f5dd1f693f374e0df200, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\Numeric\float.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

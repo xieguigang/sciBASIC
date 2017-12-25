@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9e9670e884e1fbce585c4dd9b307df8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::f9e9670e884e1fbce585c4dd9b307df8, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

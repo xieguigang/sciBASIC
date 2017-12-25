@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20162cac7c104f450197ff233b297c9c, ..\sciBASIC#\gr\Datavisualization.Network\Visualizer\Styling\NodeStyles.vb"
+﻿#Region "Microsoft.VisualBasic::20162cac7c104f450197ff233b297c9c, ..\sciBASIC#\gr\network-visualization\Visualizer\Styling\NodeStyles.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

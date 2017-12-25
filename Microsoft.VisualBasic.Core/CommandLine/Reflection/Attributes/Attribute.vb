@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::837a84bf30184f8b24ce92c3f6bb41a7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\Attributes\Attribute.vb"
+﻿#Region "Microsoft.VisualBasic::837a84bf30184f8b24ce92c3f6bb41a7, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\Attribute.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

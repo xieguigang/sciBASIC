@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::feec12d4a6c0940b0cee953ace23b1e7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Threads\BatchTasks.vb"
+﻿#Region "Microsoft.VisualBasic::feec12d4a6c0940b0cee953ace23b1e7, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\BatchTasks.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

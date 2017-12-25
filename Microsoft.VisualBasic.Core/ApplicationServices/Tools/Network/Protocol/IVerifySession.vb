@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b32dfee69476e40543c71e3742dca5b, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Protocol\IVerifySession.vb"
+﻿#Region "Microsoft.VisualBasic::5b32dfee69476e40543c71e3742dca5b, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\IVerifySession.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

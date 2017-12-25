@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95d9fddb60c4f587436b4d047c7e8975, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::b006ab1be299c1a4e61adcc36b7e40d6, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\Abstract.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

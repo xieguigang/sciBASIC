@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3e63b053b67835981b8dfabf349b196, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\CLIMapper.vb"
+﻿#Region "Microsoft.VisualBasic::b3e63b053b67835981b8dfabf349b196, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\CLIMapper.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

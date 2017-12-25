@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adcad34ffc4db772e17534e416b8591c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DriverModel.vb"
+﻿#Region "Microsoft.VisualBasic::adcad34ffc4db772e17534e416b8591c, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DriverModel.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

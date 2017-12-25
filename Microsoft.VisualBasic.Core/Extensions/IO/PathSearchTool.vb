@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::67096afad3b49cf3219b263f69c5caf1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::fc0624a1a219d748118165f304bf3ed1, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -119,6 +119,15 @@ Public Module ProgramPathSearchTool
     ''' </summary>
     ''' <param name="DIR"></param>
     <Extension> Public Sub MkDIR(DIR$, Optional throwEx As Boolean = True)
+        If DIR.StringEmpty OrElse DIR = "./" OrElse DIR = ".\" Then
+            ' 2017-12-25
+            ' 当前文件夹
+            ' 因为假若能够切换到当前文件夹的话，说明当前的文件夹已经存在了
+            ' 则在这里是否应该跳过这个创建过程
+            ' 还是不跳过吧
+            DIR = App.CurrentDirectory
+        End If
+
         Try
             Call FileIO.FileSystem.CreateDirectory(DIR)
         Catch ex As Exception
@@ -385,7 +394,7 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' Safe file copy operation
+    ''' Safe file copy operation.(请注意，<paramref name="copyTo"/>参数的字符串最末尾必须是``/``或者``\``才会被认作为目录路径)
     ''' </summary>
     ''' <param name="source$"></param>
     ''' <param name="copyTo$">Can be file name or directory name</param>

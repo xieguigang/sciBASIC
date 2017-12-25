@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2cc0cf90434252d298f843429dd87848, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Math\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::ce758cbf028e600d429989895eec1388, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Math\GeomTransform.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

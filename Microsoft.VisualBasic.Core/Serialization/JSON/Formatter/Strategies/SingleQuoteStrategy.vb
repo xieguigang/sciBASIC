@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5499279945bfc4639c1313a474eebe5c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::5499279945bfc4639c1313a474eebe5c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\SingleQuoteStrategy.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

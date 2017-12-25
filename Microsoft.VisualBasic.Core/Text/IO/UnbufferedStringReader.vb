@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b79e4afc046df4d4e13ceb4c18f7d9f7, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Text\IO\UnbufferedStringReader.vb"
+﻿#Region "Microsoft.VisualBasic::b79e4afc046df4d4e13ceb4c18f7d9f7, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\IO\UnbufferedStringReader.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ed2f8e34c36d88c77f3237525a5e88e, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Serialization\Controls\Contrls.vb"
+﻿#Region "Microsoft.VisualBasic::8ed2f8e34c36d88c77f3237525a5e88e, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\Controls\Contrls.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

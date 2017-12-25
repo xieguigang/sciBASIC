@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68da30f79e3d0efc3a79b52d16d6925d, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\EntryPoints\Delegate.vb"
+﻿#Region "Microsoft.VisualBasic::68da30f79e3d0efc3a79b52d16d6925d, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\Delegate.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

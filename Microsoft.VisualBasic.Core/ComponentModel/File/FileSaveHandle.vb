@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd978faa87a7eccb3c8bd4a9a14a5500, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\File\FileSaveHandle.vb"
+﻿#Region "Microsoft.VisualBasic::bd978faa87a7eccb3c8bd4a9a14a5500, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\File\FileSaveHandle.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

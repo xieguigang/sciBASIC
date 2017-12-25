@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09103db9f3b42def3f59569a98d7d368, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\DataSource\Property\PropertyValue.vb"
+﻿#Region "Microsoft.VisualBasic::09103db9f3b42def3f59569a98d7d368, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\PropertyValue.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

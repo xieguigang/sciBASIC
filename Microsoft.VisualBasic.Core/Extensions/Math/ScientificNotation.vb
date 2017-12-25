@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81dc3bbe4b63f750c4ac4b1effa1ee76, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\ScientificNotation.vb"
+﻿#Region "Microsoft.VisualBasic::81dc3bbe4b63f750c4ac4b1effa1ee76, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\ScientificNotation.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

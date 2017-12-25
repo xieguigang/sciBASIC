@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7063b31bfaa6a47452dfdac198c6b7a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Colors\ColorMap.vb"
+﻿#Region "Microsoft.VisualBasic::e7063b31bfaa6a47452dfdac198c6b7a, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Colors\ColorMap.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

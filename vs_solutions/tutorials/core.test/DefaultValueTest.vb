@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b40107c81ddc775e65ec933db6eaa70a, ..\sciBASIC#\tutorials\core.test\DefaultValueTest.vb"
+﻿#Region "Microsoft.VisualBasic::b40107c81ddc775e65ec933db6eaa70a, ..\sciBASIC#\vs_solutions\tutorials\core.test\DefaultValueTest.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbb2ea48f2dd4d815304d189f668b4b9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Math\Trigonometric\Arctan.vb"
+﻿#Region "Microsoft.VisualBasic::fbb2ea48f2dd4d815304d189f668b4b9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Arctan.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b82c5e4590aaa400a62e098ecc636f8, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\Effects.vb"
+﻿#Region "Microsoft.VisualBasic::7b82c5e4590aaa400a62e098ecc636f8, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\Effects.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

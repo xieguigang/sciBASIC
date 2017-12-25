@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9badf946a5bcbeb6e6e350feeddc3c9, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\WebServices\NetResponse.vb"
+﻿#Region "Microsoft.VisualBasic::d9badf946a5bcbeb6e6e350feeddc3c9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\WebServices\NetResponse.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

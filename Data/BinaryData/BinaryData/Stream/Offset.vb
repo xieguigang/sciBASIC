@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6abbfcc0b91e3371019651f7a899474, ..\sciBASIC#\Data\BinaryData\BinaryData\Offset.vb"
+﻿#Region "Microsoft.VisualBasic::f3c2ddf604a3f903b7ce6781615aaef1, ..\sciBASIC#\Data\BinaryData\BinaryData\Stream\Offset.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

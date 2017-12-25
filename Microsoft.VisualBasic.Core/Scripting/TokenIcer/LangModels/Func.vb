@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5519a2c49b159bbff5ad5c5d19d303a, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Scripting\TokenIcer\LangModels\Func.vb"
+﻿#Region "Microsoft.VisualBasic::d5519a2c49b159bbff5ad5c5d19d303a, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\Func.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

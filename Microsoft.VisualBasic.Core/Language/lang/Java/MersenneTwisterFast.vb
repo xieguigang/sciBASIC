@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff44d6c535633fec44e72f9a62a7eeaf, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\lang\Java\MersenneTwisterFast.vb"
+﻿#Region "Microsoft.VisualBasic::ff44d6c535633fec44e72f9a62a7eeaf, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\Java\MersenneTwisterFast.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

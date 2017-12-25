@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9161dffe0553bacd8f508b50bbf6d0c4, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ComponentModel\Settings\DataModels\ModelBase.vb"
+﻿#Region "Microsoft.VisualBasic::9161dffe0553bacd8f508b50bbf6d0c4, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ModelBase.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

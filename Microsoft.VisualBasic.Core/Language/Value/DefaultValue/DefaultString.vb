@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::346dc39219b5c64d2323dc432e0a3cc6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Language\Value\DefaultValue\DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::c303aa0c1588547626483da6635cd76e, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -27,16 +27,17 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language.Perl
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language.Default
 
     Public Structure DefaultString : Implements IDefaultValue(Of String)
+        Implements IsEmpty
 
         Public ReadOnly Property DefaultValue As String Implements IDefaultValue(Of String).DefaultValue
 
-        Public ReadOnly Property IsEmpty As Boolean
+        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return DefaultValue.StringEmpty
             End Get
@@ -46,10 +47,12 @@ Namespace Language.Default
             DefaultValue = [string]
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadXml(Of T)() As T
             Return DefaultValue.LoadXml(Of T)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadJson(Of T)() As T
             If DefaultValue.FileExists Then
                 Return DefaultValue.ReadAllText.LoadObject(Of T)

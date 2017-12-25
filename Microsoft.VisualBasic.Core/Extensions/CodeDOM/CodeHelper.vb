@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea3539d65fe975a02454e73f31350c4f, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\CodeDOM\CodeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::ea3539d65fe975a02454e73f31350c4f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\CodeDOM\CodeHelper.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

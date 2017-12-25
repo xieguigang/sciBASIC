@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d467553726e98c961922ea8e34000b1, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Network\Protocol\Reflection\AppMgr.vb"
+﻿#Region "Microsoft.VisualBasic::8d467553726e98c961922ea8e34000b1, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\Reflection\AppMgr.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

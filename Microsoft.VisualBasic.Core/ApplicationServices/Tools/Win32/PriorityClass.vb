@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2fb9c656753077274a4c14b6c3ef9d6, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Tools\Win32\PriorityClass.vb"
+﻿#Region "Microsoft.VisualBasic::d2fb9c656753077274a4c14b6c3ef9d6, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Win32\PriorityClass.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

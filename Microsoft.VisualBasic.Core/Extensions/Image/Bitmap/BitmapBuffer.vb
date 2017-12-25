@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50e555decc43a0083cf63d5d6a731dff, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\Extensions\Image\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::d5a73f48c052988031ef69eb27856f11, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\BitmapBuffer.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -119,11 +119,12 @@ Namespace Imaging.BitmapImage
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPixel(x As Integer, y As Integer) As Color
             Dim i As Integer = GetIndex(x, y)
+            Dim iA As Byte = buffer(i + 3)
             Dim iR As Byte = buffer(i + 2)
             Dim iG As Byte = buffer(i + 1)
             Dim iB As Byte = buffer(i + 0)
 
-            Return Color.FromArgb(CInt(iR), CInt(iG), CInt(iB))
+            Return Color.FromArgb(CInt(iA), CInt(iR), CInt(iG), CInt(iB))
         End Function
 
         ''' <summary>
@@ -139,6 +140,7 @@ Namespace Imaging.BitmapImage
         Public Sub SetPixel(x As Integer, y As Integer, color As Color)
             Dim i As Integer = GetIndex(x, y)
 
+            buffer(i + 3) = color.A
             buffer(i + 2) = color.R
             buffer(i + 1) = color.G
             buffer(i + 0) = color.B

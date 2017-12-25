@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7e50df947308e25d848a41ce34723ba, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Threads\ServicesFolk.vb"
+﻿#Region "Microsoft.VisualBasic::6864ab1abde87b67480f1e6467ea0b9e, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ServicesFolk.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

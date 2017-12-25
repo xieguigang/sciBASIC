@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c084b7bb524e1677e1ff2abd7d9f66c, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Invoke\InvokeHandler.vb"
+﻿#Region "Microsoft.VisualBasic::9c084b7bb524e1677e1ff2abd7d9f66c, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Invoke\InvokeHandler.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

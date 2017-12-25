@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cddcdb8c2010185dde66eba23e08e3ec, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\CommandLine\Reflection\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::cddcdb8c2010185dde66eba23e08e3ec, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\SDKManual.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

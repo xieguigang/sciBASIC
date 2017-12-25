@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35abd1a79bec5f6e2a38549042a1cfe5, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Debugger\VisualBasicAppException.vb"
+﻿#Region "Microsoft.VisualBasic::35abd1a79bec5f6e2a38549042a1cfe5, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Debugger\VisualBasicAppException.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

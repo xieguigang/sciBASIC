@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b87f630e12c740bf7fba08d5f78490e2, ..\sciBASIC#\gr\Datavisualization.Network\Datavisualization.Network\IO\FileStream\csv\vbnet.vb"
+﻿#Region "Microsoft.VisualBasic::b87f630e12c740bf7fba08d5f78490e2, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\IO\FileStream\csv\vbnet.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

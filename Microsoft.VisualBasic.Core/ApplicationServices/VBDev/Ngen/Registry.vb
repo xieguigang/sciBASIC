@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64625ae6702b8f28df8c85a6224313e0, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\VBDev\Ngen\Registry.vb"
+﻿#Region "Microsoft.VisualBasic::64625ae6702b8f28df8c85a6224313e0, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Ngen\Registry.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

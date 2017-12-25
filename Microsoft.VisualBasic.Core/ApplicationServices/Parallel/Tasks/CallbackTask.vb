@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cb14b35413196d04634cbeb887b9907, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\Tasks\CallbackTask.vb"
+﻿#Region "Microsoft.VisualBasic::0cb14b35413196d04634cbeb887b9907, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\CallbackTask.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

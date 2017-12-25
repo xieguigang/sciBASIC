@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8692c0dfaacf8f0e842aa47da86c0416, ..\sciBASIC#\Microsoft.VisualBasic.Architecture.Framework\ApplicationServices\Parallel\OperationTimeOut.vb"
+﻿#Region "Microsoft.VisualBasic::8692c0dfaacf8f0e842aa47da86c0416, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\OperationTimeOut.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
