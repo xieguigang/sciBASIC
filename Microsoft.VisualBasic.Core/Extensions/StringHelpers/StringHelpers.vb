@@ -792,10 +792,16 @@ Public Module StringHelpers
         End If
     End Function
 
+    ''' <summary>
+    ''' Alias for <see cref="Strings.Split(String, String, Integer, CompareMethod)"/>
+    ''' </summary>
+    ''' <param name="str$"></param>
+    ''' <param name="deli$"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function SplitBy(str$, deli$) As String()
-        Return Strings.Split(str, deli)
+    Public Function SplitBy(str$, deli$, Optional compares As CompareMethod = CompareMethod.Text) As String()
+        Return Strings.Split(str, deli, Compare:=compares)
     End Function
 
     ''' <summary>
@@ -993,13 +999,14 @@ Public Module StringHelpers
     ''' 查找到任意一个既返回位置，大小写不敏感，假若查找不到，则返回-1值，判断是否查找成功，可以使用 &lt;0 来完成，
     ''' 因为是通过InStr来完成的，所以查找成功的时候，最小的值是1，即字符串序列的第一个位置，也是元素0位置
     ''' </summary>
-    ''' <param name="source"></param>
+    ''' <param name="text"></param>
     ''' <param name="find"></param>
     ''' <returns></returns>
     <ExportAPI("InStr.Any")>
-    <Extension> Public Function InStrAny(source As String, ParamArray find As String()) As Integer
-        For Each Token As String In find
-            Dim idx As Integer = Strings.InStr(source, Token, CompareMethod.Text)
+    <Extension> Public Function InStrAny(text$, ParamArray find$()) As Integer
+        For Each token As String In find
+            Dim idx% = Strings.InStr(text, token, CompareMethod.Text)
+
             If idx > 0 Then
                 Return idx
             End If
@@ -1017,33 +1024,34 @@ Public Module StringHelpers
     ''' <param name="s"></param>
     ''' <returns></returns>
     ''' <param name="trim">
-    ''' Set <see cref="System.Boolean.FalseString"/> to avoid a reader bug in the csv data reader <see cref="BufferedStream"/>
+    ''' Set <see cref="Boolean.FalseString"/> to avoid a reader bug in the csv data reader <see cref="BufferedStream"/>
     ''' </param>
-    <ExportAPI("lTokens")>
+    <ExportAPI("LineTokens")>
     <Extension> Public Function lTokens(s$, Optional trim As Boolean = True) As String()
         If String.IsNullOrEmpty(s) Then
-            Return New String() {}
+            Return {}
         End If
 
         Dim lf As Boolean = InStr(s, vbLf) > 0
         Dim cr As Boolean = InStr(s, vbCr) > 0
 
         If Not (cr OrElse lf) Then  ' 没有分行符，则只有一行
-            Return New String() {s}
+            Return {s}
         End If
 
         If lf AndAlso cr Then
             If trim Then  ' 假若将这个换行替换掉，在Csv文件读取模块会出现bug。。。。。不清楚是怎么回事
                 s = s.Replace(vbCr, "")
             End If
+
             Return Splitter.Split(s, vbLf, True)
         End If
 
         If lf Then
             Return Splitter.Split(s, vbLf, True)
+        Else
+            Return Splitter.Split(s, vbCr, True)
         End If
-
-        Return Splitter.Split(s, vbCr, True)
     End Function
 
     ''' <summary>
@@ -1058,20 +1066,30 @@ Public Module StringHelpers
             Return Extensions.IsNullOrEmpty(values)
         End If
 
-        If values.IsNullOrEmpty Then
-            Return True
-        End If
+        With values.ToArray
+            If .IsNullOrEmpty Then
+                Return True
+            End If
 
-        If values.Count = 1 AndAlso String.IsNullOrEmpty(values.First) Then
-            Return True
-        End If
+            If .Count = 1 AndAlso String.IsNullOrEmpty(.First) Then
+                Return True
+            End If
+        End With
 
         Return False
     End Function
 
-    <Extension>
-    Public Function TextLast(s$, token$) As Boolean
+    ''' <summary>
+    ''' Does the <paramref name="token"/> is located at the last of <paramref name="s"/> text string.
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="token$"></param>
+    ''' <returns></returns>
+    <Extension> Public Function TextLast(s$, token$) As Boolean
         Dim lastIndex% = s.Length - token.Length
+        ' 因为token子字符串可能会在s字符串之中出现多次，所以直接使用正向的InStr函数
+        ' 可能会导致匹配到第一个字符串而无法正确的匹配上最后一个token，所以在这里使用
+        ' InstrRev来避免这个问题
         Dim val% = InStrRev(s, token)
         Return lastIndex = val
     End Function
