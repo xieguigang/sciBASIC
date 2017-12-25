@@ -838,9 +838,12 @@
     <Compile Include="Extensions\Reflection\Parameters\Simple.vb" />
     <Compile Include="Extensions\Reflection\Parameters\ParamLogUtility.vb" />
     <Compile Include="Extensions\WebServices\HttpGet.vb" />
+    <Compile Include="Language\Linq\Assert\AssertEqualsExtensions.vb" />
+    <Compile Include="Language\Linq\Assert\VectorAssert.vb" />
     <Compile Include="Language\Value\DefaultValue\DefaultString.vb" />
     <Compile Include="Language\Value\DefaultValue\DefaultExtensions.vb" />
     <Compile Include="Scripting\Expressions\Aggregate.vb" />
+    <Compile Include="Scripting\Runtime\CType\Abstract.vb" />
     <Compile Include="Serialization\Abstract.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
