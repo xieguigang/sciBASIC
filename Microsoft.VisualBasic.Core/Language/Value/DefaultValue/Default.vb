@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.Language.Perl
 Namespace Language.Default
 
     Public Delegate Function Assert(Of T)(obj As T) As Boolean
+    Public Delegate Function BinaryAssert(Of T)(x As T, y As T) As Boolean
 
     Public Interface IDefaultValue(Of T)
         ReadOnly Property DefaultValue As T
