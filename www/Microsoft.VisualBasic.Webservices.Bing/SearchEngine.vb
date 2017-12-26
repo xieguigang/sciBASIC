@@ -42,6 +42,8 @@ Imports Microsoft.VisualBasic.Text.HtmlParser
                     Url:="http://cn.bing.com/")>
 Public Module SearchEngineProvider
 
+    Public Const BingRefer$ = "https://cn.bing.com/?FORM=Z9FD1"
+
     Const BingURL As String = "https://www.bing.com/search?q={0}&PC=U316&FORM=Firefox"
     Const TotalCount As String = "<span class=""sb_count"">\d+ results</span>"
     Const TranslateThisPage As String = "Translate this page"

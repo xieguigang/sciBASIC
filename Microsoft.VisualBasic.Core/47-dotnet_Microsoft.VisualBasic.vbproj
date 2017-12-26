@@ -771,7 +771,6 @@
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Mappings.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Schema.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\ClusterParts.vb" />
-    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\NewickParser.vb" />
     <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
     <Compile Include="ComponentModel\DataStructures\BucketDictionary.vb" />
     <Compile Include="ComponentModel\DataStructures\FuzzyGroup.vb" />

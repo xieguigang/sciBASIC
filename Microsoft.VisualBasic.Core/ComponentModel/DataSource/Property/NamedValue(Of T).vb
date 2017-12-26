@@ -140,5 +140,27 @@ Namespace ComponentModel.DataSourceModel
 
             Return newTable
         End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator =(tuple As NamedValue(Of T), compares As T) As Boolean
+            If tuple.Value Is Nothing Then
+                If compares Is Nothing Then
+                    Return True
+                Else
+                    Return False
+                End If
+            Else
+                If compares Is Nothing Then
+                    Return False
+                Else
+                    Return tuple.Value.Equals(compares)
+                End If
+            End If
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator <>(tuple As NamedValue(Of T), compares As T) As Boolean
+            Return Not tuple = compares
+        End Operator
     End Structure
 End Namespace

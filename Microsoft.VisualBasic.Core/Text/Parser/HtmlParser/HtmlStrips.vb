@@ -37,12 +37,34 @@ Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Text.HtmlParser
 
+    ''' <summary>
+    ''' Html text document operations for a given html text
+    ''' </summary>
     Public Module HtmlStrips
 
+        ''' <summary>
+        ''' 将<paramref name="html"/>文本之中的注释部分的字符串拿出来
+        ''' </summary>
+        ''' <param name="html"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetHtmlComments(html As String) As String()
             Return r.Matches(html, "<![-]{2}.+?[-]{2}>", RegexICSng).ToArray
+        End Function
+
+        ''' <summary>
+        ''' removes all of the html code comments from a given <paramref name="html"/> document.
+        ''' </summary>
+        ''' <param name="html"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function RemovesHtmlComments(html As StringBuilder) As StringBuilder
+            For Each comment$ In html.ToString.GetHtmlComments
+                Call html.Replace(comment, "")
+            Next
+
+            Return html
         End Function
 
         ''' <summary>
@@ -114,7 +136,8 @@ Namespace Text.HtmlParser
             Return s
         End Function
 
-        Const HTML_TAG As String = "</?.+?(\s+.+?="".+?"")*>"
+        Const HtmlTags$ = "</?.+?(\s+.+?="".+?"")*>"
+        Const hrefPattern$ = "href=[""'].+?[""']"
 
         ''' <summary>
         ''' Gets the link text in the html fragement text.
@@ -129,7 +152,9 @@ Namespace Text.HtmlParser
                 Return ""
             End If
 
-            Dim url As String = Regex.Match(html, "href=[""'].+?[""']", RegexOptions.IgnoreCase).Value
+            Dim url$ = r _
+                .Match(html, hrefPattern, RegexOptions.IgnoreCase) _
+                .Value
 
             If String.IsNullOrEmpty(url) Then
                 Return ""
@@ -198,8 +223,8 @@ Namespace Text.HtmlParser
                 Return ""
             End If
 
-            Dim l As Integer = Len(value)
-            Dim i As Integer = value.LastIndexOf(vbCrLf)
+            Dim l% = Len(value)
+            Dim i% = value.LastIndexOf(vbCrLf)
 
             If i = l - 2 Then
                 Return Mid(value, 1, l - 2)
@@ -208,7 +233,7 @@ Namespace Text.HtmlParser
             End If
         End Function
 
-        Private ReadOnly vbCrLfLen As Integer = Len(vbCrLf)
+        ReadOnly vbCrLfLen% = Len(vbCrLf)
 
         ''' <summary>
         ''' 获取两个尖括号之间的内容
@@ -264,7 +289,9 @@ Namespace Text.HtmlParser
             Dim attrs = [select].TagAttributes.ToArray
             Dim name$ = attrs.GetByKey("name", True).Value
             Dim value$ = options _
-                .Where(Function(s) InStr(s, selected, CompareMethod.Text) > 0) _
+                .Where(Function(s)
+                           Return InStr(s, selected, CompareMethod.Text) > 0
+                       End Function) _
                 .FirstOrDefault _
                ?.Replace(selected, "") _
                 .TagAttributes _
@@ -288,7 +315,9 @@ Namespace Text.HtmlParser
         End Function
 
         ' <br><br/>
-
+        ''' <summary>
+        ''' The line break html tag in the html document. 
+        ''' </summary>
         Const LineFeed$ = "(<br>)|(<br\s*/>)"
 
         ''' <summary>
@@ -306,7 +335,9 @@ Namespace Text.HtmlParser
         End Function
 
         ' <area shape=rect	coords=40,45,168,70	href="/dbget-bin/www_bget?hsa05034"	title="hsa05034: Alcoholism" onmouseover="popupTimer(&quot;hsa05034&quot;, &quot;hsa05034: Alcoholism&quot;, &quot;#ffffff&quot;)" onmouseout="hideMapTn()" />
-
+        ''' <summary>
+        ''' The regexp pattern for the attributes in a html tag.
+        ''' </summary>
         Const attributeParse$ = "\S+?\s*[=]\s*"".+?"""
 
         <Extension>
@@ -348,6 +379,11 @@ Namespace Text.HtmlParser
             Return html.RemoveTags("script")
         End Function
 
+        ''' <summary>
+        ''' Removes all of the ``&lt;style>`` css styles block from a given <paramref name="html"/> document.
+        ''' </summary>
+        ''' <param name="html"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function RemovesCSSstyles(html As String) As String
@@ -355,6 +391,11 @@ Namespace Text.HtmlParser
             Return html.RemoveTags("style")
         End Function
 
+        ''' <summary>
+        ''' Removes all of the ``&lt;img>`` image links block from a given <paramref name="html"/> document.
+        ''' </summary>
+        ''' <param name="html"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function RemovesImageLinks(html As String) As String
