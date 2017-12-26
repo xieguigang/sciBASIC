@@ -38,6 +38,8 @@ Public Module Translation
                     .Split("；"c) _
                     .Select(Function(t) t.Split("："c).Last.Split("，"c)) _
                     .IteratesALL _
+                    .Select(AddressOf Strings.Trim) _
+                    .Where(Function(s) Not s.StringEmpty) _
                     .ToArray
             }
         End If
