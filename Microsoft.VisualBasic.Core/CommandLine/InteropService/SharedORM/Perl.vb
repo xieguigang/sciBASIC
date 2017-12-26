@@ -35,6 +35,59 @@ Namespace CommandLine.InteropService.SharedORM
 
         Dim namespace$
 
+        ' #!/usr/bin/perl 
+        '
+        ' package assemblyName;
+        '
+        ' sub new {
+        '
+        '     my $class = shift;
+        '     my $self = {
+        '
+        '         _memberField1 => shift,
+        '         _memberField2 => shift,
+        '
+        '     };
+        '
+        '     bless $self, $class;
+        '     return $self;
+        ' }
+        '
+        ' sub public_function {
+        '
+        '     my ($self, $arg1, $arg2) = @_;
+        '
+        '     # using class member
+        '     #
+        '     # get value
+        '     my $m1 = $self->{_memberField1};
+        '     
+        '     # set value
+        '     $self->{_memberField1} = $arg1;
+        ' }
+        '
+        ' sub readonly_property {
+        '     my ($self) = @_;
+        '
+        '     # return field value
+        '     return $self->{_memberField2};
+        ' }
+        '
+        '
+        ' # usage
+        '
+        ' #!/usr/bin/perl
+        '
+        ' use assemblyName;
+        '
+        ' my $App = new assemblyName();
+        '
+        ' # invoke
+        ' $App->public_function($arg1, $arg2);
+        '
+        ' # get property value
+        ' my $value = $App->readonly_property();
+
         Public Sub New(CLI As Type, namespace$)
             MyBase.New(CLI)
             Me.namespace = [namespace]
