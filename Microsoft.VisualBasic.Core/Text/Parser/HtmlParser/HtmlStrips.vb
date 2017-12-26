@@ -114,7 +114,7 @@ Namespace Text.HtmlParser
             Return s
         End Function
 
-        Const HTML_TAG As String = "</?.+?(\s+.+?="".+?"")*>"
+        Const HtmlTags As String = "</?.+?(\s+.+?="".+?"")*>"
 
         ''' <summary>
         ''' Gets the link text in the html fragement text.
