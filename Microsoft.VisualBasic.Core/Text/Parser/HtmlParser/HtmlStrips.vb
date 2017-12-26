@@ -37,6 +37,9 @@ Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Text.HtmlParser
 
+    ''' <summary>
+    ''' Html text document operations for a given html text
+    ''' </summary>
     Public Module HtmlStrips
 
         ''' <summary>
@@ -50,6 +53,11 @@ Namespace Text.HtmlParser
             Return r.Matches(html, "<![-]{2}.+?[-]{2}>", RegexICSng).ToArray
         End Function
 
+        ''' <summary>
+        ''' removes all of the html code comments from a given <paramref name="html"/> document.
+        ''' </summary>
+        ''' <param name="html"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function RemovesHtmlComments(html As StringBuilder) As StringBuilder
             For Each comment$ In html.ToString.GetHtmlComments
@@ -307,7 +315,9 @@ Namespace Text.HtmlParser
         End Function
 
         ' <br><br/>
-
+        ''' <summary>
+        ''' The line break html tag in the html document. 
+        ''' </summary>
         Const LineFeed$ = "(<br>)|(<br\s*/>)"
 
         ''' <summary>
@@ -325,7 +335,9 @@ Namespace Text.HtmlParser
         End Function
 
         ' <area shape=rect	coords=40,45,168,70	href="/dbget-bin/www_bget?hsa05034"	title="hsa05034: Alcoholism" onmouseover="popupTimer(&quot;hsa05034&quot;, &quot;hsa05034: Alcoholism&quot;, &quot;#ffffff&quot;)" onmouseout="hideMapTn()" />
-
+        ''' <summary>
+        ''' The regexp pattern for the attributes in a html tag.
+        ''' </summary>
         Const attributeParse$ = "\S+?\s*[=]\s*"".+?"""
 
         <Extension>
@@ -367,6 +379,11 @@ Namespace Text.HtmlParser
             Return html.RemoveTags("script")
         End Function
 
+        ''' <summary>
+        ''' Removes all of the ``&lt;style>`` css styles block from a given <paramref name="html"/> document.
+        ''' </summary>
+        ''' <param name="html"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function RemovesCSSstyles(html As String) As String
@@ -374,6 +391,11 @@ Namespace Text.HtmlParser
             Return html.RemoveTags("style")
         End Function
 
+        ''' <summary>
+        ''' Removes all of the ``&lt;img>`` image links block from a given <paramref name="html"/> document.
+        ''' </summary>
+        ''' <param name="html"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function RemovesImageLinks(html As String) As String
