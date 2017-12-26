@@ -40,6 +40,44 @@ Imports Microsoft.VisualBasic.Text
 Public Module TextDoc
 
     ''' <summary>
+    ''' 默认是加载Xml文件的
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="file"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="parser">default is Xml parser</param>
+    ''' <param name="ThrowEx"></param>
+    ''' <returns></returns>
+    <Extension> Public Function LoadTextDoc(Of T As ITextFile)(file As String,
+                                                               Optional encoding As Encoding = Nothing,
+                                                               Optional parser As Func(Of String, Encoding, T) = Nothing,
+                                                               Optional ThrowEx As Boolean = True) As T
+        If parser Is Nothing Then
+            parser = AddressOf LoadXml
+        End If
+
+        Dim FileObj As T
+
+        Try
+            FileObj = parser(file, encoding)
+            FileObj.FilePath = file
+        Catch ex As Exception
+            Call App.LogException(New Exception(file.ToFileURL, ex))
+
+            If ThrowEx Then
+                Throw ex
+            Else
+#If DEBUG Then
+                Call ex.PrintException
+#End If
+                Return Nothing
+            End If
+        End Try
+
+        Return FileObj
+    End Function
+
+    ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="handle$">

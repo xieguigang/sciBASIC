@@ -34,10 +34,22 @@ Namespace Language.Default
     Public Delegate Function Assert(Of T)(obj As T) As Boolean
     Public Delegate Function BinaryAssert(Of T)(x As T, y As T) As Boolean
 
+    ''' <summary>
+    ''' + Test of A eqauls to B?
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
+    Public Delegate Function BinaryAssert(Of T)(x As T, y As T) As Boolean
+
     Public Interface IDefaultValue(Of T)
         ReadOnly Property DefaultValue As T
     End Interface
 
+    ''' <summary>
+    ''' Apply on the structure type that assert the object is null or not.
+    ''' </summary>
     Public Interface IsEmpty
         ReadOnly Property IsEmpty As Boolean
     End Interface
@@ -47,6 +59,7 @@ Namespace Language.Default
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Structure DefaultValue(Of T) : Implements IDefaultValue(Of T)
+        Implements IsEmpty
 
         Public ReadOnly Property DefaultValue As T Implements IDefaultValue(Of T).DefaultValue
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -57,6 +70,12 @@ Namespace Language.Default
                     ' using lazy loading, if the default value takes time to creates.
                     Return LazyValue.Value()
                 End If
+            End Get
+        End Property
+
+        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            Get
+                Return LazyValue Is Nothing AndAlso assert(Value)
             End Get
         End Property
 
