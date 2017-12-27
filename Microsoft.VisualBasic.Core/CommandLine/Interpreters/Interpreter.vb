@@ -166,9 +166,37 @@ Namespace CommandLine
 
             ElseIf "??history".TextEquals(commandName) Then
 
-                Call Console.WriteLine()
-                Call (App.LogErrDIR.ParentPath & "/.shells.log").ReadAllText.EchoLine
-                Call Console.WriteLine()
+                Dim logs$ = (App.LogErrDIR.ParentPath & "/.shells.log")
+
+                With DirectCast(argvs(Scan0), CommandLine)
+                    If .Parameters.IsNullOrEmpty Then
+                        Call Console.WriteLine()
+                        Call logs.ReadAllText.EchoLine
+                        Call Console.WriteLine()
+                    Else
+                        With .ParameterList.First
+                            Select Case .Name.ToLower
+                                Case "/clear"
+                                    Call New Byte() {}.FlushStream(logs)
+                                Case "/search"
+
+                                    Dim term$ = .Value
+
+                                    Call Console.WriteLine()
+                                    Call logs.IterateAllLines _
+                                        .Where(Function(line)
+                                                   Return InStr(line, term, CompareMethod.Text) > 0
+                                               End Function) _
+                                        .JoinBy(vbCrLf) _
+                                        .EchoLine
+                                    Call Console.WriteLine()
+
+                                Case Else
+                                    Console.WriteLine("Unknown command!")
+                            End Select
+                        End With
+                    End If
+                End With
 
                 Return 0
 
