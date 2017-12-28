@@ -36,7 +36,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
-Namespace Language
+Namespace Language.Vectorization
 
     ''' <summary>
     ''' Schema provider of the <see cref="VectorShadows(Of T)"/>

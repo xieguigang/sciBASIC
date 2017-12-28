@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Language
+Namespace Language.Vectorization
 
     Public Class StringVector : Inherits Vector(Of String)
 

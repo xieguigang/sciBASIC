@@ -35,7 +35,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Language
+Namespace Language.Vectorization
 
     ''' <summary>
     ''' Vectorization programming language feature for VisualBasic

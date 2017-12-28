@@ -34,7 +34,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports CollectionSet = Microsoft.VisualBasic.ComponentModel.DataStructures.Set
 
-Namespace Language
+Namespace Language.Vectorization
 
     ''' <summary>
     ''' VB.NET object collection
