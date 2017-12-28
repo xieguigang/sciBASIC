@@ -465,7 +465,6 @@
     <Compile Include="Algebra\RSyntax\Math\Skellam.vb" />
     <Compile Include="Algebra\RSyntax\PrimitiveAPI\Etc.vb" />
     <Compile Include="Algebra\RSyntax\PrimitiveAPI\PrimitiveAPI.vb" />
-    <Compile Include="Algebra\RSyntax\Vectors\BooleanVector.vb" />
     <Compile Include="Algebra\RSyntax\Vectors\GenericVector%28Of T%29.vb" />
     <Compile Include="Algebra\Solvers\SOR.vb" />
     <Compile Include="Algebra\Solvers\GaussianElimination.vb" />

@@ -839,6 +839,7 @@
     <Compile Include="Extensions\WebServices\HttpGet.vb" />
     <Compile Include="Language\Linq\Assert\AssertEqualsExtensions.vb" />
     <Compile Include="Language\Linq\Assert\VectorAssert.vb" />
+    <Compile Include="Language\Linq\Vectorization\BooleanVector.vb" />
     <Compile Include="Language\Linq\Vectorization\StringVector.vb" />
     <Compile Include="Language\Value\DefaultValue\DefaultString.vb" />
     <Compile Include="Language\Value\DefaultValue\DefaultExtensions.vb" />

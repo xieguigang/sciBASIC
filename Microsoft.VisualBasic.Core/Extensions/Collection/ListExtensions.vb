@@ -54,8 +54,9 @@ Public Module ListExtensions
             .Where(Function(x) Not x Is Nothing) _
             .GroupBy(Function(x) x) _
             .OrderByDescending(Function(g) g.Count) _
-            .First _
-            .First
+            .FirstOrDefault _
+            .SafeQuery _
+            .FirstOrDefault ' 因为可能会碰到list是空的情况，所以在这里需要使用FirstOrDefault
     End Function
 
     ''' <summary>

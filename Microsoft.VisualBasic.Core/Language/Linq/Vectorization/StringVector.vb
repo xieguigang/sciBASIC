@@ -18,19 +18,27 @@ Namespace Language.Vectorization
             Me.buffer = buffer.SafeQuery.ToArray
         End Sub
 
+        Public Shared Widening Operator CType(list As List(Of String)) As StringVector
+            Return New StringVector(list)
+        End Operator
+
+        Public Shared Widening Operator CType(array As String()) As StringVector
+            Return New StringVector(array)
+        End Operator
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator &(s1 As StringVector, s2$) As StringVector
             Return New StringVector(s1.Select(Function(s) s & s2))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator <>(s1 As StringVector, s2$) As IEnumerable(Of Boolean)
-            Return (s1 = s2).Select(Function(b) Not b)
+        Public Shared Operator <>(s1 As StringVector, s2$) As BooleanVector
+            Return Not s1 = s2
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator =(s1 As StringVector, s2$) As IEnumerable(Of Boolean)
-            Return s1.Select(Function(s) s = s2)
+        Public Shared Operator =(s1 As StringVector, s2$) As BooleanVector
+            Return New BooleanVector(s1.Select(Function(s) s = s2))
         End Operator
     End Class
 End Namespace
