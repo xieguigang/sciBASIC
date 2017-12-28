@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language.Vectorization
 
@@ -7,6 +8,10 @@ Namespace Language.Vectorization
 
         Sub New()
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return buffer.GetJson
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(buffer As IEnumerable(Of String))
