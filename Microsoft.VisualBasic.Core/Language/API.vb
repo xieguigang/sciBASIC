@@ -150,5 +150,11 @@ Namespace Language
             Return x Is Nothing
         End Function
 #End Region
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsVector(strings As IEnumerable(Of String)) As StringVector
+            Return New StringVector(strings)
+        End Function
     End Module
 End Namespace
