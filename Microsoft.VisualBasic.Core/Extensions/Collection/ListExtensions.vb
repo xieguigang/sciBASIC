@@ -41,6 +41,24 @@ Imports Microsoft.VisualBasic.Linq
 Public Module ListExtensions
 
     ''' <summary>
+    ''' 查找出序列之中最频繁出现的对象
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function TopMostFrequent(Of T)(list As IEnumerable(Of T)) As T
+        Return list _
+            .SafeQuery _
+            .Where(Function(x) Not x Is Nothing) _
+            .GroupBy(Function(x) x) _
+            .OrderByDescending(Function(g) g.Count) _
+            .First _
+            .First
+    End Function
+
+    ''' <summary>
     ''' ForEach拓展的简化版本
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
