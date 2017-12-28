@@ -47,7 +47,7 @@ Public Module ListExtensions
     ''' <param name="collection"></param>
     ''' <param name="[do]"></param>
     <Extension> Public Sub DoEach(Of T)(collection As IEnumerable(Of T), [do] As Action(Of T))
-        For Each x As T In collection
+        For Each x As T In collection.SafeQuery
             Call [do](x)
         Next
     End Sub
