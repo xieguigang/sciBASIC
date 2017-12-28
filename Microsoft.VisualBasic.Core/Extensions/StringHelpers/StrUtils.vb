@@ -218,8 +218,8 @@ Public Module StrUtils
         End If
 
         Dim items As String() = New String(1) {}
-
         Dim index As Integer = text.IndexOf(sep)
+
         If index >= 0 Then
             items(0) = text.Substring(0, index)
             items(1) = text.Substring(index + 1)

@@ -34,6 +34,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
@@ -147,6 +148,7 @@ Public Module StringHelpers
     End Function
 
     ReadOnly sizeOfInt64% = Marshal.SizeOf(Long.MaxValue)
+    ReadOnly sizeOfInt32% = Marshal.SizeOf(Integer.MaxValue)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -156,6 +158,18 @@ Public Module StringHelpers
                 Return CType(bi, Long)
             Else
                 Return BitConverter.ToInt64(.ref, Scan0)
+            End If
+        End With
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToTruncateInt32(bi As BigInteger) As Integer
+        With bi.ToByteArray
+            If .Length < sizeOfInt32 Then
+                Return CType(bi, Long)
+            Else
+                Return BitConverter.ToInt32(.ref, Scan0)
             End If
         End With
     End Function
@@ -480,6 +494,13 @@ Public Module StringHelpers
         End If
     End Function
 
+    ''' <summary>
+    ''' 计算目标字符串在序列之中出现的次数
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <param name="target$"></param>
+    ''' <param name="method"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Count(source As IEnumerable(Of String), target$, Optional method As StringComparison = StringComparison.Ordinal) As Integer
@@ -1029,6 +1050,45 @@ Public Module StringHelpers
         Next
 
         Return -1
+    End Function
+
+    ''' <summary>
+    ''' Removes the duplicated string from the source <paramref name="strings"/> collection 
+    ''' with string compare ignore case.
+    ''' </summary>
+    ''' <param name="strings"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function DistinctIgnoreCase(strings As IEnumerable(Of String)) As IEnumerable(Of String)
+        Dim list = strings.Distinct.ToArray
+        Dim lowerBuffers As New Dictionary(Of String, List(Of String))
+
+        For Each s As String In list
+            With s.ToLower
+                If Not lowerBuffers.ContainsKey(.ref) Then
+                    lowerBuffers(.ref) = New List(Of String)
+                End If
+                lowerBuffers(.ref).Add(s)
+            End With
+        Next
+
+        Dim distinct = lowerBuffers _
+            .Select(Function(pack)
+                        Dim n$() = pack _
+                            .Value _
+                            .Where(Function(s) s <> pack.Key) _
+                            .ToArray
+
+                        ' 尽量不返回全部都是小写的字符串
+                        If n.Length > 0 Then
+                            Return n.First
+                        Else
+                            Return pack.Key
+                        End If
+                    End Function) _
+            .ToArray
+
+        Return distinct
     End Function
 
     ''' <summary>
