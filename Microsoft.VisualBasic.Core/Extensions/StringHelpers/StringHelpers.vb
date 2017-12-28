@@ -131,7 +131,7 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s$"></param>
     ''' <returns></returns>
-    <Extension> Public Function StringHash(s$) As Long
+    <Extension> Public Function StringHashCode(s$) As Long
         Dim hash& = 5381
         Dim chars%() = s.Select(AddressOf Convert.ToInt32).ToArray
 
