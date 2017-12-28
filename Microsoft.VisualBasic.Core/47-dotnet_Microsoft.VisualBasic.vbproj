@@ -839,7 +839,7 @@
     <Compile Include="Extensions\WebServices\HttpGet.vb" />
     <Compile Include="Language\Linq\Assert\AssertEqualsExtensions.vb" />
     <Compile Include="Language\Linq\Assert\VectorAssert.vb" />
-    <Compile Include="Language\Linq\StringVector.vb" />
+    <Compile Include="Language\Linq\Vectorization\StringVector.vb" />
     <Compile Include="Language\Value\DefaultValue\DefaultString.vb" />
     <Compile Include="Language\Value\DefaultValue\DefaultExtensions.vb" />
     <Compile Include="Scripting\Expressions\Aggregate.vb" />
@@ -854,10 +854,10 @@
     <Compile Include="Language\lang\Java\Line2D.vb" />
     <Compile Include="Language\lang\Java\Collections.vb" />
     <Compile Include="Language\lang\Java\Reflection.vb" />
-    <Compile Include="Language\Linq\SchemaProvider.vb" />
+    <Compile Include="Language\Linq\Vectorization\SchemaProvider.vb" />
     <Compile Include="Language\Linq\Indexer.vb" />
-    <Compile Include="Language\Linq\Vector.vb" />
-    <Compile Include="Language\Linq\VectorShadows.vb" />
+    <Compile Include="Language\Linq\Vectorization\Vector.vb" />
+    <Compile Include="Language\Linq\Vectorization\VectorShadows.vb" />
     <Compile Include="Language\Linq\List%28Of T%29.vb" />
     <Compile Include="Language\lang\Perl\die.vb" />
     <Compile Include="Language\API.vb" />
