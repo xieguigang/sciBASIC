@@ -122,7 +122,7 @@ Namespace Darwinism.GAF
         End Function
 
         Public Function Crossover(anotherChromosome As IIndividual) As IList(Of IIndividual) Implements Chromosome(Of IIndividual).Crossover
-            Return Crossover(anotherChromosome)
+            Return Crossover(TryCast(anotherChromosome, ParameterVector))
         End Function
 
         ''' <summary>
@@ -137,8 +137,7 @@ Namespace Darwinism.GAF
             Dim this#() = thisClone.Vector
             Dim othr#() = otheClone.Vector
 
-            Call seeds() _
-                .Crossover(this, othr)
+            Call seeds().Crossover(this, othr)
             Call thisClone.__setValues(this)
             Call otheClone.__setValues(othr)
 
