@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
@@ -673,6 +674,11 @@ Namespace LinearAlgebra
                 Return New Vector(array)
 
             End If
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(args As DefaultString) As Vector
+            Return CType(args.DefaultValue, Vector)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -28,14 +28,26 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
 Namespace Language.Default
 
+    ''' <summary>
+    ''' <see cref="CLI"/> optional value helper data model
+    ''' </summary>
     Public Structure DefaultString : Implements IDefaultValue(Of String)
         Implements IsEmpty
 
+        ''' <summary>
+        ''' The optional argument value that read from <see cref="CLI"/> 
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property DefaultValue As String Implements IDefaultValue(Of String).DefaultValue
 
+        ''' <summary>
+        ''' <see cref="DefaultValue"/> is empty?
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -99,5 +111,4 @@ Namespace Language.Default
             Return s1 & s2.DefaultValue
         End Operator
     End Structure
-
 End Namespace
