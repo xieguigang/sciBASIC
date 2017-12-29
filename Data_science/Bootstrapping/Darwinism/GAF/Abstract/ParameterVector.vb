@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.Darwinism
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF.Abstract
@@ -15,24 +16,30 @@ Namespace Darwinism.GAF.Abstract
             Throw New NotImplementedException()
         End Function
 
-        Public Function Crossover(anotherChromosome As IIndividual) As IList(Of IIndividual) Implements Chromosome(Of IIndividual).Crossover
-            Throw New NotImplementedException()
+        Private Function Crossover(anotherChromosome As IIndividual) As IList(Of IIndividual) Implements Chromosome(Of IIndividual).Crossover
+            Return Crossover(TryCast(anotherChromosome, ParameterVector(Of T)))
         End Function
 
         Public Function Crossover(anotherChromosome As ParameterVector(Of T)) As IList(Of ParameterVector(Of T)) Implements Chromosome(Of ParameterVector(Of T)).Crossover
             Throw New NotImplementedException()
         End Function
 
-        Public Function Mutate() As IIndividual Implements Chromosome(Of IIndividual).Mutate
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function Mutate() As IIndividual Implements Chromosome(Of IIndividual).Mutate
+            Return ChromosomeMutate()
+        End Function
+
+        Public Overridable Function Clone() As Object Implements ICloneable.Clone
             Throw New NotImplementedException()
         End Function
 
-        Public Function Clone() As Object Implements ICloneable.Clone
+        Public Overridable Function ChromosomeMutate() As ParameterVector(Of T) Implements Chromosome(Of ParameterVector(Of T)).Mutate
             Throw New NotImplementedException()
         End Function
+    End Class
 
-        Private Function Chromosome_Mutate() As ParameterVector(Of T) Implements Chromosome(Of ParameterVector(Of T)).Mutate
-            Throw New NotImplementedException()
-        End Function
+    Public Class FFFF : Inherits ParameterVector(Of FFFF)
+
+
     End Class
 End Namespace
