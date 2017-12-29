@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::1edae949e56bc5caae3f583dbb13fb09, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Protocol.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -36,7 +36,9 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports DynamicsSystem = Microsoft.VisualBasic.Math.Calculus.ODEs
 
 Namespace Darwinism.GAF.ODEs
 
@@ -112,7 +114,7 @@ Namespace Darwinism.GAF.ODEs
                                 Optional parallel As ParallelComputing(Of ParameterVector) = Nothing,
                                 Optional weights As Dictionary(Of String, Double) = Nothing) As var()
 
-            Dim vars$() = ODEs.GetParameters(model.GetType).ToArray
+            Dim vars$() = DynamicsSystem.GetParameters(model.GetType).ToArray
 
             If obs.IsNullOrEmpty Then
                 obs = vars.ToDictionary(
@@ -264,7 +266,7 @@ Namespace Darwinism.GAF.ODEs
                 vector = vars.Select(
                     Function(x) New var With {
                         .Name = x,
-                        .Value = 0.5R
+                        .value = 0.5R
                     }).ToArray
             Else
                 vector = LinqAPI.Exec(Of var) <=
@@ -274,7 +276,7 @@ Namespace Darwinism.GAF.ODEs
                     Where Array.IndexOf(vars, x.Key) > -1
                     Select New var With {
                         .Name = x.Key,
-                        .Value = x.Value
+                        .value = x.Value
                     }
 
                 Dim vData As Dictionary(Of var) = vector.ToDictionary
@@ -282,8 +284,8 @@ Namespace Darwinism.GAF.ODEs
                 For Each name$ In vars
                     If Not vData.ContainsKey(name$) Then
                         vData += New var With {
-                            .name = name,
-                            .Value = (2 ^ name.Length) * (100 * randomGenerator().NextDouble)
+                            .Name = name,
+                            .value = (2 ^ name.Length) * (100 * randomGenerator().NextDouble)
                         }
                     End If
                 Next

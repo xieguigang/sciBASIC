@@ -41,7 +41,7 @@ Namespace Topology
     ''' dy = alpha - beta
     ''' ```
     ''' </summary>
-    Public Class Model : Inherits GAF.Model
+    Public Class Model : Inherits GAF.ODEs.Model
 
         Dim _alpha As Dictionary(Of String, (parm As NamedValue(Of Double), v As var)())
         Dim _beta As Dictionary(Of String, (parm As NamedValue(Of Double), v As var)())
