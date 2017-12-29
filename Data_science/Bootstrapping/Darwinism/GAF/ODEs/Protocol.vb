@@ -38,7 +38,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.ODEs
 
     Public Enum MutateLevels As Integer
         Low = 1
@@ -264,7 +264,7 @@ Namespace Darwinism.GAF
                 vector = vars.Select(
                     Function(x) New var With {
                         .Name = x,
-                        .value = 0.5R
+                        .Value = 0.5R
                     }).ToArray
             Else
                 vector = LinqAPI.Exec(Of var) <=
@@ -274,7 +274,7 @@ Namespace Darwinism.GAF
                     Where Array.IndexOf(vars, x.Key) > -1
                     Select New var With {
                         .Name = x.Key,
-                        .value = x.Value
+                        .Value = x.Value
                     }
 
                 Dim vData As Dictionary(Of var) = vector.ToDictionary
@@ -282,8 +282,8 @@ Namespace Darwinism.GAF
                 For Each name$ In vars
                     If Not vData.ContainsKey(name$) Then
                         vData += New var With {
-                            .Name = name,
-                            .value = (2 ^ name.Length) * (100 * randomGenerator().NextDouble)
+                            .name = name,
+                            .Value = (2 ^ name.Length) * (100 * randomGenerator().NextDouble)
                         }
                     End If
                 Next

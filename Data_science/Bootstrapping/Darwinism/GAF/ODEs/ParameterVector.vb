@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.ODEs
 
     ''' <summary>
     ''' Parameters that wait for bootstrapping estimates

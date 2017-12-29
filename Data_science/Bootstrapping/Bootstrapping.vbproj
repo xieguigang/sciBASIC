@@ -191,6 +191,7 @@
   <ItemGroup>
     <Compile Include="BootstrapIterator.vb" />
     <Compile Include="Darwinism\DESolver.vb" />
+    <Compile Include="Darwinism\GAF\Abstract\ParameterVector.vb" />
     <Compile Include="Darwinism\GAF\ODEs\DistributeSupports.vb" />
     <Compile Include="Darwinism\GAF\Drivers\TimeValue.vb" />
     <Compile Include="Darwinism\GAF\Drivers\RawCompare.vb" />
@@ -274,9 +275,7 @@
       <Name>Microsoft.VisualBasic.DataMining.Framework</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Darwinism\GAF\Abstract\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

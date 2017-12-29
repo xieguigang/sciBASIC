@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.Data.Bootstrapping.MonteCarlo
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.ODEs
 
     Public MustInherit Class Model : Inherits MonteCarlo.Model
 

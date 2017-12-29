@@ -32,7 +32,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Math
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.ODEs
 
     ''' <summary>
     ''' Supports for GA distribute computing

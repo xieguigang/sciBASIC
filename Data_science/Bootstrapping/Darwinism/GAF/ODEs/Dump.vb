@@ -30,7 +30,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.Text
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.ODEs
 
     Public Class Dump
         Implements IterartionListener(Of ParameterVector)
