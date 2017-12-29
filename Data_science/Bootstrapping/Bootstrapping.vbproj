@@ -191,14 +191,14 @@
   <ItemGroup>
     <Compile Include="BootstrapIterator.vb" />
     <Compile Include="Darwinism\DESolver.vb" />
-    <Compile Include="Darwinism\GAF\DistributeSupports.vb" />
+    <Compile Include="Darwinism\GAF\ODEs\DistributeSupports.vb" />
     <Compile Include="Darwinism\GAF\Drivers\TimeValue.vb" />
     <Compile Include="Darwinism\GAF\Drivers\RawCompare.vb" />
-    <Compile Include="Darwinism\GAF\GAFModel.vb" />
-    <Compile Include="Darwinism\GAF\Dump.vb" />
+    <Compile Include="Darwinism\GAF\ODEs\GAFModel.vb" />
+    <Compile Include="Darwinism\GAF\ODEs\Dump.vb" />
     <Compile Include="Darwinism\GAF\Drivers\Fitness.vb" />
-    <Compile Include="Darwinism\GAF\Protocol.vb" />
-    <Compile Include="Darwinism\GAF\ParameterVector.vb" />
+    <Compile Include="Darwinism\GAF\ODEs\Protocol.vb" />
+    <Compile Include="Darwinism\GAF\ODEs\ParameterVector.vb" />
     <Compile Include="Sampling.vb" />
     <Compile Include="Monte-Carlo\Bifurcation\ParameterBifurcations.vb" />
     <Compile Include="Monte-Carlo\CodeGenerator.vb" />
@@ -274,7 +274,9 @@
       <Name>Microsoft.VisualBasic.DataMining.Framework</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Darwinism\GAF\Abstract\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

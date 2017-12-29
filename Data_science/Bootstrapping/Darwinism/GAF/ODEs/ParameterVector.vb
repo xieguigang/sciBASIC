@@ -28,12 +28,10 @@
 
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.Calculus
 
 Namespace Darwinism.GAF
 

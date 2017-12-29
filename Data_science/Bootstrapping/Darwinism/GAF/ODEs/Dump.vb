@@ -28,7 +28,6 @@
 
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
-Imports Microsoft.VisualBasic.Math.Calculus
 Imports Microsoft.VisualBasic.Text
 
 Namespace Darwinism.GAF
