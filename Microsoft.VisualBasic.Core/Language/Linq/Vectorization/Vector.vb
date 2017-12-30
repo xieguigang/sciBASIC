@@ -297,12 +297,15 @@ Namespace Language.Vectorization
         End Operator
 
         ''' <summary>
+        ''' Append the elements in vector <paramref name="a"/> with all of the elements in vector <paramref name="b"/> directly.
         ''' Union two collection directly without <see cref="Enumerable.Distinct"/> operation.
         ''' (请注意，使用<see cref="CollectionSet"/>集合对象的Union功能会去除重复，而这个操作符则是直接进行合并取``并集``而不去重)
         ''' </summary>
         ''' <param name="a"></param>
         ''' <param name="b"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator &(a As Vector(Of T), b As Vector(Of T)) As Vector(Of T)
             Return New Vector(Of T)(a.buffer.AsList + b.buffer)
         End Operator
