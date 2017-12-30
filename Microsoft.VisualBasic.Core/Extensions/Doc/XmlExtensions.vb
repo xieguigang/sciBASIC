@@ -253,13 +253,9 @@ Public Module XmlExtensions
                        Optional encoding As Encodings = Encodings.UTF16,
     <CallerMemberName> Optional caller As String = "") As Boolean
         Try
-            Using file = saveXml.Open
-                Call WriteXML(obj, GetType(T),
-                              out:=file,
-                              encoding:=encoding)
-            End Using
-
-            Return True
+            Return obj _
+                .GetXml(ThrowEx:=throwEx, xmlEncoding:=encoding) _
+                .SaveTo(saveXml, encoding.CodePage, throwEx:=throwEx)
         Catch ex As Exception
             ex = New Exception(caller, ex)
 
