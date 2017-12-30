@@ -1,37 +1,40 @@
 ﻿#Region "Microsoft.VisualBasic::3db7eb045625aaa05856e5bf57081070, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports System.Numerics
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
@@ -131,17 +134,44 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s$"></param>
     ''' <returns></returns>
-    <Extension> Public Function StringHash(s$) As Long
+    <Extension> Public Function StringHashCode(s$) As Long
         Dim hash& = 5381
         Dim chars%() = s.Select(AddressOf Convert.ToInt32).ToArray
 
         For i As Integer = s.Length - 1 To 0 Step -1
-            hash = (hash * 33) Xor chars(i)
+            hash = (New BigInteger(hash) * 33 Xor chars(i)).ToTruncateInt64
         Next
 
         hash = hash >> 0
 
         Return hash
+    End Function
+
+    ReadOnly sizeOfInt64% = Marshal.SizeOf(Long.MaxValue)
+    ReadOnly sizeOfInt32% = Marshal.SizeOf(Integer.MaxValue)
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToTruncateInt64(bi As BigInteger) As Long
+        With bi.ToByteArray
+            If .Length < sizeOfInt64 Then
+                Return CType(bi, Long)
+            Else
+                Return BitConverter.ToInt64(.ref, Scan0)
+            End If
+        End With
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToTruncateInt32(bi As BigInteger) As Integer
+        With bi.ToByteArray
+            If .Length < sizeOfInt32 Then
+                Return CType(bi, Long)
+            Else
+                Return BitConverter.ToInt32(.ref, Scan0)
+            End If
+        End With
     End Function
 
     ''' <summary>
@@ -464,6 +494,13 @@ Public Module StringHelpers
         End If
     End Function
 
+    ''' <summary>
+    ''' 计算目标字符串在序列之中出现的次数
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <param name="target$"></param>
+    ''' <param name="method"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Count(source As IEnumerable(Of String), target$, Optional method As StringComparison = StringComparison.Ordinal) As Integer
@@ -1013,6 +1050,45 @@ Public Module StringHelpers
         Next
 
         Return -1
+    End Function
+
+    ''' <summary>
+    ''' Removes the duplicated string from the source <paramref name="strings"/> collection 
+    ''' with string compare ignore case.
+    ''' </summary>
+    ''' <param name="strings"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function DistinctIgnoreCase(strings As IEnumerable(Of String)) As IEnumerable(Of String)
+        Dim list = strings.Distinct.ToArray
+        Dim lowerBuffers As New Dictionary(Of String, List(Of String))
+
+        For Each s As String In list
+            With s.ToLower
+                If Not lowerBuffers.ContainsKey(.ref) Then
+                    lowerBuffers(.ref) = New List(Of String)
+                End If
+                lowerBuffers(.ref).Add(s)
+            End With
+        Next
+
+        Dim distinct = lowerBuffers _
+            .Select(Function(pack)
+                        Dim n$() = pack _
+                            .Value _
+                            .Where(Function(s) s <> pack.Key) _
+                            .ToArray
+
+                        ' 尽量不返回全部都是小写的字符串
+                        If n.Length > 0 Then
+                            Return n.First
+                        Else
+                            Return pack.Key
+                        End If
+                    End Function) _
+            .ToArray
+
+        Return distinct
     End Function
 
     ''' <summary>

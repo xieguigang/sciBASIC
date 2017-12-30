@@ -65,6 +65,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
     ''' name/value pairs in the tree nodes. name is the node key.
     ''' The advantage of a binary tree is its fast insert and lookup
     ''' characteristics. This version does not deal with tree balancing.
+    ''' (二叉搜索树，用于建立对repository的索引文件)
     ''' </summary>
     ''' <remarks></remarks>
     Public Class BinaryTree(Of T)

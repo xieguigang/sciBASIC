@@ -41,13 +41,32 @@ Imports Microsoft.VisualBasic.Linq
 Public Module ListExtensions
 
     ''' <summary>
+    ''' 查找出序列之中最频繁出现的对象
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function TopMostFrequent(Of T)(list As IEnumerable(Of T)) As T
+        Return list _
+            .SafeQuery _
+            .Where(Function(x) Not x Is Nothing) _
+            .GroupBy(Function(x) x) _
+            .OrderByDescending(Function(g) g.Count) _
+            .FirstOrDefault _
+            .SafeQuery _
+            .FirstOrDefault ' 因为可能会碰到list是空的情况，所以在这里需要使用FirstOrDefault
+    End Function
+
+    ''' <summary>
     ''' ForEach拓展的简化版本
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="collection"></param>
     ''' <param name="[do]"></param>
     <Extension> Public Sub DoEach(Of T)(collection As IEnumerable(Of T), [do] As Action(Of T))
-        For Each x As T In collection
+        For Each x As T In collection.SafeQuery
             Call [do](x)
         Next
     End Sub

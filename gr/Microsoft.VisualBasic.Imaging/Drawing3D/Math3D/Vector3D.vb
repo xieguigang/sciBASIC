@@ -27,10 +27,10 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Language
-Imports sys = System.Math
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports sys = System.Math
 
 Namespace Drawing3D.Math3D
 

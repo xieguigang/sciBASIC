@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
 Namespace Darwinism.GAF.Driver

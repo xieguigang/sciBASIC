@@ -29,12 +29,12 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
-Namespace SyntaxAPI.Vectors
+Namespace Language.Vectorization
 
     ''' <summary>
     ''' <see cref="System.Boolean"/> Array
     ''' </summary>
-    Public Class BooleanVector : Inherits GenericVector(Of Boolean)
+    Public Class BooleanVector : Inherits Vector(Of Boolean)
 
         ''' <summary>
         ''' Only one boolean value ``True`` in the array list
@@ -57,17 +57,19 @@ Namespace SyntaxAPI.Vectors
         End Property
 
         Public ReadOnly Property IsLogical As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return [Dim] = 1
+                Return buffer.Length = 1
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(b As IEnumerable(Of Boolean))
             MyBase.New(b)
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"ALL({Length}) = {Which.IsTrue(buffer).Count} true + {Which.IsTrue(Not Me).Count} false"
+            Return $"ALL({Length}) = {Which.IsTrue(Buffer).Count} true + {Which.IsTrue(Not Me).Count} false"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -110,6 +110,11 @@ Namespace Math
         End Function
 
         <Extension>
+        Public Function NextDouble(rand As Random, min#, max#) As Double
+            Return (max - min) * rand.NextDouble + min
+        End Function
+
+        <Extension>
         Public Function GetRandomValue(rng As IntRange) As Integer
             Return rng.Length * __randomSeeds.NextDouble + rng.Min
         End Function

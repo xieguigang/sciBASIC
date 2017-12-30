@@ -84,9 +84,9 @@ Namespace Text.Xml.Models
     ''' Property Info (Property Name and Property Value).
     ''' (和<see cref="NamedValue"/>所不同的是，这个对象之中的键值对集合的键值都是小段字符串)
     ''' </summary>
-    Public Structure [Property]
+    Public Structure [Property] : Implements INamedValue
 
-        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property name As String Implements INamedValue.Key
         <XmlAttribute> Public Property value As String
         <XmlText>
         Public Property Comment As String

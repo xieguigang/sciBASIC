@@ -1,41 +1,40 @@
 ﻿#Region "Microsoft.VisualBasic::cd89b8c4c78affcef976082288808328, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\ParameterVector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Calculus
 
-Namespace Darwinism.GAF
+Namespace Darwinism.GAF.ODEs
 
     ''' <summary>
     ''' Parameters that wait for bootstrapping estimates
@@ -124,7 +123,7 @@ Namespace Darwinism.GAF
         End Function
 
         Public Function Crossover(anotherChromosome As IIndividual) As IList(Of IIndividual) Implements Chromosome(Of IIndividual).Crossover
-            Return Crossover(anotherChromosome)
+            Return Crossover(TryCast(anotherChromosome, ParameterVector))
         End Function
 
         ''' <summary>
@@ -139,8 +138,7 @@ Namespace Darwinism.GAF
             Dim this#() = thisClone.Vector
             Dim othr#() = otheClone.Vector
 
-            Call seeds() _
-                .Crossover(this, othr)
+            Call seeds().Crossover(this, othr)
             Call thisClone.__setValues(this)
             Call otheClone.__setValues(othr)
 

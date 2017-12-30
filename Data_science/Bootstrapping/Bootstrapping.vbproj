@@ -47,7 +47,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
@@ -165,6 +165,27 @@
     <PlatformTarget>x64</PlatformTarget>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Biodeep\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Biodeep\</OutputPath>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -191,14 +212,15 @@
   <ItemGroup>
     <Compile Include="BootstrapIterator.vb" />
     <Compile Include="Darwinism\DESolver.vb" />
-    <Compile Include="Darwinism\GAF\DistributeSupports.vb" />
+    <Compile Include="Darwinism\GAF\Abstract\ParameterVector.vb" />
+    <Compile Include="Darwinism\GAF\ODEs\DistributeSupports.vb" />
     <Compile Include="Darwinism\GAF\Drivers\TimeValue.vb" />
     <Compile Include="Darwinism\GAF\Drivers\RawCompare.vb" />
-    <Compile Include="Darwinism\GAF\GAFModel.vb" />
-    <Compile Include="Darwinism\GAF\Dump.vb" />
+    <Compile Include="Darwinism\GAF\ODEs\GAFModel.vb" />
+    <Compile Include="Darwinism\GAF\ODEs\Dump.vb" />
     <Compile Include="Darwinism\GAF\Drivers\Fitness.vb" />
-    <Compile Include="Darwinism\GAF\Protocol.vb" />
-    <Compile Include="Darwinism\GAF\ParameterVector.vb" />
+    <Compile Include="Darwinism\GAF\ODEs\Protocol.vb" />
+    <Compile Include="Darwinism\GAF\ODEs\ParameterVector.vb" />
     <Compile Include="Sampling.vb" />
     <Compile Include="Monte-Carlo\Bifurcation\ParameterBifurcations.vb" />
     <Compile Include="Monte-Carlo\CodeGenerator.vb" />
