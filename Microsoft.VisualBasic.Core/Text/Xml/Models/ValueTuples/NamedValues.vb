@@ -35,24 +35,10 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Xml.Models
 
-    Public Class StringValue : Implements Value(Of String).IValueOf
-
-        ''' <summary>
-        ''' A short text value without new line symbols
-        ''' </summary>
-        ''' <returns></returns>
-        <XmlAttribute>
-        Public Property value As String Implements Value(Of String).IValueOf.Value
-
-        Public Overrides Function ToString() As String
-            Return value
-        End Function
-    End Class
-
     ''' <summary>
     ''' 键值对集合的键值<see cref="text"/>可能是一大段文本
     ''' </summary>
-    <XmlType("data")> Public Structure NamedValue
+    <XmlType("data")> Public Class NamedValue
         Implements INamedValue
         Implements Value(Of String).IValueOf
 
@@ -74,11 +60,14 @@ Namespace Text.Xml.Models
             Me.text = value
         End Sub
 
+        Sub New()
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{name}: {text}"
         End Function
-    End Structure
+    End Class
 
     ''' <summary>
     ''' Property Info (Property Name and Property Value).
@@ -103,21 +92,6 @@ Namespace Text.Xml.Models
     End Structure
 
     ''' <summary>
-    ''' 代码行的模型？
-    ''' </summary>
-    Public Structure LineValue
-
-        <XmlAttribute>
-        Public Property line As Integer
-        <XmlText>
-        Public Property text As String
-
-        Public Overrides Function ToString() As String
-            Return $"[{line}]  {text}"
-        End Function
-    End Structure
-
-    ''' <summary>
     ''' 在这里不实现<see cref="IEnumerable(Of T)"/>是为了方便的实现XML序列化操作
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
@@ -138,6 +112,11 @@ Namespace Text.Xml.Models
                 name = .Name
                 vector = .Value
             End With
+        End Sub
+
+        Sub New(name$, vector As T())
+            Me.name = name
+            Me.vector = vector
         End Sub
 
         Public Overrides Function ToString() As String

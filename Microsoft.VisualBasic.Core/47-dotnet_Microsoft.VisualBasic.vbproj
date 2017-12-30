@@ -875,6 +875,7 @@
     <Compile Include="Text\GreekAlphabets.vb" />
     <Compile Include="Text\StringSimilarity\Levenshtein\LevenshteinString.vb" />
     <Compile Include="Text\Xml\Linq\NodeIterator.vb" />
+    <Compile Include="Text\Xml\Models\StringValue.vb" />
     <Compile Include="Text\Xml\Models\Coordinate.vb" />
     <Compile Include="ComponentModel\DataSource\Property\DynamicProperty.vb" />
     <Compile Include="ComponentModel\DataSource\Iterator.vb" />
@@ -1002,7 +1003,7 @@
     <Compile Include="Text\Xml\OpenXml\Content_Types.vb" />
     <Compile Include="Text\Xml\XmlBuilder.vb" />
     <Compile Include="Text\Xml\Linq\Linq.vb" />
-    <Compile Include="Text\Xml\Models\Models.vb" />
+    <Compile Include="Text\Xml\Models\ValueTuples\NamedValues.vb" />
     <Compile Include="Text\Xml\Extensions.vb" />
     <Compile Include="Text\Xml\XmlDeclaration.vb" />
     <Compile Include="Text\Xml\Xmlns.vb" />
@@ -1250,7 +1251,7 @@
     <Compile Include="ComponentModel\Href.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\DataSource.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\IEnumerable.vb" />
-    <Compile Include="ComponentModel\ValuePair\ValuePair.vb" />
+    <Compile Include="Text\Xml\Models\ValueTuples\ValuePair.vb" />
     <Compile Include="Serialization\DumpData\DumpData.vb" />
     <Compile Include="Serialization\DumpData\DumpNode.vb" />
     <Compile Include="Extensions\Security\TripleDES.vb" />
