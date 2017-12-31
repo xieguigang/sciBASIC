@@ -188,6 +188,20 @@ Namespace Serialization.JSON
             Return obj
         End Function
 
+        ''' <summary>
+        ''' XML CDATA to json
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="json"></param>
+        ''' <param name="simpleDict"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function LoadObject(Of T As New)(json As XElement, Optional simpleDict As Boolean = True) As T
+            Return json.Value.LoadObject(Of T)(simpleDict:=simpleDict)
+        End Function
+
         Public Function LoadJsonFile(Of T)(file As String, Optional encoding As Encoding = Nothing, Optional simpleDict As Boolean = True) As T
             Dim json As String = IO.File.ReadAllText(file, If(encoding Is Nothing, Encoding.Default, encoding))
             Return json.LoadObject(Of T)(simpleDict)
