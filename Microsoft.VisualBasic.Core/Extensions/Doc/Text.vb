@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports fs = Microsoft.VisualBasic.FileIO.FileSystem
 
 <Package("Doc.TextFile", Category:=APICategories.UtilityTools, Publisher:="xie.guigang@gmail.com")>
 Public Module TextDoc
@@ -48,10 +49,11 @@ Public Module TextDoc
     ''' <param name="parser">default is Xml parser</param>
     ''' <param name="ThrowEx"></param>
     ''' <returns></returns>
-    <Extension> Public Function LoadTextDoc(Of T As ITextFile)(file As String,
-                                                               Optional encoding As Encoding = Nothing,
-                                                               Optional parser As Func(Of String, Encoding, T) = Nothing,
-                                                               Optional ThrowEx As Boolean = True) As T
+    <Extension>
+    Public Function LoadTextDoc(Of T As ITextFile)(file$,
+                                                   Optional encoding As Encoding = Nothing,
+                                                   Optional parser As Func(Of String, Encoding, T) = Nothing,
+                                                   Optional ThrowEx As Boolean = True) As T
         If parser Is Nothing Then
             parser = AddressOf LoadXml
         End If
@@ -176,11 +178,14 @@ Public Module TextDoc
     ''' Read the first line of the text in the file.
     ''' </summary>
     ''' <param name="path"></param>
+    ''' <param name="encoding">
+    ''' Parameter value is set to <see cref="DefaultEncoding"/> if this parameter is not specific.
+    ''' </param>
     ''' <returns></returns>
     <Extension> Public Function ReadFirstLine(path$, Optional encoding As Encoding = Nothing) As String
         Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)
             Using reader As New StreamReader(file, encoding Or DefaultEncoding)
-                Dim first As String = reader.ReadLine
+                Dim first$ = reader.ReadLine
                 Return first
             End Using
         End Using
@@ -191,9 +196,9 @@ Public Module TextDoc
     ''' </summary>
     ''' <param name="handle$">文本内容或者文件路径</param>
     ''' <returns></returns>
-    <Extension> Public Function SolveStream(handle$) As String
+    <Extension> Public Function SolveStream(handle$, Optional encoding As Encodings = Encodings.UTF8) As String
         If handle.FileExists(True) Then
-            Return handle.ReadAllText
+            Return handle.ReadAllText(encoding.CodePage)
         Else
             Return handle
         End If
@@ -215,7 +220,7 @@ Public Module TextDoc
                                 Optional throwEx As Boolean = True,
                                 Optional suppress As Boolean = False) As String
         Try
-            Return FileIO.FileSystem.ReadAllText(path, encoding:=encoding Or UTF8)
+            Return fs.ReadAllText(path, encoding:=encoding Or UTF8)
         Catch ex As Exception
             ex = New Exception(path.ToFileURL, ex)
 
@@ -294,7 +299,7 @@ Public Module TextDoc
 #Else
         Try
             path = ProgramPathSearchTool.Long2Short(path)
-            DIR = FileIO.FileSystem.GetParentPath(path)
+            DIR = fs.GetParentPath(path)
         Catch ex As Exception
             Dim msg As String = $" **** Directory string is illegal or string is too long:  [{NameOf(path)}:={path}] > 260"
             Throw New Exception(msg, ex)
@@ -308,7 +313,7 @@ Public Module TextDoc
         End If
 
         Try
-            Call FileIO.FileSystem.WriteAllText(path, text Or EmptyString, append, encoding Or UTF8)
+            Call fs.WriteAllText(path, text Or EmptyString, append, encoding Or UTF8)
         Catch ex As Exception
             ex = New Exception("[DIR]  " & DIR, ex)
             ex = New Exception("[Path]  " & path, ex)
@@ -350,12 +355,17 @@ Public Module TextDoc
     <Extension> Public Function IsTextFile(path$, Optional chunkSize% = 4 * 1024) As Boolean
         Using file As New FileStream(path, FileMode.Open, FileAccess.Read)
             Dim byteData(1) As Byte
-            Dim i As Integer
-            Dim p As Integer
+            Dim i%
+            Dim p%
 
             While file.Read(byteData, 0, byteData.Length) > 0
                 If byteData(0) = 0 Then i += 1
-                If p <= chunkSize Then p += 1 Else Exit While
+
+                If p <= chunkSize Then
+                    p += 1
+                Else
+                    Exit While
+                End If
             End While
 
             Return i <= 0.1 * p
@@ -379,8 +389,10 @@ Public Module TextDoc
 
         Call "".SaveTo(path)
 
-        Using file As New StreamWriter(New FileStream(path, FileMode.OpenOrCreate), encoding Or DefaultEncoding)
-            For Each line As String In array.SafeQuery
+        Using fs As New FileStream(path, FileMode.OpenOrCreate),
+            file As New StreamWriter(fs, encoding Or DefaultEncoding)
+
+            For Each line$ In array.SafeQuery
                 Call file.WriteLine(line)
             Next
         End Using

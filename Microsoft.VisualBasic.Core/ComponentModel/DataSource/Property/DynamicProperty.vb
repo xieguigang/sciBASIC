@@ -164,7 +164,7 @@ Namespace ComponentModel.DataSourceModel
         ''' to see if any duplicated was existed? 
         ''' </summary>
         ''' <returns></returns>
-        Protected ReadOnly Property MyHashCode As Integer
+        Protected Overridable ReadOnly Property MyHashCode As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetHashCode()
