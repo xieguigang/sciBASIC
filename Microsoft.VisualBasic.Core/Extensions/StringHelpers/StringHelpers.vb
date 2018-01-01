@@ -256,16 +256,15 @@ Public Module StringHelpers
     ''' <returns>A copy of format in which the format items have been replaced by the string representation
     ''' of the corresponding objects in args.</returns>
     <Extension>
-    Public Function sFormat(s As String, ParamArray args As Object()) As String
+    Public Function FormatString(s$, ParamArray args As Object()) As String
         Return String.Format(s, args)
     End Function
 
     ''' <summary>
     ''' this is to emulate what's evailable in PHP
     ''' </summary>
-    ''' 
     <Extension>
-    Public Function RepeatString(text As String, count As Integer) As String
+    Public Function RepeatString(text$, count%) As String
         Dim sb = New StringBuilder(text.Length * count)
         For i As Integer = 0 To count - 1
             Call sb.Append(text)
@@ -273,8 +272,15 @@ Public Module StringHelpers
         Return sb.ToString()
     End Function
 
+    ''' <summary>
+    ''' Join and contact the text tokens with a specific <paramref name="delimiter"/> string.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="data"></param>
+    ''' <param name="delimiter$"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter As String) As String
+    Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter$) As String
         Return String.Join(delimiter, data.Select(AddressOf Scripting.ToString).ToArray)
     End Function
 
