@@ -52,7 +52,7 @@ Imports Microsoft.VisualBasic.Text
 Public Module ProgramPathSearchTool
 
     ''' <summary>
-    ''' 
+    ''' 修改路径字符串之中的文件名后缀拓展名为<paramref name="newSuffix"/>指定的值。<paramref name="newSuffix"/>不需要添加小数点
     ''' </summary>
     ''' <param name="path$"></param>
     ''' <param name="newSuffix$">新的文件拓展名，这个拓展名不带有小数点，例如需要修改为*.csv，则直接赋值csv即可</param>
