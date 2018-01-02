@@ -1,32 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::3c10b680c6fa1b0ad7034791dffcbb69, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.ComponentModel
+Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -135,5 +137,32 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
                 .Save(.ref, encoding:=Encodings.UTF8) _
                 .CLICode
         End With
+    End Function
+
+    <ExportAPI("/Print")>
+    <Usage("/Print /in <table.csv/xlsx> [/sheet <sheetName> /out <device/txt>]")>
+    <Description("Print the csv/xlsx file content onto the console screen or text file in table layout.")>
+    Public Function Print(args As CommandLine) As Integer
+        Dim table As (header As String(), rows As String()())
+        Dim csv As csv
+
+        With args <= "/in"
+            If .ExtensionSuffix.TextEquals("csv") Then
+                csv = csv.Load(.ref)
+            Else
+                csv = Xlsx.Open(.ref).GetTable(sheetName:=args("/sheet") Or "Sheet1")
+            End If
+        End With
+
+        With csv _
+            .Select(Function(r) r.ToArray) _
+            .ToArray
+
+            table = (.First, .Skip(1).ToArray)
+        End With
+
+        Using out As StreamWriter = args.OpenStreamOutput("/out")
+            Call PrintAsTable.PrintTable(table.rows, out,, table.header)
+        End Using
     End Function
 End Module

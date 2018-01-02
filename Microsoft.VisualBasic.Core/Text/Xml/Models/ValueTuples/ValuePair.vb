@@ -29,9 +29,8 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace ComponentModel
+Namespace Text.Xml.Models
 
     ''' <summary>
     ''' An object for the text file format xml data storage.(用于存储与XML文件之中的字符串键值对对象)
@@ -158,62 +157,6 @@ Namespace ComponentModel
             Next
 
             Return List.ToArray
-        End Function
-    End Class
-
-    ''' <summary>
-    ''' ``{Key, strArray()}`` The value of this data type object is a string collection.
-    ''' (本类型对象的值属性类型为一个字符串集合)
-    ''' </summary>
-    ''' <remarks>
-    ''' 实际上这个类型完全可以由<see cref="NamedValue(Of String())"/>来替代，但是由于<see cref="NamedValue(Of String())"/>是通用化的，而本类型是特化为文本字符串的，所以使用本类型可以进行更加优雅的XML格式的文档生成
-    ''' </remarks>
-    Public Class Key_strArrayValuePair : Inherits KeyValuePairObject(Of String, String())
-        Implements INamedValue
-
-        <XmlAttribute> Public Overrides Property Key As String Implements INamedValue.Key
-            Get
-                Return MyBase.Key
-            End Get
-            Set(value As String)
-                MyBase.Key = value
-            End Set
-        End Property
-        <XmlElement> Public Overrides Property Value As String()
-            Get
-                Return MyBase.Value
-            End Get
-            Set(value As String())
-                MyBase.Value = value
-            End Set
-        End Property
-
-        Public Overloads Shared Widening Operator CType(obj As KeyValuePair(Of String, String())) As Key_strArrayValuePair
-            Return New Key_strArrayValuePair With {
-                .Key = obj.Key,
-                .Value = obj.Value
-            }
-        End Operator
-
-        Public Overloads Shared Function CreateObject(key As String, value As String()) As Key_strArrayValuePair
-            Return New Key_strArrayValuePair With {
-                .Key = key,
-                .Value = value
-            }
-        End Function
-
-        Public Overrides Function ToString() As String
-            Return Key
-        End Function
-
-        Public Shared Function ToDictionary(ListData As IEnumerable(Of Key_strArrayValuePair)) As Dictionary(Of String, String())
-            Dim Dictionary As New Dictionary(Of String, String())
-
-            For Each item As Key_strArrayValuePair In ListData
-                Call Dictionary.Add(item.Key, item.Value)
-            Next
-
-            Return Dictionary
         End Function
     End Class
 End Namespace

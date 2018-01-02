@@ -132,6 +132,12 @@ Namespace Terminal.ProgressBar
         Dim y%
         Dim theme As ColorTheme
 
+        Shared ReadOnly disabled As Boolean
+
+        Shared Sub New()
+            disabled = App.GetVariable("progress_bar").TextEquals(NameOf(disabled))
+        End Sub
+
         ''' <summary>
         ''' Create a console progress bar object with custom configuration.
         ''' </summary>
@@ -139,7 +145,7 @@ Namespace Terminal.ProgressBar
         ''' <param name="Y">The row position number of the progress bar.</param>
         ''' <param name="CLS">Clear the console screen?</param>
         Sub New(title$, Y%, Optional CLS As Boolean = False, Optional theme As ColorTheme = Nothing)
-            If CLS AndAlso App.IsConsoleApp Then
+            If CLS AndAlso App.IsConsoleApp AndAlso Not disabled Then
                 Call Console.Clear()
             End If
 
@@ -148,13 +154,15 @@ Namespace Terminal.ProgressBar
             Me.theme = theme Or ColorTheme.DefaultTheme
             Me.y = Y
 
-            AddHandler TerminalEvents.Resize, AddressOf __resize
+            If Not disabled Then
+                AddHandler TerminalEvents.Resize, AddressOf __resize
 
-            Try
-                Call __resize(Nothing, Nothing)
-            Catch ex As Exception
+                Try
+                    Call __resize(Nothing, Nothing)
+                Catch ex As Exception
 
-            End Try
+                End Try
+            End If
         End Sub
 
         ''' <summary>
@@ -192,7 +200,9 @@ Namespace Terminal.ProgressBar
         ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetToEchoLine()
-            Console.SetCursorPosition(0, y + 3)
+            If Not disabled Then
+                Console.SetCursorPosition(0, y + 3)
+            End If
         End Sub
 
         Public Overrides Sub [Step]()
@@ -254,7 +264,10 @@ Namespace Terminal.ProgressBar
         ''' <param name="percent">Percentage, 假设是从p到current</param>
         Public Sub SetProgress(percent%, Optional details$ = "")
             current = percent
-            Call __tick(current, details)
+
+            If Not disabled Then
+                Call __tick(current, details)
+            End If
         End Sub
 
 #Region "IDisposable Support"
@@ -264,8 +277,11 @@ Namespace Terminal.ProgressBar
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
-                    ' TODO: dispose managed state (managed objects).
-                    RemoveHandler TerminalEvents.Resize, AddressOf __resize
+                    If Not disabled Then
+                        ' TODO: dispose managed state (managed objects).
+                        RemoveHandler TerminalEvents.Resize, AddressOf __resize
+                    End If
+
                     Call timer.Stop()
                 End If
 

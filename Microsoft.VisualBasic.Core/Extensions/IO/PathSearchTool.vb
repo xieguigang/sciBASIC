@@ -52,6 +52,19 @@ Imports Microsoft.VisualBasic.Text
 Public Module ProgramPathSearchTool
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <param name="newSuffix$">新的文件拓展名，这个拓展名不带有小数点，例如需要修改为*.csv，则直接赋值csv即可</param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ChangeSuffix(path$, newSuffix$) As String
+        Return path.TrimSuffix & "." & newSuffix
+    End Function
+
+    ''' <summary>
     ''' Execute file delete
     ''' </summary>
     ''' <param name="path$"></param>

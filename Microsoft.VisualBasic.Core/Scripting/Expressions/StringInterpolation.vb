@@ -84,7 +84,7 @@ Namespace Scripting.Expressions
         ''' </summary>
         ''' <param name="sb"></param>
         ''' <param name="getValue"></param>
-        ''' <param name="nullAsEmpty"></param>
+        ''' <param name="nullAsEmpty">只有当变量的值不为空值的时候才会进行替换，但是当<paramref name="nullAsEmpty"/>为真的时候会被强行替换为空字符串进行替换</param>
         ''' <param name="escape"></param>
         <Extension>
         Public Sub Interpolate(ByRef sb As StringBuilder, getValue As Func(Of String, String),

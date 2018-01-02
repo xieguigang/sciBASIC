@@ -42,6 +42,13 @@ Namespace IO
 
         Public Overridable Property ID As String Implements INamedValue.Key
 
+        Protected Overrides ReadOnly Property MyHashCode As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return ID.GetHashCode
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
