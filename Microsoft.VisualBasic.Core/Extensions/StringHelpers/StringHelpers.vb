@@ -727,7 +727,7 @@ Public Module StringHelpers
     ''' <returns></returns>
     <ExportAPI("Match")>
     <Extension> Public Function Match(input As Match, pattern$, Optional options As RegexOptions = RegexOptions.Multiline) As String
-        Return Regex.Match(input.Value, pattern, options).Value
+        Return r.Match(input.Value, pattern, options).Value
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
