@@ -114,7 +114,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\.vs\installer\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Webservices.Github.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <DebugType>full</DebugType>
