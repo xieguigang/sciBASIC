@@ -182,8 +182,9 @@ Namespace Serialization.JSON
         ''' <summary>
         ''' JSON反序列化
         ''' </summary>
-        <Extension> Public Function LoadObject(Of T)(json As String, Optional simpleDict As Boolean = True) As T
-            Dim value As Object = LoadObject(json, GetType(T), simpleDict)
+        ''' <param name="json">This string value can be json text or json file path.</param>
+        <Extension> Public Function LoadObject(Of T)(json$, Optional simpleDict As Boolean = True) As T
+            Dim value As Object = LoadObject(json.SolveStream(Encodings.UTF8), GetType(T), simpleDict)
             Dim obj As T = DirectCast(value, T)
             Return obj
         End Function

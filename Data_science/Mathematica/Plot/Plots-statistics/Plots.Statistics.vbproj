@@ -230,6 +230,7 @@
   <ItemGroup>
     <Compile Include="BoxPlot.vb" />
     <Compile Include="BoxData.vb" />
+    <Compile Include="ForestPlot.vb" />
     <Compile Include="HistStackedBarplot.vb" />
     <Compile Include="Heatmap\Heatmap.vb" />
     <Compile Include="Heatmap\CorrelationHeatmap.vb" />
