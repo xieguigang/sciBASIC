@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cde9800d7655a7c378de44183ab63c3e, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\ValuePair\ValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::515b6bffbf878288c5248381260bf2a7, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Xml\Models\ValueTuples\ValuePair.vb"
 
     ' Author:
     ' 

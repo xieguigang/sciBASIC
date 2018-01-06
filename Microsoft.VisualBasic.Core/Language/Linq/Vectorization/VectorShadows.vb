@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0227c1cb188e972dc4201a5a1e2b6101, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\VectorShadows.vb"
+﻿#Region "Microsoft.VisualBasic::02e63e8eae9aa3a8a76735f8f7a0949d, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\Vectorization\VectorShadows.vb"
 
     ' Author:
     ' 

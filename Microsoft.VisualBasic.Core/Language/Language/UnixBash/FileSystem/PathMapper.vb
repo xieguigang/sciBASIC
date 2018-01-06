@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a607bc785b695f6fd2a7934d8db2e268, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\UnixBash\FileSystem\PathMapper.vb"
+﻿#Region "Microsoft.VisualBasic::a607bc785b695f6fd2a7934d8db2e268, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\UnixBash\FileSystem\PathMapper.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bed11e068fc896e1e7f8d9a91311ec0a, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\UnixBash\LinuxRunHelper.vb"
+﻿#Region "Microsoft.VisualBasic::bed11e068fc896e1e7f8d9a91311ec0a, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\UnixBash\LinuxRunHelper.vb"
 
     ' Author:
     ' 

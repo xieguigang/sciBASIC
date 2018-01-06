@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01bd911e4de0106883e4feebbdbe828d, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Signals\TestProvider.vb"
+﻿#Region "Microsoft.VisualBasic::9c5c87be774f3bb1d96e156924dee57a, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Signals\TestProvider.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Public Module TestProvider
         Next
     End Sub
 End Module
-

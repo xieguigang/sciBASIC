@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25812c12dac9ecf4fcec03c898655832, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\SearchEngine.vb"
+﻿#Region "Microsoft.VisualBasic::839cd3091b8227a886fcafba11930522, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\SearchEngine.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e35a2a53d1f0c8484ab3b71002120a55, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::bf79215700f01081ff65a5b388803de1, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb"
 
     ' Author:
     ' 

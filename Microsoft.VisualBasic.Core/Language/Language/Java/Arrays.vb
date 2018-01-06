@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95023b0b53a9e88f269b159ac92282bd, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\Java\Arrays.vb"
+﻿#Region "Microsoft.VisualBasic::95023b0b53a9e88f269b159ac92282bd, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\Java\Arrays.vb"
 
     ' Author:
     ' 

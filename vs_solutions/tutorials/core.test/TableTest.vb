@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1400e463c77254b4dc46cd76d73a72c3, ..\sciBASIC#\vs_solutions\tutorials\core.test\TableTest.vb"
+﻿#Region "Microsoft.VisualBasic::1191a65b2ff94589cc9e086aa8621b65, ..\sciBASIC#\vs_solutions\tutorials\core.test\TableTest.vb"
 
     ' Author:
     ' 
@@ -71,4 +71,3 @@ Module TableTest
         Next
     End Function
 End Module
-
