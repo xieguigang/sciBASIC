@@ -159,10 +159,11 @@ Namespace XML.xl
         <XmlAttribute> Public Property val As String
     End Class
 
-    Public Class ColorValue
+    Public Class ColorValue : Inherits StringValue
         <XmlAttribute> Public Property theme As String
         <XmlAttribute> Public Property rgb As String
         <XmlAttribute> Public Property indexed As String
+        <XmlAttribute> Public Property lastClr As String
     End Class
 
     Public Class Bold

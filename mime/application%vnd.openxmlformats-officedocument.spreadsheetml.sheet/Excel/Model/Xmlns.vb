@@ -48,6 +48,8 @@ Public Module Xmlns
 
     Public Const x16r2$ = "http://schemas.microsoft.com/office/spreadsheetml/2015/02/main"
 
+    Public Const a$ = "http://schemas.openxmlformats.org/drawingml/2006/main"
+
     Public Const worksheet$ = "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
 
 End Module
