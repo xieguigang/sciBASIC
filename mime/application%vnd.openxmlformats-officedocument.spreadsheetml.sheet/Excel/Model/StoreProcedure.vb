@@ -59,7 +59,7 @@ Public Module StoreProcedure
         Dim colIndex%
         Dim cellIndex As Point
 
-        For Each col As c In row.columns
+        For Each col As XML.xl.worksheets.c In row.columns
             cellIndex = Coordinates.Index(col.r)
             colIndex = cellIndex.Y ' 因为这里都是同一行的数据，所以只取列下标即可
 
@@ -100,7 +100,7 @@ Public Module StoreProcedure
 
     Private Function CreateRow(i%, data As RowObject, strings As Dictionary(Of String, Integer)) As row
         Dim spans$
-        Dim cols As c() = data _
+        Dim cols As XML.xl.worksheets.c() = data _
             .SeqIterator _
             .Where(Function(s) Not s.value.StringEmpty) _
             .Select(Function(x)
@@ -124,7 +124,7 @@ Public Module StoreProcedure
                             s = strings(s)
                         End If
 
-                        Return New c With {
+                        Return New XML.xl.worksheets.c With {
                             .r = x.i.ColumnIndex & i,
                             .v = s,
                             .t = t,

@@ -30,17 +30,68 @@ Imports System.Xml.Serialization
 
 Namespace XML.xl
 
-    <XmlRoot("styleSheet")>
+    <XmlRoot("styleSheet", [Namespace]:="http://schemas.openxmlformats.org/spreadsheetml/2006/main")>
     Public Class styles
+
         Public Property fonts As fonts
+        Public Property fills As fills
+        Public Property borders As borders
+
+        <XmlAttribute("Ignorable", [Namespace]:=Excel.Xmlns.mc)>
+        Public Property Ignorable As String
+
+        <XmlNamespaceDeclarations()>
+        Public xmlns As XmlSerializerNamespaces
+
+        Sub New()
+            xmlns = New XmlSerializerNamespaces
+
+            xmlns.Add("mc", Excel.Xmlns.mc)
+            xmlns.Add("x14ac", Excel.Xmlns.x14ac)
+            xmlns.Add("x16r2", Excel.Xmlns.x16r2)
+        End Sub
+
     End Class
 
     Public Class List(Of T)
         <XmlAttribute> Public Property count As Integer
     End Class
 
+    Public Class xf
+
+    End Class
+
+    Public Class borders : Inherits List(Of border)
+
+    End Class
+
+    Public Class border
+        Public Property left As String
+        Public Property right As String
+        Public Property top As String
+        Public Property bottom As String
+        Public Property diagonal As String
+    End Class
+
+    Public Class fills : Inherits List(Of fill)
+
+    End Class
+
+    Public Class fill
+        Public Property patternFill As patternFill
+    End Class
+
+    Public Class patternFill
+        Public Property patternType As String
+        Public Property fgColor As ColorValue
+        Public Property bgColor As ColorValue
+    End Class
+
     Public Class fonts : Inherits List(Of font)
-        <XmlElement> Public Property fonts As font()
+        <XmlAttribute("knownFonts", [Namespace]:=Excel.Xmlns.x14ac)>
+        Public Property knownFonts As String
+        <XmlElement>
+        Public Property fonts As font()
     End Class
 
     Public Class font
@@ -59,6 +110,7 @@ Namespace XML.xl
     Public Class ColorValue
         <XmlAttribute> Public Property theme As String
         <XmlAttribute> Public Property rgb As String
+        <XmlAttribute> Public Property indexed As String
     End Class
 
     Public Class Bold

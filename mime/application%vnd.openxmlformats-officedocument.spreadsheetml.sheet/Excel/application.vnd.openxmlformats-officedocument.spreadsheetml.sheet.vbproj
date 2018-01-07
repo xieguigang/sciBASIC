@@ -166,6 +166,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IO\xl\calcChain.xml.vb" />
     <Compile Include="IO\_rels\rels.vb" />
     <Compile Include="IXml.vb" />
     <Compile Include="IO\docProps\app.xml.vb" />

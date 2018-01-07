@@ -46,6 +46,9 @@ Namespace XML.xl
         Public Property calcPr As calcPr
         Public Property workbookPr As workbookPr
         Public Property fileRecoveryPr As fileRecoveryPr
+        Public Property definedNames As definedName()
+
+        Public Property extLst As ext()
 
         <XmlElement("AlternateContent", [Namespace]:=mc)>
         Public Property AlternateContent As AlternateContent
@@ -97,6 +100,28 @@ Namespace XML.xl
         End Function
     End Class
 
+    <XmlType("ext", [Namespace]:=Excel.Xmlns.x15)>
+    Public Class ext
+
+        <XmlAttribute>
+        Public Property uri As String
+        Public Property workbookPr As workbookPr
+
+        <XmlNamespaceDeclarations()>
+        Public xmlns As XmlSerializerNamespaces
+
+        Sub New()
+            xmlns = New XmlSerializerNamespaces
+            xmlns.Add("x15", Excel.Xmlns.x15)
+        End Sub
+    End Class
+
+    Public Class definedName
+        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property hidden As String
+        <XmlText> Public Property value As String
+    End Class
+
     <XmlRoot("AlternateContent", [Namespace]:=mc)>
     Public Class AlternateContent
         Public Property Choice As Choice
@@ -129,8 +154,9 @@ Namespace XML.xl
     End Class
 
     Public Class workbookPr
-        <XmlAttribute>
-        Public Property defaultThemeVersion As String
+        <XmlAttribute> Public Property defaultThemeVersion As String
+        <XmlAttribute> Public Property chartTrackingRefBase As String
+        <XmlAttribute> Public Property filterPrivacy As String
     End Class
 
     Public Structure calcPr

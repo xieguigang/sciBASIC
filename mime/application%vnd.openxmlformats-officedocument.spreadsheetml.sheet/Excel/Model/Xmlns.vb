@@ -45,6 +45,8 @@ Public Module Xmlns
     Public Const xr$ = "http://schemas.microsoft.com/office/spreadsheetml/2014/revision"
     Public Const xr3$ = "http://schemas.microsoft.com/office/spreadsheetml/2016/revision3"
 
+    Public Const x16r2$ = "http://schemas.microsoft.com/office/spreadsheetml/2015/02/main"
+
     Public Const worksheet$ = "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
 
 End Module
