@@ -106,6 +106,9 @@ Namespace XML.xl
         <XmlAttribute>
         Public Property uri As String
         Public Property workbookPr As workbookPr
+        <XmlElement("slicerStyles", [Namespace]:=Excel.Xmlns.x14)>
+        Public Property slicerStyles As slicerStyles
+        Public Property timelineStyles As timelineStyles
 
         <XmlNamespaceDeclarations()>
         Public xmlns As XmlSerializerNamespaces
@@ -113,7 +116,18 @@ Namespace XML.xl
         Sub New()
             xmlns = New XmlSerializerNamespaces
             xmlns.Add("x15", Excel.Xmlns.x15)
+            xmlns.Add("x14", Excel.Xmlns.x14)
         End Sub
+    End Class
+
+    Public Class slicerStyles
+        <XmlAttribute>
+        Public Property defaultSlicerStyle As String
+    End Class
+
+    Public Class timelineStyles
+        <XmlAttribute>
+        Public Property defaultTimelineStyle As String
     End Class
 
     Public Class definedName
