@@ -1,9 +1,27 @@
 ﻿Imports Microsoft.VisualBasic.MIME.Office
+Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
+Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports Microsoft.VisualBasic.Data.csv.IO
 
 Module test
 
     Sub Main()
-        Call test()
+        Call IOtest()
+        ' Call test()
+    End Sub
+
+    Sub IOtest()
+        Dim file = Xlsx.Open("E:\GCModeller\src\runtime\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\test\test.xlsx")
+        Dim table As New csv
+
+        table += New RowObject({"", "ddddddddd", "+++++++"})
+        table += New RowObject({1, 2, 3, 4, 5})
+
+        file.WriteSheetTable(table, "444444")
+
+        Call file.WriteXlsx("./dddd.xlsx")
+
+        Pause()
     End Sub
 
     Sub test()
