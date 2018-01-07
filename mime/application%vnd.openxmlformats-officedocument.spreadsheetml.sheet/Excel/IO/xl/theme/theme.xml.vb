@@ -78,10 +78,21 @@ Namespace XML.xl.theme
     Public Class fontScheme
         <XmlAttribute>
         Public Property name As String
+        Public Property majorFont As Fonts
+        Public Property minorFont As Fonts
+    End Class
+
+    Public Class Fonts
+        Public Property latin As font
+        Public Property ea As font
+        Public Property cs As font
+        <XmlElement("font")>
+        Public Property fonts As font()
     End Class
 
     Public Class font
         <XmlAttribute> Public Property script As String
         <XmlAttribute> Public Property typeface As String
+        <XmlAttribute> Public Property panose As String
     End Class
 End Namespace
