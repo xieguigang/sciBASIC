@@ -74,8 +74,7 @@ Namespace LP
         <Extension>
         Public Function Solve(func As ObjectiveFunction, equations As IEnumerable(Of Equation)) As Double()
             Dim matrix As New Tableau(equations.BuildMatrix(func))
-            Dim solver As New LinearSolver(func.type)
-            Dim result As Objective = solver.solve(matrix)
+            Dim result As Objective = LinearSolver.solve(matrix)
             Return result.Solution
         End Function
     End Module

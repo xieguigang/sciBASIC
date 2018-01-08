@@ -35,8 +35,8 @@ Namespace LP
 
         Public Overridable ReadOnly Property Tableau As Tableau
 
-        Public Sub New(___tableau As Tableau)
-            Me.Tableau = ___tableau
+        Public Sub New(tableau As Tableau)
+            Me.Tableau = tableau
         End Sub
 
         Public Overridable ReadOnly Property Solution As Double()

@@ -30,41 +30,33 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace LP
 
-    Public Class LinearSolver
+    Public Module LinearSolver
 
-        Public Property Loops As Integer = 100
-
-        ReadOnly type As OptimizationType
-
-        Public Sub New(type As OptimizationType)
-            Me.type = type
-        End Sub
-
-        Public Function solve(___tableau As Tableau) As Objective
-            If Not ___tableau.inProperForm Then
+        Public Function solve(tableau As Tableau, Optional loops% = 100) As Objective
+            If Not tableau.inProperForm Then
                 Throw New ArgumentException("Tableau is not in proper form")
             End If
 
             ' Check if the problem has a solution
-            If ___tableau.Infeasible Then
+            If tableau.Infeasible Then
                 Throw New InfeasibleException("Problem is infeasible.")
             End If
-            If ___tableau.Unbounded Then
+            If tableau.Unbounded Then
                 Throw New UnboundedException("Problem is unbounded.")
             End If
 
             ' Optimize
             Dim [loop] As int = 0
-            Dim objectiveFunction As Double() = ___tableau.Matrix(0)
+            Dim objectiveFunction#() = tableau.Matrix(0)
 
-            Do While (Not isOptimal(objectiveFunction)) AndAlso ++[loop] < Loops
-                Dim pivotColumn% = ___tableau.PivotColumn           ' entering variable
-                Dim pivotRow% = ___tableau.getPivotRow(pivotColumn) ' leaving variable
+            Do While (Not isOptimal(objectiveFunction)) AndAlso ++[loop] < loops
+                Dim pivotColumn% = tableau.PivotColumn           ' entering variable
+                Dim pivotRow% = tableau.getPivotRow(pivotColumn) ' leaving variable
 
-                Call ___tableau.pivot(pivotRow, pivotColumn)
+                Call tableau.pivot(pivotRow, pivotColumn)
             Loop
 
-            Return New Objective(___tableau)
+            Return New Objective(tableau)
         End Function
 
         ''' <summary>
@@ -78,5 +70,5 @@ Namespace LP
             Next
             Return True
         End Function
-    End Class
+    End Module
 End Namespace
