@@ -18,6 +18,10 @@ Namespace Algebra.LinearProgramming
         Const PIVOT_ITERATION_LIMIT As Integer = 1000
         Const USE_SUBSCRIPT_UNICODE As Boolean = False
 
+        Sub New(opt As OptimizationType, variableNames$(), objectiveFunctionCoefficients#(), constraintCoefficients#(,), constraintTypes$(), constraintRightHandSides#(), Optional objectiveFunctionValue# = 0)
+            Call Me.New(opt.Description, variableNames, objectiveFunctionCoefficients, constraintCoefficients.ToVectorList, constraintTypes, constraintRightHandSides, objectiveFunctionValue)
+        End Sub
+
         Public Sub New(objectiveFunctionType As String, variableNames() As String, objectiveFunctionCoefficients() As Double, constraintCoefficients()() As Double, constraintTypes() As String, constraintRightHandSides() As Double, objectiveFunctionValue As Double)
 
             ' Create default variable name array

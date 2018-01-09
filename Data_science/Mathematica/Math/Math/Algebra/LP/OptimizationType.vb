@@ -31,7 +31,14 @@ Imports System.ComponentModel
 Namespace Algebra.LinearProgramming
 
     Public Enum OptimizationType
+
+        ''' <summary>
+        ''' Maximize
+        ''' </summary>
         <Description("Maximize")> MAX
+        ''' <summary>
+        ''' Minimize
+        ''' </summary>
         <Description("Minimize")> MIN
     End Enum
 End Namespace

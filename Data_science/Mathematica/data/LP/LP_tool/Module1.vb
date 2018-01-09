@@ -1,17 +1,23 @@
 ﻿Imports Microsoft.VisualBasic.Math.Algebra.LinearProgramming
 
 Module Module1
+
+    ''' <summary>
+    ''' https://en.wikipedia.org/wiki/Simplex_algorithm
+    ''' </summary>
     Sub Main()
-        Dim lpModel As New LPP("Min",
-                                   variableNames:=New String() {"x", "y", "z"},
-                                  objectiveFunctionCoefficients:=New Double() {-2, -3, -4},
-                                 constraintCoefficients:=New Double()() {
-                                       New Double() {3, 2, 1},
-                                       New Double() {2, 5, 3}
-                                   },
-                                 constraintTypes:=New String() {"<=", "<="},
-                                  constraintRightHandSides:=New Double() {10, 15},
-                                   objectiveFunctionValue:=0)
+        Dim lpModel As New LPP(
+            OptimizationType.MIN,
+            variableNames:={"x", "y", "z"},
+            objectiveFunctionCoefficients:={-2, -3, -4},
+            constraintCoefficients:={
+                {3, 2, 1},
+                {2, 5, 3}
+            },
+            constraintTypes:={"<=", "<="},
+            constraintRightHandSides:={10, 15},
+            objectiveFunctionValue:=0
+        )
 
         Console.WriteLine("Print model")
         Console.WriteLine(lpModel.ToString())
