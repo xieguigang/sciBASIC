@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{FAC86FC8-E5A9-45ED-A403-D99799561F02}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>LP_tool.Program</StartupObject>
+    <StartupObject>LP_tool.Module1</StartupObject>
     <RootNamespace>LP_tool</RootNamespace>
     <AssemblyName>LP_tool</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -69,7 +69,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.vb" />
+    <Compile Include="LPPExamples.vb" />
+    <Compile Include="LPPTest.vb" />
+    <Compile Include="Module1.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
