@@ -1,5 +1,10 @@
 Namespace Algebra.LinearProgramming
 
+    ''' <summary>
+    ''' Linear programming solver from: 
+    ''' 
+    ''' https://github.com/gthole/lpp
+    ''' </summary>
     Public Class LPP
 
         Private objectiveFunctionType As OptimizationType
