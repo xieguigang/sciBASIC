@@ -148,7 +148,9 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
         With args <= "/in"
             If .ExtensionSuffix.TextEquals("csv") Then
+#Disable Warning
                 csv = csv.Load(.ref)
+#Enable Warning
             Else
                 csv = Xlsx.Open(.ref).GetTable(sheetName:=args("/sheet") Or "Sheet1")
             End If
