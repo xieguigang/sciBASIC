@@ -199,8 +199,10 @@ Namespace ComponentModel.DataStructures.BinaryTree
         Public Function FindSymbol(Name As String) As TreeNode(Of T)
             Dim np As TreeNode(Of T) = Root
             Dim cmp As Integer
+
             While np IsNot Nothing
-                cmp = String.Compare(Name, np.Name)
+                cmp = NameCompare(Name, np.Name)
+
                 If cmp = 0 Then
                     ' found !
                     Return np
@@ -212,8 +214,9 @@ Namespace ComponentModel.DataStructures.BinaryTree
                     np = np.Right
                 End If
             End While
-            Return Nothing
+
             ' Return null to indicate failure to find name
+            Return Nothing
         End Function
 
         ''' <summary>
@@ -306,14 +309,19 @@ Namespace ComponentModel.DataStructures.BinaryTree
             End Try
         End Function
 
-        ' Searches for a node with name key, name. If found it returns a reference
-        ' to the node and to thenodes parent. Else returns null.
+        ''' <summary>
+        ''' Searches for a node with name key, name. If found it returns a reference
+        ''' to the node and to the nodes parent. Else returns null.
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="parent"></param>
+        ''' <returns></returns>
         Private Function findParent(name As String, ByRef parent As TreeNode(Of T)) As TreeNode(Of T)
             Dim np As TreeNode(Of T) = Root
             parent = Nothing
             Dim cmp As Integer
             While np IsNot Nothing
-                cmp = String.Compare(name, np.Name)
+                cmp = NameCompare(name, np.Name)
                 If cmp = 0 Then
                     ' found !
                     Return np

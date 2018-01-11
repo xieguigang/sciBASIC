@@ -71,6 +71,26 @@ Namespace ComponentModel.DataStructures.BinaryTree
             End Get
         End Property
 
+        Public ReadOnly Property ChainPosition As String
+            Get
+                If Parent Is Nothing Then
+                    Return "/"
+                Else
+                    If Parent.Left Is Nothing Then
+                        Return Parent.ChainPosition & "/+"
+                    ElseIf Parent.Right Is Nothing Then
+                        Return Parent.ChainPosition & "/-"
+                    Else
+                        If Me Is Parent.Right Then
+                            Return Parent.ChainPosition & "/+"
+                        Else
+                            Return Parent.ChainPosition & "/-"
+                        End If
+                    End If
+                End If
+            End Get
+        End Property
+
         <ScriptIgnore> Public ReadOnly Property IsLeaf As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

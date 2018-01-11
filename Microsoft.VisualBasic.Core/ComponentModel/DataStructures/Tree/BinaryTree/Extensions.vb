@@ -12,6 +12,16 @@ Namespace ComponentModel.DataStructures.BinaryTree
             Return tree.insert(node.Name, node)
         End Function
 
+        ''' <summary>
+        ''' 字符串名字的比较规则：
+        ''' 
+        ''' 假若字符串是空值或者空字符串，则该变量小
+        ''' 假若字符串相等（忽略大小写），则变量值一样
+        ''' 最后逐个字符进行比较，按照字母的charcode大小来比较，第一个charcode大的变量大
+        ''' </summary>
+        ''' <param name="a$"></param>
+        ''' <param name="b$"></param>
+        ''' <returns></returns>
         Public Function NameCompare(a$, b$) As Integer
             Dim null1 = String.IsNullOrEmpty(a)
             Dim null2 = String.IsNullOrEmpty(b)
@@ -22,7 +32,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 Return -1
             ElseIf null2 Then
                 Return 1
-            ElseIf String.Equals(a, b, StringComparison.Ordinal) Then
+            ElseIf String.Equals(a, b, StringComparison.OrdinalIgnoreCase) Then
                 Return 0
             Else
 
