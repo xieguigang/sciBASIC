@@ -1,4 +1,4 @@
-Namespace Algebra.LinearProgramming
+ï»¿Namespace Algebra.LinearProgramming
 
     ''' <summary>
     ''' Linear programming solver from: 
@@ -151,7 +151,7 @@ Namespace Algebra.LinearProgramming
         Public Sub makeStandardForm()
             For i As Integer = 0 To constraintTypes.Length - 1
                 If constraintTypes(i) <> "=" Then
-                    addVariableAt(i, If(constraintTypes(i) = "³", -1, 1))
+                    addVariableAt(i, If(constraintTypes(i) = "Â³", -1, 1))
                     constraintTypes(i) = "="
                 End If
             Next
@@ -164,7 +164,7 @@ Namespace Algebra.LinearProgramming
         Private Sub makeStandardForm(artificialVariables As List(Of Integer))
             For i As Integer = 0 To constraintTypes.Length - 1
                 If constraintTypes(i) <> "=" Then
-                    addVariableAt(i, If(constraintTypes(i) = "³", -1, 1))
+                    addVariableAt(i, If(constraintTypes(i) = "Â³", -1, 1))
                     constraintTypes(i) = "="
                     artificialVariables = increaseArtificialVariableIndices(artificialVariables)
                 End If
