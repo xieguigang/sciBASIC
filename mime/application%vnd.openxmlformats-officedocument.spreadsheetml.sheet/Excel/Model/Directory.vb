@@ -63,10 +63,13 @@ Public Class docProps : Inherits Directory
         Call MyBase.New(ROOT)
     End Sub
 
+    ''' <summary>
+    ''' 有些文件可能是会不存在的，所以在这里就不抛出错误了，直接返回Nothing
+    ''' </summary>
     Protected Overrides Sub _loadContents()
-        core = (Folder & "/core.xml").LoadXml(Of core)
-        custom = (Folder & "/custom.xml").LoadXml(Of custom)
-        app = (Folder & "/app.xml").LoadXml(Of XML.docProps.app)
+        core = (Folder & "/core.xml").LoadXml(Of core)(ThrowEx:=False)
+        custom = (Folder & "/custom.xml").LoadXml(Of custom)(ThrowEx:=False)
+        app = (Folder & "/app.xml").LoadXml(Of XML.docProps.app)(ThrowEx:=False)
     End Sub
 
     Protected Overrides Function _name() As String
@@ -145,6 +148,7 @@ Public Class worksheets : Inherits Directory
     ''' </summary>
     ''' <returns></returns>
     Public Property worksheets As Dictionary(Of String, worksheet)
+    Public Property _rels As Dictionary(Of String, rels)
 
     Sub New(ROOT$)
         Call MyBase.New(ROOT)
@@ -183,6 +187,9 @@ Public Class worksheets : Inherits Directory
             .Select(Function(path) (path, path.LoadXml(Of worksheet))) _
             .ToDictionary(Function(page) getID(page),
                           Function(page) page.Item2)
+        _rels = (ls - l - "*.rels" <= (Folder & "/_rels")) _
+            .ToDictionary(Function(path) path.BaseName,
+                          Function(path) path.LoadXml(Of rels))
     End Sub
 
     Private Shared Function getID(page As (path$, page As worksheet)) As String

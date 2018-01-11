@@ -166,6 +166,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IO\xl\calcChain.xml.vb" />
     <Compile Include="IO\_rels\rels.vb" />
     <Compile Include="IXml.vb" />
     <Compile Include="IO\docProps\app.xml.vb" />
@@ -234,9 +235,9 @@
       <Project>{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\text%25html\MIME-htmls.vbproj">
+    <ProjectReference Include="..\..\text%25html\mime-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>MIME-htmls</Name>
+      <Name>mime-htmls</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

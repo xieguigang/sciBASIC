@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3596bb305a11d1630b4a5182304e5eb, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\Java\JavaMath.vb"
+﻿#Region "Microsoft.VisualBasic::c3596bb305a11d1630b4a5182304e5eb, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\Java\JavaMath.vb"
 
     ' Author:
     ' 

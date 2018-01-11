@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f4f9cddb13ef03d682594b7938ebda9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\C\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::5f4f9cddb13ef03d682594b7938ebda9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\C\Vector.vb"
 
     ' Author:
     ' 

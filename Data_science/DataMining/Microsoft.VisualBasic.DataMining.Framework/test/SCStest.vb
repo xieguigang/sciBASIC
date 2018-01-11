@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::331360bc2536cac449296a5b377a1178, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\SCStest.vb"
+﻿#Region "Microsoft.VisualBasic::ac64527fc6947ad7d75d2daaaecd017f, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\SCStest.vb"
 
     ' Author:
     ' 
@@ -73,4 +73,3 @@ Module SCStest
         Pause()
     End Sub
 End Module
-

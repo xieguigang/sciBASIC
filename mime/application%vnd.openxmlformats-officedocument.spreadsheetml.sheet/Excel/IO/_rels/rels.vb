@@ -49,5 +49,6 @@ Namespace XML._rels
         <XmlAttribute> Public Property Id As String
         <XmlAttribute> Public Property Type As String
         <XmlAttribute> Public Property Target As String
+        <XmlAttribute> Public Property TargetMode As String
     End Class
 End Namespace
