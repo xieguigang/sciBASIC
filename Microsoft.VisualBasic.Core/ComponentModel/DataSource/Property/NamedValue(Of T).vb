@@ -158,6 +158,22 @@ Namespace ComponentModel.DataSourceModel
             End If
         End Operator
 
+        ''' <summary>
+        ''' Convert from tuple
+        ''' </summary>
+        ''' <param name="tuple"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(tuple As (name$, value As T)) As NamedValue(Of T)
+            Return New NamedValue(Of T)(tuple.name, tuple.value)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(tuple As (name$, value As T, describ$)) As NamedValue(Of T)
+            Return New NamedValue(Of T)(tuple.name, tuple.value, tuple.describ)
+        End Operator
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(tuple As NamedValue(Of T), compares As T) As Boolean
             Return Not tuple = compares
