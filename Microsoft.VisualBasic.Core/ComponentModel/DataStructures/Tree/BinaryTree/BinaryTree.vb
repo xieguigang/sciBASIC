@@ -132,7 +132,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' <param name="parent"></param>
         ''' <param name="node"></param>
         ''' <param name="left"></param>
-        Public Sub Add(parent As String, node As TreeNode(Of T), left As Boolean)
+        Public Sub Add(parent$, node As TreeNode(Of T), left As Boolean)
             Dim parentNode = DirectFind(parent)
             If left Then
                 parentNode.Left = node
@@ -235,7 +235,8 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 Dim comparison As Integer
 
                 If [overrides] = 0 Then
-                    comparison = String.Compare(node.Name, tree.Name)
+                    comparison = NameCompare(node.Name, tree.Name)
+
                     If comparison = 0 Then
                         Throw New Exception("Duplicated node was found!")
                     End If
@@ -243,10 +244,15 @@ Namespace ComponentModel.DataStructures.BinaryTree
                     comparison = [overrides]
                 End If
 
+                ' 2018-1-11
+                ' overrides 应该一直被传递下去，而不是使用comparison结果，否则会一直被错误的overrides下去的
+                ' 导致构建出来的树不平衡
                 If comparison < 0 Then
-                    add(node, tree.Left, comparison)
+                    add(node, tree.Left, [overrides]:=[overrides])
+                    tree.Left.Parent = tree
                 Else
-                    add(node, tree.Right, comparison)
+                    add(node, tree.Right, [overrides]:=[overrides])
+                    tree.Right.Parent = tree
                 End If
             End If
         End Sub

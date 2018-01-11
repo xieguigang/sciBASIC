@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::8a3c74afcfd3be1eaf426fa047e045db, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\TreeNode(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
@@ -40,9 +41,10 @@ Namespace ComponentModel.DataStructures.BinaryTree
         Implements Value(Of T).IValueOf
 
         Public Property Name As String Implements INamedValue.Key
-        Public Property Value As T Implements Value(Of T).IValueOf.value
+        Public Property Value As T Implements Value(Of T).IValueOf.Value
         Public Property Left As TreeNode(Of T)
         Public Property Right As TreeNode(Of T)
+        Public Property Parent As TreeNode(Of T)
 
         ''' <summary>
         ''' Constructor  to create a single node 
@@ -59,7 +61,18 @@ Namespace ComponentModel.DataStructures.BinaryTree
         Sub New()
         End Sub
 
+        Public ReadOnly Property QualifiedName As String
+            Get
+                If Parent Is Nothing Then
+                    Return "/"
+                Else
+                    Return Parent.QualifiedName & "/" & Name
+                End If
+            End Get
+        End Property
+
         <ScriptIgnore> Public ReadOnly Property IsLeaf As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Left Is Nothing AndAlso
                     Right Is Nothing
@@ -101,11 +114,17 @@ Namespace ComponentModel.DataStructures.BinaryTree
             End Get
         End Property
 
+        Public Shared Property DisplayQualifiedName As Boolean = True
+
         Public Overrides Function ToString() As String
-            If Value Is Nothing Then
-                Return Name
+            If DisplayQualifiedName Then
+                Return QualifiedName
             Else
-                Return Name & " ==> " & Value.ToString
+                If Value Is Nothing Then
+                    Return Name
+                Else
+                    Return $"[{Name}] {Value}"
+                End If
             End If
         End Function
 
