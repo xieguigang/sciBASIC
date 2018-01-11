@@ -279,9 +279,11 @@ Public Module StringHelpers
     ''' <param name="data"></param>
     ''' <param name="delimiter$"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter$) As String
-        Return String.Join(delimiter, data.Select(AddressOf Scripting.ToString).ToArray)
+        Return String.Join(delimiter, data.SafeQuery.Select(AddressOf Scripting.ToString).ToArray)
     End Function
 
     ''' <summary>
@@ -292,6 +294,8 @@ Public Module StringHelpers
     ''' <param name="trim">Needs Removes all leading and trailing white-space characters from 
     ''' the current <see cref="System.String"/> object.</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function GetTagValue(s$, Optional delimiter$ = " ", Optional trim As Boolean = False, Optional failureNoName As Boolean = True) As NamedValue(Of String)
         Return s.GetTagValue(delimiter, trim:=If(trim, " ", Nothing), failureNoName:=failureNoName)
@@ -390,6 +394,8 @@ Public Module StringHelpers
     ''' Call <see cref="StringBuilder.Remove"/>(<see cref="StringBuilder.Length"/> - 1, 1) for removes the last character in the string sequence.
     ''' </summary>
     ''' <param name="s"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Sub RemoveLast(s As StringBuilder)
         Call s.Remove(s.Length - 1, 1)
     End Sub
@@ -410,6 +416,8 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Reverse(s As String) As String
         Return New String(s.Reverse.ToArray)
     End Function
