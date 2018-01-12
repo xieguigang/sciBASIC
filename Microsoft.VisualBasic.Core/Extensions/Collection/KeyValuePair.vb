@@ -647,4 +647,10 @@ Public Module KeyValuePairExtensions
     Public Function [Select](Of K, V, T)(source As IEnumerable(Of KeyValuePair(Of K, V)), project As Func(Of K, V, T)) As IEnumerable(Of T)
         Return source.Select(Function(value) project(value.Key, value.Value))
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function [Select](Of V, T)(source As IEnumerable(Of KeyValuePair(Of String, V)), project As Func(Of String, V, T)) As IEnumerable(Of T)
+        Return source.Select(Function(value) project(value.Key, value.Value))
+    End Function
 End Module

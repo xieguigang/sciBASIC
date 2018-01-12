@@ -126,7 +126,7 @@ Namespace Language.Vectorization
         ''' <param name="y"></param>
         ''' <returns></returns>
         Public Shared Operator Or(x As BooleanVector, y As Boolean()) As BooleanVector
-            Return New BooleanVector(From i In x.SeqIterator Select i.value OrElse y(i))
+            Return New BooleanVector(x.Select(Function(b, i) b OrElse y(i)))
         End Operator
 
         ''' <summary>
@@ -135,6 +135,8 @@ Namespace Language.Vectorization
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or(x As BooleanVector, y As BooleanVector) As BooleanVector
             Return x Or y.ToArray
         End Operator
@@ -158,9 +160,10 @@ Namespace Language.Vectorization
 
         Public Shared Operator IsFalse(b As BooleanVector) As Boolean
             If b Then
-                Return True
-            Else
+                ' b是True，则不是False，在这里返回False，表明IsFalse不成立
                 Return False
+            Else
+                Return True
             End If
         End Operator
     End Class
