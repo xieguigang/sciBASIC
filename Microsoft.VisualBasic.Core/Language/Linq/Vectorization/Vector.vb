@@ -272,6 +272,10 @@ Namespace Language.Vectorization
             buffer = New T(capacity - 1) {}
         End Sub
 
+        ''' <summary>
+        ''' 构建一个新的向量对象，这个向量对象只提供基本的数据存储和访问模型，并没有提供高级的动态处理和模式解析的操作
+        ''' </summary>
+        ''' <param name="data"></param>
         Sub New(data As IEnumerable(Of T))
             buffer = data.ToArray
         End Sub
