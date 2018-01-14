@@ -46,21 +46,6 @@ Namespace ComponentModel.DataStructures.BinaryTree
         Public Property Right As TreeNode(Of T)
         Public Property Parent As TreeNode(Of T)
 
-        ''' <summary>
-        ''' Constructor  to create a single node 
-        ''' </summary>
-        ''' <param name="name"></param>
-        ''' <param name="obj"></param>
-        Public Sub New(name As String, obj As T)
-            With Me
-                .Name = name
-                .Value = obj
-            End With
-        End Sub
-
-        Sub New()
-        End Sub
-
         Public ReadOnly Property QualifiedName As String
             Get
                 If Parent Is Nothing Then
@@ -133,6 +118,21 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 Return n
             End Get
         End Property
+
+        ''' <summary>
+        ''' Constructor  to create a single node 
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="obj"></param>
+        Public Sub New(name As String, obj As T)
+            With Me
+                .Name = name
+                .Value = obj
+            End With
+        End Sub
+
+        Sub New()
+        End Sub
 
         Public Shared Property DisplayQualifiedName As Boolean = True
 
