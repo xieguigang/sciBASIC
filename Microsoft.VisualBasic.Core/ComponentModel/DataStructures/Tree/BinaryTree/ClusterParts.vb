@@ -49,7 +49,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
                                            isLeafX As IsType(Of T),
                                            GetEntities As GetEntities(Of T)) As Dictionary(Of String, String())
 
-            Dim ROOT As TreeNode(Of T) = tree.DirectFind(BinaryTree.ClusterParts.ROOT)
+            Dim ROOT As TreeNode(Of T) = tree.FindSymbol(BinaryTree.ClusterParts.ROOT)
             Dim hash As Dictionary(Of String, String()) = New Dictionary(Of String, String())
             For Each x In ROOT.GetEnumerator
                 Call x.__addCluster(hash, isLeaf, isLeafX, GetEntities)
