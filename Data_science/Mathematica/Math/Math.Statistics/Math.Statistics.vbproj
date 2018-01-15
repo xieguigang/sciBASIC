@@ -194,6 +194,7 @@
     <Compile Include="HypothesisTesting\T-test\TestResult.vb" />
     <Compile Include="HypothesisTesting\Hypothesis.vb" />
     <Compile Include="HypothesisTesting\T-test\Ttest.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
