@@ -47,6 +47,10 @@ Namespace MomentFunctions
         Dim _ToleranceForConvergence As Double = 0.01
         Dim _MinValuesBeforeConvergenceTest As Integer = 100
 
+        ''' <summary>
+        ''' 标准差
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property StDev() As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

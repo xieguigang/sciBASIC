@@ -166,6 +166,16 @@ Public Module Bootstraping
         Return answer
     End Function
 
+    <Extension>
+    Public Function ProbabilityDensity(x As Vector, m#, sd#) As Vector
+        Dim answer As Double = 1 / (sd * (sys.Sqrt(2 * sys.PI)))
+        Dim exp = (x - m) ^ 2.0
+        Dim expP2 As Double = 2 * sys.Pow(sd, 2.0)
+        Dim expP3 = sys.E ^ -(exp / expP2)
+        Dim y As Vector = answer * expP3
+        Return y
+    End Function
+
     Public Function AboveStandardDistribution(upperX As Double, n As Double, m As Double, sd As Double) As Double
         Dim lowerX As Double = m - 4.1 * sd
         Dim answer As Double = TrapezodialRule(lowerX, upperX, n, m, sd)

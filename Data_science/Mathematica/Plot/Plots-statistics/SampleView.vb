@@ -1,8 +1,11 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -33,6 +36,23 @@ Public Module SampleView
         Dim normalErrorLine As Pen = Stroke.TryParse(normalErrorColor).GDIObject
         Dim outlierLine As Pen = Stroke.TryParse(outlierColor).GDIObject
         Dim normaldistLine As Pen = Stroke.TryParse(normaldistLineColor).GDIObject
+        Dim d1# = data.StDev
+        Dim d2# = 2 * d1
+        Dim d3# = 3 * d1
+        Dim xrange As Vector = {data.Mean - d3, data.Mean + d3} _
+            .Range _
+            .Enumerate(n:=200) _
+            .AsVector
+        Dim points As PointF() = xrange _
+            .AsVector _
+            .ProbabilityDensity(data.Mean, d1) _
+            .Select(Function(y, i)
+                        Return New PointF With {
+                            .X = xrange(i),
+                            .Y = y
+                        }
+                    End Function) _
+            .ToArray
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
