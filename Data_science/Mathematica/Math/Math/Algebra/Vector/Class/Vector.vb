@@ -555,7 +555,7 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' Power
+        ''' Power: <see cref="Math.Pow(Double, Double)"/>
         ''' </summary>
         ''' <param name="v"></param>
         ''' <param name="n"></param>

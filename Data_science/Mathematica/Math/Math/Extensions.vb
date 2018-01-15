@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
@@ -62,18 +63,34 @@ Public Module Extensions
         Return New Vector(data)
     End Function
 
+    ''' <summary>
+    ''' Create a <see cref="Vector"/> from a specific <see cref="Integer"/> abstract vector.
+    ''' </summary>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsVector(v As Vector(Of Integer)) As Vector
         Return v.Select(Function(i) CDbl(i)).AsVector
     End Function
 
+    ''' <summary>
+    ''' Create a <see cref="Vector"/> from a specific numeric collection.
+    ''' </summary>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsVector(v As Vector(Of Double)) As Vector
         Return v.Select(Function(x) x).AsVector
     End Function
 
+    ''' <summary>
+    ''' Create a <see cref="Vector"/> from a given subset of the dynamics object property values.
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="keys$"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsVector(data As DynamicPropertyBase(Of Double), keys$()) As Vector
@@ -149,7 +166,7 @@ Public Module Extensions
         Dim pre As Double = data.First
         Dim pr As Double = 1000000
 
-        For Each x In data.SeqIterator
+        For Each x As SeqValue(Of Double) In data.SeqIterator
             Dim d = (pre - x.value)
 
             If d / pr > ratio Then
@@ -174,7 +191,10 @@ Public Module Extensions
         Dim pre As Double = data.First
         Dim pr As Double = 1000000
 
-        For Each x In data.Skip(1).SeqIterator(offset:=1)
+        For Each x As SeqValue(Of Double) In data _
+            .Skip(1) _
+            .SeqIterator(offset:=1)
+
             Dim dy = (x.value - pre) ' 对边
             Dim tanX As Double = dy / dx
             Dim a As Double = Atn(tanX)
@@ -196,7 +216,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Function Reach(data As IEnumerable(Of Double), n As Double, Optional offset As Double = 0) As Integer
-        For Each x In data.SeqIterator
+        For Each x As SeqValue(Of Double) In data.SeqIterator
             If sys.Abs(x.value - n) <= offset Then
                 Return x.i
             End If
@@ -250,5 +270,17 @@ Public Module Extensions
     <Extension>
     Public Function Tanimoto(x As Vector, y As Vector) As Double
         Return (x * y).Sum / ((x * x).Sum + (y * y).Sum - (x * y).Sum)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Y(points As IEnumerable(Of PointF)) As Vector
+        Return points.Select(Function(pt) CDbl(pt.Y)).AsVector
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function X(points As IEnumerable(Of PointF)) As Vector
+        Return points.Select(Function(pt) CDbl(pt.X)).AsVector
     End Function
 End Module

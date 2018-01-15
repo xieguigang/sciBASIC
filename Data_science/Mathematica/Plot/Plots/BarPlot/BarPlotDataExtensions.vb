@@ -211,7 +211,7 @@ Namespace BarPlot
         ''' <param name="data"></param>
         ''' <returns></returns>
         <Extension> Public Function Normalize(data As BarDataGroup) As BarDataGroup
-            For Each x In data.Samples
+            For Each x As BarDataSample In data.Samples
                 x.data = x.data.AsVector / x.StackedSum
             Next
 
