@@ -8,5 +8,8 @@ Module SampleVisualizeTest
         Dim norm As Vector = rand(100)
 
         Call norm.NormalDistributionPlot.AsGDIImage.SaveAs("./nd.png")
+
+
+        Pause()
     End Sub
 End Module

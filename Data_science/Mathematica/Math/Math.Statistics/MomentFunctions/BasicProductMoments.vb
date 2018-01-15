@@ -103,11 +103,10 @@ Namespace MomentFunctions
         ''' <summary>
         ''' This constructor allows one to create an instance without adding any data.
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New()
-            means = 0
-            _SampleVariance = 0
-            _Min = 0
-            _Max = 0
+            Call Me.New({})
         End Sub
 
         ''' <summary>
@@ -121,6 +120,7 @@ Namespace MomentFunctions
             _SampleVariance = 0
             _Min = 0
             _Max = 0
+            buffer = New List(Of Double)
 
             For Each d As Double In data
                 Me.AddObservation(d)
