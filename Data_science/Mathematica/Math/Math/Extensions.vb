@@ -62,18 +62,34 @@ Public Module Extensions
         Return New Vector(data)
     End Function
 
+    ''' <summary>
+    ''' Create a <see cref="Vector"/> from a specific <see cref="Integer"/> abstract vector.
+    ''' </summary>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsVector(v As Vector(Of Integer)) As Vector
         Return v.Select(Function(i) CDbl(i)).AsVector
     End Function
 
+    ''' <summary>
+    ''' Create a <see cref="Vector"/> from a specific numeric collection.
+    ''' </summary>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsVector(v As Vector(Of Double)) As Vector
         Return v.Select(Function(x) x).AsVector
     End Function
 
+    ''' <summary>
+    ''' Create a <see cref="Vector"/> from a given subset of the dynamics object property values.
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="keys$"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsVector(data As DynamicPropertyBase(Of Double), keys$()) As Vector
