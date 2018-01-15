@@ -30,7 +30,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ODEsSolver", "..\Math\ODE\O
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data_science", "Data_science", "{BD520A3E-1448-45A6-A928-59676FE72A3F}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Testing", "Testing\Testing.vbproj", "{AD4BCB63-E1C7-4243-A032-78A4FA0DBEBF}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Test", "Test\test.vbproj", "{AD4BCB63-E1C7-4243-A032-78A4FA0DBEBF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99} = {FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}
 	EndProjectSection
