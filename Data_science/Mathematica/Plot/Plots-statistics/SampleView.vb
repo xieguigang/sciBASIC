@@ -41,7 +41,10 @@ Public Module SampleView
         Dim d1# = data.StDev
         Dim d2# = 2 * d1
         Dim d3# = 3 * d1
-        Dim xrange As Vector = {data.Mean - d3, data.Mean + d3} _
+        Dim d4# = 4 * d1
+        Dim d5# = 5 * d1
+        Dim d6# = 6 * d1
+        Dim xrange As Vector = {data.Mean - d6, data.Mean + d6} _
             .Range _
             .Enumerate(n:=200) _
             .AsVector
