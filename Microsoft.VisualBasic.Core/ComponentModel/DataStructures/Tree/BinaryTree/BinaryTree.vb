@@ -133,7 +133,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' <param name="node"></param>
         ''' <param name="left"></param>
         Public Sub Add(parent$, node As TreeNode(Of T), left As Boolean)
-            Dim parentNode = DirectFind(parent)
+            Dim parentNode = FindSymbol(parent)
             If left Then
                 parentNode.Left = node
             Else
@@ -147,7 +147,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' <param name="parent"></param>
         ''' <param name="node"></param>
         Public Sub Add(parent As String, node As TreeNode(Of T))
-            Dim parentNode = DirectFind(parent)
+            Dim parentNode = FindSymbol(parent)
             parentNode += node
         End Sub
 
@@ -161,34 +161,6 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 Return _counts
             End Get
         End Property
-
-        ''' <summary>
-        ''' 假若节点是不适用标识符来标识自己的左右的位置，则必须要使用这个方法才可以查找成功
-        ''' </summary>
-        ''' <param name="name"></param>
-        ''' <returns></returns>
-        Public Function DirectFind(name As String) As TreeNode(Of T)
-            If String.Equals(name, Root.Name) Then
-                Return Root
-            Else
-                Return __visitStack(Root, name)
-            End If
-        End Function
-
-        Private Shared Function __visitStack(node As TreeNode(Of T), name As String) As TreeNode(Of T)
-            For Each x In node.GetEnumerator
-                If String.Equals(x.Name, name) Then
-                    Return x
-                Else
-                    Dim n = __visitStack(x, name)
-                    If Not n Is Nothing Then
-                        Return n
-                    End If
-                End If
-            Next
-
-            Return Nothing
-        End Function
 
         ''' <summary>
         ''' Find name in tree. Return a reference to the node

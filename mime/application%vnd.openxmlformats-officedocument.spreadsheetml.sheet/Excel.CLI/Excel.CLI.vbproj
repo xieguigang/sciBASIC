@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F2836E14-0E10-4B98-9B2C-C842D7E2F14E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Excel_CLI.test</StartupObject>
+    <StartupObject>Excel_CLI.Program</StartupObject>
     <RootNamespace>Excel_CLI</RootNamespace>
     <AssemblyName>Excel</AssemblyName>
     <FileAlignment>512</FileAlignment>

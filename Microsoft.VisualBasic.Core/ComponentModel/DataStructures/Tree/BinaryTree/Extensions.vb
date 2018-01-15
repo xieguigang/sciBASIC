@@ -55,5 +55,29 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 End If
             End If
         End Function
+
+        ''' <summary>
+        ''' The term index search engine.
+        ''' 
+        ''' + If the string similarity less than threshold, then will returns negative value
+        ''' + If the string similarity greater than threshold, then will returns positive value
+        ''' + If the string text equals to other, then will reutrns ZERO
+        ''' </summary>
+        ''' <param name="a$"></param>
+        ''' <param name="b$"></param>
+        ''' <returns></returns>
+        Public Function NameFuzzyMatch(a$, b$) As Integer
+            Dim similarity = Text.Levenshtein.ComputeDistance(a, b)
+
+            If a.TextEquals(b) Then
+                Return 0
+            ElseIf similarity Is Nothing Then
+                Return -1
+            ElseIf similarity.MatchSimilarity < 0.6 Then
+                Return -1
+            Else
+                Return 1
+            End If
+        End Function
     End Module
 End Namespace
