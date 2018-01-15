@@ -167,4 +167,36 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
             Call PrintAsTable.PrintTable(table.rows, out,, table.header)
         End Using
     End Function
+
+    <ExportAPI("/Association")>
+    <Usage("/Association /a <a.csv> /b <dataset.csv> [/column.A <scan0> /out <out.csv>]")>
+    Public Function Association(args As CommandLine) As Integer
+        Dim a$ = args <= "/a"
+        Dim b$ = args <= "/b"
+        Dim columnNameA$ = args("/column.A")
+        Dim out$ = args("/out") Or $"{a.TrimSuffix}_AND_{b.BaseName}.csv"
+        Dim bName$ = b.BaseName
+        Dim bData = EntityObject.LoadDataSet(b).GroupBy(Function(bb) bb.ID).ToDictionary(Function(g) g.Key, Function(g) g.ToArray)
+        Dim aData = EntityObject.LoadDataSet(a, uidMap:=columnNameA)
+        Dim associates As New List(Of EntityObject)
+
+        For Each x As EntityObject In aData
+            If bData.ContainsKey(x.ID) Then
+                For Each y As EntityObject In bData(x.ID)
+                    Dim copy = x.Copy
+
+                    For Each [property] In y.Properties
+                        Dim key = bName & "." & [property].Key
+                        copy.Properties.Add(key, [property].Value)
+                    Next
+
+                    associates += copy
+                Next
+            End If
+        Next
+
+        Return associates _
+            .SaveDataSet(out, KeyMap:=columnNameA) _
+            .CLICode
+    End Function
 End Module
