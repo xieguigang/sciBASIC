@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f6ce22684d35989c08ea0f901f62ba7a, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\BasicProductMoments.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -116,15 +116,17 @@ Namespace MomentFunctions
         ''' </summary>
         ''' <param name="data"> the dataset to calculate mean and standard deviation for. </param>
         Public Sub New(data As IEnumerable(Of Double))
-            means = 0
-            _SampleVariance = 0
-            _Min = 0
-            _Max = 0
-            buffer = New List(Of Double)
+            buffer = data.AsList
+            means = buffer.Average
+            _Min = buffer.Min
+            _Max = buffer.Max
+            _SampleVariance = Aggregate n As Double
+                              In buffer
+                              Let d = (n - means) ^ 2
+                              Into Sum(d)
+            _SampleVariance /= buffer.Count
 
-            For Each d As Double In data
-                Me.AddObservation(d)
-            Next
+            Call TestForConvergence()
         End Sub
 
         ''' <summary>
@@ -134,7 +136,9 @@ Namespace MomentFunctions
         ''' </summary>
         ''' <param name="observation"> the observation to be added </param>
         Public Overridable Sub AddObservation(observation As Double)
-            If Count = 0 Then
+            Dim count = buffer.Count
+
+            If count = 0 Then
                 _Min = observation
                 _Max = observation
                 means = observation
@@ -144,8 +148,9 @@ Namespace MomentFunctions
                 If observation < _Min Then _Min = observation
 
                 ' check for integer rounding issues.
-                Dim newmean As Double = Mean + ((observation - Mean) / Count)
-                _SampleVariance = (((CDbl(Count - 2) / CDbl(Count - 1)) * _SampleVariance) + (Math.Pow(observation - Mean, 2.0)) / Count)
+                Dim newmean As Double = Mean + ((observation - Mean) / count)
+                ' 2018-1-15 当元素只有1个的时候，在下面的计算表达式之中count-1是等于零的，会导致_SampleVariance的结果值为NaN
+                _SampleVariance = (((CDbl(count - 2) / CDbl(count - 1)) * _SampleVariance) + (Math.Pow(observation - Mean, 2.0)) / count)
                 means = newmean
             End If
 
