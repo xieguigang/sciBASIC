@@ -44,12 +44,14 @@ Namespace Math.Statistics
         Protected Friend means As Double
 
         Public Overridable ReadOnly Property Min As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return ranges.Min
             End Get
         End Property
 
         Public Overridable ReadOnly Property Max As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return ranges.Max
             End Get
@@ -60,6 +62,7 @@ Namespace Math.Statistics
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Mean As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return means
             End Get
