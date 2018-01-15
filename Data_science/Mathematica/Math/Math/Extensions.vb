@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
@@ -266,5 +267,17 @@ Public Module Extensions
     <Extension>
     Public Function Tanimoto(x As Vector, y As Vector) As Double
         Return (x * y).Sum / ((x * x).Sum + (y * y).Sum - (x * y).Sum)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Y(points As IEnumerable(Of PointF)) As Vector
+        Return points.Select(Function(pt) CDbl(pt.Y)).AsVector
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function X(points As IEnumerable(Of PointF)) As Vector
+        Return points.Select(Function(pt) CDbl(pt.X)).AsVector
     End Function
 End Module

@@ -1,5 +1,8 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -52,10 +55,31 @@ Public Module SampleView
                         }
                     End Function) _
             .ToArray
+        Dim XTicks = xrange.Range().CreateAxisTicks
+        Dim YTicks = points.Y.Range.CreateAxisTicks
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                Dim X, Y As d3js.scale.LinearScale
+                Dim rect = region.PlotRegion
 
+                X = d3js.scale.linear.domain(XTicks).range(integers:={rect.Left, rect.Right})
+                Y = d3js.scale.linear.domain(YTicks).range(integers:={0, rect.Bottom - rect.Top})
+
+                Dim scaler As New DataScaler With {
+                    .X = X,
+                    .Y = Y,
+                    .ChartRegion = rect,
+                    .AxisTicks = (XTicks, YTicks)
+                }
+
+                For Each pair In points.SlideWindows(2, offset:=1)
+                    Dim p1 As PointF = pair(0), p2 As PointF = pair(1)
+                    p1 = scaler.Translate(p1.X, p1.Y)
+                    p2 = scaler.Translate(p2.X, p2.Y)
+
+                    Call g.DrawLine(normaldistLine, p1, p2)
+                Next
             End Sub
 
         Return g.GraphicsPlots(

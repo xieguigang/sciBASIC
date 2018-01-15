@@ -220,20 +220,20 @@ Public Module Scatter
 
                 If drawAxis Then
                     Call g.DrawAxis(
-                        rect, scaler, showGrid, xlabel:=Xlabel, ylabel:=Ylabel,
-                        htmlLabel:=htmlLabel)
+                        rect, scaler, showGrid,
+                        xlabel:=Xlabel, ylabel:=Ylabel,
+                        htmlLabel:=htmlLabel
+                    )
                 End If
 
                 Dim width = rect.PlotRegion.Width / 200
 
                 For Each line As SerialData In array
                     Dim pts = line.pts.SlideWindows(2)
-                    Dim pen As New Pen(color:=line.color, width:=line.width) With {
-                        .DashStyle = line.lineType
-                    }
+                    Dim pen As Pen = line.GetPen
                     Dim br As New SolidBrush(line.color)
                     Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
-                    Dim d = line.PointSize
+                    Dim d! = line.PointSize
                     Dim r As Single = line.PointSize / 2
                     Dim bottom! = gSize.Height - margin.Bottom
                     Dim getPointBrush = Function(pt As PointData)
