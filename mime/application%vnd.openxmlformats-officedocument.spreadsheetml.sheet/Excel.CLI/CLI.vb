@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports Contract = Microsoft.VisualBasic.Data.csv.DATA.DataFrame
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
@@ -174,24 +175,46 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
         Dim a$ = args <= "/a"
         Dim b$ = args <= "/b"
         Dim columnNameA$ = args("/column.A")
-        Dim out$ = args("/out") Or $"{a.TrimSuffix}_AND_{b.BaseName}.csv"
         Dim bName$ = b.BaseName
-        Dim bData = EntityObject.LoadDataSet(b).GroupBy(Function(bb) bb.ID).ToDictionary(Function(g) g.Key, Function(g) g.ToArray)
         Dim aData = EntityObject.LoadDataSet(a, uidMap:=columnNameA)
+        Dim bData = EntityObject.LoadDataSet(b) _
+            .GroupBy(Function(bb) bb.ID) _
+            .ToDictionary(Function(g) g.Key,
+                          Function(g)
+                              Dim values = g _
+                                  .Select(Function(bb) bb.Properties) _
+                                  .IteratesALL _
+                                  .GroupBy(Function(p) p.Key) _
+                                  .ToDictionary(Function(p) p.Key,
+                                                Function(v)
+                                                    Return v.Values _
+                                                        .Select(Function(s) s.Split(";"c)) _
+                                                        .IteratesALL _
+                                                        .Distinct _
+                                                        .JoinBy(";")
+                                                End Function)
+
+                              Return New EntityObject With {
+                                  .ID = g.Key,
+                                  .Properties = values
+                              }
+                          End Function)
+        Dim out$ = args("/out") Or $"{a.TrimSuffix}_AND_{bName}.csv"
         Dim associates As New List(Of EntityObject)
 
         For Each x As EntityObject In aData
             If bData.ContainsKey(x.ID) Then
-                For Each y As EntityObject In bData(x.ID)
-                    Dim copy = x.Copy
+                Dim copy As EntityObject = x.Copy
+                Dim y = bData(x.ID)
 
-                    For Each [property] In y.Properties
-                        Dim key = bName & "." & [property].Key
-                        copy.Properties.Add(key, [property].Value)
-                    Next
-
-                    associates += copy
+                For Each [property] In y.Properties
+                    Dim key = bName & "." & [property].Key
+                    copy.Properties.Add(key, [property].Value)
                 Next
+
+                associates += copy
+            Else
+                associates += x
             End If
         Next
 
