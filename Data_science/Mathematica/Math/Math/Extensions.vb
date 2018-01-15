@@ -166,7 +166,7 @@ Public Module Extensions
         Dim pre As Double = data.First
         Dim pr As Double = 1000000
 
-        For Each x In data.SeqIterator
+        For Each x As SeqValue(Of Double) In data.SeqIterator
             Dim d = (pre - x.value)
 
             If d / pr > ratio Then
@@ -191,7 +191,10 @@ Public Module Extensions
         Dim pre As Double = data.First
         Dim pr As Double = 1000000
 
-        For Each x In data.Skip(1).SeqIterator(offset:=1)
+        For Each x As SeqValue(Of Double) In data _
+            .Skip(1) _
+            .SeqIterator(offset:=1)
+
             Dim dy = (x.value - pre) ' 对边
             Dim tanX As Double = dy / dx
             Dim a As Double = Atn(tanX)
@@ -213,7 +216,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Function Reach(data As IEnumerable(Of Double), n As Double, Optional offset As Double = 0) As Integer
-        For Each x In data.SeqIterator
+        For Each x As SeqValue(Of Double) In data.SeqIterator
             If sys.Abs(x.value - n) <= offset Then
                 Return x.i
             End If

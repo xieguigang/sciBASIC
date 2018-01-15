@@ -89,7 +89,7 @@ Public Module Bootstraping
 
     <Extension>
     Public Iterator Function Sampling(source As IEnumerable(Of Double), N As Integer, Optional B As Integer = 100) As IEnumerable(Of IntegerTagged(Of Vector))
-        For Each x In Samples(source, N, B)
+        For Each x As IntegerTagged(Of Double()) In Samples(source, N, B)
             Yield New IntegerTagged(Of Vector) With {
                 .Tag = x.Tag,
                 .Value = New Vector(x.Value)

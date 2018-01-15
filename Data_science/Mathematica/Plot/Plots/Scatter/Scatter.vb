@@ -436,9 +436,8 @@ Public Module Scatter
             Next
         End If
 
-        For Each x# In ranges
-            Call engine _
-                .SetVariable(range.Name, x)
+        For Each x As Double In ranges
+            Call engine.SetVariable(range.Name, x)
             y += engine.Evaluation(expression)
         Next
 
@@ -473,7 +472,7 @@ Public Module Scatter
         Dim ranges As Double() = range.seq(steps).ToArray
         Dim y As New List(Of Double)
 
-        For Each x# In ranges
+        For Each x As Double In ranges
             y += expression(x#)
         Next
 

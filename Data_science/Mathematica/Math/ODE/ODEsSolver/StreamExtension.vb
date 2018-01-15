@@ -63,7 +63,7 @@ Public Module StreamExtension
         Call $"len(x) = {df.x.Length}".__DEBUG_ECHO
         Call Console.WriteLine()
 
-        For Each y In df.y.Values
+        For Each y As NamedCollection(Of Double) In df.y.Values
             Call $"len(y={y.Name}) = {y.Value.Length}".__DEBUG_ECHO
         Next
 #End If

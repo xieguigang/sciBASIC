@@ -224,7 +224,7 @@ Public MustInherit Class ODEs
     Protected MustOverride Sub func(dx#, ByRef dy As Vector)
 
     Private Sub ODEs(dx As Double, y As Vector, ByRef k As Vector)
-        For Each x In vars       ' 更新设置y的值
+        For Each x As var In vars       ' 更新设置y的值
             x.value = y(x.Index)
         Next
 
