@@ -81,11 +81,11 @@ Namespace IO
             Return $"{ID} => ({Properties.Count}) {Properties.Keys.ToArray.GetJson}"
         End Function
 
-        Public Shared Function LoadDataSet(path As String, Optional uidMap As String = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of EntityObject)
+        Public Shared Function LoadDataSet(path$, Optional ByRef uidMap$ = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of EntityObject)
             Return LoadDataSet(Of EntityObject)(path, uidMap, tsv)
         End Function
 
-        Public Shared Function GetIDList(path$, Optional uidMap As String = Nothing, Optional tsv As Boolean = False, Optional ignoreMapErrors As Boolean = False) As String()
+        Public Shared Function GetIDList(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False, Optional ignoreMapErrors As Boolean = False) As String()
             Dim table As File = If(tsv, File.LoadTsv(path), File.Load(path))
             Dim getIDsDefault =
                 Function()
@@ -112,7 +112,7 @@ Namespace IO
             End If
         End Function
 
-        Public Shared Function LoadDataSet(Of T As EntityObject)(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of T)
+        Public Shared Function LoadDataSet(Of T As EntityObject)(path$, Optional ByRef uidMap$ = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of T)
             If Not path.FileExists Then
                 Return {}
             End If

@@ -233,8 +233,8 @@ Namespace Graphic.Axis
                     X = scaler.Region.Left + offset.X
             End Select
 
-            Dim top As New Point(X, scaler.Region.Y + offset.Y)                ' Y轴
-            Dim ZERO As New Point(X, size.Height + top.Y) ' 坐标轴原点，需要在这里修改layout
+            Dim top As New Point(X, scaler.TranslateY(scaler.AxisTicks.Y.Max) + offset.Y)                ' Y轴
+            Dim ZERO As New Point(X, scaler.TranslateY(scaler.AxisTicks.Y.Min) + offset.Y) ' 坐标轴原点，需要在这里修改layout
 
             If showAxisLine Then
                 Call g.DrawLine(pen, ZERO, top)     ' y轴
