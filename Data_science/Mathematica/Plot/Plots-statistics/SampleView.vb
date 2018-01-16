@@ -65,16 +65,19 @@ Public Module SampleView
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim X, Y As d3js.scale.LinearScale
                 Dim rect = region.PlotRegion
+                Dim up As New Rectangle(rect.Location, New Size(rect.Width, rect.Height / 2))
 
-                X = d3js.scale.linear.domain(XTicks).range(integers:={rect.Left, rect.Right})
-                Y = d3js.scale.linear.domain(YTicks).range(integers:={0, rect.Bottom - rect.Top})
+                X = d3js.scale.linear.domain(XTicks).range(integers:={up.Left, up.Right})
+                Y = d3js.scale.linear.domain(YTicks).range(integers:={up.Top, up.Bottom})
 
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,
-                    .ChartRegion = rect,
+                    .ChartRegion = up,
                     .AxisTicks = (XTicks, YTicks)
                 }
+
+
 
                 For Each pair In points.SlideWindows(2, offset:=1)
                     Dim p1 As PointF = pair(0), p2 As PointF = pair(1)

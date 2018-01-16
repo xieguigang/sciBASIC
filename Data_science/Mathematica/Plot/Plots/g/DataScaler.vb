@@ -88,7 +88,7 @@ Namespace Graphic
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TranslateY(y#) As Double
-            Return ChartRegion.Bottom - Me.Y(y)
+            Return ChartRegion.Bottom - Me.Y(y) + ChartRegion.Top
         End Function
     End Structure
 End Namespace
