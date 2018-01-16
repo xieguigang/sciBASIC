@@ -71,6 +71,11 @@ Namespace Graphic
         ''' The charting region in <see cref="Rectangle"/> data structure.
         ''' </summary>
         Dim Region As Rectangle
+        Dim Reversed As Boolean
+
+        Sub New(rev As Boolean)
+            Reversed = rev
+        End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Translate(x#, y#) As PointF
@@ -103,7 +108,11 @@ Namespace Graphic
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TranslateY(y#) As Double
-            Return Region.Bottom - Me.Y(y) + Region.Top
+            If Reversed Then
+                Return Me.Y(y)
+            Else
+                Return Region.Bottom - Me.Y(y) + Region.Top
+            End If
         End Function
     End Structure
 End Namespace
