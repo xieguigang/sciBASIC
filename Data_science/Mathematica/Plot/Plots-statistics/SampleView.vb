@@ -73,7 +73,7 @@ Public Module SampleView
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,
-                    .ChartRegion = up,
+                    .Region = up,
                     .AxisTicks = (XTicks, YTicks)
                 }
 

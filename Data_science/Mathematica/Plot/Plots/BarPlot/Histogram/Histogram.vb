@@ -215,7 +215,7 @@ Namespace BarPlot.Histogram
                     Dim scaler As New DataScaler With {
                         .X = X,
                         .Y = Y,
-                        .ChartRegion = region.PlotRegion,
+                        .Region = region.PlotRegion,
                         .AxisTicks = (XTicks, YTicks)
                     }
 

@@ -204,7 +204,7 @@ Public Module Scatter
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,
-                    .ChartRegion = region,
+                    .Region = region,
                     .AxisTicks = (XTicks, YTicks)
                 }
                 Dim gSize As Size = rect.Size
