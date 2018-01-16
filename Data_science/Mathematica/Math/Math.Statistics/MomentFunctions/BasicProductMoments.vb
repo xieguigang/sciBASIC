@@ -117,16 +117,24 @@ Namespace MomentFunctions
         ''' <param name="data"> the dataset to calculate mean and standard deviation for. </param>
         Public Sub New(data As IEnumerable(Of Double))
             buffer = data.AsList
-            means = buffer.Average
-            _Min = buffer.Min
-            _Max = buffer.Max
-            _SampleVariance = Aggregate n As Double
-                              In buffer
-                              Let d = (n - means) ^ 2
-                              Into Sum(d)
-            _SampleVariance /= buffer.Count
 
-            Call TestForConvergence()
+            If buffer = 0 Then
+                means = 0
+                Min = 0
+                Max = 0
+                SampleVariance = 0
+            Else
+                means = buffer.Average
+                Min = buffer.Min
+                Max = buffer.Max
+                SampleVariance = Aggregate n As Double
+                                 In buffer
+                                 Let d = (n - means) ^ 2
+                                 Into Sum(d)
+                SampleVariance /= buffer.Count
+
+                Call TestForConvergence()
+            End If
         End Sub
 
         ''' <summary>
@@ -150,7 +158,13 @@ Namespace MomentFunctions
                 ' check for integer rounding issues.
                 Dim newmean As Double = Mean + ((observation - Mean) / count)
                 ' 2018-1-15 当元素只有1个的时候，在下面的计算表达式之中count-1是等于零的，会导致_SampleVariance的结果值为NaN
-                _SampleVariance = (((CDbl(count - 2) / CDbl(count - 1)) * _SampleVariance) + (Math.Pow(observation - Mean, 2.0)) / count)
+                Dim N21 = (CDbl(count - 2) / CDbl(count - 1)) * _SampleVariance
+
+                If SampleVariance = 0R OrElse count = 2 Then
+                    N21 = 0
+                End If
+
+                _SampleVariance = N21 + (Math.Pow(observation - Mean, 2.0)) / count
                 means = newmean
             End If
 

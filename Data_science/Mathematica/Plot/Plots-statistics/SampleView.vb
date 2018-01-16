@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
@@ -21,6 +22,19 @@ Public Module SampleView
     Const defaultNormalDistLineStyle$ = "stroke: " & NameOf(Color.Purple) & "; stroke-width: 2px; stroke-dash: dash;"
     Const outlierLineStyle$ = "stroke: red; stroke-width: 2px; stroke-dash: solid;"
     Const normalErrorLineStyle$ = "stroke: green; stroke-width: 2px; stroke-dash: solid;"
+
+    <Extension>
+    Public Function SDY(sample As BasicProductMoments) As Double()
+        Dim sd As New List(Of Double)
+        Dim calc As New BasicProductMoments
+
+        For Each x As Double In sample
+            Call calc.AddObservation(observation:=x)
+            Call sd.Add(calc.StDev)
+        Next
+
+        Return sd
+    End Function
 
     <Extension>
     Public Function NormalDistributionPlot(sample As IEnumerable(Of Double),
@@ -65,8 +79,8 @@ Public Module SampleView
             .ToArray
         Dim XTicks = xrange.Range().CreateAxisTicks
         Dim YTicks = points.Y.Range.CreateAxisTicks
-        Dim ptY#() = data.AsVector.ProbabilityDensity(means, d1)
         Dim ptX#() = data.ToArray
+        Dim ptY#() = data.SDY
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -115,14 +129,15 @@ Public Module SampleView
                 scaler = New DataScaler(rev:=True) With {
                     .X = X,
                     .Y = Y,
-                    .Region = up,
+                    .Region = down,
                     .AxisTicks = (XTicks, YTicks)
                 }
 
                 Call g.DrawAxis(
                     region, scaler, True,
                     xlabel:=xlabel, ylabel:="Offset",
-                    htmlLabel:=False
+                    htmlLabel:=False,
+                    xlayout:=XAxisLayoutStyles.Top
                 )
 
                 For i As Integer = 0 To data.SampleSize - 1
