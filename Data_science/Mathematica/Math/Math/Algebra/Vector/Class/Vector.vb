@@ -520,6 +520,17 @@ Namespace LinearAlgebra
             Return result
         End Function
 
+        ''' <summary>
+        ''' ``[min, max]``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Range As DoubleRange
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New DoubleRange(Me)
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function rand(size%) As Vector
             Return Extensions.rand(size)

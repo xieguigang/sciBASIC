@@ -1839,6 +1839,12 @@ Namespace Math
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Distance(pt As (X#, Y#), x#, y#) As Double
+            Return {pt.X, pt.Y}.EuclideanDistance({x, y})
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("RangesAt")>
         <Extension> Public Function RangesAt(n As Double, LowerBound As Double, UpBound As Double) As Boolean
             Return n <= UpBound AndAlso n > LowerBound
