@@ -236,14 +236,15 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Operator -(v1 As Vector, a As Double) As Vector
+        Public Overloads Shared Operator -(v1 As Vector, a#) As Vector
             '向量数加算符重载
-            Dim N0 As Integer = v1.[Dim]           '获取变量维数
+            Dim N0 As Integer = v1.[Dim] ' 获取变量维数
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
                 v2(j) = v1(j) - a
             Next
+
             Return v2
         End Operator
 
@@ -254,13 +255,14 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Operator *(v1 As Vector, a As Double) As Vector
-            Dim N0 As Integer = v1.[Dim]            '获取变量维数
+        Public Overloads Shared Operator *(v1 As Vector, a#) As Vector
+            Dim N0 As Integer = v1.[Dim] ' 获取变量维数
             Dim v2 As New Vector(N0)
 
             For j As Integer = 0 To N0 - 1
                 v2(j) = v1(j) * a
             Next
+
             Return v2
         End Operator
 
@@ -271,13 +273,14 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator /(v1 As Vector, a As Double) As Vector
+        Public Shared Operator /(v1 As Vector, a#) As Vector
             Dim N0 As Integer = v1.[Dim]         '获取变量维数
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
                 v2(j) = v1(j) / a
             Next
+
             Return v2
         End Operator
 
@@ -288,6 +291,7 @@ Namespace LinearAlgebra
             For j = 0 To N0 - 1
                 v2(j) = x / v(j)
             Next
+
             Return v2
         End Operator
 
@@ -306,6 +310,7 @@ Namespace LinearAlgebra
             For j = 0 To N0 - 1
                 v2(j) = v1(j) + a
             Next
+
             Return v2
         End Operator
 
