@@ -114,5 +114,9 @@ Namespace Graphic
                 Return Region.Bottom - Me.Y(y) + Region.Top
             End If
         End Function
+
+        Public Function TranslateHeight(y As Double) As Double
+            Return Region.Bottom - Me.Y(y)
+        End Function
     End Structure
 End Namespace
