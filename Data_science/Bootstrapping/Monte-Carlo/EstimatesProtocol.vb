@@ -249,7 +249,7 @@ Namespace MonteCarlo
                 Dim required As VectorTagged(Of NamedValue(Of Dictionary(Of String, Double)())()) = Nothing
 
                 For Each cluster In kmeansResult
-                    For Each x In cluster.Value
+                    For Each x As NamedValue(Of Dictionary(Of String, Double)()) In cluster.Value
                         If Not String.IsNullOrEmpty(x.Name) Then
                             required = New VectorTagged(Of NamedValue(Of Dictionary(Of String, Double)())()) With {
                                 .Tag = cluster.Key,
@@ -295,7 +295,7 @@ Namespace MonteCarlo
                             Function(o) o.Value).ToArray)
 
                     ' 调整y0和参数列表
-                    For Each y In y0.Keys.ToArray
+                    For Each y As String In y0.Keys.ToArray
                         Dim values As Double() = output(y)
                         Dim range As IValueProvider = values.__getRanges
                         y0(y) = New NamedValue(Of IValueProvider)(y, range)

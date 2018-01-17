@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
@@ -23,21 +24,39 @@ Public Module SampleView
     Const normalErrorLineStyle$ = "stroke: green; stroke-width: 2px; stroke-dash: solid;"
 
     <Extension>
+    Public Function SDY(sample As BasicProductMoments) As Double()
+        Dim sd As New List(Of Double)
+        Dim calc As New BasicProductMoments
+
+        For Each x As Double In sample
+            Call calc.AddObservation(observation:=x)
+            Call sd.Add(calc.StDev)
+        Next
+
+        Return sd
+    End Function
+
+    <Extension>
     Public Function NormalDistributionPlot(sample As IEnumerable(Of Double),
                                            Optional size$ = "2000,1800",
                                            Optional bg$ = "white",
                                            Optional margin$ = g.DefaultPadding,
-                                           Optional dotSize! = 5,
+                                           Optional dotRadius! = 2.5,
+                                           Optional dotColorStyle$ = NameOf(Color.Blue),
                                            Optional normaldistLineColor$ = defaultNormalDistLineStyle,
                                            Optional outlierColor$ = outlierLineStyle,
                                            Optional normalErrorColor$ = normalErrorLineStyle,
-                                           Optional meanLineCSS$ = defaultMeanLineStyle) As GraphicsData
+                                           Optional meanLineCSS$ = defaultMeanLineStyle,
+                                           Optional xlabel$ = "X") As GraphicsData
 
         Dim data As New BasicProductMoments(sample)
+        Dim means = data.Mean
         Dim meanLine As Pen = Stroke.TryParse(meanLineCSS).GDIObject
         Dim normalErrorLine As Pen = Stroke.TryParse(normalErrorColor).GDIObject
         Dim outlierLine As Pen = Stroke.TryParse(outlierColor).GDIObject
         Dim normaldistLine As Pen = Stroke.TryParse(normaldistLineColor).GDIObject
+        Dim dotBrush As Brush = dotColorStyle.GetBrush
+        Dim dotSize As New Size(dotRadius * 2, dotRadius * 2)
         Dim d1# = data.StDev
         Dim d2# = 2 * d1
         Dim d3# = 3 * d1
@@ -60,28 +79,72 @@ Public Module SampleView
             .ToArray
         Dim XTicks = xrange.Range().CreateAxisTicks
         Dim YTicks = points.Y.Range.CreateAxisTicks
+        Dim ptX#() = data.ToArray
+        Dim ptY#() = data.SDY
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim X, Y As d3js.scale.LinearScale
                 Dim rect = region.PlotRegion
+                Dim up As New Rectangle(rect.Location, New Size(rect.Width, rect.Height / 2))
 
-                X = d3js.scale.linear.domain(XTicks).range(integers:={rect.Left, rect.Right})
-                Y = d3js.scale.linear.domain(YTicks).range(integers:={0, rect.Bottom - rect.Top})
+                X = d3js.scale.linear.domain(XTicks).range(integers:={up.Left, up.Right})
+                Y = d3js.scale.linear.domain(YTicks).range(integers:={up.Top, up.Bottom})
 
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,
-                    .ChartRegion = rect,
+                    .Region = up,
                     .AxisTicks = (XTicks, YTicks)
                 }
 
-                For Each pair In points.SlideWindows(2, offset:=1)
+                ' 绘制出坐标轴
+                Call g.DrawAxis(
+                    region, scaler, True,
+                    xlabel:=xlabel, ylabel:="Offset",
+                    htmlLabel:=False
+                )
+
+                For Each pair As SlideWindow(Of PointF) In points.SlideWindows(2, offset:=1)
                     Dim p1 As PointF = pair(0), p2 As PointF = pair(1)
                     p1 = scaler.Translate(p1.X, p1.Y)
                     p2 = scaler.Translate(p2.X, p2.Y)
 
                     Call g.DrawLine(normaldistLine, p1, p2)
+                Next
+
+                ' 绘制下半部分的散点图
+                Dim down As New Rectangle With {
+                    .X = up.Left,
+                    .Y = up.Bottom,
+                    .Width = up.Width,
+                    .Height = up.Height
+                }
+
+                XTicks = ptX.Range.CreateAxisTicks
+                YTicks = ptY.Range.CreateAxisTicks
+                X = d3js.scale.linear.domain(XTicks).range(integers:={down.Left, down.Right})
+                Y = d3js.scale.linear.domain(YTicks).range(integers:={down.Top, down.Bottom})
+
+                scaler = New DataScaler(rev:=True) With {
+                    .X = X,
+                    .Y = Y,
+                    .Region = down,
+                    .AxisTicks = (XTicks, YTicks)
+                }
+
+                Call g.DrawAxis(
+                    region, scaler, True,
+                    xlabel:=xlabel, ylabel:="Offset",
+                    htmlLabel:=False,
+                    xlayout:=XAxisLayoutStyles.Top
+                )
+
+                For i As Integer = 0 To data.SampleSize - 1
+                    Dim point As New PointF(ptX(i), ptY(i))
+                    point = scaler.Translate(point)
+
+                    Call g.DrawCircle(centra:=point, r:=dotRadius, color:=dotBrush)
                 Next
             End Sub
 

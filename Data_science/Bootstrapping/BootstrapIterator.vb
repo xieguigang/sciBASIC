@@ -245,7 +245,7 @@ Public Module BootstrapIterator
             '}
         Next
 
-        For Each y In y0
+        For Each y As NamedValue(Of IValueProvider) In y0
             Dim value As Double = y.Value()()
             odes(y.Name).value = value
             'debug += New NamedValue(Of Double) With {
