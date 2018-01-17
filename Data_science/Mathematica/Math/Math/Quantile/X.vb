@@ -60,7 +60,7 @@ Namespace Quantile
         End Sub
 
         Public Overrides Function ToString() As String
-            Return String.Format("{0:D}, {1:D}, {2:D}", value, g, delta)
+            Return $"{value.ToString("F2")}@[delta={delta.ToString("F2")}, lower_delta={g.ToString("F2")}]"
         End Function
     End Class
 End Namespace
