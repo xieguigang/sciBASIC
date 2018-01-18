@@ -28,6 +28,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.LeastSquares
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
@@ -78,7 +79,23 @@ Module Module1
         Call output.SaveTo("./output.csv")
     End Sub
 
+    Sub Rtest2()
+
+        Dim weight = {115.0, 117, 120, 123, 126, 129, 132, 135, 139, 142, 146, 150, 154, 159, 164}
+        Dim height = {58.0, 59.0, 60.0, 61.25, 62.0, 63.5, 64.0, 65.0, 66.1, 67.1, 68.0, 69.0, 70.0, 71.8, 72.0}
+
+
+        Dim linear = LeastSquares.LinearFit(height, weight)
+        Dim poly = LeastSquares.PolyFit(height, weight, 2)
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+
+        Call Rtest2()
+
         Call FittingTest()
         'Dim rnd As New Randomizer
         'Dim list As New List(Of Double)
