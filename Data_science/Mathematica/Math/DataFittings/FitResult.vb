@@ -154,7 +154,7 @@ Public Class FittedResult
         Dim items = Factor _
             .Select(Function(a, i)
                         If i = 0 Then
-                            Return a
+                            Return a.ToString("F2")
                         ElseIf i = 1 Then
                             Return $"{a.ToString("F2")}*x"
                         Else
@@ -164,6 +164,6 @@ Public Class FittedResult
             .ToArray
         Dim Y$ = items.JoinBy(" + ")
 
-        Return $"{Y} @ {R_square.ToString("F4")}"
+        Return $"{Y} @ R2={R_square.ToString("F4")}"
     End Function
 End Class

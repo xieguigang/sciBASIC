@@ -50,23 +50,23 @@ Module Module1
         output += {
             New NamedValue(Of Double()) With {
                 .Name = "y-linearfit",
-                .Value = y1.FitedYlist
+                .Value = y1.ErrorTest.Select(Function(p) p.Yfit).ToArray
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-2",
-                .Value = ypoly2.FitedYlist
+                .Value = ypoly2.ErrorTest.Select(Function(p) p.Yfit).ToArray
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-3",
-                .Value = ypoly3.FitedYlist
+                .Value = ypoly3.ErrorTest.Select(Function(p) p.Yfit).ToArray
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-4",
-                .Value = ypoly4.FitedYlist
+                .Value = ypoly4.ErrorTest.Select(Function(p) p.Yfit).ToArray
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-5",
-                .Value = ypoly5.FitedYlist
+                .Value = ypoly5.ErrorTest.Select(Function(p) p.Yfit).ToArray
             }
         }
 
