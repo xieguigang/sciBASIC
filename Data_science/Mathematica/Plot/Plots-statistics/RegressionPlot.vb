@@ -26,7 +26,8 @@ Public Module RegressionPlot
                          Optional regressionLineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
                          Optional predictPointStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: dash;",
                          Optional predictedX#() = Nothing,
-                         Optional showLegend As Boolean = True) As GraphicsData
+                         Optional showLegend As Boolean = True,
+                         Optional legendLabelFontCSS$ = CSSFont.Win7LargerNormal) As GraphicsData
 
         Dim XTicks#() = fit.X.Range.CreateAxisTicks
         Dim YTicks#() = fit.Y.Range.CreateAxisTicks
@@ -35,6 +36,7 @@ Public Module RegressionPlot
         Dim predictedPointBorder As Pen = Stroke.TryParse(predictPointStroke).GDIObject
         Dim predictedBrush As Brush = predictPointStyle.GetBrush
         Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
+        Dim legendLabelFont As Font = CSSFont.TryParse(legendLabelFontCSS)
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect = region.PlotRegion
@@ -127,8 +129,21 @@ Public Module RegressionPlot
                 End If
 
                 If showLegend Then
-                    Dim eq$ = fit.ToString
+                    Dim eq$ = "f(x) = " & fit.Polynomial.ToString
+                    Dim R2$ = "R2 = " & fit.R_square.ToString("F4")
+                    Dim pt As New PointF With {
+                        .X = rect.Left + 20,
+                        .Y = rect.Top + 20
+                    }
 
+                    Call g.DrawString(eq, legendLabelFont, Brushes.Black, pt)
+
+                    pt = New PointF With {
+                        .X = pt.X,
+                        .Y = pt.Y + legendLabelFont.Height + 5
+                    }
+
+                    Call g.DrawString(R2, legendLabelFont, Brushes.Black, pt)
                 End If
             End Sub
 
