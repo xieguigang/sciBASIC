@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module RegressionPlot
@@ -18,12 +19,20 @@ Public Module RegressionPlot
                          Optional xLabel$ = "X",
                          Optional yLabel$ = "Y",
                          Optional pointSize! = 5,
-                         Optional pointBrushStyle$ = "red") As GraphicsData
+                         Optional pointBrushStyle$ = "red",
+                         Optional errorFitPointStyle$ = "blue",
+                         Optional predictPointStyle$ = "green",
+                         Optional regressionLineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
+                         Optional predictPointStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: dash;",
+                         Optional predictedX#() = Nothing) As GraphicsData
 
         Dim XTicks#() = fit.X.Range.CreateAxisTicks
         Dim YTicks#() = fit.Y.Range.CreateAxisTicks
         Dim pointBrush As Brush = pointBrushStyle.GetBrush
-
+        Dim regressionPen As Pen = Stroke.TryParse(regressionLineStyle).GDIObject
+        Dim predictedPointBorder As Pen = Stroke.TryParse(predictPointStroke).GDIObject
+        Dim predictedBrush As Brush = predictPointStyle.GetBrush
+        Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect = region.PlotRegion
@@ -42,6 +51,7 @@ Public Module RegressionPlot
                     htmlLabel:=False
                 )
 
+                ' scatter plot
                 For Each point As TestPoint In fit.ErrorTest
                     Dim pt As PointF = scaler.Translate(point)
 
@@ -51,6 +61,56 @@ Public Module RegressionPlot
                         color:=pointBrush
                     )
                 Next
+
+                ' regression line
+                Dim A As New PointF With {.X = XTicks.Min, .Y = fit(.X)}
+                Dim B As New PointF With {.X = XTicks.Max, .Y = fit(.X)}
+
+                A = scaler.Translate(A)
+                B = scaler.Translate(B)
+
+                Call g.DrawLine(regressionPen, A, B)
+
+                For Each point As TestPoint In fit.ErrorTest
+                    Dim pt As New PointF With {
+                        .X = point.X,
+                        .Y = point.Yfit
+                    }
+
+                    pt = scaler.Translate(pt)
+
+                    g.DrawCircle(
+                        centra:=pt,
+                        r:=pointSize,
+                        color:=errorFitPointBrush
+                    )
+                    g.DrawCircle(
+                        centra:=pt,
+                        r:=pointSize,
+                        color:=predictedPointBorder,
+                        fill:=False
+                    )
+                Next
+
+                If Not predictedX.IsNullOrEmpty Then
+                    For Each ptX As Double In predictedX
+                        Dim pt As New PointF With {.X = ptX, .Y = fit(.X)}
+
+                        pt = scaler.Translate(pt)
+
+                        g.DrawCircle(
+                            centra:=pt,
+                            r:=pointSize,
+                            color:=predictedBrush
+                        )
+                        g.DrawCircle(
+                            centra:=pt,
+                            r:=pointSize,
+                            color:=predictedPointBorder,
+                            fill:=False
+                        )
+                    Next
+                End If
             End Sub
 
         Return g.GraphicsPlots(
