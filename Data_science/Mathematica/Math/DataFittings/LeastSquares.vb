@@ -30,9 +30,9 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
 
-'尘中远，于2014.03.20
-'主页：http://blog.csdn.net/czyt1988/article/details/21743595
-'参考：http://blog.csdn.net/maozefa/article/details/1725535
+' 尘中远，于2014.03.20
+' 主页：http://blog.csdn.net/czyt1988/article/details/21743595
+' 参考：http://blog.csdn.net/maozefa/article/details/1725535
 
 ''' <summary>
 ''' 曲线拟合类，只适用于线性拟合：
@@ -51,12 +51,12 @@ Public Module LeastSquares
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LinearFit(x As List(Of Double), y As List(Of Double)) As FittedResult
-        Return LinearFit(x.ToArray, y.ToArray, getSeriesLength(x, y))
+        Return LinearFit(x.ToArray, y.ToArray, SeriesLength(x, y))
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LinearFit(x As Double(), y As Double()) As FittedResult
-        Return LinearFit(x.ToArray, y.ToArray, getSeriesLength(x, y))
+        Return LinearFit(x.ToArray, y.ToArray, SeriesLength(x, y))
     End Function
 
     Public Function LinearFit(x As Double(), y As Double(), length As Integer) As FittedResult
@@ -90,12 +90,19 @@ Public Module LeastSquares
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function PolyFit(x As List(Of Double), y As List(Of Double), poly_n As Integer) As FittedResult
-        Return PolyFit(x.ToArray, y.ToArray, getSeriesLength(x, y), poly_n)
+        Return PolyFit(x.ToArray, y.ToArray, SeriesLength(x, y), poly_n)
     End Function
 
+    ''' <summary>
+    ''' 多项式拟合
+    ''' </summary>
+    ''' <param name="x#"></param>
+    ''' <param name="y#"></param>
+    ''' <param name="poly_n%">最高的阶数</param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function PolyFit(x#(), y#(), poly_n%) As FittedResult
-        Return PolyFit(x.ToArray, y.ToArray, getSeriesLength(x, y), poly_n)
+        Return PolyFit(x.ToArray, y.ToArray, SeriesLength(x, y), poly_n)
     End Function
 
     Public Function PolyFit(x As Double(), y As Double(), length As Integer, poly_n As Integer) As FittedResult
@@ -149,7 +156,7 @@ Public Module LeastSquares
     ''' <param name="x"></param>
     ''' <param name="y"></param>
     ''' <returns>最小的一个长度</returns>
-    Public Function getSeriesLength(x As IEnumerable(Of Double), y As IEnumerable(Of Double)) As Integer
+    Public Function SeriesLength(x As IEnumerable(Of Double), y As IEnumerable(Of Double)) As Integer
         Dim xl% = x.Count
         Dim yl% = y.Count
         Return If(xl > yl, yl, xl)
