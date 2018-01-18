@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::9fbcf8d7ff75e110d975de9dd021eb86, ..\sciBASIC#\Data_science\Mathematica\Math\DataFittings\LeastSquares.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
 
@@ -47,10 +48,13 @@ Public Module LeastSquares
     ''' <param name="x">观察值的x</param>
     ''' <param name="y">观察值的y</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LinearFit(x As List(Of Double), y As List(Of Double)) As FittedResult
         Return LinearFit(x.ToArray, y.ToArray, getSeriesLength(x, y))
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LinearFit(x As Double(), y As Double()) As FittedResult
         Return LinearFit(x.ToArray, y.ToArray, getSeriesLength(x, y))
     End Function
@@ -83,10 +87,13 @@ Public Module LeastSquares
     ''' <param name="x">观察值的x</param>
     ''' <param name="y">观察值的y</param>
     ''' <param name="poly_n">期望拟合的阶数，若poly_n=2，则y=a0+a1*x+a2*x^2</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function PolyFit(x As List(Of Double), y As List(Of Double), poly_n As Integer) As FittedResult
         Return PolyFit(x.ToArray, y.ToArray, getSeriesLength(x, y), poly_n)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function PolyFit(x#(), y#(), poly_n%) As FittedResult
         Return PolyFit(x.ToArray, y.ToArray, getSeriesLength(x, y), poly_n)
     End Function
@@ -127,6 +134,7 @@ Public Module LeastSquares
                 ata(i * (poly_n + 1) + j) = sumxx(i + j)
             Next
         Next
+
         gauss_solve(poly_n + 1, ata, result.Factor, sumxy)
         '计算拟合后的数据并计算误差
         result.FitedYlist.Capacity = length
@@ -162,6 +170,7 @@ Public Module LeastSquares
 
             Call result.FitedYlist.Add(CDbl(yi))
         Next
+
         result.RMSE = Math.Sqrt(result.SSE / CDbl(length))
     End Sub
 
@@ -171,6 +180,7 @@ Public Module LeastSquares
         Dim k As Integer
         Dim r As Integer
         Dim max As Double
+
         For k = 0 To n - 2
             max = Math.Abs(A(k * n + k))
             'find maxmum
@@ -202,6 +212,7 @@ Public Module LeastSquares
         Next
 
         i = n - 1
+
         While i >= 0
             j = i + 1
             x(i) = b(i)
