@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MIME.Office.Excel.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -172,9 +172,13 @@
     <Compile Include="IO\docProps\app.xml.vb" />
     <Compile Include="IO\docProps\custom.xml.vb" />
     <Compile Include="IO\docProps\core.xml.vb" />
+    <Compile Include="Model\Directory\docProps.vb" />
+    <Compile Include="Model\Directory\worksheets.vb" />
+    <Compile Include="Model\Directory\xl.vb" />
+    <Compile Include="Model\Directory\_rels.vb" />
     <Compile Include="Model\File.vb" />
     <Compile Include="IO.vb" />
-    <Compile Include="Model\Directory.vb" />
+    <Compile Include="Model\Directory\Directory.vb" />
     <Compile Include="Model\StoreProcedure.vb" />
     <Compile Include="Model\Xmlns.vb" />
     <Compile Include="Extensions.vb" />
@@ -223,9 +227,9 @@
       <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
       <Name>47_dotnet_ms-vb_data.framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+      <Name>Math-core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\Microsoft.VisualBasic.Imaging.vbproj">
       <Project>{85e71b4b-9276-4ec8-aadc-c849205f1ea8}</Project>
@@ -235,9 +239,9 @@
       <Project>{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\text%25html\mime-htmls.vbproj">
+    <ProjectReference Include="..\..\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>mime-htmls</Name>
+      <Name>MIME-htmls</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

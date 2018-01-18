@@ -1,36 +1,37 @@
 ﻿#Region "Microsoft.VisualBasic::8d44253e477180976932ecc12e030747, ..\sciBASIC#\Data_science\Mathematica\Math\MathApp\Testing\Module1.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.Bootstrapping.LeastSquares
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Mathematical
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module1
@@ -49,23 +50,23 @@ Module Module1
         output += {
             New NamedValue(Of Double()) With {
                 .Name = "y-linearfit",
-                .Value = y1.FitedYlist
+                .Value = y1.ErrorTest.Select(Function(p) p.Yfit).ToArray
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-2",
-                .Value = ypoly2.FitedYlist
+                .Value = ypoly2.ErrorTest.Select(Function(p) p.Yfit).ToArray
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-3",
-                .Value = ypoly3.FitedYlist
+                .Value = ypoly3.ErrorTest.Select(Function(p) p.Yfit).ToArray
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-4",
-                .Value = ypoly4.FitedYlist
+                .Value = ypoly4.ErrorTest.Select(Function(p) p.Yfit).ToArray
             },
             New NamedValue(Of Double()) With {
                 .Name = "y-polyfit-5",
-                .Value = ypoly5.FitedYlist
+                .Value = ypoly5.ErrorTest.Select(Function(p) p.Yfit).ToArray
             }
         }
 
@@ -78,7 +79,23 @@ Module Module1
         Call output.SaveTo("./output.csv")
     End Sub
 
+    Sub Rtest2()
+
+        Dim weight = {115.0, 117, 120, 123, 126, 129, 132, 135, 139, 142, 146, 150, 154, 159, 164}
+        Dim height = {58.0, 59.0, 60.0, 61.25, 62.0, 63.5, 64.0, 65.0, 66.1, 67.1, 68.0, 69.0, 70.0, 71.8, 72.0}
+
+
+        Dim linear = LeastSquares.LinearFit(height, weight)
+        Dim poly = LeastSquares.PolyFit(height, weight, 2)
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+
+        Call Rtest2()
+
         Call FittingTest()
         'Dim rnd As New Randomizer
         'Dim list As New List(Of Double)

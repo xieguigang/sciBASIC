@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::fabde4994c111ad37ce2952426f687c4, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Vector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -206,6 +206,7 @@ Namespace Language.Vectorization
         ''' <param name="range"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(range As IntRange) As List(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New List(Of T)(Me.Skip(range.Min).Take(range.Length))
             End Get
@@ -224,6 +225,7 @@ Namespace Language.Vectorization
         ''' <param name="indices"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(indices As IEnumerable(Of Integer)) As List(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New List(Of T)(indices.Select(Function(i) buffer(i)))
             End Get
@@ -234,12 +236,21 @@ Namespace Language.Vectorization
             End Set
         End Property
 
+        Public Iterator Function Subset(booleans As IEnumerable(Of Boolean)) As IEnumerable(Of T)
+            For Each index In booleans.SeqIterator
+                If index.value = True Then
+                    Yield buffer(index.i)
+                End If
+            Next
+        End Function
+
         ''' <summary>
         ''' Select all of the elements from this list collection is any of them match the condition expression: <paramref name="where"/>
         ''' </summary>
         ''' <param name="[where]"></param>
         ''' <returns></returns>
         Default Public Overloads ReadOnly Property Item([where] As Predicate(Of T)) As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer.Where(Function(o) where(o)).ToArray
             End Get
@@ -280,6 +291,10 @@ Namespace Language.Vectorization
             buffer = data.ToArray
         End Sub
 #End Region
+
+        Public Overrides Function ToString() As String
+            Return $"{buffer.Length} @ {GetType(T).FullName}"
+        End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For Each x In buffer
