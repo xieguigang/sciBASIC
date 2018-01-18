@@ -83,6 +83,13 @@ Public Class FittedResult
         End Get
     End Property
 
+    Public ReadOnly Property IsPolyFit As Boolean
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return Factor.Length > 2
+        End Get
+    End Property
+
     ''' <summary>
     ''' 获取斜率
     ''' </summary>

@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -13,7 +14,7 @@ Public Module RegressionPlot
 
     <Extension>
     Public Function Plot(fit As FittedResult,
-                         Optional size$ = "2000,1800",
+                         Optional size$ = "2100,1600",
                          Optional bg$ = "white",
                          Optional margin$ = g.DefaultPadding,
                          Optional xLabel$ = "X",
@@ -24,7 +25,8 @@ Public Module RegressionPlot
                          Optional predictPointStyle$ = "green",
                          Optional regressionLineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
                          Optional predictPointStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: dash;",
-                         Optional predictedX#() = Nothing) As GraphicsData
+                         Optional predictedX#() = Nothing,
+                         Optional showLegend As Boolean = True) As GraphicsData
 
         Dim XTicks#() = fit.X.Range.CreateAxisTicks
         Dim YTicks#() = fit.Y.Range.CreateAxisTicks
@@ -62,14 +64,26 @@ Public Module RegressionPlot
                     )
                 Next
 
-                ' regression line
-                Dim A As New PointF With {.X = XTicks.Min, .Y = fit(.X)}
-                Dim B As New PointF With {.X = XTicks.Max, .Y = fit(.X)}
+                If fit.IsPolyFit Then
+                    For Each t In XTicks.SlideWindows(2)
+                        Dim A As New PointF With {.X = t(0), .Y = fit(.X)}
+                        Dim B As New PointF With {.X = t(1), .Y = fit(.X)}
 
-                A = scaler.Translate(A)
-                B = scaler.Translate(B)
+                        A = scaler.Translate(A)
+                        B = scaler.Translate(B)
 
-                Call g.DrawLine(regressionPen, A, B)
+                        Call g.DrawLine(regressionPen, A, B)
+                    Next
+                Else
+                    ' regression line
+                    Dim A As New PointF With {.X = XTicks.Min, .Y = fit(.X)}
+                    Dim B As New PointF With {.X = XTicks.Max, .Y = fit(.X)}
+
+                    A = scaler.Translate(A)
+                    B = scaler.Translate(B)
+
+                    Call g.DrawLine(regressionPen, A, B)
+                End If
 
                 For Each point As TestPoint In fit.ErrorTest
                     Dim pt As New PointF With {
@@ -110,6 +124,11 @@ Public Module RegressionPlot
                             fill:=False
                         )
                     Next
+                End If
+
+                If showLegend Then
+                    Dim eq$ = fit.ToString
+
                 End If
             End Sub
 
