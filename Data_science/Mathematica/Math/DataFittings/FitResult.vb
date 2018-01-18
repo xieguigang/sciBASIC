@@ -152,6 +152,6 @@ Public Class FittedResult
             .ToArray
         Dim Y$ = items.JoinBy(" + ")
 
-        Return Y
+        Return $"{Y} @ {R_square.ToString("F4")}"
     End Function
 End Class
