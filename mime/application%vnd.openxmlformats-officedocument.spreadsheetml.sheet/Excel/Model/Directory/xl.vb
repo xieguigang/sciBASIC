@@ -9,6 +9,7 @@ Public Class xl : Inherits Directory
     Public Property styles As styles
     Public Property sharedStrings As sharedStrings
     Public Property worksheets As worksheets
+    Public Property _rels As _rels
 
     Sub New(ROOT$)
         Call MyBase.New(ROOT)
@@ -60,6 +61,7 @@ Public Class xl : Inherits Directory
         sharedStrings = (Folder & "/sharedStrings.xml").LoadXml(Of sharedStrings)
         workbook = (Folder & "/workbook.xml").LoadXml(Of workbook)
         worksheets = New worksheets(Folder)
+        _rels = New _rels(Folder & "/_rels/")
     End Sub
 
     Protected Overrides Function _name() As String
