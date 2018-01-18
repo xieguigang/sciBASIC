@@ -33,6 +33,13 @@ Public Class worksheets : Inherits Directory
     Public Function GetWorksheet(sheetID$) As worksheet
         If worksheets.ContainsKey(sheetID) Then
             Return worksheets(sheetID)
+        Else
+            For Each key In worksheets.Keys
+                If key.TextEquals(sheetID) Then
+                    sheetID = key
+                    Return worksheets(sheetID)
+                End If
+            Next
         End If
 
         With "sheet" & sheetID

@@ -34,10 +34,12 @@ Public Class xl : Inherits Directory
     Public Function GetWorksheet(name$) As worksheet
         Dim sheetID$ = workbook.GetSheetIDByName(name)
 
+        ' rId to sheetName by using rels file
         If sheetID.StringEmpty Then
             Return Nothing
         Else
-            Return worksheets.GetWorksheet(sheetID)
+            Dim key$ = _rels.workbook.Target(sheetID).Target.BaseName
+            Return worksheets.GetWorksheet(key)
         End If
     End Function
 
@@ -61,7 +63,7 @@ Public Class xl : Inherits Directory
         sharedStrings = (Folder & "/sharedStrings.xml").LoadXml(Of sharedStrings)
         workbook = (Folder & "/workbook.xml").LoadXml(Of workbook)
         worksheets = New worksheets(Folder)
-        _rels = New _rels(Folder & "/_rels/")
+        _rels = New _rels(Folder)
     End Sub
 
     Protected Overrides Function _name() As String
