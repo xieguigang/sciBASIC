@@ -206,6 +206,7 @@ Namespace Language.Vectorization
         ''' <param name="range"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(range As IntRange) As List(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New List(Of T)(Me.Skip(range.Min).Take(range.Length))
             End Get
@@ -224,6 +225,7 @@ Namespace Language.Vectorization
         ''' <param name="indices"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(indices As IEnumerable(Of Integer)) As List(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New List(Of T)(indices.Select(Function(i) buffer(i)))
             End Get
@@ -234,12 +236,21 @@ Namespace Language.Vectorization
             End Set
         End Property
 
+        Public Iterator Function Subset(booleans As IEnumerable(Of Boolean)) As IEnumerable
+            For Each index In booleans.SeqIterator
+                If index.value = True Then
+                    Yield buffer(index.i)
+                End If
+            Next
+        End Function
+
         ''' <summary>
         ''' Select all of the elements from this list collection is any of them match the condition expression: <paramref name="where"/>
         ''' </summary>
         ''' <param name="[where]"></param>
         ''' <returns></returns>
         Default Public Overloads ReadOnly Property Item([where] As Predicate(Of T)) As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer.Where(Function(o) where(o)).ToArray
             End Get

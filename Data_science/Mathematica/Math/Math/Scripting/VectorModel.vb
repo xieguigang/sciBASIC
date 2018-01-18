@@ -87,6 +87,13 @@ Namespace Scripting
             End Set
         End Property
 
+        Default Public Overloads ReadOnly Property Item(booleans As IEnumerable(Of Boolean)) As VectorModel(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New VectorModel(Of T)(Subset(booleans))
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(source As IEnumerable(Of T))
             Call MyBase.New(source)
