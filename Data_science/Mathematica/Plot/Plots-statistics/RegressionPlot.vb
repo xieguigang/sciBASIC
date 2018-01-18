@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -13,10 +14,15 @@ Public Module RegressionPlot
     Public Function Plot(fit As FittedResult,
                          Optional size$ = "2000,1800",
                          Optional bg$ = "white",
-                         Optional margin$ = g.DefaultPadding) As GraphicsData
+                         Optional margin$ = g.DefaultPadding,
+                         Optional xLabel$ = "X",
+                         Optional yLabel$ = "Y",
+                         Optional pointSize! = 5,
+                         Optional pointBrushStyle$ = "red") As GraphicsData
 
         Dim XTicks#() = fit.X.Range.CreateAxisTicks
         Dim YTicks#() = fit.Y.Range.CreateAxisTicks
+        Dim pointBrush As Brush = pointBrushStyle.GetBrush
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
@@ -30,7 +36,21 @@ Public Module RegressionPlot
                     .AxisTicks = (XTicks, YTicks)
                 }
 
+                Call g.DrawAxis(
+                    region, scaler, True,
+                    xlabel:=xLabel, ylabel:=yLabel,
+                    htmlLabel:=False
+                )
 
+                For Each point As TestPoint In fit.ErrorTest
+                    Dim pt As PointF = scaler.Translate(point)
+
+                    g.DrawCircle(
+                        centra:=pt,
+                        r:=pointSize,
+                        color:=pointBrush
+                    )
+                Next
             End Sub
 
         Return g.GraphicsPlots(

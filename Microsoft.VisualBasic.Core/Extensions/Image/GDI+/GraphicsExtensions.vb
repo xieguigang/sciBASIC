@@ -212,7 +212,7 @@ Namespace Imaging
         End Sub
 
         <Extension>
-        Public Sub DrawCircle(ByRef g As IGraphics, centra As PointF, r!, color As SolidBrush)
+        Public Sub DrawCircle(ByRef g As IGraphics, centra As PointF, r!, color As Brush)
             Dim d = r * 2
 
             With centra

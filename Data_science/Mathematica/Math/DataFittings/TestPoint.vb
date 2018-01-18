@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 
 Public Structure TestPoint
 
@@ -16,4 +17,8 @@ Public Structure TestPoint
     Public Overrides Function ToString() As String
         Return $"[{X.ToString("F2")}, {Y.ToString("F2")}] {Yfit.ToString("F2")}"
     End Function
+
+    Public Shared Narrowing Operator CType(point As TestPoint) As PointF
+        Return New PointF(point.X, point.Y)
+    End Operator
 End Structure
