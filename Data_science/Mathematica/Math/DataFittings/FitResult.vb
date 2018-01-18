@@ -74,7 +74,7 @@ Public Class FittedResult
     ''' <returns></returns>
     Default Public ReadOnly Property GetY(x As Double) As Double
         Get
-
+            Return Polynomial(x)
         End Get
     End Property
 
