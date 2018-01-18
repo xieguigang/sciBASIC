@@ -129,7 +129,7 @@ Public Module RegressionPlot
                 End If
 
                 If showLegend Then
-                    Dim eq$ = "f(x) = " & fit.Polynomial.ToString
+                    Dim eq$ = "f(x) = " & fit.Polynomial.ToString("G2")
                     Dim R2$ = "R2 = " & fit.R_square.ToString("F4")
                     Dim pt As New PointF With {
                         .X = rect.Left + 20,
