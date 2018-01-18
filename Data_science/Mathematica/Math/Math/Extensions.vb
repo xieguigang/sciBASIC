@@ -155,6 +155,12 @@ Public Module Extensions
         End With
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function IsInside(vector As Vector, range As DoubleRange) As BooleanVector
+        Return vector.Select(Function(d) range.IsInside(d)).AsVector
+    End Function
+
     ''' <summary>
     ''' 返回数值序列之中的首次出现符合条件的减少的位置
     ''' </summary>
