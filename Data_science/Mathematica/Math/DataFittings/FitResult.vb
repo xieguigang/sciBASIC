@@ -27,8 +27,24 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.C
+
+Public Structure TestPoint
+
+    Public Property X As Double
+    Public Property Y As Double
+    Public Property Yfit As Double
+
+    Public ReadOnly Property Err As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return Y - Yfit
+        End Get
+    End Property
+
+    Public Overrides Function ToString() As String
+        Return $"[{X.ToString("F2")}, {Y.ToString("F2")}] {Yfit.ToString("F2")}"
+    End Function
+End Structure
 
 ''' <summary>
 ''' 线性回归结果
@@ -50,7 +66,7 @@ Public Class FittedResult
     ''' <summary>
     ''' 拟合后的方程系数，根据阶次获取拟合方程的系数，如getFactor(2),就是获取``y = a0 + a1*x + a2*x^2 + ... + apoly_n*x^poly_n``中a2的值
     ''' </summary>
-    Public Property Factor As New List(Of Double)()
+    Public Property Factor As Double()
     ''' <summary>
     ''' 回归平方和
     ''' </summary>
@@ -66,11 +82,7 @@ Public Class FittedResult
     ''' <summary>
     ''' 保存拟合后的y值，在拟合时可设置为不保存节省内存
     ''' </summary>
-    Public Property FitedYlist As New List(Of Double)()
-
-    Sub New()
-        Call Factor.Resize(2, 0)
-    End Sub
+    Public Property ErrorTest As TestPoint()
 
     ''' <summary>
     ''' 根据x获取拟合方程的y值
@@ -129,7 +141,7 @@ Public Class FittedResult
     Public ReadOnly Property FactorSize As Integer
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Factor.Count
+            Return Factor.Length
         End Get
     End Property
 
