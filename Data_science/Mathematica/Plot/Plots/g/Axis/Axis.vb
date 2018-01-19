@@ -76,7 +76,9 @@ Namespace Graphic.Axis
                             Optional labelFont$ = CSSFont.PlotSubTitle,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional gridFill$ = "rgb(245,245,245)",
-                            Optional htmlLabel As Boolean = True)
+                            Optional htmlLabel As Boolean = True,
+                            Optional XtickFormat$ = "F2",
+                            Optional YtickFormat$ = "F2")
             With region
                 Call g.DrawAxis(
                     scaler,
@@ -85,7 +87,9 @@ Namespace Graphic.Axis
                     xlabel, ylabel,
                     xlayout:=xlayout, ylayout:=ylayout,
                     labelFontStyle:=labelFont,
-                    axisStroke:=axisStroke, gridFill:=gridFill, htmlLabel:=htmlLabel)
+                    axisStroke:=axisStroke, gridFill:=gridFill, htmlLabel:=htmlLabel,
+                    XtickFormat:=XtickFormat,
+                    YtickFormat:=YtickFormat)
             End With
         End Sub
 
@@ -111,7 +115,9 @@ Namespace Graphic.Axis
                             Optional gridColor$ = "white",
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional tickFontStyle$ = CSSFont.Win7Normal,
-                            Optional htmlLabel As Boolean = True)
+                            Optional htmlLabel As Boolean = True,
+                            Optional XtickFormat$ = "F2",
+                            Optional YtickFormat$ = "F2")
 
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
             Dim rect As Rectangle = scaler.Region
@@ -156,10 +162,10 @@ Namespace Graphic.Axis
             End If
 
             If xlayout <> XAxisLayoutStyles.None Then
-                Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel)
+                Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel, tickFormat:=XtickFormat)
             End If
             If ylayout <> YAxisLayoutStyles.None Then
-                Call g.DrawY(pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel)
+                Call g.DrawY(pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel, tickFormat:=YtickFormat)
             End If
         End Sub
 
@@ -217,7 +223,8 @@ Namespace Graphic.Axis
                                      labelFont$,
                                      tickFont As Font,
                                      Optional showAxisLine As Boolean = True,
-                                     Optional htmlLabel As Boolean = True)
+                                     Optional htmlLabel As Boolean = True,
+                                     Optional tickFormat$ = "F2")
 
             Dim X%  ' y轴的layout的变化只需要变换x的值即可
             Dim size = scaler.Region.Size
@@ -251,7 +258,7 @@ Namespace Graphic.Axis
                         Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
                     End If
 
-                    Dim labelText = (tick).ToString("F" & 2)
+                    Dim labelText = (tick).ToString(tickFormat)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
                     Dim p As New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2)
 
@@ -283,6 +290,10 @@ Namespace Graphic.Axis
                         .X = scaler.Region.Left - fSize.Height - maxYTickSize * 1.5,
                         .Y = size.Height / 2 + scaler.Region.Top
                     }
+
+                    If location.X < 5 Then
+                        location = New PointF(5, location.Y)
+                    End If
 
                     Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
 
@@ -380,7 +391,8 @@ Namespace Graphic.Axis
                                      tickFont As Font,
                                      Optional overridesTickLine% = -1,
                                      Optional noTicks As Boolean = False,
-                                     Optional htmlLabel As Boolean = True)
+                                     Optional htmlLabel As Boolean = True,
+                                     Optional tickFormat$ = "F2")
 
             Dim Y% = scaler.Region.Top + offset.Y
             Dim size = scaler.Region.Size
@@ -405,7 +417,7 @@ Namespace Graphic.Axis
                     Dim x As Single = scaler.X(tick) + offset.X
                     Dim axisX As New PointF(x, ZERO.Y)
 
-                    Dim labelText = (tick).ToString("F" & 2)
+                    Dim labelText = (tick).ToString(tickFormat)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
                     Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))

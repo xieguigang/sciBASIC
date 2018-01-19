@@ -97,7 +97,11 @@ Namespace Language.Vectorization
             op_Likes = find(objectLike)
             op_IntegerDivisions = find(nameIntegerDivision)
 
-            For Each op As IGrouping(Of String, MethodInfo) In operators
+            For Each op As IGrouping(Of String, MethodInfo) In operators _
+                .Where(Function(o)
+                           ' 在这里将IsTrue/IsFalse/CType等表达式排除掉
+                           Return OperatorExpression.opName2Linq.ContainsKey(o.Key)
+                       End Function)
 #If DEBUG Then
                 ' Call op.Key.EchoLine
 #End If

@@ -96,6 +96,7 @@ Namespace Imaging
         '     A System.Drawing.RectangleF structure that represents a bounding rectangle for
         '     the clipping region of this System.Drawing.Graphics.
         Public Overrides ReadOnly Property ClipBounds As RectangleF
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Graphics.ClipBounds
             End Get
@@ -144,6 +145,7 @@ Namespace Imaging
         ''' The value, in dots per inch, for the horizontal resolution supported by this System.Drawing.Graphics.
         ''' </returns>
         Public Overrides ReadOnly Property DpiX As Single
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Graphics.DpiX
             End Get
@@ -154,6 +156,7 @@ Namespace Imaging
         ''' </summary>
         ''' <returns>The value, in dots per inch, for the vertical resolution supported by this System.Drawing.Graphics.</returns>
         Public Overrides ReadOnly Property DpiY As Single
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Graphics.DpiY
             End Get
@@ -180,6 +183,7 @@ Namespace Imaging
         '     true if the clipping region of this System.Drawing.Graphics is empty; otherwise,
         '     false.
         Public Overrides ReadOnly Property IsClipEmpty As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Graphics.IsClipEmpty
             End Get
@@ -193,6 +197,7 @@ Namespace Imaging
         '     true if the visible portion of the clipping region of this System.Drawing.Graphics
         '     is empty; otherwise, false.
         Public Overrides ReadOnly Property IsVisibleClipEmpty As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Graphics.IsVisibleClipEmpty
             End Get
@@ -325,6 +330,7 @@ Namespace Imaging
         '     A System.Drawing.RectangleF structure that represents a bounding rectangle for
         '     the visible clipping region of this System.Drawing.Graphics.
         Public Overrides ReadOnly Property VisibleClipBounds As RectangleF
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Graphics.VisibleClipBounds
             End Get
@@ -347,10 +353,17 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="color">System.Drawing.Color structure that represents the background color of the drawing
         ''' surface.</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub Clear(color As Color)
             Call Graphics.Clear(color)
         End Sub
-        '
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Sub Clear(bg As Brush)
+            Call Graphics.FillRectangle(bg, New RectangleF(New PointF, Size.SizeF))
+        End Sub
+
         ' Summary:
         '     Performs a bit-block transfer of color data, corresponding to a rectangle of
         '     pixels, from the screen to the drawing surface of the System.Drawing.Graphics.

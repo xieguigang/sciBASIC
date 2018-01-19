@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25402.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "+Microsoft.VisualBasic.Architecture.Framework", "..\Microsoft.VisualBasic.Architecture.Framework\+Microsoft.VisualBasic.Architecture.Framework.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "RDF", "RDF\RDF.vbproj", "{20912FF3-CE68-497C-854D-21E372F11D7C}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "application.rdf_xml", "application%rdf+xml\application.rdf_xml.vbproj", "{20912FF3-CE68-497C-854D-21E372F11D7C}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "application_xml", "application%xml\application_xml.vbproj", "{25AF39F4-76AF-411F-AC19-0DD1E128D801}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,8 +73,35 @@ Global
 		{20912FF3-CE68-497C-854D-21E372F11D7C}.Release|x64.Build.0 = Release|x64
 		{20912FF3-CE68-497C-854D-21E372F11D7C}.Release|x86.ActiveCfg = Release|x86
 		{20912FF3-CE68-497C-854D-21E372F11D7C}.Release|x86.Build.0 = Release|x86
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Debug|x64.Build.0 = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Debug|x86.Build.0 = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.docs|Any CPU.ActiveCfg = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.docs|Any CPU.Build.0 = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.docs|x64.ActiveCfg = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.docs|x64.Build.0 = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.docs|x86.ActiveCfg = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.docs|x86.Build.0 = Debug|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Publish|x64.ActiveCfg = Release|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Publish|x64.Build.0 = Release|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Publish|x86.ActiveCfg = Release|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Publish|x86.Build.0 = Release|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Release|x64.ActiveCfg = Release|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Release|x64.Build.0 = Release|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Release|x86.ActiveCfg = Release|Any CPU
+		{25AF39F4-76AF-411F-AC19-0DD1E128D801}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E9EE2110-2ED2-4A04-B5F1-B1CBBE6CE3ED}
 	EndGlobalSection
 EndGlobal

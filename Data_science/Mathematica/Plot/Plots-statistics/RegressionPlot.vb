@@ -1,12 +1,17 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js
+Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -25,9 +30,11 @@ Public Module RegressionPlot
                          Optional predictPointStyle$ = "green",
                          Optional regressionLineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
                          Optional predictPointStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: dash;",
-                         Optional predictedX#() = Nothing,
+                         Optional labelAnchorLineStroke$ = Stroke.StrongHighlightStroke,
+                         Optional predictedX As IEnumerable(Of NamedValue(Of Double)) = Nothing,
                          Optional showLegend As Boolean = True,
-                         Optional legendLabelFontCSS$ = CSSFont.Win7LargerNormal) As GraphicsData
+                         Optional legendLabelFontCSS$ = CSSFont.Win7Large,
+                         Optional pointLabelFontCSS$ = CSSFont.Win7LittleLarge) As GraphicsData
 
         Dim XTicks#() = fit.X.Range.CreateAxisTicks
         Dim YTicks#() = fit.Y.Range.CreateAxisTicks
@@ -37,6 +44,8 @@ Public Module RegressionPlot
         Dim predictedBrush As Brush = predictPointStyle.GetBrush
         Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
         Dim legendLabelFont As Font = CSSFont.TryParse(legendLabelFontCSS)
+        Dim pointLabelFont As Font = CSSFont.TryParse(pointLabelFontCSS)
+        Dim labelAnchorPen As Pen = Stroke.TryParse(labelAnchorLineStroke).GDIObject
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect = region.PlotRegion
@@ -108,11 +117,20 @@ Public Module RegressionPlot
                     )
                 Next
 
-                If Not predictedX.IsNullOrEmpty Then
-                    For Each ptX As Double In predictedX
-                        Dim pt As New PointF With {.X = ptX, .Y = fit(.X)}
+                If Not predictedX Is Nothing Then
+                    Dim labels As New List(Of Label)
+                    Dim anchors As New List(Of PointF)
+                    Dim labelSize As SizeF
+
+                    For Each ptX As NamedValue(Of Double) In predictedX
+                        Dim pt As New PointF With {
+                            .X = ptX.Value,
+                            .Y = fit(.X)
+                        }
 
                         pt = scaler.Translate(pt)
+                        labelSize = g.MeasureString(ptX.Name, pointLabelFont)
+                        anchors += pt
 
                         g.DrawCircle(
                             centra:=pt,
@@ -125,6 +143,28 @@ Public Module RegressionPlot
                             color:=predictedPointBorder,
                             fill:=False
                         )
+
+                        labels += New Label With {
+                            .height = labelSize.Height,
+                            .width = labelSize.Width,
+                            .text = ptX.Name,
+                            .X = pt.X,
+                            .Y = pt.Y
+                        }
+                    Next
+
+                    Call d3js.labeler _
+                        .Labels(labels) _
+                        .Anchors(labels.GetLabelAnchors(pointSize)) _
+                        .Width(rect.Width) _
+                        .Height(rect.Height) _
+                        .Start(showProgress:=False)
+
+                    For Each label As SeqValue(Of Label) In labels.SeqIterator
+                        With label.value
+                            Call g.DrawLine(labelAnchorPen, .ref, anchors(label))
+                            Call g.DrawString(.text, pointLabelFont, Brushes.Black, .ref)
+                        End With
                     Next
                 End If
 

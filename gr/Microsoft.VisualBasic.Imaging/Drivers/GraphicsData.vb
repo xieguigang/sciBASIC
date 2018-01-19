@@ -54,12 +54,14 @@ Namespace Driver
         Public ReadOnly Property Size As Size
 
         Public ReadOnly Property Width As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Size.Width
             End Get
         End Property
 
         Public ReadOnly Property Height As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Size.Height
             End Get
@@ -158,6 +160,7 @@ Namespace Driver
         Public Shared Property DefaultFormat As ImageFormats = ImageFormats.Png
 
         Public Overrides ReadOnly Property Driver As Drivers
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Drivers.GDI
             End Get
@@ -204,6 +207,7 @@ Namespace Driver
     Public Class SVGData : Inherits GraphicsData
 
         Friend ReadOnly Property SVG As SVGDataCache
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return engine.__svgData
             End Get
@@ -227,6 +231,7 @@ Namespace Driver
         End Sub
 
         Public Overrides ReadOnly Property Driver As Drivers
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Drivers.SVG
             End Get
@@ -257,6 +262,7 @@ Namespace Driver
             End With
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Render() As Drawing.Image
             Return New Renderer().DrawImage(Me)
         End Function
