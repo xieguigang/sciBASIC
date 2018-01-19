@@ -6,10 +6,12 @@ Imports Microsoft.VisualBasic.Data.Bootstrapping
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -28,6 +30,7 @@ Public Module RegressionPlot
                          Optional predictPointStyle$ = "green",
                          Optional regressionLineStyle$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;",
                          Optional predictPointStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: dash;",
+                         Optional labelAnchorLineStroke$ = Stroke.StrongHighlightStroke,
                          Optional predictedX As IEnumerable(Of NamedValue(Of Double)) = Nothing,
                          Optional showLegend As Boolean = True,
                          Optional legendLabelFontCSS$ = CSSFont.Win7Large,
@@ -42,6 +45,7 @@ Public Module RegressionPlot
         Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
         Dim legendLabelFont As Font = CSSFont.TryParse(legendLabelFontCSS)
         Dim pointLabelFont As Font = CSSFont.TryParse(pointLabelFontCSS)
+        Dim labelAnchorPen As Pen = Stroke.TryParse(labelAnchorLineStroke).GDIObject
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect = region.PlotRegion
@@ -115,6 +119,7 @@ Public Module RegressionPlot
 
                 If Not predictedX Is Nothing Then
                     Dim labels As New List(Of Label)
+                    Dim anchors As New List(Of PointF)
                     Dim labelSize As SizeF
 
                     For Each ptX As NamedValue(Of Double) In predictedX
@@ -125,6 +130,7 @@ Public Module RegressionPlot
 
                         pt = scaler.Translate(pt)
                         labelSize = g.MeasureString(ptX.Name, pointLabelFont)
+                        anchors += pt
 
                         g.DrawCircle(
                             centra:=pt,
@@ -147,7 +153,19 @@ Public Module RegressionPlot
                         }
                     Next
 
-                    Call d3js.labeler.Anchors()
+                    Call d3js.labeler _
+                        .Labels(labels) _
+                        .Anchors(labels.GetLabelAnchors(pointSize)) _
+                        .Width(rect.Width) _
+                        .Height(rect.Height) _
+                        .Start()
+
+                    For Each label As SeqValue(Of Label) In labels.SeqIterator
+                        With label.value
+                            Call g.DrawLine(labelAnchorPen, .ref, anchors(label))
+                            Call g.DrawString(.text, pointLabelFont, Brushes.Black, .ref)
+                        End With
+                    Next
                 End If
 
                 If showLegend Then

@@ -268,7 +268,7 @@ Namespace d3js.Layout
         End Function
 
         ''' <summary>
-        ''' main simulated annealing function
+        ''' main simulated annealing function.(这个函数运行完成之后，可以直接使用<see cref="Label.X"/>和<see cref="Label.Y"/>位置数据进行作图)
         ''' </summary>
         ''' <param name="nsweeps"></param>
         ''' <returns></returns>
