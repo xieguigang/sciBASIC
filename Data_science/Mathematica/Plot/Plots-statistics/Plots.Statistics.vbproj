@@ -230,6 +230,7 @@
   <ItemGroup>
     <Compile Include="BoxPlot.vb" />
     <Compile Include="BoxData.vb" />
+    <Compile Include="RegressionPlot.vb" />
     <Compile Include="SampleView.vb" />
     <Compile Include="ForestPlot.vb" />
     <Compile Include="HistStackedBarplot.vb" />
@@ -306,6 +307,10 @@
     <ProjectReference Include="..\..\..\Graph\Graph.vbproj">
       <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
       <Name>Graph</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Math\DataFittings\DataFittings.vbproj">
+      <Project>{fc125b0d-1942-496f-b502-9c0eb80e35b6}</Project>
+      <Name>DataFittings</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Math\Math.Statistics\Math.Statistics.vbproj">
       <Project>{3e195df1-9feb-44d5-904b-15626bbe74d7}</Project>

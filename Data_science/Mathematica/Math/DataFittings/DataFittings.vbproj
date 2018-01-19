@@ -182,6 +182,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -202,6 +203,8 @@
   <ItemGroup>
     <Compile Include="LeastSquares.vb" />
     <Compile Include="FitResult.vb" />
+    <Compile Include="Extensions.vb" />
+    <Compile Include="TestPoint.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

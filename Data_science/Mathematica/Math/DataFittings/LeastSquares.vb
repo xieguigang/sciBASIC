@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ' 尘中远，于2014.03.20
 ' 主页：http://blog.csdn.net/czyt1988/article/details/21743595
@@ -60,7 +60,6 @@ Public Module LeastSquares
     End Function
 
     Public Function LinearFit(x As Double(), y As Double(), length As Integer) As FittedResult
-        Dim result As New FittedResult
         Dim t1 As Double = 0, t2 As Double = 0, t3 As Double = 0, t4 As Double = 0
         Dim factor#() = New Double(1) {}
 
@@ -73,7 +72,12 @@ Public Module LeastSquares
 
         factor(1) = (t3 * length - t2 * t4) / (t1 * length - t2 * t2)
         factor(0) = (t1 * t4 - t2 * t3) / (t1 * length - t2 * t2)
-        result.Factor = factor
+
+        Dim result As New FittedResult With {
+            .Polynomial = New Polynomial With {
+                .Factors = factor
+            }
+        }
 
         ' 计算误差
         calcError(x, y, length, result)
@@ -116,7 +120,9 @@ Public Module LeastSquares
         Dim ata As New List(Of Double)((poly_n + 1) * (poly_n + 1), fill:=0)
         Dim sumxy As New List(Of Double)(poly_n + 1, fill:=0)
         Dim result As New FittedResult With {
-            .Factor = New Double(poly_n) {}
+            .Polynomial = New Polynomial With {
+                .Factors = New Double(poly_n) {}
+            }
         }
 
         For i = 0 To 2 * poly_n
@@ -143,9 +149,9 @@ Public Module LeastSquares
             Next
         Next
 
-        gauss_solve(poly_n + 1, ata, result.Factor, sumxy)
+        Call gaussSolve(poly_n + 1, ata, result.Polynomial.Factors, sumxy)
         ' 计算拟合后的数据并计算误差
-        calcError(x, y, length, result)
+        Call calcError(x, y, length, result)
 
         Return result
     End Function
@@ -186,7 +192,7 @@ Public Module LeastSquares
         result.ErrorTest = err
     End Sub
 
-    Private Sub gauss_solve(n As Integer, ByRef A As List(Of Double), ByRef x As Double(), ByRef b As List(Of Double))
+    Private Sub gaussSolve(n%, ByRef A As List(Of Double), ByRef x#(), ByRef b As List(Of Double))
         Dim i As Integer
         Dim j As Integer
         Dim k As Integer
@@ -195,7 +201,7 @@ Public Module LeastSquares
 
         For k = 0 To n - 2
             max = Math.Abs(A(k * n + k))
-            'find maxmum
+            ' find maxmum
             r = k
             For i = k + 1 To n - 2
                 If max < Math.Abs(A(i * n + i)) Then
@@ -205,14 +211,14 @@ Public Module LeastSquares
             Next
             If r <> k Then
                 For i = 0 To n - 1
-                    'change array:A[k]&A[r]
+                    ' change array:A[k]&A[r]
                     max = A(k * n + i)
                     A(k * n + i) = A(r * n + i)
                     A(r * n + i) = max
                 Next
             End If
             max = b(k)
-            'change array:b[k]&b[r]
+            ' change array:b[k]&b[r]
             b(k) = b(r)
             b(r) = max
             For i = k + 1 To n - 1
