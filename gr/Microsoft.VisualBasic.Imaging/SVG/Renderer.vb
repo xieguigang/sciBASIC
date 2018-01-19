@@ -35,8 +35,18 @@ Namespace SVG
     ''' </summary>
     Public Class Renderer
 
+        ''' <summary>
+        ''' Rendering the SVG document as bitmap image.
+        ''' </summary>
+        ''' <param name="svg"></param>
+        ''' <returns></returns>
         Public Function DrawImage(svg As SVGData) As Drawing.Image
-            Throw New NotImplementedException
+            Using g As Graphics2D = svg.Size.CreateGDIDevice
+
+                Call g.Clear(svg.SVG.bg.GetBrush)
+
+                Return g.ImageResource
+            End Using
         End Function
     End Class
 End Namespace
