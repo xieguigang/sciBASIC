@@ -284,6 +284,10 @@ Namespace Graphic.Axis
                         .Y = size.Height / 2 + scaler.Region.Top
                     }
 
+                    If location.X < 5 Then
+                        location = New PointF(5, location.Y)
+                    End If
+
                     Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
 
                     With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
