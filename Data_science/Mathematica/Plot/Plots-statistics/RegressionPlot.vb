@@ -158,7 +158,7 @@ Public Module RegressionPlot
                         .Anchors(labels.GetLabelAnchors(pointSize)) _
                         .Width(rect.Width) _
                         .Height(rect.Height) _
-                        .Start()
+                        .Start(showProgress:=False)
 
                     For Each label As SeqValue(Of Label) In labels.SeqIterator
                         With label.value
