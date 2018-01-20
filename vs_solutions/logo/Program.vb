@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
+Imports Microsoft.VisualBasic.Imaging.Math2D
 
 ''' <summary>
 ''' sciBASIC framework logo generator. A demo for the sciBASIC graphics artist system.
@@ -34,6 +35,18 @@ Module Program
         End Using
 
         logo = logo.CorpBlank(blankColor:=Color.Transparent)
+
+        Using g As Graphics2D = Math.Max(logo.Width, logo.Height) _
+            .SquareSize _
+            .CreateGDIDevice(filled:=Color.Transparent)
+
+            Dim topleft As New Point With {
+                .X = (g.Width - logo.Width) / 2,
+                .Y = (g.Height - logo.Height) / 2
+            }
+
+            Call g.DrawImageUnscaled(logo, topleft)
+        End Using
 
         Call logo.SaveAs("../../../logo-knot.png")
 
