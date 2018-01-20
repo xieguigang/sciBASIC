@@ -54,8 +54,8 @@ Module Program
             Call g.DrawImageUnscaled(logo, New Point(50, 50))
 
             Call g.DrawString("sci", New Font(fontName, 140), color1, New PointF(430, 90))
-            Call g.DrawString("BASIC#", New Font(fontName, 200), color2, New PointF(690, 60))
-            Call g.DrawString("http://sciBASIC.NET", New Font(FontFace.SegoeUI, 48), color1, New PointF(740, 350))
+            Call g.DrawString("BASIC#", New Font(fontName, 200), color2, New PointF(670, 60))
+            Call g.DrawString("http://sciBASIC.NET", New Font(FontFace.SegoeUI, 48), color1, New PointF(720, 350))
 
             logo = g.ImageResource
         End Using
