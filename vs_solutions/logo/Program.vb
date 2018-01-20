@@ -64,5 +64,11 @@ Module Program
             .CorpBlank(blankColor:=Color.Transparent, margin:=30) _
             .SaveAs(save)
 
+        logo = save.LoadImage _
+            .ColorReplace(color1.Color, Color.White) _
+            .ColorReplace(color2.Color, Color.White)
+
+        Call logo.SaveAs("../../../logo-white.png")
+
     End Sub
 End Module
