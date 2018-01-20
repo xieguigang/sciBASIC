@@ -35,6 +35,8 @@ Module Program
 
         logo = logo.CorpBlank(blankColor:=Color.Transparent)
 
+        Call logo.SaveAs("../../../logo-knot.png")
+
         Using g As Graphics2D = New Size(1800, 500).CreateGDIDevice(filled:=Color.Transparent)
 
             Call g.DrawImageUnscaled(logo, New Point(50, 50))
