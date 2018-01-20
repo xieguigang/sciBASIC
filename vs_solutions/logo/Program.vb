@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 ''' </summary>
 Module Program
 
-    Const save$ = "./logo.png"
+    Const save$ = "../../../../logo.png"
 
     ReadOnly BLUE As Color = Color.FromArgb(50, 60, 160)
     ReadOnly GREEN As Color = Color.FromArgb(50, 160, 60)
@@ -39,9 +39,9 @@ Module Program
 
             Call g.DrawImageUnscaled(logo, New Point(50, 50))
 
-            Call g.DrawString("sci", New Font(fontName, 120), color1, New PointF(400, 45))
-            Call g.DrawString("BASIC#", New Font(fontName, 200), color2, New PointF(575, 10))
-            Call g.DrawString("http://sciBASIC.NET", New Font(FontFace.SegoeUI, 48), color1, New PointF(630, 300))
+            Call g.DrawString("sci", New Font(fontName, 120), color1, New PointF(400, 90))
+            Call g.DrawString("BASIC#", New Font(fontName, 200), color2, New PointF(575, 60))
+            Call g.DrawString("http://sciBASIC.NET", New Font(FontFace.SegoeUI, 48), color1, New PointF(630, 350))
 
             logo = g.ImageResource
         End Using
