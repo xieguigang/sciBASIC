@@ -30,13 +30,18 @@ Namespace Drawing3D.Models.Isometric.Shapes
 
     Public Class Knot : Inherits Shape3D
 
-        Public Sub New(origin As Point3D)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="origin">The shape model location</param>
+        ''' <param name="scale#">The scale size</param>
+        Public Sub New(origin As Point3D, Optional scale# = 1 / 5)
             Push((New Prism(Math3D.ORIGIN, 5, 1, 1)).paths)
             Push((New Prism(New Point3D(4, 1, 0), 1, 4, 1)).paths)
             Push((New Prism(New Point3D(4, 4, -2), 1, 1, 3)).paths)
             Push(New Path3D(New Point3D() {New Point3D(0, 0, 2), New Point3D(0, 0, 1), New Point3D(1, 0, 1), New Point3D(1, 0, 2)}))
             Push(New Path3D(New Point3D() {New Point3D(0, 0, 2), New Point3D(0, 1, 2), New Point3D(0, 1, 1), New Point3D(0, 0, 1)}))
-            ScalePath3Ds(Math3D.ORIGIN, 1.0 / 5.0)
+            ScalePath3Ds(Math3D.ORIGIN, scale)
             TranslatePath3Ds(-0.1, 0.15, 0.4)
             TranslatePath3Ds(origin.X, origin.Y, origin.Z)
         End Sub
