@@ -33,21 +33,19 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
     Public Class URLBuilder
 
         Public ReadOnly Property [lib] As Libraries
-        Public ReadOnly Property jsName As String
 
         ''' <summary>
         ''' link url after hexo generates the static site
         ''' </summary>
         Dim ext As String
 
-        Sub New(type As Libraries, js$)
-            Me.jsName = js
+        Sub New(type As Libraries)
             Me.lib = type
             Me.ext = If(type = Libraries.Hexo, ".html", ".md")
         End Sub
 
         Sub New()
-            Me.New(Libraries.Github, Nothing)
+            Me.New(Libraries.Github)
         End Sub
 
         Public Function GetNamespaceTypeUrl(ns As ProjectNamespace, pt As ProjectType) As String

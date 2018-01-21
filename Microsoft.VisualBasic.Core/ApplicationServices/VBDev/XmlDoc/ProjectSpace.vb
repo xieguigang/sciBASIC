@@ -162,12 +162,12 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         ''' <param name="url">Generates the hexo page source file?</param>
         ''' <returns></returns>
         Public Function ExportMarkdownFiles(folderPath As String, Optional url As URLBuilder = Nothing) As Boolean
-            Dim [lib] As URLBuilder = If(url Is Nothing, New URLBuilder, url)
+            With url Or New URLBuilder().AsDefault
+                Call ExportMarkdownFiles(folderPath, TemplateToken, .ref)
+                Call "Build library index...".__DEBUG_ECHO
 
-            Call ExportMarkdownFiles(folderPath, TemplateToken, [lib])
-            Call "Build library index...".__DEBUG_ECHO
-
-            Return BuildIndex(folderPath, [lib].lib)
+                Return BuildIndex(folderPath, .lib)
+            End With
         End Function
 
         ''' <summary>
