@@ -149,7 +149,7 @@ Namespace BarPlot.Histogram
             Dim data As New List(Of Double)
             Dim engine As New Expression
 
-            For Each x# In xrange.Value.seq(steps)
+            For Each x As Double In xrange.Value.seq(steps)
                 Call engine.SetVariable(xrange.Name, x#)
                 data += engine.Evaluation(expression$)
             Next
@@ -215,7 +215,7 @@ Namespace BarPlot.Histogram
                     Dim scaler As New DataScaler With {
                         .X = X,
                         .Y = Y,
-                        .ChartRegion = region.PlotRegion,
+                        .Region = region.PlotRegion,
                         .AxisTicks = (XTicks, YTicks)
                     }
 

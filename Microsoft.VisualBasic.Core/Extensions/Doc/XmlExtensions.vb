@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24b790a7413475d5515ac411376bfb1b, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::330453535309bdde99af74d0a7b9f4cd, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -253,13 +253,9 @@ Public Module XmlExtensions
                        Optional encoding As Encodings = Encodings.UTF16,
     <CallerMemberName> Optional caller As String = "") As Boolean
         Try
-            Using file = saveXml.Open
-                Call WriteXML(obj, GetType(T),
-                              out:=file,
-                              encoding:=encoding)
-            End Using
-
-            Return True
+            Return obj _
+                .GetXml(ThrowEx:=throwEx, xmlEncoding:=encoding) _
+                .SaveTo(saveXml, encoding.CodePage, throwEx:=throwEx)
         Catch ex As Exception
             ex = New Exception(caller, ex)
 

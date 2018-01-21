@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dda63bd0a042fa4c713380d32ada3fe1, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedValue(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::8c1a12a3868225efef982ebb004c8ad3, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedValue(Of T).vb"
 
     ' Author:
     ' 
@@ -156,6 +156,22 @@ Namespace ComponentModel.DataSourceModel
                     Return tuple.Value.Equals(compares)
                 End If
             End If
+        End Operator
+
+        ''' <summary>
+        ''' Convert from tuple
+        ''' </summary>
+        ''' <param name="tuple"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(tuple As (name$, value As T)) As NamedValue(Of T)
+            Return New NamedValue(Of T)(tuple.name, tuple.value)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(tuple As (name$, value As T, describ$)) As NamedValue(Of T)
+            Return New NamedValue(Of T)(tuple.name, tuple.value, tuple.describ)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

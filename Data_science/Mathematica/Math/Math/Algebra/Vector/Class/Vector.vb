@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::2cba25edb939636f2021ad0f8dc889e8, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::8d0acf507e790129ee071e47834512b3, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -236,14 +236,15 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Operator -(v1 As Vector, a As Double) As Vector
+        Public Overloads Shared Operator -(v1 As Vector, a#) As Vector
             '向量数加算符重载
-            Dim N0 As Integer = v1.[Dim]           '获取变量维数
+            Dim N0 As Integer = v1.[Dim] ' 获取变量维数
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
                 v2(j) = v1(j) - a
             Next
+
             Return v2
         End Operator
 
@@ -254,13 +255,14 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Operator *(v1 As Vector, a As Double) As Vector
-            Dim N0 As Integer = v1.[Dim]            '获取变量维数
+        Public Overloads Shared Operator *(v1 As Vector, a#) As Vector
+            Dim N0 As Integer = v1.[Dim] ' 获取变量维数
             Dim v2 As New Vector(N0)
 
             For j As Integer = 0 To N0 - 1
                 v2(j) = v1(j) * a
             Next
+
             Return v2
         End Operator
 
@@ -271,13 +273,14 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator /(v1 As Vector, a As Double) As Vector
+        Public Shared Operator /(v1 As Vector, a#) As Vector
             Dim N0 As Integer = v1.[Dim]         '获取变量维数
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
                 v2(j) = v1(j) / a
             Next
+
             Return v2
         End Operator
 
@@ -288,6 +291,7 @@ Namespace LinearAlgebra
             For j = 0 To N0 - 1
                 v2(j) = x / v(j)
             Next
+
             Return v2
         End Operator
 
@@ -306,6 +310,7 @@ Namespace LinearAlgebra
             For j = 0 To N0 - 1
                 v2(j) = v1(j) + a
             Next
+
             Return v2
         End Operator
 
@@ -515,6 +520,17 @@ Namespace LinearAlgebra
             Return result
         End Function
 
+        ''' <summary>
+        ''' ``[min, max]``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Range As DoubleRange
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New DoubleRange(Me)
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function rand(size%) As Vector
             Return Extensions.rand(size)
@@ -555,7 +571,7 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' Power
+        ''' Power: <see cref="Math.Pow(Double, Double)"/>
         ''' </summary>
         ''' <param name="v"></param>
         ''' <param name="n"></param>

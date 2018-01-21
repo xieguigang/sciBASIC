@@ -38,7 +38,8 @@ Public Class StringWriter
 
     Dim encoding As Encodings
     Dim codepage As Encoding
-    Dim stream As BinaryWriter
+
+    Public ReadOnly stream As BinaryWriter
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(path$, Optional encoding As Encodings = Encodings.ASCII)

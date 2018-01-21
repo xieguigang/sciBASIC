@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8becf8e25a528b87622665aeea2de47e, ..\sciBASIC#\Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::af15033ce23ac8ab2791bdca3932ab0e, ..\sciBASIC#\Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,13 @@ Namespace IO
         Implements INamedValue
 
         Public Overridable Property ID As String Implements INamedValue.Key
+
+        Protected Overrides ReadOnly Property MyHashCode As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return ID.GetHashCode
+            End Get
+        End Property
 
         Sub New()
         End Sub

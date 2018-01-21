@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91e130ccb513dab6be2de419f1d72aec, ..\sciBASIC#\mime\text%html\HTML\HTML.vb"
+﻿#Region "Microsoft.VisualBasic::0bfd88a629503931126bbe64dd416c02, ..\sciBASIC#\mime\text%html\HTML\HTML.vb"
 
     ' Author:
     ' 
@@ -26,11 +26,10 @@
 
 #End Region
 
-Imports System.Text
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.MIME.Markup.StreamWriter
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace HTML.DDM
 

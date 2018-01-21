@@ -110,7 +110,7 @@ Namespace MonteCarlo
             Dim a = base.x(Scan0)
             Dim b = base.x.Last
 
-            For Each x In base.params
+            For Each x As KeyValuePair(Of String, Double) In base.params
                 Call App.JoinVariable(x.Key, x.Value)
             Next
 
@@ -126,7 +126,7 @@ Namespace MonteCarlo
                         Return out
                     End Function
 
-                For Each x# In ranges
+                For Each x As Double In ranges
                     Yield __run(x)
                 Next
             Else
@@ -139,8 +139,8 @@ Namespace MonteCarlo
                                     .RunTest(model, params, params, l, a, b)
                              Order By x Ascending
 
-                For Each x In LQuery
-                    Yield x.out
+                For Each value In LQuery
+                    Yield value.out
                 Next
             End If
         End Function

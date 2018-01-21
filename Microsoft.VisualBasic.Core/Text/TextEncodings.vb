@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77e08589f173c8965a5ea0fc30a4969d, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::18509104ee1713cd85c7eca88b14e6d1, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -73,7 +73,7 @@ Namespace Text
         Public ReadOnly Property UTF8WithoutBOM As New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False)
 
         ''' <summary>
-        ''' 获取操作系统的当前 ANSI 代码页的编码。
+        ''' 获取操作系统的当前 ANSI 代码页的编码。这个属性可以通过``default_encoding``环境参数来设置
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property DefaultEncoding As defaultEncoding = Encoding.Default

@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::3db7eb045625aaa05856e5bf57081070, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::0ffac31f09c4a9d2f7d22944aea65be7, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -256,16 +256,15 @@ Public Module StringHelpers
     ''' <returns>A copy of format in which the format items have been replaced by the string representation
     ''' of the corresponding objects in args.</returns>
     <Extension>
-    Public Function sFormat(s As String, ParamArray args As Object()) As String
+    Public Function FormatString(s$, ParamArray args As Object()) As String
         Return String.Format(s, args)
     End Function
 
     ''' <summary>
     ''' this is to emulate what's evailable in PHP
     ''' </summary>
-    ''' 
     <Extension>
-    Public Function RepeatString(text As String, count As Integer) As String
+    Public Function RepeatString(text$, count%) As String
         Dim sb = New StringBuilder(text.Length * count)
         For i As Integer = 0 To count - 1
             Call sb.Append(text)
@@ -273,9 +272,18 @@ Public Module StringHelpers
         Return sb.ToString()
     End Function
 
+    ''' <summary>
+    ''' Join and contact the text tokens with a specific <paramref name="delimiter"/> string.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="data"></param>
+    ''' <param name="delimiter$"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter As String) As String
-        Return String.Join(delimiter, data.Select(AddressOf Scripting.ToString).ToArray)
+    Public Function JoinBy(Of T)(data As IEnumerable(Of T), delimiter$) As String
+        Return String.Join(delimiter, data.SafeQuery.Select(AddressOf Scripting.ToString).ToArray)
     End Function
 
     ''' <summary>
@@ -286,6 +294,8 @@ Public Module StringHelpers
     ''' <param name="trim">Needs Removes all leading and trailing white-space characters from 
     ''' the current <see cref="System.String"/> object.</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function GetTagValue(s$, Optional delimiter$ = " ", Optional trim As Boolean = False, Optional failureNoName As Boolean = True) As NamedValue(Of String)
         Return s.GetTagValue(delimiter, trim:=If(trim, " ", Nothing), failureNoName:=failureNoName)
@@ -384,6 +394,8 @@ Public Module StringHelpers
     ''' Call <see cref="StringBuilder.Remove"/>(<see cref="StringBuilder.Length"/> - 1, 1) for removes the last character in the string sequence.
     ''' </summary>
     ''' <param name="s"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Sub RemoveLast(s As StringBuilder)
         Call s.Remove(s.Length - 1, 1)
     End Sub
@@ -404,6 +416,8 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Reverse(s As String) As String
         Return New String(s.Reverse.ToArray)
     End Function
@@ -721,7 +735,7 @@ Public Module StringHelpers
     ''' <returns></returns>
     <ExportAPI("Match")>
     <Extension> Public Function Match(input As Match, pattern$, Optional options As RegexOptions = RegexOptions.Multiline) As String
-        Return Regex.Match(input.Value, pattern, options).Value
+        Return r.Match(input.Value, pattern, options).Value
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\test\bin\Debug\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.Statistics.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -167,7 +167,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\..\..\.vs\installer\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.Statistics.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -230,6 +230,9 @@
   <ItemGroup>
     <Compile Include="BoxPlot.vb" />
     <Compile Include="BoxData.vb" />
+    <Compile Include="RegressionPlot.vb" />
+    <Compile Include="SampleView.vb" />
+    <Compile Include="ForestPlot.vb" />
     <Compile Include="HistStackedBarplot.vb" />
     <Compile Include="Heatmap\Heatmap.vb" />
     <Compile Include="Heatmap\CorrelationHeatmap.vb" />
@@ -289,9 +292,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\mime\text%25html\mime-htmls.vbproj">
+    <ProjectReference Include="..\..\..\..\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>mime-htmls</Name>
+      <Name>MIME-htmls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hierarchical-clustering.vbproj">
       <Project>{6ca54af6-cadc-457e-94b9-384f2990f07e}</Project>
@@ -305,9 +308,17 @@
       <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
       <Name>Graph</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Math\Math\math-core.vbproj">
+    <ProjectReference Include="..\..\Math\DataFittings\DataFittings.vbproj">
+      <Project>{fc125b0d-1942-496f-b502-9c0eb80e35b6}</Project>
+      <Name>DataFittings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Math\Math.Statistics\Math.Statistics.vbproj">
+      <Project>{3e195df1-9feb-44d5-904b-15626bbe74d7}</Project>
+      <Name>Math.Statistics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Math\Math\Math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+      <Name>Math-core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Math\ODE\ODEsSolver.vbproj">
       <Project>{14e0b048-3a0d-4fd6-aa79-9b815d6f1b30}</Project>

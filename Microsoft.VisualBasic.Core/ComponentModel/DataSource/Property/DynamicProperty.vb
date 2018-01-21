@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65db21377ce52c6c84139e8b012adb60, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::c0ca771700880fb67c3ae89a309e4876, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -164,7 +164,7 @@ Namespace ComponentModel.DataSourceModel
         ''' to see if any duplicated was existed? 
         ''' </summary>
         ''' <returns></returns>
-        Protected ReadOnly Property MyHashCode As Integer
+        Protected Overridable ReadOnly Property MyHashCode As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetHashCode()

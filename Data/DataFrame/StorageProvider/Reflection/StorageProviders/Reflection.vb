@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7081ba834fb0b38c8af54fe6efbf7a22, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::a226c70e31c748ad413c7558d9ec4546, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
@@ -137,7 +138,7 @@ Namespace StorageProvider.Reflection
         ''' <remarks></remarks>
         Public Function Load(Of ItemType As Class)(path As String,
                                                    Optional Explicit As Boolean = True,
-                                                   Optional encoding As System.Text.Encoding = Nothing,
+                                                   Optional encoding As Encoding = Nothing,
                                                    Optional fast As Boolean = False,
                                                    Optional maps As Dictionary(Of String, String) = Nothing) As List(Of ItemType)
             If Not path.FileExists Then '空文件

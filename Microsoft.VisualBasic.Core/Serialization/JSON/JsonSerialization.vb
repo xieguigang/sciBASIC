@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d85bb62cc35b42b2e9b343c43fbb93f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::b0d838c95ebc80e7951815897acfe093, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -182,10 +182,25 @@ Namespace Serialization.JSON
         ''' <summary>
         ''' JSON反序列化
         ''' </summary>
-        <Extension> Public Function LoadObject(Of T)(json As String, Optional simpleDict As Boolean = True) As T
-            Dim value As Object = LoadObject(json, GetType(T), simpleDict)
+        ''' <param name="json">This string value can be json text or json file path.</param>
+        <Extension> Public Function LoadObject(Of T)(json$, Optional simpleDict As Boolean = True) As T
+            Dim value As Object = LoadObject(json.SolveStream(Encodings.UTF8), GetType(T), simpleDict)
             Dim obj As T = DirectCast(value, T)
             Return obj
+        End Function
+
+        ''' <summary>
+        ''' XML CDATA to json
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="json"></param>
+        ''' <param name="simpleDict"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function LoadObject(Of T As New)(json As XElement, Optional simpleDict As Boolean = True) As T
+            Return json.Value.LoadObject(Of T)(simpleDict:=simpleDict)
         End Function
 
         Public Function LoadJsonFile(Of T)(file As String, Optional encoding As Encoding = Nothing, Optional simpleDict As Boolean = True) As T

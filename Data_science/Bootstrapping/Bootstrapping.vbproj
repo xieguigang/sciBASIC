@@ -136,7 +136,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\.vs\installer\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016</NoWarn>

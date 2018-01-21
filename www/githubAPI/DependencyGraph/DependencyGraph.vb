@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92f5ff8302e23b080ed5c11662cee66b, ..\sciBASIC#\www\githubAPI\DependencyGraph\DependencyGraph.vb"
+﻿#Region "Microsoft.VisualBasic::1cc4c50ff4b96530d5334c28178e2540, ..\sciBASIC#\www\githubAPI\DependencyGraph\DependencyGraph.vb"
 
     ' Author:
     ' 
@@ -30,4 +30,3 @@ Public Module DependencyGraph
 
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5d563f8f4996babbf82ac3cd295f87d, ..\sciBASIC#\gr\network-visualization\test\visualEffectsTest.vb"
+﻿#Region "Microsoft.VisualBasic::f8e13f7f7843dc3f2b586ca93dbcd5c2, ..\sciBASIC#\gr\network-visualization\test\visualEffectsTest.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Module visualEffectsTest
         Call g.DrawImage("2000,2000", scale:=3.5, radiusScale:=5, fontSizeFactor:=5).Save("./test.png")
     End Sub
 End Module
-

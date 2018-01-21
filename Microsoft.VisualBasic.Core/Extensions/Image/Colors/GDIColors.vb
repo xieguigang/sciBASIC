@@ -41,6 +41,12 @@ Namespace Imaging
     ''' </summary>
     Public Module GDIColors
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function HTMLColors(colors As IEnumerable(Of Color)) As IEnumerable(Of String)
+            Return colors.Select(AddressOf ToHtmlColor)
+        End Function
+
         ''' <summary>
         ''' ``<paramref name="x"/> -> <paramref name="y"/>``：返回两个颜色之间的中间的颜色，这个函数是某些插值操作所需要的
         ''' </summary>

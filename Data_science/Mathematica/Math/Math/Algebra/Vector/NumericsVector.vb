@@ -27,9 +27,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
-Imports Microsoft.VisualBasic.Scripting
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace LinearAlgebra
 

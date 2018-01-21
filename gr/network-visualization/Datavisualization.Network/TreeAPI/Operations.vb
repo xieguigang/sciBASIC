@@ -65,7 +65,7 @@ Namespace TreeAPI
                         Call netList.Remove(x)
                     Next
 
-                    If tree.DirectFind(node) Is Nothing Then
+                    If tree.FindSymbol(node) Is Nothing Then
                         Call tree.insert(node, NodeTypes.Path)
                     End If
                 End If

@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::a3ef9ea0eb0c18e65cdb5657bf3d8868, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sys = System.Math
 
 '
@@ -89,15 +90,12 @@ Namespace Quantile
 
         Dim sample As New List(Of X)
 
-        Public Sub printList()
-            Dim buf As New StringBuilder
-
-            For Each i As X In sample
-                buf.Append(String.Format("({0:D} {1:D} {2:D}),", i.value, i.g, i.delta))
-            Next
-
-            Call buf.ToString.__DEBUG_ECHO
-        End Sub
+        Public Overrides Function ToString() As String
+            Return seq(0, 1, 0.1) _
+                .ToDictionary(Function(pct) (100 * pct).ToString("F2") & "%",
+                              Function(pct) Query(pct).ToString("F2")) _
+                .GetJson
+        End Function
 
         Public Sub Insert(v&)
             Call Insert(CDbl(v))
@@ -152,7 +150,7 @@ Namespace Quantile
         End Sub
 
         ''' <summary>
-        ''' 使用数量百分比来获取得到对应的阈值
+        ''' 使用数量百分比来获取得到对应的阈值，<paramref name="quantile"/>为0-1之间的百分比值
         ''' </summary>
         ''' <param name="quantile#">0-1之间的百分比值</param>
         ''' <returns>阈值</returns>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50eb4e68e7bee4a4903075f200fa275f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::d3b59f9a27f534866387c9e224de9d17, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\Vectorization\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -97,7 +97,11 @@ Namespace Language.Vectorization
             op_Likes = find(objectLike)
             op_IntegerDivisions = find(nameIntegerDivision)
 
-            For Each op As IGrouping(Of String, MethodInfo) In operators
+            For Each op As IGrouping(Of String, MethodInfo) In operators _
+                .Where(Function(o)
+                           ' 在这里将IsTrue/IsFalse/CType等表达式排除掉
+                           Return OperatorExpression.opName2Linq.ContainsKey(o.Key)
+                       End Function)
 #If DEBUG Then
                 ' Call op.Key.EchoLine
 #End If

@@ -355,11 +355,23 @@ Namespace Language
         ''' <param name="vals"></param>
         ''' <returns></returns>
         Public Shared Operator +(list As List(Of T), vals As IEnumerable(Of T)) As List(Of T)
-            If vals Is Nothing Then
-                Return list
+            If Not vals Is Nothing Then
+                Call list.AddRange(vals.ToArray)
             End If
-            Call list.AddRange(vals.ToArray)
             Return list
+        End Operator
+
+        ''' <summary>
+        ''' Append <paramref name="list2"/> to the end of <paramref name="list1"/>
+        ''' </summary>
+        ''' <param name="list1"></param>
+        ''' <param name="list2"></param>
+        ''' <returns></returns>
+        Public Shared Operator +(list1 As List(Of T), list2 As List(Of T)) As List(Of T)
+            If Not list2 Is Nothing Then
+                list1.AddRange(list2.ToArray)
+            End If
+            Return list1
         End Operator
 
         ''' <summary>
@@ -369,10 +381,9 @@ Namespace Language
         ''' <param name="vals"></param>
         ''' <returns></returns>
         Public Shared Operator +(list As List(Of T), vals As IEnumerable(Of IEnumerable(Of T))) As List(Of T)
-            If vals Is Nothing Then
-                Return list
+            If Not vals Is Nothing Then
+                Call list.AddRange(vals.IteratesALL)
             End If
-            Call list.AddRange(vals.IteratesALL)
             Return list
         End Operator
 
@@ -462,12 +473,12 @@ Namespace Language
         ''' <param name="find"></param>
         ''' <returns></returns>
         Public Shared Operator ^(list As List(Of T), find As Func(Of T, Boolean)) As T
-            Dim LQuery = LinqAPI.DefaultFirst(Of T) <=
+            Dim LQuery = LinqAPI.DefaultFirst(Of T) _
  _
-                From x As T
-                In list.AsParallel
-                Where True = find(x)
-                Select x
+                () <= From x As T
+                      In list.AsParallel
+                      Where True = find(x)
+                      Select x
 
             Return LQuery
         End Operator

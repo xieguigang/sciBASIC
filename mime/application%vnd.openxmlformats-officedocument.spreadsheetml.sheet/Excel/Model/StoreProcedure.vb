@@ -59,7 +59,7 @@ Public Module StoreProcedure
         Dim colIndex%
         Dim cellIndex As Point
 
-        For Each col As c In row.columns
+        For Each col As XML.xl.worksheets.c In row.columns
             cellIndex = Coordinates.Index(col.r)
             colIndex = cellIndex.Y ' 因为这里都是同一行的数据，所以只取列下标即可
 
@@ -100,36 +100,11 @@ Public Module StoreProcedure
 
     Private Function CreateRow(i%, data As RowObject, strings As Dictionary(Of String, Integer)) As row
         Dim spans$
-        Dim cols As c() = data _
+        Dim cols As XML.xl.worksheets.c() = data _
             .SeqIterator _
             .Where(Function(s) Not s.value.StringEmpty) _
             .Select(Function(x)
-                        Dim s$ = x
-                        Dim t$ = Nothing
-
-                        If strings.ContainsKey(s) Then
-                            ' 使用共享引用以减少所生成的文件的大小
-                            t = "s"
-                            s = strings(s)
-                        ElseIf Not s.IsNumeric Then
-
-                            ' 非数值类型的要添加进入共享字符串列表
-                            SyncLock strings
-                                With strings
-                                    Call .Add(s, .Count)
-                                End With
-                            End SyncLock
-
-                            t = "s"
-                            s = strings(s)
-                        End If
-
-                        Return New c With {
-                            .r = x.i.ColumnIndex & i,
-                            .v = s,
-                            .t = t,
-                            .s = If(t Is Nothing, Nothing, "1")
-                        }
+                        Return strings.CreateColumn(i, x)
                     End Function) _
             .ToArray
 
@@ -141,6 +116,36 @@ Public Module StoreProcedure
             .r = i,
             .spans = spans,
             .columns = cols
+        }
+    End Function
+
+    <Extension>
+    Private Function CreateColumn(strings As Dictionary(Of String, Integer), i%, x As SeqValue(Of String)) As XML.xl.worksheets.c
+        Dim s$ = x
+        Dim t$ = Nothing
+
+        If strings.ContainsKey(s) Then
+            ' 使用共享引用以减少所生成的文件的大小
+            t = "s"
+            s = strings(s)
+        ElseIf Not s.IsNumeric Then
+
+            ' 非数值类型的要添加进入共享字符串列表
+            SyncLock strings
+                With strings
+                    Call .Add(s, .Count)
+                End With
+            End SyncLock
+
+            t = "s"
+            s = strings(s)
+        End If
+
+        Return New XML.xl.worksheets.c With {
+            .r = x.i.ColumnIndex & i,
+            .v = s,
+            .t = t,
+            .s = If(t Is Nothing, Nothing, "1")
         }
     End Function
 End Module

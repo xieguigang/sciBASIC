@@ -151,6 +151,12 @@ Namespace Imaging
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ColorBrush(c As Color) As SolidBrush
+            Return New SolidBrush(color:=c)
+        End Function
+
         ''' <summary>
         ''' Converts the colors into solidbrushes in batch.
         ''' </summary>
@@ -206,7 +212,7 @@ Namespace Imaging
         End Sub
 
         <Extension>
-        Public Sub DrawCircle(ByRef g As IGraphics, centra As PointF, r!, color As SolidBrush)
+        Public Sub DrawCircle(ByRef g As IGraphics, centra As PointF, r!, color As Brush)
             Dim d = r * 2
 
             With centra

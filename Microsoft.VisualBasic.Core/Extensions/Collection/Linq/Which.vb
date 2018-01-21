@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::2b3827446fc900809b2eb22ff43ea695, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Which.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
@@ -45,6 +46,8 @@ Namespace Linq
         ''' <param name="source"></param>
         ''' <param name="predicate"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Index(Of T)(source As IEnumerable(Of T), predicate As Func(Of T, Boolean)) As IEnumerable(Of Integer)
             Return source _
                 .SeqIterator _
@@ -80,6 +83,8 @@ Namespace Linq
         ''' double works whose min or max is searched for.
         ''' </param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Max(Of T As IComparable)(x As IEnumerable(Of T)) As Integer
             Return x.MaxIndex
         End Function
@@ -93,6 +98,8 @@ Namespace Linq
         ''' double works whose min or max is searched for.
         ''' </param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Min(Of T As IComparable)(x As IEnumerable(Of T)) As Integer
             Return x.MinIndex
         End Function
@@ -102,6 +109,8 @@ Namespace Linq
         ''' </summary>
         ''' <param name="v"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsTrue(v As IEnumerable(Of Boolean)) As Integer()
             Return v _
                 .SeqIterator _
@@ -115,6 +124,8 @@ Namespace Linq
         ''' </summary>
         ''' <param name="list"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsTrue(list As Object) As Integer()
             Return IsTrue(DirectCast(list, IEnumerable).Cast(Of Object).Select(Function(o) CBool(o)))
         End Function
@@ -124,6 +135,8 @@ Namespace Linq
         ''' </summary>
         ''' <param name="v"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsFalse(v As IEnumerable(Of Boolean)) As Integer()
             Return v _
                 .SeqIterator _
@@ -132,10 +145,12 @@ Namespace Linq
                 .ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsTrue([operator] As Func(Of Boolean())) As Integer()
             Return IsTrue([operator]())
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsFalse([operator] As Func(Of Boolean())) As Integer()
             Return Which.IsFalse([operator]())
         End Function
@@ -167,6 +182,8 @@ Namespace Linq
         ''' <param name="compareTo"></param>
         ''' <returns></returns>
         ''' <remarks>因为这个返回的是一个迭代器，所以可以和First结合产生FirstGreaterThan表达式</remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsGreaterThan(Of T As IComparable)(source As IEnumerable(Of T), compareTo As T) As IEnumerable(Of Integer)
             Return source _
                 .SeqIterator _
@@ -174,6 +191,7 @@ Namespace Linq
                 .Select(Function(i) i.i) ' 因为返回的是linq表达式，所以这里就不加ToArray了
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsGreaterThan(Of T, C As IComparable)(source As IEnumerable(Of T), getValue As Func(Of T, C), compareTo As C) As IEnumerable(Of Integer)
             Return Which.IsGreaterThan(source.Select(getValue), compareTo)
         End Function

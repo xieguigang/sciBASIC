@@ -1,32 +1,32 @@
-﻿#Region "Microsoft.VisualBasic::e35a2a53d1f0c8484ab3b71002120a55, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::bf79215700f01081ff65a5b388803de1, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Collections
+Imports System.Runtime.CompilerServices
 
 ' Software License Agreement (BSD License)
 '* 
@@ -132,8 +132,8 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' <param name="parent"></param>
         ''' <param name="node"></param>
         ''' <param name="left"></param>
-        Public Sub Add(parent As String, node As TreeNode(Of T), left As Boolean)
-            Dim parentNode = DirectFind(parent)
+        Public Sub Add(parent$, node As TreeNode(Of T), left As Boolean)
+            Dim parentNode = FindSymbol(parent)
             If left Then
                 parentNode.Left = node
             Else
@@ -147,7 +147,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' <param name="parent"></param>
         ''' <param name="node"></param>
         Public Sub Add(parent As String, node As TreeNode(Of T))
-            Dim parentNode = DirectFind(parent)
+            Dim parentNode = FindSymbol(parent)
             parentNode += node
         End Sub
 
@@ -156,38 +156,11 @@ Namespace ComponentModel.DataStructures.BinaryTree
         ''' </summary>
         ''' <returns>Number of nodes in the tree</returns>
         Public ReadOnly Property Length As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _counts
             End Get
         End Property
-
-        ''' <summary>
-        ''' 假若节点是不适用标识符来标识自己的左右的位置，则必须要使用这个方法才可以查找成功
-        ''' </summary>
-        ''' <param name="name"></param>
-        ''' <returns></returns>
-        Public Function DirectFind(name As String) As TreeNode(Of T)
-            If String.Equals(name, Root.Name) Then
-                Return Root
-            Else
-                Return __visitStack(Root, name)
-            End If
-        End Function
-
-        Private Shared Function __visitStack(node As TreeNode(Of T), name As String) As TreeNode(Of T)
-            For Each x In node.GetEnumerator
-                If String.Equals(x.Name, name) Then
-                    Return x
-                Else
-                    Dim n = __visitStack(x, name)
-                    If Not n Is Nothing Then
-                        Return n
-                    End If
-                End If
-            Next
-
-            Return Nothing
-        End Function
 
         ''' <summary>
         ''' Find name in tree. Return a reference to the node
@@ -198,8 +171,10 @@ Namespace ComponentModel.DataStructures.BinaryTree
         Public Function FindSymbol(Name As String) As TreeNode(Of T)
             Dim np As TreeNode(Of T) = Root
             Dim cmp As Integer
+
             While np IsNot Nothing
-                cmp = String.Compare(Name, np.Name)
+                cmp = NameCompare(Name, np.Name)
+
                 If cmp = 0 Then
                     ' found !
                     Return np
@@ -211,8 +186,9 @@ Namespace ComponentModel.DataStructures.BinaryTree
                     np = np.Right
                 End If
             End While
-            Return Nothing
+
             ' Return null to indicate failure to find name
+            Return Nothing
         End Function
 
         ''' <summary>
@@ -234,7 +210,8 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 Dim comparison As Integer
 
                 If [overrides] = 0 Then
-                    comparison = String.Compare(node.Name, tree.Name)
+                    comparison = NameCompare(node.Name, tree.Name)
+
                     If comparison = 0 Then
                         Throw New Exception("Duplicated node was found!")
                     End If
@@ -242,10 +219,15 @@ Namespace ComponentModel.DataStructures.BinaryTree
                     comparison = [overrides]
                 End If
 
+                ' 2018-1-11
+                ' overrides 应该一直被传递下去，而不是使用comparison结果，否则会一直被错误的overrides下去的
+                ' 导致构建出来的树不平衡
                 If comparison < 0 Then
-                    add(node, tree.Left, comparison)
+                    add(node, tree.Left, [overrides]:=[overrides])
+                    tree.Left.Parent = tree
                 Else
-                    add(node, tree.Right, comparison)
+                    add(node, tree.Right, [overrides]:=[overrides])
+                    tree.Right.Parent = tree
                 End If
             End If
         End Sub
@@ -299,14 +281,19 @@ Namespace ComponentModel.DataStructures.BinaryTree
             End Try
         End Function
 
-        ' Searches for a node with name key, name. If found it returns a reference
-        ' to the node and to thenodes parent. Else returns null.
+        ''' <summary>
+        ''' Searches for a node with name key, name. If found it returns a reference
+        ''' to the node and to the nodes parent. Else returns null.
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="parent"></param>
+        ''' <returns></returns>
         Private Function findParent(name As String, ByRef parent As TreeNode(Of T)) As TreeNode(Of T)
             Dim np As TreeNode(Of T) = Root
             parent = Nothing
             Dim cmp As Integer
             While np IsNot Nothing
-                cmp = String.Compare(name, np.Name)
+                cmp = NameCompare(name, np.Name)
                 If cmp = 0 Then
                     ' found !
                     Return np

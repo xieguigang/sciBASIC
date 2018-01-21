@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f624b295c08ed0d3c04e12dd209ea638, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\VisualBasic.vb"
+﻿#Region "Microsoft.VisualBasic::594e477515b58abb30a9085f901cb3a4, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\VisualBasic.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Namespace CommandLine.InteropService.SharedORM
             Dim className$ = MyBase.exe _
                 .NormalizePathString(OnlyASCII:=True) _
                 .Replace(" ", "_")
+            Dim rel$ = ProgramPathSearchTool.RelativePath(App.Type.Assembly.Location.GetFullPath)
 
             Call vb.AppendLine("Imports " & GetType(StringBuilder).Namespace)
             Call vb.AppendLine("Imports " & GetType(IIORedirectAbstract).Namespace)
@@ -55,7 +56,7 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine("Imports Microsoft.VisualBasic.ApplicationServices")
             Call vb.AppendLine()
             Call vb.AppendLine("' Microsoft VisualBasic CommandLine Code AutoGenerator")
-            Call vb.AppendLine("' assembly: " & App.Type.Assembly.Location.GetFullPath)
+            Call vb.AppendLine("' assembly: " & rel)
             Call vb.AppendLine()
             Call vb.AppendLine(GetManualPage.lTokens.Select(Function(l) "' " & l).JoinBy(vbCrLf))
             Call vb.AppendLine()

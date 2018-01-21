@@ -63,6 +63,20 @@ Namespace d3js
             }
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetLabelAnchors(labels As IEnumerable(Of Label), r!) As Anchor()
+            Return labels _
+                .Select(Function(l)
+                            Return New Anchor With {
+                                .r = r,
+                                .x = l.X,
+                                .y = l.Y
+                            }
+                        End Function) _
+                .ToArray
+        End Function
+
         <Extension>
         Public Function Label(g As Graphics2D, labels As IEnumerable(Of String), Optional fontCSS$ = CSSFont.Win7Normal) As IEnumerable(Of Label)
             Dim font As Font = CSSFont _

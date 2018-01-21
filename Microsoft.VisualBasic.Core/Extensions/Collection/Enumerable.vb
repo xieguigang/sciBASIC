@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c36e34c195ac3833eba6b8642e829137, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::9d640c0d20da9dd9aafd4c8a958dd667, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
 
     ' Author:
     ' 
@@ -27,12 +27,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.KeyValuePair
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports Microsoft.VisualBasic.Text.Xml.Models.KeyValuePair
 
 <Extension>
 Public Module IEnumerations
@@ -89,7 +89,7 @@ Public Module IEnumerations
         Return Dictionary
     End Function
 
-    <Extension> Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional Explicit As Boolean = True) As ComponentModel.KeyValuePair()
+    <Extension> Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional Explicit As Boolean = True) As KeyValuePair()
         Dim Method = If(Explicit, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
         Dim LQuery = (From item In source Where String.Equals(item.Key, Key, Method) Select item).ToArray
         Return LQuery

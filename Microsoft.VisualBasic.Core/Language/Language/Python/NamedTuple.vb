@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cd06372a0ab61fdc6935b640899b086, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\lang\Python\NamedTuple.vb"
+﻿#Region "Microsoft.VisualBasic::6cd06372a0ab61fdc6935b640899b086, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\Python\NamedTuple.vb"
 
     ' Author:
     ' 

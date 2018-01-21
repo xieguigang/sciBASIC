@@ -314,7 +314,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\..\..\.vs\installer\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
@@ -427,7 +427,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
+    <Compile Include="Algebra\LP\Extensions.vb" />
+    <Compile Include="Algebra\LP\LPP.vb" />
+    <Compile Include="Algebra\LP\LPPSolution.vb" />
     <Compile Include="Algebra\SVD.vb" />
+    <Compile Include="Algebra\Vector\Polynomial.vb" />
     <Compile Include="Scripting\VectorModel.vb" />
     <Compile Include="Scripting\Factors\NamedVector.vb" />
     <Compile Include="Scripting\Factors\FactorVector.vb" />
@@ -502,15 +506,7 @@
     <Compile Include="FuzzyLogic\Models\LDM.vb" />
     <Compile Include="FuzzyLogic\Models\ModelAPI.vb" />
     <Compile Include="Scripting\Logical\TokenIcer.vb" />
-    <Compile Include="Algebra\LP\Data\Equation.vb" />
-    <Compile Include="Algebra\LP\Data\Solver.vb" />
-    <Compile Include="Algebra\LP\Data\ObjectiveFunction.vb" />
-    <Compile Include="Algebra\LP\Exceptions.vb" />
-    <Compile Include="Algebra\LP\Data\InputReader.vb" />
-    <Compile Include="Algebra\LP\LinearSolver.vb" />
-    <Compile Include="Algebra\LP\Objective.vb" />
     <Compile Include="Algebra\LP\OptimizationType.vb" />
-    <Compile Include="Algebra\LP\Tableau.vb" />
     <Compile Include="Algebra\Matrix.NET\CholeskyDecomposition.vb" />
     <Compile Include="Algebra\Matrix.NET\EigenvalueDecomposition.vb" />
     <Compile Include="Algebra\Matrix.NET\GeneralMatrix.vb" />
@@ -557,7 +553,6 @@
   <ItemGroup>
     <None Include="Expression_Evaluate.sequencediagram" />
     <None Include="FuzzyLogic\README.md" />
-    <None Include="Algebra\LP\README.md" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>

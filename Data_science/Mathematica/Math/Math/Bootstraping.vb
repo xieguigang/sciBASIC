@@ -89,7 +89,7 @@ Public Module Bootstraping
 
     <Extension>
     Public Iterator Function Sampling(source As IEnumerable(Of Double), N As Integer, Optional B As Integer = 100) As IEnumerable(Of IntegerTagged(Of Vector))
-        For Each x In Samples(source, N, B)
+        For Each x As IntegerTagged(Of Double()) In Samples(source, N, B)
             Yield New IntegerTagged(Of Vector) With {
                 .Tag = x.Tag,
                 .Value = New Vector(x.Value)
@@ -164,6 +164,16 @@ Public Module Bootstraping
         Dim expP3 As Double = sys.Pow(sys.E, (-(exp / expP2)))
         answer = answer * expP3
         Return answer
+    End Function
+
+    <Extension>
+    Public Function ProbabilityDensity(x As Vector, m#, sd#) As Vector
+        Dim answer As Double = 1 / (sd * (sys.Sqrt(2 * sys.PI)))
+        Dim exp = (x - m) ^ 2.0
+        Dim expP2 As Double = 2 * sys.Pow(sd, 2.0)
+        Dim expP3 = sys.E ^ -(exp / expP2)
+        Dim y As Vector = answer * expP3
+        Return y
     End Function
 
     Public Function AboveStandardDistribution(upperX As Double, n As Double, m As Double, sd As Double) As Double

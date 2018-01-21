@@ -76,7 +76,9 @@ Namespace Graphic.Axis
                             Optional labelFont$ = CSSFont.PlotSubTitle,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional gridFill$ = "rgb(245,245,245)",
-                            Optional htmlLabel As Boolean = True)
+                            Optional htmlLabel As Boolean = True,
+                            Optional XtickFormat$ = "F2",
+                            Optional YtickFormat$ = "F2")
             With region
                 Call g.DrawAxis(
                     scaler,
@@ -85,7 +87,9 @@ Namespace Graphic.Axis
                     xlabel, ylabel,
                     xlayout:=xlayout, ylayout:=ylayout,
                     labelFontStyle:=labelFont,
-                    axisStroke:=axisStroke, gridFill:=gridFill, htmlLabel:=htmlLabel)
+                    axisStroke:=axisStroke, gridFill:=gridFill, htmlLabel:=htmlLabel,
+                    XtickFormat:=XtickFormat,
+                    YtickFormat:=YtickFormat)
             End With
         End Sub
 
@@ -111,10 +115,12 @@ Namespace Graphic.Axis
                             Optional gridColor$ = "white",
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional tickFontStyle$ = CSSFont.Win7Normal,
-                            Optional htmlLabel As Boolean = True)
+                            Optional htmlLabel As Boolean = True,
+                            Optional XtickFormat$ = "F2",
+                            Optional YtickFormat$ = "F2")
 
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
-            Dim rect As Rectangle = scaler.ChartRegion
+            Dim rect As Rectangle = scaler.Region
             Dim tickFont As Font = CSSFont.TryParse(tickFontStyle)
             Dim gridPenX As New Pen(gridColor.TranslateColor, 2) With {
                 .DashStyle = Drawing2D.DashStyle.Dash
@@ -156,10 +162,10 @@ Namespace Graphic.Axis
             End If
 
             If xlayout <> XAxisLayoutStyles.None Then
-                Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel)
+                Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel, tickFormat:=XtickFormat)
             End If
             If ylayout <> YAxisLayoutStyles.None Then
-                Call g.DrawY(pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel)
+                Call g.DrawY(pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel, tickFormat:=YtickFormat)
             End If
         End Sub
 
@@ -217,24 +223,25 @@ Namespace Graphic.Axis
                                      labelFont$,
                                      tickFont As Font,
                                      Optional showAxisLine As Boolean = True,
-                                     Optional htmlLabel As Boolean = True)
+                                     Optional htmlLabel As Boolean = True,
+                                     Optional tickFormat$ = "F2")
 
             Dim X%  ' y轴的layout的变化只需要变换x的值即可
-            Dim size = scaler.ChartRegion.Size
+            Dim size = scaler.Region.Size
 
             Select Case layout
                 Case YAxisLayoutStyles.Centra
-                    X = scaler.ChartRegion.Left + (size.Width) / 2 + offset.X
+                    X = scaler.Region.Left + (size.Width) / 2 + offset.X
                 Case YAxisLayoutStyles.Right
-                    X = scaler.ChartRegion.Left + size.Width + offset.X
+                    X = scaler.Region.Left + size.Width + offset.X
                 Case YAxisLayoutStyles.ZERO
                     X = scaler.X(0) + offset.X
                 Case Else
-                    X = scaler.ChartRegion.Left + offset.X
+                    X = scaler.Region.Left + offset.X
             End Select
 
-            Dim top As New Point(X, scaler.ChartRegion.Y + offset.Y)                ' Y轴
-            Dim ZERO As New Point(X, size.Height + top.Y) ' 坐标轴原点，需要在这里修改layout
+            Dim top As New Point(X, scaler.TranslateY(scaler.AxisTicks.Y.Max) + offset.Y)                ' Y轴
+            Dim ZERO As New Point(X, scaler.TranslateY(scaler.AxisTicks.Y.Min) + offset.Y) ' 坐标轴原点，需要在这里修改layout
 
             If showAxisLine Then
                 Call g.DrawLine(pen, ZERO, top)     ' y轴
@@ -251,7 +258,7 @@ Namespace Graphic.Axis
                         Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
                     End If
 
-                    Dim labelText = (tick).ToString("F" & 2)
+                    Dim labelText = (tick).ToString(tickFormat)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
                     Dim p As New Point(ZERO.X - delta - sz.Width, y - sz.Height / 2)
 
@@ -271,7 +278,7 @@ Namespace Graphic.Axis
                     labelImage = labelImage.RotateImage(-90)
 
                     Dim location As New Point With {
-                        .X = scaler.ChartRegion.Left - labelImage.Width + maxYTickSize,
+                        .X = scaler.Region.Left - labelImage.Width + maxYTickSize,
                         .Y = (size.Height - labelImage.Height) / 2
                     }
 
@@ -280,9 +287,13 @@ Namespace Graphic.Axis
                     Dim font As Font = CSSFont.TryParse(labelFont)
                     Dim fSize As SizeF = g.MeasureString(label, font)
                     Dim location As New PointF With {
-                        .X = scaler.ChartRegion.Left - fSize.Height - maxYTickSize * 1.5,
-                        .Y = size.Height / 2 + scaler.ChartRegion.Top
+                        .X = scaler.Region.Left - fSize.Height - maxYTickSize * 1.5,
+                        .Y = size.Height / 2 + scaler.Region.Top
                     }
+
+                    If location.X < 5 Then
+                        location = New PointF(5, location.Y)
+                    End If
 
                     Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
 
@@ -380,10 +391,11 @@ Namespace Graphic.Axis
                                      tickFont As Font,
                                      Optional overridesTickLine% = -1,
                                      Optional noTicks As Boolean = False,
-                                     Optional htmlLabel As Boolean = True)
+                                     Optional htmlLabel As Boolean = True,
+                                     Optional tickFormat$ = "F2")
 
-            Dim Y% = scaler.ChartRegion.Top + offset.Y
-            Dim size = scaler.ChartRegion.Size
+            Dim Y% = scaler.Region.Top + offset.Y
+            Dim size = scaler.Region.Size
 
             Select Case layout
                 Case XAxisLayoutStyles.Centra
@@ -394,7 +406,7 @@ Namespace Graphic.Axis
                     Y += size.Height
             End Select
 
-            Dim ZERO As New Point(scaler.ChartRegion.Left + offset.X, Y)                 ' 坐标轴原点
+            Dim ZERO As New Point(scaler.Region.Left + offset.X, Y)                 ' 坐标轴原点
             Dim right As New Point(ZERO.X + size.Width, Y)   ' X轴
             Dim d! = If(overridesTickLine <= 0, 10, overridesTickLine)
 
@@ -405,7 +417,7 @@ Namespace Graphic.Axis
                     Dim x As Single = scaler.X(tick) + offset.X
                     Dim axisX As New PointF(x, ZERO.Y)
 
-                    Dim labelText = (tick).ToString("F" & 2)
+                    Dim labelText = (tick).ToString(tickFormat)
                     Dim sz As SizeF = g.MeasureString(labelText, tickFont)
 
                     Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
@@ -417,8 +429,8 @@ Namespace Graphic.Axis
                 If htmlLabel Then
                     Dim labelImage As Image = label.__plotLabel(labelFont, False)
                     Dim point As New Point With {
-                        .X = (size.Width - labelImage.Width) / 2 + scaler.ChartRegion.Left,
-                        .Y = scaler.ChartRegion.Top + size.Height + tickFont.Height + d * 3
+                        .X = (size.Width - labelImage.Width) / 2 + scaler.Region.Left,
+                        .Y = scaler.Region.Top + size.Height + tickFont.Height + d * 3
                     }
 
                     Call g.DrawImageUnscaled(labelImage, point)
@@ -426,8 +438,8 @@ Namespace Graphic.Axis
                     Dim font As Font = CSSFont.TryParse(labelFont).GDIObject
                     Dim fSize As SizeF = g.MeasureString(label, font)
                     Dim point As New PointF With {
-                        .X = (size.Width - fSize.Width) / 2 + scaler.ChartRegion.Left,
-                        .Y = scaler.ChartRegion.Top + size.Height + tickFont.Height + d * 3
+                        .X = (size.Width - fSize.Width) / 2 + scaler.Region.Left,
+                        .Y = scaler.Region.Top + size.Height + tickFont.Height + d * 3
                     }
 
                     Call $"[X:={label}] {point.ToString}".__INFO_ECHO

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc0624a1a219d748118165f304bf3ed1, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::dfdf62c2f4438eb288471d7dc3488dd5, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
 
     ' Author:
     ' 
@@ -50,6 +50,19 @@ Imports Microsoft.VisualBasic.Text
 <Package("Program.Path.Search",
                     Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
 Public Module ProgramPathSearchTool
+
+    ''' <summary>
+    ''' 修改路径字符串之中的文件名后缀拓展名为<paramref name="newSuffix"/>指定的值。<paramref name="newSuffix"/>不需要添加小数点
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <param name="newSuffix$">新的文件拓展名，这个拓展名不带有小数点，例如需要修改为*.csv，则直接赋值csv即可</param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ChangeSuffix(path$, newSuffix$) As String
+        Return path.TrimSuffix & "." & newSuffix
+    End Function
 
     ''' <summary>
     ''' Execute file delete

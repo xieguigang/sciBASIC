@@ -41,9 +41,14 @@ Public Module Xmlns
     Public Const xr2$ = "http://schemas.microsoft.com/office/spreadsheetml/2015/revision2"
     Public Const x15ac$ = "http://schemas.microsoft.com/office/spreadsheetml/2010/11/ac"
 
+    Public Const x14$ = "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main"
     Public Const x14ac$ = "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac"
     Public Const xr$ = "http://schemas.microsoft.com/office/spreadsheetml/2014/revision"
     Public Const xr3$ = "http://schemas.microsoft.com/office/spreadsheetml/2016/revision3"
+
+    Public Const x16r2$ = "http://schemas.microsoft.com/office/spreadsheetml/2015/02/main"
+
+    Public Const a$ = "http://schemas.openxmlformats.org/drawingml/2006/main"
 
     Public Const worksheet$ = "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
 

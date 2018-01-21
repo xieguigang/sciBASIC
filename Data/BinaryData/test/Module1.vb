@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6491595b2048f0927ed41ed4cf8c2e06, ..\sciBASIC#\Data\BinaryData\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::7e5ec03b76d64c817ab6905b5eefed61, ..\sciBASIC#\Data\BinaryData\test\Module1.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Module Module1
         Pause()
     End Sub
 End Module
-
