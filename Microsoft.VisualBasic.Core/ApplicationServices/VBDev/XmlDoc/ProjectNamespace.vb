@@ -55,7 +55,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Me._types = New Dictionary(Of String, ProjectType)()
         End Sub
 
-        Protected Sub New(proj As Project, types As Dictionary(Of String, ProjectType))
+        Public Sub New(proj As Project, types As Dictionary(Of String, ProjectType))
             Me.project = proj
             Me._types = types
         End Sub

@@ -56,6 +56,11 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             _namespaces = New Dictionary(Of String, ProjectNamespace)()
         End Sub
 
+        Sub New(name$, namespaces As Dictionary(Of String, ProjectNamespace))
+            Me.Name = name
+            Me._namespaces = namespaces
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Name
         End Function
