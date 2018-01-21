@@ -39,24 +39,6 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
     <Package("Assembly.Doc.API")>
     Public Module DocAPI
 
-        Dim libraries As Dictionary(Of String, Libraries) =
-            Enums(Of Libraries) _
-            .ToDictionary(Function(x) x.ToString.ToLower)
-
-        ''' <summary>
-        ''' 类型名称的大小写不敏感
-        ''' </summary>
-        ''' <param name="type"></param>
-        ''' <returns>查找失败的时候默认是返回<see cref="Serialization.Libraries.Github"/></returns>
-        <Extension>
-        Public Function GetLibraryType(type As Value(Of String)) As Libraries
-            If libraries.ContainsKey(type = LCase(+type)) Then
-                Return libraries(+type)
-            Else
-                Return Serialization.Libraries.Github
-            End If
-        End Function
-
         Public ReadOnly Property Types As Dictionary(Of Char, memberTypes) =
             New Dictionary(Of Char, memberTypes) From {
  _

@@ -1037,8 +1037,6 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectType.vb" />
-    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\URLBuilder.vb" />
-    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Libraries.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\HardwareInfo.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\TaskManager.vb" />
