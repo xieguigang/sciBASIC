@@ -13,6 +13,7 @@
 
 [![sciBASIC# logo](./logo.png)](./vs_solutions/logo/Program.vb)
 
+> Read the project documents: [http://sciBASIC.NET/](http://sciBASIC.NET)
 
 ## Scientific Computing runtime for VisualBasic.NET
 
