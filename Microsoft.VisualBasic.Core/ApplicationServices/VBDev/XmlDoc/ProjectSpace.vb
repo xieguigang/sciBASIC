@@ -137,12 +137,15 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         ''' a markdown page template. This token: [content] will be replaced with generated content.
         ''' </param>
         Public Sub ExportMarkdownFiles(folderPath As String, pageTemplate As String, url As URLBuilder)
+            Dim directory$
+
             For Each p As Project In Me.projects
                 For Each pn As ProjectNamespace In p.Namespaces
                     pn.ExportMarkdownFile(folderPath, pageTemplate, url)
+                    directory = url.GetNamespaceSave(folderPath, pn).ParentPath
 
                     For Each pt As ProjectType In pn.Types
-                        pt.ExportMarkdownFile(folderPath & "/" & pn.Path, pageTemplate, url)
+                        pt.ExportMarkdownFile(directory, pageTemplate, url)
                     Next
                 Next
             Next

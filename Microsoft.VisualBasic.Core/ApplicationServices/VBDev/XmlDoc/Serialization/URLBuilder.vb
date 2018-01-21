@@ -37,7 +37,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
         ''' <summary>
         ''' link url after hexo generates the static site
         ''' </summary>
-        Dim ext As String
+        Dim ext$
 
         Sub New(type As Libraries)
             Me.lib = type
@@ -47,6 +47,10 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
         Sub New()
             Me.New(Libraries.Github)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{[lib]} @ {ext}"
+        End Function
 
         Public Function GetNamespaceTypeUrl(ns As ProjectNamespace, pt As ProjectType) As String
             Dim file$
@@ -81,8 +85,12 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
                 Select Case .lib
                     Case Libraries.Hexo
                         path = folderPath & "/N-" & ns.Path & ".md"
-                    Case Else
+                    Case Libraries.Github
                         path = folderPath & "/" & ns.Path & "/index.md"
+                    Case Libraries.xDoc
+                        path = folderPath & "/" & ns.Path.Replace("."c, "/"c) & "/index.md"
+                    Case Else
+                        Throw New NotImplementedException
                 End Select
 
                 Return path
@@ -95,8 +103,12 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             Select Case [lib]
                 Case Libraries.Hexo
                     path = folderPath & "/T-" & type.[Namespace].Path & "." & type.Name & ".md"
-                Case Else
+                Case Libraries.Github
                     path = folderPath & "/" & type.Name & ".md"
+                Case Libraries.xDoc
+                    path = folderPath & "/" & type.Name & ".md"
+                Case Else
+                    Throw New NotImplementedException
             End Select
 
             Return path
