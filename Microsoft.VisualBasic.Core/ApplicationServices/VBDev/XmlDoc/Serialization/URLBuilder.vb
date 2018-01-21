@@ -52,15 +52,18 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             Dim file$
             Dim link$
 
-            If [lib] = Libraries.Hexo Then
-                file = "T-" & ns.Path & "." & pt.Name & $"{ext}"
-                link = $"[{pt.Name}]({file})"
-            ElseIf [lib] = Libraries.Github Then
-                file = $"./{pt.Name}.md"
-                link = $"[{pt.Name}]({file})"
-            Else
-                link = $"<a href=""#"" onClick=""load('/docs/{ns.Path}/{pt.Name}.md')"">{pt.Name}</a>"
-            End If
+            Select Case [lib]
+                Case Libraries.Hexo
+                    file = "T-" & ns.Path & "." & pt.Name & $"{ext}"
+                    link = $"[{pt.Name}]({file})"
+                Case Libraries.Github
+                    file = $"./{pt.Name}.md"
+                    link = $"[{pt.Name}]({file})"
+                Case Libraries.xDoc
+                    link = $"/docs/{ns.Path.Replace("."c, "/"c)}/{pt.Name}.md"
+                Case Else
+                    Throw New NotImplementedException
+            End Select
 
             Return link
         End Function
@@ -73,18 +76,28 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
         ''' <returns></returns>
         Public Function GetNamespaceSave(folderPath$, ns As ProjectNamespace) As String
             With Me
-                Dim path$ = If(.[lib] <> Libraries.Hexo,
-                    folderPath & "/" & ns.Path & "/index.md",
-                    folderPath & "/N-" & ns.Path & ".md")
+                Dim path$
+
+                Select Case .lib
+                    Case Libraries.Hexo
+                        path = folderPath & "/N-" & ns.Path & ".md"
+                    Case Else
+                        path = folderPath & "/" & ns.Path & "/index.md"
+                End Select
 
                 Return path
             End With
         End Function
 
         Public Function GetTypeSave(folderPath$, type As ProjectType) As String
-            Dim path$ = If([lib] = Libraries.Hexo,
-                folderPath & "/T-" & type.[Namespace].Path & "." & type.Name & ".md",
-                folderPath & "/" & type.Name & ".md")
+            Dim path$
+
+            Select Case [lib]
+                Case Libraries.Hexo
+                    path = folderPath & "/T-" & type.[Namespace].Path & "." & type.Name & ".md"
+                Case Else
+                    path = folderPath & "/" & type.Name & ".md"
+            End Select
 
             Return path
         End Function
@@ -93,12 +106,17 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             Dim link$
 
             If [lib] <> Libraries.xDoc Then
-                Dim file$ = If([lib] = Libraries.Hexo,
-                    $"N-{type.[Namespace].Path}{ext}",
-                    "./index.md")
+                Dim file$
+
+                If [lib] = Libraries.Hexo Then
+                    file = $"N-{type.[Namespace].Path}{ext}"
+                Else
+                    file = "./index.md"
+                End If
+
                 link = $"[{type.[Namespace].Path}]({file})"
             Else
-                link = $"<a href=""#"" onClick=""load('/docs/{type.[Namespace].Path}/index.md')"">{type.Namespace.Path}</a>"
+                link = $"/docs/{type.[Namespace].Path.Replace("."c, "/"c)}/index.md"
             End If
 
             Return link
