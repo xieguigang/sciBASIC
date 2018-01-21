@@ -40,10 +40,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
     ''' <summary>
     ''' A collection of one or more projects put together, and their attendant namespaces.
     ''' </summary>
-    Public Class ProjectSpace
+    Public Class ProjectSpace : Implements IEnumerable(Of Project)
 
-        Dim projects As New List(Of Project)
-        Dim handle$
+        Protected projects As New List(Of Project)
+        Protected handle$
 
         Public Overrides Function ToString() As String
             Return handle
@@ -126,5 +126,15 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                 End Using
             End Using
         End Sub
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Project) Implements IEnumerable(Of Project).GetEnumerator
+            For Each proj As Project In projects
+                Yield proj
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
     End Class
 End Namespace

@@ -38,8 +38,8 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
     ''' </summary>
     Public Class ProjectNamespace
 
-        Dim project As Project
-        Dim _types As Dictionary(Of String, ProjectType)
+        Protected project As Project
+        Protected _types As Dictionary(Of String, ProjectType)
 
         Public Property Path() As String
 
@@ -53,6 +53,15 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Public Sub New(project As Project)
             Me.project = project
             Me._types = New Dictionary(Of String, ProjectType)()
+        End Sub
+
+        Protected Sub New(proj As Project, types As Dictionary(Of String, ProjectType))
+            Me.project = proj
+            Me._types = types
+        End Sub
+
+        Protected Sub New(ns As ProjectNamespace)
+            Call Me.New(ns.project, ns._types)
         End Sub
 
         Public Overrides Function ToString() As String

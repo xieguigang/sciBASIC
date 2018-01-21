@@ -31,10 +31,7 @@
 
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports System.Xml
-Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
-Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
 
@@ -43,10 +40,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
     ''' </summary>
     Public Class ProjectType
 
-        Dim projectNamespace As ProjectNamespace
-        Dim fields As Dictionary(Of String, ProjectMember)
-        Dim properties As Dictionary(Of String, ProjectMember)
-        Dim methods As Dictionary(Of String, ProjectMember)
+        Protected projectNamespace As ProjectNamespace
+        Protected fields As Dictionary(Of String, ProjectMember)
+        Protected properties As Dictionary(Of String, ProjectMember)
+        Protected methods As Dictionary(Of String, ProjectMember)
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -65,6 +62,16 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Me.fields = New Dictionary(Of String, ProjectMember)()
             Me.properties = New Dictionary(Of String, ProjectMember)()
             Me.methods = New Dictionary(Of String, ProjectMember)()
+        End Sub
+
+        Protected Sub New(type As ProjectType)
+            projectNamespace = type.projectNamespace
+            fields = type.fields
+            properties = type.properties
+            methods = type.methods
+            Name = type.Name
+            Summary = type.Summary
+            Remarks = type.Remarks
         End Sub
 
         Public Overrides Function ToString() As String
@@ -149,27 +156,5 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                 Remarks = summaryNode.InnerText
             End If
         End Sub
-
-        Private Function CleanText(incomingText As String) As String
-            If incomingText Is Nothing Then
-                Return String.Empty
-            End If
-
-            incomingText = incomingText.Replace(vbTab, "").Trim()
-
-            Dim results As String = String.Empty
-            Dim lastCharWasSpace As Boolean = False
-            For Each c As Char In incomingText
-                If c <> " "c Then
-                    lastCharWasSpace = False
-                    results += c
-                ElseIf Not lastCharWasSpace Then
-                    lastCharWasSpace = True
-                    results += c
-                End If
-            Next
-
-            Return results
-        End Function
     End Class
 End Namespace
