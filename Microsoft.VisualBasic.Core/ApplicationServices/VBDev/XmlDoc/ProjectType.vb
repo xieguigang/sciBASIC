@@ -67,6 +67,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Me.methods = New Dictionary(Of String, ProjectMember)()
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return Name
+        End Function
+
         Public Function GetMethod(methodName As String) As ProjectMember
             If Me.methods.ContainsKey(methodName.ToLower()) Then
                 Return Me.methods(methodName.ToLower())

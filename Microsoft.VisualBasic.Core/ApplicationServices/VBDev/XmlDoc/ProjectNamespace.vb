@@ -58,6 +58,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Me._types = New Dictionary(Of String, ProjectType)()
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return Path
+        End Function
+
         Public Overloads Function [GetType](typeName As String) As ProjectType
             If Me._types.ContainsKey(typeName.ToLower()) Then
                 Return Me._types(typeName.ToLower())

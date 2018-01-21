@@ -56,6 +56,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             _namespaces = New Dictionary(Of String, ProjectNamespace)()
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return Name
+        End Function
+
         Public Function GetNamespace(namespacePath As String) As ProjectNamespace
             If _namespaces.ContainsKey(namespacePath.ToLower()) Then
                 Return _namespaces(namespacePath.ToLower())

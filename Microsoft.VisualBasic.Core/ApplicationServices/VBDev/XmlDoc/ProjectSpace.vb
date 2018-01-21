@@ -43,11 +43,13 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
     ''' A collection of one or more projects put together, and their attendant namespaces.
     ''' </summary>
     Public Class ProjectSpace
-        Private projects As List(Of Project)
 
-        Public Sub New()
-            Me.projects = New List(Of Project)()
-        End Sub
+        Dim projects As New List(Of Project)
+        Dim handle$
+
+        Public Overrides Function ToString() As String
+            Return handle
+        End Function
 
         Public Function GetProject(name As String) As Project
             For Each p As Project In Me.projects
@@ -74,6 +76,8 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Public Sub ImportFromXmlDocFolder(path As String)
             If Not Directory.Exists(path) Then
                 Throw New InvalidOperationException()
+            Else
+                handle = path
             End If
 
             Dim di As New DirectoryInfo(path)
@@ -95,6 +99,8 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Public Sub ImportFromXmlDocFile(path As String)
             If Not path.FileExists Then
                 Throw New InvalidOperationException()
+            Else
+                handle = path
             End If
 
             Dim fi As New FileInfo(path)
