@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::a9b5714b40b1faf5ca25f9c74f330ac3, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
@@ -97,13 +98,13 @@ Namespace SVG
 
         Public Overrides ReadOnly Property DpiX As Single
             Get
-                Throw New NotImplementedException()
+                Return 1
             End Get
         End Property
 
         Public Overrides ReadOnly Property DpiY As Single
             Get
-                Throw New NotImplementedException()
+                Return 1
             End Get
         End Property
 
@@ -201,12 +202,16 @@ Namespace SVG
         End Property
 
         Public Overrides ReadOnly Property VisibleClipBounds As RectangleF
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Throw New NotImplementedException()
+                Return New RectangleF With {
+                    .Size = Size.SizeF
+                }
             End Get
         End Property
 
         Public Overrides ReadOnly Property Size As Size
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return __svgData.Size
             End Get
@@ -216,8 +221,23 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
+        ''' <summary>
+        ''' This function will clear entire svg document contents.
+        ''' </summary>
+        ''' <param name="color"></param>
         Public Overrides Sub Clear(color As Color)
             __svgData.bg$ = color.ToHtmlColor
+            __svgData.circles *= 0
+            __svgData.images *= 0
+            __svgData.lines *= 0
+            __svgData.paths *= 0
+            __svgData.polygons *= 0
+            __svgData.polylines *= 0
+            __svgData.rects *= 0
+            __svgData.texts *= 0
+
+            ' reset
+            __svgData.zlayer = 0
         End Sub
 
         Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)

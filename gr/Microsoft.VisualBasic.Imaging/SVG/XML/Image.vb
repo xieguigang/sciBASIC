@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::e79abaee3cae3d55fb4016d620d2bf19, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\XML\Image.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Net.Http
 
 Namespace SVG.XML
@@ -38,13 +39,17 @@ Namespace SVG.XML
     ''' 
     ''' + http://stackoverflow.com/questions/6249664/does-svg-support-embedding-of-bitmap-images
     ''' </summary>
-    Public Class Image
+    Public Class Image : Implements CSSLayer
 
         <XmlAttribute> Public Property x As Single
         <XmlAttribute> Public Property y As Single
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
-        <XmlAttribute("image.data")> Public Property data As String
+
+        <XmlAttribute("href", [Namespace]:=SVGWriter.Xlink)>
+        Public Property data As String
+        <XmlAttribute("z-index")>
+        Public Property zIndex As Integer Implements CSSLayer.zIndex
 
         ''' <summary>
         ''' ``data:image/png;base64,...``

@@ -124,6 +124,7 @@ Namespace Imaging
             {"tiff", ImageFormat.Tiff}
         }
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function GetFormat(format As ImageFormats) As ImageFormat
             Return __formats(format)
         End Function
@@ -137,6 +138,8 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="format$">大小写不敏感</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ParseImageFormat(format$) As ImageFormats
             Return enumFormats.TryGetValue(LCase(format), [default]:=ImageFormats.Png)

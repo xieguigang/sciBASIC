@@ -1,35 +1,38 @@
 ﻿#Region "Microsoft.VisualBasic::2d5508eb97ee2937cbb6c3c1835a6d7b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataCache.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace SVG
 
@@ -41,52 +44,94 @@ Namespace SVG
         Protected Friend circles As New List(Of circle)
         Protected Friend paths As New List(Of path)
         Protected Friend polygons As New List(Of polygon)
+        Protected Friend polylines As New List(Of polyline)
         Protected Friend images As New List(Of XML.Image)
         Protected Friend bg$
         Protected Friend Size As Size
 
+        ''' <summary>
+        ''' Generates the <see cref="CSSLayer"/> index order value.
+        ''' </summary>
+        Friend zlayer As int = 0
+
+        Private Function updateLayerIndex(Of T As CSSLayer)(node As T) As T
+            node.zIndex = ++zlayer
+            Return node
+        End Function
+
+        Private Iterator Function updateLayerIndex(Of T As CSSLayer)(nodes As IEnumerable(Of T)) As IEnumerable(Of T)
+            For Each node As T In nodes
+                node.zIndex = ++zlayer
+                Yield node
+            Next
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(text As XML.text)
-            texts += text
+            texts += updateLayerIndex(text)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(rect As rect)
-            rects += rect
+            rects += updateLayerIndex(rect)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(line As line)
-            lines += line
+            lines += updateLayerIndex(line)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(circle As circle)
-            circles += circle
+            circles += updateLayerIndex(circle)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(path As path)
-            paths += path
+            paths += updateLayerIndex(path)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(polygon As polygon)
-            polygons += polygon
+            polygons += updateLayerIndex(polygon)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(image As XML.Image)
-            images += image
+            images += updateLayerIndex(image)
         End Sub
 
         Public Sub Add(data As SVGDataCache)
             With data
-                Call Me.texts.AddRange(.texts)
-                Call Me.circles.AddRange(.circles)
-                Call Me.images.AddRange(.images)
-                Call Me.lines.AddRange(.lines)
-                Call Me.paths.AddRange(.paths)
-                Call Me.polygons.AddRange(.polygons)
-                Call Me.rects.AddRange(.rects)
+                Call Me.texts.AddRange(updateLayerIndex(.texts))
+                Call Me.circles.AddRange(updateLayerIndex(.circles))
+                Call Me.images.AddRange(updateLayerIndex(.images))
+                Call Me.lines.AddRange(updateLayerIndex(.lines))
+                Call Me.paths.AddRange(updateLayerIndex(.paths))
+                Call Me.polygons.AddRange(updateLayerIndex(.polygons))
+                Call Me.rects.AddRange(updateLayerIndex(.rects))
             End With
         End Sub
 
-        Public Function GetSVG(size As Size) As SVGXml
-            Dim SVG As New SVGXml With {
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function innerDefaultWidth() As DefaultValue(Of Integer)
+            Return Size.Width.AsDefault(Function(n) CType(n, Integer) = 0)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function innerDefaultHeight() As DefaultValue(Of Integer)
+            Return Size.Height.AsDefault(Function(n) CType(n, Integer) = 0)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="size">
+        ''' If this argument is ignored, then the default internal <see cref="Size"/> value will be used.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function GetSVG(Optional size As Size = Nothing) As SVGXml
+            Dim SVG As New SVGXml() With {
                 .gs = {
                     New g With {
                         .circles = circles,
@@ -97,8 +142,8 @@ Namespace SVG
                         .lines = lines
                     }
                 },
-                .width = size.Width,
-                .height = size.Height
+                .width = size.Width Or innerDefaultWidth(),
+                .height = size.Height Or innerDefaultHeight()
             }
 
             If Not bg.StringEmpty Then
@@ -116,10 +161,13 @@ Namespace SVG
         ''' <param name="data"></param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(data As SVGDataCache, offset As Point) As SVGDataCache
             Return data + offset.PointF
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(data As SVGDataCache, offset As PointF) As SVGDataCache
             Return New SVGDataCache With {
                 .bg = data.bg,

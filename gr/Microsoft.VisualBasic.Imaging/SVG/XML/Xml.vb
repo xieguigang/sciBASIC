@@ -1,36 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::d7d9b31c11e55b6d00d469e173f3cbd0, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports System.Xml
-Imports System.Xml.Schema
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -42,7 +41,7 @@ Namespace SVG.XML
     ''' <summary>
     ''' The basically SVG XML document node, it can be tweaks on the style by using CSS
     ''' </summary>
-    Public MustInherit Class node ' : Implements IXmlSerializable
+    Public MustInherit Class node : Implements CSSLayer
 
         ''' <summary>
         ''' CSS style definition <see cref="ICSSValue"/>.(请注意，假若是SVG对象则赋值这个属性无效)
@@ -55,6 +54,11 @@ Namespace SVG.XML
         ''' <returns></returns>
         <XmlAttribute> Public Property [class] As String
         <XmlAttribute> Public Property id As String
+        <XmlAttribute> Public Property fill As String
+        <XmlAttribute> Public Property stroke As String
+
+        <XmlAttribute("z-index")>
+        Public Property zIndex As Integer Implements CSSLayer.zIndex
 
         ''' <summary>
         ''' 
@@ -101,12 +105,17 @@ Namespace SVG.XML
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property points As String()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return cache
             End Get
             Set(value As String())
-                cache = value
-                data = value.Select(AddressOf FloatPointParser).ToArray
+                cache = value _
+                    .Where(Function(s) Not s.StringEmpty) _
+                    .ToArray
+                data = cache _
+                    .Select(AddressOf FloatPointParser) _
+                    .ToArray
             End Set
         End Property
 
@@ -118,13 +127,20 @@ Namespace SVG.XML
 
         Sub New(pts As IEnumerable(Of PointF))
             data = pts.ToArray
-            cache = data.Select(Function(pt) $"{pt.X},{pt.Y}").ToArray
+            cache = data _
+                .Select(Function(pt) $"{pt.X},{pt.Y}") _
+                .ToArray
         End Sub
 
         Public Shared Operator +(polygon As polygon, offset As PointF) As polygon
             Dim points As PointF() = polygon _
                 .data _
-                .Select(Function(pt) New PointF(pt.X + offset.X, pt.Y + offset.Y)) _
+                .Select(Function(pt)
+                            Return New PointF With {
+                                .X = pt.X + offset.X,
+                                .Y = pt.Y + offset.Y
+                            }
+                        End Function) _
                 .ToArray
             Return New polygon(points) With {
                 .style = polygon.style,
@@ -132,6 +148,12 @@ Namespace SVG.XML
                 .class = polygon.class
             }
         End Operator
+    End Class
+
+    Public Class polyline : Inherits node
+
+        <XmlAttribute> Public Property points As String()
+
     End Class
 
     ''' <summary>
