@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace SVG
 
@@ -48,43 +49,60 @@ Namespace SVG
         Protected Friend bg$
         Protected Friend Size As Size
 
+        ''' <summary>
+        ''' Generates the <see cref="CSSLayer"/> index order value.
+        ''' </summary>
+        Friend zlayer As int = 0
+
+        Private Function updateLayerIndex(Of T As CSSLayer)(node As T) As T
+            node.zIndex = ++zlayer
+            Return node
+        End Function
+
+        Private Iterator Function updateLayerIndex(Of T As CSSLayer)(nodes As IEnumerable(Of T)) As IEnumerable(Of T)
+            For Each node As T In nodes
+                node.zIndex = ++zlayer
+                Yield node
+            Next
+        End Function
+
         Public Sub Add(text As XML.text)
-            texts += text
+            texts += updateLayerIndex(text)
         End Sub
 
         Public Sub Add(rect As rect)
-            rects += rect
+            rects += updateLayerIndex(rect)
         End Sub
 
         Public Sub Add(line As line)
-            lines += line
+            lines += updateLayerIndex(line)
         End Sub
 
         Public Sub Add(circle As circle)
-            circles += circle
+            circles += updateLayerIndex(circle)
         End Sub
 
         Public Sub Add(path As path)
-            paths += path
+            paths += updateLayerIndex(path)
         End Sub
 
         Public Sub Add(polygon As polygon)
-            polygons += polygon
+            polygons += updateLayerIndex(polygon)
         End Sub
 
         Public Sub Add(image As XML.Image)
-            images += image
+            images += updateLayerIndex(image)
         End Sub
 
         Public Sub Add(data As SVGDataCache)
             With data
-                Call Me.texts.AddRange(.texts)
-                Call Me.circles.AddRange(.circles)
-                Call Me.images.AddRange(.images)
-                Call Me.lines.AddRange(.lines)
-                Call Me.paths.AddRange(.paths)
-                Call Me.polygons.AddRange(.polygons)
-                Call Me.rects.AddRange(.rects)
+                Call Me.texts.AddRange(updateLayerIndex(.texts))
+                Call Me.circles.AddRange(updateLayerIndex(.circles))
+                Call Me.images.AddRange(updateLayerIndex(.images))
+                Call Me.lines.AddRange(updateLayerIndex(.lines))
+                Call Me.paths.AddRange(updateLayerIndex(.paths))
+                Call Me.polygons.AddRange(updateLayerIndex(.polygons))
+                Call Me.rects.AddRange(updateLayerIndex(.rects))
             End With
         End Sub
 
