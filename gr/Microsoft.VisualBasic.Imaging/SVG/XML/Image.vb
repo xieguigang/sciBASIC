@@ -44,7 +44,9 @@ Namespace SVG.XML
         <XmlAttribute> Public Property y As Single
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
-        <XmlAttribute("image.data")> Public Property data As String
+
+        <XmlAttribute("href", [Namespace]:=SVGWriter.Xlink)>
+        Public Property data As String
 
         ''' <summary>
         ''' ``data:image/png;base64,...``

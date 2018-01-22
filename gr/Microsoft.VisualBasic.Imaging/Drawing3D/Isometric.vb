@@ -349,6 +349,7 @@ Namespace Drawing3D
 
                     c = Not c
                 End If
+
                 j = i
             Loop
 
@@ -368,6 +369,7 @@ Namespace Drawing3D
 
                     c = Not c
                 End If
+
                 j = i
             Loop
             Return c

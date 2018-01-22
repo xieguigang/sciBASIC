@@ -31,10 +31,7 @@
 
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports System.Xml
-Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
-Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
 
@@ -43,10 +40,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
     ''' </summary>
     Public Class ProjectType
 
-        Dim projectNamespace As ProjectNamespace
-        Dim fields As Dictionary(Of String, ProjectMember)
-        Dim properties As Dictionary(Of String, ProjectMember)
-        Dim methods As Dictionary(Of String, ProjectMember)
+        Protected projectNamespace As ProjectNamespace
+        Protected fields As Dictionary(Of String, ProjectMember)
+        Protected properties As Dictionary(Of String, ProjectMember)
+        Protected methods As Dictionary(Of String, ProjectMember)
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -66,6 +63,20 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Me.properties = New Dictionary(Of String, ProjectMember)()
             Me.methods = New Dictionary(Of String, ProjectMember)()
         End Sub
+
+        Protected Sub New(type As ProjectType)
+            projectNamespace = type.projectNamespace
+            fields = type.fields
+            properties = type.properties
+            methods = type.methods
+            Name = type.Name
+            Summary = type.Summary
+            Remarks = type.Remarks
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return Name
+        End Function
 
         Public Function GetMethod(methodName As String) As ProjectMember
             If Me.methods.ContainsKey(methodName.ToLower()) Then
@@ -133,118 +144,6 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return pm
         End Function
 
-        ''' <summary>
-        ''' Exports for the specific type in a namespace
-        ''' </summary>
-        ''' <param name="folderPath"></param>
-        ''' <param name="pageTemplate"></param>
-        ''' <param name="url"></param>
-        ''' <remarks>这里还应该包括完整的函数的参数注释的输出</remarks>
-        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, url As URLBuilder)
-            Dim methodList As New StringBuilder()
-
-            If Me.methods.Values.Count > 0 Then
-                methodList.AppendLine("### Methods" & vbCr & vbLf)
-
-                Dim sortedMembers As New SortedList(Of String, ProjectMember)()
-
-                For Each pm As ProjectMember In Me.methods.Values
-                    sortedMembers.Add(pm.Name, pm)
-                Next
-
-                For Each pm As ProjectMember In sortedMembers.Values
-                    methodList.AppendLine("#### " & pm.Name)
-                    If Not pm.Declare.StringEmpty Then
-                        methodList.AppendLine("```csharp")
-                        methodList.AppendLine($"{pm.Declare}")
-                        methodList.AppendLine("```")
-                    End If
-                    methodList.AppendLine(CleanText(pm.Summary))
-
-                    If Not pm.Params.IsNullOrEmpty Then
-                        Call methodList.AppendLine()
-                        Call methodList.AppendLine("|Parameter Name|Remarks|")
-                        Call methodList.AppendLine("|--------------|-------|")
-
-                        For Each arg In pm.Params
-                            Call methodList.AppendLine($"|{arg.name}|{arg.text}|")
-                        Next
-
-                        Call methodList.AppendLine()
-                    End If
-
-                    If Not pm.Returns.StringEmpty Then
-                        If Not url.[lib] = Libraries.Hexo Then
-                            methodList.AppendLine()
-                        End If
-                        methodList.AppendLine("_returns: " & pm.Returns & "_")
-                    End If
-
-                    If Not pm.Remarks.StringEmpty Then
-                        For Each line As String In pm.Remarks.lTokens
-                            Call methodList.AppendLine("> " & line)
-                        Next
-                    End If
-
-                    Call methodList.AppendLine()
-                Next
-            End If
-
-            Dim propertyList As New StringBuilder()
-
-            If Me.properties.Count > 0 Then
-                propertyList.AppendLine("### Properties" & vbCr & vbLf)
-
-                Dim sortedMembers As SortedList(Of String, ProjectMember) = New SortedList(Of String, ProjectMember)()
-
-                For Each pm As ProjectMember In Me.properties.Values
-                    sortedMembers.Add(pm.Name, pm)
-                Next
-
-                For Each pm As ProjectMember In sortedMembers.Values
-                    propertyList.AppendLine("#### " & pm.Name)
-                    propertyList.AppendLine(CleanText(pm.Summary))
-                Next
-            End If
-
-            Dim rmk As String = ""
-
-            For Each l As String In Remarks.lTokens
-                rmk &= "> " & l & vbCrLf
-            Next
-
-            If Trim(rmk) = ">" OrElse rmk.StringEmpty Then
-                rmk = ""
-            End If
-
-            Dim link$ = url.GetTypeNamespaceLink(Me)
-            Dim text As String = String.Format("# {0}" & vbCr & vbLf &
-                                               $"_namespace: {link}_" & vbCr & vbLf &
-                                               vbCr & vbLf &
-                                               "{2}" & vbCr & vbLf &
-                                               vbCr & vbLf &
-                                               "{3}" & vbCr & vbLf &
-                                               vbCr & vbLf &
-                                               "{4}" & vbCr & vbLf &
-                                               "{5}", Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), rmk, methodList.ToString(), propertyList.ToString())
-
-            Dim path$ = url.GetTypeSave(folderPath, Me) ' *.md save path
-
-            If url.[lib] = Libraries.Hexo Then
-                text = $"---
-title: {Me.Name}
----
-
-" & text
-            Else
-                If pageTemplate IsNot Nothing Then
-                    text = pageTemplate.Replace("[content]", text)
-                End If
-            End If
-
-            Call text.SaveTo(path, UTF8WithoutBOM)
-        End Sub
-
         Public Sub LoadFromNode(xn As XmlNode)
             Dim summaryNode As XmlNode = xn.SelectSingleNode("summary")
 
@@ -257,27 +156,5 @@ title: {Me.Name}
                 Remarks = summaryNode.InnerText
             End If
         End Sub
-
-        Private Function CleanText(incomingText As String) As String
-            If incomingText Is Nothing Then
-                Return String.Empty
-            End If
-
-            incomingText = incomingText.Replace(vbTab, "").Trim()
-
-            Dim results As String = String.Empty
-            Dim lastCharWasSpace As Boolean = False
-            For Each c As Char In incomingText
-                If c <> " "c Then
-                    lastCharWasSpace = False
-                    results += c
-                ElseIf Not lastCharWasSpace Then
-                    lastCharWasSpace = True
-                    results += c
-                End If
-            Next
-
-            Return results
-        End Function
     End Class
 End Namespace

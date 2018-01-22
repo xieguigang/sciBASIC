@@ -39,6 +39,12 @@ Namespace Imaging.Math2D
 
     <Package("GDI.Transform")> Public Module GeomTransform
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SquareSize(width%) As Size
+            Return New Size(width, width)
+        End Function
+
         ''' <summary>
         ''' 这个方形区域的面积
         ''' </summary>
