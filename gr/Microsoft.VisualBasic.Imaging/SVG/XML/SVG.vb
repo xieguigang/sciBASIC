@@ -55,6 +55,11 @@ Namespace SVG.XML
             xmlns.Add("xlink", SVGWriter.Xlink)
         End Sub
 
+        Sub New(width%, height%)
+            Call Me.New
+            Call Me.SetSize(New Size(width, height))
+        End Sub
+
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
         <XmlAttribute> Public Property id As String

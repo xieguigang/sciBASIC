@@ -1,34 +1,36 @@
 ﻿#Region "Microsoft.VisualBasic::2d5508eb97ee2937cbb6c3c1835a6d7b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataCache.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 
 Namespace SVG
@@ -85,8 +87,25 @@ Namespace SVG
             End With
         End Sub
 
-        Public Function GetSVG(size As Size) As SVGXml
-            Dim SVG As New SVGXml With {
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function innerDefaultWidth() As DefaultValue(Of Integer)
+            Return Size.Width.AsDefault(Function(n) CType(n, Integer) = 0)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function innerDefaultHeight() As DefaultValue(Of Integer)
+            Return Size.Height.AsDefault(Function(n) CType(n, Integer) = 0)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="size">
+        ''' If this argument is ignored, then the default internal <see cref="Size"/> value will be used.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function GetSVG(Optional size As Size = Nothing) As SVGXml
+            Dim SVG As New SVGXml() With {
                 .gs = {
                     New g With {
                         .circles = circles,
@@ -97,8 +116,8 @@ Namespace SVG
                         .lines = lines
                     }
                 },
-                .width = size.Width,
-                .height = size.Height
+                .width = size.Width Or innerDefaultWidth(),
+                .height = size.Height Or innerDefaultHeight()
             }
 
             If Not bg.StringEmpty Then
