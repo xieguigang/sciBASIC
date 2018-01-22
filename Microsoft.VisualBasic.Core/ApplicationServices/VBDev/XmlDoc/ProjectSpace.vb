@@ -113,7 +113,9 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
                     Call xd.Load(xr)
 
-                    Dim nameNode As XmlNode = xd.DocumentElement.SelectSingleNode("assembly/name")
+                    Dim nameNode As XmlNode = xd _
+                        .DocumentElement _
+                        .SelectSingleNode("assembly/name")
 
                     If nameNode IsNot Nothing Then
                         Dim p As Project = Me.EnsureProject(nameNode.InnerText)
