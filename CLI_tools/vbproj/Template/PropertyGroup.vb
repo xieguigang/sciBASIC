@@ -86,6 +86,6 @@ Public Class PropertyGroup
     Public Property AutoGenerateBindingRedirects As String
 
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return Condition
     End Function
 End Class
