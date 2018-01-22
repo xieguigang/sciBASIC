@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28b9256c9ec1ebd0aec8a9c43b04b886, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\workbook.xml.vb"
+﻿#Region "Microsoft.VisualBasic::f9151041195b8270cc0ae44e214da40f, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\workbook.xml.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -45,6 +46,9 @@ Namespace XML.xl
         Public Property calcPr As calcPr
         Public Property workbookPr As workbookPr
         Public Property fileRecoveryPr As fileRecoveryPr
+        Public Property definedNames As definedName()
+
+        Public Property extLst As ext()
 
         <XmlElement("AlternateContent", [Namespace]:=mc)>
         Public Property AlternateContent As AlternateContent
@@ -64,17 +68,24 @@ Namespace XML.xl
             xmlns.Add("xr2", Excel.Xmlns.xr2)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSheetIDByIndex(index As Integer) As String
+            Return sheets(index).sheetId
+        End Function
+
         ''' <summary>
         ''' 不存在会返回空字符串
         ''' </summary>
         ''' <param name="name$"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetSheetIDByName(name$) As String
             Return sheets _
                 .SafeQuery _
                 .Where(Function(s) s.name.TextEquals(name)) _
                 .FirstOrDefault _
-                .sheetId
+                .rid
         End Function
 
         Public Function Add(sheetName$) As String
@@ -87,6 +98,42 @@ Namespace XML.xl
             }
             Return "sheet" & n
         End Function
+    End Class
+
+    <XmlType("ext", [Namespace]:=Excel.Xmlns.x15)>
+    Public Class ext
+
+        <XmlAttribute>
+        Public Property uri As String
+        Public Property workbookPr As workbookPr
+        <XmlElement("slicerStyles", [Namespace]:=Excel.Xmlns.x14)>
+        Public Property slicerStyles As slicerStyles
+        Public Property timelineStyles As timelineStyles
+
+        <XmlNamespaceDeclarations()>
+        Public xmlns As XmlSerializerNamespaces
+
+        Sub New()
+            xmlns = New XmlSerializerNamespaces
+            xmlns.Add("x15", Excel.Xmlns.x15)
+            xmlns.Add("x14", Excel.Xmlns.x14)
+        End Sub
+    End Class
+
+    Public Class slicerStyles
+        <XmlAttribute>
+        Public Property defaultSlicerStyle As String
+    End Class
+
+    Public Class timelineStyles
+        <XmlAttribute>
+        Public Property defaultTimelineStyle As String
+    End Class
+
+    Public Class definedName
+        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property hidden As String
+        <XmlText> Public Property value As String
     End Class
 
     <XmlRoot("AlternateContent", [Namespace]:=mc)>
@@ -121,8 +168,9 @@ Namespace XML.xl
     End Class
 
     Public Class workbookPr
-        <XmlAttribute>
-        Public Property defaultThemeVersion As String
+        <XmlAttribute> Public Property defaultThemeVersion As String
+        <XmlAttribute> Public Property chartTrackingRefBase As String
+        <XmlAttribute> Public Property filterPrivacy As String
     End Class
 
     Public Structure calcPr

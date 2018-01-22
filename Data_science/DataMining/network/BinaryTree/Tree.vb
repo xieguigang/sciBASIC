@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9ecf2bd834a285142785b2d9fd48644, ..\sciBASIC#\Data_science\DataMining\network\BinaryTree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::9802ccbd02f4384ca0599b314f0ebc08, ..\sciBASIC#\Data_science\DataMining\network\BinaryTree\Tree.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -51,11 +51,11 @@ Namespace KMeans
         ''' <param name="depth">将会以最短的聚类作为数据分区的深度</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Partitioning(cluster As IEnumerable(Of EntityLDM), Optional depth As Integer = -1, Optional trim As Boolean = True) As List(Of Partition)
-            Dim list As New List(Of EntityLDM)(cluster)
+        Public Function Partitioning(cluster As IEnumerable(Of EntityClusterModel), Optional depth As Integer = -1, Optional trim As Boolean = True) As List(Of Partition)
+            Dim list As New List(Of EntityClusterModel)(cluster)
 
             If depth <= 0 Then
-                depth = (From x As EntityLDM
+                depth = (From x As EntityClusterModel
                          In list
                          Select l = x.Cluster
                          Order By l.Length Ascending).First.Split("."c).Length
@@ -81,10 +81,10 @@ Namespace KMeans
             Dim partitions As New List(Of Partition)
 
             For Each tag As String In clusters
-                Dim LQuery As EntityLDM() =
-                    LinqAPI.Exec(Of EntityLDM) <=
+                Dim LQuery As EntityClusterModel() =
+                    LinqAPI.Exec(Of EntityClusterModel) <=
  _
-                    From x As EntityLDM
+                    From x As EntityClusterModel
                     In list.AsParallel
                     Where InStr(x.Cluster, tag, CompareMethod.Binary) = 1
                     Select x
@@ -92,7 +92,7 @@ Namespace KMeans
                 list -= LQuery
                 partitions += New Partition With {
                     .Tag = tag,
-                    .uids = LQuery.ToArray(Function(x) x.ID),
+                    .uids = LQuery.Select(Function(x) x.ID),
                     .members = LQuery
                 }
             Next
@@ -100,7 +100,7 @@ Namespace KMeans
             If Not list.IsNullOrEmpty Then
                 partitions += New Partition With {
                     .Tag = "Unclass",
-                    .uids = list.ToArray(Function(x) x.ID),
+                    .uids = list.Select(Function(x) x.ID),
                     .members = list.ToArray
                 }
             End If
@@ -115,7 +115,7 @@ Namespace KMeans
 
         Private Structure __edgePath
             Public path As String()
-            Public node As EntityLDM
+            Public node As EntityClusterModel
 
             Public Overrides Function ToString() As String
                 Return $"[{node.Cluster}] --> {node.ID}"
@@ -132,8 +132,8 @@ Namespace KMeans
         ''' <returns></returns>
         <ExportAPI("Cluster.Trees.Network",
                    Info:="Create network model for visualize the binary tree clustering result.")>
-        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityLDM), Optional removesProperty As Boolean = True) As FileStream.NetworkTables
-            Dim array = (From x As EntityLDM
+        <Extension> Public Function bTreeNET(source As IEnumerable(Of EntityClusterModel), Optional removesProperty As Boolean = True) As FileStream.NetworkTables
+            Dim array = (From x As EntityClusterModel
                          In source
                          Let path As String() = x.Cluster.Split("."c)
                          Select New __edgePath With {
@@ -194,12 +194,12 @@ Namespace KMeans
             If depth = array(Scan0).path.Length AndAlso
                 array(Scan0).path.Last = "X"c Then
 
-                Return array.ToArray(
+                Return array.Select(
                     Function(x) New NetworkEdge With {
                         .FromNode = parent.ID,
                         .ToNode = x.node.ID,
                         .Interaction = "Leaf-X"
-                    })
+                    }).ToArray
             End If
 
             Dim edges As New List(Of NetworkEdge)
@@ -210,7 +210,7 @@ Namespace KMeans
                           Group By cur Into Group).ToArray
 
             For Each part In groups
-                Dim parts = part.Group.ToArray(Function(x) x.x)
+                Dim parts = part.Group.Select(Function(x) x.x).ToArray
 
                 If parts.Length = 1 Then ' 叶节点
                     Dim leaf As __edgePath = parts.First

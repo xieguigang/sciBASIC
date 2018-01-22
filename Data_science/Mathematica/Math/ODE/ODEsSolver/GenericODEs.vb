@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -42,7 +42,7 @@ Public Class GenericODEs : Inherits ODEs
     Sub New(ParamArray vars As var())
         Me.vars = vars
 
-        For Each x In vars.SeqIterator
+        For Each x As SeqValue(Of var) In vars.SeqIterator
             x.value.Index = x.i
         Next
     End Sub

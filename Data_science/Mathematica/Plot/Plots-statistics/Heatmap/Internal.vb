@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64e5b6c5bd2a2eab78f9fad1b45d4bba, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\Internal.vb"
+﻿#Region "Microsoft.VisualBasic::dceee5036fda8a2f5671799103f627ac, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\Internal.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -181,7 +181,9 @@ Namespace Heatmap
                                     .Properties _
                                     .Keys _
                                     .ToDictionary(Function(key) key,
-                                                  Function(key) range.ScaleMapping(x(key), levelRange))
+                                                  Function(key)
+                                                      Return range.ScaleMapping(x(key), levelRange)
+                                                  End Function)
                            }
                         End Function)
         End Function

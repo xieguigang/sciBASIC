@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08a44be37ecb694d4aea07cc3952ded2, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\Parallel\StreamAPI.vb"
+﻿#Region "Microsoft.VisualBasic::ee56ff3e54be3a2c20e67c88b69e0de6, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\Parallel\StreamAPI.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -73,7 +73,7 @@ Namespace KMeans.Parallel
 
             Dim props As Double() =
                 buffer.Skip(nameLen.Length + name.Length).Split(RawStream.DblFloat) _
-                      .ToArray(Function(buf) BitConverter.ToDouble(buf, Scan0))
+                      .Select(Function(buf) BitConverter.ToDouble(buf, Scan0)).ToArray
 
             Return New Entity With {
                 .Properties = props,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d2ea759b3f3b5995f02013b8b39d78b, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::74fbae36ba46ee7805ad608fbf2f317c, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -27,13 +27,31 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace KMeans
 
     Public Module Extensions
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ToEntityObjects(dataset As IEnumerable(Of EntityClusterModel)) As IEnumerable(Of EntityObject)
+            Return dataset _
+                .Select(Function(data)
+                            Dim cluster As New NamedValue(Of String) With {
+                                .Name = NameOf(data.Cluster),
+                                .Value = data.Cluster
+                            }
+                            Return New EntityObject With {
+                                .ID = data.ID,
+                                .Properties = cluster + data.Properties.AsCharacter
+                            }
+                        End Function)
+        End Function
 
         ''' <summary>
         ''' Grouping the numeric values by using the kmeans cluserting operations.
@@ -42,14 +60,17 @@ Namespace KMeans
         ''' <param name="array"></param>
         ''' <param name="nd"></param>
         ''' <returns></returns>
-        <Extension> Public Function ValueGroups(array As IEnumerable(Of Double), nd As Integer) As List(Of EntityLDM)
-            Dim entities As EntityLDM() = array.ToArray(
-                Function(x, i) New EntityLDM With {
-                    .ID = i & ":" & x,
-                    .Properties = New Dictionary(Of String, Double) From {
-                        {"val", x}
-                    }
-                })
+        <Extension> Public Function ValueGroups(array As IEnumerable(Of Double), nd As Integer) As List(Of EntityClusterModel)
+            Dim entities As EntityClusterModel() = array _
+                .Select(Function(x, i)
+                            Return New EntityClusterModel With {
+                                .ID = i & ":" & x,
+                                .Properties = New Dictionary(Of String, Double) From {
+                                    {"val", x}
+                                }
+                            }
+                        End Function) _
+                .ToArray
             Return entities.Kmeans(nd)
         End Function
 
@@ -59,10 +80,10 @@ Namespace KMeans
         ''' <param name="source"></param>
         ''' <param name="expected"></param>
         ''' <returns></returns>
-        <Extension> Public Function Kmeans(source As IEnumerable(Of EntityLDM),
+        <Extension> Public Function Kmeans(source As IEnumerable(Of EntityClusterModel),
                                            expected As Integer,
                                            Optional debug As Boolean = True,
-                                           Optional parallel As Boolean = True) As List(Of EntityLDM)
+                                           Optional parallel As Boolean = True) As List(Of EntityClusterModel)
 
             Dim maps As String() = source _
                 .First _
@@ -71,16 +92,17 @@ Namespace KMeans
                 .ToArray
             Dim clusters As ClusterCollection(Of Entity) =
                 ClusterDataSet(clusterCount:=expected,
-                               source:=source.ToArray(Function(x) x.ToModel),
+                               Source:=source.Select(Function(x) x.ToModel).ToArray,
                                debug:=debug,
                                parallel:=parallel)
-            Dim result As New List(Of EntityLDM)
+            Dim result As New List(Of EntityClusterModel)
 
             For Each cluster As SeqValue(Of KMeansCluster(Of Entity)) In clusters.SeqIterator(offset:=1)
-                Dim values As EntityLDM() = (+cluster) _
-                    .ToArray(Function(x) x.ToLDM(maps))
+                Dim values As EntityClusterModel() = (+cluster) _
+                    .Select(Function(x) x.ToLDM(maps)) _
+                    .ToArray
 
-                For Each x As EntityLDM In values
+                For Each x As EntityClusterModel In values
                     x.Cluster = cluster.i
                 Next
 
@@ -91,9 +113,9 @@ Namespace KMeans
         End Function
 
         <Extension>
-        Public Function ToKMeansModels(data As IEnumerable(Of DataSet)) As EntityLDM()
+        Public Function ToKMeansModels(data As IEnumerable(Of DataSet)) As EntityClusterModel()
             Return data.Select(
-                Function(d) New EntityLDM With {
+                Function(d) New EntityClusterModel With {
                     .ID = d.ID,
                     .Cluster = "",
                     .Properties = New Dictionary(Of String, Double)(d.Properties)

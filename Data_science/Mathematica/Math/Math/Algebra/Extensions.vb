@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad53130c2aa226cd9080694a9d9e1089, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0499fe76206093a20857d8a0a2e3c66d, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -30,6 +30,8 @@ Imports System.Drawing
 
 Namespace LinearAlgebra
 
+    Public Delegate Function fx(x#) As Double
+
     Public Module HelperExtensions
 
         ''' <summary>
@@ -38,7 +40,7 @@ Namespace LinearAlgebra
         ''' <param name="p1"></param>
         ''' <param name="p2"></param>
         ''' <returns>``y=ax+b``</returns>
-        Public Function PrimitiveLinearEquation(p1 As PointF, p2 As PointF) As Func(Of Double, Double)
+        Public Function PrimitiveLinearEquation(p1 As PointF, p2 As PointF) As fx
             Dim x1 = p1.X
             Dim x2 = p2.X
             Dim y1 = p1.Y
@@ -46,9 +48,7 @@ Namespace LinearAlgebra
             Dim a# = (y2 - y1) / (x2 - x1)
             Dim b# = y1 - a * x1
 
-            Return Function(x)
-                       Return a * x + b
-                   End Function
+            Return Function(x) a * x + b
         End Function
     End Module
 End Namespace

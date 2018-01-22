@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -245,7 +245,7 @@ Public Module BootstrapIterator
             '}
         Next
 
-        For Each y In y0
+        For Each y As NamedValue(Of IValueProvider) In y0
             Dim value As Double = y.Value()()
             odes(y.Name).value = value
             'debug += New NamedValue(Of Double) With {

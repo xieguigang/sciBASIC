@@ -1,34 +1,36 @@
-﻿#Region "Microsoft.VisualBasic::0092a25ffb7df0514f8d6cf15888f1f7, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2fde1e11cb9678fdecf5c5c3485e3dbf, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -47,7 +49,7 @@ Public Module Extensions
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SSM(q As Vector, s As Vector) As Double
-        Return Sum(q * s) / Sqrt(Sum(q ^ 2) * Sum(s ^ 2))
+        Return (q * s).Sum / Sqrt((q ^ 2).Sum * (s ^ 2).Sum)
     End Function
 
     ''' <summary>
@@ -61,6 +63,34 @@ Public Module Extensions
         Return New Vector(data)
     End Function
 
+    ''' <summary>
+    ''' Create a <see cref="Vector"/> from a specific <see cref="Integer"/> abstract vector.
+    ''' </summary>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsVector(v As Vector(Of Integer)) As Vector
+        Return v.Select(Function(i) CDbl(i)).AsVector
+    End Function
+
+    ''' <summary>
+    ''' Create a <see cref="Vector"/> from a specific numeric collection.
+    ''' </summary>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsVector(v As Vector(Of Double)) As Vector
+        Return v.Select(Function(x) x).AsVector
+    End Function
+
+    ''' <summary>
+    ''' Create a <see cref="Vector"/> from a given subset of the dynamics object property values.
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="keys$"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsVector(data As DynamicPropertyBase(Of Double), keys$()) As Vector
@@ -125,6 +155,12 @@ Public Module Extensions
         End With
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function IsInside(vector As Vector, range As DoubleRange) As BooleanVector
+        Return vector.Select(Function(d) range.IsInside(d)).AsVector
+    End Function
+
     ''' <summary>
     ''' 返回数值序列之中的首次出现符合条件的减少的位置
     ''' </summary>
@@ -136,7 +172,7 @@ Public Module Extensions
         Dim pre As Double = data.First
         Dim pr As Double = 1000000
 
-        For Each x In data.SeqIterator
+        For Each x As SeqValue(Of Double) In data.SeqIterator
             Dim d = (pre - x.value)
 
             If d / pr > ratio Then
@@ -161,7 +197,10 @@ Public Module Extensions
         Dim pre As Double = data.First
         Dim pr As Double = 1000000
 
-        For Each x In data.Skip(1).SeqIterator(offset:=1)
+        For Each x As SeqValue(Of Double) In data _
+            .Skip(1) _
+            .SeqIterator(offset:=1)
+
             Dim dy = (x.value - pre) ' 对边
             Dim tanX As Double = dy / dx
             Dim a As Double = Atn(tanX)
@@ -183,7 +222,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Function Reach(data As IEnumerable(Of Double), n As Double, Optional offset As Double = 0) As Integer
-        For Each x In data.SeqIterator
+        For Each x As SeqValue(Of Double) In data.SeqIterator
             If sys.Abs(x.value - n) <= offset Then
                 Return x.i
             End If
@@ -237,5 +276,17 @@ Public Module Extensions
     <Extension>
     Public Function Tanimoto(x As Vector, y As Vector) As Double
         Return (x * y).Sum / ((x * x).Sum + (y * y).Sum - (x * y).Sum)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Y(points As IEnumerable(Of PointF)) As Vector
+        Return points.Select(Function(pt) CDbl(pt.Y)).AsVector
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function X(points As IEnumerable(Of PointF)) As Vector
+        Return points.Select(Function(pt) CDbl(pt.X)).AsVector
     End Function
 End Module

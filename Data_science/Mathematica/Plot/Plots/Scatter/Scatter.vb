@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb34a9a4c29e1926d3e3f003e96470f9, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::c209c898da3c93bf56c89d3f14c3a13e, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Scatter.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js.scale
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -45,7 +46,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
-Imports Microsoft.VisualBasic.Math.StatisticsMathExtensions
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -63,20 +63,85 @@ Public Module Scatter
         Call canvas.DrawLine(New Pen(color), CSng(p0.X - width), p0.Y, CSng(p0.X + width), p0.Y)
     End Sub
 
+    <Extension>
+    Public Function CreateAxisTicks(array As SerialData(), Optional preferPositive As Boolean = False, Optional scale# = 1.2) As (x As Double(), y As Double())
+        Dim ptX#() = array _
+            .Select(Function(s)
+                        Return s.pts.Select(Function(pt) CDbl(pt.pt.X))
+                    End Function) _
+           .IteratesALL _
+           .ToArray
+        Dim XTicks = ptX _
+           .Range(scale) _
+           .CreateAxisTicks
+        Dim YTicks = array _
+            .Select(Function(s)
+                        Return s.pts _
+                            .Select(Function(pt)
+                                        Return {
+                                            pt.pt.Y - pt.errMinus,
+                                            pt.pt.Y + pt.errPlus
+                                        }
+                                    End Function)
+                    End Function) _
+            .IteratesALL _
+            .IteratesALL _
+            .Range _
+            .CreateAxisTicks
+
+        If preferPositive AndAlso Not ptX.Any(Function(n) n < 0) Then
+            ' 全部都是正实数，则将可能的负实数去掉
+            '
+            ' 因为在下面的Range函数里面，是根据scale来将最大值加上一个delta值，最小值减去一个delta值来得到scale之后的结果，
+            ' 所以假若X有比较接近于零的值得花， scale之后会出现负数
+            ' 这个负数很明显是不合理的，所以在这里将负数删除掉
+            With ptX.Range(scale)
+                XTicks = New DoubleRange(0, .Max).CreateAxisTicks
+            End With
+        End If
+
+        Return (XTicks, YTicks)
+    End Function
+
+    ''' <summary>
+    ''' 线条插值类型
+    ''' </summary>
+    Public Enum Splines As Byte
+        ''' <summary>
+        ''' 无插值操作
+        ''' </summary>
+        None = 0
+        ''' <summary>
+        ''' 二次插值
+        ''' </summary>
+        B_Spline
+        ''' <summary>
+        ''' 贝塞尔曲线插值
+        ''' </summary>
+        Bezier
+        CatmullRomSpline
+        CentripetalCatmullRomSpline
+        ''' <summary>
+        ''' 三次插值处理
+        ''' </summary>
+        CubicSpline
+    End Enum
+
     ''' <summary>
     ''' Scatter plot function.(绘图函数，默认的输出大小为``4300px,2000px``)
     ''' </summary>
     ''' <param name="c"></param>
     ''' <param name="size"></param>
     ''' <param name="bg"></param>
-    ''' <param name="fill">是否进行填充？当这个参数为真的时候就相当于绘制histogram图形了</param>
+    ''' <param name="fill">是否对曲线下的区域进行填充？这个参数只有在<paramref name="drawLine"/>开启的情况下才会发生作用</param>
     ''' <param name="drawLine">
-    ''' 是否绘制两个点之间的连接线段，当这个参数为假的时候，将不会绘制连线，就相当于绘制散点图了，而非折线图
+    ''' 是否绘制两个点之间的连接线段，当这个参数为False的时候，将不会绘制连线，就相当于绘制散点图了，而非折线图
     ''' </param>
     ''' <param name="xaxis">
     ''' 参数<paramref name="xaxis"/>和<paramref name="yaxis"/>必须要同时不为空才会起作用
     ''' </param>
     ''' <param name="legendSize">默认为(120,40)</param>
+    ''' <param name="preferPositive"><see cref="CreateAxisTicks"/></param>
     ''' <returns></returns>
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
@@ -103,31 +168,18 @@ Public Module Scatter
                          Optional xaxis$ = Nothing,
                          Optional ablines As Line() = Nothing,
                          Optional htmlLabel As Boolean = True,
-                         Optional ticksY# = -1) As GraphicsData
+                         Optional ticksY# = -1,
+                         Optional preferPositive As Boolean = False,
+                         Optional interplot As Splines = Splines.None) As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
-        Dim XTicks = array _
-            .Select(Function(s)
-                        Return s.pts.Select(Function(pt) CDbl(pt.pt.X))
-                    End Function) _
-            .IteratesALL _
-            .Range(1.2) _
-            .CreateAxisTicks
-        Dim YTicks = array _
-            .Select(Function(s)
-                        Return s.pts _
-                            .Select(Function(pt)
-                                        Return {
-                                            pt.pt.Y - pt.errMinus,
-                                            pt.pt.Y + pt.errPlus
-                                        }
-                                    End Function)
-                    End Function) _
-            .IteratesALL _
-            .IteratesALL _
-            .Range _
-            .CreateAxisTicks
+        Dim XTicks#(), YTicks#()
+
+        With array.CreateAxisTicks(preferPositive)
+            XTicks = .x
+            YTicks = .y
+        End With
 
         If ticksY > 0 Then
             YTicks = AxisScalling.GetAxisByTick(YTicks, tick:=ticksY)
@@ -137,12 +189,22 @@ Public Module Scatter
             Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 
                 Dim region As Rectangle = rect.PlotRegion
-                Dim X = d3js.scale.linear.domain(XTicks).range(integers:={region.Left, region.Right})
-                Dim Y = d3js.scale.linear.domain(YTicks).range(integers:={0, region.Bottom - region.Top}) ' Y 为什么是从零开始的？
+                Dim X, Y As d3js.scale.LinearScale
+
+                If Not xaxis.StringEmpty AndAlso Not yaxis.StringEmpty Then
+                    XTicks = AxisProvider.TryParse(xaxis).AxisTicks
+                    YTicks = AxisProvider.TryParse(yaxis).AxisTicks
+                    X = XTicks.LinearScale.range(integers:={region.Left, region.Right})
+                    Y = YTicks.LinearScale.range(integers:={0, region.Bottom - region.Top})
+                Else
+                    X = d3js.scale.linear.domain(XTicks).range(integers:={region.Left, region.Right})
+                    Y = d3js.scale.linear.domain(YTicks).range(integers:={0, region.Bottom - region.Top}) ' Y 为什么是从零开始的？
+                End If
+
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,
-                    .ChartRegion = region,
+                    .Region = region,
                     .AxisTicks = (XTicks, YTicks)
                 }
                 Dim gSize As Size = rect.Size
@@ -158,19 +220,20 @@ Public Module Scatter
 
                 If drawAxis Then
                     Call g.DrawAxis(
-                        rect, scaler, showGrid, xlabel:=Xlabel, ylabel:=Ylabel,
-                        htmlLabel:=htmlLabel)
+                        rect, scaler, showGrid,
+                        xlabel:=Xlabel, ylabel:=Ylabel,
+                        htmlLabel:=htmlLabel
+                    )
                 End If
 
                 Dim width = rect.PlotRegion.Width / 200
 
                 For Each line As SerialData In array
                     Dim pts = line.pts.SlideWindows(2)
-                    Dim pen As New Pen(color:=line.color, width:=line.width) With {
-                        .DashStyle = line.lineType
-                    }
+                    Dim pen As Pen = line.GetPen
                     Dim br As New SolidBrush(line.color)
-                    Dim d = line.PointSize
+                    Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
+                    Dim d! = line.PointSize
                     Dim r As Single = line.PointSize / 2
                     Dim bottom! = gSize.Height - margin.Bottom
                     Dim getPointBrush = Function(pt As PointData)
@@ -192,18 +255,26 @@ Public Module Scatter
                         If drawLine Then
                             Call g.DrawLine(pen, pt1, pt2)
                         End If
+
                         If fill Then
                             Dim path As New GraphicsPath
-                            Dim ptbr As New PointF(pt1.X, bottom)
-                            Dim ptbl As New PointF(pt2.X, bottom)
+                            Dim ptc As New PointF(pt2.X, bottom) ' c
+                            Dim ptd As New PointF(pt1.X, bottom) ' d
+
+
+                            '   /-b
+                            ' a-  |
+                            ' |   |
+                            ' |   |
+                            ' d---c
 
                             path.AddLine(pt1, pt2)
-                            path.AddLine(pt2, ptbr)
-                            path.AddLine(ptbr, ptbl)
-                            path.AddLine(ptbl, pt1)
+                            path.AddLine(pt2, ptc)
+                            path.AddLine(ptc, ptd)
+                            path.AddLine(ptd, pt1)
                             path.CloseFigure()
 
-                            Call g.FillPath(br, path)
+                            Call g.FillPath(fillBrush, path)
                         End If
 
                         If fillPie Then
@@ -365,9 +436,8 @@ Public Module Scatter
             Next
         End If
 
-        For Each x# In ranges
-            Call engine _
-                .SetVariable(range.Name, x)
+        For Each x As Double In ranges
+            Call engine.SetVariable(range.Name, x)
             y += engine.Evaluation(expression)
         Next
 
@@ -402,7 +472,7 @@ Public Module Scatter
         Dim ranges As Double() = range.seq(steps).ToArray
         Dim y As New List(Of Double)
 
-        For Each x# In ranges
+        For Each x As Double In ranges
             y += expression(x#)
         Next
 
@@ -479,10 +549,10 @@ Public Module Scatter
             .lineType = lineType,
             .PointSize = ptSize,
             .width = lineWidth,
-            .pts = points.ToArray(
+            .pts = points.Select(
                 Function(pt) New PointData With {
                     .pt = pt
-            }),
+            }).ToArray,
             .title = title
         }
     End Function

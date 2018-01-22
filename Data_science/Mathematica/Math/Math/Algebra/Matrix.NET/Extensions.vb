@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64af0189f73a5ac51b379f1202c0111a, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::60e641d7bea6527af76fd62c05687e93, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -29,7 +29,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.StatisticsMathExtensions
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.Text
 
 Namespace Matrix

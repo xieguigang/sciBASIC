@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e810cd7ea2982d494d0e00f7bccedb5, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\SearchEngine.vb"
+﻿#Region "Microsoft.VisualBasic::839cd3091b8227a886fcafba11930522, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\SearchEngine.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -41,6 +41,8 @@ Imports Microsoft.VisualBasic.Text.HtmlParser
                     Description:="",
                     Url:="http://cn.bing.com/")>
 Public Module SearchEngineProvider
+
+    Public Const BingRefer$ = "https://cn.bing.com/?FORM=Z9FD1"
 
     Const BingURL As String = "https://www.bing.com/search?q={0}&PC=U316&FORM=Firefox"
     Const TotalCount As String = "<span class=""sb_count"">\d+ results</span>"
@@ -84,13 +86,22 @@ Public Module SearchEngineProvider
         Loop
     End Function
 
+    ''' <summary>
+    ''' Request a bing search and get the search result.
+    ''' </summary>
+    ''' <param name="url"></param>
+    ''' <returns></returns>
     Public Function DownloadResult(url As String) As SearchResult
         Dim web As String = Regex.Replace(url.GET, "<strong>|</strong>", "", RegexICSng)
         Dim count As String = Regex.Match(web, TotalCount).Value
         Dim itms As String() = Strings.Split(
             web.Replace(TranslateThisPage, ""), "<h2>", -1, CompareMethod.Text)
-        Dim result As WebResult() = itms.Skip(1).ToArray(AddressOf WebResult.TryParse)
-        Dim [next] As String = __getNextPageLink(web)
+        Dim result As WebResult() = itms _
+            .Skip(1) _
+            .Select(AddressOf WebResult.TryParse) _
+            .ToArray
+
+        Dim next$ = __getNextPageLink(web)
 
         count = Regex.Match(count, "\d+").Value
 

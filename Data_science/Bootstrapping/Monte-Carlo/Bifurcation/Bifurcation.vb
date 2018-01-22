@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d6255733f1a70e2c80f9a08fef00f64, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\Bifurcation\Bifurcation.vb"
+﻿#Region "Microsoft.VisualBasic::bd6751f51f1b9cfe26be35047a8a1d34, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\Bifurcation\Bifurcation.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -148,8 +148,8 @@ Namespace MonteCarlo
                     .IteratesALL _
                     .GroupBy(Function(x) x.Key) _
                     .ToDictionary(Function(k) k.Key,
-                                  Function(o) o.ToArray(
-                                  Function(v) v.Value))
+                                  Function(o) o.Select(
+                                  Function(v) v.Value).ToArray)
 
                 Dim avgs As Dictionary(Of String, Double) =
                     datas.ToDictionary(
@@ -164,7 +164,7 @@ Namespace MonteCarlo
                 'Dim inits As EntityLDM() =
                 '    (+cluster) _
                 '    .Select(Function(x) x.uid) _
-                '    .ToArray(Function(data) New EntityLDM With {
+                '    .Select(Function(data) New EntityLDM With {
                 '        .Name = data,
                 '        .Properties = data.LoadObject(Of Dictionary(Of String, Double))
                 '    })
@@ -189,7 +189,7 @@ Namespace MonteCarlo
                 '    subclusters = inits _
                 '        .Kmeans(parts) _
                 '        .GroupBy(Function(x) x.Cluster) _
-                '        .ToArray(Function(g) g.ToArray)
+                '        .Select(Function(g) g.ToArray)
                 'End If
 
                 'For Each subc As EntityLDM() In subclusters
@@ -206,7 +206,7 @@ Namespace MonteCarlo
                 '    Yield New NamedValue(Of ValueRange()) With {
                 '        .Name = cluster.i & "::" & means.GetJson,
                 '        .Value = status _
-                '            .ToArray(Function(s) New ValueRange With {
+                '            .Select(Function(s) New ValueRange With {
                 '                .Name = s.Key,
                 '                .Min = s.Value.Min,
                 '                .Max = s.Value.Max

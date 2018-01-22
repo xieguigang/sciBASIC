@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36857190ed2ce096355205f4eb98f56d, ..\sciBASIC#\gr\Landscape\3DBuilder\XML\XmlModel3D.vb"
+﻿#Region "Microsoft.VisualBasic::c9d4f6e8b783c3322caefd877528f736, ..\sciBASIC#\gr\Landscape\3DBuilder\XML\XmlModel3D.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -55,7 +55,7 @@ Namespace Vendor_3mf.XML
                 .basematerials _
                 .basematerials _
                 .Select(Function(b) b.displaycolor.TranslateColor) _
-                .ToArray(Function(c) New SolidBrush(c))
+                .Select(Function(c) New SolidBrush(c))
 
             On Error Resume Next
 

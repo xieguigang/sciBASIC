@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2a054588e8852deeba4c364336bc8fa, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::827c1cd6c7e6ff35be03bf7cf794da3a, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -28,7 +28,7 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
 Namespace StorageProvider.Reflection
@@ -47,7 +47,7 @@ Namespace StorageProvider.Reflection
         <Extension>
         Public Function IsDataIgnored([property] As PropertyInfo) As Boolean
             Return Not [property].GetCustomAttributes(attributeType:=ignored, inherit:=True).IsNullOrEmpty OrElse
-                   Not [property].GetCustomAttributes(attributeType:=dataIgnores, inherit:=True).IsNullOrEmpty  
+                   Not [property].GetCustomAttributes(attributeType:=dataIgnores, inherit:=True).IsNullOrEmpty
         End Function
 
         ''' <summary>
@@ -166,13 +166,13 @@ Namespace StorageProvider.Reflection
             If Not (valueType = GetMetaAttribute([Property].PropertyType)) Is Nothing Then
 
                 Return New ComponentModels.MetaAttribute(              ' 是字典类型
-                    New MetaAttribute(valueType.value), [Property])
+                    New MetaAttribute(valueType.Value), [Property])
 
             ElseIf Not (elType = (GetThisElement([Property].PropertyType, forcePrimitive)) Is Nothing OrElse
-                        elType.value.Equals(GetType(Void))) Then
+                        elType.Value.Equals(GetType(Void))) Then
 
                 Return ComponentModels.CollectionColumn.CreateObject(    ' 是集合类型
-                    New CollectionAttribute(_getName), [Property], elType.value)
+                    New CollectionAttribute(_getName), [Property], elType.Value)
 
             ElseIf IsKeyValuePair([Property]) Then   ' 是键值对
 

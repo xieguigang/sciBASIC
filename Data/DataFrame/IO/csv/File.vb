@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::645ee7db5b74dd1407f2a3b0fba2f414, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::0d2014b9c8f5eff16f20769449cb0cc2, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -46,8 +46,7 @@ Namespace IO
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
-    <ActiveViews(File.ActiveViews)>
-    Public Class File : Inherits ITextFile
+    <ActiveViews(File.ActiveViews)> Public Class File : Inherits ITextFile
         Implements IEnumerable(Of RowObject)
         Implements IList(Of RowObject)
 
@@ -350,7 +349,7 @@ B21,B22,B23,...
         End Function
 
         Public Function ToArray(Of T)([ctype] As Func(Of RowObject, T)) As T()
-            Dim array As T() = _innerTable.ToArray([ctype])
+            Dim array As T() = _innerTable.Select([ctype]).ToArray
             Return array
         End Function
 
@@ -666,10 +665,7 @@ B21,B22,B23,...
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function Load(Path As String, Optional encoding As Encoding = Nothing, Optional trimBlanks As Boolean = False) As File
-            If encoding Is Nothing Then
-                encoding = Encoding.Default
-            End If
-            Dim buf As List(Of RowObject) = __loads(Path, encoding, trimBlanks)
+            Dim buf As List(Of RowObject) = __loads(Path, encoding Or TextEncodings.DefaultEncoding, trimBlanks)
             Dim csv As New File With {
                 .FilePath = Path,
                 ._innerTable = buf
@@ -864,7 +860,7 @@ B21,B22,B23,...
         End Sub
 
         Public Sub Add(ParamArray row As Object())
-            Call Add(row.ToArray(Function(c) Scripting.ToString(c)))
+            Call Add(row.Select(Function(c) Scripting.ToString(c)))
         End Sub
 
         Public Sub Add(ParamArray row As String())

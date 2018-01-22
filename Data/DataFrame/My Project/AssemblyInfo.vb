@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("DocumentFormat.Csv: Csv file IO and dataset operation wrapper")>
-<Assembly: AssemblyDescription("DocumentFormat.Csv: Csv file IO and dataset operation wrapper")>
+<Assembly: AssemblyTitle("Data Framework for sciBASIC based on the csv 2D table")>
+<Assembly: AssemblyDescription("Data Framework for sciBASIC based on the csv 2D table")>
 <Assembly: AssemblyCompany("Microsoft")>
 <Assembly: AssemblyProduct("Dynamics DataFrame")>
 <Assembly: AssemblyCopyright("Copyright © xie.guigang@live.com 2016")>
-<Assembly: AssemblyTrademark("Excel")> 
+<Assembly: AssemblyTrademark("sciBASIC")>
 
 <Assembly: ComVisible(False)>
 

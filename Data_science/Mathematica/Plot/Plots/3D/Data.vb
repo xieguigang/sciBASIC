@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93e2b2243e5c130818895aab59c35af2, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\Data.vb"
+﻿#Region "Microsoft.VisualBasic::b32571c6aada65488e277a1da983e58b, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\Data.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -37,6 +37,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Terminal
+Imports Microsoft.VisualBasic.Terminal.ProgressBar
 
 Namespace Plot3D
 
@@ -89,11 +90,11 @@ Namespace Plot3D
                         pY0, previousX(i), xline(i), pY1
                     }
                     Dim v As Point3D() = data _
-                        .ToArray(Function(d) d.pt)
+                        .Select(Function(d) d.pt)
                     Dim sf As New Surface With {    ' 使用一个矩形来生成一个3维表面
                         .vertices = v
                     }
-                    Dim zc#() = data.ToArray(Function(d) d.C)
+                    Dim zc#() = data.Select(Function(d) d.C)
 
                     Yield (sf, zc)
 
@@ -168,7 +169,7 @@ Namespace Plot3D
             If App.IsConsoleApp Then
                 Dim tick As New ProgressProvider(total)
                 Dim msg$ = $"Populates data points...(Estimates size: {tick.Target * (yLen / ysteps)}...)"
-                Dim prog As New ProgressBar(msg, CLS:=True)
+                Dim prog As New ProgressBar(msg, 1, CLS:=True)
 
                 Call tick.StepProgress()
 

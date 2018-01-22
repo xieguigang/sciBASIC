@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8a2a245dc47e5eaef3d0e2c60b7547f, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
+﻿#Region "Microsoft.VisualBasic::5b2b6f4a2345f0cd48a41acb72d2bd90, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -88,17 +88,17 @@ Namespace StorageProvider.ComponentModels
                                 Return DirectCast(field, StorageProvider)
                             End Function) +
                 SchemaProvider.EnumColumns _
-                    .ToArray(Function(field)
-                                 Return DirectCast(field, StorageProvider)
-                             End Function) +
+                    .Select(Function(field)
+                                Return DirectCast(field, StorageProvider)
+                            End Function) +
                 SchemaProvider.KeyValuePairColumns _
-                    .ToArray(Function(field)
-                                 Return DirectCast(field, StorageProvider)
-                             End Function) +
+                    .Select(Function(field)
+                                Return DirectCast(field, StorageProvider)
+                            End Function) +
                 SchemaProvider.CollectionColumns _
-                    .ToArray(Function(field)
-                                 Return DirectCast(field, StorageProvider)
-                             End Function)
+                    .Select(Function(field)
+                                Return DirectCast(field, StorageProvider)
+                            End Function).ToArray
             Me.Columns = LinqAPI.Exec(Of StorageProvider) _
  _
                 () <= From field As StorageProvider

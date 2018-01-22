@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd3dfa7a4fa52fbe8df3a0979220daae, ..\sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyEngine.vb"
+﻿#Region "Microsoft.VisualBasic::927328ff1c66392bc6ca158b1e8627e5, ..\sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\FuzzyEngine.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -220,9 +220,9 @@ Namespace Logical.FuzzyLogic
 
             Dim model As New Models.FuzzyModel With {
                 .Output = New Models.Value(conseq),
-                .Input = trace.ToArray(Function(x) New Models.Value(x)),
+                .Input = trace.Select(Function(x) New Models.Value(x)).ToArray,
                 .Defuzzify = New Models.Defuzzify(conseq),
-                .Fuzzify = trace.ToArray(Function(x) New Models.Fuzzify(x)),
+                .Fuzzify = trace.Select(Function(x) New Models.Fuzzify(x)).ToArray,
                 .Rules = New Models.RuleBlock(FuzzyRuleCollection)
             }
 

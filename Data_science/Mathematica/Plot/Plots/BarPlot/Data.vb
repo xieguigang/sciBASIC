@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::69fc37a6248c9fe63fc7a9a93f6d349a, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Data.vb"
+﻿#Region "Microsoft.VisualBasic::5d25c356031b9d5392f53ebc056552e9, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Data.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -179,16 +179,17 @@ Namespace BarPlot
             Dim source = data.Distributes(base!)
             Dim bg As Color = color.ToColor(onFailure:=Drawing.Color.DarkBlue)
             Dim values As New List(Of Double)
-            Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) <=
+            Dim serials = LinqAPI.Exec(Of NamedValue(Of Color)) _
  _
-                From lv As Integer
-                In source.Keys
-                Select New NamedValue(Of Color) With {
-                    .Name = lv.ToString,
-                    .Value = bg
-                }
+                () <= From lv As Integer
+                      In source.Keys
+                      Let tag As String = lv.ToString
+                      Select New NamedValue(Of Color) With {
+                          .Name = tag,
+                          .Value = bg
+                      }
 
-            For Each x In serials
+            For Each x As NamedValue(Of Color) In serials
                 values += source(CInt(x.Name)).Value
             Next
 

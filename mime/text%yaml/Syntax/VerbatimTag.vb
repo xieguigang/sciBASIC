@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5c05dce7d826832945d9a7a6a2ea9cf, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\VerbatimTag.vb"
+﻿#Region "Microsoft.VisualBasic::f5c05dce7d826832945d9a7a6a2ea9cf, ..\sciBASIC#\mime\text%yaml\Syntax\VerbatimTag.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

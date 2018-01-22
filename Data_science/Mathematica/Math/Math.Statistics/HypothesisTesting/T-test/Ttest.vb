@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5f3baed00a8f5ff185fbdbcde0a2ab0, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
+﻿#Region "Microsoft.VisualBasic::1fca50aa7a275fa3a27cc7440f38879e, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
-Imports Microsoft.VisualBasic.Math.StatisticsMathExtensions
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Namespace Hypothesis
 

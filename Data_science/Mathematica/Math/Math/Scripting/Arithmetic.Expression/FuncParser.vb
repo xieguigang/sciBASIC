@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8c0412f0e9c10519f9baa792fb9019b, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\FuncParser.vb"
+﻿#Region "Microsoft.VisualBasic::d4471f0f3f2e96c58bcd1483b8a11dcc, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\FuncParser.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -50,11 +50,15 @@ Namespace Scripting
         <Extension> Private Function __defineParser(define As String, expr As String) As Func
             Dim name As String = Mid(define, 1, InStr(define, "(") - 1)
             Dim args As String = Mid(define, name.Length + 1).GetStackValue("(", ")")
+
             Return New Func With {
-            .Args = args.Split(","c).ToArray(Function(s) s.Trim),
-            .Expression = expr,
-            .Name = name
-        }
+                .Args = args _
+                    .Split(","c) _
+                    .Select(Function(s) s.Trim) _
+                    .ToArray,
+                .Expression = expr,
+                .Name = name
+            }
         End Function
     End Module
 End Namespace

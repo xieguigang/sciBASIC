@@ -94,3 +94,9 @@ Call t2.Tarray2.GetJson.__DEBUG_ECHO
 ```
 
 The dynamics data was loaded into the correctly properties.
+
+
+
+
+
+https://cdn.earthdata.nasa.gov/conduit/upload/497/ESDS-RFC-022v1.pdf

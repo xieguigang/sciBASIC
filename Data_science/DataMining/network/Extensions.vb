@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e67ef0a18841d469ee0ffaf4f7c6b32, ..\sciBASIC#\Data_science\DataMining\network\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b257baa49e54304446185e51cbd94bc7, ..\sciBASIC#\Data_science\DataMining\network\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -39,15 +39,15 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="path$"></param>
     ''' <returns></returns>
-    Public Iterator Function ClusterResultFastLoad(path$) As IEnumerable(Of EntityLDM)
+    Public Iterator Function ClusterResultFastLoad(path$) As IEnumerable(Of EntityClusterModel)
         Using reader As StreamReader = path.OpenReader
             Dim header As New RowObject(reader.ReadLine)
-            Dim cluster% = header.IndexOf(NameOf(EntityLDM.Cluster))
-            Dim name% = header.IndexOf(NameOf(EntityLDM.ID))
+            Dim cluster% = header.IndexOf(NameOf(EntityClusterModel.Cluster))
+            Dim name% = header.IndexOf(NameOf(EntityClusterModel.ID))
             Dim row As New Value(Of RowObject)
 
             Do While Not reader.EndOfStream
-                Yield New EntityLDM With {
+                Yield New EntityClusterModel With {
                     .ID = (row = New RowObject(reader.ReadLine))(name),
                     .Cluster = (+row)(cluster)
                 }

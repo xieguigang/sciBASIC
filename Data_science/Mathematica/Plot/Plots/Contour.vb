@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::651af5ccebaaec0192f63b7bb4f0fb8a, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Contour.vb"
+﻿#Region "Microsoft.VisualBasic::dc7acd9bf88a1bf892715e04dc2a739a, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Contour.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -61,14 +61,14 @@ Public Module Contour
     Public Function Compile(exp$) As Func(Of Double, Double, Double)
         With New Expression
 
-            Call .SetVariable("x", 0)
-            Call .SetVariable("y", 0)
+            !x = 0
+            !y = 0
 
             Dim func As SimpleExpression = .Compile(exp)
 
             Return Function(x, y)
-                       Call .SetVariable("x", x)
-                       Call .SetVariable("y", y)
+                       !x = x
+                       !y = y
                        Return func.Evaluate
                    End Function
         End With
@@ -346,7 +346,7 @@ Public Module Contour
                 .domain(yTicks) _
                 .range(integers:={region.PlotRegion.Top, region.PlotRegion.Bottom})
             Dim colorDatas As SolidBrush() = Nothing
-            Dim getColors = GetColor(data.ToArray(Function(o) o.z), colorDatas)
+            Dim getColors = GetColor(data.Select(Function(o) o.z).ToArray, colorDatas)
             Dim size As Size = region.Size
             Dim margin = region.Padding
             Dim plotWidth! = region.PlotRegion.Width

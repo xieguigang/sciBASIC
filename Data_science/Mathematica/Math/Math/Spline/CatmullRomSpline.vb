@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d6cf26202a88b8bd7d1f1fcc4f44370, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Spline\CatmullRomSpline.vb"
+﻿#Region "Microsoft.VisualBasic::f5ba7f24568bafb134271027a2621578, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Spline\CatmullRomSpline.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -87,11 +87,9 @@ Namespace Interpolation
                                          <Parameter("Is.Polygon")>
                                          Optional isPolygon As Boolean = False) As List(Of Point)
 
-            Dim data As IEnumerable(Of PointF) =
-                raw.Select(Function(pt) New PointF(pt.X, pt.Y))
+            Dim data As IEnumerable(Of PointF) = raw.Select(Function(pt) New PointF(pt.X, pt.Y))
             Dim spline = data.CatmullRomSpline(interpolationStep, isPolygon)
-            Dim result As New List(Of Point)(
-                spline.Select(Function(pt) New Point(pt.X, pt.Y)))
+            Dim result As New List(Of Point)(spline.Select(Function(pt) New Point(pt.X, pt.Y)))
 
             Return result
         End Function

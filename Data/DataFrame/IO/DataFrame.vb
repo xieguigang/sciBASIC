@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99e12c59f36bda6b6bcb4e0a5380b2c6, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::afc356c1cc1dec30a5c9c468f385986e, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -27,10 +27,10 @@
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -46,8 +46,8 @@ Namespace IO
     ''' <remarks></remarks>
     Public Class DataFrame : Inherits File
         Implements ISchema
-        Implements System.Data.IDataReader
-        Implements System.IDisposable
+        Implements IDataReader
+        Implements IDisposable
         Implements IEnumerable(Of DynamicObjectLoader)
 
         ''' <summary>
@@ -64,19 +64,32 @@ Namespace IO
         Protected __columnList As List(Of String)
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
 
+        Const FieldExists$ = "Required change column name mapping from `{0}` to `{1}`, but the column ``{1}`` is already exists in your file data!"
+
         ''' <summary>
         ''' ``Csv.Field -> <see cref="PropertyInfo.Name"/>``
         ''' </summary>
-        ''' <param name="MappingData">{oldFieldName, newFieldName}</param>
+        ''' <param name="MappingData">``{oldFieldName, newFieldName}``</param>
         ''' <remarks></remarks>
         Public Sub ChangeMapping(MappingData As Dictionary(Of String, String))
-            For Each ColumnName As KeyValuePair(Of String, String) In MappingData
-                Dim p As Integer = __columnList.IndexOf(ColumnName.Key)
+            For Each map As NamedValue(Of String) In MappingData.IterateNameValues
+                Dim p% = __columnList.IndexOf(map.Name)
 
-                If Not p = -1 Then ' 由于只是改变映射的名称，并不要添加新的列，所以在这里忽略掉不存在的列
-                    __columnList(p) = ColumnName.Value
-                    _SchemaOridinal.Remove(ColumnName.Key)
-                    _SchemaOridinal.Add(ColumnName.Value, p)
+                ' 由于只是改变映射的名称，并不要添加新的列，所以在这里忽略掉不存在的列
+                If Not p = -1 Then
+                    __columnList(p) = map.Value
+
+                    ' 2017-11-4 假设在原来的文件之中存在一个名字叫做ID的列
+                    ' 但是在这里进行名称映射的变化的结果也是ID名字的话，
+                    ' 则在这里会出现重复键名称的错误
+                    If SchemaOridinal.ContainsKey(map.Value) AndAlso map.Name <> map.Value Then
+                        Dim ex As New Exception(String.Format(FieldExists, map.Name, map.Value))
+                        ex = New Exception(Me.FilePath, ex)
+                        Throw ex
+                    End If
+
+                    _SchemaOridinal.Remove(map.Name)
+                    _SchemaOridinal.Add(map.Value, p)
                 End If
             Next
         End Sub
@@ -209,12 +222,14 @@ Namespace IO
         End Property
 
         Private ReadOnly Property IDataRecord_Item(i As Integer) As Object Implements IDataRecord.Item
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return IDataRecord_GetValue(i)
             End Get
         End Property
 
         Public Overloads ReadOnly Property Item(name As String) As Object Implements IDataRecord.Item
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return IDataRecord_GetValue(GetOrdinal(name))
             End Get
@@ -226,7 +241,7 @@ Namespace IO
         ''' <returns></returns>
         Public Function csv() As File
             Dim File As New File
-            File += __columnList.ToCsvRow
+            File += New RowObject(__columnList)
             File += DirectCast(_innerTable, IEnumerable(Of RowObject))
             Return File
         End Function
@@ -247,9 +262,13 @@ Namespace IO
         End Function
 
         Private Shared Function __getColumnList(table As IEnumerable(Of RowObject)) As List(Of String)
-            Return LinqAPI.MakeList(Of String) <= From strValue As String
-                                                  In table.First
-                                                  Select __reviewColumnHeader(strValue)
+            Return LinqAPI.MakeList(Of String) _
+ _
+                () <= From strValue As String
+                      In table.First
+                      Let s = __reviewColumnHeader(strValue)
+                      Select s
+
         End Function
 
         ''' <summary>
@@ -318,9 +337,8 @@ Namespace IO
         End Function
 
         Public Overrides Function Generate() As String
-            Dim sb As StringBuilder = New StringBuilder(1024)
-            Dim head As String =
-                New RowObject(__columnList).AsLine
+            Dim sb As New StringBuilder(1024)
+            Dim head As String = New RowObject(__columnList).AsLine
 
             Call sb.AppendLine(head)
 
@@ -348,12 +366,13 @@ Namespace IO
         ''' <param name="columns"></param>
         ''' <returns></returns>
         ''' <remarks>由于存在一一对应关系，这里不会再使用并行拓展</remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOrdinalSchema(columns As String()) As Integer()
-            Return columns.ToArray(
-                [ctype]:=AddressOf __columnList.IndexOf,
-                parallel:=False)
+            Return columns.Select(Function(c) __columnList.IndexOf(c)).ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetValue(ordinal As Integer) As String
 #If DEBUG Then
             If ordinal > Me.__currentLine.Count - 1 Then
@@ -384,6 +403,8 @@ Namespace IO
         ''' Reset the reading position in the data frame object.
         ''' </summary>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Reset()
             __current = -1
         End Sub
@@ -399,6 +420,7 @@ Namespace IO
             __columnList = source._innerTable.First.AsList
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return FilePath.ToFileURL & "  // " & _innerTable(__current).ToString
         End Function

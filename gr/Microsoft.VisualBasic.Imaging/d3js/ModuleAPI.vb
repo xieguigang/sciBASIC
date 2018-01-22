@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -61,6 +61,20 @@ Namespace d3js
                 .w_len = w_len,
                 .w_orient = w_orient
             }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetLabelAnchors(labels As IEnumerable(Of Label), r!) As Anchor()
+            Return labels _
+                .Select(Function(l)
+                            Return New Anchor With {
+                                .r = r,
+                                .x = l.X,
+                                .y = l.Y
+                            }
+                        End Function) _
+                .ToArray
         End Function
 
         <Extension>

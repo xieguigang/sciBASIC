@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef09fa2bca23983a5008c7941cbbf960, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
+﻿#Region "Microsoft.VisualBasic::a5587c2c373946c5cc6e0e478d49713b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -50,10 +50,10 @@ Namespace Drawing2D.Colors
 
         Sub New(maps As Dictionary(Of String, String), levels%)
             Dim path$() = maps.Keys.ToArray
-            Dim colors As Color() = path.ToArray(AddressOf TranslateColor)
+            Dim colors As Color() = path.Select(AddressOf TranslateColor).ToArray
             Dim parts = path.SlideWindows(2).ToArray
             Dim levelMappings As New List(Of ColorRange)
-            Dim tags$() = path.ToArray(Function(c) maps(c))
+            Dim tags$() = path.Select(Function(c) maps(c)).ToArray
 
             With Me
                 .colors = colors.CubicSpline(levels)

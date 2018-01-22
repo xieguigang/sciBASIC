@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05c84cf95e8d52642ea7710326335b83, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\ZScores.vb"
+﻿#Region "Microsoft.VisualBasic::61bd59fbc281eebc3e0f1ee396135ec0, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\ZScores.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -85,11 +85,18 @@ Public Module ZScoresPlot
                 Dim maxLegendLabelSize As SizeF = g.MeasureString(maxGroupLabel, legendLabelFont)
 
                 ' 计算出layout信息
-                Dim plotWidth% = rect.PlotRegion.Width - maxSerialLabelSize.Width - maxLegendLabelSize.Width - maxLegendLabelSize.Height - 30
+                Dim plotWidth% = rect.PlotRegion.Width _
+                                 - maxSerialLabelSize.Width _
+                                 - maxLegendLabelSize.Width _
+                                 - maxLegendLabelSize.Height _
+                                 - 30
                 Dim plotHeight = rect.PlotRegion.Height - titleFont.Height - tickFont.Height - 20
                 Dim plotWidthRange As DoubleRange = {0, plotWidth}
                 Dim X = Function(Z#)
-                            Return rect.Padding.Left + maxSerialLabelSize.Width + 5 + range.ScaleMapping(Z, plotWidthRange)
+                            Return rect.Padding.Left _
+                                   + maxSerialLabelSize.Width _
+                                   + 5 _
+                                   + range.ScaleMapping(Z, plotWidthRange)
                         End Function
                 Dim dy! = plotHeight / (data.serials.Length)
                 Dim yTop! = rect.Padding.Top
@@ -237,6 +244,7 @@ Public Structure ZScores
         }
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Load(path$, groups As Dictionary(Of String, String()), Optional colors$ = ColorBrewer.QualitativeSchemes.Set2_8) As ZScores
         Return ZScores.Load(path, groups, Designer.GetColors(colors))
     End Function

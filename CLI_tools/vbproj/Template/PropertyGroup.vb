@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -86,6 +86,6 @@ Public Class PropertyGroup
     Public Property AutoGenerateBindingRedirects As String
 
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return Condition
     End Function
 End Class

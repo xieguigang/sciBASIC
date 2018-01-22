@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cfbc13e3b5eb1ad76dc4ce8a7688018, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\TagDirective.vb"
+﻿#Region "Microsoft.VisualBasic::3cfbc13e3b5eb1ad76dc4ce8a7688018, ..\sciBASIC#\mime\text%yaml\Syntax\TagDirective.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

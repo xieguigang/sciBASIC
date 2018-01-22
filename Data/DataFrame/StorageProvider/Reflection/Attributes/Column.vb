@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60923c54c7834b799e53e85d9a667474, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\Attributes\Column.vb"
+﻿#Region "Microsoft.VisualBasic::d876f757606fa5b11e2322fb68f8ac3e, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\Attributes\Column.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Data.Linq.Mapping
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace StorageProvider.Reflection
 
@@ -108,23 +109,4 @@ Namespace StorageProvider.Reflection
             Return New ColumnAttribute(sName)
         End Operator
     End Class
-
-    ''' <summary>
-    ''' Custom user object parser
-    ''' </summary>
-    Public Interface IParser
-
-        ''' <summary>
-        ''' 将目标对象序列化为文本字符串
-        ''' </summary>
-        ''' <param name="obj"></param>
-        ''' <returns></returns>
-        Function ToString(obj As Object) As String
-        ''' <summary>
-        ''' 从Csv文件之中所读取出来的字符串之中解析出目标对象
-        ''' </summary>
-        ''' <param name="cell$"></param>
-        ''' <returns></returns>
-        Function TryParse(cell$) As Object
-    End Interface
 End Namespace

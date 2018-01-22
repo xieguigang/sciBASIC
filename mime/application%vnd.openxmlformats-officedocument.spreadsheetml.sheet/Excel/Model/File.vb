@@ -1,38 +1,39 @@
-﻿#Region "Microsoft.VisualBasic::074e6d2595764289ece139a8f73ae25c, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
+﻿#Region "Microsoft.VisualBasic::17cce036e26dfb853782048aeda5300a, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.IO.Compression
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.GZip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
@@ -54,11 +55,24 @@ Public Class File : Implements IFileReference
     Dim _filePath As DefaultValue(Of String)
 
     Public Property FilePath As String Implements IFileReference.FilePath
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return _filePath.Value
         End Get
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Set(value As String)
             _filePath = value
+        End Set
+    End Property
+
+    Default Public Property TableItem(sheetName As String) As csv
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return GetTable(sheetName)
+        End Get
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Set
+            Call WriteSheetTable(Value, sheetName)
         End Set
     End Property
 
@@ -117,12 +131,19 @@ Public Class File : Implements IFileReference
     ''' </summary>
     ''' <param name="path$"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function WriteXlsx(Optional path$ = Nothing) As Boolean
         ' Save to the user specific path or original source _filePath 
         ' If the path Is Not specific by user
         Return Me.SaveTo(path Or _filePath)
     End Function
 
+    ''' <summary>
+    ''' Get worksheet table by sheet name
+    ''' </summary>
+    ''' <param name="sheetName$"></param>
+    ''' <returns></returns>
     Public Function GetTable(sheetName$) As csv
         Dim worksheet As worksheet = xl.GetWorksheet(sheetName)
 
@@ -133,6 +154,23 @@ Public Class File : Implements IFileReference
         End If
     End Function
 
+    ''' <summary>
+    ''' Get worksheet table by its index in the workbook.
+    ''' (<paramref name="index"/>是以零为底的下标编号)
+    ''' </summary>
+    ''' <param name="index">ZERO based array index.</param>
+    ''' <returns></returns>
+    Public Function GetTable(index As Integer) As csv
+        Dim worksheet As worksheet = xl.GetWorksheetByIndex(index)
+
+        If worksheet Is Nothing Then
+            Return Nothing
+        Else
+            Return xl.GetTableData(worksheet)
+        End If
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function LoadDataSet(Of T As Class)(sheetName$) As T()
         Return GetTable(sheetName).AsDataSource(Of T)
     End Function
@@ -157,6 +195,8 @@ Public Class File : Implements IFileReference
     ''' </summary>
     ''' <param name="path$">``*.xlsx``</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function Open(path$) As File
         Return IO.CreateReader(xlsx:=path)
     End Function

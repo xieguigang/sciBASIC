@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::69fc335b3bc77b63f83234c597b795e6, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0ac4cd10210283ed4cfecfa9e1d2fc6c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -74,13 +74,18 @@ Namespace Drawing2D
             End With
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function Enlarge(shape As IEnumerable(Of Point), scale#) As Point()
+            Return shape.PointF.Enlarge(scale).ToPoints
+        End Function
+
         ''' <summary>
         ''' 将一个多边形放大指定的倍数<paramref name="scale"/>
         ''' </summary>
         ''' <param name="shape">矢量图形的点集合</param>
         ''' <param name="scale#"></param>
         ''' <returns></returns>
-        <Extension> Public Function Enlarge(shape As IEnumerable(Of Point), scale#) As Point()
+        <Extension> Public Function Enlarge(shape As IEnumerable(Of PointF), scale#) As PointF()
             Dim shapeVector = shape.ToArray
             Dim center = shapeVector.Centre
             Dim x As New Vector(shapeVector.Select(Function(pt) pt.X))
@@ -99,7 +104,7 @@ Namespace Drawing2D
             ' 返回放大之后的矢量图形向量
             Return shapeVector _
                 .Sequence _
-                .Select(Function(i) New Point(x(i), y(i))) _
+                .Select(Function(i) New PointF(x(i), y(i))) _
                 .ToArray
         End Function
 
@@ -142,12 +147,15 @@ Namespace Drawing2D
                     End With
             End Select
 
-            Dim out = polygon _
+            Dim out As PointF() = polygon _
                 .Select(Function(point)
-                            Return New PointF(point.X - offset.X,
-                                              point.Y - offset.Y)
+                            Return New PointF With {
+                                .X = point.X - offset.X,
+                                .Y = point.Y - offset.Y
+                            }
                         End Function) _
                 .ToArray
+
             Return out
         End Function
 

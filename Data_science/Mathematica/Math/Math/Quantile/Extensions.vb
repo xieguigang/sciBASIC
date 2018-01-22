@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f984d3c909003dda16c6ef090028c9d, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e6ad18d44c60a0315f75a32265da7eff, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -180,7 +180,7 @@ Namespace Quantile
                          In data
                          Select x,
                              v = getValue(x)).ToArray
-            Dim vals As Long() = cache.ToArray(Function(x) x.v)
+            Dim vals As Long() = cache.Select(Function(x) x.v).ToArray
             Dim estimator As QuantileEstimationGK = vals.GKQuantile(epsilon, compact_size)
 
             For Each q As Double In quantiles

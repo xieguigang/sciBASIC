@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5429fa032d17dbcf818de4985a724fea, ..\sciBASIC#\mime\text%html\HTML\Image.vb"
+﻿#Region "Microsoft.VisualBasic::dbbbd2c41e1657db270004a827fe80eb, ..\sciBASIC#\mime\text%html\HTML\Image.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -76,7 +76,7 @@ Namespace HTML
 
         Public Shared Function GetImages(html As String) As Image()
             Dim data As String() = Regex.Matches(html, HtmlStrips.imgHtmlTagPattern, RegexICSng).ToArray
-            Dim res As Image() = data.ToArray(Function(tag) Image.ResParser(tag))
+            Dim res As Image() = data.Select(Function(tag) Image.ResParser(tag)).ToArray
             Return res
         End Function
     End Class

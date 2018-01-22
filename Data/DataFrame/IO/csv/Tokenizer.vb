@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99c2f295c4b72016dfcbfc00297eaafa, ..\sciBASIC#\Data\DataFrame\IO\csv\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::a75ec8e59518544fa95d4c840d5bb2a2, ..\sciBASIC#\Data\DataFrame\IO\csv\Tokenizer.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -80,7 +80,7 @@ Namespace IO
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
-        Public Function CharsParser(s$, Optional delimiter As Char = ","c) As List(Of String)
+        Public Function CharsParser(s$, Optional delimiter As Char = ","c, Optional quot As Char = ASCII.Quot) As List(Of String)
             Dim tokens As New List(Of String)  ' row data 
             Dim temp As New List(Of Char)
             Dim openEscaping As Boolean = False ' 解析器是否是处于由双引号所产生的栈之中？
@@ -91,7 +91,7 @@ Namespace IO
 
                 If openEscaping Then
 
-                    If c = ASCII.Quot Then
+                    If c = quot Then
                         If temp.StartEscaping Then
                             Call temp.RemoveLast
                             Call temp.Add(c)
@@ -115,7 +115,7 @@ Namespace IO
                         temp += c
                     End If
                 Else
-                    If temp.Count = 0 AndAlso c = ASCII.Quot Then
+                    If temp.Count = 0 AndAlso c = quot Then
                         ' token的第一个字符串为双引号，则开始转义
                         openEscaping = True
                     Else

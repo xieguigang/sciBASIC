@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c897709444520f9c674e334ee94f5278, ..\sciBASIC#\Data_science\Bootstrapping\Topology\Model.vb"
+﻿#Region "Microsoft.VisualBasic::86315a5f5faba9d19213c245841a0fd3, ..\sciBASIC#\Data_science\Bootstrapping\Topology\Model.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -41,7 +41,7 @@ Namespace Topology
     ''' dy = alpha - beta
     ''' ```
     ''' </summary>
-    Public Class Model : Inherits GAF.Model
+    Public Class Model : Inherits GAF.ODEs.Model
 
         Dim _alpha As Dictionary(Of String, (parm As NamedValue(Of Double), v As var)())
         Dim _beta As Dictionary(Of String, (parm As NamedValue(Of Double), v As var)())
@@ -63,11 +63,11 @@ Namespace Topology
             Call MyBase.New(
                 vars _
                 .SeqIterator _
-                .ToArray(Function(v) New var With {
+                .Select(Function(v) New var With {
                     .Index = v.i,
                     .Name = v.value.Name,
                     .value = v.value.Value
-            }))
+            }).ToArray)
 
             Dim name As New Value(Of String)
 

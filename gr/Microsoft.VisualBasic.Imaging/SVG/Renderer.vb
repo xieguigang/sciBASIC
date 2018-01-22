@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -35,8 +35,18 @@ Namespace SVG
     ''' </summary>
     Public Class Renderer
 
+        ''' <summary>
+        ''' Rendering the SVG document as bitmap image.
+        ''' </summary>
+        ''' <param name="svg"></param>
+        ''' <returns></returns>
         Public Function DrawImage(svg As SVGData) As Drawing.Image
-            Throw New NotImplementedException
+            Using g As Graphics2D = svg.Size.CreateGDIDevice
+
+                Call g.Clear(svg.SVG.bg.GetBrush)
+
+                Return g.ImageResource
+            End Using
         End Function
     End Class
 End Namespace

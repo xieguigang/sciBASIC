@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d68f66a87406ca7dc9b483abb479cb31, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b2b74b0c725478aad26496d24bc2315a, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -207,7 +207,7 @@ Namespace Drawing2D.Colors
 
                 For Each x In colors
                     valids(ColorTranslator.FromHtml(x.Key)) =
-                        x.Value.ToArray(AddressOf ColorTranslator.FromHtml)
+                        x.Value.Select(AddressOf ColorTranslator.FromHtml).ToArray
                 Next
 
                 AvailableInterpolates = valids
@@ -245,7 +245,8 @@ Namespace Drawing2D.Colors
             ColorMap.PatternSpring,
             ColorMap.PatternSummer,
             ColorMap.PatternWinter
-        }.ToArray(AddressOf LCase)
+        }.Select(AddressOf LCase) _
+         .ToArray
 
         ''' <summary>
         ''' Google material design colors
@@ -351,6 +352,8 @@ Namespace Drawing2D.Colors
         ''' <param name="n%"></param>
         ''' <param name="alpha%"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetColors(term$, Optional n% = 256, Optional alpha% = 255) As Color()
             Return CubicSpline(GetColors(term), n, alpha)
         End Function
@@ -362,8 +365,10 @@ Namespace Drawing2D.Colors
         ''' <param name="n%"></param>
         ''' <param name="alpha%"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetBrushes(term$, Optional n% = 256, Optional alpha% = 255) As SolidBrush()
-            Return GetColors(term, n, alpha).ToArray(Function(c) New SolidBrush(c))
+            Return GetColors(term, n, alpha).Select(Function(c) New SolidBrush(c)).ToArray
         End Function
 
         ''' <summary>
@@ -372,6 +377,8 @@ Namespace Drawing2D.Colors
         ''' <param name="colors$"></param>
         ''' <param name="n%"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function FromNames(colors$(), n%) As Color()
             Return colors.Select(AddressOf ToColor).__internalFills(n)
         End Function

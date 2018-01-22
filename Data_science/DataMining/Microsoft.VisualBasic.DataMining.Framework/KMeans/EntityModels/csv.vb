@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85340452c4b44dbd5a31d574fbc41c63, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\csv.vb"
+﻿#Region "Microsoft.VisualBasic::f3f9e5f9a7cd6653d88144e6d0a6e13a, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\csv.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -36,7 +36,7 @@ Namespace KMeans
     ''' <summary>
     ''' 存储在Csv文件里面的数据模型，近似等价于<see cref="DataSet"/>，只不过多带了一个用来描述cluster的<see cref="Cluster"/>属性标签
     ''' </summary>
-    Public Class EntityLDM : Inherits DataSet
+    Public Class EntityClusterModel : Inherits DataSet
         Implements INamedValue
 
         ''' <summary>
@@ -64,16 +64,16 @@ Namespace KMeans
             }
         End Function
 
-        Public Shared Function Load(path As String, map As String) As EntityLDM()
+        Public Shared Function Load(path As String, map As String) As EntityClusterModel()
             Dim maps As New Dictionary(Of String, String) From {
-                {map, NameOf(EntityLDM.ID)}
+                {map, NameOf(EntityClusterModel.ID)}
             }
-            Return path.LoadCsv(Of EntityLDM)(maps:=maps).ToArray
+            Return path.LoadCsv(Of EntityClusterModel)(maps:=maps).ToArray
         End Function
 
-        Public Shared Iterator Function FromModel(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of EntityLDM)
+        Public Shared Iterator Function FromModel(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of EntityClusterModel)
             For Each x As NamedValue(Of Dictionary(Of String, Double)) In data
-                Yield New EntityLDM With {
+                Yield New EntityClusterModel With {
                     .ID = x.Name,
                     .Properties = x.Value
                 }

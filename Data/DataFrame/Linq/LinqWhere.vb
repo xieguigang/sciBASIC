@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da8d6edfef0c0c19f8ac5aaf4b4f4693, ..\sciBASIC#\Data\DataFrame\Linq\LinqWhere.vb"
+﻿#Region "Microsoft.VisualBasic::697c8587b63f00cb7d910d7b27e9cbf0, ..\sciBASIC#\Data\DataFrame\Linq\LinqWhere.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -269,7 +269,7 @@ Namespace IO.Linq
 #End Region
 
         Public Overrides Function ToString() As String
-            Return Tokens.ToArray(Function(x) x.ToString).JoinBy(" ")
+            Return Tokens.Select(Function(x) x.ToString).JoinBy(" ")
         End Function
 
         ''' <summary>
@@ -279,7 +279,7 @@ Namespace IO.Linq
         ''' <returns></returns>
         Public Shared Function TryParse(expr As String) As LinqWhere(Of T)
             Dim tokens = CommandLine.GetTokens(expr)
-            Dim lstCond = tokens.ToArray(Function(s) __tokenParser(s))
+            Dim lstCond = tokens.Select(Function(s) __tokenParser(s)).ToArray
             Return New LinqWhere(Of T) With {
             ._Tokens = lstCond
         }.Compile

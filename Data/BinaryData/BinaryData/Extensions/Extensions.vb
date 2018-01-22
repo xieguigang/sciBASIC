@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ebc6928209db7e800b3868f87167b9c, ..\sciBASIC#\Data\BinaryData\BinaryData\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d239ff151aa31f006e121ccbb8fbbe31, ..\sciBASIC#\Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -28,7 +28,6 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.Text
 
 Public Module Extensions

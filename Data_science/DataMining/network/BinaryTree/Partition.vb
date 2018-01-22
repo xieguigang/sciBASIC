@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ca29f18bb9a318eb72022c027457fb5, ..\sciBASIC#\Data_science\DataMining\network\BinaryTree\Partition.vb"
+﻿#Region "Microsoft.VisualBasic::946ced487cee3f43f17d73918810d61c, ..\sciBASIC#\Data_science\DataMining\network\BinaryTree\Partition.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -47,7 +47,7 @@ Namespace KMeans
         End Property
 
         Public Property uids As String()
-        Public Property members As EntityLDM()
+        Public Property members As EntityClusterModel()
 
         Public ReadOnly Property PropertyMeans As Double()
             Get
@@ -57,13 +57,13 @@ Namespace KMeans
                     pVector(key) = New List(Of Double)
                 Next
 
-                For Each member As EntityLDM In members
+                For Each member As EntityClusterModel In members
                     For Each key As String In pVector.Keys.ToArray
                         pVector(key) += member.Properties(key)
                     Next
                 Next
 
-                Return pVector.Keys.ToArray(Function(k) pVector(k).Average)
+                Return pVector.Keys.Select(Function(k) pVector(k).Average)
             End Get
         End Property
 

@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::210920fd496d9844eb0923c06db66750, ..\sciBASIC#\Data_science\Bootstrapping\EigenvectorBootstrapping.vb"
+﻿#Region "Microsoft.VisualBasic::f879a05ff59821afc450e2eab07314ef, ..\sciBASIC#\Data_science\Bootstrapping\EigenvectorBootstrapping.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -97,11 +97,11 @@ Public Module EigenvectorBootstrapping
 
         Call "Load data complete!".__DEBUG_ECHO
 
-        Dim datasets As Entity() = strTags.ToArray(
+        Dim datasets As Entity() = strTags.Select(
             Function(x) New Entity With {
                 .uid = x.Description,
                 .Properties = x.Value.Tag  ' 在这里使用特征向量作为属性来进行聚类操作
-        })
+        }).ToArray
 
         Call "Creates dataset complete!".__DEBUG_ECHO
 
@@ -121,7 +121,7 @@ Public Module EigenvectorBootstrapping
             For Each x As Entity In cluster
                 Dim rawKey As String = x.Properties.GetJson
                 Dim rawParams =
-                    raw(rawKey).ToArray(Function(o) o.Value.Value)
+                    raw(rawKey).Select(Function(o) o.Value.Value)
 
                 tmp += New NamedValue(Of Dictionary(Of String, Double)()) With {
                     .Name = x.uid,
@@ -156,7 +156,7 @@ Public Module EigenvectorBootstrapping
         For Each key As SeqValue(Of String) In eig.Keys.SeqIterator
             out.y(+key) = New NamedCollection(Of Double) With {
                 .Name = +key,
-                .Value = serials(key.i).Split(2).ToArray(Function(o) o(0))
+                .Value = serials(key.i).Split(2).Select(Function(o) o(0))
             }
         Next
 

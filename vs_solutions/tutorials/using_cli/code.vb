@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bec22e7bb958f2a0f0bbb6d576e3941, ..\sciBASIC#\docs\Tutorials\using_cli\code.vb"
+﻿#Region "Microsoft.VisualBasic::8bec22e7bb958f2a0f0bbb6d576e3941, ..\sciBASIC#\vs_solutions\tutorials\using_cli\code.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

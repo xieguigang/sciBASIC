@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04574a34902b5ab4141d34a63b514af5, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\YamlDocument.vb"
+﻿#Region "Microsoft.VisualBasic::04574a34902b5ab4141d34a63b514af5, ..\sciBASIC#\mime\text%yaml\Syntax\YamlDocument.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

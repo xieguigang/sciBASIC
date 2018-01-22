@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5d92c261a69fa06f1636f5d4f57b7a3, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\ReservedDirective.vb"
+﻿#Region "Microsoft.VisualBasic::c5d92c261a69fa06f1636f5d4f57b7a3, ..\sciBASIC#\mime\text%yaml\Syntax\ReservedDirective.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

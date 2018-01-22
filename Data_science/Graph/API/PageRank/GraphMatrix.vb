@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64776a5194ba9b734c6ee05bf373f4cd, ..\sciBASIC#\Data_science\Graph\API\PageRank\GraphMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::b92638bcf305a2bc3c91ac63112f884f, ..\sciBASIC#\Data_science\Graph\API\PageRank\GraphMatrix.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -45,19 +46,14 @@ Namespace Analysis.PageRank
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="skipCount">
-        ''' 对于文本处理的时候，textrank的这部分数据可能会比较有用，这个时候这里可以设置为False.
-        ''' </param>
-        Sub New(g As Graph, Optional skipCount As Boolean = True)
+        Sub New(g As Graph)
+            Dim index As New Index(Of String)(g.Vertex.Keys)
+
             nodes = g.Vertex
             edges = g.ToArray
 
-            Dim index As New Index(Of String)(nodes.Keys)
-
             For Each node As Vertex In nodes
-                Call indices.Add(
-                    node.Label,
-                    New List(Of Integer))
+                indices(node.Label) = New List(Of Integer)
             Next
 
             For Each edge As Edge In edges
@@ -67,42 +63,35 @@ Namespace Analysis.PageRank
                 End With
             Next
 
-            If Not skipCount Then
-
-                ' 对于文本处理的时候，textrank的这部分数据可能会比较有用
-                Dim counts As New Dictionary(Of String, (Edge As Edge, C As int))
-                Dim uid$
-
-                For Each edge As Edge In edges
-                    uid = edge.Key
-
-                    If Not counts.ContainsKey(uid) Then
-                        Call counts.Add(uid, (edge, 1))
-                    Else
-                        counts(uid).C.Value += 1
-                    End If
-                Next
-
-                ' 统计计数完毕之后再重新赋值
-                For Each edge As Edge In edges
-                    uid = edge.Key
-                    ' edge.Properties.Add("c", counts(uid).C)
-                Next
-            End If
-
             For Each k In indices.Keys.ToArray
                 indices(k) = indices(k).Distinct.AsList
             Next
         End Sub
 
-        Public Function Graph() As Graph
-            With New Graph
+        ''' <summary>
+        ''' 对于文本处理的时候，textrank的这部分数据可能会比较有用
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetEdgeCount() As Dictionary(Of String, Integer)
+            Dim counts As New Dictionary(Of String, (Edge As Edge, C As int))
+            Dim uid$
 
-            End With
-            'Return New FileStream.NetworkTables With {
-            '    .nodes = nodes,
-            '    .edges = edges
-            '}
+            For Each edge As Edge In edges
+                uid = edge.Key
+
+                If Not counts.ContainsKey(uid) Then
+                    Call counts.Add(uid, (edge, 1))
+                Else
+                    counts(uid).C.Value += 1
+                End If
+            Next
+
+            ' 统计计数完毕之后再重新赋值
+            Return counts.ToDictionary(
+                Function(e) e.Key,
+                Function(c)
+                    Return c.Value.C.Value
+                End Function)
         End Function
 
         Public Function TranslateVector(v#(), Optional reorder As Boolean = False) As Dictionary(Of String, Double)
@@ -122,12 +111,19 @@ Namespace Analysis.PageRank
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return indices.GetJson
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(gm As GraphMatrix) As List(Of Integer)()
-            Return gm.nodes.ToArray(Function(k) gm.indices(k.ID))
+            Return gm _
+                .nodes _
+                .Select(Function(k)
+                            Return gm.indices(k.Label)
+                        End Function) _
+                .ToArray
         End Operator
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b514818c70c45d2f9478a3fe1d0d32c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
+﻿#Region "Microsoft.VisualBasic::e91ee28a4f45b0990b879a498e867423, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -29,6 +29,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -56,11 +57,13 @@ Namespace Drawing3D
                                   camera As Camera,
                                   surfaces As IEnumerable(Of Surface),
                                   Optional drawPath As Boolean = False,
-                                  Optional illumination As Boolean = True)
+                                  Optional illumination As Boolean = True,
+                                  Optional offset As PointF = Nothing)
+
             Dim buf = camera.PainterBuffer(
                 surfaces,
                 illumination)
-            Call canvas.BufferPainting(buf, drawPath)
+            Call canvas.BufferPainting(buf, drawPath, offset)
         End Sub
 
         ''' <summary>
@@ -109,16 +112,20 @@ Namespace Drawing3D
         ''' <param name="buf"></param>
         ''' <param name="drawPath"></param>
         <Extension>
-        Public Sub BufferPainting(ByRef canvas As Graphics, buf As IEnumerable(Of Polygon), Optional drawPath As Boolean = False)
-            'If illumination Then
-            '    buf = buf.Illumination
-            'End If
+        Public Sub BufferPainting(ByRef canvas As Graphics, buf As IEnumerable(Of Polygon),
+                                  Optional drawPath As Boolean = False,
+                                  Optional offset As PointF = Nothing)
+
+            Dim buffer As Point()
+
             For Each polygon As Polygon In buf
                 With polygon
+                    buffer = .points.Offsets(offset)
+                    canvas.FillPolygon(.brush, buffer)
+
                     If drawPath Then
-                        Call canvas.DrawPolygon(Pens.Black, .points)
+                        Call canvas.DrawPolygon(Pens.Black, buffer)
                     End If
-                    Call canvas.FillPolygon(.brush, .points)
                 End With
             Next
         End Sub

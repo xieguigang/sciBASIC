@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d038659ef7918e331aca1af3d354b67, ..\sciBASIC#\mime\application%json\Parser\JsonElement.vb"
+﻿#Region "Microsoft.VisualBasic::4749e47a23e006631937a40b66649639, ..\sciBASIC#\mime\application%json\Parser\JsonElement.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

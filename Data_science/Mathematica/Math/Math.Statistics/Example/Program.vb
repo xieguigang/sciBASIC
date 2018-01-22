@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35601e6b3539dce40d6ff34415d38fb7, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\Program.vb"
+﻿#Region "Microsoft.VisualBasic::f1fa4d1df7f156b0fe243748914e3ac8, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Example\Program.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,8 +26,8 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Mathematical.LinearAlgebra
-Imports Microsoft.VisualBasic.Mathematical.Statistics
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Statistics
 
 Public Module ExampleMonteCarlo
 

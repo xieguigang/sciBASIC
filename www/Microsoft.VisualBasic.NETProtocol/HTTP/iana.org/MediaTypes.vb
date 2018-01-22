@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::749a20fd8b873b7dc890f8d5719ffd9a, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\HTTP\iana.org\MediaTypes.vb"
+﻿#Region "Microsoft.VisualBasic::2547dc08db30de3978e4d1e053278609, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\HTTP\iana.org\MediaTypes.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' Csv file reader for the csv file list on https://www.iana.org/assignments/media-types/media-types.xhtml
@@ -50,4 +49,3 @@ Public Class MediaTypes
         Return Name
     End Function
 End Class
-

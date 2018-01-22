@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d6c6ff1989ee8d50023fa16df2da733, ..\sciBASIC#\mime\text%html\MarkDown\MarkdownOptions.vb"
+﻿#Region "Microsoft.VisualBasic::35f9f796ac48e84d6fa06a11c3d28b62, ..\sciBASIC#\mime\text%html\MarkDown\MarkdownOptions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,7 +26,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace MarkDown
@@ -98,6 +98,17 @@ Namespace MarkDown
 
         Public Overrides Function ToString() As String
             Return Me.GetJson
+        End Function
+
+        Public Shared Function DefaultOption() As DefaultValue(Of MarkdownOptions)
+            Return New MarkdownOptions With {
+                .AllowEmptyLinkText = True,
+                .AutoHyperlink = True,
+                .DisableHr = False,
+                .AutoNewlines = True,
+                .StrictBoldItalic = True,
+                .DisableImages = False
+            }
         End Function
     End Class
 End Namespace

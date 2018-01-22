@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::041603b7a022a9e89713e3bab839c0ae, ..\sciBASIC#\Data_science\DataMining\Visualize\Kmeans.vb"
+﻿#Region "Microsoft.VisualBasic::1ce53437b3d89cf6c40a38561ff8e65b, ..\sciBASIC#\Data_science\DataMining\Visualize\Kmeans.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -49,7 +49,7 @@ Public Module Kmeans
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ClusterGroups(clusters As IEnumerable(Of EntityLDM)) As Dictionary(Of String, EntityLDM())
+    Public Function ClusterGroups(clusters As IEnumerable(Of EntityClusterModel)) As Dictionary(Of String, EntityClusterModel())
         Return clusters _
             .GroupBy(Function(c) c.Cluster) _
             .ToDictionary(Function(cluster) cluster.Key,
@@ -66,7 +66,7 @@ Public Module Kmeans
     ''' <param name="bg$"></param>
     ''' <returns></returns>
     <Driver("kmeans.scatter.2D")>
-    Public Function Scatter2D(clusterData As IEnumerable(Of EntityLDM),
+    Public Function Scatter2D(clusterData As IEnumerable(Of EntityClusterModel),
                               catagory As (X As NamedCollection(Of String), Y As NamedCollection(Of String)),
                               Optional size$ = "1600,1600",
                               Optional padding$ = g.DefaultPadding,
@@ -83,7 +83,7 @@ Public Module Kmeans
             Dim color As Color = clusterColors(cluster)
             Dim points As New List(Of PointData)
 
-            For Each member As EntityLDM In (+cluster).Value
+            For Each member As EntityClusterModel In (+cluster).Value
                 points += New PointData With {
                     .pt = New PointF With {
                         .X = member(catagory.X.Value).Average,
@@ -136,7 +136,7 @@ Public Module Kmeans
                               Optional axisStroke$ = Stroke.AxisStroke,
                               Optional DIR$ = "./") As GraphicsData
 
-        Dim clusters As EntityLDM() = data _
+        Dim clusters As EntityClusterModel() = data _
             .ToKMeansModels _
             .Kmeans(expected:=clusterN)
 
@@ -144,7 +144,7 @@ Public Module Kmeans
             Call clusters.SaveTo($"{DIR}/{catagory.Keys.JoinBy(",").NormalizePathString}-Kmeans.csv")
         End If
 
-        For Each member As EntityLDM In clusters
+        For Each member As EntityClusterModel In clusters
             member.Cluster = "Cluster:  #" & member.Cluster
         Next
 
@@ -177,7 +177,7 @@ Public Module Kmeans
     ''' </remarks>
     <Extension>
     <Driver("kmeans.scatter.3D")>
-    Public Function Scatter3D(clusterData As IEnumerable(Of EntityLDM),
+    Public Function Scatter3D(clusterData As IEnumerable(Of EntityClusterModel),
                               catagory As Dictionary(Of NamedCollection(Of String)),
                               camera As Camera,
                               Optional size$ = "1200,1000",
@@ -203,7 +203,7 @@ Public Module Kmeans
             Dim color As Color = clusterColors(cluster)
             Dim point3D As New List(Of Point3D)
 
-            For Each member As EntityLDM In (+cluster).Value
+            For Each member As EntityClusterModel In (+cluster).Value
                 With keys _
                     .Select(Function(cat)
                                 Return member(catagory(cat).Value).Average

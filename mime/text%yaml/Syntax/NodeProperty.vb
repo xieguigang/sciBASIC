@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43712e9fa76de6c12eb5ebd7f29c50d5, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\NodeProperty.vb"
+﻿#Region "Microsoft.VisualBasic::43712e9fa76de6c12eb5ebd7f29c50d5, ..\sciBASIC#\mime\text%yaml\Syntax\NodeProperty.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

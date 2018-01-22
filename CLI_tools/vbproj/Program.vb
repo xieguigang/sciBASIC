@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -42,7 +42,7 @@ Module Program
         Return GetType(Program).RunCLI(App.CommandLine)
     End Function
 
-    Const Condition$ = " '$(Configuration)|$(Platform)' == '%s|%s' "
+    Const Condition$ = "'$(Configuration)|$(Platform)' == '%s|%s'"
 
     ''' <summary>
     ''' 为某个解决方案的文件夹之中的每一个项目文件配置统一的输出文件夹

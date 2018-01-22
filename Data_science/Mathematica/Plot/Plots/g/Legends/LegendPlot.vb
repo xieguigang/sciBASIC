@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46467c24bfd3f9721565fb79df048ff5, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Legends\LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::3b77cd6d21eba3879c1b0980ece34346, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Legends\LegendPlot.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -93,7 +93,8 @@ Namespace Graphic.Legend
                                    style As LegendStyles,
                                    color As Brush,
                                    Optional border As Stroke = Nothing,
-                                   Optional radius% = 5)
+                                   Optional radius% = 5,
+                                   Optional ByRef labelPos As PointF = Nothing)
             Select Case style
 
                 Case LegendStyles.Circle
@@ -101,6 +102,11 @@ Namespace Graphic.Legend
                     Dim c As New Point With {
                         .X = pos.X + gSize.Height,
                         .Y = pos.Y + gSize.Height / 2
+                    }
+
+                    labelPos = New PointF With {
+                        .X = Math.Max(c.X + r, labelPos.X),
+                        .Y = labelPos.Y
                     }
 
                     Call Circle.Draw(g, c, r, color, border)
@@ -138,10 +144,10 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Rectangle
 
-                    Dim dw As Integer = gSize.Width * 0.1
+                    Dim dw As Integer = gSize.Width * 0.4
                     Dim dh As Integer = gSize.Height * 0.2
                     Dim size As New Size With {
-                        .Width = gSize.Width - dw * 2,
+                        .Width = dw,
                         .Height = gSize.Height - dh * 2
                     }
 
@@ -196,6 +202,11 @@ Namespace Graphic.Legend
                         .Y = pos.Y + (gSize.Height - d) / 2
                     }
 
+                    labelPos = New PointF With {
+                        .X = topLeft.X + d + 5,
+                        .Y = labelPos.Y
+                    }
+
                     Call Triangle.Draw(g, topLeft, New Size(d, d), color, border)
 
                 Case LegendStyles.Pentacle
@@ -228,13 +239,13 @@ Namespace Graphic.Legend
 
             Dim font As Font = l.GetFont
             Dim fSize As SizeF = g.MeasureString(l.title, font)
-            Dim labelPosition As New Point With {
-                .X = pos.X + canvas.Height * 1.5,
+            Dim labelPosition As New PointF With {
+                .X = pos.X + canvas.Width / 2,
                 .Y = pos.Y + (canvas.Height - fSize.Height) / 2
             }
             Dim color As Brush = l.color.GetBrush
 
-            Call g.DrawLegendShape(pos, canvas, l.style, color, border, radius)
+            Call g.DrawLegendShape(pos, canvas, l.style, color, border, radius, labelPosition)
             Call g.DrawString(l.title, font, Brushes.Black, labelPosition)
 
             If fSize.Height > canvas.Height Then

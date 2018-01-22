@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d27d657d491e8dc3adfb31d35ce025f, ..\sciBASIC#\mime\text%html\MarkDown\Articles.vb"
+﻿#Region "Microsoft.VisualBasic::2fc0e94666485ad40df0645fd97770b6, ..\sciBASIC#\mime\text%html\MarkDown\Articles.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

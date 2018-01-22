@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45d1a180de2a0c199e4563babd69727a, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Array.vb"
+﻿#Region "Microsoft.VisualBasic::df9ded7ff1f9d7e73e101cea0ddb4690, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Array.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -76,7 +76,7 @@ Namespace StorageProvider.ComponentModels
                     Return Nothing
                 End If
                 Dim tokens As String() = Strings.Split(cellData, Delimiter)
-                Dim array As Object() = tokens.ToArray(Cast)
+                Dim array As Object() = tokens.Select(Cast).ToArray
                 Return Scripting.InputHandler.DirectCast(array, Element)
             End Function
 
@@ -92,7 +92,7 @@ Namespace StorageProvider.ComponentModels
 
             Dim array$() = Scripting _
                 .CastArray(Of Object)([object]) _
-                .ToArray(AddressOf Scripting.ToString)
+                .Select(AddressOf Scripting.ToString).ToArray
             Return String.Join(ArrayDefine.Delimiter, array)
         End Function
     End Class

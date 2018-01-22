@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("sciBASIC# scientific computing handouts")>
 <Assembly: AssemblyDescription("sciBASIC# scientific computing handouts")>
 <Assembly: AssemblyCompany("123456789*8+9")>
-<Assembly: AssemblyProduct("vbMath")>
+<Assembly: AssemblyProduct("sciBASIC")>
 <Assembly: AssemblyCopyright("Copyright © xie.guigang@gmail.com 2013. All rights reserved.")>
 <Assembly: AssemblyTrademark("VisualBasic")>
 

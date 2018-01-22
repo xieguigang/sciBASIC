@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e2965d0526f0d5faeea4b9a9a9dfd5a, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::7a992c9f33967f1e9fa3af6e31d73bb3, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\Scatter.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -189,7 +189,7 @@ Namespace Plot3D
             Dim data As Point3D() = func _
                 .Evaluate(x, y, xsteps, ysteps) _
                 .IteratesALL _
-                .ToArray(Function(o) New Point3D(o.X, o.y, o.z))
+                .Select(Function(o) New Point3D(o.X, o.y, o.z))
             Dim rect As Rectangle
             Dim previous As Point
             Dim cur As Point

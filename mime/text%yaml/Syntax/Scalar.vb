@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ba8113dbb7bde58a37317171d07a0ab, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\Scalar.vb"
+﻿#Region "Microsoft.VisualBasic::8ba8113dbb7bde58a37317171d07a0ab, ..\sciBASIC#\mime\text%yaml\Syntax\Scalar.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

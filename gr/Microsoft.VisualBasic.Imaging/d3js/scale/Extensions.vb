@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fe97b8cd48b18d2bfb403c501625f99, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c5018e51308fb56c0f713751ff362b4b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -25,6 +25,8 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace d3js.scale
 
@@ -66,8 +68,8 @@ Namespace d3js.scale
         ''' 'Alice' and 'Bob'? I don't know. Neither does D3.
         ''' </summary>
         ''' <returns></returns>
-        Public Function ordinal() As OrdinalScale
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)> Public Function ordinal() As OrdinalScale
+            Return New OrdinalScale
         End Function
 
         ''' <summary>
@@ -89,8 +91,14 @@ Namespace d3js.scale
         ''' domain.
         ''' </summary>
         ''' <returns></returns>
-        Public Function linear() As LinearScale
+        <MethodImpl(MethodImplOptions.AggressiveInlining)> Public Function linear() As LinearScale
             Return New LinearScale
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function LinearScale(domain As IEnumerable(Of Double)) As LinearScale
+            Return d3js.scale.linear.domain(domain)
         End Function
     End Module
 End Namespace

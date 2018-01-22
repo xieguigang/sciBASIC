@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3dc6e40ba22970798d51e182e9aee1ac, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\DataModel.vb"
+﻿#Region "Microsoft.VisualBasic::329f25fe438a1d34e349abea124c43ad, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\DataModel.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.TagData
@@ -53,6 +54,7 @@ Namespace BarPlot.Histogram
         Public pointY#
 
         Public ReadOnly Property LinePoint As PointData
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New PointData With {
                     .pt = New PointF(x1 + width / 2, pointY)
@@ -65,6 +67,7 @@ Namespace BarPlot.Histogram
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property width As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return x2# - x1#
             End Get
@@ -79,13 +82,40 @@ Namespace BarPlot.Histogram
 
         Public Property Samples As HistProfile()
 
+        Public ReadOnly Property XRange As DoubleRange
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Samples _
+                    .SafeQuery _
+                    .Select(Function(s)
+                                Return s.data.Select(Function(d) {d.x1, d.x2})
+                            End Function) _
+                    .IteratesALL _
+                    .IteratesALL _
+                    .Range
+            End Get
+        End Property
+
+        Public ReadOnly Property YRange As DoubleRange
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Samples _
+                    .SafeQuery _
+                    .Select(Function(s)
+                                Return s.data.Select(Function(d) d.y)
+                            End Function) _
+                    .IteratesALL _
+                    .Range
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
         Sub New(data As IEnumerable(Of HistProfile))
             Samples = data
             Serials = data _
-                .ToArray(Function(x) New NamedValue(Of Color) With {
+                .Select(Function(x) New NamedValue(Of Color) With {
                     .Name = x.legend.title,
                     .Value = x.legend.color.ToColor
                 })
@@ -118,7 +148,7 @@ Namespace BarPlot.Histogram
                 .width = width,
                 .lineType = type,
                 .PointSize = ptSize,
-                .pts = data.ToArray(Function(x) x.LinePoint)
+                .pts = data.Select(Function(x) x.LinePoint)
             }
         End Function
 
@@ -147,7 +177,7 @@ Namespace BarPlot.Histogram
                 From n As Double
                 In array
                 Let x1 As Double = x
-                Let x2 As Double = (x = x.value + delta)
+                Let x2 As Double = (x = x.Value + delta)
                 Where Not n.IsNaNImaginary
                 Select New HistogramData With {
                     .x1 = x1,
@@ -161,13 +191,13 @@ Namespace BarPlot.Histogram
         ''' </summary>
         ''' <param name="hist"></param>
         Sub New(hist As Dictionary(Of Double, IntegerTagged(Of Double)), step!)
-            data = hist.ToArray(
+            data = hist.Select(
                 Function(range) New HistogramData With {
                     .x1 = range.Key,
                     .x2 = .x1 + step!,
                     .y = range.Value.Tag,
-                    .pointY = range.Value.value
-                })
+                    .pointY = range.Value.Value
+                }).ToArray
         End Sub
     End Structure
 End Namespace

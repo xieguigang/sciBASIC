@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65b8ab3fb4f7136464bfe9d294c3f62a, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IXml.vb"
+﻿#Region "Microsoft.VisualBasic::e45ba7a7b38d087fda2074ee05a6a4ec, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IXml.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,13 +26,15 @@
 
 #End Region
 
-Imports System.Text
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Text
 
 Public MustInherit Class IXml
 
     Protected MustOverride Function filePath() As String
     Protected MustOverride Function toXml() As String
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return filePath()
     End Function
@@ -40,6 +42,6 @@ Public MustInherit Class IXml
     Public Function WriteXml(dir$) As Boolean
         Dim path$ = dir & "/" & filePath()
         Dim xml$ = toXml()
-        Return xml.SaveTo(path, Encoding.UTF8)
+        Return xml.SaveTo(path, TextEncodings.UTF8WithoutBOM)
     End Function
 End Class

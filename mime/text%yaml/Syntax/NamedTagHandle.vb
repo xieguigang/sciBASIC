@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e405bac50dde3a087f4cb30b181b5f9b, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\NamedTagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::e405bac50dde3a087f4cb30b181b5f9b, ..\sciBASIC#\mime\text%yaml\Syntax\NamedTagHandle.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

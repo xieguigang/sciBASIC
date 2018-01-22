@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3046761e5a58c1780c920b1c96bbbada, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\Implementation\Apriori.vb"
+﻿#Region "Microsoft.VisualBasic::798d646cb998c423f071dab870a28510, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\Implementation\Apriori.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -213,7 +213,7 @@ Namespace AprioriAlgorithm
             Dim closedItemSets = New Dictionary(Of String, Dictionary(Of String, Double))()
             Dim i As Integer = 0
 
-            For Each item In allFrequentItems
+            For Each item As KeyValuePair(Of String, TransactionTokensItem) In allFrequentItems
                 Dim parents As Dictionary(Of String, Double) =
                     GetItemParents(item.Key, Interlocked.Increment(i), allFrequentItems)
 
@@ -255,7 +255,7 @@ Namespace AprioriAlgorithm
         Public Function GetMaximalItemSets(closedItemSets As Dictionary(Of String, Dictionary(Of String, Double))) As IList(Of String)
             Dim maximalItemSets = New List(Of String)()
 
-            For Each item In closedItemSets
+            For Each item As KeyValuePair(Of String, Dictionary(Of String, Double)) In closedItemSets
                 Dim parents As Dictionary(Of String, Double) = item.Value
 
                 If parents.Count = 0 Then
@@ -285,7 +285,7 @@ Namespace AprioriAlgorithm
             Dim subsetsList As IEnumerable(Of String) = GenerateSubsets(Token.Key)
             Dim List As New List(Of Rule)
 
-            For Each subset In subsetsList
+            For Each subset As String In subsetsList
                 Dim remaining As String = GetRemaining(subset, Token.Key)
                 Dim rule As New Rule(subset, remaining, 0)
                 Call List.Add(rule)

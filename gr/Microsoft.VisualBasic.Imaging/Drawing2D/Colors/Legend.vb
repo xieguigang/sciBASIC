@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f2bc824f49b392cf8c7f7534249da85, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::988c59f51be207d7d8457e025a9278d3, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -60,7 +60,7 @@ Namespace Drawing2D.Colors
                                        Optional labelFont As Font = Nothing,
                                        Optional legendWidth! = -1) As GraphicsData
             Dim br As SolidBrush() =
-                designer.ToArray(Function(c) New SolidBrush(c))
+                designer.Select(Function(c) New SolidBrush(c)).ToArray
             Return br.ColorMapLegend(
                 title,
                 min, max,

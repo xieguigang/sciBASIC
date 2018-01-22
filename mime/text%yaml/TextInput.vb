@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9059ee2df2178597586ad630b1dec37d, ..\sciBASIC#\mime\text%yaml\yaml\TextInput.vb"
+﻿#Region "Microsoft.VisualBasic::9059ee2df2178597586ad630b1dec37d, ..\sciBASIC#\mime\text%yaml\TextInput.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

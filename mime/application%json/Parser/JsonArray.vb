@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02ebfdb469e1b4a92d787e52f74e32d4, ..\sciBASIC#\mime\application%json\Parser\JsonArray.vb"
+﻿#Region "Microsoft.VisualBasic::590a16056d36b86a0fcaadb1f4059a1b, ..\sciBASIC#\mime\application%json\Parser\JsonArray.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -73,7 +73,8 @@ Namespace Parser
         Public Overrides Function BuildJsonString() As String
             Dim a As New StringBuilder
             Dim array$() = list _
-                .ToArray(Function(x) x.BuildJsonString)
+                .Select(Function(x) x.BuildJsonString) _
+                .ToArray
 
             a.AppendLine("[")
             a.AppendLine(array.JoinBy(", "))

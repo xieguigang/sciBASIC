@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb2fe4803e11fa164acd5d2daf9d1b06, ..\sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\Models\LDM.vb"
+﻿#Region "Microsoft.VisualBasic::1606d6d642310b209c03bf5000922c51, ..\sciBASIC#\Data_science\Mathematica\Math\Math\FuzzyLogic\Models\LDM.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -77,7 +77,7 @@ Namespace Logical.FuzzyLogic.Models
 
         Sub New(x As LinguisticVariable)
             Identifier = x.Name
-            Terms = x.MembershipFunctionCollection.ToArray(Function(m) New Term(m))
+            Terms = x.MembershipFunctionCollection.Select(Function(m) New Term(m)).ToArray
         End Sub
     End Class
 
@@ -127,7 +127,7 @@ Namespace Logical.FuzzyLogic.Models
         Sub New(rules As IEnumerable(Of FuzzyRule))
             Me.[AND] = "MIN"
             Me.[OR] = "MAX"
-            Me.Rules = rules.ToArray(Function(x, i) New Rule(i, x))
+            Me.Rules = rules.Select(Function(x, i) New Rule(i, x)).ToArray
         End Sub
     End Class
 End Namespace

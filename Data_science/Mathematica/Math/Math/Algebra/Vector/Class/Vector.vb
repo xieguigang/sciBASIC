@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::addfbd5ebb1caffccbe3a83c1febbae6, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::8d0acf507e790129ee071e47834512b3, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -29,6 +29,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SyntaxAPI.Vectors
 Imports Microsoft.VisualBasic.Scripting
@@ -66,9 +68,10 @@ Namespace LinearAlgebra
         ''' Only one number in the vector and its value is ZERO
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property Zero As Vector
+        Public Shared ReadOnly Property Zero(Optional [Dim] As Integer = 1) As Vector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Vector({0#})
+                Return New Vector(Linq.Extensions.Repeats(0R, [Dim]))
             End Get
         End Property
 
@@ -233,14 +236,15 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Operator -(v1 As Vector, a As Double) As Vector
+        Public Overloads Shared Operator -(v1 As Vector, a#) As Vector
             '向量数加算符重载
-            Dim N0 As Integer = v1.[Dim]           '获取变量维数
+            Dim N0 As Integer = v1.[Dim] ' 获取变量维数
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
                 v2(j) = v1(j) - a
             Next
+
             Return v2
         End Operator
 
@@ -251,13 +255,14 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Operator *(v1 As Vector, a As Double) As Vector
-            Dim N0 As Integer = v1.[Dim]            '获取变量维数
+        Public Overloads Shared Operator *(v1 As Vector, a#) As Vector
+            Dim N0 As Integer = v1.[Dim] ' 获取变量维数
             Dim v2 As New Vector(N0)
 
             For j As Integer = 0 To N0 - 1
                 v2(j) = v1(j) * a
             Next
+
             Return v2
         End Operator
 
@@ -268,13 +273,14 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Operator /(v1 As Vector, a As Double) As Vector
+        Public Shared Operator /(v1 As Vector, a#) As Vector
             Dim N0 As Integer = v1.[Dim]         '获取变量维数
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
                 v2(j) = v1(j) / a
             Next
+
             Return v2
         End Operator
 
@@ -285,6 +291,7 @@ Namespace LinearAlgebra
             For j = 0 To N0 - 1
                 v2(j) = x / v(j)
             Next
+
             Return v2
         End Operator
 
@@ -303,6 +310,7 @@ Namespace LinearAlgebra
             For j = 0 To N0 - 1
                 v2(j) = v1(j) + a
             Next
+
             Return v2
         End Operator
 
@@ -319,7 +327,7 @@ Namespace LinearAlgebra
             Dim v2 As New Vector(N0)
 
             For j = 0 To N0 - 1
-                v2(j) = v1(j) - a
+                v2(j) = a - v1(j)
             Next
             Return v2
         End Operator
@@ -497,6 +505,11 @@ Namespace LinearAlgebra
             Return (x1 + x2).Mod
         End Function
 
+        ''' <summary>
+        ''' Returns a numeric vector with all elements is value ``1``
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         Public Shared Function Ones(n As Integer) As Vector
             Dim result As New Vector(n)
 
@@ -507,23 +520,58 @@ Namespace LinearAlgebra
             Return result
         End Function
 
+        ''' <summary>
+        ''' ``[min, max]``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Range As DoubleRange
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New DoubleRange(Me)
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function rand(size%) As Vector
             Return Extensions.rand(size)
         End Function
 
+        ''' <summary>
+        ''' <paramref name="x"/>向量之中的每一个元素是否都等于<paramref name="n"/>?
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator =(x As Vector, n As Integer) As BooleanVector
-            Return New BooleanVector(From d As Double In x Select d = n)
+            Return x = CDbl(n)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator <>(x As Vector, n As Integer) As BooleanVector
-            Return New BooleanVector(From d As Double In x Select d <> n)
+            Return Not x = CDbl(n)
         End Operator
 
         ''' <summary>
-        ''' Power
+        ''' <paramref name="x"/>向量之中的每一个元素是否都等于<paramref name="n"/>?
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator =(x As Vector, n As Double) As BooleanVector
+            ' 不可以缺少这一对括号，否则会被当作为属性d，而非值比较
+            Dim asserts = From d As Double In x Select (d = n)
+            Return New BooleanVector(asserts)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator <>(x As Vector, n As Double) As BooleanVector
+            Return Not x = n
+        End Operator
+
+        ''' <summary>
+        ''' Power: <see cref="Math.Pow(Double, Double)"/>
         ''' </summary>
         ''' <param name="v"></param>
         ''' <param name="n"></param>
@@ -531,6 +579,11 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator ^(v As Vector, n As Integer) As Vector
             Return New Vector(From d As Double In v Select d ^ n)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator ^(n As Double, v As Vector) As Vector
+            Return New Vector(From p As Double In v Select n ^ p)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -612,7 +665,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <param name="vector$"></param>
         ''' <returns></returns>
-        Public Shared Widening Operator CType(vector$) As Vector
+        Public Shared Widening Operator CType(vector As String) As Vector
             Dim exp As String = Trim(vector)
 
             If exp.StringEmpty Then
@@ -640,8 +693,18 @@ Namespace LinearAlgebra
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(args As DefaultString) As Vector
+            Return CType(args.DefaultValue, Vector)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(vector As VectorShadows(Of Double)) As Vector
             Return vector.As(Of Double).AsVector
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(list As List(Of Double)) As Vector
+            Return New Vector(list)
         End Operator
     End Class
 End Namespace

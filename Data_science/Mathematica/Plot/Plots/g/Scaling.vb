@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a42c162364f33d1ab649475bbe97189, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Scaling.vb"
+﻿#Region "Microsoft.VisualBasic::1f26e4748583e1f262d85510cc4da0d3, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Scaling.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -167,7 +167,10 @@ Namespace Graphic
         End Sub
 
         Public Shared Function Average(hist As BarDataGroup) As Double
-            Return hist.Samples.Select(Function(x) x.data).IteratesALL.Average()
+            Return hist.Samples _
+                .Select(Function(x) x.data) _
+                .IteratesALL _
+                .Average()
         End Function
 
         ''' <summary>
@@ -180,22 +183,27 @@ Namespace Graphic
         ''' </param>
         ''' <returns></returns>
         Public Shared Function Scaling(data As IEnumerable(Of SerialData), [get] As Func(Of PointData, Single), absoluteScaling As Boolean, ByRef min!) As Single
-            Dim array!() = data.Select(Function(s) s.pts).IteratesALL.ToArray([get])
+            Dim array!() = data _
+                .Select(Function(s) s.pts) _
+                .IteratesALL _
+                .Select([get]) _
+                .ToArray
+
             Return __scaling(array!, min!, absoluteScaling)
         End Function
 
         Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#, z#)), [get] As Func(Of (X#, y#, z#), Single), absoluteScaling As Boolean, ByRef min!) As Single
-            Dim array!() = data.ToArray([get])
+            Dim array!() = data.Select([get]).ToArray
             Return __scaling(array!, min!, absoluteScaling)
         End Function
 
         Public Shared Function ScalingTuple(data As IEnumerable(Of (X#, y#)), [get] As Func(Of (X#, y#), Single), absoluteScaling As Boolean, ByRef min!) As Single
-            Dim array!() = data.ToArray([get])
+            Dim array!() = data.Select([get]).ToArray
             Return __scaling(array!, min!, absoluteScaling)
         End Function
 
         Public Shared Function Scaling(data As IEnumerable(Of Point3D), [get] As Func(Of Point3D, Single), absoluteScaling As Boolean, ByRef min!) As Single
-            Dim array!() = data.ToArray([get])
+            Dim array!() = data.Select([get]).ToArray
             Return __scaling(array!, min!, absoluteScaling)
         End Function
 
@@ -229,9 +237,10 @@ Namespace Graphic
             Dim array!() = data.Samples _
                 .Select(Function(s) s.data) _
                 .IteratesALL _
-                .ToArray([get]) _
+                .Select([get]) _
                 .IteratesALL _
                 .ToArray
+
             Return __scaling(array!, min!, absoluteScaling)
         End Function
     End Class

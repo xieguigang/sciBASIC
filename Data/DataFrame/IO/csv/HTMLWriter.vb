@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84a80ea196c0b955e1eeca69c0a870d4, ..\sciBASIC#\Data\DataFrame\IO\csv\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::e2813e1a82c9808afb15a03bd828724e, ..\sciBASIC#\Data\DataFrame\IO\csv\HTMLWriter.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -149,9 +149,9 @@ Namespace IO
             Dim doc As New StringBuilder
             Dim rowText$ = row _
                 .Where(Function(t) removes(t) = -1) _
-                .ToArray(Function(x)
-                             Return $"<td id=""{x}""><strong>{If(theadSpace, x & "&nbsp;&nbsp;&nbsp;", x)}</strong></td>"
-                         End Function) _
+                .Select(Function(x)
+                            Return $"<td id=""{x}""><strong>{If(theadSpace, x & "&nbsp;&nbsp;&nbsp;", x)}</strong></td>"
+                        End Function) _
                 .JoinBy("")
 
             Call doc.AppendLine("<thead>")
@@ -164,7 +164,7 @@ Namespace IO
         <Extension> Private Sub __contentRow(row As RowObject, ByRef doc As StringBuilder, removes As Index(Of Integer), alt$)
             Dim rowText$ = row.ToArray _
                 .SeqIterator _
-                .Where(Function(i) removes(i.i) = -1) _
+                .Where(Function(i) removes(x:=i.i) = -1) _
                 .Select(Function(x) $"<td>{+x}</td>") _
                 .JoinBy("")
 

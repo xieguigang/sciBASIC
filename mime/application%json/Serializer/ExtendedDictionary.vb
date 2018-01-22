@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::866ecfb46491aea0fd2ff89ef301b72e, ..\sciBASIC#\mime\application%json\Serializer\ExtendedDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::9d72bac475c5cf61bb725ae83ac2fda4, ..\sciBASIC#\mime\application%json\Serializer\ExtendedDictionary.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

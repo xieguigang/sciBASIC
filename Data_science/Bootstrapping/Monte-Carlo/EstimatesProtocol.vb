@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::35189b90bf84a2e65dcdace21be537d9, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\EstimatesProtocol.vb"
+﻿#Region "Microsoft.VisualBasic::e191f063860e246d968d03a83ae12c84, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\EstimatesProtocol.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -249,7 +249,7 @@ Namespace MonteCarlo
                 Dim required As VectorTagged(Of NamedValue(Of Dictionary(Of String, Double)())()) = Nothing
 
                 For Each cluster In kmeansResult
-                    For Each x In cluster.Value
+                    For Each x As NamedValue(Of Dictionary(Of String, Double)()) In cluster.Value
                         If Not String.IsNullOrEmpty(x.Name) Then
                             required = New VectorTagged(Of NamedValue(Of Dictionary(Of String, Double)())()) With {
                                 .Tag = cluster.Key,
@@ -291,11 +291,11 @@ Namespace MonteCarlo
                         .GroupBy(Function(x) x.Key) _
                         .ToDictionary(
                             Function(x) x.Key,
-                            Function(x) x.ToArray(
-                            Function(o) o.Value))
+                            Function(x) x.Select(
+                            Function(o) o.Value).ToArray)
 
                     ' 调整y0和参数列表
-                    For Each y In y0.Keys.ToArray
+                    For Each y As String In y0.Keys.ToArray
                         Dim values As Double() = output(y)
                         Dim range As IValueProvider = values.__getRanges
                         y0(y) = New NamedValue(Of IValueProvider)(y, range)

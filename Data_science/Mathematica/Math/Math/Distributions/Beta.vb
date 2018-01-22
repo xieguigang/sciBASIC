@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51e9a8fd9982ae9f372d9689129ee5ac, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\Beta.vb"
+﻿#Region "Microsoft.VisualBasic::10c5bb0af65991ecd86709ef21597672, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Distributions\Beta.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,9 +26,7 @@
 
 #End Region
 
-Imports System.Math
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Math.BasicR
 Imports Microsoft.VisualBasic.Math.Distributions.DirichletDistribution
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -38,6 +36,8 @@ Namespace Distributions
     ''' Beta distribution
     ''' </summary>
     Public Module Beta
+
+        ' x ^ (a - 1) * (1 - x) ^ (b - 1) * E ^ C
 
         ''' <summary>
         ''' Beta PDF

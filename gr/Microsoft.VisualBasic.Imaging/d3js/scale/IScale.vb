@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8db5a1f510673334840ee7f7a649ff74, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
+﻿#Region "Microsoft.VisualBasic::efaeb36f85324db2edf7d4c993c0f32f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -29,6 +29,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace d3js.scale
 
@@ -64,6 +65,11 @@ Namespace d3js.scale
             Return Me
         End Function
 
+        ''' <summary>
+        ''' 输入绘图的坐标轴在画布上面的X/Y值的范围
+        ''' </summary>
+        ''' <param name="integers"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function range(Optional integers As IEnumerable(Of Integer) = Nothing) As T
             Return range(integers.Select(Function(x) CDbl(x)))

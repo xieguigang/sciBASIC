@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29f7ab3a7c33a5872d61f32e9a86f209, ..\sciBASIC#\mime\application%json\Parser\JsonObject.vb"
+﻿#Region "Microsoft.VisualBasic::7a471bb15f91084c9804327f924ee206, ..\sciBASIC#\mime\application%json\Parser\JsonObject.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -81,7 +81,8 @@ Namespace Parser
             Dim a As New StringBuilder
             Dim array$() = Me _
                 .array _
-                .ToArray(Function(kp) $"""{kp.Key}"": {kp.Value.BuildJsonString}")
+                .Select(Function(kp) $"""{kp.Key}"": {kp.Value.BuildJsonString}") _
+                .ToArray
 
             Call a.AppendLine("{")
             Call a.AppendLine(array.JoinBy("," & vbLf))

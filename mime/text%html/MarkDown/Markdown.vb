@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31964e2e627d734b54bead8d6d9049fc, ..\sciBASIC#\mime\text%html\MarkDown\Markdown.vb"
+﻿#Region "Microsoft.VisualBasic::c4eee6876f4f11b0af61be7f7b0e4e19, ..\sciBASIC#\mime\text%html\MarkDown\Markdown.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,9 +26,6 @@
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Configuration
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
@@ -64,14 +61,7 @@ Namespace MarkDown
         End Sub
 
         Sub New()
-            Call Me.New(New MarkdownOptions With {
-                .AllowEmptyLinkText = True,
-                .AutoHyperlink = True,
-                .DisableHr = False,
-                .AutoNewlines = True,
-                .StrictBoldItalic = True,
-                .DisableImages = False
-            })
+            Call Me.New(MarkdownOptions.DefaultOption.DefaultValue)
         End Sub
 
         Public Property AllowEmptyLinkText() As Boolean

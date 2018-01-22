@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1622510ea8bd6fb9b8abf9d6893d8bc, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e6a6fd4e78f075b60782aff287d18368, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -41,6 +42,36 @@ Imports Microsoft.VisualBasic.Text
 ''' The csv document extensions API
 ''' </summary>
 Public Module DocumentExtensions
+
+    <Extension>
+    Public Iterator Function InvalidsAsRLangNA(source As IEnumerable(Of DataSet), Optional replaceAs$ = "NA") As IEnumerable(Of EntityObject)
+        Dim NaN As Index(Of String) = {
+            "正无穷大", "负无穷大", "非数字",
+            "Infinity", "-Infinity",
+            "NaN",
+            "∞", "-∞"
+        }
+
+        For Each data As DataSet In source
+            Dim values = data _
+                .Properties _
+                .ToDictionary(Function(map) map.Key,
+                              Function(map)
+                                  Dim s = map.Value.ToString
+
+                                  If NaN.IndexOf(s) > -1 Then
+                                      Return replaceAs
+                                  Else
+                                      Return s
+                                  End If
+                              End Function)
+
+            Yield New EntityObject With {
+                .ID = data.ID,
+                .Properties = values
+            }
+        Next
+    End Function
 
     ''' <summary>
     ''' 对于一些数学计算的数值结果，无穷大，无穷小或者非实数会被转换为中文，导致R程序无法识别
@@ -187,16 +218,19 @@ Public Module DocumentExtensions
             source = data.Columns
         End If
 
-        Dim out = LinqAPI.Exec(Of NamedValue(Of Double())) <=
+        Dim out = LinqAPI.Exec(Of NamedValue(Of Double())) _
  _
-            From column As String()
-            In source
-            Let name As String = column(Scan0)
-            Let values As Double() = column.Skip(1).ToArray(AddressOf Val)
-            Select New NamedValue(Of Double()) With {
-                .Name = name,
-                .Value = values
-            }
+            () <= From column As String()
+                  In source
+                  Let name As String = column(Scan0)
+                  Let values As Double() = column _
+                      .Skip(1) _
+                      .Select(AddressOf Val) _
+                      .ToArray
+                  Select New NamedValue(Of Double()) With {
+                      .Name = name,
+                      .Value = values
+                  }
 
         Return out
     End Function
@@ -272,6 +306,45 @@ Public Module DocumentExtensions
     End Function
 
     ''' <summary>
+    ''' 必须要保证第一列是键名，第二列才是数据
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="path$"></param>
+    ''' <param name="parser"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function LoadDictionary(Of T)(path$, Optional parser As IStringParser(Of T) = Nothing) As Dictionary(Of String, T)
+        With parser Or Scripting.DefaultTextParser(Of T)
+            Dim table As New Dictionary(Of String, T)
+
+            For Each line As String In path.IterateAllLines.Skip(1)
+                Dim key$ = Tokenizer.CharsParser(line).First
+                Dim value$ = Mid(line, key.Length + 1)
+
+                table(key) = .ref(value)
+            Next
+
+            Return table
+        End With
+    End Function
+
+    <Extension>
+    Public Function CreateTable(Of T)(csv As IO.File, Optional parser As IStringParser(Of T) = Nothing) As Dictionary(Of String, T)
+        With parser Or Scripting.DefaultTextParser(Of T)
+            Dim table As New Dictionary(Of String, T)
+
+            For Each line As RowObject In csv.Skip(1)
+                Dim key$ = line.First
+                Dim value = line.Second
+
+                table(key) = .ref(value)
+            Next
+
+            Return table
+        End With
+    End Function
+
+    ''' <summary>
     ''' 这个函数会自动判断对象的格式为tsv还是csv文件格式
     ''' </summary>
     ''' <param name="path$"></param>
@@ -302,5 +375,11 @@ Public Module DocumentExtensions
         Else
             Return IO.File.LoadTsv(path, encoding)
         End If
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ParseDoc(csv$, Optional removesBlank As Boolean = False) As IO.File
+        Return IO.File.Load(csv.lTokens, trimBlanks:=removesBlank)
     End Function
 End Module

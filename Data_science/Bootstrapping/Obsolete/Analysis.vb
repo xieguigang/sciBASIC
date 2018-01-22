@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25ddfc5c10ac6cc7816bad0ecd360b1, ..\sciBASIC#\Data_science\Bootstrapping\Obsolete\Analysis.vb"
+﻿#Region "Microsoft.VisualBasic::878226dba155e65735e2547348735533, ..\sciBASIC#\Data_science\Bootstrapping\Obsolete\Analysis.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -71,7 +71,7 @@
 '        Dim datasets As Entity() = codes.ToArray(
 '            Function(x) New Entity With {
 '                .uid = x.Name,
-'                .Properties = x.Name.Split(","c).ToArray(AddressOf Val)
+'                .Properties = x.Name.Split(","c).Select(AddressOf Val)
 '        })
 '        Dim clusters = ClusterDataSet(clustersExpected, datasets)
 '        Dim out As New Dictionary(Of String, Dictionary(Of String, DoubleRange))
@@ -92,7 +92,7 @@
 
 '            For Each p In pg
 '                Dim array = p.ToArray
-'                Dim vals = array.ToArray(Function(x) x.Value)
+'                Dim vals = array.Select(Function(x) x.Value)
 '                value(p.Key) = New DoubleRange(vals.Min, vals.Max)
 '            Next
 

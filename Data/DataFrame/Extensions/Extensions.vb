@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::8acdeb90a2d235e8e88470234baef917, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d92da4ab815e72aac4f3a271cb1a0ff4, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -39,10 +39,12 @@ Imports Microsoft.VisualBasic.Data.csv.IO.Linq
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
 ''' The shortcuts operation for the common csv document operations.
@@ -57,6 +59,18 @@ Public Module Extensions
     Sub New()
         Call __initStreamIO_pointer()
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function LoadCsv(Of T As Class)(path As DefaultString) As List(Of T)
+        Return path.DefaultValue.LoadCsv(Of T)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function LoadTsv(Of T As Class)(path As DefaultString) As T()
+        Return path.DefaultValue.LoadTsv(Of T)
+    End Function
 
     ''' <summary>
     ''' Anonymous type data reader helper.(System.MissingMethodException occurred
@@ -156,9 +170,9 @@ Public Module Extensions
 
     <Extension>
     Public Function TabExport(Of T As Class)(source As IEnumerable(Of T), saveTo As String, Optional noTitle As Boolean = False, Optional encoding As Encodings = Encodings.UTF8) As Boolean
-        Dim doc As IO.File = StorageProvider.Reflection.Reflector.Save(source, False)
+        Dim doc As File = Reflector.Save(source, False)
         Dim lines As RowObject() = If(noTitle, doc.Skip(1).ToArray, doc.ToArray)
-        Dim slines As String() = lines.ToArray(Function(x) x.AsLine(vbTab))
+        Dim slines As String() = lines.Select(Function(x) x.AsLine(vbTab)).ToArray
         Dim sdoc As String = String.Join(vbCrLf, slines)
         Return sdoc.SaveTo(saveTo, encoding.CodePage)
     End Function
@@ -204,28 +218,58 @@ Public Module Extensions
         Return DataFrame.CreateObject(csv)
     End Function
 
+    ''' <summary>
+    ''' Convert the dictionary table collection as the <see cref="EntityObject"/> collection.
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function DataFrame(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))) As EntityObject()
-        Return source.ToArray(
-            Function(o)
-                Return New EntityObject With {
-                    .ID = o.Name,
-                    .Properties = o.Value
-                }
-            End Function)
+        Return source _
+            .Select(Function(o)
+                        Return New EntityObject With {
+                            .ID = o.Name,
+                            .Properties = o.Value
+                        }
+                    End Function) _
+            .ToArray
+    End Function
+
+    <Extension>
+    Public Function SaveTable(table As IEnumerable(Of KeyValuePair(Of String, Double)), path$, Optional encoding As Encoding = Nothing) As Boolean
+        Dim csv As New File_csv
+
+        csv += {"ID", "value"}
+        csv += table _
+            .Select(Function(map)
+                        Return New RowObject(New String() {map.Key, map.Value})
+                    End Function)
+
+        Return csv.Save(path, encoding)
     End Function
 
     ''' <summary>
-    ''' 这个函数不会被申明为拓展函数了，因为这个object序列类型的函数如果为拓展函数的话，会与T泛型函数产生冲突
+    ''' This extension is using for .NET scripting API.
+    ''' (这个函数不会被申明为拓展函数了，因为这个object序列类型的函数如果为拓展函数的话，会与T泛型函数产生冲突)
     ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="path$"></param>
-    ''' <param name="encoding"></param>
+    ''' <param name="data">A generic .NET collection, using for scripting API.</param>
+    ''' <param name="path$">The file path of the csv file for saved.</param>
+    ''' <param name="encoding">Default is utf-8 without BOM</param>
+    ''' <param name="type">
+    ''' If this <see cref="Type"/> information provider is nothing, then the function will peeks of the first sevral element for the type information.
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("Write.Csv")>
-    Public Function SaveTable(data As IEnumerable(Of Object), path$, Optional encoding As Encoding = Nothing) As Boolean
-        ' 假若序列之中的第一个元素为Nothing的话，则尝试使用第二个元素来获取type信息
-        Dim type As Type = (data.First Or [Default](data.SecondOrNull)).GetType
+    <Extension>
+    Public Function SaveTable(data As IEnumerable, path$, Optional encoding As Encoding = Nothing, Optional type As Type = Nothing) As Boolean
+        If type Is Nothing Then
+            For Each x As Object In data
+                If Not x Is Nothing Then
+                    type = x.GetType
+                    Exit For
+                End If
+            Next
+        End If
 
         Return Reflector _
             .__save(___source:=data,
@@ -236,31 +280,26 @@ Public Module Extensions
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(data As IEnumerable(Of DynamicObjectLoader), path As String, Optional encoding As Encoding = Nothing) As Boolean
+    <Extension> Public Function SaveTo(data As IEnumerable(Of DynamicObjectLoader), path$, Optional encoding As Encoding = Nothing) As Boolean
         Dim headers As Dictionary(Of String, Integer) = data.First.Schema
-        Dim LQuery = LinqAPI.Exec(Of RowObject) <=
+        Dim LQuery = LinqAPI.Exec(Of RowObject) _
  _
-            From x As DynamicObjectLoader
-            In data
-            Select New RowObject(From p In headers Select x.GetValue(p.Value))
+            () <= From x As DynamicObjectLoader
+                  In data
+                  Let content = (From p In headers Select x.GetValue(p.Value)) '
+                  Select New RowObject(content)
 
-        Dim csv As New IO.File
+        With New IO.File
+            Call .AppendLine(From p In headers Select p.Key)
+            Call .AppendRange(LQuery)
 
-        Call csv.AppendLine((From p In headers Select p.Key).AsList)
-        Call csv.AppendRange(LQuery)
-
-        Return csv.Save(path, encoding)
+            Return .Save(path, encoding)
+        End With
     End Function
 
     <ExportAPI("Write.Csv")>
-    <Extension> Public Function SaveTo(dat As IEnumerable(Of RowObject), Path As String, Optional encoding As Encoding = Nothing) As Boolean
-        Dim Csv As IO.File = CType(dat, IO.File)
-        Return Csv.Save(Path, Encoding:=encoding)
-    End Function
-
-    <ExportAPI("Row.Parsing")>
-    <Extension> Public Function ToCsvRow(data As IEnumerable(Of String)) As RowObject
-        Return CType(data.AsList, RowObject)
+    <Extension> Public Function SaveTo(dat As IEnumerable(Of RowObject), path$, Optional encoding As Encoding = Nothing) As Boolean
+        Return CType(dat, IO.File).Save(path, Encoding:=encoding)
     End Function
 
     ''' <summary>
@@ -271,7 +310,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI(NameOf(DataFrame), Info:="Create a dynamics data frame object from a csv document object.")>
-    <Extension> Public Function DataFrame(data As IO.File) As DataFrame
+    <Extension> Public Function DataFrame(data As File) As DataFrame
         Return DataFrame.CreateObject(data)
     End Function
 
@@ -283,7 +322,7 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As IO.File,
+    <Extension> Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
                                                             Optional explicit As Boolean = False,
                                                             Optional maps As Dictionary(Of String, String) = Nothing) As T()
         Dim df As DataFrame = IO.DataFrame.CreateObject(dataSet)
@@ -334,8 +373,8 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(strDataLines As IEnumerable(Of String), Optional Delimiter As String = ",", Optional explicit As Boolean = True) As T()
-        Dim Expression As String = String.Format(DataImports.SplitRegxExpression, Delimiter)
+    <Extension> Public Function AsDataSource(Of T As Class)(strDataLines As IEnumerable(Of String), Optional delimiter$ = ",", Optional explicit As Boolean = True) As T()
+        Dim Expression As String = String.Format(DataImports.SplitRegxExpression, delimiter)
         Dim LQuery = (From line As String In strDataLines Select RowParsing(line, Expression)).ToArray
         Return CType(LQuery, csv.IO.File).AsDataSource(Of T)(explicit)
     End Function
@@ -370,12 +409,13 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="explicit"></param>
+    ''' <param name="explicit">
+    ''' 列名称隐式解析，即不强制要求属性上面有<see cref="ColumnAttribute"/>标记，默认是，否则只解析出带有<see cref="ColumnAttribute"/>自定义属性标记的属性作为csv的列的数据源
+    ''' </param>
     ''' <returns></returns>
     <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String), Optional explicit As Boolean = True, Optional trimBlanks As Boolean = False) As T()
-        Dim dataFrame As IO.File =
-            IO.File.Load(source.ToArray, trimBlanks)
-        Dim buf As T() = dataFrame.AsDataSource(Of T)(explicit)
+        Dim dataFrame As File = File.Load(source.ToArray, trimBlanks)
+        Dim buf As T() = dataFrame.AsDataSource(Of T)(Not explicit)
         Return buf
     End Function
 
@@ -402,7 +442,8 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                              Optional maps As Dictionary(Of String, String) = Nothing,
                                              Optional reorderKeys As Integer = 0,
                                              Optional layout As Dictionary(Of String, Integer) = Nothing,
-                                             Optional tsv As Boolean = False) As Boolean
+                                             Optional tsv As Boolean = False,
+                                             Optional transpose As Boolean = False) As Boolean
         Try
             path = FileIO.FileSystem.GetFileInfo(path).FullName
         Catch ex As Exception
@@ -420,6 +461,14 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
             maps,
             Not nonParallel,
             metaBlank, reorderKeys, layout)
+
+        If transpose Then
+            csv = csv _
+                .Select(Function(r) r.ToArray) _
+                .MatrixTranspose _
+                .Select(Function(r) New RowObject(r)) _
+                .ToArray
+        End If
 
         Dim success = csv.SaveDataFrame(
             path:=path,
@@ -446,13 +495,17 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     ''' <param name="blank$"></param>
     ''' <param name="reorderKeys"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 对于<see cref="DataSet"/>类型的数据集，可以先使用拓展函数转化为<see cref="EntityObject"/>之后再调用本函数进行保存操作
+    ''' </remarks>
     <Extension>
     Public Function SaveDataSet(Of T As EntityObject)(source As IEnumerable(Of T),
                                                       path$,
-                                                      Optional encoding As Encodings = Encodings.ASCII,
+                                                      Optional encoding As Encodings = Encodings.UTF8,
                                                       Optional KeyMap$ = Nothing,
                                                       Optional blank$ = "",
-                                                      Optional reorderKeys As Integer = 0) As Boolean
+                                                      Optional reorderKeys As Integer = 0,
+                                                      Optional transpose As Boolean = False) As Boolean
 
         Dim modify As Dictionary(Of String, String) = Nothing
         Dim layout As New Dictionary(Of String, Integer) From {
@@ -467,7 +520,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
             layout.Add(KeyMap, -10000)
         End If
 
-        Return source.SaveTo(path, , encoding.CodePage, blank,, modify, reorderKeys, layout)
+        Return source.SaveTo(path, , encoding.CodePage, blank,, modify, reorderKeys, layout, transpose:=transpose)
     End Function
 
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
@@ -491,12 +544,13 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
                                                Optional explicit As Boolean = False,
                                                Optional maps As Dictionary(Of String, String) = Nothing,
                                                Optional metaBlank$ = "",
-                                               Optional reorderKeys% = 0) As IO.File
+                                               Optional reorderKeys% = 0) As File
         Return Reflector.Save(
             source, explicit,
             maps:=maps,
             metaBlank:=metaBlank,
-            reorderKeys:=reorderKeys)
+            reorderKeys:=reorderKeys
+        )
     End Function
 
     ''' <summary>
@@ -528,7 +582,7 @@ Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{f
     <Extension> Public Function LoadDblVector(path As String) As Double()
         Dim buf As IO.File = IO.File.Load(path)
         Dim FirstRow As RowObject = buf.First
-        Dim data As Double() = FirstRow.ToArray(AddressOf Val)
+        Dim data As Double() = FirstRow.Select(AddressOf Val).ToArray
         Return data
     End Function
 

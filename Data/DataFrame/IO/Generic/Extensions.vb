@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d63dce240b976219426cdd208d3410a, ..\sciBASIC#\Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::51c1ef317f1fbcb8a462eb826c909754, ..\sciBASIC#\Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace IO
 
@@ -180,6 +181,20 @@ Namespace IO
                 .Select(AddressOf CreateObject) _
                 .ToArray
             Return out
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsCharacter(source As IEnumerable(Of DataSet)) As IEnumerable(Of EntityObject)
+            Return source.Select(AddressOf asCharacter)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function asCharacter(data As DataSet) As EntityObject
+            Return New EntityObject With {
+                .ID = data.ID,
+                .Properties = data.Properties.AsCharacter
+            }
         End Function
 
         ''' <summary>

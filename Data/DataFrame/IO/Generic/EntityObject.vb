@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45a8ec327bb1dba4e77555fa379571bc, ..\sciBASIC#\Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::21edcb99ea2a809956c4bca5669b5fe9, ..\sciBASIC#\Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -81,11 +81,11 @@ Namespace IO
             Return $"{ID} => ({Properties.Count}) {Properties.Keys.ToArray.GetJson}"
         End Function
 
-        Public Shared Function LoadDataSet(path As String, Optional uidMap As String = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of EntityObject)
+        Public Shared Function LoadDataSet(path$, Optional ByRef uidMap$ = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of EntityObject)
             Return LoadDataSet(Of EntityObject)(path, uidMap, tsv)
         End Function
 
-        Public Shared Function GetIDList(path$, Optional uidMap As String = Nothing, Optional tsv As Boolean = False, Optional ignoreMapErrors As Boolean = False) As String()
+        Public Shared Function GetIDList(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False, Optional ignoreMapErrors As Boolean = False) As String()
             Dim table As File = If(tsv, File.LoadTsv(path), File.Load(path))
             Dim getIDsDefault =
                 Function()
@@ -112,7 +112,10 @@ Namespace IO
             End If
         End Function
 
-        Public Shared Function LoadDataSet(Of T As EntityObject)(path As String, Optional uidMap As String = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of T)
+        Public Shared Function LoadDataSet(Of T As EntityObject)(path$, Optional ByRef uidMap$ = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of T)
+            If Not path.FileExists Then
+                Return {}
+            End If
             If uidMap.StringEmpty Then
                 If Not tsv Then
                     Dim first As New RowObject(path.ReadFirstLine)

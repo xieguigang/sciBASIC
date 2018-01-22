@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f51e53009517bc85c1db02f4836e58b, ..\sciBASIC#\docs\guides\VectorDemo\Program.vb"
+﻿#Region "Microsoft.VisualBasic::df3562213cb28e60453bd899ca3b4e4c, ..\sciBASIC#\docs\guides\VectorDemo\Program.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

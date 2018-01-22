@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b615c2f2ecfb74c5605452e4f999ebd, ..\sciBASIC#\mime\text%html\HTML\CSS\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::66a62e28a20712b332418dc687a9b9d6, ..\sciBASIC#\mime\text%html\HTML\CSS\FontStyle.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -64,6 +64,7 @@ Namespace HTML.CSS
         Public Const Win7LittleLarge$ = "font-style: normal; font-size: 20; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7Large$ = "font-style: normal; font-size: 24; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7VeryLarge$ = "font-style: normal; font-size: 36; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7VeryVeryLarge$ = "font-style: strong; font-size: 56; font-family: " & FontFace.MicrosoftYaHei & ";"
 
         Public Const PlotTitle$ = "font-style: strong; font-size: 24; font-family: " & FontFace.BookmanOldStyle & ";"
         Public Const PlotSubTitle$ = "font-style: normal; font-size: 20; font-family: " & FontFace.BookmanOldStyle & ";"

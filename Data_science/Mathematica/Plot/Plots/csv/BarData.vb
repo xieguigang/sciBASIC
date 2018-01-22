@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cdf09addd8505d3fd1f3d78a1d5996e, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\csv\BarData.vb"
+﻿#Region "Microsoft.VisualBasic::bdeef3d6f8e5e5f6eb8b37285ee127b3, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\csv\BarData.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -78,7 +78,7 @@ Namespace csv
 
         <Extension>
         Public Function LoadBarData(csv$, colors$()) As BarDataGroup
-            Return csv.LoadBarData(colors.ToArray(AddressOf ToColor))
+            Return csv.LoadBarData(colors.Select(AddressOf ToColor).ToArray)
         End Function
 
         <Extension>
@@ -100,16 +100,16 @@ Namespace csv
             Return New BarDataGroup With {
                 .Serials = names _
                     .SeqIterator _
-                    .ToArray(Function(x) New NamedValue(Of Color) With {
+                    .Select(Function(x) New NamedValue(Of Color) With {
                         .Name = x.value,
                         .Value = clData(x.i)
                     }),
                 .Samples = csv.Rows _
-                    .ToArray(Function(x) New BarDataSample With {
+                    .Select(Function(x) New BarDataSample With {
                         .Tag = x.First,
                         .data = x _
                             .Skip(1) _
-                            .ToArray(AddressOf Val)
+                            .Select(AddressOf Val)
                     })
             }
         End Function

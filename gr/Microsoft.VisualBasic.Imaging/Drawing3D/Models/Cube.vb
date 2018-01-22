@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9529894848f32bf3fa4ca90eb90b1c5, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Cube.vb"
+﻿#Region "Microsoft.VisualBasic::c877ea83c35c967b2d330d545cb4f2ef, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Cube.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -81,7 +81,7 @@ Namespace Drawing3D.Models
         Sub New(vertices As Point3D(), colors As Color())
             Me.New(
                 vertices,
-                colors.ToArray(Function(c) New SolidBrush(c)))
+                colors.Select(Function(c) New SolidBrush(c)).ToArray)
         End Sub
 
         Sub New(vertices As Point3D(), brushes As Brush())
@@ -118,7 +118,7 @@ Namespace Drawing3D.Models
         End Sub
 
         Public Function Copy(data As IEnumerable(Of Point3D)) As I3DModel Implements I3DModel.Copy
-            Return New Cube(data.ToArray, faces.ToArray(Function(s) s.brush))
+            Return New Cube(data.ToArray, faces.Select(Function(s) s.brush).ToArray)
         End Function
 
         ''' <summary>

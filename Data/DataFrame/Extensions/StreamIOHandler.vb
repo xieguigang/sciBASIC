@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71af5fc1de1107af5e59c0519233a758, ..\sciBASIC#\Data\DataFrame\Extensions\StreamIOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::c6a60345905c5bad746e50908f70b7c2, ..\sciBASIC#\Data\DataFrame\Extensions\StreamIOHandler.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -27,9 +27,9 @@
 #End Region
 
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports Microsoft.VisualBasic.FileIO
 
 Module StreamIOHandler
 
@@ -37,7 +37,7 @@ Module StreamIOHandler
     ''' 初始化函数指针，为``>>``语法提供csv流的支持
     ''' </summary>
     Public Sub __initStreamIO_pointer()
-        Call CollectionIO.SetHandle(AddressOf ISaveCsv)
+        Call IOHandler.SetHandle(AddressOf ISaveCsv)
         Call $"Default IO handle has been changes to {DefaultSaveDescription}...".__INFO_ECHO
     End Sub
 

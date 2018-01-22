@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b67e6679f19ea7a57150ef4a1755fcdf, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::cb045c4c0c39a1b02b4ad842690d78ac, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Scatter\Heatmap.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -104,8 +104,8 @@ Partial Module Scatter
                                labelX$, labelY$, legendTitle$,
                                ptSize%)
 
-        Dim points As (pt As PointF, value#)() = data.ToArray(
-            Function(o) (New PointF(o(fieldX), o(fieldY)), o(fieldValue)))
+        Dim points As (pt As PointF, value#)() = data.Select(
+            Function(o) (New PointF(o(fieldX), o(fieldY)), o(fieldValue))).ToArray
         Dim levels%() = points.Select(Function(pt) pt.value) _
             .GenerateMapping(Level:=colors.Length)
         Dim valueGroups = points _

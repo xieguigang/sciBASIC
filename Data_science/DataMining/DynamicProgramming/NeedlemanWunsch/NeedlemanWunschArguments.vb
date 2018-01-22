@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9ea983e8d115fd526b3440dca5ac37e, ..\sciBASIC#\Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\NeedlemanWunschArguments.vb"
+﻿#Region "Microsoft.VisualBasic::ccde402fc2f9591be6cd2b9367c3d501, ..\sciBASIC#\Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\NeedlemanWunschArguments.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -68,13 +68,13 @@ Namespace NeedlemanWunsch
 
         Public ReadOnly Property Query As String
             Get
-                Return New String(Sequence1.ToArray(Of Char)(__toChar))
+                Return New String(Sequence1.Select(Of Char)(__toChar).ToArray)
             End Get
         End Property
 
         Public ReadOnly Property Subject As String
             Get
-                Return New String(Sequence2.ToArray(Of Char)(__toChar))
+                Return New String(Sequence2.Select(Of Char)(__toChar).ToArray)
             End Get
         End Property
 

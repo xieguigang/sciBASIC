@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3fbc603226f39a59953581345b9fa2b, ..\sciBASIC#\Data_science\Graph\API\PageRank\PageRank.vb"
+﻿#Region "Microsoft.VisualBasic::307b6472415da60e9604e99a28ca2048, ..\sciBASIC#\Data_science\Graph\API\PageRank\PageRank.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Namespace Analysis.PageRank
 
     ''' <summary>
-    ''' https://github.com/jeffersonhwang/pagerank
+    ''' 无权重的``pagerank``计算模块.(https://github.com/jeffersonhwang/pagerank)
     ''' </summary>
     Public Class PageRank
 
@@ -77,6 +77,7 @@ Namespace Analysis.PageRank
         Public Function ComputePageRank() As Vector
             Dim final As Vector = Nothing
 
+            ' Run the page rank iteration
             For Each generator As Vector In PageRankGenerator(
                 _incomingLinks,
                 _numLinks,
@@ -171,6 +172,7 @@ Namespace Analysis.PageRank
                     ' an element of the A x I vector.
                     ' all elements are identical.
                     Dim oneAv As Double = 0.0
+
                     If M > 0 Then
                         oneAv = alpha * iOld.Take(leafNodes).Sum / N
                     End If

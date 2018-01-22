@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1df4260501f0e1405aa7cef0cd651a4f, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Expression\ExpressionBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::e620357e65b3a020c7f75cfb4a4a9567, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Expression\ExpressionBuilder.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -41,7 +41,7 @@ Public Module ExpressionBuilder
 
     <Extension>
     Public Function Debug(expression As IEnumerable(Of MetaExpression)) As String
-        Return String.Join(" ", expression.ToArray(Function(x) $"<{x.Operator}>"))
+        Return String.Join(" ", expression.Select(Function(x) $"<{x.Operator}>").ToArray)
     End Function
 
     ''' <summary>

@@ -1,33 +1,34 @@
-﻿#Region "Microsoft.VisualBasic::19e2a85babe4de4ff99077e7167a8244, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
+﻿#Region "Microsoft.VisualBasic::4575171ed8472f02cec9f46d7aa78550, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Labeler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2016 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Terminal
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Terminal.ProgressBar
 Imports sys = System.Math
 
 Namespace d3js.Layout
@@ -66,13 +67,13 @@ Namespace d3js.Layout
         Friend w_orient As Double = 3.0   ' orientation bias
 #End Region
 
-        Dim calcEnergy As Func(Of Integer, Label(), Anchor(), Double) =
-            Function(i, labels, anchor)
-                Return energy(i)
-            End Function
+        Dim calcEnergy As Func(Of Integer, Label(), Anchor(), Double) = AddressOf defaultEnergyGet
+        Dim definedCoolingSchedule As CoolingSchedule = AddressOf coolingSchedule
 
-        Dim definedCoolingSchedule As CoolingSchedule =
-            AddressOf coolingSchedule
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function defaultEnergyGet(i%, labels As Label(), anchor As Anchor()) As Double
+            Return energy(i)
+        End Function
 
         ''' <summary>
         ''' energy function, tailored for label placement
@@ -260,12 +261,14 @@ Namespace d3js.Layout
         ''' <param name="initialT#"></param>
         ''' <param name="nsweeps#"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function coolingSchedule(currT#, initialT#, nsweeps#) As Double
             Return (currT - (initialT / nsweeps))
         End Function
 
         ''' <summary>
-        ''' main simulated annealing function
+        ''' main simulated annealing function.(这个函数运行完成之后，可以直接使用<see cref="Label.X"/>和<see cref="Label.Y"/>位置数据进行作图)
         ''' </summary>
         ''' <param name="nsweeps"></param>
         ''' <returns></returns>
@@ -286,7 +289,7 @@ Namespace d3js.Layout
                 Dim tickProvider As New ProgressProvider(nsweeps)
                 Dim p#
 
-                progress = New ProgressBar("Labels layouting...", CLS:=True)
+                progress = New ProgressBar("Labels layouting...", 1, CLS:=True)
                 tick = Sub(currT#)
                            p = tickProvider.StepProgress
                            progress.SetProgress(p, currT.ToString("F2"))

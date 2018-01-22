@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::220ae08f6b2d19a7595985b95f236911, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\ScatterHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::52a10859cca878353651ab3d9a10c816, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\ScatterHeatmap.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -139,7 +139,7 @@ Namespace Plot3D
                              Optional showLegend As Boolean = True) As DrawGraphics
 
             Dim averages As Double() = data _
-                .ToArray(Function(c) c.c.Average)
+                .Select(Function(c) c.c.Average).ToArray
             Dim levels As Integer() = averages _
                 .GenerateMapping(mapLevels) _
                 .ToArray

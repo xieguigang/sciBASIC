@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbd84759b87764f3ea0e30232c70e020, ..\sciBASIC#\gr\Landscape\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::3b69a1c7b5842ab05843c6bd56809be2, ..\sciBASIC#\gr\Landscape\Surface.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -69,7 +69,7 @@ Namespace Data
 
         Public Function CreateObject() As Drawing3D.Surface
             Return New Drawing3D.Surface With {
-                .vertices = vertices.ToArray(Function(pt) pt.PointData),
+                .vertices = vertices.Select(Function(pt) pt.PointData).ToArray,
                 .brush = Brush
             }
         End Function

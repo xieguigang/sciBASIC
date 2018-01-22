@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f8f0d3c1faf1f3d82df391eeae95bb8, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\SecondaryTagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::5f8f0d3c1faf1f3d82df391eeae95bb8, ..\sciBASIC#\mime\text%yaml\Syntax\SecondaryTagHandle.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

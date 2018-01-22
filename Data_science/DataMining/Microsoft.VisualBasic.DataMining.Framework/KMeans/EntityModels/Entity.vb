@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86662427a802bcb8095597120fff4018, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::ab7e9994670afaf494c63d1f84861ce0, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\Entity.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -52,17 +52,21 @@ Namespace KMeans
         ''' <param name="path">Csv文件之中除了第一列是名称标识符，其他的都必须是该实体对象的属性</param>
         ''' <returns></returns>
         Public Shared Function Load(path As String, Optional map As String = "Name") As Entity()
-            Dim data As EntityLDM() = EntityLDM.Load(path, map)
-            Dim source As Entity() = data.ToArray(
-                Function(x) New Entity With {
-                    .uid = x.ID,
-                    .Properties = x.Properties.Values.ToArray
-                })
+            Dim data As EntityClusterModel() = EntityClusterModel.Load(path, map)
+            Dim source As Entity() = data _
+                .Select(Function(x)
+                            Return New Entity With {
+                                .uid = x.ID,
+                                .Properties = x.Properties.Values.ToArray
+                            }
+                        End Function) _
+                .ToArray
+
             Return source
         End Function
 
-        Public Function ToLDM() As EntityLDM
-            Return New EntityLDM With {
+        Public Function ToLDM() As EntityClusterModel
+            Return New EntityClusterModel With {
                 .ID = uid,
                 .Properties = Properties _
                     .SeqIterator _
@@ -71,8 +75,8 @@ Namespace KMeans
             }
         End Function
 
-        Public Function ToLDM(maps As String()) As EntityLDM
-            Return New EntityLDM With {
+        Public Function ToLDM(maps As String()) As EntityClusterModel
+            Return New EntityClusterModel With {
                 .ID = uid,
                 .Properties = Properties _
                     .SeqIterator _

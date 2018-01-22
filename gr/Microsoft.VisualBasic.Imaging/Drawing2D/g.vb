@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::924994bc47dad29ea3d131100855b86a, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::4ed65c0cd77897a12cd980a66dfd2eab, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -34,9 +34,9 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
-Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Drawing2D
 
@@ -112,6 +112,18 @@ Namespace Drawing2D
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function MeasureWidthOrHeight(wh#, length%) As Single
+            If wh > 0 AndAlso wh <= 1 Then
+                Return wh * length
+            Else
+                Return wh
+            End If
+        End Function
+
+        ReadOnly defaultSize As DefaultValue(Of Size) = New Size(3600, 2000).AsDefault(Function(size) DirectCast(size, Size).IsEmpty)
+        ReadOnly defaultPaddingValue As DefaultValue(Of Padding) = CType(DefaultPadding, Padding).AsDefault(Function(pad) DirectCast(pad, Padding).IsEmpty)
+
         ''' <summary>
         ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="padding"/>:=(100,100,100,100).
         ''' (用户可以通过命令行设置环境变量``graphic_driver``来切换图形引擎)
@@ -124,15 +136,17 @@ Namespace Drawing2D
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function GraphicsPlots(ByRef size As Size, ByRef padding As Padding, bg$, plotAPI As IPlot, Optional driver As Drivers = Drivers.Default) As GraphicsData
+        Public Function GraphicsPlots(ByRef size As Size,
+                                      ByRef padding As Padding,
+                                      bg$,
+                                      plotAPI As IPlot,
+                                      Optional driver As Drivers = Drivers.Default,
+                                      Optional dpi$ = "100,100") As GraphicsData
+
             Dim image As GraphicsData
 
-            If size.IsEmpty Then
-                size = New Size(3600, 2000)
-            End If
-            If padding.IsEmpty Then
-                padding = New Padding(100)
-            End If
+            size = size Or defaultSize
+            padding = padding Or defaultPaddingValue
 
             If g.__getDriver(developerValue:=driver) = Drivers.SVG Then
                 Dim svg As New GraphicsSVG(size)
@@ -147,12 +161,12 @@ Namespace Drawing2D
             Else
                 ' using gdi+ graphics driver
                 ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
-                Using g As Graphics2D = size.CreateGDIDevice(Color.Transparent)
+                Using g As Graphics2D = size.CreateGDIDevice(Color.Transparent, dpi:=dpi)
                     Dim rect As New Rectangle(New Point, size)
 
                     With g.Graphics
 
-                        Call .FillBg(bg$, rect)
+                        Call .FillBackground(bg$, rect)
 
                         .CompositingQuality = CompositingQuality.HighQuality
                         .CompositingMode = CompositingMode.SourceOver
@@ -185,23 +199,49 @@ Namespace Drawing2D
         ''' 3. 可能为base64图片字符串
         ''' </param>
         <Extension>
-        Public Sub FillBg(ByRef g As Graphics, bg$, rect As Rectangle)
+        Public Sub FillBackground(ByRef g As Graphics, bg$, rect As Rectangle)
             Dim bgColor As Color = bg.ToColor(onFailure:=Nothing)
 
             If Not bgColor.IsEmpty Then
                 Call g.FillRectangle(New SolidBrush(bgColor), rect)
             Else
-                Dim res As Image
-
-                If bg.FileExists Then
-                    res = LoadImage(path:=bg$)
-                Else
-                    res = Base64Codec.GetImage(bg$)
-                End If
-
+                ' If the bg is not a file, then will try decode it as base64 string image. 
+                Dim res As Image = bg.LoadImage(base64:=Not bg.FileExists)
                 Call g.DrawImage(res, rect)
             End If
         End Sub
+
+        ''' <summary>
+        ''' <see cref="Graphics.MeasureString(String, Font)"/> extensions
+        ''' </summary>
+        ''' <param name="text$"></param>
+        ''' <param name="g"></param>
+        ''' <param name="font"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function MeasureSize(text$, g As IGraphics, font As Font) As SizeF
+            Return g.MeasureString(text, font)
+        End Function
+
+        ''' <summary>
+        ''' <see cref="Graphics.MeasureString(String, Font)"/> extensions
+        ''' </summary>
+        ''' <param name="text$"></param>
+        ''' <param name="g"></param>
+        ''' <param name="font"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function MeasureSize(text$, g As IGraphics, font As Font, scale As (x#, y#)) As SizeF
+            Dim size As SizeF
+
+            g.ScaleTransform(scale.x, scale.y)
+            size = g.MeasureString(text, font)
+            g.ScaleTransform(1, 1)
+
+            Return size
+        End Function
 
         ''' <summary>
         ''' Data plots graphics engine.
@@ -210,12 +250,13 @@ Namespace Drawing2D
         ''' <param name="bg"></param>
         ''' <param name="plot"></param>
         ''' <returns></returns>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GraphicsPlots(plot As Action(Of IGraphics), ByRef size As Size, ByRef padding As Padding, bg$) As GraphicsData
             Return GraphicsPlots(size, padding, bg, Sub(ByRef g, rect) Call plot(g))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Allocate(Optional size As Size = Nothing, Optional padding$ = DefaultPadding, Optional bg$ = "white") As InternalCanvas
             Return New InternalCanvas With {
                 .size = size,
@@ -292,6 +333,7 @@ Namespace Drawing2D
             Public Property padding As Padding
             Public Property bg As String
 
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Public Function InvokePlot() As GraphicsData
                 Return GraphicsPlots(
                     size, padding, bg,
@@ -303,11 +345,13 @@ Namespace Drawing2D
                     End Sub)
             End Function
 
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Public Shared Operator +(g As InternalCanvas, plot As IPlot) As InternalCanvas
                 g.plots += plot
                 Return g
             End Operator
 
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Public Shared Operator +(g As InternalCanvas, plot As IPlot()) As InternalCanvas
                 g.plots += plot
                 Return g

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e6236372ad91d87f5f9901ec50c2ff5, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\AxisScalling.vb"
+﻿#Region "Microsoft.VisualBasic::43843c45c604123e16a79543541b1485, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\AxisScalling.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -31,6 +31,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graphic.Axis
@@ -49,6 +50,17 @@ Namespace Graphic.Axis
             With range
                 Return AxisScalling.CreateAxisTicks(.Min, .Max, ticks, decimalDigits)
             End With
+        End Function
+
+        ''' <summary>
+        ''' <see cref="AxisProvider"/>
+        ''' </summary>
+        ''' <param name="ticks#"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AxisExpression(ticks#()) As String
+            Return $"({ticks.Min},{ticks.Max}),n={ticks.Length}"
         End Function
 
         ''' <summary>
@@ -164,28 +176,23 @@ Namespace Graphic.Axis
             Next
 
             ' 通过分别计算ticks的数量差值，是否容纳了输入的[min,max]范围来判断是否合适
-            With candidateArray _
-                .Select(Function(ar)
-                            If ar.Range.IsInside(inputRange) Then
-                                ' +1 是为了防止乘以0，导致整个结果都为零，出现min的index被误判的情况出现
-                                Return {
-                                    Abs(ar.Length - ticks) + 1,
-                                    Abs(ar.Min - inputRange.Min) + 1,
-                                    Abs(ar.Max - inputRange.Max) + 1
-                                }.ProductALL
-                            Else
-                                Return Integer.MaxValue
-                            End If
-                        End Function)
+            Dim maxSteps = candidateArray.Max(Function(candidate) candidate.Length)
+            Dim dSteps = maxSteps - candidateArray.Select(Function(candidate) Abs(candidate.Length - ticks)).AsVector
+            Dim dMin = inputRange.Length - candidateArray.Select(Function(candidate) Abs(candidate.Min - inputRange.Min)).AsVector
+            Dim dMax = inputRange.Length - candidateArray.Select(Function(candidate) Abs(candidate.Max - inputRange.Max)).AsVector
 
-                Dim tickArray#() = candidateArray(Which.Min(.ref))
+            dSteps = dSteps / dSteps.Max
+            dMin = dMin / dMin.Max
+            dMax = dMax / dMax.Max
 
-                For i As Integer = 0 To tickArray.Length - 1
-                    tickArray(i) = Math.Round(tickArray(i), decimalDigits)
-                Next
+            Dim scores As Vector = dSteps * 0.8 + dMin * 0.1 + dMax * 0.1
+            Dim tickArray#() = candidateArray(Which.Max(scores))
 
-                Return tickArray
-            End With
+            For i As Integer = 0 To tickArray.Length - 1
+                tickArray(i) = Math.Round(tickArray(i), decimalDigits)
+            Next
+
+            Return tickArray
         End Function
 
         ''' <summary>

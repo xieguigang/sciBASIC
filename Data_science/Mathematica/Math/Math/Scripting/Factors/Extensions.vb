@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5eb5d17fab7f4a9aa3e551310904068, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Factors\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d0419352624b80c6850a9e4bc05a90d8, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Factors\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -62,22 +62,6 @@ Namespace Scripting
                 .ToArray
 
             Return out
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function AsCharacter(values As Dictionary(Of String, Double)) As Dictionary(Of String, String)
-            Return values.ToDictionary(
-                Function(x) x.Key,
-                Function(x) CStr(x.Value))
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function AsNumeric(values As Dictionary(Of String, String)) As Dictionary(Of String, Double)
-            Return values.ToDictionary(
-                Function(x) x.Key,
-                Function(x) x.Value.ParseNumeric)
         End Function
 
         Public Property names(vector As FactorVector) As String()

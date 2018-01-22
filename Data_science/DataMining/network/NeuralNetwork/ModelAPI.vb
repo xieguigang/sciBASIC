@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::206d2a895cc532713f57becb2c982947, ..\sciBASIC#\Data_science\DataMining\network\NeuralNetwork\ModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::7444d59de0c8169f73c625fd61468e2a, ..\sciBASIC#\Data_science\DataMining\network\NeuralNetwork\ModelAPI.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -46,13 +46,13 @@ Namespace NeuralNetwork.Models
                 .ToDictionary(Function(x) x.value,
                               Function(x) x.i)
 
-            network += net.HiddenLayer.ToArray(Function(x) x.__node(NameOf(net.HiddenLayer), hash))
-            network += net.InputLayer.ToArray(Function(x) x.__node(NameOf(net.InputLayer), hash))
-            network += net.OutputLayer.ToArray(Function(x) x.__node(NameOf(net.OutputLayer), hash))
+            network += net.HiddenLayer.Select(Function(x) x.__node(NameOf(net.HiddenLayer), hash))
+            network += net.InputLayer.Select(Function(x) x.__node(NameOf(net.InputLayer), hash))
+            network += net.OutputLayer.Select(Function(x) x.__node(NameOf(net.OutputLayer), hash))
 
-            network += net.HiddenLayer.ToArray(Function(x) x.__edges(NameOf(net.HiddenLayer), hash)).IteratesALL
-            network += net.InputLayer.ToArray(Function(x) x.__edges(NameOf(net.InputLayer), hash)).IteratesALL
-            network += net.OutputLayer.ToArray(Function(x) x.__edges(NameOf(net.OutputLayer), hash)).IteratesALL
+            network += net.HiddenLayer.Select(Function(x) x.__edges(NameOf(net.HiddenLayer), hash)).IteratesALL
+            network += net.InputLayer.Select(Function(x) x.__edges(NameOf(net.InputLayer), hash)).IteratesALL
+            network += net.OutputLayer.Select(Function(x) x.__edges(NameOf(net.OutputLayer), hash)).IteratesALL
 
             Return network
         End Function

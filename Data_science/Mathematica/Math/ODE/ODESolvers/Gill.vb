@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38e1269661d3dc8348e989e159f0808d, ..\sciBASIC#\Data_science\Mathematica\Math\ODE\ODESolvers\Gill.vb"
+﻿#Region "Microsoft.VisualBasic::0cd3a074765d64955cdbb9fce7a87e6a, ..\sciBASIC#\Data_science\Mathematica\Math\ODE\ODESolvers\Gill.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,7 +26,7 @@
 
 #End Region
 
-Imports System.Math
+Imports System.Runtime.CompilerServices
 
 Partial Module ODESolver
 
@@ -35,14 +35,14 @@ Partial Module ODESolver
     ''' </summary>
     ReadOnly sqr2# = Sqrt(2.0)
 
-    Public Sub Gill(ByRef ode As ODE, N As Integer, t0 As Double, tt As Double)
+    <Extension>
+    Public Function Gill(ByRef ode As ODE, N As Integer, t0 As Double, tt As Double) As ODEOutput
         Dim df As df = ode.df
-
-        Call ode.Allocate(N, t0, tt)
-
+        Dim out As ODEOutput = ode.Allocate(N, t0, tt)
         Dim y As Double = ode.y0, t As Double = t0    ' 积分初值
         Dim k1 As Double, k2 As Double, k3 As Double, k4 As Double
         Dim h# = (tt - t0) / N   ' 步长
+        Dim vector#() = out.Y.Vector
 
         ' 因为已经设置了y0了，所以在这里都是从1开始的
         For i% = 1 To N
@@ -53,8 +53,9 @@ Partial Module ODESolver
 
             y = y + (k1 + k2 * (2 - sqr2) + k3 * (2 + sqr2) + k4) * h / 6.0
             t = t + h
-            ode.y(i) = y
-            ode.x(i) = t
+            vector(i) = y
         Next
-    End Sub
+
+        Return out
+    End Function
 End Module

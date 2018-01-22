@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f2da45dda91693595fd8ed7009abab8, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Drivers\TimeValue.vb"
+﻿#Region "Microsoft.VisualBasic::65b404216fc941973031380ad00d0d22, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Drivers\TimeValue.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
 Namespace Darwinism.GAF.Driver

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99ea9311acbf1bbb7dff15484418053a, ..\sciBASIC#\mime\text%yaml\yaml\TextParserCommon.vb"
+﻿#Region "Microsoft.VisualBasic::99ea9311acbf1bbb7dff15484418053a, ..\sciBASIC#\mime\text%yaml\TextParserCommon.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

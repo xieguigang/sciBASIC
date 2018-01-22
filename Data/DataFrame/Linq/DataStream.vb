@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::766931d0046806ff5bf3392d0d197ea4, ..\sciBASIC#\Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::5099f4392ef71d62bfd5c7061309d429, ..\sciBASIC#\Data\DataFrame\Linq\DataStream.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -77,7 +77,7 @@ Namespace IO.Linq
             Dim first As String = file.ReadFirstLine
 
             _title = RowObject.TryParse(first)
-            _schema = _title.ToArray(
+            _schema = _title.Select(
                 Function(colName, idx) New With {
                     .colName = colName,
                     .ordinal = idx}) _

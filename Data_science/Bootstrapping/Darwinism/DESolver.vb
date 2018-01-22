@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec336762e7d12eb0aefac7d057ab6ebc, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\DESolver.vb"
+﻿#Region "Microsoft.VisualBasic::99b97fef321426a10b27ec469bfbb909, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\DESolver.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,8 +26,8 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF
 Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.Driver
+Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.ODEs
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism
@@ -92,7 +92,7 @@ Namespace Darwinism
                 Function(seed)
                     Dim out As New ParameterVector(randomGenerator) With {
                         .vars = vars _
-                        .ToArray(Function(v) New var(v))
+                        .Select(Function(v) New var(v))
                     }
 
                     If seed Is Nothing Then

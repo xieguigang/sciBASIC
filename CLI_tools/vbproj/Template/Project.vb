@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -54,10 +54,8 @@ Public Class Project : Implements ISaveHandle
  _
         () <= From x As PropertyGroup
               In PropertyGroups
-              Where String.Equals(
-                  condition,
-                  x.Condition,
-                  StringComparison.OrdinalIgnoreCase)
+              Where Not x.Condition.StringEmpty AndAlso
+                  condition.TextEquals(x.Condition)
               Select x
 
     End Function

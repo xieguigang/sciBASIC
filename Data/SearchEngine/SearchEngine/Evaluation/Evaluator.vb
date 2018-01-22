@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73e58af74841226eb1a3f5b27bd87aed, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Evaluation\Evaluator.vb"
+﻿#Region "Microsoft.VisualBasic::ca539908d8120dd57ce48a1264b542f1, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Evaluation\Evaluator.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -73,7 +73,7 @@ Public Module Evaluator
         If term.First = "~"c Then  ' Levenshtein match
             Dim exp$ = Mid(term.ToLower, 2)
             Dim t1$() = exp.Split(__allASCIISymbols)
-            Dim query%() = exp.ToArray(AddressOf AscW)
+            Dim query%() = exp.Select(AddressOf AscW).ToArray
 
             If t1$.Length = 1 Then ' 只有一个单词，则做匹配的时候需要一个单词一个单词的进行匹配
                 Return Function(searchIn$)

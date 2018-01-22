@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::834a22757359769a04ed21de44fb309e, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\TagPrefix.vb"
+﻿#Region "Microsoft.VisualBasic::834a22757359769a04ed21de44fb309e, ..\sciBASIC#\mime\text%yaml\Syntax\TagPrefix.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3603efd000b6b0836c64833e79a8a125, ..\sciBASIC#\mime\text%html\HTML\Xml\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::cce5a41ddb9c08b28ec8e944ebdd6db5, ..\sciBASIC#\mime\text%html\HTML\Xml\Meta.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -64,7 +64,7 @@ Namespace HTML.XmlMeta
         End Function
 
         Public Shared Function Generator(classId As IEnumerable(Of String), attrs As Dictionary(Of String, String)) As String
-            Dim sb As New StringBuilder(String.Join(", ", classId.ToArray(Function(s) "." & s)))
+            Dim sb As New StringBuilder(String.Join(", ", classId.Select(Function(s) "." & s).ToArray))
 
             Call sb.AppendLine("{")
             For Each attr In attrs

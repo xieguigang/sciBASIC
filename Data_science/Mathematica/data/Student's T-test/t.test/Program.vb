@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13496174fc799effd7a6c1d0da389b9c, ..\sciBASIC#\Data_science\Mathematica\data\Student's T-test\t.test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c1753f7cb1189f7b2b0dbd9883481c4d, ..\sciBASIC#\Data_science\Mathematica\data\Student's T-test\t.test\Program.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,7 +26,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Mathematical.Statistics.Hypothesis
+Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Program

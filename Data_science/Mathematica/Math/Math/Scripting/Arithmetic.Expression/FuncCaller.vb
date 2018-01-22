@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ae49ae8548d6944ab12f92c663b1549, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\FuncCaller.vb"
+﻿#Region "Microsoft.VisualBasic::dc1422d810f3c786177f5343c73cad8a, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\FuncCaller.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -52,12 +52,12 @@ Namespace Scripting
         End Sub
 
         Public Overrides Function ToString() As String
-            Dim args As String() = Params.ToArray(Function(x) x.ToString)
+            Dim args As String() = Params.Select(Function(x) x.ToString).ToArray
             Return $"{Name}({args.JoinBy(", ")})"
         End Function
 
         Public Function Evaluate() As Double
-            Return __calls(Name, Params.ToArray(Function(x) x.Evaluate))
+            Return __calls(Name, Params.Select(Function(x) x.Evaluate).ToArray)
         End Function
     End Class
 

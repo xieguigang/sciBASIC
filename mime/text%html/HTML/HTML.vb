@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::711307ca44d0b342f060f11f70ab0934, ..\sciBASIC#\mime\text%html\HTML\HTML.vb"
+﻿#Region "Microsoft.VisualBasic::0bfd88a629503931126bbe64dd416c02, ..\sciBASIC#\mime\text%html\HTML\HTML.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,11 +26,10 @@
 
 #End Region
 
-Imports System.Text
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.MIME.Markup.StreamWriter
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace HTML.DDM
 
@@ -108,7 +107,7 @@ Namespace HTML.DDM
 
         <XmlText> Public Overrides Property InnerText As String
             Get
-                Dim values As String() = _cssElements.ToArray(Function(css) css.ToString)
+                Dim values As String() = _cssElements.Select(Function(css) css.ToString).ToArray
                 Return String.Join(vbCrLf, values)
             End Get
             Set(value As String)
@@ -123,7 +122,7 @@ Namespace HTML.DDM
         Public Property Name As String
 
         Public Overrides Function ToString() As String
-            Dim pValues As String() = Properties.ToArray(Function(prop) $"{prop.Key}: {prop.Value}")
+            Dim pValues As String() = Properties.Select(Function(prop) $"{prop.Key}: {prop.Value}").ToArray
             Return $"{Name} {"{"} {String.Join("; ", pValues)} {"}"}"
         End Function
     End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2a133fda0fa9bf199375435b87be63e, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\MappingEntry.vb"
+﻿#Region "Microsoft.VisualBasic::13104db3a3ee0ac77538902faca29f28, ..\sciBASIC#\mime\text%yaml\Syntax\MappingEntry.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,19 +26,16 @@
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace Syntax
 
     Public Class MappingEntry : Implements INamedValue
 
-        Public Key As DataItem
+        Public Property Key As DataItem
+        Public Property Value As DataItem
 
-        Public Value As DataItem
-
-        Private Property Identifier As String Implements INamedValue.Key
+        Private Property Name As String Implements INamedValue.Key
             Get
                 Return Scripting.ToString(Key)
             End Get
@@ -48,7 +45,7 @@ Namespace Syntax
         End Property
 
         Public Overrides Function ToString() As String
-            Return String.Format("{{Key:{0}, Value:{1}}}", Key, Value)
+            Return $"{Key}: {Value}"
         End Function
     End Class
 End Namespace

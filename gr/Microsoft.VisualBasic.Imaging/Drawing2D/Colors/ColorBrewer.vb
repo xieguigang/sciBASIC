@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f6006e2d52209eddf00a8e5bebffa3d, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
+﻿#Region "Microsoft.VisualBasic::9b47f1a485c8e0461ee540c149317ddd, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -94,27 +95,27 @@ Namespace Drawing2D.Colors
         Public Function GetColors(name$) As Color()
             Select Case LCase(name)
                 Case NameOf(c3)
-                    Return c3.ToArray(AddressOf ToColor)
+                    Return c3.Select(AddressOf ToColor).ToArray
                 Case NameOf(c4)
-                    Return c4.ToArray(AddressOf ToColor)
+                    Return c4.Select(AddressOf ToColor).ToArray
                 Case NameOf(c5)
-                    Return c5.ToArray(AddressOf ToColor)
+                    Return c5.Select(AddressOf ToColor).ToArray
                 Case NameOf(c6)
-                    Return c6.ToArray(AddressOf ToColor)
+                    Return c6.Select(AddressOf ToColor).ToArray
                 Case NameOf(c7)
-                    Return c7.ToArray(AddressOf ToColor)
+                    Return c7.Select(AddressOf ToColor).ToArray
                 Case NameOf(c8)
-                    Return c8.ToArray(AddressOf ToColor)
+                    Return c8.Select(AddressOf ToColor).ToArray
                 Case NameOf(c9)
-                    Return c9.ToArray(AddressOf ToColor)
+                    Return c9.Select(AddressOf ToColor).ToArray
                 Case NameOf(c10)
-                    Return c10.ToArray(AddressOf ToColor)
+                    Return c10.Select(AddressOf ToColor).ToArray
                 Case NameOf(c11)
-                    Return c11.ToArray(AddressOf ToColor)
+                    Return c11.Select(AddressOf ToColor).ToArray
                 Case NameOf(c12)
-                    Return c12.ToArray(AddressOf ToColor)
+                    Return c12.Select(AddressOf ToColor).ToArray
                 Case Else
-                    Return c3.ToArray(AddressOf ToColor)
+                    Return c3.Select(AddressOf ToColor).ToArray
             End Select
         End Function
 
@@ -123,6 +124,8 @@ Namespace Drawing2D.Colors
         ''' </summary>
         ''' <param name="term$"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ParseName(term$) As NamedValue(Of String)
             Return term.GetTagValue(":")
         End Function

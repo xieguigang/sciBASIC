@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e07628a89e992e75ed8ca5ad0732ad0, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::623ca529acfbebf2f6b4002e3d89c903, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -29,7 +29,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace BarPlot.Histogram
 
@@ -42,6 +41,7 @@ Namespace BarPlot.Histogram
         ''' <param name="step!"></param>
         ''' <param name="legend"></param>
         ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function NewModel(hist As Dictionary(Of Double, IntegerTagged(Of Double)), step!, legend As Legend) As HistProfile
             Return New HistProfile(hist, [step]) With {

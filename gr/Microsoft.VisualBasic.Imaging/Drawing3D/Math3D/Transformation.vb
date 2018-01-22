@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99b4bddb4907b52fe65de1cdcafb544d, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Transformation.vb"
+﻿#Region "Microsoft.VisualBasic::216d6e987cdcfdc6877917b5a561e3af, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Transformation.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -58,7 +58,7 @@ Namespace Drawing3D.Math3D
                     .brush = surface.brush,
                     .vertices = surface _
                         .vertices _
-                        .ToArray(Function(p3D) p3D - offset)
+                        .Select(Function(p3D) p3D - offset).ToArray
                 }
             Next
 

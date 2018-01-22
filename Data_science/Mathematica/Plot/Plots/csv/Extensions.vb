@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d57ddada419ff0924ed924263d303d9, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\csv\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::074f85b58faa98b6cb390ece883629eb, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\csv\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -46,8 +46,8 @@ Namespace csv
                 Dim Y = columns(index.y)
                 Dim pts As PointF() = X _
                     .SeqIterator _
-                    .ToArray(Function(xi) New PointF(xi.value, Y(xi)))
-                Dim points As PointData() = pts.ToArray(Function(pt) New PointData(pt))
+                    .Select(Function(xi) New PointF(xi.value, Y(xi))).ToArray
+                Dim points As PointData() = pts.Select(Function(pt) New PointData(pt)).ToArray
 
                 Return New ChartPlots.SerialData With {
                     .color = color.TranslateColor,

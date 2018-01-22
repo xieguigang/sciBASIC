@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f999d2deb2bb1209ab09c2f455927b3e, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\csv\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::019fe48fcde03ea3f0b437a906647d1c, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\csv\SerialData.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -107,7 +107,7 @@ Namespace csv
                 .OrderBy(Function(x) x.X) _
                 .ToArray
             Dim pts As List(Of PointF) = B_Spline.Compute(
-                rawData.ToArray(Function(x) New PointF(x.X, x.Y)),
+                rawData.Select(Function(x) New PointF(x.X, x.Y)),
                 degree,
                 resolution)
             Dim result As New List(Of SerialData)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b049bc30f15d54e6dc68bf887664d09, ..\sciBASIC#\Data_science\Graph\API\Dijkstra\Dijkstra.vb"
+﻿#Region "Microsoft.VisualBasic::09b23c4f2330e470a6801a63a8de0c8c, ..\sciBASIC#\Data_science\Graph\API\Dijkstra\Dijkstra.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -79,7 +79,7 @@ Namespace Dijkstra
 
             ' Initialise the new routes. the constructor will set the route weight to in.max
             For Each location As Vertex In _Points
-                shortestPaths.Add(location, New Route(location.ID))
+                shortestPaths.Add(location, New Route(location.Label))
             Next
 
             ' The startPosition has a weight 0. 

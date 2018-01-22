@@ -11,8 +11,9 @@
 
 <hr>
 
-+ ![Microsoft VisualBasic logo](./logo.jpg)
-+ ![](./etc/README/nodes.gif)
+[![sciBASIC# logo](./logo.png)](./vs_solutions/logo/Program.vb)
+
+> Read the project documents: [http://sciBASIC.NET/](http://sciBASIC.NET)
 
 ## Scientific Computing runtime for VisualBasic.NET
 
@@ -24,6 +25,7 @@
 > Guides for using this framework, you can found the document and content index at the [README.md](./guides/README.md)(This guidelines document is currently compiling for users):
 > + https://github.com/xieguigang/sciBASIC/tree/master/docs/guides
 
+![](./etc/README/nodes.gif)
 <hr/>
 
 ### Runtime Installation
@@ -50,12 +52,13 @@ PM> Install-Package sciBASIC -Pre
 ###### 1. source projects
 
 + **[/CLI_tools](./CLI_tools/)** : Some small utilities and example tools
-+ **[/Data](./Data/)** : *sciBASIC#* data framework system for data science, includes data frame, data I/O and data object search framework.
++ **[/Data](./Data/)** : *sciBASIC#* data framework system for data science, includes data frame, data I/O, natural language text processing and data object search framework.
 + **[/Data_science](./Data_science/)** : *sciBASIC#* Mathmatica system, data graphics plot system & Data Mining library
-+ **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : Microsoft VisualBasic General App Runtime core
-+ **[/mime](./mime/)** : various mime-type doc parsers in VisualBasic
-+ **[/gr](./gr/)** : **sciBASIC# Artists**: (graphic artist) VB.NET data graphics system
++ **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : **Microsoft VisualBasic General App core runtime**
++ **[/mime](./mime/)** : Various mime-type text or Xml doc parsers in VisualBasic.
++ **[/gr](./gr/)** : **sciBASIC# Artists**: (graphic artist) VB.NET imaging graphics system
 + **[/www](./www/)** : Web related utilities code
++ **[/vs_solutions](./vs_solutions/)** : sciBASIC framework Windows installer project. 
 
 ###### 2. docs for User
 
@@ -368,4 +371,4 @@ BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 
 ![](./www/data/github/xieguigang_github-vcard.png)
 
-> Copyleft ! 2017, [I@xieguigang.me](mailto://I@xieguigang.me) (http://scibasic.cool/)
+> Copyleft ! 2018, [I@xieguigang.me](mailto://I@xieguigang.me) (http://sciBASIC.NET/)

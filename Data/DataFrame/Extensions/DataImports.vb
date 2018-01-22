@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::297e184e9bccd39f9d48120045181bf4, ..\sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::6b05bb1a7f66ac6f35727378b94619f7, ..\sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -34,6 +34,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports csvFile = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
 ''' Module provides the csv data imports operation of the csv document creates from a text file.
@@ -94,11 +95,10 @@ Public Module DataImports
     End Function
 
     <ExportAPI("Data.Imports")>
-    Public Function ImportsData(<Parameter("str.Data")> lines As IEnumerable(Of String),
-                                Optional delimiter As String = ",") As IO.File
-        Dim Expression As String = String.Format(SplitRegxExpression, delimiter)
-        Dim LQuery = (From line As String In lines Select RowParsing(line, Expression)).ToArray
-        Return New IO.File(LQuery)
+    Public Function ImportsData(lines As IEnumerable(Of String), Optional delimiter$ = ",") As csvFile
+        Dim regexp As String = String.Format(SplitRegxExpression, delimiter)
+        Dim LQuery = (From line As String In lines Select RowParsing(line, regexp)).ToArray
+        Return New csvFile(LQuery)
     End Function
 
     ''' <summary>

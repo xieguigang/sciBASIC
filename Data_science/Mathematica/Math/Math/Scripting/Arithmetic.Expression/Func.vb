@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bffcec85d02608ba617febd19ad8b95c, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\Func.vb"
+﻿#Region "Microsoft.VisualBasic::becb200e524a76e48782bb058232f3e8, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\Func.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -59,7 +59,7 @@ Namespace Scripting
         ''' <param name="engine"></param>
         ''' <returns></returns>
         Public Function GetExpression(engine As Expression) As Func(Of Double(), Double)
-            Dim helper As New __callerHelper(Args.ToArray(Function(x) x.ToLower)) With {
+            Dim helper As New __callerHelper(Args.Select(Function(x) x.ToLower).ToArray) With {
                 .__engine = engine
             }
             Dim expr As SimpleExpression =

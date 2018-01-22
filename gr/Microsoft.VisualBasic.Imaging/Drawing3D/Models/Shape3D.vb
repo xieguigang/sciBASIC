@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -152,6 +152,7 @@ Namespace Drawing3D.Models.Isometric
         Public Sub ScalePath3Ds(origin As Point3D, dx As Double)
             Dim i As Integer = 0
             Dim length As Integer = paths.Count
+
             Do While i < length
                 paths(i) = paths(i).Scale(origin, dx)
                 i += 1

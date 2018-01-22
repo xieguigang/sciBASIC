@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f4b7022d46a4c71f55d77f40a987aea, ..\sciBASIC#\mime\text%yaml\yaml\Syntax\NonSpecificTag.vb"
+﻿#Region "Microsoft.VisualBasic::5f4b7022d46a4c71f55d77f40a987aea, ..\sciBASIC#\mime\text%yaml\Syntax\NonSpecificTag.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

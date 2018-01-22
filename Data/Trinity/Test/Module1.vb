@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c111fb5d5effc09cd916b70827e89f81, ..\sciBASIC#\Data\Trinity\Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::a2c3283e21aecc4303ea3041a2de4e27, ..\sciBASIC#\Data\Trinity\Test\Module1.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,9 +26,8 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
 Imports Microsoft.VisualBasic.Data.NLP
-Imports Microsoft.VisualBasic.Data.visualize.Network
-Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.PageRank
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module1
@@ -45,22 +44,22 @@ The original research paper proposing this algorithm Is
 available here"
 
 
-        s$ = "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
+        '        s$ = "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
 
         Dim ps = TextRank.Sentences(s.TrimNewLine)
-        Dim g As GraphMatrix = ps.TextGraph
+        Dim g As GraphMatrix = ps.TextRankGraph
         Dim pr As New PageRank(g)
         Dim result = g.TranslateVector(pr.ComputePageRank, True)
 
         Call result.GetJson(True).EchoLine
 
-        Dim net = g.GetNetwork
+        'Dim net = g.GetNetwork
 
-        For Each node In net.Nodes
-            node.Properties.Add("PageRank", result(node.ID))
-        Next
+        'For Each node In net.Nodes
+        '    node.Properties.Add("PageRank", result(node.ID))
+        'Next
 
-        Call net.Save("G:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\")
+        'Call net.Save("G:\GCModeller\src\runtime\sciBASIC#\Data\TextRank\")
 
         Pause()
     End Sub

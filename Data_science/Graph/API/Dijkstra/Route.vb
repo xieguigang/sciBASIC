@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::416f104c6df0726440a115bbb08ca3b9, ..\sciBASIC#\Data_science\Graph\API\Dijkstra\Route.vb"
+﻿#Region "Microsoft.VisualBasic::f719f4941b3c4b4c096666b324159b4a, ..\sciBASIC#\Data_science\Graph\API\Dijkstra\Route.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

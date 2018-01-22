@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12cb0fbf62230a143bc8dc376e464300, ..\sciBASIC#\Data\DataFrame\Extensions\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::c4b0f31b72f51916afeca6f62fb4a2ad, ..\sciBASIC#\Data\DataFrame\Extensions\PipeStream.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -89,7 +89,7 @@ Public Module PipeStream
 
         Return source _
             .Select(Function(row)
-                        Return row.ToArray(AddressOf Val)
+                        Return row.Select(AddressOf Val).ToArray
                     End Function) _
             .ToArray
     End Function

@@ -1,48 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::9e0d5f641791421b8bdefbd1ec97ff64, ..\sciBASIC#\mime\text%yaml\yaml\ParserCustom.vb"
+﻿#Region "Microsoft.VisualBasic::4eaa8c8b85ada491dc7caeeede0509c1, ..\sciBASIC#\mime\text%yaml\ParserCustom.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2016 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.IO
 Imports Microsoft.VisualBasic.MIME.text.yaml.Syntax
 
 Namespace Grammar
 
     Partial Public Class YamlParser
 
-        Public Shared Function Load(file__1 As String) As YamlStream
-            Dim text As String = File.ReadAllText(file__1)
+        ''' <summary>
+        ''' 从源文本或者文本文件中解析出YAML数据
+        ''' </summary>
+        ''' <param name="content">Text content data or source link.</param>
+        ''' <returns></returns>
+        Public Shared Function Load(content As String) As YamlStream
+            Dim text As String = content.SolveStream
             Dim input As New TextInput(text)
             Dim parser As New YamlParser()
             Dim success As Boolean
             Dim stream As YamlStream = parser.ParseYamlStream(input, success)
+
             If success Then
                 Return stream
             Else
-                Dim message As String = parser.GetEorrorMessages()
+                Dim message$ = parser.GetEorrorMessages()
                 Throw New Exception(message)
             End If
         End Function

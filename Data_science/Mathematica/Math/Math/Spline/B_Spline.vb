@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbda2bbc4799e0c90de1211062790433, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Spline\B_Spline.vb"
+﻿#Region "Microsoft.VisualBasic::b511b9a248f0561930dd7fd141701196, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Spline\B_Spline.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -49,7 +49,7 @@ Namespace Interpolation
         ''' 
         <Extension>
         Public Function BSpline(ctrlPts As IEnumerable(Of Point), Optional degree% = 5, Optional RESOLUTION% = 10) As List(Of PointF)
-            Return ctrlPts.ToArray(
+            Return ctrlPts.Select(
                 Function(pt) New PointF With {
                     .X = pt.X,
                     .Y = pt.Y
@@ -59,14 +59,15 @@ Namespace Interpolation
         ''' <summary>
         ''' B-spline curve interpolation
         ''' </summary>
-        ''' <param name="ctrlPts">Control points</param>
+        ''' <param name="controlPoints">Control points</param>
         ''' <param name="degree%"></param>
         ''' <param name="RESOLUTION%"></param>
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function Compute(ctrlPts As PointF(), Optional degree% = 5, Optional RESOLUTION% = 10) As List(Of PointF)
+        Public Function Compute(controlPoints As IEnumerable(Of PointF), Optional degree% = 5, Optional RESOLUTION% = 10) As List(Of PointF)
             Dim out As New List(Of PointF)
+            Dim ctrlPts = controlPoints.ToArray
 
             If ctrlPts.Length > 1 Then
                 Dim ustep As Double = 1.0 / (RESOLUTION * (ctrlPts.Length - 1))

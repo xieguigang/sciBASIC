@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e19499531b2c59713d86ef7041417b00, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Field.vb"
+﻿#Region "Microsoft.VisualBasic::eb39a5883d6e1da5e7923c666c41d69e, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Field.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -28,7 +28,7 @@
 
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
-Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace StorageProvider.ComponentModels
 

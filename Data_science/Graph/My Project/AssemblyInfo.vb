@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Graph")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyTitle("Graph and Tree algorithm provider")>
+<Assembly: AssemblyDescription("Graph and Tree algorithm provider")>
+<Assembly: AssemblyCompany("GPL3")>
 <Assembly: AssemblyProduct("Graph")>
-<Assembly: AssemblyCopyright("Copyright ©  2017")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyCopyright("Copyright © xieguigang 2017")>
+<Assembly: AssemblyTrademark("sciBASIC")>
 
 <Assembly: ComVisible(False)>
 

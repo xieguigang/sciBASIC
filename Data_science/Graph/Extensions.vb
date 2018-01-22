@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96daf42242df7345953a4887afd63bb0, ..\sciBASIC#\Data_science\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::dfc043563e1d4277cf7ae638df054aa5, ..\sciBASIC#\Data_science\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -30,6 +30,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Public Module Extensions

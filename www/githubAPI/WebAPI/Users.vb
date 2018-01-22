@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39b1c89d1ff71f63ccecee73fae99be5, ..\sciBASIC#\www\githubAPI\WebAPI\Users.vb"
+﻿#Region "Microsoft.VisualBasic::3f48d0527a05310eeb0a6b9d0c840843, ..\sciBASIC#\www\githubAPI\WebAPI\Users.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)

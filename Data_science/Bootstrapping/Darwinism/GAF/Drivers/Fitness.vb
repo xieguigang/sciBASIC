@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0ee33b830347582ca4a10a2b0906b04, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Drivers\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::8c2d9671922b310b7a34d09608cbcb78, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\Drivers\Fitness.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.Bootstrapping.Darwinism.GAF.ODEs
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.Math.Calculus

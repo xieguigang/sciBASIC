@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6ea7f8acff8bc83f9e7d95fdb047a41, ..\sciBASIC#\Data_science\Mathematica\Math\ODE\ODESolvers\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::68279f369175c08e3014061a826d2d41, ..\sciBASIC#\Data_science\Mathematica\Math\ODE\ODESolvers\Solver.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -27,7 +27,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
 ''' Solving the Ordinary differential equation(ODE) by using trapezoidal method.(使用梯形法求解常微分方程)
@@ -51,18 +54,18 @@ Public Module ODESolver
     ''' <param name="b"></param>
     ''' 
     <Extension>
-    Public Sub Eluer(ByRef df As ODE, n As Integer, a As Double, b As Double)
+    Public Function Eluer(ByRef df As ODE, n As Integer, a As Double, b As Double) As ODEOutput
         Dim h As Double = (b - a) / n
-
-        Call df.Allocate(n, a, b)
-
-        Dim x = df.x, y = df.y
+        Dim out As ODEOutput = df.Allocate(n, a, b)
+        Dim x# = a, y#() = out.Y.Vector
 
         For i As Integer = 1 To n - 1
-            x(i) = a + h * i
-            y(i) = x(i - 1) + h * df(x(i - 1), y(i - 1))
+            y(i) = x + h * df(x, y(i - 1))
+            x = a + h * i
         Next
-    End Sub
+
+        Return out
+    End Function
 
     ''' <summary>
     ''' 二阶龙格库塔法解解微分方程，分块数量为n, 解的区间为[a,b], 解向量为(x,y),方程初值为(x0, y0)
@@ -73,29 +76,35 @@ Public Module ODESolver
     ''' <param name="a"></param>
     ''' <param name="b"></param>
     <Extension>
-    Public Sub RK2(ByRef df As ODE, n As Integer, a As Double, b As Double)
+    Public Function RK2(ByRef df As ODE, n As Integer, a As Double, b As Double) As ODEOutput
         Dim h As Double = (b - a) / n
         Dim k1 As Double, k2 As Double
-
-        Call df.Allocate(n, a, b)
-
-        Dim x = df.x, y = df.y
+        Dim out As ODEOutput = df.Allocate(n, a, b)
+        Dim y#() = out.Y.Vector
+        Dim x# = a
 
         For i As Integer = 1 To n - 1
-            x(i) = a + h * i
-            k1 = df(x(i - 1), y(i - 1))
-            k2 = df(x(i - 1) + h, y(i - 1) + h * k1)
+            k1 = df(x, y(i - 1))
+            k2 = df(x + h, y(i - 1) + h * k1)
             y(i) = y(i - 1) + h / 2 * (k1 + k2)
+            x = a + h * i
         Next
-    End Sub
+
+        Return out
+    End Function
 
     <Extension>
-    Public Sub Allocate(ByRef ode As ODE, n%, a#, b#)
-        ode.x = New Double(n - 1) {}
-        ode.y = New Double(n - 1) {}
-        ode.x(Scan0) = a
-        ode.y(Scan0) = ode.y0
-    End Sub
+    Public Function Allocate(ByRef ode As ODE, n%, a#, b#) As ODEOutput
+        Dim out As New ODEOutput
+
+        out.X = New Sequence(a, b, n)
+        out.Y = New NumericVector With {
+            .Vector = New Double(n - 1) {}
+        }
+        out.Y.Vector(Scan0) = ode.y0
+
+        Return out
+    End Function
 
     ''' <summary>
     ''' 四阶龙格库塔法解解微分方程，分块数量为n, 解的区间为[a,b], 解向量为(x,y),方程初值为(x0, y0)
@@ -107,21 +116,35 @@ Public Module ODESolver
     ''' <param name="b"></param>
     ''' 
     <Extension>
-    Public Sub RK4(ByRef df As ODE, n As Integer, a As Double, b As Double)
+    Public Function RK4(ByRef df As ODE, n As Integer, a As Double, b As Double) As ODEOutput
         Dim h As Double = (b - a) / n
-
-        Call df.Allocate(n, a, b)
-
-        Dim x = df.x, y = df.y
+        Dim out As ODEOutput = df.Allocate(n, a, b)
+        Dim x = a, y#() = out.Y.Vector
         Dim k1, k2, k3, k4 As Double
 
         For i As Integer = 1 To n - 1
-            x(i) = a + h * i
-            k1 = df(x(i - 1), y(i - 1))
-            k2 = df(x(i - 1) + 0.5 * h, y(i - 1) + 0.5 * h * k1)
-            k3 = df(x(i - 1) + 0.5 * h, y(i - 1) + 0.5 * h * k2)
-            k4 = df(x(i - 1) + h, y(i - 1) + h * k3)
+            k1 = df(x, y(i - 1))
+            k2 = df(x + 0.5 * h, y(i - 1) + 0.5 * h * k1)
+            k3 = df(x + 0.5 * h, y(i - 1) + 0.5 * h * k2)
+            k4 = df(x + h, y(i - 1) + h * k3)
             y(i) = y(i - 1) + h / 6 * (k1 + 2 * k2 + 2 * k3 + k4)
+            x = a + h * i
         Next
-    End Sub
+
+        Return out
+    End Function
+
+    <Extension>
+    Public Function DataFrame(out As ODEOutput) As csv
+        Dim csv As New csv
+
+        csv += {"X", "Y"}
+        csv += out.X _
+            .ToArray _
+            .Select(Function(x, i)
+                        Return New RowObject(New String() {x, out.Y(i)})
+                    End Function)
+
+        Return csv
+    End Function
 End Module

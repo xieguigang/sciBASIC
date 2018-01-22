@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01ade74fdb0702091a833c91162d8bbb, ..\sciBASIC#\Data\DataFrame\IO\csv\StreamIO.vb"
+﻿#Region "Microsoft.VisualBasic::df21eb9a9c6bc8db8a3b8d2af1cafdff, ..\sciBASIC#\Data\DataFrame\IO\csv\StreamIO.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -52,7 +52,7 @@ Namespace IO
             Dim scores As New Dictionary(Of Type, Integer)
 
             For Each schema In types.Select(AddressOf SchemaProvider.CreateObject)
-                Dim allNames As String() = schema.Properties.ToArray(Function(x) x.Name)
+                Dim allNames As String() = schema.Properties.Select(Function(x) x.Name).ToArray
                 Dim matches = (From p As String
                                In allNames
                                Where System.Array.IndexOf(head, p) > -1

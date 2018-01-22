@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e91c593ca1b22d939116cd1046604e9c, ..\sciBASIC#\mime\text%html\Markups\StreamWriter\HTMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::4972c07e16cd2e081e91c408810bef63, ..\sciBASIC#\mime\text%html\Markups\StreamWriter\HTMLWriter.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -75,7 +75,7 @@ Namespace StreamWriter
             Dim attrs As String =
                 If(nodeElement.Attributes.IsNullOrEmpty,
                 "",
-                " " & String.Join(" ", nodeElement.Attributes.ToArray(Function(attr) $"{attr.Name}=""{attr.Value}""")))
+                " " & String.Join(" ", nodeElement.Attributes.Select(Function(attr) $"{attr.Name}=""{attr.Value}""").ToArray))
 
             If nodeElement.HtmlElements.IsNullOrEmpty Then
                 Call sbr.Append($"<{nodeElement.Name}{attrs}></{nodeElement.Name}>")

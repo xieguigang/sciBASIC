@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eedd7288ea4c40baa8d1482586ead841, ..\sciBASIC#\vs_solutions\installer\Installer\FormFinish.vb"
+﻿#Region "Microsoft.VisualBasic::3417689633639e994118b879a9e629ac, ..\sciBASIC#\vs_solutions\installer\Installer\FormFinish.vb"
 
     ' Author:
     ' 
@@ -6,7 +6,7 @@
     '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
     ' 
-    ' Copyright (c) 2016 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
