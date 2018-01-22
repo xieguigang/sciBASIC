@@ -47,10 +47,10 @@ Namespace SVG
         ''' Get the current svg model data from current graphics engine.
         ''' </summary>
         ''' <param name="g"></param>
-        ''' <param name="size$"></param>
+        ''' <param name="size$">默认是使用<see cref="GraphicsSVG"/>对象的内部大小</param>
         ''' <returns></returns>
         <Extension>
-        Public Function SVG(g As GraphicsSVG, Optional size$ = "1440,900") As SVGXml
+        Public Function SVG(g As GraphicsSVG, Optional size$ = Nothing) As SVGXml
             Return g.__svgData.GetSVG(size.SizeParser)
         End Function
 

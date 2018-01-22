@@ -41,7 +41,7 @@ Namespace SVG.XML
     ''' <summary>
     ''' The basically SVG XML document node, it can be tweaks on the style by using CSS
     ''' </summary>
-    Public MustInherit Class node ' : Implements IXmlSerializable
+    Public MustInherit Class node : Implements CSSLayer
 
         ''' <summary>
         ''' CSS style definition <see cref="ICSSValue"/>.(请注意，假若是SVG对象则赋值这个属性无效)
@@ -56,6 +56,9 @@ Namespace SVG.XML
         <XmlAttribute> Public Property id As String
         <XmlAttribute> Public Property fill As String
         <XmlAttribute> Public Property stroke As String
+
+        <XmlAttribute("z-index")>
+        Public Property zIndex As Integer Implements CSSLayer.zIndex
 
         ''' <summary>
         ''' 
