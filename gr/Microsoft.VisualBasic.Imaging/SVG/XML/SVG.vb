@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
@@ -38,7 +39,7 @@ Namespace SVG.XML
     ''' <summary>
     ''' The svg vector graphics in Xml document format.
     ''' </summary>
-    <XmlType("svg", [Namespace]:=SVGWriter.Xmlns)> Public Class SVGXml
+    <XmlRoot("svg", [Namespace]:=SVGWriter.Xmlns)> Public Class SVGXml
         Implements ISaveHandle
         Implements ICanvas
 
@@ -95,8 +96,15 @@ Namespace SVG.XML
             height = size.Height & "px"
         End Sub
 
+        ''' <summary>
+        ''' Load SVG object from a specific xml file path or xml file text content.
+        ''' </summary>
+        ''' <param name="xml"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function TryLoad(xml As String) As SVGXml
-            Return xml.LoadFromXml(Of SVGXml)(throwEx:=True)
+            Return xml.SolveStream.LoadFromXml(Of SVGXml)(throwEx:=True)
         End Function
 
         ''' <summary>
@@ -105,6 +113,8 @@ Namespace SVG.XML
         ''' <param name="Path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function SaveAsXml(Optional path$ = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             Return GetSVGXml.SaveTo(path, encoding)
         End Function
@@ -113,6 +123,8 @@ Namespace SVG.XML
         ''' 将当前的这个SVG对象序列化为XML字符串文本
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetSVGXml() As String
             Return GetXml
         End Function
@@ -123,6 +135,8 @@ Namespace SVG.XML
         ''' <param name="Path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SaveAsXml(Optional path$ = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return SaveAsXml(path, encoding.CodePage)
         End Function
