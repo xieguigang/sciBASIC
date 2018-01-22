@@ -165,7 +165,7 @@ Namespace CommandLine
                     ' 在这里使用IsTrue来判断，如果开关存在则返回TRUE字符串
                     ' 否则返回空字符串表示不存在
 
-                    If IsTrue(paramName) Then
+                    If HavebFlag(paramName) Then
                         value = "TRUE"
                     Else
                         value = ""

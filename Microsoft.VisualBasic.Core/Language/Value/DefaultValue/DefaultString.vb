@@ -87,6 +87,16 @@ Namespace Language.Default
             Return str.DefaultValue.ParseBoolean
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator IsTrue(str As DefaultString) As Boolean
+            Return CType(str, Boolean)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator IsFalse(str As DefaultString) As Boolean
+            Return False = CType(str, Boolean)
+        End Operator
+
         ''' <summary>
         ''' If <paramref name="value"/> is empty then returns <paramref name="default"/>, else returns <paramref name="value"/> itself.
         ''' </summary>
