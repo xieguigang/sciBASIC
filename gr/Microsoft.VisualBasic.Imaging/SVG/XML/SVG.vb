@@ -36,6 +36,10 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace SVG.XML
 
+    ' 2018-1-22
+    ' XmlType / XmlRoot是不一样的？
+    ' 如果要修改根节点的xmlns的话，则必须要使用XmlRoot来进行修饰
+
     ''' <summary>
     ''' The svg vector graphics in Xml document format.
     ''' </summary>

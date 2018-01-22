@@ -28,6 +28,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
@@ -101,12 +102,17 @@ Namespace SVG.XML
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property points As String()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return cache
             End Get
             Set(value As String())
-                cache = value
-                data = value.Select(AddressOf FloatPointParser).ToArray
+                cache = value _
+                    .Where(Function(s) Not s.StringEmpty) _
+                    .ToArray
+                data = cache _
+                    .Select(AddressOf FloatPointParser) _
+                    .ToArray
             End Set
         End Property
 
@@ -118,7 +124,9 @@ Namespace SVG.XML
 
         Sub New(pts As IEnumerable(Of PointF))
             data = pts.ToArray
-            cache = data.Select(Function(pt) $"{pt.X},{pt.Y}").ToArray
+            cache = data _
+                .Select(Function(pt) $"{pt.X},{pt.Y}") _
+                .ToArray
         End Sub
 
         Public Shared Operator +(polygon As polygon, offset As PointF) As polygon

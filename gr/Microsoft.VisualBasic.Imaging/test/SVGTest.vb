@@ -52,7 +52,7 @@ Module SVGTest
 
         Call sss.SaveAsXml("./testssss.svg")
 
-        Pause()
+        ' Pause()
 
         Dim svg = SVGXml.TryLoad("D:\GCModeller\src\runtime\sciBASIC#\gr\SVG\Tree_of_life_SVG.svg")
 
