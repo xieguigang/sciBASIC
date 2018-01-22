@@ -43,6 +43,7 @@ Namespace SVG
         Protected Friend circles As New List(Of circle)
         Protected Friend paths As New List(Of path)
         Protected Friend polygons As New List(Of polygon)
+        Protected Friend polylines As New List(Of polyline)
         Protected Friend images As New List(Of XML.Image)
         Protected Friend bg$
         Protected Friend Size As Size
