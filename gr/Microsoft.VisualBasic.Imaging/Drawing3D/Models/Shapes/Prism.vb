@@ -35,14 +35,21 @@ Namespace Drawing3D.Models.Isometric.Shapes
     Public Class Prism : Inherits Shape3D
 
         ''' <summary>
-        ''' x,y,z的边长分别为1
+        ''' 构造一个x,y,z的边长分别为1的正方体
         ''' </summary>
         ''' <param name="origin"></param>
         Public Sub New(origin As Point3D)
             Me.New(origin, 1, 1, 1)
         End Sub
 
-        Public Sub New(origin As Point3D, dx As Double, dy As Double, dz As Double)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="origin">位置</param>
+        ''' <param name="dx#">边长</param>
+        ''' <param name="dy#">边长</param>
+        ''' <param name="dz#">边长</param>
+        Public Sub New(origin As Point3D, dx#, dy#, dz#)
             MyBase.New()
 
             Dim paths As Path3D() = New Path3D(5) {}

@@ -66,6 +66,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Me.projectType = projectType
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return [Declare]
+        End Function
+
         Public Sub LoadFromNode(xn As XmlNode)
             Dim summaryNode As XmlNode = xn.SelectSingleNode("summary")
 
