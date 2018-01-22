@@ -32,7 +32,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Text
 
 Namespace SVG
 
@@ -59,8 +58,8 @@ Namespace SVG
         ''' <param name="path$">``*.svg``保存的SVG文件的路径</param>
         ''' <returns></returns>
         <Extension> Public Function WriteSVG(g As GraphicsSVG, path$, Optional size$ = "1440,900") As Boolean
-            Using file As StreamWriter = path.OpenWriter(Encodings.Unicode)
-                Call g.WriteSVG(out:=file.BaseStream, size:=size)
+            Using file As FileStream = path.Open
+                Call g.WriteSVG(out:=file, size:=size)
                 Return True
             End Using
         End Function
