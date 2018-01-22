@@ -152,7 +152,6 @@ Namespace SVG.XML
 
     Public Class polyline : Inherits node
 
-        <XmlAttribute> Public Property stroke As String
         <XmlAttribute> Public Property points As String()
 
     End Class

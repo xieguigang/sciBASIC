@@ -54,10 +54,8 @@ Public Class Project : Implements ISaveHandle
  _
         () <= From x As PropertyGroup
               In PropertyGroups
-              Where String.Equals(
-                  condition,
-                  x.Condition,
-                  StringComparison.OrdinalIgnoreCase)
+              Where Not x.Condition.StringEmpty AndAlso
+                  condition.TextEquals(x.Condition)
               Select x
 
     End Function
