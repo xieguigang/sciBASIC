@@ -29,8 +29,6 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Text
-Imports System.Xml
-Imports System.Xml.Schema
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS

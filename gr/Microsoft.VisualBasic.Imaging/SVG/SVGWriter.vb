@@ -40,6 +40,9 @@ Namespace SVG
     ''' </summary>
     Public Module SVGWriter
 
+        Public Const Xmlns$ = "http://www.w3.org/2000/svg"
+        Public Const Xlink$ = "http://www.w3.org/1999/xlink"
+
         ''' <summary>
         ''' Get the current svg model data from current graphics engine.
         ''' </summary>
