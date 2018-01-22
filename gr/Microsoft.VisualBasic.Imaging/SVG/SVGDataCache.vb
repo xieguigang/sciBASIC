@@ -66,30 +66,37 @@ Namespace SVG
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(text As XML.text)
             texts += updateLayerIndex(text)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(rect As rect)
             rects += updateLayerIndex(rect)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(line As line)
             lines += updateLayerIndex(line)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(circle As circle)
             circles += updateLayerIndex(circle)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(path As path)
             paths += updateLayerIndex(path)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(polygon As polygon)
             polygons += updateLayerIndex(polygon)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(image As XML.Image)
             images += updateLayerIndex(image)
         End Sub
@@ -154,10 +161,13 @@ Namespace SVG
         ''' <param name="data"></param>
         ''' <param name="offset"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(data As SVGDataCache, offset As Point) As SVGDataCache
             Return data + offset.PointF
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(data As SVGDataCache, offset As PointF) As SVGDataCache
             Return New SVGDataCache With {
                 .bg = data.bg,
