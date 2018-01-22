@@ -74,6 +74,11 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Remarks = type.Remarks
         End Sub
 
+        Friend Sub New(t1 As ProjectType, t2 As ProjectType)
+            projectNamespace = t1.projectNamespace
+            ' fields = (t1.fields.Values.AsList + t2.fields.Values).GroupBy()
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Name
         End Function
