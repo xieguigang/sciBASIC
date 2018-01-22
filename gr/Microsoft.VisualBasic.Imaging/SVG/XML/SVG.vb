@@ -88,6 +88,7 @@ Namespace SVG.XML
         <XmlElement("line")> Public Property lines As line() Implements ICanvas.lines
         <XmlElement("circle")> Public Property circles As circle() Implements ICanvas.circles
         <XmlElement> Public Property title As String Implements ICanvas.title
+        <XmlElement> Public Property polyline As polyline() Implements ICanvas.polyline
 
         Public Sub SetSize(size As Size)
             width = size.Width & "px"
