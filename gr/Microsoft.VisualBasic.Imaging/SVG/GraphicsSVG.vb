@@ -34,6 +34,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace SVG
@@ -222,6 +223,11 @@ Namespace SVG
         End Sub
 
         ''' <summary>
+        ''' Generates the <see cref="CSSLayer"/> index order value.
+        ''' </summary>
+        Dim zlayer As int = 0
+
+        ''' <summary>
         ''' This function will clear entire svg document contents.
         ''' </summary>
         ''' <param name="color"></param>
@@ -235,6 +241,9 @@ Namespace SVG
             __svgData.polylines *= 0
             __svgData.rects *= 0
             __svgData.texts *= 0
+
+            ' reset
+            zlayer = 0
         End Sub
 
         Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)
