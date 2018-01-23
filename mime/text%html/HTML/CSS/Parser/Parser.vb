@@ -49,7 +49,7 @@ Namespace HTML.CSS.Parser
         ''' <summary>
         ''' 主要的CSS解析函数
         ''' </summary>
-        ''' <param name="CSS"></param>
+        ''' <param name="CSS">CSS文本内容</param>
         ''' <returns></returns>
         Public Function GetTagWithCSS(CSS As String) As CSSFile
             Dim TagWithCSSList As New List(Of Selector)
