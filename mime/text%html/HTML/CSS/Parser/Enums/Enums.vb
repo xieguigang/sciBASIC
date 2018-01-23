@@ -56,6 +56,12 @@ Namespace HTML.CSS
     ''' HTML Tags. 
     ''' </summary>
     Public Enum HtmlTags As Integer
+
+        ''' <summary>
+        ''' Invalid tag name
+        ''' </summary>
+        NA = 0
+
         h1
         h2
         h3
@@ -69,6 +75,8 @@ Namespace HTML.CSS
         ul
         li
         table
+        thead
+        tbody
         tr
         th
         nav

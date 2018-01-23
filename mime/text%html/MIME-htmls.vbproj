@@ -476,6 +476,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HTML\CSS\CSSLayer.vb" />
+    <Compile Include="HTML\CSS\Parser\Enums\Extensions.vb" />
     <Compile Include="HTML\CSS\Parser\Selector.vb" />
     <Compile Include="HTML\CSS\Parser\Enums\CssProperty.vb" />
     <Compile Include="HTML\CSS\Size.vb" />

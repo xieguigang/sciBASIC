@@ -24,6 +24,8 @@ Namespace HTML.CSS.Parser
                     Return CSSSelectorTypes.class
                 ElseIf Selector.First = "#" Then
                     Return CSSSelectorTypes.id
+                ElseIf Selector.GetTagValue <> HtmlTags.NA Then
+                    Return CSSSelectorTypes.tag
                 Else
                     Return CSSSelectorTypes.expression
                 End If

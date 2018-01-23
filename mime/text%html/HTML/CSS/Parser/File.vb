@@ -28,7 +28,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace HTML.CSS.Parser
@@ -69,17 +68,14 @@ Namespace HTML.CSS.Parser
         Public ReadOnly Property ByTag As Selector()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Selectors _
-                    .Where(Function(style)
-                               With style.Key.First
-                                   If Not .Equals("."c) AndAlso Not .Equals("#"c) Then
-                                       Return True
-                                   Else
-                                       Return False
-                                   End If
-                               End With
-                           End Function) _
-                    .Values
+                Return GetAllStylesByType(CSSSelectorTypes.tag)
+            End Get
+        End Property
+
+        Public ReadOnly Property ByExpression As Selector()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return GetAllStylesByType(CSSSelectorTypes.expression)
             End Get
         End Property
 
@@ -119,10 +115,10 @@ Namespace HTML.CSS.Parser
         ''' <param name="name$">没有class或者ID的符号前缀的名称</param>
         ''' <param name="type">class还是ID或者还是html的标签名称？</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindStyle(name$, type As CSSSelectorTypes) As Selector
-            With ("." & name) Or ("#" & name).AsDefault(Function() type = CSSSelectorTypes.id)
-                Return GetSelector(.ref)
-            End With
+            Return GetSelector(name.BuildSelector(type))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

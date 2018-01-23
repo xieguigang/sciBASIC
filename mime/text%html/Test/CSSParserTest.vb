@@ -4,7 +4,7 @@ Module CSSParserTest
 
     Sub Main()
 
-        Dim css$ = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\smartnucl.CVD_kb\template\styles\hmp.css"
+        Dim css$ = "D:\GCModeller\src\runtime\sciBASIC#\gr\SVG\demo.css"
 
         Dim file = CssParser.GetTagWithCSS(css.ReadAllText)
 

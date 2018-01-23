@@ -46,6 +46,30 @@ Namespace HTML.CSS.Parser
     ''' </remarks>
     Public Module CssParser
 
+        <Extension>
+        Public Function BuildSelector(name$, type As CSSSelectorTypes) As String
+            Select Case type
+                Case CSSSelectorTypes.class
+                    If name.First <> "."c Then
+                        Return "." & name
+                    Else
+                        Return name
+                    End If
+                Case CSSSelectorTypes.id
+                    If name.First <> "#" Then
+                        Return "#" & name
+                    Else
+                        Return name
+                    End If
+                Case CSSSelectorTypes.tag
+                    Return name
+                Case CSSSelectorTypes.expression
+                    Return name
+                Case Else
+                    Return name
+            End Select
+        End Function
+
         ''' <summary>
         ''' 主要的CSS解析函数
         ''' </summary>
