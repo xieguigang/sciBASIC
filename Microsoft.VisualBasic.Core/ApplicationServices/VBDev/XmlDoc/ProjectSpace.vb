@@ -72,6 +72,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return p
         End Function
 
+        ''' <summary>
+        ''' Batch imports of <see cref="ImportFromXmlDocFile(String)"/>
+        ''' </summary>
+        ''' <param name="path"></param>
         Public Sub ImportFromXmlDocFolder(path As String)
             If Not Directory.Exists(path) Then
                 Throw New InvalidOperationException(path)
@@ -93,6 +97,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Next
         End Sub
 
+        ''' <summary>
+        ''' Imports xdoc document data from a specific xml file.
+        ''' </summary>
+        ''' <param name="path"></param>
         Public Sub ImportFromXmlDocFile(path As String)
             If Not path.FileExists Then
                 Throw New InvalidOperationException(path)
@@ -113,11 +121,14 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
                     Call xd.Load(xr)
 
-                    Dim nameNode As XmlNode = xd.DocumentElement.SelectSingleNode("assembly/name")
+                    Dim nameNode As XmlNode = xd _
+                        .DocumentElement _
+                        .SelectSingleNode("assembly/name")
 
                     If nameNode IsNot Nothing Then
-                        Dim p As Project = Me.EnsureProject(nameNode.InnerText)
-                        p.ProcessXmlDoc(xd)
+                        xml = nameNode.InnerText
+                        Call EnsureProject(xml) _
+                            .ProcessXmlDoc(xd)
                     End If
                 End Using
             End Using
