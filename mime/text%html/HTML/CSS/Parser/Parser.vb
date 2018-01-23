@@ -47,7 +47,7 @@ Namespace HTML.CSS.Parser
     Public Module CssParser
 
         ''' <summary>
-        ''' ��Ҫ��CSS��������
+        ''' 主要的CSS解析函数
         ''' </summary>
         ''' <param name="CSS"></param>
         ''' <returns></returns>
@@ -81,15 +81,15 @@ Namespace HTML.CSS.Parser
         Const IndivisualTagsPattern$ = "(?<selector>(?:(?:[^,{]+),?)*?)\{(?:(?<name>[^}:]+):?(?<value>[^};]+);?)*?\}"
 
         ''' <summary>
-        ''' CSS��ע��������/*��ʼ����*/������
+        ''' CSS的注释总是以/*起始，以*/结束的
         ''' </summary>
         Const CommentBlock$ = "/\*.+?\*/"
 
         ''' <summary>
         ''' ###### 2017-10-1
         ''' 
-        ''' ԭ�����������������û�п��ǵ�ע�͵�����
-        ''' ��CSS֮�д���ע�͵�ʱ����޷�����������
+        ''' 原来的这个解析函数还没有考虑到注释的问题
+        ''' 当CSS之中存在注释的时候就无法正常工作了
         ''' </summary>
         ''' <param name="input"></param>
         ''' <returns></returns>
@@ -97,7 +97,7 @@ Namespace HTML.CSS.Parser
             Dim b As New List(Of String)()
             Dim s As New StringBuilder(input)
 
-            ' ������Ҫ�Ƴ���CSS��ע���ı�
+            ' 首先需要移除掉CSS的注释文本
             For Each block As Match In r.Matches(input, CommentBlock, RegexICSng)
                 Call s.Replace(block.Value, "")
             Next
