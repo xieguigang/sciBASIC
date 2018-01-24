@@ -170,7 +170,8 @@ Public Module Scatter
                          Optional htmlLabel As Boolean = True,
                          Optional ticksY# = -1,
                          Optional preferPositive As Boolean = False,
-                         Optional interplot As Splines = Splines.None) As GraphicsData
+                         Optional interplot As Splines = Splines.None,
+                         Optional densityColor As Boolean = False) As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
@@ -198,7 +199,7 @@ Public Module Scatter
                     Y = YTicks.LinearScale.range(integers:={0, region.Bottom - region.Top})
                 Else
                     X = d3js.scale.linear.domain(XTicks).range(integers:={region.Left, region.Right})
-                    Y = d3js.scale.linear.domain(YTicks).range(integers:={0, region.Bottom - region.Top}) ' Y 为什么是从零开始的？
+                    Y = d3js.scale.linear.domain(YTicks).range(integers:={region.Bottom, region.Top})
                 End If
 
                 Dim scaler As New DataScaler With {
@@ -352,7 +353,7 @@ Public Module Scatter
                 Next
             End Sub
 
-        Return GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
+        Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
     End Function
 
     Public Function Plot(x As Vector,
