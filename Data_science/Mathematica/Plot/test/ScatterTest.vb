@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::344aab29ee9a647d7cfb06c1171d244f, ..\sciBASIC#\Data_science\Mathematica\Plot\Testing\ScatterTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -34,8 +34,12 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Imaging
 
 Module ScatterTest
 
@@ -79,7 +83,24 @@ Module ScatterTest
                           preferPositive:=True).Save($"./line.png")
     End Sub
 
+    Sub qqplotTest()
+        Dim rnd As New Random
+        Dim a = seq(0, 100, 0.23).Select(Function(x) rnd.NextDouble * x).ToArray
+        Dim b = seq(-10, 20, 0.1).ToArray
+
+        Dim set1 As New NamedValue(Of Double())("AAAAA", a)
+        Dim set2 As New NamedValue(Of Double())("BBBBBB", b)
+
+        Call QQPlot.Plot(set1, set2).AsGDIImage.SaveAs("./qqqqqq.png")
+
+
+        Pause()
+    End Sub
+
+
     Sub Main()
+
+        qqplotTest()
 
         StyleTest()
 
