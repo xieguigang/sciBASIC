@@ -196,7 +196,7 @@ Public Module Scatter
                     XTicks = AxisProvider.TryParse(xaxis).AxisTicks
                     YTicks = AxisProvider.TryParse(yaxis).AxisTicks
                     X = XTicks.LinearScale.range(integers:={region.Left, region.Right})
-                    Y = YTicks.LinearScale.range(integers:={0, region.Bottom - region.Top})
+                    Y = YTicks.LinearScale.range(integers:={region.Bottom, region.Top})
                 Else
                     X = d3js.scale.linear.domain(XTicks).range(integers:={region.Left, region.Right})
                     Y = d3js.scale.linear.domain(YTicks).range(integers:={region.Bottom, region.Top})
@@ -209,15 +209,6 @@ Public Module Scatter
                     .AxisTicks = (XTicks, YTicks)
                 }
                 Dim gSize As Size = rect.Size
-
-                'If xaxis.StringEmpty OrElse yaxis.StringEmpty Then
-                '    Mapper = New Mapper(
-                '        serialsData,
-                '        XabsoluteScalling:=XaxisAbsoluteScalling,
-                '        YabsoluteScalling:=YaxisAbsoluteScalling)
-                'Else
-                '    Mapper = New Mapper(x:=xaxis, y:=yaxis, range:=serialsData)
-                'End If
 
                 If drawAxis Then
                     Call g.DrawAxis(
