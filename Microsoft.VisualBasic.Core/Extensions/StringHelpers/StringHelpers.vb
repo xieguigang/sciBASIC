@@ -51,6 +51,17 @@ Imports r = System.Text.RegularExpressions.Regex
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    ''' <summary>
+    ''' Get the first char of the target <see cref="StringBuilder"/> 
+    ''' </summary>
+    ''' <param name="sb"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function First(sb As StringBuilder) As Char
+        Return sb.Chars(Scan0)
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function CreateBuilder(s As String) As StringBuilder

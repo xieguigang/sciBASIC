@@ -1,33 +1,37 @@
 ﻿#Region "Microsoft.VisualBasic::33acba9b10756793a73f6a7b4e816e5d, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\QQPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Quantile
 
 ''' <summary>
 ''' ### Quantile-Quantile Plot
@@ -100,10 +104,42 @@ Public Module QQPlot
     ''' + 2-Sample Chi-Square Test
     ''' + 2-Sample Kolmogorov-Smirnov Test
     ''' </remarks>
-    Public Function Plot(set1 As IEnumerable(Of Double), set2 As IEnumerable(Of Double),
+    Public Function Plot(set1 As NamedValue(Of Double()), set2 As NamedValue(Of Double()),
                          Optional size$ = "2700,3000",
                          Optional padding$ = g.DefaultPadding,
-                         Optional bg$ = "white") As GraphicsData
+                         Optional bg$ = "white",
+                         Optional pointSize! = 5) As GraphicsData
 
+        Dim q1 As QuantileEstimationGK = set1.Value.GKQuantile
+        Dim q2 As QuantileEstimationGK = set2.Value.GKQuantile
+        Dim q#() = seq(0, 1, 0.01).ToArray
+        Dim points As PointData() = q# _
+            .Select(Function(percentage#)
+                        Dim pt As New PointF With {
+                            .X = q1.Query(percentage),
+                            .Y = q2.Query(percentage)
+                        }
+
+                        Return New PointData With {
+                            .pt = pt
+                        }
+                    End Function) _
+            .ToArray
+
+        Dim qqserial As New SerialData With {
+            .color = Color.Black,
+            .PointSize = pointSize,
+            .pts = points,
+            .title = "q-q"
+        }
+
+        Return Scatter.Plot(
+            {qqserial},
+            size,
+            padding,
+            bg,
+            drawLine:=False,
+            Xlabel:=set1.Name,
+            Ylabel:=set2.Name)
     End Function
 End Module

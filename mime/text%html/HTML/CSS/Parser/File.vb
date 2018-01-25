@@ -1,38 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::39431ade7cf33dec8a5e8fc4f4e6cf49, ..\sciBASIC#\mime\text%html\HTML\CSS\Parser\File.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text
 
 Namespace HTML.CSS.Parser
 
@@ -48,8 +44,9 @@ Namespace HTML.CSS.Parser
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ByID As Selector()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return GetAllStylesByType(Types.ID)
+                Return GetAllStylesByType(CSSSelectorTypes.id)
             End Get
         End Property
 
@@ -58,8 +55,9 @@ Namespace HTML.CSS.Parser
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ByClass As Selector()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return GetAllStylesByType(Types.Class)
+                Return GetAllStylesByType(CSSSelectorTypes.class)
             End Get
         End Property
 
@@ -68,18 +66,16 @@ Namespace HTML.CSS.Parser
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ByTag As Selector()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Selectors _
-                    .Where(Function(style)
-                               With style.Key.First
-                                   If Not .Equals("."c) AndAlso Not .Equals("#"c) Then
-                                       Return True
-                                   Else
-                                       Return False
-                                   End If
-                               End With
-                           End Function) _
-                    .Values
+                Return GetAllStylesByType(CSSSelectorTypes.tag)
+            End Get
+        End Property
+
+        Public ReadOnly Property ByExpression As Selector()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return GetAllStylesByType(CSSSelectorTypes.expression)
             End Get
         End Property
 
@@ -105,7 +101,9 @@ Namespace HTML.CSS.Parser
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
-        Public Function GetAllStylesByType(type As Types) As Selector()
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetAllStylesByType(type As CSSSelectorTypes) As Selector()
             Return Selectors.Values _
                 .Where(Function(style) style.Type = type) _
                 .ToArray
@@ -117,70 +115,15 @@ Namespace HTML.CSS.Parser
         ''' <param name="name$">没有class或者ID的符号前缀的名称</param>
         ''' <param name="type">class还是ID或者还是html的标签名称？</param>
         ''' <returns></returns>
-        Public Function FindStyle(name$, type As Types) As Selector
-            With ("." & name) Or ("#" & name).AsDefault(Function() type = Types.ID)
-                Return GetSelector(.ref)
-            End With
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function FindStyle(name$, type As CSSSelectorTypes) As Selector
+            Return GetSelector(name.BuildSelector(type))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return Selectors.Keys.ToArray.GetJson
         End Function
     End Class
-
-    ''' <summary>
-    ''' CSS之中的样式选择器
-    ''' </summary>
-    Public Class Selector : Inherits [Property](Of String)
-        Implements INamedValue
-
-        ''' <summary>
-        ''' 选择器的名称
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Selector As String Implements IKeyedEntity(Of String).Key
-        Public ReadOnly Property Type As Types
-            Get
-                If Selector.First = "."c Then
-                    Return Types.Class
-                ElseIf Selector.First = "#" Then
-                    Return Types.ID
-                Else
-                    Return Types.Unknown
-                End If
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' CSS style value without selector name.
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property CSSValue As String
-            Get
-                Return Properties _
-                    .Select(Function(x) $"{x.Key}: {x.Value};") _
-                    .JoinBy(ASCII.LF)
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Get the selector text name
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property Name As String
-            Get
-                Return Selector.Trim("#"c, "."c)
-            End Get
-        End Property
-
-        Public Overrides Function ToString() As String
-            Return Selector & " { " & CSSValue & " }"
-        End Function
-    End Class
-
-    Public Enum Types As Byte
-        Unknown
-        ID
-        [Class]
-    End Enum
 End Namespace

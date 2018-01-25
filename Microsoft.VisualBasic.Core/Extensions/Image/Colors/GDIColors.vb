@@ -267,7 +267,7 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="exp$"></param>
         ''' <returns></returns>
-        <Extension> Public Function TranslateColor(exp$) As Color
+        <Extension> Public Function TranslateColor(exp$, Optional throwEx As Boolean = True) As Color
             If exp.StringEmpty Then
                 Return Color.Black
             End If
@@ -280,7 +280,7 @@ Namespace Imaging
                 Return ColorTranslator.FromOle(CInt(exp))
             End If
 
-            Return exp.ToColor
+            Return exp.ToColor(throwEx:=throwEx)
         End Function
 
         <Extension>

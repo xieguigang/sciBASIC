@@ -88,6 +88,31 @@ Namespace Language.Default
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(str As DefaultString) As Integer
+            Return str.DefaultValue.ParseDouble
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(str As DefaultString) As Double
+            Return str.DefaultValue.ParseDouble
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(str As DefaultString) As Long
+            Return str.DefaultValue.ParseDouble
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(str As DefaultString) As Single
+            Return str.DefaultValue.ParseDouble
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(str As DefaultString) As Short
+            Return str.DefaultValue.ParseDouble
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator IsTrue(str As DefaultString) As Boolean
             Return CType(str, Boolean)
         End Operator

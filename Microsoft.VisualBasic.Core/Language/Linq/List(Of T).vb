@@ -573,6 +573,10 @@ Namespace Language
             Next
         End Function
 
+        ''' <summary>
+        ''' Get the <see cref="Last"/> element value and then removes the last element.
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Pop() As T
             Dim out = Last
             Call Me.RemoveLast

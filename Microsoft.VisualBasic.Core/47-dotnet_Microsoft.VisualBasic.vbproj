@@ -758,6 +758,8 @@
     <Compile Include="ComponentModel\DataSource\Abstract.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\QueryCache.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\NamedValueList.vb" />
+    <Compile Include="ComponentModel\DataStructures\Set\BadBehaviourResponses.vb" />
+    <Compile Include="ComponentModel\DataStructures\Set\StringSet.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetsExtension.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Extensions.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb" />
@@ -839,6 +841,7 @@
     <Compile Include="Extensions\Reflection\Methods.vb" />
     <Compile Include="Extensions\Reflection\Parameters\Simple.vb" />
     <Compile Include="Extensions\Reflection\Parameters\ParamLogUtility.vb" />
+    <Compile Include="Extensions\ValueTypes\RangeExtensions.vb" />
     <Compile Include="Extensions\WebServices\HttpGet.vb" />
     <Compile Include="Language\Linq\Assert\AssertEqualsExtensions.vb" />
     <Compile Include="Language\Linq\Assert\VectorAssert.vb" />
