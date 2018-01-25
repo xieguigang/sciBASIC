@@ -43,7 +43,13 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
         Protected projectNamespace As ProjectNamespace
         Protected fields As Dictionary(Of String, ProjectMember)
+        ''' <summary>
+        ''' 因为属性存在参数，所以可能会出现重载的情况
+        ''' </summary>
         Protected properties As Dictionary(Of String, List(Of ProjectMember))
+        ''' <summary>
+        ''' 会出现重载函数，所以这里也应该是一个list
+        ''' </summary>
         Protected methods As Dictionary(Of String, List(Of ProjectMember))
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
@@ -84,46 +90,44 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return Name
         End Function
 
-        Public Function GetMethod(methodName As String) As ProjectMember
-            If Me.methods.ContainsKey(methodName.ToLower()) Then
-                Return Me.methods(methodName.ToLower())
-            End If
-
-            Return Nothing
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetMethods(methodName As String) As List(Of ProjectMember)
+            Return getInternal(methods, methodName.ToLower)
         End Function
 
         Public Function EnsureMethod(methodName As String) As ProjectMember
-            Dim pm As ProjectMember = Me.GetMethod(methodName)
+            Dim pmlist As List(Of ProjectMember) = Me.GetMethods(methodName)
+            Dim pm As New ProjectMember(Me) With {
+                .Name = methodName
+            }
 
-            If pm Is Nothing Then
-                pm = New ProjectMember(Me) With {
-                    .Name = methodName
-                }
-
-                Me.methods.Add(methodName.ToLower(), pm)
-            End If
+            Call pmlist.Add(pm)
 
             Return pm
         End Function
 
-        Public Function GetProperty(propertyName As String) As ProjectMember
-            If Me.properties.ContainsKey(propertyName.ToLower()) Then
-                Return Me.properties(propertyName.ToLower())
+        Private Shared Function getInternal(ByRef table As Dictionary(Of String, List(Of ProjectMember)), name$) As List(Of ProjectMember)
+            If table.ContainsKey(name) Then
+                Return table(name)
+            Else
+                Dim list As New List(Of ProjectMember)
+                table.Add(name, list)
+                Return list
             End If
+        End Function
 
-            Return Nothing
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetProperties(propertyName As String) As List(Of ProjectMember)
+            Return getInternal(properties, propertyName.ToLower)
         End Function
 
         Public Function EnsureProperty(propertyName As String) As ProjectMember
-            Dim pm As ProjectMember = Me.GetProperty(propertyName)
+            Dim pmlist As List(Of ProjectMember) = Me.GetProperties(propertyName)
+            Dim pm As New ProjectMember(Me) With {
+                .Name = propertyName
+            }
 
-            If pm Is Nothing Then
-                pm = New ProjectMember(Me) With {
-                    .Name = propertyName
-                }
-
-                Me.properties.Add(propertyName.ToLower(), pm)
-            End If
+            Call pmlist.Add(pm)
 
             Return pm
         End Function

@@ -140,8 +140,12 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
                             If typeChar = "M"c Then
                                 pt.EnsureMethod(memberShortName).LoadFromNode(memberNode)
-                            ElseIf typeChar = "P"c OrElse typeChar = "F" Then
+                            ElseIf typeChar = "P"c Then
                                 pt.EnsureProperty(memberShortName).LoadFromNode(memberNode)
+                            ElseIf typeChar = "F" Then
+                                pt.EnsureField(memberShortName).LoadFromNode(memberNode)
+                            Else
+                                Throw New NotImplementedException
                             End If
                         End If
                     End If

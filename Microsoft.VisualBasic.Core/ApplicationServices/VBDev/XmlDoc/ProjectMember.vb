@@ -32,6 +32,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
@@ -73,9 +74,14 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
         Public Sub LoadFromNode(xn As XmlNode)
             Dim summaryNode As XmlNode = xn.SelectSingleNode("summary")
+            Dim [declare] As NamedValue(Of String) = xn _
+                .Attributes _
+                .GetNamedItem("name") _
+                .InnerText _
+                .Trim(ASCII.CR, ASCII.LF, " ") _
+                .GetTagValue(":", trim:=True)
 
-            [Declare] = xn.Attributes.GetNamedItem("name").InnerText
-            [Declare] = [Declare].Split(":"c).Last
+            Me.Declare = [declare].Value
 
             If summaryNode IsNot Nothing Then
                 Me.Summary = summaryNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
