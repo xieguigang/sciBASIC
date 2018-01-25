@@ -77,6 +77,17 @@ Namespace Scripting
             Next
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AsTable() As Dictionary(Of String, T)
+            Return index.ToDictionary(Function(k, i) k,
+                                      Function(k, i) buffer(i))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetJson() As String
+            Return AsTable.GetJson
+        End Function
+
         Public Overrides Function ToString() As String
             Return index.Keys.ToArray.GetJson
         End Function
@@ -105,6 +116,11 @@ Namespace Scripting
                 .index = index,
                 .buffer = vector
             }
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(vector As NamedVector) As Dictionary(Of String, Double)
+            Return vector.AsTable
         End Operator
 
         Public Shared Operator *(A As NamedVector, B As NamedVector) As NamedVector
