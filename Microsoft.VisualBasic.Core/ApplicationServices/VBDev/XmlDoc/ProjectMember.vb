@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::b55834792f2d68294f7be4aa8d6a6806, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectMember.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,7 +32,9 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
 
@@ -72,24 +74,29 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
         Public Sub LoadFromNode(xn As XmlNode)
             Dim summaryNode As XmlNode = xn.SelectSingleNode("summary")
+            Dim [declare] As NamedValue(Of String) = xn _
+                .Attributes _
+                .GetNamedItem("name") _
+                .InnerText _
+                .Trim(ASCII.CR, ASCII.LF, " ") _
+                .GetTagValue(":", trim:=True)
 
-            [Declare] = xn.Attributes.GetNamedItem("name").InnerText
-            [Declare] = [Declare].Split(":"c).Last
+            Me.Declare = [declare].Value
 
             If summaryNode IsNot Nothing Then
-                Me._Summary = summaryNode.InnerText
+                Me.Summary = summaryNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
             End If
 
             Dim returnsNode As XmlNode = xn.SelectSingleNode("returns")
 
             If returnsNode IsNot Nothing Then
-                Me._Returns = returnsNode.InnerText
+                Me.Returns = returnsNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
             End If
 
             Dim remarksNode As XmlNode = xn.SelectSingleNode("remarks")
 
             If remarksNode IsNot Nothing Then
-                Me.Remarks = remarksNode.InnerText
+                Me.Remarks = remarksNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
             End If
 
             Dim ns = xn.SelectNodes("param")
@@ -97,13 +104,18 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             If Not ns Is Nothing Then
                 Dim args As New List(Of param)
                 Dim text$
+                Dim name$
 
                 For Each x As XmlNode In ns
                     text = x.InnerText Or "-".AsDefault(Function()
                                                             Return Strings.Trim(x.InnerText).IsNullOrEmpty
                                                         End Function)
+                    name = x.Attributes _
+                        .GetNamedItem("name") _
+                        .InnerText _
+                        .Trim(ASCII.CR, ASCII.LF, " ")
                     args += New param With {
-                        .name = x.Attributes.GetNamedItem("name").InnerText,
+                        .name = name,
                         .text = (text)
                     }
                 Next

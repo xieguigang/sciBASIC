@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::db99d3ebc683c8bfbf541bc5288c2fb3, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Project.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml
+Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
 
@@ -52,7 +53,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         End Property
 
         Public Sub New(name As String)
-            _Name = name
+            _Name = name.Trim(ASCII.CR, ASCII.LF, " ")
             _namespaces = New Dictionary(Of String, ProjectNamespace)()
         End Sub
 
@@ -87,7 +88,9 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         End Function
 
         Friend Sub ProcessXmlDoc(document As XmlDocument)
-            Dim memberNodes As XmlNodeList = document.DocumentElement.SelectNodes("members/member")
+            Dim memberNodes As XmlNodeList = document _
+                .DocumentElement _
+                .SelectNodes("members/member")
 
             For Each memberNode As XmlNode In memberNodes
                 Dim memberDescription As String = memberNode.Attributes.GetNamedItem("name").InnerText
@@ -97,59 +100,75 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                     Dim typeChar As Char = memberDescription(0)
 
                     If typeChar = "T"c Then
-                        Dim typeFullName As String = memberDescription.Substring(2, memberDescription.Length - 2)
-                        Dim lastPeriod As Integer = typeFullName.LastIndexOf(".")
-
-                        lastPeriod = typeFullName.LastIndexOf(".")
-
-                        If lastPeriod > 0 Then
-                            Dim namespaceFullName As String = typeFullName.Substring(0, lastPeriod)
-                            Dim typeShortName As String = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
-
-                            Me.EnsureNamespace(namespaceFullName).EnsureType(typeShortName).LoadFromNode(memberNode)
-                        End If
+                        Call processType(memberNode, memberDescription)
                     Else
-                        Dim memberFullName As String = memberDescription.Substring(2, memberDescription.Length - 2)
-                        Dim firstParen As Integer = memberFullName.IndexOf("(")
+                        Call processMember(memberNode, memberDescription, typeChar)
+                    End If
+                End If
+            Next
+        End Sub
 
-                        If firstParen > 0 Then
-                            memberFullName = memberFullName.Substring(0, firstParen)
-                        End If
+        Private Sub processMember(memberNode As XmlNode, memberDescription$, typeChar As Char)
+            Dim memberFullName As String = memberDescription.Substring(2, memberDescription.Length - 2)
+            Dim firstParen As Integer = memberFullName.IndexOf("(")
 
-                        Dim lastPeriod As Integer = memberFullName.LastIndexOf(".")
+            If firstParen > 0 Then
+                memberFullName = memberFullName.Substring(0, firstParen)
+            End If
+
+            Dim lastPeriod As Integer = memberFullName.LastIndexOf(".")
+
+            If lastPeriod > 0 Then
+                Dim typeFullName As String = memberFullName.Substring(0, lastPeriod)
+
+                lastPeriod = typeFullName.LastIndexOf(".")
+
+                If lastPeriod > 0 Then
+                    Dim namespaceFullName As String = typeFullName.Substring(0, lastPeriod)
+
+                    lastPeriod = typeFullName.LastIndexOf(".")
+
+                    If lastPeriod > 0 Then
+                        Dim typeShortName As String = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
+
+                        lastPeriod = memberFullName.LastIndexOf(".")
 
                         If lastPeriod > 0 Then
-                            Dim typeFullName As String = memberFullName.Substring(0, lastPeriod)
+                            Dim memberShortName As String = memberFullName.Substring(lastPeriod + 1, memberFullName.Length - (lastPeriod + 1))
+                            Dim pn As ProjectNamespace = Me.EnsureNamespace(namespaceFullName)
+                            Dim pt As ProjectType = pn.EnsureType(typeShortName)
 
-                            lastPeriod = typeFullName.LastIndexOf(".")
-
-                            If lastPeriod > 0 Then
-                                Dim namespaceFullName As String = typeFullName.Substring(0, lastPeriod)
-
-                                lastPeriod = typeFullName.LastIndexOf(".")
-
-                                If lastPeriod > 0 Then
-                                    Dim typeShortName As String = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
-
-                                    lastPeriod = memberFullName.LastIndexOf(".")
-
-                                    If lastPeriod > 0 Then
-                                        Dim memberShortName As String = memberFullName.Substring(lastPeriod + 1, memberFullName.Length - (lastPeriod + 1))
-                                        Dim pn As ProjectNamespace = Me.EnsureNamespace(namespaceFullName)
-                                        Dim pt As ProjectType = pn.EnsureType(typeShortName)
-
-                                        If typeChar = "M"c Then
-                                            pt.EnsureMethod(memberShortName).LoadFromNode(memberNode)
-                                        ElseIf typeChar = "P"c OrElse typeChar = "F" Then
-                                            pt.EnsureProperty(memberShortName).LoadFromNode(memberNode)
-                                        End If
-                                    End If
-                                End If
+                            If typeChar = "M"c Then
+                                pt.EnsureMethod(memberShortName).LoadFromNode(memberNode)
+                            ElseIf typeChar = "P"c Then
+                                pt.EnsureProperty(memberShortName).LoadFromNode(memberNode)
+                            ElseIf typeChar = "F"c Then
+                                pt.EnsureField(memberShortName).LoadFromNode(memberNode)
+                            ElseIf typeChar = "E"c Then
+                                pt.EnsureEvent(memberShortName).LoadFromNode(memberNode)
+                            Else
+                                Throw New NotImplementedException
                             End If
                         End If
                     End If
                 End If
-            Next
+            End If
+        End Sub
+
+        Private Sub processType(memberNode As XmlNode, memberDescription$)
+            Dim typeFullName As String = memberDescription.Substring(2, memberDescription.Length - 2)
+            Dim lastPeriod As Integer = typeFullName.LastIndexOf(".")
+
+            lastPeriod = typeFullName.LastIndexOf(".")
+
+            If lastPeriod > 0 Then
+                Dim namespaceFullName As String = typeFullName.Substring(0, lastPeriod)
+                Dim typeShortName As String = typeFullName.Substring(lastPeriod + 1, typeFullName.Length - (lastPeriod + 1))
+
+                Call EnsureNamespace(namespaceFullName) _
+                    .EnsureType(typeShortName) _
+                    .LoadFromNode(memberNode)
+            End If
         End Sub
     End Class
 End Namespace
