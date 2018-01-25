@@ -50,16 +50,16 @@ Public Module LeastSquares
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function LinearFit(x As List(Of Double), y As List(Of Double)) As FittedResult
+    Public Function LinearFit(x As List(Of Double), y As List(Of Double)) As FitResult
         Return LinearFit(x.ToArray, y.ToArray, SeriesLength(x, y))
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function LinearFit(x As Double(), y As Double()) As FittedResult
+    Public Function LinearFit(x As Double(), y As Double()) As FitResult
         Return LinearFit(x.ToArray, y.ToArray, SeriesLength(x, y))
     End Function
 
-    Public Function LinearFit(x As Double(), y As Double(), length As Integer) As FittedResult
+    Public Function LinearFit(x As Double(), y As Double(), length As Integer) As FitResult
         Dim t1 As Double = 0, t2 As Double = 0, t3 As Double = 0, t4 As Double = 0
         Dim factor#() = New Double(1) {}
 
@@ -73,7 +73,7 @@ Public Module LeastSquares
         factor(1) = (t3 * length - t2 * t4) / (t1 * length - t2 * t2)
         factor(0) = (t1 * t4 - t2 * t3) / (t1 * length - t2 * t2)
 
-        Dim result As New FittedResult With {
+        Dim result As New FitResult With {
             .Polynomial = New Polynomial With {
                 .Factors = factor
             }
@@ -93,7 +93,7 @@ Public Module LeastSquares
     ''' <param name="poly_n">期望拟合的阶数，若poly_n=2，则y=a0+a1*x+a2*x^2</param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function PolyFit(x As List(Of Double), y As List(Of Double), poly_n As Integer) As FittedResult
+    Public Function PolyFit(x As List(Of Double), y As List(Of Double), poly_n As Integer) As FitResult
         Return PolyFit(x.ToArray, y.ToArray, SeriesLength(x, y), poly_n)
     End Function
 
@@ -105,11 +105,11 @@ Public Module LeastSquares
     ''' <param name="poly_n%">最高的阶数</param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function PolyFit(x#(), y#(), poly_n%) As FittedResult
+    Public Function PolyFit(x#(), y#(), poly_n%) As FitResult
         Return PolyFit(x.ToArray, y.ToArray, SeriesLength(x, y), poly_n)
     End Function
 
-    Public Function PolyFit(x As Double(), y As Double(), length As Integer, poly_n As Integer) As FittedResult
+    Public Function PolyFit(x As Double(), y As Double(), length As Integer, poly_n As Integer) As FitResult
 
         Dim i As Integer
         Dim j As Integer
@@ -119,7 +119,7 @@ Public Module LeastSquares
         Dim sumxx As New List(Of Double)(poly_n * 2 + 1, fill:=0)
         Dim ata As New List(Of Double)((poly_n + 1) * (poly_n + 1), fill:=0)
         Dim sumxy As New List(Of Double)(poly_n + 1, fill:=0)
-        Dim result As New FittedResult With {
+        Dim result As New FitResult With {
             .Polynomial = New Polynomial With {
                 .Factors = New Double(poly_n) {}
             }
@@ -168,7 +168,7 @@ Public Module LeastSquares
         Return If(xl > yl, yl, xl)
     End Function
 
-    Private Sub calcError(x As Double(), y As Double(), length As Integer, ByRef result As FittedResult)
+    Private Sub calcError(x As Double(), y As Double(), length As Integer, ByRef result As FitResult)
         Dim mean_y As Double = y.Sum / length
         Dim yi#
         Dim err As New List(Of TestPoint)

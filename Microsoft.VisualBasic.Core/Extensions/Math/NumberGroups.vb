@@ -38,6 +38,9 @@ Namespace Math
     ''' </summary>
     Public Module NumberGroups
 
+        ''' <summary>
+        ''' The numeric vector model
+        ''' </summary>
         Public Interface IVector
             ReadOnly Property Data As Double()
         End Interface
@@ -96,17 +99,18 @@ Namespace Math
         ''' <param name="offsets"></param>
         ''' <returns></returns>
         <Extension> Public Function GroupBy(source As IEnumerable(Of Double), offsets#) As Dictionary(Of String, Double())
-            Dim data = source.AsList
+            Dim data As List(Of Double) = source.AsList
             Dim groups As New Dictionary(Of String, List(Of Double))
 
             Do While data.Count > 0
-                Dim x As Double = data.First
+                Dim x As Double = data.Pop
                 Dim hit As Boolean = False
 
                 For Each group In groups.Values
                     If Abs(group.Average - x) <= offsets Then
                         group.Add(x)
                         hit = True
+                        Exit For
                     End If
                 Next
 
@@ -131,7 +135,7 @@ Namespace Math
         Public Function Groups(Of TagObject As INumberTag)(source As IEnumerable(Of TagObject), offset As Integer) As GroupResult(Of TagObject, Integer)()
             Dim list As New List(Of GroupResult(Of TagObject, Integer))
             Dim orders As TagObject() = (From x As TagObject
-                                     In source
+                                         In source
                                          Select x
                                          Order By x.Tag Ascending).ToArray
             Dim tag As TagObject = orders(Scan0)
@@ -156,7 +160,6 @@ Namespace Math
     End Module
 
     Public Interface INumberTag
-
         ReadOnly Property Tag As Integer
     End Interface
 End Namespace
