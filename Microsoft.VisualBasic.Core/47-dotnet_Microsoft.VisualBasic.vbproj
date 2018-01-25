@@ -758,6 +758,8 @@
     <Compile Include="ComponentModel\DataSource\Abstract.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\QueryCache.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\NamedValueList.vb" />
+    <Compile Include="ComponentModel\DataStructures\Set\BadBehaviourResponses.vb" />
+    <Compile Include="ComponentModel\DataStructures\Set\StringSet.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetsExtension.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Extensions.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb" />
