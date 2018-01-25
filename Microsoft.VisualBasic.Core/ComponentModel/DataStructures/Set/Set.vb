@@ -239,7 +239,7 @@ Namespace ComponentModel.DataStructures
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or(s1 As [Set], s2 As [Set]) As [Set]
-            Return New [Set](New [Set](1) {s1, s2})
+            Return New [Set](s1.ToArray + s2.ToArray.AsList, s1._equals)
         End Operator
 
         Public Shared Operator Or(s1 As [Set], s2 As IEnumerable) As [Set]
@@ -394,7 +394,8 @@ Namespace ComponentModel.DataStructures
         ''' <summary>
         ''' Performs cleanup tasks on the <see cref="[Set]">Set</see> object.
         ''' </summary>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)> Public Sub Dispose() Implements IDisposable.Dispose
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Dispose() Implements IDisposable.Dispose
             _members.Clear()
         End Sub
     End Class

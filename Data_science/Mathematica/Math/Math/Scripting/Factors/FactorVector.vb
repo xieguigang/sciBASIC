@@ -84,6 +84,16 @@ Namespace Scripting
 
     Public Class NamedVector : Inherits FactorVector(Of Double)
 
+        Public Sub Add(factor$, value#)
+            If buffer Is Nothing Then
+                buffer = {}
+                index = New Dictionary(Of String, Integer)
+            End If
+
+            Call index.Add(factor, buffer.Length)
+            Call buffer.Add(value)
+        End Sub
+
         Public Shared Widening Operator CType(table As Dictionary(Of String, Double)) As NamedVector
             Dim index As Index(Of String) = table.Keys.Indexing
             Dim vector As Vector = index _
