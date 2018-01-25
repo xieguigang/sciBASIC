@@ -43,8 +43,8 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
         Protected projectNamespace As ProjectNamespace
         Protected fields As Dictionary(Of String, ProjectMember)
-        Protected properties As Dictionary(Of String, ProjectMember)
-        Protected methods As Dictionary(Of String, ProjectMember)
+        Protected properties As Dictionary(Of String, List(Of ProjectMember))
+        Protected methods As Dictionary(Of String, List(Of ProjectMember))
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -61,8 +61,8 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Me.projectNamespace = projectNamespace
 
             Me.fields = New Dictionary(Of String, ProjectMember)()
-            Me.properties = New Dictionary(Of String, ProjectMember)()
-            Me.methods = New Dictionary(Of String, ProjectMember)()
+            Me.properties = New Dictionary(Of String, List(Of ProjectMember))()
+            Me.methods = New Dictionary(Of String, List(Of ProjectMember))()
         End Sub
 
         Protected Sub New(type As ProjectType)
