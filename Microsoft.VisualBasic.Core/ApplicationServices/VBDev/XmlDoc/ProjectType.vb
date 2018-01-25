@@ -39,10 +39,16 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
     ''' <summary>
     ''' A type within a project namespace.
     ''' </summary>
+    ''' <remarks>
+    ''' Fields和Events都不允许重载，但是属性和函数都可以重载
+    ''' </remarks>
     Public Class ProjectType
 
         Protected projectNamespace As ProjectNamespace
+
         Protected fields As Dictionary(Of String, ProjectMember)
+        Protected events As Dictionary(Of String, ProjectMember)
+
         ''' <summary>
         ''' 因为属性存在参数，所以可能会出现重载的情况
         ''' </summary>
@@ -69,6 +75,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Me.fields = New Dictionary(Of String, ProjectMember)()
             Me.properties = New Dictionary(Of String, List(Of ProjectMember))()
             Me.methods = New Dictionary(Of String, List(Of ProjectMember))()
+            Me.events = New Dictionary(Of String, ProjectMember)
         End Sub
 
         Protected Sub New(type As ProjectType)
@@ -149,6 +156,28 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                 }
 
                 Me.fields.Add(fieldName.ToLower(), pm)
+            End If
+
+            Return pm
+        End Function
+
+        Public Function GetEvent(eventName As String) As ProjectMember
+            If Me.events.ContainsKey(eventName.ToLower()) Then
+                Return Me.events(eventName.ToLower())
+            End If
+
+            Return Nothing
+        End Function
+
+        Public Function EnsureEvent(eventName As String) As ProjectMember
+            Dim pm As ProjectMember = Me.GetField(eventName)
+
+            If pm Is Nothing Then
+                pm = New ProjectMember(Me) With {
+                    .Name = eventName
+                }
+
+                Me.fields.Add(eventName.ToLower(), pm)
             End If
 
             Return pm

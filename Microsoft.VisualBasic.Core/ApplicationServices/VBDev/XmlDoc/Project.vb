@@ -142,8 +142,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                                 pt.EnsureMethod(memberShortName).LoadFromNode(memberNode)
                             ElseIf typeChar = "P"c Then
                                 pt.EnsureProperty(memberShortName).LoadFromNode(memberNode)
-                            ElseIf typeChar = "F" Then
+                            ElseIf typeChar = "F"c Then
                                 pt.EnsureField(memberShortName).LoadFromNode(memberNode)
+                            ElseIf typeChar = "E"c Then
+                                pt.EnsureEvent(memberShortName).LoadFromNode(memberNode)
                             Else
                                 Throw New NotImplementedException
                             End If
