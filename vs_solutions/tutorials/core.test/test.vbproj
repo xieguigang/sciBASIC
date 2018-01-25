@@ -118,6 +118,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="devToolTest.vb" />
     <Compile Include="treeTest.vb" />
     <Compile Include="TableTest.vb" />
     <Compile Include="reflectionTest.vb" />

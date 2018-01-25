@@ -77,13 +77,13 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             [Declare] = [Declare].Split(":"c).Last
 
             If summaryNode IsNot Nothing Then
-                Me._Summary = summaryNode.InnerText
+                Me.Summary = summaryNode.InnerText
             End If
 
             Dim returnsNode As XmlNode = xn.SelectSingleNode("returns")
 
             If returnsNode IsNot Nothing Then
-                Me._Returns = returnsNode.InnerText
+                Me.Returns = returnsNode.InnerText
             End If
 
             Dim remarksNode As XmlNode = xn.SelectSingleNode("remarks")
