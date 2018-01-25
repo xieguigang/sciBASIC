@@ -79,8 +79,9 @@ Namespace Scripting
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function AsTable() As Dictionary(Of String, T)
-            Return index.ToDictionary(Function(k, i) k,
-                                      Function(k, i) buffer(i))
+            Return index _
+                .ToDictionary(Function(k, i) k,
+                              Function(k, i) buffer(i))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -104,6 +105,15 @@ Namespace Scripting
             Call index.Add(factor, buffer.Length)
             Call buffer.Add(value)
         End Sub
+
+        Public Overloads Function GetJson(format As String) As String
+            Dim table = AsTable() _
+                .ToDictionary(Function(key, v) key,
+                              Function(key, v)
+                                  Return v.ToString(format)
+                              End Function)
+            Return table.GetJson
+        End Function
 
         Public Shared Widening Operator CType(table As Dictionary(Of String, Double)) As NamedVector
             Dim index As Index(Of String) = table.Keys.Indexing
