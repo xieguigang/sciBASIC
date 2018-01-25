@@ -40,7 +40,7 @@ Namespace Scripting
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(vector As NamedVector) As Dictionary(Of String, Double)
+        Public Overloads Shared Narrowing Operator CType(vector As NamedVector) As Dictionary(Of String, Double)
             Return vector.AsTable
         End Operator
 
