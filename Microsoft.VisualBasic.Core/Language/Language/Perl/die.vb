@@ -65,6 +65,9 @@ Namespace Language.Perl
                 ElseIf .ImplementInterface(GetType(IsEmpty)) Then
                     Return DirectCast(obj, IsEmpty).IsEmpty
 
+                ElseIf .ref Is GetType(TimeSpan) Then
+                    Return DirectCast(obj, TimeSpan) = TimeSpan.Zero
+
                 Else
                     Return False ' False表示没有错误
                 End If

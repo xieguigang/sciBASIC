@@ -161,8 +161,14 @@ Namespace Academic
 
             Return New ArticleProfile With {
                 .title = title,
-                .abstract = abstract,
-                .authors = authors.Where(Function(l) l.href <> "javascript:void(0);").ToArray,
+                .abstract = abstract _
+                    .SplitParagraph(len:=200) _
+                    .JoinBy(ASCII.LF),
+                .authors = authors _
+                    .Where(Function(l)
+                               Return l.href <> "javascript:void(0);"
+                           End Function) _
+                    .ToArray,
                 .DOI = doi,
                 .issue = issue,
                 .journal = journal,

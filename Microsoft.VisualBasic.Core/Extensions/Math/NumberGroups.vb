@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::1585693a19d1d942ebc15ac34e45c0ac, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Math
 
@@ -52,7 +53,7 @@ Namespace Math
             Dim result As Double = mins.Sum(Function(tt) tt.Tag)
 
             With target
-                For Each x In mins.Select(Function(o) o.value)
+                For Each x In mins.Select(Function(o) o.Value)
                     Call .Remove(item:=x)
                     If .Count = 0 Then
                         Exit For
@@ -88,7 +89,7 @@ Namespace Math
 
             Return New DoubleTagged(Of T) With {
                 .Tag = minV,
-                .value = minX
+                .Value = minX
             }
         End Function
 
@@ -98,30 +99,53 @@ Namespace Math
         ''' <param name="source"></param>
         ''' <param name="offsets"></param>
         ''' <returns></returns>
-        <Extension> Public Function GroupBy(source As IEnumerable(Of Double), offsets#) As Dictionary(Of String, Double())
-            Dim data As List(Of Double) = source.AsList
-            Dim groups As New Dictionary(Of String, List(Of Double))
+        <Extension> Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), offsets#) As NamedCollection(Of T)()
+            Dim data As List(Of T) = source.AsList
+            Dim tmp As New With {
+                .values = New List(Of Double),
+                .list = New List(Of T)
+            }
+            Dim groups = {
+                tmp
+            }.ToDictionary(Function(null) "",
+                           Function(obj) obj)
+
+            Call groups.Clear()
 
             Do While data.Count > 0
-                Dim x As Double = data.Pop
+                Dim x As T = data.Pop
                 Dim hit As Boolean = False
+                Dim value# = evaluate(x)
 
                 For Each group In groups.Values
-                    If Abs(group.Average - x) <= offsets Then
-                        group.Add(x)
+                    If Abs(group.values.Average - value) <= offsets Then
+                        group.values.Add(value)
+                        group.list.Add(x)
                         hit = True
                         Exit For
                     End If
                 Next
 
                 If Not hit Then
-                    groups.Add(x, New List(Of Double) From {x})
+                    tmp = New With {
+                        .values = New List(Of Double),
+                        .list = New List(Of T)
+                    }
+                    tmp.values.Add(value)
+                    tmp.list.Add(x)
+                    groups.Add(value, tmp)
                 End If
             Loop
 
             Return groups _
-                .ToDictionary(Function(x) x.Key,
-                              Function(g) g.Value.ToArray)
+                .Select(Function(tuple)
+                            Return New NamedCollection(Of T) With {
+                                .Name = tuple.Key,
+                                .Value = tuple.Value.list
+                            }
+                        End Function) _
+                .OrderBy(Function(tuple) Val(tuple.Name)) _
+                .ToArray
         End Function
 
         ''' <summary>

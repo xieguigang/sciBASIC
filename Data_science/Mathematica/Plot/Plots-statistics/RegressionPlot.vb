@@ -18,7 +18,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Public Module RegressionPlot
 
     <Extension>
-    Public Function Plot(fit As FittedResult,
+    Public Function Plot(fit As FitResult,
                          Optional size$ = "2100,1600",
                          Optional bg$ = "white",
                          Optional margin$ = g.DefaultPadding,
