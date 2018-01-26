@@ -156,6 +156,13 @@ Public Module KeyValuePairExtensions
         Next
     End Function
 
+    <Extension>
+    Public Iterator Function EnumerateTuples(Of K, V)(table As IEnumerable(Of KeyValuePair(Of K, V))) As IEnumerable(Of (tag As K, obj As V))
+        For Each entry In table
+            Yield (entry.Key, entry.Value)
+        Next
+    End Function
+
     <Extension> Public Function AsNamedVector(Of T)(groups As IEnumerable(Of IGrouping(Of String, T))) As IEnumerable(Of NamedCollection(Of T))
         Return groups.Select(Function(group)
                                  Return New NamedCollection(Of T) With {

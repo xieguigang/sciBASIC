@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::34278e2f17d90c572007b17f53677f36, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\Uid.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Linq
@@ -39,6 +40,7 @@ Namespace Language
         ''' index collection of array <see cref="__chars"/>
         ''' </summary>
         Dim chars As List(Of Integer)
+        Dim value As Integer = 0
 
         ReadOnly __chars As Char() = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         ReadOnly __upbound As Integer = __chars.Length - 1
@@ -142,6 +144,7 @@ Namespace Language
             End If
 
             chars(l) = n
+            Me.value += 1
 
             Return move
         End Function
@@ -170,24 +173,29 @@ Namespace Language
         ''' </summary>
         ''' <param name="i"></param>
         ''' <returns></returns>
-        Public Shared Operator +(i As Uid) As Uid
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(i As Uid) As SeqValue(Of String)
             Call i.__plus(i.chars.Count - 1)
-            Return i
+            Return New SeqValue(Of String)(i.value, i.ToString)
         End Operator
 
         ''' <summary>
         ''' 直接字符串序列，不会产生步进前移
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return New String(
-                chars.Select(Function(x) __chars(x)).ToArray)
+            Return chars.Select(Function(x) __chars(x)).CharString
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator &(i As Uid, s$) As String
             Return i.ToString & s
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(i As Uid) As String
             Return i.ToString
         End Operator
