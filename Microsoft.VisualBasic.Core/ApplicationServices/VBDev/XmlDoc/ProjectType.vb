@@ -32,7 +32,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml
+Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
 
@@ -90,7 +92,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
         Friend Sub New(t1 As ProjectType, t2 As ProjectType)
             projectNamespace = t1.projectNamespace
-            ' fields = (t1.fields.Values.AsList + t2.fields.Values).GroupBy()
+            fields = (t1.fields.Values.AsList + t2.fields.Values).GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.Sum)
+            events = (t1.events.Values.AsList + t2.events.Values).GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.Sum)
+            properties = (t1.properties.Values.AsList + t2.properties.Values).IteratesALL.GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.ToList)
+            methods = (t1.methods.Values.AsList + t2.methods.Values).IteratesALL.GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.ToList)
         End Sub
 
         Public Overrides Function ToString() As String

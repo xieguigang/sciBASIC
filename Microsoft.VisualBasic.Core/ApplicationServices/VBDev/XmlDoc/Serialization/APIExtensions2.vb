@@ -27,6 +27,11 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
         End Function
 
         <Extension>
+        Public Function Sum(members As IEnumerable(Of ProjectMember)) As ProjectMember
+
+        End Function
+
+        <Extension>
         Private Function Add(ns1 As ProjectNamespace, ns2 As ProjectNamespace, proj As Project) As ProjectNamespace
             Dim path$ = ns1.Path
             Dim types As New Dictionary(Of String, ProjectType)
