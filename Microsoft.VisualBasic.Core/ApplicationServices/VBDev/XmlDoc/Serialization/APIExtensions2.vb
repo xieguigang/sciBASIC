@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development.XmlDoc.Serialization
@@ -24,6 +25,19 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             Next
 
             Return out
+        End Function
+
+        <Extension>
+        Public Function Sum(members As IEnumerable(Of ProjectMember), type As ProjectType) As ProjectMember
+            Dim list = members.ToArray
+            Return New ProjectMember(type) With {
+                .Name = list(0).Name,
+                .Declare = list.Select(Function(m) m.Declare).Distinct.JoinBy(vbLf),
+                .Remarks = list.Select(Function(m) m.Remarks).Distinct.JoinBy(vbLf),
+                .Returns = list.Select(Function(m) m.Returns).Distinct.JoinBy(vbLf),
+                .Summary = list.Select(Function(m) m.Summary).Distinct.JoinBy(vbLf),
+                .Params = list.Select(Function(m) m.Params).IteratesALL.ToArray
+            }
         End Function
 
         <Extension>
