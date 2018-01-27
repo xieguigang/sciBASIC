@@ -249,7 +249,7 @@ Namespace MarkDown
         Private Shared Function __MarkdownTable(text$) As String
             Dim lines$() = text.lTokens
 
-            If text.StringEmpty Then
+            If text.StringEmpty OrElse lines.Length < 2 Then
                 Return ""
             End If
 
