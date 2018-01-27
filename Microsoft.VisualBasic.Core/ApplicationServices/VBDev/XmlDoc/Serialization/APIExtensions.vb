@@ -42,6 +42,8 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
         ''' NDoc supports this by recognising a special NamespaceDoc class located in each namespace
         ''' 
         ''' > https://stackoverflow.com/questions/793210/xml-documentation-for-a-namespace
+        ''' 
+        ''' 这个名字的对象类型主要是被用来标记命名空间的注释信息使用的
         ''' </summary>
         Public Const NamespaceDoc$ = NameOf(NamespaceDoc)
 
