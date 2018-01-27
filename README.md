@@ -13,6 +13,7 @@
 
 [![sciBASIC# logo](./logo.png)](./vs_solutions/logo/Program.vb)
 
+> Read the project documents: [http://sciBASIC.NET/](http://sciBASIC.NET)
 
 ## Scientific Computing runtime for VisualBasic.NET
 
@@ -53,7 +54,7 @@ PM> Install-Package sciBASIC -Pre
 + **[/CLI_tools](./CLI_tools/)** : Some small utilities and example tools
 + **[/Data](./Data/)** : *sciBASIC#* data framework system for data science, includes data frame, data I/O, natural language text processing and data object search framework.
 + **[/Data_science](./Data_science/)** : *sciBASIC#* Mathmatica system, data graphics plot system & Data Mining library
-+ **[/Microsoft.VisualBasic.Architecture.Framework](./Microsoft.VisualBasic.Architecture.Framework/)** : **Microsoft VisualBasic General App core runtime**
++ **[/Microsoft.VisualBasic.Core](./Microsoft.VisualBasic.Core/)** : **Microsoft VisualBasic General App core runtime**
 + **[/mime](./mime/)** : Various mime-type text or Xml doc parsers in VisualBasic.
 + **[/gr](./gr/)** : **sciBASIC# Artists**: (graphic artist) VB.NET imaging graphics system
 + **[/www](./www/)** : Web related utilities code

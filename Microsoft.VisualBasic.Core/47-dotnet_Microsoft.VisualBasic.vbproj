@@ -718,6 +718,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
     <Compile Include="CommandLine\CLI\Scripting.vb" />
     <Compile Include="CommandLine\InteropService\Abstract.vb" />
     <Compile Include="CommandLine\InteropService\CLIAbstractor.vb" />
@@ -757,6 +759,8 @@
     <Compile Include="ComponentModel\DataSource\Abstract.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\QueryCache.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\NamedValueList.vb" />
+    <Compile Include="ComponentModel\DataStructures\Set\BadBehaviourResponses.vb" />
+    <Compile Include="ComponentModel\DataStructures\Set\StringSet.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetsExtension.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Extensions.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb" />
@@ -838,6 +842,7 @@
     <Compile Include="Extensions\Reflection\Methods.vb" />
     <Compile Include="Extensions\Reflection\Parameters\Simple.vb" />
     <Compile Include="Extensions\Reflection\Parameters\ParamLogUtility.vb" />
+    <Compile Include="Extensions\ValueTypes\RangeExtensions.vb" />
     <Compile Include="Extensions\WebServices\HttpGet.vb" />
     <Compile Include="Language\Linq\Assert\AssertEqualsExtensions.vb" />
     <Compile Include="Language\Linq\Assert\VectorAssert.vb" />
@@ -1037,8 +1042,6 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectNamespace.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectType.vb" />
-    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\URLBuilder.vb" />
-    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Libraries.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\HardwareInfo.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\GetLastErrorAPI.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\TaskManager.vb" />
@@ -1241,8 +1244,8 @@
     <Compile Include="Serialization\ConfigMappings\ConfigurationMappings.vb" />
     <Compile Include="Serialization\ShadowsCopy.vb" />
     <Compile Include="Scripting\TextGrepScriptEngine.vb" />
-    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Member.vb" />
-    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Doc.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Doc.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb" />
     <Compile Include="ApplicationServices\ZipLib.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />

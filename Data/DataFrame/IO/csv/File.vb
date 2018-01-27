@@ -119,7 +119,7 @@ B21,B22,B23,...
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        Default Public Overloads Property Item(x As Integer, y As Integer) As String
+        Default Public Overloads Property Item(x%, y%) As String
             Get
                 Dim row As RowObject = Me(x)
                 Return row(y)

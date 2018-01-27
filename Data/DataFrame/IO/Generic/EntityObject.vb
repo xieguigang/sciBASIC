@@ -133,5 +133,12 @@ Namespace IO
                 Return path.LoadCsv(Of T)(explicit:=False, maps:=map)
             End If
         End Function
+
+        Public Shared Function LoadDataSet(Of T As EntityObject)(stream As File, Optional ByRef uidMap$ = Nothing) As IEnumerable(Of T)
+            Dim map As New Dictionary(Of String, String) From {
+                {uidMap Or stream(0, 0).AsDefault, NameOf(EntityObject.ID)}
+            }
+            Return stream.AsDataSource(Of T)(explicit:=False, maps:=map)
+        End Function
     End Class
 End Namespace

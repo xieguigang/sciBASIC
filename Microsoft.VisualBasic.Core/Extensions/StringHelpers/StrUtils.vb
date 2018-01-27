@@ -69,6 +69,16 @@ Public Module StrUtils
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
+    Public Function GetCompareType(type As CompareMethod) As StringComparison
+        If type = CompareMethod.Binary Then
+            Return StringComparison.Ordinal
+        Else
+            Return StringComparison.OrdinalIgnoreCase
+        End If
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function GetString(bytes As IEnumerable(Of Byte), Optional encoding As Encodings = Encodings.UTF8) As String
         Return encoding.CodePage.GetString(bytes.ToArray)
     End Function

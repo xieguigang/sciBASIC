@@ -32,7 +32,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Text
 
 Namespace SVG
 
@@ -41,14 +40,17 @@ Namespace SVG
     ''' </summary>
     Public Module SVGWriter
 
+        Public Const Xmlns$ = "http://www.w3.org/2000/svg"
+        Public Const Xlink$ = "http://www.w3.org/1999/xlink"
+
         ''' <summary>
         ''' Get the current svg model data from current graphics engine.
         ''' </summary>
         ''' <param name="g"></param>
-        ''' <param name="size$"></param>
+        ''' <param name="size$">默认是使用<see cref="GraphicsSVG"/>对象的内部大小</param>
         ''' <returns></returns>
         <Extension>
-        Public Function SVG(g As GraphicsSVG, Optional size$ = "1440,900") As SVGXml
+        Public Function SVG(g As GraphicsSVG, Optional size$ = Nothing) As SVGXml
             Return g.__svgData.GetSVG(size.SizeParser)
         End Function
 
@@ -59,8 +61,8 @@ Namespace SVG
         ''' <param name="path$">``*.svg``保存的SVG文件的路径</param>
         ''' <returns></returns>
         <Extension> Public Function WriteSVG(g As GraphicsSVG, path$, Optional size$ = "1440,900") As Boolean
-            Using file As StreamWriter = path.OpenWriter(Encodings.Unicode)
-                Call g.WriteSVG(out:=file.BaseStream, size:=size)
+            Using file As FileStream = path.Open
+                Call g.WriteSVG(out:=file, size:=size)
                 Return True
             End Using
         End Function

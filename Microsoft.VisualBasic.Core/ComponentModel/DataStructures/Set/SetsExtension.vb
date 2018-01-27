@@ -106,5 +106,11 @@ Public Module SetsExtension
     Public Function ToArray([set] As [Set]) As Object()
         Return [set].ToArray
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsSet(strings As IEnumerable(Of String)) As StringSet
+        Return New StringSet(strings)
+    End Function
 #End Region
 End Module

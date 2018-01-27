@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::34278e2f17d90c572007b17f53677f36, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\Uid.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Linq
@@ -33,12 +34,19 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
 
+    ''' <summary>
+    ''' The unique id generator.
+    ''' </summary>
     Public Class Uid : Implements INamedValue
 
         ''' <summary>
-        ''' index collection of array <see cref="__chars"/>
+        ''' index collection of array <see cref="__chars"/>.(<see cref="__chars"/>数组的下标集合)
         ''' </summary>
         Dim chars As List(Of Integer)
+        ''' <summary>
+        ''' tick n
+        ''' </summary>
+        Dim value As Integer = 0
 
         ReadOnly __chars As Char() = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         ReadOnly __upbound As Integer = __chars.Length - 1
@@ -48,6 +56,7 @@ Namespace Language
         ''' </summary>
         ''' <returns></returns>
         Public Property Key As String Implements IKeyedEntity(Of String).Key
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return ToString()
             End Get
@@ -66,6 +75,10 @@ Namespace Language
             End Set
         End Property
 
+        ''' <summary>
+        ''' Throw error helper
+        ''' </summary>
+        ''' <param name="c"></param>
         Private Sub __error(c As Char)
             Dim msg$ = $"Char '{c}' is not a valid ASCII char, valids list: " & __chars.GetJson
             Throw New NotSupportedException(msg)
@@ -142,17 +155,23 @@ Namespace Language
             End If
 
             chars(l) = n
+            Me.value += 1
 
             Return move
         End Function
 
+        ''' <summary>
+        ''' current id value +1
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Plus() As String
             Call __plus(chars.Count - 1)
             Return ToString()
         End Function
 
         ''' <summary>
-        ''' 请注意，这个操作是线程不安全的，所以请确保在执行这个命令之前使用``SyncLock``加锁
+        ''' Thread unsafe operator for current id value plus <paramref name="n"/>.
+        ''' (请注意，这个操作是线程不安全的，所以请确保在执行这个命令之前使用``SyncLock``加锁)
         ''' </summary>
         ''' <param name="i"></param>
         ''' <param name="n"></param>
@@ -166,28 +185,45 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' 请注意，这个操作是线程不安全的，所以请确保在执行这个命令之前使用``SyncLock``加锁
+        ''' Thread unsafe operator for current id value +1.
+        ''' (请注意，这个操作是线程不安全的，所以请确保在执行这个命令之前使用``SyncLock``加锁)
         ''' </summary>
         ''' <param name="i"></param>
         ''' <returns></returns>
-        Public Shared Operator +(i As Uid) As Uid
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(i As Uid) As SeqValue(Of String)
             Call i.__plus(i.chars.Count - 1)
-            Return i
+            Return New SeqValue(Of String)(i.value, i.ToString)
         End Operator
 
         ''' <summary>
-        ''' 直接字符串序列，不会产生步进前移
+        ''' Convert the internal id value as the uid string value.(直接字符串序列，不会产生步进前移)
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return New String(
-                chars.Select(Function(x) __chars(x)).ToArray)
+            Return chars.Select(Function(x) __chars(x)).CharString
         End Function
 
+        ''' <summary>
+        ''' String contract of current id value string with a specific <paramref name="s"/> value.
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <param name="s$"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator &(i As Uid, s$) As String
             Return i.ToString & s
         End Operator
 
+        ''' <summary>
+        ''' Alias for <see cref="ToString()"/>
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(i As Uid) As String
             Return i.ToString
         End Operator

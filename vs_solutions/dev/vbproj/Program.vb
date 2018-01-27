@@ -42,7 +42,7 @@ Module Program
         Return GetType(Program).RunCLI(App.CommandLine)
     End Function
 
-    Const Condition$ = " '$(Configuration)|$(Platform)' == '%s|%s' "
+    Const Condition$ = "'$(Configuration)|$(Platform)' == '%s|%s'"
 
     ''' <summary>
     ''' 为某个解决方案的文件夹之中的每一个项目文件配置统一的输出文件夹

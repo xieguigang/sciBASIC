@@ -46,10 +46,34 @@ Namespace HTML.CSS.Parser
     ''' </remarks>
     Public Module CssParser
 
+        <Extension>
+        Public Function BuildSelector(name$, type As CSSSelectorTypes) As String
+            Select Case type
+                Case CSSSelectorTypes.class
+                    If name.First <> "."c Then
+                        Return "." & name
+                    Else
+                        Return name
+                    End If
+                Case CSSSelectorTypes.id
+                    If name.First <> "#" Then
+                        Return "#" & name
+                    Else
+                        Return name
+                    End If
+                Case CSSSelectorTypes.tag
+                    Return name
+                Case CSSSelectorTypes.expression
+                    Return name
+                Case Else
+                    Return name
+            End Select
+        End Function
+
         ''' <summary>
-        ''' ��Ҫ��CSS��������
+        ''' 主要的CSS解析函数
         ''' </summary>
-        ''' <param name="CSS"></param>
+        ''' <param name="CSS">CSS文本内容</param>
         ''' <returns></returns>
         Public Function GetTagWithCSS(CSS As String) As CSSFile
             Dim TagWithCSSList As New List(Of Selector)
@@ -81,15 +105,15 @@ Namespace HTML.CSS.Parser
         Const IndivisualTagsPattern$ = "(?<selector>(?:(?:[^,{]+),?)*?)\{(?:(?<name>[^}:]+):?(?<value>[^};]+);?)*?\}"
 
         ''' <summary>
-        ''' CSS��ע��������/*��ʼ����*/������
+        ''' CSS的注释总是以/*起始，以*/结束的
         ''' </summary>
         Const CommentBlock$ = "/\*.+?\*/"
 
         ''' <summary>
         ''' ###### 2017-10-1
         ''' 
-        ''' ԭ�����������������û�п��ǵ�ע�͵�����
-        ''' ��CSS֮�д���ע�͵�ʱ����޷�����������
+        ''' 原来的这个解析函数还没有考虑到注释的问题
+        ''' 当CSS之中存在注释的时候就无法正常工作了
         ''' </summary>
         ''' <param name="input"></param>
         ''' <returns></returns>
@@ -97,7 +121,7 @@ Namespace HTML.CSS.Parser
             Dim b As New List(Of String)()
             Dim s As New StringBuilder(input)
 
-            ' ������Ҫ�Ƴ���CSS��ע���ı�
+            ' 首先需要移除掉CSS的注释文本
             For Each block As Match In r.Matches(input, CommentBlock, RegexICSng)
                 Call s.Replace(block.Value, "")
             Next

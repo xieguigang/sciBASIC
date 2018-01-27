@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::b1a1ea07fb5ce7820363aefac6bc88f8, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -31,22 +31,34 @@
 
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports System.Xml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
 
     ''' <summary>
     ''' A type within a project namespace.
     ''' </summary>
+    ''' <remarks>
+    ''' Fields和Events都不允许重载，但是属性和函数都可以重载
+    ''' </remarks>
     Public Class ProjectType
 
-        Dim projectNamespace As ProjectNamespace
-        Dim fields As Dictionary(Of String, ProjectMember)
-        Dim properties As Dictionary(Of String, ProjectMember)
-        Dim methods As Dictionary(Of String, ProjectMember)
+        Protected projectNamespace As ProjectNamespace
+
+        Protected fields As Dictionary(Of String, ProjectMember)
+        Protected events As Dictionary(Of String, ProjectMember)
+
+        ''' <summary>
+        ''' 因为属性存在参数，所以可能会出现重载的情况
+        ''' </summary>
+        Protected properties As Dictionary(Of String, List(Of ProjectMember))
+        ''' <summary>
+        ''' 会出现重载函数，所以这里也应该是一个list
+        ''' </summary>
+        Protected methods As Dictionary(Of String, List(Of ProjectMember))
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -63,50 +75,72 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Me.projectNamespace = projectNamespace
 
             Me.fields = New Dictionary(Of String, ProjectMember)()
-            Me.properties = New Dictionary(Of String, ProjectMember)()
-            Me.methods = New Dictionary(Of String, ProjectMember)()
+            Me.properties = New Dictionary(Of String, List(Of ProjectMember))()
+            Me.methods = New Dictionary(Of String, List(Of ProjectMember))()
+            Me.events = New Dictionary(Of String, ProjectMember)
         End Sub
 
-        Public Function GetMethod(methodName As String) As ProjectMember
-            If Me.methods.ContainsKey(methodName.ToLower()) Then
-                Return Me.methods(methodName.ToLower())
-            End If
+        Protected Sub New(type As ProjectType)
+            projectNamespace = type.projectNamespace
+            events = type.events
+            fields = type.fields
+            properties = type.properties
+            methods = type.methods
+            Name = type.Name
+            Summary = type.Summary
+            Remarks = type.Remarks
+        End Sub
 
-            Return Nothing
+        Friend Sub New(t1 As ProjectType, t2 As ProjectType)
+            projectNamespace = t1.projectNamespace
+            fields = (t1.fields.Values.AsList + t2.fields.Values).GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.Sum(Me))
+            events = (t1.events.Values.AsList + t2.events.Values).GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.Sum(Me))
+            properties = (t1.properties.Values.AsList + t2.properties.Values).IteratesALL.GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.ToList)
+            methods = (t1.methods.Values.AsList + t2.methods.Values).IteratesALL.GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.ToList)
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return Name
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetMethods(methodName As String) As List(Of ProjectMember)
+            Return getInternal(methods, methodName.ToLower)
         End Function
 
         Public Function EnsureMethod(methodName As String) As ProjectMember
-            Dim pm As ProjectMember = Me.GetMethod(methodName)
+            Dim pmlist As List(Of ProjectMember) = Me.GetMethods(methodName)
+            Dim pm As New ProjectMember(Me) With {
+                .Name = methodName
+            }
 
-            If pm Is Nothing Then
-                pm = New ProjectMember(Me) With {
-                    .Name = methodName
-                }
-
-                Me.methods.Add(methodName.ToLower(), pm)
-            End If
+            Call pmlist.Add(pm)
 
             Return pm
         End Function
 
-        Public Function GetProperty(propertyName As String) As ProjectMember
-            If Me.properties.ContainsKey(propertyName.ToLower()) Then
-                Return Me.properties(propertyName.ToLower())
+        Private Shared Function getInternal(ByRef table As Dictionary(Of String, List(Of ProjectMember)), name$) As List(Of ProjectMember)
+            If table.ContainsKey(name) Then
+                Return table(name)
+            Else
+                Dim list As New List(Of ProjectMember)
+                table.Add(name, list)
+                Return list
             End If
+        End Function
 
-            Return Nothing
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetProperties(propertyName As String) As List(Of ProjectMember)
+            Return getInternal(properties, propertyName.ToLower)
         End Function
 
         Public Function EnsureProperty(propertyName As String) As ProjectMember
-            Dim pm As ProjectMember = Me.GetProperty(propertyName)
+            Dim pmlist As List(Of ProjectMember) = Me.GetProperties(propertyName)
+            Dim pm As New ProjectMember(Me) With {
+                .Name = propertyName
+            }
 
-            If pm Is Nothing Then
-                pm = New ProjectMember(Me) With {
-                    .Name = propertyName
-                }
-
-                Me.properties.Add(propertyName.ToLower(), pm)
-            End If
+            Call pmlist.Add(pm)
 
             Return pm
         End Function
@@ -133,151 +167,40 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return pm
         End Function
 
-        ''' <summary>
-        ''' Exports for the specific type in a namespace
-        ''' </summary>
-        ''' <param name="folderPath"></param>
-        ''' <param name="pageTemplate"></param>
-        ''' <param name="url"></param>
-        ''' <remarks>这里还应该包括完整的函数的参数注释的输出</remarks>
-        Public Sub ExportMarkdownFile(folderPath As String, pageTemplate As String, url As URLBuilder)
-            Dim methodList As New StringBuilder()
-
-            If Me.methods.Values.Count > 0 Then
-                methodList.AppendLine("### Methods" & vbCr & vbLf)
-
-                Dim sortedMembers As New SortedList(Of String, ProjectMember)()
-
-                For Each pm As ProjectMember In Me.methods.Values
-                    sortedMembers.Add(pm.Name, pm)
-                Next
-
-                For Each pm As ProjectMember In sortedMembers.Values
-                    methodList.AppendLine("#### " & pm.Name)
-                    If Not pm.Declare.StringEmpty Then
-                        methodList.AppendLine("```csharp")
-                        methodList.AppendLine($"{pm.Declare}")
-                        methodList.AppendLine("```")
-                    End If
-                    methodList.AppendLine(CleanText(pm.Summary))
-
-                    If Not pm.Params.IsNullOrEmpty Then
-                        Call methodList.AppendLine()
-                        Call methodList.AppendLine("|Parameter Name|Remarks|")
-                        Call methodList.AppendLine("|--------------|-------|")
-
-                        For Each arg In pm.Params
-                            Call methodList.AppendLine($"|{arg.name}|{arg.text}|")
-                        Next
-
-                        Call methodList.AppendLine()
-                    End If
-
-                    If Not pm.Returns.StringEmpty Then
-                        If Not url.[lib] = Libraries.Hexo Then
-                            methodList.AppendLine()
-                        End If
-                        methodList.AppendLine("_returns: " & pm.Returns & "_")
-                    End If
-
-                    If Not pm.Remarks.StringEmpty Then
-                        For Each line As String In pm.Remarks.lTokens
-                            Call methodList.AppendLine("> " & line)
-                        Next
-                    End If
-
-                    Call methodList.AppendLine()
-                Next
+        Public Function GetEvent(eventName As String) As ProjectMember
+            If Me.events.ContainsKey(eventName.ToLower()) Then
+                Return Me.events(eventName.ToLower())
             End If
 
-            Dim propertyList As New StringBuilder()
+            Return Nothing
+        End Function
 
-            If Me.properties.Count > 0 Then
-                propertyList.AppendLine("### Properties" & vbCr & vbLf)
+        Public Function EnsureEvent(eventName As String) As ProjectMember
+            Dim pm As ProjectMember = Me.GetField(eventName)
 
-                Dim sortedMembers As SortedList(Of String, ProjectMember) = New SortedList(Of String, ProjectMember)()
+            If pm Is Nothing Then
+                pm = New ProjectMember(Me) With {
+                    .Name = eventName
+                }
 
-                For Each pm As ProjectMember In Me.properties.Values
-                    sortedMembers.Add(pm.Name, pm)
-                Next
-
-                For Each pm As ProjectMember In sortedMembers.Values
-                    propertyList.AppendLine("#### " & pm.Name)
-                    propertyList.AppendLine(CleanText(pm.Summary))
-                Next
+                Me.fields.Add(eventName.ToLower(), pm)
             End If
 
-            Dim rmk As String = ""
-
-            For Each l As String In Remarks.lTokens
-                rmk &= "> " & l & vbCrLf
-            Next
-
-            If Trim(rmk) = ">" OrElse rmk.StringEmpty Then
-                rmk = ""
-            End If
-
-            Dim link$ = url.GetTypeNamespaceLink(Me)
-            Dim text As String = String.Format("# {0}" & vbCr & vbLf &
-                                               $"_namespace: {link}_" & vbCr & vbLf &
-                                               vbCr & vbLf &
-                                               "{2}" & vbCr & vbLf &
-                                               vbCr & vbLf &
-                                               "{3}" & vbCr & vbLf &
-                                               vbCr & vbLf &
-                                               "{4}" & vbCr & vbLf &
-                                               "{5}", Me.Name, Me.[Namespace].Path, CleanText(Me._Summary), rmk, methodList.ToString(), propertyList.ToString())
-
-            Dim path$ = url.GetTypeSave(folderPath, Me) ' *.md save path
-
-            If url.[lib] = Libraries.Hexo Then
-                text = $"---
-title: {Me.Name}
----
-
-" & text
-            Else
-                If pageTemplate IsNot Nothing Then
-                    text = pageTemplate.Replace("[content]", text)
-                End If
-            End If
-
-            Call text.SaveTo(path, UTF8WithoutBOM)
-        End Sub
+            Return pm
+        End Function
 
         Public Sub LoadFromNode(xn As XmlNode)
             Dim summaryNode As XmlNode = xn.SelectSingleNode("summary")
 
             If summaryNode IsNot Nothing Then
-                Me._Summary = summaryNode.InnerText
+                Me.Summary = summaryNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
             End If
 
             summaryNode = xn.SelectSingleNode("remarks")
+
             If Not summaryNode Is Nothing Then
-                Remarks = summaryNode.InnerText
+                Remarks = summaryNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
             End If
         End Sub
-
-        Private Function CleanText(incomingText As String) As String
-            If incomingText Is Nothing Then
-                Return String.Empty
-            End If
-
-            incomingText = incomingText.Replace(vbTab, "").Trim()
-
-            Dim results As String = String.Empty
-            Dim lastCharWasSpace As Boolean = False
-            For Each c As Char In incomingText
-                If c <> " "c Then
-                    lastCharWasSpace = False
-                    results += c
-                ElseIf Not lastCharWasSpace Then
-                    lastCharWasSpace = True
-                    results += c
-                End If
-            Next
-
-            Return results
-        End Function
     End Class
 End Namespace

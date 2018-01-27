@@ -40,6 +40,7 @@ Namespace SVG.XML
         Property path As path()
         Property rect As rect()
         Property polygon As polygon()
+        Property polyline As polyline()
         Property lines As line()
         Property circles As circle()
         Property title As String
@@ -59,7 +60,7 @@ Namespace SVG.XML
         <XmlElement> Public Property polygon As polygon() Implements ICanvas.polygon
         <XmlElement("line")> Public Property lines As line() Implements ICanvas.lines
         <XmlElement("circle")> Public Property circles As circle() Implements ICanvas.circles
-        <XmlAttribute> Public Property fill As String
         <XmlElement> Public Property title As String Implements ICanvas.title
+        <XmlElement> Public Property polyline As polyline() Implements ICanvas.polyline
     End Class
 End Namespace

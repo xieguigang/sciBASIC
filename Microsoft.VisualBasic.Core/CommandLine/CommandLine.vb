@@ -158,8 +158,18 @@ Namespace CommandLine
 
                 Dim value As String = LQuery.Value ' 是值类型，不会出现空引用的情况
 
-                If value Is Nothing Then
-                    value = ""
+                If value.StringEmpty Then
+                    ' 2018-1-22
+                    '
+                    ' 如果是需要获取逻辑值的话，直接查找__arguments值列表是获取不到结果的
+                    ' 在这里使用IsTrue来判断，如果开关存在则返回TRUE字符串
+                    ' 否则返回空字符串表示不存在
+
+                    If HavebFlag(paramName) Then
+                        value = "TRUE"
+                    Else
+                        value = ""
+                    End If
                 Else
                     ' 尝试进行字符串插值，从而实现命令行部分脚本化
 

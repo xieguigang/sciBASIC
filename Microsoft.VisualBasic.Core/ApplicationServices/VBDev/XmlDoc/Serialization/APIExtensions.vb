@@ -30,35 +30,24 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.HtmlParser
 
 Namespace ApplicationServices.Development.XmlDoc.Serialization
 
     <Package("Assembly.Doc.API")>
-    Public Module DocAPI
-
-        Dim libraries As Dictionary(Of String, Libraries) =
-            Enums(Of Libraries) _
-            .ToDictionary(Function(x) x.ToString.ToLower)
+    Public Module APIExtensions
 
         ''' <summary>
-        ''' 类型名称的大小写不敏感
+        ''' NDoc supports this by recognising a special NamespaceDoc class located in each namespace
+        ''' 
+        ''' > https://stackoverflow.com/questions/793210/xml-documentation-for-a-namespace
+        ''' 
+        ''' 这个名字的对象类型主要是被用来标记命名空间的注释信息使用的
         ''' </summary>
-        ''' <param name="type"></param>
-        ''' <returns>查找失败的时候默认是返回<see cref="Serialization.Libraries.Github"/></returns>
-        <Extension>
-        Public Function GetLibraryType(type As Value(Of String)) As Libraries
-            If libraries.ContainsKey(type = LCase(+type)) Then
-                Return libraries(+type)
-            Else
-                Return Serialization.Libraries.Github
-            End If
-        End Function
+        Public Const NamespaceDoc$ = NameOf(NamespaceDoc)
 
-        Public ReadOnly Property Types As Dictionary(Of Char, memberTypes) =
-            New Dictionary(Of Char, memberTypes) From {
+        Public ReadOnly Property Types As New Dictionary(Of Char, memberTypes) From {
  _
             {"T"c, memberTypes.Type},
             {"F"c, memberTypes.Filed},
@@ -88,21 +77,22 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
         Const code As String = "<code>.+?</code>"
         Const example As String = "<example>.*?</example>"
 
+        <Extension>
         Public Function TrimAssemblyDoc(doc As String) As String
-            Dim sb As StringBuilder = New StringBuilder(doc)
-            Dim ms As String() = Regex.Matches(doc, cref, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
+            Dim sb As New StringBuilder(doc)
+            Dim ms As String() = Regex.Matches(doc, cref, RegexICSng).ToArray
 
             For Each m As String In ms
                 Call sb.Replace(m, "@" & m.__trans)
             Next
 
-            ms = Regex.Matches(sb.ToString, cref2, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
+            ms = Regex.Matches(sb.ToString, cref2, RegexICSng).ToArray
 
             For Each m As String In ms
                 Call sb.Replace(m, "@" & m.__trans)
             Next
 
-            ms = Regex.Matches(sb.ToString, crefFull, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
+            ms = Regex.Matches(sb.ToString, crefFull, RegexICSng).ToArray
 
             For Each m As String In ms
                 Call sb.Replace(m, "@" & m.__trans)
@@ -114,7 +104,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
         End Function
 
         <Extension> Private Function __boldParam(sb As StringBuilder) As String
-            Dim ms As String() = Regex.Matches(sb.ToString, paramRef, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
+            Dim ms As String() = Regex.Matches(sb.ToString, paramRef, RegexICSng).ToArray
 
             For Each m As String In ms
                 Dim bold As String = m.__trans
@@ -123,7 +113,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
                 Call sb.Replace(m, bold)
             Next
 
-            ms = Regex.Matches(sb.ToString, paramRef2, RegexOptions.IgnoreCase Or RegexOptions.Singleline).ToArray
+            ms = Regex.Matches(sb.ToString, paramRef2, RegexICSng).ToArray
 
             For Each m As String In ms
                 Dim bold As String = m.__trans

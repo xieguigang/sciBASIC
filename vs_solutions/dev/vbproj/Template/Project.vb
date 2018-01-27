@@ -54,10 +54,8 @@ Public Class Project : Implements ISaveHandle
  _
         () <= From x As PropertyGroup
               In PropertyGroups
-              Where String.Equals(
-                  condition,
-                  x.Condition,
-                  StringComparison.OrdinalIgnoreCase)
+              Where Not x.Condition.StringEmpty AndAlso
+                  condition.TextEquals(x.Condition)
               Select x
 
     End Function
@@ -98,6 +96,7 @@ Public Class Import
 
     <XmlAttribute> Public Property Project As String
     <XmlAttribute> Public Property Condition As String
+    <XmlAttribute> Public Property Label As String
 
     Public Overrides Function ToString() As String
         Return Me.GetJson

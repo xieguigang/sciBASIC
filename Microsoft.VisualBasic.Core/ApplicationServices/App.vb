@@ -195,7 +195,7 @@ Public Module App
         Return CLITools.TryParse(CLI)
     End Function
 
-    Public ReadOnly Property Github As String = "https://github.com/xieguigang/sciBASIC"
+    Public ReadOnly Property Github As String = LICENSE.githubURL
 
     ''' <summary>
     ''' Returns the argument portion of the <see cref="Microsoft.VisualBasic.CommandLine.CommandLine"/> used to start Visual Basic or
@@ -789,7 +789,7 @@ Public Module App
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __getTEMPhash() As String
         SyncLock _tmpHash
-            Return FormatZero(+_tmpHash, "00000")
+            Return FormatZero(++_tmpHash, "00000")
         End SyncLock
     End Function
 

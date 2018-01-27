@@ -34,7 +34,6 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
@@ -51,6 +50,17 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
+
+    ''' <summary>
+    ''' Get the first char of the target <see cref="StringBuilder"/> 
+    ''' </summary>
+    ''' <param name="sb"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function First(sb As StringBuilder) As Char
+        Return sb.Chars(Scan0)
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>

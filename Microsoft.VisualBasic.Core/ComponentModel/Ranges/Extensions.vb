@@ -55,6 +55,7 @@ Namespace ComponentModel.Ranges
         ''' <summary>
         ''' + ``min -> max``
         ''' + ``min—max``
+        ''' + ``min~max``
         ''' + ``[min,max]``
         ''' + ``{min,max}``
         ''' + ``(min,max)``
@@ -72,6 +73,8 @@ Namespace ComponentModel.Ranges
             ElseIf InStr(exp, "—") > 0 Then
                 ' 使用的是中文的分隔符
                 t = Strings.Split(exp, "—")
+            ElseIf InStr(exp, "~") > 0 Then
+                t = Strings.Split(exp, "~")
             ElseIf exp.IsPattern(RegexpDouble & "\s*[-]\s*" & RegexpDouble) Then
                 ' 使用的是英文的分隔符
                 ' 因为可能会和负号弄混，所以在这里需要使用正则表达式来匹配出这个分隔符

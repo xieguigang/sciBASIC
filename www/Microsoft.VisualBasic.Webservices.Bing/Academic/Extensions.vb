@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::b0e2de86cfa54ac6966df4e5d4e8eb60, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Academic\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text
@@ -60,5 +61,50 @@ Namespace Academic
                 Next
             Next
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Summary(articles As IEnumerable(Of ArticleProfile)) As Summary()
+            Return articles _
+                .Select(Function(a) New Summary(a)) _
+                .ToArray
+        End Function
     End Module
+
+    Public Class Summary
+
+        Public Property title As String
+        Public Property authors As String()
+        Public Property year As String
+        Public Property journal As String
+        Public Property doi As String
+        Public Property cites As Integer
+        Public Property pubmed As String
+
+        Sub New()
+        End Sub
+
+        Sub New(article As ArticleProfile)
+            title = article.title
+            authors = article _
+                .authors _
+                .Select(Function(a) a.title) _
+                .ToArray
+            year = article.PubDate.Year
+            journal = article.journal.title
+            doi = article.DOI
+            cites = article.cites.Sum(Function(c) c.Volume)
+            pubmed = article _
+                .source _
+                .Where(Function(link)
+                           Return link.title.TextEquals("www.ncbi.nlm.nih.gov")
+                       End Function) _
+                .FirstOrDefault _
+                .href
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{authors.FirstOrDefault} ({year})"
+        End Function
+    End Class
 End Namespace

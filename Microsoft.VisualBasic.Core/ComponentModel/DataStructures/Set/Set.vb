@@ -47,29 +47,13 @@ Namespace ComponentModel.DataStructures
         Implements IDisposable
         Implements IsEmpty
 
-        ''' <summary>
-        ''' Enum of values to determine the aggressiveness of the response of the
-        ''' class to bad data.
-        ''' </summary>
-        Private Enum BadBehaviourResponses
-            ''' <summary>
-            ''' If the user enters bad data, throw an exception they have to deal with.
-            ''' </summary>
-            BeAggressive = 0
-
-            ''' <summary>
-            ''' If the user enters bad data, just eat it quietly.
-            ''' </summary>
-            BeCool = 1
-        End Enum
-
 #Region "Private Members"
-        Dim _members As New ArrayList()
-        Dim _behaviour As BadBehaviourResponses = BadBehaviourResponses.BeAggressive
+        Protected Friend _members As New ArrayList()
+        Protected _behaviour As BadBehaviourResponses = BadBehaviourResponses.BeAggressive
         ''' <summary>
         ''' 如何判断两个元素是否相同？
         ''' </summary>
-        Dim _equals As Func(Of Object, Object, Boolean)
+        Protected Friend _equals As Func(Of Object, Object, Boolean)
 #End Region
 
 #Region "ctors"
@@ -78,6 +62,10 @@ Namespace ComponentModel.DataStructures
         ''' </summary>
         Public Sub New(Optional equals As Func(Of Object, Object, Boolean) = Nothing)
             _equals = equals
+        End Sub
+
+        Protected Sub New()
+            _behaviour = BadBehaviourResponses.BeAggressive
         End Sub
 
         ''' <summary>
@@ -248,8 +236,15 @@ Namespace ComponentModel.DataStructures
         ''' <param name="s2">Any set.</param>
         ''' <returns>A new <see cref="[Set]">Set</see> object that contains all of the
         ''' members of each of the input sets.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or(s1 As [Set], s2 As [Set]) As [Set]
-            Return New [Set](New [Set](1) {s1, s2})
+            Return New [Set](s1.ToArray + s2.ToArray.AsList, s1._equals)
+        End Operator
+
+        Public Shared Operator Or(s1 As [Set], s2 As IEnumerable) As [Set]
+            Dim sb As New [Set](s2, s1._equals)
+            Return s1 Or sb
         End Operator
 
         ''' <summary>
@@ -399,7 +394,8 @@ Namespace ComponentModel.DataStructures
         ''' <summary>
         ''' Performs cleanup tasks on the <see cref="[Set]">Set</see> object.
         ''' </summary>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)> Public Sub Dispose() Implements IDisposable.Dispose
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Dispose() Implements IDisposable.Dispose
             _members.Clear()
         End Sub
     End Class

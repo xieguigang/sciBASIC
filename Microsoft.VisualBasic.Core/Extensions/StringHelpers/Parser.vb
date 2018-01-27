@@ -136,7 +136,7 @@ Public Module PrimitiveParser
 
     ''' <summary>
     ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
-    ''' (请注意，空值字符串为False)
+    ''' (请注意，空值字符串为False，如果字符串不存在与单词表之中，则也是False)
     ''' </summary>
     ''' <param name="str"></param>
     ''' <returns></returns>

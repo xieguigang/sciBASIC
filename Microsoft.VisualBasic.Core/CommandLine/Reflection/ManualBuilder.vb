@@ -52,6 +52,10 @@ Namespace CommandLine.Reflection
             Dim infoLines = Paragraph.SplitParagraph(api.Info, 90).ToArray
             Dim blank$
 
+            If infoLines.IsNullOrEmpty Then
+                infoLines = {"Description not available..."}
+            End If
+
             ' print API name and description
             Call Console.WriteLine()
             Call Console.WriteLine($"   '{api.Name}' - {infoLines.FirstOrDefault}")

@@ -28,7 +28,6 @@
 
 Imports System.ComponentModel
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ApplicationServices.Development.XmlDoc.Serialization
@@ -73,7 +72,7 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             name = Mid(name, 3)
             Return New memberName With {
                 .Name = name,
-                .Type = DocAPI.Types(type)
+                .Type = APIExtensions.Types(type)
             }
         End Function
     End Structure

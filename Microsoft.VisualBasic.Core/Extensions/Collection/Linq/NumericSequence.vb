@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::3aca41c93858807ecf374c47f88bfeb7, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\NumericSequence.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Linq
 
@@ -78,6 +79,11 @@ Namespace Linq
             Next
         End Function
 
+        Public ReadOnly OneDay As DefaultValue(Of TimeSpan) = New TimeSpan(days:=1, hours:=0, minutes:=0, seconds:=0)
+        Public ReadOnly OneHour As DefaultValue(Of TimeSpan) = New TimeSpan(hours:=1, minutes:=0, seconds:=0)
+        Public ReadOnly OneMinute As DefaultValue(Of TimeSpan) = New TimeSpan(minutes:=1, seconds:=0, hours:=0)
+        Public ReadOnly OneSecond As DefaultValue(Of TimeSpan) = New TimeSpan(seconds:=1, hours:=0, minutes:=0)
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -85,8 +91,8 @@ Namespace Linq
         ''' <param name="[to]"></param>
         ''' <param name="step%">Milliseconds</param>
         ''' <returns></returns>
-        Public Iterator Function Range(from As Date, [to] As Date, Optional step# = 1) As IEnumerable(Of Date)
-            Dim t As TimeSpan = TimeSpan.FromMilliseconds([step])
+        Public Iterator Function Range(from As Date, [to] As Date, Optional [step] As TimeSpan = Nothing) As IEnumerable(Of Date)
+            Dim t As TimeSpan = [step] Or OneDay
 
             ' 由于后面的Do循环之中from是放在加减法之后的，所以需要在这里把最开始的值返回，要不然第一个值会被丢失的。。。
             Yield from

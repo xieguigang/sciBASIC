@@ -55,7 +55,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     Public Function cbind(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim append$ = args <= "/append"
-        Dim out$ = (args <= "/out") Or ([in].TrimSuffix & "+" & append.BaseName & ".csv").AsDefault
+        Dim out$ = args("/out") Or ([in].TrimSuffix & "+" & append.BaseName & ".csv")
         Dim a = EntityObject.LoadDataSet([in])
         Dim b = Contract.Load(append)
 
@@ -79,7 +79,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
               Description:="A directory path that contains csv files that will be merge into one file directly.")>
     Public Function rbind(args As CommandLine) As Integer
         Dim [in] As String = args("/in")
-        Dim out$ = (args <= "/out") Or ([in].TrimSuffix & ".rbind.csv").AsDefault
+        Dim out$ = args("/out") Or ([in].TrimSuffix & ".rbind.csv")
 
         Return (ls - l - r - "*.csv" <= [in]) _
             .DirectAppends(EXPORT:=out) _
@@ -96,11 +96,10 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
             Dim Excel As Xlsx = Xlsx.Open(.ref)
             Dim table As csv = args <= "/table"
-            Dim sheetName$ = (args <= "/sheetName") Or .ref.BaseName.AsDefault
+            Dim sheetName$ = args("/sheetName") Or .BaseName
 
             Call Excel.WriteSheetTable(table, sheetName)
-            Call Excel.WriteXlsx(
-                (args <= "/saveAs") Or .ref.AsDefault)
+            Call Excel.WriteXlsx(args("/saveAs") Or .ref)
 
             Return 0
         End With
@@ -128,10 +127,9 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
               Description:="The csv output file path.")>
     Public Function Extract(args As CommandLine) As Integer
         Dim sheet$ = args <= "/sheetName"
-        Dim defaultOut As DefaultValue(Of String) =
-            (args <= "/open").TrimSuffix & $"-{sheet}.csv"
+        Dim defaultOut$ = (args <= "/open").TrimSuffix & $"-{sheet}.csv"
 
-        With (args <= "/out") Or defaultOut
+        With args("/out") Or defaultOut
 
             Return Xlsx.Open(args <= "/open") _
                 .GetTable(sheet) _

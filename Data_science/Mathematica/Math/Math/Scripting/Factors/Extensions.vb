@@ -28,7 +28,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Scripting
 
@@ -64,7 +63,7 @@ Namespace Scripting
             Return out
         End Function
 
-        Public Property names(vector As FactorVector) As String()
+        Public Property names(vector As IFactorVector) As String()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return vector.index.Keys.ToArray
