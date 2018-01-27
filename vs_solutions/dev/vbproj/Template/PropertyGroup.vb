@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e154124fe856c2bc0201266d29cc8053, ..\sciBASIC#\CLI_tools\vbproj\Template\PropertyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::d388fd41df098fe26ca726af530615d1, ..\sciBASIC#\vs_solutions\dev\vbproj\Template\PropertyGroup.vb"
 
     ' Author:
     ' 

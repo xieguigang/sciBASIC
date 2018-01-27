@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67bae7bc55aac1b3af889adffed6061f, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\ForestPlot.vb"
+﻿#Region "Microsoft.VisualBasic::b494f0ffdfbee91cdf4cdc29ff6a8161, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\ForestPlot.vb"
 
     ' Author:
     ' 
@@ -25,7 +25,6 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
-
 
 ''' <summary>
 ''' A forest plot, also known as a blobbogram, is a graphical display of estimated results from a number of 
@@ -63,4 +62,3 @@
 Public Module ForestPlot
 
 End Module
-

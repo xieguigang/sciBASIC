@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3baf0fa2864e286cb6e73df3c71a75c9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\Perl\die.vb"
+﻿#Region "Microsoft.VisualBasic::6c002d69c796d729c2af5fd30a227e2a, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\Perl\die.vb"
 
     ' Author:
     ' 

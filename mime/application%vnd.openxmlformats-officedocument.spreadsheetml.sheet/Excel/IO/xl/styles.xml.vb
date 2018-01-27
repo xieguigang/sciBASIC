@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6d530ab5f8c4634918aae7ef92a50bf, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\styles.xml.vb"
+﻿#Region "Microsoft.VisualBasic::bbbc17dbd66c760630b5a111b546e9eb, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\styles.xml.vb"
 
     ' Author:
     ' 

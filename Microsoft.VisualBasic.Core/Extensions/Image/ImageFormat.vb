@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f835f5b29c2b224a3223af6ce4bba92f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\ImageFormat.vb"
+﻿#Region "Microsoft.VisualBasic::0ea751b114acdf831795adab35301319, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\ImageFormat.vb"
 
     ' Author:
     ' 
