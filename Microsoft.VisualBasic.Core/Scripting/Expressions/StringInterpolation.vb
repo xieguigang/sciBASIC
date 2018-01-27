@@ -40,10 +40,17 @@ Namespace Scripting.Expressions
         ' "abcdefg$h$i is $k \$a"
 
         Const VB_str$ = "&VB_str"
+
         ''' <summary>
         ''' 允许下换线，点号，ASCII字母，以及数字作为标识符
+        ''' 
+        ''' ```
+        ''' $var
+        ''' $obj.property
+        ''' $obj.property.value.method.etc
+        ''' ```
         ''' </summary>
-        Const VariablePattern$ = "[$][_a-z][_a-z0-9]*(_\.[a-z][a-z0-9]*)*"
+        Const VariablePattern$ = "[$][_a-z][_a-z0-9]*(\.[a-z][a-z0-9]*)*"
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
