@@ -38,6 +38,13 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
     <Package("Assembly.Doc.API")>
     Public Module APIExtensions
 
+        ''' <summary>
+        ''' NDoc supports this by recognising a special NamespaceDoc class located in each namespace
+        ''' 
+        ''' > https://stackoverflow.com/questions/793210/xml-documentation-for-a-namespace
+        ''' </summary>
+        Public Const NamespaceDoc$ = NameOf(NamespaceDoc)
+
         Public ReadOnly Property Types As New Dictionary(Of Char, memberTypes) From {
  _
             {"T"c, memberTypes.Type},

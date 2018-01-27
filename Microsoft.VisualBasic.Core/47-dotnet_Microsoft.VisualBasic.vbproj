@@ -1243,8 +1243,8 @@
     <Compile Include="Serialization\ConfigMappings\ConfigurationMappings.vb" />
     <Compile Include="Serialization\ShadowsCopy.vb" />
     <Compile Include="Scripting\TextGrepScriptEngine.vb" />
-    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Member.vb" />
-    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Doc.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Member.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\Models\Doc.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb" />
     <Compile Include="ApplicationServices\ZipLib.vb" />
     <Compile Include="ComponentModel\DataSource\DataFramework.vb" />
