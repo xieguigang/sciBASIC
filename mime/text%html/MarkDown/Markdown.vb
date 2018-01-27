@@ -249,6 +249,10 @@ Namespace MarkDown
         Private Shared Function __MarkdownTable(text$) As String
             Dim lines$() = text.lTokens
 
+            If text.StringEmpty Then
+                Return ""
+            End If
+
             For Each line In lines
                 If line.First <> "|"c Then
                     Return text  ' 不是table格式的，则直接返回原始文本
