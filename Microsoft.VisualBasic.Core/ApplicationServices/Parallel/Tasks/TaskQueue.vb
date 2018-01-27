@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::2fd4ce98b5ab95e16530aa8724a1ab9d, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 
 Namespace Parallel.Tasks
@@ -39,13 +40,20 @@ Namespace Parallel.Tasks
     ''' </summary>
     Public Class TaskQueue(Of T) : Implements IDisposable
 
-        ReadOnly __tasks As New Queue(Of __task)(App.BufferSize)
+        ''' <summary>
+        ''' ###### 2018-1-27
+        ''' 
+        ''' 如果直接在这里使用<see cref="App.BufferSize"/>的话，极端的情况下会导致服务器的内存直接被耗尽
+        ''' 所以在这里使用一个较小的常数值
+        ''' </summary>
+        ReadOnly __tasks As New Queue(Of __task)(4096)
 
         ''' <summary>
         ''' 返回当前的任务池之中的任务数量
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Tasks As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 SyncLock __tasks
                     Return __tasks.Count
