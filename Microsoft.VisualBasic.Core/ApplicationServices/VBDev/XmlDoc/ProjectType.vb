@@ -82,6 +82,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
         Protected Sub New(type As ProjectType)
             projectNamespace = type.projectNamespace
+            events = type.events
             fields = type.fields
             properties = type.properties
             methods = type.methods

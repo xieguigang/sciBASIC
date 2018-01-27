@@ -32,6 +32,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml
+Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
@@ -87,7 +88,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return pn
         End Function
 
-        Friend Sub ProcessXmlDoc(document As XmlDocument)
+        Friend Sub ProcessXmlDoc(document As XmlDocument, excludeVBSpecific As Boolean)
             Dim memberNodes As XmlNodeList = document _
                 .DocumentElement _
                 .SelectNodes("members/member")
@@ -95,6 +96,10 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             For Each memberNode As XmlNode In memberNodes
                 Dim memberDescription As String = memberNode.Attributes.GetNamedItem("name").InnerText
                 Dim firstSemicolon As Integer = memberDescription.IndexOf(":")
+
+                If excludeVBSpecific AndAlso memberDescription.IsMyResource Then
+                    Continue For
+                End If
 
                 If firstSemicolon = 1 Then
                     Dim typeChar As Char = memberDescription(0)

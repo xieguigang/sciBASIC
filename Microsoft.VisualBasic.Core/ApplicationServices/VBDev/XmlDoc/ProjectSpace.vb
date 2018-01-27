@@ -47,6 +47,12 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Protected projects As New List(Of Project)
         Protected handle$
 
+        ReadOnly excludeVBSpecific As Boolean
+
+        Sub New(excludeVBSpecific As Boolean)
+            Me.excludeVBSpecific = excludeVBSpecific
+        End Sub
+
         Public Overrides Function ToString() As String
             Return handle
         End Function
@@ -128,7 +134,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                     If nameNode IsNot Nothing Then
                         xml = nameNode.InnerText
                         Call EnsureProject(xml) _
-                            .ProcessXmlDoc(xd)
+                            .ProcessXmlDoc(xd, excludeVBSpecific)
                     End If
                 End Using
             End Using
