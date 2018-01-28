@@ -249,6 +249,10 @@ Namespace MarkDown
         Private Shared Function __MarkdownTable(text$) As String
             Dim lines$() = text.lTokens
 
+            If text.StringEmpty OrElse lines.Length < 2 Then
+                Return ""
+            End If
+
             For Each line In lines
                 If line.First <> "|"c Then
                     Return text  ' 不是table格式的，则直接返回原始文本
@@ -292,8 +296,12 @@ Namespace MarkDown
 
                 line = "<tr><td>" & Mid(line, 2)                           ' 处理第一个标记
                 If line.Last <> "|"c AndAlso line.Last = ">"c Then  ' 假设这个是br标记，如果是其他的标记，那么我也没有办法了
-                    Dim brTag = br.Matches(line).ToArray.Last
-                    line = Mid(line, 1, line.Length - brTag.Length)
+                    Dim brTags = br.Matches(line).ToArray
+
+                    If brTags.Length > 0 Then
+                        Dim brTag = brTags.Last
+                        line = Mid(line, 1, line.Length - brTag.Length)
+                    End If
                 End If
                 line = Mid(line, 1, line.Length - 1) & "</td></tr>"        ' 处理最后一个标记
                 line = line.Replace("|", "</td><td>")                      ' 处理每一个标记
