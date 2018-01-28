@@ -179,6 +179,7 @@ Namespace XML.xl
     End Structure
 
     Public Structure sheet
+
         <XmlAttribute> Public Property name As String
         <XmlAttribute> Public Property sheetId As String
 

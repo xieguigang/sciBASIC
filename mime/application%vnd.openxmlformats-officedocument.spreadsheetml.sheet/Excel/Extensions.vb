@@ -41,8 +41,24 @@ Public Module Extensions
         Throw New NotImplementedException
     End Function
 
+    ''' <summary>
+    ''' 枚举出当前的这个Excel文件之中的所有的表格数据
+    ''' </summary>
+    ''' <param name="xlsx"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function EnumerateTables(xlsx As Xlsx) As IEnumerable(Of NamedValue(Of csv))
+        Dim names$() = xlsx.xl _
+            .workbook _
+            .sheets _
+            .Select(Function(s) s.name) _
+            .ToArray
 
+        For Each name As String In names
+            Yield New NamedValue(Of csv) With {
+                .Name = name,
+                .Value = xlsx.GetTable(sheetName:=name)
+            }
+        Next
     End Function
 End Module
