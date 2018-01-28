@@ -720,6 +720,8 @@
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
+    <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb" />
+    <Compile Include="NamespaceDoc.vb" />
     <Compile Include="CommandLine\CLI\Scripting.vb" />
     <Compile Include="CommandLine\InteropService\Abstract.vb" />
     <Compile Include="CommandLine\InteropService\CLIAbstractor.vb" />
@@ -1095,7 +1097,7 @@
     <Compile Include="Language\Linq\Linq.vb" />
     <Compile Include="Text\IO\UnbufferedStringReader.vb" />
     <Compile Include="Text\Parser\HtmlParser\Table.vb" />
-    <Compile Include="Language\Class.vb" />
+    <Compile Include="Language\NamespaceDoc.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\ls.vb" />
     <Compile Include="Language\Language\UnixBash\FileSystem\File.vb" />
     <Compile Include="Language\BaseClass.vb" />

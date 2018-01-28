@@ -277,7 +277,7 @@ Public Module ProgramPathSearchTool
     ''' 枚举所有非法的路径字符
     ''' </summary>
     ''' <remarks></remarks>
-    Public Const ILLEGAL_PATH_CHARACTERS_ENUMERATION As String = ":*?""<>|"
+    Public Const ILLEGAL_PATH_CHARACTERS_ENUMERATION As String = ":*?""<>|&"
     Public Const ILLEGAL_FILENAME_CHARACTERS As String = "\/" & ILLEGAL_PATH_CHARACTERS_ENUMERATION
 
     ''' <summary>
