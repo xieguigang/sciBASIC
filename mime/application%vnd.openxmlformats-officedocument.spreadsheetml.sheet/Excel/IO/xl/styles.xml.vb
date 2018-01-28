@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 
 Namespace XML.xl
 
@@ -43,7 +44,7 @@ Namespace XML.xl
         Public Property tableStyles As tableStyles
         Public Property extLst As ext()
 
-        <XmlAttribute("Ignorable", [Namespace]:=Excel.Xmlns.mc)>
+        <XmlAttribute("Ignorable", [Namespace]:=OpenXML.mc)>
         Public Property Ignorable As String
 
         <XmlNamespaceDeclarations()>
@@ -52,9 +53,9 @@ Namespace XML.xl
         Sub New()
             xmlns = New XmlSerializerNamespaces
 
-            xmlns.Add("mc", Excel.Xmlns.mc)
-            xmlns.Add("x14ac", Excel.Xmlns.x14ac)
-            xmlns.Add("x16r2", Excel.Xmlns.x16r2)
+            xmlns.Add("mc", OpenXML.mc)
+            xmlns.Add("x14ac", OpenXML.x14ac)
+            xmlns.Add("x16r2", OpenXML.x16r2)
         End Sub
 
     End Class
@@ -140,7 +141,7 @@ Namespace XML.xl
     End Class
 
     Public Class fonts : Inherits List(Of font)
-        <XmlAttribute("knownFonts", [Namespace]:=Excel.Xmlns.x14ac)>
+        <XmlAttribute("knownFonts", [Namespace]:=OpenXML.x14ac)>
         Public Property knownFonts As String
         <XmlElement>
         Public Property fonts As font()

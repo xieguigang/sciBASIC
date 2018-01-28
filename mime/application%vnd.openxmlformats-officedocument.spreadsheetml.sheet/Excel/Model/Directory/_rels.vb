@@ -60,7 +60,7 @@ Namespace Model.Directory
         End Sub
 
         Protected Overrides Function _name() As String
-            Return NameOf(Excel._rels)
+            Return NameOf(_rels)
         End Function
     End Class
 End Namespace

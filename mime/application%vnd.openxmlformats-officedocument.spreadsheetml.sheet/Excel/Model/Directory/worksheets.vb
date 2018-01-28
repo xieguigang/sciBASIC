@@ -51,8 +51,7 @@ Namespace Model.Directory
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function HaveWorksheet(sheetID$) As Boolean
-            Return worksheets.ContainsKey(sheetID) OrElse
-               worksheets.ContainsKey("sheet" & sheetID)
+            Return worksheets.ContainsKey(sheetID) OrElse worksheets.ContainsKey("sheet" & sheetID)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -86,12 +85,12 @@ Namespace Model.Directory
             ' 所以在这里不可以直接使用文件名来作为sheet的编号名称
             ' r:id是一致的
             worksheets = (ls - l - "*.xml" <= Folder) _
-            .Select(Function(path) (path:=path, path.LoadXml(Of worksheet))) _
-            .ToDictionary(Function(page) page.path.BaseName,
-                          Function(page) page.Item2)
+                .Select(Function(path) (path:=path, path.LoadXml(Of worksheet))) _
+                .ToDictionary(Function(page) page.path.BaseName,
+                              Function(page) page.Item2)
             _rels = (ls - l - "*.rels" <= (Folder & "/_rels")) _
-            .ToDictionary(Function(path) path.BaseName,
-                          Function(path) path.LoadXml(Of rels))
+                .ToDictionary(Function(path) path.BaseName,
+                              Function(path) path.LoadXml(Of rels))
         End Sub
 
         Public Sub Save()
@@ -100,8 +99,8 @@ Namespace Model.Directory
             For Each sheet In worksheets
                 path = $"{Folder}/{sheet.Key}.xml"
                 sheet.Value _
-                .ToXML _
-                .SaveTo(path, Encoding.UTF8)
+                    .ToXML _
+                    .SaveTo(path, Encoding.UTF8)
             Next
         End Sub
 
