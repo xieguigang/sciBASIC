@@ -52,10 +52,20 @@ Public Module KeyValuePairExtensions
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Tsv(table As Dictionary(Of String, String), saveTo$, Optional encoding As Encodings = Encodings.UTF8) As Boolean
+    Public Function Tsv(table As Dictionary(Of String, String),
+                        saveTo$,
+                        Optional encoding As Encodings = Encodings.UTF8,
+                        Optional reversed As Boolean = False) As Boolean
+
         Dim file$() = $"key{ASCII.TAB}map" +
             table _
-            .Select(Function(map) $"{map.Key}{ASCII.TAB}{map.Value}") _
+            .Select(Function(map)
+                        If reversed Then
+                            Return $"{map.Value}{ASCII.TAB}{map.Key}"
+                        Else
+                            Return $"{map.Key}{ASCII.TAB}{map.Value}"
+                        End If
+                    End Function) _
             .AsList
         Return file.SaveTo(saveTo, encoding.CodePage)
     End Function
