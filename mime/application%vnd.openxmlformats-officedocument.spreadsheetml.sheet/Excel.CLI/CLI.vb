@@ -130,10 +130,12 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
               Description:="The csv output file path or a directory path value when the ``/sheetName`` parameter is value ``*``.")>
     Public Function Extract(args As CommandLine) As Integer
         Dim sheetName$ = args <= "/sheetName"
-        Dim defaultOut$ = (args <= "/open").TrimSuffix & $"-{sheetName}.csv"
+        Dim defaultOut$
 
         If sheetName = "*" Then
-            defaultOut = defaultOut.TrimSuffix
+            defaultOut = (args <= "/open").TrimSuffix
+        Else
+            defaultOut = (args <= "/open").TrimSuffix & $"-{sheetName}.csv"
         End If
 
         With args("/out") Or defaultOut
