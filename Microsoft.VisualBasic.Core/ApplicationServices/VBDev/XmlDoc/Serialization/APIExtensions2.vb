@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::deb9ae41322802fe4b67b6efbd2838e3, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb"
+﻿#Region "Microsoft.VisualBasic::c9e138543849a97e4d555996abd710cf, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions2.vb"
 
     ' Author:
     ' 
@@ -29,7 +29,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development.XmlDoc.Serialization
@@ -53,19 +52,6 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             Next
 
             Return out
-        End Function
-
-        <Extension>
-        Public Function Sum(members As IEnumerable(Of ProjectMember), type As ProjectType) As ProjectMember
-            Dim list = members.ToArray
-            Return New ProjectMember(type) With {
-                .Name = list(0).Name,
-                .Declare = list.Select(Function(m) m.Declare).Distinct.JoinBy(vbLf),
-                .Remarks = list.Select(Function(m) m.Remarks).Distinct.JoinBy(vbLf),
-                .Returns = list.Select(Function(m) m.Returns).Distinct.JoinBy(vbLf),
-                .Summary = list.Select(Function(m) m.Summary).Distinct.JoinBy(vbLf),
-                .Params = list.Select(Function(m) m.Params).IteratesALL.ToArray
-            }
         End Function
 
         <Extension>

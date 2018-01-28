@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48604e5a9065f5b41761e3e3c4c845e0, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\ManualBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::8b8fac1a1c62233803553bf5e988a807, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\ManualBuilder.vb"
 
     ' Author:
     ' 
