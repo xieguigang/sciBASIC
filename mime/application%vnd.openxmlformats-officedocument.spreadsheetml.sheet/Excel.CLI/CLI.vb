@@ -142,7 +142,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
                 Dim excel = Xlsx.Open(args <= "/open")
 
                 For Each sheet As NamedValue(Of csv) In excel.EnumerateTables
-                    Dim save$ = $"{ .ref}/{sheet.Name.NormalizePathString}.csv"
+                    Dim save$ = $"{ .ref}/{sheet.Name.NormalizePathString(False)}.csv"
                     Call sheet.Value.Save(save, encoding:=Encodings.UTF8)
                 Next
 
