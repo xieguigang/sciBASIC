@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1a1ea07fb5ce7820363aefac6bc88f8, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
+﻿#Region "Microsoft.VisualBasic::bcbc0b04f945d77fb8fb9e1f660d3217, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
 
     ' Author:
     ' 
@@ -32,18 +32,33 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml
+Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
+Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Development.XmlDoc.Assembly
 
     ''' <summary>
     ''' A type within a project namespace.
     ''' </summary>
+    ''' <remarks>
+    ''' Fields和Events都不允许重载，但是属性和函数都可以重载
+    ''' </remarks>
     Public Class ProjectType
 
         Protected projectNamespace As ProjectNamespace
+
         Protected fields As Dictionary(Of String, ProjectMember)
-        Protected properties As Dictionary(Of String, ProjectMember)
-        Protected methods As Dictionary(Of String, ProjectMember)
+        Protected events As Dictionary(Of String, ProjectMember)
+
+        ''' <summary>
+        ''' 因为属性存在参数，所以可能会出现重载的情况
+        ''' </summary>
+        Protected properties As Dictionary(Of String, List(Of ProjectMember))
+        ''' <summary>
+        ''' 会出现重载函数，所以这里也应该是一个list
+        ''' </summary>
+        Protected methods As Dictionary(Of String, List(Of ProjectMember))
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -60,12 +75,14 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Me.projectNamespace = projectNamespace
 
             Me.fields = New Dictionary(Of String, ProjectMember)()
-            Me.properties = New Dictionary(Of String, ProjectMember)()
-            Me.methods = New Dictionary(Of String, ProjectMember)()
+            Me.properties = New Dictionary(Of String, List(Of ProjectMember))()
+            Me.methods = New Dictionary(Of String, List(Of ProjectMember))()
+            Me.events = New Dictionary(Of String, ProjectMember)
         End Sub
 
         Protected Sub New(type As ProjectType)
             projectNamespace = type.projectNamespace
+            events = type.events
             fields = type.fields
             properties = type.properties
             methods = type.methods
@@ -74,50 +91,56 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Remarks = type.Remarks
         End Sub
 
+        Friend Sub New(t1 As ProjectType, t2 As ProjectType)
+            projectNamespace = t1.projectNamespace
+            fields = (t1.fields.Values.AsList + t2.fields.Values).GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.Sum(Me))
+            events = (t1.events.Values.AsList + t2.events.Values).GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.Sum(Me))
+            properties = (t1.properties.Values.AsList + t2.properties.Values).IteratesALL.GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.ToList)
+            methods = (t1.methods.Values.AsList + t2.methods.Values).IteratesALL.GroupBy(Function(f) f.Name.ToLower).ToDictionary(Function(g) g.Key, Function(g) g.ToList)
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Name
         End Function
 
-        Public Function GetMethod(methodName As String) As ProjectMember
-            If Me.methods.ContainsKey(methodName.ToLower()) Then
-                Return Me.methods(methodName.ToLower())
-            End If
-
-            Return Nothing
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetMethods(methodName As String) As List(Of ProjectMember)
+            Return getInternal(methods, methodName.ToLower)
         End Function
 
         Public Function EnsureMethod(methodName As String) As ProjectMember
-            Dim pm As ProjectMember = Me.GetMethod(methodName)
+            Dim pmlist As List(Of ProjectMember) = Me.GetMethods(methodName)
+            Dim pm As New ProjectMember(Me) With {
+                .Name = methodName
+            }
 
-            If pm Is Nothing Then
-                pm = New ProjectMember(Me) With {
-                    .Name = methodName
-                }
-
-                Me.methods.Add(methodName.ToLower(), pm)
-            End If
+            Call pmlist.Add(pm)
 
             Return pm
         End Function
 
-        Public Function GetProperty(propertyName As String) As ProjectMember
-            If Me.properties.ContainsKey(propertyName.ToLower()) Then
-                Return Me.properties(propertyName.ToLower())
+        Private Shared Function getInternal(ByRef table As Dictionary(Of String, List(Of ProjectMember)), name$) As List(Of ProjectMember)
+            If table.ContainsKey(name) Then
+                Return table(name)
+            Else
+                Dim list As New List(Of ProjectMember)
+                table.Add(name, list)
+                Return list
             End If
+        End Function
 
-            Return Nothing
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetProperties(propertyName As String) As List(Of ProjectMember)
+            Return getInternal(properties, propertyName.ToLower)
         End Function
 
         Public Function EnsureProperty(propertyName As String) As ProjectMember
-            Dim pm As ProjectMember = Me.GetProperty(propertyName)
+            Dim pmlist As List(Of ProjectMember) = Me.GetProperties(propertyName)
+            Dim pm As New ProjectMember(Me) With {
+                .Name = propertyName
+            }
 
-            If pm Is Nothing Then
-                pm = New ProjectMember(Me) With {
-                    .Name = propertyName
-                }
-
-                Me.properties.Add(propertyName.ToLower(), pm)
-            End If
+            Call pmlist.Add(pm)
 
             Return pm
         End Function
@@ -144,16 +167,39 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             Return pm
         End Function
 
+        Public Function GetEvent(eventName As String) As ProjectMember
+            If Me.events.ContainsKey(eventName.ToLower()) Then
+                Return Me.events(eventName.ToLower())
+            End If
+
+            Return Nothing
+        End Function
+
+        Public Function EnsureEvent(eventName As String) As ProjectMember
+            Dim pm As ProjectMember = Me.GetField(eventName)
+
+            If pm Is Nothing Then
+                pm = New ProjectMember(Me) With {
+                    .Name = eventName
+                }
+
+                Me.fields.Add(eventName.ToLower(), pm)
+            End If
+
+            Return pm
+        End Function
+
         Public Sub LoadFromNode(xn As XmlNode)
             Dim summaryNode As XmlNode = xn.SelectSingleNode("summary")
 
             If summaryNode IsNot Nothing Then
-                Me._Summary = summaryNode.InnerText
+                Me.Summary = summaryNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
             End If
 
             summaryNode = xn.SelectSingleNode("remarks")
+
             If Not summaryNode Is Nothing Then
-                Remarks = summaryNode.InnerText
+                Remarks = summaryNode.InnerText.Trim(ASCII.CR, ASCII.LF, " ")
             End If
         End Sub
     End Class

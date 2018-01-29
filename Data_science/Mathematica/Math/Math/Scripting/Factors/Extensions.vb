@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0419352624b80c6850a9e4bc05a90d8, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Factors\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a49dc545e5e58623d65056c7a7aafee9, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Factors\Extensions.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Scripting
 
@@ -64,7 +63,7 @@ Namespace Scripting
             Return out
         End Function
 
-        Public Property names(vector As FactorVector) As String()
+        Public Property names(vector As IFactorVector) As String()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return vector.index.Keys.ToArray

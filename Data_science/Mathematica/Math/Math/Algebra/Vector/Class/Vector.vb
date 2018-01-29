@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d0acf507e790129ee071e47834512b3, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::7eaac35d7e50a1c6b9586cf2152ec0fb, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -43,12 +43,14 @@ Namespace LinearAlgebra
     ''' Vector was inherits from type <see cref="List(Of Double)"/>
     ''' </summary>
     Public Class Vector : Inherits GenericVector(Of Double)
+        Implements IVector
 
         ''' <summary>
         ''' <see cref="System.Double.NaN"/>
         ''' </summary>
         ''' <returns></returns>
         Public Shared ReadOnly Property NAN As Vector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Vector({Double.NaN})
             End Get
@@ -59,6 +61,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public Shared ReadOnly Property Inf As Vector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Vector({Double.PositiveInfinity})
             End Get
@@ -80,6 +83,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property IsNumeric As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return [Dim] = 1
             End Get
@@ -528,6 +532,13 @@ Namespace LinearAlgebra
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New DoubleRange(Me)
+            End Get
+        End Property
+
+        Private ReadOnly Property Data As Double() Implements IVector.Data
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return buffer
             End Get
         End Property
 

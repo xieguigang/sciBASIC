@@ -1,28 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::a5c5bd319d3e3cb5bbd1ea2d5222f6ae, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
+﻿#Region "Microsoft.VisualBasic::72583ecbe0ad701ec1f8fbc8c7be7a1c, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xieguigang (xie.guigang@live.com)
+    '       xie (genetics@smrucc.org)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -46,6 +46,12 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
         Protected projects As New List(Of Project)
         Protected handle$
+
+        ReadOnly excludeVBSpecific As Boolean
+
+        Sub New(excludeVBSpecific As Boolean)
+            Me.excludeVBSpecific = excludeVBSpecific
+        End Sub
 
         Public Overrides Function ToString() As String
             Return handle
@@ -128,7 +134,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
                     If nameNode IsNot Nothing Then
                         xml = nameNode.InnerText
                         Call EnsureProject(xml) _
-                            .ProcessXmlDoc(xd)
+                            .ProcessXmlDoc(xd, excludeVBSpecific)
                     End If
                 End Using
             End Using

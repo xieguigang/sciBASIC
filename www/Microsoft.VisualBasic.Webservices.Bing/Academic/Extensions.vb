@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0e2de86cfa54ac6966df4e5d4e8eb60, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Academic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::12140e290c240ccd2e73c49ceac612d0, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Academic\Extensions.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text
@@ -60,5 +61,50 @@ Namespace Academic
                 Next
             Next
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Summary(articles As IEnumerable(Of ArticleProfile)) As Summary()
+            Return articles _
+                .Select(Function(a) New Summary(a)) _
+                .ToArray
+        End Function
     End Module
+
+    Public Class Summary
+
+        Public Property title As String
+        Public Property authors As String()
+        Public Property year As String
+        Public Property journal As String
+        Public Property doi As String
+        Public Property cites As Integer
+        Public Property pubmed As String
+
+        Sub New()
+        End Sub
+
+        Sub New(article As ArticleProfile)
+            title = article.title
+            authors = article _
+                .authors _
+                .Select(Function(a) a.title) _
+                .ToArray
+            year = article.PubDate.Year
+            journal = article.journal.title
+            doi = article.DOI
+            cites = article.cites.Sum(Function(c) c.Volume)
+            pubmed = article _
+                .source _
+                .Where(Function(link)
+                           Return link.title.TextEquals("www.ncbi.nlm.nih.gov")
+                       End Function) _
+                .FirstOrDefault _
+                .href
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{authors.FirstOrDefault} ({year})"
+        End Function
+    End Class
 End Namespace

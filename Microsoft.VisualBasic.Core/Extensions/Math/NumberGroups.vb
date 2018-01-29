@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1585693a19d1d942ebc15ac34e45c0ac, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::a313b7c2ea94b538cd4a392974d8cdb4, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
 
     ' Author:
     ' 
@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Math
 
@@ -38,6 +39,9 @@ Namespace Math
     ''' </summary>
     Public Module NumberGroups
 
+        ''' <summary>
+        ''' The numeric vector model
+        ''' </summary>
         Public Interface IVector
             ReadOnly Property Data As Double()
         End Interface
@@ -49,7 +53,7 @@ Namespace Math
             Dim result As Double = mins.Sum(Function(tt) tt.Tag)
 
             With target
-                For Each x In mins.Select(Function(o) o.value)
+                For Each x In mins.Select(Function(o) o.Value)
                     Call .Remove(item:=x)
                     If .Count = 0 Then
                         Exit For
@@ -85,7 +89,7 @@ Namespace Math
 
             Return New DoubleTagged(Of T) With {
                 .Tag = minV,
-                .value = minX
+                .Value = minX
             }
         End Function
 
@@ -95,29 +99,53 @@ Namespace Math
         ''' <param name="source"></param>
         ''' <param name="offsets"></param>
         ''' <returns></returns>
-        <Extension> Public Function GroupBy(source As IEnumerable(Of Double), offsets#) As Dictionary(Of String, Double())
-            Dim data = source.AsList
-            Dim groups As New Dictionary(Of String, List(Of Double))
+        <Extension> Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), offsets#) As NamedCollection(Of T)()
+            Dim data As List(Of T) = source.AsList
+            Dim tmp As New With {
+                .values = New List(Of Double),
+                .list = New List(Of T)
+            }
+            Dim groups = {
+                tmp
+            }.ToDictionary(Function(null) "",
+                           Function(obj) obj)
+
+            Call groups.Clear()
 
             Do While data.Count > 0
-                Dim x As Double = data.First
+                Dim x As T = data.Pop
                 Dim hit As Boolean = False
+                Dim value# = evaluate(x)
 
                 For Each group In groups.Values
-                    If Abs(group.Average - x) <= offsets Then
-                        group.Add(x)
+                    If Abs(group.values.Average - value) <= offsets Then
+                        group.values.Add(value)
+                        group.list.Add(x)
                         hit = True
+                        Exit For
                     End If
                 Next
 
                 If Not hit Then
-                    groups.Add(x, New List(Of Double) From {x})
+                    tmp = New With {
+                        .values = New List(Of Double),
+                        .list = New List(Of T)
+                    }
+                    tmp.values.Add(value)
+                    tmp.list.Add(x)
+                    groups.Add(value, tmp)
                 End If
             Loop
 
             Return groups _
-                .ToDictionary(Function(x) x.Key,
-                              Function(g) g.Value.ToArray)
+                .Select(Function(tuple)
+                            Return New NamedCollection(Of T) With {
+                                .Name = tuple.Key,
+                                .Value = tuple.Value.list
+                            }
+                        End Function) _
+                .OrderBy(Function(tuple) Val(tuple.Name)) _
+                .ToArray
         End Function
 
         ''' <summary>
@@ -131,7 +159,7 @@ Namespace Math
         Public Function Groups(Of TagObject As INumberTag)(source As IEnumerable(Of TagObject), offset As Integer) As GroupResult(Of TagObject, Integer)()
             Dim list As New List(Of GroupResult(Of TagObject, Integer))
             Dim orders As TagObject() = (From x As TagObject
-                                     In source
+                                         In source
                                          Select x
                                          Order By x.Tag Ascending).ToArray
             Dim tag As TagObject = orders(Scan0)
@@ -156,7 +184,6 @@ Namespace Math
     End Module
 
     Public Interface INumberTag
-
         ReadOnly Property Tag As Integer
     End Interface
 End Namespace

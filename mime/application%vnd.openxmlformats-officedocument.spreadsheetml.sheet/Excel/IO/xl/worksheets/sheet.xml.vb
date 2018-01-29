@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f049868a9611d2a57953320f2dfc54b9, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\worksheets\sheet.xml.vb"
+﻿#Region "Microsoft.VisualBasic::ec2108df552351c67b8dd950ce22a8a8, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\worksheets\sheet.xml.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 
 Namespace XML.xl.worksheets
 
@@ -47,9 +48,9 @@ Namespace XML.xl.worksheets
         Public Property hyperlinks As hyperlink()
         Public Property drawing As drawing
 
-        <XmlAttribute("uid", [Namespace]:=xr)>
+        <XmlAttribute("uid", [Namespace]:=OpenXML.xr)>
         Public Property uid As String
-        <XmlAttribute(NameOf(Ignorable), [Namespace]:=mc)>
+        <XmlAttribute(NameOf(Ignorable), [Namespace]:=OpenXML.mc)>
         Public Property Ignorable As String
 
         <XmlNamespaceDeclarations()>
@@ -57,12 +58,12 @@ Namespace XML.xl.worksheets
 
         Sub New()
             xmlns = New XmlSerializerNamespaces
-            xmlns.Add("r", r)
-            xmlns.Add("mc", mc)
-            xmlns.Add("x14ac", x14ac)
-            xmlns.Add("xr", xr)
-            xmlns.Add("xr2", xr2)
-            xmlns.Add("xr3", xr3)
+            xmlns.Add("r", OpenXML.r)
+            xmlns.Add("mc", OpenXML.mc)
+            xmlns.Add("x14ac", OpenXML.x14ac)
+            xmlns.Add("xr", OpenXML.xr)
+            xmlns.Add("xr2", OpenXML.xr2)
+            xmlns.Add("xr3", OpenXML.xr3)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -71,13 +72,14 @@ Namespace XML.xl.worksheets
     End Class
 
     Public Class drawing
-        <XmlAttribute("id", [Namespace]:=Excel.Xmlns.r)>
+        <XmlAttribute("id", [Namespace]:=OpenXML.r)>
         Public Property id As String
     End Class
 
     Public Class hyperlink
         <XmlAttribute> Public Property ref As String
-        <XmlAttribute("id", [Namespace]:=Excel.Xmlns.r)> Public Property id As String
+        <XmlAttribute("id", [Namespace]:=OpenXML.r)>
+        Public Property id As String
     End Class
 
     Public Class conditionalFormatting
@@ -97,7 +99,7 @@ Namespace XML.xl.worksheets
     Public Class sheetFormatPr
         <XmlAttribute>
         Public Property defaultRowHeight As String
-        <XmlAttribute("dyDescent", [Namespace]:=Excel.Xmlns.x14ac)>
+        <XmlAttribute("dyDescent", [Namespace]:=OpenXML.x14ac)>
         Public Property dyDescent As String
     End Class
 
@@ -139,7 +141,7 @@ Namespace XML.xl.worksheets
         <XmlAttribute> Public Property r As String
         <XmlAttribute> Public Property spans As String
 
-        <XmlAttribute(NameOf(dyDescent), [Namespace]:=x14ac)>
+        <XmlAttribute(NameOf(dyDescent), [Namespace]:=OpenXML.x14ac)>
         Public Property dyDescent As String
 
         <XmlAttribute> Public Property ht As String
@@ -212,7 +214,7 @@ Namespace XML.xl.worksheets
     Public Class pageSetup
         <XmlAttribute> Public Property paperSize As String
         <XmlAttribute> Public Property orientation As String
-        <XmlAttribute("id", [Namespace]:=Xmlns.r)>
+        <XmlAttribute("id", [Namespace]:=OpenXML.r)>
         Public Property id As String
     End Class
 End Namespace

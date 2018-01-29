@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::310562f7fb886dd95e87a64064f100cb, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::051219c7858b016ac1936b62bc6eb520, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -363,6 +363,7 @@ Public Module VBDebugger
     End Sub
 
     ''' <summary>
+    ''' Use an assert statement to disrupt normal execution if a boolean condition is false.
     ''' If <paramref name="test"/> is false(means this assertion test failure), then throw exception.
     ''' </summary>
     ''' <param name="test"></param>
@@ -404,7 +405,7 @@ Public Module VBDebugger
     ''' </summary>
     ''' <param name="MSG">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
     ''' <param name="Indent"></param>
-    '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Sub __DEBUG_ECHO(MSG As StringBuilder, Optional Indent As Integer = 0)
         Call MSG.ToString.__DEBUG_ECHO(Indent)
     End Sub

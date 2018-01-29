@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c22d4854725de2da9413062f6e51b2a, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming.vb"
+﻿#Region "Microsoft.VisualBasic::c5c83a22f509d48df561a185825320fa, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,7 @@
 
 #End Region
 
-Namespace ComponentModel.Algorithm
+Namespace ComponentModel.Algorithm.DynamicProgramming
 
 
 End Namespace

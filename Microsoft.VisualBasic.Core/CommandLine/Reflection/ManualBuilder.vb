@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48604e5a9065f5b41761e3e3c4c845e0, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\ManualBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::8b8fac1a1c62233803553bf5e988a807, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\ManualBuilder.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,10 @@ Namespace CommandLine.Reflection
         <Extension> Public Function PrintHelp(api As APIEntryPoint) As Integer
             Dim infoLines = Paragraph.SplitParagraph(api.Info, 90).ToArray
             Dim blank$
+
+            If infoLines.IsNullOrEmpty Then
+                infoLines = {"Description not available..."}
+            End If
 
             ' print API name and description
             Call Console.WriteLine()

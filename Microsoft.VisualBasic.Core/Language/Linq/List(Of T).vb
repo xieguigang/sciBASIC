@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::540ddb34ff4b0d54470a9b79801f146a, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::2db14890d8c6eb37e48f0c97e7cc5008, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
@@ -573,6 +573,10 @@ Namespace Language
             Next
         End Function
 
+        ''' <summary>
+        ''' Get the <see cref="Last"/> element value and then removes the last element.
+        ''' </summary>
+        ''' <returns></returns>
         Public Function Pop() As T
             Dim out = Last
             Call Me.RemoveLast

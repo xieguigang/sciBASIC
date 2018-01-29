@@ -178,7 +178,7 @@
     <Compile Include="Model\Directory\_rels.vb" />
     <Compile Include="Model\File.vb" />
     <Compile Include="IO.vb" />
-    <Compile Include="Model\Directory\Directory.vb" />
+    <Compile Include="Model\Directory\Abstract.vb" />
     <Compile Include="Model\StoreProcedure.vb" />
     <Compile Include="Model\Xmlns.vb" />
     <Compile Include="Extensions.vb" />

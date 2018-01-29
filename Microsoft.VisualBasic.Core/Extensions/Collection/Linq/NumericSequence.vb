@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3aca41c93858807ecf374c47f88bfeb7, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\NumericSequence.vb"
+﻿#Region "Microsoft.VisualBasic::098c1f8c9fb227e5113a6592c888e3d7, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\NumericSequence.vb"
 
     ' Author:
     ' 
@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Linq
 
@@ -78,6 +79,11 @@ Namespace Linq
             Next
         End Function
 
+        Public ReadOnly OneDay As DefaultValue(Of TimeSpan) = New TimeSpan(days:=1, hours:=0, minutes:=0, seconds:=0)
+        Public ReadOnly OneHour As DefaultValue(Of TimeSpan) = New TimeSpan(hours:=1, minutes:=0, seconds:=0)
+        Public ReadOnly OneMinute As DefaultValue(Of TimeSpan) = New TimeSpan(minutes:=1, seconds:=0, hours:=0)
+        Public ReadOnly OneSecond As DefaultValue(Of TimeSpan) = New TimeSpan(seconds:=1, hours:=0, minutes:=0)
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -85,8 +91,8 @@ Namespace Linq
         ''' <param name="[to]"></param>
         ''' <param name="step%">Milliseconds</param>
         ''' <returns></returns>
-        Public Iterator Function Range(from As Date, [to] As Date, Optional step# = 1) As IEnumerable(Of Date)
-            Dim t As TimeSpan = TimeSpan.FromMilliseconds([step])
+        Public Iterator Function Range(from As Date, [to] As Date, Optional [step] As TimeSpan = Nothing) As IEnumerable(Of Date)
+            Dim t As TimeSpan = [step] Or OneDay
 
             ' 由于后面的Do循环之中from是放在加减法之后的，所以需要在这里把最开始的值返回，要不然第一个值会被丢失的。。。
             Yield from

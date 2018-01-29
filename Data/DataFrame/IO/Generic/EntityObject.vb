@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21edcb99ea2a809956c4bca5669b5fe9, ..\sciBASIC#\Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::a5e202b3c22a6d28adf79f962be02735, ..\sciBASIC#\Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -132,6 +132,13 @@ Namespace IO
             Else
                 Return path.LoadCsv(Of T)(explicit:=False, maps:=map)
             End If
+        End Function
+
+        Public Shared Function LoadDataSet(Of T As EntityObject)(stream As File, Optional ByRef uidMap$ = Nothing) As IEnumerable(Of T)
+            Dim map As New Dictionary(Of String, String) From {
+                {uidMap Or stream(0, 0).AsDefault, NameOf(EntityObject.ID)}
+            }
+            Return stream.AsDataSource(Of T)(explicit:=False, maps:=map)
         End Function
     End Class
 End Namespace

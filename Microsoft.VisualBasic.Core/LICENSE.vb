@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95666d3aca68ff95c78b4cab8c665409, ..\sciBASIC#\Microsoft.VisualBasic.Core\LICENSE.vb"
+﻿#Region "Microsoft.VisualBasic::0f7a88bf5a1aae4ec39085ee28f06bb0, ..\sciBASIC#\Microsoft.VisualBasic.Core\LICENSE.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 ''' <summary>
 ''' Information about this VisualBasic App framework code module.
 ''' </summary>
@@ -50,16 +52,21 @@ Public Module LICENSE
     '''to take away yo [rest of string was truncated]&quot;;.
     '''</summary>
     Public ReadOnly Property GPL3 As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return My.Resources.gpl
         End Get
     End Property
 #End If
 
+    Friend Const githubURL$ = "https://github.com/xieguigang/sciBASIC"
+
     ''' <summary>
     ''' https://github.com/xieguigang/sciBASIC
     ''' </summary>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub GithubRepository()
-        Call System.Diagnostics.Process.Start("https://github.com/xieguigang/sciBASIC")
+        Call System.Diagnostics.Process.Start(LICENSE.githubURL)
     End Sub
 End Module

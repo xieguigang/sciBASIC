@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d2014b9c8f5eff16f20769449cb0cc2, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::e1abc2dcc9c56ec039732d5b0764de18, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -119,7 +119,7 @@ B21,B22,B23,...
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        Default Public Overloads Property Item(x As Integer, y As Integer) As String
+        Default Public Overloads Property Item(x%, y%) As String
             Get
                 Dim row As RowObject = Me(x)
                 Return row(y)

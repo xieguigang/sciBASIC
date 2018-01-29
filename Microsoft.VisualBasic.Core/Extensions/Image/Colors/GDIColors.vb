@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9e9670e884e1fbce585c4dd9b307df8, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::38682dd625e219011733b1dbcb54751e, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -267,7 +267,7 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="exp$"></param>
         ''' <returns></returns>
-        <Extension> Public Function TranslateColor(exp$) As Color
+        <Extension> Public Function TranslateColor(exp$, Optional throwEx As Boolean = True) As Color
             If exp.StringEmpty Then
                 Return Color.Black
             End If
@@ -280,7 +280,7 @@ Namespace Imaging
                 Return ColorTranslator.FromOle(CInt(exp))
             End If
 
-            Return exp.ToColor
+            Return exp.ToColor(throwEx:=throwEx)
         End Function
 
         <Extension>

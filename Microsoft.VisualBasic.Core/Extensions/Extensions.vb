@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::949f6f0541bd1ac2c30818bfdc8bd9d8, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::dcf2757bea3c1ddd1b2425d4250bed42, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -1971,8 +1971,13 @@ Public Module Extensions
     ''' <param name="dotNETlist"></param>
     ''' <returns></returns>
     <Extension> Public Function RemoveLast(Of T)(ByRef dotNETlist As Generic.List(Of T)) As Generic.List(Of T)
-        If dotNETlist.IsNullOrEmpty OrElse dotNETlist.Count = 1 Then
+        If dotNETlist.IsNullOrEmpty Then
             dotNETlist = New List(Of T)
+
+            ' 2018-1-25
+            ' 需要将0和1分开来看，否则会造成最后一个元素永远都移除不了的bug
+        ElseIf dotNETlist.Count = 1 Then
+            dotNETlist.Clear()
         Else
             Dim i As Integer = dotNETlist.Count - 1
             Call dotNETlist.RemoveAt(i)

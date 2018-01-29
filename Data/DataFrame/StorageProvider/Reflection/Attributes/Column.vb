@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d876f757606fa5b11e2322fb68f8ac3e, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\Attributes\Column.vb"
+﻿#Region "Microsoft.VisualBasic::b572c63e75994ed10026ae9c50cb45df, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\Attributes\Column.vb"
 
     ' Author:
     ' 
@@ -27,21 +27,22 @@
 #End Region
 
 Imports System.Data.Linq.Mapping
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace StorageProvider.Reflection
 
     ''' <summary>
-    ''' This is a column(or Field) in the csv document. 
+    ''' This is a column(or Field) in the csv document. The <see cref="ColumnAttribute.CustomParser"/> should implements the 
+    ''' interface type of <see cref="IParser"/>.
     ''' </summary>
     ''' <remarks></remarks>
-    <AttributeUsage(AttributeTargets.Property,
-                    AllowMultiple:=False,
-                    Inherited:=False)>
+    <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=False)>
     Public Class ColumnAttribute : Inherits DataAttribute
         Implements IAttributeComponent
 
         Public Overridable ReadOnly Property ProviderId As ProviderIds Implements IAttributeComponent.ProviderId
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return ProviderIds.Column
             End Get
@@ -56,16 +57,16 @@ Namespace StorageProvider.Reflection
         ''' <summary>
         ''' 构建一个列的别名属性值，也可以在这个构造函数之中指定自定义的解析器用来存储非基本类型
         ''' </summary>
-        ''' <param name="Name"></param>
+        ''' <param name="name"></param>
         ''' <param name="customParser">The type should implements the interface <see cref="IParser"/>.
         ''' (对于基本类型，这个参数是可以被忽略掉的，但是对于复杂类型，这个参数是不能够被忽略的，否则会报错)
         ''' </param>
-        Sub New(Name$, Optional customParser As Type = Nothing)
-            Me.Name = Name
+        Sub New(name$, Optional customParser As Type = Nothing)
+            Me.Name = name
             Me.CustomParser = customParser
 
-            If String.IsNullOrEmpty(Name) Then
-                Throw New DataException($"{NameOf(Name)} value can not be null!")
+            If String.IsNullOrEmpty(name) Then
+                Throw New DataException($"{NameOf(name)} value can not be null!")
             End If
         End Sub
 
@@ -90,9 +91,12 @@ Namespace StorageProvider.Reflection
             End If
         End Function
 
+        Const NotImplementedErr$ = "Custom parser required of the type implements interface {0}, but {1} did not!"
+
         Private Function __innerMsg() As String
-            Return _
-                $"Custom parser required of the type implements interface {GetType(IParser).FullName}, but {CustomParser.FullName} did not!"
+            Dim target$ = GetType(IParser).FullName
+            Dim parser$ = CustomParser.FullName
+            Return String.Format(NotImplementedErr, target, parser)
         End Function
 
         ''' <summary>
@@ -101,10 +105,12 @@ Namespace StorageProvider.Reflection
         ''' <returns></returns>
         Public Shared ReadOnly Property TypeInfo As Type = GetType(ColumnAttribute)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(attr As ColumnAttribute) As String
             Return attr.Name
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(sName As String) As ColumnAttribute
             Return New ColumnAttribute(sName)
         End Operator

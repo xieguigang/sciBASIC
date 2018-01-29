@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27012cd6508dc1e069cf468fbc348ac4, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\ModuleAPI.vb"
+﻿#Region "Microsoft.VisualBasic::f6b54fc2e2e36d178be35e5af509347c, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\ModuleAPI.vb"
 
     ' Author:
     ' 

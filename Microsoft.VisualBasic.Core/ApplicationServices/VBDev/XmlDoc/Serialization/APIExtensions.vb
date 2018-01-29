@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85b2b96bdd7a2992334ec7a10526ca5e, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::c55ef8dfaf8ee406011b6266f1e0e017, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,15 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
 
     <Package("Assembly.Doc.API")>
     Public Module APIExtensions
+
+        ''' <summary>
+        ''' NDoc supports this by recognising a special NamespaceDoc class located in each namespace
+        ''' 
+        ''' > https://stackoverflow.com/questions/793210/xml-documentation-for-a-namespace
+        ''' 
+        ''' 这个名字的对象类型主要是被用来标记命名空间的注释信息使用的
+        ''' </summary>
+        Public Const NamespaceDoc$ = NameOf(NamespaceDoc)
 
         Public ReadOnly Property Types As New Dictionary(Of Char, memberTypes) From {
  _

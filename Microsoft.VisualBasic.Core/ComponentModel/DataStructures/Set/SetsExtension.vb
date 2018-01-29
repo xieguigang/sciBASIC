@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8b02c7c45176a14214621c7f9027112, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Set\SetsExtension.vb"
+﻿#Region "Microsoft.VisualBasic::9a7863656bea2451647ada32825bc553, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Set\SetsExtension.vb"
 
     ' Author:
     ' 
@@ -105,6 +105,12 @@ Public Module SetsExtension
     <ExportAPI("As.Array")>
     Public Function ToArray([set] As [Set]) As Object()
         Return [set].ToArray
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsSet(strings As IEnumerable(Of String)) As StringSet
+        Return New StringSet(strings)
     End Function
 #End Region
 End Module

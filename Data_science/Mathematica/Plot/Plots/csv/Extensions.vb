@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::074f85b58faa98b6cb390ece883629eb, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\csv\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2b167eeb21e351587b3f73a6504e0a19, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\csv\Extensions.vb"
 
     ' Author:
     ' 
@@ -46,11 +46,14 @@ Namespace csv
                 Dim Y = columns(index.y)
                 Dim pts As PointF() = X _
                     .SeqIterator _
-                    .Select(Function(xi) New PointF(xi.value, Y(xi))).ToArray
-                Dim points As PointData() = pts.Select(Function(pt) New PointData(pt)).ToArray
+                    .Select(Function(xi) New PointF(xi.value, Y(xi))) _
+                    .ToArray
+                Dim points As PointData() = pts _
+                    .Select(Function(pt) New PointData(pt)) _
+                    .ToArray
 
                 Return New ChartPlots.SerialData With {
-                    .color = color.TranslateColor,
+                    .color = color.TranslateColor(throwEx:=False),
                     .PointSize = ptSize,
                     .title = $"Plot({fieldX}, {fieldY})",
                     .pts = points
