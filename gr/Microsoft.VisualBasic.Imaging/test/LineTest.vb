@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cac828278f38759bfa7f6182053a756a, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\LineTest.vb"
+﻿#Region "Microsoft.VisualBasic::cac828278f38759bfa7f6182053a756a, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\LineTest.vb"
 
     ' Author:
     ' 

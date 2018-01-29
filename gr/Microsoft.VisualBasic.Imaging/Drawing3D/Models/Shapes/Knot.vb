@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c790746d32f19a70f57d8cc9e7ef8c9b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Knot.vb"
+﻿#Region "Microsoft.VisualBasic::a61e815183a1237df2a8788cad9efc2f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Knot.vb"
 
     ' Author:
     ' 

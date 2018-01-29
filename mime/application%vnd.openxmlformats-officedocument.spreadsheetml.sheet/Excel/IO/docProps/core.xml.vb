@@ -27,10 +27,11 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 
 Namespace XML.docProps
 
-    <XmlRoot("coreProperties", [Namespace]:=cp)>
+    <XmlRoot("coreProperties", [Namespace]:=OpenXML.cp)>
     Public Class core : Inherits IXml
 
         <XmlNamespaceDeclarations()>
@@ -39,20 +40,20 @@ Namespace XML.docProps
         Sub New()
             xmlns = New XmlSerializerNamespaces
 
-            xmlns.Add("cp", Excel.Xmlns.cp)
-            xmlns.Add("dc", Excel.Xmlns.dc)
-            xmlns.Add("dcterms", Excel.Xmlns.dcterms)
-            xmlns.Add("dcmitype", Excel.Xmlns.dcmitype)
-            xmlns.Add("xsi", Excel.Xmlns.xsi)
+            xmlns.Add("cp", OpenXML.cp)
+            xmlns.Add("dc", OpenXML.dc)
+            xmlns.Add("dcterms", OpenXML.dcterms)
+            xmlns.Add("dcmitype", OpenXML.dcmitype)
+            xmlns.Add("xsi", OpenXML.xsi)
         End Sub
 
-        <XmlElement(ElementName:=NameOf(creator), [Namespace]:=dc)>
+        <XmlElement(ElementName:=NameOf(creator), [Namespace]:=OpenXML.dc)>
         Public Property creator As String
-        <XmlElement(ElementName:=NameOf(lastModifiedBy), [Namespace]:=cp)>
+        <XmlElement(ElementName:=NameOf(lastModifiedBy), [Namespace]:=OpenXML.cp)>
         Public Property lastModifiedBy As String
-        <XmlElement(NameOf(created), [Namespace]:=dcterms)>
+        <XmlElement(NameOf(created), [Namespace]:=OpenXML.dcterms)>
         Public Property created As W3CDTF
-        <XmlElement(NameOf(modified), [Namespace]:=dcterms)>
+        <XmlElement(NameOf(modified), [Namespace]:=OpenXML.dcterms)>
         Public Property modified As W3CDTF
 
         Protected Overrides Function filePath() As String
@@ -65,7 +66,7 @@ Namespace XML.docProps
     End Class
 
     Public Structure W3CDTF
-        <XmlAttribute("type", [Namespace]:=xsi)>
+        <XmlAttribute("type", [Namespace]:=OpenXML.xsi)>
         Public Property type As String
         <XmlText> Public Property [Date] As Date
     End Structure

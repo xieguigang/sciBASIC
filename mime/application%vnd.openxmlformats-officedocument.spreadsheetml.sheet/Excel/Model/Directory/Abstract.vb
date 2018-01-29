@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f8089aab61a9fed7d4f9dd7db8bee50, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::57e1b611ba6b48003055908bdf539677, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory\Directory.vb"
 
 ' Author:
 ' 
@@ -26,19 +26,22 @@
 
 #End Region
 
-Public MustInherit Class Directory
+Namespace Model.Directory
 
-    Public ReadOnly Property Folder As String
+    Public MustInherit Class Directory
 
-    Sub New(ROOT$)
-        Folder = $"{ROOT}/{_name()}"
-        Call _loadContents()
-    End Sub
+        Public ReadOnly Property Folder As String
 
-    Protected MustOverride Function _name() As String
-    Protected MustOverride Sub _loadContents()
+        Sub New(ROOT$)
+            Folder = $"{ROOT}/{_name()}"
+            Call _loadContents()
+        End Sub
 
-    Public Overrides Function ToString() As String
-        Return Folder
-    End Function
-End Class
+        Protected MustOverride Function _name() As String
+        Protected MustOverride Sub _loadContents()
+
+        Public Overrides Function ToString() As String
+            Return Folder
+        End Function
+    End Class
+End Namespace

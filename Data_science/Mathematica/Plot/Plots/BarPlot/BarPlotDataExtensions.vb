@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3599849fb40061738190ffb5fb5db372, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\BarPlotDataExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::863687eb49d48d750ab2825de8ae1878, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\BarPlotDataExtensions.vb"
 
     ' Author:
     ' 

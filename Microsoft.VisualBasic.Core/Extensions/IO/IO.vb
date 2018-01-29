@@ -41,11 +41,19 @@ Imports Microsoft.VisualBasic.Text
 <Package("IO")>
 Public Module IOExtensions
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function FlushStream(stream As MemoryStream, path$) As Boolean
+        Return stream.ToArray.FlushStream(path)
+    End Function
+
     ''' <summary>
     ''' 将指定的字符串的数据值写入到目标可写的输出流之中
     ''' </summary>
     ''' <param name="data$">所需要写入的字符串数据</param>
     ''' <param name="out">输出流</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Sub FlushTo(data$, out As StreamWriter)
         Call out.WriteLine(data)
@@ -78,9 +86,13 @@ Public Module IOExtensions
     ''' </summary>
     ''' <param name="path">The file path of the target text file.</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ReadVector(path As String) As Double()
-        Return IO.File.ReadAllLines(path).Select(Function(x) CDbl(x)).ToArray
+        Return File.ReadAllLines(path) _
+            .Select(Function(x) CDbl(x)) _
+            .ToArray
     End Function
 
     ''' <summary>

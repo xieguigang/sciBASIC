@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::deb9ae41322802fe4b67b6efbd2838e3, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb"
+﻿#Region "Microsoft.VisualBasic::c9e138543849a97e4d555996abd710cf, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions2.vb"
 
     ' Author:
     ' 
@@ -29,35 +29,18 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development.XmlDoc.Serialization
 
     Partial Module APIExtensions
 
-        <Extension> Public Function Sum(projects As IEnumerable(Of Project), Optional excludeNamespace$() = Nothing, <CallerMemberName> Optional name$ = Nothing) As Project
+        <Extension> Public Function Sum(projects As IEnumerable(Of Project), <CallerMemberName> Optional name$ = Nothing) As Project
             Dim namespaces As New Dictionary(Of String, ProjectNamespace)
             Dim out As New Project(name, namespaces)
 
             For Each proj As Project In projects
                 For Each ns In proj.Namespaces
-
-                    If Not excludeNamespace Is Nothing Then
-                        Dim skip As Boolean = False
-
-                        For Each nsName As String In excludeNamespace
-                            If InStr(ns.Path, nsName) = 1 Then
-                                skip = True
-                                Exit For
-                            End If
-                        Next
-
-                        If skip Then
-                            Continue For
-                        End If
-                    End If
-
                     With ns.Path.ToLower
                         If namespaces.ContainsKey(.ref) Then
                             namespaces(.ref) = namespaces(.ref).Add(ns, proj:=out)
@@ -69,19 +52,6 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
             Next
 
             Return out
-        End Function
-
-        <Extension>
-        Public Function Sum(members As IEnumerable(Of ProjectMember), type As ProjectType) As ProjectMember
-            Dim list = members.ToArray
-            Return New ProjectMember(type) With {
-                .Name = list(0).Name,
-                .Declare = list.Select(Function(m) m.Declare).Distinct.JoinBy(vbLf),
-                .Remarks = list.Select(Function(m) m.Remarks).Distinct.JoinBy(vbLf),
-                .Returns = list.Select(Function(m) m.Returns).Distinct.JoinBy(vbLf),
-                .Summary = list.Select(Function(m) m.Summary).Distinct.JoinBy(vbLf),
-                .Params = list.Select(Function(m) m.Params).IteratesALL.ToArray
-            }
         End Function
 
         <Extension>

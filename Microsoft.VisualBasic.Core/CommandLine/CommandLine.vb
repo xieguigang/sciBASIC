@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41e16c99f537cb47a76a6e831f3bfc02, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::99a6d6569eedc29de0adc1397882ee35, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -116,6 +116,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         <DumpNode> Public ReadOnly Property Parameters As String()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Tokens.Skip(1).ToArray
             End Get
@@ -127,6 +128,17 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Property BoolFlags As String()
+
+        ''' <summary>
+        ''' 获取得到通过``/@set``参数所传入的环境变量
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property EnvironmentVariables As Dictionary(Of String, String)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return GetDictionary("/@set")
+            End Get
+        End Property
 
         ''' <summary>
         ''' Get the original command line string.(获取所输入的命令行对象的原始的字符串)
