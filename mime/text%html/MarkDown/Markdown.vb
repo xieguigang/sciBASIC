@@ -1103,6 +1103,9 @@ Namespace MarkDown
         ''' </summary>
         Const SyntaxCodeBloackRegexp$ = CodeBlockFlag & ".+?" & CodeBlockFlag
 
+        ''' <summary>
+        ''' 使用\`符号作为代码块的标记，例如``代码块``
+        ''' </summary>
         Shared ReadOnly __syntaxCodeBlock As New Regex(SyntaxCodeBloackRegexp, RegexICSng)
 
         ''' <summary>
@@ -1119,7 +1122,19 @@ Namespace MarkDown
             )
             ((?=^[ ]{{0,{0}}}[^ \t\n])|\Z) # Lookahead for non-space at line-start, or end of doc"
 
-        Private Shared _codeBlock As New Regex(String.Format(codeBlockRegexp, _tabWidth), RegexPythonRawString)
+        ''' <summary>
+        ''' 这种情况不是使用\`符号作为代码块，而是直接使用三行缩进来作为代码块的标记，例如：
+        ''' 
+        ''' ```
+        ''' 在这里使用缩进来构建代码块
+        ''' 组成结构为 空白行起始 + 三个空格缩进 + 空白行结束
+        ''' 
+        '''    代码
+        '''    代码
+        '''    
+        ''' ```
+        ''' </summary>
+        Shared ReadOnly _codeBlock As New Regex(String.Format(codeBlockRegexp, _tabWidth), RegexPythonRawString)
 
         ''' <summary>
         ''' Turn Markdown 4-space indented code into HTML pre code blocks

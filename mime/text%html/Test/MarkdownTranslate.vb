@@ -35,7 +35,7 @@ print 1,2,3
 + This is [what???](http://scibasic.net)
 
 
-        > Microsoft.VisualBasic.Language.List``code``
+> Microsoft.VisualBasic.Language.List``code``
 
         </markdown>
 
@@ -43,7 +43,7 @@ print 1,2,3
     ReadOnly codeBlockTest$ =
         <markdown>
 
-                   > Microsoft.VisualBasic.Language.List``code``
+> Microsoft.VisualBasic.Language.List``code``
 
 ```vbnet
 Dim a$ = "12345"
