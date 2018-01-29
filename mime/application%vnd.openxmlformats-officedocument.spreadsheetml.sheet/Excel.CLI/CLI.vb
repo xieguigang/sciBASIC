@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::f81f565c63745f93fadf6571ac1f4986, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,12 +32,14 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Office.Excel
 Imports Microsoft.VisualBasic.Text
 Imports Contract = Microsoft.VisualBasic.Data.csv.DATA.DataFrame
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
@@ -117,24 +119,42 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     End Function
 
     <ExportAPI("/Extract")>
-    <Usage("/Extract /open <xlsx> /sheetName <name_string> [/out <out.csv>]")>
+    <Usage("/Extract /open <xlsx> /sheetName <name_string> [/out <out.csv/directory>]")>
     <Description("Open target excel file and get target table and save into a csv file.")>
     <Argument("/open", False, CLITypes.File,
               Description:="File path of the Excel ``*.xlsx`` file for open and read.")>
     <Argument("/sheetName", False, CLITypes.String,
-              Description:="The worksheet table name for read data and save as csv file.")>
+              Description:="The worksheet table name for read data and save as csv file. 
+              If this argument value is equals to ``*``, then all of the tables in the target xlsx excel file will be extract.")>
     <Argument("/out", True, CLITypes.File,
-              Description:="The csv output file path.")>
+              Description:="The csv output file path or a directory path value when the ``/sheetName`` parameter is value ``*``.")>
     Public Function Extract(args As CommandLine) As Integer
-        Dim sheet$ = args <= "/sheetName"
-        Dim defaultOut$ = (args <= "/open").TrimSuffix & $"-{sheet}.csv"
+        Dim sheetName$ = args <= "/sheetName"
+        Dim defaultOut$
+
+        If sheetName = "*" Then
+            defaultOut = (args <= "/open").TrimSuffix
+        Else
+            defaultOut = (args <= "/open").TrimSuffix & $"-{sheetName}.csv"
+        End If
 
         With args("/out") Or defaultOut
 
-            Return Xlsx.Open(args <= "/open") _
-                .GetTable(sheet) _
-                .Save(.ref, encoding:=Encodings.UTF8) _
-                .CLICode
+            If sheetName = "*" Then
+                Dim excel = Xlsx.Open(args <= "/open")
+
+                For Each sheet As NamedValue(Of csv) In excel.EnumerateTables
+                    Dim save$ = $"{ .ref}/{sheet.Name.NormalizePathString(False)}.csv"
+                    Call sheet.Value.Save(save, encoding:=Encodings.UTF8)
+                Next
+
+                Return 0
+            Else
+                Return Xlsx.Open(args <= "/open") _
+                    .GetTable(sheetName) _
+                    .Save(.ref, encoding:=Encodings.UTF8) _
+                    .CLICode
+            End If
         End With
     End Function
 

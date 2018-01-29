@@ -32,6 +32,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
+Imports Microsoft.VisualBasic.MIME.Office.Excel.Model.Directory
 
 Public Module IO
 

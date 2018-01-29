@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 
 Namespace XML.docProps
 
@@ -41,7 +42,7 @@ Namespace XML.docProps
 
         Sub New()
             xmlns = New XmlSerializerNamespaces
-            xmlns.Add("vt", Excel.Xmlns.vt)
+            xmlns.Add("vt", OpenXML.vt)
         End Sub
 
         Protected Overrides Function filePath() As String
@@ -59,7 +60,7 @@ Namespace XML.docProps
         <XmlAttribute> Public Property pid As String
         <XmlAttribute> Public Property name As String
 
-        <XmlElement(NameOf(lpwstr), [Namespace]:=vt)>
+        <XmlElement(NameOf(lpwstr), [Namespace]:=OpenXML.vt)>
         Public Property lpwstr As String
 
         Public Overrides Function ToString() As String

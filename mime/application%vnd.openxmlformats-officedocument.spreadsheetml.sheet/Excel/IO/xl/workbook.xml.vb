@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::44380a90db1a8ab4f8c6599d9aa5ea40, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\workbook.xml.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -30,6 +30,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 Imports worksheet = Microsoft.VisualBasic.Language.List(Of Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.sheet)
 
 Namespace XML.xl
@@ -50,10 +51,10 @@ Namespace XML.xl
 
         Public Property extLst As ext()
 
-        <XmlElement("AlternateContent", [Namespace]:=mc)>
+        <XmlElement("AlternateContent", [Namespace]:=OpenXML.mc)>
         Public Property AlternateContent As AlternateContent
 
-        <XmlAttribute(NameOf(Ignorable), [Namespace]:=mc)>
+        <XmlAttribute(NameOf(Ignorable), [Namespace]:=OpenXML.mc)>
         Public Property Ignorable As String
 
         <XmlNamespaceDeclarations()>
@@ -62,10 +63,10 @@ Namespace XML.xl
         Sub New()
             xmlns = New XmlSerializerNamespaces
 
-            xmlns.Add("r", Excel.Xmlns.r)
-            xmlns.Add("mc", Excel.Xmlns.mc)
-            xmlns.Add("x15", Excel.Xmlns.x15)
-            xmlns.Add("xr2", Excel.Xmlns.xr2)
+            xmlns.Add("r", OpenXML.r)
+            xmlns.Add("mc", OpenXML.mc)
+            xmlns.Add("x15", OpenXML.x15)
+            xmlns.Add("xr2", OpenXML.xr2)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -100,13 +101,13 @@ Namespace XML.xl
         End Function
     End Class
 
-    <XmlType("ext", [Namespace]:=Excel.Xmlns.x15)>
+    <XmlType("ext", [Namespace]:=OpenXML.x15)>
     Public Class ext
 
         <XmlAttribute>
         Public Property uri As String
         Public Property workbookPr As workbookPr
-        <XmlElement("slicerStyles", [Namespace]:=Excel.Xmlns.x14)>
+        <XmlElement("slicerStyles", [Namespace]:=OpenXML.x14)>
         Public Property slicerStyles As slicerStyles
         Public Property timelineStyles As timelineStyles
 
@@ -115,8 +116,8 @@ Namespace XML.xl
 
         Sub New()
             xmlns = New XmlSerializerNamespaces
-            xmlns.Add("x15", Excel.Xmlns.x15)
-            xmlns.Add("x14", Excel.Xmlns.x14)
+            xmlns.Add("x15", OpenXML.x15)
+            xmlns.Add("x14", OpenXML.x14)
         End Sub
     End Class
 
@@ -136,7 +137,7 @@ Namespace XML.xl
         <XmlText> Public Property value As String
     End Class
 
-    <XmlRoot("AlternateContent", [Namespace]:=mc)>
+    <XmlRoot("AlternateContent", [Namespace]:=OpenXML.mc)>
     Public Class AlternateContent
         Public Property Choice As Choice
     End Class
@@ -148,7 +149,7 @@ Namespace XML.xl
         Public Property absPath As absPath
     End Class
 
-    <XmlRoot("absPath", [Namespace]:=x15ac)>
+    <XmlRoot("absPath", [Namespace]:=OpenXML.x15ac)>
     Public Class absPath
 
         <XmlAttribute>
@@ -159,7 +160,7 @@ Namespace XML.xl
 
         Sub New()
             xmlns = New XmlSerializerNamespaces
-            xmlns.Add("x15ac", x15ac)
+            xmlns.Add("x15ac", OpenXML.x15ac)
         End Sub
     End Class
 
@@ -178,10 +179,11 @@ Namespace XML.xl
     End Structure
 
     Public Structure sheet
+
         <XmlAttribute> Public Property name As String
         <XmlAttribute> Public Property sheetId As String
 
-        <XmlAttribute("id", [Namespace]:=r)>
+        <XmlAttribute("id", [Namespace]:=OpenXML.r)>
         Public Property rid As String
 
         Public Overrides Function ToString() As String
@@ -196,7 +198,7 @@ Namespace XML.xl
         <XmlAttribute> Public Property windowHeight As String
         <XmlAttribute> Public Property activeTab As String
 
-        <XmlAttribute("uid", [Namespace]:=xr2)>
+        <XmlAttribute("uid", [Namespace]:=OpenXML.xr2)>
         Public Property uid As String
     End Structure
 

@@ -35,7 +35,7 @@ Module devToolTest
     End Sub
 
     Sub loadTest()
-        Dim assembly = New ProjectSpace()
+        Dim assembly = New ProjectSpace(True)
 
         assembly.ImportFromXmlDocFile("E:\GCModeller\GCModeller\bin\Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml")
 
