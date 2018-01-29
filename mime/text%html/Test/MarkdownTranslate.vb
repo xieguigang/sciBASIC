@@ -13,7 +13,7 @@ Module MarkdownTranslate
 ### header3
 
 ```vbnet
-
+' test
 Call println(1,2,3)
 ```
 
@@ -34,9 +34,30 @@ print 1,2,3
 + ![](./test2.png)
 + This is [what???](http://scibasic.net)
 
+
+        > Microsoft.VisualBasic.Language.List``code``
+
+        </markdown>
+
+
+    ReadOnly codeBlockTest$ =
+        <markdown>
+
+                   > Microsoft.VisualBasic.Language.List``code``
+
+```vbnet
+Dim a$ = "12345"
+```
+
+> This is not a ``code`` block
+
+
         </markdown>
 
     Sub Main()
+
+        Dim codeTest = New MarkdownHTML().Transform(codeBlockTest)
+
 
         Dim html = New MarkdownHTML().Transform(testMarkdown)
 
