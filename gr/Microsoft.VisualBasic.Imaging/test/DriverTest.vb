@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7bebc758d73979328658ac23979c08f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Test.Project\DriverTest.vb"
+﻿#Region "Microsoft.VisualBasic::f7bebc758d73979328658ac23979c08f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\DriverTest.vb"
 
     ' Author:
     ' 

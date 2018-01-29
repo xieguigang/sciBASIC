@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a967082e05b74080e30a2f376a994cc, ..\sciBASIC#\CLI_tools\Regex\frmRegexTest.vb"
+﻿#Region "Microsoft.VisualBasic::e63a81a3afa4e9bf3bebf99b34617b98, ..\sciBASIC#\CLI_tools\Regex\frmRegexTest.vb"
 
     ' Author:
     ' 
@@ -28,7 +28,7 @@
 
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class frmRegexTest
 
@@ -85,7 +85,7 @@ Public Class frmRegexTest
 
         For Each cb As CheckBox In {CheckBox1, CheckBox2, CheckBox3, CheckBox4, CheckBox5, CheckBox6, CheckBox7, CheckBox8, CheckBox9}
             If cb.Checked Then
-                opt += Scripting.CastRegexOptions(cb.Text)
+                opt += Scripting.CTypeDynamic(cb.Text, GetType(RegexOptions))
             End If
         Next
 

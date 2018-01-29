@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fd4ce98b5ab95e16530aa8724a1ab9d, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
+﻿#Region "Microsoft.VisualBasic::956ebcd8a97a2cc25b960fde016dcc9d, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 
 Namespace Parallel.Tasks
@@ -39,13 +40,20 @@ Namespace Parallel.Tasks
     ''' </summary>
     Public Class TaskQueue(Of T) : Implements IDisposable
 
-        ReadOnly __tasks As New Queue(Of __task)(App.BufferSize)
+        ''' <summary>
+        ''' ###### 2018-1-27
+        ''' 
+        ''' 如果直接在这里使用<see cref="App.BufferSize"/>的话，极端的情况下会导致服务器的内存直接被耗尽
+        ''' 所以在这里使用一个较小的常数值
+        ''' </summary>
+        ReadOnly __tasks As New Queue(Of __task)(4096)
 
         ''' <summary>
         ''' 返回当前的任务池之中的任务数量
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Tasks As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 SyncLock __tasks
                     Return __tasks.Count

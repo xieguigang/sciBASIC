@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f8089aab61a9fed7d4f9dd7db8bee50, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::020de3ba4fa5c55ac0ba48a7ccb7da97, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Class.vb"
 
 ' Author:
 ' 
@@ -26,19 +26,11 @@
 
 #End Region
 
-Public MustInherit Class Directory
+Namespace Language
 
-    Public ReadOnly Property Folder As String
-
-    Sub New(ROOT$)
-        Folder = $"{ROOT}/{_name()}"
-        Call _loadContents()
-    End Sub
-
-    Protected MustOverride Function _name() As String
-    Protected MustOverride Sub _loadContents()
-
-    Public Overrides Function ToString() As String
-        Return Folder
-    End Function
-End Class
+    ''' <summary>
+    ''' The VisualBasic.NET language addons
+    ''' </summary>
+    Friend Class NamespaceDoc
+    End Class
+End Namespace

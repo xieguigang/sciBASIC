@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12885f2683a8c6e3fec35db050cf9aef, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::920ae62225b95a88ff0f5d9fa456c180, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -195,7 +195,7 @@ Public Module App
         Return CLITools.TryParse(CLI)
     End Function
 
-    Public ReadOnly Property Github As String = "https://github.com/xieguigang/sciBASIC"
+    Public ReadOnly Property Github As String = LICENSE.githubURL
 
     ''' <summary>
     ''' Returns the argument portion of the <see cref="Microsoft.VisualBasic.CommandLine.CommandLine"/> used to start Visual Basic or

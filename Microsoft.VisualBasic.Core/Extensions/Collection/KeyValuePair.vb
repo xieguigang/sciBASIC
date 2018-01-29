@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e865c3cf71fb7f2109e78e7edd23d44c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::5ab74dd28a8a4c793ad79b3453e94331, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
 ' Author:
 ' 
@@ -35,6 +35,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -42,6 +43,32 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' KeyValue pair data related extensions API.
 ''' </summary>
 Public Module KeyValuePairExtensions
+
+    ''' <summary>
+    ''' 将目标键值对集合保存为一个``Tsv``文件
+    ''' </summary>
+    ''' <param name="table"></param>
+    ''' <param name="saveTo$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Tsv(table As Dictionary(Of String, String),
+                        saveTo$,
+                        Optional encoding As Encodings = Encodings.UTF8,
+                        Optional reversed As Boolean = False) As Boolean
+
+        Dim file$() = $"key{ASCII.TAB}map" +
+            table _
+            .Select(Function(map)
+                        If reversed Then
+                            Return $"{map.Value}{ASCII.TAB}{map.Key}"
+                        Else
+                            Return $"{map.Key}{ASCII.TAB}{map.Value}"
+                        End If
+                    End Function) _
+            .AsList
+        Return file.SaveTo(saveTo, encoding.CodePage)
+    End Function
 
     ''' <summary>
     ''' tuple set to dictionary table

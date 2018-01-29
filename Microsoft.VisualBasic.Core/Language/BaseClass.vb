@@ -51,6 +51,18 @@ Namespace Language
     'End Module
 
     ''' <summary>
+    ''' The base class object in VisualBasic
+    ''' </summary>
+    Public Interface IClassObject
+
+        ''' <summary>
+        ''' The extension property.(为了节省内存的需要，这个附加属性尽量不要被自动初始化)
+        ''' </summary>
+        ''' <returns></returns>
+        Property Extension As ExtendedProps
+    End Interface
+
+    ''' <summary>
     ''' The base class object in VisualBasic language
     ''' </summary>
     Public Class BaseClass : Implements IClassObject

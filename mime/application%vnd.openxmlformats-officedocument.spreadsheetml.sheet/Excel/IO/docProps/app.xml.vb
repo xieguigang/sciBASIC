@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 
 Namespace XML.docProps
 
@@ -49,7 +50,7 @@ Namespace XML.docProps
 
         Sub New()
             xmlns = New XmlSerializerNamespaces
-            xmlns.Add("vt", Excel.Xmlns.vt)
+            xmlns.Add("vt", OpenXML.vt)
         End Sub
 
         Protected Overrides Function filePath() As String
@@ -61,12 +62,13 @@ Namespace XML.docProps
         End Function
     End Class
 
-    <XmlRoot("vector", [Namespace]:=vt)>
+    <XmlRoot("vector", [Namespace]:=OpenXML.vt)>
     Public Class Vectors
         Public Property vector As vector
     End Class
 
     Public Class vector
+
         <XmlAttribute> Public Property size As String
 
         ''' <summary>
@@ -77,11 +79,13 @@ Namespace XML.docProps
         ''' 
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property baseType As String
+        <XmlAttribute>
+        Public Property baseType As String
         <XmlElement("variant")>
         Public Property variants As [variant]()
         <XmlElement("lpstr")>
         Public Property lpstrs As String()
+
     End Class
 
     Public Class [variant]

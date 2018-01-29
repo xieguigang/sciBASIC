@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5e2b6f2a8202b2d24840418b8c8a98b, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\DataSample.vb"
+﻿#Region "Microsoft.VisualBasic::31b36123c46983036d28d0db002896cb, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\DataSample.vb"
 
     ' Author:
     ' 

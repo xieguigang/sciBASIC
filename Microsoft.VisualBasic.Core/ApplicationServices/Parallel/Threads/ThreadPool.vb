@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5ec81b965bf4ec1da8247b0da47999b, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadPool.vb"
+﻿#Region "Microsoft.VisualBasic::428f68cffb11bf82c69327e04c881853, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadPool.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
@@ -51,6 +52,7 @@ Namespace Parallel.Threads
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property NumOfThreads As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return __threads.Length
             End Get
@@ -93,6 +95,7 @@ Namespace Parallel.Threads
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property FullCapacity As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return WorkingThreads = __threads.Length
             End Get
