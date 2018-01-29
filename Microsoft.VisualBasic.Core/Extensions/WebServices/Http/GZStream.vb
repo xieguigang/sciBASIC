@@ -39,12 +39,26 @@ Namespace Net.Http
         ''' </summary>
         ''' <param name="base64$"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function UnzipBase64(base64$) As MemoryStream
-            Dim bytes As Byte() = Convert.FromBase64String(base64)
+            Return Convert.FromBase64String(base64).UnzipStream
+        End Function
+
+        <Extension>
+        Public Function UnzipStream(stream As IEnumerable(Of Byte)) As MemoryStream
             Dim ms As New MemoryStream
-            Dim gz As New GZipStream(New MemoryStream(bytes), CompressionMode.Decompress)
+            Dim gz As New GZipStream(New MemoryStream(stream.ToArray), CompressionMode.Decompress)
             Call gz.CopyTo(ms)
+            Return ms
+        End Function
+
+        <Extension>
+        Public Function ZipStream(stream As Stream) As MemoryStream
+            Dim ms As New MemoryStream
+            Dim gz As New GZipStream(ms, CompressionMode.Compress)
+            Call stream.CopyTo(gz)
             Return ms
         End Function
 
@@ -54,10 +68,7 @@ Namespace Net.Http
         ''' <param name="stream"></param>
         ''' <returns></returns>
         <Extension> Public Function ZipAsBase64(stream As Stream) As String
-            Dim ms As New MemoryStream
-            Dim gz As New GZipStream(ms, CompressionMode.Compress)
-            Call stream.CopyTo(gz)
-            Dim bytes As Byte() = ms.ToArray
+            Dim bytes As Byte() = stream.ZipStream.ToArray
             Dim s$ = Convert.ToBase64String(bytes)
             Return s
         End Function
