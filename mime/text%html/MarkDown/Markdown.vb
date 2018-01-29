@@ -250,7 +250,7 @@ Namespace MarkDown
             Dim lines$() = text.lTokens
 
             If text.StringEmpty OrElse lines.Length < 2 Then
-                Return ""
+                Return text
             End If
 
             For Each line In lines
@@ -957,7 +957,7 @@ Namespace MarkDown
                   [ ]*          # Trailing spaces
                   $             # End of line."
 
-        Private Shared _horizontalRules As New Regex(regex_horizontalRules, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
+        Shared ReadOnly _horizontalRules As New Regex(regex_horizontalRules, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Turn Markdown horizontal rules into HTML hr tags
@@ -1269,8 +1269,8 @@ Namespace MarkDown
             )+
         )"
 
-        Private Shared _blockquote As New Regex(blockQuoteRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
-        Private Shared _blockquoteSingleLine As New Regex(blockQuoteSingleLineRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
+        Shared ReadOnly _blockquote As New Regex(blockQuoteRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
+        Shared ReadOnly _blockquoteSingleLine As New Regex(blockQuoteSingleLineRegexp, RegexOptions.IgnorePatternWhitespace Or RegexOptions.Multiline Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Turn Markdown > quoted blocks into HTML blockquote blocks
@@ -1307,7 +1307,7 @@ Namespace MarkDown
             Return Regex.Replace(match.Groups(1).Value, "^  ", "", RegexOptions.Multiline)
         End Function
 
-        Private Shared _autolinkBare As New Regex("(<|="")?\b(https?|ftp)(://" & _charInsideUrl & "*" & _charEndingUrl & ")(?=$|\W)", RegexOptions.IgnoreCase Or RegexOptions.Compiled)
+        Shared ReadOnly _autolinkBare As New Regex("(<|="")?\b(https?|ftp)(://" & _charInsideUrl & "*" & _charEndingUrl & ")(?=$|\W)", RegexOptions.IgnoreCase Or RegexOptions.Compiled)
 
         ''' <summary>
         ''' Email addresses: address@domain.foo
