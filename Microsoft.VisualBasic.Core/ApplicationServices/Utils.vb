@@ -195,7 +195,7 @@ Namespace ApplicationServices
         End Function
 
         ''' <summary>
-        ''' *.txt -> text
+        ''' ``*.txt -> text``，这个函数是作用于文件的拓展名之上的
         ''' </summary>
         ''' <param name="ext$"></param>
         ''' <returns></returns>
@@ -207,6 +207,17 @@ Namespace ApplicationServices
             Else
                 Return MIME.UnknownType
             End If
+        End Function
+
+        ''' <summary>
+        ''' 与<see cref="GetMIMEDescrib(String)"/>所不同的是，这个函数是直接作用于文件路径之上的。
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function FileMimeType(path As String) As ContentType
+            Return ("*." & path.ExtensionSuffix).GetMIMEDescrib
         End Function
     End Module
 End Namespace
