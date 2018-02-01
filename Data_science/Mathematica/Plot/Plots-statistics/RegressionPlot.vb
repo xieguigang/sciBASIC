@@ -62,10 +62,12 @@ Public Module RegressionPlot
                          Optional predictedX As IEnumerable(Of NamedValue(Of Double)) = Nothing,
                          Optional showLegend As Boolean = True,
                          Optional legendLabelFontCSS$ = CSSFont.Win7Large,
-                         Optional pointLabelFontCSS$ = CSSFont.Win7LittleLarge) As GraphicsData
+                         Optional pointLabelFontCSS$ = CSSFont.Win7LittleLarge,
+                         Optional xAxisTickDecimal% = 2,
+                         Optional yAxisTickDecimal% = 2) As GraphicsData
 
-        Dim XTicks#() = fit.X.Range.CreateAxisTicks
-        Dim YTicks#() = fit.Y.Range.CreateAxisTicks
+        Dim XTicks#() = fit.X.Range.CreateAxisTicks(decimalDigits:=xAxisTickDecimal)
+        Dim YTicks#() = fit.Y.Range.CreateAxisTicks(decimalDigits:=yAxisTickDecimal)
         Dim pointBrush As Brush = pointBrushStyle.GetBrush
         Dim regressionPen As Pen = Stroke.TryParse(regressionLineStyle).GDIObject
         Dim predictedPointBorder As Pen = Stroke.TryParse(predictPointStroke).GDIObject
@@ -186,7 +188,7 @@ Public Module RegressionPlot
                         .Anchors(labels.GetLabelAnchors(pointSize)) _
                         .Width(rect.Width) _
                         .Height(rect.Height) _
-                        .Start(showProgress:=False)
+                        .Start(showProgress:=False, nsweeps:=500)
 
                     For Each label As SeqValue(Of Label) In labels.SeqIterator
                         With label.value
