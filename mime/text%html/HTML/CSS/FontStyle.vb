@@ -54,6 +54,7 @@ Namespace HTML.CSS
 
         Public Const Win10Normal$ = "font-style: normal; font-size: 12; font-family: " & FontFace.SegoeUI & ";"
         Public Const Win10NormalLarger$ = "font-style: normal; font-size: 16; font-family: " & FontFace.SegoeUI & ";"
+        Public Const Win10NormalLarge$ = "font-style: normal; font-size: 20; font-family: " & FontFace.SegoeUI & ";"
 
         Public Const Win7Small$ = "font-style: normal; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7Normal$ = "font-style: normal; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"

@@ -44,7 +44,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports sys = System.Math
 
 Public Module RegressionPlot
 
@@ -64,7 +63,7 @@ Public Module RegressionPlot
                          Optional labelAnchorLineStroke$ = Stroke.StrongHighlightStroke,
                          Optional predictedX As IEnumerable(Of NamedValue(Of Double)) = Nothing,
                          Optional showLegend As Boolean = True,
-                         Optional legendLabelFontCSS$ = CSSFont.Win7Large,
+                         Optional legendLabelFontCSS$ = CSSFont.Win10NormalLarge,
                          Optional pointLabelFontCSS$ = CSSFont.Win7LittleLarge,
                          Optional xAxisTickDecimal% = 2,
                          Optional yAxisTickDecimal% = 2,
@@ -243,7 +242,7 @@ Public Module RegressionPlot
                     Dim eq$ = "f(x) = " & fit.Polynomial.ToString("G2")
                     Dim R2$ = "R2 = " & fit.R_square.ToString("F4")
                     Dim pt As New PointF With {
-                        .X = rect.Left + 20,
+                        .X = rect.Left + g.MeasureString("00", legendLabelFont).Width,
                         .Y = rect.Top + 20
                     }
 
