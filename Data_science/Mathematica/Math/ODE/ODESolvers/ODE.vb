@@ -46,7 +46,7 @@ Public Class ODE : Implements INamedValue
     Public Property ID As String Implements INamedValue.Key
 
     ''' <summary>
-    ''' Public Delegate Function df(x As Double, y As Double) As Double
+    ''' Public <see cref="System.Delegate"/> Function df(x As <see cref="Double"/>, y As <see cref="Double"/>) As <see cref="Double"/>
     ''' (从这里传递自定义的函数指针)
     ''' </summary>
     ''' <returns></returns>
