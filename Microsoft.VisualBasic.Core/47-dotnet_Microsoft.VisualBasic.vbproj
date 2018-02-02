@@ -865,10 +865,10 @@
     <Compile Include="ComponentModel\Ranges\IndexSelector.vb" />
     <Compile Include="ComponentModel\Ranges\Extensions.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
-    <Compile Include="ComponentModel\Ranges\IRanges.vb" />
-    <Compile Include="ComponentModel\Ranges\Range.vb" />
-    <Compile Include="ComponentModel\Ranges\DoubleRange.vb" />
-    <Compile Include="ComponentModel\Ranges\IntRange.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\IRanges.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\Range.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\DoubleRange.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\IntRange.vb" />
     <Compile Include="ComponentModel\Settings\Inf\IniFile.vb" />
     <Compile Include="ComponentModel\Settings\Inf\ClassMapper.vb" />
     <Compile Include="ComponentModel\Settings\DataModels\ProfileTable.vb" />
@@ -1416,7 +1416,7 @@
     <None Include="ApplicationServices\Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ComponentModel\Ranges\Copyright.txt" />
+    <Content Include="ComponentModel\Ranges\RangeModel\Copyright.txt" />
     <Content Include="Serialization\JSON\Formatter\license.txt" />
     <None Include="README.md" />
   </ItemGroup>
