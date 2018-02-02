@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::54520f24974bfe270f8669ea5b3250aa, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math
 
@@ -40,11 +41,13 @@ Namespace Drawing2D.Shapes
         Dim pt1 As PointF, pt2 As PointF
 
         Public Property Stroke As Pen
+
         Public ReadOnly Property A As PointF
             Get
                 Return pt1
             End Get
         End Property
+
         Public ReadOnly Property B As PointF
             Get
                 Return pt2
@@ -52,8 +55,12 @@ Namespace Drawing2D.Shapes
         End Property
 
         Public Overrides ReadOnly Property Size As Size
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Size(pt2.X - pt1.X, pt2.Y - pt1.Y)
+                Return New Size With {
+                    .Width = pt2.X - pt1.X,
+                    .Height = pt2.Y - pt1.Y
+                }
             End Get
         End Property
 
@@ -62,6 +69,7 @@ Namespace Drawing2D.Shapes
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Length As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Math.Sqrt((pt1.X - pt2.X) ^ 2 + (pt1.Y - pt2.Y) ^ 2)
             End Get

@@ -1,32 +1,33 @@
 ﻿#Region "Microsoft.VisualBasic::7d38f2c8567f263ff9729dca16d6adc9, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\RegressionPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -37,11 +38,13 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports sys = System.Math
 
 Public Module RegressionPlot
 
@@ -49,7 +52,7 @@ Public Module RegressionPlot
     Public Function Plot(fit As FitResult,
                          Optional size$ = "2100,1600",
                          Optional bg$ = "white",
-                         Optional margin$ = g.DefaultPadding,
+                         Optional margin$ = g.DefaultLargerPadding,
                          Optional xLabel$ = "X",
                          Optional yLabel$ = "Y",
                          Optional pointSize! = 5,
@@ -64,7 +67,8 @@ Public Module RegressionPlot
                          Optional legendLabelFontCSS$ = CSSFont.Win7Large,
                          Optional pointLabelFontCSS$ = CSSFont.Win7LittleLarge,
                          Optional xAxisTickDecimal% = 2,
-                         Optional yAxisTickDecimal% = 2) As GraphicsData
+                         Optional yAxisTickDecimal% = 2,
+                         Optional showErrorBand As Boolean = True) As GraphicsData
 
         Dim XTicks#() = fit.X.Range.CreateAxisTicks(decimalDigits:=xAxisTickDecimal)
         Dim YTicks#() = fit.Y.Range.CreateAxisTicks(decimalDigits:=yAxisTickDecimal)
@@ -95,6 +99,7 @@ Public Module RegressionPlot
                 )
 
                 ' scatter plot
+                ' 绘制红色的实际数值点
                 For Each point As TestPoint In fit.ErrorTest
                     Dim pt As PointF = scaler.Translate(point)
 
@@ -117,8 +122,8 @@ Public Module RegressionPlot
                     Next
                 Else
                     ' regression line
-                    Dim A As New PointF With {.X = XTicks.Min, .Y = fit(.X)}
-                    Dim B As New PointF With {.X = XTicks.Max, .Y = fit(.X)}
+                    Dim A As New PointF With {.X = fit.X.Min, .Y = fit(.X)}
+                    Dim B As New PointF With {.X = fit.X.Max, .Y = fit(.X)}
 
                     A = scaler.Translate(A)
                     B = scaler.Translate(B)
@@ -126,6 +131,7 @@ Public Module RegressionPlot
                     Call g.DrawLine(regressionPen, A, B)
                 End If
 
+                ' 绘制蓝色的fit计算点
                 For Each point As TestPoint In fit.ErrorTest
                     Dim pt As New PointF With {
                         .X = point.X,
@@ -146,6 +152,41 @@ Public Module RegressionPlot
                         fill:=False
                     )
                 Next
+
+                If showErrorBand Then
+                    Dim dx = XTicks(1) - XTicks(0)
+                    Dim plusError As New List(Of PointF)
+                    Dim negError As New List(Of PointF)
+                    Dim line As Line
+
+                    For Each point As TestPoint In fit.ErrorTest
+                        Dim A As New PointF(point.X, point.Yfit)
+                        Dim B As New PointF With {
+                            .X = point.X + dx,
+                            .Y = fit(.X)
+                        }
+
+                        line = New Line(A, B).ParallelShift(Math.Abs(point.Err))
+                        plusError.Add(scaler.Translate(line.A))
+
+                        line = New Line(A, B).ParallelShift(-Math.Abs(point.Err))
+                        negError.Add(scaler.Translate(line.A))
+                    Next
+
+                    negError.Reverse()
+
+                    Dim path As New GraphicsPath
+
+                    For Each t In plusError.SlideWindows(2)
+                        path.AddLine(t(0), t(1))
+                    Next
+                    For Each t In negError.SlideWindows(2)
+                        path.AddLine(t(0), t(1))
+                    Next
+
+                    path.CloseAllFigures()
+                    g.FillPath(New SolidBrush(Color.FromArgb(230, Color.Cyan)), path)
+                End If
 
                 If Not predictedX Is Nothing Then
                     Dim labels As New List(Of Label)
