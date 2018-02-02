@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::ce5ef3e2c946fcec5a3daca7ab8de2d4, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicSplineVector.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sys = System.Math
 
@@ -40,6 +41,7 @@ Namespace Interpolation
         Dim _cubics As New List(Of Cubic)
 
         Public ReadOnly Property Count As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _points.Count
             End Get
@@ -52,10 +54,12 @@ Namespace Interpolation
         Sub New()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub Add(x!)
             Call _points.Add(x!)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub CalcSpline()
             Call CalcNaturalCubic(_points, _cubics)
         End Sub
@@ -85,15 +89,18 @@ Namespace Interpolation
             '	          and then back substitution.  The D[i] are the derivatives at the knots.
             '		 
             gamma(0) = 1.0F / 2.0F
+
             For i = 1 To num - 1
                 gamma(i) = 1.0F / (4.0F - gamma(i - 1))
             Next
+
             gamma(num) = 1.0F / (2.0F - gamma(num - 1))
 
             Dim p0 As Single = values(0)
             Dim p1 As Single = values(1)
 
             delta(0) = 3.0F * (p1 - p0) * gamma(0)
+
             For i = 1 To num - 1
                 p0 = values(i - 1)
                 p1 = values(i + 1)
@@ -104,8 +111,8 @@ Namespace Interpolation
             p1 = values(num)
 
             delta(num) = (3.0F * (p1 - p0) - delta(num - 1)) * gamma(num)
-
             D(num) = delta(num)
+
             For i = num - 1 To 0 Step -1
                 D(i) = delta(i) - gamma(i) * D(i + 1)
             Next
@@ -122,10 +129,11 @@ Namespace Interpolation
         End Sub
 
         Public Function GetPoint(position As Single) As Single
-            position = position * _cubics.Count
+            Dim cubicNum%, cubicPos!
 
-            Dim cubicNum As Integer = CInt(Fix(sys.Min(_cubics.Count - 1, position)))
-            Dim cubicPos As Single = (position - cubicNum)
+            position = position * _cubics.Count
+            cubicNum = CInt(Fix(sys.Min(_cubics.Count - 1, position)))
+            cubicPos = (position - cubicNum)
 
             Return _cubics(cubicNum).Eval(cubicPos)
         End Function
