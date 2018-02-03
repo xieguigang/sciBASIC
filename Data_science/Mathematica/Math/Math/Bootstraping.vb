@@ -40,16 +40,25 @@ Imports sys = System.Math
 ''' </summary>
 Public Module Bootstraping
 
+    ''' <summary>
+    ''' Create the vector model from target .NET object collection.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function [Shadows](Of T)(source As IEnumerable(Of T)) As VectorModel(Of T)
-        Return New VectorModel(Of T)(source)
+    Public Function [Shadows](Of T)(source As IEnumerable(Of T)) As IVector(Of T)
+        Return New IVector(Of T)(source)
     End Function
 
+    ''' <summary>
+    ''' Generate a numeric <see cref="Vector"/> by <see cref="Permutation"/> <paramref name="x"/> times.
+    ''' </summary>
+    ''' <param name="x%"></param>
+    ''' <returns></returns>
     Public Function Sample(x%) As Vector
-        Dim xvec As Integer() =
-            New Random().Permutation(x, x)
-        Return New Vector(xvec.Select(Function(n) CDbl(n)))
+        Return New Random().Permutation(x, x).AsVector
     End Function
 
     ''' <summary>
@@ -58,7 +67,7 @@ Public Module Bootstraping
     '''
     ''' + 有放回的从样本中随机抽取N次(所以可能x1..xn中有的值会被抽取多次)，每次抽取一个元素。并将抽到的元素放到集合S中；
     ''' + 重复**步骤1** B次（例如``B = 100``）， 得到B个集合， 记作S1, S2,…, SB;
-    ''' + 对每个Si （i=1,2,…,B），用蒙特卡洛方法估计随机变量的数字特征d，分别记作d1,d2,…,dB;
+    ''' + 对每个``Si(i=1, 2, ..., B)``，用蒙特卡洛方法估计随机变量的数字特征d，分别记作d1,d2,…,dB;
     ''' + 用d1,d2,…dB来近似d的分布；
     ''' 
     ''' 本质上，bootstrap算法是最大似然估计的一种实现，它和最大似然估计相比的优点在于，它不需要用参数来刻画总体分布。
@@ -88,7 +97,7 @@ Public Module Bootstraping
     End Function
 
     <Extension>
-    Public Iterator Function Sampling(source As IEnumerable(Of Double), N As Integer, Optional B As Integer = 100) As IEnumerable(Of IntegerTagged(Of Vector))
+    Public Iterator Function Sampling(source As IEnumerable(Of Double), N%, Optional B% = 100) As IEnumerable(Of IntegerTagged(Of Vector))
         For Each x As IntegerTagged(Of Double()) In Samples(source, N, B)
             Yield New IntegerTagged(Of Vector) With {
                 .Tag = x.Tag,

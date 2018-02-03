@@ -29,7 +29,7 @@
 Imports System.Dynamic
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports CollectionSet = Microsoft.VisualBasic.ComponentModel.DataStructures.Set

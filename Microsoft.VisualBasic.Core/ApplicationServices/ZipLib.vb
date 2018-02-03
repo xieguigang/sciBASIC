@@ -157,8 +157,10 @@ Namespace ApplicationServices
             'directory if it does not exist
             Dim destinationFilePath As String = Path.GetDirectoryName(destinationFileName)
 
-            'Creates the directory (if it doesn't exist) for the new path
-            Call Directory.CreateDirectory(destinationFilePath)
+            ' Creates the directory (if it doesn't exist) for the new path
+            ' 2018-2-2 在原先的代码之中直接使用CreateDirectory，如果目标文件夹存在的话会报错
+            ' 在这里使用安全一点的mkdir函数
+            Call destinationFilePath.MkDIR(throwEx:=False)
 
             'Determines what to do with the file based upon the
             'method of overwriting chosen

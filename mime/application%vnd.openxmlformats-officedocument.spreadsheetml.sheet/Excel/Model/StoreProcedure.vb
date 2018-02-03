@@ -60,7 +60,7 @@ Namespace Model
             Dim colIndex%
             Dim cellIndex As Point
 
-            For Each col As XML.xl.worksheets.c In row.columns
+            For Each col As XML.xl.worksheets.c In row.columns.SafeQuery
                 cellIndex = Coordinates.Index(col.r)
                 colIndex = cellIndex.Y ' 因为这里都是同一行的数据，所以只取列下标即可
 
