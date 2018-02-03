@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Scripting
 
-    Public Class VectorModel(Of T) : Inherits VectorShadows(Of T)
+    Public Class IVector(Of T) : Inherits VectorShadows(Of T)
 
         Default Public Overloads ReadOnly Property Item(name$) As Vector
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -87,10 +87,10 @@ Namespace Scripting
             End Set
         End Property
 
-        Default Public Overloads ReadOnly Property Item(booleans As IEnumerable(Of Boolean)) As VectorModel(Of T)
+        Default Public Overloads ReadOnly Property Item(booleans As IEnumerable(Of Boolean)) As IVector(Of T)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New VectorModel(Of T)(Subset(booleans))
+                Return New IVector(Of T)(Subset(booleans))
             End Get
         End Property
 

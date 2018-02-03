@@ -429,7 +429,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'mysqli_X64_release|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\mysqli\Reflector\bin\x64\mysqli_X64_release\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -787,6 +787,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb" />
+    <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\WebServices\Http\DataURI.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="CommandLine\CLI\Scripting.vb" />
@@ -864,10 +865,10 @@
     <Compile Include="ComponentModel\Ranges\IndexSelector.vb" />
     <Compile Include="ComponentModel\Ranges\Extensions.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
-    <Compile Include="ComponentModel\Ranges\IRanges.vb" />
-    <Compile Include="ComponentModel\Ranges\Range.vb" />
-    <Compile Include="ComponentModel\Ranges\DoubleRange.vb" />
-    <Compile Include="ComponentModel\Ranges\IntRange.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\IRanges.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\Range.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\DoubleRange.vb" />
+    <Compile Include="ComponentModel\Ranges\RangeModel\IntRange.vb" />
     <Compile Include="ComponentModel\Settings\Inf\IniFile.vb" />
     <Compile Include="ComponentModel\Settings\Inf\ClassMapper.vb" />
     <Compile Include="ComponentModel\Settings\DataModels\ProfileTable.vb" />
@@ -1415,7 +1416,7 @@
     <None Include="ApplicationServices\Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ComponentModel\Ranges\Copyright.txt" />
+    <Content Include="ComponentModel\Ranges\RangeModel\Copyright.txt" />
     <Content Include="Serialization\JSON\Formatter\license.txt" />
     <None Include="README.md" />
   </ItemGroup>

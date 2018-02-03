@@ -28,7 +28,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.Graph
 Imports Microsoft.VisualBasic.Imaging
@@ -83,7 +83,7 @@ Namespace Heatmap
                              Optional xMin# = Double.NaN,
                              Optional yMin# = Double.NaN) As GraphicsData
 
-            Dim pointVector As VectorModel(Of PointF) = points _
+            Dim pointVector As IVector(Of PointF) = points _
                 .Where(Function(pt)
                            Return Not New Double() {
                                pt.X, pt.Y

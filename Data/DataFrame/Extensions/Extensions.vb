@@ -324,8 +324,21 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
                                                             Optional explicit As Boolean = False,
+                                                            Optional skipEmpty As Boolean = True,
                                                             Optional maps As Dictionary(Of String, String) = Nothing) As T()
-        Dim df As DataFrame = IO.DataFrame.CreateObject(dataSet)
+        Dim sheet As File_csv
+
+        If skipEmpty Then
+            sheet = dataSet _
+                .Where(Function(row)
+                           Return Not row Is Nothing AndAlso row.NumbersOfColumn > 0
+                       End Function) _
+                .ToArray
+        Else
+            sheet = dataSet
+        End If
+
+        Dim df As DataFrame = IO.DataFrame.CreateObject(file:=sheet)
         Return df.AsDataSource(Of T)(explicit, maps)
     End Function
 

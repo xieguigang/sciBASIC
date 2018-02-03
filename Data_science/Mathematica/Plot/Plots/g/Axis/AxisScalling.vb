@@ -27,7 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -188,9 +188,14 @@ Namespace Graphic.Axis
             Dim scores As Vector = dSteps * 0.8 + dMin * 0.1 + dMax * 0.1
             Dim tickArray#() = candidateArray(Which.Max(scores))
 
-            For i As Integer = 0 To tickArray.Length - 1
-                tickArray(i) = Math.Round(tickArray(i), decimalDigits)
-            Next
+            ' 2018-2-1
+            ' 如果数值是 1E-10 这样子的小数的话，在这里直接使用Round或导致返回的ticks全部都是零的bugs
+            ' 在这里加个开关，如果小于零就不在进行round了
+            If decimalDigits >= 0 Then
+                For i As Integer = 0 To tickArray.Length - 1
+                    tickArray(i) = Math.Round(tickArray(i), decimalDigits)
+                Next
+            End If
 
             Return tickArray
         End Function
