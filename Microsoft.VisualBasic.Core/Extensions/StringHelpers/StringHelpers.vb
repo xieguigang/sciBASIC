@@ -52,6 +52,22 @@ Imports r = System.Text.RegularExpressions.Regex
 Public Module StringHelpers
 
     ''' <summary>
+    ''' Appends a copy of the specified string followed by the default line terminator
+    ''' to the end of the current <see cref="StringBuilder"/> object.
+    ''' </summary>
+    ''' <param name="sb"></param>
+    ''' <param name="[string]">The string to append.</param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' A reference to this instance after the append operation has completed.
+    ''' </remarks>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AppendLine(sb As StringBuilder, [string] As XElement) As StringBuilder
+        Return sb.AppendLine([string].ToString)
+    End Function
+
+    ''' <summary>
     ''' Get the first char of the target <see cref="StringBuilder"/> 
     ''' </summary>
     ''' <param name="sb"></param>
