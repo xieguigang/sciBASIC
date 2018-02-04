@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::66a62e28a20712b332418dc687a9b9d6, ..\sciBASIC#\mime\text%html\HTML\CSS\FontStyle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.ComponentModel
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging
 
@@ -145,12 +146,14 @@ Namespace HTML.CSS
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property GDIObject As Font
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Font(family, size, style)
             End Get
         End Property
 
         Public Overrides ReadOnly Property CSSValue As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return ToString()
             End Get
@@ -165,10 +168,12 @@ Namespace HTML.CSS
             size = font.Size
         End Sub
 
-        Public Shared Function GetFontStyle(family As String, style As FontStyle, size As Single) As String
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetFontStyle(family$, style As FontStyle, size$) As String
             Return $"font-style: {ToString(style)}; font-size: {size}; font-family: {family};"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetFontStyle(font As Font) As String
             Return GetFontStyle(font.Name, font.Style, font.Size)
         End Function
@@ -269,10 +274,12 @@ Namespace HTML.CSS
         Public Const strikeout = "strikeout"
         Public Const underline = "underline"
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(font As Font) As CSSFont
             Return New CSSFont(font)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(font As CSSFont) As Font
             Return font.GDIObject
         End Operator
