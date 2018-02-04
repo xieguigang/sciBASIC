@@ -208,7 +208,7 @@ Namespace ApplicationServices.Debugging
                 VBDebugger.Mute = config.mute
             End If
 
-            Dim vars As Dictionary(Of String, String) = args.GetDictionary("/@set")
+            Dim vars As Dictionary(Of String, String) = args.EnvironmentVariables
             Dim disableLoadOptions As Boolean = args.GetBoolean("--load_options.disable")
 
             ' --load_options.disable 开关将会禁止所有的环境项目的设置

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BF580AA1-8BA7-42BF-B567-134D4FA6D17D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.CSSParserTest</StartupObject>
+    <StartupObject>Test.MarkdownTranslate</StartupObject>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Module1.vb" />
     <Compile Include="CSSParserTest.vb" />
+    <Compile Include="MarkdownTranslate.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

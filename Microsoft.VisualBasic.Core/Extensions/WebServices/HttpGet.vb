@@ -130,6 +130,8 @@ RETRY:      Return __get(url, headers, proxy, UA)
         Return ""
     End Function
 
+    Const doctorcomError$ = "Please login your Campus Broadband Network Client at first!"
+
     Private Function __get(url$, headers As Dictionary(Of String, String), proxy$, UA$) As String
         Dim timer As Stopwatch = Stopwatch.StartNew
         Dim webRequest As HttpWebRequest = HttpWebRequest.Create(url)
@@ -154,7 +156,7 @@ RETRY:      Return __get(url, headers, proxy, UA)
 
             ' 判断是否是由于还没有登陆校园网客户端而导致的错误
             If InStr(html, "http://www.doctorcom.com", CompareMethod.Text) > 0 Then
-                Call "Please login your Campus Broadband Network Client at first!".PrintException
+                Call doctorcomError.PrintException
                 Return ""
             End If
 

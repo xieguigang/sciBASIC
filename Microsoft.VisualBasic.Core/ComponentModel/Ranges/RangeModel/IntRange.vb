@@ -34,7 +34,7 @@
 
 Imports Microsoft.VisualBasic.Language
 
-Namespace ComponentModel.Ranges
+Namespace ComponentModel.Ranges.Model
 
     ''' <summary>
     ''' Represents an <see cref="Integer"/> range with minimum and maximum values

@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::7c4fa37af327b22fc68535a722adab04, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\Axis.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text.HtmlParser
@@ -73,7 +74,7 @@ Namespace Graphic.Axis
                             Optional ylabel$ = "",
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
-                            Optional labelFont$ = CSSFont.PlotSubTitle,
+                            Optional labelFont$ = CSSFont.Win10NormalLarger,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional gridFill$ = "rgb(245,245,245)",
                             Optional htmlLabel As Boolean = True,
@@ -82,6 +83,7 @@ Namespace Graphic.Axis
             With region
                 Call g.DrawAxis(
                     scaler,
+                    .ref,
                     showGrid,
                     offset,
                     xlabel, ylabel,
@@ -104,6 +106,7 @@ Namespace Graphic.Axis
         <Extension>
         Public Sub DrawAxis(ByRef g As IGraphics,
                             scaler As DataScaler,
+                            region As GraphicsRegion,
                             showGrid As Boolean,
                             Optional offset As Point = Nothing,
                             Optional xlabel$ = "",
@@ -165,7 +168,7 @@ Namespace Graphic.Axis
                 Call g.DrawX(pen, xlabel, scaler, xlayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel, tickFormat:=XtickFormat)
             End If
             If ylayout <> YAxisLayoutStyles.None Then
-                Call g.DrawY(pen, ylabel, scaler, ylayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel, tickFormat:=YtickFormat)
+                Call g.DrawY(pen, ylabel, region, scaler, ylayout, offset, labelFontStyle, tickFont, htmlLabel:=htmlLabel, tickFormat:=YtickFormat)
             End If
         End Sub
 
@@ -190,7 +193,7 @@ Namespace Graphic.Axis
                     Call g.DrawLine(gridPen, left, right)
                 Next
 
-                Call g.DrawY(pen, label,
+                Call g.DrawY(pen, label, region,
                              scaler,
                              YAxisLayoutStyles.Left,
                              offset,
@@ -218,6 +221,7 @@ Namespace Graphic.Axis
         ''' </param>
         <Extension> Public Sub DrawY(ByRef g As IGraphics,
                                      pen As Pen, label$,
+                                     canvas As GraphicsRegion,
                                      scaler As DataScaler,
                                      layout As YAxisLayoutStyles, offset As Point,
                                      labelFont$,
@@ -279,7 +283,7 @@ Namespace Graphic.Axis
 
                     Dim location As New Point With {
                         .X = scaler.Region.Left - labelImage.Width + maxYTickSize,
-                        .Y = (size.Height - labelImage.Height) / 2
+                        .Y = (size.Height - labelImage.Height) / 2 + scaler.Region.Top
                     }
 
                     Call g.DrawImageUnscaled(labelImage, location)
@@ -288,7 +292,7 @@ Namespace Graphic.Axis
                     Dim fSize As SizeF = g.MeasureString(label, font)
                     Dim location As New PointF With {
                         .X = scaler.Region.Left - fSize.Height - maxYTickSize * 1.5,
-                        .Y = size.Height / 2 + scaler.Region.Top
+                        .Y = fSize.Width + (size.Height - fSize.Width) / 2 + scaler.Region.Top
                     }
 
                     If location.X < 5 Then

@@ -446,6 +446,7 @@
     <Compile Include="Signals\FourierTransform.vb" />
     <Compile Include="Signals\WaveletTransform.vb" />
     <Compile Include="Spline\BezierExtensions.vb" />
+    <Compile Include="Spline\Extensions.vb" />
     <Compile Include="UncheckInteger.vb" />
     <Compile Include="HashMaps\HashBlizzard.vb" />
     <Compile Include="HashMaps\JenkinsHash.vb" />

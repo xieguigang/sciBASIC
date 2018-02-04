@@ -37,7 +37,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 
-Namespace ComponentModel.Ranges
+Namespace ComponentModel.Ranges.Model
 
     ''' <summary>
     ''' Represents a double range with minimum and maximum values
