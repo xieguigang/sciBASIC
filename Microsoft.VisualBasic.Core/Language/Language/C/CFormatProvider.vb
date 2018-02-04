@@ -265,10 +265,10 @@ Namespace Language.C
         ''' <summary>
         ''' Format string like C
         ''' </summary>
-        ''' <param name="Format"></param>
-        ''' <param name="Parameters"></param>
+        ''' <param name="format"></param>
+        ''' <param name="parameters"></param>
         ''' <returns></returns>
-        Public Function sprintf(Format As String, ParamArray Parameters As Object()) As String
+        Public Function sprintf(format$, ParamArray parameters As Object()) As String
             '#Region "Variables"
             Dim f As New StringBuilder()
             'Regex r = new Regex( @"\%(\d*\$)?([\'\#\-\+ ]*)(\d*)(?:\.(\d+))?([hl])?([dioxXucsfeEgGpn%])" );
@@ -293,12 +293,12 @@ Namespace Language.C
             Dim paddingCharacter As Char = " "c
             '#End Region
 
-            Format = Format.Replace("\\", "\/")
-            Format = Format.Replace("\n", vbLf)
-            Format = Format.Replace("\t", vbTab)
+            format = format.Replace("\\", "\/")
+            format = format.Replace("\n", vbLf)
+            format = format.Replace("\t", vbTab)
 
             ' find all format parameters in format string
-            f.Append(Format)
+            f.Append(format)
             m = r.Match(f.ToString())
             While m.Success
                 '#Region "parameter index"
@@ -388,10 +388,10 @@ Namespace Language.C
 
                 '#Region "get next value parameter"
                 ' get next value parameter and convert value parameter depending on short / long indicator
-                If Parameters Is Nothing OrElse paramIx >= Parameters.Length Then
+                If parameters Is Nothing OrElse paramIx >= parameters.Length Then
                     o = Nothing
                 Else
-                    o = Parameters(paramIx)
+                    o = parameters(paramIx)
 
                     If shortLongIndicator = "h"c Then
                         If TypeOf o Is Integer Then
