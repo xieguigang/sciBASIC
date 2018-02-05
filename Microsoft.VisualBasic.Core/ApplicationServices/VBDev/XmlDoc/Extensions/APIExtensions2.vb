@@ -36,12 +36,28 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
 
     Partial Module APIExtensions
 
-        <Extension> Public Function Sum(projects As IEnumerable(Of Project), <CallerMemberName> Optional name$ = Nothing) As Project
+        <Extension> Public Function Sum(projects As IEnumerable(Of Project), Optional excludeNamespace$() = Nothing, <CallerMemberName> Optional name$ = Nothing) As Project
             Dim namespaces As New Dictionary(Of String, ProjectNamespace)
             Dim out As New Project(name, namespaces)
 
             For Each proj As Project In projects
                 For Each ns In proj.Namespaces
+
+                    If Not excludeNamespace Is Nothing Then
+                        Dim skip As Boolean = False
+
+                        For Each nsName As String In excludeNamespace
+                            If InStr(ns.Path, nsName) = 1 Then
+                                skip = True
+                                Exit For
+                            End If
+                        Next
+
+                        If skip Then
+                            Continue For
+                        End If
+                    End If
+
                     With ns.Path.ToLower
                         If namespaces.ContainsKey(.ref) Then
                             namespaces(.ref) = namespaces(.ref).Add(ns, proj:=out)

@@ -1,33 +1,34 @@
 ﻿#Region "Microsoft.VisualBasic::6f5f15573b686d0b66aa60375da59a1d, ..\sciBASIC#\mime\text%html\HTML\CSS\Padding.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.ComponentModel
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -40,40 +41,31 @@ Namespace HTML.CSS
     <TypeConverter(GetType(PaddingConverter))> Public Structure Padding
 
         Public ReadOnly Property IsEmpty As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Top = 0 AndAlso Bottom = 0 AndAlso Left = 0 AndAlso Right = 0
             End Get
         End Property
 
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.Windows.Forms.Padding class using the
-        '     supplied padding size for all edges.
-        '
-        ' Parameters:
-        '   all:
-        '     The number of pixels to be used for padding for all edges.
+        ''' <summary>
+        ''' Initializes a new instance of the <see cref="Padding"/> class using the
+        ''' supplied padding size for all edges.
+        ''' </summary>
+        ''' <param name="all">The number of pixels to be used for padding for all edges.</param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(all As Integer)
             Call Me.New(all, all, all, all)
         End Sub
-        '
-        ' Summary:
-        '     Initializes a new instance of the System.Windows.Forms.Padding class using a
-        '     separate padding size for each edge.
-        '
-        ' Parameters:
-        '   left:
-        '     The padding size, in pixels, for the left edge.
-        '
-        '   top:
-        '     The padding size, in pixels, for the top edge.
-        '
-        '   right:
-        '     The padding size, in pixels, for the right edge.
-        '
-        '   bottom:
-        '     The padding size, in pixels, for the bottom edge.
-        Public Sub New(left As Integer, top As Integer, right As Integer, bottom As Integer)
+
+        ''' <summary>
+        ''' Initializes a new instance of the <see cref="Padding"/> class using a
+        ''' separate padding size for each edge.
+        ''' </summary>
+        ''' <param name="left">The padding size, in pixels, for the left edge.</param>
+        ''' <param name="top">The padding size, in pixels, for the top edge.</param>
+        ''' <param name="right">The padding size, in pixels, for the right edge.</param>
+        ''' <param name="bottom">The padding size, in pixels, for the bottom edge.</param>
+        Public Sub New(left%, top%, right%, bottom%)
             With Me
                 .Left = left
                 .Top = top
@@ -82,10 +74,12 @@ Namespace HTML.CSS
             End With
         End Sub
 
-        Sub New(margin As Drawing.Size)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(margin As Size)
             Call Me.New(margin.Width, margin.Height)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(width%, height%)
             Call Me.New(left:=width, right:=width, top:=height, bottom:=height)
         End Sub
@@ -114,6 +108,7 @@ Namespace HTML.CSS
         ''' </summary>
         ''' <returns></returns>
         <Browsable(False)> Public ReadOnly Property Horizontal As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Left + Right
             End Get
@@ -157,6 +152,7 @@ Namespace HTML.CSS
         ''' </summary>
         ''' <returns></returns>
         <Browsable(False)> Public ReadOnly Property Vertical As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Top + Bottom
             End Get
@@ -175,6 +171,7 @@ Namespace HTML.CSS
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property LayoutVector As Integer()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return {Top, Right, Bottom, Left}
             End Get
