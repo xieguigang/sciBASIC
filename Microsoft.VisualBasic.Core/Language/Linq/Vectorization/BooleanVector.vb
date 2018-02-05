@@ -69,7 +69,7 @@ Namespace Language.Vectorization
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"ALL({Length}) = {Which.IsTrue(Buffer).Count} true + {Which.IsTrue(Not Me).Count} false"
+            Return $"ALL({Length}) = {Linq.Which.IsTrue(buffer).Count} true + {Linq.Which.IsTrue(Not Me).Count} false"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

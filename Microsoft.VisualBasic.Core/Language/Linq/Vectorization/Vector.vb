@@ -125,9 +125,11 @@ Namespace Language.Vectorization
         ''' <param name="address"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(address As IAddress(Of Integer)) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer(address.Address)
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As T)
                 buffer(address.Address) = value
             End Set
@@ -163,9 +165,11 @@ Namespace Language.Vectorization
         ''' <param name="index%"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(index%) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer(index)
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As T)
                 buffer(index) = value
             End Set
@@ -262,8 +266,9 @@ Namespace Language.Vectorization
         ''' <param name="booleans"></param>
         ''' <returns></returns>
         Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Vector(Of T)(Me(indices:=Which.IsTrue(booleans)))
+                Return New Vector(Of T)(Me(indices:=Linq.Which.IsTrue(booleans)))
             End Get
             Set(value As Vector(Of T))
                 For Each i In booleans.SeqIterator
@@ -304,6 +309,11 @@ Namespace Language.Vectorization
 
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Which(assert As Func(Of T, Boolean)) As Integer()
+            Return Linq.Which.IsTrue(Me.Select(assert))
         End Function
 
         ''' <summary>
