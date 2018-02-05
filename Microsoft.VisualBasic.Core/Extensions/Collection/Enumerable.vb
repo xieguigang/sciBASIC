@@ -37,6 +37,12 @@ Imports Microsoft.VisualBasic.Text.Xml.Models.KeyValuePair
 <Extension>
 Public Module IEnumerations
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function [Next](Of T)(random As Random, data As T()) As T
+        Return data(random.Next(0, data.Length))
+    End Function
+
     <Extension> Public Function Differ(Of T As INamedValue, T2)(source As IEnumerable(Of T),
                                                                 ToDiffer As IEnumerable(Of T2),
                                                                 getId As Func(Of T2, String)) As String()
