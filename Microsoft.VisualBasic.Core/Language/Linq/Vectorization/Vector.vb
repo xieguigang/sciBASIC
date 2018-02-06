@@ -198,8 +198,10 @@ Namespace Language.Vectorization
                 Return list
             End Get
             Set(value As List(Of T))
-                For Each i As SeqValue(Of Integer) In exp.TranslateIndex.SeqIterator
-                    buffer(+i) = value(i.i)
+                Dim index%() = exp.TranslateIndex
+
+                For Each i As SeqValue(Of Integer) In index.SeqIterator
+                    buffer(i.value) = value(i.i)
                 Next
             End Set
         End Property
