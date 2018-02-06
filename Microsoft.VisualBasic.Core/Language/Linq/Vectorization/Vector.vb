@@ -322,7 +322,11 @@ Namespace Language.Vectorization
         ''' <param name="v"></param>
         ''' <returns></returns>
         Public Overloads Shared Narrowing Operator CType(v As Vector(Of T)) As T()
-            Return v.ToArray
+            Return v.buffer.ToArray
+        End Operator
+
+        Public Overloads Shared Narrowing Operator CType(v As Vector(Of T)) As List(Of T)
+            Return v.buffer.AsList
         End Operator
 
         ''' <summary>

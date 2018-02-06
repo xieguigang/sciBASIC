@@ -50,7 +50,7 @@ Public Module LeastSquares
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function LinearFit(x As List(Of Double), y As List(Of Double)) As FitResult
+    Public Function LinearFit(x As Vector, y As Vector) As FitResult
         Return LinearFit(x.ToArray, y.ToArray, SeriesLength(x, y))
     End Function
 
@@ -93,7 +93,7 @@ Public Module LeastSquares
     ''' <param name="poly_n">期望拟合的阶数，若poly_n=2，则y=a0+a1*x+a2*x^2</param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function PolyFit(x As List(Of Double), y As List(Of Double), poly_n As Integer) As FitResult
+    Public Function PolyFit(x As Vector, y As Vector, poly_n As Integer) As FitResult
         Return PolyFit(x.ToArray, y.ToArray, SeriesLength(x, y), poly_n)
     End Function
 
@@ -109,7 +109,7 @@ Public Module LeastSquares
         Return PolyFit(x.ToArray, y.ToArray, SeriesLength(x, y), poly_n)
     End Function
 
-    Public Function PolyFit(x As Double(), y As Double(), length As Integer, poly_n As Integer) As FitResult
+    Public Function PolyFit(x As Double(), y As Double(), length%, poly_n%) As FitResult
 
         Dim i As Integer
         Dim j As Integer
