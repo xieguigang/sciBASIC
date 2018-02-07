@@ -43,7 +43,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
-Imports Microsoft.VisualBasic.Text.Similarity
+Imports Microsoft.VisualBasic.Text.Patterns
 Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
@@ -1023,7 +1023,7 @@ Public Module StringHelpers
     ''' <param name="caseSensitive"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function WildcardsLocated(collection As IEnumerable(Of String), text As String, Optional caseSensitive As Boolean = True) As Integer
+    Public Function WildcardsLocated(collection As IEnumerable(Of String), text$, Optional caseSensitive As Boolean = True) As Integer
         For Each s As SeqValue(Of String) In collection.SeqIterator
             If text.WildcardMatch(s.value, Not caseSensitive) Then
                 Return s.i
