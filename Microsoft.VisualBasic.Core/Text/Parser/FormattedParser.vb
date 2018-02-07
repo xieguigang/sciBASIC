@@ -143,6 +143,7 @@ Namespace Text
             Return copy
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function UntilBlank(s As String) As Boolean
             Return Not s.StringEmpty
         End Function

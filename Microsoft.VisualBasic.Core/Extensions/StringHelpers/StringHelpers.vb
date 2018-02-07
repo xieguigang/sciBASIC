@@ -43,7 +43,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
-Imports Microsoft.VisualBasic.Text.Similarity
+Imports Microsoft.VisualBasic.Text.Patterns
 Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
@@ -57,15 +57,19 @@ Public Module StringHelpers
     ''' to the end of the current <see cref="StringBuilder"/> object.
     ''' </summary>
     ''' <param name="sb"></param>
-    ''' <param name="[string]">The string to append.</param>
+    ''' <param name="html">The html string to append.</param>
     ''' <returns></returns>
     ''' <remarks>
     ''' A reference to this instance after the append operation has completed.
     ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function AppendLine(sb As StringBuilder, [string] As XElement, ParamArray args As Object()) As StringBuilder
-        Return sb.AppendLine(sprintf([string].ToString, args))
+    Public Function AppendLine(sb As StringBuilder, html As XElement, ParamArray args As Object()) As StringBuilder
+        If args.IsNullOrEmpty Then
+            Return sb.AppendLine(html.ToString)
+        Else
+            Return sb.AppendLine(sprintf(html.ToString, args))
+        End If
     End Function
 
     ''' <summary>
@@ -1019,7 +1023,7 @@ Public Module StringHelpers
     ''' <param name="caseSensitive"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function WildcardsLocated(collection As IEnumerable(Of String), text As String, Optional caseSensitive As Boolean = True) As Integer
+    Public Function WildcardsLocated(collection As IEnumerable(Of String), text$, Optional caseSensitive As Boolean = True) As Integer
         For Each s As SeqValue(Of String) In collection.SeqIterator
             If text.WildcardMatch(s.value, Not caseSensitive) Then
                 Return s.i
