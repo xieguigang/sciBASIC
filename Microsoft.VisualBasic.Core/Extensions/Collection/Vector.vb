@@ -50,6 +50,7 @@ Public Module VectorExtensions
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function RepeatCalls(Of T)(factory As Func(Of T), n%, Optional sleep% = 0) As T()
         Return n _
@@ -70,6 +71,8 @@ Public Module VectorExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <returns>返回<see cref="Object"/>类型是为了简化语法</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function VectorShadows(Of T)(source As IEnumerable(Of T)) As Object
         Return New VectorShadows(Of T)(source)
@@ -182,6 +185,8 @@ Public Module VectorExtensions
     ''' <param name="array">要搜索的从零开始的一维数组。</param>
     ''' <param name="o">要在 array 中查找的对象。</param>
     ''' <returns>如果在整个 array 中找到 value 的第一个匹配项，则为该项的从零开始的索引；否则为 -1。</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function IndexOf(Of T)(array As T(), o As T) As Integer
         Return System.Array.IndexOf(array, value:=o)
@@ -194,6 +199,8 @@ Public Module VectorExtensions
     ''' <param name="source">请不要使用Linq查询表达式，尽量使用``list``或者``array``</param>
     ''' <param name="index"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Last(Of T)(source As IEnumerable(Of T), index As Integer) As T
         Return source(source.Count - index)
@@ -206,6 +213,8 @@ Public Module VectorExtensions
     ''' <param name="source"></param>
     ''' <param name="x"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function After(Of T)(source As IEnumerable(Of T), x As T) As IEnumerable(Of T)
         Return source.After(Function(o) x.Equals(o))
@@ -259,6 +268,8 @@ Public Module VectorExtensions
     ''' <param name="s"></param>
     ''' <param name="c"></param>
     ''' <param name="len"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Sub Memset(ByRef s As String, c As Char, len As Integer)
         s = New String(c, len)

@@ -83,8 +83,8 @@ Namespace Text.HtmlParser
             End If
         End Function
 
-        Public Const HtmlLink As String = "<a\s.+?</a>"
-        Public Const HtmlPageTitle As String = "<title>.+</title>"
+        Public Const HtmlLink$ = "<a\s.+?</a>"
+        Public Const HtmlPageTitle$ = "<title>.+</title>"
 
         ''' <summary>
         ''' Parsing the title text from the html inputs.

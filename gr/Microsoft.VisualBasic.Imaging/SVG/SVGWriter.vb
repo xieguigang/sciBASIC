@@ -60,16 +60,16 @@ Namespace SVG
         ''' <param name="g"></param>
         ''' <param name="path$">``*.svg``保存的SVG文件的路径</param>
         ''' <returns></returns>
-        <Extension> Public Function WriteSVG(g As GraphicsSVG, path$, Optional size$ = "1440,900") As Boolean
+        <Extension> Public Function WriteSVG(g As GraphicsSVG, path$, Optional size$ = "1440,900", Optional comments$ = Nothing) As Boolean
             Using file As FileStream = path.Open
-                Call g.WriteSVG(out:=file, size:=size)
+                Call g.WriteSVG(out:=file, size:=size, comments:=comments)
                 Return True
             End Using
         End Function
 
-        <Extension> Public Function WriteSVG(g As GraphicsSVG, out As Stream, Optional size$ = "1440,900") As Boolean
+        <Extension> Public Function WriteSVG(g As GraphicsSVG, out As Stream, Optional size$ = "1440,900", Optional comments$ = Nothing) As Boolean
             Dim sz As Size = size.SizeParser
-            Dim svg As SVGXml = g.__svgData.GetSVG(sz)
+            Dim svg As SVGXml = g.__svgData.GetSVG(sz, comments)
             Dim XML$ = svg.GetSVGXml
             Dim bytes As Byte() = Encoding.Unicode.GetBytes(XML)
 

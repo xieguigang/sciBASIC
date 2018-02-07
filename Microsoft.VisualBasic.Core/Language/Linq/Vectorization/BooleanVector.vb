@@ -41,6 +41,7 @@ Namespace Language.Vectorization
         ''' </summary>
         ''' <returns></returns>
         Public Shared ReadOnly Property [True] As BooleanVector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New BooleanVector({True})
             End Get
@@ -51,6 +52,7 @@ Namespace Language.Vectorization
         ''' </summary>
         ''' <returns></returns>
         Public Shared ReadOnly Property [False] As BooleanVector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New BooleanVector({False})
             End Get
@@ -69,7 +71,10 @@ Namespace Language.Vectorization
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"ALL({Length}) = {Which.IsTrue(Buffer).Count} true + {Which.IsTrue(Not Me).Count} false"
+            Dim countTrue% = Linq.Which.IsTrue(buffer).Count
+            Dim countFalse% = Linq.Which.IsTrue(Not Me).Count
+
+            Return $"ALL({Length}) = {countTrue} true + {countFalse} false"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -83,6 +88,8 @@ Namespace Language.Vectorization
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator &(x As Boolean, y As BooleanVector) As BooleanVector
             Return New BooleanVector(From b As Boolean In y Select b AndAlso x)
         End Operator
@@ -93,6 +100,8 @@ Namespace Language.Vectorization
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator &(x As BooleanVector, y As BooleanVector) As BooleanVector
             Return New BooleanVector(From i As SeqValue(Of Boolean) In x.SeqIterator Select i.value AndAlso y(i))
         End Operator
@@ -102,6 +111,8 @@ Namespace Language.Vectorization
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Not(x As BooleanVector) As BooleanVector
             Return New BooleanVector((From b As Boolean In x Select Not b).ToArray)
         End Operator
@@ -111,10 +122,13 @@ Namespace Language.Vectorization
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(x As BooleanVector) As Boolean
             Return x(0)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(b As Boolean()) As BooleanVector
             Return New BooleanVector(b)
         End Operator
@@ -125,6 +139,8 @@ Namespace Language.Vectorization
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or(x As BooleanVector, y As Boolean()) As BooleanVector
             Return New BooleanVector(x.Select(Function(b, i) b OrElse y(i)))
         End Operator
@@ -146,6 +162,8 @@ Namespace Language.Vectorization
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(x As BooleanVector) As Boolean()
             Return x.ToArray
         End Operator

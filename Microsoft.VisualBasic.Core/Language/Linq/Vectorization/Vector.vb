@@ -125,9 +125,11 @@ Namespace Language.Vectorization
         ''' <param name="address"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(address As IAddress(Of Integer)) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer(address.Address)
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As T)
                 buffer(address.Address) = value
             End Set
@@ -163,9 +165,11 @@ Namespace Language.Vectorization
         ''' <param name="index%"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(index%) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer(index)
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As T)
                 buffer(index) = value
             End Set
@@ -194,8 +198,10 @@ Namespace Language.Vectorization
                 Return list
             End Get
             Set(value As List(Of T))
-                For Each i As SeqValue(Of Integer) In exp.TranslateIndex.SeqIterator
-                    buffer(+i) = value(i.i)
+                Dim index%() = exp.TranslateIndex
+
+                For Each i As SeqValue(Of Integer) In index.SeqIterator
+                    buffer(i.value) = value(i.i)
                 Next
             End Set
         End Property
@@ -262,8 +268,9 @@ Namespace Language.Vectorization
         ''' <param name="booleans"></param>
         ''' <returns></returns>
         Default Public Overridable Overloads Property Item(booleans As IEnumerable(Of Boolean)) As Vector(Of T)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Vector(Of T)(Me(indices:=Which.IsTrue(booleans)))
+                Return New Vector(Of T)(Me(indices:=Linq.Which.IsTrue(booleans)))
             End Get
             Set(value As Vector(Of T))
                 For Each i In booleans.SeqIterator
@@ -306,13 +313,22 @@ Namespace Language.Vectorization
             Yield GetEnumerator()
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Which(assert As Func(Of T, Boolean)) As Integer()
+            Return Linq.Which.IsTrue(Me.Select(assert))
+        End Function
+
         ''' <summary>
         ''' 没用？？？
         ''' </summary>
         ''' <param name="v"></param>
         ''' <returns></returns>
         Public Overloads Shared Narrowing Operator CType(v As Vector(Of T)) As T()
-            Return v.ToArray
+            Return v.buffer.ToArray
+        End Operator
+
+        Public Overloads Shared Narrowing Operator CType(v As Vector(Of T)) As List(Of T)
+            Return v.buffer.AsList
         End Operator
 
         ''' <summary>

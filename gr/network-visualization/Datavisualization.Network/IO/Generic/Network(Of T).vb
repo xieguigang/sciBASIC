@@ -1,31 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::a3a86ab32b890bae2b7f053ac8bc91a5, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\IO\Generic\Network(Of T).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -84,6 +85,7 @@ Namespace FileStream.Generic
         Dim __nodes As Dictionary(Of T_Node)
         Dim __edges As List(Of T_Edge)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function HaveNode(id$) As Boolean
             Return __nodes.ContainsKey(id)
         End Function
@@ -107,12 +109,13 @@ Namespace FileStream.Generic
         ''' </summary>
         ''' <remarks></remarks>
         Public Sub RemoveSelfLoop()
-            Dim LQuery As T_Edge() =
+            Dim LQuery = LinqAPI.Exec(Of T_Edge) _
  _
-                LinqAPI.Exec(Of T_Edge) <= From x As T_Edge
-                                           In Edges
-                                           Where Not x.SelfLoop
-                                           Select x
+                () <= From x As T_Edge
+                      In Edges
+                      Where Not x.SelfLoop
+                      Select x
+
             Edges = LQuery
         End Sub
 
@@ -125,21 +128,20 @@ Namespace FileStream.Generic
         ''' <param name="encoding">The file encoding of the exported node and edge csv file.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overrides Function Save(Optional outDIR As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
-            If String.IsNullOrEmpty(outDIR) Then
-                outDIR = App.CurrentDirectory
-            End If
-
-            Call Nodes.SaveTo(String.Format("{0}/nodes.csv", outDIR), False, encoding)
-            Call Edges.SaveTo(String.Format("{0}/network-edges.csv", outDIR), False, encoding)
+        Public Overrides Function Save(Optional outDIR$ = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+            With outDIR Or App.CurrentDirectory.AsDefault
+                Call Nodes.SaveTo($"{ .ref}/nodes.csv", False, encoding)
+                Call Edges.SaveTo($"{ .ref}/network-edges.csv", False, encoding)
+            End With
 
             Return True
         End Function
 
-        Public Shared Function Load(DIR As String) As Network(Of T_Node, T_Edge)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Load(directory As String) As Network(Of T_Node, T_Edge)
             Return New Network(Of T_Node, T_Edge) With {
-                .Edges = $"{DIR}/network-edges.csv".LoadCsv(Of T_Edge),
-                .Nodes = $"{DIR}/nodes.csv".LoadCsv(Of T_Node)
+                .Edges = $"{directory}/network-edges.csv".LoadCsv(Of T_Edge),
+                .Nodes = $"{directory}/nodes.csv".LoadCsv(Of T_Node)
             }
         End Function
 

@@ -2121,6 +2121,9 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public MustOverride Sub DrawPie(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
+
+        Public MustOverride Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius!)
+
         '
         ' Summary:
         '     Draws a polygon defined by an array of System.Drawing.PointF structures.

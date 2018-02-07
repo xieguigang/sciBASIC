@@ -108,5 +108,9 @@ Namespace Imaging
             Call __release()
             MyBase.Dispose()
         End Sub
+
+        Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)
+            Throw New NotImplementedException()
+        End Sub
     End Class
 End Namespace

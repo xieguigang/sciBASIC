@@ -28,7 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Text.Similarity
+Namespace Text.Patterns
 
     ''' <summary>
     ''' Extensions to <see cref="String"/> by using wildcards to match string

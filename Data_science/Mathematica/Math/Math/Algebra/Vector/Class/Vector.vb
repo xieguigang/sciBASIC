@@ -717,5 +717,10 @@ Namespace LinearAlgebra
         Public Shared Widening Operator CType(list As List(Of Double)) As Vector
             Return New Vector(list)
         End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(v As Vector) As List(Of Double)
+            Return v.buffer.AsList
+        End Operator
     End Class
 End Namespace

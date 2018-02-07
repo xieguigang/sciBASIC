@@ -90,6 +90,11 @@ Namespace ComponentModel
             Property Key As T1
             Property Maps As V
         End Interface
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(map As Map(Of T1, V)) As (key As T1, mapAs As V)
+            Return (map.Key, map.Maps)
+        End Operator
     End Structure
 
     ''' <summary>

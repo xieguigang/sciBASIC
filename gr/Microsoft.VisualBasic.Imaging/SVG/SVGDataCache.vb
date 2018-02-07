@@ -130,7 +130,7 @@ Namespace SVG
         ''' If this argument is ignored, then the default internal <see cref="Size"/> value will be used.
         ''' </param>
         ''' <returns></returns>
-        Public Function GetSVG(Optional size As Size = Nothing) As SVGXml
+        Public Function GetSVG(Optional size As Size = Nothing, Optional xmlComment$ = Nothing) As SVGXml
             Dim SVG As New SVGXml() With {
                 .gs = {
                     New g With {
@@ -143,7 +143,8 @@ Namespace SVG
                     }
                 },
                 .width = size.Width Or innerDefaultWidth(),
-                .height = size.Height Or innerDefaultHeight()
+                .height = size.Height Or innerDefaultHeight(),
+                .XmlComment = xmlComment
             }
 
             If Not bg.StringEmpty Then

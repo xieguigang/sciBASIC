@@ -79,10 +79,12 @@ Namespace Text.Similarity
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function tokenEquals(w1$, w2$) As Boolean
             Return w1$ = w2$
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function tokenEqualsIgnoreCase(w1$, w2$) As Boolean
             Return String.Equals(w1, w2, StringComparison.OrdinalIgnoreCase)
         End Function
@@ -131,6 +133,7 @@ Namespace Text.Similarity
             Return t1$.TokenOrders(s2, caseSensitive)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function TokenOrders(s1$(), s2$, Optional caseSensitive As Boolean = False) As Integer()
             Return TokenOrders(s1, s2.Split.Distinct, caseSensitive) ' 假若有重复的字符串出现，则肯定不会有顺序排布的结果，将重复的去掉
@@ -147,6 +150,7 @@ Namespace Text.Similarity
             Return orders
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsOrdered(s1$(), s2$, Optional caseSensitive As Boolean = False) As Boolean
             Return s1.IsOrdered(s2.Split, caseSensitive)
@@ -177,11 +181,13 @@ Namespace Text.Similarity
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsOrdered(s1$, s2$, Optional caseSensitive As Boolean = False) As Boolean
             Return s1.Split.IsOrdered(s2$, caseSensitive)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsOrdered(s1$, s2$(), Optional caseSensitive As Boolean = False, Optional fuzzy As Boolean = True) As Boolean
             Return s1.Split.IsOrdered(s2$, caseSensitive, fuzzy)

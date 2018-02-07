@@ -53,7 +53,6 @@ Namespace SVG.XML
         Implements ICanvas
 
         <XmlAttribute> Public Property transform As String Implements ICanvas.transform
-        <XmlElement("text")> Public Property texts As text() Implements ICanvas.texts
         <XmlElement("g")> Public Property gs As g() Implements ICanvas.gs
         <XmlElement> Public Property path As path() Implements ICanvas.path
         <XmlElement> Public Property rect As rect() Implements ICanvas.rect
@@ -62,5 +61,6 @@ Namespace SVG.XML
         <XmlElement("circle")> Public Property circles As circle() Implements ICanvas.circles
         <XmlElement> Public Property title As String Implements ICanvas.title
         <XmlElement> Public Property polyline As polyline() Implements ICanvas.polyline
+        <XmlElement("text")> Public Property texts As text() Implements ICanvas.texts
     End Class
 End Namespace
