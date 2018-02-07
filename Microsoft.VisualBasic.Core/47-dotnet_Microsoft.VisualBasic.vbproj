@@ -1080,6 +1080,7 @@
     <Compile Include="ComponentModel\Algorithm\Levenshtein\ResultVisualize.vb" />
     <Compile Include="Text\Xml\Linq\Entity.vb" />
     <Compile Include="Text\Xml\Models\Vector.vb" />
+    <Compile Include="Text\Xml\Serialization\XmlComment.vb" />
     <Compile Include="Text\Xml\OpenXml\Content_Types.vb" />
     <Compile Include="Text\Xml\XmlBuilder.vb" />
     <Compile Include="Text\Xml\Linq\Linq.vb" />
