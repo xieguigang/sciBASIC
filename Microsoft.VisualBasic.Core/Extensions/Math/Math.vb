@@ -577,17 +577,7 @@ Namespace Math
                 Return value
             End If
         End Function
-        '
-        ' Summary:
-        '     Returns the logarithm of a specified number in a specified base.
-        '
-        ' Parameters:
-        '   a:
-        '     The number whose logarithm is to be found.
-        '
-        '   newBase:
-        '     The base of the logarithm.
-        '
+
         ' Returns:
         '     One of the values in the following table. (+Infinity denotes System.Double.PositiveInfinity,
         '     -Infinity denotes System.Double.NegativeInfinity, and NaN denotes System.Double.NaN.)anewBaseReturn
@@ -596,8 +586,14 @@ Namespace Math
         '     value)NaN(any value)newBase = NaNNaN(any value)newBase = 1NaNa = 00 <newBase<
         '     1 +Infinitya = 0newBase> 1-Infinitya = +Infinity0 <newBase< 1-Infinitya = +InfinitynewBase>
         '     1+Infinitya = 1newBase = 00a = 1newBase = +Infinity0
+        ''' <summary>
+        ''' Returns the logarithm of a specified number in a specified base.
+        ''' </summary>
+        ''' <param name="a">The number whose logarithm is to be found.</param>
+        ''' <param name="newBase">The base of the logarithm.</param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Log(a As Double, newBase As Double) As Double
+        Public Function Log(a#, newBase#) As Double
             Return sys.Log(a, newBase)
         End Function
 
