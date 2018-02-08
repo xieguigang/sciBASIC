@@ -83,6 +83,10 @@ Namespace ComponentModel
         ''' <returns></returns>
         Public Property Maps As V Implements IMap.Maps
 
+        Public Overrides Function ToString() As String
+            Return $"map[{Key}, {Maps}]"
+        End Function
+
         ''' <summary>
         ''' 与<see cref="IKeyValuePairObject(Of TKey, TValue)"/>相比，这个类型更加倾向于特定化的描述两个对象之间的一一对应关系
         ''' </summary>
@@ -94,6 +98,17 @@ Namespace ComponentModel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(map As Map(Of T1, V)) As (key As T1, mapAs As V)
             Return (map.Key, map.Maps)
+        End Operator
+
+        ''' <summary>
+        ''' 因为map主要的作用是获取得到key所配对的value结果，所以在这里是转换为<see cref="Maps"/>结果值的
+        ''' </summary>
+        ''' <param name="map"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(map As Map(Of T1, V)) As V
+            Return map.Maps
         End Operator
     End Structure
 
