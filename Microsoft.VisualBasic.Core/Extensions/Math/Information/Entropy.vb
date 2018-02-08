@@ -28,16 +28,28 @@ Namespace Math.Information
         <Extension>
         Public Function ShannonEnt(Of T)(collection As IEnumerable(Of T)) As Double
             Dim distincts = (From x As T In collection Group x By x Into Count).ToArray
-            Dim entropy#
-            Dim prob#
             Dim numEntries% = Aggregate g In distincts Into Sum(g.Count)
-
-            For Each item In distincts
-                prob = item.Count / numEntries
-                entropy -= prob * Math.Log(prob, newBase:=2)
-            Next
+            Dim probs = From item In distincts Select item.Count / numEntries
+            Dim entropy# = ShannonEntropy(probs)
 
             Return entropy
+        End Function
+
+        ''' <summary>
+        ''' 直接从一个概率向量之中计算出香农信息熵
+        ''' </summary>
+        ''' <param name="probs">Sum of this probability vector must equals to 1</param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function ShannonEntropy(probs As IEnumerable(Of Double)) As Double
+            Dim entropy# = Aggregate prob As Double
+                           In probs
+                           Let ln = Math.Log(prob, newBase:=2)
+                           Into Sum(prob * ln)
+            ' 和的负数，注意在这里最后的结果还需要乘以-1
+            ' 有一个负号
+            Return -entropy
         End Function
     End Module
 End Namespace
