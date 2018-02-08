@@ -52,6 +52,11 @@ Namespace Scripting.Expressions
         ''' </summary>
         Const VariablePattern$ = "[$][_a-z][_a-z0-9]*(\.[a-z][a-z0-9]*)*"
 
+        ''' <summary>
+        ''' 不存在的键名会自动返回空字符串
+        ''' </summary>
+        ''' <param name="resource"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetValue(resource As Dictionary(Of String, String)) As Func(Of String, String)
