@@ -26,7 +26,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.DataMining.AprioriAlgorithm.Entities
+Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 Imports Microsoft.VisualBasic.Linq
 
 Namespace AprioriRules
