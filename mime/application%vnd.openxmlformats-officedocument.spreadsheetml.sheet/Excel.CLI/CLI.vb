@@ -62,9 +62,9 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
         Dim b = Contract.Load(append)
 
         With args <= "/token0.ID"
-            If Not String.IsNullOrEmpty(.ref) Then
+            If Not String.IsNullOrEmpty(.ByRef) Then
                 For Each obj As EntityObject In a
-                    obj.ID = Strings.Split(obj.ID, Delimiter:= .ref)(0)
+                    obj.ID = Strings.Split(obj.ID, Delimiter:= .ByRef)(0)
                 Next
             End If
         End With
@@ -96,12 +96,12 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     Public Function PushTable(args As CommandLine) As Integer
         With args <= "/write"
 
-            Dim Excel As Xlsx = Xlsx.Open(.ref)
+            Dim Excel As Xlsx = Xlsx.Open(.ByRef)
             Dim table As csv = args <= "/table"
             Dim sheetName$ = args("/sheetName") Or .BaseName
 
             Call Excel.WriteSheetTable(table, sheetName)
-            Call Excel.WriteXlsx(args("/saveAs") Or .ref)
+            Call Excel.WriteXlsx(args("/saveAs") Or .ByRef)
 
             Return 0
         End With
@@ -144,7 +144,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
                 Dim excel = Xlsx.Open(args <= "/open")
 
                 For Each sheet As NamedValue(Of csv) In excel.EnumerateTables
-                    Dim save$ = $"{ .ref}/{sheet.Name.NormalizePathString(False)}.csv"
+                    Dim save$ = $"{ .ByRef}/{sheet.Name.NormalizePathString(False)}.csv"
                     Call sheet.Value.Save(save, encoding:=Encodings.UTF8)
                 Next
 
@@ -152,7 +152,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
             Else
                 Return Xlsx.Open(args <= "/open") _
                     .GetTable(sheetName) _
-                    .Save(.ref, encoding:=Encodings.UTF8) _
+                    .Save(.ByRef, encoding:=Encodings.UTF8) _
                     .CLICode
             End If
         End With
@@ -168,10 +168,10 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
         With args <= "/in"
             If .ExtensionSuffix.TextEquals("csv") Then
 #Disable Warning
-                csv = csv.Load(.ref)
+                csv = csv.Load(.ByRef)
 #Enable Warning
             Else
-                csv = Xlsx.Open(.ref).GetTable(sheetName:=args("/sheet") Or "Sheet1")
+                csv = Xlsx.Open(.ByRef).GetTable(sheetName:=args("/sheet") Or "Sheet1")
             End If
         End With
 

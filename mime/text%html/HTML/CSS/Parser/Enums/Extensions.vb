@@ -40,8 +40,8 @@ Namespace HTML.CSS
         <Extension>
         Public Function GetTagValue(str As String) As HtmlTags
             With Strings.Trim(str).ToLower
-                If tags.ContainsKey(.ref) Then
-                    Return tags(.ref)
+                If tags.ContainsKey(.ByRef) Then
+                    Return tags(.ByRef)
                 Else
                     Return HtmlTags.NA
                 End If

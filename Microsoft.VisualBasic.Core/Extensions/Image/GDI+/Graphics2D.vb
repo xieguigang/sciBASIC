@@ -199,7 +199,7 @@ Namespace Imaging
                 .TextRenderingHint = Drawing.Text.TextRenderingHint.SingleBitPerPixelGridFit
             }
                 ' .Clear(Color.Transparent)
-                Return .ref
+                Return .ByRef
             End With
         End Function
 

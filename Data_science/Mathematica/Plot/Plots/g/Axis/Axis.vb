@@ -83,7 +83,7 @@ Namespace Graphic.Axis
             With region
                 Call g.DrawAxis(
                     scaler,
-                    .ref,
+                    .ByRef,
                     showGrid,
                     offset,
                     xlabel, ylabel,

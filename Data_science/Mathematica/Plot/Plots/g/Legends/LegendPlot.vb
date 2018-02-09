@@ -54,8 +54,8 @@ Namespace Graphic.Legend
         ''' <returns></returns>
         Public Function GetStyle(str$, Optional defaultStyle As LegendStyles = LegendStyles.Circle) As LegendStyles
             With LCase(str)
-                If legendExpressions.ContainsKey(.ref) Then
-                    Return legendExpressions(.ref)
+                If legendExpressions.ContainsKey(.ByRef) Then
+                    Return legendExpressions(.ByRef)
                 Else
                     Return defaultStyle
                 End If

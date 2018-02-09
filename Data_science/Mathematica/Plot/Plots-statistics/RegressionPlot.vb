@@ -232,8 +232,8 @@ Public Module RegressionPlot
 
                     For Each label As SeqValue(Of Label) In labels.SeqIterator
                         With label.value
-                            Call g.DrawLine(labelAnchorPen, .ref, anchors(label))
-                            Call g.DrawString(.text, pointLabelFont, Brushes.Black, .ref)
+                            Call g.DrawLine(labelAnchorPen, .ByRef, anchors(label))
+                            Call g.DrawString(.text, pointLabelFont, Brushes.Black, .ByRef)
                         End With
                     Next
                 End If

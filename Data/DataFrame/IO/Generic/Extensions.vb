@@ -46,7 +46,7 @@ Namespace IO
             With data.ToArray
                 Dim allKeys = .Keys(distinct:=True)
 
-                For Each x As DataSet In .ref
+                For Each x As DataSet In .ByRef
                     Yield x.ItemValue(allKeys)
                 Next
             End With
@@ -114,7 +114,7 @@ Namespace IO
                     .Select(Function(x)
                                 Dim values = groupKeys.ToDictionary(
                                     Function(k) k.Key,
-                                    Function(k) .ref(x(k.Value)))
+                                    Function(k) .ByRef(x(k.Value)))
 
                                 Return New DataSet With {
                                     .ID = x.ID,

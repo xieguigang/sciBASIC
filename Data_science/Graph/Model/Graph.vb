@@ -113,8 +113,8 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
                 .ID = buffer.GetAvailablePos,
                 .Label = label
             }
-                Call AddVertex(.ref)
-                Return .ref
+                Call AddVertex(.ByRef)
+                Return .ByRef
             End With
         End If
     End Function

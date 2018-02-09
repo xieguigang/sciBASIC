@@ -417,7 +417,7 @@ Namespace Imaging
             Else
                 With res.Size.CreateGDIDevice
                     Call .DrawImage(res, 0, 0, .Width, .Height)
-                    Return .ref
+                    Return .ByRef
                 End With
             End If
         End Function

@@ -287,7 +287,7 @@ Namespace Language.Vectorization
 
             With op.MatchRight(type)
                 If Not .IsNothing AndAlso .GetParameters(left).ParameterType Is Me.Type Then
-                    Return .ref
+                    Return .ByRef
                 End If
             End With
 
@@ -305,7 +305,7 @@ Namespace Language.Vectorization
             With op.MatchRight(type)
                 If Not .IsNothing AndAlso .GetParameters(left).ParameterType Is Me.Type Then
                     vector = True
-                    Return .ref
+                    Return .ByRef
                 End If
             End With
 
