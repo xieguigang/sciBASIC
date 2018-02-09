@@ -92,14 +92,4 @@ Namespace AprioriAlgorithm
             Return data.Items.Select(Function(item) itemCodes(item)).CharString
         End Function
     End Class
-
-    Public Structure Transaction
-
-        Public Property Name As String
-        Public Property Items As String()
-
-        Public Overrides Function ToString() As String
-            Return $"{Name} = {{ {Items.JoinBy(", ")} }}"
-        End Function
-    End Structure
 End Namespace

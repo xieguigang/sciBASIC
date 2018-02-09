@@ -38,7 +38,8 @@ Namespace AprioriAlgorithm.Entities
 
 #Region "Member Variables"
 
-        Dim combination As String, remaining As String
+        Dim combination As String
+        Dim remaining As String
         Dim _confidence As Double
 
 #End Region

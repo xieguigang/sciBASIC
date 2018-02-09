@@ -385,7 +385,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AprioriAlgorithm\Algorithm\Encoding.vb" />
+    <Compile Include="AprioriAlgorithm\Algorithm\Entities\Transaction.vb" />
+    <Compile Include="AprioriAlgorithm\Helper\Encoding.vb" />
     <Compile Include="ComponentModel\Class.vb" />
     <Compile Include="ComponentModel\Extensions.vb" />
     <Compile Include="DBSCAN\ClusterIds.vb" />
