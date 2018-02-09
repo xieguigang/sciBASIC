@@ -177,7 +177,7 @@ Public Module Math
 
         With RepulsiveForce(f, m1.Point, m2.Point)
             .source = NameOf(CoulombsLaw)
-            Return .ref
+            Return .ByRef
         End With
     End Function
 
@@ -229,7 +229,7 @@ Public Module Math
     Public Function AttractiveForce(strength#, a As Vector, b As Vector) As Force
         With -Math.RepulsiveForce(strength, a, b)
             .source = NameOf(AttractiveForce)
-            Return .ref
+            Return .ByRef
         End With
     End Function
 End Module

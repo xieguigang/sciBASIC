@@ -107,10 +107,10 @@ Public Module XmlExtensions
             Dim exMsg$ = $"{XmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
 
             With New Exception(exMsg)
-                Call App.LogException(.ref)
+                Call App.LogException(.ByRef)
 
                 If ThrowEx Then
-                    Throw .ref
+                    Throw .ByRef
                 Else
                     Return Nothing
                 End If

@@ -85,7 +85,7 @@ Namespace AprioriRules
             With transactions.ToArray
                 Dim encoding As New Encoding(.AllItems)
                 Dim out = encoding _
-                    .TransactionEncoding(.ref) _
+                    .TransactionEncoding(.ByRef) _
                     .AnalysisTransactions(
                         items:=encoding.AllCodes,
                         minSupport:=minSupport,

@@ -91,7 +91,7 @@ Namespace CommandLine.Reflection
 
                 Console.ForegroundColor = ConsoleColor.Green
                 Call Console.WriteLine(api.Usage)
-                Console.ForegroundColor = .ref
+                Console.ForegroundColor = .ByRef
 
             End With
 

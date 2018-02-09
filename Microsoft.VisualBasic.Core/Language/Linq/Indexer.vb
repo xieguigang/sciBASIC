@@ -53,9 +53,9 @@ Namespace Language
                 Dim array = DirectCast(args, IEnumerable(Of Object)).ToArray
 
                 With array(Scan0).GetType
-                    If .ref Is GetType(Boolean) Then
+                    If .ByRef Is GetType(Boolean) Then
                         Return Which.IsTrue(array.Select(Function(o) CBool(o)))
-                    ElseIf .ref Is GetType(Integer) Then
+                    ElseIf .ByRef Is GetType(Integer) Then
                         Return array.Select(Function(o) CInt(o))
                     Else
                         Throw New NotImplementedException

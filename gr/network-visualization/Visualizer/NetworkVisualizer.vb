@@ -236,8 +236,8 @@ Public Module NetworkVisualizer
                     Dim lineColor As New Pen(cl, w)
 
                     With edge.Data!interaction_type
-                        If Not .IsNothing AndAlso edgeDashTypes.ContainsKey(.ref) Then
-                            lineColor.DashStyle = edgeDashTypes(.ref)
+                        If Not .IsNothing AndAlso edgeDashTypes.ContainsKey(.ByRef) Then
+                            lineColor.DashStyle = edgeDashTypes(.ByRef)
                         End If
                     End With
 
@@ -273,7 +273,7 @@ Public Module NetworkVisualizer
                     End If
 
                     With DirectCast(New SolidBrush(defaultColor), Brush).AsDefault(n.NodeBrushAssert)
-                        br = n.Data.Color Or .ref
+                        br = n.Data.Color Or .ByRef
                     End With
 
                     Dim center As PointF = scalePos(n)

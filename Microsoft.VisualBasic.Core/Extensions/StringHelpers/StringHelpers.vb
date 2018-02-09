@@ -188,7 +188,7 @@ Public Module StringHelpers
             If .Length < sizeOfInt64 Then
                 Return CType(bi, Long)
             Else
-                Return BitConverter.ToInt64(.ref, Scan0)
+                Return BitConverter.ToInt64(.ByRef, Scan0)
             End If
         End With
     End Function
@@ -200,7 +200,7 @@ Public Module StringHelpers
             If .Length < sizeOfInt32 Then
                 Return CType(bi, Long)
             Else
-                Return BitConverter.ToInt32(.ref, Scan0)
+                Return BitConverter.ToInt32(.ByRef, Scan0)
             End If
         End With
     End Function
@@ -360,8 +360,8 @@ Public Module StringHelpers
 
             If Not trim.StringEmpty(whitespaceAsEmpty:=False) Then
                 With trim.ToArray
-                    value = value.Trim(.ref)
-                    key = key.Trim(.ref)
+                    value = value.Trim(.ByRef)
+                    key = key.Trim(.ByRef)
                 End With
             End If
 
@@ -1110,10 +1110,10 @@ Public Module StringHelpers
 
         For Each s As String In list
             With s.ToLower
-                If Not lowerBuffers.ContainsKey(.ref) Then
-                    lowerBuffers(.ref) = New List(Of String)
+                If Not lowerBuffers.ContainsKey(.ByRef) Then
+                    lowerBuffers(.ByRef) = New List(Of String)
                 End If
-                lowerBuffers(.ref).Add(s)
+                lowerBuffers(.ByRef).Add(s)
             End With
         Next
 

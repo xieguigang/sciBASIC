@@ -72,12 +72,12 @@ Namespace ComponentModel.DataSourceModel
                 If primitive Then
                     Return .Keys _
                         .Where(Function(k)
-                                   Return .ref(k).PropertyType.IsPrimitive
+                                   Return .ByRef(k).PropertyType.IsPrimitive
                                End Function) _
                         .ToDictionary(Function(key) key,
-                                      Function(key) .ref(key))
+                                      Function(key) .ByRef(key))
                 Else
-                    Return .ref
+                    Return .ByRef
                 End If
             End With
         End Function

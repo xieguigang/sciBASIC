@@ -321,7 +321,7 @@ Public Module DocumentExtensions
                 Dim key$ = Tokenizer.CharsParser(line).First
                 Dim value$ = Mid(line, key.Length + 1)
 
-                table(key) = .ref(value)
+                table(key) = .ByRef(value)
             Next
 
             Return table
@@ -337,7 +337,7 @@ Public Module DocumentExtensions
                 Dim key$ = line.First
                 Dim value = line.Second
 
-                table(key) = .ref(value)
+                table(key) = .ByRef(value)
             Next
 
             Return table

@@ -113,8 +113,8 @@ Public Class World
 
                 With reaction.Value(a, b)
                     .source = reaction.Name
-                    Call forces.Add(.ref)
-                    Call forceSystem(b.ID).Add(- .ref)
+                    Call forces.Add(.ByRef)
+                    Call forceSystem(b.ID).Add(- .ByRef)
                 End With
             Next
         Next

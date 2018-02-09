@@ -61,7 +61,7 @@ Namespace ComponentModel.Algorithm.base
         <Extension>
         Public Function FullCombination(Of T)(seq As IEnumerable(Of T)) As IEnumerable(Of (a As T, b As T))
             With seq.ToArray
-                Return .CreateCombos(.ref)
+                Return .CreateCombos(.ByRef)
             End With
         End Function
 
