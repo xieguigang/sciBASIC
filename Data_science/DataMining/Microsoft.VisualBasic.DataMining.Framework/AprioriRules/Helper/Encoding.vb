@@ -41,6 +41,7 @@ Namespace AprioriRules
 
         Public ReadOnly Property CodeMappings As IReadOnlyDictionary(Of Char, String)
         Public ReadOnly Property AllItems As String()
+        Public ReadOnly Property AllCodes As Char()
 
         Dim itemCodes As Dictionary(Of String, Char)
 
@@ -64,6 +65,7 @@ Namespace AprioriRules
                               Function(c) c.raw)
             itemCodes = CodeMappings.ToDictionary(Function(t) t.Value, Function(t) t.Key)
             AllItems = CodeMappings.Values.ToArray
+            AllCodes = CodeMappings.Keys.ToArray
         End Sub
 
         Public Overrides Function ToString() As String

@@ -33,7 +33,7 @@ Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace AprioriRules
+Namespace AprioriRules.Impl
 
     ''' <summary>
     ''' 关联分析程序（当某一种事务的样本较少的时候，将无法分析出关联性）

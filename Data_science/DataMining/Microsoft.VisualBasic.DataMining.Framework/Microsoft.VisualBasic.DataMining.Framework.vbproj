@@ -418,7 +418,7 @@
     <Compile Include="AprioriRules\Algorithm\Entities\Output.vb" />
     <Compile Include="AprioriRules\Algorithm\Entities\Rule.vb" />
     <Compile Include="AprioriRules\Algorithm\Implementation\Apriori.vb" />
-    <Compile Include="AprioriRules\AlgorithmInvoker.vb" />
+    <Compile Include="AprioriRules\ExportAPI.vb" />
     <Compile Include="MarginalLikelihoodAnalysis.vb" />
     <Compile Include="Abundance.vb" />
     <Compile Include="NeuralNetwork\TrainingUtils.vb" />
