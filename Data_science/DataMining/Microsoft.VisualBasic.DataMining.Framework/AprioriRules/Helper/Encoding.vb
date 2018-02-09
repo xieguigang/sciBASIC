@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.AprioriAlgorithm.Entities
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
