@@ -91,10 +91,7 @@ For writing x86/x64 server/Desktop Win32 CLI program.
 **2. Relationship between Microsoft VisualBasic.NET and sciBASIC?**
 sciBASIC is fully compatible with the native VB.NET language, sciBASIC is a kind of dialect derive from the Microsoft VisualBasic.NET language.
 
-**3. Supports for .NET Core?**
-Current no plans for porting to .NET Core, current sciBASIC using a high-performance VB.NET closed source compiler for running .NET on super computer in China.
-
-**4. Is there any interactive WinForm/WPF control for charting plot?**
+**3. Is there any interactive WinForm/WPF control for charting plot?**
 One of this framework its primary target is aim at provides a drawing environment for your CLI program create high quality printable content for scientific manuscript. This framework is not too much involved with "interactive".
 
 ## ODEs scripting language feature
