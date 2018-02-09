@@ -72,9 +72,17 @@ Public Module ProgramPathSearchTool
     ''' <returns></returns>
     <Extension> Public Function Delete(path$, Optional throwEx As Boolean = False) As Boolean
         Try
-            Call FileIO.FileSystem.DeleteFile(
-                path, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently
-            )
+            If path.FileExists Then
+                Call FileIO.FileSystem.DeleteFile(
+                   path, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently
+                )
+            ElseIf path.DirectoryExists Then
+                Call FileIO.FileSystem.DeleteDirectory(
+                    path, DeleteDirectoryOption.DeleteAllContents
+                )
+            End If
+
+            Return True
         Catch ex As Exception
             If throwEx Then
                 Throw New Exception(path, ex)
@@ -85,8 +93,6 @@ Public Module ProgramPathSearchTool
             Return False
         Finally
         End Try
-
-        Return True
     End Function
 
     ''' <summary>

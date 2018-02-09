@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.IO
 Imports System.IO.Compression
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -52,9 +53,12 @@ Module Program
     End Function
 
     <ExportAPI("/compress")>
-    <Usage("/compress [/directory] /out <out.zip> <directory/filelist>")>
+    <Usage("/compress [/directory /tree] /out <out.zip> <directory/filelist>")>
+    <Description("Zip compress target file or directory.")>
     <Argument("/directory", True, CLITypes.Boolean,
               Description:="Zip compress target is a directory?")>
+    <Argument("/tree", True, CLITypes.Boolean,
+              Description:="The directory content should be in tree style or flat style? This option only works when the ``/directory`` option was presented.")>
     <Argument("/out", False, CLITypes.File, PipelineTypes.std_out,
               Extensions:="*.zip",
               Description:="The output file path of the zip package file.")>
@@ -62,15 +66,16 @@ Module Program
         Dim isDirectory As Boolean = args.IsTrue("/directory")
         Dim out$ = args <= "/out"
         Dim temp$ = App.GetAppSysTempFile(".zip", App.PID)
+        Dim tree As Boolean = args("/tree")
 
         If isDirectory Then
             Call GZip.DirectoryArchive(
-                args.Tokens(4),
+                args.Tokens.Last,
                 saveZip:=temp,
                 action:=ArchiveAction.Replace,
                 compression:=CompressionLevel.Fastest,
                 fileOverwrite:=Overwrite.Always,
-                flatDirectory:=True)
+                flatDirectory:=Not tree)
         Else
             Call args.Tokens _
                 .Skip(3) _

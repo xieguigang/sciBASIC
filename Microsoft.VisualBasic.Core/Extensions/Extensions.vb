@@ -77,6 +77,12 @@ Imports v = System.Array
 Public Module Extensions
 #End If
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Average(range As DoubleRange) As Double
+        Return {range.Min, range.Max}.Average
+    End Function
+
     ''' <summary>
     ''' Create the numeric range from a numeric value collection
     ''' </summary>
@@ -888,6 +894,13 @@ Public Module Extensions
     <Extension> Public Function SetValue(Of T)(ByRef var As T, value As T) As T
         var = value
         Return value
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function SetValue(Of T)(ByRef var As T, value As Func(Of T, T)) As T
+        var = value(arg:=var)
+        Return var
     End Function
 
     ''' <summary>

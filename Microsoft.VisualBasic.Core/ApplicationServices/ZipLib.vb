@@ -192,26 +192,33 @@ Namespace ApplicationServices
         End Sub
 
         <ExportAPI("File.Zip")>
-        Public Sub FileArchive(File$, SaveZip$,
-                           Optional action As ArchiveAction = ArchiveAction.Replace,
-                           Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
-                           Optional compression As CompressionLevel = CompressionLevel.Optimal)
+        Public Sub FileArchive(file$, SaveZip$,
+                               Optional action As ArchiveAction = ArchiveAction.Replace,
+                               Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
+                               Optional compression As CompressionLevel = CompressionLevel.Optimal)
 
             Call SaveZip.ParentPath.MkDIR
-            Call {File}.AddToArchive(SaveZip, action, fileOverwrite, compression)
+            Call {file}.AddToArchive(SaveZip, action, fileOverwrite, compression)
         End Sub
 
         <ExportAPI("DIR.Zip")>
-        Public Sub DirectoryArchive(DIR As String, saveZip As String,
-                                Optional action As ArchiveAction = ArchiveAction.Replace,
-                                Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
-                                Optional compression As CompressionLevel = CompressionLevel.Optimal,
-                                Optional flatDirectory As Boolean = False)
+        Public Sub DirectoryArchive(DIR$, saveZip$,
+                                    Optional action As ArchiveAction = ArchiveAction.Replace,
+                                    Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
+                                    Optional compression As CompressionLevel = CompressionLevel.Optimal,
+                                    Optional flatDirectory As Boolean = False)
 
             Dim rel$ = DIR Or "".AsDefault(Function() flatDirectory)
 
+            Call rel.SetValue(AddressOf GetDirectoryFullPath)
             Call (ls - l - r - "*.*" <= DIR) _
-                .AddToArchive(saveZip, action, fileOverwrite, compression, relativeDIR:=rel)
+                .AddToArchive(
+                    archiveFullName:=saveZip,
+                    action:=action,
+                    fileOverwrite:=fileOverwrite,
+                    compression:=compression,
+                    relativeDIR:=rel.Replace("/"c, "\"c).Trim("\"c)
+                 )
         End Sub
 
         ''' <summary>
@@ -234,11 +241,11 @@ Namespace ApplicationServices
         <ExportAPI("Zip.Add.Files", Info:="Allows you to add files to an archive, whether the archive already exists or not")>
         <Extension>
         Public Sub AddToArchive(<Parameter("files", "A set of file names that are to be added")> files As IEnumerable(Of String),
-                            <Parameter("Zip", "The name of the archive to you want to add your files to")> archiveFullName$,
-                            Optional action As ArchiveAction = ArchiveAction.Replace,
-                            Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
-                            Optional compression As CompressionLevel = CompressionLevel.Optimal,
-                            Optional relativeDIR$ = Nothing)
+                                <Parameter("Zip", "The name of the archive to you want to add your files to")> archiveFullName$,
+                                Optional action As ArchiveAction = ArchiveAction.Replace,
+                                Optional fileOverwrite As Overwrite = Overwrite.IfNewer,
+                                Optional compression As CompressionLevel = CompressionLevel.Optimal,
+                                Optional relativeDIR$ = Nothing)
 
             'Identifies the mode we will be using - the default is Create
             Dim mode As ZipArchiveMode = ZipArchiveMode.Create

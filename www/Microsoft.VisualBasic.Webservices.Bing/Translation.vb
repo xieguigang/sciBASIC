@@ -33,6 +33,11 @@ Imports r = System.Text.RegularExpressions.Regex
 
 Public Module Translation
 
+    ''' <summary>
+    ''' 如果没有翻译结果，则返回空值
+    ''' </summary>
+    ''' <param name="word"></param>
+    ''' <returns></returns>
     Public Function GetTranslation(word As String) As WordTranslation
         Dim term$ = word.UrlEncode
         Dim url$ = $"https://cn.bing.com/dict/search?q={term}&qs=n&form=Z9LH5&sp=-1&pq={term}&sc=6-10&sk=&cvid=0BC4AECB5070489794D29912A900BEF5"
@@ -74,9 +79,20 @@ Public Module Translation
     End Function
 End Module
 
+''' <summary>
+''' 单词翻译的结果
+''' </summary>
 Public Class WordTranslation
 
+    ''' <summary>
+    ''' 输入的目标单词
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Word As String
+    ''' <summary>
+    ''' 该单词所产生的翻译结果列表
+    ''' </summary>
+    ''' <returns></returns>
     Public Property Translations As String()
 
     Public Overrides Function ToString() As String
