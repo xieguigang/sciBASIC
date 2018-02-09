@@ -386,6 +386,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AprioriRules\Algorithm\Entities\Transaction.vb" />
+    <Compile Include="AprioriRules\Algorithm\Implementation\StrongRules.vb" />
     <Compile Include="AprioriRules\Helper\Encoding.vb" />
     <Compile Include="ComponentModel\Class.vb" />
     <Compile Include="ComponentModel\Extensions.vb" />
