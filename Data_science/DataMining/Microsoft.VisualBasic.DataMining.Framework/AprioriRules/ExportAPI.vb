@@ -29,12 +29,13 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl
-Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl.Apriori
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Namespace AprioriRules
+
+    Public Delegate Function AprioriPredictions(minSupport#, minConfidence#, items As IEnumerable(Of String), transactions$()) As Output
 
     ''' <summary>
     ''' ``AprioriRules`` API export module

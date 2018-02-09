@@ -50,8 +50,6 @@ Namespace AprioriRules.Impl
                       Cites:="")>
     Public Module Apriori
 
-        Public Delegate Function AprioriPredictions(minSupport#, minConfidence#, items As IEnumerable(Of String), transactions$()) As Output
-
 #Region "IApriori"
 
         <ExportAPI("Apriori.Predictions")>
