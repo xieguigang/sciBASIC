@@ -31,7 +31,7 @@ Imports Microsoft.VisualBasic.DataMining.AprioriAlgorithm.Entities
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
-Namespace AprioriAlgorithm
+Namespace AprioriRules
 
     ''' <summary>
     ''' Transaction encoding helper.(对一个Transaction之中的独立部件编码为一个字符)

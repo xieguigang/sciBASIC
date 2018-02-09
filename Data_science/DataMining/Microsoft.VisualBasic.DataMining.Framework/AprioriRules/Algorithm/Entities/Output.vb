@@ -26,7 +26,7 @@
 
 #End Region
 
-Namespace AprioriAlgorithm.Entities
+Namespace AprioriRules.Entities
 
     Public Class Output
 

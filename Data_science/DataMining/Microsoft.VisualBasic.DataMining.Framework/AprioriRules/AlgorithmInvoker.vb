@@ -29,7 +29,7 @@
 Imports Microsoft.VisualBasic.DataMining.AprioriAlgorithm.Entities
 Imports Microsoft.VisualBasic.Linq
 
-Namespace AprioriAlgorithm
+Namespace AprioriRules
 
     Public Class AlgorithmInvoker
 

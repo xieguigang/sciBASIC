@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 
-Namespace AprioriAlgorithm.Entities
+Namespace AprioriRules.Entities
 
     Public Structure Transaction
 

@@ -28,7 +28,7 @@
 
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
-Namespace AprioriAlgorithm.Entities
+Namespace AprioriRules.Entities
 
     ''' <summary>
     ''' 
