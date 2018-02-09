@@ -51,17 +51,24 @@ Namespace AprioriRules
         ''' <remarks>
         ''' 因为<paramref name="items"/>的值可能会存在非常多种情况，所以在这构造函数之中会使用中文字符来进行编码
         ''' </remarks>
-        Sub New(items As String())
+        Sub New(items As IEnumerable(Of String))
+            Static a% = GB2312.a
+
             CodeMappings = items _
                 .Distinct _
                 .OrderBy(Function(s) s) _
                 .Select(Function(s, i)
-                            Return (code:=GB2312.firstChCode + i, raw:=s)
+                            Return (code:=a + i, raw:=s)
                         End Function) _
                 .ToDictionary(Function(c) ChrW(c.code),
                               Function(c) c.raw)
             itemCodes = CodeMappings.ToDictionary(Function(t) t.Value, Function(t) t.Key)
+            AllItems = CodeMappings.Values.ToArray
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{AllItems.Length} codes = {CodeMappings.Keys.Take(5).JoinBy(", ")}..."
+        End Function
 
         ''' <summary>
         ''' rule transaction string to item names

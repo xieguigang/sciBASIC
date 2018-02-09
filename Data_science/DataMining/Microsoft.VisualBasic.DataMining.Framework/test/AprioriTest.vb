@@ -1,5 +1,7 @@
 ﻿Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.DataMining.AprioriRules
+Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 
 Module AprioriTest
     Sub Main()
@@ -10,6 +12,9 @@ Module AprioriTest
             .ToArray
 
         Dim datasets = data.Select(Function(s, i) New EntityObject With {.ID = i, .Properties = s.Split(","c).Select(Function(t) t.GetTagValue("=")).ToDictionary(Function(n) n.Name, Function(v) v.Value)}).ToArray
+        Dim transactions = datasets.BuildTransactions.ToArray
+        Dim encoder As New Encoding(transactions.AllItems)
+        Dim list = encoder.TransactionEncoding(transactions).ToArray
 
         Pause()
     End Sub

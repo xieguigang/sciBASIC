@@ -29,6 +29,7 @@
 ' http://www.tuicool.com/articles/3MbAJv
 ' C# 汉字转拼音(支持GB2312字符集中所有汉字)
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 
 Namespace Text
@@ -1203,6 +1204,17 @@ Namespace Text
         ''' ``GB2312-80``标准规范中最后一个一级汉字的机内码.即``座``的机内码
         ''' </summary>
         Const lastOfOneLevelChCode As Integer = -10247
+
+        ''' <summary>
+        ''' ``啊``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property a As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return AscW("啊")
+            End Get
+        End Property
 
         ' 配置中文字符
         'static Regex regex = new Regex("[\u4e00-\u9fa5]$");
