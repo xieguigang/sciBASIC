@@ -31,46 +31,8 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace AprioriAlgorithm
 
-    Public Class BinaryEncodingServices
-
-        Dim _codesMappings As Dictionary(Of Char, String)
-        Dim _mappingCodes As Dictionary(Of String, Char)
-
-        Sub New(Codes As IEnumerable(Of String))
-            Dim CodesChr = EncodingServices.GenerateCodes(Codes.Count)
-            _codesMappings =
-                IteratorExtensions.SeqIterator(Of Char, String)(CodesChr, Codes) _
-                    .ToDictionary(Function(obj) obj.value,
-                                  Function(obj) obj.Follows)
-            _mappingCodes = _codesMappings.ToDictionary(Function(obj) obj.Value,
-                                                        Function(obj) obj.Key)
-        End Sub
-
-        ''' <summary>
-        ''' ±àÂëÒ»¸öÊÂÎñ
-        ''' </summary>
-        ''' <param name="transaction"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function EncodingTransaction(transaction As String()) As String
-            Dim Chars = (From s As String In transaction Select _mappingCodes(s)).ToArray
-            Return New String(Chars)
-        End Function
-
-        ''' <summary>
-        ''' ½âÂëÒ»¸öÊÂÎñ
-        ''' </summary>
-        ''' <param name="Transaction"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public Function DecodesTransaction(Transaction As String) As String()
-            Dim LQuery = (From ch As Char In Transaction Select _codesMappings(ch)).ToArray
-            Return LQuery
-        End Function
-    End Class
-
     ''' <summary>
-    ''' ½«ÊÂ¼þ½øÐÐ±àÂëÎªµ¥¸ö×Ö·û
+    ''' 对一个Transaction之中的独立部件编码为一个字符
     ''' </summary>
     ''' <remarks></remarks>
     Public Class EncodingServices

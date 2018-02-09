@@ -1,45 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::798d646cb998c423f071dab870a28510, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\AprioriAlgorithm\Algorithm\Implementation\Apriori.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.ComponentModel.Composition
 Imports System.Text
-Imports Microsoft.VisualBasic.DataMining.AprioriAlgorithm.Entities
-Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Threading
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.DataMining.AprioriAlgorithm.Entities
+Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace AprioriAlgorithm
 
     ''' <summary>
-    ''' 
+    ''' 关联分析程序（当某一种事务的样本较少的时候，将无法分析出关联性）
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
@@ -53,7 +50,7 @@ Namespace AprioriAlgorithm
                       Cites:="")>
     Public Module Apriori
 
-        Public Delegate Function AprioriPredictions(minSupport As Double, minConfidence As Double, items As IEnumerable(Of String), transactions As String()) As Output
+        Public Delegate Function AprioriPredictions(minSupport#, minConfidence#, items As IEnumerable(Of String), transactions$()) As Output
 
 #Region "IApriori"
 
@@ -61,7 +58,7 @@ Namespace AprioriAlgorithm
         Public Function InvokeAnalysis(<Parameter("Support.Min")> minSupport As Double,
                                        <Parameter("Confidence.Min")> minConfidence As Double,
                                        <Parameter("Items")> items As IEnumerable(Of String),
-                                       <Parameter("Transactions")> Transactions As Generic.IEnumerable(Of String)) As Output
+                                       <Parameter("Transactions")> Transactions As IEnumerable(Of String)) As Output
 
             Dim frequentItems As IList(Of TransactionTokensItem) = GetL1FrequentItems(minSupport, items, Transactions)
             Dim allFrequentItems As Dictionary(Of String, TransactionTokensItem) = frequentItems.ToDictionary(Function(obj) obj.Name)
@@ -101,7 +98,7 @@ Namespace AprioriAlgorithm
 #Region "Private Internal Methods"
 
         ''' <summary>
-        ''' ���ַ���֮�е��ַ������������
+        ''' 将字符串之中的字符进行排序操作
         ''' </summary>
         ''' <param name="token"></param>
         ''' <returns></returns>
