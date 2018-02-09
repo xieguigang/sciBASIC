@@ -440,7 +440,7 @@
     <Compile Include="ValueMapping.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BeliefNetwork.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BNInfer.vb" />
-    <Content Include="AprioriRules\CodeProject.txt" />
+    <None Include="AprioriRules\README.md" />
     <Compile Include="Kernel\Neuron.vb" />
     <Compile Include="Kernel\Bayesian.vb" />
     <Compile Include="ComponentModel\Entity.vb" />

@@ -18,4 +18,8 @@ Module AprioriTest
 
         Pause()
     End Sub
+
+    Sub BasicQuickTest()
+
+    End Sub
 End Module
