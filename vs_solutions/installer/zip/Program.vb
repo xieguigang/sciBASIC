@@ -52,7 +52,7 @@ Module Program
     End Function
 
     <ExportAPI("/compress")>
-    <Usage("/compress [/directory] /out <out.zip> <directory/filelist>")>
+    <Usage("/compress [/directory /tree] /out <out.zip> <directory/filelist>")>
     <Argument("/directory", True, CLITypes.Boolean,
               Description:="Zip compress target is a directory?")>
     <Argument("/out", False, CLITypes.File, PipelineTypes.std_out,
@@ -62,15 +62,16 @@ Module Program
         Dim isDirectory As Boolean = args.IsTrue("/directory")
         Dim out$ = args <= "/out"
         Dim temp$ = App.GetAppSysTempFile(".zip", App.PID)
+        Dim tree As Boolean = args("/tree")
 
         If isDirectory Then
             Call GZip.DirectoryArchive(
-                args.Tokens(4),
+                args.Tokens.Last,
                 saveZip:=temp,
                 action:=ArchiveAction.Replace,
                 compression:=CompressionLevel.Fastest,
                 fileOverwrite:=Overwrite.Always,
-                flatDirectory:=True)
+                flatDirectory:=Not tree)
         Else
             Call args.Tokens _
                 .Skip(3) _
