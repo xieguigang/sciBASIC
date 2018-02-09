@@ -64,7 +64,7 @@ Namespace CommandLine
             Do While Not (input = Console.ReadLine).TextEquals("quit()")
                 With input.Value
                     If Not .StringEmpty Then
-                        Call RunAppInternal(CLITools.TryParse(.ref))
+                        Call RunAppInternal(CLITools.TryParse(.ByRef))
                     End If
                 End With
 

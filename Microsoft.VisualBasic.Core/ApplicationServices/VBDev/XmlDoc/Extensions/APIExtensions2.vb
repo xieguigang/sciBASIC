@@ -59,10 +59,10 @@ Namespace ApplicationServices.Development.XmlDoc.Serialization
                     End If
 
                     With ns.Path.ToLower
-                        If namespaces.ContainsKey(.ref) Then
-                            namespaces(.ref) = namespaces(.ref).Add(ns, proj:=out)
+                        If namespaces.ContainsKey(.ByRef) Then
+                            namespaces(.ByRef) = namespaces(.ByRef).Add(ns, proj:=out)
                         Else
-                            namespaces.Add(.ref, ns)
+                            namespaces.Add(.ByRef, ns)
                         End If
                     End With
                 Next

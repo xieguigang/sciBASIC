@@ -160,7 +160,7 @@ Public Module App
             If .StringEmpty Then
                 Return Nothing
             Else
-                Return Scripting.CTypeDynamic(Of T)(.ref)
+                Return Scripting.CTypeDynamic(Of T)(.ByRef)
             End If
         End With
     End Function

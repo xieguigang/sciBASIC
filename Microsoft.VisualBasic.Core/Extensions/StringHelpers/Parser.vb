@@ -48,8 +48,8 @@ Public Module PrimitiveParser
     <ExportAPI("IsNumeric", Info:="Is this token value string is a number?")>
     <Extension> Public Function IsNumeric(str$) As Boolean
         With str.GetString(ASCII.Quot)
-            Dim s$ = r.Match(.ref, NumericPattern).Value
-            Return .ref = s
+            Dim s$ = r.Match(.ByRef, NumericPattern).Value
+            Return .ByRef = s
         End With
     End Function
 

@@ -130,8 +130,8 @@ Namespace FileStream.Generic
         ''' <remarks></remarks>
         Public Overrides Function Save(Optional outDIR$ = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             With outDIR Or App.CurrentDirectory.AsDefault
-                Call Nodes.SaveTo($"{ .ref}/nodes.csv", False, encoding)
-                Call Edges.SaveTo($"{ .ref}/network-edges.csv", False, encoding)
+                Call Nodes.SaveTo($"{ .ByRef}/nodes.csv", False, encoding)
+                Call Edges.SaveTo($"{ .ByRef}/network-edges.csv", False, encoding)
             End With
 
             Return True

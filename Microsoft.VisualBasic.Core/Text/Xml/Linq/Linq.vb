@@ -89,7 +89,7 @@ Namespace Text.Xml.Linq
                 If Not .IsNullOrEmpty Then
                     With DirectCast(.First, XmlTypeAttribute).TypeName
                         If Not .StringEmpty Then
-                            Return .ref
+                            Return .ByRef
                         End If
                     End With
                 End If
@@ -99,7 +99,7 @@ Namespace Text.Xml.Linq
                 If Not .IsNullOrEmpty Then
                     With DirectCast(.First, XmlRootAttribute).ElementName
                         If Not .StringEmpty Then
-                            Return .ref
+                            Return .ByRef
                         End If
                     End With
                 End If

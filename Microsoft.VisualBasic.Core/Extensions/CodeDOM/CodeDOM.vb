@@ -228,7 +228,7 @@ Namespace Emit.CodeDOM_VBC
                      Where Array.IndexOf(DotNETFramework, BaseName(path)) = -1
                      Select path
 
-                    Call refs.AddRange(.ref.ToArray)
+                    Call refs.AddRange(.ByRef.ToArray)
                 End With
             End If
 

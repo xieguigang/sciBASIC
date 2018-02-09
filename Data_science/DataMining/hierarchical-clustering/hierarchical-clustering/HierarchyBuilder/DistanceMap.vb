@@ -97,7 +97,7 @@ Namespace Hierarchy
             Else
                 With poll.Tree
                     Call linkTable.Remove(poll.HashKey)
-                    Return .ref
+                    Return .ByRef
                 End With
             End If
         End Function

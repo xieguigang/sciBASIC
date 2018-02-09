@@ -95,9 +95,9 @@ Namespace Quantile
 
                 With exp.Split(":"c).Last.Trim
                     If .IsPattern("\d+(\.\d+)?[%]") Then
-                        q = Val(.ref.Trim("%"c)) / 100
+                        q = Val(.ByRef.Trim("%"c)) / 100
                     Else
-                        q = Val(.ref)
+                        q = Val(.ByRef)
                     End If
                 End With
 

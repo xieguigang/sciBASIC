@@ -167,12 +167,12 @@ Namespace Heatmap
                             If drawValueLabel Then
 
                                 With c.ToString("F2")
-                                    Dim ksz As SizeF = g.MeasureString(.ref, valuelabelFont)
+                                    Dim ksz As SizeF = g.MeasureString(.ByRef, valuelabelFont)
                                     Dim kpos As New PointF With {
                                         .X = rect.Left + (rect.Width - ksz.Width) / 2,
                                         .Y = rect.Top + (rect.Height - ksz.Height) / 2
                                     }
-                                    Call g.DrawString(.ref, valuelabelFont, Brushes.White, kpos)
+                                    Call g.DrawString(.ByRef, valuelabelFont, Brushes.White, kpos)
                                 End With
                             End If
 

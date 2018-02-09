@@ -167,7 +167,7 @@ Public Module WebServiceUtils
         Dim tokens$()
 
         With InStr(url, "://")
-            If .ref < 10 AndAlso .ref > 0 Then
+            If .ByRef < 10 AndAlso .ByRef > 0 Then
                 url = url.GetTagValue("?").Value
             End If
 

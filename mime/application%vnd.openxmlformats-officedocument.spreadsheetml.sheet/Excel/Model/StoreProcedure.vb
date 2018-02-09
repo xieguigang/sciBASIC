@@ -65,10 +65,10 @@ Namespace Model
                 colIndex = cellIndex.Y ' 因为这里都是同一行的数据，所以只取列下标即可
 
                 With col.sharedStringsRef
-                    If .ref = -1 Then
+                    If .ByRef = -1 Then
                         [string] = col.v
                     Else
-                        [string] = strings.strings(.ref).t
+                        [string] = strings.strings(.ByRef).t
                     End If
                 End With
 
