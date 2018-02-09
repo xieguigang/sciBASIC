@@ -42,7 +42,7 @@ Namespace AprioriRules
     ''' </summary>
     Public Module AprioriExport
 
-        ReadOnly aprioriDefaultWorker As DefaultValue(Of AprioriPredictions) = New AprioriPredictions(AddressOf Apriori.InvokeAnalysis)
+        ReadOnly aprioriDefaultWorker As DefaultValue(Of AprioriPredictions) = New AprioriPredictions(AddressOf Apriori.GetAssociateRules)
 
         <Extension>
         Public Function AnalysisTransactions(transactions As IEnumerable(Of String),
