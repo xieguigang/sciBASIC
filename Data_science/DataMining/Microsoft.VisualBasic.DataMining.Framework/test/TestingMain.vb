@@ -27,12 +27,9 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.visualize.Network
-Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.DataMining.FuzzyCMeans
 Imports Microsoft.VisualBasic.DataMining.NeuralNetwork
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -204,7 +201,7 @@ Module TestingMain
         Dim Data0 = Microsoft.VisualBasic.Data.csv.IO.File.FastLoad("E:\xcb_vcell\xcb_model\Result\MAT_OUT.csv")
         Dim MAT = Microsoft.VisualBasic.DataMining.Serials.PeriodAnalysis.SerialsVarialble.Load(Data0)
 
-        Dim datad = Microsoft.VisualBasic.Math.Interpolation.BezierCurve.BezierSmoothInterpolation(MAT(1).SerialsData, 100)
+        Dim datad = Microsoft.VisualBasic.Math.Interpolation.BezierExtensions.BezierSmoothInterpolation(MAT(1).SerialsData, 100)
 
         Call datad.SaveTo("./Bezier.csv")
 
