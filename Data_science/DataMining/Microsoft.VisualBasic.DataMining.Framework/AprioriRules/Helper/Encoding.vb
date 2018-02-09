@@ -68,6 +68,14 @@ Namespace AprioriRules
             AllCodes = CodeMappings.Keys.ToArray
         End Sub
 
+        Public Shared Iterator Function GenerateCodes(length As Integer) As IEnumerable(Of Char)
+            Dim a% = GB2312.a
+
+            For i As Integer = 0 To length - 1
+                Yield ChrW(a + i)
+            Next
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{AllItems.Length} codes = {CodeMappings.Keys.Take(5).JoinBy(", ")}..."
         End Function
