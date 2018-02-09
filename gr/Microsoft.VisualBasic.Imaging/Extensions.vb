@@ -34,6 +34,13 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Module Extensions
 
+    <Extension>
+    Public Function AsSVG(img As GraphicsData, Optional comment$ = Nothing) As SVGData
+        Dim svg As SVGData = DirectCast(img, SVGData)
+        svg.XmlComment = comment
+        Return svg
+    End Function
+
     ''' <summary>
     ''' 假若目标图像是svg类型，则会被合成为gdi图像，如果是gdi图像，则会被直接转换
     ''' </summary>

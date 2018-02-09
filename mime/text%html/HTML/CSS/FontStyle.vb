@@ -175,7 +175,7 @@ Namespace HTML.CSS
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetFontStyle(font As Font) As String
-            Return GetFontStyle(font.Name, font.Style, font.Size)
+            Return GetFontStyle(font.Name, font.Style, font.Size & "px")
         End Function
 
         Public Overloads Shared Function ToString(style As FontStyle) As String
@@ -253,7 +253,7 @@ Namespace HTML.CSS
             Call sb.Append($"font-style: {ToString(style)};")
 
             If size > 0 Then
-                sb.Append($"font-size: {size};")
+                sb.Append($"font-size: {size}px;")
             End If
             If Not String.IsNullOrEmpty(family) Then
                 sb.Append($"font-family: {family};")

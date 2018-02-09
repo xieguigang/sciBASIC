@@ -1,30 +1,32 @@
 ﻿#Region "Microsoft.VisualBasic::b7e95140344da3cb1b22c5e3b530b992, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\VectorEqualityComparer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace LinearAlgebra
 
@@ -37,16 +39,16 @@ Namespace LinearAlgebra
         ''' <summary>
         ''' Sequence Equals
         ''' </summary>
-        ''' <param name="v1"></param>
-        ''' <param name="v2"></param>
+        ''' <param name="list1"></param>
+        ''' <param name="list2"></param>
         ''' <returns></returns>
-        Public Shared Function VectorEqualsToAnother(v1 As List(Of Double), v2 As List(Of Double)) As Boolean
-            If v1.Count <> v2.Count Then
+        Public Shared Function VectorEqualsToAnother(list1 As List(Of Double), list2 As List(Of Double)) As Boolean
+            If list1.Count <> list2.Count Then
                 Return False
             End If
 
-            For i As Integer = 0 To v1.Count - 1
-                If v1(i) <> v2(i) Then
+            For i As Integer = 0 To list1.Count - 1
+                If list1(i) <> list2(i) Then
                     Return False
                 End If
             Next
@@ -68,8 +70,9 @@ Namespace LinearAlgebra
             Return True
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function Equals(x As Vector, y As Vector) As Boolean Implements IEqualityComparer(Of Vector).Equals
-            Return VectorEqualsToAnother(x, y)
+            Return VectorEqualsToAnother(list1:=x, list2:=y)
         End Function
 
         ''' <summary>

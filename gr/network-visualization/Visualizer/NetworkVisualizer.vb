@@ -142,8 +142,10 @@ Public Module NetworkVisualizer
                               Optional labelColorAsNodeColor As Boolean = False,
                               Optional nodeStroke$ = WhiteStroke,
                               Optional scale# = 1.2,
+                              Optional minLinkWidth! = 2,
                               Optional radiusScale# = 1.25,
                               Optional minRadius# = 5,
+                              Optional minFontSize! = 10,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
                               Optional ByRef nodePoints As Dictionary(Of Node, Point) = Nothing,
                               Optional fontSizeFactor# = 1.5,
@@ -230,7 +232,7 @@ Public Module NetworkVisualizer
                     End If
 
                     Dim w As Integer = 5 * edge.Data.weight * scale
-                    w = If(w < scale, scale, w)
+                    w = If(w < minLinkWidth, minLinkWidth, w)
                     Dim lineColor As New Pen(cl, w)
 
                     With edge.Data!interaction_type
@@ -274,19 +276,26 @@ Public Module NetworkVisualizer
                         br = n.Data.Color Or .ref
                     End With
 
-                    pt = scalePos(n)
-                    With pt
+                    Dim center As PointF = scalePos(n)
+
+                    With center
                         pt = New Point(.X - r / 2, .Y - r / 2)
                     End With
 
                     rect = New Rectangle(pt, New Size(r, r))
 
-                    Call g.FillPie(br, rect, 0, 360)
-                    Call g.DrawEllipse(stroke, rect)
+                    ' 绘制节点，目前还是圆形
+                    If TypeOf g Is Graphics2D Then
+                        Call g.FillPie(br, rect, 0, 360)
+                        Call g.DrawEllipse(stroke, rect)
+                    Else
+                        Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
+                    End If
 
                     If displayId Then
 
-                        Dim font As New Font(baseFont.Name, (baseFont.Size + r) / fontSizeFactor)
+                        Dim fontSize! = (baseFont.Size + r) / fontSizeFactor
+                        Dim font As New Font(baseFont.Name, If(fontSize < minFontSize, minFontSize, fontSize))
                         Dim label As New Label With {
                             .text = n.GetDisplayText
                         }

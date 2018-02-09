@@ -216,5 +216,9 @@ Namespace Imaging
             Dim g As Graphics = Graphics.FromImage(image)
             Return Graphics2D.CreateObject(g, image)
         End Function
+
+        Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)
+            Throw New NotImplementedException()
+        End Sub
     End Class
 End Namespace

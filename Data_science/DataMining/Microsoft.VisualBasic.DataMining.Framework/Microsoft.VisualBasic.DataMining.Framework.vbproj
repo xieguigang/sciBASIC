@@ -385,7 +385,9 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AprioriAlgorithm\Algorithm\EncodingServices.vb" />
+    <Compile Include="AprioriRules\Algorithm\Entities\Transaction.vb" />
+    <Compile Include="AprioriRules\Algorithm\Implementation\StrongRules.vb" />
+    <Compile Include="AprioriRules\Helper\Encoding.vb" />
     <Compile Include="ComponentModel\Class.vb" />
     <Compile Include="ComponentModel\Extensions.vb" />
     <Compile Include="DBSCAN\ClusterIds.vb" />
@@ -413,11 +415,11 @@
     <Compile Include="KMeans\EntityModels\Entity.vb" />
     <Compile Include="KMeans\Models\KMeansCluster.vb" />
     <Compile Include="KMeans\KMeans.vb" />
-    <Compile Include="AprioriAlgorithm\Algorithm\Entities\TransactionTokensItem.vb" />
-    <Compile Include="AprioriAlgorithm\Algorithm\Entities\Output.vb" />
-    <Compile Include="AprioriAlgorithm\Algorithm\Entities\Rule.vb" />
-    <Compile Include="AprioriAlgorithm\Algorithm\Implementation\Apriori.vb" />
-    <Compile Include="AprioriAlgorithm\AlgorithmInvoker.vb" />
+    <Compile Include="AprioriRules\Algorithm\Entities\TransactionTokensItem.vb" />
+    <Compile Include="AprioriRules\Algorithm\Entities\Output.vb" />
+    <Compile Include="AprioriRules\Algorithm\Entities\Rule.vb" />
+    <Compile Include="AprioriRules\Algorithm\Implementation\Apriori.vb" />
+    <Compile Include="AprioriRules\ExportAPI.vb" />
     <Compile Include="MarginalLikelihoodAnalysis.vb" />
     <Compile Include="Abundance.vb" />
     <Compile Include="NeuralNetwork\TrainingUtils.vb" />
@@ -438,7 +440,7 @@
     <Compile Include="ValueMapping.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BeliefNetwork.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BNInfer.vb" />
-    <Content Include="AprioriAlgorithm\CodeProject.txt" />
+    <None Include="AprioriRules\README.md" />
     <Compile Include="Kernel\Neuron.vb" />
     <Compile Include="Kernel\Bayesian.vb" />
     <Compile Include="ComponentModel\Entity.vb" />
@@ -500,9 +502,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Mathematica\Math\Math\Math-core.vbproj">
+    <ProjectReference Include="..\..\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>Math-core</Name>
+      <Name>math-core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

@@ -73,6 +73,7 @@ Public Class FitResult
     ''' <param name="x"></param>
     ''' <returns></returns>
     Default Public ReadOnly Property GetY(x As Double) As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return Polynomial(x)
         End Get

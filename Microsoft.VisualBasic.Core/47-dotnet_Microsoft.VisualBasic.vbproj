@@ -788,6 +788,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
+    <Compile Include="Extensions\Math\Information\Entropy.vb" />
     <Compile Include="Extensions\WebServices\Http\DataURI.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="CommandLine\CLI\Scripting.vb" />
@@ -924,6 +925,7 @@
     <Compile Include="Scripting\Expressions\Aggregate.vb" />
     <Compile Include="Scripting\Runtime\CType\Abstract.vb" />
     <Compile Include="Serialization\Abstract.vb" />
+    <Compile Include="Text\Patterns\Regexp.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
     <Compile Include="Extensions\WebServices\Http\GZStream.vb" />
@@ -1017,7 +1019,7 @@
     <Compile Include="Extensions\Reflection\Delegate\DelegateFactory.vb" />
     <Compile Include="Extensions\Reflection\Delegate\TypeExtensions.vb" />
     <Compile Include="Extensions\ValueTypes\DateTimeHelper.vb" />
-    <Compile Include="Text\StringSimilarity\Wildcards.vb" />
+    <Compile Include="Text\Patterns\Wildcards.vb" />
     <Compile Include="Extensions\WebServices\UserAgent.vb" />
     <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
     <Compile Include="Language\Language\C\RandomNumbers.vb" />
@@ -1078,6 +1080,7 @@
     <Compile Include="ComponentModel\Algorithm\Levenshtein\ResultVisualize.vb" />
     <Compile Include="Text\Xml\Linq\Entity.vb" />
     <Compile Include="Text\Xml\Models\Vector.vb" />
+    <Compile Include="Text\Xml\Serialization\XmlComment.vb" />
     <Compile Include="Text\Xml\OpenXml\Content_Types.vb" />
     <Compile Include="Text\Xml\XmlBuilder.vb" />
     <Compile Include="Text\Xml\Linq\Linq.vb" />

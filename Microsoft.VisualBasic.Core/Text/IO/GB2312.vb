@@ -1,36 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::fbe883cb1bf4126fed9729557e6d2d5e, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\IO\GB2312.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 ' http://www.tuicool.com/articles/3MbAJv
 ' C# 汉字转拼音(支持GB2312字符集中所有汉字)
 
-Imports System.Collections.Generic
-Imports System.Linq
+Imports System.Runtime.CompilerServices
 Imports System.Text
 
 Namespace Text
@@ -41,7 +40,7 @@ Namespace Text
     Public Module GB2312
 
 #Region "数组信息"
-        Public ReadOnly Property pyValue As Integer() = New Integer() {
+        Public ReadOnly Property pyValue As Integer() = {
             -20319, -20317, -20304, -20295, -20292, -20283,
             -20265, -20257, -20242, -20230, -20051, -20036,
             -20032, -20026, -20002, -19990, -19986, -19982,
@@ -108,7 +107,7 @@ Namespace Text
             -10544, -10533, -10519, -10331, -10329, -10328,
             -10322, -10315, -10309, -10307, -10296, -10281,
             -10274, -10270, -10262, -10260, -10256, -10254}
-        Public ReadOnly Property pyName As String() = New String() {
+        Public ReadOnly Property pyName As String() = {
             "A", "Ai", "An", "Ang", "Ao", "Ba",
             "Bai", "Ban", "Bang", "Bao", "Bei", "Ben",
             "Beng", "Bi", "Bian", "Biao", "Bie", "Bin",
@@ -179,7 +178,7 @@ Namespace Text
         ''' <summary>
         ''' 二级汉字数组
         ''' </summary>
-        Public ReadOnly Property otherChinese As String() = New String() {
+        Public ReadOnly Property otherChinese As String() = {
             "亍", "丌", "兀", "丐", "廿", "卅",
             "丕", "亘", "丞", "鬲", "孬", "噩",
             "丨", "禺", "丿", "匕", "乇", "夭",
@@ -685,7 +684,7 @@ Namespace Text
         ''' <summary>
         ''' 二级汉字对应拼音数组
         ''' </summary>
-        Public ReadOnly Property otherPinYin As String() = New String() {
+        Public ReadOnly Property otherPinYin As String() = {
             "Chu", "Ji", "Wu", "Gai", "Nian", "Sa",
             "Pi", "Gen", "Cheng", "Ge", "Nao", "E",
             "Shu", "Yu", "Pie", "Bi", "Tuo", "Yao",
@@ -1190,12 +1189,33 @@ Namespace Text
             "Han", "Zha"}
 #End Region
 #Region "变量定义"
-        ' GB2312-80 标准规范中第一个汉字的机内码.即"啊"的机内码
-        Private Const firstChCode As Integer = -20319
-        ' GB2312-80 标准规范中最后一个汉字的机内码.即"齄"的机内码
-        Private Const lastChCode As Integer = -2050
-        ' GB2312-80 标准规范中最后一个一级汉字的机内码.即"座"的机内码
-        Private Const lastOfOneLevelChCode As Integer = -10247
+
+        ''' <summary>
+        ''' ``GB2312-80``标准规范中第一个汉字的机内码.即``啊``的机内码 
+        ''' </summary>
+        Public Const firstChCode As Integer = -20319
+
+        ''' <summary>
+        ''' ``GB2312-80``标准规范中最后一个汉字的机内码.即``齄``的机内码 
+        ''' </summary>
+        Public Const lastChCode As Integer = -2050
+
+        ''' <summary>
+        ''' ``GB2312-80``标准规范中最后一个一级汉字的机内码.即``座``的机内码
+        ''' </summary>
+        Const lastOfOneLevelChCode As Integer = -10247
+
+        ''' <summary>
+        ''' ``啊``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property a As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return AscW("啊")
+            End Get
+        End Property
+
         ' 配置中文字符
         'static Regex regex = new Regex("[\u4e00-\u9fa5]$");
 #End Region
@@ -1212,6 +1232,7 @@ Namespace Text
             End If
             Return rs
         End Function
+
         ''' <summary>
         ''' 取拼音第一个字段
         ''' </summary>
@@ -1228,6 +1249,7 @@ Namespace Text
             Next
             Return sb.ToString()
         End Function
+
         ''' <summary>
         ''' 获取单字拼音
         ''' </summary>
@@ -1295,6 +1317,7 @@ Namespace Text
             '}             
             Return String.Empty
         End Function
+
         ''' <summary>
         ''' 把汉字转换成拼音(全拼)
         ''' </summary>

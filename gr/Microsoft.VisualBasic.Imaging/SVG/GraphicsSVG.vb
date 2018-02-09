@@ -1171,5 +1171,17 @@ Namespace SVG
         Public Overrides Sub DrawRectangle(pen As Pen, rect As RectangleF)
             Call Me.DrawRectangles(pen, {rect})
         End Sub
+
+        Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)
+            Dim circle As New circle With {
+                .r = radius,
+                .cx = center.X,
+                .cy = center.Y,
+                .fill = fill.ToHtmlColor,
+                .stroke = New Stroke(stroke).CSSValue,
+                .style = .stroke
+            }
+            Call __svgData.Add(circle)
+        End Sub
     End Class
 End Namespace
