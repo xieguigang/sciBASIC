@@ -81,7 +81,7 @@ PM> Install-Package sciBASIC -Pre
 |Microsoft.VisualBasic.MIME                 |MIME type text document parser                                                    |
 |Microsoft.VisualBasic.Scripting            |String expression related API for CLI programming and scripting programming       |
 
-sciBASIC runtime can be split as two part: Part1 is the general application runtime, like scripting helper, commandline system, and text document parser; Another part of the runtime is the data science runtime, like math function, cluster function, or charting runtime for data visualization. All of the data science related namespace in sciBASIC are mark as **asterisk**. 
+sciBASIC runtime can be split as two part: Part1 is the general application runtime, like scripting helper, commandline system, and text document parser; Another part of the runtime is the data science runtime, like math function, cluster function, or charting runtime for data visualization. All of the data science related namespace in sciBASIC are marked with **asterisk**. 
 
 ## FAQs
 
