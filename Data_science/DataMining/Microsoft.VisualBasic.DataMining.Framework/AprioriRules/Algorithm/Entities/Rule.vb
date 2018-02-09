@@ -41,33 +41,25 @@ Namespace AprioriRules.Entities
 
         Dim combination As String
         Dim remaining As String
-        Dim _confidence As Double
-
-#End Region
-
-#Region "Constructor"
-
-        Public Sub New(combination As String, remaining As String, confidence As Double)
-            Me.combination = combination
-            Me.remaining = remaining
-            Me._confidence = confidence
-        End Sub
 
 #End Region
 
 #Region "Public Properties"
 
-        <Column("rule.X")> Public ReadOnly Property X() As String
+        <Column("rule.X")> Public ReadOnly Property X As String
             Get
                 Return combination
             End Get
         End Property
 
-        <Column("rule.Y")> Public ReadOnly Property Y() As String
+        <Column("rule.Y")> Public ReadOnly Property Y As String
             Get
                 Return remaining
             End Get
         End Property
+
+        Public ReadOnly Property SupportXY As Double
+        Public ReadOnly Property SupportX As Double
 
         ''' <summary>
         ''' 
@@ -75,17 +67,20 @@ Namespace AprioriRules.Entities
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Column("confidence")> Public ReadOnly Property Confidence() As Double
-            Get
-                Return _confidence
-            End Get
-        End Property
+        <Column("confidence")> Public ReadOnly Property Confidence As Double
+
+        Public Sub New(combination$, remaining$, confidence#, supports As (XY#, X#))
+            Me.combination = combination
+            Me.remaining = remaining
+            Me.Confidence = confidence
+            Me.SupportX = supports.X
+            Me.SupportXY = supports.XY
+        End Sub
+#End Region
 
         Public Overrides Function ToString() As String
-            Return String.Format("({0})  {1}  --> {2}", Confidence, X, Y)
+            Return $"({Confidence}) {{ {X} }} -> {{ {Y} }}"
         End Function
-
-#End Region
 
 #Region "IComparable<clssRules> Members"
 
@@ -95,17 +90,18 @@ Namespace AprioriRules.Entities
 #End Region
 
         Public Overrides Function GetHashCode() As Integer
-            Dim sortedXY As String = Apriori.SorterSortTokens(X & Y)
+            Dim sortedXY$ = Apriori.SorterSortTokens(X & Y)
             Return sortedXY.GetHashCode()
         End Function
 
         Public Overrides Function Equals(obj As Object) As Boolean
             Dim other = TryCast(obj, Rule)
+
             If other Is Nothing Then
                 Return False
             End If
 
-            Return other.X = Me.X AndAlso other.Y = Me.Y OrElse other.X = Me.Y AndAlso other.Y = Me.X
+            Return other.X = X AndAlso other.Y = Y OrElse other.X = Y AndAlso other.Y = X
         End Function
     End Class
 End Namespace

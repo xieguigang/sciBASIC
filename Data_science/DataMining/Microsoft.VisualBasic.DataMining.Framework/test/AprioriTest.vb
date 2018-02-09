@@ -5,6 +5,10 @@ Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
 
 Module AprioriTest
     Sub Main()
+        Call BasicQuickTest()
+
+
+
         Dim data = "D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\arules\Adult.csv" _
             .ReadAllLines _
             .Skip(1) _
@@ -20,6 +24,10 @@ Module AprioriTest
     End Sub
 
     Sub BasicQuickTest()
+        Dim database$() = {"ACD", "BCE", "ABCE", "BE"}
+        Dim result = database.AnalysisTransactions(minSupport:=0, minConfidence:=60)
 
+
+        Pause()
     End Sub
 End Module
