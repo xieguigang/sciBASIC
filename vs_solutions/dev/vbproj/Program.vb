@@ -27,14 +27,14 @@
 #End Region
 
 Imports System.ComponentModel
+Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeHelper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
-Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeHelper
-Imports System.Text
 
 Module Program
 
