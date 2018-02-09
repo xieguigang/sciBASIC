@@ -1,4 +1,5 @@
 ﻿Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.AprioriRules
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
@@ -25,8 +26,10 @@ Module AprioriTest
 
     Sub BasicQuickTest()
         Dim database$() = {"ACD", "BCE", "ABCE", "BE"}
-        Dim result = database.AnalysisTransactions(minSupport:=0, minConfidence:=60)
+        Dim result As Output = database.AnalysisTransactions(minSupport:=0, minConfidence:=60)
 
+        Call result.ToString.SaveTo("./test.html")
+        Call result.StrongRules.Where(Function(r) r.SupportX >= 2).SaveTo("./rules.csv")
 
         Pause()
     End Sub

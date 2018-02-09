@@ -58,7 +58,9 @@ Namespace AprioriRules.Entities
             End Get
         End Property
 
+        <Column("support(XY)")>
         Public ReadOnly Property SupportXY As Double
+        <Column("support(X)")>
         Public ReadOnly Property SupportX As Double
 
         ''' <summary>
@@ -79,7 +81,7 @@ Namespace AprioriRules.Entities
 #End Region
 
         Public Overrides Function ToString() As String
-            Return $"({Confidence}) {{ {X} }} -> {{ {Y} }}"
+            Return $"({SupportXY}/{SupportX} = {Math.Round(Confidence, 4)}) {{ {X} }} -> {{ {Y} }}"
         End Function
 
 #Region "IComparable<clssRules> Members"

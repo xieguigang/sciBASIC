@@ -34,7 +34,7 @@ Namespace AprioriRules.Impl
 
             For Each subset As String In subsetsList
                 Dim remaining$ = GetRemaining(subset, token.Key)
-                Dim rule As New Rule(subset, remaining, 0)
+                Dim rule As New Rule(subset, remaining, 0, (0, 0))
 
                 Call list.Add(rule)
             Next
@@ -96,30 +96,30 @@ Namespace AprioriRules.Impl
 
         <Extension>
         Public Sub AddStrongRule(strongRules As List(Of Rule), rule As Rule, XY$, minConfidence#, allFrequentItems As Dictionary(Of String, TransactionTokensItem))
-            Dim confidence# = allFrequentItems.GetConfidence(rule.X, XY)
+            Dim value = allFrequentItems.GetConfidence(rule.X, XY)
 
-            If confidence >= minConfidence Then
-                Dim newRule As New Rule(rule.X, rule.Y, confidence)
+            If value.confidence >= minConfidence Then
+                Dim newRule As New Rule(rule.X, rule.Y, value.confidence, value.support)
                 strongRules.Add(newRule)
             End If
 
-            confidence = allFrequentItems.GetConfidence(rule.Y, XY)
+            value = allFrequentItems.GetConfidence(rule.Y, XY)
 
-            If confidence >= minConfidence Then
-                Dim newRule As New Rule(rule.Y, rule.X, confidence)
+            If value.confidence >= minConfidence Then
+                Dim newRule As New Rule(rule.Y, rule.X, value.confidence, value.support)
                 strongRules.Add(newRule)
             End If
         End Sub
 
         <Extension>
-        Public Function GetConfidence(allFrequentItems As Dictionary(Of String, TransactionTokensItem), X$, XY$) As Double
+        Public Function GetConfidence(allFrequentItems As Dictionary(Of String, TransactionTokensItem), X$, XY$) As (support As (XY#, X#), confidence#)
             If Not (allFrequentItems.ContainsKey(X) AndAlso allFrequentItems.ContainsKey(XY)) Then
-                Return 0
+                Return ((0, 0), 0)
             End If
 
             Dim supportX As Double = allFrequentItems(X).Support
             Dim supportXY As Double = allFrequentItems(XY).Support
-            Return supportXY / supportX
+            Return ((supportXY, supportX), supportXY / supportX)
         End Function
 
         Public Function GetMaximalItemSets(closedItemSets As Dictionary(Of String, Dictionary(Of String, Double))) As IList(Of String)

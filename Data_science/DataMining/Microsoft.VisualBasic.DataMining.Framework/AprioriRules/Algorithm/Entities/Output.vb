@@ -26,14 +26,52 @@
 
 #End Region
 
+Imports System.Text
+Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Text
+
 Namespace AprioriRules.Entities
 
     Public Class Output
 
+        ''' <summary>
+        ''' The output result for this AprioriRules data mining
+        ''' </summary>
+        ''' <returns></returns>
         Public Property StrongRules() As List(Of Rule)
         Public Property MaximalItemSets() As List(Of String)
         Public Property ClosedItemSets() As Dictionary(Of String, Dictionary(Of String, Double))
         Public Property FrequentItems() As Dictionary(Of String, TransactionTokensItem)
 
+        Public Overrides Function ToString() As String
+            Dim html As New StringBuilder()
+            Dim rules = StrongRules _
+                .Select(Function(rule)
+                            Return <tr>
+                                       <td><%= $"{{{rule.X}}} -> {{{rule.Y}}}" %></td>
+                                       <td><%= rule.SupportXY %></td>
+                                       <td><%= rule.SupportX %></td>
+                                       <td><%= rule.Confidence %></td>
+                                   </tr>
+                        End Function) _
+                .Select(AddressOf InputHandler.ToString) _
+                .JoinBy(ASCII.LF)
+
+            html.AppendLine(
+                <thead>
+                    <tr>
+                        <th>Rules</th>
+                        <th>Support(X Y)</th>
+                        <th>Support(X)</th>
+                        <th>Confidence</th>
+                    </tr>
+                </thead>)
+            html.AppendLine(<tbody>
+                                %s
+                            </tbody>, rules)
+
+            Return sprintf(<table>%s</table>.ToString, html)
+        End Function
     End Class
 End Namespace
