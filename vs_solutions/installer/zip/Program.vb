@@ -26,6 +26,7 @@
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.IO
 Imports System.IO.Compression
 Imports Microsoft.VisualBasic.ApplicationServices
@@ -53,8 +54,11 @@ Module Program
 
     <ExportAPI("/compress")>
     <Usage("/compress [/directory /tree] /out <out.zip> <directory/filelist>")>
+    <Description("Zip compress target file or directory.")>
     <Argument("/directory", True, CLITypes.Boolean,
               Description:="Zip compress target is a directory?")>
+    <Argument("/tree", True, CLITypes.Boolean,
+              Description:="The directory content should be in tree style or flat style? This option only works when the ``/directory`` option was presented.")>
     <Argument("/out", False, CLITypes.File, PipelineTypes.std_out,
               Extensions:="*.zip",
               Description:="The output file path of the zip package file.")>
