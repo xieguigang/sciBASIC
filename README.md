@@ -17,7 +17,7 @@
 
 ## Scientific Computing runtime for VisualBasic.NET
 
-``sciBASIC#``(read as scientific visualbasic or just ``sciBASIC sharp``) is a Microsoft VisualBasic language feature runtime for your data science application which is running in the CLI environment on Windows/Linux/macOS **Desktop/Server** platform or **supercomputer** platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences programming in VisualBasic language, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
+``sciBASIC#``(read as ``scientific visualbasic`` or just ``sciBASIC sharp``) is a Microsoft VisualBasic language feature runtime for your data science application which is running in the CLI environment on Windows/Linux/macOS **Desktop/Server** platform or **supercomputer** platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences application which is programming in VisualBasic language, and it also extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
 
 > Abount VisualBasic code style guidelines:
 > + https://github.com/xieguigang/sciBASIC/tree/master/docs/vb_codestyle
@@ -93,6 +93,16 @@ sciBASIC is fully compatible with the native VB.NET language, sciBASIC is a kind
 
 **3. Is there any interactive WinForm/WPF control for charting plot?**
 One of this framework its primary target is aim at provides a drawing environment for your CLI program create high quality printable content for scientific manuscript. This framework is not too much involved with "interactive".
+
+**4. Any coding style suggestion by using sciBASIC framework?**
+``sciBASIC`` framework is a kind of functional programming runtime for VisualBasic language. 
+
+**5. Major features**
+Major features of the ``sciBASIC`` are: 
++ Functional programming
++ Fluent style Method cascading
++ Linq pipeline
++ Parallel computing
 
 ## ODEs scripting language feature
 

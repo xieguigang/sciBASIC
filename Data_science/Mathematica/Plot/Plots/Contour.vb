@@ -215,8 +215,10 @@ Public Module Contour
                          Optional bg$ = "white",
                          Optional size$ = "3000,2500",
                          Optional padding$ = "padding: 100 400 100 400;",
+                         Optional unit% = 5,
                          Optional legendTitle$ = "Scatter Heatmap",
-                         Optional legendFont As Font = Nothing,
+                         Optional legendFont$ = CSSFont.Win10NormalLarge,
+                         Optional tickFont$ = CSSFont.Win7Normal,
                          Optional xlabel$ = "X",
                          Optional ylabel$ = "Y",
                          Optional minZ# = Double.MinValue,
@@ -230,14 +232,16 @@ Public Module Contour
            bg$, AddressOf New __plotHelper With {
                 .offset = New Point(-300, 0),
                 .colorMap = colorMap,
-                .legendFont = legendFont,
+                .legendFont = CSSFont.TryParse(legendFont),
                 .legendTitle = legendTitle,
                 .mapLevels = mapLevels,
-                .matrix = matrix,
+                .matrix = matrix.AsList,
                 .xlabel = xlabel,
                 .ylabel = ylabel,
                 .minZ = minZ,
-                .maxZ = maxZ
+                .maxZ = maxZ,
+                .unit = unit,
+                .tickFont = CSSFont.TryParse(tickFont)
            }.Plot)
     End Function
 

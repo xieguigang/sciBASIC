@@ -48,6 +48,13 @@ Namespace Serialization.JSON
     ''' </summary>
     <Package("Json.Contract")> Public Module JsonContract
 
+        <Extension>
+        Public Function MatrixJson(matrix As Double()()) As String
+            Dim rows = matrix.Select(Function(row) $"[ {row.JoinBy(", ")} ]")
+            Dim json = $"[ {rows.JoinBy("," & ASCII.LF)} ]"
+            Return json
+        End Function
+
         ''' <summary>
         ''' 使用<see cref="ScriptIgnoreAttribute"/>来屏蔽掉不想序列化的属性
         ''' </summary>
