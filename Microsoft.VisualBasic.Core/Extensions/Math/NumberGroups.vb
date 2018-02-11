@@ -144,6 +144,7 @@ Namespace Math
                 Dim min% = 0
                 Dim max% = .Length - 1
                 Dim index%
+                Dim value#
 
                 If max = -1 Then
                     ' no elements
@@ -153,10 +154,11 @@ Namespace Math
                 Do While min <> max
                     index = (max - min) / 2 + min
                     x = .ByRef(index)
+                    value = x.value
 
-                    If equals(target, x.value) Then
+                    If equals(target, value) Then
                         Return x.i
-                    ElseIf target > x Then
+                    ElseIf target > value Then
                         min = index
                     Else
                         max = index
