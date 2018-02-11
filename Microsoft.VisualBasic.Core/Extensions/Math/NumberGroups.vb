@@ -145,6 +145,11 @@ Namespace Math
                 Dim max% = .Length - 1
                 Dim index%
 
+                If max = -1 Then
+                    ' no elements
+                    Return -1
+                End If
+
                 Do While min <> max
                     index = (max - min) / 2 + min
                     x = .ByRef(index)
@@ -158,7 +163,11 @@ Namespace Math
                     End If
                 Loop
 
-                Return -1
+                If equals(.ByRef(index).value, target) Then
+                    Return 0
+                Else
+                    Return -1
+                End If
             End With
         End Function
 
@@ -170,7 +179,7 @@ Namespace Math
         <Extension> Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), equals As GenericLambda(Of Double).IEquals) As NamedCollection(Of T)()
             Dim data As List(Of T) = source.AsList
             Dim tmp As New With {
-                .avg = New Average({0}),
+                .avg = New Average({}),
                 .list = New List(Of T)
             }
             Dim groups = {
