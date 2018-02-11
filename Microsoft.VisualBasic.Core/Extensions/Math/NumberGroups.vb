@@ -1,34 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::a313b7c2ea94b538cd4a392974d8cdb4, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
@@ -93,54 +94,117 @@ Namespace Math
             }
         End Function
 
+        Public Class Average
+
+            Public Sum#, N%
+
+            Public ReadOnly Property Average As Double
+                <MethodImpl(MethodImplOptions.AggressiveInlining)>
+                Get
+                    Return Sum / N
+                End Get
+            End Property
+
+            Sub New()
+            End Sub
+
+            Sub New(data As IEnumerable(Of Double))
+                With data.ToArray
+                    Sum = .Sum
+                    N = .Length
+                End With
+            End Sub
+
+            Public Overrides Function ToString() As String
+                Return $"Means of {N} samples = {Average}"
+            End Function
+
+            Public Shared Operator +(avg As Average, x#) As Average
+                avg.Sum += x
+                avg.N += 1
+                Return avg
+            End Operator
+        End Class
+
+        ''' <summary>
+        ''' Returns ``-1`` means no search result
+        ''' </summary>
+        ''' <param name="seq"></param>
+        ''' <param name="target#"></param>
+        ''' <param name="equals"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function BinarySearch(seq As IEnumerable(Of Double), target#, equals As GenericLambda(Of Double).IEquals) As Double
+            With seq _
+                .SeqIterator _
+                .OrderBy(Function(x) x.value) _
+                .ToArray
+
+                Dim x As SeqValue(Of Double)
+                Dim min% = 0
+                Dim max% = .Length - 1
+                Dim index%
+
+                Do While min <> max
+                    index = (max - min) / 2 + min
+                    x = .ByRef(index)
+
+                    If equals(target, x.value) Then
+                        Return x.i
+                    ElseIf target > x Then
+                        min = index
+                    Else
+                        max = index
+                    End If
+                Loop
+
+                Return -1
+            End With
+        End Function
+
         ''' <summary>
         ''' 将一维的数据按照一定的偏移量分组输出
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <Extension> Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), equals As IEquals(Of Double)) As NamedCollection(Of T)()
+        <Extension> Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), equals As GenericLambda(Of Double).IEquals) As NamedCollection(Of T)()
             Dim data As List(Of T) = source.AsList
             Dim tmp As New With {
-                .values = New List(Of Double),
+                .avg = New Average({0}),
                 .list = New List(Of T)
             }
             Dim groups = {
                 tmp
-            }.ToDictionary(Function(null) "",
-                           Function(obj) obj)
-
-            Call groups.Clear()
+            }.AsList * 0
 
             Do While data.Count > 0
                 Dim x As T = data.Pop
-                Dim hit As Boolean = False
                 Dim value# = evaluate(x)
+                Dim hit% = groups _
+                    .Select(Function(g)
+                                Return g.avg.Average
+                            End Function) _
+                    .BinarySearch(value, equals)
 
-                For Each group In groups.Values
-                    If equals(group.values.Average, value) Then
-                        group.values.Add(value)
-                        group.list.Add(x)
-                        hit = True
-                        Exit For
-                    End If
-                Next
-
-                If Not hit Then
-                    tmp = New With {
-                        .values = New List(Of Double),
-                        .list = New List(Of T)
+                ' 在这里应该使用二分法查找来加快计算速度的
+                If hit > -1 Then
+                    With groups(hit)
+                        .avg += value
+                        .list.Add(x)
+                    End With
+                Else
+                    groups += New With {
+                        .avg = New Average({value}),
+                        .list = New List(Of T) From {x}
                     }
-                    tmp.values.Add(value)
-                    tmp.list.Add(x)
-                    groups.Add(value, tmp)
                 End If
             Loop
 
             Return groups _
                 .Select(Function(tuple)
                             Return New NamedCollection(Of T) With {
-                                .Name = tuple.Key,
-                                .Value = tuple.Value.list
+                                .Name = tuple.avg.Average,
+                                .Value = tuple.list
                             }
                         End Function) _
                 .OrderBy(Function(tuple) Val(tuple.Name)) _
