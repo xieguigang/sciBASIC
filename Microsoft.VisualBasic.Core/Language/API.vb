@@ -135,7 +135,7 @@ Namespace Language
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function ref(Of T)(x As T) As T
+        <Extension> Public Function [ByRef](Of T)(x As T) As T
             Return x
         End Function
 

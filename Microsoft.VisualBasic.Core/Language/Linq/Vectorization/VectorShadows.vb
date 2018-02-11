@@ -117,7 +117,7 @@ Namespace Language.Vectorization
         ''' <returns></returns>
         Public Shared Function CreateVector(data As IEnumerable, type As Type) As Object
             With GetType(VectorShadows(Of )).MakeGenericType(type)
-                Dim vector = Activator.CreateInstance(.ref, {data.CreateArray(type)})
+                Dim vector = Activator.CreateInstance(.ByRef, {data.CreateArray(type)})
                 Return vector
             End With
         End Function

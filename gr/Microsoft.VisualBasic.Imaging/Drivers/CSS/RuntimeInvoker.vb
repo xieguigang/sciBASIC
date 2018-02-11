@@ -97,7 +97,7 @@ Namespace Driver.CSS
                 .GetParameters _
                 .Where(Function(parm)
                            With parm.ParameterType
-                               Return .ref Is GetType(String) OrElse DataFramework.IsPrimitive(.ref)
+                               Return .ByRef Is GetType(String) OrElse DataFramework.IsPrimitive(.ByRef)
                            End With
                        End Function) _
                 .Select(Function(parm)
@@ -217,7 +217,7 @@ Namespace Driver.CSS
         Private Function ScanValue(arg As ParameterInfo, values As Dictionary(Of ArgumentReference), CSS As CSSFile) As Object
             With values.Keys.Where(Function(s) s.TextEquals(arg.Name)).FirstOrDefault
                 If Not .StringEmpty Then
-                    Return values(.ref).value
+                    Return values(.ByRef).value
                 End If
             End With
 

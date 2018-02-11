@@ -195,11 +195,11 @@ Namespace ApplicationServices.Terminal
                 Next
 
                 For Each row As String() In table
-                    Call printLayout(row, width, maxLen, .ref)
+                    Call printLayout(row, width, maxLen, .ByRef)
                 Next
 
                 If Not final Is Nothing Then
-                    Call final(Nothing, width, maxLen, .ref)
+                    Call final(Nothing, width, maxLen, .ByRef)
                 End If
 
                 Call .Flush()

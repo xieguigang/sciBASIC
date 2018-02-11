@@ -229,7 +229,7 @@ Namespace Serialization.JSON
                         .Trim _
                         .Trim(ASCII.Quot)
 
-                        [date] = Date.Parse(.ref)
+                        [date] = Date.Parse(.ByRef)
                     End With
                     sb.Replace(s, $"""{propertyName}"":" & [date].GetJson)
                 Else

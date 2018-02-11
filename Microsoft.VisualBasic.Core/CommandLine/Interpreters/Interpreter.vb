@@ -344,11 +344,11 @@ Namespace CommandLine
                 With cName
                     Dim msg$
 
-                    msg$ = .ref & New String(" "c, maxLength - .Length + 3)
+                    msg$ = .ByRef & New String(" "c, maxLength - .Length + 3)
 
                     With __API_table(.ToLower).Info
                         If Not .StringEmpty Then
-                            msg$ &= Mid(.ref, 1, 60) & "..."
+                            msg$ &= Mid(.ByRef, 1, 60) & "..."
                         End If
                     End With
 

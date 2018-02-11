@@ -77,7 +77,9 @@ Namespace Text.Search
         End Operator
 
         Public Shared Operator Like(segment As TextSegment, text$) As DistResult
-            Return LevenshteinDistance.ComputeDistance(segment.Array, text)
+            Dim out = LevenshteinDistance.ComputeDistance(segment.Array, text)
+            out.Reference = segment._text
+            Return out
         End Operator
     End Class
 End Namespace

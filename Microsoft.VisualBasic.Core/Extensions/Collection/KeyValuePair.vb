@@ -616,7 +616,7 @@ Public Module KeyValuePairExtensions
                     i += 1
                 Next
 
-                Return .ref
+                Return .ByRef
             End With
         Catch ex As Exception
             ex = New Exception("key --> [ " & source(i).Key & " ]", ex)

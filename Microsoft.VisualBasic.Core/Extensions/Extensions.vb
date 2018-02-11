@@ -743,7 +743,7 @@ Public Module Extensions
                 Call .AddRange(collection)
             End If
 
-            Return .ref
+            Return .ByRef
         End With
     End Function
 

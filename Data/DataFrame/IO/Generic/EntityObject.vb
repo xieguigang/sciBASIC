@@ -100,11 +100,11 @@ Namespace IO
                 Return getIDsDefault()
             Else
                 With table.Headers.IndexOf(uidMap)
-                    If .ref = -1 AndAlso ignoreMapErrors Then
+                    If .ByRef = -1 AndAlso ignoreMapErrors Then
                         Return getIDsDefault()
                     Else
                         ' 当不忽略错误的时候，不存在的uidMap其index位置会出现越界的错误直接在这里报错
-                        Return table.Columns(.ref) _
+                        Return table.Columns(.ByRef) _
                             .Skip(1) _
                             .ToArray
                     End If

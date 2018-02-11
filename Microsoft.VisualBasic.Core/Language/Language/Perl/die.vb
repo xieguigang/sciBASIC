@@ -49,11 +49,11 @@ Namespace Language.Perl
 
             With obj.GetType
 
-                If .ref Is GetType(Boolean) Then
+                If .ByRef Is GetType(Boolean) Then
                     Return False = DirectCast(obj, Boolean)
 
                     ' 对于字符串而言，判断是否为空的标准则是看字符串是否为空或者空字符串
-                ElseIf .ref Is GetType(String) Then
+                ElseIf .ByRef Is GetType(String) Then
                     Return String.IsNullOrEmpty(DirectCast(obj, String))
 
                 ElseIf .IsInheritsFrom(GetType(Array)) Then
@@ -65,7 +65,7 @@ Namespace Language.Perl
                 ElseIf .ImplementInterface(GetType(IsEmpty)) Then
                     Return DirectCast(obj, IsEmpty).IsEmpty
 
-                ElseIf .ref Is GetType(TimeSpan) Then
+                ElseIf .ByRef Is GetType(TimeSpan) Then
                     Return DirectCast(obj, TimeSpan) = TimeSpan.Zero
 
                 Else

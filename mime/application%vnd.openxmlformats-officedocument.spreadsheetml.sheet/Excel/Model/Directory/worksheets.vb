@@ -72,8 +72,8 @@ Namespace Model.Directory
             End If
 
             With "sheet" & sheetID
-                If worksheets.ContainsKey(.ref) Then
-                    Return worksheets(.ref)
+                If worksheets.ContainsKey(.ByRef) Then
+                    Return worksheets(.ByRef)
                 Else
                     Return Nothing
                 End If
