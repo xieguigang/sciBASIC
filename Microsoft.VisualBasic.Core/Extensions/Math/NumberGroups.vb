@@ -188,8 +188,45 @@ Namespace Math
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <Extension> Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), equals As GenericLambda(Of Double).IEquals) As NamedCollection(Of T)()
-            Dim data As List(Of T) = source.AsList
+        <Extension> Public Iterator Function GroupBy(Of T)(source As IEnumerable(Of T),
+                                                           evaluate As Func(Of T, Double),
+                                                           equals As GenericLambda(Of Double).IEquals,
+                                                           Optional parallel As Boolean = False) As IEnumerable(Of NamedCollection(Of T))
+            If Not parallel Then
+                For Each group In source.AsList.GroupByImpl(evaluate, equals)
+                    Yield group
+                Next
+            Else
+                Dim partitions = source _
+                    .SplitIterator(20000) _
+                    .AsParallel _
+                    .Select(Function(part)
+                                Return part.AsList.GroupByImpl(evaluate, equals)
+                            End Function) _
+                    .IteratesALL _
+                    .AsList
+
+                ' 先分割，再对name做分组
+                Dim union = partitions.GroupByImpl(Function(part) Val(part.Name), equals)
+
+                For Each unionGroup In union
+                    Dim name$ = unionGroup.Name
+                    Dim data = unionGroup _
+                        .Value _
+                        .Select(Function(member) member.Value) _
+                        .IteratesALL _
+                        .ToArray
+
+                    Yield New NamedCollection(Of T) With {
+                        .Name = name,
+                        .Value = data
+                    }
+                Next
+            End If
+        End Function
+
+        <Extension>
+        Private Function GroupByImpl(Of T)(source As List(Of T), evaluate As Func(Of T, Double), equals As GenericLambda(Of Double).IEquals) As NamedCollection(Of T)()
             Dim tmp As New With {
                 .avg = New Average({}),
                 .list = New List(Of T)
@@ -198,8 +235,8 @@ Namespace Math
                 tmp
             }.AsList * 0
 
-            Do While data.Count > 0
-                Dim x As T = data.Pop
+            Do While source.Count > 0
+                Dim x As T = source.Pop
                 Dim value# = evaluate(x)
                 Dim hit% = groups _
                     .Select(Function(g)
