@@ -94,7 +94,7 @@ sciBASIC is fully compatible with the native VB.NET language, sciBASIC is a kind
 **3. Is there any interactive WinForm/WPF control for charting plot?**
 One of this framework its primary target is aim at provides a drawing environment for your CLI program create high quality printable content for scientific manuscript. This framework is not too much involved with "interactive".
 
-**4. Any coding style suggestion using sciBASIC?**
+**4. Any coding style suggestion by using sciBASIC framework?**
 ``sciBASIC`` framework is a kind of functional programming runtime for VisualBasic language. 
 
 **5. Major features**
