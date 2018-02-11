@@ -97,7 +97,6 @@ Namespace Math
         ''' 将一维的数据按照一定的偏移量分组输出
         ''' </summary>
         ''' <param name="source"></param>
-        ''' <param name="offsets"></param>
         ''' <returns></returns>
         <Extension> Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), equals As IEquals(Of Double)) As NamedCollection(Of T)()
             Dim data As List(Of T) = source.AsList
