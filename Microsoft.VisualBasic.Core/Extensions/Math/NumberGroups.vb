@@ -193,9 +193,37 @@ Namespace Math
                                                            equals As GenericLambda(Of Double).IEquals,
                                                            Optional parallel As Boolean = False) As IEnumerable(Of NamedCollection(Of T))
             If Not parallel Then
-                For Each group In source.AsList.GroupByImpl(evaluate, equals)
-                    Yield group
+
+                ' For Each group In source.AsList.GroupByImpl(evaluate, equals)
+                '     Yield group
+                ' Next
+
+                Dim tagValues = source _
+                    .Select(Function(o) (evaluate(o), o)) _
+                    .OrderBy(Function(o) o.Item1) _
+                    .ToArray
+                Dim means As New Average
+                Dim members As New List(Of T)
+
+                For Each x In tagValues
+                    If means.N = 0 Then
+                        means += x.Item1
+                    Else
+                        If equals(means.Average, x.Item1) Then
+                            means += x.Item1
+                            members += x.Item2
+                        Else
+                            Yield New NamedCollection(Of T)(CStr(means.Average), members)
+
+                            means = New Average({x.Item1})
+                            members = New List(Of T) From {x.Item2}
+                        End If
+                    End If
                 Next
+
+                If members > 0 Then
+                    Yield New NamedCollection(Of T)(CStr(means.Average), members)
+                End If
             Else
                 Dim partitions = source _
                     .SplitIterator(20000) _
