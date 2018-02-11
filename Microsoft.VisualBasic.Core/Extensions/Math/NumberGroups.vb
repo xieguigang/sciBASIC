@@ -149,9 +149,17 @@ Namespace Math
                 If max = -1 Then
                     ' no elements
                     Return -1
+                ElseIf max = 0 Then
+                    ' one element
+                    If equals(.ByRef(0).value, target) Then
+                        Return 0
+                    Else
+                        ' 序列只有一个元素，但是不相等，则返回-1，否则后面的while会无限死循环
+                        Return -1
+                    End If
                 End If
 
-                Do While min <> max
+                Do While max <> (min + 1)
                     index = (max - min) / 2 + min
                     x = .ByRef(index)
                     value = x.value
@@ -165,8 +173,10 @@ Namespace Math
                     End If
                 Loop
 
-                If equals(.ByRef(index).value, target) Then
-                    Return 0
+                If equals(.ByRef(min).value, target) Then
+                    Return .ByRef(min).i
+                ElseIf equals(.ByRef(max).value, target) Then
+                    Return .ByRef(max).i
                 Else
                     Return -1
                 End If
