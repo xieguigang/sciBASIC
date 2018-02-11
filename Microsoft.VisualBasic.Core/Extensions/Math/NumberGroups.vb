@@ -99,7 +99,7 @@ Namespace Math
         ''' <param name="source"></param>
         ''' <param name="offsets"></param>
         ''' <returns></returns>
-        <Extension> Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), offsets#) As NamedCollection(Of T)()
+        <Extension> Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), equals As IEquals(Of Double)) As NamedCollection(Of T)()
             Dim data As List(Of T) = source.AsList
             Dim tmp As New With {
                 .values = New List(Of Double),
@@ -118,7 +118,7 @@ Namespace Math
                 Dim value# = evaluate(x)
 
                 For Each group In groups.Values
-                    If Abs(group.values.Average - value) <= offsets Then
+                    If equals(group.values.Average, value) Then
                         group.values.Add(value)
                         group.list.Add(x)
                         hit = True
@@ -146,6 +146,18 @@ Namespace Math
                         End Function) _
                 .OrderBy(Function(tuple) Val(tuple.Name)) _
                 .ToArray
+        End Function
+
+        ''' <summary>
+        ''' 将一维的数据按照一定的偏移量分组输出
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="offsets"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function GroupBy(Of T)(source As IEnumerable(Of T), evaluate As Func(Of T, Double), offsets#) As NamedCollection(Of T)()
+            Return source.GroupBy(evaluate, equals:=Function(a, b) Abs(a - b) <= offsets)
         End Function
 
         ''' <summary>
