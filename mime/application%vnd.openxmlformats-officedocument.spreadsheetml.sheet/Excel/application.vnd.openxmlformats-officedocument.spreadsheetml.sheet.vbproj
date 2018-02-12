@@ -222,6 +222,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="Resources\New.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
