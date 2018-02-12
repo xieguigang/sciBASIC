@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6962c0f7ee44e5ad244dfe78367c41e7, Program.vb"
+﻿#Region "Microsoft.VisualBasic::18d0ca50b5ba65a7d12c250127146042, Program.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,19 @@
     ' Module Program
     ' 
     '     Function: Main
+    ' 
+    ' 
+    ' 
+    ' Module CLI
+    ' 
+    '     Function: API1, CLIHelpInfoDemo, ScriptingTest, vbCode
+    ' 
+    ' 
+    ' 
+    ' Class CLIGrouping
+    ' 
+    ' 
+    ' 
     ' 
     ' 
 

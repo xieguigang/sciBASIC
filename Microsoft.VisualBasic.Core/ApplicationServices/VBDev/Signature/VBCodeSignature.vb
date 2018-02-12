@@ -192,7 +192,10 @@ Namespace ApplicationServices.Development
             End If
 
             vbType.AppendLine(members.JoinBy(ASCII.LF))
-            vbType.AppendLine(innerModules.ToString)
+
+            If innerModules.Length > 0 Then
+                vbType.AppendLine(innerModules.ToString)
+            End If
 
             Return vbType.ToString
         End Function
