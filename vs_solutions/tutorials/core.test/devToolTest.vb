@@ -45,7 +45,7 @@ Module devToolTest
     End Sub
 
     Sub parserTest()
-        Dim code = "E:\repo\xDoc\Yilia\runtime\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Runtime\Where.vb".ReadAllText
+        Dim code = "E:\repo\xDoc\Yilia\runtime\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb".ReadAllText
         Dim list = VBCodeSignature.SummaryModules(code)
 
         Pause()
