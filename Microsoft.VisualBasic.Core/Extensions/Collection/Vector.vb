@@ -27,7 +27,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -43,12 +42,6 @@ Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 ''' Extension methods for the .NET object sequence
 ''' </summary>
 Public Module VectorExtensions
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function UTF8String(stream As IEnumerable(Of Byte)) As String
-        Return Encoding.UTF8.GetString(stream.ToArray)
-    End Function
 
     <Extension>
     Public Iterator Function Replicate(Of T)(template As T, n%) As IEnumerable(Of T)
