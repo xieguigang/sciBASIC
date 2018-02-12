@@ -41,7 +41,7 @@ Namespace NeedlemanWunsch
         Dim matrix As Integer()() = Nothing
         Dim tracebackMatrix As Integer()() = Nothing
 
-        Sub New(match As IEquals(Of T), empty As T, toChar As Func(Of T, Char))
+        Sub New(match As GenericLambda(Of T).IEquals, empty As T, toChar As Func(Of T, Char))
             Call MyBase.New(match, toChar)
             __empty = empty
         End Sub
