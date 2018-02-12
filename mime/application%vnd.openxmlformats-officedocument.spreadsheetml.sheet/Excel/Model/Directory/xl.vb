@@ -49,7 +49,7 @@ Namespace Model.Directory
         ''' <summary>
         ''' 使用表名称来判断目标工作簿是否存在？
         ''' </summary>
-        ''' <param name="worksheet$"></param>
+        ''' <param name="worksheet$">The sheet name</param>
         ''' <returns></returns>
         Public Function Exists(worksheet$) As Boolean
             Return Not workbook _

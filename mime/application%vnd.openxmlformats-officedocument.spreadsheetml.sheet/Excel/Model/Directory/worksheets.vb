@@ -104,6 +104,7 @@ Namespace Model.Directory
             Next
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function _name() As String
             Return NameOf(worksheets)
         End Function
