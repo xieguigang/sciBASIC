@@ -8,7 +8,7 @@ Public Module Styling
         Dim style As New xlsxFont With {
             .charset = "134",
             .scheme = "minor",
-            .color = fillColor.TranslateColor.ToHtmlColor,
+            .color = fillColor.TranslateColor,
             .family = 3,
             .name = fontface,
             .sz = size,
