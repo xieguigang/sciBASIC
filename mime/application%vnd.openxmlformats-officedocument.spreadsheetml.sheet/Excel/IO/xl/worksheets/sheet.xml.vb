@@ -44,7 +44,9 @@ Namespace XML.xl.worksheets
         Public Property pageSetup As pageSetup
         Public Property sheetViews As sheetView()
         Public Property sheetFormatPr As sheetFormatPr
-        Public Property conditionalFormatting As conditionalFormatting
+
+        <XmlElement("conditionalFormatting")>
+        Public Property conditionalFormattings As conditionalFormatting()
         Public Property hyperlinks As hyperlink()
         Public Property drawing As drawing
 
@@ -83,9 +85,15 @@ Namespace XML.xl.worksheets
     End Class
 
     Public Class conditionalFormatting
-        <XmlAttribute> Public Property sqref As String
-        <XmlElement(NameOf(cfRule))>
-        Public Property cfRules As cfRule()
+
+        ''' <summary>
+        ''' 单元格的引用范围
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute>
+        Public Property sqref As String
+        Public Property cfRule As cfRule
+
     End Class
 
     Public Class cfRule
@@ -95,6 +103,7 @@ Namespace XML.xl.worksheets
         <XmlAttribute> Public Property [operator] As String
 
         Public Property formula As String
+        Public Property colorScale As colorScale
     End Class
 
     Public Class colorScale
