@@ -17,7 +17,7 @@
 
 ## Scientific Computing runtime for VisualBasic.NET
 
-``sciBASIC#``(read as scientific visualbasic or just ``sciBASIC sharp``) is a Microsoft VisualBasic language feature runtime for your data science application which is running in the CLI environment on Windows/Linux/macOS **Desktop/Server** platform or **supercomputer** platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences programming in VisualBasic language, and extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
+``sciBASIC#``(read as ``scientific visualbasic`` or just ``sciBASIC sharp``) is a Microsoft VisualBasic language feature runtime for your data science application which is running in the CLI environment on Windows/Linux/macOS **Desktop/Server** platform or **supercomputer** platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences application which is programming in VisualBasic language, and it also extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
 
 > Abount VisualBasic code style guidelines:
 > + https://github.com/xieguigang/sciBASIC/tree/master/docs/vb_codestyle
@@ -72,16 +72,37 @@ PM> Install-Package sciBASIC -Pre
 |Namespace                                  |Description                                                                       |
 |-------------------------------------------|----------------------------------------------------------------------------------|
 |Microsoft.VisualBasic.ApplicationServices  |Application tool and Utils for build software in a more easy way                  |
-|Microsoft.VisualBasic.CommandLine          |CLI framework system                                                              |
+|Microsoft.VisualBasic.CommandLine          |CLI framework for VisualBasic App                                                 |
 |\*Microsoft.VisualBasic.Data               |Raw data processing related code and charting plot library for data visualization |
 |\*Microsoft.VisualBasic.DataMining         |``sciBASIC`` data mining library                                                  |
 |\*Microsoft.VisualBasic.Imaging            |``sciBASIC`` graphics system based on the GDI+ API from ``System.Drawing``        |
 |\*Microsoft.VisualBasic.MachineLearning    |``sciBASIC`` machine learning library                                             |
 |\*Microsoft.VisualBasic.Math               |``sciBASIC`` math library                                                         |
 |Microsoft.VisualBasic.MIME                 |MIME type text document parser                                                    |
-|Microsoft.VisualBasic.Scripting            |String expression related API for CLI programming and optional parameter scripting|
+|Microsoft.VisualBasic.Scripting            |String expression related API for CLI programming and scripting programming       |
 
-sciBASIC runtime can be split as two part: Part1 is the general application runtime, like scripting helper, commandline system, and text document parser; Another part of the runtime is the data science runtime, like math function, cluster function, or charting runtime for data visualization. All of the data science related namespace in sciBASIC are mark as **asterisk**. 
+sciBASIC runtime can be split as two part: Part1 is the general application runtime, like scripting helper, commandline system, and text document parser; Another part of the runtime is the data science runtime, like math function, cluster function, or charting runtime for data visualization. All of the data science related namespace in sciBASIC are marked with **asterisk**. 
+
+## FAQs
+
+**1. Which platform that I can using this framework?**
+For writing x86/x64 server/Desktop Win32 CLI program.
+
+**2. Relationship between Microsoft VisualBasic.NET and sciBASIC?**
+sciBASIC is fully compatible with the native VB.NET language, sciBASIC is a kind of dialect derive from the Microsoft VisualBasic.NET language.
+
+**3. Is there any interactive WinForm/WPF control for charting plot?**
+One of this framework its primary target is aim at provides a drawing environment for your CLI program create high quality printable content for scientific manuscript. This framework is not too much involved with "interactive".
+
+**4. Any coding style suggestion by using sciBASIC framework?**
+``sciBASIC`` framework is a kind of functional programming runtime for VisualBasic language. 
+
+**5. Major features**
+Major features of the ``sciBASIC`` are: 
++ Functional programming
++ Fluent style Method cascading
++ Linq pipeline
++ Parallel computing
 
 ## ODEs scripting language feature
 

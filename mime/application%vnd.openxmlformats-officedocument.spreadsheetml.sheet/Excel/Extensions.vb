@@ -28,6 +28,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
@@ -38,7 +39,10 @@ Public Module Extensions
     ''' </summary>
     ''' <returns></returns>
     Public Function CreateNew() As Xlsx
-        Throw New NotImplementedException
+        With App.GetAppSysTempFile(".xlsx", App.PID)
+            Call My.Resources._New.FlushStream(.ByRef)
+            Return File.Open(path:= .ByRef)
+        End With
     End Function
 
     ''' <summary>

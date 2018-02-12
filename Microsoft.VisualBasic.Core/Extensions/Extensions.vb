@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::dcf2757bea3c1ddd1b2425d4250bed42, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -286,6 +286,8 @@ Public Module Extensions
     ''' <typeparam name="T2"></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function Keys(Of T1, T2)(source As IEnumerable(Of KeyValuePair(Of T1, T2))) As T1()
         Return source.Select(Function(x) x.Key).ToArray
     End Function
@@ -297,10 +299,14 @@ Public Module Extensions
     ''' <param name="array"></param>
     ''' <param name="value"></param>
     <Extension> Public Sub Add(Of T)(ByRef array As T(), value As T)
-        Dim appendBuffer As T() = New T(array.Length) {}
-        Call v.ConstrainedCopy(array, Scan0, appendBuffer, Scan0, array.Length)
-        appendBuffer(array.Length) = value
-        array = appendBuffer
+        If array.IsNullOrEmpty Then
+            array = {value}
+        Else
+            Dim appendBuffer As T() = New T(array.Length) {}
+            Call v.ConstrainedCopy(array, Scan0, appendBuffer, Scan0, array.Length)
+            appendBuffer(array.Length) = value
+            array = appendBuffer
+        End If
     End Sub
 
     ''' <summary>
@@ -367,6 +373,8 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="array"></param>
     ''' <param name="value"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Sub Add(Of T)(ByRef array As T(), value As List(Of T))
         Call Add(Of T)(array, value.ToArray)
     End Sub

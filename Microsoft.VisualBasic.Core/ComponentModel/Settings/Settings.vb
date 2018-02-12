@@ -69,7 +69,7 @@ Namespace ComponentModel.Settings
             If Not XmlFile.FileExists Then
                 Return __createSave(XmlFile, CreateSave)
             Else
-                Dim File As T = XmlFile.LoadXml(Of T)(ThrowEx:=False)
+                Dim File As T = XmlFile.LoadXml(Of T)(throwEx:=False)
 
                 If File Is Nothing Then
                     Return __createSave(XmlFile, CreateSave)

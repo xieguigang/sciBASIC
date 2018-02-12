@@ -58,11 +58,14 @@ Namespace Text.Search
             If min = max Then
                 cache = __cache(text, max)
             Else
-                cache = LinqAPI.Exec(Of TextSegment) <=
-                    From d As Integer
-                    In (max - min).Sequence.AsParallel
-                    Let len As Integer = min + d
-                    Select __cache(text, len)
+                cache = LinqAPI.Exec(Of TextSegment) _
+ _
+                    () <= From d As Integer
+                          In (max - min) _
+                              .Sequence _
+                              .AsParallel
+                          Let len As Integer = min + d
+                          Select __cache(text, len)
             End If
 
             _text = text
@@ -135,21 +138,22 @@ Namespace Text.Search
         ''' <param name="keyword"></param>
         ''' <param name="cutoff">表示出现连续的m匹配的片段的长度,-1表示所搜索的关键词片段的长度一半</param>
         ''' <returns></returns>
-        Public Function Found(keyword As String, Optional cutoff As Integer = -1) As Map(Of TextSegment, DistResult)()
+        Public Function Found(keyword$, Optional cutoff% = -1) As Map(Of TextSegment, DistResult)()
             If cutoff = -1 Then
                 cutoff = Len(keyword) / 2
             End If
 
-            Dim LQuery = LinqAPI.Exec(Of Map(Of TextSegment, DistResult)) <=
-                From piece As TextSegment
-                In cache
-                Let levl As DistResult = LevenshteinDistance.ComputeDistance(piece.Array, keyword)
-                Where Not levl Is Nothing AndAlso
-                    IsMatch(levl.DistEdits, cutoff)
-                Select New Map(Of TextSegment, DistResult) With {
-                    .Key = piece,
-                    .Maps = levl
-                }
+            Dim LQuery = LinqAPI.Exec(Of Map(Of TextSegment, DistResult)) _
+ _
+                () <= From piece As TextSegment
+                      In cache
+                      Let levl As DistResult = LevenshteinDistance.ComputeDistance(piece.Array, keyword)
+                      Where Not levl Is Nothing AndAlso IsMatch(levl.DistEdits, cutoff)
+                      Select New Map(Of TextSegment, DistResult) With {
+                          .Key = piece,
+                          .Maps = levl
+                      }
+
             Return LQuery
         End Function
 

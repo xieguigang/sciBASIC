@@ -83,6 +83,11 @@ Namespace ComponentModel
         ''' <returns></returns>
         Public Property Maps As V Implements IMap.Maps
 
+        Sub New(x As T1, y As V)
+            Key = x
+            Maps = y
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"map[{Key}, {Maps}]"
         End Function

@@ -210,7 +210,7 @@ Public Module Kmeans
                             End Function) _
                     .ToArray
 
-                    Dim point As New Point3D(.ref(0), .ref(1), .ref(2))
+                    Dim point As New Point3D(.ByRef(0), .ByRef(1), .ByRef(2))
                     point3D += point
                 End With
             Next
