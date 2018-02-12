@@ -45,7 +45,7 @@ Namespace Text.Similarity
         ''' + (0, 1): similarity threshold
         ''' </summary>
         Dim threshold#
-        Dim compare As IEquals(Of String)
+        Dim compare As GenericLambda(Of String).IEquals
 
         ''' <summary>
         ''' thresholds:

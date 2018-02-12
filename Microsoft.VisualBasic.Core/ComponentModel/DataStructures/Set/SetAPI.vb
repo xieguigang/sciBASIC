@@ -30,9 +30,14 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
 
-Public Module SetAPI
+Public NotInheritable Class GenericLambda(Of T)
 
-    Public Delegate Function GetUid(Of T)(x As T) As String
+    Public Delegate Function IEquals(a As T, b As T) As Boolean
+    Public Delegate Function GetUid(x As T) As String
+
+End Class
+
+Public Module SetAPI
 
     '''<summary>
     ''' Performs an intersection of two sets.(求交集，这个函数总是会挑选出<paramref name="s1"/>集合之中的元素的)
@@ -42,7 +47,7 @@ Public Module SetAPI
     ''' <returns>A new <see cref="[Set]">Set</see> object that contains the members
     ''' that were common to both of the input sets.</returns>
     <Extension>
-    Public Function Intersection(Of T)(s1 As IEnumerable(Of T), s2 As IEnumerable(Of T), getUID As GetUid(Of T)) As T()
+    Public Function Intersection(Of T)(s1 As IEnumerable(Of T), s2 As IEnumerable(Of T), getUID As GenericLambda(Of T).GetUid) As T()
         Dim tags = (From x As T In s1 Let uid As String = getUID(x) Select uid, tag = NameOf(s1), x).AsList +
             From x As T
             In s2
@@ -71,8 +76,6 @@ Public Module SetAPI
         Return result
     End Function
 
-    Public Delegate Function IEquals(Of T)(a As T, b As T) As Boolean
-
     '''<summary>
     ''' Performs an intersection of two sets.(求交集)
     ''' </summary>
@@ -82,7 +85,7 @@ Public Module SetAPI
     ''' that were common to both of the input sets.</returns>
     ''' 
     <Extension>
-    Public Function Intersection(Of T)(s1 As IEnumerable(Of T), s2 As IEnumerable(Of T), __equals As IEquals(Of T)) As T()
+    Public Function Intersection(Of T)(s1 As IEnumerable(Of T), s2 As IEnumerable(Of T), __equals As GenericLambda(Of T).IEquals) As T()
         Dim result As New List(Of T)
 
         If s1.Count > s2.Count Then
@@ -103,7 +106,7 @@ Public Module SetAPI
     End Function
 
     <Extension>
-    Public Function Contains(Of T)([set] As IEnumerable(Of T), x As T, __equals As IEquals(Of T)) As Boolean
+    Public Function Contains(Of T)([set] As IEnumerable(Of T), x As T, __equals As GenericLambda(Of T).IEquals) As Boolean
         Dim LQuery = (From obj As T In [set].AsParallel Where __equals(x, obj) Select 1).FirstOrDefault
         Return LQuery > 0
     End Function

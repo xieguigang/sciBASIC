@@ -185,6 +185,8 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
         Using out As StreamWriter = args.OpenStreamOutput("/out")
             Call PrintAsTable.PrintTable(table.rows, out,, table.header)
         End Using
+
+        Return 0
     End Function
 
     <ExportAPI("/Association")>

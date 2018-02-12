@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
@@ -48,7 +49,7 @@ Namespace Model.Directory
         ''' <summary>
         ''' 使用表名称来判断目标工作簿是否存在？
         ''' </summary>
-        ''' <param name="worksheet$"></param>
+        ''' <param name="worksheet$">The sheet name</param>
         ''' <returns></returns>
         Public Function Exists(worksheet$) As Boolean
             Return Not workbook _
@@ -57,18 +58,22 @@ Namespace Model.Directory
         End Function
 
         ''' <summary>
-        ''' Get <see cref="worksheet"/> by name.
+        ''' Get <see cref="Xmlns.worksheet"/> by name.
         ''' </summary>
         ''' <param name="name$">如果表名称不存在的话，则这个函数是会返回一个空值的</param>
         ''' <returns></returns>
-        Public Function GetWorksheet(name$) As worksheet
+        Public Function GetWorksheet(name$) As XML.xl.worksheets.worksheet
             Dim sheetID$ = workbook.GetSheetIDByName(name)
 
             ' rId to sheetName by using rels file
             If sheetID.StringEmpty Then
                 Return Nothing
             Else
-                Dim key$ = _rels.workbook.Target(sheetID).Target.BaseName
+                Dim key$ = _rels _
+                    .workbook _
+                    .Target(sheetID) _
+                    .Target _
+                    .BaseName
                 Return worksheets.GetWorksheet(key)
             End If
         End Function
@@ -80,18 +85,18 @@ Namespace Model.Directory
         ''' <param name="index"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetWorksheetByIndex(index As Integer) As worksheet
+        Public Function GetWorksheetByIndex(index As Integer) As XML.xl.worksheets.worksheet
             Return worksheets.GetWorksheet(sheetID:=workbook.GetSheetIDByIndex(index))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetTableData(worksheet As worksheet) As csv
+        Public Function GetTableData(worksheet As XML.xl.worksheets.worksheet) As csv
             Return worksheet.ToTableFrame(sharedStrings)
         End Function
 
         Protected Overrides Sub _loadContents()
-            sharedStrings = (Folder & "/sharedStrings.xml").LoadXml(Of sharedStrings)
-            workbook = (Folder & "/workbook.xml").LoadXml(Of workbook)
+            sharedStrings = (Folder & "/sharedStrings.xml").LoadXml(Of sharedStrings)(throwEx:=False) Or New sharedStrings().AsDefault
+            workbook = (Folder & "/workbook.xml").LoadXml(Of workbook)(throwEx:=False) Or New workbook().AsDefault
             worksheets = New worksheets(Folder)
             _rels = New _rels(Folder)
         End Sub

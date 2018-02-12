@@ -60,7 +60,7 @@ Namespace KMeans
         ''' <param name="array"></param>
         ''' <param name="nd"></param>
         ''' <returns></returns>
-        <Extension> Public Function ValueGroups(array As IEnumerable(Of Double), nd As Integer) As List(Of EntityClusterModel)
+        <Extension> Public Function ValueGroups(array As IEnumerable(Of Double), nd%) As List(Of EntityClusterModel)
             Dim entities As EntityClusterModel() = array _
                 .Select(Function(x, i)
                             Return New EntityClusterModel With {
@@ -81,7 +81,7 @@ Namespace KMeans
         ''' <param name="expected"></param>
         ''' <returns></returns>
         <Extension> Public Function Kmeans(source As IEnumerable(Of EntityClusterModel),
-                                           expected As Integer,
+                                           expected%,
                                            Optional debug As Boolean = True,
                                            Optional parallel As Boolean = True) As List(Of EntityClusterModel)
 

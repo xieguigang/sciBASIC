@@ -42,7 +42,7 @@ Namespace Model.Directory
         ''' Key都是格式``sheet%d``的字符串
         ''' </summary>
         ''' <returns></returns>
-        Public Property worksheets As Dictionary(Of String, worksheet)
+        Public Property worksheets As Dictionary(Of String, XML.xl.worksheets.worksheet)
         Public Property _rels As Dictionary(Of String, rels)
 
         Sub New(ROOT$)
@@ -55,11 +55,11 @@ Namespace Model.Directory
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(sheetID As String, worksheet As worksheet)
+        Public Sub Add(sheetID As String, worksheet As XML.xl.worksheets.worksheet)
             Call worksheets.Add(sheetID, worksheet)
         End Sub
 
-        Public Function GetWorksheet(sheetID$) As worksheet
+        Public Function GetWorksheet(sheetID$) As XML.xl.worksheets.worksheet
             If worksheets.ContainsKey(sheetID) Then
                 Return worksheets(sheetID)
             Else
@@ -104,9 +104,9 @@ Namespace Model.Directory
             Next
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function _name() As String
             Return NameOf(worksheets)
         End Function
     End Class
-
 End Namespace
