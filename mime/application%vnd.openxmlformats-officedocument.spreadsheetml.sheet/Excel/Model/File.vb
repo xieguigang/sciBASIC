@@ -33,6 +33,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.GZip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Office.Excel.Model
 Imports Microsoft.VisualBasic.MIME.Office.Excel.Model.Directory
@@ -109,9 +110,11 @@ Public Class File : Implements IFileReference
             ' 进行替换
             xl.worksheets.worksheets(sheetID) = worksheet
 
-            If modify.NotExists("worksheet.update") Then
-                modify.Add("worksheet.update")
-            End If
+            With "worksheet.update"
+                If modify.IndexOf(.ByRef) = -1 Then
+                    modify.Add(.ByRef)
+                End If
+            End With
         Else
             ' 进行添加
             sheetID = xl.workbook.Add(sheetName)
@@ -121,9 +124,11 @@ Public Class File : Implements IFileReference
                 .PartName = $"/xl/worksheets/{sheetID}.xml"
             }
 
-            If modify.NotExists("worksheet.add") Then
-                modify.Add("worksheet.add")
-            End If
+            With "worksheet.add"
+                If modify.IndexOf(.ByRef) = -1 Then
+                    modify.Add(.ByRef)
+                End If
+            End With
         End If
 
         Return True
@@ -157,6 +162,11 @@ Public Class File : Implements IFileReference
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetWorksheet(sheetName$) As worksheet
+        Return xl.GetWorksheet(sheetName)
+    End Function
+
     ''' <summary>
     ''' Get worksheet table by its index in the workbook.
     ''' (<paramref name="index"/>是以零为底的下标编号)
@@ -178,19 +188,25 @@ Public Class File : Implements IFileReference
         Return GetTable(sheetName).AsDataSource(Of T)
     End Function
 
-    Public Shared Function CreatePackage(tmp$, xlsx$) As Boolean
+    Public Shared Function CreatePackage(tmp$, xlsx$, Optional throwEx As Boolean = True) As Boolean
         Try
             Call GZip.DirectoryArchive(tmp, xlsx, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
+            Return True
         Catch ex As Exception
             Dim debug$ = New Dictionary(Of String, String) From {
                 {NameOf(tmp), tmp},
                 {NameOf(xlsx), xlsx}
             }.GetJson
             ex = New Exception(debug, ex)
+
+            If throwEx Then
+                Throw ex
+            Else
+                Call App.LogException(ex)
+            End If
+
             Return False
         End Try
-
-        Return True
     End Function
 
     ''' <summary>

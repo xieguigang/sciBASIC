@@ -32,6 +32,9 @@ Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 
 Namespace XML.xl.worksheets
 
+    ''' <summary>
+    ''' 保存数据所使用到的工作表的对象模型
+    ''' </summary>
     <XmlRoot("worksheet", [Namespace]:="http://schemas.openxmlformats.org/spreadsheetml/2006/main")>
     Public Class worksheet
 

@@ -68,7 +68,11 @@ Namespace Model.Directory
             If sheetID.StringEmpty Then
                 Return Nothing
             Else
-                Dim key$ = _rels.workbook.Target(sheetID).Target.BaseName
+                Dim key$ = _rels _
+                    .workbook _
+                    .Target(sheetID) _
+                    .Target _
+                    .BaseName
                 Return worksheets.GetWorksheet(key)
             End If
         End Function

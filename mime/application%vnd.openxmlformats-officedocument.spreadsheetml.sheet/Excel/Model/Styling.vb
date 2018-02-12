@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.worksheets
 Imports xlsxFont = Microsoft.VisualBasic.MIME.Office.Excel.XML.xl.font
@@ -24,7 +25,23 @@ Public Module Styling
 
     <Extension>
     Public Sub SetColorScaleStyles(xlsx As File, sheetName$, range$, style As colorScale)
+        Dim worksheet As worksheet = xlsx.GetWorksheet(sheetName)
+        Dim format As New conditionalFormatting With {
+            .sqref = range,
+            .cfRule = New cfRule With {
+                .colorScale = style,
+                .type = "colorScale",
+                .priority = 1
+            }
+        }
 
+        worksheet.conditionalFormattings.Add(format)
+
+        With "worksheet.update"
+            If xlsx.modify(.ByRef) = -1 Then
+                xlsx.modify.Add(.ByRef)
+            End If
+        End With
     End Sub
 
     Public Function ColorScale(min$, p50$, max$) As colorScale
