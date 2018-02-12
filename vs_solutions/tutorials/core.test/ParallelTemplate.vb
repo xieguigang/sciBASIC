@@ -23,61 +23,13 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-    ' M
-    ' o
-    ' d
-    ' u
-    ' l
-    ' e
-    '  
-    ' P
-    ' a
-    ' r
-    ' a
-    ' l
-    ' l
-    ' e
-    ' l
-    ' T
-    ' e
-    ' m
-    ' p
-    ' l
-    ' a
-    ' t
-    ' e
-    ' 
+    ' Module ParallelTemplate
     ' 
-
-    ' 
+    '     Sub: Main
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' S
-    ' u
-    ' b
-    ' :
-    '  
-    ' M
-    ' a
-    ' i
-    ' n
     ' 
-
     ' 
-
-    ' 
     ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
 
 #End Region
 

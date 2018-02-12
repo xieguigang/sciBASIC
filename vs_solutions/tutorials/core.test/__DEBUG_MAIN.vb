@@ -23,189 +23,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-    ' M
-    ' o
-    ' d
-    ' u
-    ' l
-    ' e
-    '  
-    ' _
-    ' _
-    ' D
-    ' E
-    ' B
-    ' U
-    ' G
-    ' _
-    ' M
-    ' A
-    ' I
-    ' N
-    ' 
+    ' Module __DEBUG_MAIN
     ' 
-
-    ' 
+    '     Function: Main
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' F
-    ' u
-    ' n
-    ' c
-    ' t
-    ' i
-    ' o
-    ' n
-    ' :
-    '  
-    ' M
-    ' a
-    ' i
-    ' n
     ' 
-
+    '     Sub: fffff, ListTest, testVariables
     ' 
-
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' S
-    ' u
-    ' b
-    ' :
-    '  
-    ' f
-    ' f
-    ' f
-    ' f
-    ' f
-    ' ,
-    '  
-    ' L
-    ' i
-    ' s
-    ' t
-    ' T
-    ' e
-    ' s
-    ' t
-    ' ,
-    '  
-    ' t
-    ' e
-    ' s
-    ' t
-    ' V
-    ' a
-    ' r
-    ' i
-    ' a
-    ' b
-    ' l
-    ' e
-    ' s
     ' 
-
+    '     Class TestJSON
     ' 
-
-    ' 
+    '         Properties: Data, Extensions, Name
     ' 
-
-    ' 
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' C
-    ' l
-    ' a
-    ' s
-    ' s
-    '  
-    ' T
-    ' e
-    ' s
-    ' t
-    ' J
-    ' S
-    ' O
-    ' N
-    ' 
     ' 
-
-    ' 
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    '  
-    '  
-    '  
-    '  
-    ' P
-    ' r
-    ' o
-    ' p
-    ' e
-    ' r
-    ' t
-    ' i
-    ' e
-    ' s
-    ' :
-    '  
-    ' D
-    ' a
-    ' t
-    ' a
-    ' ,
-    '  
-    ' E
-    ' x
-    ' t
-    ' e
-    ' n
-    ' s
-    ' i
-    ' o
-    ' n
-    ' s
-    ' ,
-    '  
-    ' N
-    ' a
-    ' m
-    ' e
     ' 
-
     ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
 
 #End Region
 

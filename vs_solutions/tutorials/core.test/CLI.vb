@@ -23,92 +23,13 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-    ' M
-    ' o
-    ' d
-    ' u
-    ' l
-    ' e
-    '  
-    ' C
-    ' L
-    ' I
-    ' 
+    ' Module CLI
     ' 
-
-    ' 
+    '     Function: CLIDocumentTest, ExceptionHandlerTest, Main
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' F
-    ' u
-    ' n
-    ' c
-    ' t
-    ' i
-    ' o
-    ' n
-    ' :
-    '  
-    ' C
-    ' L
-    ' I
-    ' D
-    ' o
-    ' c
-    ' u
-    ' m
-    ' e
-    ' n
-    ' t
-    ' T
-    ' e
-    ' s
-    ' t
-    ' ,
-    '  
-    ' E
-    ' x
-    ' c
-    ' e
-    ' p
-    ' t
-    ' i
-    ' o
-    ' n
-    ' H
-    ' a
-    ' n
-    ' d
-    ' l
-    ' e
-    ' r
-    ' T
-    ' e
-    ' s
-    ' t
-    ' ,
-    '  
-    ' M
-    ' a
-    ' i
-    ' n
     ' 
-
     ' 
-
-    ' 
     ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
 
 #End Region
 

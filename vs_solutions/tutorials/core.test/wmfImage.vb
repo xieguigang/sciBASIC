@@ -23,102 +23,16 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-    ' M
-    ' o
-    ' d
-    ' u
-    ' l
-    ' e
-    '  
-    ' w
-    ' m
-    ' f
-    ' I
-    ' m
-    ' a
-    ' g
-    ' e
-    ' 
+    ' Module wmfImage
     ' 
-
-    ' 
+    '     Function: colorsTest
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' F
-    ' u
-    ' n
-    ' c
-    ' t
-    ' i
-    ' o
-    ' n
-    ' :
-    '  
-    ' c
-    ' o
-    ' l
-    ' o
-    ' r
-    ' s
-    ' T
-    ' e
-    ' s
-    ' t
     ' 
-
+    '     Sub: Main, replaceColorsTest
     ' 
-
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' S
-    ' u
-    ' b
-    ' :
-    '  
-    ' M
-    ' a
-    ' i
-    ' n
-    ' ,
-    '  
-    ' r
-    ' e
-    ' p
-    ' l
-    ' a
-    ' c
-    ' e
-    ' C
-    ' o
-    ' l
-    ' o
-    ' r
-    ' s
-    ' T
-    ' e
-    ' s
-    ' t
     ' 
-
     ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
 
 #End Region
 

@@ -23,52 +23,13 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-    ' M
-    ' o
-    ' d
-    ' u
-    ' l
-    ' e
-    '  
-    ' M
-    ' o
-    ' d
-    ' u
-    ' l
-    ' e
-    ' 1
-    ' 
+    ' Module Module1
     ' 
-
-    ' 
+    '     Sub: Main
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' S
-    ' u
-    ' b
-    ' :
-    '  
-    ' M
-    ' a
-    ' i
-    ' n
     ' 
-
     ' 
-
-    ' 
     ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
 
 #End Region
 

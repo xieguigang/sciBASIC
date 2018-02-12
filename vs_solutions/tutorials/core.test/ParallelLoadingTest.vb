@@ -23,101 +23,16 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-    ' C
-    ' l
-    ' a
-    ' s
-    ' s
-    '  
-    ' P
-    ' a
-    ' r
-    ' a
-    ' l
-    ' l
-    ' e
-    ' l
-    ' L
-    ' o
-    ' a
-    ' d
-    ' i
-    ' n
-    ' g
-    ' T
-    ' e
-    ' s
-    ' t
-    ' 
+    ' Class ParallelLoadingTest
     ' 
-
-    ' 
+    '     Properties: ddddd, fffd
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' P
-    ' r
-    ' o
-    ' p
-    ' e
-    ' r
-    ' t
-    ' i
-    ' e
-    ' s
-    ' :
-    '  
-    ' d
-    ' d
-    ' d
-    ' d
-    ' d
-    ' ,
-    '  
-    ' f
-    ' f
-    ' f
-    ' d
     ' 
-
+    '     Function: Load
     ' 
-
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' F
-    ' u
-    ' n
-    ' c
-    ' t
-    ' i
-    ' o
-    ' n
-    ' :
-    '  
-    ' L
-    ' o
-    ' a
-    ' d
     ' 
-
     ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
 
 #End Region
 

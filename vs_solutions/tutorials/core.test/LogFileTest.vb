@@ -23,77 +23,13 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-    ' M
-    ' o
-    ' d
-    ' u
-    ' l
-    ' e
-    '  
-    ' L
-    ' o
-    ' g
-    ' F
-    ' i
-    ' l
-    ' e
-    ' T
-    ' e
-    ' s
-    ' t
-    ' 
+    ' Module LogFileTest
     ' 
-
-    ' 
+    '     Sub: Main, PrintTest, WriteTes
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' S
-    ' u
-    ' b
-    ' :
-    '  
-    ' M
-    ' a
-    ' i
-    ' n
-    ' ,
-    '  
-    ' P
-    ' r
-    ' i
-    ' n
-    ' t
-    ' T
-    ' e
-    ' s
-    ' t
-    ' ,
-    '  
-    ' W
-    ' r
-    ' i
-    ' t
-    ' e
-    ' T
-    ' e
-    ' s
     ' 
-
     ' 
-
-    ' 
     ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
 
 #End Region
 

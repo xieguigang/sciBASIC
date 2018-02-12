@@ -23,111 +23,16 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-    ' M
-    ' o
-    ' d
-    ' u
-    ' l
-    ' e
-    '  
-    ' T
-    ' a
-    ' b
-    ' l
-    ' e
-    ' T
-    ' e
-    ' s
-    ' t
-    ' 
+    ' Module TableTest
     ' 
-
-    ' 
+    '     Function: integers
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' F
-    ' u
-    ' n
-    ' c
-    ' t
-    ' i
-    ' o
-    ' n
-    ' :
-    '  
-    ' i
-    ' n
-    ' t
-    ' e
-    ' g
-    ' e
-    ' r
-    ' s
     ' 
-
+    '     Sub: assertTest, main, test_dictionary
     ' 
-
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' S
-    ' u
-    ' b
-    ' :
-    '  
-    ' a
-    ' s
-    ' s
-    ' e
-    ' r
-    ' t
-    ' T
-    ' e
-    ' s
-    ' t
-    ' ,
-    '  
-    ' m
-    ' a
-    ' i
-    ' n
-    ' ,
-    '  
-    ' t
-    ' e
-    ' s
-    ' t
-    ' _
-    ' d
-    ' i
-    ' c
-    ' t
-    ' i
-    ' o
-    ' n
-    ' a
-    ' r
-    ' y
     ' 
-
     ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
 
 #End Region
 

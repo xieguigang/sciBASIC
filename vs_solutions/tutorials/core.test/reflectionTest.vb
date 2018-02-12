@@ -23,72 +23,13 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-    ' M
-    ' o
-    ' d
-    ' u
-    ' l
-    ' e
-    '  
-    ' r
-    ' e
-    ' f
-    ' l
-    ' e
-    ' c
-    ' t
-    ' i
-    ' o
-    ' n
-    ' T
-    ' e
-    ' s
-    ' t
-    ' 
+    ' Module reflectionTest
     ' 
-
-    ' 
+    '     Sub: Main, testDefault
     ' 
-
-    '  
-    '  
-    '  
-    '  
-    ' S
-    ' u
-    ' b
-    ' :
-    '  
-    ' M
-    ' a
-    ' i
-    ' n
-    ' ,
-    '  
-    ' t
-    ' e
-    ' s
-    ' t
-    ' D
-    ' e
-    ' f
-    ' a
-    ' u
-    ' l
-    ' t
     ' 
-
     ' 
-
-    ' 
     ' 
-
-    ' 
-    ' 
-
-    ' 
-    ' 
-
 
 #End Region
 
