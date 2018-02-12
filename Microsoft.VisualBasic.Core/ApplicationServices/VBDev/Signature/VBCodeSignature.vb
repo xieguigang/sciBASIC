@@ -157,6 +157,10 @@ Namespace ApplicationServices.Development
                     .Skip(1) _
                     .Select(Function(l) New String(" "c, prefix.Length) & l) _
                     .JoinBy(ASCII.LF)
+
+                If Not methods.IsNullOrEmpty Then
+                    members += ""
+                End If
             End If
             If Not methods.IsNullOrEmpty Then
                 Dim types = methods _
@@ -171,6 +175,10 @@ Namespace ApplicationServices.Development
                         .Skip(1) _
                         .Select(Function(l) New String(" "c, prefix.Length) & l) _
                         .JoinBy(ASCII.LF)
+
+                    If types.Count > 1 Then
+                        members += ""
+                    End If
                 End If
                 If types.ContainsKey("Sub") Then
                     prefix = container.Description & $"    Sub: "
@@ -179,6 +187,10 @@ Namespace ApplicationServices.Development
                         .Skip(1) _
                         .Select(Function(l) New String(" "c, prefix.Length) & l) _
                         .JoinBy(ASCII.LF)
+
+                    If Not operators.IsNullOrEmpty Then
+                        members += ""
+                    End If
                 End If
             End If
             If Not operators.IsNullOrEmpty Then
