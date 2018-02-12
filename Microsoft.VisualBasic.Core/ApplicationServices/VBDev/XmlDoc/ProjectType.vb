@@ -54,11 +54,11 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         ''' <summary>
         ''' 因为属性存在参数，所以可能会出现重载的情况
         ''' </summary>
-        Protected properties As Dictionary(Of String, List(Of ProjectMember))
+        Protected Friend properties As Dictionary(Of String, List(Of ProjectMember))
         ''' <summary>
         ''' 会出现重载函数，所以这里也应该是一个list
         ''' </summary>
-        Protected methods As Dictionary(Of String, List(Of ProjectMember))
+        Protected Friend methods As Dictionary(Of String, List(Of ProjectMember))
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -70,6 +70,11 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Public Property Name As String
         Public Property Summary As String
         Public Property Remarks As String
+
+        Friend Sub New()
+            properties = New Dictionary(Of String, List(Of ProjectMember))
+            methods = New Dictionary(Of String, List(Of ProjectMember))
+        End Sub
 
         Public Sub New(projectNamespace As ProjectNamespace)
             Me.projectNamespace = projectNamespace

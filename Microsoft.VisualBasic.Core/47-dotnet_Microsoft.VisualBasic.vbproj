@@ -793,6 +793,7 @@
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Math\Information\Entropy.vb" />
     <Compile Include="Extensions\WebServices\Http\DataURI.vb" />
+    <Compile Include="Language\Value\ByRefValueExtensions.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="CommandLine\CLI\Scripting.vb" />
     <Compile Include="CommandLine\InteropService\Abstract.vb" />
