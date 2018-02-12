@@ -36,10 +36,22 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 Module test
 
     Sub Main()
+        stylingTest()
         styleModelTest()
 
         Call IOtest()
         ' Call test()
+    End Sub
+
+    Sub stylingTest()
+        Dim file = Excel.CreateNew
+        Dim style4 = Styling.ColorScale("black", "red", "green", "blue", "yellow")
+
+        Call file.SetColorScaleStyles("Sheet1", "A1:A100", style4)
+
+        Call file.SaveTo("D:\test.xlsx")
+
+        Pause()
     End Sub
 
     Sub styleModelTest()

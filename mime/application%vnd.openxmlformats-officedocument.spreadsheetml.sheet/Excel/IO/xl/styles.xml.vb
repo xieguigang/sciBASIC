@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging
 Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
@@ -200,10 +201,20 @@ Namespace XML.xl
         <XmlAttribute> Public Property indexed As String
         <XmlAttribute> Public Property lastClr As String
 
+        Public Overrides Function ToString() As String
+            Return rgb
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(color As Color) As ColorValue
             Return New ColorValue With {
                 .rgb = color.ToHtmlColor
             }
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Widening Operator CType(color As String) As ColorValue
+            Return color.TranslateColor
         End Operator
     End Class
 

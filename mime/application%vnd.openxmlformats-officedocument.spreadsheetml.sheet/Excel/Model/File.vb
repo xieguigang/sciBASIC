@@ -116,22 +116,33 @@ Public Class File : Implements IFileReference
                 End If
             End With
         Else
-            ' 进行添加
-            sheetID = xl.workbook.Add(sheetName)
-            xl.worksheets.Add(sheetID, worksheet)
-            ContentTypes.Overrides += New Type With {
-                .ContentType = OpenXML.worksheet,
-                .PartName = $"/xl/worksheets/{sheetID}.xml"
-            }
-
-            With "worksheet.add"
-                If modify.IndexOf(.ByRef) = -1 Then
-                    modify.Add(.ByRef)
-                End If
-            End With
+            Call addInternal(sheetName, worksheet)
         End If
 
         Return True
+    End Function
+
+    Private Sub addInternal(sheetName$, worksheet As worksheet)
+        ' 进行添加
+        Dim sheetID = xl.workbook.Add(sheetName)
+        xl.worksheets.Add(sheetID, worksheet)
+        ContentTypes.Overrides += New Type With {
+            .ContentType = OpenXML.worksheet,
+            .PartName = $"/xl/worksheets/{sheetID}.xml"
+        }
+
+        With "worksheet.add"
+            If modify.IndexOf(.ByRef) = -1 Then
+                modify.Add(.ByRef)
+            End If
+        End With
+    End Sub
+
+    Public Function AddSheetTable(sheetName As String) As worksheet
+        With New csv().CreateWorksheet(xl.sharedStrings)
+            Call addInternal(sheetName, .ByRef)
+            Return .ByRef
+        End With
     End Function
 
     ''' <summary>
@@ -153,7 +164,7 @@ Public Class File : Implements IFileReference
     ''' <param name="sheetName$"></param>
     ''' <returns></returns>
     Public Function GetTable(sheetName$) As csv
-        Dim worksheet As worksheet = xl.GetWorksheet(sheetName)
+        Dim worksheet As XML.xl.worksheets.worksheet = xl.GetWorksheet(sheetName)
 
         If worksheet Is Nothing Then
             Return Nothing
@@ -163,7 +174,7 @@ Public Class File : Implements IFileReference
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function GetWorksheet(sheetName$) As worksheet
+    Public Function GetWorksheet(sheetName$) As XML.xl.worksheets.worksheet
         Return xl.GetWorksheet(sheetName)
     End Function
 
@@ -174,7 +185,7 @@ Public Class File : Implements IFileReference
     ''' <param name="index">ZERO based array index.</param>
     ''' <returns></returns>
     Public Function GetTable(index As Integer) As csv
-        Dim worksheet As worksheet = xl.GetWorksheetByIndex(index)
+        Dim worksheet As XML.xl.worksheets.worksheet = xl.GetWorksheetByIndex(index)
 
         If worksheet Is Nothing Then
             Return Nothing
