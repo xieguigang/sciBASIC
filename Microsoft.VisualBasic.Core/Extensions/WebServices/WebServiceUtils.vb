@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::82f023281a5a86d95cb429f1436eaba2, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::a350c1159d362c5eb5224145c6c7cf3e, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module WebServiceUtils
+    ' 
+    '     Properties: DefaultUA, Protocols, Proxy
+    ' 
+    '     Function: __getMyIPAddress, BuildArgs, BuildReqparm, CheckValidationResult, GenerateDictionary
+    '               GetMyIPAddress, GetProxy, (+2 Overloads) PostRequest, UrlDecode, UrlEncode
+    '               UrlPathEncode
+    ' 
+    '     Sub: New, (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

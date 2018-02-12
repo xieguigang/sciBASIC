@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::25af564a40cdb3a1f94ef5c0986f0daf, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::6d5faa6bcf3388d507ff3c10097a01e2, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,29 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '  
+    ' 
+    '     Properties: APIList, APINameList, Count, ExecuteEmptyCli, ExecuteFile
+    '                 ExecuteNotFound, Info, IsReadOnly, ListCommandInfo, Stack
+    '                 Type
+    ' 
+    '     Function: __executeEmpty, __getsAllCommands, __methodInvoke, Contains, CreateEmptyCLIObject
+    '               (+3 Overloads) CreateInstance, (+3 Overloads) Execute, ExistsCommand, GetAllCommands, getAPI
+    '               GetEnumerator, GetEnumerator1, GetPossibleCommand, Help, ListingRelated
+    '               (+2 Overloads) Remove, SDKdocs, ToDictionary, ToString, TryGetValue
+    ' 
+    '     Sub: (+2 Overloads) Add, AddCommand, Clear, CopyTo, (+2 Overloads) Dispose
+    '          listingCommands, New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

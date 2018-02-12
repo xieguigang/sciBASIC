@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5b2b6f4a2345f0cd48a41acb72d2bd90, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
+﻿#Region "Microsoft.VisualBasic::5b2b6f4a2345f0cd48a41acb72d2bd90, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class RowWriter
+    ' 
+    '         Properties: Columns, MetaRow, SchemaProvider
+    ' 
+    '         Function: GetRowNames, ToRow
+    ' 
+    '         Sub: New
+    '         Delegate Function
+    ' 
+    '             Properties: HaveMeta, IsMetaIndexed
+    ' 
+    '             Function: __buildRowMeta, __buildRowNullMeta, __meta, CacheIndex, GetMetaTitles
+    '                       ToString
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

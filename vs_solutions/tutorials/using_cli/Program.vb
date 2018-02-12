@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18d0ca50b5ba65a7d12c250127146042, Program.vb"
+﻿#Region "Microsoft.VisualBasic::18d0ca50b5ba65a7d12c250127146042, vs_solutions\tutorials\using_cli\Program.vb"
 
     ' Author:
     ' 
@@ -26,26 +26,25 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Source file summaries:
+
+    ' /********************************************************************************/
+
+    ' Summaries:
 
     ' Module Program
     ' 
     '     Function: Main
     ' 
-    ' 
-    ' 
     ' Module CLI
     ' 
     '     Function: API1, CLIHelpInfoDemo, ScriptingTest, vbCode
-    ' 
-    ' 
     ' 
     ' Class CLIGrouping
     ' 
     ' 
     ' 
     ' 
-    ' 
+    ' /********************************************************************************/
 
 #End Region
 

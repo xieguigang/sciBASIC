@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::99a6d6569eedc29de0adc1397882ee35, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::327bedaf1a25c1b4f588d1acb92a6b6b, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,35 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class CommandLine
+    ' 
+    '         Properties: BoolFlags, CLICommandArgvs, Count, EnvironmentVariables, IsNothing
+    '                     IsNullOrEmpty, IsReadOnly, Keys, Name, ParameterList
+    '                     SingleValue, Tokens
+    ' 
+    '         Function: Assert, CheckMissingRequiredArguments, CheckMissingRequiredParameters, Contains, ContainsParameter
+    '                   GetBoolean, GetByte, GetBytes, GetChar, GetChars
+    '                   GetCommandsOverview, GetDateTime, GetDecimal, GetDictionary, GetDouble
+    '                   GetEnumerator, GetEnumerator1, GetFloat, GetFullDIRPath, GetFullFilePath
+    '                   GetGuid, GetInt16, GetInt32, GetInt64, GetObject
+    '                   GetOrdinal, GetString, GetValue, HavebFlag, IsNull
+    '                   IsTrue, OpenHandle, OpenStreamInput, OpenStreamOutput, ReadInput
+    '                   (+2 Overloads) Remove, ToArgumentVector, ToString
+    ' 
+    '         Sub: (+2 Overloads) Add, Clear, CopyTo
+    ' 
+    '         Operators: (+4 Overloads) -, ^, +, <, (+2 Overloads) <=
+    '                    >, (+2 Overloads) >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

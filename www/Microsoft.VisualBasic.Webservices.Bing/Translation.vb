@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::270ba81df8c7d6c9f4d383362569b6a4, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Translation.vb"
+﻿#Region "Microsoft.VisualBasic::daad7ebeb349d8bb7dabbc3353c2e4d3, www\Microsoft.VisualBasic.Webservices.Bing\Translation.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Translation
+    ' 
+    '     Function: GetTranslation
+    ' 
+    ' Class WordTranslation
+    ' 
+    '     Properties: Translations, Word
+    ' 
+    '     Function: ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

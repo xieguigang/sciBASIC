@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::3ef41ae379bbfb45ddc02bb0876b9ec9, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\WebResult.vb"
+﻿#Region "Microsoft.VisualBasic::3ef41ae379bbfb45ddc02bb0876b9ec9, www\Microsoft.VisualBasic.Webservices.Bing\WebResult.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class WebResult
+    ' 
+    '     Function: TryParse
+    ' 
+    ' Class SearchResult
+    ' 
+    '     Properties: [Next], CurrentPage, HaveNext, Results, Title
+    ' 
+    '     Function: NextPage, ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

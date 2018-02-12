@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::77614039bebd1e23ce6f386f2b824239, ..\sciBASIC#\vs_solutions\dev\vbproj\Template\Project.vb"
+﻿#Region "Microsoft.VisualBasic::77614039bebd1e23ce6f386f2b824239, vs_solutions\dev\vbproj\Template\Project.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,34 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Project
+    ' 
+    '     Properties: [Imports], ItemGroups, PropertyGroups, Targets
+    ' 
+    '     Function: GetProfile, RemoveNamespace, (+2 Overloads) Save, ToString
+    ' 
+    ' Class Target
+    ' 
+    ' 
+    ' 
+    ' Class Import
+    ' 
+    '     Function: ToString
+    ' 
+    ' Class ConditionValue
+    ' 
+    '     Properties: Condition, value
+    ' 
+    '     Function: ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

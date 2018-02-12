@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d4a9bb4082504823cac4937f2b1c37f4, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::a4668b409de5b8cdce02372798b36c88, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module VBMath
+    ' 
+    '         Function: (+7 Overloads) Abs, Acos, Asin, Atan, Atan2
+    '                   BigMul, (+2 Overloads) Ceiling, Cos, Cosh, Covariance
+    '                   Distance, (+2 Overloads) DivRem, Exp, (+2 Overloads) Floor, FormatNumeric
+    '                   Hypot, IEEERemainder, IsPowerOf2, (+2 Overloads) Log, Log10
+    '                   Log2, LogN, (+12 Overloads) Max, (+11 Overloads) Min, PoissonPDF
+    '                   Pow, Pow2, ProductALL, (+8 Overloads) Round, RSD
+    '                   (+2 Overloads) seq, (+7 Overloads) Sign, Sin, Sinh, Sqrt
+    '                   Tan, Tanh, (+2 Overloads) Truncate, WeighedAverage
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

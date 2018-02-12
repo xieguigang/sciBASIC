@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::278270daee8d57d9e2d94f54d4b29866, ..\sciBASIC#\mime\text%html\HTML\CSS\Parser\Enums\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4c001f8ce73a4a5d8dc9fd33c27f3e4b, mime\text%html\HTML\CSS\Parser\Enums\Extensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Extensions
+    ' 
+    '         Function: GetTagValue
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19cb1e767ff1e798f4b608f4f4e83f72, LicenseMgr\MainWindow.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::19cb1e767ff1e798f4b608f4f4e83f72, vs_solutions\dev\LicenseMgr\LicenseMgr\MainWindow.xaml.vb"
 
     ' Author:
     ' 

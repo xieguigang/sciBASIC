@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bec22e7bb958f2a0f0bbb6d576e3941, code.vb"
+﻿#Region "Microsoft.VisualBasic::8bec22e7bb958f2a0f0bbb6d576e3941, vs_solutions\tutorials\using_cli\code.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,10 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Source file summaries:
+
+    ' /********************************************************************************/
+
+    ' Summaries:
 
     '     Class CLI_Example
     ' 
@@ -35,8 +38,7 @@
     '         Sub: New
     ' 
     ' 
-    ' 
-    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5ecd2229c267c6f208a59d6c70edc280, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\ConfigMappings\ConfigurationMappings.vb"
+﻿#Region "Microsoft.VisualBasic::5ecd2229c267c6f208a59d6c70edc280, Microsoft.VisualBasic.Core\Serialization\ConfigMappings\ConfigurationMappings.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module ConfigurationMappings
+    ' 
+    '         Function: __getCustomMapping, __getReads_MappingHandle, __getWrite_MappingHandle, __knowsIsIgnored, GetNodeMapping
+    '                   LoadMapping, (+2 Overloads) WriteMapping
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

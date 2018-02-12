@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::15ca8b146eacf0ec7aab16b515c5ab10, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IForceDirected.vb"
+﻿#Region "Microsoft.VisualBasic::15ca8b146eacf0ec7aab16b515c5ab10, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Interfaces\IForceDirected.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,33 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Delegate Sub
+    ' 
+    ' 
+    '     Delegate Sub
+    ' 
+    ' 
+    '     Interface IForceDirected
+    ' 
+    '         Properties: Damping, graph, Repulsion, Stiffness, Threadshold
+    '                     WithinThreashold
+    ' 
+    '         Function: GetBoundingBox, GetPoint, Nearest
+    ' 
+    '         Sub: Calculate, Clear, EachEdge, EachNode, SetPhysics
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

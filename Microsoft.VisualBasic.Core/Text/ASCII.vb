@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a6662552e1367655d8bc7abffe981fee, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::a6662552e1367655d8bc7abffe981fee, Microsoft.VisualBasic.Core\Text\ASCII.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ASCII
+    ' 
+    '         Properties: AlphaNumericTable, Nonprintings, Symbols
+    ' 
+    '         Function: IsASCIIString, ReplaceQuot, TrimNonPrintings
+    '         Class [Byte]
+    ' 
+    '             Function: GetASCIISymbols
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

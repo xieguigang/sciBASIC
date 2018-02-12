@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c9b49f530f9064b6fc59d7ab8d9f014b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::c9b49f530f9064b6fc59d7ab8d9f014b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module HelperMethods
+    ' 
+    '         Function: ASCIIImage
+    ' 
+    '         Sub: WriteASCIIStream
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

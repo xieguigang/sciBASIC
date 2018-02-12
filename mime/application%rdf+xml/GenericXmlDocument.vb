@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::da39ff4c181d60a11fe9acbe31b09274, ..\sciBASIC#\mime\application%rdf+xml\GenericXmlDocument.vb"
+﻿#Region "Microsoft.VisualBasic::da39ff4c181d60a11fe9acbe31b09274, mime\application%rdf+xml\GenericXmlDocument.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,40 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class GenericXmlDocument
+    ' 
+    '         Properties: DocumentNodes, Uri
+    ' 
+    '         Function: CreateObjectFromXmlText, GetNodesValue, GetTokens, LoadDocument, ToString
+    ' 
+    '     Class ElementNode
+    ' 
+    '         Properties: Attributes, InternalText, Name, Value
+    ' 
+    '         Function: CreateObject, GetNodeValue, IsXmlElementNode, ToString
+    '         Class Attribute
+    ' 
+    '             Properties: Name, Value
+    ' 
+    '             Function: CreateObject, ToString
+    ' 
+    ' 
+    ' 
+    '     Class Node
+    ' 
+    '         Properties: ChildNodes, ElementNodes
+    ' 
+    '         Function: CreateObject, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

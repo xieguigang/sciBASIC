@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::9e893e9f3cd8a734b1866b28b403eb76, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\TestingMain.vb"
+﻿#Region "Microsoft.VisualBasic::c14f553b04596a2843ccae1bf5c83d57, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\TestingMain.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module TestingMain
+    ' 
+    '     Sub: Main
+    '     Class Student
+    ' 
+    '         Properties: Name
+    ' 
+    '         Function: [New], ToString
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

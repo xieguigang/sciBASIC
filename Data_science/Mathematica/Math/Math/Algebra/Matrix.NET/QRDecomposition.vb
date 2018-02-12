@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::938c1221b2b40024076eca7303c01923, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\QRDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::938c1221b2b40024076eca7303c01923, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\QRDecomposition.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class QRDecomposition
+    ' 
+    '         Properties: FullRank, H, Q, R
+    ' 
+    '         Function: Solve
+    ' 
+    '         Sub: ISerializable_GetObjectData, New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

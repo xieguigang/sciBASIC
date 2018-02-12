@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::39f304b96e1eae7e3019477ff8875cab, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssTable.vb"
+﻿#Region "Microsoft.VisualBasic::39f304b96e1eae7e3019477ff8875cab, mime\text%html\HTML\CSS\Render\CssTable.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,34 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class CssTable
+    ' 
+    '         Properties: AllRows, BodyRows, Caption, ColumnCount, ColumnMinWidths
+    '                     Columns, ColumnWidths, FooterBox, HeaderBox, HorizontalSpacing
+    '                     RowCount, TableBox, VerticalSpacing, WidthSpecified
+    ' 
+    '         Function: (+2 Overloads) CanReduceWidth, CreateColumn, GetAvailableCellWidth, GetAvailableWidth, GetCellRealColumnIndex
+    '                   GetCellWidth, GetColSpan, GetReductableColumns, GetRowSpan, GetSpan
+    '                   GetSpannedMinWidth, GetWidthSum
+    ' 
+    '         Sub: Analyze, Measure, MeasureWords, (+2 Overloads) New
+    '         Class SpacingBox
+    ' 
+    '             Properties: EndRow, StartRow
+    ' 
+    '             Sub: New
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

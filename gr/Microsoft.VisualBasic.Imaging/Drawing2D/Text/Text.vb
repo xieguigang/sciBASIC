@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d2f20568e51bc93a216cdb1f5ac4f6fe, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
+﻿#Region "Microsoft.VisualBasic::d2f20568e51bc93a216cdb1f5ac4f6fe, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module TextRender
+    ' 
+    '         Function: DrawHtmlText
+    ' 
+    '         Sub: RenderHTML
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

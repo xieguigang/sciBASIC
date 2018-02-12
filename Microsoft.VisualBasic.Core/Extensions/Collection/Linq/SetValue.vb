@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::fb23f87e901dbe3b09902ba28ad2c6d1, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SetValue.vb"
+﻿#Region "Microsoft.VisualBasic::fb23f87e901dbe3b09902ba28ad2c6d1, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SetValue.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure SetValuExtension
+    ' 
+    '         Function: InvokeSet, ToString
+    ' 
+    '     Class SetValue
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: New
+    '         Delegate Function
+    ' 
+    '             Function: GetEnumerator, GetSet, IEnumerable_GetEnumerator, InvokeSet, (+2 Overloads) InvokeSetValue
+    '             Operators: <=, >=
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

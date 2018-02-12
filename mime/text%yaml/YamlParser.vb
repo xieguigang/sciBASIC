@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::e89ef6f076d93b5a65de831f9e92d7d0, ..\sciBASIC#\mime\text%yaml\YamlParser.vb"
+﻿#Region "Microsoft.VisualBasic::e89ef6f076d93b5a65de831f9e92d7d0, mime\text%yaml\YamlParser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,48 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class YamlParser
+    ' 
+    '         Function: ParseAliasNode, ParseAnchor, ParseAnchorName, ParseBlank, ParseBlockCollection
+    '                   ParseBlockCollectionEntry, ParseBlockCollectionEntryOptionalIndent, ParseBlockContent, ParseBlockExplicitKey, ParseBlockExplicitValue
+    '                   ParseBlockKey, ParseBlockMapping, ParseBlockMappingEntry, ParseBlockScalar, ParseBlockScalarModifier
+    '                   ParseBlockSequence, ParseBlockSequenceEntry, ParseBlockSimpleKey, ParseBlockSimpleValue, ParseChompedLineBreak
+    '                   ParseChompingIndicator, ParseDataItem, ParseDigit, ParseDirective, ParseDirectiveName
+    '                   ParseDirectiveParameter, ParseDoubleQuotedMultiLine, ParseDoubleQuotedMultiLineBreak, ParseDoubleQuotedMultiLineFist, ParseDoubleQuotedMultiLineInner
+    '                   ParseDoubleQuotedMultiLineLast, ParseDoubleQuotedSingleLine, ParseDoubleQuotedText, ParseEmptyBlock, ParseEmptyFlow
+    '                   ParseEmptyLineBlock, ParseEscapedSingleQuote, ParseEscapeSequence, ParseExplicitDocument, ParseExplicitKey
+    '                   ParseExplicitValue, ParseFlowContentInBlock, ParseFlowContentInFlow, ParseFlowKey, ParseFlowMapping
+    '                   ParseFlowMappingEntry, ParseFlowNodeInFlow, ParseFlowScalarInBlock, ParseFlowScalarInFlow, ParseFlowSequence
+    '                   ParseFlowSequenceEntry, ParseFlowSingPair, ParseFoldedLine, ParseFoldedLines, ParseFoldedText
+    '                   ParseGlobalTagPrefix, ParseHexDigit, ParseImplicitDocument, ParseIndentedBlock, ParseIndentedBlockNode
+    '                   ParseIndentedContent, ParseIndentIndicator, ParseInteger, ParseLetter, ParseLineFolding
+    '                   ParseLiteralContent, ParseLiteralFirst, ParseLiteralInner, ParseLiteralText, ParseLocalTagPrefix
+    '                   ParseMapping, ParseNamedTagHandle, ParseNodeProperty, ParseNonBreakChar, ParseNonSpaceChar
+    '                   ParseNonSpaceSep, ParseNonSpecificTag, ParseNormalizedLineBreak, ParsePlainText, ParsePlainTextChar
+    '                   ParsePlainTextCharInFlow, ParsePlainTextFirstChar, ParsePlainTextFirstCharInFlow, ParsePlainTextInFlow, ParsePlainTextInFlowMoreLine
+    '                   ParsePlainTextInFlowSingleLine, ParsePlainTextMoreLine, ParsePlainTextMultiLine, ParsePlainTextSingleLine, ParsePrimaryTagHandle
+    '                   ParseReservedDirective, ParseReservedLineBreak, ParseScalar, ParseSecondaryTagHandle, ParseSeparatedBlock
+    '                   ParseSeparatedBlockNode, ParseSeparatedContent, ParseSequence, ParseShorthandTag, ParseSimpleKey
+    '                   ParseSingleQuotedMultiLine, ParseSingleQuotedMultiLineFist, ParseSingleQuotedMultiLineInner, ParseSingleQuotedMultiLineLast, ParseSingleQuotedSingleLine
+    '                   ParseSingleQuotedText, ParseSpace, ParseSpacedLine, ParseSpacedLines, ParseSpacedPlainTextChar
+    '                   ParseSpacedPlainTextCharInFlow, ParseTag, ParseTagChar, ParseTagDirective, ParseTagHandle
+    '                   ParseTagPrefix, ParseUriChar, ParseVerbatimTag, ParseWordChar, ParseYamlDirective
+    '                   (+2 Overloads) ParseYamlStream, ParseYamlVersion
+    ' 
+    '         Sub: ParseComment, ParseComments, ParseDocumentMarker, ParseEmptyLinePlain, ParseEmptyLineQuoted
+    '              ParseEndOfDocument, ParseEscapedLineBreak, ParseIgnoredBlank, ParseIgnoredSpace, ParseIndent
+    '              ParseInlineComment, ParseInlineComments, ParseLineBreak, ParseSeparationLines, ParseSeparationLinesInFlow
+    '              ParseSeparationSpace, ParseSeparationSpaceAsIndent
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

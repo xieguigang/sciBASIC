@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::9e273d1dd8fe70be680903255e44fe5d, ..\sciBASIC#\mime\application%rdf+xml\RDF.vb"
+﻿#Region "Microsoft.VisualBasic::9e273d1dd8fe70be680903255e44fe5d, mime\application%rdf+xml\RDF.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class RDF
+    ' 
+    '     Function: (+2 Overloads) LoadDocument, ToString
+    '     Structure __docHelper
+    ' 
+    '         Function: ProcDoc
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

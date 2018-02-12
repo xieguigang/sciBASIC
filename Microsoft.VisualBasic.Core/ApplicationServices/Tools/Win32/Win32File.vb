@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5fabdcf92fe163a9b8eff4cd5bd91ce1, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Win32\Win32File.vb"
+﻿#Region "Microsoft.VisualBasic::5fabdcf92fe163a9b8eff4cd5bd91ce1, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Win32\Win32File.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Win32File
+    ' 
+    '         Function: CreateFileW, GetAccess, GetMode, GetShare, (+3 Overloads) Open
+    '                   OpenRead, OpenWrite, ReadAllText, SetFilePointer
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

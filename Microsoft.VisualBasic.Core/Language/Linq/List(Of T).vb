@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2db14890d8c6eb37e48f0c97e7cc5008, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::d810441c6e952a6e4fde6ea28e74c765, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class List
+    ' 
+    '         Properties: First, Last
+    ' 
+    '         Function: Pop, PopAll, ValuesEnumerator
+    ' 
+    '         Sub: (+5 Overloads) New
+    ' 
+    '         Operators: (+5 Overloads) -, *, ^, (+6 Overloads) +, (+2 Overloads) <
+    '                    (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) >, >>
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

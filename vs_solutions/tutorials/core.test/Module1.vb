@@ -1,26 +1,42 @@
-﻿#Region "Microsoft.VisualBasic::ca60e3b27c9bd92a969dccdbf9d53657, Module1.vb"
+﻿#Region "Microsoft.VisualBasic::36255e280f7c86337a8103ba52bbd665, vs_solutions\tutorials\core.test\Module1.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
     ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Source file summaries:
+
+    ' /********************************************************************************/
+
+    ' Summaries:
 
     ' Module Module1
     ' 
     '     Sub: Main, New
-    ' 
     '     Structure Foo
     ' 
     '         Operators: (+2 Overloads) Like
-    ' 
-    ' 
     ' 
     '     Structure Lazy
     ' 
@@ -28,7 +44,7 @@
     ' 
     ' 
     ' 
-    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -206,5 +222,3 @@ Module Module1
     End Structure
 
 End Module
-
-

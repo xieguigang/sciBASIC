@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a150920ec0a7947b3df7b9c40648d9be, ..\sciBASIC#\www\githubAPI\Class\Repositories.vb"
+﻿#Region "Microsoft.VisualBasic::a150920ec0a7947b3df7b9c40648d9be, www\githubAPI\Class\Repositories.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,36 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Repository
+    ' 
+    '         Properties: [private], archive_url, assignees_url, blobs_url, branches_url
+    '                     clone_url, collaborators_url, comments_url, commits_url, compare_url
+    '                     contents_url, contributors_url, created_at, default_branch, deployments_url
+    '                     description, downloads_url, events_url, fork, forks_count
+    '                     forks_url, full_name, git_commits_url, git_refs_url, git_tags_url
+    '                     git_url, has_downloads, has_issues, has_pages, has_wiki
+    '                     homepage, hooks_url, html_url, id, issue_comment_url
+    '                     issue_events_url, issues_url, keys_url, labels_url, language
+    '                     languages_url, merges_url, milestones_url, mirror_url, name
+    '                     notifications_url, open_issues_count, owner, permissions, pulls_url
+    '                     pushed_at, releases_url, size, ssh_url, stargazers_count
+    '                     stargazers_url, statuses_url, subscribers_url, subscription_url, svn_url
+    '                     tags_url, teams_url, trees_url, updated_at, url
+    '                     watchers_count
+    ' 
+    '     Class permissions
+    ' 
+    '         Properties: admin, pull, push
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

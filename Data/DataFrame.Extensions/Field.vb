@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c1e22f783d01499e74ec20d2bcbc8e5d, ..\sciBASIC#\Data\DataFrame.Extensions\Field.vb"
+﻿#Region "Microsoft.VisualBasic::c1e22f783d01499e74ec20d2bcbc8e5d, Data\DataFrame.Extensions\Field.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,28 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Field
+    ' 
+    '     Properties: Binding, BindProperty, InnerClass, Name, Type
+    ' 
+    '     Function: GetValue, ToString
+    ' 
+    ' Class [Class]
+    ' 
+    '     Properties: Fields, Stack, Type
+    ' 
+    '     Function: GetEnumerator, GetField, (+2 Overloads) GetSchema, IEnumerable_GetEnumerator, ToString
+    ' 
+    '     Sub: Remove
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::51c1ef317f1fbcb8a462eb826c909754, ..\sciBASIC#\Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9596757001635b90df160347913d7a2f, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Extensions
+    ' 
+    '         Function: asCharacter, AsCharacter, (+2 Overloads) AsDataSet, CreateObject, DataFrame
+    '                   EuclideanDistance, GroupBy, Matrix, NamedMatrix, Project
+    '                   (+2 Overloads) PropertyNames, Transpose, Values, Vector
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::9ce5f37811f510608732de243d8a4c59, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\BaseClass.vb"
+﻿#Region "Microsoft.VisualBasic::72a6dcacf718ed181ca3abb4dae1c5e3, Microsoft.VisualBasic.Core\Language\BaseClass.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Interface IClassObject
+    ' 
+    '         Properties: Extension
+    ' 
+    '     Class BaseClass
+    ' 
+    '         Properties: Extension
+    ' 
+    '         Function: __toString, ReadProperty, ToString
+    '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::f719f4941b3c4b4c096666b324159b4a, ..\sciBASIC#\Data_science\Graph\API\Dijkstra\Route.vb"
+﻿#Region "Microsoft.VisualBasic::f719f4941b3c4b4c096666b324159b4a, Data_science\Graph\API\Dijkstra\Route.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Route
+    ' 
+    '         Properties: Connections, Cost, Count, Identity, IsReadOnly
+    ' 
+    '         Function: Contains, ContainsNode, GetEnumerator, GetEnumerator1, IndexOf
+    '                   Remove, ToString
+    ' 
+    '         Sub: Add, Clear, CopyTo, Insert, New
+    '              RemoveAt, SetValue
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

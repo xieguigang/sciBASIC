@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::43843c45c604123e16a79543541b1485, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\AxisScalling.vb"
+﻿#Region "Microsoft.VisualBasic::82a87b1d193b7d92c9267c2418b8155f, Data_science\Mathematica\Plot\Plots\g\Axis\AxisScalling.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module AxisScalling
+    ' 
+    '         Function: __fix, __max, AxisExpression, (+3 Overloads) CreateAxisTicks, (+2 Overloads) GetAxisByTick
+    '                   (+2 Overloads) GetAxisValues
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

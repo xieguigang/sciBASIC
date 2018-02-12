@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::1fb697c1532f7c20ad396cbc0ae34ac8, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\LanguageExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b09890ca24056e526d08a965c88bf3e6, Microsoft.VisualBasic.Core\Language\Linq\LanguageExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module LanguageExtensions
+    ' 
+    '         Sub: (+2 Overloads) Add
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

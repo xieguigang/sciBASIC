@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::956ebcd8a97a2cc25b960fde016dcc9d, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
+﻿#Region "Microsoft.VisualBasic::956ebcd8a97a2cc25b960fde016dcc9d, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Tasks\TaskQueue.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,34 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Interface ITaskHandle
+    ' 
+    '         Function: Run
+    ' 
+    '     Class TaskQueue
+    ' 
+    '         Properties: RunningTask, Tasks, uid
+    ' 
+    '         Function: (+2 Overloads) Join
+    ' 
+    '         Sub: __taskQueueEXEC, (+2 Overloads) Dispose, (+2 Overloads) Enqueue, New
+    '         Structure __task
+    ' 
+    '             Properties: Value
+    ' 
+    '             Sub: Run
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

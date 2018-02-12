@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d465031eff0b145583044cc413b34a58, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::d465031eff0b145583044cc413b34a58, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module EmitReflection
+    ' 
+    '     Function: __getValue, AsLambda, CreateObject, Description, Enums
+    '               GetAllEnumFlags, (+3 Overloads) GetAssemblyDetails, GetDelegateInvokeEntryPoint, GetDouble, GetInt
+    '               GetTypesHelper, GetVersion, IsNumericType, ModuleVersion, ResourcesSatellite
+    '               Source
+    ' 
+    '     Sub: RunApp
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

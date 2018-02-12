@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::3444666dfe24851c4ed4969b0ed2f69f, ..\sciBASIC#\gr\network-visualization\NetworkCanvas\IGraphicsEngine.vb"
+﻿#Region "Microsoft.VisualBasic::3444666dfe24851c4ed4969b0ed2f69f, gr\network-visualization\NetworkCanvas\IGraphicsEngine.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Interface IGraphicsEngine
+    ' 
+    '     Properties: ShowLabels
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

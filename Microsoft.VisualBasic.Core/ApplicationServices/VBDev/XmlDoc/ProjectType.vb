@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::bcbc0b04f945d77fb8fb9e1f660d3217, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
+﻿#Region "Microsoft.VisualBasic::c252ce7e2743d86c472f5af9a6b501e1, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ProjectType
+    ' 
+    '         Properties: [Namespace], Name, Remarks, Summary
+    ' 
+    '         Function: EnsureEvent, EnsureField, EnsureMethod, EnsureProperty, GetEvent
+    '                   GetField, getInternal, GetMethods, GetProperties, ToString
+    ' 
+    '         Sub: LoadFromNode, (+4 Overloads) New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

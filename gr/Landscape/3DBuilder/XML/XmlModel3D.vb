@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c9d4f6e8b783c3322caefd877528f736, ..\sciBASIC#\gr\Landscape\3DBuilder\XML\XmlModel3D.vb"
+﻿#Region "Microsoft.VisualBasic::c9d4f6e8b783c3322caefd877528f736, gr\Landscape\3DBuilder\XML\XmlModel3D.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,29 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '  
+    ' 
+    '     Properties: build, resources, unit
+    ' 
+    '     Function: GetSurfaces
+    ' 
+    '     Class build
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class item
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

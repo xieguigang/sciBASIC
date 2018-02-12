@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d62ae946441fa096e1e0935f826d82a8, ..\sciBASIC#\Data_science\Mathematica\Math\Randomizer\Randomizer.vb"
+﻿#Region "Microsoft.VisualBasic::d62ae946441fa096e1e0935f826d82a8, Data_science\Mathematica\Math\Randomizer\Randomizer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Randomizer
+    ' 
+    '     Function: (+3 Overloads) [Next], __getRandom, __getRandoms, GetRandomInts, GetRandomNormalDeviates
+    '               GetRandomPercentages, NextDouble, Sample
+    ' 
+    '     Sub: (+2 Overloads) New, NextBytes
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

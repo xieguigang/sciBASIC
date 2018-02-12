@@ -1,28 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::ed9f36c089eea486f381dad0812f6d40, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::ff5db45a60e5f1942f38e43128e99511, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module StringHelpers
+    ' 
+    '     Properties: NonStrictCompares, StrictCompares
+    ' 
+    '     Function: __json, AllEquals, AppendLine, CharString, (+2 Overloads) Count
+    '               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
+    '               GetBetween, GetEMails, GetStackValue, (+2 Overloads) GetTagValue, GetURLs
+    '               IgnoreCase, Intersection, IsNullOrEmpty, JoinBy, Lookup
+    '               Matches, (+2 Overloads) MaxLengthString, RepeatString, ReplaceChars, Reverse
+    '               RNull, SaveTo, Split, SplitBy, StringReplace
+    '               StripBlank, Strips, TextEquals, TokenCountIgnoreCase, ToTruncateInt32
+    '               ToTruncateInt64, WildcardsLocated
+    ' 
+    '     Sub: Parts
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

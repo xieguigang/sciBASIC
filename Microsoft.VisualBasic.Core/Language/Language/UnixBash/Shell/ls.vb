@@ -1,28 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::755273a39336f5a933eca0e0a539a9e1, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\ls.vb"
+﻿#Region "Microsoft.VisualBasic::7bc6884824e06fb764836a71aa358d8f, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\ls.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Search
+    ' 
+    '         Properties: SearchType, wildcards
+    ' 
+    '         Function: Clone, ToString
+    '         Operators: (+3 Overloads) -, <, <<, <=, >
+    '                    >=
+    ' 
+    '     Structure wildcardsCompatible
+    ' 
+    '         Function: IsMatch
+    ' 
+    '     Structure SearchOpt
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: (+2 Overloads) New
+    '         Enum Options
+    ' 
+    '             Directory, Ext, LongName, None, Recursive
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

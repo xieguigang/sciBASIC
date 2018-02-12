@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::3d1f20edf0b7c1eb08f5f2fe33692bbb, ..\sciBASIC#\Data\Trinity\Html\Html2Article.vb"
+﻿#Region "Microsoft.VisualBasic::3d1f20edf0b7c1eb08f5f2fe33692bbb, Data\Trinity\Html\Html2Article.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Html2Article
+    ' 
+    '     Properties: AppendMode, Depth, LimitCount
+    ' 
+    '     Function: FormatTag, GetArticle, GetPublishDate, GetTitle
+    ' 
+    '     Sub: GetContent
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

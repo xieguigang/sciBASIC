@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a9b14135004a7ea01f518ba84a3636e2, ..\sciBASIC#\Data\BinaryData\BinaryData\Storage\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::a9b14135004a7ea01f518ba84a3636e2, Data\BinaryData\BinaryData\Storage\Reflection.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Reflection
+    ' 
+    '     Function: CreateReader, CreateWriter, ReadObject, WriteObject
+    ' 
+    ' Class SchemaTree
+    ' 
+    '     Properties: BaseType, Schema, Tree
+    ' 
+    '     Function: BuildTree, ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

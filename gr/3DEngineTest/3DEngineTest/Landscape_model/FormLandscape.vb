@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::413d331f9ce38b02e45bddcaca9f4d08, ..\sciBASIC#\gr\3DEngineTest\3DEngineTest\Landscape_model\FormLandscape.vb"
+﻿#Region "Microsoft.VisualBasic::413d331f9ce38b02e45bddcaca9f4d08, gr\3DEngineTest\3DEngineTest\Landscape_model\FormLandscape.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class FormLandscape
+    ' 
+    '     Sub: __isometricLoad, AutoRotateToolStripMenuItem_Click, FormLandscape_Load, IsometricComplexExampleToolStripMenuItem_Click, IsometricGridToolStripMenuItem_Click
+    '          IsometricKnotToolStripMenuItem_Click, IsometricPieToolStripMenuItem_Click, LightToolStripMenuItem_Click, Load3mfToolStripMenuItem_Click, RemoveTexturesToolStripMenuItem_Click
+    '          ResetToolStripMenuItem_Click, ResetToolStripMenuItem1_Click, ResetToolStripMenuItem2_Click, RotateXToolStripMenuItem_Click, RotateYToolStripMenuItem_Click
+    '          RotateZToolStripMenuItem_Click, SetBackgroundColorToolStripMenuItem_Click, SetLightColorToolStripMenuItem_Click, TrackBar1_Scroll, trbFOV_Scroll
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

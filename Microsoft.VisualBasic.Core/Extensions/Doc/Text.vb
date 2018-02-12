@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::781e78c677f5fac97c3ad5f606c8731e, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::781e78c677f5fac97c3ad5f606c8731e, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module TextDoc
+    ' 
+    '     Function: ForEachChar, IterateAllLines, LineIterators, LoadTextDoc, OpenWriter
+    '               ReadAllLines, ReadAllText, SaveTSV, SaveWithHTMLEncoding, TsvHeaders
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

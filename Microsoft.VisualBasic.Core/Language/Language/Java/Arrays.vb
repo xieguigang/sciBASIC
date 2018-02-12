@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::95023b0b53a9e88f269b159ac92282bd, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\Java\Arrays.vb"
+﻿#Region "Microsoft.VisualBasic::95023b0b53a9e88f269b159ac92282bd, Microsoft.VisualBasic.Core\Language\Language\Java\Arrays.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Arrays
+    ' 
+    '         Function: copyOfRange, Max, Min, Shuffle, sublist
+    ' 
+    '         Sub: Fill
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

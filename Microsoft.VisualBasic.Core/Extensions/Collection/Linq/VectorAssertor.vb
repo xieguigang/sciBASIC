@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::730427f4a9abf5b32dc2a672b92d2ec2, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\VectorAssertor.vb"
+﻿#Region "Microsoft.VisualBasic::730427f4a9abf5b32dc2a672b92d2ec2, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\VectorAssertor.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure VectorAssertor
+    ' 
+    '         Function: ToString
+    '         Operators: <>, =, (+2 Overloads) Like
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

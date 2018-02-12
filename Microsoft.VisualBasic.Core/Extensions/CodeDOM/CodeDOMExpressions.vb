@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::062abf9170cbd65288b462d737aac04f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\CodeDOM\CodeDOMExpressions.vb"
+﻿#Region "Microsoft.VisualBasic::062abf9170cbd65288b462d737aac04f, Microsoft.VisualBasic.Core\Extensions\CodeDOM\CodeDOMExpressions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module CodeDOMExpressions
+    ' 
+    '         Properties: EntryPoint
+    ' 
+    '         Function: (+4 Overloads) [Call], [CType], [GetType], (+4 Overloads) [New], (+2 Overloads) [Return]
+    '                   (+2 Overloads) Argument, Comments, DeclareFunc, (+2 Overloads) Field, FieldRef
+    '                   GetValue, (+3 Overloads) LocalsInit, LocalVariable, (+2 Overloads) Reference, Type
+    '                   Value, ValueAssign
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

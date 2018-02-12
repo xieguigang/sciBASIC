@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::cf3f9fd815b4dc6e4d1c97ab5b908ec5, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\Protocols\POST.vb"
+﻿#Region "Microsoft.VisualBasic::cf3f9fd815b4dc6e4d1c97ab5b908ec5, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\Protocols\POST.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,31 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class LogonPOST
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Function: Serialize
+    ' 
+    '     Sub: (+2 Overloads) New
+    ' 
+    '     Class BroadcastPOST
+    ' 
+    '         Function: Serialize
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

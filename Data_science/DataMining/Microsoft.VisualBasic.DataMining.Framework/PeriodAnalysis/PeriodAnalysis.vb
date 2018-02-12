@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2c3b502a1524f0eb72a8052b6228940d, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::2c3b502a1524f0eb72a8052b6228940d, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module PeriodAnalysis
+    ' 
+    '         Function: Analysis, ConvertData, FilteringData, LoadDataFromCsv
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a75ec8e59518544fa95d4c840d5bb2a2, ..\sciBASIC#\Data\DataFrame\IO\csv\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::a75ec8e59518544fa95d4c840d5bb2a2, Data\DataFrame\IO\csv\Tokenizer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Tokenizer
+    ' 
+    '         Function: CharsParser, IsEmptyRow, RegexTokenizer
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

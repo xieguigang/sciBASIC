@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::733def1b25e3d3aa0c0087c8b509228b, ..\sciBASIC#\Data_science\Mathematica\Plot\test\RegressionPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::46846a79968d968d90bebaad8fd0979a, Data_science\Mathematica\Plot\test\RegressionPlotTest.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module RegressionPlotTest
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -41,4 +54,3 @@ Module RegressionPlotTest
         Pause()
     End Sub
 End Module
-

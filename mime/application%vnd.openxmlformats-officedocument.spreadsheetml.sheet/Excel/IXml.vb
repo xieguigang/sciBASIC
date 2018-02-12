@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::e45ba7a7b38d087fda2074ee05a6a4ec, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IXml.vb"
+﻿#Region "Microsoft.VisualBasic::e45ba7a7b38d087fda2074ee05a6a4ec, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IXml.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class IXml
+    ' 
+    '     Function: ToString, WriteXml
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

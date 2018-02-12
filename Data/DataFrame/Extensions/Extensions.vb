@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d92da4ab815e72aac4f3a271cb1a0ff4, ..\sciBASIC#\Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e56f8614b8a1ef389bfcba9da7b5bfb6, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Extensions
+    ' 
+    '     Function: DataFrame, GetLocusMapName, (+2 Overloads) LoadCsv, LoadTsv, SaveDataSet
+    '               (+2 Overloads) SaveTable, (+2 Overloads) SaveTo, TabExport
+    ' 
+    '     Sub: New
+    '     Structure __loadHelper
+    ' 
+    '         Function: LoadObject
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

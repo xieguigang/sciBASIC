@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::e11896bc222b9bf6045983c6f1674067, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\ImageData.vb"
+﻿#Region "Microsoft.VisualBasic::a5edf9acba440d4bd079aada56b8ee60, Data_science\Mathematica\Plot\Plots\ImageData.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module ImageDataExtensions
+    ' 
+    '     Function: Image2DMap, Image3DMap, PointZProvider, SurfaceProvider
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

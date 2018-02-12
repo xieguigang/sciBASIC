@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a12f36e5335ed7b5e9c5c966ddac4d2f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::a12f36e5335ed7b5e9c5c966ddac4d2f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure DesignerExpression
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: New
+    '         Delegate Function
+    ' 
+    '             Function: alpha, darker, lighter, Modify, reverse
+    '                       skip, take
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

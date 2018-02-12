@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::afc356c1cc1dec30a5c9c468f385986e, ..\sciBASIC#\Data\DataFrame\IO\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::afc356c1cc1dec30a5c9c468f385986e, Data\DataFrame\IO\DataFrame.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,32 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DataFrame
+    ' 
+    '         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
+    '                     IsClosed, Item, RecordsAffected, SchemaOridinal
+    ' 
+    '         Function: [Select], __createObject, __createSchemaOridinal, __createTableVector, __getColumnList
+    '                   __reviewColumnHeader, AddAttribute, CreateDataSource, CreateObject, csv
+    '                   EnumerateData, Generate, GetBoolean, GetByte, GetBytes
+    '                   GetChar, GetChars, GetData, GetDataTypeName, GetDateTime
+    '                   GetDecimal, GetDouble, GetEnumerator2, GetFieldType, GetFloat
+    '                   GetGuid, GetInt16, GetInt32, GetInt64, GetName
+    '                   GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
+    '                   GetValues, IDataRecord_GetValue, IsDBNull, Load, Read
+    '                   ToString
+    ' 
+    '         Sub: ChangeMapping, Close, CopyFrom, New, Reset
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

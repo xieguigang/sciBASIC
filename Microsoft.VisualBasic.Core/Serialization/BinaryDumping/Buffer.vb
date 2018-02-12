@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::71c92b8b60e8518345f9d0cb949f6090, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\BinaryDumping\Buffer.vb"
+﻿#Region "Microsoft.VisualBasic::71c92b8b60e8518345f9d0cb949f6090, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\Buffer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,36 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure Buffer
+    ' 
+    '         Properties: TotalBytes
+    ' 
+    '         Function: Serialize, ToString
+    ' 
+    '         Sub: New
+    ' 
+    '     Delegate Function
+    ' 
+    ' 
+    '     Delegate Function
+    ' 
+    ' 
+    '     Module BufferAPI
+    ' 
+    '         Function: CreateBuffer, GetBuffer
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

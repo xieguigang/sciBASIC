@@ -1,36 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::e74997eff57f140852aa7964c22bdd7b, VectorTest.vb"
+﻿#Region "Microsoft.VisualBasic::98809a4610d68f722cfb481d3b2688a3, vs_solutions\tutorials\core.test\VectorTest.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
     ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Source file summaries:
+
+    ' /********************************************************************************/
+
+    ' Summaries:
 
     ' Module VectorTest
     ' 
     '     Sub: Main
-    ' 
     '     Structure fdddd
     ' 
     '         Operators: -, *, \, ^, (+2 Overloads) And
     '                    (+2 Overloads) Like, (+2 Overloads) Mod, (+2 Overloads) Or, (+2 Overloads) Xor
     ' 
-    ' 
     '     Structure str
     ' 
     '         Properties: pattern
-    ' 
     '         Operators: (+2 Overloads) *, +, (+2 Overloads) Like
     ' 
     ' 
     ' 
-    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -233,5 +249,3 @@ Module VectorTest
         Pause()
     End Sub
 End Module
-
-

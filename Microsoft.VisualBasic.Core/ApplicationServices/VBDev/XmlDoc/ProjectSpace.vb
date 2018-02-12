@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::72583ecbe0ad701ec1f8fbc8c7be7a1c, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
+﻿#Region "Microsoft.VisualBasic::72583ecbe0ad701ec1f8fbc8c7be7a1c, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ProjectSpace
+    ' 
+    '         Function: EnsureProject, GetEnumerator, GetProject, IEnumerable_GetEnumerator, ToString
+    ' 
+    '         Sub: ImportFromXmlDocFile, ImportFromXmlDocFolder, LoadFile, New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

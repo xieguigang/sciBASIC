@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::7a992c9f33967f1e9fa3af6e31d73bb3, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::8381b47f49d304134f1a91b078311e9a, Data_science\Mathematica\Plot\Plots\3D\Scatter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Scatter
+    ' 
+    '         Function: (+2 Overloads) Plot
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

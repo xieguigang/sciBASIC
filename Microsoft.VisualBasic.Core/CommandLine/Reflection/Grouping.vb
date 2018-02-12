@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::9b8ec8a564ea48316af97c0e2daa02e6, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\Grouping.vb"
+﻿#Region "Microsoft.VisualBasic::9b8ec8a564ea48316af97c0e2daa02e6, Microsoft.VisualBasic.Core\CommandLine\Reflection\Grouping.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Grouping
+    ' 
+    '         Properties: GroupData
+    ' 
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
+    ' 
+    '         Sub: New
+    '         Class Groups
+    ' 
+    '             Properties: Data
+    ' 
+    '             Sub: New
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

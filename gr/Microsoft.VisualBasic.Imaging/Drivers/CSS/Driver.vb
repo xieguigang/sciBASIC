@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::7198ae6f70bd1c6b353198bf905ab13f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\Driver.vb"
+﻿#Region "Microsoft.VisualBasic::7198ae6f70bd1c6b353198bf905ab13f, gr\Microsoft.VisualBasic.Imaging\Drivers\CSS\Driver.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,44 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Driver
+    ' 
+    '         Sub: New
+    ' 
+    '     Class CSSSelector
+    ' 
+    '         Properties: IsGlobal, Type
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: New
+    ' 
+    '     Class GlobalCSSSelector
+    ' 
+    '         Properties: IsGlobal
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: New
+    ' 
+    '     Enum Types
+    ' 
+    '         [Integer], Brush, Float, Font, Padding
+    '         Size, Stroke
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

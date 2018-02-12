@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d470f62e78fe7930cb5faf08c3ba4eae, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DBSCAN\DbscanAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::d470f62e78fe7930cb5faf08c3ba4eae, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DBSCAN\DbscanAlgorithm.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DbscanAlgorithm
+    ' 
+    '         Sub: ComputeClusterDbscan, ExpandCluster, New, RegionQuery
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

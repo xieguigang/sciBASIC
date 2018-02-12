@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b085b4c4061a7062ff73b40c9197934d, ..\sciBASIC#\Data_science\algorithms\PCA\PCA\Program.vb"
+﻿#Region "Microsoft.VisualBasic::b085b4c4061a7062ff73b40c9197934d, Data_science\algorithms\PCA\PCA\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Program
+    ' 
+    '     Sub: Main, TestPCA_scores
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

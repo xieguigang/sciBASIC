@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::16198bd10b3c29360bb8ca688db23a57, ..\sciBASIC#\Data_science\Graph\Model\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::16198bd10b3c29360bb8ca688db23a57, Data_science\Graph\Model\Tree.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Tree
+    ' 
+    '     Properties: Data
+    ' 
+    ' Class AbstractTree
+    ' 
+    '     Properties: Childs, Count, IsLeaf, IsRoot, Parent
+    '                 QualifyName
+    ' 
+    '     Function: (+2 Overloads) CountLeafs, ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

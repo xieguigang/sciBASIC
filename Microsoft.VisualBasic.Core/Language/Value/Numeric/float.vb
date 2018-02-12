@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::1f40ff0c8221f5dd1f693f374e0df200, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\Numeric\float.vb"
+﻿#Region "Microsoft.VisualBasic::1f40ff0c8221f5dd1f693f374e0df200, Microsoft.VisualBasic.Core\Language\Value\Numeric\float.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class float
+    ' 
+    '         Function: CompareTo, Equals, GetTypeCode, ToBoolean, ToByte
+    '                   ToChar, ToDateTime, ToDecimal, ToDouble, ToInt16
+    '                   ToInt32, ToInt64, ToSByte, ToSingle, (+2 Overloads) ToString
+    '                   ToType, ToUInt16, ToUInt32, ToUInt64
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    '         Operators: -, (+2 Overloads) *, (+2 Overloads) /, ^, (+2 Overloads) +
+    '                    <, <=, >, >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

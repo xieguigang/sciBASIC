@@ -1,16 +1,35 @@
-﻿#Region "Microsoft.VisualBasic::13b86d27c97a627c7ecac05e61be7e6a, wmfImage.vb"
+﻿#Region "Microsoft.VisualBasic::cccc247a90a767eac97b91db48465b0e, vs_solutions\tutorials\core.test\wmfImage.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
     ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Source file summaries:
+
+    ' /********************************************************************************/
+
+    ' Summaries:
 
     ' Module wmfImage
     ' 
@@ -18,7 +37,7 @@
     ' 
     '     Sub: Main, replaceColorsTest
     ' 
-    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -133,5 +152,3 @@ Module wmfImage
         Pause()
     End Sub
 End Module
-
-

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c4b0f31b72f51916afeca6f62fb4a2ad, ..\sciBASIC#\Data\DataFrame\Extensions\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::c4b0f31b72f51916afeca6f62fb4a2ad, Data\DataFrame\Extensions\PipeStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module PipeStream
+    ' 
+    '     Function: AsDataSet, AsMatrix, DataFrame, LoadStream, Vectors
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

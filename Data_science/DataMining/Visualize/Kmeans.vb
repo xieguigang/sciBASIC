@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::1ce53437b3d89cf6c40a38561ff8e65b, ..\sciBASIC#\Data_science\DataMining\Visualize\Kmeans.vb"
+﻿#Region "Microsoft.VisualBasic::dcd7bb7ade11b2d39f8733825b4b436f, Data_science\DataMining\Visualize\Kmeans.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Kmeans
+    ' 
+    '     Function: ClusterGroups, Scatter2D, (+2 Overloads) Scatter3D
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

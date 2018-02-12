@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::abc0e9947062f9d80de370b9f10d8b65, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Math.vb"
+﻿#Region "Microsoft.VisualBasic::abc0e9947062f9d80de370b9f10d8b65, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Math.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Vector
+    ' 
+    '         Function: Abs, BesselI, Exp, floor, Log
+    '                   Log10, (+3 Overloads) Max, (+3 Overloads) Min, Order, pchisq
+    '                   round, Sign, Sinh, Sort, Sqrt
+    '                   (+2 Overloads) Sum, Trunc
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

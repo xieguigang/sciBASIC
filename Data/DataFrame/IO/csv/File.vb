@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::e1abc2dcc9c56ec039732d5b0764de18, ..\sciBASIC#\Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::e1abc2dcc9c56ec039732d5b0764de18, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,34 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '         Delegate Function
+    ' 
+    '             Properties: Cell, EstimatedFileSize, Headers, IsReadOnly, RowNumbers
+    '                         Rows, Width
+    ' 
+    '             Function: __createTableVector, __getDefaultPath, __LINQ_LOAD, __loads, AppendRange
+    '                       Contains, (+2 Overloads) Distinct, FastLoad, FindAll, FindAtColumn
+    '                       Generate, GenerateDocument, GetAllStringTokens, GetByLine, GetEnumerator
+    '                       GetEnumerator1, IndexOf, InsertEmptyColumnBefore, IsNullOrEmpty, Join
+    '                       (+2 Overloads) Load, LoadTsv, Normalization, (+2 Overloads) Remove, RemoveSubRow
+    '                       Save, (+2 Overloads) ToArray, TokenCounts, ToString, Transpose
+    '                       Trim
+    ' 
+    '             Sub: __setColumn, (+3 Overloads) Add, Append, (+3 Overloads) AppendLine, Clear
+    '                  CopyTo, DeleteCell, Insert, InsertAt, (+4 Overloads) New
+    '                  RemoveAt, RemoveRange
+    ' 
+    '             Operators: (+2 Overloads) +, <, <=, >, >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

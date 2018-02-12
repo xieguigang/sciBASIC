@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::ab787a6c262c729d299513ea74b46534, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\Pointer.vb"
+﻿#Region "Microsoft.VisualBasic::ab787a6c262c729d299513ea74b46534, Microsoft.VisualBasic.Core\Language\Value\Pointer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Pointer
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: (+3 Overloads) New
+    ' 
+    '         Operators: (+2 Overloads) -, (+4 Overloads) +, <, <<, <=
+    '                    >, >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

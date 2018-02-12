@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b4f5cf6c6ec79697c77296151d6f893f, ..\sciBASIC#\Data_science\Mathematica\Plot\test\BarPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::b4f5cf6c6ec79697c77296151d6f893f, Data_science\Mathematica\Plot\test\BarPlotTest.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module BarPlotTest
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

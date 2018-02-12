@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::3ecc7823d5528014644c89ff4154d18f, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\Pipeline\API.vb"
+﻿#Region "Microsoft.VisualBasic::3ecc7823d5528014644c89ff4154d18f, Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\Pipeline\API.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,29 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module API
+    ' 
+    ' 
+    '         Enum Protocols
+    ' 
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: Protocol
+    ' 
+    '     Function: Delete, IsRef, (+2 Overloads) TryGetValue, WriteData
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::ba05ae9141673356a1f0903b7dbfb302, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\RSyntax\PrimitiveAPI\PrimitiveAPI.vb"
+﻿#Region "Microsoft.VisualBasic::ba05ae9141673356a1f0903b7dbfb302, Data_science\Mathematica\Math\Math\Algebra\RSyntax\PrimitiveAPI\PrimitiveAPI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module PrimitiveAPI
+    ' 
+    '         Function: [stop], [Try], All, Any, (+3 Overloads) C
+    '                   getOption, IfElse, (+3 Overloads) Length, (+2 Overloads) Missing, (+2 Overloads) Paste
+    '                   (+2 Overloads) Rep, (+2 Overloads) warning, ZeroVector
+    ' 
+    '         Sub: [Try]
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

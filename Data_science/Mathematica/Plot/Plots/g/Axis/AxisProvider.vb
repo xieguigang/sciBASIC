@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::80718309bfaf05260017f46b9c68201c, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Axis\AxisProvider.vb"
+﻿#Region "Microsoft.VisualBasic::72d18c76e9a1eea788e312a4ea86b07d, Data_science\Mathematica\Plot\Plots\g\Axis\AxisProvider.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class AxisProvider
+    ' 
+    '         Properties: n, Range, Tick
+    ' 
+    '         Function: AxisTicks, ToString, TryParse
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
