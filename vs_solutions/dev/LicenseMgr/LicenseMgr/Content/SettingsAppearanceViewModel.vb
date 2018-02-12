@@ -26,7 +26,10 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Source file summaries:
+
+    ' /********************************************************************************/
+
+    ' Summaries:
 
     '     Class SettingsAppearanceViewModel
     ' 
@@ -36,7 +39,7 @@
     '         Sub: New, OnAppearanceManagerPropertyChanged, SyncThemeAndColor
     ' 
     ' 
-    ' 
+    ' /********************************************************************************/
 
 #End Region
 

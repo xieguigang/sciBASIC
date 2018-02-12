@@ -26,14 +26,17 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Source file summaries:
+
+    ' /********************************************************************************/
+
+    ' Summaries:
 
     '     Class FileSymbolic
     ' 
     '         Sub: Admin_Rights, New, Original_File, Symlink_Create, UserControl_Initialized
     ' 
     ' 
-    ' 
+    ' /********************************************************************************/
 
 #End Region
 

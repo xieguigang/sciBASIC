@@ -26,19 +26,19 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Source file summaries:
+
+    ' /********************************************************************************/
+
+    ' Summaries:
 
     '     Module MyWpfExtension
     ' 
     '         Properties: Application, Computer, Log, User, Windows
-    ' 
     '         Class MyWindows
     ' 
     '             Function: [GetType], Create__Instance__
     ' 
-    ' 
     '             Sub: Dispose__Instance__, New
-    ' 
     ' 
     ' 
     ' 
@@ -47,7 +47,7 @@
     '     Properties: Info
     ' 
     ' 
-    ' 
+    ' /********************************************************************************/
 
 #End Region
 

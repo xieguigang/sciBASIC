@@ -26,14 +26,17 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Source file summaries:
+
+    ' /********************************************************************************/
+
+    ' Summaries:
 
     '     Class About
     ' 
     '         Sub: New
     ' 
     ' 
-    ' 
+    ' /********************************************************************************/
 
 #End Region
 

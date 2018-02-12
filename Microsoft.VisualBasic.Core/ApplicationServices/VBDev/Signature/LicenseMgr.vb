@@ -157,13 +157,17 @@ THE SOFTWARE.",
 
             sb.AppendLine()
             sb.AppendLine()
-            sb.AppendLine("    ' Source file summaries:")
+            sb.AppendLine()
+            sb.AppendLine("    ' /********************************************************************************/")
+            sb.AppendLine()
+            sb.AppendLine("    ' Summaries:")
             sb.AppendLine()
 
             For Each line As String In VBCodeSignature.SummaryModules(vb:=src).lTokens
                 Call sb.AppendLine("    ' " & line)
             Next
 
+            sb.AppendLine("    ' /********************************************************************************/")
             Call sb.AppendLine()
             Call sb.AppendLine($"#End Region")
             Call sb.AppendLine()

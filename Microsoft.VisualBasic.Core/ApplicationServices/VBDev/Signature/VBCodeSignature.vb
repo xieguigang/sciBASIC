@@ -153,10 +153,13 @@ Namespace ApplicationServices.Development
                 prefix = container.Description & "    Properties: "
                 lines = properties.Keys.memberList
                 members += prefix & lines(Scan0)
-                members += lines _
-                    .Skip(1) _
-                    .Select(Function(l) New String(" "c, prefix.Length) & l) _
-                    .JoinBy(ASCII.LF)
+
+                If lines.Length > 1 Then
+                    members += lines _
+                        .Skip(1) _
+                        .Select(Function(l) New String(" "c, prefix.Length) & l) _
+                        .JoinBy(ASCII.LF)
+                End If
 
                 If Not methods.IsNullOrEmpty Then
                     members += ""
@@ -171,10 +174,13 @@ Namespace ApplicationServices.Development
                 If types.ContainsKey("Function") Then
                     prefix = container.Description & $"    Function: "
                     members += prefix & types!Function.First
-                    members += types!Function _
-                        .Skip(1) _
-                        .Select(Function(l) New String(" "c, prefix.Length) & l) _
-                        .JoinBy(ASCII.LF)
+
+                    If types!Function.Length > 1 Then
+                        members += types!Function _
+                            .Skip(1) _
+                            .Select(Function(l) New String(" "c, prefix.Length) & l) _
+                            .JoinBy(ASCII.LF)
+                    End If
 
                     If types.Count > 1 Then
                         members += ""
@@ -183,10 +189,13 @@ Namespace ApplicationServices.Development
                 If types.ContainsKey("Sub") Then
                     prefix = container.Description & $"    Sub: "
                     members += prefix & types!Sub.First
-                    members += types!Sub _
-                        .Skip(1) _
-                        .Select(Function(l) New String(" "c, prefix.Length) & l) _
-                        .JoinBy(ASCII.LF)
+
+                    If types!Sub.Length > 1 Then
+                        members += types!Sub _
+                            .Skip(1) _
+                            .Select(Function(l) New String(" "c, prefix.Length) & l) _
+                            .JoinBy(ASCII.LF)
+                    End If
 
                     If Not operators.IsNullOrEmpty Then
                         members += ""
@@ -197,10 +206,13 @@ Namespace ApplicationServices.Development
                 prefix = container.Description & "    Operators: "
                 lines = operators.Keys.memberList
                 members += prefix & lines(Scan0)
-                members += lines _
-                    .Skip(1) _
-                    .Select(Function(l) New String(" "c, prefix.Length) & l) _
-                    .JoinBy(ASCII.LF)
+
+                If lines.Length > 1 Then
+                    members += lines _
+                        .Skip(1) _
+                        .Select(Function(l) New String(" "c, prefix.Length) & l) _
+                        .JoinBy(ASCII.LF)
+                End If
             End If
 
             vbType.AppendLine(members.JoinBy(ASCII.LF))
