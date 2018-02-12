@@ -1,4 +1,26 @@
-﻿#Region "Microsoft.VisualBasic::079c39c18aa05ac55970509e9ad8cfc3, core.test"
+﻿#Region "Microsoft.VisualBasic::ab9785f6578b27340a9d868b0b454005, ParallelTemplate.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module ParallelTemplate
+    ' 
+    '     Sub: Main
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::079c39c18aa05ac55970509e9ad8cfc3, core.test"
 
     ' Author:
     ' 
@@ -56,4 +78,5 @@ Module ParallelTemplate
         '   Call Socket.SendMessage(LoadResult.GetSerializeBuffer) '返回内存数据
     End Sub
 End Module
+
 

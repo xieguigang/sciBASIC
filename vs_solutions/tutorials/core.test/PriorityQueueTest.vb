@@ -1,4 +1,34 @@
-﻿#Region "Microsoft.VisualBasic::33726b4813f43252f38028bce180f8bd, core.test"
+﻿#Region "Microsoft.VisualBasic::66938d8118ee64ae9a3d8932915afa8b, PriorityQueueTest.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module PriorityQueueTest
+    ' 
+    '     Sub: Main, Test
+    ' 
+    '     Structure XXX
+    ' 
+    '         Properties: Identity
+    ' 
+    '         Function: (+2 Overloads) CompareTo
+    ' 
+    ' 
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::33726b4813f43252f38028bce180f8bd, core.test"
 
     ' Author:
     ' 
@@ -142,4 +172,5 @@ Module PriorityQueueTest
         End Function
     End Structure
 End Module
+
 

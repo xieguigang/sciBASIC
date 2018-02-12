@@ -1,4 +1,34 @@
-﻿#Region "Microsoft.VisualBasic::6c3aed97d4188e0cde64b5f39037c8b7, core.test"
+﻿#Region "Microsoft.VisualBasic::b18af9a40d7a1af9221b26fb449da8a2, __DEBUG_MAIN.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module __DEBUG_MAIN
+    ' 
+    '     Function: Main
+    ' 
+    '     Sub: fffff, ListTest, testVariables
+    ' 
+    '     Class TestJSON
+    ' 
+    '         Properties: Data, Extensions, Name
+    ' 
+    ' 
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::6c3aed97d4188e0cde64b5f39037c8b7, core.test"
 
     ' Author:
     ' 
@@ -84,6 +114,8 @@ Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 'Imports Microsoft.VisualBasic.Webservices
 'Imports System.Windows.Forms
+
+' 中文测试
 
 Public Module __DEBUG_MAIN
 
@@ -528,4 +560,5 @@ Public Class sdfsd(Of T1, T3)
     <DumpNode> Public Property safsdfsdf As T3
     <DumpNode> Protected ffff As String = Now.ToString
 End Class
+
 

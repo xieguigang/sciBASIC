@@ -1,4 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::b2b34e0303713b7851580efd2040bab3, core.test"
+﻿#Region "Microsoft.VisualBasic::079cb13fe73306a9e7d59c79b4269ae5, TableTest.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module TableTest
+    ' 
+    '     Function: integers
+    ' 
+    '     Sub: assertTest, main, test_dictionary
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::b2b34e0303713b7851580efd2040bab3, core.test"
 
     ' Author:
     ' 
@@ -93,4 +117,5 @@ Module TableTest
         Next
     End Function
 End Module
+
 

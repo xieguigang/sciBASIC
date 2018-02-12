@@ -1,4 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::f573f300673cb9ee52c4ef73c25a91d5, core.test"
+﻿#Region "Microsoft.VisualBasic::13b86d27c97a627c7ecac05e61be7e6a, wmfImage.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module wmfImage
+    ' 
+    '     Function: colorsTest
+    ' 
+    '     Sub: Main, replaceColorsTest
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::f573f300673cb9ee52c4ef73c25a91d5, core.test"
 
     ' Author:
     ' 
@@ -109,4 +133,5 @@ Module wmfImage
         Pause()
     End Sub
 End Module
+
 

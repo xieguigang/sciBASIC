@@ -1,4 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::1dcfe98595b59fadc05eff88da28068f, core.test"
+﻿#Region "Microsoft.VisualBasic::13b6d38269339d647348d32b7705e6ce, ParallelLoadingTest.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Class ParallelLoadingTest
+    ' 
+    '     Properties: ddddd, fffd
+    ' 
+    '     Function: Load
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::1dcfe98595b59fadc05eff88da28068f, core.test"
 
     ' Author:
     ' 
@@ -60,4 +84,5 @@ Public Class ParallelLoadingTest
         Return {New ParallelLoadingTest With {.ddddd = Rnd(), .fffd = Now}}
     End Function
 End Class
+
 

@@ -1,4 +1,26 @@
-﻿#Region "Microsoft.VisualBasic::79e000a08e00363a08f3a622b2d25fa1, ..\..\core.test"
+﻿#Region "Microsoft.VisualBasic::66b9e1d4fa5e8171762e8385e66ac5f0, LinuxRunTest\child\Module1.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module Module1
+    ' 
+    '     Sub: Main
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::79e000a08e00363a08f3a622b2d25fa1, ..\..\core.test"
 
     ' Author:
     ' 
@@ -60,4 +82,5 @@ Module Module1
     End Sub
 
 End Module
+
 

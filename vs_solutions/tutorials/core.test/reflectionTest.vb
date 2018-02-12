@@ -1,4 +1,26 @@
-﻿#Region "Microsoft.VisualBasic::700ceb977ff257a3ac7674e64f6c5d4a, core.test"
+﻿#Region "Microsoft.VisualBasic::a79b5a2c5ee6b97e1a407b9e8782ef31, reflectionTest.vb"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module reflectionTest
+    ' 
+    '     Sub: Main, testDefault
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::700ceb977ff257a3ac7674e64f6c5d4a, core.test"
 
     ' Author:
     ' 
@@ -141,4 +163,5 @@ Public Structure ColorTheme
             }
     End Function
 End Structure
+
 

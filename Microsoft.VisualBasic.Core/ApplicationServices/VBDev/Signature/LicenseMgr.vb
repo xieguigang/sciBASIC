@@ -100,7 +100,7 @@ THE SOFTWARE.",
         ''' <returns></returns>
         <Extension>
         Public Function Insert(src As String, info As LicenseInfo, rootDir$) As Boolean
-            Dim file As String = ProgramPathSearchTool.RelativePath(src, rootDir, appendParent:=False)
+            Dim file As String = ProgramPathSearchTool.RelativePath(rootDir, src, appendParent:=False)
             Dim [in] As String = src.ReadAllText
             Dim path As String = src
 
