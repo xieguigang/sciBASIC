@@ -88,7 +88,7 @@ Public Module MatrixExtensions
     ''' <param name="m"></param>
     ''' <param name="n"></param>
     ''' <returns></returns>
-    Public Function MAT(Of T)(m As Integer, n As Integer) As T()()
+    Public Function MAT(Of T)(m%, n%) As T()()
         Dim newMAT As T()() = New T(m - 1)() {}
 
         For i As Integer = 0 To m - 1
