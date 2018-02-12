@@ -26,13 +26,13 @@
 
 #End Region
 
+Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Controls
-Imports System.Linq
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.ApplicationServices.Development
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 'Imports Microsoft.VisualBasic.Windows.Forms
 
@@ -82,11 +82,11 @@ Namespace Pages
                         Call AuthorAddCommon(name, email)
 
                         If Not name Is Nothing Then
-                            name.Text = author.Name
+                            name.Text = author.name
 
                         End If
                         If Not email Is Nothing Then
-                            email.Text = author.Value
+                            email.Text = author.text
                         End If
                     Next
                 End If
@@ -143,13 +143,14 @@ Namespace Pages
         ''' 最后在这进行数据更新
         ''' </summary>
         Private Sub __update()
-            info.Authors =
-                LinqAPI.Exec(Of NamedValue(Of String)) <= From author As KeyValuePair(Of TextBox, TextBox)
-                                                          In Me.authors
-                                                          Select New NamedValue(Of String) With {
-                                                              .Name = author.Key.Text,
-                                                              .Value = author.Value.Text
-                                                          }
+            info.Authors = LinqAPI.Exec(Of NamedValue) _
+ _
+                () <= From author As KeyValuePair(Of TextBox, TextBox)
+                      In Me.authors
+                      Select New NamedValue With {
+                          .name = author.Key.Text,
+                          .text = author.Value.Text
+                      }
         End Sub
     End Class
 End Namespace

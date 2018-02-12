@@ -70,7 +70,7 @@ Namespace ApplicationServices.Development
                         End If
                     Else
                         If container.IsEmpty Then
-                            container = New NamedValue(Of String)(name, type, indents)
+                            container = New NamedValue(Of String)(name, type, indents.Trim(ASCII.CR, ASCII.LF))
                         Else
                             ' 下一层堆栈
                             innerModules.AppendLine((vblines - 1).SummaryInternal(vb))
@@ -165,7 +165,6 @@ Namespace ApplicationServices.Development
                     End If
 
                     vbType.AppendLine(members.JoinBy(ASCII.LF))
-                    vbType.AppendLine()
                     vbType.AppendLine(innerModules.ToString)
 
                     Return vbType.ToString

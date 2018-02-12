@@ -68,9 +68,8 @@ Namespace Pages
             Else
                 Try
 
-                    info.RootDIR = BrowsedFolder.Text
-
-                    Dim failures = Development.LicenseMgr.Inserts(info)
+                    Dim rootDir$ = BrowsedFolder.Text
+                    Dim failures = Development.LicenseMgr.Inserts(info, rootDir)
 
                     If failures.Length > 0 Then
                         Dim ex As New Exception("These files are write data failures!")

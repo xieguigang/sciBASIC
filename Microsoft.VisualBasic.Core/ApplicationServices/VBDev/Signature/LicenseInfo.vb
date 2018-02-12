@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace ApplicationServices.Development
 
@@ -40,16 +41,12 @@ Namespace ApplicationServices.Development
 
     Public Class LicenseInfo : Inherits BaseClass
 
-        Public Property Authors As NamedValue(Of String)()
+        Public Property Authors As NamedValue()
         Public Property Title As String
         Public Property Copyright As String
-        Public Property Brief As String
-        Public Property RootDIR As String
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetRelativePath(src As String) As String
-            Return ProgramPathSearchTool.RelativePath(RootDIR, src)
-        End Function
+        <XmlText>
+        Public Property Brief As String
 
         Public Overrides Function ToString() As String
             Return Brief
