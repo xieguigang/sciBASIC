@@ -1,10 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::760437edec4ce7666647d4a07c89a70b, ..\sciBASIC#\vs_solutions\tutorials\core.test\VectorTest.vb"
+﻿#Region "Microsoft.VisualBasic::760437edec4ce7666647d4a07c89a70b, ..\core.test\VectorTest.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
+    '       asuka ()
+    '       xieguigang ()
+    '       xie ()
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
@@ -23,6 +23,373 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' M
+    ' o
+    ' d
+    ' u
+    ' l
+    ' e
+    '  
+    ' V
+    ' e
+    ' c
+    ' t
+    ' o
+    ' r
+    ' T
+    ' e
+    ' s
+    ' t
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' u
+    ' b
+    ' :
+    '  
+    ' M
+    ' a
+    ' i
+    ' n
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' t
+    ' r
+    ' u
+    ' c
+    ' t
+    ' u
+    ' r
+    ' e
+    '  
+    ' f
+    ' d
+    ' d
+    ' d
+    ' d
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' O
+    ' p
+    ' e
+    ' r
+    ' a
+    ' t
+    ' o
+    ' r
+    ' s
+    ' :
+    '  
+    ' -
+    ' ,
+    '  
+    ' *
+    ' ,
+    '  
+    ' \
+    ' ,
+    '  
+    ' ^
+    ' ,
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' A
+    ' n
+    ' d
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' L
+    ' i
+    ' k
+    ' e
+    ' ,
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' M
+    ' o
+    ' d
+    ' ,
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' O
+    ' r
+    ' ,
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' X
+    ' o
+    ' r
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' t
+    ' r
+    ' u
+    ' c
+    ' t
+    ' u
+    ' r
+    ' e
+    '  
+    ' s
+    ' t
+    ' r
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' P
+    ' r
+    ' o
+    ' p
+    ' e
+    ' r
+    ' t
+    ' i
+    ' e
+    ' s
+    ' :
+    '  
+    ' p
+    ' a
+    ' t
+    ' t
+    ' e
+    ' r
+    ' n
+    ' 
+
+    ' 
+
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' O
+    ' p
+    ' e
+    ' r
+    ' a
+    ' t
+    ' o
+    ' r
+    ' s
+    ' :
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' *
+    ' ,
+    '  
+    ' +
+    ' ,
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' L
+    ' i
+    ' k
+    ' e
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
 
 #End Region
 

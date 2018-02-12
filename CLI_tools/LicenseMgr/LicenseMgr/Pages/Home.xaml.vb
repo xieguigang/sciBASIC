@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::6d4ffaf7082d14411759627fba6b8fdd, ..\sciBASIC#\CLI_tools\LicenseMgr\LicenseMgr\Pages\Home.xaml.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,7 @@ Imports System.Linq
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.ApplicationServices.Development
 
 'Imports Microsoft.VisualBasic.Windows.Forms
 
@@ -48,15 +49,15 @@ Namespace Pages
         End Sub
 
         Private Sub license_brief_TextChanged(sender As Object, e As TextChangedEventArgs) Handles license_brief.TextChanged
-            LicenseInfo.info.Brief = license_brief.Text
+            LicenseInfoExtensions.info.Brief = license_brief.Text
         End Sub
 
         Private Sub license_title_TextChanged(sender As Object, e As TextChangedEventArgs) Handles license_title.TextChanged
-            LicenseInfo.info.Title = license_title.Text
+            LicenseInfoExtensions.info.Title = license_title.Text
         End Sub
 
         Private Sub copyright_TextChanged(sender As Object, e As TextChangedEventArgs) Handles copyright.TextChanged
-            LicenseInfo.info.Copyright = copyright.Text
+            LicenseInfoExtensions.info.Copyright = copyright.Text
         End Sub
 
         Private Sub Load_Click(sender As Object, e As RoutedEventArgs) Handles Load.Click
@@ -64,7 +65,7 @@ Namespace Pages
                 .Filter = "Xml Meta data(*.xml)|*.xml"
             }
                 If file.ShowDialog = Forms.DialogResult.OK Then
-                    LicenseInfo.info = file.FileName.LoadXml(Of SoftwareToolkits.LicenseInfo)
+                    LicenseInfoExtensions.info = file.FileName.LoadXml(Of LicenseInfo)
 
                     copyright.Text = info.Copyright
                     license_title.Text = info.Title
@@ -85,7 +86,7 @@ Namespace Pages
 
                         End If
                         If Not email Is Nothing Then
-                            email.Text = author.x
+                            email.Text = author.Value
                         End If
                     Next
                 End If
@@ -99,7 +100,7 @@ Namespace Pages
                 .Filter = "Xml Meta data(*.xml)|*.xml"
             }
                 If file.ShowDialog = Forms.DialogResult.OK Then
-                    Call LicenseInfo.info.GetXml.SaveTo(file.FileName)
+                    Call LicenseInfoExtensions.info.GetXml.SaveTo(file.FileName)
                 End If
             End Using
         End Sub
@@ -147,7 +148,7 @@ Namespace Pages
                                                           In Me.authors
                                                           Select New NamedValue(Of String) With {
                                                               .Name = author.Key.Text,
-                                                              .x = author.Value.Text
+                                                              .Value = author.Value.Text
                                                           }
         End Sub
     End Class

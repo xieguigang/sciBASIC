@@ -1,10 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::8b7896940717eeb4dd11248d005fa5ca, ..\sciBASIC#\vs_solutions\tutorials\core.test\treeTest.vb"
+﻿#Region "Microsoft.VisualBasic::80a3b9fac91571dcd682961d3f81301c, ..\core.test\treeTest.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
+    '       asuka ()
+    '       xieguigang ()
+    '       xie ()
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
@@ -23,6 +23,53 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' M
+    ' o
+    ' d
+    ' u
+    ' l
+    ' e
+    '  
+    ' t
+    ' r
+    ' e
+    ' e
+    ' T
+    ' e
+    ' s
+    ' t
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' u
+    ' b
+    ' :
+    '  
+    ' M
+    ' a
+    ' i
+    ' n
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
 
 #End Region
 
@@ -45,4 +92,3 @@ Module treeTest
         Pause()
     End Sub
 End Module
-

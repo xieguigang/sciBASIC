@@ -1,10 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5f1dc2fcde41554eed79153f3ec1b473, ..\sciBASIC#\vs_solutions\tutorials\core.test\PriorityQueueTest.vb"
+﻿#Region "Microsoft.VisualBasic::5f1dc2fcde41554eed79153f3ec1b473, ..\core.test\PriorityQueueTest.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
+    '       asuka ()
+    '       xieguigang ()
+    '       xie ()
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
@@ -23,6 +23,183 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' M
+    ' o
+    ' d
+    ' u
+    ' l
+    ' e
+    '  
+    ' P
+    ' r
+    ' i
+    ' o
+    ' r
+    ' i
+    ' t
+    ' y
+    ' Q
+    ' u
+    ' e
+    ' u
+    ' e
+    ' T
+    ' e
+    ' s
+    ' t
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' u
+    ' b
+    ' :
+    '  
+    ' M
+    ' a
+    ' i
+    ' n
+    ' ,
+    '  
+    ' T
+    ' e
+    ' s
+    ' t
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' t
+    ' r
+    ' u
+    ' c
+    ' t
+    ' u
+    ' r
+    ' e
+    '  
+    ' X
+    ' X
+    ' X
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' P
+    ' r
+    ' o
+    ' p
+    ' e
+    ' r
+    ' t
+    ' i
+    ' e
+    ' s
+    ' :
+    '  
+    ' I
+    ' d
+    ' e
+    ' n
+    ' t
+    ' i
+    ' t
+    ' y
+    ' 
+
+    ' 
+
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' F
+    ' u
+    ' n
+    ' c
+    ' t
+    ' i
+    ' o
+    ' n
+    ' :
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' C
+    ' o
+    ' m
+    ' p
+    ' a
+    ' r
+    ' e
+    ' T
+    ' o
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
 
 #End Region
 

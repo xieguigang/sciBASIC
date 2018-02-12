@@ -1,28 +1,418 @@
-﻿#Region "Microsoft.VisualBasic::8f47ed2a3a056cae65bbc3b18f55c97e, ..\sciBASIC#\vs_solutions\tutorials\core.test\devToolTest.vb"
+﻿#Region "Microsoft.VisualBasic::f5c85a2ca7e9da2e3b03f531838242c5, ..\core.test\devToolTest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka ()
+    '       xieguigang ()
+    '       xie ()
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' M
+    ' o
+    ' d
+    ' u
+    ' l
+    ' e
+    '  
+    ' d
+    ' e
+    ' v
+    ' T
+    ' o
+    ' o
+    ' l
+    ' T
+    ' e
+    ' s
+    ' t
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' u
+    ' b
+    ' :
+    '  
+    ' l
+    ' o
+    ' a
+    ' d
+    ' T
+    ' e
+    ' s
+    ' t
+    ' ,
+    '  
+    ' M
+    ' a
+    ' i
+    ' n
+    ' ,
+    '  
+    ' p
+    ' a
+    ' r
+    ' s
+    ' e
+    ' r
+    ' T
+    ' e
+    ' s
+    ' t
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' C
+    ' l
+    ' a
+    ' s
+    ' s
+    '  
+    ' i
+    ' n
+    ' n
+    ' e
+    ' r
+    ' T
+    ' e
+    ' s
+    ' t
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' P
+    ' r
+    ' o
+    ' p
+    ' e
+    ' r
+    ' t
+    ' i
+    ' e
+    ' s
+    ' :
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' A
+    ' A
+    ' 
+
+    ' 
+
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' F
+    ' u
+    ' n
+    ' c
+    ' t
+    ' i
+    ' o
+    ' n
+    ' :
+    '  
+    ' X
+    ' ,
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' Z
+    ' 
+
+    ' 
+
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' u
+    ' b
+    ' :
+    '  
+    ' A
+    ' C
+    ' C
+    ' ,
+    '  
+    ' (
+    ' +
+    ' 3
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' X
+    ' 1
+    ' 
+
+    ' 
+
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' O
+    ' p
+    ' e
+    ' r
+    ' a
+    ' t
+    ' o
+    ' r
+    ' s
+    ' :
+    '  
+    ' -
+    ' ,
+    '  
+    ' +
+    ' ,
+    '  
+    ' <
+    ' <
+    ' ,
+    '  
+    ' <
+    ' =
+    ' ,
+    '  
+    ' >
+    ' =
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' I
+    ' s
+    ' F
+    ' a
+    ' l
+    ' s
+    ' e
+    ' ,
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' I
+    ' s
+    ' T
+    ' r
+    ' u
+    ' e
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' E
+    ' n
+    ' u
+    ' m
+    '  
+    ' i
+    ' n
+    ' n
+    ' e
+    ' r
+    ' E
+    ' n
+    ' u
+    ' m
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' A
+    ' A
+    ' A
+    ' ,
+    '  
+    ' B
+    ' B
+    ' B
+    ' ,
+    '  
+    ' C
+    ' C
+    ' C
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
 
 #End Region
 
@@ -118,4 +508,3 @@ Public Module devToolTest
         DDD = 5
     End Enum
 End Module
-

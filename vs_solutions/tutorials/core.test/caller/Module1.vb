@@ -1,10 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::532761f83fc4f6e6e888b5a96d75fd5b, ..\sciBASIC#\vs_solutions\tutorials\core.test\caller\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::532761f83fc4f6e6e888b5a96d75fd5b, ..\core.test\caller\Module1.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
+    '       asuka ()
+    '       xieguigang ()
+    '       xie ()
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
@@ -23,6 +23,52 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' M
+    ' o
+    ' d
+    ' u
+    ' l
+    ' e
+    '  
+    ' M
+    ' o
+    ' d
+    ' u
+    ' l
+    ' e
+    ' 1
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' u
+    ' b
+    ' :
+    '  
+    ' M
+    ' a
+    ' i
+    ' n
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
 
 #End Region
 

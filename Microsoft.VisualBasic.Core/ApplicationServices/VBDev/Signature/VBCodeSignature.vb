@@ -17,7 +17,7 @@ Namespace ApplicationServices.Development
         Const MethodPatterns$ = "^\s+" & AccessPattern & "\s*((Sub )|(Function )|(Iterator )|(Operator ))+\s*" & VBLanguage.IdentiferPattern
         Const OperatorPatterns$ = "^\s+" & AccessPattern & "\s*Operator\s+(([<]|[>]|\=|\+|\-|\*|/|\^|\\)+|(" & VBLanguage.IdentiferPattern & "))"
         Const ClosePatterns$ = "^\s+End\s((Sub)|(Function)|(Class)|(Structure)|(Enum)|(Interface)|(Operator)|(Module))"
-        Const CloseTypePatterns$ = "^\s+End\s((Class)|(Structure)|(Enum)|(Interface)|(Module))"
+        Const CloseTypePatterns$ = "^\s*End\s((Class)|(Structure)|(Enum)|(Interface)|(Module))"
         Const IndentsPattern$ = "^\s+"
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -1,10 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::5f7806e3be017574758ccbbca8142932, ..\sciBASIC#\vs_solutions\tutorials\core.test\ParallelTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::5f7806e3be017574758ccbbca8142932, ..\core.test\ParallelTemplate.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
+    '       asuka ()
+    '       xieguigang ()
+    '       xie ()
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
@@ -23,6 +23,61 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' M
+    ' o
+    ' d
+    ' u
+    ' l
+    ' e
+    '  
+    ' P
+    ' a
+    ' r
+    ' a
+    ' l
+    ' l
+    ' e
+    ' l
+    ' T
+    ' e
+    ' m
+    ' p
+    ' l
+    ' a
+    ' t
+    ' e
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' u
+    ' b
+    ' :
+    '  
+    ' M
+    ' a
+    ' i
+    ' n
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
 
 #End Region
 

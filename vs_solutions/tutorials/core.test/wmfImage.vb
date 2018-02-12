@@ -1,10 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::1be04f96bf1e0ee3fedc9390bfca589f, ..\sciBASIC#\vs_solutions\tutorials\core.test\wmfImage.vb"
+﻿#Region "Microsoft.VisualBasic::1be04f96bf1e0ee3fedc9390bfca589f, ..\core.test\wmfImage.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
+    '       asuka ()
+    '       xieguigang ()
+    '       xie ()
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
@@ -23,6 +23,102 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' M
+    ' o
+    ' d
+    ' u
+    ' l
+    ' e
+    '  
+    ' w
+    ' m
+    ' f
+    ' I
+    ' m
+    ' a
+    ' g
+    ' e
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' F
+    ' u
+    ' n
+    ' c
+    ' t
+    ' i
+    ' o
+    ' n
+    ' :
+    '  
+    ' c
+    ' o
+    ' l
+    ' o
+    ' r
+    ' s
+    ' T
+    ' e
+    ' s
+    ' t
+    ' 
+
+    ' 
+
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' u
+    ' b
+    ' :
+    '  
+    ' M
+    ' a
+    ' i
+    ' n
+    ' ,
+    '  
+    ' r
+    ' e
+    ' p
+    ' l
+    ' a
+    ' c
+    ' e
+    ' C
+    ' o
+    ' l
+    ' o
+    ' r
+    ' s
+    ' T
+    ' e
+    ' s
+    ' t
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
 
 #End Region
 

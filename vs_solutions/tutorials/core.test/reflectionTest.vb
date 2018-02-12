@@ -1,10 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::82a931dc0b83918cb053220a02060b92, ..\sciBASIC#\vs_solutions\tutorials\core.test\reflectionTest.vb"
+﻿#Region "Microsoft.VisualBasic::82a931dc0b83918cb053220a02060b92, ..\core.test\reflectionTest.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
+    '       asuka ()
+    '       xieguigang ()
+    '       xie ()
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
@@ -23,6 +23,72 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' M
+    ' o
+    ' d
+    ' u
+    ' l
+    ' e
+    '  
+    ' r
+    ' e
+    ' f
+    ' l
+    ' e
+    ' c
+    ' t
+    ' i
+    ' o
+    ' n
+    ' T
+    ' e
+    ' s
+    ' t
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' u
+    ' b
+    ' :
+    '  
+    ' M
+    ' a
+    ' i
+    ' n
+    ' ,
+    '  
+    ' t
+    ' e
+    ' s
+    ' t
+    ' D
+    ' e
+    ' f
+    ' a
+    ' u
+    ' l
+    ' t
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
 
 #End Region
 

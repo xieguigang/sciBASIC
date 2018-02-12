@@ -1,10 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::12b87139cec3a6fada99e7fcd6855f3d, ..\sciBASIC#\vs_solutions\tutorials\core.test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::12b87139cec3a6fada99e7fcd6855f3d, ..\core.test\Module1.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
+    '       asuka ()
+    '       xieguigang ()
+    '       xie ()
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
@@ -23,6 +23,200 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' M
+    ' o
+    ' d
+    ' u
+    ' l
+    ' e
+    '  
+    ' M
+    ' o
+    ' d
+    ' u
+    ' l
+    ' e
+    ' 1
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' u
+    ' b
+    ' :
+    '  
+    ' M
+    ' a
+    ' i
+    ' n
+    ' ,
+    '  
+    ' N
+    ' e
+    ' w
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' t
+    ' r
+    ' u
+    ' c
+    ' t
+    ' u
+    ' r
+    ' e
+    '  
+    ' F
+    ' o
+    ' o
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' O
+    ' p
+    ' e
+    ' r
+    ' a
+    ' t
+    ' o
+    ' r
+    ' s
+    ' :
+    '  
+    ' (
+    ' +
+    ' 2
+    '  
+    ' O
+    ' v
+    ' e
+    ' r
+    ' l
+    ' o
+    ' a
+    ' d
+    ' s
+    ' )
+    '  
+    ' L
+    ' i
+    ' k
+    ' e
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' S
+    ' t
+    ' r
+    ' u
+    ' c
+    ' t
+    ' u
+    ' r
+    ' e
+    '  
+    ' L
+    ' a
+    ' z
+    ' y
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    '  
+    ' F
+    ' u
+    ' n
+    ' c
+    ' t
+    ' i
+    ' o
+    ' n
+    ' :
+    '  
+    ' L
+    ' o
+    ' n
+    ' g
+    ' L
+    ' o
+    ' a
+    ' d
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
 
 #End Region
 

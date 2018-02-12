@@ -1,10 +1,10 @@
-﻿#Region "Microsoft.VisualBasic::b493f08649bb3120eb1d418929d10925, ..\sciBASIC#\vs_solutions\tutorials\core.test\ParallelLoadingTest.vb"
+﻿#Region "Microsoft.VisualBasic::b493f08649bb3120eb1d418929d10925, ..\core.test\ParallelLoadingTest.vb"
 
     ' Author:
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
+    '       asuka ()
+    '       xieguigang ()
+    '       xie ()
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
@@ -23,6 +23,101 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' C
+    ' l
+    ' a
+    ' s
+    ' s
+    '  
+    ' P
+    ' a
+    ' r
+    ' a
+    ' l
+    ' l
+    ' e
+    ' l
+    ' L
+    ' o
+    ' a
+    ' d
+    ' i
+    ' n
+    ' g
+    ' T
+    ' e
+    ' s
+    ' t
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' P
+    ' r
+    ' o
+    ' p
+    ' e
+    ' r
+    ' t
+    ' i
+    ' e
+    ' s
+    ' :
+    '  
+    ' d
+    ' d
+    ' d
+    ' d
+    ' d
+    ' ,
+    '  
+    ' f
+    ' f
+    ' f
+    ' d
+    ' 
+
+    ' 
+
+    ' 
+
+    '  
+    '  
+    '  
+    '  
+    ' F
+    ' u
+    ' n
+    ' c
+    ' t
+    ' i
+    ' o
+    ' n
+    ' :
+    '  
+    ' L
+    ' o
+    ' a
+    ' d
+    ' 
+
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
+    ' 
+    ' 
+
 
 #End Region
 
