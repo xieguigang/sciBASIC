@@ -784,6 +784,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
+    <Compile Include="ApplicationServices\VBDev\Signature\VBCodeSignature.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\LicenseInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
