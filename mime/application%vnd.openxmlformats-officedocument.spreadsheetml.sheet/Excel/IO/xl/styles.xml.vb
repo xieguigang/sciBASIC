@@ -65,12 +65,23 @@ Namespace XML.xl
     End Class
 
     Public Class tableStyles : Inherits List(Of tableStyle)
-
-    End Class
-
-    Public Class tableStyle
         <XmlAttribute> Public Property defaultTableStyle As String
         <XmlAttribute> Public Property defaultPivotStyle As String
+    End Class
+
+    Public Class tableStyle : Inherits List(Of tableStyleElement)
+        <XmlAttribute> Public Property defaultTableStyle As String
+        <XmlAttribute> Public Property defaultPivotStyle As String
+        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property pivot As String
+        <XmlAttribute> Public Property table As String
+        <XmlElement("tableStyleElement")>
+        Public Property elements As tablestyleelement()
+    End Class
+
+    Public Class tableStyleElement
+        <XmlAttribute> Public Property type As String
+        <XmlAttribute> Public Property dxfId As String
     End Class
 
     Public Class dxfs : Inherits List(Of dxf)
@@ -148,11 +159,14 @@ Namespace XML.xl
     End Class
 
     Public Class font
-        Public Property b As Bold
+        Public Property b As Flag
+        Public Property i As Flag
+        Public Property u As Flag
         Public Property sz As StringValue
         Public Property color As ColorValue
         Public Property name As StringValue
         Public Property family As StringValue
+        Public Property charset As StringValue
         Public Property scheme As StringValue
     End Class
 
@@ -167,6 +181,6 @@ Namespace XML.xl
         <XmlAttribute> Public Property lastClr As String
     End Class
 
-    Public Class Bold
+    Public Class Flag
     End Class
 End Namespace
