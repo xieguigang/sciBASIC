@@ -136,7 +136,7 @@ Public Module devToolTest
     End Sub
 
     Sub parserTest()
-        Dim code = "E:\repo\xDoc\Yilia\runtime\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb".ReadAllText
+        Dim code = "E:\GCModeller\src\runtime\sciBASIC#\vs_solutions\tutorials\using_cli\Program.vb".ReadAllText
         Dim list = VBCodeSignature.SummaryModules(code)
 
         Console.WriteLine(list)

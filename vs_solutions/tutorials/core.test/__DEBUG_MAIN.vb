@@ -354,12 +354,12 @@ Public Module __DEBUG_MAIN
 
 
         Dim iii = LicenseMgr.Template
-        iii.RootDIR = "G:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework"
+        Dim RootDIR = "G:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework"
 
 
-        Call LicenseMgr.Insert("G:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LicenseMgr.vb", iii)
+        Call LicenseMgr.Insert("G:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Tools\SoftwareToolkits\LicenseMgr.vb", iii, RootDIR)
 
-        Dim fff = LicenseMgr.Inserts(iii)
+        Dim fff = LicenseMgr.Inserts(iii, RootDIR)
 
         Call this.__DEBUG_ECHO
 
