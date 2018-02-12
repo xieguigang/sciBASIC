@@ -158,6 +158,9 @@ Namespace XML.xl
         Public Property fonts As font()
     End Class
 
+    ''' <summary>
+    ''' Font style in Xlsx
+    ''' </summary>
     Public Class font
         Public Property b As Flag
         Public Property i As Flag
@@ -171,7 +174,19 @@ Namespace XML.xl
     End Class
 
     Public Class StringValue
-        <XmlAttribute> Public Property val As String
+
+        <XmlAttribute>
+        Public Property val As String
+
+        Public Overrides Function ToString() As String
+            Return val
+        End Function
+
+        Public Shared Widening Operator CType(str As String) As StringValue
+            Return New StringValue With {
+                .val = str
+            }
+        End Operator
     End Class
 
     Public Class ColorValue : Inherits StringValue
