@@ -1,9 +1,11 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Values
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
+Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices.Development
 
@@ -17,28 +19,33 @@ Namespace ApplicationServices.Development
         Const CloseTypePatterns$ = "^\s+End\s((Class)|(Structure)|(Enum)|(Interface)|(Module))"
         Const IndentsPattern$ = "^\s+"
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function SummaryModules(vb As String) As String
-            Dim modules As New StringBuilder
+            Return New Pointer(Of String)(vb.lTokens).SummaryInternal(vb)
+        End Function
+
+        <Extension>
+        Private Function SummaryInternal(vblines As Pointer(Of String), vb$) As String
+            Dim line$
             Dim tokens As Value(Of String) = ""
             Dim list As List(Of String)
             Dim type$
             Dim name$
             Dim indents$
-            Dim vblines As Pointer(Of String) = vb.lTokens
+            Dim properties As New List(Of NamedValue(Of String))
+            Dim methods As New List(Of NamedValue(Of String))
+            Dim operators As New List(Of NamedValue(Of String))
+            Dim container As New NamedValue(Of String)
+            Dim innerModules As New StringBuilder
 
-            For Each line As String In vb.lTokens
+            Do While Not vblines.EndRead
+                line = ++vblines
+
                 If Not (tokens = line.Match(TypePatterns, RegexICMul)).StringEmpty Then
                     list = tokens.Split(" "c).AsList
                     type = list(-2)
                     name = list(-1)
                     indents = line.Match(IndentsPattern, RegexICMul)
-
-                    If Not modules.Length = 0 Then
-                        modules.AppendLine()
-                    End If
-
-                    modules.AppendLine($"{indents}{type} {name}")
-                    modules.AppendLine()
 
                     If type = "Enum" Then
                         Dim members = vb _
@@ -49,7 +56,20 @@ Namespace ApplicationServices.Development
                             .Where(Function(s) Not s.StringEmpty) _
                             .ToArray
 
-                        modules.AppendLine(indents & "    " & members.JoinBy(", "))
+                        Dim enumType As New StringBuilder
+
+                        enumType.AppendLine(indents & type & " " & name)
+                        enumType.AppendLine()
+                        enumType.AppendLine(indents & "    " & members.JoinBy(", "))
+
+                        Return enumType.ToString
+                    Else
+                        If container.IsEmpty Then
+                            container = New NamedValue(Of String)(name, type, indents)
+                        Else
+                            ' 下一层堆栈
+                            innerModules.AppendLine((vblines - 1).SummaryInternal(vb))
+                        End If
                     End If
                 End If
                 If Not (tokens = line.Match(PropertyPatterns, RegexICMul)).StringEmpty Then
@@ -58,7 +78,7 @@ Namespace ApplicationServices.Development
                     name = list(-1)
                     indents = line.Match(IndentsPattern, RegexICMul)
 
-                    modules.AppendLine($"{indents}{type} {name}")
+                    properties += New NamedValue(Of String)(name, type, indents)
                 End If
                 If Not (tokens = line.Match(MethodPatterns, RegexICMul)).StringEmpty Then
                     list = tokens.Split(" "c).AsList
@@ -66,15 +86,43 @@ Namespace ApplicationServices.Development
                     name = list(-1)
                     indents = line.Match(IndentsPattern, RegexICMul)
 
-                    modules.AppendLine($"{indents}{type} {name}")
+                    If type = "Operator" Then
+                        operators += New NamedValue(Of String)(name, type, indents)
+                    Else
+                        methods += New NamedValue(Of String)(name, type, indents)
+                    End If
                 End If
-            Next
+                If Not (tokens = line.Match(CloseTypePatterns, RegexICMul)).StringEmpty Then
+                    Dim vbType As New StringBuilder
+                    Dim members As New List(Of String)
 
-            Return modules.ToString
-        End Function
+                    vbType.AppendLine(container.Description & container.Value & " " & container.Name)
+                    vbType.AppendLine()
 
-        Private Function SummaryInternal(vblines As Pointer(Of String)) As String
+                    If Not properties.IsNullOrEmpty Then
+                        members += "Properties"
+                        members += properties.OrderBy(Function(p) p.Name).Select(Function(p) $"{p.Description}{p.Value} {p.Name}").JoinBy(ASCII.LF)
+                        members += ""
+                    End If
+                    If Not methods.IsNullOrEmpty Then
+                        members += "Methods"
+                        members += methods.OrderBy(Function(m) m.Value).ThenBy(Function(m) m.Name).Select(Function(m) $"{m.Description}{m.Value} {m.Name}").JoinBy(ASCII.LF)
+                        members += ""
+                    End If
+                    If Not operators.IsNullOrEmpty Then
+                        members += "Operators"
+                        members += operators.OrderBy(Function(o) o.Name).Select(Function(o) $"{o.Description}{o.Value} {o.Name}").JoinBy(ASCII.LF)
+                        members += ""
+                    End If
 
+                    vbType.AppendLine(members.JoinBy(ASCII.LF))
+                    vbType.AppendLine(innerModules.ToString)
+
+                    Return vbType.ToString
+                End If
+            Loop
+
+            Throw New NotImplementedException
         End Function
     End Module
 End Namespace
