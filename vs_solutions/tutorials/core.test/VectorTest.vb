@@ -1,4 +1,40 @@
-﻿#Region "Microsoft.VisualBasic::760437edec4ce7666647d4a07c89a70b, core.test"
+﻿#Region "Microsoft.VisualBasic::d9ae45bdb8829d28941c6b8d97ffc2ba, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module VectorTest
+    ' 
+    '     Sub: Main
+    ' 
+    '     Structure fdddd
+    ' 
+    '         Operators: -, *, \, ^, (+2 Overloads) And
+    '                    (+2 Overloads) Like, (+2 Overloads) Mod, (+2 Overloads) Or, (+2 Overloads) Xor
+    ' 
+    ' 
+    '     Structure str
+    ' 
+    '         Properties: pattern
+    ' 
+    '         Operators: (+2 Overloads) *, +, (+2 Overloads) Like
+    ' 
+    ' 
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::760437edec4ce7666647d4a07c89a70b, core.test"
 
     ' Author:
     ' 
@@ -161,3 +197,4 @@ Module VectorTest
         Pause()
     End Sub
 End Module
+

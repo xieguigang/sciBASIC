@@ -1,4 +1,26 @@
-﻿#Region "Microsoft.VisualBasic::32bf033d93b65934e75dc90194c7a96a, core.test"
+﻿#Region "Microsoft.VisualBasic::8fc81cb896b9d27851d6b33e234c6ff9, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module LogFileTest
+    ' 
+    '     Sub: Main, PrintTest, WriteTes
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::32bf033d93b65934e75dc90194c7a96a, core.test"
 
     ' Author:
     ' 
@@ -42,3 +64,4 @@ Module LogFileTest
 
     End Sub
 End Module
+

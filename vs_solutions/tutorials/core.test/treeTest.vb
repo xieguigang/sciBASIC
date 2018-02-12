@@ -1,4 +1,26 @@
-﻿#Region "Microsoft.VisualBasic::80a3b9fac91571dcd682961d3f81301c, core.test"
+﻿#Region "Microsoft.VisualBasic::9756da122d5c75de635b0950ca67a476, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module treeTest
+    ' 
+    '     Sub: Main
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::80a3b9fac91571dcd682961d3f81301c, core.test"
 
     ' Author:
     ' 
@@ -40,3 +62,4 @@ Module treeTest
         Pause()
     End Sub
 End Module
+

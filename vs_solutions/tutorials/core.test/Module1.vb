@@ -1,4 +1,38 @@
-﻿#Region "Microsoft.VisualBasic::12b87139cec3a6fada99e7fcd6855f3d, core.test"
+﻿#Region "Microsoft.VisualBasic::61a7d586cdb61bfcb962e1aae4ec475f, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module Module1
+    ' 
+    '     Sub: Main, New
+    ' 
+    '     Structure Foo
+    ' 
+    '         Operators: (+2 Overloads) Like
+    ' 
+    ' 
+    ' 
+    '     Structure Lazy
+    ' 
+    '         Function: LongLoad
+    ' 
+    ' 
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::12b87139cec3a6fada99e7fcd6855f3d, core.test"
 
     ' Author:
     ' 
@@ -138,3 +172,4 @@ Module Module1
     End Structure
 
 End Module
+

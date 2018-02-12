@@ -1,4 +1,28 @@
-﻿#Region "Microsoft.VisualBasic::3b041cec7c68c691890dede98b8add7b, core.test"
+﻿#Region "Microsoft.VisualBasic::85490eaa71ae2164b0ad1f76ee952a79, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module DefaultValueTest
+    ' 
+    '     Function: [ByRef], Draw
+    ' 
+    '     Sub: Main, syntaxTest
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::3b041cec7c68c691890dede98b8add7b, core.test"
 
     ' Author:
     ' 
@@ -75,3 +99,4 @@ Module DefaultValueTest
     End Function
 
 End Module
+

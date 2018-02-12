@@ -1,4 +1,26 @@
-﻿#Region "Microsoft.VisualBasic::5aba667920bb9c6fb79d7ef5a020f704, core.test"
+﻿#Region "Microsoft.VisualBasic::ee401c25e9cdc2b8fc874b1113ef8c4b, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module CLI
+    ' 
+    '     Function: CLIDocumentTest, ExceptionHandlerTest, Main
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::5aba667920bb9c6fb79d7ef5a020f704, core.test"
 
     ' Author:
     ' 
@@ -51,3 +73,4 @@ Module CLI
         Throw New Exception
     End Function
 End Module
+

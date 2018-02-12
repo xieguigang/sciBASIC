@@ -58,10 +58,14 @@ Namespace ApplicationServices.Development
                             .ToArray
 
                         Dim enumType As New StringBuilder
+                        Dim memberList = members.memberList
 
                         enumType.AppendLine(indents & type & " " & name)
                         enumType.AppendLine()
-                        enumType.AppendLine(indents & "    " & members.JoinBy(", "))
+
+                        For Each line In memberList
+                            enumType.AppendLine(indents & "    " & line)
+                        Next
 
                         If container.IsEmpty Then
                             Return enumType.ToString
@@ -126,7 +130,6 @@ Namespace ApplicationServices.Development
                             .Skip(1) _
                             .Select(Function(l) New String(" "c, prefix.Length) & l) _
                             .JoinBy(ASCII.LF)
-                        members += ""
                     End If
                     If Not methods.IsNullOrEmpty Then
                         Dim types = methods _
@@ -141,7 +144,6 @@ Namespace ApplicationServices.Development
                                 .Skip(1) _
                                 .Select(Function(l) New String(" "c, prefix.Length) & l) _
                                 .JoinBy(ASCII.LF)
-                            members += ""
                         End If
                         If types.ContainsKey("Sub") Then
                             prefix = container.Description & $"    Sub: "
@@ -150,7 +152,6 @@ Namespace ApplicationServices.Development
                                 .Skip(1) _
                                 .Select(Function(l) New String(" "c, prefix.Length) & l) _
                                 .JoinBy(ASCII.LF)
-                            members += ""
                         End If
                     End If
                     If Not operators.IsNullOrEmpty Then
@@ -161,7 +162,6 @@ Namespace ApplicationServices.Development
                             .Skip(1) _
                             .Select(Function(l) New String(" "c, prefix.Length) & l) _
                             .JoinBy(ASCII.LF)
-                        members += ""
                     End If
 
                     vbType.AppendLine(members.JoinBy(ASCII.LF))

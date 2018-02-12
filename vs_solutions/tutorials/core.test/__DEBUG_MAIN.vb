@@ -1,4 +1,34 @@
-﻿#Region "Microsoft.VisualBasic::17c41d15ad1a1aac28f5433024a03881, core.test"
+﻿#Region "Microsoft.VisualBasic::6c3aed97d4188e0cde64b5f39037c8b7, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module __DEBUG_MAIN
+    ' 
+    '     Function: Main
+    ' 
+    '     Sub: fffff, ListTest, testVariables
+    ' 
+    '     Class TestJSON
+    ' 
+    '         Properties: Data, Extensions, Name
+    ' 
+    ' 
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::17c41d15ad1a1aac28f5433024a03881, core.test"
 
     ' Author:
     ' 
@@ -498,3 +528,4 @@ Public Class sdfsd(Of T1, T3)
     <DumpNode> Public Property safsdfsdf As T3
     <DumpNode> Protected ffff As String = Now.ToString
 End Class
+

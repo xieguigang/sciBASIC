@@ -1,4 +1,42 @@
-﻿#Region "Microsoft.VisualBasic::f5c85a2ca7e9da2e3b03f531838242c5, core.test"
+﻿#Region "Microsoft.VisualBasic::d6e7d85c4444ef86dd581810dc5570d5, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module devToolTest
+    ' 
+    '     Sub: loadTest, Main, parserTest
+    ' 
+    '     Class innerTest
+    ' 
+    '         Properties: (+2 Overloads) AA
+    ' 
+    '         Function: X, (+2 Overloads) Z
+    ' 
+    '         Sub: ACC, (+3 Overloads) X1
+    ' 
+    '         Operators: -, +, <<, <=, >=
+    '                    (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
+    ' 
+    ' 
+    '     Enum innerEnum
+    ' 
+    '         AAA, BBB, CCC, Get
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::f5c85a2ca7e9da2e3b03f531838242c5, core.test"
 
     ' Author:
     ' 
@@ -133,3 +171,4 @@ Public Module devToolTest
         DDD = 5
     End Enum
 End Module
+

@@ -1,4 +1,26 @@
-﻿#Region "Microsoft.VisualBasic::bfa5e9bdb2a53100de723fd333a6c2c0, ..\..\core.test"
+﻿#Region "Microsoft.VisualBasic::79e000a08e00363a08f3a622b2d25fa1, ..\..\core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module Module1
+    ' 
+    '     Sub: Main
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::bfa5e9bdb2a53100de723fd333a6c2c0, ..\..\core.test"
 
     ' Author:
     ' 
@@ -38,3 +60,4 @@ Module Module1
     End Sub
 
 End Module
+
