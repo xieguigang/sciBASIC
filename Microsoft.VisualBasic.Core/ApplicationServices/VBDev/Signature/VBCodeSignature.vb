@@ -4,12 +4,12 @@ Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 
 Namespace ApplicationServices.Development
 
-    Module VBCodeSignature
+    Public Module VBCodeSignature
 
-        Const AccessPattern$ = "((Public)|(Private)|(Friend)|(Protected)|(\s))*"
-        Const TypePatterns$ = "^\s+" & AccessPattern & "\s*((Class)|(Module)|(Structure)|(Enum)|(Delegate))\s+" & VBLanguage.IdentiferPattern
-        Const PropertyPatterns$ = "^\s+" & AccessPattern & "\s*((ReadOnly)|(WriteOnly)|(Default)|(\s))*\s*Property\s+" & VBLanguage.IdentiferPattern
-        Const MethodPatterns$ = "^\s+" & AccessPattern & "\s*((Sub)|(Function)|(Iterator)|(\s))*\s+" & VBLanguage.IdentiferPattern
+        Const AccessPattern$ = "((Public )|(Private )|(Friend )|(Protected )|(Shadows )|(Shared )|(Overrides )|(Overloads )|(Overridable )|(MustOverrides ))*"
+        Const TypePatterns$ = "^\s+" & AccessPattern & "\s*((Class)|(Module)|(Structure)|(Enum)|(Delegate)|(Interface))\s+" & VBLanguage.IdentiferPattern
+        Const PropertyPatterns$ = "^\s+" & AccessPattern & "\s*((ReadOnly )|(WriteOnly )|(Default ))*\s*Property\s+" & VBLanguage.IdentiferPattern
+        Const MethodPatterns$ = "^\s+" & AccessPattern & "\s*((Sub )|(Function )|(Iterator )|(Operator ))+\s*" & VBLanguage.IdentiferPattern
 
         <Extension>
         Public Iterator Function PopulateModules(vb As String) As IEnumerable(Of NamedCollection(Of String))

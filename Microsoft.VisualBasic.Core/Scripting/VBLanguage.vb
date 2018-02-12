@@ -66,7 +66,7 @@ Namespace Scripting.SymbolBuilder
         ''' <summary>
         ''' 匹配一个合法的标识符，在正则匹配的时候应该不区分大小写
         ''' </summary>
-        Public Const IdentiferPattern$ = "[_a-z][_a-z0-9]*"
+        Public Const IdentiferPattern$ = "\[?[_a-z][_a-z0-9]*\]?"
 
         ''' <summary>
         ''' Tokenize of <see cref="VBKeywords"/>
