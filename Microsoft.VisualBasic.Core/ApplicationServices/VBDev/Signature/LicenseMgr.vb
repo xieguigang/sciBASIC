@@ -156,6 +156,10 @@ THE SOFTWARE.",
                 Call sb.AppendLine("    ' " & line)
             Next
 
+            For Each line As String In VBCodeSignature.SummaryModules(vb:=src)
+                Call sb.AppendLine("    ' " & line)
+            Next
+
             Call sb.AppendLine()
             Call sb.AppendLine($"#End Region")
             Call sb.AppendLine()
