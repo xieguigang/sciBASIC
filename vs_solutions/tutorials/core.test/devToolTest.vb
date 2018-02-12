@@ -29,7 +29,7 @@
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
 
-Module devToolTest
+Public Module devToolTest
 
     Sub Main()
         Call parserTest()
@@ -48,7 +48,74 @@ Module devToolTest
         Dim code = "E:\repo\xDoc\Yilia\runtime\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb".ReadAllText
         Dim list = VBCodeSignature.SummaryModules(code)
 
+        Console.WriteLine(list)
+
         Pause()
     End Sub
+
+    Public MustInherit Class innerTest
+
+        Property AA As String
+        ReadOnly Property AA(o$) As Integer
+            Get
+
+            End Get
+        End Property
+
+        Function X() As Double
+        End Function
+
+        Function Z()
+
+        End Function
+        Function Z(o#)
+
+        End Function
+
+        Sub ACC()
+
+        End Sub
+
+        Sub X1()
+
+        End Sub
+        Sub X1(a$)
+
+        End Sub
+        Sub X1(o&)
+
+        End Sub
+
+        Public Shared Operator +(o As innerTest) As innerTest
+
+        End Operator
+        Public Shared Operator -(o As innerTest) As innerTest
+
+        End Operator
+        Public Shared Operator <<(o As innerTest, i%) As Double
+
+        End Operator
+
+        Public Shared Operator <=(o As innerTest, i%) As Double
+
+        End Operator
+        Public Shared Operator >=(o As innerTest, i%) As Double
+
+        End Operator
+
+        Public Shared Operator IsTrue(o As innerTest) As Boolean
+
+        End Operator
+        Public Shared Operator IsFalse(o As innerTest) As Boolean
+
+        End Operator
+    End Class
+
+    Enum innerEnum
+        AAA
+        BBB
+        CCC
+        DDD = 5
+    End Enum
 End Module
 

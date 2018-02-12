@@ -11,10 +11,11 @@ Namespace ApplicationServices.Development
 
     Public Module VBCodeSignature
 
-        Const AccessPattern$ = "((Public )|(Private )|(Friend )|(Protected )|(Shadows )|(Shared )|(Overrides )|(Overloads )|(Overridable )|(MustOverrides ))*"
-        Const TypePatterns$ = "^\s+" & AccessPattern & "\s*((Class)|(Module)|(Structure)|(Enum)|(Delegate)|(Interface))\s+" & VBLanguage.IdentiferPattern
+        Const AccessPattern$ = "((Public )|(Private )|(Friend )|(Protected )|(Shadows )|(Shared )|(Overrides )|(Overloads )|(Overridable )|(MustOverrides )|(NotInheritable )|(MustInherit ))*"
+        Const TypePatterns$ = "^\s*" & AccessPattern & "((Class)|(Module)|(Structure)|(Enum)|(Delegate)|(Interface))\s+" & VBLanguage.IdentiferPattern
         Const PropertyPatterns$ = "^\s+" & AccessPattern & "\s*((ReadOnly )|(WriteOnly )|(Default ))*\s*Property\s+" & VBLanguage.IdentiferPattern
         Const MethodPatterns$ = "^\s+" & AccessPattern & "\s*((Sub )|(Function )|(Iterator )|(Operator ))+\s*" & VBLanguage.IdentiferPattern
+        Const OperatorPatterns$ = "^\s+" & AccessPattern & "\s*Operator\s+(([<]|[>]|\=|\+|\-|\*|/|\^|\\)+|(" & VBLanguage.IdentiferPattern & "))"
         Const ClosePatterns$ = "^\s+End\s((Sub)|(Function)|(Class)|(Structure)|(Enum)|(Interface)|(Operator)|(Module))"
         Const CloseTypePatterns$ = "^\s+End\s((Class)|(Structure)|(Enum)|(Interface)|(Module))"
         Const IndentsPattern$ = "^\s+"
@@ -62,7 +63,11 @@ Namespace ApplicationServices.Development
                         enumType.AppendLine()
                         enumType.AppendLine(indents & "    " & members.JoinBy(", "))
 
-                        Return enumType.ToString
+                        If container.IsEmpty Then
+                            Return enumType.ToString
+                        Else
+                            innerModules.AppendLine(enumType.ToString)
+                        End If
                     Else
                         If container.IsEmpty Then
                             container = New NamedValue(Of String)(name, type, indents)
@@ -92,30 +97,75 @@ Namespace ApplicationServices.Development
                         methods += New NamedValue(Of String)(name, type, indents)
                     End If
                 End If
+                If Not (tokens = line.Match(OperatorPatterns, RegexICMul)).StringEmpty Then
+                    list = tokens.Split(" "c).AsList
+                    type = list(-2)
+                    name = list(-1)
+                    indents = line.Match(IndentsPattern, RegexICMul)
+
+                    If type = "Operator" Then
+                        operators += New NamedValue(Of String)(name, type, indents)
+                    Else
+                        methods += New NamedValue(Of String)(name, type, indents)
+                    End If
+                End If
                 If Not (tokens = line.Match(CloseTypePatterns, RegexICMul)).StringEmpty Then
                     Dim vbType As New StringBuilder
                     Dim members As New List(Of String)
+                    Dim prefix$
+                    Dim lines$()
 
                     vbType.AppendLine(container.Description & container.Value & " " & container.Name)
                     vbType.AppendLine()
 
                     If Not properties.IsNullOrEmpty Then
-                        members += "Properties"
-                        members += properties.OrderBy(Function(p) p.Name).Select(Function(p) $"{p.Description}{p.Value} {p.Name}").JoinBy(ASCII.LF)
+                        prefix = container.Description & "    Properties: "
+                        lines = properties.Keys.memberList
+                        members += prefix & lines(Scan0)
+                        members += lines _
+                            .Skip(1) _
+                            .Select(Function(l) New String(" "c, prefix.Length) & l) _
+                            .JoinBy(ASCII.LF)
                         members += ""
                     End If
                     If Not methods.IsNullOrEmpty Then
-                        members += "Methods"
-                        members += methods.OrderBy(Function(m) m.Value).ThenBy(Function(m) m.Name).Select(Function(m) $"{m.Description}{m.Value} {m.Name}").JoinBy(ASCII.LF)
-                        members += ""
+                        Dim types = methods _
+                            .GroupBy(Function(m) m.Value) _
+                            .ToDictionary(Function(t) t.Key,
+                                          Function(l) l.Keys.memberList)
+
+                        If types.ContainsKey("Function") Then
+                            prefix = container.Description & $"    Function: "
+                            members += prefix & types!Function.First
+                            members += types!Function _
+                                .Skip(1) _
+                                .Select(Function(l) New String(" "c, prefix.Length) & l) _
+                                .JoinBy(ASCII.LF)
+                            members += ""
+                        End If
+                        If types.ContainsKey("Sub") Then
+                            prefix = container.Description & $"    Sub: "
+                            members += prefix & types!Sub.First
+                            members += types!Sub _
+                                .Skip(1) _
+                                .Select(Function(l) New String(" "c, prefix.Length) & l) _
+                                .JoinBy(ASCII.LF)
+                            members += ""
+                        End If
                     End If
                     If Not operators.IsNullOrEmpty Then
-                        members += "Operators"
-                        members += operators.OrderBy(Function(o) o.Name).Select(Function(o) $"{o.Description}{o.Value} {o.Name}").JoinBy(ASCII.LF)
+                        prefix = container.Description & "    Operators: "
+                        lines = operators.Keys.memberList
+                        members += prefix & lines(Scan0)
+                        members += lines _
+                            .Skip(1) _
+                            .Select(Function(l) New String(" "c, prefix.Length) & l) _
+                            .JoinBy(ASCII.LF)
                         members += ""
                     End If
 
                     vbType.AppendLine(members.JoinBy(ASCII.LF))
+                    vbType.AppendLine()
                     vbType.AppendLine(innerModules.ToString)
 
                     Return vbType.ToString
@@ -123,6 +173,23 @@ Namespace ApplicationServices.Development
             Loop
 
             Throw New NotImplementedException
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Private Function memberList(names As IEnumerable(Of String)) As String()
+            Return names _
+                .GroupBy(Function(pName) pName) _
+                .OrderBy(Function(pName) pName.Key) _
+                .Select(Function(overload)
+                            If overload.Count = 1 Then
+                                Return overload.Key
+                            Else
+                                Return $"(+{overload.Count} Overloads) " & overload.Key
+                            End If
+                        End Function) _
+                .Split(5) _
+                .Select(Function(part) part.JoinBy(", ")) _
+                .ToArray
         End Function
     End Module
 End Namespace
