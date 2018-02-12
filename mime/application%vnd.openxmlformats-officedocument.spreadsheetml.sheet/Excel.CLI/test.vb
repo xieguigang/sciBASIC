@@ -26,12 +26,12 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.MIME.Office
-Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
-Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.MIME.Office.Excel
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.MIME.Office
+Imports Microsoft.VisualBasic.MIME.Office.Excel
+Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 Module test
 

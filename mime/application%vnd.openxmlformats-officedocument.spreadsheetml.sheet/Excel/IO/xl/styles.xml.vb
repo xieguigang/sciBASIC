@@ -178,6 +178,8 @@ Namespace XML.xl
     Public Class StringValue
 
         <XmlAttribute>
+        Public Property type As String
+        <XmlAttribute>
         Public Property val As String
 
         Public Overrides Function ToString() As String

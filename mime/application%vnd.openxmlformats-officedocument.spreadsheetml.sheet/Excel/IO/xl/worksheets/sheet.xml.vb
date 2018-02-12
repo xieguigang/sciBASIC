@@ -89,11 +89,19 @@ Namespace XML.xl.worksheets
     End Class
 
     Public Class cfRule
-        Public Property formula As String
         <XmlAttribute> Public Property type As String
         <XmlAttribute> Public Property dxfId As String
         <XmlAttribute> Public Property priority As String
         <XmlAttribute> Public Property [operator] As String
+
+        Public Property formula As String
+    End Class
+
+    Public Class colorScale
+        <XmlElement("cfvo")>
+        Public Property cfvo As StringValue()
+        <XmlElement("color")>
+        Public Property colors As ColorValue()
     End Class
 
     Public Class sheetFormatPr
