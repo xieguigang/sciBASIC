@@ -1,32 +1,31 @@
 ﻿#Region "Microsoft.VisualBasic::79e1e178f1e280c0d79910d03ca998e4, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\KMeans.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
-Imports System.Data
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.Language
@@ -318,41 +317,6 @@ Namespace KMeans
             Next
 
             Return position
-        End Function
-
-        ''' <summary>
-        ''' Converts a System.Data.DataTable to a 2-dimensional array
-        ''' </summary>
-        ''' <param name="table">A System.Data.DataTable containing data to cluster</param>
-        ''' <returns>A 2-dimensional array containing data to cluster</returns>
-        <Extension> Public Function ToFloatMatrix(table As DataTable) As Double(,)
-            Dim rowCount As Integer = table.Rows.Count
-            Dim fieldCount As Integer = table.Columns.Count
-            Dim dataPoints As Double(,)
-            Dim fieldValue As Double = 0.0
-            Dim row As DataRow
-
-            dataPoints = New Double(rowCount - 1, fieldCount - 1) {}
-
-            For rowPosition As Integer = 0 To rowCount - 1
-                row = table.Rows(rowPosition)
-
-                For fieldPosition As Integer = 0 To fieldCount - 1
-                    Try
-                        fieldValue = Double.Parse(row(fieldPosition).ToString())
-                    Catch ex As Exception
-                        Dim msg$ = $"Invalid row at {rowPosition.ToString()} and field {fieldPosition.ToString()}"
-                        ex = New InvalidCastException(msg, ex)
-                        ex.PrintException
-
-                        Throw ex
-                    End Try
-
-                    dataPoints(rowPosition, fieldPosition) = fieldValue
-                Next
-            Next
-
-            Return dataPoints
         End Function
     End Module
 End Namespace
