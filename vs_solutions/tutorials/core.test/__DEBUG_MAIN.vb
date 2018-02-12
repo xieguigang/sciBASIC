@@ -151,7 +151,7 @@ Public Module __DEBUG_MAIN
 
             ddddsss = "abc"
 
-            Dim g = .ref.GetJson
+            Dim g = .GetJson
 
             System.Console.WriteLine(g)
             Pause()
