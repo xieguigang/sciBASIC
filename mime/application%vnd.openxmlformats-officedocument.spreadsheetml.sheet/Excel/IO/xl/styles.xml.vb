@@ -1,32 +1,35 @@
 ﻿#Region "Microsoft.VisualBasic::bbbc17dbd66c760630b5a111b546e9eb, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\styles.xml.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
+Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Imaging
 Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 
 Namespace XML.xl
@@ -65,12 +68,23 @@ Namespace XML.xl
     End Class
 
     Public Class tableStyles : Inherits List(Of tableStyle)
-
-    End Class
-
-    Public Class tableStyle
         <XmlAttribute> Public Property defaultTableStyle As String
         <XmlAttribute> Public Property defaultPivotStyle As String
+    End Class
+
+    Public Class tableStyle : Inherits List(Of tableStyleElement)
+        <XmlAttribute> Public Property defaultTableStyle As String
+        <XmlAttribute> Public Property defaultPivotStyle As String
+        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property pivot As String
+        <XmlAttribute> Public Property table As String
+        <XmlElement("tableStyleElement")>
+        Public Property elements As tableStyleElement()
+    End Class
+
+    Public Class tableStyleElement
+        <XmlAttribute> Public Property type As String
+        <XmlAttribute> Public Property dxfId As String
     End Class
 
     Public Class dxfs : Inherits List(Of dxf)
@@ -147,26 +161,63 @@ Namespace XML.xl
         Public Property fonts As font()
     End Class
 
+    ''' <summary>
+    ''' Font style in Xlsx
+    ''' </summary>
     Public Class font
-        Public Property b As Bold
+        Public Property b As Flag
+        Public Property i As Flag
+        Public Property u As Flag
         Public Property sz As StringValue
         Public Property color As ColorValue
         Public Property name As StringValue
         Public Property family As StringValue
+        Public Property charset As StringValue
         Public Property scheme As StringValue
     End Class
 
     Public Class StringValue
-        <XmlAttribute> Public Property val As String
+
+        <XmlAttribute>
+        Public Property type As String
+        <XmlAttribute>
+        Public Property val As String
+
+        Public Overrides Function ToString() As String
+            Return val
+        End Function
+
+        Public Shared Widening Operator CType(str As String) As StringValue
+            Return New StringValue With {
+                .val = str
+            }
+        End Operator
     End Class
 
     Public Class ColorValue : Inherits StringValue
+
         <XmlAttribute> Public Property theme As String
         <XmlAttribute> Public Property rgb As String
         <XmlAttribute> Public Property indexed As String
         <XmlAttribute> Public Property lastClr As String
+
+        Public Overrides Function ToString() As String
+            Return rgb
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Widening Operator CType(color As Color) As ColorValue
+            Return New ColorValue With {
+                .rgb = color.ToHtmlColor
+            }
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Widening Operator CType(color As String) As ColorValue
+            Return color.TranslateColor
+        End Operator
     End Class
 
-    Public Class Bold
+    Public Class Flag
     End Class
 End Namespace

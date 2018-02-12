@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::b698869bf6a4e69f72427ecf758b1a4c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -33,12 +33,49 @@ Imports Microsoft.VisualBasic.Language
 Public Module MatrixExtensions
 
     ''' <summary>
+    ''' Converts a <see cref="DataTable"/> to a 2-dimensional array
+    ''' </summary>
+    ''' <param name="table">A System.Data.DataTable containing data to cluster</param>
+    ''' <returns>A 2-dimensional array containing data to cluster</returns>
+    <Extension> Public Function ToFloatMatrix(table As DataTable) As Double(,)
+        Dim rowCount As Integer = table.Rows.Count
+        Dim fieldCount As Integer = table.Columns.Count
+        Dim dataPoints As Double(,)
+        Dim fieldValue As Double = 0.0
+        Dim row As DataRow
+
+        dataPoints = New Double(rowCount - 1, fieldCount - 1) {}
+
+        For rowPosition As Integer = 0 To rowCount - 1
+            row = table.Rows(rowPosition)
+
+            For fieldPosition As Integer = 0 To fieldCount - 1
+                Try
+                    fieldValue = Double.Parse(row(fieldPosition).ToString())
+                Catch ex As Exception
+                    Dim msg$ = $"Invalid row at {rowPosition.ToString()} and field {fieldPosition.ToString()}"
+                    ex = New InvalidCastException(msg, ex)
+                    ex.PrintException
+
+                    Throw ex
+                End Try
+
+                dataPoints(rowPosition, fieldPosition) = fieldValue
+            Next
+        Next
+
+        Return dataPoints
+    End Function
+
+    ''' <summary>
     ''' Gets property field data from a generic data frame
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="dataframe"></param>
     ''' <param name="property$"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DATA(Of T)(dataframe As IEnumerable(Of DynamicPropertyBase(Of T)), property$) As T()
         Return dataframe.Select(Function(d) d([property])).ToArray
@@ -51,7 +88,7 @@ Public Module MatrixExtensions
     ''' <param name="m"></param>
     ''' <param name="n"></param>
     ''' <returns></returns>
-    Public Function MAT(Of T)(m As Integer, n As Integer) As T()()
+    Public Function MAT(Of T)(m%, n%) As T()()
         Dim newMAT As T()() = New T(m - 1)() {}
 
         For i As Integer = 0 To m - 1
@@ -92,6 +129,8 @@ Public Module MatrixExtensions
     ''' <param name="MAT"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function ToVectorList(Of T)(MAT As T(,)) As List(Of T())
         Return MAT.RowIterator.AsList
     End Function

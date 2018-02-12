@@ -58,7 +58,7 @@ Public Module XmlExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="XmlFile">The path of the xml document.(XML文件的文件路径)</param>
-    ''' <param name="ThrowEx">
+    ''' <param name="throwEx">
     ''' If the deserialization operation have throw a exception, then this function should process this error automatically or just throw it?
     ''' (当反序列化出错的时候是否抛出错误？假若不抛出错误，则会返回空值)
     ''' </param>
@@ -70,12 +70,12 @@ Public Module XmlExtensions
     ''' <remarks></remarks>
     <Extension> Public Function LoadXml(Of T)(XmlFile As String,
                                               Optional encoding As Encoding = Nothing,
-                                              Optional ThrowEx As Boolean = True,
+                                              Optional throwEx As Boolean = True,
                                               Optional preprocess As Func(Of String, String) = Nothing,
                                               Optional stripInvalidsCharacter As Boolean = False) As T
         Dim type As Type = GetType(T)
         Dim obj As Object = XmlFile.LoadXml(
-            type, encoding, ThrowEx,
+            type, encoding, throwEx,
             preprocess,
             stripInvalidsCharacter:=stripInvalidsCharacter)
 

@@ -44,7 +44,7 @@ Namespace Model
     Public Module StoreProcedure
 
         <Extension>
-        Public Function ToTableFrame(worksheet As worksheet, strings As sharedStrings) As csv
+        Public Function ToTableFrame(worksheet As worksheets.worksheet, strings As sharedStrings) As csv
             Dim getValues As IEnumerable(Of RowObject) = worksheet _
                 .sheetData _
                 .rows _
@@ -78,6 +78,12 @@ Namespace Model
             Return csv
         End Function
 
+        ''' <summary>
+        ''' 创建新的表格对象
+        ''' </summary>
+        ''' <param name="table"></param>
+        ''' <param name="strings"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function CreateWorksheet(table As csv, strings As sharedStrings) As worksheet
             Dim stringTable = strings.ToHashTable

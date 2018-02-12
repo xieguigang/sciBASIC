@@ -1,28 +1,28 @@
 ﻿#Region "Microsoft.VisualBasic::ec2108df552351c67b8dd950ce22a8a8, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\worksheets\sheet.xml.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xieguigang (xie.guigang@live.com)
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
@@ -32,6 +32,9 @@ Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.Model.Xmlns
 
 Namespace XML.xl.worksheets
 
+    ''' <summary>
+    ''' 保存数据所使用到的工作表的对象模型
+    ''' </summary>
     <XmlRoot("worksheet", [Namespace]:="http://schemas.openxmlformats.org/spreadsheetml/2006/main")>
     Public Class worksheet
 
@@ -44,7 +47,9 @@ Namespace XML.xl.worksheets
         Public Property pageSetup As pageSetup
         Public Property sheetViews As sheetView()
         Public Property sheetFormatPr As sheetFormatPr
-        Public Property conditionalFormatting As conditionalFormatting
+
+        <XmlElement("conditionalFormatting")>
+        Public Property conditionalFormattings As conditionalFormatting()
         Public Property hyperlinks As hyperlink()
         Public Property drawing As drawing
 
@@ -83,17 +88,32 @@ Namespace XML.xl.worksheets
     End Class
 
     Public Class conditionalFormatting
-        <XmlAttribute> Public Property sqref As String
-        <XmlElement(NameOf(cfRule))>
-        Public Property cfRules As cfRule()
+
+        ''' <summary>
+        ''' 单元格的引用范围
+        ''' </summary>
+        ''' <returns></returns>
+        <XmlAttribute>
+        Public Property sqref As String
+        Public Property cfRule As cfRule
+
     End Class
 
     Public Class cfRule
-        Public Property formula As String
         <XmlAttribute> Public Property type As String
         <XmlAttribute> Public Property dxfId As String
         <XmlAttribute> Public Property priority As String
         <XmlAttribute> Public Property [operator] As String
+
+        Public Property formula As String
+        Public Property colorScale As colorScale
+    End Class
+
+    Public Class colorScale
+        <XmlElement("cfvo")>
+        Public Property cfvo As StringValue()
+        <XmlElement("color")>
+        Public Property colors As ColorValue()
     End Class
 
     Public Class sheetFormatPr
@@ -108,14 +128,25 @@ Namespace XML.xl.worksheets
     End Class
 
     Public Class sheetView
+        <XmlAttribute> Public Property zoomScale As String
+        <XmlAttribute> Public Property zoomScaleNormal As String
         <XmlAttribute> Public Property tabSelected As String
         <XmlAttribute> Public Property workbookViewId As String
         Public Property selection As selection
+        Public Property pane As pane
+    End Class
+
+    Public Class pane
+        <XmlAttribute> Public Property ySplit As String
+        <XmlAttribute> Public Property topLeftCell As String
+        <XmlAttribute> Public Property activePane As String
+        <XmlAttribute> Public Property state As String
     End Class
 
     Public Class selection
         <XmlAttribute> Public Property activeCell As String
         <XmlAttribute> Public Property sqref As String
+        <XmlAttribute> Public Property pane As String
     End Class
 
     Public Structure dimension
@@ -140,6 +171,7 @@ Namespace XML.xl.worksheets
     Public Structure row
         <XmlAttribute> Public Property r As String
         <XmlAttribute> Public Property spans As String
+        <XmlAttribute> Public Property s As String
 
         <XmlAttribute(NameOf(dyDescent), [Namespace]:=OpenXML.x14ac)>
         Public Property dyDescent As String
