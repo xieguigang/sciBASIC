@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d6f156cf4094e8d21b5354a91ffacfd, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\NeedlemanWunschArguments.vb"
+﻿#Region "Microsoft.VisualBasic::52fb51c9c4b8a45d4e31191cd6e3da35, analysis\SequenceToolkit\NeedlemanWunsch\NeedlemanWunschArguments.vb"
 
 ' Author:
 ' 
@@ -31,22 +31,21 @@
 
 ' Summaries:
 
-'     Class NeedlemanWunschArguments
+' Class NeedlemanWunschArguments
 ' 
-'         Properties: GapPenalty, MatchScore, MismatchScore, NumberOfAlignments, Query
-'                     Score, Subject
+'     Properties: GapPenalty, MatchScore, MismatchScore, NumberOfAlignments, Query
+'                 Score, Subject
 ' 
-'         Function: getAligned1, getAligned2, match
+'     Function: getAligned1, getAligned2, match
 ' 
-'         Sub: addAligned1, addAligned2, New
-' 
+'     Sub: addAligned1, addAligned2, New
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
 
 Namespace NeedlemanWunsch
 
@@ -143,13 +142,13 @@ Namespace NeedlemanWunsch
         ''' <returns> score </returns>
         Public Property Score As Integer
 
-        Sub New(match As GenericLambda(Of T).IEquals, toChar As Func(Of T, Char))
+        Sub New(match As Equals(Of T), toChar As Func(Of T, Char))
             __equals = match
             __toChar = toChar
         End Sub
 
-        ReadOnly __toChar As Func(Of T, Char)
-        ReadOnly __equals As GenericLambda(Of T).IEquals
+        Protected ReadOnly __toChar As Func(Of T, Char)
+        ReadOnly __equals As Equals(Of T)
 
         ''' <summary>
         ''' if char a is equal to char b

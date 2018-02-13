@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a7e2e9c5480b176ba94d28845082ae6, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
+﻿#Region "Microsoft.VisualBasic::88528252a4ee81077b2e40bdea5d73cf, analysis\SequenceToolkit\NeedlemanWunsch\GNW.vb"
 
     ' Author:
     ' 
@@ -31,18 +31,21 @@
 
     ' Summaries:
 
-    '     Class NeedlemanWunsch
+    ' Class NeedlemanWunsch
     ' 
-    '         Function: fillTracebackMatrix
+    '     Function: fillTracebackMatrix
     ' 
-    '         Sub: compute, New, traceback, writeAlignment
-    ' 
+    '     Sub: compute, New, traceback, writeAlignment
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+Imports System.Linq
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
 
 Namespace NeedlemanWunsch
 
@@ -57,7 +60,7 @@ Namespace NeedlemanWunsch
         Dim matrix As Integer()() = Nothing
         Dim tracebackMatrix As Integer()() = Nothing
 
-        Sub New(match As GenericLambda(Of T).IEquals, empty As T, toChar As Func(Of T, Char))
+        Sub New(match As Equals(Of T), empty As T, toChar As Func(Of T, Char))
             Call MyBase.New(match, toChar)
             __empty = empty
         End Sub
@@ -65,15 +68,12 @@ Namespace NeedlemanWunsch
         ReadOnly __empty As T
 
         ''' <summary>
-        '''     
-        '''	 * this function is called for the first time with two empty stacks
-        '''	 * and the end indices of the matrix
-        '''	 * 
-        '''	 * the function computes a traceback over the matrix, it calls itself recursively
-        '''	 * for each sequence, it pushes the aligned character (a,c,g,t or -)
-        '''	 * on a stack (use java.util.Stack with the function push()) 
-        '''	 * 
-        '''	 
+        '''	this function is called for the first time with two empty stacks
+        '''	and the end indices of the matrix
+        '''	
+        '''	the function computes a traceback over the matrix, it calls itself recursively
+        '''	for each sequence, it pushes the aligned character (a,c,g,t or -)
+        '''	on a stack (use java.util.Stack with the function push()) 
         ''' </summary>
         ''' <param name="s1"></param>
         ''' <param name="s2"></param>
@@ -132,23 +132,21 @@ Namespace NeedlemanWunsch
         ''' <summary>
         ''' computes the matrix for the Needleman-Wunsch Algorithm
         ''' </summary>
+        ''' <remarks>	
+        ''' this function computes the NW-algorithm with linear gap-costs
+        '''  - first make yourself familiar with this function and the functions used to compute the resulting alignment!
+        '''  
+        '''  - modify the functions used in this class such that the NW algorithm is modular
+        '''    i.e. the following criteria should be fulfilled: 
+        '''        - it should be easy to replace the linear gap cost function with an affine gap cost function
+        '''        - the initialization step, fill and traceback should be modular, to allow
+        '''          to switch between different algorithms later (NW, SW, OverlapAlignment etc.)
+        '''    
+        '''  - you are allowed to change the class structure, if you think that it is necessary!
+        '''    (make sure to use object oriented programming concepts, i.e. use objects to abstract your code 
+        '''   	-> don't do everything in a single class)    	 
+        ''' </remarks>
         Public Sub compute()
-
-            '    	
-            '    	 * this function computes the NW-algorithm with linear gap-costs
-            '    	 * - first make yourself familiar with this function and the functions used to compute the resulting alignment!
-            '    	 * 
-            '    	 * - modify the functions used in this class such that the NW algorithm is modular
-            '    	 *   i.e. the following criteria should be fulfilled: 
-            '    	 *   	- it should be easy to replace the linear gap cost function with an affine gap cost function
-            '    	 *      - the initialization step, fill and traceback should be modular, to allow
-            '    	 *        to switch between different algorithms later (NW, SW, OverlapAlignment etc.)
-            '    	 * 
-            '    	 * - you are allowed to change the class structure, if you think that it is necessary!
-            '    	 *   (make sure to use object oriented programming concepts, i.e. use objects to abstract your code 
-            '    	 *   	-> don't do everything in a single class)
-            '    	 * 
-            '    	 
 
             ' Set the number of rows and columns
             Dim rows As Integer = Me.Sequence2.Length + 1 ' number of rows
@@ -231,42 +229,37 @@ Namespace NeedlemanWunsch
 
         ''' <summary>
         ''' This funktion provide a easy way to write a computed alignment into a fasta file </summary>
-        ''' <param name="outFile"> </param>
+        ''' <param name="output"> </param>
         ''' <param name="single"> </param>
-        Public Sub writeAlignment(outFile As String, [single] As Boolean)
-            Using outputFile As New FileStream(outFile, FileMode.OpenOrCreate)
-                Using output As New StreamWriter(outputFile)
-
-                    If [single] Then
-                        output.Write(">SEQUENCE_1|Score:")
-                        output.Write(Me.Score)
-                        output.WriteLine()
-                        output.Write(Me.getAligned1(0))
-                        output.WriteLine()
-                        output.Write(">SEQUENCE_2|Score:")
-                        output.Write(Me.Score)
-                        output.WriteLine()
-                        output.Write(Me.getAligned2(0))
-                    Else
-                        For i As Integer = 0 To Me.NumberOfAlignments - 1
-                            output.Write(">SEQUENCE_1|Alignment:")
-                            output.Write(i + 1)
-                            output.Write("|Score:")
-                            output.Write(Me.Score)
-                            output.WriteLine()
-                            output.Write(Me.getAligned1(0))
-                            output.WriteLine()
-                            output.Write(">SEQUENCE_2|Alignment:")
-                            output.Write(i + 1)
-                            output.Write("|Score:")
-                            output.Write(Me.Score)
-                            output.WriteLine()
-                            output.Write(Me.getAligned2(0))
-                            output.WriteLine()
-                        Next
-                    End If
-                End Using
-            End Using
+        Public Sub writeAlignment(output As StreamWriter, [single] As Boolean)
+            If [single] Then
+                output.Write(">SEQUENCE_1|Score:")
+                output.Write(Me.Score)
+                output.WriteLine()
+                output.Write(New String(Me.getAligned1(0).Select(__toChar).ToArray))
+                output.WriteLine()
+                output.Write(">SEQUENCE_2|Score:")
+                output.Write(Me.Score)
+                output.WriteLine()
+                output.Write(New String(Me.getAligned2(0).Select(__toChar).ToArray))
+            Else
+                For i As Integer = 0 To Me.NumberOfAlignments - 1
+                    output.Write(">SEQUENCE_1|Alignment:")
+                    output.Write(i + 1)
+                    output.Write("|Score:")
+                    output.Write(Me.Score)
+                    output.WriteLine()
+                    output.Write(New String(Me.getAligned1(i).Select(__toChar).ToArray))
+                    output.WriteLine()
+                    output.Write(">SEQUENCE_2|Alignment:")
+                    output.Write(i + 1)
+                    output.Write("|Score:")
+                    output.Write(Me.Score)
+                    output.WriteLine()
+                    output.Write(New String(Me.getAligned2(i).Select(__toChar).ToArray))
+                    output.WriteLine()
+                Next
+            End If
         End Sub
     End Class
 End Namespace
