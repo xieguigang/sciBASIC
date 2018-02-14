@@ -204,8 +204,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions.vb" />
     <Compile Include="NeedlemanWunsch\GNW.vb" />
-    <Compile Include="NeedlemanWunsch\NeedlemanWunschArguments.vb" />
+    <Compile Include="NeedlemanWunsch\GlobalAlign.vb" />
+    <Compile Include="NeedlemanWunsch\Workspace.vb" />
     <Compile Include="SmithWaterman\GSW.vb" />
     <Compile Include="SmithWaterman\Match.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
