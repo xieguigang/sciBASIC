@@ -58,13 +58,12 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 
 ''' <summary>
 ''' Some common used reflection operation extension at here.
 ''' </summary>
-<Package("Emit.Reflection",
-                  Category:=APICategories.SoftwareTools,
-                  Publisher:="xie.guigang@live.com")>
+<Package("Emit.Reflection", Category:=APICategories.SoftwareTools, Publisher:="xie.guigang@live.com")>
 Public Module EmitReflection
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -223,20 +222,20 @@ NULL:       If Not strict Then
 
     <ExportAPI("GET.Assembly.Details")>
     <Extension>
-    Public Function GetAssemblyDetails(path As String) As ApplicationInfoUtils
-        Return New ApplicationInfoUtils(Assembly.LoadFile(path))
+    Public Function GetAssemblyDetails(path As String) As DevAssmInfo
+        Return Assembly.LoadFile(path).FromAssembly
     End Function
 
     <ExportAPI("GET.Assembly.Details")>
     <Extension>
-    Public Function GetAssemblyDetails(def As Type) As ApplicationInfoUtils
-        Return New ApplicationInfoUtils(def.Assembly)
+    Public Function GetAssemblyDetails(def As Type) As DevAssmInfo
+        Return def.Assembly.FromAssembly
     End Function
 
     <ExportAPI("GET.Assembly.Details")>
     <Extension>
-    Public Function GetAssemblyDetails(assm As Assembly) As ApplicationInfoUtils
-        Return New ApplicationInfoUtils(assm)
+    Public Function GetAssemblyDetails(assm As Assembly) As DevAssmInfo
+        Return assm.FromAssembly
     End Function
 
     ''' <summary>

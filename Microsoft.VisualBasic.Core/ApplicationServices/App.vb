@@ -87,6 +87,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
+Imports DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 
 '                   _ooOoo_
 '                  o8888888o
@@ -243,7 +244,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ExecutablePath As String
-    Public ReadOnly Property Info As ApplicationInfoUtils
+    Public ReadOnly Property Info As DevAssmInfo
 
     ''' <summary>
     ''' Gets the name, without the extension, of the assembly file for the application.
@@ -445,8 +446,8 @@ Public Module App
     End Function
 
     Public Function GetAppLocalData(exe$) As String
-        Dim app As New ApplicationInfoUtils(Assembly.LoadFile(path:=IO.Path.GetFullPath(exe)))
-        Return GetAppLocalData(app:=app.ProductName, assemblyName:=exe.BaseName)
+        Dim app As DevAssmInfo = Assembly.LoadFile(path:=IO.Path.GetFullPath(exe)).FromAssembly
+        Return GetAppLocalData(app:=app.AssemblyProduct, assemblyName:=exe.BaseName)
     End Function
 
 #Region "这里的环境变量方法主要是操作从命令行之中所传递进来的额外的参数的"
