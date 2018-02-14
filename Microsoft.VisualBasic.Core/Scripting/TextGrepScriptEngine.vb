@@ -68,10 +68,10 @@ Namespace Scripting
     ''' 
     ''' </summary>
     ''' <param name="source">文本源</param>
-    ''' <param name="paras">脚本命令的参数</param>
+    ''' <param name="args">脚本命令的参数</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Delegate Function TextGrepMethodToken(source As String, paras As String()) As String
+    Public Delegate Function TextGrepMethodToken(source$, args$()) As String
     Public Delegate Function TextGrepMethod(source As String) As String
 
     ''' <summary>
