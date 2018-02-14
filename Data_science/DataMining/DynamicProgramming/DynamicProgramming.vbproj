@@ -204,6 +204,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NeedlemanWunsch\GNW.vb" />
+    <Compile Include="NeedlemanWunsch\NeedlemanWunschArguments.vb" />
     <Compile Include="SmithWaterman\GSW.vb" />
     <Compile Include="SmithWaterman\Match.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -221,8 +223,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="NeedlemanWunsch\GNW.vb" />
-    <Compile Include="NeedlemanWunsch\NeedlemanWunschArguments.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
