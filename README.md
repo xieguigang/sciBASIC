@@ -47,6 +47,10 @@ PM> Install-Package sciBASIC
 PM> Install-Package sciBASIC -Pre
 ```
 
+### Contacts
+
+[foundation@sciBASIC.net](mailto://foundation@scibasic.net)
+
 ### Directory Structure
 
 ###### 1. source projects
