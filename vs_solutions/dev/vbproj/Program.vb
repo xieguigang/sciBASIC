@@ -78,8 +78,7 @@ Module Program
                     !config, !platform
                 }.StringFormat
             Catch ex As Exception
-                ex = New Exception(.GetJson, ex)
-                Throw ex
+                Throw New Exception(.GetJson, ex)
             Finally
                 Call $" ==> {condition}".__INFO_ECHO
             End Try
@@ -92,18 +91,17 @@ Module Program
         End If
 
         For Each xml As String In files
-            Dim vbproj As Project = xml.LoadXml(Of Project)(,, AddressOf Project.RemoveNamespace)
+            Dim vbproj As Project = xml.LoadXml(Of Project)(,, )
             Dim config = vbproj.GetProfile(condition$)
-            Dim relOut$ = RelativePath(xml.ParentPath, output, appendParent:=False) ' 获取得到的是相对于vbproj文件的目标文件夹的相对路径
+
+            ' 获取得到的是相对于vbproj文件的目标文件夹的相对路径
+            Dim relOut$ = RelativePath(xml.ParentPath, output, appendParent:=False)
 
             If config Is Nothing Then
                 Call $"Project: {xml.GetFullPath} didn't have target config profile, ignore this project item...".EchoLine
                 Continue For
             End If
 
-#If DEBUG Then
-            xml = xml.TrimSuffix & "_updated.vbproj"
-#End If
             config.OutputPath = relOut
             vbproj.Save(xml, Encodings.UTF8)
         Next
