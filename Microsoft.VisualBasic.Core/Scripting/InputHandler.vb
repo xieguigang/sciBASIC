@@ -306,9 +306,13 @@ Namespace Scripting
             End If
 
             Dim source As IEnumerable = DirectCast(obj, IEnumerable)
-            Dim data = (From val As Object
-                        In source
-                        Select Conversion.CTypeDynamic(val, type)).ToArray
+            Dim data = LinqAPI.Exec(Of Object) _
+ _
+                () <= From val As Object
+                      In source
+                      Let value = Conversion.CTypeDynamic(val, type)
+                      Select value
+
             Return [DirectCast](data, type)
         End Function
 
