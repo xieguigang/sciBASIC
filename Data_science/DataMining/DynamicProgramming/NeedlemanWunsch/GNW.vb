@@ -1,51 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::f677d6ce70b230bc7706131be1784810, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NeedlemanWunsch
-    ' 
-    '         Function: fillTracebackMatrix
-    ' 
-    '         Sub: compute, New, traceback, writeAlignment
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NeedlemanWunsch
+' 
+'         Function: fillTracebackMatrix
+' 
+'         Sub: compute, New, traceback, writeAlignment
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.IO
-Imports System.Linq
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
 
 Namespace NeedlemanWunsch
@@ -55,11 +51,10 @@ Namespace NeedlemanWunsch
     ''' Bioinformatics 1, WS 15/16
     ''' Dr. Kay Nieselt and Alexander Seitz
     ''' </summary>
-    Public Class NeedlemanWunsch(Of T)
-        Inherits NeedlemanWunschArguments(Of T)
+    Public Class NeedlemanWunsch(Of T) : Inherits Workspace(Of T)
 
-        Dim matrix As Integer()() = Nothing
-        Dim tracebackMatrix As Integer()() = Nothing
+        Dim matrix%()() = Nothing
+        Dim tracebackMatrix%()() = Nothing
 
         Sub New(match As Equals(Of T), empty As T, toChar As Func(Of T, Char))
             Call MyBase.New(match, toChar)
@@ -91,14 +86,14 @@ Namespace NeedlemanWunsch
                     '			 * think of a clever object oriented way to do so!
                     '			 
 
-                    Dim ___aligned1 As T() = s1.ToArray
-                    Dim ___aligned2 As T() = s2.ToArray
+                    Dim aligned1 As T() = s1.ToArray
+                    Dim aligned2 As T() = s2.ToArray
 
-                    Call Array.Reverse(___aligned1)
-                    Call Array.Reverse(___aligned2)
+                    Call Array.Reverse(aligned1)
+                    Call Array.Reverse(aligned2)
 
-                    Me.addAligned1(___aligned1)
-                    Me.addAligned2(___aligned2)
+                    Me.AddAligned1(aligned1)
+                    Me.AddAligned2(aligned2)
                 Case 1 ' upper cell
                     s1.Push(__empty)
                     s2.Push(Me.Sequence2(i - 2))
@@ -154,8 +149,8 @@ Namespace NeedlemanWunsch
             Dim columns As Integer = Me.Sequence1.Length + 1 ' number of columns
 
             ' Strings, which will be aligned
-            Dim ___sequence1 As T() = Me.Sequence1
-            Dim ___sequence2 As T() = Me.Sequence2
+            Dim seq1 As T() = Me.Sequence1
+            Dim seq2 As T() = Me.Sequence2
 
             ' Set up the score- and the traceback-matrix
             matrix = MAT(Of Integer)(rows, columns)
@@ -177,7 +172,7 @@ Namespace NeedlemanWunsch
             ' Fill matrix and traceback matrix
             For i As Integer = 1 To rows - 1
                 For j As Integer = 1 To columns - 1
-                    Dim a As Integer = matrix(i - 1)(j - 1) + Me.match(___sequence1(j - 1), ___sequence2(i - 1))
+                    Dim a As Integer = matrix(i - 1)(j - 1) + Me.isMatch(seq1(j - 1), seq2(i - 1))
                     Dim b As Integer = matrix(i)(j - 1) - Me.GapPenalty
                     Dim c As Integer = matrix(i - 1)(j) - Me.GapPenalty
                     Dim max As Integer = Math.Max(a, b, c)
@@ -227,40 +222,5 @@ Namespace NeedlemanWunsch
                 Return 4
             End If
         End Function
-
-        ''' <summary>
-        ''' This funktion provide a easy way to write a computed alignment into a fasta file </summary>
-        ''' <param name="output"> </param>
-        ''' <param name="single"> </param>
-        Public Sub writeAlignment(output As StreamWriter, [single] As Boolean)
-            If [single] Then
-                output.Write(">SEQUENCE_1|Score:")
-                output.Write(Me.Score)
-                output.WriteLine()
-                output.Write(New String(Me.getAligned1(0).Select(__toChar).ToArray))
-                output.WriteLine()
-                output.Write(">SEQUENCE_2|Score:")
-                output.Write(Me.Score)
-                output.WriteLine()
-                output.Write(New String(Me.getAligned2(0).Select(__toChar).ToArray))
-            Else
-                For i As Integer = 0 To Me.NumberOfAlignments - 1
-                    output.Write(">SEQUENCE_1|Alignment:")
-                    output.Write(i + 1)
-                    output.Write("|Score:")
-                    output.Write(Me.Score)
-                    output.WriteLine()
-                    output.Write(New String(Me.getAligned1(i).Select(__toChar).ToArray))
-                    output.WriteLine()
-                    output.Write(">SEQUENCE_2|Alignment:")
-                    output.Write(i + 1)
-                    output.Write("|Score:")
-                    output.Write(Me.Score)
-                    output.WriteLine()
-                    output.Write(New String(Me.getAligned2(i).Select(__toChar).ToArray))
-                    output.WriteLine()
-                Next
-            End If
-        End Sub
     End Class
 End Namespace
