@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a05c9d8bdf5d414d2ed7d810486c278, Microsoft.VisualBasic.Core\Extensions\Collection\ByteStreamExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8d13c139900788629b8facfbad71157c, Microsoft.VisualBasic.Core\Extensions\Collection\ByteStreamExtensions.vb"
 
     ' Author:
     ' 
@@ -65,4 +65,3 @@ Public Module ByteStreamExtensions
         Return Encoding.ASCII.GetString(stream.ToArray)
     End Function
 End Module
-

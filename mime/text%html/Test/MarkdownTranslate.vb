@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f3f22d0e3652546ea7940a08887654f, mime\text%html\Test\MarkdownTranslate.vb"
+﻿#Region "Microsoft.VisualBasic::cb1fd6143b6bb53d85570eb440ae4487, mime\text%html\Test\MarkdownTranslate.vb"
 
     ' Author:
     ' 
@@ -106,4 +106,3 @@ Dim a$ = "12345"
         Pause()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3326a878521521b384ef46ec18d8faa8, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Styling.vb"
+﻿#Region "Microsoft.VisualBasic::e6ab36b6dbbcf1b78faa65c4baa813ee, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Styling.vb"
 
     ' Author:
     ' 
@@ -111,4 +111,3 @@ Public Module Styling
         }
     End Function
 End Module
-

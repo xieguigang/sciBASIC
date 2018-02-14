@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88528252a4ee81077b2e40bdea5d73cf, analysis\SequenceToolkit\NeedlemanWunsch\GNW.vb"
+﻿#Region "Microsoft.VisualBasic::f677d6ce70b230bc7706131be1784810, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    ' Class NeedlemanWunsch
+    '     Class NeedlemanWunsch
     ' 
-    '     Function: fillTracebackMatrix
+    '         Function: fillTracebackMatrix
     ' 
-    '     Sub: compute, New, traceback, writeAlignment
+    '         Sub: compute, New, traceback, writeAlignment
+    ' 
     ' 
     ' /********************************************************************************/
 
