@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::1ae2441d6fa9832d664e035278c75c23, ..\sciBASIC#\Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
+﻿#Region "Microsoft.VisualBasic::0a7e2e9c5480b176ba94d28845082ae6, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class NeedlemanWunsch
+    ' 
+    '         Function: fillTracebackMatrix
+    ' 
+    '         Sub: compute, New, traceback, writeAlignment
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -41,7 +57,7 @@ Namespace NeedlemanWunsch
         Dim matrix As Integer()() = Nothing
         Dim tracebackMatrix As Integer()() = Nothing
 
-        Sub New(match As IEquals(Of T), empty As T, toChar As Func(Of T, Char))
+        Sub New(match As GenericLambda(Of T).IEquals, empty As T, toChar As Func(Of T, Char))
             Call MyBase.New(match, toChar)
             __empty = empty
         End Sub

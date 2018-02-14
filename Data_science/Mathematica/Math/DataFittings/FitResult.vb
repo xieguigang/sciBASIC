@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::85f6ed56fbc0f071a88390277db7fe92, ..\sciBASIC#\Data_science\Mathematica\Math\DataFittings\FitResult.vb"
+﻿#Region "Microsoft.VisualBasic::4bda002946253311a53c6d05b6d123dc, Data_science\Mathematica\Math\DataFittings\FitResult.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class FitResult
+    ' 
+    '     Properties: ErrorTest, FactorSize, Intercept, IsPolyFit, Polynomial
+    '                 R_square, RMSE, Slope, SSE, SSR
+    ' 
+    '     Function: ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

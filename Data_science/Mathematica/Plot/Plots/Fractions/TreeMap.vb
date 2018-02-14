@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2631b90e1db8fe2743b399cfd83a34a1, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Fractions\TreeMap.vb"
+﻿#Region "Microsoft.VisualBasic::2631b90e1db8fe2743b399cfd83a34a1, Data_science\Mathematica\Plot\Plots\Fractions\TreeMap.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module TreeMap
+    ' 
+    '     Function: GetPercentage, Plot
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

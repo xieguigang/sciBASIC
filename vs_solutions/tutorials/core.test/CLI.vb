@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5aba667920bb9c6fb79d7ef5a020f704, ..\sciBASIC#\vs_solutions\tutorials\core.test\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::4670cb343b85451ccfe2865e551a590d, vs_solutions\tutorials\core.test\CLI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,63 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module CLI
+    ' 
+    '     Function: CLIDocumentTest, ExceptionHandlerTest, Main
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+#Region "Microsoft.VisualBasic::ee401c25e9cdc2b8fc874b1113ef8c4b, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module CLI
+    ' 
+    '     Function: CLIDocumentTest, ExceptionHandlerTest, Main
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::5aba667920bb9c6fb79d7ef5a020f704, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module CLI
+    ' 
+    '     Function: CLIDocumentTest, ExceptionHandlerTest, Main
+    ' 
+    ' 
+    ' 
 
 #End Region
 

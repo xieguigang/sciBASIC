@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::8a9e7eecc1a87bd71fbc6da66de6223f, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Heatmap\CorrelationHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::4bd2e7fba3bc843283428062fc51cc6c, Data_science\Mathematica\Plot\Plots-statistics\Heatmap\CorrelationHeatmap.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module CorrelationHeatmap
+    ' 
+    '         Function: Plot
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

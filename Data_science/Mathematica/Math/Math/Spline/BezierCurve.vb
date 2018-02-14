@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::27ad160d55a8cca9fb16583b60a7858c, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Spline\BezierCurve.vb"
+﻿#Region "Microsoft.VisualBasic::27ad160d55a8cca9fb16583b60a7858c, Data_science\Mathematica\Math\Math\Spline\BezierCurve.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class BezierCurve
+    ' 
+    '         Properties: BezierPoints, InitPointsList, Iterations
+    ' 
+    '         Function: MidPoint, ReCalculate
+    ' 
+    '         Sub: CreateBezier, (+2 Overloads) New, PopulateBezierPoints
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

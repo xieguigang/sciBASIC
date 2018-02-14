@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c3b52a3090011adbd361e08ae411ec0b, ..\sciBASIC#\gr\physics\physics_Test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c3b52a3090011adbd361e08ae411ec0b, gr\physics\physics_Test\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Program
+    ' 
+    '     Sub: add, cl, g, Main, repl
+    '          reverse
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

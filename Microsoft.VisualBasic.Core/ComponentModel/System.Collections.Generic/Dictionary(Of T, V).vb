@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::68e251d403a2620e1f3f3ccc89f18f87, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::68e251d403a2620e1f3f3ccc89f18f87, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Dictionary
+    ' 
+    '         Function: Find, GetValueList, Remove, SafeGetValue, (+2 Overloads) TryGetValue
+    ' 
+    '         Sub: Add, AddRange, InsertOrUpdate, (+3 Overloads) New
+    ' 
+    '         Operators: (+2 Overloads) -, ^, +, <=, >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::6d4ffaf7082d14411759627fba6b8fdd, ..\sciBASIC#\CLI_tools\LicenseMgr\LicenseMgr\Pages\Home.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::bd271e1f85cdf7fcf09e164d0322fd26, vs_solutions\dev\LicenseMgr\LicenseMgr\Pages\Home.xaml.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,14 +25,29 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Home
+    ' 
+    '         Sub: __update, Add_Author_Click, AuthorAddCommon, copyright_TextChanged, license_brief_TextChanged
+    '              license_title_TextChanged, Load_Click, New, Save_Click
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
+Imports System.Linq
 Imports System.Windows
 Imports System.Windows.Controls
-Imports System.Linq
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 'Imports Microsoft.VisualBasic.Windows.Forms
 
@@ -48,15 +64,15 @@ Namespace Pages
         End Sub
 
         Private Sub license_brief_TextChanged(sender As Object, e As TextChangedEventArgs) Handles license_brief.TextChanged
-            LicenseInfo.info.Brief = license_brief.Text
+            LicenseInfoExtensions.info.Brief = license_brief.Text
         End Sub
 
         Private Sub license_title_TextChanged(sender As Object, e As TextChangedEventArgs) Handles license_title.TextChanged
-            LicenseInfo.info.Title = license_title.Text
+            LicenseInfoExtensions.info.Title = license_title.Text
         End Sub
 
         Private Sub copyright_TextChanged(sender As Object, e As TextChangedEventArgs) Handles copyright.TextChanged
-            LicenseInfo.info.Copyright = copyright.Text
+            LicenseInfoExtensions.info.Copyright = copyright.Text
         End Sub
 
         Private Sub Load_Click(sender As Object, e As RoutedEventArgs) Handles Load.Click
@@ -64,7 +80,7 @@ Namespace Pages
                 .Filter = "Xml Meta data(*.xml)|*.xml"
             }
                 If file.ShowDialog = Forms.DialogResult.OK Then
-                    LicenseInfo.info = file.FileName.LoadXml(Of SoftwareToolkits.LicenseInfo)
+                    LicenseInfoExtensions.info = file.FileName.LoadXml(Of LicenseInfo)
 
                     copyright.Text = info.Copyright
                     license_title.Text = info.Title
@@ -81,11 +97,11 @@ Namespace Pages
                         Call AuthorAddCommon(name, email)
 
                         If Not name Is Nothing Then
-                            name.Text = author.Name
+                            name.Text = author.name
 
                         End If
                         If Not email Is Nothing Then
-                            email.Text = author.x
+                            email.Text = author.text
                         End If
                     Next
                 End If
@@ -99,7 +115,7 @@ Namespace Pages
                 .Filter = "Xml Meta data(*.xml)|*.xml"
             }
                 If file.ShowDialog = Forms.DialogResult.OK Then
-                    Call LicenseInfo.info.GetXml.SaveTo(file.FileName)
+                    Call LicenseInfoExtensions.info.GetXml.SaveTo(file.FileName)
                 End If
             End Using
         End Sub
@@ -142,13 +158,14 @@ Namespace Pages
         ''' 最后在这进行数据更新
         ''' </summary>
         Private Sub __update()
-            info.Authors =
-                LinqAPI.Exec(Of NamedValue(Of String)) <= From author As KeyValuePair(Of TextBox, TextBox)
-                                                          In Me.authors
-                                                          Select New NamedValue(Of String) With {
-                                                              .Name = author.Key.Text,
-                                                              .x = author.Value.Text
-                                                          }
+            info.Authors = LinqAPI.Exec(Of NamedValue) _
+ _
+                () <= From author As KeyValuePair(Of TextBox, TextBox)
+                      In Me.authors
+                      Select New NamedValue With {
+                          .name = author.Key.Text,
+                          .text = author.Value.Text
+                      }
         End Sub
     End Class
 End Namespace

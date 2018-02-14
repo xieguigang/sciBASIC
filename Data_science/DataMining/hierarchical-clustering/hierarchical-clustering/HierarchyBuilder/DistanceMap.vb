@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::64b6081e78d49216be3125eea4a83cc6, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
+﻿#Region "Microsoft.VisualBasic::77d1984edef9d3a32867a503e442e95a, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DistanceMap
+    ' 
+    '         Properties: MinimalDistance
+    ' 
+    '         Function: Add, FindByCodePair, Remove, RemoveFirst, ToList
+    '                   ToString
+    ' 
+    '         Sub: (+2 Overloads) New, Sort
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

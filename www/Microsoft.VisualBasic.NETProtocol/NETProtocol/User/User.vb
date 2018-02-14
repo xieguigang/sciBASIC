@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::1d5528947d6039702e42d54228e55c42, ..\sciBASIC#\www\Microsoft.VisualBasic.NETProtocol\NETProtocol\User\User.vb"
+﻿#Region "Microsoft.VisualBasic::1d5528947d6039702e42d54228e55c42, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\User\User.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class User
+    ' 
+    '         Properties: Id, UserInvoke
+    ' 
+    '         Function: __pushUpdate, __register
+    ' 
+    '         Sub: __close, __downloadMsg, (+2 Overloads) Dispose, New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

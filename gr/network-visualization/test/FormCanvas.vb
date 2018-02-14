@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b6b93f3b7cfbd61a165c21e2bcce8385, ..\sciBASIC#\gr\network-visualization\test\FormCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::b6b93f3b7cfbd61a165c21e2bcce8385, gr\network-visualization\test\FormCanvas.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class FormCanvas
+    ' 
+    '     Sub: AutoRotateToolStripMenuItem_Click, DToolStripMenuItem_Click, Form1_Load, FormCanvas_Closed, RefreshParametersToolStripMenuItem_Click
+    '          SaveAsSVGToolStripMenuItem_Click, ShowLabelsToolStripMenuItem_Click, TrackBar1_Scroll
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

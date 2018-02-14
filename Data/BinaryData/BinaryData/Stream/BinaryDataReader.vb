@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a1070cd911d93e5b9079541d6c5482a5, ..\sciBASIC#\Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::a1070cd911d93e5b9079541d6c5482a5, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class BinaryDataReader
+    ' 
+    '     Properties: ByteOrder, Encoding, EndOfStream, Length, Position
+    ' 
+    '     Function: DecimalFromBytes, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal, ReadDecimals
+    '               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadInt16, ReadInt16s
+    '               ReadInt32, ReadInt32s, ReadInt64, ReadInt64s, ReadMultiple
+    '               ReadSBytes, ReadSingle, ReadSingles, (+4 Overloads) ReadString, ReadUInt16
+    '               ReadUInt16s, ReadUInt32, ReadUInt32s, ReadUInt64, ReadUInt64s
+    '               ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
+    ' 
+    '     Sub: Align, (+5 Overloads) New
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

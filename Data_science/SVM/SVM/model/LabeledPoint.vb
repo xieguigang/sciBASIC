@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c6f0f3dc3e76521301ea697b72859951, ..\sciBASIC#\Data_science\SVM\SVM\model\LabeledPoint.vb"
+﻿#Region "Microsoft.VisualBasic::c6f0f3dc3e76521301ea697b72859951, Data_science\SVM\SVM\model\LabeledPoint.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class LabeledPoint
+    ' 
+    '         Properties: ColorClass, X, Y
+    ' 
+    '         Function: Clone, Equals, HasColorClass, ICloneable_Clone, ListEqual
+    '                   ToString
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

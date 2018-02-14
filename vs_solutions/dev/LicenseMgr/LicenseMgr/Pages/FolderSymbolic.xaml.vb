@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::92bdf137c2a84222a99b634957ba6b45, ..\sciBASIC#\CLI_tools\LicenseMgr\LicenseMgr\Pages\FileSymbolic.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::9c038e448e84af2295159d3e505335cf, vs_solutions\dev\LicenseMgr\LicenseMgr\Pages\FolderSymbolic.xaml.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,60 +25,78 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class FolderSymbolic
+    ' 
+    '         Sub: Admin_Rights, New, Original_Folder, Symlink_Create, UserControl_Initialized
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
+Imports FirstFloor.ModernUI.Presentation
+Imports FirstFloor.ModernUI.Windows.Controls
 Imports System.IO
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Media
-Imports FirstFloor.ModernUI.Presentation
-Imports FirstFloor.ModernUI.Windows.Controls
-Imports Microsoft
-'Imports Microsoft.VisualBasic.Windows.Forms
-Imports Microsoft.Win32
 'Imports Microsoft.VisualBasic.FileIO.SymLinker
+Imports Microsoft
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.ApplicationServices
+'Imports Microsoft.VisualBasic.Windows.Forms
 
 Namespace Pages
 
     ''' <summary>
-    ''' Interaction logic for FileSymbolic.xaml
+    ''' Interaction logic for FolderSymbolic.xaml
     ''' </summary>
-    Partial Public Class FileSymbolic
+    Partial Public Class FolderSymbolic
         Inherits UserControl
         Public Sub New()
             InitializeComponent()
         End Sub
 
-        Private Sub Original_File(sender As Object, e As RoutedEventArgs)
-            BrowsedFile.Text = "You haven't selected a source yet."
+        Private Sub Original_Folder(sender As Object, e As RoutedEventArgs)
+            BrowsedFolder.Text = "You haven't selected a source yet."
 
-            Dim Browse As New OpenFileDialog() With {
-                .Filter = "Microsoft VisualBasic Source Code(*.vb)|*.vb"
-            }
-            Browse.Title = "Browse for source file"
-            Browse.InitialDirectory = "Desktop"
-            Browse.CheckFileExists = True
-            Browse.CheckPathExists = True
-            Browse.ValidateNames = True
-            Browse.Multiselect = False
-            Dim FileSelected As Nullable(Of Boolean) = Browse.ShowDialog()
-            If FileSelected = True Then
-                BrowsedFile.Text = Browse.FileName
+            Dim Browse As New System.Windows.Forms.FolderBrowserDialog()
+            Browse.Description = "Choose the original folder where to apply this license info:"
+            Browse.RootFolder = System.Environment.SpecialFolder.Desktop
+            Browse.ShowNewFolderButton = True
+            Dim result As System.Windows.Forms.DialogResult = Browse.ShowDialog()
+            If result = System.Windows.Forms.DialogResult.OK Then
+                BrowsedFolder.Text = Browse.SelectedPath
             End If
         End Sub
 
         Private Sub Symlink_Create(sender As Object, e As RoutedEventArgs)
-            If BrowsedFile.Text = "You haven't selected a source yet." Then
+            If BrowsedFolder.Text = "You haven't selected a source yet." Then
                 ModernDialog.ShowMessage("You didn't choose a source. Please do it.", "Oops!", MessageBoxButton.OK)
             Else
                 Try
-                    info.RootDIR = BrowsedFile.Text.ParentPath
-                    Call SoftwareToolkits.LicenseMgr.Insert(BrowsedFile.Text, info)
-                    BrowsedFile.Text = "You haven't selected a source yet."
-                    ModernDialog.ShowMessage("License information applied success.", "Success!", MessageBoxButton.OK)
-                Catch ex As Exception
-                    ex = New Exception(BrowsedFile.Text, ex)
 
+                    Dim rootDir$ = BrowsedFolder.Text
+                    Dim failures = Development.LicenseMgr.Inserts(info, rootDir)
+
+                    If failures.Length > 0 Then
+                        Dim ex As New Exception("These files are write data failures!")
+                        ex = New Exception(failures.GetJson)
+                        Throw ex
+                    End If
+
+                    ModernDialog.ShowMessage("The source code license info applied success.", "Success!", MessageBoxButton.OK)
+                    BrowsedFolder.Text = "You haven't selected a source yet."
+
+                Catch ex As Exception
+
+                    ex = New Exception(BrowsedFolder.Text)
                     Call Microsoft.VisualBasic.App.LogException(ex)
 
                     Dim OldColor As Color = AppearanceManager.Current.AccentColor
@@ -96,7 +115,7 @@ Namespace Pages
         End Sub
 
         Private Sub Admin_Rights(sender As Object, e As RoutedEventArgs)
-            '  VisualBasic.App.RunAsAdmin()
+            '   VisualBasic.App.RunAsAdmin()
         End Sub
     End Class
 End Namespace

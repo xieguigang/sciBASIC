@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::ec00543cf093d521ce8737879b5f6647, ..\sciBASIC#\Data\BinaryData\BinaryData\Stream\BinaryDataWriter.vb"
+﻿#Region "Microsoft.VisualBasic::ec00543cf093d521ce8737879b5f6647, Data\BinaryData\BinaryData\Stream\BinaryDataWriter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class BinaryDataWriter
+    ' 
+    '     Properties: ByteOrder, Encoding, Position
+    ' 
+    '     Function: DecimalToBytes, ReserveOffset, (+2 Overloads) Seek, (+2 Overloads) TemporarySeek
+    ' 
+    '     Sub: Align, (+5 Overloads) New, (+21 Overloads) Write, WriteByteLengthPrefixString, WriteDwordLengthPrefixString
+    '          WriteMultiple, WriteNoPrefixOrTerminationString, WriteReversed, WriteWordLengthPrefixString, WriteZeroTerminatedString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

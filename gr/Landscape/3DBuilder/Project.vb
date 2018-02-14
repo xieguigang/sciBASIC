@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::342db05537f44878dd7cd0d8c3c904a3, ..\sciBASIC#\gr\Landscape\3DBuilder\Project.vb"
+﻿#Region "Microsoft.VisualBasic::342db05537f44878dd7cd0d8c3c904a3, gr\Landscape\3DBuilder\Project.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Project
+    ' 
+    '         Properties: model, Thumbnail
+    ' 
+    '         Function: FromZipDirectory, GetMatrix, GetSurfaces
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

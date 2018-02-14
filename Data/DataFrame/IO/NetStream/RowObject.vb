@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::697da78cb11448c34208f76b1d8a9690, ..\sciBASIC#\Data\DataFrame\IO\NetStream\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::697da78cb11448c34208f76b1d8a9690, Data\DataFrame\IO\NetStream\RowObject.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class RowObject
+    ' 
+    '         Function: CreateObject, Load
+    ' 
+    '         Sub: (+4 Overloads) New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

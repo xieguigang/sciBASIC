@@ -1,28 +1,50 @@
-﻿#Region "Microsoft.VisualBasic::31b36123c46983036d28d0db002896cb, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\DataSample.vb"
+﻿#Region "Microsoft.VisualBasic::c65c956e6b69aef4f24bfefc78b583b4, Microsoft.VisualBasic.Core\Extensions\Math\StatisticsMathExtensions\DataSample.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DataSample
+    ' 
+    '         Properties: Max, Mean, Min, SampleSize
+    ' 
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator, Split, ToString
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    '     Module DataSampleExtensions
+    ' 
+    '         Function: DoubleSample, IntegerSample
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

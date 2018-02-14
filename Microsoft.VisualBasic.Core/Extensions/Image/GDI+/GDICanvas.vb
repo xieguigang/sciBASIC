@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d146e50c58211b75c50537094b6a0e3d, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::d146e50c58211b75c50537094b6a0e3d, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,37 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class GDICanvas
+    ' 
+    '         Properties: Clip, ClipBounds, CompositingMode, CompositingQuality, DpiX
+    '                     DpiY, Font, Graphics, InterpolationMode, IsClipEmpty
+    '                     IsVisibleClipEmpty, PageScale, PageUnit, PixelOffsetMode, RenderingOrigin
+    '                     SmoothingMode, Stroke, TextContrast, TextRenderingHint, Transform
+    '                     VisibleClipBounds
+    ' 
+    '         Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, MeasureCharacterRanges
+    '                   (+8 Overloads) MeasureString
+    ' 
+    '         Sub: AddMetafileComment, (+2 Overloads) Clear, (+4 Overloads) CopyFromScreen, Dispose, (+4 Overloads) DrawArc
+    '              DrawB, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve
+    '              (+4 Overloads) DrawEllipse, (+2 Overloads) DrawIcon, DrawIconUnstretched, (+30 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled
+    '              DrawImageUnscaledAndClipped, (+5 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath, (+4 Overloads) DrawPie
+    '              (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+7 Overloads) DrawString, EndContainer
+    '              (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
+    '              (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, (+2 Overloads) FillRectangles, FillRegion
+    '              Finalize, (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ReleaseHdc
+    '              ReleaseHdcInternal, ResetClip, ResetTransform, Restore, (+2 Overloads) RotateTransform
+    '              (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

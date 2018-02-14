@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::9b47f1a485c8e0461ee540c149317ddd, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
+﻿#Region "Microsoft.VisualBasic::9b47f1a485c8e0461ee540c149317ddd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,43 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure ColorBrewer
+    ' 
+    '         Properties: Accent, Blues, BrBG, BuGn, BuPu
+    '                     c10, c11, c12, c3, c4
+    '                     c5, c6, c7, c8, c9
+    '                     Dark2, GnBu, Greens, Greys, Oranges
+    '                     OrRd, Paired, Pastel1, Pastel2, PiYG
+    '                     PRGn, PuBu, PuBuGn, PuOr, PuRd
+    '                     Purples, RdBu, RdGy, RdPu, RdYlBu
+    '                     RdYlGn, Reds, Set1, Set2, Set3
+    '                     Spectral, type, YlGn, YlGnBu, YlOrBr
+    '                     YlOrRd
+    ' 
+    '         Function: GetColors, ParseName, ToString
+    '         Class DivergingSchemes
+    ' 
+    '             Sub: New
+    ' 
+    '         Class QualitativeSchemes
+    ' 
+    '             Sub: New
+    ' 
+    '         Class SequentialSchemes
+    ' 
+    '             Sub: New
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

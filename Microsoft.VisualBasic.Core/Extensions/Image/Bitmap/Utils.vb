@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::26494377f84c1c1f357fe37826393806, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::26494377f84c1c1f357fe37826393806, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\Utils.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Utils
+    ' 
+    '         Function: ColorReplace, Resize, ResizeUnscaled, ResizeUnscaledByHeight
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

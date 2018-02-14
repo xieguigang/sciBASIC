@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a85c68ec7dde72b8386e325bb6946b13, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::a85c68ec7dde72b8386e325bb6946b13, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashDictionary.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class HashDictionary
+    ' 
+    '         Properties: __keys, __values, (+2 Overloads) Count, IsReadOnly, Keys
+    '                     Values
+    ' 
+    '         Function: Contains, (+2 Overloads) ContainsKey, GetEnumerator, GetEnumerator1, (+2 Overloads) Remove
+    '                   (+2 Overloads) TryGetValue
+    ' 
+    '         Sub: (+2 Overloads) Add, Clear, CopyTo, (+2 Overloads) Dispose, (+2 Overloads) New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

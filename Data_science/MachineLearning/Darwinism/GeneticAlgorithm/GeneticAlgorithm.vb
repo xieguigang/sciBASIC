@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::78feb08e6fcebe3acb47a95040836ef3, ..\sciBASIC#\Data_science\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::78feb08e6fcebe3acb47a95040836ef3, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class GeneticAlgorithm
+    ' 
+    '         Properties: Best, Fitness, Iteration, ParentChromosomesSurviveCount, Population
+    '                     Worst
+    ' 
+    '         Function: __iterate, GetFitness
+    ' 
+    '         Sub: addIterationListener, Clear, (+2 Overloads) Evolve, New, removeIterationListener
+    '              Terminate
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

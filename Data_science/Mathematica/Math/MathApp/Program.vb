@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::3ff60c573606a6eab38c8065bc127750, ..\sciBASIC#\Data_science\Mathematica\Math\MathApp\Program.vb"
+﻿#Region "Microsoft.VisualBasic::3ff60c573606a6eab38c8065bc127750, Data_science\Mathematica\Math\MathApp\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Program
+    ' 
+    '     Function: __calc, Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

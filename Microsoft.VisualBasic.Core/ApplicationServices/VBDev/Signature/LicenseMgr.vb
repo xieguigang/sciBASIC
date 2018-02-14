@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::0934f3d9ce0c1a2d09535854afeaa523, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\LicenseMgr.vb"
+﻿#Region "Microsoft.VisualBasic::0cb3b24c3761820eee76ec1654b146d9, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\LicenseMgr.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,15 +25,32 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module LicenseMgr
+    ' 
+    '         Properties: Ignores, Template
+    ' 
+    '         Function: AddRegion, Insert, Inserts, RemoveRegion
+    ' 
+    '         Sub: New
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace ApplicationServices.Development
 
@@ -50,9 +68,9 @@ Namespace ApplicationServices.Development
             Get
                 Return New LicenseInfo With {
                     .Authors = {
-                        New NamedValue(Of String) With {
-                            .Name = "asuka",
-                            .Value = "amethyst.asuka@gcmodeller.org"
+                        New NamedValue With {
+                            .name = "asuka",
+                            .text = "amethyst.asuka@gcmodeller.org"
                         }
                     },
                     .Brief = "Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -73,7 +91,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.",
                     .Copyright = "Copyright (c) 2016 amethyst.asuka@gcmodeller.org",
-                    .RootDIR = "./",
                     .Title = "The MIT License (MIT)"
             }
             End Get
@@ -100,8 +117,8 @@ THE SOFTWARE.",
         ''' <param name="info">License meta data</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Insert(src As String, info As LicenseInfo) As Boolean
-            Dim file As String = info.GetRelativePath(src)
+        Public Function Insert(src As String, info As LicenseInfo, rootDir$) As Boolean
+            Dim file As String = ProgramPathSearchTool.RelativePath(rootDir, src, appendParent:=False)
             Dim [in] As String = src.ReadAllText
             Dim path As String = src
 
@@ -142,8 +159,8 @@ THE SOFTWARE.",
             Call sb.AppendLine("    ' Author:")
             Call sb.AppendLine("    ' ")
 
-            For Each author As NamedValue(Of String) In info.Authors.SafeQuery
-                Call sb.AppendLine($"    '       {author.Name} ({author.Value})")
+            For Each author As NamedValue In info.Authors.SafeQuery
+                Call sb.AppendLine($"    '       {author.name} ({author.text})")
             Next
             Call sb.AppendLine("    ' ")
             Call sb.AppendLine("    ' " & info.Copyright)
@@ -156,6 +173,19 @@ THE SOFTWARE.",
                 Call sb.AppendLine("    ' " & line)
             Next
 
+            sb.AppendLine()
+            sb.AppendLine()
+            sb.AppendLine()
+            sb.AppendLine("    ' /********************************************************************************/")
+            sb.AppendLine()
+            sb.AppendLine("    ' Summaries:")
+            sb.AppendLine()
+
+            For Each line As String In VBCodeSignature.SummaryModules(vb:=src).lTokens
+                Call sb.AppendLine("    ' " & line)
+            Next
+
+            sb.AppendLine("    ' /********************************************************************************/")
             Call sb.AppendLine()
             Call sb.AppendLine($"#End Region")
             Call sb.AppendLine()
@@ -172,10 +202,10 @@ THE SOFTWARE.",
         ''' </summary>
         ''' <param name="info">The root directory</param>
         ''' <returns></returns>
-        Public Function Inserts(info As LicenseInfo) As String()
+        Public Function Inserts(info As LicenseInfo, rootDir$) As String()
             Dim fails As New List(Of String)
 
-            For Each vb As String In ls - l - r - "*.vb" <= info.RootDIR
+            For Each vb As String In ls - l - r - "*.vb" <= rootDir
                 Dim skip As Boolean = False
 
                 ' ignores all of the IDE auto generated source file.
@@ -190,7 +220,7 @@ THE SOFTWARE.",
                     Continue For
                 End If
 
-                If Not vb.Insert(info) Then
+                If Not vb.Insert(info, rootDir) Then
                     fails += vb
                 End If
             Next

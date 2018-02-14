@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::ab00a99e8d49a425b35339f455296714, ..\sciBASIC#\Data\DataFrame\Extensions\ProfileStreams.vb"
+﻿#Region "Microsoft.VisualBasic::ab00a99e8d49a425b35339f455296714, Data\DataFrame\Extensions\ProfileStreams.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module ProfileStreams
+    ' 
+    '     Function: GenerateProfiles, LoadProfiles, WriteProfiles
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::7de3b38abe167002542f089ac0bcd767, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DelegateFactory.vb"
+﻿#Region "Microsoft.VisualBasic::7de3b38abe167002542f089ac0bcd767, Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DelegateFactory.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,28 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module DelegateFactory
+    ' 
+    '         Function: (+3 Overloads) Contructor, (+2 Overloads) DefaultContructor, DelegateIndexerGet, DelegateIndexerSet, (+2 Overloads) EventAccessor
+    '                   EventAccessorImpl, (+4 Overloads) EventAdd, EventAddImpl, EventHandlerFactory, (+4 Overloads) EventRemove
+    '                   EventRemoveImpl, (+3 Overloads) FieldGet, FieldGet2, (+3 Overloads) FieldSet, (+2 Overloads) FieldSetWithCast
+    '                   GetConstructorInfo, GetEventInfo, GetEventInfoAccessor, GetFieldInfo, GetFuncDelegateArguments
+    '                   GetFuncDelegateReturnType, GetIndexerPropertyInfo, GetMethodInfo, GetPropertyInfo, GetStaticFieldInfo
+    '                   GetStaticMethodInfo, GetStaticPropertyInfo, (+8 Overloads) IndexerGet, (+7 Overloads) IndexerSet, (+2 Overloads) InstanceGenericMethod
+    '                   InstanceGenericMethodVoid, (+9 Overloads) InstanceMethod, InstanceMethod2, InstanceMethodVoid, (+5 Overloads) PropertyGet
+    '                   PropertyGet2, (+4 Overloads) PropertySet, StaticEventAdd, (+3 Overloads) StaticFieldGet, StaticFieldGetExpr
+    '                   (+3 Overloads) StaticFieldSet, StaticGenericMethod, StaticGenericMethodVoid, (+12 Overloads) StaticMethod, StaticMethodVoid
+    '                   (+3 Overloads) StaticPropertyGet, StaticPropertyGet2, (+3 Overloads) StaticPropertySet
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

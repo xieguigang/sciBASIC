@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5eaa0c470aa3f638ac1a9b97eca11515, ..\sciBASIC#\Data\Trinity\Html\Article.vb"
+﻿#Region "Microsoft.VisualBasic::5eaa0c470aa3f638ac1a9b97eca11515, Data\Trinity\Html\Article.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Structure Article
+    ' 
+    '     Properties: Content, ContentWithTags, PublishDate, Title
+    ' 
+    '     Function: ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

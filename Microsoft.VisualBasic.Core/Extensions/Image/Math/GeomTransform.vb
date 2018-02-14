@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c56fac22e37fb77948b7bb50703a061e, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Math\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::c56fac22e37fb77948b7bb50703a061e, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeomTransform.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '  
+    ' 
+    '     Function: Area, CenterAlign, (+2 Overloads) CentralOffset, (+2 Overloads) Centre, CircleRectangle
+    '               (+3 Overloads) Distance, (+2 Overloads) GetBounds, (+2 Overloads) InRegion, MirrorX, MirrorY
+    '               Offsets, SquareSize
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

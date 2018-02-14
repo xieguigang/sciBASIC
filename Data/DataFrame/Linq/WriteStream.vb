@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::641cc93a7a03bb5734bcd4e8c77a1b56, ..\sciBASIC#\Data\DataFrame\Linq\WriteStream.vb"
+﻿#Region "Microsoft.VisualBasic::641cc93a7a03bb5734bcd4e8c77a1b56, Data\DataFrame\Linq\WriteStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class WriteStream
+    ' 
+    '         Properties: BaseStream, IsMetaIndexed
+    ' 
+    '         Function: [Ctype], (+2 Overloads) Flush, ToArray, ToString
+    ' 
+    '         Sub: (+2 Overloads) Dispose, Flush, New
+    '         Class __ctypeTransform
+    ' 
+    '             Function: ToString
+    ' 
+    '             Sub: WriteArray, WriteObj
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

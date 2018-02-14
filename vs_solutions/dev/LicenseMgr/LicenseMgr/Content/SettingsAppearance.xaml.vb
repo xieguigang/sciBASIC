@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::299d52d06aed17c63732813681a2398d, ..\sciBASIC#\CLI_tools\LicenseMgr\LicenseMgr\Content\About.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::5386687f6a3b1945115dc69dea2fbb24, vs_solutions\dev\LicenseMgr\LicenseMgr\Content\SettingsAppearance.xaml.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,18 +25,34 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class SettingsAppearance
+    ' 
+    '         Sub: New
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Windows.Controls
 
 Namespace Content
     ''' <summary>
-    ''' Interaction logic for About.xaml
+    ''' Interaction logic for SettingsAppearance.xaml
     ''' </summary>
-    Public Class About
+    Public Class SettingsAppearance
         Inherits UserControl
         Public Sub New()
             InitializeComponent()
+
+            ' a simple view model for appearance configuration
+            Me.DataContext = New SettingsAppearanceViewModel()
         End Sub
     End Class
 End Namespace

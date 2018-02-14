@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::9479e4d351638c81379704163fe558e6, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\TokenIcer\TokenParser.vb"
+﻿#Region "Microsoft.VisualBasic::9479e4d351638c81379704163fe558e6, Microsoft.VisualBasic.Core\Scripting\TokenIcer\TokenParser.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class TokenParser
+    ' 
+    '         Properties: InputString, UNDEFINED
+    ' 
+    '         Function: GetToken, (+2 Overloads) Peek
+    ' 
+    '         Sub: (+2 Overloads) New, PrepareRegex, ResetParser
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

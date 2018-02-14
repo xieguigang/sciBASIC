@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2341461641c672795a56e9ff61d0c358, ..\sciBASIC#\CLI_tools\LicenseMgr\LicenseMgr\Content\Ms-PL.xaml.vb"
+﻿#Region "Microsoft.VisualBasic::ae74b9296db08d7df5499dbbecfb6cb2, vs_solutions\dev\LicenseMgr\LicenseMgr\LicenseInfo.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,30 +25,37 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module LicenseInfoExtensions
+    ' 
+    '     Properties: info
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Text
-Imports System.Threading.Tasks
-Imports System.Windows
-Imports System.Windows.Controls
-Imports System.Windows.Data
-Imports System.Windows.Documents
-Imports System.Windows.Input
-Imports System.Windows.Media
-Imports System.Windows.Media.Imaging
-Imports System.Windows.Navigation
-Imports System.Windows.Shapes
+Imports Microsoft.VisualBasic.ApplicationServices.Development
 
-Namespace Content
-    ''' <summary>
-    ''' Interaction logic for Ms_PL.xaml
-    ''' </summary>
-    Public Class Ms_PL
-        Inherits UserControl
-        Public Sub New()
-            InitializeComponent()
-        End Sub
-    End Class
-End Namespace
+Module LicenseInfoExtensions
+
+    Dim __content As LicenseInfo
+
+    Public Property info As LicenseInfo
+        Get
+            If __content Is Nothing Then
+                __content = New LicenseInfo
+            End If
+
+            Return __content
+        End Get
+        Set(value As LicenseInfo)
+            __content = value
+        End Set
+    End Property
+
+End Module

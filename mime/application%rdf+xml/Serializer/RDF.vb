@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c6d63ad7b6086afec147be86aaf013a5, ..\sciBASIC#\mime\application%rdf+xml\Serializer\RDF.vb"
+﻿#Region "Microsoft.VisualBasic::c6d63ad7b6086afec147be86aaf013a5, mime\application%rdf+xml\Serializer\RDF.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,60 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class PropertyAttribute
+    ' 
+    '         Properties: _bindProperty, _rdfType, _valueType, IsArrayType, IsValueType
+    '                     Name
+    ' 
+    '         Function: Initlaize, ToString
+    ' 
+    '         Sub: New
+    ' 
+    '     Class RDFIgnore
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class RDFDescription
+    ' 
+    '         Properties: About
+    ' 
+    '     Class RDFElement
+    ' 
+    '         Function: GetXmlSerializationCustomAttribute
+    ' 
+    '         Sub: New
+    ' 
+    '     Class RDFAttribute
+    ' 
+    '         Function: GetXmlSerializationCustomAttribute
+    ' 
+    '         Sub: New
+    ' 
+    '     Class RDFType
+    ' 
+    '         Properties: _BindElementTypeInfo, _BindTypeInfo, IsArrayType, PropertyCollection, TypeName
+    ' 
+    '         Function: CreateTypeDefine, GetTypeDefine, GetXmlSerializationCustomAttribute, ToString
+    ' 
+    '         Sub: New
+    ' 
+    '     Class RDFNamespaceImports
+    ' 
+    '         Properties: SchemaUrl, Type
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

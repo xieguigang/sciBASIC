@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::f08860a735a808c3e1ad4c0b239a11f5, ..\sciBASIC#\Data_science\Mathematica\Math\ODE\ODEsSolver\ODEs.vb"
+﻿#Region "Microsoft.VisualBasic::f08860a735a808c3e1ad4c0b239a11f5, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEs.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class ODEs
+    ' 
+    '     Properties: Parameters
+    ' 
+    '     Function: __getY0, GetParameters, GetVariables, Solve, TimePopulator
+    ' 
+    '     Sub: __rungeKutta, (+2 Overloads) New, ODEs
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

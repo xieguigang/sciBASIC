@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2fcd8aa7a6821d08b54824d32bc241e4, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::2fcd8aa7a6821d08b54824d32bc241e4, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class BinaryTree
+    ' 
+    '         Properties: Length, Root
+    ' 
+    '         Function: drawNode, findParent, findSuccessor, FindSymbol, GetAllNodes
+    '                   (+2 Overloads) insert, ToString
+    ' 
+    '         Sub: add, (+2 Overloads) Add, clear, delete, KillTree
+    '              (+3 Overloads) New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

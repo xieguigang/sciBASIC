@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5f7806e3be017574758ccbbca8142932, ..\sciBASIC#\vs_solutions\tutorials\core.test\ParallelTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::f9fe5075634ce2e0323403841fd7b165, vs_solutions\tutorials\core.test\ParallelTemplate.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,63 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module ParallelTemplate
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+#Region "Microsoft.VisualBasic::079c39c18aa05ac55970509e9ad8cfc3, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module ParallelTemplate
+    ' 
+    '     Sub: Main
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::5f7806e3be017574758ccbbca8142932, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module ParallelTemplate
+    ' 
+    '     Sub: Main
+    ' 
+    ' 
+    ' 
 
 #End Region
 

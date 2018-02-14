@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b65a2ad328c9a77033192f55a6f75490, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\C\CFormatProvider.vb"
+﻿#Region "Microsoft.VisualBasic::abc29bef6478452ab678c9fd162e74ab, Microsoft.VisualBasic.Core\Language\Language\C\CFormatProvider.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module CLangStringFormatProvider
+    ' 
+    '         Function: FormatHex, FormatNumber, FormatOct, IsPositive, ReplaceMetaCharsMatch
+    '                   sprintf, ToInteger, ToUnsigned, UnboxToLong
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

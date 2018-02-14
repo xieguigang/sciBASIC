@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::cabffe0d5bdc2db0dc87f2abdfa93c20, ..\sciBASIC#\vs_solutions\installer\Installer\FormProgress.vb"
+﻿#Region "Microsoft.VisualBasic::cabffe0d5bdc2db0dc87f2abdfa93c20, vs_solutions\installer\Installer\FormProgress.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class FormProgress
+    ' 
+    '     Sub: ButtonNext_Click, FormWelcome_Load, InstallerScript
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

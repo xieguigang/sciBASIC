@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::f13ea8556ad8d7833dfbd328e3818857, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointers.vb"
+﻿#Region "Microsoft.VisualBasic::f13ea8556ad8d7833dfbd328e3818857, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointers.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,47 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class [Integer]
+    ' 
+    '         Sub: New
+    ' 
+    '     Class [Char]
+    ' 
+    '         Sub: New
+    ' 
+    '     Class [Short]
+    ' 
+    '         Sub: New
+    ' 
+    '     Class [Long]
+    ' 
+    '         Sub: New
+    ' 
+    '     Class [Single]
+    ' 
+    '         Sub: New
+    ' 
+    '     Class [Byte]
+    ' 
+    '         Sub: New
+    ' 
+    '     Class [IntPtr]
+    ' 
+    '         Sub: New
+    ' 
+    '     Class [Double]
+    ' 
+    '         Sub: New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

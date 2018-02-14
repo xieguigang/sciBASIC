@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::7feabc53c168e3045f2f3ec1654605f5, ..\sciBASIC#\Data_science\Mathematica\Plot\test\SampleVisualizeTest.vb"
+﻿#Region "Microsoft.VisualBasic::287c1a39afa8da80bea3ecda95b010cc, Data_science\Mathematica\Plot\test\SampleVisualizeTest.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module SampleVisualizeTest
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -41,4 +54,3 @@ Module SampleVisualizeTest
         Pause()
     End Sub
 End Module
-

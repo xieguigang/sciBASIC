@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d9fd50be9a2c1b03365d0763699f16d9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\Percentage.vb"
+﻿#Region "Microsoft.VisualBasic::d9fd50be9a2c1b03365d0763699f16d9, Microsoft.VisualBasic.Core\Extensions\Math\Percentage.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,28 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure Percentage
+    ' 
+    '         Properties: One, ZERO
+    ' 
+    '         Function: (+2 Overloads) CompareTo, Equals, GetTypeCode, ToBoolean, ToByte
+    '                   ToChar, ToDateTime, ToDecimal, ToDouble, ToInt16
+    '                   ToInt32, ToInt64, ToSByte, ToSingle, (+3 Overloads) ToString
+    '                   ToType, ToUInt16, ToUInt32, ToUInt64, TryParse
+    ' 
+    '         Sub: New
+    ' 
+    '         Operators: <, >
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

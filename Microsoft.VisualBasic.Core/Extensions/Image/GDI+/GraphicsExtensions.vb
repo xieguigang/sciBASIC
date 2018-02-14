@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::06f8e9d73186780636e5dab3a9178763, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4b340240f6c004390e9c5e1a77bbce8a, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module GraphicsExtensions
+    ' 
+    '         Function: ColorBrush, EntireImage, GetBrushes, (+2 Overloads) GraphicsPath, LoadImage
+    '                   PointF, SizeF, ToFloat
+    ' 
+    '         Sub: (+5 Overloads) DrawCircle
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

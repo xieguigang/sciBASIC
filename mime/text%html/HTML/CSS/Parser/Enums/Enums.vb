@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::93086ba6b58837b06bf5d8e2fa48cd51, ..\sciBASIC#\mime\text%html\HTML\CSS\Parser\Enums\Enums.vb"
+﻿#Region "Microsoft.VisualBasic::93086ba6b58837b06bf5d8e2fa48cd51, mime\text%html\HTML\CSS\Parser\Enums\Enums.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,38 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Enum CSSSelectorTypes
+    ' 
+    '         [class], id, tag
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum HtmlTags
+    ' 
+    '         [option], [select], a, audio, body
+    '         button, div, em, footer, form
+    '         h1, h2, h3, h4, h5
+    '         h6, heder, hr, iframe, img
+    '         input, li, nav, ol, p
+    '         pre, span, svg, table, tbody
+    '         textarea, th, thead, tr, ul
+    '         video
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

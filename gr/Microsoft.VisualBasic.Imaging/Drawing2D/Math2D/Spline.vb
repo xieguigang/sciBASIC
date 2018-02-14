@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::70941426519c48ee2fea5493ec40f84f, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Spline.vb"
+﻿#Region "Microsoft.VisualBasic::70941426519c48ee2fea5493ec40f84f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Spline.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Spline
+    ' 
+    '         Function: (+2 Overloads) BezierCurve
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

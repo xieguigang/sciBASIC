@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::da2c6ecb8a208c7baa35299785b5ffc0, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Interface\DFL\I_FactorElement.vb"
+﻿#Region "Microsoft.VisualBasic::da2c6ecb8a208c7baa35299785b5ffc0, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Interface\DFL\I_FactorElement.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class I_FactorElement
+    ' 
+    '         Properties: FunctionalState, Quantity, Weight
+    ' 
+    '         Function: get_InteractionQuantity, Internal_getEventProbabilities, set_Quantity, ShadowCopy, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

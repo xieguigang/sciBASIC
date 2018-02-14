@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::85ba822ec5449a86c5b4d81f6a7f0141, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssDrawingHelper.vb"
+﻿#Region "Microsoft.VisualBasic::85ba822ec5449a86c5b4d81f6a7f0141, mime\text%html\HTML\CSS\Render\CssDrawingHelper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,29 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class CssDrawingHelper
+    ' 
+    '         Sub: New
+    '         Enum Border
+    ' 
+    '             Bottom, Left, Right, Top
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Function: CreateCorner, Darken, GetBorderPath, GetRoundRect, RoundP
+    '               RoundR
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

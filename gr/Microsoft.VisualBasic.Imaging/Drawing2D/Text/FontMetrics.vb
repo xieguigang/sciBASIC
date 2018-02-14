@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::68de761b1a44c645c72163c684bf0fc5, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
+﻿#Region "Microsoft.VisualBasic::68de761b1a44c645c72163c684bf0fc5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class FontMetrics
+    ' 
+    '         Properties: Font, Graphics, Height
+    ' 
+    '         Function: (+2 Overloads) GetStringBounds
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    '     Module Extensions
+    ' 
+    '         Function: FontMetrics
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

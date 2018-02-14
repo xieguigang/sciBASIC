@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::827c1cd6c7e6ff35be03bf7cf794da3a, ..\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::827c1cd6c7e6ff35be03bf7cf794da3a, Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module TypeSchemaProvider
+    ' 
+    '         Function: __generateMask, GetInterfaces, GetMetaAttribute, GetProperties, GetThisElement
+    '                   IsDataIgnored, IsEnum, IsKeyValuePair
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

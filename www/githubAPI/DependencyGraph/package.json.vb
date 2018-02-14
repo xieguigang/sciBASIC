@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::58d88ab90ff4d2470f0de67536b7ce5d, ..\sciBASIC#\www\githubAPI\DependencyGraph\package.json.vb"
+﻿#Region "Microsoft.VisualBasic::58d88ab90ff4d2470f0de67536b7ce5d, www\githubAPI\DependencyGraph\package.json.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,34 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class package
+    ' 
+    '     Properties: author, dependencies, description, devDependencies, keywords
+    '                 license, main, name, repository, scripts
+    '                 version
+    ' 
+    '     Function: ToString
+    ' 
+    ' Class scripts
+    ' 
+    '     Properties: test
+    ' 
+    ' Class repository
+    ' 
+    '     Properties: type, url
+    ' 
+    ' Class dependencies
+    ' 
+    '     Properties: distributions, eslint, summary, tap
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b612bea5ab77372d66dde5ec825c93cf, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Cylinder.vb"
+﻿#Region "Microsoft.VisualBasic::b612bea5ab77372d66dde5ec825c93cf, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Cylinder.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Cylinder
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    '     Class Pie
+    ' 
+    '         Sub: New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

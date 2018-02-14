@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::3a44361e3d2f8eb98a8b15b27e563935, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\SimpleExpression.vb"
+﻿#Region "Microsoft.VisualBasic::3a44361e3d2f8eb98a8b15b27e563935, Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\SimpleExpression.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class SimpleExpression
+    ' 
+    '         Properties: IsNullOrEmpty, LastOperator, ReferenceDepth
+    ' 
+    '         Function: (+2 Overloads) Evaluate, GetEnumerator, IEnumerable_GetEnumerator, RemoveLast, ToString
+    ' 
+    '         Sub: (+2 Overloads) Add, Calculator, (+2 Overloads) New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

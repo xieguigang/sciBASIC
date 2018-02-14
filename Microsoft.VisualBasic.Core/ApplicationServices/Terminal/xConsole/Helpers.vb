@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::4efecaebf76db9799527811db18dd578, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::4efecaebf76db9799527811db18dd578, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\Helpers.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,33 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Helpers
+    ' 
+    '         Function: SetConsoleFont, (+2 Overloads) SetConsoleIcon
+    '         Enum StdHandle
+    ' 
+    ' 
+    ' 
+    ' 
+    '         Structure ConsoleFont
+    ' 
+    '             Properties: ConsoleFonts, ConsoleFontsCount
+    ' 
+    '             Function: GetConsoleFontInfo, GetNumberOfConsoleFonts, GetStdHandle, SetConsoleFont
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

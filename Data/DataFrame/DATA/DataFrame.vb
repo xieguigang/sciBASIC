@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::6529c5fa0c02fc73128cf21dda805632, ..\sciBASIC#\Data\DataFrame\DATA\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::6529c5fa0c02fc73128cf21dda805632, Data\DataFrame\DATA\DataFrame.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DataFrame
+    ' 
+    '         Function: [As], Append, GetEnumerator, IEnumerable_GetEnumerator, Load
+    '                   SaveTable, ToString
+    ' 
+    '         Sub: New
+    ' 
+    '         Operators: +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

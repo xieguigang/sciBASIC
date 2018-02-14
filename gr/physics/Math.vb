@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::849c2e07292a14c1e094d5de201f9055, ..\sciBASIC#\gr\physics\Math.vb"
+﻿#Region "Microsoft.VisualBasic::b3dceb0b33987992ae66986a358c933d, gr\physics\Math.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Math
+    ' 
+    '     Function: AttractiveForce, Cos, (+2 Overloads) CoulombsLaw, Decomposition2D, Decomposition3D
+    '               Friction, Gravity, ParallelogramLaw, RepulsiveForce, Sum
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

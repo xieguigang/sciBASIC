@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::0f2f4420a2b1f9659bf0c72ba28bd034, ..\sciBASIC#\Data_science\SVM\SVM\model\Line.vb"
+﻿#Region "Microsoft.VisualBasic::0f2f4420a2b1f9659bf0c72ba28bd034, Data_science\SVM\SVM\model\Line.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,32 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Line
+    ' 
+    '         Properties: Increase, NormalVector, Offset
+    ' 
+    '         Function: CalcY, Clone, Equals, GetX, ICloneable_Clone
+    '                   ToString
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    '     Class LineBuilder
+    ' 
+    '         Properties: EndX, EndY, Length, StartX, StartY
+    ' 
+    '         Function: Build, ToString, UpdateEndPoint
+    ' 
+    '         Sub: FlipPoints, New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2bc4f31e04fbd17458e501a88eeb91f0, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Settings\Settings.vb"
+﻿#Region "Microsoft.VisualBasic::6afa1f4685a0ac4ad359a4987ac8976f, Microsoft.VisualBasic.Core\ComponentModel\Settings\Settings.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Settings
+    ' 
+    '         Properties: SettingsData
+    ' 
+    '         Function: __createSave, CreateEmpty, Load, LoadFile
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

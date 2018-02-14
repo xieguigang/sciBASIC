@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2c2b0690346dec9d943c5b704f3500d1, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\DendrogramPanel.vb"
+﻿#Region "Microsoft.VisualBasic::2c2b0690346dec9d943c5b704f3500d1, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\DendrogramPanel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DendrogramPanel
+    ' 
+    '         Properties: ClassTable, Debug, LineColor, LinkDotRadius, Model
+    '                     ScalePadding, ScaleTickLength, ScaleValueDecimals, ScaleValueInterval, ShowDistanceValues
+    '                     ShowLeafLabel, ShowScale
+    ' 
+    '         Function: __draw, (+2 Overloads) createComponent, Paint
+    ' 
+    '         Sub: updateModelMetrics
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

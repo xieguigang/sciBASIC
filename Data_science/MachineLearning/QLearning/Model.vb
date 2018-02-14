@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::585f3860b591689891284f999b029255, ..\sciBASIC#\Data_science\MachineLearning\QLearning\Model.vb"
+﻿#Region "Microsoft.VisualBasic::585f3860b591689891284f999b029255, Data_science\MachineLearning\QLearning\Model.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,35 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Interface IQTable
+    ' 
+    '         Properties: ActionRange, ExplorationChance, GammaValue, LearningRate, Table
+    ' 
+    '     Class QModel
+    ' 
+    '         Properties: ActionRange, Actions, ExplorationChance, GammaValue, LearningRate
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    '     Class IndexCurve
+    ' 
+    '         Properties: uid
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    '     Class QTableDump
+    ' 
+    '         Sub: Dump, Save
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

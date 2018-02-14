@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::34a9b88409ae852d6e16c4fbbbb1489f, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Kernel\BayesianBeliefNetwork\BeliefNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::34a9b88409ae852d6e16c4fbbbb1489f, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Kernel\BayesianBeliefNetwork\BeliefNetwork.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,65 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class BeliefNode
+    ' 
+    '         Properties: Id, Name, Range
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: Clear, New
+    ' 
+    '     Class BeliefNetwork
+    ' 
+    '         Properties: Nodes
+    ' 
+    '         Function: (+2 Overloads) CreateFrom
+    ' 
+    '         Sub: ResetNodes, SetNodes
+    '         Class NetworkInitializer
+    ' 
+    '             Function: (+2 Overloads) Build
+    ' 
+    '             Sub: CreateNode
+    ' 
+    '         Class NetworkLayout
+    ' 
+    '             Function: Load, TestData, ToString
+    '             Class BeliefNode
+    ' 
+    '                 Properties: CPTable, Parents
+    ' 
+    '                 Function: ToString
+    '                 Class ParentList
+    ' 
+    '                     Function: ToString
+    ' 
+    '                 Class CPTableF
+    ' 
+    ' 
+    '                     Class CPColumn
+    ' 
+    '                         Properties: Count
+    ' 
+    '                         Function: ToString
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

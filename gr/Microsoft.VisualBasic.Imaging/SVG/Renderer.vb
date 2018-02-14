@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::8d3e1f2337ca118ede77ba692ddb425b, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::8d3e1f2337ca118ede77ba692ddb425b, gr\Microsoft.VisualBasic.Imaging\SVG\Renderer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Renderer
+    ' 
+    '         Function: DrawImage
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

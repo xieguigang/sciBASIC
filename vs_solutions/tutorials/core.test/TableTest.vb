@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::1191a65b2ff94589cc9e086aa8621b65, ..\sciBASIC#\vs_solutions\tutorials\core.test\TableTest.vb"
+﻿#Region "Microsoft.VisualBasic::f46427d51b5936c8e7ee78ac8104ca35, vs_solutions\tutorials\core.test\TableTest.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,70 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module TableTest
+    ' 
+    '     Function: integers
+    ' 
+    '     Sub: assertTest, main, test_dictionary
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+#Region "Microsoft.VisualBasic::b2b34e0303713b7851580efd2040bab3, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module TableTest
+    ' 
+    '     Function: integers
+    ' 
+    '     Sub: assertTest, main, test_dictionary
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::1191a65b2ff94589cc9e086aa8621b65, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module TableTest
+    ' 
+    '     Function: integers
+    ' 
+    ' 
+    '     Sub: assertTest, main, test_dictionary
+    ' 
+    ' 
+    ' 
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::920ae62225b95a88ff0f5d9fa456c180, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::5c9d1fc8fabf8eff79d6c8ff98e7b6bf, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,36 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module App
+    ' 
+    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, ExceptionLogFile
+    '                 ExecutablePath, Github, HOME, Info, InputFile
+    '                 IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp, LogErrDIR
+    '                 NanoTime, NextTempName, OutFile, PID, Platform
+    '                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
+    '                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
+    '                 StartupDirectory, StdErr, SysTemp, UserHOME, Version
+    ' 
+    '     Function: __CLI, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
+    '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, ElapsedMilliseconds
+    '               GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile
+    '               GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable, (+3 Overloads) LogException
+    '               NullDevice, RunCLI, RunCLIInternal, SelfFolk, SelfFolks
+    '               Shell, TraceBugs
+    ' 
+    '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, JoinVariable
+    '          (+2 Overloads) JoinVariables, New, Pause, (+2 Overloads) println, RunAsAdmin
+    '          SetBufferSize, StartGC, StopGC
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

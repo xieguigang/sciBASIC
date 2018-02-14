@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a7083eff414e3a5f924a1e2a5caa5aaf, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssBoxWord.vb"
+﻿#Region "Microsoft.VisualBasic::a7083eff414e3a5f924a1e2a5caa5aaf, mime\text%html\HTML\CSS\Render\CssBoxWord.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class CssBoxWord
+    ' 
+    '         Properties: FullWidth, Image, IsImage, IsLineBreak, IsSpaces
+    '                     IsTab, LastMeasureOffset, OwnerBox, Text
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: AppendChar, (+2 Overloads) New, ReplaceLineBreaksAndTabs
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

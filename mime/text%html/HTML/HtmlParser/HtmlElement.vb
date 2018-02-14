@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::874027342f9243747b140c162b4e78b4, ..\sciBASIC#\mime\text%html\HTML\HtmlParser\HtmlElement.vb"
+﻿#Region "Microsoft.VisualBasic::874027342f9243747b140c162b4e78b4, mime\text%html\HTML\HtmlParser\HtmlElement.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,44 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure ValueAttribute
+    ' 
+    '         Properties: Name, Value
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    '     Class HtmlElement
+    ' 
+    '         Properties: Attributes, HtmlElements, IsEmpty, IsPlantText, Name
+    '                     OnlyInnerText
+    ' 
+    '         Function: GetPlantText, SingleNodeParser, ToString
+    ' 
+    '         Sub: (+2 Overloads) Add
+    ' 
+    '     Class InnerPlantText
+    ' 
+    '         Properties: InnerText, IsEmpty, IsPlantText
+    ' 
+    '         Function: GetPlantText, ToString
+    ' 
+    '     Module SpecialHtmlElements
+    ' 
+    '         Properties: Br, DocumentType, Head, Html, Title
+    ' 
+    '         Function: IsBrChangeLine
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

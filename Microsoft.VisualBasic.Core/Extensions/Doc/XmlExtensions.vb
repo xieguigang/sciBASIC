@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::330453535309bdde99af74d0a7b9f4cd, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b1f8d9c11e83f2ea2824381d90ec2e60, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module XmlExtensions
+    ' 
+    '     Function: GetXml, SafeLoadXml, SetXmlEncoding, SetXmlStandalone
+    ' 
+    '     Sub: WriteXML
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

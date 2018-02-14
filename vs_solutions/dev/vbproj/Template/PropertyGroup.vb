@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d388fd41df098fe26ca726af530615d1, ..\sciBASIC#\vs_solutions\dev\vbproj\Template\PropertyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::d388fd41df098fe26ca726af530615d1, vs_solutions\dev\vbproj\Template\PropertyGroup.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class PropertyGroup
+    ' 
+    '     Properties: ApplicationManifest, ApplicationRevision, ApplicationVersion, AssemblyName, AutoGenerateBindingRedirects
+    '                 BootstrapperEnabled, CodeAnalysisRuleSet, Condition, Configuration, DebugSymbols
+    '                 DebugType, DefineConstants, DefineDebug, DefineTrace, DelaySign
+    '                 DocumentationFile, FileAlignment, GenerateManifests, GenerateSerializationAssemblies, Install
+    '                 InstallFrom, IsWebBootstrapper, MapFileExtensions, MyType, NoWarn
+    '                 Optimize, OptionCompare, OptionExplicit, OptionInfer, OptionStrict
+    '                 OutputPath, OutputType, Platform, PlatformTarget, Prefer32Bit
+    '                 ProjectGuid, PublishUrl, RemoveIntegerChecks, RootNamespace, SignAssembly
+    '                 StartupObject, TargetFrameworkProfile, TargetFrameworkVersion, TargetZone, UpdateEnabled
+    '                 UpdateInterval, UpdateIntervalUnits, UpdateMode, UpdatePeriodically, UpdateRequired
+    '                 UseApplicationTrust, WarningsAsErrors
+    ' 
+    '     Function: ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

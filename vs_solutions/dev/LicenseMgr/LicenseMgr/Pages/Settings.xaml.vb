@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::6ab9efbd49fab902f2cf3a007c484dfc, ..\sciBASIC#\CLI_tools\LicenseMgr\LicenseMgr\LicenseInfo.vb"
+﻿#Region "Microsoft.VisualBasic::06a72870b4dcb69ec26606e4f33387d7, vs_solutions\dev\LicenseMgr\LicenseMgr\Pages\Settings.xaml.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,23 +25,31 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Settings
+    ' 
+    '         Sub: New
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
-Module LicenseInfo
+Imports System.Windows.Controls
 
-    Dim __content As SoftwareToolkits.LicenseInfo
-
-    Public Property info As SoftwareToolkits.LicenseInfo
-        Get
-            If __content Is Nothing Then
-                __content = New SoftwareToolkits.LicenseInfo
-            End If
-
-            Return __content
-        End Get
-        Set(value As SoftwareToolkits.LicenseInfo)
-            __content = value
-        End Set
-    End Property
-
-End Module
+Namespace Pages
+    ''' <summary>
+    ''' Interaction logic for Settings.xaml
+    ''' </summary>
+    Partial Public Class Settings
+        Inherits UserControl
+        Public Sub New()
+            InitializeComponent()
+        End Sub
+    End Class
+End Namespace

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::12b87139cec3a6fada99e7fcd6855f3d, ..\sciBASIC#\vs_solutions\tutorials\core.test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::36255e280f7c86337a8103ba52bbd665, vs_solutions\tutorials\core.test\Module1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,98 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Module1
+    ' 
+    '     Sub: Main, New
+    '     Structure Foo
+    ' 
+    '         Operators: (+2 Overloads) Like
+    ' 
+    '     Structure Lazy
+    ' 
+    '         Function: LongLoad
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+#Region "Microsoft.VisualBasic::61a7d586cdb61bfcb962e1aae4ec475f, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module Module1
+    ' 
+    '     Sub: Main, New
+    ' 
+    '     Structure Foo
+    ' 
+    '         Operators: (+2 Overloads) Like
+    ' 
+    ' 
+    ' 
+    '     Structure Lazy
+    ' 
+    '         Function: LongLoad
+    ' 
+    ' 
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::12b87139cec3a6fada99e7fcd6855f3d, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module Module1
+    ' 
+    '     Sub: Main, New
+    ' 
+    ' 
+    '     Structure Foo
+    ' 
+    '         Operators: (+2 Overloads) Like
+    ' 
+    ' 
+    ' 
+    ' 
+    '     Structure Lazy
+    ' 
+    '         Function: LongLoad
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
 
 #End Region
 

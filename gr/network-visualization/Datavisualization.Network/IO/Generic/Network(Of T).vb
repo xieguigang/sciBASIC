@@ -1,28 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::a3a86ab32b890bae2b7f053ac8bc91a5, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\IO\Generic\Network(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::bcf2445aeadcc2506d7d3391511faa41, gr\network-visualization\Datavisualization.Network\IO\Generic\Network(Of T).vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Network
+    ' 
+    '         Properties: Edges, Nodes
+    ' 
+    '         Function: GetNode, HaveNode, Load, Save
+    ' 
+    '         Sub: New, RemoveDuplicated, RemoveSelfLoop
+    ' 
+    '         Operators: (+4 Overloads) -, (+2 Overloads) ^, (+4 Overloads) +, <=, >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

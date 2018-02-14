@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::bb2dc61814a9ef8c6094f2a3d1b9516a, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\Repository\Repository.vb"
+﻿#Region "Microsoft.VisualBasic::bb2dc61814a9ef8c6094f2a3d1b9516a, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Repository\Repository.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,47 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Interface IKeyedEntity
+    ' 
+    '         Properties: Key
+    ' 
+    '     Class ClientRecord
+    ' 
+    '         Properties: ClientUniqueKey, Code
+    ' 
+    '     Interface IRepositoryRead
+    ' 
+    '         Function: Exists, GetAll, GetByKey, GetWhere
+    ' 
+    '     Interface IRepositoryWrite
+    ' 
+    '         Function: AddNew
+    ' 
+    '         Sub: AddOrUpdate, Delete
+    ' 
+    '     Interface IRepository
+    ' 
+    ' 
+    ' 
+    '     Interface IClientRepository
+    ' 
+    ' 
+    ' 
+    '     Class RepositoryReadException
+    ' 
+    '         Properties: Fatal
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

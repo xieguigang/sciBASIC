@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::12140e290c240ccd2e73c49ceac612d0, ..\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Academic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::12140e290c240ccd2e73c49ceac612d0, www\Microsoft.VisualBasic.Webservices.Bing\Academic\Extensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Extensions
+    ' 
+    '         Function: Summary
+    ' 
+    '         Sub: Build_KB
+    ' 
+    '     Class Summary
+    ' 
+    '         Properties: authors, cites, doi, journal, pubmed
+    '                     title, year
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: (+2 Overloads) New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

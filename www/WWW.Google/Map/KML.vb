@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::4065fabee788aa15e161924e237c9587, ..\sciBASIC#\www\WWW.Google\Map\KML.vb"
+﻿#Region "Microsoft.VisualBasic::4065fabee788aa15e161924e237c9587, www\WWW.Google\Map\KML.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,53 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '  
+    ' 
+    '     Properties: Documents
+    ' 
+    '     Class node
+    ' 
+    '         Properties: name
+    ' 
+    '     Class Document
+    ' 
+    '         Properties: description, Folder, NetworkLink
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class NetworkLink
+    ' 
+    '         Properties: Link
+    ' 
+    '     Class Folder
+    ' 
+    ' 
+    ' 
+    '     Class Placemark
+    ' 
+    '         Properties: description, ExtendedData, Point, styleUrl
+    ' 
+    '     Class Point
+    ' 
+    '         Properties: coordinates
+    ' 
+    '     Class ExtendedData
+    ' 
+    ' 
+    ' 
+    '     Class Data
+    ' 
+    '         Properties: value
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

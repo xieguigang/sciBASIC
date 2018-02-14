@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::f4051337be761b433de4b7654cfc5803, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\core.xml.vb"
+﻿#Region "Microsoft.VisualBasic::58309957174e69b7821a47cfa5e1faca, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\docProps\core.xml.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class core
+    ' 
+    '         Properties: created, creator, lastModifiedBy, modified
+    ' 
+    '         Function: filePath, toXml
+    ' 
+    '         Sub: New
+    ' 
+    '     Structure W3CDTF
+    ' 
+    '         Properties: type
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

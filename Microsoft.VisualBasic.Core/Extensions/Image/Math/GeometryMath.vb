@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::0d7628a480f03c9b018528c12fbae40a, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
+﻿#Region "Microsoft.VisualBasic::0d7628a480f03c9b018528c12fbae40a, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,42 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module GeometryMath
+    ' 
+    '         Function: (+4 Overloads) IntersectionOf
+    '         Enum Intersection
+    ' 
+    '             Containment, Intersection, None, Tangent
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Structure Line
+    ' 
+    '         Properties: X1, X2, Y1, Y2
+    ' 
+    '         Sub: New
+    ' 
+    '     Structure Polygon
+    ' 
+    '         Properties: Length
+    ' 
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator
+    ' 
+    '         Sub: New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

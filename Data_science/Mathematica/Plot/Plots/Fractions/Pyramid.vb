@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::574e43e95675c74de5f7828ac14900bd, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\Fractions\Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::574e43e95675c74de5f7828ac14900bd, Data_science\Mathematica\Plot\Plots\Fractions\Pyramid.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Pyramid
+    ' 
+    '     Function: Plot
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
