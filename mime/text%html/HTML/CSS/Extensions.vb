@@ -68,5 +68,11 @@ Namespace HTML.CSS
         Public Function CSSValue(style As FontStyle) As String
             Return CSSFont.ToString(style)
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CSSInlineStyle(font As CSSFont) As String
+            Return $"{font.style.CSSValue} {font.size}px {font.family}"
+        End Function
     End Module
 End Namespace
