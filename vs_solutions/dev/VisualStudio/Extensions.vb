@@ -17,7 +17,9 @@ Public Module Extensions
             .Where(Function(items) Not items.Compiles.IsNullOrEmpty) _
             .Select(Function(items)
                         Return items.Compiles _
-                            .Where(Function(vb) Not vb.AutoGen) _
+                            .Where(Function(vb)
+                                       Return Not True = vb.AutoGen.ParseBoolean
+                                   End Function) _
                             .Select(Function(vb)
                                         Return vb.Include
                                     End Function)
