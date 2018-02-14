@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fe3289405c1eb056739042cbfcaf99f, vs_solutions\dev\vbproj\Template\ItemGroup.vb"
+﻿#Region "Microsoft.VisualBasic::35557a1ccbb689afa60c7bd68907efad, vs_solutions\dev\VisualStudio\vbproj\ItemGroup.vb"
 
     ' Author:
     ' 

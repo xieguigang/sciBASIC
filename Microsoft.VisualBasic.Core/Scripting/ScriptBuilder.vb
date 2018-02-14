@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a9bac722bd1665c0363c2035467272d, Microsoft.VisualBasic.Core\Scripting\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::5140a0510ea203e3e27533184a0d1f0f, Microsoft.VisualBasic.Core\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 
@@ -162,4 +162,3 @@ Namespace Scripting.SymbolBuilder
         End Function
     End Class
 End Namespace
-
