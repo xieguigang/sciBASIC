@@ -43,9 +43,7 @@
 #End Region
 
 Imports System.IO
-Imports System.Linq
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
 
 Namespace NeedlemanWunsch
