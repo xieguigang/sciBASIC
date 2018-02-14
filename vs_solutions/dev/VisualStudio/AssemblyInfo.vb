@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Text
 Imports DevAssemblyInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 
-Public Module AssemblyInfo
+Public Module AssemblyInfoExtensions
 
     Const assmInfo$ = "My Project/AssemblyInfo.vb"
 
