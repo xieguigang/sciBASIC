@@ -112,7 +112,7 @@ Public Class IncludeItem
     Public Property [Private] As String
 
     Public Overrides Function ToString() As String
-        Return Me.GetJson
+        Return Include
     End Function
 End Class
 

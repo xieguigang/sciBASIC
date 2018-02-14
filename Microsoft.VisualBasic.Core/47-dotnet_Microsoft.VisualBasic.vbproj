@@ -783,6 +783,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\VBDev\AssemblyInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\VBCodeSignature.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\LicenseInfo.vb" />
@@ -1190,7 +1191,7 @@
     <Compile Include="Text\IO\EncodingHelper.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\VarArray.vb" />
-    <Compile Include="ApplicationServices\Tools\ApplicationDetails.vb" />
+    <Compile Include="ApplicationServices\VBDev\ApplicationDetails.vb" />
     <Compile Include="Extensions\Reflection\Marshal\IntPtr%28Of T%29.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
     <Compile Include="Extensions\Reflection\Marshal\MarshalExtensions.vb" />
