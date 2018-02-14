@@ -41,13 +41,13 @@
 
 Imports System.ComponentModel
 Imports System.Text
-Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeHelper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
 Module Program
 
@@ -65,7 +65,7 @@ Module Program
     <ExportAPI("/config.output")>
     <Usage("/config.output /in <*.vbproj/DIR> /output <DIR> /c 'config=<Name>;platform=<type>'")>
     <Description("Config the output location of the project file.")>
-    Public Function ConfigOutputPath(args As CommandLine) As Integer
+    Public Function ConfigOutputPath(args As CLI) As Integer
         Dim [in] As String = args <= "/in"
         Dim output As String = args.GetFullDIRPath("/output")
         Dim c As Dictionary(Of String, String) = args.GetDictionary("/c")
@@ -78,8 +78,7 @@ Module Program
                     !config, !platform
                 }.StringFormat
             Catch ex As Exception
-                ex = New Exception(.GetJson, ex)
-                Throw ex
+                Throw New Exception(.GetJson, ex)
             Finally
                 Call $" ==> {condition}".__INFO_ECHO
             End Try
@@ -92,18 +91,17 @@ Module Program
         End If
 
         For Each xml As String In files
-            Dim vbproj As Project = xml.LoadXml(Of Project)(,, AddressOf Project.RemoveNamespace)
+            Dim vbproj As Project = xml.LoadXml(Of Project)(,, )
             Dim config = vbproj.GetProfile(condition$)
-            Dim relOut$ = RelativePath(xml.ParentPath, output, appendParent:=False) ' 获取得到的是相对于vbproj文件的目标文件夹的相对路径
+
+            ' 获取得到的是相对于vbproj文件的目标文件夹的相对路径
+            Dim relOut$ = RelativePath(xml.ParentPath, output, appendParent:=False)
 
             If config Is Nothing Then
                 Call $"Project: {xml.GetFullPath} didn't have target config profile, ignore this project item...".EchoLine
                 Continue For
             End If
 
-#If DEBUG Then
-            xml = xml.TrimSuffix & "_updated.vbproj"
-#End If
             config.OutputPath = relOut
             vbproj.Save(xml, Encodings.UTF8)
         Next
@@ -113,7 +111,7 @@ Module Program
 
     <ExportAPI("/strings.enum.Code")>
     <Usage("/strings.enum.code /in <data.txt> /name <enumName> [/pascal /out <out.vb>]")>
-    Public Function GenerateEnumFromString(args As CommandLine) As Integer
+    Public Function GenerateEnumFromString(args As CLI) As Integer
         Dim in$ = args <= "/in"
         Dim name$ = args <= "/name"
         Dim pascal As Boolean = args.IsTrue("/pascal")

@@ -52,7 +52,6 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class PropertyGroup
 

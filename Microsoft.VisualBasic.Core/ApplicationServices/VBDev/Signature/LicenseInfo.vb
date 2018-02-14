@@ -92,6 +92,7 @@ Namespace ApplicationServices.Development
         <XmlText>
         Public Property Brief As String
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return Brief
         End Function
