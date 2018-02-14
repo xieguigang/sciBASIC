@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C714EB85-3A6F-4322-9942-03090888F3E6}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>vbproj.Program</StartupObject>
-    <RootNamespace>vbproj</RootNamespace>
+    <StartupObject>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.Program</StartupObject>
+    <RootNamespace>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio</RootNamespace>
     <AssemblyName>vbproj</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
@@ -161,6 +161,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions.vb" />
     <Compile Include="Template\PropertyGroup.vb" />
     <Compile Include="Template\ItemGroup.vb" />
     <Compile Include="Template\Project.vb" />

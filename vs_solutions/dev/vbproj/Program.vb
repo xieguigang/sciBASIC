@@ -41,13 +41,13 @@
 
 Imports System.ComponentModel
 Imports System.Text
-Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC.CodeHelper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 
 Module Program
 
@@ -65,7 +65,7 @@ Module Program
     <ExportAPI("/config.output")>
     <Usage("/config.output /in <*.vbproj/DIR> /output <DIR> /c 'config=<Name>;platform=<type>'")>
     <Description("Config the output location of the project file.")>
-    Public Function ConfigOutputPath(args As CommandLine) As Integer
+    Public Function ConfigOutputPath(args As CLI) As Integer
         Dim [in] As String = args <= "/in"
         Dim output As String = args.GetFullDIRPath("/output")
         Dim c As Dictionary(Of String, String) = args.GetDictionary("/c")
@@ -113,7 +113,7 @@ Module Program
 
     <ExportAPI("/strings.enum.Code")>
     <Usage("/strings.enum.code /in <data.txt> /name <enumName> [/pascal /out <out.vb>]")>
-    Public Function GenerateEnumFromString(args As CommandLine) As Integer
+    Public Function GenerateEnumFromString(args As CLI) As Integer
         Dim in$ = args <= "/in"
         Dim name$ = args <= "/name"
         Dim pascal As Boolean = args.IsTrue("/pascal")
