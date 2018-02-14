@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::d96bafc68c28079fe51f190e85b5d72c, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\NeedlemanWunschArguments.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NeedlemanWunschArguments
-    ' 
-    '         Properties: GapPenalty, MatchScore, MismatchScore, NumberOfAlignments, Query
-    '                     Score, Subject
-    ' 
-    '         Function: getAligned1, getAligned2, match
-    ' 
-    '         Sub: addAligned1, addAligned2, New
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NeedlemanWunschArguments
+' 
+'         Properties: GapPenalty, MatchScore, MismatchScore, NumberOfAlignments, Query
+'                     Score, Subject
+' 
+'         Function: getAligned1, getAligned2, match
+' 
+'         Sub: addAligned1, addAligned2, New
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
 
@@ -55,15 +56,19 @@ Namespace NeedlemanWunsch
     ''' Bioinformatics 1, WS 15/16
     ''' Dr. Kay Nieselt and Alexander Seitz
     ''' </summary>
-    Public Class NeedlemanWunschArguments(Of T)
+    Public Class Workspace(Of T)
 
         Dim aligned1 As New List(Of T())
         Dim aligned2 As New List(Of T())
+
+        Protected ReadOnly __toChar As Func(Of T, Char)
+        ReadOnly __equals As Equals(Of T)
 
         ''' <summary>
         ''' get numberOfAlignments </summary>
         ''' <returns> numberOfAlignments </returns>
         Public ReadOnly Property NumberOfAlignments As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return aligned1.Count
             End Get
@@ -77,7 +82,6 @@ Namespace NeedlemanWunsch
         ''' <summary>
         ''' get match score </summary>
         ''' <returns> match score </returns>
-
         Public Property MatchScore As Integer = 1
 
         ''' <summary>
@@ -86,12 +90,14 @@ Namespace NeedlemanWunsch
         Public Property MismatchScore As Integer = -1
 
         Public ReadOnly Property Query As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New String(Sequence1.Select(Of Char)(__toChar).ToArray)
             End Get
         End Property
 
         Public ReadOnly Property Subject As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New String(Sequence2.Select(Of Char)(__toChar).ToArray)
             End Get
@@ -118,9 +124,9 @@ Namespace NeedlemanWunsch
 
         ''' <summary>
         ''' set aligned sequence 1 </summary>
-        ''' <param name="aligned1"> </param>
-        Protected Friend Sub addAligned1(aligned1 As T())
-            Me.aligned1.Add(aligned1)
+        ''' <param name="align"> </param>
+        Protected Friend Sub AddAligned1(align As T())
+            Me.aligned1.Add(align)
         End Sub
 
         ''' <summary>
@@ -133,9 +139,9 @@ Namespace NeedlemanWunsch
 
         ''' <summary>
         ''' set aligned sequence 2 </summary>
-        ''' <param name="aligned2"> </param>
-        Protected Friend Sub addAligned2(aligned2 As T())
-            Me.aligned2.Add(aligned2)
+        ''' <param name="align"> </param>
+        Protected Friend Sub AddAligned2(align As T())
+            Me.aligned2.Add(align)
         End Sub
 
         ''' <summary>
@@ -148,17 +154,17 @@ Namespace NeedlemanWunsch
             __toChar = toChar
         End Sub
 
-        Protected ReadOnly __toChar As Func(Of T, Char)
-        ReadOnly __equals As Equals(Of T)
-
         ''' <summary>
         ''' if char a is equal to char b
         ''' return the match score
         ''' else return mismatch score
         ''' </summary>
-        Protected Function match(a As T, b As T) As Integer
-            If __equals(a, b) Then Return MatchScore
-            Return MismatchScore
+        Protected Function isMatch(a As T, b As T) As Integer
+            If __equals(a, b) Then
+                Return MatchScore
+            Else
+                Return MismatchScore
+            End If
         End Function
     End Class
 End Namespace
