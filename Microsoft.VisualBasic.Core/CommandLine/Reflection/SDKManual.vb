@@ -73,7 +73,7 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         <Extension>
         Public Function LaunchManual(CLI As Interpreter) As Integer
-            Dim assm As ApplicationDetails = ApplicationDetails.FromTypeModule(CLI.Type)
+            Dim assm As ApplicationInfoUtils = ApplicationInfoUtils.FromTypeModule(CLI.Type)
             Dim title As String = $"{Application.ProductName} [version {Application.ProductVersion}]" & vbCrLf &
                 vbCrLf &
                 "## " & assm.ProductTitle & vbCrLf &
@@ -115,7 +115,7 @@ Namespace CommandLine.Reflection
         Public Function MarkdownDoc(App As Interpreter) As String
             Dim sb As New StringBuilder($"# { VisualBasic.App.ProductName} [version { VisualBasic.App.Version}]")
             Dim type As Type = App.Type
-            Dim assm As ApplicationDetails = ApplicationDetails.FromTypeModule(App.Type)
+            Dim assm As ApplicationInfoUtils = ApplicationInfoUtils.FromTypeModule(App.Type)
 
             Call sb.AppendLine()
             Call sb.AppendLine("> " & App.Type.NamespaceEntry.Description.lTokens.JoinBy(vbCrLf & "> "))

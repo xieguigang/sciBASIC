@@ -1191,7 +1191,7 @@
     <Compile Include="Text\IO\EncodingHelper.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\VarArray.vb" />
-    <Compile Include="ApplicationServices\VBDev\ApplicationDetails.vb" />
+    <Compile Include="ApplicationServices\VBDev\ApplicationInfoUtils.vb" />
     <Compile Include="Extensions\Reflection\Marshal\IntPtr%28Of T%29.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
     <Compile Include="Extensions\Reflection\Marshal\MarshalExtensions.vb" />

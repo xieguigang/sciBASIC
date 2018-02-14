@@ -243,7 +243,7 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ExecutablePath As String
-    Public ReadOnly Property Info As ApplicationDetails
+    Public ReadOnly Property Info As ApplicationInfoUtils
 
     ''' <summary>
     ''' Gets the name, without the extension, of the assembly file for the application.
@@ -422,7 +422,7 @@ Public Module App
                 .Replace("/", "\")
             App.Desktop = My.Computer.FileSystem.SpecialDirectories.Desktop
             App.ExecutablePath = FileIO.FileSystem.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
-            App.Info = ApplicationDetails.CurrentExe()
+            App.Info = ApplicationInfoUtils.CurrentExe()
             App.AssemblyName = BaseName(App.ExecutablePath)
             App.ProductName = Application.ProductName Or AssemblyName.AsDefault(Function(s) String.IsNullOrEmpty(s))
             App.HOME = FileIO.FileSystem.GetParentPath(App.ExecutablePath)
@@ -445,7 +445,7 @@ Public Module App
     End Function
 
     Public Function GetAppLocalData(exe$) As String
-        Dim app As New ApplicationDetails(Assembly.LoadFile(path:=IO.Path.GetFullPath(exe)))
+        Dim app As New ApplicationInfoUtils(Assembly.LoadFile(path:=IO.Path.GetFullPath(exe)))
         Return GetAppLocalData(app:=app.ProductName, assemblyName:=exe.BaseName)
     End Function
 
@@ -651,7 +651,7 @@ Public Module App
     ''' <returns></returns>
     Public Function GetProductSharedDIR(type As Type) As String
         Dim assm As Assembly = type.Assembly
-        Dim productName As String = ApplicationDetails.GetProductName(assm)
+        Dim productName As String = ApplicationInfoUtils.GetProductName(assm)
 
         If String.IsNullOrEmpty(productName) Then
             productName = BaseName(assm.Location)

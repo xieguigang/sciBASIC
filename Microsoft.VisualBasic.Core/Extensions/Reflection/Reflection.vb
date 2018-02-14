@@ -223,20 +223,20 @@ NULL:       If Not strict Then
 
     <ExportAPI("GET.Assembly.Details")>
     <Extension>
-    Public Function GetAssemblyDetails(path As String) As ApplicationDetails
-        Return New ApplicationDetails(Assembly.LoadFile(path))
+    Public Function GetAssemblyDetails(path As String) As ApplicationInfoUtils
+        Return New ApplicationInfoUtils(Assembly.LoadFile(path))
     End Function
 
     <ExportAPI("GET.Assembly.Details")>
     <Extension>
-    Public Function GetAssemblyDetails(def As Type) As ApplicationDetails
-        Return New ApplicationDetails(def.Assembly)
+    Public Function GetAssemblyDetails(def As Type) As ApplicationInfoUtils
+        Return New ApplicationInfoUtils(def.Assembly)
     End Function
 
     <ExportAPI("GET.Assembly.Details")>
     <Extension>
-    Public Function GetAssemblyDetails(assm As Assembly) As ApplicationDetails
-        Return New ApplicationDetails(assm)
+    Public Function GetAssemblyDetails(assm As Assembly) As ApplicationInfoUtils
+        Return New ApplicationInfoUtils(assm)
     End Function
 
     ''' <summary>

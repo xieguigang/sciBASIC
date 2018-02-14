@@ -201,7 +201,7 @@ Namespace Language.UnixBash
             Return Environment.UserName
         End Function
 
-        Shared ReadOnly __version As String = ApplicationDetails.GetProductVersion(GetType(PS1).Assembly)
+        Shared ReadOnly __version As String = ApplicationInfoUtils.GetProductVersion(GetType(PS1).Assembly)
 
         ''' <summary>
         ''' ``\v`` ``BASH``的版本信息
