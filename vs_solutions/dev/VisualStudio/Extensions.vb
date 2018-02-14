@@ -3,6 +3,11 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Module Extensions
 
+    ''' <summary>
+    ''' Enumerate all of the vb source files in this vbproj.
+    ''' </summary>
+    ''' <param name="vbproj"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function EnumerateSourceFiles(vbproj As String) As IEnumerable(Of String)
