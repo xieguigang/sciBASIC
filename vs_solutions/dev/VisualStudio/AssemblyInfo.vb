@@ -35,8 +35,9 @@ Public Module AssemblyInfoExtensions
             .ToArray
         Dim attributes = lines _
             .Select(Function(l)
-                        Dim name$ = Mid(l, 1, InStr(l, "("))
+                        Dim name$ = Mid(l, 1, InStr(l, "(") - 1)
                         Dim value$ = l.GetStackValue("(", ")").Trim(ASCII.Quot)
+
                         Return New NamedValue(Of String) With {
                             .Name = name,
                             .Value = value,
@@ -47,9 +48,17 @@ Public Module AssemblyInfoExtensions
         Dim info As New DevAssemblyInfo
 
         For Each reader As PropertyInfo In GetType(DevAssemblyInfo).GetProperties(PublicProperty)
-            If reader.GetIndexParameters.IsNullOrEmpty Then
-                Call reader.SetValue(info, attributes(reader.Name).Value)
-            End If
+            With reader
+                If .GetIndexParameters.IsNullOrEmpty Then
+                    If .PropertyType Is GetType(String) Then
+                        Call .SetValue(info, attributes(.Name).Value)
+                    ElseIf .PropertyType Is GetType(Boolean) Then
+                        Call .SetValue(info, attributes(.Name).Value.ParseBoolean)
+                    Else
+                        Throw New NotImplementedException(.PropertyType.ToString)
+                    End If
+                End If
+            End With
         Next
 
         Return info
