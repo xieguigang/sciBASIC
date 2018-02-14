@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02a4513b8f4bd5498c11e8ee270a0b0c, Microsoft.VisualBasic.Core\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::789fc2f496897b51a378073181eddd57, Microsoft.VisualBasic.Core\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -44,4 +44,3 @@
 ''' </summary>
 Friend Class NamespaceDoc
 End Class
-

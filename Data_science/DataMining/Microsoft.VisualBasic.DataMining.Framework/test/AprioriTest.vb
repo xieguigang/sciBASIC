@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a89d831c1c29a5479e7cb6e8903e7db, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\AprioriTest.vb"
+﻿#Region "Microsoft.VisualBasic::f7e066f54d006ca951856d05c471daf6, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\AprioriTest.vb"
 
     ' Author:
     ' 
@@ -75,4 +75,3 @@ Module AprioriTest
         Pause()
     End Sub
 End Module
-
