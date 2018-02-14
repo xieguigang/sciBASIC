@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5317043d6af7c10af9183784539ca95e, mime\text%html\HTML\CSS\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::dec09f7ac5c73e4de15d22c8bfd657cf, mime\text%html\HTML\CSS\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: CSSValue, GetTagValue
+    '         Function: CSSInlineStyle, CSSValue, GetTagValue
     ' 
     ' 
     ' /********************************************************************************/

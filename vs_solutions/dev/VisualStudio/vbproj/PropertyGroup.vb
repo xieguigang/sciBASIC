@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d388fd41df098fe26ca726af530615d1, vs_solutions\dev\vbproj\Template\PropertyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::ed9bcdc7c7657be68e5a45d436f1d90f, vs_solutions\dev\VisualStudio\vbproj\PropertyGroup.vb"
 
     ' Author:
     ' 
