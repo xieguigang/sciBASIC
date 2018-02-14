@@ -49,7 +49,7 @@
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace ApplicationServices
+Namespace ApplicationServices.Development
 
     ''' <summary>
     ''' Parsing product assembly meta data
