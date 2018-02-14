@@ -198,15 +198,15 @@ Namespace HTML.CSS
 
         Public Overloads Shared Function ToString(style As FontStyle) As String
             Select Case style
-                Case Drawing.FontStyle.Bold
+                Case FontStyle.Bold
                     Return strong
-                Case Drawing.FontStyle.Italic
+                Case FontStyle.Italic
                     Return italic
-                Case Drawing.FontStyle.Regular
+                Case FontStyle.Regular
                     Return normal
-                Case Drawing.FontStyle.Strikeout
+                Case FontStyle.Strikeout
                     Return strikeout
-                Case Drawing.FontStyle.Underline
+                Case FontStyle.Underline
                     Return underline
                 Case Else
                     Return normal
@@ -216,17 +216,17 @@ Namespace HTML.CSS
         Public Shared Function GetStyle(style As String) As String
             Select Case LCase(style)
                 Case normal
-                    Return Drawing.FontStyle.Regular
+                    Return FontStyle.Regular
                 Case italic
-                    Return Drawing.FontStyle.Italic
+                    Return FontStyle.Italic
                 Case strong
-                    Return Drawing.FontStyle.Bold
+                    Return FontStyle.Bold
                 Case strikeout
-                    Return Drawing.FontStyle.Strikeout
+                    Return FontStyle.Strikeout
                 Case underline
-                    Return Drawing.FontStyle.Underline
+                    Return FontStyle.Underline
                 Case Else
-                    Return Drawing.FontStyle.Regular
+                    Return FontStyle.Regular
             End Select
         End Function
 
