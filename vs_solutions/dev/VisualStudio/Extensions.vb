@@ -62,7 +62,7 @@ Public Module Extensions
                                        Return Not True = vb.AutoGen.ParseBoolean
                                    End Function) _
                             .Select(Function(vb)
-                                        Return vb.Include
+                                        Return vb.Include.Replace("%28", "(").Replace("%29", ")")
                                     End Function)
                     End Function) _
             .IteratesALL
