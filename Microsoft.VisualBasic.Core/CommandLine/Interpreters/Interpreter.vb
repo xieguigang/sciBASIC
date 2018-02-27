@@ -90,18 +90,18 @@ Namespace CommandLine
 
         ''' <summary>
         ''' Public Delegate Function __ExecuteFile(path As String, args As String()) As Integer,
-        ''' (<seealso cref="__executefile"/>: 假若所传入的命令行的name是文件路径，解释器就会执行这个函数指针)
+        ''' (<seealso cref="VisualBasic.CommandLine.ExecuteFile"/>: 假若所传入的命令行的name是文件路径，解释器就会执行这个函数指针)
         ''' 这个函数指针一般是用作于执行脚本程序的
         ''' </summary>
         ''' <returns></returns>
-        Public Property ExecuteFile As __ExecuteFile
+        Public Property ExecuteFile As ExecuteFile
         ''' <summary>
         ''' Public Delegate Function __ExecuteEmptyCli() As Integer,
-        ''' (<seealso cref="__ExecuteEmptyCLI"/>: 假若所传入的命令行是空的，就会执行这个函数指针)
+        ''' (<seealso cref="VisualBasic.CommandLine.ExecuteEmptyCLI"/>: 假若所传入的命令行是空的，就会执行这个函数指针)
         ''' </summary>
         ''' <returns></returns>
-        Public Property ExecuteEmptyCli As __ExecuteEmptyCLI
-        Public Property ExecuteNotFound As __ExecuteNotFound
+        Public Property ExecuteEmptyCli As ExecuteEmptyCLI
+        Public Property ExecuteNotFound As ExecuteNotFound
 #End Region
 
         ''' <summary>
