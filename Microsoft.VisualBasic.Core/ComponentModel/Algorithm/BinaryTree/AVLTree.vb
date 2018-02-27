@@ -2,6 +2,14 @@
 
 Namespace ComponentModel.Algorithm.BinaryTree
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <remarks>
+    ''' http://www.cnblogs.com/huangxincheng/archive/2012/07/22/2603956.html
+    ''' </remarks>
     Public Class AVLTree(Of K, V)
 
         ''' <summary>
