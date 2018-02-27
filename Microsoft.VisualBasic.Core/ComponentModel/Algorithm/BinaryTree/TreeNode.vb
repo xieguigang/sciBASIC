@@ -19,8 +19,15 @@ Namespace ComponentModel.Algorithm.BinaryTree
         Public Property Left As BinaryTree(Of K, V)
         Public Property Right As BinaryTree(Of K, V)
 
+        ''' <summary>
+        ''' Additional values that using for the binary tree algorithm.
+        ''' </summary>
         ReadOnly additionals As New Dictionary(Of String, Object)
 
+        ''' <summary>
+        ''' Full name of current node
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property QualifiedName As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -51,12 +58,17 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Me.Key = key
             Me.Value = value
 
-            Call AddData("name", (toString Or defaultView)(key))
-            Call AddData("parent", parent)
+            Call SetValue("name", (toString Or defaultView)(key))
+            Call SetValue("parent", parent)
         End Sub
 
+        ''' <summary>
+        ''' Set <see cref="additionals"/> value by using a key value tuple.
+        ''' </summary>
+        ''' <param name="key$"></param>
+        ''' <param name="value"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub AddData(key$, value As Object)
+        Public Sub SetValue(key$, value As Object)
             additionals(key) = value
         End Sub
 
