@@ -62,6 +62,9 @@ Namespace PCA
         ''' </summary>
         Dim S As Vector
 
+        Dim center, scale As Boolean
+
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -74,6 +77,9 @@ Namespace PCA
             Dim matrix = adjust(dataset.Matrix.ToArray, center, scale)
             Dim svd = New GeneralMatrix(matrix).SVD()
 
+            Me.center = center
+            Me.scale = scale
+
             ' svd.rightSingularVectors;
             Me.U = svd.V
             ' svd.diagonal;
@@ -82,6 +88,24 @@ Namespace PCA
 
             Me.S = eigenvalues
         End Sub
+
+        ''' <summary>
+        ''' Project the dataset into the PCA space
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        Public Function Project(data As Vector()) As Vector()
+            If center Then
+                data = data.Select(Function(r) r - means).ToArray
+
+                If scale Then
+                    data = data.Select(Function(r) r / stdevs).ToArray
+                End If
+            End If
+
+            Dim predictions = New GeneralMatrix(data).Multiply(U)
+            Return predictions.ToArray.Select(Function(r) r.AsVector).ToArray
+        End Function
 
         Private Function adjust(data As Double()(), center As Boolean, scale As Boolean) As Vector()
             Dim dataset = data.Select(Function(r) r.AsVector).ToArray
