@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2027
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "runtime", "runtime", "{AF43BE16-2B66-4DE6-92A9-AD520503972F}"
 EndProject
@@ -264,8 +264,8 @@ Global
 		{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}.Biodeep|x86.Build.0 = Release|Any CPU
 		{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}.Debug|x64.Build.0 = Debug|Any CPU
+		{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}.Debug|x64.ActiveCfg = Debug|x64
+		{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}.Debug|x64.Build.0 = Debug|x64
 		{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}.Debug|x86.Build.0 = Debug|Any CPU
 		{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}.docs|Any CPU.ActiveCfg = Debug|Any CPU

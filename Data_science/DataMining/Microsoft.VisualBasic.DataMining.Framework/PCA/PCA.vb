@@ -44,42 +44,107 @@
 
 Imports Microsoft.VisualBasic.Math.Matrix
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace PCA
 
     Public Class PCA
 
-        ''' <summary>
-        ''' 使用<see cref="CenterNormalize(GeneralMatrix)"/>特征中心化之后的结果矩阵
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property B As GeneralMatrix
-        ''' <summary>
-        ''' B的协方差矩阵C
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property C As GeneralMatrix
+        Dim means As Vector
+        Dim stdevs As Vector
 
         ''' <summary>
-        ''' SVD(<see cref="C"/>)
+        ''' Returns the Eigenvectors of the covariance matrix
         ''' </summary>
-        ''' <returns></returns>
-        Public Property SVD As SingularValueDecomposition
+        Dim U As GeneralMatrix
+        ''' <summary>
+        ''' Returns the Eigenvalues (on the diagonal)
+        ''' </summary>
+        Dim S As Vector
 
-        Public ReadOnly Property S As Vector
-            Get
-                Return SVD.SingularValues
-            End Get
-        End Property
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="dataset">
+        ''' dataset is a two-dimensional array where rows represent the samples and columns the features
+        ''' </param>
+        ''' <param name="center"></param>
+        ''' <param name="scale"></param>
+        Sub New(dataset As IEnumerable(Of DataSet), Optional center As Boolean = True, Optional scale As Boolean = False)
+            Dim matrix = adjust(dataset.Matrix, center, scale)
+            Dim svd = New GeneralMatrix(matrix).SVD()
 
-        Public ReadOnly Property V As GeneralMatrix
-            Get
-                Return SVD.V
-            End Get
-        End Property
+            ' svd.rightSingularVectors;
+            Me.U = svd.V
+            ' svd.diagonal;
+            Dim singularValues = svd.SingularValues
+            Dim eigenvalues = (singularValues ^ 2) / (matrix.Length - 1)
 
-        Public Overrides Function ToString() As String
-            Return S.ToString
+            Me.S = eigenvalues
+        End Sub
+
+        Private Function adjust(data As Double()(), center As Boolean, scale As Boolean) As Vector()
+            Dim dataset = data.Select(Function(r) r.AsVector).ToArray
+
+            If center Then
+                Dim columns = data(0).Sequence.Select(Function(i) dataset.Select(Function(r) r(i)).AsVector).ToArray
+
+                means = columns.Select(Function(c) c.Average).AsVector
+                dataset = dataset.Select(Function(r) r - means).ToArray
+                stdevs = columns.Select(Function(c) c.StdError).AsVector
+
+                If scale Then
+                    dataset = dataset.Select(Function(r) r / stdevs).ToArray
+                End If
+            End If
+
+            Return dataset
         End Function
+
+        ''' <summary>
+        ''' Returns the standard deviations of the principal components
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property StandardDeviations As Vector
+            Get
+                Return Vector.Sqrt(S)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Returns the loadings matrix
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Loadings As GeneralMatrix
+            Get
+                Return U.Transpose
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Returns the proportion of variance for each component
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ExplainedVariance As Vector
+            Get
+                Return S / S.Sum
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Returns the cumulative proportion of variance
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property CumulativeVariance As Vector
+            Get
+                Dim explained = ExplainedVariance
+
+                For i As Integer = 1 To explained.Length - 1
+                    explained(i) += explained(i - 1)
+                Next
+
+                Return explained
+            End Get
+        End Property
     End Class
 End Namespace
