@@ -827,11 +827,11 @@
     <Compile Include="CommandLine\Reflection\Attributes\[Namespace].vb" />
     <Compile Include="CommandLine\Reflection\Grouping.vb" />
     <Compile Include="CommandLine\Reflection\CLITypes.vb" />
-    <Compile Include="CommandLine\Reflection\ExceptionHandler.vb" />
-    <Compile Include="CommandLine\Reflection\SDKManual.vb" />
+    <Compile Include="CommandLine\Reflection\View\ExceptionHandler.vb" />
+    <Compile Include="CommandLine\Reflection\View\SDKManual.vb" />
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\ExportAPI.vb" />
-    <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
+    <Compile Include="CommandLine\Reflection\View\ManualBuilder.vb" />
     <Compile Include="ComponentModel\Algorithm\base\Combination\Combination.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\Extensions.vb" />
