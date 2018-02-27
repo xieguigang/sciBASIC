@@ -57,12 +57,21 @@ Namespace IO
     ''' </summary>
     Public Module Extensions
 
+        ''' <summary>
+        ''' 将数据集之中的虽有属性值取出来构建一个矩阵
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function Matrix(data As IEnumerable(Of DataSet)) As IEnumerable(Of Double())
             With data.ToArray
-                Dim allKeys = .Keys(distinct:=True)
+                Dim allKeys = .Select(Function(x) x.Properties.Keys) _
+                              .IteratesALL _
+                              .Distinct _
+                              .ToArray
 
                 For Each x As DataSet In .ByRef
+                    ' 利用属性名列表做subset，得到每一个数据对象的属性向量
                     Yield x.ItemValue(allKeys)
                 Next
             End With

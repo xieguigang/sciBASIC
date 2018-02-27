@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>PCA.Module1</StartupObject>
-    <RootNamespace>PCA</RootNamespace>
+    <StartupObject>PCAtest.Module1</StartupObject>
+    <RootNamespace>PCAtest</RootNamespace>
     <AssemblyName>PCA</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>
