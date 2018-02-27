@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{C6B49CF3-0A1F-49A9-9D89-2D0878E510FC}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>PCA.Program</StartupObject>
+    <StartupObject>PCA.Module1</StartupObject>
     <RootNamespace>PCA</RootNamespace>
     <AssemblyName>PCA</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Matrix.vb" />
+    <Compile Include="Module1.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
