@@ -10,6 +10,9 @@ Module Module1
         Pause()
     End Sub
 
+    ''' <summary>
+    ''' https://github.com/mljs/pca
+    ''' </summary>
     Sub methodTest()
         Dim data = DataSet.LoadDataSet("C:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\iris.csv", uidMap:="class")
 
