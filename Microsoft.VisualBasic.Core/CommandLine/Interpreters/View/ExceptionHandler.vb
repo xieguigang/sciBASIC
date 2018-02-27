@@ -53,7 +53,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Terminal
 
-Namespace CommandLine.Reflection
+Namespace CommandLine.ManView
 
     ''' <summary>
     ''' Defines the url or e-mail information for the exceptions.
