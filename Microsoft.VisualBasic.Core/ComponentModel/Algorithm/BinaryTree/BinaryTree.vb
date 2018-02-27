@@ -51,10 +51,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Function
 
         <Extension>
-        Public Function MinKey(Of K, V)(tree As BinaryTree(Of K, V)) As K
+        Public Function Min(Of K, V)(tree As BinaryTree(Of K, V)) As BinaryTree(Of K, V)
             Do While Not tree Is Nothing
                 If tree.Left Is Nothing Then
-                    Return tree.Key
+                    Return tree
                 Else
                     tree = tree.Left
                 End If
@@ -64,16 +64,28 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Function
 
         <Extension>
-        Public Function MaxKey(Of K, V)(tree As BinaryTree(Of K, V)) As K
+        Public Function Max(Of K, V)(tree As BinaryTree(Of K, V)) As BinaryTree(Of K, V)
             Do While Not tree Is Nothing
                 If tree.Right Is Nothing Then
-                    Return tree.Key
+                    Return tree
                 Else
                     tree = tree.Right
                 End If
             Loop
 
             Return Nothing
+        End Function
+
+        <Extension>
+        Public Function MinKey(Of K, V)(tree As BinaryTree(Of K, V)) As K
+            Dim min = tree.Min
+            Return If(min Is Nothing, Nothing, min.Key)
+        End Function
+
+        <Extension>
+        Public Function MaxKey(Of K, V)(tree As BinaryTree(Of K, V)) As K
+            Dim max = tree.Max
+            Return If(max Is Nothing, Nothing, max.Key)
         End Function
     End Module
 End Namespace
