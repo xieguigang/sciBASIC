@@ -790,6 +790,7 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeNode.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\AVLSupports.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
