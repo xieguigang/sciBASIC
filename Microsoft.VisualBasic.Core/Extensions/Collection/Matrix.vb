@@ -71,11 +71,11 @@ Public Module MatrixExtensions
         Return Matrix(Of Double, DataSet)(data)
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function Matrix(Of DataSet As DynamicPropertyBase(Of String))(data As IEnumerable(Of DataSet)) As IEnumerable(Of String())
-        Return Matrix(Of String, DataSet)(data)
-    End Function
+    '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+    '<Extension>
+    'Public Function Matrix(Of DataSet As DynamicPropertyBase(Of String))(data As IEnumerable(Of DataSet)) As IEnumerable(Of String())
+    '    Return Matrix(Of String, DataSet)(data)
+    'End Function
 
     ''' <summary>
     ''' Converts a <see cref="DataTable"/> to a 2-dimensional array
