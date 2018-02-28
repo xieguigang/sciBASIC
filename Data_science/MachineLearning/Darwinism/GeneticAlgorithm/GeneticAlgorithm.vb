@@ -73,7 +73,7 @@ Namespace Darwinism.GAF
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        ReadOnly _chromosomesComparator As ChromosomesComparator(Of C)
+        ReadOnly _chromosomesComparator As FitnessPool(Of C)
 
         Public ReadOnly Property Fitness As Fitness(Of C)
 
@@ -96,7 +96,7 @@ Namespace Darwinism.GAF
         Public Sub New(population As Population(Of C), fitnessFunc As Fitness(Of C), Optional seeds As IRandomSeeds = Nothing)
             Me._Population = population
             Me.Fitness = fitnessFunc
-            Me._chromosomesComparator = New ChromosomesComparator(Of C)(Me)
+            Me._chromosomesComparator = New FitnessPool(Of C)(AddressOf fitnessFunc.Calculate)
             Me._Population.SortPopulationByFitness(Me, _chromosomesComparator)
 
             If population.Parallel Then
@@ -220,7 +220,7 @@ Namespace Darwinism.GAF
         ''' Clear the internal cache
         ''' </summary>
         Public Sub Clear()
-            _chromosomesComparator.clearCache()
+            _chromosomesComparator.cache.Clear()
         End Sub
     End Class
 End Namespace
