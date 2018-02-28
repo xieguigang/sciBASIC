@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.DataMining.PCA
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Module Module1
@@ -16,7 +15,7 @@ Module Module1
     Sub methodTest()
         Dim data = DataSet.LoadDataSet("C:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\iris.csv", uidMap:="class")
 
-        Dim pca As New PCA(data)
+        Dim pca As New PCA(data.Matrix)
 
         Call pca.ExplainedVariance.ToString.__DEBUG_ECHO
 
