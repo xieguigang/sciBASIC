@@ -42,12 +42,27 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Math.Matrix
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Math.Matrix
 
-Namespace PCA
+Namespace LinearAlgebra
 
+    ''' <summary>
+    ''' Performs principal component analysis on a set of data and returns the resulting data set. The
+    ''' QR algorithm is used to find the eigenvalues and orthonormal eigenvectors of the covariance
+    ''' matrix of the data set. The eigenvectors corresponding to the largest eigenvalues are the
+    ''' principal components. The data file should be in the same directory as the PCA.class file.
+    ''' All numbers should be tab-delimited. The first line of the data should be two numbers: the 
+    ''' number of rows R followed by the number of columns C. After that, there should be R lines of 
+    ''' C tab-delimited values. The columns would most likely represent the dimensions of measure; the
+    ''' rows would each represent a single data point.
+    ''' @author	Kushal Ranjan
+    ''' @version	051513
+    ''' </summary>
+    ''' <remarks>
+    ''' + https://github.com/kranjan94/Principal-Component-Analysis
+    ''' + https://stats.stackexchange.com/questions/222/what-are-principal-component-scores
+    ''' </remarks>
     Public Class PCA
 
         Dim means As Vector

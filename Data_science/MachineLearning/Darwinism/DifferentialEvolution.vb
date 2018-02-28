@@ -318,7 +318,8 @@ Namespace Darwinism
                     Dim mutate# = individual1.Yield(R) + F * (individual2.Yield(R) - individual3.Yield(R))
                     mutate *= random.NextDouble
                     Call candidate.Put(R, mutate)
-                End If ' else isn't needed because we cloned original to candidate
+                End If
+                ' else isn't needed because we cloned original to candidate
 
                 ' see if Is better than original, if so replace
                 Dim originalFitness# = fitnessFunction(original)
