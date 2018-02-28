@@ -298,6 +298,7 @@
     <Compile Include="Darwinism\GeneticAlgorithm\Population.vb" />
     <Compile Include="Darwinism\Models\Chromosome.vb" />
     <Compile Include="Darwinism\Models\FitnessPool.vb" />
+    <Compile Include="Extensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
