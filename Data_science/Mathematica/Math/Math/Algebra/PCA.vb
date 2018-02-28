@@ -88,8 +88,8 @@ Namespace LinearAlgebra
         ''' </param>
         ''' <param name="center"></param>
         ''' <param name="scale"></param>
-        Sub New(dataset As IEnumerable(Of DataSet), Optional center As Boolean = True, Optional scale As Boolean = False)
-            Dim matrix = adjust(dataset.Matrix.ToArray, center, scale)
+        Sub New(dataset As IEnumerable(Of Double()), Optional center As Boolean = True, Optional scale As Boolean = False)
+            Dim matrix = adjust(dataset.ToArray, center, scale)
             Dim svd = New GeneralMatrix(matrix).SVD()
 
             Me.center = center
