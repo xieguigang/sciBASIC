@@ -140,6 +140,11 @@ Namespace Language.Default
             Me.assert = assert Or defaultAssert
         End Sub
 
+        Public Function [When](expression As Boolean) As DefaultValue(Of T)
+            assert = Function(null) expression
+            Return Me
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"default({Value})"
         End Function
