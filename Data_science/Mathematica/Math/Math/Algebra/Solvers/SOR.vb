@@ -79,7 +79,7 @@ Namespace LinearAlgebra.Solvers
                     Exit For
                 End If
 
-                Call x.CopyTo(x1)
+                x1 = x
             Next
 
             Return x
