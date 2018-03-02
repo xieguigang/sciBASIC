@@ -1,49 +1,81 @@
 ﻿#Region "Microsoft.VisualBasic::0f76840abfb9ffb5be52d037979c0a2b, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MatrixExtensions
-    ' 
-    '     Function: DATA, MAT, RowIterator
-    ' 
-    ' /********************************************************************************/
+' Module MatrixExtensions
+' 
+'     Function: DATA, MAT, RowIterator
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Public Module MatrixExtensions
+
+    ''' <summary>
+    ''' 将数据集之中的虽有属性值取出来构建一个矩阵
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
+    Public Iterator Function Matrix(Of T, DataSet As DynamicPropertyBase(Of T))(data As IEnumerable(Of DataSet)) As IEnumerable(Of T())
+        With data.ToArray
+            Dim allFields = .Select(Function(x) x.Properties.Keys) _
+                            .IteratesALL _
+                            .Distinct _
+                            .ToArray
+
+            For Each x As DataSet In .ByRef
+                ' 利用属性名列表做subset，得到每一个数据对象的属性向量
+                Yield x.ItemValue(allFields)
+            Next
+        End With
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Matrix(Of DataSet As DynamicPropertyBase(Of Double))(data As IEnumerable(Of DataSet)) As IEnumerable(Of Double())
+        Return Matrix(Of Double, DataSet)(data)
+    End Function
+
+    '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+    '<Extension>
+    'Public Function Matrix(Of DataSet As DynamicPropertyBase(Of String))(data As IEnumerable(Of DataSet)) As IEnumerable(Of String())
+    '    Return Matrix(Of String, DataSet)(data)
+    'End Function
 
     ''' <summary>
     ''' Converts a <see cref="DataTable"/> to a 2-dimensional array

@@ -973,7 +973,7 @@ Public Module App
     '''
     <ExportAPI("RunCLI",
              Info:="Running the string as cli command line and the specific type define as a interpreter.")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As __ExecuteEmptyCLI,
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, executeEmpty, Nothing, Nothing)
@@ -987,7 +987,7 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As __ExecuteEmptyCLI,
+    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, executeEmpty, Nothing, Nothing)
@@ -1001,7 +1001,7 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As __ExecuteEmptyCLI, executeNotFound As __ExecuteNotFound,
+    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As ExecuteEmptyCLI, executeNotFound As ExecuteNotFound,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, executeEmpty, executeNotFound, Nothing)
@@ -1015,7 +1015,7 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As __ExecuteEmptyCLI, executeNotFound As __ExecuteNotFound,
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As ExecuteEmptyCLI, executeNotFound As ExecuteNotFound,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, executeEmpty, executeNotFound, Nothing)
@@ -1023,9 +1023,9 @@ Public Module App
 
     <Extension>
     Private Function RunCLIInternal(App As Type, args As CLI, caller$,
-                                    executeEmpty As __ExecuteEmptyCLI,
-                                    executeNotFound As __ExecuteNotFound,
-                                    executeFile As __ExecuteFile) As Integer
+                                    executeEmpty As ExecuteEmptyCLI,
+                                    executeNotFound As ExecuteNotFound,
+                                    executeFile As ExecuteFile) As Integer
 #If DEBUG Then
         Call args.__DEBUG_ECHO
 #End If
@@ -1054,7 +1054,7 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeFile As __ExecuteFile, <CallerMemberName> Optional caller$ = Nothing) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeFile As ExecuteFile, <CallerMemberName> Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(CLITools.TryParse(args), caller, Nothing, Nothing, executeFile)
     End Function
 
@@ -1071,7 +1071,7 @@ Public Module App
     ''' ```
     ''' </param>
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeFile As __ExecuteFile, <CallerMemberName> Optional caller$ = Nothing) As Integer
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeFile As ExecuteFile, <CallerMemberName> Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, Nothing, Nothing, executeFile)
     End Function
 
@@ -1083,7 +1083,7 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeFile As __ExecuteFile, executeEmpty As __ExecuteEmptyCLI,
+    <Extension> Public Function RunCLI(Interpreter As Type, args$, executeFile As ExecuteFile, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLI(TryParse(args), executeFile, executeEmpty, caller)
@@ -1097,7 +1097,7 @@ Public Module App
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
     <ExportAPI("RunCLI")>
-    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeFile As __ExecuteFile, executeEmpty As __ExecuteEmptyCLI,
+    <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeFile As ExecuteFile, executeEmpty As ExecuteEmptyCLI,
                                        <CallerMemberName>
                                        Optional caller$ = Nothing) As Integer
         Return Interpreter.RunCLIInternal(args, caller, executeEmpty, Nothing, executeFile)

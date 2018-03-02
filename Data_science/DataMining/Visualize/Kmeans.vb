@@ -200,7 +200,8 @@ Public Module Kmeans
                               Optional shapes As LegendStyles = LegendStyles.Circle Or LegendStyles.Square Or LegendStyles.Triangle,
                               Optional pointSize! = 20,
                               Optional boxStroke$ = Stroke.StrongHighlightStroke,
-                              Optional axisStroke$ = Stroke.AxisStroke) As GraphicsData
+                              Optional axisStroke$ = Stroke.AxisStroke,
+                              Optional arrowFactor$ = "2,2") As GraphicsData
 
         Dim clusters = clusterData.ClusterGroups
 
@@ -241,6 +242,8 @@ Public Module Kmeans
             camera, bg, padding,
             boxStroke:=boxStroke,
             axisStroke:=axisStroke,
-            labX:=labX, labY:=labY, labZ:=labZ)
+            labX:=labX, labY:=labY, labZ:=labZ,
+            arrowFactor:=arrowFactor
+        )
     End Function
 End Module

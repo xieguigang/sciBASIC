@@ -1381,7 +1381,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("StdError")>
-    <Extension> Public Function StdError(data As Generic.IEnumerable(Of Double)) As Double
+    <Extension> Public Function StdError(data As IEnumerable(Of Double)) As Double
         Dim Average As Double = data.Average
         Dim Sum = (From n As Double In data Select (n - Average) ^ 2).Sum
         Sum /= data.Count

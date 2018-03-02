@@ -1532,6 +1532,8 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <param name="N"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LogN(x As Double, N As Double) As Double
             Return sys.Log(x) / sys.Log(N)
         End Function
@@ -1542,6 +1544,8 @@ Namespace Math
         ''' <param name="b"> </param>
         ''' <param name="c">
         ''' @return </param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(a As Integer, b As Integer, c As Integer) As Integer
             Return sys.Max(a, sys.Max(b, c))
         End Function

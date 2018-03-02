@@ -46,8 +46,8 @@
 
 Imports System.Reflection
 Imports System.Text
+Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.Reflection.EntryPoints

@@ -90,7 +90,8 @@ Namespace Plot3D
                              Optional labX$ = "X",
                              Optional labY$ = "Y",
                              Optional labZ$ = "Z",
-                             Optional legendSize! = 20) As GraphicsData
+                             Optional legendSize! = 20,
+                             Optional arrowFactor$ = "2,2") As GraphicsData
 
             Dim list = serials.ToArray
             Dim points = list _
@@ -112,7 +113,11 @@ Namespace Plot3D
             Dim model As New List(Of Element3D)
 
             model += GridBottom.Grid(X, Y, (X(1) - X(0), Y(1) - Y(0)), Z.Min)
-            model += AxisDraw.Axis(X, Y, Z, font, (labX, labY, labZ), axisStroke)
+            model += AxisDraw.Axis(
+                X, Y, Z, font,
+                (labX, labY, labZ),
+                axisStroke,
+                arrowFactor)
 
             ' 最后混合进入系列点
             For Each serial As Serial3D In list

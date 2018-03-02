@@ -87,6 +87,7 @@ Namespace Math.Information
         Public Function ShannonEntropy(probs As IEnumerable(Of Double)) As Double
             Dim entropy# = Aggregate prob As Double
                            In probs
+                           Where prob > 0  ' 因为是求和，所以prob等于零的时候，乘上ln应该也是零的，因为零对求和无影响，所以在这里直接使用where跳过零了
                            Let ln = Math.Log(prob, newBase:=2)
                            Into Sum(prob * ln)
             ' 和的负数，注意在这里最后的结果还需要乘以-1
