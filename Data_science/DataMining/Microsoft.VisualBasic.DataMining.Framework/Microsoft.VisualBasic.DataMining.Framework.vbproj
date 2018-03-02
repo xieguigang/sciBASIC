@@ -394,8 +394,6 @@
     <Compile Include="DBSCAN\DatasetItemBase.vb" />
     <Compile Include="DBSCAN\DbscanAlgorithm.vb" />
     <Compile Include="DBSCAN\DbscanPoint.vb" />
-    <Compile Include="PCA\PCA.vb" />
-    <Compile Include="PCA\Method.vb" />
     <Compile Include="FuzzyCMeans\AlgorithmsUtils.vb" />
     <Compile Include="FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb" />
     <Compile Include="FuzzyCMeans\Algorithm\Utils.vb" />

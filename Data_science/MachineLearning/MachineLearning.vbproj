@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -290,7 +290,6 @@
     <Compile Include="Darwinism\DifferentialEvolution.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Fitness.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb" />
-    <Compile Include="Darwinism\GeneticAlgorithm\Helper\ChromosomesComparator.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\FitnessHelper.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\ListenerHelper.vb" />
@@ -298,6 +297,8 @@
     <Compile Include="Darwinism\GeneticAlgorithm\Population.vb" />
     <Compile Include="Darwinism\Models\Chromosome.vb" />
     <Compile Include="Darwinism\Models\FitnessPool.vb" />
+    <Compile Include="Extensions.vb" />
+    <Compile Include="Framework\Iterator.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -347,13 +348,13 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DataMining\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj">
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
       <Name>Microsoft.VisualBasic.DataMining.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mathematica\Math\Math\math-core.vbproj">
+      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
+      <Name>math-core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

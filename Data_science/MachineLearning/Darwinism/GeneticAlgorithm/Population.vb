@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::e9e1e2fb4282d28b91e1937979c28f61, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class Population
-    ' 
-    '         Properties: Parallel, Random, Size
-    ' 
-    '         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    '         Sub: Add, New, (+2 Overloads) SortPopulationByFitness, Trim
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Class Population
+' 
+'         Properties: Parallel, Random, Size
+' 
+'         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator
+' 
+'         Sub: Add, New, (+2 Overloads) SortPopulationByFitness, Trim
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,12 +64,11 @@
 ' limitations under the License.
 ' *****************************************************************************
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
-Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
-Imports Microsoft.VisualBasic.Parallel.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF
 
@@ -126,6 +125,7 @@ Namespace Darwinism.GAF
         ''' <param name="index%"></param>
         ''' <returns></returns>
         Default Public ReadOnly Property Item(index%) As chr
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return chromosomes(index)
             End Get
@@ -165,7 +165,7 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="GA"></param>
         ''' <param name="comparator"></param>
-        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of chr), comparator As ChromosomesComparator(Of chr))
+        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of chr), comparator As FitnessPool(Of chr))
             Call Arrays.Shuffle(chromosomes)
 
             If Parallel Then
@@ -187,7 +187,7 @@ Namespace Darwinism.GAF
                 Next
             End If
 
-            Call chromosomes.Sort(comparator)
+            chromosomes = (From c In chromosomes Order By comparator.Fitness(c) Ascending).AsList
         End Sub
 
         ''' <summary>
