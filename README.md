@@ -49,7 +49,7 @@ PM> Install-Package sciBASIC -Pre
 
 ### Contacts
 
-[foundation@sciBASIC.net](mailto://foundation@scibasic.net)
+Foundation for VisualBasic.NET scientific computing softwares from China: [foundation@sciBASIC.NET](mailto://foundation@scibasic.net)
 
 ### Directory Structure
 
