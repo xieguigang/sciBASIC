@@ -76,6 +76,6 @@ Public Module Bihistogram
     ''' </summary>
     ''' <returns></returns>
     Public Function Plot() As GraphicsData
-
+        Throw New NotImplementedException
     End Function
 End Module
