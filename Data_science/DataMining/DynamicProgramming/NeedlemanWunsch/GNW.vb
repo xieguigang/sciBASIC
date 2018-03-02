@@ -91,8 +91,8 @@ Namespace NeedlemanWunsch
                     Dim aligned1 As T() = s1.ToArray
                     Dim aligned2 As T() = s2.ToArray
 
-                    Call Array.Reverse(aligned1)
-                    Call Array.Reverse(aligned2)
+                    ' Call Array.Reverse(aligned1)
+                    ' Call Array.Reverse(aligned2)
 
                     Me.AddAligned1(aligned1)
                     Me.AddAligned2(aligned2)
