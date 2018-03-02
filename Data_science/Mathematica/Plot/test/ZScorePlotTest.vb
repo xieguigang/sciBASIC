@@ -66,7 +66,7 @@ Module ZScorePlotTest
 
             !Control = labels - !Case - !Test - !QC
 
-            Dim data = ZScores.Load(csv, .ref, ColorBrewer.QualitativeSchemes.Set2_4)
+            Dim data = ZScores.Load(csv, .ByRef, ColorBrewer.QualitativeSchemes.Set2_4)
 
             ' data.shapes!Case = LegendStyles.Triangle
 

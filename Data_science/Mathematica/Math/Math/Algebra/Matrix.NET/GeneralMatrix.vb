@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::a2dcd9a61ef0689675cdee6130999ffe, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GeneralMatrix
-    ' 
-    '         Properties: Array, ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector
-    '                     RowDimension, RowPackedCopy
-    ' 
-    '         Function: Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals, ArrayMultiply
-    '                   ArrayMultiplyEquals, ArrayRightDivide, ArrayRightDivideEquals, chol, Clone
-    '                   Condition, Copy, Create, Determinant, Eigen
-    '                   (+4 Overloads) GetMatrix, Identity, Inverse, LUD, (+2 Overloads) Multiply
-    '                   MultiplyEquals, Norm1, Norm2, NormF, NormInf
-    '                   QRD, Rank, Solve, SolveTranspose, Subtract
-    '                   SubtractEquals, SVD, ToString, Trace, Transpose
-    ' 
-    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+5 Overloads) New
-    '              (+4 Overloads) SetMatrix
-    ' 
-    '         Operators: (+2 Overloads) -, *, +
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GeneralMatrix
+' 
+'         Properties: Array, ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector
+'                     RowDimension, RowPackedCopy
+' 
+'         Function: Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals, ArrayMultiply
+'                   ArrayMultiplyEquals, ArrayRightDivide, ArrayRightDivideEquals, chol, Clone
+'                   Condition, Copy, Create, Determinant, Eigen
+'                   (+4 Overloads) GetMatrix, Identity, Inverse, LUD, (+2 Overloads) Multiply
+'                   MultiplyEquals, Norm1, Norm2, NormF, NormInf
+'                   QRD, Rank, Solve, SolveTranspose, Subtract
+'                   SubtractEquals, SVD, ToString, Trace, Transpose
+' 
+'         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+5 Overloads) New
+'              (+4 Overloads) SetMatrix
+' 
+'         Operators: (+2 Overloads) -, *, +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
@@ -182,10 +183,15 @@ Namespace Matrix
             n = A(0).Length
             For i As Integer = 0 To m - 1
                 If A(i).Length <> n Then
-                    Throw New System.ArgumentException("All rows must have the same length.")
+                    Throw New ArgumentException("All rows must have the same length.")
                 End If
             Next
             Me.buffer = A
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(rows As IEnumerable(Of Vector))
+            Call Me.New(rows.Select(Function(v) v.ToArray).ToArray)
         End Sub
 
         ''' <summary>Construct a matrix quickly without checking arguments.</summary>

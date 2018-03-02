@@ -582,7 +582,7 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDecimal(parameter As String) As Decimal
-            Return CDec(Val(Me(parameter)))
+            Return CDec(Val(Me(parameter).DefaultValue))
         End Function
 
         ''' <summary>
@@ -592,7 +592,7 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDouble(parameter As String) As Double
-            Return Val(Me(parameter))
+            Return Val(Me(parameter).DefaultValue)
         End Function
 
         ''' <summary>
@@ -602,7 +602,7 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFloat(parameter As String) As Single
-            Return CSng(Val(Me(parameter)))
+            Return CSng(Val(Me(parameter).DefaultValue))
         End Function
 
         ''' <summary>
@@ -622,7 +622,7 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt16(parameter As String) As Int16
-            Return CType(Val(Me(parameter)), Int16)
+            Return CType(Val(Me(parameter).DefaultValue), Int16)
         End Function
 
         ''' <summary>
@@ -632,7 +632,7 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt32(parameter As String) As Int32
-            Return CInt(Val(Me(parameter)))
+            Return CInt(Val(Me(parameter).DefaultValue))
         End Function
 
         ''' <summary>
@@ -642,7 +642,7 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt64(parameter As String) As Int64
-            Return CLng(Val(Me(parameter)))
+            Return CLng(Val(Me(parameter).DefaultValue))
         End Function
 
         ''' <summary>

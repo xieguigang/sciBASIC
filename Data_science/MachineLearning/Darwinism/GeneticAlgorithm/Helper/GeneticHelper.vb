@@ -106,7 +106,7 @@ Namespace Darwinism.GAF.Helper
         ''' in real life it could be more complex
         ''' </summary>
         <Extension>
-        Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize As Integer, Optional parallel As ParallelComputing(Of T) = Nothing) As Population(Of T)
+        Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize%, Optional parallel As ParallelComputing(Of T) = Nothing) As Population(Of T)
             Dim population As New Population(Of T)(parallel) With {
                 .Parallel = True
             }

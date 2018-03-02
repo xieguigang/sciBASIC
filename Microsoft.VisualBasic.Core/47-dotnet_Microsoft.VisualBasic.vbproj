@@ -524,7 +524,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x64\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -567,7 +567,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x64\GCModeller%28UNIX-Release_X64%29\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1,UNIX=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -790,6 +790,12 @@
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb" />
+    <Compile Include="CommandLine\Interpreters\View\CommandHelp.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\BinaryTree.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\Enumerable.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeNode.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLSupports.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Math\Information\Entropy.vb" />
@@ -822,11 +828,11 @@
     <Compile Include="CommandLine\Reflection\Attributes\[Namespace].vb" />
     <Compile Include="CommandLine\Reflection\Grouping.vb" />
     <Compile Include="CommandLine\Reflection\CLITypes.vb" />
-    <Compile Include="CommandLine\Reflection\ExceptionHandler.vb" />
-    <Compile Include="CommandLine\Reflection\SDKManual.vb" />
+    <Compile Include="CommandLine\Interpreters\View\ExceptionHandler.vb" />
+    <Compile Include="CommandLine\Interpreters\View\SDKManual.vb" />
     <Compile Include="CommandLine\Reflection\CLIToken.vb" />
     <Compile Include="CommandLine\Reflection\Attributes\ExportAPI.vb" />
-    <Compile Include="CommandLine\Reflection\ManualBuilder.vb" />
+    <Compile Include="CommandLine\Interpreters\View\ManualBuilder.vb" />
     <Compile Include="ComponentModel\Algorithm\base\Combination\Combination.vb" />
     <Compile Include="ComponentModel\Algorithm\DynamicProgramming.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\Extensions.vb" />

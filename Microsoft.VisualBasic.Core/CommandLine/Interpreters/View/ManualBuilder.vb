@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::1e44624d8ebb2c80186386c3b35a6cd1, Microsoft.VisualBasic.Core\CommandLine\Reflection\ManualBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ManualBuilder
-    ' 
-    '         Function: APIPrototype, ExampleValue, GetFileExtensions
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ManualBuilder
+' 
+'         Function: APIPrototype, ExampleValue, GetFileExtensions
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
-Namespace CommandLine.Reflection
+Namespace CommandLine.ManView
 
     ''' <summary>
     ''' 用来生成帮助信息
@@ -63,7 +63,14 @@ Namespace CommandLine.Reflection
         ''' <param name="api"></param>
         ''' <returns></returns>
         <Extension> Public Function PrintHelp(api As APIEntryPoint) As Integer
-            Dim infoLines = Paragraph.SplitParagraph(api.Info, 90).ToArray
+            ' 因为在编写帮助信息的时候可能会有多行字符串，则在vb源代码里面会出现前导的空格，
+            ' 所以在这里需要将每一行的前导空格删除掉， 否则会破坏掉输出的文本对齐格式。
+            Dim infoLines = api.Info _
+                .lTokens _
+                .Select(Function(s) s.Trim(" "c, ASCII.TAB)) _
+                .JoinBy(vbCrLf) _
+                .SplitParagraph(90) _
+                .ToArray
             Dim blank$
 
             If infoLines.IsNullOrEmpty Then
@@ -249,8 +256,11 @@ Namespace CommandLine.Reflection
 
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
                     blank = New String(" "c, helpOffset - l + 2)
-                    infoLines$ = Paragraph _
-                        .SplitParagraph(param.Description, 120) _
+                    infoLines$ = param.Description _
+                        .lTokens _
+                        .Select(Function(str) str.Trim(" "c, ASCII.TAB)) _
+                        .JoinBy(vbCrLf) _
+                        .SplitParagraph(120) _
                         .ToArray
 
                     Call Console.Write(blank)

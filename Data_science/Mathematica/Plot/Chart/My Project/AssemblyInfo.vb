@@ -8,12 +8,12 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("System plots charting WinForm controls helper")>
-<Assembly: AssemblyDescription("System plots charting WinForm controls helper")>
+<Assembly: AssemblyTitle("Charting plot CLI tools")>
+<Assembly: AssemblyDescription("Charting plot CLI tools")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("Plots.Charting")>
-<Assembly: AssemblyCopyright("Copyright © I@xieguigang.me 2016")>
-<Assembly: AssemblyTrademark("")>
+<Assembly: AssemblyProduct("Charting")>
+<Assembly: AssemblyCopyright("Copyright © I@xieguigang.me 2018")>
+<Assembly: AssemblyTrademark("sciBASIC")>
 
 <Assembly: ComVisible(False)>
 

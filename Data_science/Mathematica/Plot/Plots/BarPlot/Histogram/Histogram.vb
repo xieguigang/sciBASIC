@@ -223,7 +223,7 @@ Namespace BarPlot.Histogram
                         ' Y 为什么是从零开始的？
                         Y = d3js.scale.linear _
                             .domain(YTicks) _
-                            .range(integers:={0, .Bottom - .Top})
+                            .range(integers:={ .Bottom, .Top})
                     End With
 
                     Dim scaler As New DataScaler With {
