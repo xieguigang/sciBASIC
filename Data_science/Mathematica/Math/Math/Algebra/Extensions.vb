@@ -71,6 +71,11 @@ Namespace LinearAlgebra
             Return Function(x) a * x + b
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="slideWindows">Just contains two points.</param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Tangent(slideWindows As SlideWindow(Of PointF)) As fx
