@@ -60,6 +60,8 @@ Namespace KMeans
         ''' <param name="X">An array with the values of an object or datapoint</param>
         ''' <param name="Y">An array with the values of an object or datapoint</param>
         ''' <returns>Returns the Euclidean Distance Measure Between Points X and Points Y</returns>
+        ''' 
+        <Extension>
         Public Function EuclideanDistance(X As Double(), Y As Double()) As Double
             Dim count As Integer = 0
             Dim sum As Double = 0.0
@@ -226,7 +228,8 @@ Namespace KMeans
                         Continue For ' ??? 为什么有些聚类是0？？
                     End If
 
-                    If (EuclideanDistance(x.ClusterMean, y.ClusterMean)) = 0 Then  ' 假若上一次的迭代结果和这一次迭代的结果一样，则距离是0，得到了一个稳定的聚类结果
+                    ' 假若上一次的迭代结果和这一次迭代的结果一样，则距离是0，得到了一个稳定的聚类结果
+                    If (EuclideanDistance(x.ClusterMean, y.ClusterMean)) = 0 Then
                         stableClustersCount += 1
                     End If
                 Next
@@ -234,7 +237,8 @@ Namespace KMeans
                 iterationCount += 1
                 clusters = newClusters
 
-                If iterationCount > [stop] Then ' 迭代的次数已经超过了最大的迭代次数了，则退出计算，否则可能会在这里出现死循环
+                ' 迭代的次数已经超过了最大的迭代次数了，则退出计算，否则可能会在这里出现死循环
+                If iterationCount > [stop] Then
                     Exit While
                 Else
                     If debug Then
@@ -255,6 +259,8 @@ Namespace KMeans
         ''' <param name="data">An array containing data to be clustered</param>
         ''' <param name="parallel">是否采用并行算法</param>
         ''' <returns>A collection of clusters of data</returns>
+        ''' 
+        <Extension>
         Public Function ClusterDataSet(Of T As EntityBase(Of Double))(clusters As ClusterCollection(Of T), data As T(), Optional parallel As Boolean = False) As ClusterCollection(Of T)
             Dim fieldCount As Integer = data(Scan0).Length
             Dim newClusters As New ClusterCollection(Of T)     ' create a new collection of clusters
@@ -268,26 +274,26 @@ Namespace KMeans
                 Throw New SystemException(NoMember)
             End If
 
-            If parallel Then  ' Kmeans并行算法
+            If parallel Then
 
+                ' Kmeans并行算法
                 For Each x As T In data
-                    Dim min = LinqAPI.Exec(Of SeqValue(Of Double)) <=
+                    Dim min = LinqAPI.Exec(Of SeqValue(Of Double)) _
  _
-                        From c As SeqValue(Of KMeansCluster(Of T))
-                        In clusters.SeqIterator.AsParallel
-                        Let cluster As KMeansCluster(Of T) = c.value
-                        Let clusterMean As Double() = If(
-                            cluster.NumOfEntity = 0,
-                            New Double(x.Properties.Length - 1) {},
-                            cluster.ClusterMean)
-                        Let distance As Double = EuclideanDistance(x.Properties, clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
-                        Select New SeqValue(Of Double) With {
-                            .i = c.i,
-                            .value = distance
-                        }
+                        () <= From c As SeqValue(Of KMeansCluster(Of T))
+                              In clusters.SeqIterator.AsParallel
+                              Let cluster As KMeansCluster(Of T) = c.value
+                              Let clusterMean As Double() = cluster.means(x)
+                              Let distance As Double = x.Properties.EuclideanDistance(clusterMean) ' 计算出当前的cluster和当前的实体对象之间的距离
+                              Select New SeqValue(Of Double) With {
+                                  .i = c.i,
+                                  .value = distance
+                              }
+
+                    ' 升序排序就可以得到距离最小的cluster的distance，最后取出下标值
                     Dim index As Integer = min _
                         .OrderBy(Function(distance) distance.value) _
-                        .First.i ' 升序排序就可以得到距离最小的cluster的distance，最后取出下标值
+                        .First.i
 
                     Call newClusters(index).Add(x)
                 Next
@@ -299,6 +305,12 @@ Namespace KMeans
             End If
 
             Return newClusters
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Function means(Of T As EntityBase(Of Double))(cluster As KMeansCluster(Of T), x As T) As Double()
+            Return If(cluster.NumOfEntity = 0, New Double(x.Properties.Length - 1) {}, cluster.ClusterMean)
         End Function
 
         <Extension>
