@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Values
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace ApplicationServices.Development
 
@@ -61,17 +62,28 @@ Namespace ApplicationServices.Development
         Const ClosePatterns$ = "^\s+End\s((Sub)|(Function)|(Class)|(Structure)|(Enum)|(Interface)|(Operator)|(Module))"
         Const CloseTypePatterns$ = "^\s*End\s((Class)|(Structure)|(Enum)|(Interface)|(Module))"
         Const IndentsPattern$ = "^\s+"
+        Const AttributePattern$ = "<.+?>\s*"
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function RemoveAttributes(line As String) As String
+            Return r.Replace(line, AttributePattern, "", RegexICSng)
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function SummaryModules(vb As String) As String
-            Dim vblines As Pointer(Of String) = vb.lTokens
-            Dim summary As New StringBuilder
+            Dim vblines As Pointer(Of String) = vb _
+                .lTokens _
+                .Select(AddressOf RemoveAttributes) _
+                .ToArray
 
-            Do While Not vblines.EndRead
-                summary.AppendLine(vblines.SummaryInternal(vb))
-            Loop
+            With New StringBuilder
+                Do While Not vblines.EndRead
+                    Call .AppendLine(vblines.SummaryInternal(vb))
+                Loop
 
-            Return summary.ToString
+                Return .ToString
+            End With
         End Function
 
         <Extension>
