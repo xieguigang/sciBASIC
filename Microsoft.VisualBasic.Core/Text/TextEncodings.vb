@@ -251,6 +251,12 @@ Namespace Text
             Return onFailure
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CodePage(encodingName$, Optional [default] As Encodings = Encodings.Default) As Encoding
+            Return encodingName.ParseEncodingsName(onFailure:=[default]).CodePage
+        End Function
+
         Public Function GetEncodings(value As Encoding) As Encodings
             Dim Name As String = value.ToString.Split("."c).Last
 

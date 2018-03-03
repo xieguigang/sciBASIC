@@ -1,145 +1,147 @@
 ﻿#Region "Microsoft.VisualBasic::6faa773f990dafa98fb3382de871a7ca, vs_solutions\tutorials\core.test\devToolTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module devToolTest
-    ' 
-    '     Sub: loadTest, Main, parserTest
-    '     Class innerTest
-    ' 
-    '         Properties: (+2 Overloads) AA
-    ' 
-    '         Function: X, (+2 Overloads) Z
-    ' 
-    '         Sub: ACC, (+3 Overloads) X1
-    ' 
-    '         Operators: -, +, <<, <=, >=
-    '                    (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
-    ' 
-    '     Enum innerEnum
-    ' 
-    '         AAA, BBB, CCC, Get
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module devToolTest
+' 
+'     Sub: loadTest, Main, parserTest
+'     Class innerTest
+' 
+'         Properties: (+2 Overloads) AA
+' 
+'         Function: X, (+2 Overloads) Z
+' 
+'         Sub: ACC, (+3 Overloads) X1
+' 
+'         Operators: -, +, <<, <=, >=
+'                    (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
+' 
+'     Enum innerEnum
+' 
+'         AAA, BBB, CCC, Get
+' 
+' 
+' 
+'  
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 #Region "Microsoft.VisualBasic::d6e7d85c4444ef86dd581810dc5570d5, core.test"
 
-    ' Author:
-    ' 
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
+' Author:
+' 
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
 
 
-    ' Source file summaries:
+' Source file summaries:
 
-    ' Module devToolTest
-    ' 
-    '     Sub: loadTest, Main, parserTest
-    ' 
-    '     Class innerTest
-    ' 
-    '         Properties: (+2 Overloads) AA
-    ' 
-    '         Function: X, (+2 Overloads) Z
-    ' 
-    '         Sub: ACC, (+3 Overloads) X1
-    ' 
-    '         Operators: -, +, <<, <=, >=
-    '                    (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
-    ' 
-    ' 
-    '     Enum innerEnum
-    ' 
-    '         AAA, BBB, CCC, Get
-    ' 
-    ' 
+' Module devToolTest
+' 
+'     Sub: loadTest, Main, parserTest
+' 
+'     Class innerTest
+' 
+'         Properties: (+2 Overloads) AA
+' 
+'         Function: X, (+2 Overloads) Z
+' 
+'         Sub: ACC, (+3 Overloads) X1
+' 
+'         Operators: -, +, <<, <=, >=
+'                    (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
+' 
+' 
+'     Enum innerEnum
+' 
+'         AAA, BBB, CCC, Get
+' 
+' 
 
 #End Region
 
 #Region "Microsoft.VisualBasic::f5c85a2ca7e9da2e3b03f531838242c5, core.test"
 
-    ' Author:
-    ' 
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
+' Author:
+' 
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
 
 
-    ' Source file summaries:
+' Source file summaries:
 
-    ' Module devToolTest
-    ' 
-    '     Sub: loadTest, Main, parserTest
-    ' 
-    ' 
-    '     Class innerTest
-    ' 
-    '         Properties: (+2 Overloads) AA
-    ' 
-    ' 
-    '         Function: X, (+2 Overloads) Z
-    ' 
-    ' 
-    '         Sub: ACC, (+3 Overloads) X1
-    ' 
-    ' 
-    '         Operators: -, +, <<, <=, >=
-    '                    (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
-    ' 
-    ' 
-    ' 
-    '     Enum innerEnum
-    ' 
-    '         AAA, BBB, CCC
-    ' 
-    ' 
+' Module devToolTest
+' 
+'     Sub: loadTest, Main, parserTest
+' 
+' 
+'     Class innerTest
+' 
+'         Properties: (+2 Overloads) AA
+' 
+' 
+'         Function: X, (+2 Overloads) Z
+' 
+' 
+'         Sub: ACC, (+3 Overloads) X1
+' 
+' 
+'         Operators: -, +, <<, <=, >=
+'                    (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
+' 
+' 
+' 
+'     Enum innerEnum
+' 
+'         AAA, BBB, CCC
+' 
+' 
 
 #End Region
 
+Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
 
@@ -167,7 +169,7 @@ Public Module devToolTest
         Pause()
     End Sub
 
-    Public MustInherit Class innerTest
+    <Description("AAAAAAAAAA")> Public MustInherit Class innerTest
 
         Property AA As String
         ReadOnly Property AA(o$) As Integer
@@ -176,7 +178,7 @@ Public Module devToolTest
             End Get
         End Property
 
-        Function X() As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)> Function X() As Double
         End Function
 
         Function Z()
@@ -186,7 +188,7 @@ Public Module devToolTest
 
         End Function
 
-        Sub ACC()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)> Sub ACC()
 
         End Sub
 
@@ -200,6 +202,7 @@ Public Module devToolTest
 
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator +(o As innerTest) As innerTest
 
         End Operator
@@ -217,10 +220,12 @@ Public Module devToolTest
 
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator IsTrue(o As innerTest) As Boolean
 
         End Operator
-        Public Shared Operator IsFalse(o As innerTest) As Boolean
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)> Public Shared Operator IsFalse(o As innerTest) As Boolean
 
         End Operator
     End Class
