@@ -75,6 +75,15 @@ Imports r = System.Text.RegularExpressions.Regex
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
+    <Extension>
+    Public Function CharAtOrDefault(s$, index%, Optional [default] As Char = ASCII.NUL) As Char
+        If s.Length <= index Then
+            Return [default]
+        Else
+            Return s(index)
+        End If
+    End Function
+
     ''' <summary>
     ''' Get the first char of the target <see cref="StringBuilder"/> 
     ''' </summary>

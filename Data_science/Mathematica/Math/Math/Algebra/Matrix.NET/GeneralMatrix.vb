@@ -938,6 +938,8 @@ Namespace Matrix
         ''' <param name="m1"></param>
         ''' <param name="m2"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(m1 As GeneralMatrix, m2 As GeneralMatrix) As GeneralMatrix
             Return m1.Multiply(m2)
         End Operator
@@ -1162,5 +1164,11 @@ Namespace Matrix
         Public Shared Widening Operator CType(data#()()) As GeneralMatrix
             Return New GeneralMatrix(data)
         End Operator
+
+        Public Iterator Function RowVectors() As IEnumerable(Of Vector)
+            For Each row As Double() In buffer
+                Yield row.AsVector
+            Next
+        End Function
     End Class
 End Namespace

@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::e19625f32d0a8d68d42b2274905ee36d, Data_science\Mathematica\Plot\Plots\Scatter\Bubble.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Bubble
-    ' 
-    '     Function: Plot
-    ' 
-    ' /********************************************************************************/
+' Module Bubble
+' 
+'     Function: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -48,9 +48,16 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Bubble
+
+    Private Function logRadius(R#) As Double
+        Return Math.Log(R + 1) + 1
+    End Function
+
+    ReadOnly usingLogRadius As New DefaultValue(Of Func(Of Double, Double))(AddressOf logRadius)
 
     ''' <summary>
     ''' <see cref="PointData.value"/>是Bubble的半径大小
@@ -67,7 +74,7 @@ Public Module Bubble
                          Optional padding$ = g.DefaultPadding,
                          Optional bg As String = "white",
                          Optional legend As Boolean = True,
-                         Optional logR As Boolean = False,
+                         Optional usingLogScaleRadius As Boolean = False,
                          Optional legendBorder As Stroke = Nothing,
                          Optional bubbleBorder As Stroke = Nothing,
                          Optional xAxis$ = Nothing,
@@ -95,10 +102,7 @@ Public Module Bubble
                     mapper = New Mapper(x:=xAxis, y:=yaxisData, range:=rangeData)
                 End If
 
-                Dim scale As Func(Of Double, Double) =
-                     [If](Of Func(Of Double, Double))(
-                     logR, Function(r) Math.Log(r + 1) + 1,
-                           Function(r) r)
+                Dim scale As Func(Of Double, Double) = New Func(Of Double, Double)(Function(r) r) Or usingLogRadius.When(usingLogScaleRadius)
 
                 'Call g.DrawAxis(size, margin, mapper, True,
                 '                xlabel:=xlabel,

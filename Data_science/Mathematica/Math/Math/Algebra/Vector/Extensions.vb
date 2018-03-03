@@ -51,10 +51,22 @@ Namespace LinearAlgebra
 
     Public Module Extensions
 
+        ''' <summary>
+        ''' Populate points from two <see cref="Vector"/>.
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
         Public Iterator Function Points(x As Vector, y As Vector) As IEnumerable(Of PointF)
             For i As Integer = 0 To x.Length - 1
                 Yield New PointF(x(i), y(i))
             Next
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Points(point As (x As Vector, y As Vector)) As IEnumerable(Of PointF)
+            Return Points(point.x, point.y)
         End Function
 
         <Extension>

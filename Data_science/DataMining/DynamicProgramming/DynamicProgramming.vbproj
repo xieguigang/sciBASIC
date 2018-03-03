@@ -260,7 +260,6 @@
     <Compile Include="NeedlemanWunsch\GlobalAlign.vb" />
     <Compile Include="NeedlemanWunsch\Workspace.vb" />
     <Compile Include="SmithWaterman\GSW.vb" />
-    <Compile Include="SmithWaterman\Match.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -276,6 +275,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SmithWaterman\Match.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

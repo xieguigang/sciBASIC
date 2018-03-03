@@ -201,9 +201,8 @@ Namespace Text.Search
         End Function
 
         Private Shared Function __indexing(part As TextSegment(), keyword$, cutoff#, parallel As Boolean) As Map(Of TextSegment, DistResult)()
-            Dim source As IEnumerable(Of TextSegment) = [If](Of IEnumerable(Of TextSegment))(parallel, part.AsParallel, part)
             Dim LQuery = From index As TextSegment
-                         In source
+                         In part.Populate(parallel)
                          Let levenshtein As DistResult = index Like keyword
                          Where Not levenshtein Is Nothing AndAlso
                              levenshtein.Score >= cutoff
@@ -211,6 +210,7 @@ Namespace Text.Search
                              .Key = index,
                              .Maps = levenshtein
                          }
+
             Dim out As Map(Of TextSegment, DistResult)() = LQuery.ToArray
             Return out
         End Function

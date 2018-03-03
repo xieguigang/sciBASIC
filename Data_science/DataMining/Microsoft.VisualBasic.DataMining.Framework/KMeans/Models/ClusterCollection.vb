@@ -55,7 +55,7 @@ Namespace KMeans
     <Serializable> Public Class ClusterCollection(Of T As EntityBase(Of Double))
         Implements IEnumerable(Of KMeansCluster(Of T))
 
-        ReadOnly _innerList As New List(Of KMeansCluster(Of T))
+        Friend ReadOnly _innerList As New List(Of KMeansCluster(Of T))
 
         Public ReadOnly Property NumOfCluster As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>

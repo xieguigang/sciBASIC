@@ -47,7 +47,8 @@ Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
 Namespace NeedlemanWunsch
 
     ''' <summary>
-    ''' Needleman-Wunsch Algorithm
+    ''' ## Needleman-Wunsch Algorithm
+    ''' 
     ''' Bioinformatics 1, WS 15/16
     ''' Dr. Kay Nieselt and Alexander Seitz
     ''' </summary>
@@ -79,9 +80,10 @@ Namespace NeedlemanWunsch
             Dim direction As Integer = tracebackMatrix(i - 1)(j - 1)
 
             Select Case direction
-                Case 0 ' end of the global alignment
+                Case 0
+                    ' end of the global alignment
                     '			
-                    '			 * \TODO format the aligned sequences, such that they are in the fasta-format!
+                    '			 * TODO format the aligned sequences, such that they are in the fasta-format!
                     '			 * i.e. remove any unsupported fasta characters, such as "," " " or "[" ...
                     '			 * think of a clever object oriented way to do so!
                     '			 
@@ -89,8 +91,8 @@ Namespace NeedlemanWunsch
                     Dim aligned1 As T() = s1.ToArray
                     Dim aligned2 As T() = s2.ToArray
 
-                    Call Array.Reverse(aligned1)
-                    Call Array.Reverse(aligned2)
+                    ' Call Array.Reverse(aligned1)
+                    ' Call Array.Reverse(aligned2)
 
                     Me.AddAligned1(aligned1)
                     Me.AddAligned2(aligned2)
@@ -130,6 +132,7 @@ Namespace NeedlemanWunsch
         ''' </summary>
         ''' <remarks>	
         ''' this function computes the NW-algorithm with linear gap-costs
+        ''' 
         '''  - first make yourself familiar with this function and the functions used to compute the resulting alignment!
         '''  
         '''  - modify the functions used in this class such that the NW algorithm is modular
@@ -194,9 +197,11 @@ Namespace NeedlemanWunsch
 
         ''' <summary>
         ''' return the maximizing cell(s)
-        ''' 1 , if the maximizing cell is the upper cell
-        ''' 2 , if the maximizing cell is the left-upper cell
-        ''' 4 , if the maximizing cell is the left cell
+        ''' 
+        ''' 1, if the maximizing cell is the upper cell
+        ''' 2, if the maximizing cell is the left-upper cell
+        ''' 4, if the maximizing cell is the left cell
+        ''' 
         ''' if there are more than one maximizing cells, the values are summed up
         ''' </summary>
         ''' <param name="upperLeft"> </param>

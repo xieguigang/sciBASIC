@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::71c92b8b60e8518345f9d0cb949f6090, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\Buffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure Buffer
-    ' 
-    '         Properties: TotalBytes
-    ' 
-    '         Function: Serialize, ToString
-    ' 
-    '         Sub: New
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Module BufferAPI
-    ' 
-    '         Function: CreateBuffer, GetBuffer
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure Buffer
+' 
+'         Properties: TotalBytes
+' 
+'         Function: Serialize, ToString
+' 
+'         Sub: New
+' 
+'     Delegate Function
+' 
+' 
+'     Delegate Function
+' 
+' 
+'     Module BufferAPI
+' 
+'         Function: CreateBuffer, GetBuffer
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols
 
@@ -114,15 +115,15 @@ Namespace Serialization.BinaryDumping
         Public Iterator Function GetBuffer(Of T)(raw As Byte(), getObj As IGetObject(Of T)) As IEnumerable(Of T)
             Dim length As Byte() = New Byte(RawStream.INT64 - 1) {}
             Dim l As Long
-            Dim i As Long
+            Dim i As int = 0
             Dim temp As Byte()
             Dim x As T
 
             Do While True
-                Call Array.ConstrainedCopy(raw, i.Move(RawStream.INT64), length, Scan0, RawStream.INT64)
+                Call Array.ConstrainedCopy(raw, i + RawStream.INT64, length, Scan0, RawStream.INT64)
                 l = BitConverter.ToInt64(length, Scan0)
                 temp = New Byte(l - 1) {}
-                Call Array.ConstrainedCopy(raw, i.Move(l), temp, Scan0, l)
+                Call Array.ConstrainedCopy(raw, i + l, temp, Scan0, l)
                 x = getObj(temp)
                 Yield x
 

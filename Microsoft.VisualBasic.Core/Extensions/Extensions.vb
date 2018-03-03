@@ -489,23 +489,6 @@ Public Module Extensions
 #End Region
 
     ''' <summary>
-    ''' Function test the Boolean expression and then decided returns which part of the value.
-    ''' (这个函数主要是用于Delegate函数指针类型或者Lambda表达式的)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="expr"><see cref="Boolean"/> Expression</param>
-    ''' <param name="[True]">value returns this parameter if the value of the expression is True</param>
-    ''' <param name="[False]">value returns this parameter if the value of the expression is False</param>
-    ''' <returns></returns>
-    <Extension> Public Function [If](Of T)(expr As Boolean, [True] As T, [False] As T) As T
-        If expr = True Then
-            Return [True]
-        Else
-            Return [False]
-        End If
-    End Function
-
-    ''' <summary>
     ''' Constrain the inherits class type into the base type.
     ''' (基类集合与继承类的集合约束)
     ''' </summary>
@@ -1522,85 +1505,6 @@ Public Module Extensions
         Return Random
     End Function
 
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' Copy the value in <paramref name="value"></paramref> into target variable <paramref name="target"></paramref> and then return the target variable.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="value"></param>
-    ''' <param name="target"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("value.Copy")>
-    <Extension> Public Function CopyTo(Of T)(value As T, ByRef target As T) As T
-#Else
-    ''' <summary>
-    ''' Copy the value in <paramref name="value"></paramref> into target variable <paramref name="target"></paramref> and then return the target variable.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="value"></param>
-    ''' <param name="target"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function CopyTo(Of T)(value As T, ByRef target As T) As T
-#End If
-        target = value
-        Return value
-    End Function
-
-    ''' <summary>
-    ''' <paramref name="p"></paramref> plus one and then return its previous value. (p++)
-    ''' </summary>
-    ''' <param name="p"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Move.Next")>
-    <Extension> Public Function MoveNext(ByRef p As Long) As Long
-#Else
-    <Extension> Public Function MoveNext(ByRef p As Long) As Long
-#End If
-        Dim value = p
-        p += 1
-        Return value
-    End Function
-
-    ''' <summary>
-    ''' 变量<paramref name="p"/>移动距离<paramref name="d"/>然后返回其移动之前的值
-    ''' </summary>
-    ''' <param name="p"></param>
-    ''' <param name="d"></param>
-    ''' <returns></returns>
-    <Extension> Public Function Move(ByRef p As Long, d As Integer) As Long
-        Dim value = p
-        p += d
-        Return value
-    End Function
-
-    ''' <summary>
-    ''' 变量<paramref name="p"/>移动距离<paramref name="d"/>然后返回其移动之前的值
-    ''' </summary>
-    ''' <param name="p"></param>
-    ''' <param name="d"></param>
-    ''' <returns></returns>
-    <Extension> Public Function Move(ByRef p As Integer, d As Integer) As Integer
-        Dim value = p
-        p += d
-        Return value
-    End Function
-
-    ''' <summary>
-    ''' 变量<paramref name="p"/>移动距离<paramref name="d"/>然后返回其移动之前的值
-    ''' </summary>
-    ''' <param name="p"></param>
-    ''' <param name="d"></param>
-    ''' <returns></returns>
-    <Extension> Public Function Move(ByRef p As Double, d As Integer) As Double
-        Dim value = p
-        p += d
-        Return value
-    End Function
-
     ''' <summary>
     ''' 随机的在目标集合中选取指定数目的子集合
     ''' </summary>
@@ -1641,25 +1545,15 @@ Public Module Extensions
             Return {}
         End If
 
-        Dim LQuery$() = LinqAPI.Exec(Of String) <=
-            From item As T
-            In source
-            Let strItem As String = item.ToString
-            Select strItem
+        Dim LQuery$() = LinqAPI.Exec(Of String) _
+ _
+            () <= From item As T
+                  In source
+                  Let strItem As String = item.ToString
+                  Select strItem
 
         Return LQuery
     End Function
-
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Swap")>
-    Public Sub Swap(Of T)(ByRef obj1 As T, ByRef obj2 As T)
-#Else
-    Public Sub Swap(Of T)(ByRef obj1 As T, ByRef obj2 As T)
-#End If
-        Dim objTemp As T = obj1
-        obj1 = obj2
-        obj2 = objTemp
-    End Sub
 
     <Extension> Public Sub Swap(Of T)(ByRef array As T(), a%, b%)
         Dim tmp As T = array(a)
@@ -1681,24 +1575,24 @@ Public Module Extensions
     End Sub
 
     ''' <summary>
-    ''' Swap the two item position in the target <paramref name="List">list</paramref>.
+    ''' Swap the two item position in the target <paramref name="list">list</paramref>.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="List"></param>
+    ''' <param name="list"></param>
     ''' <param name="obj_1"></param>
     ''' <param name="obj_2"></param>
-    <Extension> Public Sub SwapItem(Of T As Class)(ByRef List As List(Of T), obj_1 As T, obj_2 As T)
-        Dim idx_1 As Integer = List.IndexOf(obj_1)
-        Dim idx_2 As Integer = List.IndexOf(obj_2)
+    <Extension> Public Sub SwapItem(Of T)(ByRef list As List(Of T), obj_1 As T, obj_2 As T)
+        Dim idx_1 As Integer = list.IndexOf(obj_1)
+        Dim idx_2 As Integer = list.IndexOf(obj_2)
 
         If idx_1 = -1 OrElse idx_2 = -1 Then
             Return
         End If
 
-        Call List.RemoveAt(idx_1)
-        Call List.Insert(idx_1, obj_2)
-        Call List.RemoveAt(idx_2)
-        Call List.Insert(idx_2, obj_2)
+        Call list.RemoveAt(idx_1)
+        Call list.Insert(idx_1, obj_2)
+        Call list.RemoveAt(idx_2)
+        Call list.Insert(idx_2, obj_2)
     End Sub
 
 #If FRAMEWORD_CORE Then
@@ -1721,11 +1615,6 @@ Public Module Extensions
         Return list
     End Function
 #End If
-
-    <Extension> Public Function Increase(ByRef p As Integer) As Integer
-        p += 1
-        Return p
-    End Function
 
 #If FRAMEWORD_CORE Then
     ''' <summary>

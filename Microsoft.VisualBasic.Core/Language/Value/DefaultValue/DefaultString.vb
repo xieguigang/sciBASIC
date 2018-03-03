@@ -163,6 +163,14 @@ Namespace Language.Default
             End If
         End Operator
 
+        Public Shared Operator Or(value As DefaultString, x%) As Integer
+            If assertIsNothing(value.DefaultValue) Then
+                Return x
+            Else
+                Return CInt(value.DefaultValue)
+            End If
+        End Operator
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(value As DefaultString) As String
             Return value.DefaultValue
