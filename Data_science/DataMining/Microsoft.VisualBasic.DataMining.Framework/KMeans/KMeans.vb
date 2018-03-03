@@ -211,6 +211,9 @@ Namespace KMeans
                 Call $"Kmeans have {LQuerySchedule.CPU_NUMBER} CPU core for parallel computing.".__DEBUG_ECHO
             End If
 
+            Dim lastStables%
+            Dim hits%
+
             While stableClustersCount <> clusters.NumOfCluster
                 Dim newClusters As ClusterCollection(Of T) = ClusterDataSet(clusters, data, parallel)
 
@@ -240,14 +243,59 @@ Namespace KMeans
                 ' 迭代的次数已经超过了最大的迭代次数了，则退出计算，否则可能会在这里出现死循环
                 If iterationCount > [stop] Then
                     Exit While
+                ElseIf hits > 25 Then
+                    hits = 0
+
+                    Return clusters
+
+                    ' 随机混淆若干个稳定的cluster
+                    ' clusters = clusters.CrossOver
                 Else
                     If debug Then
                         Call $"[{iterationCount}/{[stop]}] stableClustersCount <> clusters.NumOfCluster => {stableClustersCount} <> {clusters.NumOfCluster} = {stableClustersCount <> clusters.NumOfCluster}".__DEBUG_ECHO
+                    End If
+                    If lastStables = stableClustersCount Then
+                        hits += 1
+                    Else
+                        lastStables = stableClustersCount
+                        hits = 0
                     End If
                 End If
             End While
 
             Return clusters
+        End Function
+
+        <Extension>
+        Private Function CrossOver(Of T As EntityBase(Of Double))(stableClusters As ClusterCollection(Of T)) As ClusterCollection(Of T)
+            Dim random As New Random
+
+            For null As Integer = 1 To 3
+                Dim i% = random.NextInteger(stableClusters.NumOfCluster)
+                Dim j% = random.NextInteger(stableClusters.NumOfCluster)
+
+                If i < 0 OrElse j < 0 Then
+                    Continue For
+                End If
+
+                If i <> j Then
+                    Dim x = stableClusters._innerList(i)
+                    Dim y = stableClusters._innerList(j)
+
+                    For r As Integer = 0 To 3
+                        i = random.NextInteger(x.NumOfEntity)
+                        j = random.NextInteger(y.NumOfEntity)
+
+                        If i < 0 OrElse j < 0 Then
+                            Continue For
+                        End If
+
+                        Call x._innerList(i).SwapWith(y._innerList(j))
+                    Next
+                End If
+            Next
+
+            Return stableClusters
         End Function
 
         Const NoMember$ = "Cluster count cannot be ZERO!"
