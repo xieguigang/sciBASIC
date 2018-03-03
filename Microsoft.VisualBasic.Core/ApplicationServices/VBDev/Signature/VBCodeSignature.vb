@@ -230,7 +230,7 @@ Namespace ApplicationServices.Development
                                   Function(l) l.Keys.memberList)
 
                 If constructors.Length > 0 Then
-                    members += container.Description & $"(+{constructors.Count} Overloads) Constructor"
+                    members += container.Description & $"    Constructor: (+{constructors.Count} Overloads) Sub New"
 
                     If types.Count > 1 Then
                         members += ""
