@@ -35,9 +35,11 @@
     ' 
     '         Properties: Id, Name, Range
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ToString
     ' 
-    '         Sub: Clear, New
+    '         Sub: Clear
     ' 
     '     Class BeliefNetwork
     ' 
@@ -54,22 +56,26 @@
     ' 
     '         Class NetworkLayout
     ' 
+    '             Properties: Nodes
+    ' 
     '             Function: Load, TestData, ToString
     '             Class BeliefNode
     ' 
-    '                 Properties: CPTable, Parents
+    '                 Properties: CPTable, Name, Parents, Range
     ' 
     '                 Function: ToString
     '                 Class ParentList
+    ' 
+    '                     Properties: Num, ParentNodes
     ' 
     '                     Function: ToString
     ' 
     '                 Class CPTableF
     ' 
-    ' 
+    '                     Properties: CPColumns
     '                     Class CPColumn
     ' 
-    '                         Properties: Count
+    '                         Properties: Count, Data
     ' 
     '                         Function: ToString
     ' 

@@ -33,9 +33,9 @@
 
     '     Module CLITools
     ' 
-    '         Function: __checkKeyDuplicated, __innerWrapper, Args, CreateObject, Equals
-    '                   GetTokens, IsPossibleLogicFlag, Join, Print, SingleValueOrStdIn
-    '                   TrimParamPrefix, (+3 Overloads) TryParse
+    '         Function: __checkKeyDuplicated, __innerWrapper, Args, CreateObject, CreateParameterValues
+    '                   Equals, GetLogicalArguments, GetTokens, IsPossibleLogicFlag, Join
+    '                   Print, SingleValueOrStdIn, TrimParamPrefix, (+3 Overloads) TryParse
     ' 
     ' 
     ' /********************************************************************************/

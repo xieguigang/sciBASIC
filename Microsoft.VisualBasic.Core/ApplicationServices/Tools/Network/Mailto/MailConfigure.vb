@@ -33,7 +33,8 @@
 
     '     Structure MailConfigure
     ' 
-    '         Properties: GMail, LiveMail, QQMail
+    '         Properties: Account, GMail, HostAddress, LiveMail, Password
+    '                     Port, QQMail
     ' 
     '         Function: CreateFromUri, GenerateUri, ToString
     ' 

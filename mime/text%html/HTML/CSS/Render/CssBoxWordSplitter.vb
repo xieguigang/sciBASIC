@@ -35,9 +35,11 @@
     ' 
     '         Properties: Box, Text, Words
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: CollapsesWhiteSpaces, EliminatesLineBreaks, IsLineBreak, IsSpace, IsTab
     ' 
-    '         Sub: CutWord, (+2 Overloads) New, SplitWords
+    '         Sub: CutWord, SplitWords
     ' 
     ' 
     ' /********************************************************************************/

@@ -38,10 +38,11 @@
     ' 
     '             Properties: LocalIP
     ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
     '             Function: (+2 Overloads) SendMessage, ToString
     ' 
-    '             Sub: ConnectCallback, New, Receive, ReceiveCallback, Send
-    '                  SendCallback
+    '             Sub: ConnectCallback, Receive, ReceiveCallback, Send, SendCallback
     ' 
     ' 
     ' 

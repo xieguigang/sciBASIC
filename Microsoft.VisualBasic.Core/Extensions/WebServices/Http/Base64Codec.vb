@@ -33,7 +33,7 @@
 
     '     Module Base64Codec
     ' 
-    '         Function: __getImageFromBase64, __toBase64String, ToBase64String
+    '         Function: __getImageFromBase64, __toBase64String, GetImage, (+3 Overloads) ToBase64String
     ' 
     ' 
     ' /********************************************************************************/

@@ -44,7 +44,7 @@
     ' 
     '     Module Internal
     ' 
-    '         Function: __plotInterval, ScaleByALL, ScaleByCol, ScaleByRow
+    '         Function: __plotInterval, Log, ScaleByALL, ScaleByCol, ScaleByRow
     ' 
     '         Sub: DrawClass
     ' 

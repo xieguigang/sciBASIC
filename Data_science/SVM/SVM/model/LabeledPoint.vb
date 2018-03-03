@@ -35,10 +35,9 @@
     ' 
     '         Properties: ColorClass, X, Y
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Clone, Equals, HasColorClass, ICloneable_Clone, ListEqual
     '                   ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

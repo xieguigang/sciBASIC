@@ -35,9 +35,8 @@
     ' 
     '         Properties: Ignores, Template
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: AddRegion, Insert, Inserts, RemoveRegion
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

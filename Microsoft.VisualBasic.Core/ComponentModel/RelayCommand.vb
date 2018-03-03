@@ -35,15 +35,16 @@
     ' 
     '         Properties: CallbackInvoke
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class RelayCommand
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: CanExecute
     ' 
-    '         Sub: Execute, (+2 Overloads) New
+    '         Sub: Execute
     ' 
     ' 
     ' /********************************************************************************/

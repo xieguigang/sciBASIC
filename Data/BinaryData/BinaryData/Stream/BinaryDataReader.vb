@@ -35,6 +35,8 @@
     ' 
     '     Properties: ByteOrder, Encoding, EndOfStream, Length, Position
     ' 
+    '     Constructor: (+5 Overloads) Sub New
+    ' 
     '     Function: DecimalFromBytes, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal, ReadDecimals
     '               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadInt16, ReadInt16s
     '               ReadInt32, ReadInt32s, ReadInt64, ReadInt64s, ReadMultiple
@@ -42,7 +44,7 @@
     '               ReadUInt16s, ReadUInt32, ReadUInt32s, ReadUInt64, ReadUInt64s
     '               ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
     ' 
-    '     Sub: Align, (+5 Overloads) New
+    '     Sub: Align
     ' 
     ' /********************************************************************************/
 

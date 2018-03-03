@@ -35,10 +35,12 @@
     ' 
     '         Properties: MutationLevel, radicals, vars, Vector
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Chromosome_Mutate, Clone, (+2 Overloads) Crossover, Mutate, Parse
     '                   ToString, Yield
     ' 
-    '         Sub: __setValues, New, Put
+    '         Sub: __setValues, Put
     ' 
     ' 
     ' /********************************************************************************/

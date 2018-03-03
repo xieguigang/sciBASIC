@@ -35,9 +35,11 @@
     ' 
     '         Properties: UserSocket
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetMsg, SendMessage
     ' 
-    '         Sub: (+2 Overloads) Dispose, New, PushUpdate, Run
+    '         Sub: (+2 Overloads) Dispose, PushUpdate, Run
     ' 
     ' 
     ' /********************************************************************************/

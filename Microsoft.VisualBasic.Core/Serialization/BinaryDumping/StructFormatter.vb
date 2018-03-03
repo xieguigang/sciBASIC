@@ -33,7 +33,7 @@
 
     '     Module StructFormatter
     ' 
-    ' 
+    '         Function: DeSerialize, GetSerializeBuffer, Load, Serialize
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,9 +35,11 @@
     ' 
     '         Properties: Bin, CLIArguments, StandardOutput
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: CopyRedirect, Run, (+2 Overloads) Start, ToString, writeScript
     ' 
-    '         Sub: __processExitHandle, (+2 Overloads) Dispose, New, Start
+    '         Sub: __processExitHandle, (+2 Overloads) Dispose, Start
     ' 
     ' 
     ' /********************************************************************************/

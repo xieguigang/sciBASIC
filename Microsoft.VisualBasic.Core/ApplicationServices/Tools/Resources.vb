@@ -31,13 +31,15 @@
 
     ' Summaries:
 
-    '  
+    '     Class ResourcesSatellite
     ' 
-    '     Properties: FileName, MyResource, Resources
+    '         Properties: FileName, MyResource, Resources
     ' 
-    '     Function: DirectLoadFrom, (+2 Overloads) GetObject, (+2 Overloads) GetStream, (+3 Overloads) GetString, LoadMy
+    '         Constructor: (+5 Overloads) Sub New
     ' 
-    '     Sub: __load, __resParser, (+5 Overloads) New
+    '         Function: DirectLoadFrom, (+2 Overloads) GetObject, (+2 Overloads) GetStream, (+3 Overloads) GetString, LoadMy
+    ' 
+    '         Sub: __load, __resParser
     ' 
     ' 
     ' /********************************************************************************/

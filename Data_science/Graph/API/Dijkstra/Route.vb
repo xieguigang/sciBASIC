@@ -35,11 +35,13 @@
     ' 
     '         Properties: Connections, Cost, Count, Identity, IsReadOnly
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Contains, ContainsNode, GetEnumerator, GetEnumerator1, IndexOf
     '                   Remove, ToString
     ' 
-    '         Sub: Add, Clear, CopyTo, Insert, New
-    '              RemoveAt, SetValue
+    '         Sub: Add, Clear, CopyTo, Insert, RemoveAt
+    '              SetValue
     ' 
     ' 
     ' /********************************************************************************/

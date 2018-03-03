@@ -35,7 +35,7 @@
     ' 
     '         Properties: Expression, Scripts, StatementEngine
     ' 
-    '         Function: Shell
+    '         Function: Evaluate, Shell
     ' 
     '         Sub: AddConstant, SetVariable
     ' 

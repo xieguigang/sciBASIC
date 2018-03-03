@@ -35,10 +35,12 @@
     ' 
     '         Properties: IsShutdown, LocalPort, Responsehandler, Running
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: BeginListen, IsServerInternalException, LoopbackEndPoint, (+2 Overloads) Run, ToString
     ' 
-    '         Sub: AcceptCallback, (+2 Overloads) Dispose, ForceCloseHandle, HandleRequest, (+2 Overloads) New
-    '              ReadCallback, (+2 Overloads) Send, SendCallback, WaitForStart
+    '         Sub: AcceptCallback, (+2 Overloads) Dispose, ForceCloseHandle, HandleRequest, ReadCallback
+    '              (+2 Overloads) Send, SendCallback, WaitForStart
     ' 
     ' 
     ' /********************************************************************************/

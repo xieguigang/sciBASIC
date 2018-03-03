@@ -36,9 +36,8 @@
     '         Properties: BodyHeightPercentage, BodySize, Color, DirectionLeft, HeadLength
     '                     HeadLengthPercentage, HeadSemiHeight, Left, Right, Size
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ArrowHead, Draw, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

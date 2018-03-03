@@ -33,7 +33,8 @@
 
     '     Class FolderSymbolic
     ' 
-    '         Sub: Admin_Rights, New, Original_Folder, Symlink_Create, UserControl_Initialized
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Admin_Rights, Original_Folder, Symlink_Create, UserControl_Initialized
     ' 
     ' 
     ' /********************************************************************************/

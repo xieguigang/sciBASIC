@@ -35,9 +35,8 @@
     ' 
     '         Properties: DeclaringType, EntryPoint
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: GetEntryPoint, GetProtocolCategory, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

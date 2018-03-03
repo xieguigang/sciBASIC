@@ -33,7 +33,7 @@
 
     '     Module BinaryWriter
     ' 
-    '         Function: __serialize, GetReadProperty, Serialization
+    '         Function: __serialize, GetReadProperty, (+2 Overloads) Serialization
     ' 
     ' 
     ' /********************************************************************************/

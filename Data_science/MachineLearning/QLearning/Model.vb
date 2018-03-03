@@ -39,13 +39,13 @@
     ' 
     '         Properties: ActionRange, Actions, ExplorationChance, GammaValue, LearningRate
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class IndexCurve
     ' 
     '         Properties: uid
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class QTableDump
     ' 

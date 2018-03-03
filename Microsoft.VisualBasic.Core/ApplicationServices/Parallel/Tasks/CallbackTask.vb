@@ -39,9 +39,11 @@
     ' 
     '         Properties: Task
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ToString
     ' 
-    '         Sub: Cancel, New, Start
+    '         Sub: Cancel, Start
     ' 
     ' 
     ' /********************************************************************************/

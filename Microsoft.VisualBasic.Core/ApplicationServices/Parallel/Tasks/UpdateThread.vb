@@ -35,9 +35,11 @@
     ' 
     '         Properties: Caller, ErrHandle, Periods, Running
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetTicks, Start, ToString
     ' 
-    '         Sub: [Stop], __invoke, __updates, (+2 Overloads) Dispose, New
+    '         Sub: [Stop], __invoke, __updates, (+2 Overloads) Dispose
     ' 
     ' 
     ' /********************************************************************************/

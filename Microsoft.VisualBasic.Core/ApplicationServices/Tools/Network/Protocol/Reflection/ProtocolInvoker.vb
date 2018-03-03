@@ -33,9 +33,8 @@
 
     '     Class __protocolInvoker
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: InvokeProtocol0, InvokeProtocol1, InvokeProtocol2, InvokeProtocol3, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: AsSVG
+    '     Function: AsGDIImage, AsSVG
     ' 
     '     Sub: (+2 Overloads) FillCircles
     ' 

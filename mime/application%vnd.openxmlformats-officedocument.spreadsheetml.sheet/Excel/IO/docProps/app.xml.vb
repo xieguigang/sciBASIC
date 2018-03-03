@@ -36,9 +36,8 @@
     '         Properties: Application, AppVersion, Company, DocSecurity, HeadingPairs
     '                     HyperlinksChanged, LinksUpToDate, ScaleCrop, SharedDoc, TitlesOfParts
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: filePath, toXml
-    ' 
-    '         Sub: New
     ' 
     '     Class Vectors
     ' 
@@ -46,7 +45,7 @@
     ' 
     '     Class vector
     ' 
-    '         Properties: baseType, lpstrs, variants
+    '         Properties: baseType, lpstrs, size, variants
     ' 
     '     Class [variant]
     ' 

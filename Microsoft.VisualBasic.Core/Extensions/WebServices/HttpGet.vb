@@ -33,7 +33,7 @@
 
     ' Module HttpGet
     ' 
-    '     Function: __get, __httpRequest, LogException
+    '     Function: [GET], __get, __httpRequest, Get_PageContent, LogException
     ' 
     ' /********************************************************************************/
 

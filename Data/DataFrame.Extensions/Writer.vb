@@ -33,7 +33,8 @@
 
     ' Class Writer
     ' 
-    '     Sub: (+2 Overloads) Dispose, New, WriteRow
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: (+2 Overloads) Dispose, WriteRow
     ' 
     ' /********************************************************************************/
 

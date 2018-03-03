@@ -36,12 +36,14 @@
     '         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
     '                     KeyValuePairColumns, MetaAttributes, Raw
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __columnType, __gets, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField
     '                   ContainsProperty, CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, GetCollectionColumns
     '                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
     '                   GetMetaAttributeColumn, IEnumerable_GetEnumerator, ToString
     ' 
-    '         Sub: New, Remove
+    '         Sub: Remove
     ' 
     ' 
     ' /********************************************************************************/

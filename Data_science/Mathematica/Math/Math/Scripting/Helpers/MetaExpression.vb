@@ -35,7 +35,7 @@
     ' 
     '         Properties: [Operator], LEFT
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

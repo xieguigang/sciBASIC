@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: LinearScale
+    '         Function: linear, LinearScale, ordinal
     ' 
     ' 
     ' /********************************************************************************/

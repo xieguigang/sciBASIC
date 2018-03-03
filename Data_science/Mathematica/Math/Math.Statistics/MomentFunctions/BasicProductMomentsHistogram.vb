@@ -33,9 +33,11 @@
 
     ' 	Class BasicProductMomentsHistogram
     ' 
+    ' 	    Constructor: (+1 Overloads) Sub New
+    ' 
     ' 	    Function: Bins
     ' 
-    ' 	    Sub: AddObservation, New
+    ' 	    Sub: AddObservation
     ' 
     ' 
     ' /********************************************************************************/

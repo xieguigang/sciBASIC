@@ -33,7 +33,7 @@
 
     '     Module CharSet
     ' 
-    '         Function: GenerateFontWeights, GetGeneralSize
+    '         Function: GenerateFontWeights, GetGeneralSize, GetWeight, LinearMap
     '         Class WeightedChar
     ' 
     '             Properties: Character, CharacterImage, Weight

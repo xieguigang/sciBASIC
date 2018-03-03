@@ -35,8 +35,7 @@
     ' 
     '         Properties: Length
     ' 
-    '         Sub: (+3 Overloads) New
-    ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Operators: -, (+2 Overloads) *
     ' 
     ' 

@@ -35,9 +35,11 @@
     ' 
     '         Properties: Identity, IsNull, IsPrimitive, Type
     ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
     '         Function: FromSchemaTable, GetValue, ToString
     ' 
-    '         Sub: (+4 Overloads) New, SetValue
+    '         Sub: SetValue
     ' 
     ' 
     ' /********************************************************************************/

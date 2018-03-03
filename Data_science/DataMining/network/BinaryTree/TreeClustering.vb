@@ -33,7 +33,7 @@
 
     '     Module TreeClustering
     ' 
-    '         Function: __firstCluster, __rootCluster, __treeCluster, TreeCluster
+    '         Function: __firstCluster, __rootCluster, __treeCluster, (+3 Overloads) TreeCluster
     ' 
     ' 
     ' /********************************************************************************/

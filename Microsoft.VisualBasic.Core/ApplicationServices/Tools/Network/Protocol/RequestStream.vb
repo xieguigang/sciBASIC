@@ -31,10 +31,16 @@
 
     ' Summaries:
 
+    '     Class RequestStream
+    ' 
+    '         Properties: BufferLength, ChunkBuffer, FullRead, Protocol, ProtocolCategory
+    '                     TotalBytes, uid
+    ' 
+    '         Constructor: (+7 Overloads) Sub New
+    '         Function: (+2 Overloads) CreatePackage, CreateProtocol, GetRawStream, GetUTF8String, IsAvaliableStream
+    '                   (+2 Overloads) LoadObject, Serialize, ToString
     '         Enum Protocols
     ' 
-    ' 
-    '  
     ' 
     ' 
     ' 

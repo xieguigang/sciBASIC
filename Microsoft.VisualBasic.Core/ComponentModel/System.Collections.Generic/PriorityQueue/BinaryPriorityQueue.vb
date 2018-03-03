@@ -35,12 +35,14 @@
     ' 
     '         Properties: Count, IList_IsFixedSize, IList_IsReadOnly, IsSynchronized, SyncRoot
     ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
     '         Function: [ReadOnly], Clone, Contains, IEnumerable_GetEnumerator, IList_Add
     '                   IList_IndexOf, OnCompare, Peek, Pop, Push
     '                   Syncronized
     ' 
     '         Sub: Clear, CopyTo, IList_Insert, IList_Remove, IList_RemoveAt
-    '              (+5 Overloads) New, SwitchElements, Update
+    '              SwitchElements, Update
     ' 
     ' 
     ' /********************************************************************************/

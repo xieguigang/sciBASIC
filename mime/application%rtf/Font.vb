@@ -33,9 +33,8 @@
 
     ' Class Font
     ' 
+    '     Constructor: (+4 Overloads) Sub New
     '     Function: Clone, FontColorToString, FromExistsValue, GenerateRTFTAG, (+2 Overloads) ToString
-    ' 
-    '     Sub: (+4 Overloads) New
     ' 
     ' /********************************************************************************/
 

@@ -33,10 +33,11 @@
 
     ' Class InputDevice
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: __getNode
     ' 
     '     Sub: Canvas_MouseDown, Canvas_MouseMove, Canvas_MouseUp, Canvas_MouseWheel, (+2 Overloads) Dispose
-    '          New
     ' 
     ' /********************************************************************************/
 

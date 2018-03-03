@@ -33,9 +33,8 @@
 
     '     Class IScale
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) range
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

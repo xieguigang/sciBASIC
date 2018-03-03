@@ -36,9 +36,11 @@
     '         Properties: FullWidth, Image, IsImage, IsLineBreak, IsSpaces
     '                     IsTab, LastMeasureOffset, OwnerBox, Text
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: ToString
     ' 
-    '         Sub: AppendChar, (+2 Overloads) New, ReplaceLineBreaksAndTabs
+    '         Sub: AppendChar, ReplaceLineBreaksAndTabs
     ' 
     ' 
     ' /********************************************************************************/

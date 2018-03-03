@@ -35,8 +35,9 @@
     ' 
     '         Properties: IsConverged, Max, Min, SampleVariance, StDev
     ' 
-    '         Sub: AddObservation, AddObservations, (+2 Overloads) New, SetConvergenceTolerance, SetMinValuesBeforeConvergenceTest
-    '              SetZAlphaForConvergence, TestForConvergence
+    '         Constructor: (+2 Overloads) Sub New
+    '         Sub: AddObservation, AddObservations, SetConvergenceTolerance, SetMinValuesBeforeConvergenceTest, SetZAlphaForConvergence
+    '              TestForConvergence
     ' 
     ' 
     ' /********************************************************************************/

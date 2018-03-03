@@ -33,12 +33,11 @@
 
     '     Class Image
     ' 
-    '         Properties: data, zIndex
+    '         Properties: data, height, width, x, y
+    '                     zIndex
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: GetGDIObject, SaveAs, ToString
-    ' 
-    '         Sub: (+4 Overloads) New
-    ' 
     '         Operators: +
     ' 
     ' 

@@ -35,25 +35,22 @@
     ' 
     '         Properties: Description, TypeRef
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetDescription, ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class OverloadsSignatureHandle
     ' 
     '         Properties: FullName, TypeIDBrief
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class ImportsConstant
     ' 
     '         Properties: Name, TypeInfo
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

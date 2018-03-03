@@ -33,9 +33,8 @@
 
     '     Class PQDijkstraProvider
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Compute
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

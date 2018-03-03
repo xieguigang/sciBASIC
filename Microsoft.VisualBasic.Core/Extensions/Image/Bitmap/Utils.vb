@@ -33,7 +33,8 @@
 
     '     Module Utils
     ' 
-    '         Function: ColorReplace, Resize, ResizeUnscaled, ResizeUnscaledByHeight
+    '         Function: (+2 Overloads) ColorReplace, CorpBlank, ImageCrop, Resize, ResizeUnscaled
+    '                   ResizeUnscaledByHeight, TrimRoundAvatar
     ' 
     ' 
     ' /********************************************************************************/

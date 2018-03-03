@@ -31,24 +31,34 @@
 
     ' Summaries:
 
+    '     Class File
+    ' 
+    '         Properties: Cell, EstimatedFileSize, Headers, Rows, Width
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
+    '                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Remove
+    '                   Save, (+2 Overloads) ToArray, TokenCounts, ToString, Transpose
+    '                   Trim
+    ' 
+    '         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
+    ' 
+    '         Operators: (+2 Overloads) +
     '         Delegate Function
     ' 
-    '             Properties: Cell, EstimatedFileSize, Headers, IsReadOnly, RowNumbers
-    '                         Rows, Width
+    '             Properties: IsReadOnly, RowNumbers
     ' 
-    '             Function: __createTableVector, __getDefaultPath, __LINQ_LOAD, __loads, AppendRange
-    '                       Contains, (+2 Overloads) Distinct, FastLoad, FindAll, FindAtColumn
-    '                       Generate, GenerateDocument, GetAllStringTokens, GetByLine, GetEnumerator
-    '                       GetEnumerator1, IndexOf, InsertEmptyColumnBefore, IsNullOrEmpty, Join
-    '                       (+2 Overloads) Load, LoadTsv, Normalization, (+2 Overloads) Remove, RemoveSubRow
-    '                       Save, (+2 Overloads) ToArray, TokenCounts, ToString, Transpose
-    '                       Trim
+    '             Function: __getDefaultPath, __LINQ_LOAD, __loads, Contains, (+2 Overloads) Distinct
+    '                       FastLoad, GetEnumerator, GetEnumerator1, IndexOf, IsNullOrEmpty
+    '                       Join, (+2 Overloads) Load, LoadTsv, Normalization, Remove
+    '                       RemoveSubRow
     ' 
-    '             Sub: __setColumn, (+3 Overloads) Add, Append, (+3 Overloads) AppendLine, Clear
-    '                  CopyTo, DeleteCell, Insert, InsertAt, (+4 Overloads) New
-    '                  RemoveAt, RemoveRange
+    '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
+    '                  RemoveAt
     ' 
-    '             Operators: (+2 Overloads) +, <, <=, >, >=
+    '             Operators: <, <=, >, >=
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

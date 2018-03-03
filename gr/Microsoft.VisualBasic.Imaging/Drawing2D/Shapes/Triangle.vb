@@ -36,9 +36,11 @@
     '         Properties: Angle, Color, Size, Vertex1, Vertex2
     '                     Vertex3
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: DrawAsRightTriangle
     ' 
-    '         Sub: Draw, New
+    '         Sub: Draw
     ' 
     ' 
     ' /********************************************************************************/

@@ -52,7 +52,7 @@
     ' 
     '     Function: ExtractToSelfDirectory, IsADirectoryEntry
     ' 
-    '     Sub: AddToArchive, DirectoryArchive, FileArchive, ImprovedExtractToDirectory
+    '     Sub: AddToArchive, DirectoryArchive, FileArchive, ImprovedExtractToDirectory, ImprovedExtractToFile
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,9 @@
 
     '     Module HTMLWriter
     ' 
+    '         Function: __titleRow, (+2 Overloads) ToHTML, (+2 Overloads) ToHTMLTable
     ' 
+    '         Sub: __contentRow
     ' 
     ' 
     ' /********************************************************************************/

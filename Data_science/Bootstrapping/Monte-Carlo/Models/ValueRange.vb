@@ -35,9 +35,8 @@
     ' 
     '         Properties: Name
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Clone, GetRandomModel, GetValue, ToString
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

@@ -39,18 +39,16 @@
     ' 
     '         Delegate Function
     ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Function: (+2 Overloads) GetMinimumPath, GetStartingBestPath, GetStartingTraversalCost, Perform, Perform2
-    ' 
-    '             Sub: New
     '         Structure Results
     ' 
-    '             Sub: New
+    '             Constructor: (+1 Overloads) Sub New
     ' 
     '         Class QueueElement
     ' 
+    '             Constructor: (+2 Overloads) Sub New
     '             Function: CompareTo
-    ' 
-    '             Sub: (+2 Overloads) New
     ' 
     ' 
     ' 

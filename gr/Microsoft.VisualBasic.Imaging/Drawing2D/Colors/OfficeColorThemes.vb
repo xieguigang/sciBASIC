@@ -36,16 +36,21 @@
     '         Properties: Aspect, Marquee, Office2010, Office2016, Paper
     '                     Slipstream, Themes
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetAccentColors
     ' 
-    '         Sub: __loadAllThemes, New
+    '         Sub: __loadAllThemes
     ' 
+    '     Class Theme
+    ' 
+    '         Properties: accents, dk1, dk2, folHlink, hlink
+    '                     lt1, lt2, name
+    ' 
+    '         Function: GetAccentColors, LoadFromXml, ToString
     '         Structure ObjectColor
     ' 
-    '             Properties: accents, dk1, dk2, folHlink, hlink
-    '                         lt1, lt2, name, sysClr
-    ' 
-    '             Function: GetAccentColors, LoadFromXml, ToString
+    '             Properties: sysClr
     ' 
     '         Structure Accent
     ' 
@@ -53,15 +58,15 @@
     ' 
     '         Structure sysClr
     ' 
+    '             Properties: lastClr, val
+    ' 
     '             Function: ToString
     ' 
     '         Structure srgbClr
     ' 
-    '             Properties: Color
+    '             Properties: Color, val
     ' 
     '             Function: ToString
-    ' 
-    '  
     ' 
     ' 
     ' 

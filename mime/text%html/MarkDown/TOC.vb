@@ -33,7 +33,7 @@
 
     '     Module TOC
     ' 
-    '         Function: AddToc, GetHeaders
+    '         Function: AddToc, GetHeaders, ReplaceHeaders
     ' 
     ' 
     ' /********************************************************************************/

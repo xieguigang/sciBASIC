@@ -33,7 +33,7 @@
 
     '     Module SVGWriter
     ' 
-    '         Function: SVG
+    '         Function: SVG, (+2 Overloads) WriteSVG
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,9 +33,11 @@
 
     '     Class PolygonD
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: boundingInside, (+2 Overloads) inside
     ' 
-    '         Sub: calculateBounds, (+2 Overloads) New
+    '         Sub: calculateBounds
     ' 
     ' 
     ' /********************************************************************************/

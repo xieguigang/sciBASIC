@@ -33,7 +33,7 @@
 
     ' Structure TestPoint
     ' 
-    '     Properties: Err
+    '     Properties: Err, X, Y, Yfit
     ' 
     '     Function: ToString
     ' 

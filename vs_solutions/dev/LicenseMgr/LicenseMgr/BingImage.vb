@@ -35,9 +35,11 @@
     ' 
     '     Properties: UseBingImage
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: GetUseBingImage
     ' 
-    '     Sub: New, SetUseBingImage
+    '     Sub: SetUseBingImage
     ' 
     ' /********************************************************************************/
 

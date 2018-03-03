@@ -33,7 +33,7 @@
 
     '     Module ProcessExtensions
     ' 
-    '         Function: FindProc, GetProc
+    '         Function: FindProc, (+2 Overloads) GetProc
     '         Delegate Sub
     ' 
     '             Function: [Call]

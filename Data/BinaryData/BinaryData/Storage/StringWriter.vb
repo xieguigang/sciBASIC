@@ -33,21 +33,24 @@
 
     ' Class StringWriter
     ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
     '     Function: (+2 Overloads) Append, ToString, Write
     ' 
-    '     Sub: Close, (+2 Overloads) Dispose, (+2 Overloads) New
+    '     Sub: Close, (+2 Overloads) Dispose
     ' 
     ' Class StringReader
     ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
     '     Function: ReadString, ReadStringArray
     ' 
-    '     Sub: (+2 Overloads) Dispose, (+2 Overloads) New, Seek
+    '     Sub: (+2 Overloads) Dispose, Seek
     ' 
     ' Structure SectionHeader
     ' 
+    '     Constructor: (+1 Overloads) Sub New
     '     Function: (+2 Overloads) CreateBuffer, ToArray
-    ' 
-    '     Sub: New
     ' 
     ' Enum Types
     ' 

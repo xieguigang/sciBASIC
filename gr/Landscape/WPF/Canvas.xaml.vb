@@ -33,8 +33,9 @@
 
     ' Class Canvas
     ' 
+    '     Constructor: (+1 Overloads) Sub New
     '     Sub: BuildSolid, Button_Click, Grid_MouseDown, Grid_MouseMove, Grid_MouseUp
-    '          Grid_MouseWheel, New
+    '          Grid_MouseWheel
     ' 
     ' /********************************************************************************/
 

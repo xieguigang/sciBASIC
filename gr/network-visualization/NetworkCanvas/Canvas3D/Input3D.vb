@@ -33,7 +33,8 @@
 
     ' Class Input3D
     ' 
-    '     Sub: Canvas_MouseDown, Canvas_MouseMove, Canvas_MouseUp, New
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: Canvas_MouseDown, Canvas_MouseMove, Canvas_MouseUp
     ' 
     ' /********************************************************************************/
 

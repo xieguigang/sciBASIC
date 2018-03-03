@@ -35,9 +35,11 @@
     ' 
     '         Properties: FullRank, H, Q, R
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Solve
     ' 
-    '         Sub: ISerializable_GetObjectData, New
+    '         Sub: ISerializable_GetObjectData
     ' 
     ' 
     ' /********************************************************************************/

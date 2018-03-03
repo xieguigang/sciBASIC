@@ -31,12 +31,12 @@
 
     ' Summaries:
 
-    '  
+    '     Module JsonContract
     ' 
-    '     Function: EnsureDate, GetObjectJson, LoadJsonFile, LoadJSONObject, (+2 Overloads) LoadObject
-    '               MatrixJson, RemoveJsonNullItems, WriteLargeJson
+    '         Function: EnsureDate, GetJson, GetObjectJson, LoadJsonFile, LoadJSONObject
+    '                   (+3 Overloads) LoadObject, MatrixJson, RemoveJsonNullItems, WriteLargeJson
     ' 
-    '     Sub: writeJsonInternal
+    '         Sub: writeJsonInternal
     ' 
     ' 
     ' /********************************************************************************/

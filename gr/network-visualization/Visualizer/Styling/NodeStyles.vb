@@ -33,7 +33,8 @@
 
     '     Module NodeStyles
     ' 
-    '         Function: ColorExpression, ColorFromTypes, MapExpressionParser, SizeExpression
+    '         Function: ColorExpression, ColorFromTypes, (+2 Overloads) DegreeAsSize, MapExpressionParser, SizeExpression
+    '                   ValDegreeAsSize
     ' 
     ' 
     ' /********************************************************************************/

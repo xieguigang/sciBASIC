@@ -33,7 +33,7 @@
 
     '     Module GZStream
     ' 
-    '         Function: UnzipBase64, UnzipStream, ZipStream
+    '         Function: UnzipBase64, UnzipStream, ZipAsBase64, ZipStream
     ' 
     ' 
     ' /********************************************************************************/

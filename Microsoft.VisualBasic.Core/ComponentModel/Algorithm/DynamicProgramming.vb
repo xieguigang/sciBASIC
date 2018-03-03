@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5c83a22f509d48df561a185825320fa, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming.vb"
+﻿#Region "Microsoft.VisualBasic::448e0d3f3ebd793e44872c41dfc48189, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,9 @@
 
     ' Summaries:
 
+    '     Delegate Function
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::991b21eda28166345008acfa03559a72, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::e61a329b0193769065b97bbb8e07259c, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -35,16 +35,19 @@
     ' 
     '     Properties: NonStrictCompares, StrictCompares
     ' 
-    '     Function: __json, AllEquals, CharString, (+2 Overloads) Count, CreateBuilder
-    '               DistinctIgnoreCase, EqualsAny, First, FormatString, GetBetween
-    '               GetEMails, GetStackValue, (+2 Overloads) GetTagValue, GetURLs, IgnoreCase
-    '               Intersection, IsNullOrEmpty, JoinBy, Lookup, Matches
-    '               (+2 Overloads) MaxLengthString, RepeatString, ReplaceChars, Reverse, RNull
-    '               SaveTo, Split, SplitBy, StringReplace, StripBlank
-    '               Strips, TextEquals, TokenCountIgnoreCase, ToTruncateInt32, ToTruncateInt64
-    '               WildcardsLocated
+    '     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
+    '               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
+    '               FormatZero, GetBetween, GetEMails, GetStackValue, GetString
+    '               (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny, (+2 Overloads) Intersection
+    '               IsEmptyStringVector, IsNullOrEmpty, JoinBy, Located, Lookup
+    '               lTokens, (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString
+    '               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
+    '               SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty, StringHashCode
+    '               StringReplace, StringSplit, StripBlank, Strips, TextEquals
+    '               TextLast, TokenCount, TokenCountIgnoreCase, ToTruncateInt32, ToTruncateInt64
+    '               TrimA, TrimNewLine, WildcardsLocated
     ' 
-    '     Sub: Parts
+    '     Sub: Parts, RemoveLast
     ' 
     ' /********************************************************************************/
 

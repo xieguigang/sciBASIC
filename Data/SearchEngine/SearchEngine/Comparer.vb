@@ -33,7 +33,7 @@
 
     ' Module IComparer
     ' 
-    '     Function: Evaluate, FindAll, MatchAll
+    '     Function: Evaluate, FindAll, Match, MatchAll
     ' 
     ' /********************************************************************************/
 

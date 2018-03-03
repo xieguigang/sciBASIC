@@ -33,7 +33,7 @@
 
     ' Module SetsExtension
     ' 
-    '     Function: (+2 Overloads) AsSet, Except, Intersection, ToArray, Union
+    '     Function: (+2 Overloads) AsSet, Except, Intersection, (+3 Overloads) ToArray, Union
     ' 
     ' /********************************************************************************/
 

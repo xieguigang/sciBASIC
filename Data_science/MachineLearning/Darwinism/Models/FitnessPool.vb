@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4135dc8e62a3b7837559f051b0884a9, Data_science\MachineLearning\Darwinism\Models\FitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::96dbd90f8e16809fa949a179af621bc5, Data_science\MachineLearning\Darwinism\Models\FitnessPool.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,8 @@
 
     '     Class FitnessPool
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Fitness
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

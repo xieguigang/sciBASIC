@@ -33,7 +33,8 @@
 
     '     Class CBusyIndicator
     ' 
-    '         Sub: [Stop], (+2 Overloads) Dispose, DoEvents, New, Start
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: [Stop], (+2 Overloads) Dispose, DoEvents, Start
     ' 
     ' 
     ' /********************************************************************************/

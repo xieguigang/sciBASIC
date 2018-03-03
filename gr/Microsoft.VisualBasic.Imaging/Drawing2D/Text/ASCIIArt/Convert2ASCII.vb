@@ -33,7 +33,7 @@
 
     '     Module HelperMethods
     ' 
-    '         Function: ASCIIImage
+    '         Function: ASCIIImage, Convert2ASCII, DrawText
     ' 
     '         Sub: WriteASCIIStream
     ' 

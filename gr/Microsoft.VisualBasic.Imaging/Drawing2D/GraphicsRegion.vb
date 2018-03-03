@@ -36,9 +36,8 @@
     '         Properties: Bottom, EntireArea, Height, PlotRegion, Width
     '                     XRange, YRange
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: TopCentra, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,9 +35,8 @@
     ' 
     '     Properties: Count, DefaultStopWords
     ' 
+    '     Constructor: (+1 Overloads) Sub New
     '     Function: GetEnumerator, IEnumerable_GetEnumerator, Removes
-    ' 
-    '     Sub: New
     ' 
     ' /********************************************************************************/
 

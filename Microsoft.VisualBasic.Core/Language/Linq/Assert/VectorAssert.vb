@@ -33,18 +33,16 @@
 
     '     Class VectorAssert
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class AssertAll
     ' 
-    '         Sub: New
-    ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Operators: <>, =
     ' 
     '     Class AssertAny
     ' 
-    '         Sub: New
-    ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Operators: <>, =
     ' 
     ' 

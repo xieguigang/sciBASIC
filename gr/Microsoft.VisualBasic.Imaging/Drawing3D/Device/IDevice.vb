@@ -33,7 +33,7 @@
 
     '     Class IDevice
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Delegate Sub
     ' 

@@ -36,12 +36,14 @@
     '         Properties: LocalPort, ProtocolHandler, Responsehandler, SSLMode, UidMappings
     '                     UidMappingsBack
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __broadcastMessage, __getMyIPAddress, __isGetSocketPortal, __isUserOnlineQuery, __Logon
     '                   __nonUidMappings, __requestHandlerInterface, (+2 Overloads) __sendMessage, __usrInvokeSend, GetEnumerator
     '                   IEnumerable_GetEnumerator, Run
     ' 
     '         Sub: __socketCleanup, AcceptClient, DisconnectUser, Dispose, Install
-    '              New, RemoveFreeConnections, Run, SendMessage
+    '              RemoveFreeConnections, Run, SendMessage
     ' 
     ' 
     ' /********************************************************************************/

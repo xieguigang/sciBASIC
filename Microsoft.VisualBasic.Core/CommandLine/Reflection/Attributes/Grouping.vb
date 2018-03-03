@@ -33,13 +33,13 @@
 
     '     Class GroupAttribute
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class GroupingDefineAttribute
     ' 
     '         Properties: Description
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

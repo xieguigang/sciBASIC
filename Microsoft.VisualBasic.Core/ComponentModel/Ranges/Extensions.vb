@@ -35,6 +35,8 @@
     ' 
     '         Function: (+2 Overloads) GetScaler, (+2 Overloads) RangeTransform, SymmetricalRange
     ' 
+    '         Sub: Parser
+    ' 
     ' 
     ' /********************************************************************************/
 

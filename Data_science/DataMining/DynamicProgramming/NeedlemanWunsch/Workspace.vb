@@ -36,9 +36,11 @@
     '         Properties: GapPenalty, MatchScore, MismatchScore, NumberOfAlignments, Query
     '                     Score, Subject
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: getAligned1, getAligned2, isMatch
     ' 
-    '         Sub: AddAligned1, AddAligned2, New
+    '         Sub: AddAligned1, AddAligned2
     ' 
     ' 
     ' /********************************************************************************/

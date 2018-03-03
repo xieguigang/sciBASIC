@@ -35,9 +35,11 @@
     ' 
     '         Properties: ClientDecryptionHandle, Connections, IsShutdown, LocalPort, RequestHandler
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: BeginListen, LoopbackEndPoint
     ' 
-    '         Sub: AcceptCallback, (+2 Overloads) New, (+2 Overloads) Run, WaitForRunning
+    '         Sub: AcceptCallback, (+2 Overloads) Run, WaitForRunning
     '         Delegate Sub
     ' 
     '             Properties: AcceptCallbackHandleInvoke
@@ -45,7 +47,8 @@
     '             Sub: (+2 Overloads) Dispose, ForceCloseHandle
     '         Class WorkSocket
     ' 
-    '             Sub: New, ReadCallback, Send, SendCallback, SendMessage
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: ReadCallback, Send, SendCallback, SendMessage
     ' 
     ' 
     ' 

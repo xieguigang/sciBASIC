@@ -33,20 +33,20 @@
 
     '     Class BNInfer
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class BElim
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: FindMaxNodeId, GetBelief, Sum
     ' 
-    '         Sub: New, PrepareBuckets
+    '         Sub: PrepareBuckets
     '         Class Bucket
     ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Function: ToString
-    ' 
-    '             Sub: New
     ' 
     ' 
     ' 

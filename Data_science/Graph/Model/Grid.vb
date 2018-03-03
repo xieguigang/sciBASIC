@@ -35,9 +35,8 @@
     ' 
     '     Properties: Layout, Steps
     ' 
+    '     Constructor: (+3 Overloads) Sub New
     '     Function: Index, ToString
-    ' 
-    '     Sub: (+3 Overloads) New
     ' 
     ' /********************************************************************************/
 

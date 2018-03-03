@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39e2a6e8a06b59e764fc88b69c9accdd, Data_science\Mathematica\Plot\Plots-statistics\PCAPlot.vb"
+﻿#Region "Microsoft.VisualBasic::0f668ed67697eebfc636155765b2dd78, Data_science\Mathematica\Plot\Plots-statistics\PCAPlot.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module PCAPlot
     ' 
-    ' 
+    '     Function: PC2
     ' 
     ' /********************************************************************************/
 

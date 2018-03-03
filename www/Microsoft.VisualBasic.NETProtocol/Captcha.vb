@@ -35,9 +35,11 @@
     ' 
     '     Properties: CaptchaHeight, CaptchaImage, CaptchaValue, CaptchaWidth, TimeStamp
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: ToString
     ' 
-    '     Sub: __generateCaptcha, New
+    '     Sub: __generateCaptcha
     ' 
     ' /********************************************************************************/
 

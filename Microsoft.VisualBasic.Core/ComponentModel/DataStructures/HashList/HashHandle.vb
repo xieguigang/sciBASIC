@@ -33,7 +33,8 @@
 
     '     Class DefaultHashHandle
     ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
+    '         Sub: (+2 Overloads) Add
     ' 
     '         Operators: (+2 Overloads) +
     ' 
@@ -41,16 +42,17 @@
     ' 
     '         Properties: [Next], node, Previous
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
     ' 
-    '         Sub: (+2 Overloads) New
-    ' 
     '     Class HashHandle
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: (+3 Overloads) [Next], (+2 Overloads) Current, GetEnumerator, HasElement, IEnumerable_GetEnumerator
     '                   IsNull, (+3 Overloads) Previous
     ' 
-    '         Sub: __allocate, (+2 Overloads) Add, (+2 Overloads) New, (+2 Overloads) Remove
+    '         Sub: __allocate, (+2 Overloads) Add, (+2 Overloads) Remove
     ' 
     ' 
     ' /********************************************************************************/

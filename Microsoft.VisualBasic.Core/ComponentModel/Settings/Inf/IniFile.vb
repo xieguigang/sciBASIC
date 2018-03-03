@@ -35,9 +35,11 @@
     ' 
     '         Properties: path
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetPrivateProfileString, ReadValue, ToString, WritePrivateProfileString
     ' 
-    '         Sub: New, WriteValue
+    '         Sub: WriteValue
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,7 @@
 
     '     Class CssDrawingHelper
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     '         Enum Border
     ' 
     '             Bottom, Left, Right, Top

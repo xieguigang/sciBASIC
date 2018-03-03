@@ -33,7 +33,8 @@
 
     ' Module Module2
     ' 
-    '     Sub: HeatmapScatter, Main, New
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: HeatmapScatter, Main
     ' 
     ' /********************************************************************************/
 

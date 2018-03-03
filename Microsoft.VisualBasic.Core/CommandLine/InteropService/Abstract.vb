@@ -41,9 +41,8 @@
     ' 
     '         Properties: value
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class CLIBuilder
     ' 

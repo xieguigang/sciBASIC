@@ -35,10 +35,9 @@
     ' 
     '         Properties: encoding, rootNode, standalone, version, xmlns
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __rootString, CreateObject, FromObject, FromXmlFile, Save
     '                   SaveTo, (+2 Overloads) ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

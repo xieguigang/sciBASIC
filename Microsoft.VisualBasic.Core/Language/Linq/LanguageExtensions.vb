@@ -33,7 +33,7 @@
 
     '     Module LanguageExtensions
     ' 
-    '         Sub: (+2 Overloads) Add
+    '         Sub: (+5 Overloads) Add
     ' 
     ' 
     ' /********************************************************************************/

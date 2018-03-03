@@ -35,9 +35,11 @@
     ' 
     '         Properties: Buffer, Length
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: [GET], [Next], GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
-    '         Sub: [Set], Break, New, Reset
+    '         Sub: [Set], Break, Reset
     ' 
     ' 
     ' /********************************************************************************/

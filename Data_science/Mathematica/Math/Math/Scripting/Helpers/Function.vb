@@ -35,9 +35,11 @@
     ' 
     '         Properties: FunctionList
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Evaluate, RND
     ' 
-    '         Sub: (+3 Overloads) Add, New
+    '         Sub: (+3 Overloads) Add
     ' 
     ' 
     ' /********************************************************************************/

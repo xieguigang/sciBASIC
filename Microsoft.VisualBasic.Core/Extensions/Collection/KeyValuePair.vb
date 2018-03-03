@@ -33,12 +33,15 @@
 
     ' Module KeyValuePairExtensions
     ' 
-    '     Function: (+3 Overloads) [Select], AsGroups, AsTable, (+3 Overloads) ContainsKey, DictionaryData
-    '               (+2 Overloads) EnumerateTuples, EnumParser, FlatTable, GroupByKey, HaveData
-    '               IGrouping, IsOneOfA, IterateNameCollections, IterateNameValues, IteratesAll
-    '               Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+2 Overloads) NameValueCollection
-    '               ParserDictionary, RemoveAndGet, ReverseMaps, Selects, (+2 Overloads) Subset
-    '               Takes, (+3 Overloads) ToDictionary, Tsv, (+2 Overloads) Values, XMLModel
+    '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsGroups, AsNamedVector, AsTable
+    '               (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples, EnumParser, FlatTable
+    '               (+2 Overloads) GetByKey, GroupByKey, HaveData, IGrouping, IsOneOfA
+    '               IterateNameCollections, IterateNameValues, IteratesAll, Join, KeyItem
+    '               (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+2 Overloads) NameValueCollection, ParserDictionary, RemoveAndGet
+    '               ReverseMaps, Selects, (+2 Overloads) Subset, Takes, (+3 Overloads) ToDictionary
+    '               Tsv, (+2 Overloads) Values, XMLModel
+    ' 
+    '     Sub: SortByKey, SortByValue
     ' 
     ' /********************************************************************************/
 

@@ -36,9 +36,11 @@
     '         Properties: Application, Computer, Log, User, Windows
     '         Class MyWindows
     ' 
-    '             Function: [GetType], Create__Instance__
+    '             Constructor: (+1 Overloads) Sub New
     ' 
-    '             Sub: Dispose__Instance__, New
+    '             Function: [GetType], Create__Instance__, Equals, GetHashCode, ToString
+    ' 
+    '             Sub: Dispose__Instance__
     ' 
     ' 
     ' 

@@ -35,9 +35,8 @@
     ' 
     '         Properties: Font, Graphics, Height
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) GetStringBounds
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Module Extensions
     ' 

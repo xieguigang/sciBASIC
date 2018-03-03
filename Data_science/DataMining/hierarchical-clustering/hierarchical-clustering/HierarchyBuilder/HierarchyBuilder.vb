@@ -35,9 +35,11 @@
     ' 
     '         Properties: Clusters, Distances, First, RootCluster, TreeComplete
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: findByClusters, flatAgg
     ' 
-    '         Sub: Agglomerate, New
+    '         Sub: Agglomerate
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: ToEntityObjects, ToKMeansModels
+    '         Function: Kmeans, ToEntityObjects, ToKMeansModels, ValueGroups
     ' 
     ' 
     ' /********************************************************************************/

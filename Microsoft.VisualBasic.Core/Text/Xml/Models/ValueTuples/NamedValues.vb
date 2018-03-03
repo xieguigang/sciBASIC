@@ -31,29 +31,26 @@
 
     ' Summaries:
 
-    '  
+    '     Class NamedValue
     ' 
-    '     Properties: name, text
+    '         Properties: name, text
     ' 
-    '     Function: ToString
-    ' 
-    '     Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
     ' 
     '     Structure [Property]
     ' 
-    '         Properties: Comment
+    '         Properties: Comment, name, value
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Structure NamedVector
     ' 
     '         Properties: attributes, name, vector
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

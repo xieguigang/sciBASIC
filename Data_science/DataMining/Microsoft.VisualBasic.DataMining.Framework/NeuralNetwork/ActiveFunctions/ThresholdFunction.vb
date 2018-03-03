@@ -33,9 +33,8 @@
 
     '     Class ThresholdFunction
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: [Function], Clone, Derivative, Derivative2
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

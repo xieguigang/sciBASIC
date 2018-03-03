@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: Enlarge, GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
+    '         Function: (+3 Overloads) Enlarge, GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
     '         Enum MoveTypes
     ' 
     '             BoundsBoxTopLeft, PolygonCentre

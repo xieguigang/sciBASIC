@@ -35,6 +35,8 @@
     ' 
     ' 	    Properties: Cells, CreateIds, MaintainEdgeParent, Overrides, UpdateLevel
     ' 
+    ' 	    Constructor: (+2 Overloads) Sub New
+    ' 
     ' 	    Function: add, cloneCell, cloneCells, collapsedStateForCellChanged, contains
     '                createId, createRoot, createUndoableEdit, filterCells, (+2 Overloads) filterDescendants
     '                geometryForCellChanged, getCell, getChildAt, getChildCells, getChildCount
@@ -49,8 +51,8 @@
     '                valueForCellChanged, visibleStateForCellChanged
     ' 
     ' 	    Sub: beginUpdate, cellAdded, cellRemoved, clear, endUpdate
-    '           execute, mergeChildren, mergeChildrenImpl, (+2 Overloads) New, readObject
-    '           restoreClone, setTerminals, updateEdgeParent, (+2 Overloads) updateEdgeParents
+    '           execute, mergeChildren, mergeChildrenImpl, readObject, restoreClone
+    '           setTerminals, updateEdgeParent, (+2 Overloads) updateEdgeParents
     ' 		Class mxUndoableEditAnonymousInnerClassHelper
     ' 
     ' 		    Sub: dispatch
@@ -63,51 +65,60 @@
     ' 
     ' 		    Properties: Previous, Root
     ' 
-    ' 		    Sub: execute, (+2 Overloads) New
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
     ' 
     ' 		Class mxChildChange
     ' 
     ' 		    Properties: Child, Index, Parent, Previous, PreviousIndex
     ' 
+    ' 		    Constructor: (+3 Overloads) Sub New
+    ' 
     ' 		    Function: getChildIndex, getTerminal
     ' 
-    ' 		    Sub: connect, execute, (+3 Overloads) New, setTerminal
+    ' 		    Sub: connect, execute, setTerminal
     ' 
     ' 		Class mxTerminalChange
     ' 
     ' 		    Properties: Cell, Previous, Source, Terminal
     ' 
-    ' 		    Sub: execute, (+2 Overloads) New
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
     ' 
     ' 		Class mxValueChange
     ' 
     ' 		    Properties: Cell, Previous, Value
     ' 
-    ' 		    Sub: execute, (+2 Overloads) New
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
     ' 
     ' 		Class mxStyleChange
     ' 
     ' 		    Properties: Cell, Previous, Style
     ' 
-    ' 		    Sub: execute, (+2 Overloads) New
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
     ' 
     ' 		Class mxGeometryChange
     ' 
     ' 		    Properties: Cell, Geometry, Previous
     ' 
-    ' 		    Sub: execute, (+2 Overloads) New
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
     ' 
     ' 		Class mxCollapseChange
     ' 
     ' 		    Properties: Cell, Collapsed, Previous
     ' 
-    ' 		    Sub: execute, (+2 Overloads) New
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
     ' 
     ' 		Class mxVisibleChange
     ' 
     ' 		    Properties: Cell, Previous, Visible
     ' 
-    ' 		    Sub: execute, (+2 Overloads) New
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
     ' 
     ' 
     ' 

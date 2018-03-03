@@ -33,9 +33,8 @@
 
     '     Class SubGradientDescent
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: [stop], getStepSize, getSubGradient, innerOptimize
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

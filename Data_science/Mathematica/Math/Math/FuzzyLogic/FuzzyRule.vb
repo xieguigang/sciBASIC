@@ -35,9 +35,8 @@
     ' 
     '         Properties: Text, Value
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Conditions, Validate
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

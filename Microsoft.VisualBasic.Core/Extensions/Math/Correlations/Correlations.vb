@@ -35,7 +35,7 @@
     ' 
     '         Properties: PearsonDefault
     ' 
-    '         Function: __kldPart, GetPearson, JaccardIndex, kendallTauBeta, KLD
+    '         Function: __kldPart, (+2 Overloads) GetPearson, JaccardIndex, kendallTauBeta, KLD
     '                   rankKendallTauBeta, SW
     '         Structure Pearson
     ' 

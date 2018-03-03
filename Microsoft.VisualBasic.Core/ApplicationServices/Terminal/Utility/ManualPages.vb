@@ -33,15 +33,19 @@
 
     '     Class ManualPages
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: FromFile, ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose, (+2 Overloads) New, ShowManual
+    '         Sub: (+2 Overloads) Dispose, ShowManual
     ' 
     '     Class IndexedManual
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __sp
     ' 
-    '         Sub: New, PrintPrompted, ShowManual
+    '         Sub: PrintPrompted, ShowManual
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,9 +33,8 @@
 
     '     Class Counter
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Hit
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Module CounterExtensions
     ' 

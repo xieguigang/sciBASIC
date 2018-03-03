@@ -33,7 +33,7 @@
 
     '     Module Combination
     ' 
-    '         Function: CreateCombos, FullCombination, Generate, (+2 Overloads) Iterates
+    '         Function: CreateCombos, FullCombination, Generate, (+2 Overloads) Iterates, Iteration
     ' 
     ' 
     ' /********************************************************************************/

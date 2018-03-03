@@ -42,10 +42,8 @@
     ' 
     '         Properties: Type
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Equals, ToString
-    ' 
-    '         Sub: New
-    ' 
     '         Operators: (+2 Overloads) And, (+2 Overloads) Or
     ' 
     '     Class Runtime

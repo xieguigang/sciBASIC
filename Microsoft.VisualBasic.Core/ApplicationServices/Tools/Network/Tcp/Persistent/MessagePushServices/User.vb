@@ -35,10 +35,12 @@
     ' 
     '         Properties: USER_ID
     ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
     '         Function: __receiveBroadcastMessage, (+3 Overloads) __sendMessage, __sendMessageToMe, IsUserOnLine, (+4 Overloads) SendMessage
     '                   ToString
     ' 
-    '         Sub: (+2 Overloads) BeginConnect, (+2 Overloads) BroadCastMessage, (+2 Overloads) Dispose, (+4 Overloads) New, SetDisconnectHandle
+    '         Sub: (+2 Overloads) BeginConnect, (+2 Overloads) BroadCastMessage, (+2 Overloads) Dispose, SetDisconnectHandle
     ' 
     ' 
     ' /********************************************************************************/

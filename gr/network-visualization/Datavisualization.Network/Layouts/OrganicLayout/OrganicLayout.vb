@@ -39,11 +39,13 @@
     '                     OptimizeBorderLine, OptimizeEdgeCrossing, OptimizeEdgeDistance, OptimizeEdgeLength, OptimizeNodeDistribution
     '                     RadiusScaleFactor, ResetEdges, TriesPerCell, UnchangedEnergyRoundTermination
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: calcEnergyDelta, getAdditionFactorsEnergy, getBorderline, getConnectedEdges, getEdgeCrossing
     '                   getEdgeCrossingAffectedEdges, getEdgeDistanceAffectedNodes, getEdgeDistanceFromEdge, getEdgeDistanceFromNode, getEdgeLength
     '                   getEdgeLengthAffectedEdges, getEdges, getNodeDistribution, getRelevantEdges, ToString
     ' 
-    '         Sub: execute, (+2 Overloads) New, performRound
+    '         Sub: execute, performRound
     ' 
     ' 
     ' /********************************************************************************/

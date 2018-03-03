@@ -35,9 +35,8 @@
     ' 
     '         Properties: ID, NodeType
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: CopyTo, ToString
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

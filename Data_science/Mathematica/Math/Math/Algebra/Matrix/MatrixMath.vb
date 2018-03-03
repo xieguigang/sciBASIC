@@ -39,9 +39,9 @@
     '                   LU, Mul, Orth, Pinv, Pinv2
     '                   PolyDiv, PolyDivEx, PolyGCF, PolyGCFCall, PolyMod
     '                   PolyMul, PolyRoots2, Pow, QR, QR2
-    '                   QR22, RU, Scatter, Schmidt, Sove2
-    '                   SPD, Sqrt, Svd, SvdSplit, SymTridMatrix
-    '                   VR
+    '                   QR22, RU, Scatter, Schmidt, SG
+    '                   Sove2, SPD, Sqrt, Svd, SvdSplit
+    '                   SymTridMatrix, VR
     ' 
     '         Sub: EigTorF, Lehmer, Magic, Magic_1, Magic_2
     '              Magic_4, Pascal

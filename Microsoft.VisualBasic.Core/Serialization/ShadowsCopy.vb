@@ -33,19 +33,17 @@
 
     '     Module ShadowsCopy
     ' 
-    '         Function: __shadowsCopy, (+2 Overloads) ShadowCopy
+    '         Function: __shadowsCopy, DeepCopy, (+2 Overloads) ShadowCopy, (+2 Overloads) ShadowsCopy
     ' 
     '     Class ShadowsCopyOpr
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) ShadowCopy, ToString
     ' 
-    '         Sub: New
-    ' 
     '     Class ShadowsCopyOpr
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ShadowCopy, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

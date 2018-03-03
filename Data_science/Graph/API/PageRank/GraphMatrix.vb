@@ -33,9 +33,8 @@
 
     '     Class GraphMatrix
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetEdgeCount, ToString, TranslateVector
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

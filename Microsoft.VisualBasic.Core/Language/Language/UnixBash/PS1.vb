@@ -33,11 +33,10 @@
 
     '     Class PS1
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: A, d, Fedora12, n, r
     '                   T, tl, ToString, u, v
     '                   W, wl
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

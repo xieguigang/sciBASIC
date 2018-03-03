@@ -33,11 +33,14 @@
 
     '     Class Neuron
     ' 
-    '         Properties: Bias, BiasDelta, Gradient, Value
+    '         Properties: Bias, BiasDelta, Gradient, IFunc, InputSynapses
+    '                     OutputSynapses, Value
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: CalculateError, CalculateGradient, CalculateValue
     ' 
-    '         Sub: (+2 Overloads) New, UpdateWeights
+    '         Sub: UpdateWeights
     ' 
     ' 
     ' /********************************************************************************/

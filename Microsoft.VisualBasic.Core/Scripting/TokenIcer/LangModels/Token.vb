@@ -34,15 +34,15 @@
     '     Class Token
     ' 
     '         Properties: Arguments, Closure, IsClosure, IsFunction, IsNumeric
-    '                     IsObject, Text, Type, UNDEFINED
+    '                     IsObject, name, Text, Type, UNDEFINED
+    '                     Value
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: GetValue, ToString
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     '     Class Statement
     ' 
-    '         Properties: Trace
+    '         Properties: tokens, Trace
     ' 
     '         Function: ToString
     ' 

@@ -35,7 +35,7 @@
     ' 
     '         Properties: Category, Cites, Publisher, Revision, Url
     ' 
-    '         Sub: (+4 Overloads) New
+    '         Constructor: (+4 Overloads) Sub New
     ' 
     '     Enum APICategories
     ' 

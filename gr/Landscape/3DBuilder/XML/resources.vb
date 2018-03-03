@@ -33,6 +33,8 @@
 
     '     Class base
     ' 
+    '         Properties: displaycolor, name
+    ' 
     '         Function: ToString
     ' 
     '     Class resources
@@ -41,11 +43,12 @@
     ' 
     '     Interface Iobject
     ' 
-    ' 
+    '         Properties: id
     ' 
     '     Class [object]
     ' 
-    '         Properties: components, id, mesh
+    '         Properties: components, id, mesh, pid, pindex
+    '                     type
     ' 
     '     Class basematerials
     ' 

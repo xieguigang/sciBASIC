@@ -33,17 +33,18 @@
 
     '     Class MSWriter
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ToString
     ' 
-    '         Sub: New, WriteStream
+    '         Sub: WriteStream
     ' 
-    '  
+    '     Class MMFStream
     ' 
-    '     Properties: byteData, udtBadge
+    '         Properties: byteData, udtBadge
     ' 
-    '     Function: Serialize, ToString
-    ' 
-    '     Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Serialize, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -31,13 +31,15 @@
 
     ' Summaries:
 
-    '  
+    '     Class UnbufferedStringReader
     ' 
-    '     Properties: Position
+    '         Properties: Position
     ' 
-    '     Function: Peek, (+2 Overloads) Read, ReadLine, ReadToEnd
+    '         Constructor: (+1 Overloads) Sub New
     ' 
-    '     Sub: Close, Dispose, New
+    '         Function: Peek, (+2 Overloads) Read, ReadLine, ReadToEnd
+    ' 
+    '         Sub: Close, Dispose
     ' 
     ' 
     ' /********************************************************************************/

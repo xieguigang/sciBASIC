@@ -39,6 +39,8 @@
     ' 
     '     Class ForceDirectedArgs
     ' 
+    '         Properties: Damping, Iterations, Repulsion, Stiffness
+    ' 
     '         Function: DefaultNew, ToString
     ' 
     ' 

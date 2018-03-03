@@ -35,10 +35,12 @@
     ' 
     '         Properties: Height, Size, Stride, Width
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: FromBitmap, FromImage, GetEnumerator, GetImage, GetIndex
     '                   GetPixel, IEnumerable_GetEnumerator, OutOfRange
     ' 
-    '         Sub: Dispose, New, SetPixel
+    '         Sub: Dispose, SetPixel
     ' 
     '         Operators: +
     ' 

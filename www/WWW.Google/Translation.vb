@@ -33,9 +33,8 @@
 
     ' Class Translation
     ' 
+    '     Constructor: (+1 Overloads) Sub New
     '     Function: __seperator, __translation, ToString, Translate
-    ' 
-    '     Sub: New
     ' 
     ' /********************************************************************************/
 

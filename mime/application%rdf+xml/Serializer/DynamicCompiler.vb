@@ -35,9 +35,11 @@
     ' 
     '         Properties: CompiledCode
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Compile, GenerateCode, GetDebugInformation
     ' 
-    '         Sub: (+2 Overloads) Dispose, New
+    '         Sub: (+2 Overloads) Dispose
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,9 +33,8 @@
 
     '     Class PageRank
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ComputePageRank, PageRankGenerator, TransposeLinkMatrix
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

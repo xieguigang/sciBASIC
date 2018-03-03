@@ -33,7 +33,7 @@
 
     '     Module Users
     ' 
-    '         Function: GetUserData, ParserInternal, ParserIterator
+    '         Function: Followers, Following, GetUserData, ParserInternal, ParserIterator
     ' 
     ' 
     ' /********************************************************************************/

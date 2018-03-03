@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a08b3801a82364052c6d37596d1bd10, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::69feb25fca871999ecfe7ff3693c1592, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -33,24 +33,22 @@
 
     '     Module IteratorExtensions
     ' 
-    '         Function: [Next], (+2 Overloads) Indices, Previous, (+3 Overloads) SeqIterator, ValueArray
+    '         Function: [Next], (+2 Overloads) Indices, Ordinals, Previous, (+3 Overloads) SeqIterator
+    '                   ValueArray
     ' 
     '     Structure SeqValue
     ' 
     '         Properties: Address, Follows, i, value
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Structure SeqValue
     ' 
     '         Properties: i, value
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) CompareTo, ToString
-    ' 
-    '         Sub: New
-    ' 
     '         Operators: (+2 Overloads) +, <>, =, (+2 Overloads) Mod
     ' 
     '     Interface IIterator

@@ -35,15 +35,13 @@
     ' 
     '         Properties: FactorValue
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Class Factors
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetFactors
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

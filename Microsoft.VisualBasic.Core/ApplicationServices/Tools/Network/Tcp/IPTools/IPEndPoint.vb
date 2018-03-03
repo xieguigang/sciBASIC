@@ -33,11 +33,10 @@
 
     '     Class IPEndPoint
     ' 
-    '         Properties: IsValid
+    '         Properties: IPAddress, IsValid, Port, uid
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: GetIPEndPoint, GetValue, ToString
-    ' 
-    '         Sub: (+4 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

@@ -36,9 +36,8 @@
     '         Properties: _bindProperty, _rdfType, _valueType, IsArrayType, IsValueType
     '                     Name
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Initlaize, ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class RDFIgnore
     ' 
@@ -50,31 +49,27 @@
     ' 
     '     Class RDFElement
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetXmlSerializationCustomAttribute
-    ' 
-    '         Sub: New
     ' 
     '     Class RDFAttribute
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetXmlSerializationCustomAttribute
-    ' 
-    '         Sub: New
     ' 
     '     Class RDFType
     ' 
     '         Properties: _BindElementTypeInfo, _BindTypeInfo, IsArrayType, PropertyCollection, TypeName
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: CreateTypeDefine, GetTypeDefine, GetXmlSerializationCustomAttribute, ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class RDFNamespaceImports
     ' 
     '         Properties: SchemaUrl, Type
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

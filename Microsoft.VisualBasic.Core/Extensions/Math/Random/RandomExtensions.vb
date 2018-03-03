@@ -39,9 +39,10 @@
     ' 
     '     Module RandomExtensions
     ' 
-    '         Function: (+2 Overloads) GetRandomValue, (+2 Overloads) NextDouble, randf, RandomSingle, Seed
+    '         Function: (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, NextGaussian, NextTriangular
+    '                   Permutation, randf, RandomSingle, Seed
     ' 
-    '         Sub: Shuffle
+    '         Sub: (+2 Overloads) Shuffle
     ' 
     ' 
     ' 

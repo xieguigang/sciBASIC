@@ -33,8 +33,8 @@
 
     '     Module Reflector
     ' 
-    '         Function: __save, Convert, GetsRowData, Load, LoadDataToObject
-    '                   Save
+    '         Function: __save, Convert, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema, GetsRowData
+    '                   Load, LoadDataToObject, Save
     '         Enum OperationTypes
     ' 
     '             ReadDataFromObject, WriteDataToObject

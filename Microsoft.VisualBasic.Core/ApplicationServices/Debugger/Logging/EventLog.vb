@@ -35,9 +35,8 @@
     ' 
     '         Properties: Initialized, Product, Services
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __install, (+3 Overloads) LogException, ToString, (+6 Overloads) WriteEntry
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

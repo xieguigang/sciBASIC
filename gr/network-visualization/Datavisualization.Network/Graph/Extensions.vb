@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: GetNeighbours, NodesID
+    '         Function: GetNeighbours, NodesID, RemoveDuplicated, RemoveSelfLoop
     ' 
     '         Sub: ApplyAnalysis
     ' 

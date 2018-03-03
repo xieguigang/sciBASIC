@@ -33,9 +33,11 @@
 
     '     Class EMailClient
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GmailClient, SendEMail
     ' 
-    '         Sub: New, SendMessagesTo
+    '         Sub: SendMessagesTo
     '         Structure MailConfigure
     ' 
     '             Properties: GMail

@@ -33,7 +33,7 @@
 
     '     Module APIExtensions
     ' 
-    '         Function: (+2 Overloads) Add, mergeAnnotations, Sum
+    '         Function: (+2 Overloads) Add, mergeAnnotations, (+2 Overloads) Sum
     ' 
     ' 
     ' /********************************************************************************/

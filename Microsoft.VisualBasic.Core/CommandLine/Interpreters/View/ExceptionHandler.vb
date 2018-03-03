@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48945d80118e754f49b4a03232c5fe32, Microsoft.VisualBasic.Core\CommandLine\Reflection\ExceptionHandler.vb"
+﻿#Region "Microsoft.VisualBasic::f9bd4ed1ebd97efa821f0d22538001dd, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\ExceptionHandler.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,8 @@
     ' 
     '         Properties: Debugging, Documentation, EMailLink
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Module ExceptionHandler
     ' 

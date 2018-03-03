@@ -35,7 +35,7 @@
     ' 
     '         Properties: TypeInfo
     ' 
-    '         Function: GetCLIMod, GetEntry
+    '         Function: (+2 Overloads) GetCLIMod, GetEntry
     ' 
     ' 
     ' /********************************************************************************/

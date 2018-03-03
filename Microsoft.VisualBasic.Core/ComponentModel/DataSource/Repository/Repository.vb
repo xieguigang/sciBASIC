@@ -61,7 +61,7 @@
     ' 
     '         Properties: Fatal
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90eeeaafe2d336bfd94011643d04ef2b, Microsoft.VisualBasic.Core\CommandLine\Reflection\CLIToken.vb"
+﻿#Region "Microsoft.VisualBasic::8ff64e0303cac9a0b06831b3eadcfc22, Microsoft.VisualBasic.Core\CommandLine\Reflection\CLIToken.vb"
 
     ' Author:
     ' 
@@ -33,21 +33,19 @@
 
     '     Class RunDllEntryPoint
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetDllMethod, GetPoint
-    ' 
-    '         Sub: New
     ' 
     '     Class CLIToken
     ' 
     '         Properties: Name
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class CLIParameter
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

@@ -36,7 +36,8 @@
     '         Properties: Condition, Norm2, Rank, S, SingularValues
     '                     U, V
     ' 
-    '         Sub: ISerializable_GetObjectData, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: ISerializable_GetObjectData
     ' 
     ' 
     ' /********************************************************************************/

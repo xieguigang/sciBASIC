@@ -33,10 +33,8 @@
 
     '     Class Pointer
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: (+3 Overloads) New
-    ' 
     '         Operators: (+2 Overloads) -, (+4 Overloads) +, <, <<, <=
     '                    >, >=
     ' 

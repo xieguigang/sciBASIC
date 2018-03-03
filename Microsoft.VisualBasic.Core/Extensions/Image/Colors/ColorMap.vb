@@ -42,10 +42,9 @@
     ' 
     '         Properties: Alpha, ColorMapLength, ColorMaps, MaxDepth
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Autumn, Cool, GetMaps, Gray, Hot
     '                   Jet, Spring, Summer, Winter
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' 

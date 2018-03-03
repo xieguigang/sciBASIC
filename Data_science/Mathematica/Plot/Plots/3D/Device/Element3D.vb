@@ -55,7 +55,8 @@
     ' 
     '         Properties: A, B, Stroke
     ' 
-    '         Sub: __init, Draw, New, Transform
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: __init, Draw, Transform
     ' 
     '     Class ShapePoint
     ' 

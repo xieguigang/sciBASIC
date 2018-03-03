@@ -35,9 +35,11 @@
     ' 
     '         Properties: Count, EmptySlots
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: (+2 Overloads) Contains, GetAvailablePos, GetEnumerator, GetEnumerator1
     ' 
-    '         Sub: (+2 Overloads) Add, Clear, (+3 Overloads) New, (+2 Overloads) Remove
+    '         Sub: (+2 Overloads) Add, Clear, (+2 Overloads) Remove
     ' 
     ' 
     ' /********************************************************************************/

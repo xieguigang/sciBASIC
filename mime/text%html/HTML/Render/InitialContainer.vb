@@ -36,10 +36,12 @@
     '         Properties: AvoidGeometryAntialias, AvoidTextAntialias, DocumentSource, LinkRegions, MaximumSize
     '                     MediaBlocks, ScrollOffset
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: BlockCorrection_GetInlineGroups, FindParent
     ' 
     '         Sub: BlockCorrection, CascadeStyles, FeedStyleBlock, FeedStyleSheet, MeasureBounds
-    '              (+2 Overloads) New, ParseDocument
+    '              ParseDocument
     ' 
     ' 
     ' /********************************************************************************/

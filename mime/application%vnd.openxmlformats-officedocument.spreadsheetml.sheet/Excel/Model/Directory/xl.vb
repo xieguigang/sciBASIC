@@ -35,9 +35,11 @@
     ' 
     '         Properties: _rels, sharedStrings, styles, workbook, worksheets
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: _name, Exists, GetTableData, GetWorksheet, GetWorksheetByIndex
     ' 
-    '         Sub: _loadContents, New
+    '         Sub: _loadContents
     ' 
     ' 
     ' /********************************************************************************/

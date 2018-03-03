@@ -35,9 +35,11 @@
     ' 
     '         Properties: GetSize, Length
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: Number, (+2 Overloads) Transpose
     ' 
-    '         Sub: (+3 Overloads) New, Resize
+    '         Sub: Resize
     ' 
     '         Operators: (+3 Overloads) -, (+4 Overloads) *, (+2 Overloads) /, (+3 Overloads) +, (+2 Overloads) Or
     ' 

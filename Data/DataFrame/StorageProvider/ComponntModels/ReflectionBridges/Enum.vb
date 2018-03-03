@@ -35,14 +35,12 @@
     ' 
     '         Properties: Name, ProviderId
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: CreateObject, ToString, TryGetValue
-    ' 
-    '         Sub: New
     '         Class GetEnum
     ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Function: TryGetValue
-    ' 
-    '             Sub: New
     ' 
     ' 
     ' 

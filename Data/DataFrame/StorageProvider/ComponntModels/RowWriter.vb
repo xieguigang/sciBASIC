@@ -35,9 +35,8 @@
     ' 
     '         Properties: Columns, MetaRow, SchemaProvider
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetRowNames, ToRow
-    ' 
-    '         Sub: New
     '         Delegate Function
     ' 
     '             Properties: HaveMeta, IsMetaIndexed

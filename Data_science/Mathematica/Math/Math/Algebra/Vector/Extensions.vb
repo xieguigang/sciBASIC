@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5b5bb82198316f4354c9afca8f1b583, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1ad7c039929c177c2c50ec9ffba595b8, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Module Extensions
     ' 
-    '         Function: AsVector, Point2D, Points, (+2 Overloads) rand, Take
+    '         Function: AsVector, Point2D, (+2 Overloads) Points, (+2 Overloads) rand, Take
+    '                   Top
     ' 
     ' 
     ' /********************************************************************************/

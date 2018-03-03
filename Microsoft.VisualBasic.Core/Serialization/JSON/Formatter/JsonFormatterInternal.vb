@@ -33,9 +33,11 @@
 
     '     Class JsonFormatterInternal
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Format
     ' 
-    '         Sub: New, PrettyPrintCharacter
+    '         Sub: PrettyPrintCharacter
     ' 
     ' 
     ' /********************************************************************************/

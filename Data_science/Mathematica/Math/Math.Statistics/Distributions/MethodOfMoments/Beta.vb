@@ -33,9 +33,8 @@
 
     ' 	Class Beta
     ' 
+    ' 	    Constructor: (+3 Overloads) Sub New
     ' 	    Function: GetCDF, GetInvCDF, GetPDF, Validate
-    ' 
-    ' 	    Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

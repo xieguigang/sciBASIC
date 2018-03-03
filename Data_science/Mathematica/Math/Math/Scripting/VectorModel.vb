@@ -33,9 +33,8 @@
 
     '     Class IVector
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetVector, readInternal
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

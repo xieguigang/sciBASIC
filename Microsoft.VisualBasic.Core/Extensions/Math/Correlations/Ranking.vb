@@ -41,7 +41,8 @@
     ' 
     '  
     ' 
-    '     Function: Ranking
+    '     Function: DenseRanking, FractionalRanking, ModifiedCompetitionRanking, OrdinalRanking, Ranking
+    '               StandardCompetitionRanking
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,7 @@
 
     '     Module Users
     ' 
-    '         Function: GetUser
+    '         Function: Followers, Following, GetUser
     ' 
     ' 
     ' /********************************************************************************/

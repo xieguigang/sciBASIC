@@ -35,9 +35,11 @@
     ' 
     '         Properties: Graph, useBoundingBox
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: getParentOffset, getVertexBounds, isEdgeIgnored, setVertexLocation
     ' 
-    '         Sub: execute, New, setEdgeStyleEnabled
+    '         Sub: execute, setEdgeStyleEnabled
     ' 
     ' 
     ' /********************************************************************************/

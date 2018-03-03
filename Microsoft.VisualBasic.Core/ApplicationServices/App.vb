@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f0d335f8af41495d33fcf0362f58090, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::e97147fecf17be6c0e05541fa2e5b449, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -42,15 +42,17 @@
     '                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
     '                 StartupDirectory, StdErr, SysTemp, UserHOME, Version
     ' 
-    '     Function: __CLI, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
-    '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, ElapsedMilliseconds
-    '               GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile
-    '               GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable, (+3 Overloads) LogException
-    '               NullDevice, RunCLI, RunCLIInternal, SelfFolk, SelfFolks
-    '               Shell, TraceBugs
+    '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, JoinVariable
-    '          (+2 Overloads) JoinVariables, New, Pause, (+2 Overloads) println, RunAsAdmin
+    '     Function: __CLI, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
+    '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
+    '               ElapsedMilliseconds, Exit, GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile
+    '               GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
+    '               GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal
+    '               SelfFolk, SelfFolks, Shell, TraceBugs
+    ' 
+    '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
+    '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
     '          SetBufferSize, StartGC, StopGC
     ' 
     ' /********************************************************************************/

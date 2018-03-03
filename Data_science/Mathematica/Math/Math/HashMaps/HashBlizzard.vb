@@ -41,9 +41,11 @@
     ' 
     '  
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: (+2 Overloads) HashBlizzard
     ' 
-    '     Sub: HashBlizzardInit, New
+    '     Sub: HashBlizzardInit
     ' 
     ' 
     ' /********************************************************************************/

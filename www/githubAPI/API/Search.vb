@@ -51,7 +51,7 @@
     '         Structure UsersQuery
     ' 
     '             Properties: [in], created, followers, language, location
-    '                         repos, type
+    '                         repos, term, type
     ' 
     '             Function: ToString, (+2 Overloads) Users
     ' 

@@ -33,7 +33,7 @@
 
     ' Module MethodsExtension
     ' 
-    '     Function: (+2 Overloads) AsLazy
+    '     Function: (+2 Overloads) AsLazy, (+2 Overloads) TryInvoke
     ' 
     ' /********************************************************************************/
 

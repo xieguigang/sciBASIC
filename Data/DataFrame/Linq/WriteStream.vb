@@ -35,9 +35,11 @@
     ' 
     '         Properties: BaseStream, IsMetaIndexed
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: [Ctype], (+2 Overloads) Flush, ToArray, ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose, Flush, New
+    '         Sub: (+2 Overloads) Dispose, Flush
     '         Class __ctypeTransform
     ' 
     '             Function: ToString

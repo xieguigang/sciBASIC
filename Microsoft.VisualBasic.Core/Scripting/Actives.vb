@@ -33,7 +33,8 @@
 
     '     Module Activity
     ' 
-    '         Function: __activeArray, __activeDictionary, __activeList, Active
+    '         Function: __active, __activeArray, __activeDictionary, __activeList, Active
+    '                   ActiveObject, DisplayType
     ' 
     ' 
     ' /********************************************************************************/

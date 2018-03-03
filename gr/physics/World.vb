@@ -44,9 +44,11 @@
     ' 
     '     Delegate Sub
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: LocationGenerator
     ' 
-    '         Sub: AddReaction, New, RaiseEvents, (+2 Overloads) React
+    '         Sub: AddReaction, RaiseEvents, (+2 Overloads) React
     ' 
     '         Operators: +
     ' 

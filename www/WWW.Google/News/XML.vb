@@ -33,8 +33,9 @@
 
     '     Class Channel
     ' 
-    '         Properties: copyright, description, generator, language, lastBuildDate
-    '                     link, pubDate, title, ttl, webMaster
+    '         Properties: copyright, description, generator, image, item
+    '                     language, lastBuildDate, link, pubDate, title
+    '                     ttl, webMaster
     ' 
     '         Function: ToString
     ' 
@@ -48,7 +49,7 @@
     ' 
     '     Class guid
     ' 
-    ' 
+    '         Properties: isPermaLink, text
     ' 
     ' 
     ' /********************************************************************************/

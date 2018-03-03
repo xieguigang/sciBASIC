@@ -33,9 +33,11 @@
 
     '     Class ProjectSpace
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: EnsureProject, GetEnumerator, GetProject, IEnumerable_GetEnumerator, ToString
     ' 
-    '         Sub: ImportFromXmlDocFile, ImportFromXmlDocFolder, LoadFile, New
+    '         Sub: ImportFromXmlDocFile, ImportFromXmlDocFolder, LoadFile
     ' 
     ' 
     ' /********************************************************************************/

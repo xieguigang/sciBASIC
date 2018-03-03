@@ -35,9 +35,11 @@
     ' 
     '         Properties: acceleration, mass, node, position, velocity
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: (+2 Overloads) Equals, GetHashCode, ToString
     ' 
-    '         Sub: ApplyForce, New
+    '         Sub: ApplyForce
     ' 
     '         Operators: <>, =
     ' 

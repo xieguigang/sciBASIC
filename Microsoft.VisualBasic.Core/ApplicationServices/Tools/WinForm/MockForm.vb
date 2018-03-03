@@ -33,13 +33,16 @@
 
     '     Class MockForm
     ' 
-    '         Sub: (+2 Overloads) Dispose, New, Resize
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: (+2 Overloads) Dispose, Resize
     ' 
     '     Class MockTerminal
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __cmd
     ' 
-    '         Sub: __init, New
+    '         Sub: __init
     ' 
     ' 
     ' /********************************************************************************/

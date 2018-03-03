@@ -33,10 +33,12 @@
 
     '     Class VisualBasic
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __CLI, __defaultValue, __normalizedAsIdentifier, __vbParameters, __xmlComments
     '                   GetSourceCode
     ' 
-    '         Sub: __calls, New
+    '         Sub: __calls
     ' 
     ' 
     ' /********************************************************************************/

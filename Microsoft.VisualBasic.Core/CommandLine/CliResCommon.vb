@@ -33,9 +33,8 @@
 
     '     Class CliResCommon
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString, TryRelease
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

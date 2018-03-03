@@ -35,9 +35,11 @@
     ' 
     '     Properties: Angle, source, Strength
     ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
     '     Function: ToString
     ' 
-    '     Sub: (+2 Overloads) New, void
+    '     Sub: void
     ' 
     '     Operators: -, (+2 Overloads) *, ^, +, (+2 Overloads) <
     '                (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) >

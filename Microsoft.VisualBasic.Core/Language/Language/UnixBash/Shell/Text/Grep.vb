@@ -45,10 +45,8 @@
     ' 
     '     Class GrepRegx
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: __grep, __out, Clone, ToString
-    ' 
-    '         Sub: (+4 Overloads) New
-    ' 
     '         Operators: -, *, <<, <=, >=
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ac84b7ab58db6510e0334835e1258d5, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
+﻿#Region "Microsoft.VisualBasic::97b1c26eec49971a07da58b777f3bb42, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: InitialPopulation
     ' 
-    '         Sub: Crossover
+    '         Sub: Crossover, (+2 Overloads) Mutate
     ' 
     ' 
     ' /********************************************************************************/

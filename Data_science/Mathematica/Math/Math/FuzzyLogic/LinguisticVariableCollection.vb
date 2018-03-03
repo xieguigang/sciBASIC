@@ -33,9 +33,8 @@
 
     '     Class LinguisticVariableCollection
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Find
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

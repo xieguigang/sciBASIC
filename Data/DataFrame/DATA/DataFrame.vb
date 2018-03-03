@@ -33,11 +33,9 @@
 
     '     Class DataFrame
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: [As], Append, GetEnumerator, IEnumerable_GetEnumerator, Load
     '                   SaveTable, ToString
-    ' 
-    '         Sub: New
-    ' 
     '         Operators: +
     ' 
     ' 

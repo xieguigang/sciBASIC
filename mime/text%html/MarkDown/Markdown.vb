@@ -37,6 +37,8 @@
     '                     DisableHr, DisableImages, EmptyElementSuffix, LinkEmails, QuoteSingleLine
     '                     StrictBoldItalic
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: __MarkdownTable, AnchorInlineEvaluator, AnchorRefEvaluator, AnchorRefShortcutEvaluator, AtxHeaderEvaluator
     '                   BlockQuoteEvaluator, BlockQuoteEvaluator2, CodeBlockEvaluator, CodeSpanEvaluator, DoAnchors
     '                   DoAutoLinks, DoBlockQuotes, DoCodeBlocks, DoCodeSpans, DoHardBreaks
@@ -49,7 +51,7 @@
     '                   SaveFromAutoLinking, SetextHeaderEvaluator, StripLinkDefinitions, SyntaxedCodeBlockEvaluator, Transform
     '                   Unescape, UnescapeEvaluator
     ' 
-    '         Sub: AddExtension, Cleanup, (+2 Overloads) New, Setup
+    '         Sub: AddExtension, Cleanup, Setup
     ' 
     ' 
     ' /********************************************************************************/

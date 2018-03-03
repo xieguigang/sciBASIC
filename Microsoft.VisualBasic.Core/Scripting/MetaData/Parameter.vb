@@ -35,9 +35,8 @@
     ' 
     '         Properties: [Alias], Description, ParameterInfo, TypeInfo
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetAliasNameView, (+2 Overloads) GetParameterNameAlias, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

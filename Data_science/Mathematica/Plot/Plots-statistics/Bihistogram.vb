@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da6bf498bd0bb3643e9786e132beff16, Data_science\Mathematica\Plot\Plots-statistics\Bihistogram.vb"
+﻿#Region "Microsoft.VisualBasic::6803785d2f3b8fc2e9f8f1fff515d40c, Data_science\Mathematica\Plot\Plots-statistics\Bihistogram.vb"
 
     ' Author:
     ' 

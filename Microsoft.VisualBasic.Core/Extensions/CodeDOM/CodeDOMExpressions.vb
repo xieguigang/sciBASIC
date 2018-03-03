@@ -38,7 +38,7 @@
     '         Function: (+4 Overloads) [Call], [CType], [GetType], (+4 Overloads) [New], (+2 Overloads) [Return]
     '                   (+2 Overloads) Argument, Comments, DeclareFunc, (+2 Overloads) Field, FieldRef
     '                   GetValue, (+3 Overloads) LocalsInit, LocalVariable, (+2 Overloads) Reference, Type
-    '                   Value, ValueAssign
+    '                   TypeRef, Value, ValueAssign
     ' 
     ' 
     ' /********************************************************************************/

@@ -37,9 +37,11 @@
     '                     Precision, ReceiveTimestamp, ReferenceID, ReferenceTimestamp, RootDelay
     '                     RootDispersion, RoundTripDelay, Stratum, TransmitTimestamp, VersionNumber
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ComputeDate, GetMilliSeconds, IsResponseValid, ToString
     ' 
-    '         Sub: Connect, Initialize, New, SetDate, SetTime
+    '         Sub: Connect, Initialize, SetDate, SetTime
     ' 
     ' 
     ' /********************************************************************************/

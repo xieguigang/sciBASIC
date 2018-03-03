@@ -33,9 +33,11 @@
 
     '     Class QuantileEstimationGK
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Query, ToString
     ' 
-    '         Sub: compress, (+2 Overloads) Insert, New
+    '         Sub: compress, (+2 Overloads) Insert
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,7 @@
 
     '     Module SimpleParser
     ' 
-    '         Function: (+2 Overloads) TryParse
+    '         Function: ClearOverlapOperator, (+2 Overloads) TryParse
     ' 
     ' 
     ' /********************************************************************************/

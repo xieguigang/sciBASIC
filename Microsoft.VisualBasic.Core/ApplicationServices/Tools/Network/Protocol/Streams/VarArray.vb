@@ -33,9 +33,8 @@
 
     '     Class VarArray
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Serialize
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

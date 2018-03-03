@@ -33,15 +33,14 @@
 
     '     Structure Percentage
     ' 
-    '         Properties: One, ZERO
+    '         Properties: Denominator, FractionExpr, Numerator, One, Value
+    '                     ZERO
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) CompareTo, Equals, GetTypeCode, ToBoolean, ToByte
     '                   ToChar, ToDateTime, ToDecimal, ToDouble, ToInt16
     '                   ToInt32, ToInt64, ToSByte, ToSingle, (+3 Overloads) ToString
     '                   ToType, ToUInt16, ToUInt32, ToUInt64, TryParse
-    ' 
-    '         Sub: New
-    ' 
     '         Operators: <, >
     ' 
     ' 

@@ -33,10 +33,9 @@
 
     '     Class LinearMoments
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetL1, GetL2, GetL3, GetL4, GetMax
     '                   GetMin, GetSampleSize, GetT1, GetT3, GetT4
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

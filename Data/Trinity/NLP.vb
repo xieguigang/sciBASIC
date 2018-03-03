@@ -33,7 +33,7 @@
 
     ' Module NLPExtensions
     ' 
-    '     Function: AbstractFilter, KeyPhrases
+    '     Function: Abstract, AbstractFilter, KeyPhrases, KeyWords
     ' 
     ' /********************************************************************************/
 

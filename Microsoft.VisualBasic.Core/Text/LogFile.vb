@@ -51,9 +51,11 @@
     '     Properties: ColorfulOutput, FileName, Mute, NowTimeNormalizedString, SuppressError
     '                 SuppressWarns
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: InternalFillBlanks, Read, ReadLine, Save, ToString
     ' 
-    '     Sub: Dispose, (+2 Overloads) LogException, New, SaveLog, (+4 Overloads) WriteLine
+    '     Sub: Dispose, (+2 Overloads) LogException, SaveLog, (+4 Overloads) WriteLine
     ' 
     ' 
     ' /********************************************************************************/

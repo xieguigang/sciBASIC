@@ -35,7 +35,7 @@
     ' 
     '         Properties: Types
     ' 
-    '         Function: Load, TrimAssemblyDoc
+    '         Function: __boldParam, __trans, Load, TrimAssemblyDoc
     ' 
     ' 
     ' /********************************************************************************/

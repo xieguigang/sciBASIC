@@ -35,9 +35,8 @@
     ' 
     '         Properties: CSSValue, dash, fill, GDIObject, width
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: GetDashStyle, ToString, TryParse
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

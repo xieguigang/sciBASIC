@@ -39,9 +39,11 @@
     ' 
     '         Properties: RunningTask, Tasks, uid
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: (+2 Overloads) Join
     ' 
-    '         Sub: __taskQueueEXEC, (+2 Overloads) Dispose, (+2 Overloads) Enqueue, New
+    '         Sub: __taskQueueEXEC, (+2 Overloads) Dispose, (+2 Overloads) Enqueue
     '         Structure __task
     ' 
     '             Properties: Value

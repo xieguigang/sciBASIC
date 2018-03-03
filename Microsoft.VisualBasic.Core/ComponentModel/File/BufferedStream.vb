@@ -33,11 +33,13 @@
 
     '     Class BufferedStream
     ' 
-    '         Properties: EndRead
+    '         Properties: EndRead, FileName
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: BufferProvider, LinesIterator, ReadAllLines, ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose, (+3 Overloads) New, Reset
+    '         Sub: (+2 Overloads) Dispose, Reset
     ' 
     ' 
     ' /********************************************************************************/

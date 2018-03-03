@@ -33,9 +33,8 @@
 
     '     Class Splitter
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __split, isValidDelimiterBinary, isValidDelimiterText, Split
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

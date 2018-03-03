@@ -35,7 +35,7 @@
     ' 
     '         Properties: InputNeuron, OutputNeuron, Weight, WeightDelta
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

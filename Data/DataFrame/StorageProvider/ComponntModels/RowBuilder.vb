@@ -41,9 +41,11 @@
     ' 
     '         Properties: Columns, HaveMetaAttribute, IndexedFields, NonIndexed, SchemaProvider
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __tryFill, FillData, ToString
     ' 
-    '         Sub: Indexof, New, SolveReadOnlyMetaConflicts
+    '         Sub: Indexof, SolveReadOnlyMetaConflicts
     ' 
     ' 
     ' /********************************************************************************/

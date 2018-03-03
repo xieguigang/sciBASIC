@@ -35,9 +35,8 @@
     ' 
     '         Properties: Name, TypeInfo
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GenerateConfigurations, ToString, TryParse
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -41,21 +41,19 @@
     ' 
     '     Class TreeNode
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class LeafX
     ' 
     '         Properties: LeafX
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetEntities
-    ' 
-    '         Sub: New
     ' 
     '     Class Leaf
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetEntities
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

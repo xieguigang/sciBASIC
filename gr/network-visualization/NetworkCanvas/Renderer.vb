@@ -35,10 +35,11 @@
     ' 
     '     Properties: ClientRegion, Font, ShowLabels, ZeroFilter
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: (+2 Overloads) GraphToScreen, ScreenToGraph
     ' 
     '     Sub: __invokeEdgeDraw, Clear, DirectDraw, drawEdge, drawNode
-    '          New
     ' 
     ' /********************************************************************************/
 

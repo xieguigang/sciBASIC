@@ -61,15 +61,17 @@
     '                     Top, VerticalAlign, WhiteSpace, Width, Words
     '                     WordSpacing
     ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
     '         Function: ContainsInlinesOnly, FirstWordOccourence, (+2 Overloads) GetAttribute, GetDefaultValue, GetEmHeight
     '                   GetFullWidth, GetIndexForList, GetMaximumBottom, GetMinimumWidth, GetNextSibling
     '                   GetPreviousSibling, HasJustInlineSiblings, InlineAssignHelper, MarginCollapse, NoEms
     '                   ToString
     ' 
     '         Sub: CreateListItemBox, GetFullWidth_WordsWith, GetMinimumWidth_BubblePadding, GetMinimumWidth_LongestWord, (+2 Overloads) InheritStyle
-    '              MeasureBounds, MeasureWordSpacing, MeasureWordsSize, (+4 Overloads) New, OffsetRectangle
-    '              OffsetTop, Paint, PaintBackground, PaintBorder, PaintDecoration
-    '              RectanglesReset, RemoveAnonymousSpaces, (+2 Overloads) SetBounds, SetInitialContainer, UpdateWords
+    '              MeasureBounds, MeasureWordSpacing, MeasureWordsSize, OffsetRectangle, OffsetTop
+    '              Paint, PaintBackground, PaintBorder, PaintDecoration, RectanglesReset
+    '              RemoveAnonymousSpaces, (+2 Overloads) SetBounds, SetInitialContainer, UpdateWords
     ' 
     ' 
     ' /********************************************************************************/

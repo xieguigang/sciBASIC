@@ -33,6 +33,8 @@
 
     '     Class CSS
     ' 
+    '         Properties: id, style, type
+    ' 
     '         Function: Generator, ToString
     ' 
     ' 

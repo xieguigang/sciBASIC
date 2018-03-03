@@ -31,17 +31,21 @@
 
     ' Summaries:
 
-    '  
+    '     Class XmlModel3D
     ' 
-    '     Properties: build, resources, unit
+    '         Properties: build, resources, unit
     ' 
-    '     Function: GetSurfaces
+    '         Function: GetSurfaces
     ' 
     '     Class build
+    ' 
+    '         Properties: items
     ' 
     '         Function: ToString
     ' 
     '     Class item
+    ' 
+    '         Properties: objectid, transform
     ' 
     '         Function: ToString
     ' 

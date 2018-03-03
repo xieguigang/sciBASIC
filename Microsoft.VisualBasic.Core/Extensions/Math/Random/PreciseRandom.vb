@@ -33,9 +33,8 @@
 
     '     Class PreciseRandom
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: NextDouble, NextNumber, rand, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

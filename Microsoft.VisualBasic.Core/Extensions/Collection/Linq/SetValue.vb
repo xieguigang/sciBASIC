@@ -37,9 +37,8 @@
     ' 
     '     Class SetValue
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     '         Delegate Function
     ' 
     '             Function: GetEnumerator, GetSet, IEnumerable_GetEnumerator, InvokeSet, (+2 Overloads) InvokeSetValue

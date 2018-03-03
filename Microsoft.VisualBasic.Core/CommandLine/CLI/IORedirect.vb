@@ -39,10 +39,12 @@
     ' 
     '         Delegate Sub
     ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
     '             Function: __tryGetSTDOUT, GetError, Read, ReadLine, Run
     '                       Shell, (+3 Overloads) Start, ToString
     ' 
-    '             Sub: __detectProcessExit, __listenSTDOUT, (+2 Overloads) Dispose, New, (+2 Overloads) WriteLine
+    '             Sub: __detectProcessExit, __listenSTDOUT, (+2 Overloads) Dispose, (+2 Overloads) WriteLine
     ' 
     ' 
     ' 

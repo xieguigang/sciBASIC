@@ -33,11 +33,13 @@
 
     '     Class Style
     ' 
-    '         Properties: IconStyle, LabelStyle
+    '         Properties: IconStyle, id, LabelStyle
     ' 
     '         Function: ToString
     ' 
     '     Class StyleMap
+    ' 
+    '         Properties: id, Pairs
     ' 
     '         Function: ToString
     ' 
@@ -60,6 +62,8 @@
     '         Function: ToString
     ' 
     '     Class hotSpot
+    ' 
+    '         Properties: x, xunits, y, yunits
     ' 
     '         Function: ToString
     ' 

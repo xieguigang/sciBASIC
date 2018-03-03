@@ -47,15 +47,15 @@
     '         Function: GetColors, ParseName, ToString
     '         Class DivergingSchemes
     ' 
-    '             Sub: New
+    '             Constructor: (+1 Overloads) Sub New
     ' 
     '         Class QualitativeSchemes
     ' 
-    '             Sub: New
+    '             Constructor: (+1 Overloads) Sub New
     ' 
     '         Class SequentialSchemes
     ' 
-    '             Sub: New
+    '             Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' 

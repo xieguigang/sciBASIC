@@ -33,13 +33,13 @@
 
     '     Module WinAPI
     ' 
-    '         Function: ToString
+    '         Function: SetLocalTime
+    '         Structure SYSTEMTIME
     ' 
-    '         Sub: New
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: ToString
     ' 
-    '  
     ' 
-    '     Function: SetLocalTime
     ' 
     ' 
     ' /********************************************************************************/

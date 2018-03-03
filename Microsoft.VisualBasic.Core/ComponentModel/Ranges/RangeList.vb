@@ -33,9 +33,8 @@
 
     '     Class RangeList
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: [Select], (+2 Overloads) SelectValue
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -31,9 +31,9 @@
 
     ' Summaries:
 
-    '  
+    '     Class KML
     ' 
-    '     Properties: Documents
+    '         Properties: Documents
     ' 
     '     Class node
     ' 
@@ -41,7 +41,7 @@
     ' 
     '     Class Document
     ' 
-    '         Properties: description, Folder, NetworkLink
+    '         Properties: description, Folder, NetworkLink, StyleMaps, Styles
     ' 
     '         Function: ToString
     ' 
@@ -51,7 +51,7 @@
     ' 
     '     Class Folder
     ' 
-    ' 
+    '         Properties: marks
     ' 
     '     Class Placemark
     ' 
@@ -63,11 +63,11 @@
     ' 
     '     Class ExtendedData
     ' 
-    ' 
+    '         Properties: data
     ' 
     '     Class Data
     ' 
-    '         Properties: value
+    '         Properties: name, value
     ' 
     ' 
     ' /********************************************************************************/

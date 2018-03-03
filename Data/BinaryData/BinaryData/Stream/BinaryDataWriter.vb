@@ -35,10 +35,12 @@
     ' 
     '     Properties: ByteOrder, Encoding, Position
     ' 
+    '     Constructor: (+5 Overloads) Sub New
+    ' 
     '     Function: DecimalToBytes, ReserveOffset, (+2 Overloads) Seek, (+2 Overloads) TemporarySeek
     ' 
-    '     Sub: Align, (+5 Overloads) New, (+21 Overloads) Write, WriteByteLengthPrefixString, WriteDwordLengthPrefixString
-    '          WriteMultiple, WriteNoPrefixOrTerminationString, WriteReversed, WriteWordLengthPrefixString, WriteZeroTerminatedString
+    '     Sub: Align, (+21 Overloads) Write, WriteByteLengthPrefixString, WriteDwordLengthPrefixString, WriteMultiple
+    '          WriteNoPrefixOrTerminationString, WriteReversed, WriteWordLengthPrefixString, WriteZeroTerminatedString
     ' 
     ' /********************************************************************************/
 

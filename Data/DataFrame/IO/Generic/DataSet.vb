@@ -35,9 +35,8 @@
     ' 
     '         Properties: ID, MyHashCode
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: __getID, Copy, (+2 Overloads) LoadDataSet, SubSet, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

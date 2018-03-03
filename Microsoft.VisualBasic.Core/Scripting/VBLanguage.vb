@@ -35,9 +35,8 @@
     ' 
     '         Properties: Words
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: AutoEscapeVBKeyword
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

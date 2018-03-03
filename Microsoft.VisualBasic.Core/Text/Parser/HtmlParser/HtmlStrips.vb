@@ -33,12 +33,13 @@
 
     '     Module HtmlStrips
     ' 
-    '         Function: GetHtmlComments, GetImageLinks, GetInput, GetInputGroup, GetSelectInputGroup
-    '                   GetSelectOptions, GetSelectValue, HtmlLines, img, RemovesCSSstyles
-    '                   RemovesFooter, RemovesHtmlComments, RemovesHtmlHead, RemovesHtmlStrong, RemovesImageLinks
-    '                   RemovesJavaScript, RemoveTags, src, stripTag, TagAttributes
-    ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetHtmlComments, GetImageLinks, GetInput, GetInputGroup, GetLinks
+    '                   GetSelectInputGroup, GetSelectOptions, GetSelectValue, GetValue, href
+    '                   HtmlLines, HTMLTitle, img, RemovesCSSstyles, RemovesFooter
+    '                   RemovesHtmlComments, RemovesHtmlHead, RemovesHtmlStrong, RemovesImageLinks, RemovesJavaScript
+    '                   RemoveTags, (+2 Overloads) src, StripHTMLTags, stripTag, TagAttributes
+    '                   TrimResponseTail
     ' 
     ' 
     ' /********************************************************************************/

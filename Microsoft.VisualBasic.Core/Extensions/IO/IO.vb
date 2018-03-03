@@ -33,7 +33,8 @@
 
     ' Module IOExtensions
     ' 
-    '     Function: FlushStream, Open, OpenReader, ReadBinary, ReadVector
+    '     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
+    '               ReadBinary, ReadVector
     ' 
     '     Sub: ClearFileBytes, FlushTo
     ' 

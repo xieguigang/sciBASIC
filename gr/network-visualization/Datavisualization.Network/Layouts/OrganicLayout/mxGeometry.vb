@@ -36,9 +36,11 @@
     '         Properties: AlternateBounds, Offset, Points, Relative, SourcePoint
     '                     TargetPoint
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: clone, getTerminalPoint, setTerminalPoint
     ' 
-    '         Sub: (+2 Overloads) New, swap, translate
+    '         Sub: swap, translate
     ' 
     ' 
     ' /********************************************************************************/

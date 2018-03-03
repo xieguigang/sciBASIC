@@ -35,9 +35,8 @@
     ' 
     '         Properties: Numerics
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: CreateArray, OverloadsBinaryOperator
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

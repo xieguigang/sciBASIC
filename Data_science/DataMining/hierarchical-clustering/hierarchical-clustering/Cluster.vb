@@ -36,9 +36,11 @@
     '     Properties: Children, Distance, DistanceValue, Leaf, LeafNames
     '                 Name, Parent, TotalDistance, WeightValue
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: contains, (+2 Overloads) CountLeafs, Equals, GetHashCode, ToString
     ' 
-    '     Sub: AddChild, AddLeafName, AppendLeafNames, New
+    '     Sub: AddChild, AddLeafName, AppendLeafNames
     ' 
     ' /********************************************************************************/
 

@@ -35,9 +35,8 @@
     ' 
     '         Properties: HashUser, UserHash
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __getData, __userInitPOST, Handler, IsValid
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

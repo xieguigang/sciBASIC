@@ -35,9 +35,8 @@
     ' 
     '         Properties: ErrMessage
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: __sendMail, GmailClient, QQMail, SendEMail, SendMessagesTo
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

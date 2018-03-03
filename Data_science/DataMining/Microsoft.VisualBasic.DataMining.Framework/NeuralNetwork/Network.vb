@@ -35,9 +35,11 @@
     ' 
     '         Properties: HiddenLayer, InputLayer, LearnRate, Momentum, OutputLayer
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: CalculateError, Compute
     ' 
-    '         Sub: BackPropagate, ForwardPropagate, New, (+2 Overloads) Train
+    '         Sub: BackPropagate, ForwardPropagate, (+2 Overloads) Train
     ' 
     ' 
     ' /********************************************************************************/

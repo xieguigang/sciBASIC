@@ -33,9 +33,11 @@
 
     '     Class Cube
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: Copy, GetEnumerator, IEnumerable_GetEnumerator
     ' 
-    '         Sub: Draw, (+3 Overloads) New
+    '         Sub: Draw
     ' 
     ' 
     ' /********************************************************************************/

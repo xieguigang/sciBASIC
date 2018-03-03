@@ -33,7 +33,8 @@
 
     '     Module NumericsVector
     ' 
-    ' 
+    '         Function: AsBytes, AsInteger, AsLong, AsSByte, AsSingle
+    '                   AsUInteger, AsULong, AsUShort, AsVector
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,9 +35,8 @@
     ' 
     '         Properties: H, L, S
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetHSL, hue2rgb, Lighten, ToRGB, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

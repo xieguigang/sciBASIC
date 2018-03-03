@@ -36,10 +36,8 @@
     '         Properties: Current, EndRead, Length, NullEnd, Position
     '                     RawBuffer, UBound
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: MoveNext, ToString
-    ' 
-    '         Sub: (+4 Overloads) New
-    ' 
     '         Operators: (+2 Overloads) -, (+2 Overloads) +, <<, (+2 Overloads) <=, (+2 Overloads) >=
     '                    >>
     ' 

@@ -35,9 +35,11 @@
     ' 
     '         Properties: rels, workbook
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: _name
     ' 
-    '         Sub: _loadContents, New
+    '         Sub: _loadContents
     ' 
     ' 
     ' /********************************************************************************/

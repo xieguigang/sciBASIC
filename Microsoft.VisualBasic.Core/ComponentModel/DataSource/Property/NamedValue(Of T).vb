@@ -33,12 +33,10 @@
 
     '     Structure NamedValue
     ' 
-    '         Properties: Description, IsEmpty, Name, ValueType
+    '         Properties: Description, IsEmpty, Name, Value, ValueType
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: FixValue, ToString
-    ' 
-    '         Sub: New
-    ' 
     '         Operators: (+2 Overloads) +, <>, =
     ' 
     ' 

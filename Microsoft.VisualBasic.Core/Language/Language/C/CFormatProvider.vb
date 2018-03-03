@@ -33,8 +33,8 @@
 
     '     Module CLangStringFormatProvider
     ' 
-    '         Function: FormatHex, FormatNumber, FormatOct, IsPositive, ReplaceMetaCharsMatch
-    '                   sprintf, ToInteger, ToUnsigned, UnboxToLong
+    '         Function: FormatHex, FormatNumber, FormatOct, IsPositive, ReplaceMetaChars
+    '                   ReplaceMetaCharsMatch, sprintf, ToInteger, ToUnsigned, UnboxToLong
     ' 
     ' 
     ' /********************************************************************************/

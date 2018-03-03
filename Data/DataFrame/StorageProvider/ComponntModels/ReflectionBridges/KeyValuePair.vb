@@ -35,9 +35,8 @@
     ' 
     '         Properties: Name, ProviderId
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: CreateObject, ToString
-    ' 
-    '         Sub: New
     '         Class __LoadValue
     ' 
     '             Properties: Key, Value, ValueType

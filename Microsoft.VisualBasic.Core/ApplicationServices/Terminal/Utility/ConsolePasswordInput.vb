@@ -77,9 +77,11 @@
     '                   SetConsoleMode, WriteConsole, WriteConsoleOutputCharacter
     '         Delegate Function
     ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
     '             Function: FocusEventProc, KeyEventProc, MenuEventProc, MouseEventProc, WindowBufferSizeEventProc
     ' 
-    '             Sub: New, PasswordInput
+    '             Sub: PasswordInput
     ' 
     ' 
     ' 

@@ -37,9 +37,11 @@
     '                     IsShutdown, LocalPort, PrivateKeys, PushServices, RaiseHandshakingEvent
     '                     RefuseHandshake, Responsehandler
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __redirect, __responsehandler, Install, (+2 Overloads) Run
     ' 
-    '         Sub: (+2 Overloads) Dispose, Install, New, WaitForRunning
+    '         Sub: (+2 Overloads) Dispose, Install, WaitForRunning
     ' 
     ' 
     ' /********************************************************************************/

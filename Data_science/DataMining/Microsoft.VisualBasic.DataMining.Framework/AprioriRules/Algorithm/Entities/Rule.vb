@@ -33,11 +33,10 @@
 
     '     Class Rule
     ' 
-    '         Properties: SupportX, SupportXY
+    '         Properties: Confidence, SupportX, SupportXY, X, Y
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: CompareTo, Equals, GetHashCode, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

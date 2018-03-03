@@ -35,9 +35,8 @@
     ' 
     '         Properties: Language, Text
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,7 @@
 
     '     Class Href
     ' 
-    '         Properties: ResourceId, Value
+    '         Properties: Annotations, ResourceId, Value
     ' 
     '         Function: GetFullPath, ToString
     ' 

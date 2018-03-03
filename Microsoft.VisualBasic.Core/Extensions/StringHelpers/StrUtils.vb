@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd0847410227a7cbc5dc74bedf664f05, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "Microsoft.VisualBasic::23ed94bf8957d47f0eb3fdfd6c50d5be, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' 
     '     Properties: InvariantCulture
     ' 
-    '     Function: AddWithDelim, CharCode, CharCodes, (+6 Overloads) ContactWithDelim, ContactWithDelimSkipEmpty
-    '               ContactWithDelimSkipNull, ContactWithDelimSkipSome, CountWordFrequency, (+2 Overloads) EndsWith, EscapeQuotesAndBackslashes
-    '               GetCompareType, GetHeader, GetLastSubStringBetween, GetString, GetSubStringBetween
-    '               GetWords, LowerCaseFirstChar, RandomASCIIString, Remove, SplitIntoLines
-    '               SplitRemoveEmptyEntries, SplitWithSeparator, SplitWithSeparatorFromRight, SplitWithSpaces, (+2 Overloads) StartsWith
-    '               StartWithUpperCase, UpperCaseFirstChar
+    '     Function: AddWithDelim, CharCode, CharCodes, CharString, (+6 Overloads) ContactWithDelim
+    '               ContactWithDelimSkipEmpty, ContactWithDelimSkipNull, ContactWithDelimSkipSome, CountWordFrequency, (+2 Overloads) EndsWith
+    '               EscapeQuotesAndBackslashes, GetCompareType, GetHeader, GetLastSubStringBetween, GetString
+    '               GetSubStringBetween, GetWords, LongestTag, LowerCaseFirstChar, RandomASCIIString
+    '               RandomCharString, Remove, SplitIntoLines, SplitRemoveEmptyEntries, SplitWithSeparator
+    '               SplitWithSeparatorFromRight, SplitWithSpaces, (+2 Overloads) StartsWith, StartWithUpperCase, UpperCaseFirstChar
     ' 
     ' /********************************************************************************/
 

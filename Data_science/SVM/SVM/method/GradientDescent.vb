@@ -33,9 +33,8 @@
 
     '     Class GradientDescent
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: [stop], __lipschitzConstant, calcDerivation, innerOptimize
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

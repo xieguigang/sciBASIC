@@ -35,11 +35,15 @@
     ' 
     '     Properties: DefaultUA, Protocols, Proxy
     ' 
-    '     Function: __getMyIPAddress, BuildArgs, BuildReqparm, CheckValidationResult, GenerateDictionary
-    '               GetMyIPAddress, GetProxy, (+2 Overloads) PostRequest, UrlDecode, UrlEncode
-    '               UrlPathEncode
+    '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Sub: New, (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+    '     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
+    '               CopyStream, (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress
+    '               GetProxy, (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL
+    '               (+2 Overloads) POST, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
+    '               UrlEncode, UrlPathEncode
+    ' 
+    '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
     ' 
     ' /********************************************************************************/
 

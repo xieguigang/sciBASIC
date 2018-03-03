@@ -33,9 +33,11 @@
 
     '     Class Dictionary
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: Find, GetValueList, Remove, SafeGetValue, (+2 Overloads) TryGetValue
     ' 
-    '         Sub: Add, AddRange, InsertOrUpdate, (+3 Overloads) New
+    '         Sub: Add, AddRange, InsertOrUpdate
     ' 
     '         Operators: (+2 Overloads) -, ^, +, <=, >=
     ' 

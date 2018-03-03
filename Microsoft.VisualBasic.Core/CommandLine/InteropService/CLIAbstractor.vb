@@ -33,7 +33,7 @@
 
     '     Module CLIAbstractor
     ' 
-    '         Function: CLIUsage
+    '         Function: CLICaller, CLIUsage
     ' 
     ' 
     ' /********************************************************************************/

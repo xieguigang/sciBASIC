@@ -33,7 +33,7 @@
 
     '     Module BarPlotDataExtensions
     ' 
-    '         Function: GroupBy, LoadDataSet, SerialDatas, Takes
+    '         Function: GroupBy, LoadDataSet, Normalize, SerialDatas, Takes
     ' 
     ' 
     ' /********************************************************************************/

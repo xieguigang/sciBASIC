@@ -35,9 +35,8 @@
     ' 
     '         Properties: Keys
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: AsVector, EmptyVector, ToString, Translate
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

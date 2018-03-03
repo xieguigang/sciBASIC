@@ -35,10 +35,12 @@
     ' 
     '         Properties: Position
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: [Error], GetEorrorMessages, MatchTerminal, MatchTerminalRange, MatchTerminalSet
     '                   MatchTerminalString, (+2 Overloads) TerminalMatch
     ' 
-    '         Sub: ClearError, New, SetInput
+    '         Sub: ClearError, SetInput
     ' 
     ' 
     ' /********************************************************************************/

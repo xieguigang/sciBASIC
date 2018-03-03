@@ -41,10 +41,12 @@
     ' 
     '         Properties: NewMessageCallBack, URI
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: CreateObject, getMessage, Ping, ReadData, ReadString
     '                   SendMessage, ToString, WriteMessage
     ' 
-    '         Sub: __dataArrival, (+2 Overloads) Dispose, (+2 Overloads) New, (+3 Overloads) SendMessage
+    '         Sub: __dataArrival, (+2 Overloads) Dispose, (+3 Overloads) SendMessage
     ' 
     ' 
     ' 

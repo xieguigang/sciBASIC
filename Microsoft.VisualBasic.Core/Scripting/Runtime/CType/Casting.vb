@@ -33,11 +33,12 @@
 
     '     Module Casting
     ' 
-    '         Function: (+2 Overloads) [As], CastChar, CastCharArray, CastCommandLine, CastDate
+    '         Function: (+3 Overloads) [As], CastChar, CastCharArray, CastCommandLine, CastDate
     '                   CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage, CastInteger
     '                   CastIPEndPoint, CastLogFile, CastLong, CastProcess, CastRegexOptions
     '                   CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser, FloatSizeParser
-    '                   NumericRangeParser, ParseNumeric, PointParser, ScriptValue
+    '                   NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble, ScriptValue
+    '                   SizeParser
     ' 
     ' 
     ' /********************************************************************************/

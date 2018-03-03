@@ -35,11 +35,12 @@
     ' 
     '         Properties: MyLocalPort, OnServerHashCode, RemoteServerShutdown, Responsehandler
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: BeginConnect, readDataBuffer, ToString
     ' 
-    '         Sub: __receive, __send, ConnectCallback, (+2 Overloads) Dispose, (+3 Overloads) New
-    '              Receive, ReceiveCallback, requestHandle, WaitForConnected, WaitForHash
-    '              waitReceive
+    '         Sub: __receive, __send, ConnectCallback, (+2 Overloads) Dispose, Receive
+    '              ReceiveCallback, requestHandle, WaitForConnected, WaitForHash, waitReceive
     '         Class StateObject
     ' 
     ' 

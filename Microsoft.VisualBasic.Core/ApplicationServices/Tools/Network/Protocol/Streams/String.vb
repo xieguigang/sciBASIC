@@ -33,9 +33,10 @@
 
     '     Class [String]
     ' 
-    '         Function: Serialize, ToString
+    '         Properties: Encoding, value
     ' 
-    '         Sub: (+4 Overloads) New
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: Serialize, ToString
     ' 
     ' 
     ' /********************************************************************************/

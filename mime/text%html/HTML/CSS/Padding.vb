@@ -31,16 +31,14 @@
 
     ' Summaries:
 
-    '  
+    '     Structure Padding
     ' 
-    '     Properties: Bottom, IsEmpty, LayoutVector, Left, Right
-    '                 Top
+    '         Properties: Bottom, Horizontal, IsEmpty, LayoutVector, Left
+    '                     Right, Top, Vertical
     ' 
-    '     Function: Equals, GetCanvasRegion, ToString, TryParse
-    ' 
-    '     Sub: (+5 Overloads) New
-    ' 
-    '     Operators: -, +, <>, =
+    '         Constructor: (+5 Overloads) Sub New
+    '         Function: Equals, GetCanvasRegion, ToString, TryParse
+    '         Operators: -, +, <>, =
     ' 
     ' 
     ' /********************************************************************************/

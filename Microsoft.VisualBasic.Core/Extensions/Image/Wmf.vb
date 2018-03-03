@@ -35,7 +35,8 @@
     ' 
     '         Properties: FilePath, Size
     ' 
-    '         Sub: __release, Dispose, DrawCircle, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: __release, Dispose, DrawCircle
     ' 
     ' 
     ' /********************************************************************************/

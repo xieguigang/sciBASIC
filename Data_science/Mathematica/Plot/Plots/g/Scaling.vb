@@ -35,9 +35,8 @@
     ' 
     '         Properties: xrange, yrange
     ' 
+    '         Constructor: (+6 Overloads) Sub New
     '         Function: __barDataProvider, __scaling, Average, (+3 Overloads) Scaling, (+2 Overloads) ScalingTuple
-    ' 
-    '         Sub: (+6 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

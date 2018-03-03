@@ -35,9 +35,11 @@
     ' 
     '     Properties: Key
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: GetValue, ToString
     ' 
-    '     Sub: New, SetValue
+    '     Sub: SetValue
     ' 
     ' /********************************************************************************/
 

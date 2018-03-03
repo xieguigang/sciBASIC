@@ -35,9 +35,11 @@
     ' 
     '     Properties: Line, Points
     ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
     '     Function: Equals
     ' 
-    '     Sub: AddPoint, ClearPoints, (+2 Overloads) New, RemovePoint
+    '     Sub: AddPoint, ClearPoints, RemovePoint
     ' 
     ' /********************************************************************************/
 

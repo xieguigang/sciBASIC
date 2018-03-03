@@ -35,7 +35,8 @@
     ' 
     '     Properties: rotate, ViewDistance
     ' 
-    '     Sub: drawEdge, drawNode, New
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: drawEdge, drawNode
     ' 
     ' /********************************************************************************/
 

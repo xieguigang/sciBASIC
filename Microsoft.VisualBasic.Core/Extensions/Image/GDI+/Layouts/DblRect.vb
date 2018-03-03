@@ -35,10 +35,12 @@
     ' 
     '         Properties: CenterX, CenterY, Height, Rectangle, Width
     ' 
+    '         Constructor: (+6 Overloads) Sub New
+    ' 
     '         Function: Clone, contains, Equals, intersection, intersectLine
     '                   ToString
     ' 
-    '         Sub: add, grow, (+6 Overloads) New, setRect
+    '         Sub: add, grow, setRect
     ' 
     ' 
     ' /********************************************************************************/

@@ -36,7 +36,8 @@
     '         Sub: Updates
     '         Class __layoutGenerator
     ' 
-    '             Sub: Clear, drawEdge, drawNode, New
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Clear, drawEdge, drawNode
     ' 
     ' 
     ' 

@@ -35,7 +35,8 @@
     ' 
     '     Properties: Line, Points, State
     ' 
-    '     Sub: AddPoint, ClearPoints, Draw, New, RemovePoint
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: AddPoint, ClearPoints, Draw, RemovePoint
     ' 
     ' /********************************************************************************/
 

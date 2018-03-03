@@ -33,9 +33,11 @@
 
     '     Class InteractiveConsole
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: RunApp
     ' 
-    '         Sub: New, RunAppInternal
+    '         Sub: RunAppInternal
     ' 
     ' 
     ' /********************************************************************************/

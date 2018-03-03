@@ -33,9 +33,11 @@
 
     '     Module RandomNumbers
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: rand, random
     ' 
-    '         Sub: New, randomize, srand
+    '         Sub: randomize, srand
     ' 
     ' 
     ' /********************************************************************************/

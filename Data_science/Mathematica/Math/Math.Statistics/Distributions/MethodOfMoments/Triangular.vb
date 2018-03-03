@@ -33,10 +33,9 @@
 
     ' 	Class Triangular
     ' 
+    ' 	    Constructor: (+3 Overloads) Sub New
     ' 	    Function: GetCDF, GetInvCDF, GetMax, GetMin, GetMostLikely
     '                GetPDF, Validate
-    ' 
-    ' 	    Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

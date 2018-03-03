@@ -33,23 +33,21 @@
 
     '     Class Driver
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class CSSSelector
     ' 
     '         Properties: IsGlobal, Type
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class GlobalCSSSelector
     ' 
     '         Properties: IsGlobal
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Enum Types
     ' 

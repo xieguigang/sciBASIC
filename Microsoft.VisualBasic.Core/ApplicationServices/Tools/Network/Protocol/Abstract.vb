@@ -35,15 +35,13 @@
     ' 
     '         Function: Serialize
     ' 
-    '  
+    '     Class RawStream
     ' 
-    '     Properties: _rawStreamType
+    '         Properties: _rawStreamType
     ' 
-    '     Function: GetRawStream
-    ' 
-    '     Sub: (+2 Overloads) New
-    ' 
-    '     Operators: <=, >=
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: GetRawStream
+    '         Operators: <=, >=
     ' 
     '     Delegate Function
     ' 

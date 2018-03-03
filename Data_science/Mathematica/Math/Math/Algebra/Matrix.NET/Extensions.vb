@@ -33,7 +33,9 @@
 
     '     Module Extensions
     ' 
-    '         Function: ColumnVector, rand, size
+    '         Function: CenterNormalize, ColumnVector, Covariance, rand, size
+    ' 
+    '         Sub: Print
     ' 
     ' 
     ' /********************************************************************************/

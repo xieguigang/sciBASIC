@@ -36,9 +36,11 @@
     '         Properties: [Declare], Name, Params, Remarks, Returns
     '                     Summary, Type
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ToString
     ' 
-    '         Sub: LoadFromNode, New
+    '         Sub: LoadFromNode
     ' 
     ' 
     ' /********************************************************************************/

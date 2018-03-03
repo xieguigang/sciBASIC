@@ -35,9 +35,8 @@
     ' 
     '         Properties: First, Last, Length
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: GetEnumerator, IEnumerable_GetEnumerator, Subset, ToString, Which
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

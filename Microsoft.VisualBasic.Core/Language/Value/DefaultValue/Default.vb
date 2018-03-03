@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2889c36ebd276bb6b62fca20721ad2f5, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::d9c9fb46f29d1d1a3656f6c0273cce3f, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -49,10 +49,8 @@
     ' 
     '         Properties: DefaultValue, IsEmpty
     ' 
-    '         Function: ToString
-    ' 
-    '         Sub: (+2 Overloads) New
-    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: [When], ToString
     '         Operators: +, (+4 Overloads) Or
     ' 
     ' 

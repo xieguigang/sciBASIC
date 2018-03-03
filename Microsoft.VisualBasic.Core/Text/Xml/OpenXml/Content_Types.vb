@@ -33,11 +33,13 @@
 
     '     Class ContentTypes
     ' 
-    '         Properties: [Overrides]
+    '         Properties: [Default], [Overrides]
     ' 
     '         Function: ToString
     ' 
     '     Structure Type
+    ' 
+    '         Properties: ContentType, Extension, PartName
     ' 
     '         Function: ToString
     ' 

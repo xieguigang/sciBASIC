@@ -35,10 +35,8 @@
     ' 
     '         Properties: Regex
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
-    ' 
     '         Operators: <=, >=, (+4 Overloads) And, (+4 Overloads) Like
     ' 
     ' 

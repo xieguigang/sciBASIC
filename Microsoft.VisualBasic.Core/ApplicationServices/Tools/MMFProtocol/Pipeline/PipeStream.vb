@@ -35,9 +35,8 @@
     ' 
     '         Properties: hashTable
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetValue, Serialize
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

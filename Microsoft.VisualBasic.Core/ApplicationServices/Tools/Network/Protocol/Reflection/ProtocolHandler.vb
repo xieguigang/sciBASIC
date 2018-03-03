@@ -35,9 +35,8 @@
     ' 
     '         Properties: DeclaringType, ProtocolEntry
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetMethod, HandlePush, HandleRequest, (+2 Overloads) SafelyCreateObject, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,6 +33,8 @@
 
     ' Class Vertex
     ' 
+    '     Properties: ID, Label
+    ' 
     '     Function: ToString
     ' 
     ' Class Edge

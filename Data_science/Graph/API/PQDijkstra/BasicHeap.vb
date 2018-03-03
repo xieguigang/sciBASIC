@@ -35,9 +35,11 @@
     ' 
     '         Properties: Count
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Pop
     ' 
-    '         Sub: New, Push
+    '         Sub: Push
     ' 
     ' 
     ' /********************************************************************************/

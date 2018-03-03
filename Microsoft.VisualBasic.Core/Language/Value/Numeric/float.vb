@@ -33,13 +33,11 @@
 
     '     Class float
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: CompareTo, Equals, GetTypeCode, ToBoolean, ToByte
     '                   ToChar, ToDateTime, ToDecimal, ToDouble, ToInt16
     '                   ToInt32, ToInt64, ToSByte, ToSingle, (+2 Overloads) ToString
     '                   ToType, ToUInt16, ToUInt32, ToUInt64
-    ' 
-    '         Sub: (+2 Overloads) New
-    ' 
     '         Operators: -, (+2 Overloads) *, (+2 Overloads) /, ^, (+2 Overloads) +
     '                    <, <=, >, >=
     ' 

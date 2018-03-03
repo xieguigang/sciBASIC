@@ -33,7 +33,7 @@
 
     '     Module FormattedParser
     ' 
-    ' 
+    '         Function: CrossFields, FieldParser, FlagSplit
     '         Delegate Function
     ' 
     '             Function: ReadHead, UntilBlank

@@ -31,15 +31,17 @@
 
     ' Summaries:
 
-    '  
+    '     Structure Point3D
     ' 
-    '     Properties: Depth
+    '         Properties: Depth, X, Y, Z
     ' 
-    '     Function: Project, RotateX, RotateY, RotateZ, ToString
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '     Sub: (+2 Overloads) New, Project
+    '         Function: Project, RotateX, RotateY, RotateZ, ToString
     ' 
-    '     Operators: -, <>, =
+    '         Sub: Project
+    ' 
+    '         Operators: -, <>, =
     ' 
     ' 
     ' /********************************************************************************/

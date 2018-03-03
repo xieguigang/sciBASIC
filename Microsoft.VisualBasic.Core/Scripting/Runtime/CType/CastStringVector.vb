@@ -34,7 +34,7 @@
     '     Module CastStringVector
     ' 
     '         Function: AsBoolean, AsCharacter, AsColor, (+2 Overloads) AsDouble, AsGeneric
-    '                   AsInteger, (+2 Overloads) AsNumeric, AsSingle
+    '                   AsInteger, (+2 Overloads) AsNumeric, AsSingle, AsType
     ' 
     ' 
     ' /********************************************************************************/

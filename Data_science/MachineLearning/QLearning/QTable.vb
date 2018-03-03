@@ -35,9 +35,11 @@
     ' 
     '         Properties: ActionRange, ExplorationChance, GammaValue, LearningRate, Table
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: __explore, __getActionsQValues, __getBestAction, GetValues, NextAction
     ' 
-    '         Sub: (+3 Overloads) New, UpdateQvalue
+    '         Sub: UpdateQvalue
     ' 
     ' 
     ' /********************************************************************************/

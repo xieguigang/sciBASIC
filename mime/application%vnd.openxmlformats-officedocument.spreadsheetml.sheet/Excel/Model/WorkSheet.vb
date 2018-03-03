@@ -35,9 +35,8 @@
     ' 
     '         Properties: (+2 Overloads) Column, Row
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

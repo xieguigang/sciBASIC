@@ -35,9 +35,11 @@
     ' 
     '     Properties: BootstrappedSE, Burnin, LogMarginalLikelihood
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: calculateLogMarginalLikelihood, logMarginalLikelihoodAICM, logMarginalLikelihoodArithmetic, logMarginalLikelihoodHarmonic, (+2 Overloads) logMarginalLikelihoodSmoothed
     ' 
-    '     Sub: calculate, New
+    '     Sub: calculate
     ' 
     ' /********************************************************************************/
 

@@ -35,13 +35,12 @@
     ' 
     '         Properties: properties
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: filePath, toXml
-    ' 
-    '         Sub: New
     ' 
     '     Class [property]
     ' 
-    '         Properties: lpwstr
+    '         Properties: fmtid, lpwstr, name, pid
     ' 
     '         Function: ToString
     ' 

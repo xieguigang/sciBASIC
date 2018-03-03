@@ -41,9 +41,9 @@
     ' 
     '         Delegate Sub
     ' 
-    '             Function: ByteLength, Colors, (+2 Overloads) GrayScale
+    '             Function: ByteLength, Colors, Grayscale, (+2 Overloads) GrayScale
     ' 
-    '             Sub: BitmapPixelScans
+    '             Sub: AdjustContrast, Binarization, BitmapPixelScans
     ' 
     ' 
     ' /********************************************************************************/

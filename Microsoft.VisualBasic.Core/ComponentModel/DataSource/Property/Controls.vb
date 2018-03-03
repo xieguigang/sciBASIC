@@ -33,15 +33,14 @@
 
     '     Module ControlsExtension
     ' 
-    ' 
+    '         Function: GetMoreProps, SetMoreProps
     ' 
     '     Class ExtendedProps
     ' 
     '         Properties: DynamicHashTable
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: GetDynamicMemberNames, TryGetMember, TrySetMember
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

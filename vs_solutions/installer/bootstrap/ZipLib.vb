@@ -50,7 +50,7 @@
     ' 
     '  
     ' 
-    '     Sub: ImprovedExtractToDirectory
+    '     Sub: ImprovedExtractToDirectory, ImprovedExtractToFile
     ' 
     ' 
     ' /********************************************************************************/

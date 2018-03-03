@@ -37,13 +37,13 @@
     ' 
     '     Class DynamicPropertyBase
     ' 
-    '         Properties: MyHashCode
+    '         Properties: MyHashCode, Properties
     ' 
     '         Function: EnumerateKeys, HasProperty, ToString
     ' 
     '     Class [Property]
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

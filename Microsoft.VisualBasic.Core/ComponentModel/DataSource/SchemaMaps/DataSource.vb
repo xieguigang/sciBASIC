@@ -33,16 +33,15 @@
 
     '     Class Field
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class DataFrameColumnAttribute
     ' 
     '         Properties: Description, Index, Name
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: __attrs, __attrsAll, __source, GetIndex, (+2 Overloads) LoadMapping
     '                   SetNameValue, ToString
-    ' 
-    '         Sub: (+4 Overloads) New
     ' 
     '     Class DataFrameIO
     ' 

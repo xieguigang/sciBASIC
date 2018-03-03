@@ -1,56 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::a2dcd9a61ef0689675cdee6130999ffe, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::48d90c128866fb2c8d376c95255fa3cf, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class GeneralMatrix
-' 
-'         Properties: Array, ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector
-'                     RowDimension, RowPackedCopy
-' 
-'         Function: Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals, ArrayMultiply
-'                   ArrayMultiplyEquals, ArrayRightDivide, ArrayRightDivideEquals, chol, Clone
-'                   Condition, Copy, Create, Determinant, Eigen
-'                   (+4 Overloads) GetMatrix, Identity, Inverse, LUD, (+2 Overloads) Multiply
-'                   MultiplyEquals, Norm1, Norm2, NormF, NormInf
-'                   QRD, Rank, Solve, SolveTranspose, Subtract
-'                   SubtractEquals, SVD, ToString, Trace, Transpose
-' 
-'         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+5 Overloads) New
-'              (+4 Overloads) SetMatrix
-' 
-'         Operators: (+2 Overloads) -, *, +
-' 
-' 
-' /********************************************************************************/
+    '     Class GeneralMatrix
+    ' 
+    '         Properties: Array, ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector
+    '                     RowDimension, RowPackedCopy
+    ' 
+    '         Constructor: (+6 Overloads) Sub New
+    ' 
+    '         Function: Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals, ArrayMultiply
+    '                   ArrayMultiplyEquals, ArrayRightDivide, ArrayRightDivideEquals, chol, Clone
+    '                   Condition, Copy, Create, Determinant, Eigen
+    '                   (+4 Overloads) GetMatrix, Identity, Inverse, LUD, (+2 Overloads) Multiply
+    '                   MultiplyEquals, Norm1, Norm2, NormF, NormInf
+    '                   QRD, Rank, RowVectors, Solve, SolveTranspose
+    '                   Subtract, SubtractEquals, SVD, ToString, Trace
+    '                   Transpose
+    ' 
+    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
+    ' 
+    '         Operators: (+2 Overloads) -, *, +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

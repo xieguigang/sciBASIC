@@ -36,13 +36,15 @@
     '         Properties: AsLine, DirectGet, IsNullOrEmpty, IsReadOnly, NumbersOfColumn
     '                     Width
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: __mask, AddRange, AppendItem, (+2 Overloads) Contains, CreateObject
     '                   Distinct, GetALLNonEmptys, GetColumn, GetEnumerator, GetEnumerator1
     '                   IndexOf, InsertAt, LocateKeyWord, Remove, (+2 Overloads) Takes
     '                   ToString, TryParse
     ' 
-    '         Sub: Add, Clear, CopyTo, Insert, (+3 Overloads) New
-    '              RemoveAt, Trim
+    '         Sub: Add, Clear, CopyTo, Insert, RemoveAt
+    '              Trim
     ' 
     '         Operators: -, (+4 Overloads) +
     ' 

@@ -35,9 +35,8 @@
     ' 
     '         Properties: Count, Keys, Values
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ContainsKey, GetEnumerator, IEnumerable_GetEnumerator, ToString, TryGetValue
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Module BucketDictionaryExtensions
     ' 

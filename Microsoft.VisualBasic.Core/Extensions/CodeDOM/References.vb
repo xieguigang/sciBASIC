@@ -35,9 +35,11 @@
     ' 
     '         Properties: ExecutingReferences, RunTimeDirectory
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: getReferences, (+2 Overloads) GetReferences, IsSystemAssembly
     ' 
-    '         Sub: __getReferences, New
+    '         Sub: __getReferences
     ' 
     ' 
     ' /********************************************************************************/

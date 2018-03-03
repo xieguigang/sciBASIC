@@ -35,9 +35,8 @@
     ' 
     '         Properties: Handle, IsCompleted, Task
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetValue, Run
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

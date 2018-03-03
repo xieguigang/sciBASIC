@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: OpenWriter
+    '         Function: FlushAllLines, OpenWriter
     ' 
     ' 
     ' /********************************************************************************/

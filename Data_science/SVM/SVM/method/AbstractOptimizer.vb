@@ -33,9 +33,11 @@
 
     '     Class Optimizer
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Optimize
     ' 
-    '         Sub: Cancel, New
+    '         Sub: Cancel
     ' 
     ' 
     ' /********************************************************************************/

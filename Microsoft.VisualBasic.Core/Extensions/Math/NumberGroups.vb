@@ -33,7 +33,8 @@
 
     '     Module NumberGroups
     ' 
-    '         Function: BinarySearch, GroupByImpl, Groups, Match, Min
+    '         Function: BinarySearch, (+2 Overloads) GroupBy, GroupByImpl, Groups, Match
+    '                   Min
     '         Interface IVector
     ' 
     '             Properties: Data
@@ -42,10 +43,8 @@
     ' 
     '             Properties: Average
     ' 
+    '             Constructor: (+2 Overloads) Sub New
     '             Function: ToString
-    ' 
-    '             Sub: (+2 Overloads) New
-    ' 
     '             Operators: +
     ' 
     ' 

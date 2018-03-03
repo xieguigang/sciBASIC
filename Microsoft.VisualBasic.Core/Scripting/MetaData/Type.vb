@@ -33,11 +33,13 @@
 
     '     Class TypeInfo
     ' 
-    '         Properties: SystemKnownType
+    '         Properties: assm, FullIdentity, SystemKnownType
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: [GetType], LoadAssembly, ToString
     ' 
-    '         Sub: __infoParser, (+2 Overloads) New
+    '         Sub: __infoParser
     ' 
     '         Operators: <>, =
     ' 

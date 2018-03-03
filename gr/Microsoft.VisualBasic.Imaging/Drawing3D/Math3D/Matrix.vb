@@ -35,9 +35,8 @@
     ' 
     '         Properties: Matrix
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetEnumerator, IEnumerable_GetEnumerator, TranslateBuffer
-    ' 
-    '         Sub: New
     '         Structure SurfaceVector
     ' 
     ' 

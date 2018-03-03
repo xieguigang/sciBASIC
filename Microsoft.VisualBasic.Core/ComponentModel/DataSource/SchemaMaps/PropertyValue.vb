@@ -37,6 +37,8 @@
     ' 
     '     Class PropertyValue
     ' 
+    '         Properties: [Property], Key, Value
+    ' 
     '         Function: ImportsLines, ImportsTsv, ToString
     ' 
     ' 

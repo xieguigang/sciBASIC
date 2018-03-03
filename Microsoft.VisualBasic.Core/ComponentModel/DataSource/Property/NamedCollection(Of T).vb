@@ -33,11 +33,10 @@
 
     '     Structure NamedCollection
     ' 
-    '         Properties: Description, IsEmpty, Length, Value
+    '         Properties: Description, IsEmpty, Length, Name, Value
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: GetEnumerator, GetValues, IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: (+4 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,8 @@
 
     '     Module Numeric
     ' 
-    '         Function: Equals, MaxIndex, MinIndex
+    '         Function: Equals, GreaterThan, GreaterThanOrEquals, LessThan, LessThanOrEquals
+    '                   MaxIndex, MinIndex, NextInteger
     ' 
     '     Class Precise
     ' 

@@ -35,7 +35,8 @@
     ' 
     '     Properties: BooleanValues
     ' 
-    '     Function: ParseDate, ParseDouble, ParseInteger, ParseLong, ParseSingle
+    '     Function: IsNumeric, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger
+    '               ParseLong, ParseSingle
     ' 
     ' /********************************************************************************/
 

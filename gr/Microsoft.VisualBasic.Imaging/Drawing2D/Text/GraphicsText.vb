@@ -33,9 +33,11 @@
 
     '     Class GraphicsText
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ConvertSize, GetRotatePoint
     ' 
-    '         Sub: (+2 Overloads) DrawString, DrawStringInternal, New
+    '         Sub: (+2 Overloads) DrawString, DrawStringInternal
     ' 
     ' 
     ' /********************************************************************************/

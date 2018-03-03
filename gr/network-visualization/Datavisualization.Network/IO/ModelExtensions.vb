@@ -33,8 +33,10 @@
 
     '     Module GraphAPI
     ' 
-    '         Function: CreateGraph, (+2 Overloads) CytoscapeExportAsGraph, CytoscapeNetworkFromEdgeTable, OrderByDegrees, RemovesByDegree
-    '                   RemovesByDegreeQuantile, ScaleRadius, UsingDegreeAsRadius
+    '         Function: (+2 Overloads) CreateGraph, (+2 Overloads) CytoscapeExportAsGraph, CytoscapeNetworkFromEdgeTable, OrderByDegrees, RemovesByDegree
+    '                   RemovesByDegreeQuantile, ScaleRadius, Tabular, UsingDegreeAsRadius
+    ' 
+    '         Sub: AddEdges
     ' 
     ' 
     ' /********************************************************************************/

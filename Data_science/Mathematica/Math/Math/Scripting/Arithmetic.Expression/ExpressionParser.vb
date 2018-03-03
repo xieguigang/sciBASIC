@@ -36,7 +36,7 @@
     '         Function: GetTokens, TryParse
     '         Delegate Function
     ' 
-    '             Function: TryParse
+    '             Function: (+4 Overloads) TryParse
     ' 
     ' 
     ' 

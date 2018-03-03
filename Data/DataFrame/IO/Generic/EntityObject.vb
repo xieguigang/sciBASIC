@@ -35,9 +35,8 @@
     ' 
     '         Properties: ID
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: Copy, GetIDList, (+3 Overloads) LoadDataSet, ToString
-    ' 
-    '         Sub: (+4 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

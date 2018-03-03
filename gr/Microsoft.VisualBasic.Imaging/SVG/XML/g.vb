@@ -38,7 +38,8 @@
     ' 
     '     Class g
     ' 
-    ' 
+    '         Properties: circles, gs, lines, path, polygon
+    '                     polyline, rect, texts, title, transform
     ' 
     ' 
     ' /********************************************************************************/

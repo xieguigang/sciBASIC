@@ -35,9 +35,8 @@
     ' 
     '         Properties: Name, Value
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Class HtmlElement
     ' 

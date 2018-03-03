@@ -35,9 +35,11 @@
     ' 
     '     Properties: Parameters
     ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
     '     Function: __getY0, GetParameters, GetVariables, Solve, TimePopulator
     ' 
-    '     Sub: __rungeKutta, (+2 Overloads) New, ODEs
+    '     Sub: __rungeKutta, ODEs
     ' 
     ' /********************************************************************************/
 

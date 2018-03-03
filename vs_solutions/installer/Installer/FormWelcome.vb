@@ -33,7 +33,8 @@
 
     ' Class FormWelcome
     ' 
-    '     Sub: ButtonNext_Click, New
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: ButtonNext_Click
     ' 
     ' /********************************************************************************/
 

@@ -35,11 +35,13 @@
     ' 
     '         Properties: Seed
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: nextBoolean, nextByte, nextChar, nextDouble, nextFloat
     '                   nextGamma, nextGaussian, (+2 Overloads) nextInt, nextLong, nextShort
     '                   permuted, shuffled
     ' 
-    '         Sub: (+2 Overloads) New, nextBytes, permute, (+2 Overloads) shuffle
+    '         Sub: nextBytes, permute, (+2 Overloads) shuffle
     ' 
     ' 
     ' /********************************************************************************/

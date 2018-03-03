@@ -35,10 +35,8 @@
     ' 
     '         Properties: First, Last
     ' 
+    '         Constructor: (+5 Overloads) Sub New
     '         Function: Pop, PopAll, ValuesEnumerator
-    ' 
-    '         Sub: (+5 Overloads) New
-    ' 
     '         Operators: (+5 Overloads) -, *, ^, (+6 Overloads) +, (+2 Overloads) <
     '                    (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) >, >>
     ' 

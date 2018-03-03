@@ -35,7 +35,8 @@
     ' 
     '         Properties: MultiThreadSupport
     ' 
-    '         Sub: AddToQueue, (+2 Overloads) Dispose, exeQueue, New, WaitQueue
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: AddToQueue, (+2 Overloads) Dispose, exeQueue, WaitQueue
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,7 @@
 
     ' Module IO
     ' 
-    '     Function: CreateReader, ToXML
+    '     Function: CreateReader, SaveTo, ToXML
     ' 
     ' /********************************************************************************/
 

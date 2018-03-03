@@ -35,9 +35,11 @@
     ' 
     '         Properties: _rels, worksheets
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: _name, GetWorksheet, HaveWorksheet
     ' 
-    '         Sub: _loadContents, Add, New, Save
+    '         Sub: _loadContents, Add, Save
     ' 
     ' 
     ' /********************************************************************************/

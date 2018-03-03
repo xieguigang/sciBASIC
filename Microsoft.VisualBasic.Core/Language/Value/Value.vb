@@ -35,10 +35,8 @@
     ' 
     '         Properties: HasValue, Value
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Equals, GetUnderlyingType, (+2 Overloads) GetValueOrDefault, IsNothing, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
-    ' 
     '         Operators: -, (+3 Overloads) +, <=, <>, =
     '                    >=
     '         Interface IValueOf

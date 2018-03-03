@@ -33,9 +33,11 @@
 
     '     Class QueryCacheFactory
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Exists, GetAll, GetByKey, GetWhere, ToString
     ' 
-    '         Sub: Clear, New
+    '         Sub: Clear
     ' 
     ' 
     ' /********************************************************************************/

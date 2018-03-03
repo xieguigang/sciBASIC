@@ -33,7 +33,7 @@
 
     '     Module SlideWindowExtensions
     ' 
-    '         Function: __extendTails
+    '         Function: __extendTails, CreateSlideWindows, SlideWindows
     ' 
     ' 
     ' /********************************************************************************/

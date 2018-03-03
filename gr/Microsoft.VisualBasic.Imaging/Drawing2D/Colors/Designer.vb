@@ -36,10 +36,9 @@
     '         Properties: AvailableInterpolates, Category31, ClusterColour, ColorBrewer, ConsoleColors
     '                     MaterialPalette, Rainbow, TSF
     ' 
-    '         Function: __constraint, __internalFills, Colors, CubicSpline, FromSchema
-    '                   GetBrushes, (+2 Overloads) GetColors, GetColorsInternal, IsColorNameList
-    ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: __constraint, __internalFills, Colors, CubicSpline, FromNames
+    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, GetColorsInternal, IsColorNameList
     ' 
     ' 
     ' /********************************************************************************/

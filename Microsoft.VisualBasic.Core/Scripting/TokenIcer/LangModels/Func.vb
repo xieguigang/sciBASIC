@@ -39,17 +39,18 @@
     ' 
     '         Properties: Args, Caller, IsFuncCalls
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: ToArray, ToString
     ' 
-    '         Sub: __expand, (+2 Overloads) New
+    '         Sub: __expand
     ' 
     '     Class InnerToken
     ' 
     '         Properties: InnerStack, obj
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToArray, ToString
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

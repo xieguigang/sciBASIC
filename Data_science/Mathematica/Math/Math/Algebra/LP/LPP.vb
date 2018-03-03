@@ -35,10 +35,12 @@
     ' 
     '         Properties: ArtificialVariableAssignments
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: choosePivotConstraint, choosePivotVar, displayEqLine, findInitialBasicVariables, increaseArtificialVariableIndices
     '                   intToBinary, isFeasible, solve, subscriptN, ToString
     ' 
-    '         Sub: addArtificialVariables, addVariableAt, (+2 Overloads) makeStandardForm, (+2 Overloads) New, pivot
+    '         Sub: addArtificialVariables, addVariableAt, (+2 Overloads) makeStandardForm, pivot
     ' 
     ' 
     ' /********************************************************************************/

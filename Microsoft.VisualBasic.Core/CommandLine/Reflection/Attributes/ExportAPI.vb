@@ -35,9 +35,8 @@
     ' 
     '         Properties: Example, Info, Name, Type, Usage
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __printView, __printViewHTML, GenerateHtmlDoc, PrintView, ToString
-    ' 
-    '         Sub: New
     ' 
     '     Interface IExportAPI
     ' 

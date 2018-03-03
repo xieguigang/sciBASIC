@@ -35,9 +35,8 @@
     ' 
     '         Properties: Value
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: BuildJsonString, GetStripString, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

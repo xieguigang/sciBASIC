@@ -35,9 +35,8 @@
     ' 
     '         Properties: Define, Name, ProviderId
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: CreateObject, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

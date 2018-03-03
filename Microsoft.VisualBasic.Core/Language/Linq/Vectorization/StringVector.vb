@@ -33,10 +33,8 @@
 
     '     Class StringVector
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: InStr, IsPattern, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
-    ' 
     '         Operators: <>, =
     ' 
     ' 

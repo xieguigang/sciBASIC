@@ -35,7 +35,7 @@
     ' 
     '         Properties: r, x, y
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

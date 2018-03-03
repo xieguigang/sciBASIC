@@ -35,9 +35,11 @@
     ' 
     '         Properties: CurrentSize, Downloading, DownloadSpeed, TotalSize
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ToString
     ' 
-    '         Sub: __downloadTask, (+2 Overloads) Dispose, New, StartTask
+    '         Sub: __downloadTask, (+2 Overloads) Dispose, StartTask
     ' 
     ' 
     ' /********************************************************************************/

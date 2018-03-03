@@ -36,7 +36,7 @@
     '         Properties: Cell, ConnectedEdges, HeightSquared, RadiusSquared, RelevantEdges
     '                     Source, Target, X, Y
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

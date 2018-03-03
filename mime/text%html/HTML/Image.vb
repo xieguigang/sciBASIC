@@ -33,7 +33,8 @@
 
     '     Class Image
     ' 
-    '         Properties: Text
+    '         Properties: Align, Alt, Border, HSpace, source
+    '                     Text
     ' 
     '         Function: GetImages, ResParser, ToString
     ' 

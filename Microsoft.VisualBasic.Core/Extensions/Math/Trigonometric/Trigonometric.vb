@@ -34,7 +34,7 @@
     '     Module Trigonometric
     ' 
     '         Function: Angle, (+2 Overloads) Distance, GetAngle, GetAngleVector, MovePoint
-    '                   NearestPoint
+    '                   NearestPoint, ToDegrees, ToPoint, ToRadians
     ' 
     ' 
     ' /********************************************************************************/

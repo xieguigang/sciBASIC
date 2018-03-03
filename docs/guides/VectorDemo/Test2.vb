@@ -38,10 +38,8 @@
     ' 
     '         Properties: str
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
-    ' 
     '         Operators: (+2 Overloads) Like
     ' 
     ' 

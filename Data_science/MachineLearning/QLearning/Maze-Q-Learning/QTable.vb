@@ -33,9 +33,11 @@
 
     ' Class QTable
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: __getMapString
     ' 
-    '     Sub: New, PrintQTable
+    '     Sub: PrintQTable
     ' 
     ' /********************************************************************************/
 

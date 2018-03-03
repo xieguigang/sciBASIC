@@ -31,12 +31,13 @@
 
     ' Summaries:
 
-    '  
+    '     Class EigenvalueDecomposition
     ' 
-    '     Properties: D, ImagEigenvalues, RealEigenvalues, V
+    '         Properties: D, ImagEigenvalues, RealEigenvalues, V
     ' 
-    '     Sub: cdiv, hqr2, ISerializable_GetObjectData, New, orthes
-    '          tql2, tred2
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: cdiv, hqr2, ISerializable_GetObjectData, orthes, tql2
+    '              tred2
     ' 
     ' 
     ' /********************************************************************************/

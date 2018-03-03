@@ -33,7 +33,7 @@
 
     '     Module TypeExtensions
     ' 
-    '         Function: CanBeAssignedFrom
+    '         Function: CanBeAssignedFrom, ImplementInterface
     ' 
     ' 
     ' /********************************************************************************/

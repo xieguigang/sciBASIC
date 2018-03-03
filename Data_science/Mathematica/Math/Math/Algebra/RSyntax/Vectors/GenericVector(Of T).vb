@@ -35,7 +35,8 @@
     ' 
     '         Properties: [Dim], (+2 Overloads) [GET], SelectWhere
     ' 
-    '         Sub: (+2 Overloads) Dispose, Factor, (+3 Overloads) New
+    '         Constructor: (+3 Overloads) Sub New
+    '         Sub: (+2 Overloads) Dispose, Factor
     ' 
     '         Operators: <>, =
     ' 

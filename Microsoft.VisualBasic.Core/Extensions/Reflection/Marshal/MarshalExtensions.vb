@@ -33,7 +33,7 @@
 
     ' Module MarshalExtensions
     ' 
-    ' 
+    '     Function: (+2 Overloads) MarshalAs
     ' 
     ' /********************************************************************************/
 

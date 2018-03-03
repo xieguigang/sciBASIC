@@ -33,7 +33,7 @@
 
     '     Module CodeGenerator
     ' 
-    ' 
+    '         Function: ConstAlpha, ConstBeta, SNonLinear, SPowerAlpha, SPowerBeta
     ' 
     ' 
     ' /********************************************************************************/

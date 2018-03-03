@@ -35,17 +35,15 @@
     ' 
     '         Properties: Max, Min
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) IsInside, IsOverlapping, ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class RangeTagValue
     ' 
     '         Properties: Value
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

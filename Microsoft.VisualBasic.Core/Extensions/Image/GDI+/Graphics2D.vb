@@ -35,9 +35,11 @@
     ' 
     '         Properties: Center, Height, ImageResource, Size, Width
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: CreateDevice, CreateObject, Open, (+2 Overloads) Save, ToString
     ' 
-    '         Sub: __save, DrawCircle, (+3 Overloads) New
+    '         Sub: __save, DrawCircle
     '         Structure Context
     ' 
     '             Function: Create

@@ -33,7 +33,8 @@
 
     '     Module ScaleMaps
     ' 
-    '         Function: LogLevels, MapHelper, Scale
+    '         Function: (+4 Overloads) GenerateMapping, (+3 Overloads) Log2Ranks, LogLevels, MapHelper, Scale
+    '                   TrimRanges
     ' 
     ' 
     ' /********************************************************************************/

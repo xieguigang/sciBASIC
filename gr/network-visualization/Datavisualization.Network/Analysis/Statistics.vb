@@ -33,7 +33,7 @@
 
     '     Module Statistics
     ' 
-    '         Function: ComputeDegreeData, ComputeNodeDegrees, NodesGroupCount, Sum
+    '         Function: ComputeDegreeData, (+2 Overloads) ComputeNodeDegrees, GetDegrees, NodesGroupCount, Sum
     ' 
     ' 
     ' /********************************************************************************/

@@ -44,7 +44,8 @@
     ' 
     '         Properties: Tokens
     ' 
-    '         Function: TryParse
+    '         Function: __parseComparer, __parseOperator, __parseUNDEFINE, (+2 Overloads) IsWhiteSpace, Split
+    '                   TryParse
     ' 
     ' 
     ' /********************************************************************************/

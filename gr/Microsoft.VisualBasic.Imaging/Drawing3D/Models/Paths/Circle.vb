@@ -33,13 +33,12 @@
 
     '     Class Circle
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class Arc
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Circle
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

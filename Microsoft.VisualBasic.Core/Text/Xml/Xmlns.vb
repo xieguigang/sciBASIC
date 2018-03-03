@@ -35,9 +35,11 @@
     ' 
     '         Properties: [namespace], xmlns, xsd, xsi
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: RootParser, ToString
     ' 
-    '         Sub: [Set], __replace, Clear, New, WriteNamespace
+    '         Sub: [Set], __replace, Clear, WriteNamespace
     ' 
     ' 
     ' /********************************************************************************/

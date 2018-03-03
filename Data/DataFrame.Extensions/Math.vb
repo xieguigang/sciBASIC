@@ -33,7 +33,7 @@
 
     ' Module DataSetMath
     ' 
-    '     Function: Log, Log2
+    '     Function: (+2 Overloads) Log, Log2
     ' 
     ' /********************************************************************************/
 

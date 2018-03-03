@@ -36,6 +36,8 @@
     '         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
     '                     IsClosed, Item, RecordsAffected, SchemaOridinal
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: [Select], __createObject, __createSchemaOridinal, __createTableVector, __getColumnList
     '                   __reviewColumnHeader, AddAttribute, CreateDataSource, CreateObject, csv
     '                   EnumerateData, Generate, GetBoolean, GetByte, GetBytes
@@ -46,7 +48,7 @@
     '                   GetValues, IDataRecord_GetValue, IsDBNull, Load, Read
     '                   ToString
     ' 
-    '         Sub: ChangeMapping, Close, CopyFrom, New, Reset
+    '         Sub: ChangeMapping, Close, CopyFrom, Reset
     ' 
     ' 
     ' /********************************************************************************/

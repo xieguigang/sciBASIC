@@ -35,10 +35,12 @@
     ' 
     '         Properties: HistoryList
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: __getDefaultPath, __getHistory, MoveFirst, MoveLast, MoveNext
     '                   MovePrevious, Save, ToString
     ' 
-    '         Sub: __init, (+2 Overloads) New, PushStack, StartInitialize
+    '         Sub: __init, PushStack, StartInitialize
     '         Structure History
     ' 
     '             Function: ToString

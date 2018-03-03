@@ -36,9 +36,8 @@
     '         Function: GetBytes, LoadHelper
     '         Class __load
     ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Function: Load
-    ' 
-    '             Sub: New
     ' 
     ' 
     ' 

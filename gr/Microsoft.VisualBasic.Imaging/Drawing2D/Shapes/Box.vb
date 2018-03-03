@@ -35,7 +35,8 @@
     ' 
     '         Properties: Size
     ' 
-    '         Sub: DrawRectangle, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: DrawRectangle
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,10 +33,11 @@
 
     ' Class RDFD
     ' 
-    ' 
+    '     Properties: CDList
     '     Class CD
     ' 
-    ' 
+    '         Properties: Artist, Company, Country, IgnoredProperty, Price
+    '                     Year
     ' 
     ' 
     ' 

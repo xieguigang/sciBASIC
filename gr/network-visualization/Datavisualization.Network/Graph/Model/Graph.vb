@@ -35,13 +35,15 @@
     ' 
     '         Properties: connectedNodes, edges, nodes
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: (+2 Overloads) AddEdge, AddNode, Clone, Copy, (+2 Overloads) CreateEdge
     '                   (+2 Overloads) CreateNode, GetEdge, (+2 Overloads) GetEdges, GetElementByID, GetNode
     '                   ToString
     ' 
     '         Sub: AddGraphListener, Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode
-    '              FilterEdges, FilterNodes, Merge, New, notify
-    '              RemoveEdge, RemoveNode
+    '              FilterEdges, FilterNodes, Merge, notify, RemoveEdge
+    '              RemoveNode
     ' 
     ' 
     ' /********************************************************************************/

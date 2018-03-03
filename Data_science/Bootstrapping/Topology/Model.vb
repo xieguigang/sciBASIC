@@ -33,9 +33,11 @@
 
     '     Class Model
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: y0
     ' 
-    '         Sub: func, New
+    '         Sub: func
     ' 
     ' 
     ' /********************************************************************************/

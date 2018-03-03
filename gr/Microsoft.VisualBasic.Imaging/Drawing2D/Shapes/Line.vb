@@ -36,9 +36,8 @@
     '         Properties: A, Alpha, B, Center, Length
     '                     Size, Stroke
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: Draw, ParallelShift, ToString
-    ' 
-    '         Sub: (+4 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

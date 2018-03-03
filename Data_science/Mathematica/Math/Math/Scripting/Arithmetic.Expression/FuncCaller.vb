@@ -35,9 +35,8 @@
     ' 
     '         Properties: Name, Params
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Evaluate, ToString
-    ' 
-    '         Sub: New
     ' 
     '     Delegate Function
     ' 

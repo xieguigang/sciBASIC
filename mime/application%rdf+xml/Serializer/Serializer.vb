@@ -39,9 +39,11 @@
     ' 
     ' Class Serializer
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: Copy, CreateDynamicType, (+3 Overloads) DeSerialization, InitlaizeSchema
     ' 
-    '     Sub: New, Normalization
+    '     Sub: Normalization
     ' 
     ' /********************************************************************************/
 

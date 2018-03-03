@@ -35,9 +35,8 @@
     ' 
     '         Properties: CharSet
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __attrs
-    ' 
-    '         Sub: New
     ' 
     '     Class ContentType
     ' 
@@ -57,23 +56,23 @@
     ' 
     '     Class Description
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class Author
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class Copyright
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class Keywords
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class Viewport
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class Link
     ' 

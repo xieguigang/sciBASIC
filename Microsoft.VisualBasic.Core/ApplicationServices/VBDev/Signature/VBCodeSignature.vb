@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d944ce16ce4d711f5bdb02578c94f09, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\VBCodeSignature.vb"
+﻿#Region "Microsoft.VisualBasic::8b06d95a593437f525ad5ead2dcd00ed, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\VBCodeSignature.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module VBCodeSignature
     ' 
-    '         Function: SummaryInternal, typeSummary
+    '         Function: memberList, RemoveAttributes, SummaryInternal, SummaryModules, typeSummary
     ' 
     ' 
     ' /********************************************************************************/
