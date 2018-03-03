@@ -208,10 +208,22 @@ Namespace ApplicationServices.Development
                 End If
             End If
             If Not methods.IsNullOrEmpty Then
+                Dim constructors = methods _
+                    .Where(Function(s) s.Name = "New") _
+                    .ToArray
                 Dim types = methods _
+                    .Where(Function(s) s.Name <> "New") _
                     .GroupBy(Function(m) m.Value) _
                     .ToDictionary(Function(t) t.Key,
                                   Function(l) l.Keys.memberList)
+
+                If constructors.Length > 0 Then
+                    members += container.Description & $"(+{constructors.Count} Overloads) Constructor"
+
+                    If types.Count > 1 Then
+                        members += ""
+                    End If
+                End If
 
                 If types.ContainsKey("Function") Then
                     prefix = container.Description & $"    Function: "
