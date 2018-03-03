@@ -149,7 +149,13 @@ Namespace Linq
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Indices(Of T)(source As IEnumerable(Of SeqValue(Of T))) As Integer()
-            Return source.Select(Function(o) o.i).ToArray
+            Return source.Ordinals.ToArray
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Ordinals(Of T)(source As IEnumerable(Of SeqValue(Of T))) As IEnumerable(Of Integer)
+            Return source.Select(Function(o) o.i)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

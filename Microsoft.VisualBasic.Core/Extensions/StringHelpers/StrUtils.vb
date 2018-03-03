@@ -185,14 +185,25 @@ Public Module StrUtils
     ''' <param name="len%"></param>
     ''' <returns></returns>
     Public Function RandomASCIIString(len%) As String
-        Dim rnd As New Random(BitConverter.ToInt32(New BigInteger(Now.ToBinary).ToByteArray, Scan0))
+        With New Random
+            Return CharString(len, Function() Chr(.Next(32, 127)))
+        End With
+    End Function
+
+    <Extension>
+    Public Function RandomCharString(chars As IEnumerable(Of Char), len%) As String
+        With New Random
+            Dim buffer = chars.ToArray
+            Return CharString(len, Function() .Next(buffer))
+        End With
+    End Function
+
+    Public Function CharString(len%, getChar As Func(Of Char)) As String
         Dim s As New List(Of Char)
 
-        For i As Integer = 0 To len
-            s.Add(Chr(rnd.Next(32, 127)))
+        For i As Integer = 0 To len - 1
+            s.Add(getChar())
         Next
-
-        Call Randomize()
 
         Return New String(s.ToArray)
     End Function

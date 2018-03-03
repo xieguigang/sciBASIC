@@ -56,6 +56,19 @@ Namespace Linq
     <Extension>
     Public Module Extensions
 
+        <Extension>
+        Public Function Populate(Of T)(source As IEnumerable(Of T), parallel As Boolean, Optional degreeOfParallelism% = -1) As IEnumerable(Of T)
+            If parallel Then
+                If degreeOfParallelism > 1 Then
+                    Return source.AsParallel.WithDegreeOfParallelism(degreeOfParallelism)
+                Else
+                    Return source.AsParallel
+                End If
+            Else
+                Return source
+            End If
+        End Function
+
         Public Function DATA(Of T)(src As IEnumerable(Of T)) As DataValue(Of T)
             Return New DataValue(Of T)(src)
         End Function

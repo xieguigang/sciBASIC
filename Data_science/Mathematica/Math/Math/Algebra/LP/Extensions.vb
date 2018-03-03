@@ -66,9 +66,9 @@ Namespace Algebra.LinearProgramming
         <Extension>
         Friend Function ParseType(type As String) As OptimizationType
             Select Case LCase(type)
-                Case "max", "Maximize"
+                Case "max", "maximize"
                     Return OptimizationType.MAX
-                Case "min", "Minimize"
+                Case "min", "minimize"
                     Return OptimizationType.MIN
                 Case Else
                     Throw New NotImplementedException(type)

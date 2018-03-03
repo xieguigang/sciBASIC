@@ -42,6 +42,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Matrix
 
@@ -79,72 +81,12 @@ Namespace LinearAlgebra
 
         Dim center, scale As Boolean
 
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="dataset">
-        ''' dataset is a two-dimensional array where rows represent the samples and columns the features
-        ''' </param>
-        ''' <param name="center"></param>
-        ''' <param name="scale"></param>
-        Sub New(dataset As IEnumerable(Of Double()), Optional center As Boolean = True, Optional scale As Boolean = False)
-            Dim matrix = adjust(dataset.ToArray, center, scale)
-            Dim svd = New GeneralMatrix(matrix).SVD()
-
-            Me.center = center
-            Me.scale = scale
-
-            ' svd.rightSingularVectors;
-            Me.U = svd.V
-            ' svd.diagonal;
-            Dim singularValues = svd.SingularValues
-            Dim eigenvalues = (singularValues ^ 2) / (matrix.Length - 1)
-
-            Me.S = eigenvalues
-        End Sub
-
-        ''' <summary>
-        ''' Project the dataset into the PCA space
-        ''' </summary>
-        ''' <param name="data"></param>
-        ''' <returns></returns>
-        Public Function Project(data As Vector()) As Vector()
-            If center Then
-                data = data.Select(Function(r) r - means).ToArray
-
-                If scale Then
-                    data = data.Select(Function(r) r / stdevs).ToArray
-                End If
-            End If
-
-            Dim predictions = New GeneralMatrix(data).Multiply(U)
-            Return predictions.ToArray.Select(Function(r) r.AsVector).ToArray
-        End Function
-
-        Private Function adjust(data As Double()(), center As Boolean, scale As Boolean) As Vector()
-            Dim dataset = data.Select(Function(r) r.AsVector).ToArray
-
-            If center Then
-                Dim columns = data(0).Sequence.Select(Function(i) dataset.Select(Function(r) r(i)).AsVector).ToArray
-
-                means = columns.Select(Function(c) c.Average).AsVector
-                dataset = dataset.Select(Function(r) r - means).ToArray
-                stdevs = columns.Select(Function(c) c.StdError).AsVector
-
-                If scale Then
-                    dataset = dataset.Select(Function(r) r / stdevs).ToArray
-                End If
-            End If
-
-            Return dataset
-        End Function
-
         ''' <summary>
         ''' Returns the standard deviations of the principal components
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property StandardDeviations As Vector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Vector.Sqrt(S)
             End Get
@@ -155,6 +97,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Loadings As GeneralMatrix
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return U.Transpose
             End Get
@@ -165,6 +108,7 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ExplainedVariance As Vector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return S / S.Sum
             End Get
@@ -185,5 +129,104 @@ Namespace LinearAlgebra
                 Return explained
             End Get
         End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="dataset">
+        ''' dataset is a two-dimensional array where rows represent the samples and columns the features
+        ''' </param>
+        ''' <param name="center"></param>
+        ''' <param name="scale"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(dataset As IEnumerable(Of Double()), Optional center As Boolean = True, Optional scale As Boolean = False)
+            Call Me.New(dataset.Select(Function(d) d.AsVector), center, scale)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(matrix As GeneralMatrix, Optional center As Boolean = True, Optional scale As Boolean = False)
+            Call Me.New(vectors:=matrix, center:=center, scale:=scale)
+        End Sub
+
+        Sub New(vectors As IEnumerable(Of Vector), Optional center As Boolean = True, Optional scale As Boolean = False)
+            Dim matrix = adjust(vectors.ToArray, center, scale)
+            Dim svd = New GeneralMatrix(matrix).SVD()
+
+            Me.center = center
+            Me.scale = scale
+
+            ' svd.rightSingularVectors;
+            Me.U = svd.V
+            ' svd.diagonal;
+            Dim singularValues = svd.SingularValues
+            Dim eigenvalues = (singularValues ^ 2) / (matrix.Length - 1)
+
+            Me.S = eigenvalues
+        End Sub
+
+        ''' <summary>
+        ''' Project the dataset into the PCA space
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        Public Function Project(data As Vector(), Optional nPC% = -1, Optional ByRef ordinal%() = Nothing) As Vector()
+            If center Then
+                data = data.Select(Function(r) r - means).ToArray
+
+                If scale Then
+                    data = data.Select(Function(r) r / stdevs).ToArray
+                End If
+            End If
+
+            With New GeneralMatrix(data) * U
+                If nPC <= 0 OrElse nPC >= means.Length Then
+                    ' ALL
+                    Return .RowVectors.ToArray
+                Else
+                    ' top n
+                    Dim rows As Vector() = .RowVectors.ToArray
+                    Dim out As New List(Of Vector)
+
+                    ordinal = Which.Top(ExplainedVariance, n:=nPC)
+
+                    For Each i As Integer In ordinal
+                        out.Add(rows.Select(Function(r) r(i)).AsVector)
+                    Next
+
+                    Return out.ToArray
+                End If
+            End With
+        End Function
+
+        Private Function adjust(dataset As Vector(), center As Boolean, scale As Boolean) As Vector()
+            If center Then
+                Dim columns = dataset(0) _
+                    .Sequence _
+                    .Select(Function(i)
+                                Return dataset _
+                                    .Select(Function(r) r(i)) _
+                                    .AsVector
+                            End Function) _
+                    .ToArray
+
+                means = columns.Select(Function(c) c.Average).AsVector
+                dataset = dataset.Select(Function(r) r - means).ToArray
+                stdevs = columns.Select(Function(c) c.StdError).AsVector
+
+                If scale Then
+                    dataset = dataset _
+                        .Select(Function(r) r / stdevs) _
+                        .ToArray
+                End If
+            End If
+
+            Return dataset
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function adjust(data As Double()(), center As Boolean, scale As Boolean) As Vector()
+            Return adjust(data.Select(Function(r) r.AsVector).ToArray, center, scale)
+        End Function
     End Class
 End Namespace
