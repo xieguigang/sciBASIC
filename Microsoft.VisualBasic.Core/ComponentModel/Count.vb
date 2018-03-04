@@ -55,10 +55,14 @@ Namespace ComponentModel
     ''' </summary>
     Public Class Counter : Inherits int
 
+        ''' <summary>
+        ''' Create a new integer counter.(新建一个计数器)
+        ''' </summary>
         Sub New()
             MyBase.New(0)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(hits As Integer)
             Call MyBase.New(x:=hits)
         End Sub
@@ -70,6 +74,11 @@ Namespace ComponentModel
         Public Function Hit() As Integer
             Return ++Me
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Widening Operator CType(c As Integer) As Counter
+            Return New Counter(hits:=c)
+        End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(c As Counter) As Integer
