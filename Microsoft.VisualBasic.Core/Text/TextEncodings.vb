@@ -76,10 +76,11 @@ Namespace Text
         Unicode
         UTF7
         ''' <summary>
-        ''' <see cref="TextEncodings.UTF8WithoutBOM"/>. 
+        ''' 在Linux平台上面是<see cref="TextEncodings.UTF8WithoutBOM"/>，而在Windows平台上面则是带有BOM的UTF8格式. 
         ''' (HTML的默认的编码格式，假若所保存的html文本出现乱码，请考虑是不是应该要选择这个编码才行？)
         ''' </summary>
         UTF8
+        UTF8WithoutBOM
         ''' <summary>
         ''' VB.NET的XML文件的默认编码格式为utf-16
         ''' </summary>
@@ -123,18 +124,37 @@ Namespace Text
         ''' yum install -y mono-locale-extras
         ''' ```
         ''' </remarks>
-        Public ReadOnly Property TextEncodings As IReadOnlyDictionary(Of Encodings, Encoding) =
-            New Dictionary(Of Encodings, Encoding) From {
+        Public ReadOnly Property TextEncodings As IReadOnlyDictionary(Of Encodings, Encoding) = codePageTable()
+
+        ''' <summary>
+        ''' 在这个函数之中会根据当前所运行的平台对utf8编码进行一下额外的处理
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function codePageTable() As Dictionary(Of Encodings, Encoding)
+            Dim utf8 As Encoding
+
+            If App.IsMicrosoftPlatform Then
+                ' 2018-3-5
+                ' Windows平台上面的Excel表格只能够读取带有BOM前缀的csv文件，否则中文会出现乱码
+                utf8 = Encoding.UTF8
+            Else
+                utf8 = UTF8WithoutBOM
+            End If
+
+            Return New Dictionary(Of Encodings, Encoding) From {
  _
-            {Encodings.ASCII, Encoding.ASCII},
-            {Encodings.GB2312, __gbk2312_encoding()},
-            {Encodings.Unicode, Encoding.Unicode},
-            {Encodings.UTF7, Encoding.UTF7},
-            {Encodings.UTF32, Encoding.UTF32},
-            {Encodings.UTF8, UTF8WithoutBOM},
-            {Encodings.Default, Encoding.Default},
-            {Encodings.UTF16, Encoding.Unicode}
-        }
+                {Encodings.ASCII, Encoding.ASCII},
+                {Encodings.GB2312, __gbk2312_encoding()},
+                {Encodings.Unicode, Encoding.Unicode},
+                {Encodings.UTF7, Encoding.UTF7},
+                {Encodings.UTF32, Encoding.UTF32},
+                {Encodings.UTF8, utf8},
+                {Encodings.UTF8WithoutBOM, UTF8WithoutBOM},
+                {Encodings.Default, Encoding.Default},
+                {Encodings.UTF16, Encoding.Unicode}
+            }
+        End Function
 
         ''' <summary>
         ''' 构造函数会自动的从命令行配置之中设置默认的编码格式
