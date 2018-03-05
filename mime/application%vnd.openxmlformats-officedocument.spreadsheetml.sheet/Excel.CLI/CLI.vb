@@ -102,6 +102,25 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
             .CLICode
     End Function
 
+    ''' <summary>
+    ''' 指定文件夹之中的csv文件按照文件名中第一个小数点前面的单词作为分组的key，进行分组合并
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/rbind.group")>
+    <Usage("/rbind.group /in <*.csv.DIR> [/out <out.directory>]")>
+    Public Function rbindGroup(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or $"{[in].TrimDIR}.rbind.groups/"
+        Dim files = (ls - l - r - "*.csv" <= [in]).GroupBy(Function(path) path.BaseName.Split("."c).First).ToArray
+
+        For Each group In files
+            Call group.DirectAppends(EXPORT:=$"{out}/{group.Key}.csv")
+        Next
+
+        Return 0
+    End Function
+
     <ExportAPI("/push")>
     <Usage("/push /write <*.xlsx> /table <*.csv> [/sheetName <name_string> /saveAs <*.xlsx>]")>
     <Description("Write target csv table its content data as a worksheet into the target Excel package.")>
