@@ -133,11 +133,11 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     End Function
 
     <ExportAPI("/Extract")>
-    <Usage("/Extract /open <xlsx> /sheetName <name_string> [/out <out.csv/directory>]")>
+    <Usage("/Extract /open <xlsx> [/sheetName <name_string, default=*> /out <out.csv/directory>]")>
     <Description("Open target excel file and get target table and save into a csv file.")>
     <Argument("/open", False, CLITypes.File,
               Description:="File path of the Excel ``*.xlsx`` file for open and read.")>
-    <Argument("/sheetName", False, CLITypes.String,
+    <Argument("/sheetName", True, CLITypes.String,
               Description:="The worksheet table name for read data and save as csv file. 
               If this argument value is equals to ``*``, then all of the tables in the target xlsx excel file will be extract.")>
     <Argument("/out", True, CLITypes.File,
