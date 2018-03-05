@@ -102,6 +102,25 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
             .CLICode
     End Function
 
+    ''' <summary>
+    ''' 指定文件夹之中的csv文件按照文件名中第一个小数点前面的单词作为分组的key，进行分组合并
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/rbind.group")>
+    <Usage("/rbind.group /in <*.csv.DIR> [/out <out.directory>]")>
+    Public Function rbindGroup(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or $"{[in].TrimDIR}.rbind.groups/"
+        Dim files = (ls - l - r - "*.csv" <= [in]).GroupBy(Function(path) path.BaseName.Split("."c).First).ToArray
+
+        For Each group In files
+            Call group.DirectAppends(EXPORT:=$"{out}/{group.Key}.csv")
+        Next
+
+        Return 0
+    End Function
+
     <ExportAPI("/push")>
     <Usage("/push /write <*.xlsx> /table <*.csv> [/sheetName <name_string> /saveAs <*.xlsx>]")>
     <Description("Write target csv table its content data as a worksheet into the target Excel package.")>
@@ -133,17 +152,17 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     End Function
 
     <ExportAPI("/Extract")>
-    <Usage("/Extract /open <xlsx> /sheetName <name_string> [/out <out.csv/directory>]")>
+    <Usage("/Extract /open <xlsx> [/sheetName <name_string, default=*> /out <out.csv/directory>]")>
     <Description("Open target excel file and get target table and save into a csv file.")>
     <Argument("/open", False, CLITypes.File,
               Description:="File path of the Excel ``*.xlsx`` file for open and read.")>
-    <Argument("/sheetName", False, CLITypes.String,
+    <Argument("/sheetName", True, CLITypes.String,
               Description:="The worksheet table name for read data and save as csv file. 
               If this argument value is equals to ``*``, then all of the tables in the target xlsx excel file will be extract.")>
     <Argument("/out", True, CLITypes.File,
               Description:="The csv output file path or a directory path value when the ``/sheetName`` parameter is value ``*``.")>
     Public Function Extract(args As CommandLine) As Integer
-        Dim sheetName$ = args <= "/sheetName"
+        Dim sheetName$ = args("/sheetName") Or "*"
         Dim defaultOut$
 
         If sheetName = "*" Then
