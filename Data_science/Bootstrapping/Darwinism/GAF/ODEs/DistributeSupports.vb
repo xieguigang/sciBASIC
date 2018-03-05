@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::fb69be7b00c33cd84b4a9c41d0b514d6, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\ODEs\DistributeSupports.vb"
+﻿#Region "Microsoft.VisualBasic::fb69be7b00c33cd84b4a9c41d0b514d6, Data_science\Bootstrapping\Darwinism\GAF\ODEs\DistributeSupports.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module DistributeSupports
+    ' 
+    '         Function: GetFitness, log10
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

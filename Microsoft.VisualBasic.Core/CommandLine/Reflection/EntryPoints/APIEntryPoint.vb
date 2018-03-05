@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5e790f9193860320fd8094b990075192, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::2c6d3618db23552ede4f7e9cf99a23df, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,11 +25,29 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class APIEntryPoint
+    ' 
+    '         Properties: Arguments, EntryPoint, IsInstanceMethod, target
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: __directInvoke, DirectInvoke, EntryPointFullName, HelpInformation, (+2 Overloads) Invoke
+    '                   InvokeCLI
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Reflection
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq.Extensions
 

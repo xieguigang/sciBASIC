@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::eb5faf8917db4d5f0508d8f368988149, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::eb5faf8917db4d5f0508d8f368988149, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Correlations.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,48 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Correlations
+    ' 
+    '         Properties: PearsonDefault
+    ' 
+    '         Function: __kldPart, (+2 Overloads) GetPearson, JaccardIndex, kendallTauBeta, KLD
+    '                   rankKendallTauBeta, SW
+    '         Structure Pearson
+    ' 
+    '             Properties: P
+    ' 
+    '             Function: Measure, RankPearson, ToString
+    ' 
+    '         Delegate Function
+    ' 
+    '             Function: __getOrder, CorrelationMatrix, Spearman
+    ' 
+    '             Sub: throwNotAgree
+    '         Structure spcc
+    ' 
+    ' 
+    '             Structure __spccInner
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    '     Module Beta
+    ' 
+    '         Function: betacf, betai, erfcc, gammln
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

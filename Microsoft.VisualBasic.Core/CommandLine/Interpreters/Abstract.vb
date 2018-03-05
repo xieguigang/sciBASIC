@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5dc34b90e4cc94e531907979f16b71ba, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Interpreters\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::dc46e1f7a1d006175ea1351e45e19984, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Abstract.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,6 +25,28 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Delegate Function
+    ' 
+    ' 
+    '     Delegate Function
+    ' 
+    ' 
+    '     Delegate Function
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Namespace CommandLine
@@ -34,18 +57,18 @@ Namespace CommandLine
     ''' <param name="path"></param>
     ''' <param name="args"></param>
     ''' <returns></returns>
-    Public Delegate Function __ExecuteFile(path As String, args As CommandLine) As Integer
+    Public Delegate Function ExecuteFile(path As String, args As CommandLine) As Integer
     ''' <summary>
     ''' 假若所传入的命令行是空的，就会执行这个函数指针
     ''' </summary>
     ''' <returns></returns>
-    Public Delegate Function __ExecuteEmptyCLI() As Integer
+    Public Delegate Function ExecuteEmptyCLI() As Integer
 
     ''' <summary>
     ''' 假若查找不到命令的话，执行这个函数
     ''' </summary>
     ''' <param name="args"></param>
     ''' <returns></returns>
-    Public Delegate Function __ExecuteNotFound(args As CommandLine) As Integer
+    Public Delegate Function ExecuteNotFound(args As CommandLine) As Integer
 
 End Namespace

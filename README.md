@@ -47,6 +47,10 @@ PM> Install-Package sciBASIC
 PM> Install-Package sciBASIC -Pre
 ```
 
+### Contacts
+
+Foundation for VisualBasic.NET scientific computing softwares from China: [foundation@sciBASIC.NET](mailto://foundation@scibasic.net)
+
 ### Directory Structure
 
 ###### 1. source projects

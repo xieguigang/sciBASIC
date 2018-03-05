@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2eb2a1da17f7eed55f08a58f73a8f0ff, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssValue.vb"
+﻿#Region "Microsoft.VisualBasic::2eb2a1da17f7eed55f08a58f73a8f0ff, mime\text%html\HTML\CSS\Render\CssValue.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class CssValue
+    ' 
+    '         Function: DetectSource, GetActualBorderWidth, GetActualColor, GetImage, GetStyleSheet
+    '                   GetTypeInfo, (+2 Overloads) ParseLength, ParseNumber, (+2 Overloads) SplitValues
+    ' 
+    '         Sub: GoLink
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

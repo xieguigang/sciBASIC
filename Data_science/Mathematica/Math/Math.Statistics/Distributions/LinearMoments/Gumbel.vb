@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::6a744351205e1a1596a4dd24de6fe82b, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Gumbel.vb"
+﻿#Region "Microsoft.VisualBasic::6a744351205e1a1596a4dd24de6fe82b, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Gumbel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' 	Class Gumbel
+    ' 
+    ' 	    Constructor: (+3 Overloads) Sub New
+    ' 	    Function: GetCDF, GetInvCDF, GetPDF, Validate
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

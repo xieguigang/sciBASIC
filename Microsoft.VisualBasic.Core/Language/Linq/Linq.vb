@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::bdb9cc942f7123775b83eb9ecf8cd4d5, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::bdb9cc942f7123775b83eb9ecf8cd4d5, Microsoft.VisualBasic.Core\Language\Linq\Linq.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,60 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class LinqAPI
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+3 Overloads) BuildHash, DefaultFirst, (+2 Overloads) Exec, IsEquals, LQuery
+    '                   MakeList, Takes
+    ' 
+    '         Structure CountHelper
+    ' 
+    '             Operators: <=, <>, =, >=
+    ' 
+    '         Structure LQueryHelper
+    ' 
+    '             Operators: (+2 Overloads) <=, (+2 Overloads) >=
+    ' 
+    '         Structure TakeHelper
+    ' 
+    '             Properties: n
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: ToString
+    '             Operators: <=, >=
+    ' 
+    '         Structure BuildHashHelper
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Operators: <=, >=
+    ' 
+    '         Structure ListHelper
+    ' 
+    '             Operators: (+3 Overloads) <=, (+3 Overloads) >=
+    ' 
+    '         Structure ExecHelper
+    ' 
+    '             Operators: (+2 Overloads) <=, (+2 Overloads) >=
+    ' 
+    '         Structure FirstOrDefaultHelper
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Operators: <=, >=
+    ' 
+    '         Structure ToArrayHelper
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Operators: (+2 Overloads) <=, (+2 Overloads) >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

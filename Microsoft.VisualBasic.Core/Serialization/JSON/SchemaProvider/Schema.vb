@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::0b71e24fa0391addb7022cf3116ed3d6, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\JSON\SchemaProvider\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::0b71e24fa0391addb7022cf3116ed3d6, Microsoft.VisualBasic.Core\Serialization\JSON\SchemaProvider\Schema.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,31 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Schema
+    ' 
+    '         Properties: title
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class SchemaProvider
+    ' 
+    '         Properties: description, properties, required, type
+    ' 
+    '     Class [Property]
+    ' 
+    '         Properties: exclusiveMinimum, minimum, name, ref
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::45cba76eb3740ed7b4fc2419ff4ccfe9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\SymLinker\JunctionPoint.vb"
+﻿#Region "Microsoft.VisualBasic::45cba76eb3740ed7b4fc2419ff4ccfe9, Microsoft.VisualBasic.Core\Extensions\IO\SymLinker\JunctionPoint.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,55 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module JunctionPoint
+    ' 
+    ' 
+    '         Enum EFileAccess
+    ' 
+    ' 
+    ' 
+    ' 
+    '         Enum EFileShare
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '         Enum ECreationDisposition
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '         Enum EFileAttributes
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '         Structure REPARSE_DATA_BUFFER
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Function: CreateFile, DeviceIoControl, Exists, GetTarget, InternalGetTarget
+    '               OpenReparsePoint
+    ' 
+    '     Sub: Create, Delete, ThrowLastWin32Error
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

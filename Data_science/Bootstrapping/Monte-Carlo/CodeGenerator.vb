@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::f94715148a8c93f8c1d6244523d6924b, ..\sciBASIC#\Data_science\Bootstrapping\Monte-Carlo\CodeGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::f94715148a8c93f8c1d6244523d6924b, Data_science\Bootstrapping\Monte-Carlo\CodeGenerator.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module CodeGenerator
+    ' 
+    '         Function: ConstAlpha, ConstBeta, SNonLinear, SPowerAlpha, SPowerBeta
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

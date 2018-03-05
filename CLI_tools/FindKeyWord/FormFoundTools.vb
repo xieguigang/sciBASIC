@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::ed65746ce4718e7f8721a0a4c81ef19f, ..\sciBASIC#\CLI_tools\FindKeyWord\FormFoundTools.vb"
+﻿#Region "Microsoft.VisualBasic::ed65746ce4718e7f8721a0a4c81ef19f, CLI_tools\FindKeyWord\FormFoundTools.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class FormFoundTools
+    ' 
+    '     Sub: CheckBox2_CheckedChanged, FormFoundTools_Load, ListView1_DoubleClick, ListView1_KeyUp, ListView1_SelectedIndexChanged
+    '          OpenEditor, UpdateProcess
+    ' 
+    ' Class Settings
+    ' 
+    '     Properties: DefaultEditor, DefaultFile, Editors, History
+    ' 
+    '     Function: Open, Save
+    ' 
+    '     Sub: AddEditor, SetPath
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

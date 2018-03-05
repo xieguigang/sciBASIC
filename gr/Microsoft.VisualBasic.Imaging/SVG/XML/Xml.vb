@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::ff40f843d8de606152075c0a67bf51bc, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml.vb"
+﻿#Region "Microsoft.VisualBasic::ff40f843d8de606152075c0a67bf51bc, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,71 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class node
+    ' 
+    '         Properties: [class], attributes, fill, id, stroke
+    '                     style, zIndex
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class title
+    ' 
+    '         Properties: innerHTML
+    ' 
+    '     Class circle
+    ' 
+    '         Properties: cx, cy, r, title
+    '         Operators: +
+    ' 
+    '     Class polygon
+    ' 
+    '         Properties: points
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Operators: +
+    ' 
+    '     Class polyline
+    ' 
+    '         Properties: points
+    ' 
+    '     Class rect
+    ' 
+    '         Properties: height, width, x, y
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Operators: +
+    ' 
+    '     Class path
+    ' 
+    '         Properties: d
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Operators: +
+    ' 
+    '     Class line
+    ' 
+    '         Properties: x1, x2, y1, y2
+    '         Operators: +
+    ' 
+    '     Class text
+    ' 
+    '         Properties: anchor, dy, transform, value, x
+    '                     y
+    '         Operators: +
+    ' 
+    '     Class CSSStyles
+    ' 
+    '         Properties: id, styles
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

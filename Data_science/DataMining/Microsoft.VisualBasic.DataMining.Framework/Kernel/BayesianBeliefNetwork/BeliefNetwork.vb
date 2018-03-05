@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::34a9b88409ae852d6e16c4fbbbb1489f, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Kernel\BayesianBeliefNetwork\BeliefNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::34a9b88409ae852d6e16c4fbbbb1489f, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Kernel\BayesianBeliefNetwork\BeliefNetwork.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,71 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class BeliefNode
+    ' 
+    '         Properties: Id, Name, Range
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: Clear
+    ' 
+    '     Class BeliefNetwork
+    ' 
+    '         Properties: Nodes
+    ' 
+    '         Function: (+2 Overloads) CreateFrom
+    ' 
+    '         Sub: ResetNodes, SetNodes
+    '         Class NetworkInitializer
+    ' 
+    '             Function: (+2 Overloads) Build
+    ' 
+    '             Sub: CreateNode
+    ' 
+    '         Class NetworkLayout
+    ' 
+    '             Properties: Nodes
+    ' 
+    '             Function: Load, TestData, ToString
+    '             Class BeliefNode
+    ' 
+    '                 Properties: CPTable, Name, Parents, Range
+    ' 
+    '                 Function: ToString
+    '                 Class ParentList
+    ' 
+    '                     Properties: Num, ParentNodes
+    ' 
+    '                     Function: ToString
+    ' 
+    '                 Class CPTableF
+    ' 
+    '                     Properties: CPColumns
+    '                     Class CPColumn
+    ' 
+    '                         Properties: Count, Data
+    ' 
+    '                         Function: ToString
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

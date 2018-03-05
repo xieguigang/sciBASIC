@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::6e10f9e85dbc1c78d4616d54ce68cfe7, ..\sciBASIC#\Data_science\SVM\SVM\method\SvmArgument.vb"
+﻿#Region "Microsoft.VisualBasic::6e10f9e85dbc1c78d4616d54ce68cfe7, Data_science\SVM\SVM\method\SvmArgument.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class SvmArgument
+    ' 
+    '         Properties: NormalVector, Offset
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: [Next], Clone, ICloneable_Clone, Minus, Multipy
+    '                   Norm, ToLine, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

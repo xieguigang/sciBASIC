@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::26727e2f455de79829db004f5e78d17e, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Factors\Factor.vb"
+﻿#Region "Microsoft.VisualBasic::26727e2f455de79829db004f5e78d17e, Data_science\Mathematica\Math\Math\Scripting\Factors\Factor.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Factor
+    ' 
+    '         Properties: FactorValue
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class Factors
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetFactors
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

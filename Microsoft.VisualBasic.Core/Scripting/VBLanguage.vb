@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::50c9486816cfe67aba867527bd0c9d63, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\VBLanguage.vb"
+﻿#Region "Microsoft.VisualBasic::210f46f223a8f1d6fbfc0ee881b7b986, Microsoft.VisualBasic.Core\Scripting\VBLanguage.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,7 +25,25 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class VBLanguage
+    ' 
+    '         Properties: Words
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: AutoEscapeVBKeyword
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace Scripting.SymbolBuilder
 
@@ -62,10 +81,16 @@ Namespace Scripting.SymbolBuilder
             "|Yield|"
 
         ''' <summary>
+        ''' 匹配一个合法的标识符，在正则匹配的时候应该不区分大小写
+        ''' </summary>
+        Public Const IdentiferPattern$ = "\[?[_a-z][_a-z0-9]*\]?"
+
+        ''' <summary>
         ''' Tokenize of <see cref="VBKeywords"/>
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Words As String()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return VBKeywords _
                     .Split("|"c) _

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::abe553f7dd21d4c40a98e949b07d1c8a, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\OrganicLayout.vb"
+﻿#Region "Microsoft.VisualBasic::abe553f7dd21d4c40a98e949b07d1c8a, gr\network-visualization\Datavisualization.Network\Layouts\OrganicLayout\OrganicLayout.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,31 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class mxOrganicLayout
+    ' 
+    '         Properties: ApproxNodeDimensions, AverageNodeArea, BorderLineCostFactor, DisableEdgeStyle, EdgeCrossingCostFactor
+    '                     EdgeDistanceCostFactor, EdgeLengthCostFactor, FineTuning, FineTuningRadius, InitialMoveRadius
+    '                     MaxDistanceLimit, MaxIterations, MinDistanceLimit, MinMoveRadius, NodeDistributionCostFactor
+    '                     OptimizeBorderLine, OptimizeEdgeCrossing, OptimizeEdgeDistance, OptimizeEdgeLength, OptimizeNodeDistribution
+    '                     RadiusScaleFactor, ResetEdges, TriesPerCell, UnchangedEnergyRoundTermination
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: calcEnergyDelta, getAdditionFactorsEnergy, getBorderline, getConnectedEdges, getEdgeCrossing
+    '                   getEdgeCrossingAffectedEdges, getEdgeDistanceAffectedNodes, getEdgeDistanceFromEdge, getEdgeDistanceFromNode, getEdgeLength
+    '                   getEdgeLengthAffectedEdges, getEdges, getNodeDistribution, getRelevantEdges, ToString
+    ' 
+    '         Sub: execute, performRound
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

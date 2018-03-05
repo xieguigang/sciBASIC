@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::8ed2f8e34c36d88c77f3237525a5e88e, ..\sciBASIC#\Microsoft.VisualBasic.Core\Serialization\Controls\Contrls.vb"
+﻿#Region "Microsoft.VisualBasic::8ed2f8e34c36d88c77f3237525a5e88e, Microsoft.VisualBasic.Core\Serialization\Controls\Contrls.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,46 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Button
+    ' 
+    '         Properties: AutoSizeMode, DialogResult
+    ' 
+    '     Class ButtonBase
+    ' 
+    '         Properties: AutoEllipsis, AutoSize, BackColor, FlatAppearance, FlatStyle
+    '                     Image, ImageAlign, ImageIndex, ImageKey, ImageList
+    '                     Text, TextAlign, TextImageRelation, UseCompatibleTextRendering, UseMnemonic
+    '                     UseVisualStyleBackColor
+    ' 
+    '     Class Control
+    ' 
+    '         Properties: AccessibilityObject, AccessibleDefaultActionDescription, AccessibleDescription, AccessibleName, AccessibleRole
+    '                     AllowDrop, Anchor, AutoScrollOffset, AutoSize, BackColor
+    '                     BackgroundImage, BackgroundImageLayout, BindingContext, Bottom, Bounds
+    '                     CanEnableIme, CanFocus, CanSelect, Capture, CausesValidation
+    '                     ClientRectangle, ClientSize, CompanyName, ContainsFocus, Created
+    '                     CreateParams, Cursor, DataBindings, DefaultCursor, DefaultImeMode
+    '                     DefaultMargin, DefaultMaximumSize, DefaultMinimumSize, DefaultPadding, DefaultSize
+    '                     DisplayRectangle, Disposing, Dock, DoubleBuffered, Enabled
+    '                     Focused, Font, FontHeight, ForeColor, Handle
+    '                     HasChildren, Height, ImeMode, ImeModeBase, InvokeRequired
+    '                     IsAccessible, IsDisposed, IsHandleCreated, IsMirrored, Left
+    '                     Location, Margin, MaximumSize, MinimumSize, Name
+    '                     Padding, Parent, PreferredSize, ProductName, ProductVersion
+    '                     RecreatingHandle, Region, RenderRightToLeft, ResizeRedraw, Right
+    '                     RightToLeft, ScaleChildren, ShowFocusCues, ShowKeyboardCues, Size
+    '                     TabIndex, TabStop, Tag, Text, Top
+    '                     UseWaitCursor, Visible, Width, WindowTarget
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

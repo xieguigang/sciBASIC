@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::bb86d3776b528c6757f21a3f437bef75, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\LP\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::76dde6fed113768765f05d6dc4bb4750, Data_science\Mathematica\Math\Math\Algebra\LP\Extensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Extensions
+    ' 
+    '         Function: copyOf, formatDecimals, ParseType
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -52,9 +66,9 @@ Namespace Algebra.LinearProgramming
         <Extension>
         Friend Function ParseType(type As String) As OptimizationType
             Select Case LCase(type)
-                Case "max", "Maximize"
+                Case "max", "maximize"
                     Return OptimizationType.MAX
-                Case "min", "Minimize"
+                Case "min", "minimize"
                     Return OptimizationType.MIN
                 Case Else
                     Throw New NotImplementedException(type)

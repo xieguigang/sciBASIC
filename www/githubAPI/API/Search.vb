@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::f409b9e3f6874f40a3c73d2bf52d2cef, ..\sciBASIC#\www\githubAPI\API\Search.vb"
+﻿#Region "Microsoft.VisualBasic::f409b9e3f6874f40a3c73d2bf52d2cef, www\githubAPI\API\Search.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,43 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Search
+    ' 
+    ' 
+    '         Enum UserSorts
+    ' 
+    '             [default], followers, joined, repositories
+    ' 
+    ' 
+    ' 
+    '         Enum UserSortOrders
+    ' 
+    '             asc, desc
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '         Structure UsersQuery
+    ' 
+    '             Properties: [in], created, followers, language, location
+    '                         repos, term, type
+    ' 
+    '             Function: ToString, (+2 Overloads) Users
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

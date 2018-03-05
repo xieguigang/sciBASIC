@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::dfdf62c2f4438eb288471d7dc3488dd5, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::2f48713fda8f725dcd17dded55bea865, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,28 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module ProgramPathSearchTool
+    ' 
+    '     Function: BaseName, BatchMd5Renamed, BranchRule, ChangeSuffix, Delete
+    '               DIR, DirectoryExists, DirectoryName, EnumerateFiles, ExtensionSuffix
+    '               FileCopy, (+2 Overloads) FileExists, FileLength, FileName, FileOpened
+    '               GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath, GetMostAppreancePath
+    '               ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList, Long2Short
+    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
+    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory, SearchDrive
+    '               SearchProgram, SearchScriptFile, SourceCopy, TheFile, ToDIR_URL
+    '               ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    ' 
+    '     Sub: MkDIR
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

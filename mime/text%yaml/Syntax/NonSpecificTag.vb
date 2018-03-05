@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5f4b7022d46a4c71f55d77f40a987aea, ..\sciBASIC#\mime\text%yaml\Syntax\NonSpecificTag.vb"
+﻿#Region "Microsoft.VisualBasic::5f4b7022d46a4c71f55d77f40a987aea, mime\text%yaml\Syntax\NonSpecificTag.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class NonSpecificTag
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d4a9bb4082504823cac4937f2b1c37f4, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::c54997cc0a88671687cf954a7fc14fdf, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module VBMath
+    ' 
+    '         Function: (+7 Overloads) Abs, Acos, Asin, Atan, Atan2
+    '                   BigMul, (+2 Overloads) Ceiling, Cos, Cosh, Covariance
+    '                   Distance, (+2 Overloads) DivRem, (+6 Overloads) EuclideanDistance, Exp, (+2 Overloads) Floor
+    '                   FormatNumeric, Hypot, IEEERemainder, IsPowerOf2, (+2 Overloads) Log
+    '                   Log10, Log2, LogN, (+12 Overloads) Max, (+11 Overloads) Min
+    '                   PoissonPDF, Pow, Pow2, ProductALL, (+3 Overloads) RangesAt
+    '                   RMS, (+8 Overloads) Round, RSD, (+4 Overloads) SD, (+2 Overloads) seq
+    '                   (+7 Overloads) Sign, Sin, Sinh, Sqrt, Sum
+    '                   Tan, Tanh, (+2 Overloads) Truncate, WeighedAverage
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -1511,6 +1533,8 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <param name="N"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LogN(x As Double, N As Double) As Double
             Return sys.Log(x) / sys.Log(N)
         End Function
@@ -1521,6 +1545,8 @@ Namespace Math
         ''' <param name="b"> </param>
         ''' <param name="c">
         ''' @return </param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Max(a As Integer, b As Integer, c As Integer) As Integer
             Return sys.Max(a, sys.Max(b, c))
         End Function

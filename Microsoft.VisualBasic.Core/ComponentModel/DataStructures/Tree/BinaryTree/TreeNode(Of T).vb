@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2512e6ceaf36abffed482f292c39e523, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\TreeNode(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::2512e6ceaf36abffed482f292c39e523, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\TreeNode(Of T).vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class TreeNode
+    ' 
+    '         Properties: AllChilds, ChainPosition, Count, DisplayQualifiedName, IsLeaf
+    '                     Left, Name, Parent, QualifiedName, Right
+    '                     Value
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: GetEnumerator, ToString
+    '         Operators: -, +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

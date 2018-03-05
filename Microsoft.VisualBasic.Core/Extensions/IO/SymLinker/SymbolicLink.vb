@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::3657912b74e191d47455cc60f5792cc7, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\IO\SymLinker\SymbolicLink.vb"
+﻿#Region "Microsoft.VisualBasic::3657912b74e191d47455cc60f5792cc7, Microsoft.VisualBasic.Core\Extensions\IO\SymLinker\SymbolicLink.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module SymbolicLink
+    ' 
+    '         Function: CreateFile, CreateSymbolicLink, DeviceIoControl, Exists, getFileHandle
+    '                   GetTarget
+    ' 
+    '         Sub: CreateDirectoryLink, CreateFileLink
+    '         Structure SymbolicLinkReparseData
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

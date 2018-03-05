@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::7cd16e63540b8754b215831f05c7c152, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Xml\OpenXml\Content_Types.vb"
+﻿#Region "Microsoft.VisualBasic::7cd16e63540b8754b215831f05c7c152, Microsoft.VisualBasic.Core\Text\Xml\OpenXml\Content_Types.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ContentTypes
+    ' 
+    '         Properties: [Default], [Overrides]
+    ' 
+    '         Function: ToString
+    ' 
+    '     Structure Type
+    ' 
+    '         Properties: ContentType, Extension, PartName
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

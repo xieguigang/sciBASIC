@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::81a0e2aae5e5284abccc1b146861fd5d, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drivers\GraphicsData.vb"
+﻿#Region "Microsoft.VisualBasic::3bf0e2207e54e9b3f68f4185d40d7957, gr\Microsoft.VisualBasic.Imaging\Drivers\GraphicsData.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,39 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class GraphicsData
+    ' 
+    '         Properties: Height, Size, Width
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    '     Class ImageData
+    ' 
+    '         Properties: DefaultFormat, Driver, Image
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) Save
+    ' 
+    '         Sub: Dispose
+    ' 
+    '     Class SVGData
+    ' 
+    '         Properties: Driver, SVG, XmlComment
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Render, (+2 Overloads) Save
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

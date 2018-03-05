@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::83bf4cc0bd899533a3ceb93d1b9bccdb, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::83bf4cc0bd899533a3ceb93d1b9bccdb, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,29 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class SchemaProvider
+    ' 
+    '         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
+    '                     KeyValuePairColumns, MetaAttributes, Raw
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __columnType, __gets, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField
+    '                   ContainsProperty, CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, GetCollectionColumns
+    '                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
+    '                   GetMetaAttributeColumn, IEnumerable_GetEnumerator, ToString
+    ' 
+    '         Sub: Remove
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

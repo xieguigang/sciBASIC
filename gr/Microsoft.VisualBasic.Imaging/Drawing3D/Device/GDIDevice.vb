@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::11695a99131cf64355313cf7205864b2, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\GDIDevice.vb"
+﻿#Region "Microsoft.VisualBasic::11695a99131cf64355313cf7205864b2, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\GDIDevice.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class GDIDevice
+    ' 
+    '         Properties: Animation, AutoRotation, bg, DisableScreenResize, DrawPath
+    '                     FOV, LightColor, LightIllumination, Model, Plot
+    '                     RefreshInterval, RotationThread, ShowDebugger, ShowHorizontalPanel, ViewDistance
+    ' 
+    '         Sub: ___animationLoop, __init, __initDevice, _animationLoop_Tick, Dispose
+    '              GDIDevice_KeyDown, GDIDevice_Load, GDIDevice_MouseWheel, GDIDevice_Resize, InitializeComponent
+    '              Pause, Rotate, RotateX, RotateY, RotateZ
+    '              Run
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

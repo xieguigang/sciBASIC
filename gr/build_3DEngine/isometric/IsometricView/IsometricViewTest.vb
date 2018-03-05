@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::da3009a2466666d1a7e637d306b8b9ec, ..\sciBASIC#\gr\build_3DEngine\isometric\IsometricView\IsometricViewTest.vb"
+﻿#Region "Microsoft.VisualBasic::da3009a2466666d1a7e637d306b8b9ec, gr\build_3DEngine\isometric\IsometricView\IsometricViewTest.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class IsometricViewTest
+    ' 
+    '     Sub: cylinder, doScreenshotCylinder, doScreenshotExtrude, doScreenshotGrid, doScreenshotKnot
+    '          doScreenshotOctahedron, doScreenshotOne, doScreenshotPath3D, doScreenshotPrism, doScreenshotPyramid
+    '          doScreenshotRotateZ, doScreenshotScale, doScreenshotStairs, doScreenshotThree, doScreenshotTranslate
+    '          doScreenshotTwo, extrude, grid, knot, measureAndScreenshotView
+    '          octahedron, path, prism, pyramid, rotateZ
+    '          sampleOne, sampleThree, sampleTwo, scale, stairs
+    '          translate
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

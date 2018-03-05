@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5ca997c628beffddb0e2a2d9ac16dcbd, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::5ca997c628beffddb0e2a2d9ac16dcbd, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,31 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Field
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class DataFrameColumnAttribute
+    ' 
+    '         Properties: Description, Index, Name
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: __attrs, __attrsAll, __source, GetIndex, (+2 Overloads) LoadMapping
+    '                   SetNameValue, ToString
+    ' 
+    '     Class DataFrameIO
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

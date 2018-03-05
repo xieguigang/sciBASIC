@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::505f7c423821c884100b34b33a2c0092, ..\sciBASIC#\mime\application%rtf\Rtf.vb"
+﻿#Region "Microsoft.VisualBasic::505f7c423821c884100b34b33a2c0092, mime\application%rtf\Rtf.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Rtf
+    ' 
+    '     Properties: GlobalFormat, Length
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: __getMetaDataStr, __toRTF, GetColor, GetFont, InternalSetFormat
+    '               Save, SetFormat
+    ' 
+    '     Sub: (+3 Overloads) AppendLine, AppendText
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

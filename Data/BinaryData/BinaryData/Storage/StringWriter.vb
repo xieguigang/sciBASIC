@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::9dfd770b560081ca36c2730f085adcc5, ..\sciBASIC#\Data\BinaryData\BinaryData\Storage\StringWriter.vb"
+﻿#Region "Microsoft.VisualBasic::9dfd770b560081ca36c2730f085adcc5, Data\BinaryData\BinaryData\Storage\StringWriter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,42 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class StringWriter
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: (+2 Overloads) Append, ToString, Write
+    ' 
+    '     Sub: Close, (+2 Overloads) Dispose
+    ' 
+    ' Class StringReader
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: ReadString, ReadStringArray
+    ' 
+    '     Sub: (+2 Overloads) Dispose, Seek
+    ' 
+    ' Structure SectionHeader
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: (+2 Overloads) CreateBuffer, ToArray
+    ' 
+    ' Enum Types
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

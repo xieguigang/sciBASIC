@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::78feb08e6fcebe3acb47a95040836ef3, ..\sciBASIC#\Data_science\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::e70d1d83ea58ce2b8f704c6d6ce44ce4, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class GeneticAlgorithm
+    ' 
+    '         Properties: Best, Fitness, Iteration, ParentChromosomesSurviveCount, Population
+    '                     Worst
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __iterate, GetFitness
+    ' 
+    '         Sub: addIterationListener, Clear, (+2 Overloads) Evolve, removeIterationListener, Terminate
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -42,18 +63,21 @@
 ' limitations under the License.
 ' *****************************************************************************
 
-Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
-Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
 
 Namespace Darwinism.GAF
 
+    ''' <summary>
+    ''' The GA engine core
+    ''' </summary>
+    ''' <typeparam name="C"></typeparam>
     Public Class GeneticAlgorithm(Of C As Chromosome(Of C))
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        ReadOnly _chromosomesComparator As ChromosomesComparator(Of C)
+        ReadOnly _chromosomesComparator As FitnessPool(Of C)
 
         Public ReadOnly Property Fitness As Fitness(Of C)
 
@@ -76,7 +100,7 @@ Namespace Darwinism.GAF
         Public Sub New(population As Population(Of C), fitnessFunc As Fitness(Of C), Optional seeds As IRandomSeeds = Nothing)
             Me._Population = population
             Me.Fitness = fitnessFunc
-            Me._chromosomesComparator = New ChromosomesComparator(Of C)(Me)
+            Me._chromosomesComparator = New FitnessPool(Of C)(AddressOf fitnessFunc.Calculate)
             Me._Population.SortPopulationByFitness(Me, _chromosomesComparator)
 
             If population.Parallel Then
@@ -200,7 +224,7 @@ Namespace Darwinism.GAF
         ''' Clear the internal cache
         ''' </summary>
         Public Sub Clear()
-            _chromosomesComparator.clearCache()
+            _chromosomesComparator.cache.Clear()
         End Sub
     End Class
 End Namespace

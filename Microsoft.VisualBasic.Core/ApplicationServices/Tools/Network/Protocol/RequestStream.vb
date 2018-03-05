@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::648eb50529b7b29992b7e94234d6f68c, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::648eb50529b7b29992b7e94234d6f68c, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\RequestStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,36 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class RequestStream
+    ' 
+    '         Properties: BufferLength, ChunkBuffer, FullRead, Protocol, ProtocolCategory
+    '                     TotalBytes, uid
+    ' 
+    '         Constructor: (+7 Overloads) Sub New
+    '         Function: (+2 Overloads) CreatePackage, CreateProtocol, GetRawStream, GetUTF8String, IsAvaliableStream
+    '                   (+2 Overloads) LoadObject, Serialize, ToString
+    '         Enum Protocols
+    ' 
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: IsPing, IsPlantText, IsSSL_PublicToken, IsSSLHandshaking, IsSSLProtocol
+    '                 TypeGetSystemProtocol
+    ' 
+    '     Function: SystemProtocol
+    '     Operators: (+3 Overloads) <>, (+3 Overloads) =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

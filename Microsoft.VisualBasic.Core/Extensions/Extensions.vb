@@ -1,28 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::dcf2757bea3c1ddd1b2425d4250bed42, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7386b09bb639ca6f66861f62e60be45b, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Extensions
+    ' 
+    ' 
+    ' Module Extensions
+    ' 
+    '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, Append
+    '               (+2 Overloads) Average, CheckDuplicated, Constrain, DataCounts, DateToString
+    '               DriverRun, ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching
+    '               GetHexInteger, (+2 Overloads) GetItem, (+2 Overloads) GetLength, IndexOf, InsertOrUpdate
+    '               Invoke, InvokeSet, Is_NA_UHandle, IsNaNImaginary, (+6 Overloads) IsNullOrEmpty
+    '               (+4 Overloads) Join, (+2 Overloads) JoinBy, Keys, KeysJson, Log2
+    '               (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5
+    '               ModifyValue, NormalizeXMLString, NotNull, (+2 Overloads) Offset, ParseDateTime
+    '               Range, Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast
+    '               RunDriver, SaveAsTabularMapping, Second, SelectFile, SeqRandom
+    '               (+2 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles
+    '               Split, SplitIterator, (+2 Overloads) SplitMV, StdError, TakeRandomly
+    '               Takes, ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray
+    '               ToVector, (+3 Overloads) TrimNull, (+2 Overloads) TryGetValue, Unlist, WriteAddress
+    ' 
+    '     Sub: (+5 Overloads) Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
+    '          SwapItem, SwapWith
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -469,23 +503,6 @@ Public Module Extensions
     End Sub
 
 #End Region
-
-    ''' <summary>
-    ''' Function test the Boolean expression and then decided returns which part of the value.
-    ''' (这个函数主要是用于Delegate函数指针类型或者Lambda表达式的)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="expr"><see cref="Boolean"/> Expression</param>
-    ''' <param name="[True]">value returns this parameter if the value of the expression is True</param>
-    ''' <param name="[False]">value returns this parameter if the value of the expression is False</param>
-    ''' <returns></returns>
-    <Extension> Public Function [If](Of T)(expr As Boolean, [True] As T, [False] As T) As T
-        If expr = True Then
-            Return [True]
-        Else
-            Return [False]
-        End If
-    End Function
 
     ''' <summary>
     ''' Constrain the inherits class type into the base type.
@@ -1363,7 +1380,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI("StdError")>
-    <Extension> Public Function StdError(data As Generic.IEnumerable(Of Double)) As Double
+    <Extension> Public Function StdError(data As IEnumerable(Of Double)) As Double
         Dim Average As Double = data.Average
         Dim Sum = (From n As Double In data Select (n - Average) ^ 2).Sum
         Sum /= data.Count
@@ -1504,85 +1521,6 @@ Public Module Extensions
         Return Random
     End Function
 
-#If FRAMEWORD_CORE Then
-    ''' <summary>
-    ''' Copy the value in <paramref name="value"></paramref> into target variable <paramref name="target"></paramref> and then return the target variable.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="value"></param>
-    ''' <param name="target"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("value.Copy")>
-    <Extension> Public Function CopyTo(Of T)(value As T, ByRef target As T) As T
-#Else
-    ''' <summary>
-    ''' Copy the value in <paramref name="value"></paramref> into target variable <paramref name="target"></paramref> and then return the target variable.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="value"></param>
-    ''' <param name="target"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function CopyTo(Of T)(value As T, ByRef target As T) As T
-#End If
-        target = value
-        Return value
-    End Function
-
-    ''' <summary>
-    ''' <paramref name="p"></paramref> plus one and then return its previous value. (p++)
-    ''' </summary>
-    ''' <param name="p"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Move.Next")>
-    <Extension> Public Function MoveNext(ByRef p As Long) As Long
-#Else
-    <Extension> Public Function MoveNext(ByRef p As Long) As Long
-#End If
-        Dim value = p
-        p += 1
-        Return value
-    End Function
-
-    ''' <summary>
-    ''' 变量<paramref name="p"/>移动距离<paramref name="d"/>然后返回其移动之前的值
-    ''' </summary>
-    ''' <param name="p"></param>
-    ''' <param name="d"></param>
-    ''' <returns></returns>
-    <Extension> Public Function Move(ByRef p As Long, d As Integer) As Long
-        Dim value = p
-        p += d
-        Return value
-    End Function
-
-    ''' <summary>
-    ''' 变量<paramref name="p"/>移动距离<paramref name="d"/>然后返回其移动之前的值
-    ''' </summary>
-    ''' <param name="p"></param>
-    ''' <param name="d"></param>
-    ''' <returns></returns>
-    <Extension> Public Function Move(ByRef p As Integer, d As Integer) As Integer
-        Dim value = p
-        p += d
-        Return value
-    End Function
-
-    ''' <summary>
-    ''' 变量<paramref name="p"/>移动距离<paramref name="d"/>然后返回其移动之前的值
-    ''' </summary>
-    ''' <param name="p"></param>
-    ''' <param name="d"></param>
-    ''' <returns></returns>
-    <Extension> Public Function Move(ByRef p As Double, d As Integer) As Double
-        Dim value = p
-        p += d
-        Return value
-    End Function
-
     ''' <summary>
     ''' 随机的在目标集合中选取指定数目的子集合
     ''' </summary>
@@ -1623,25 +1561,15 @@ Public Module Extensions
             Return {}
         End If
 
-        Dim LQuery$() = LinqAPI.Exec(Of String) <=
-            From item As T
-            In source
-            Let strItem As String = item.ToString
-            Select strItem
+        Dim LQuery$() = LinqAPI.Exec(Of String) _
+ _
+            () <= From item As T
+                  In source
+                  Let strItem As String = item.ToString
+                  Select strItem
 
         Return LQuery
     End Function
-
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Swap")>
-    Public Sub Swap(Of T)(ByRef obj1 As T, ByRef obj2 As T)
-#Else
-    Public Sub Swap(Of T)(ByRef obj1 As T, ByRef obj2 As T)
-#End If
-        Dim objTemp As T = obj1
-        obj1 = obj2
-        obj2 = objTemp
-    End Sub
 
     <Extension> Public Sub Swap(Of T)(ByRef array As T(), a%, b%)
         Dim tmp As T = array(a)
@@ -1663,24 +1591,24 @@ Public Module Extensions
     End Sub
 
     ''' <summary>
-    ''' Swap the two item position in the target <paramref name="List">list</paramref>.
+    ''' Swap the two item position in the target <paramref name="list">list</paramref>.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="List"></param>
+    ''' <param name="list"></param>
     ''' <param name="obj_1"></param>
     ''' <param name="obj_2"></param>
-    <Extension> Public Sub SwapItem(Of T As Class)(ByRef List As List(Of T), obj_1 As T, obj_2 As T)
-        Dim idx_1 As Integer = List.IndexOf(obj_1)
-        Dim idx_2 As Integer = List.IndexOf(obj_2)
+    <Extension> Public Sub SwapItem(Of T)(ByRef list As List(Of T), obj_1 As T, obj_2 As T)
+        Dim idx_1 As Integer = list.IndexOf(obj_1)
+        Dim idx_2 As Integer = list.IndexOf(obj_2)
 
         If idx_1 = -1 OrElse idx_2 = -1 Then
             Return
         End If
 
-        Call List.RemoveAt(idx_1)
-        Call List.Insert(idx_1, obj_2)
-        Call List.RemoveAt(idx_2)
-        Call List.Insert(idx_2, obj_2)
+        Call list.RemoveAt(idx_1)
+        Call list.Insert(idx_1, obj_2)
+        Call list.RemoveAt(idx_2)
+        Call list.Insert(idx_2, obj_2)
     End Sub
 
 #If FRAMEWORD_CORE Then
@@ -1703,11 +1631,6 @@ Public Module Extensions
         Return list
     End Function
 #End If
-
-    <Extension> Public Function Increase(ByRef p As Integer) As Integer
-        p += 1
-        Return p
-    End Function
 
 #If FRAMEWORD_CORE Then
     ''' <summary>

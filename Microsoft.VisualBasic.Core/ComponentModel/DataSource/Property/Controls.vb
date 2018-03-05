@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::653e0433987e989ce48bac0f2a3d83b6, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\Controls.vb"
+﻿#Region "Microsoft.VisualBasic::653e0433987e989ce48bac0f2a3d83b6, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\Controls.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module ControlsExtension
+    ' 
+    '         Function: GetMoreProps, SetMoreProps
+    ' 
+    '     Class ExtendedProps
+    ' 
+    '         Properties: DynamicHashTable
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: GetDynamicMemberNames, TryGetMember, TrySetMember
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

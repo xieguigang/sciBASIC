@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::99a6d6569eedc29de0adc1397882ee35, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::8131ed9a4734ae73329de534db8a7e7f, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,35 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class CommandLine
+    ' 
+    '         Properties: BoolFlags, CLICommandArgvs, Count, EnvironmentVariables, IsNothing
+    '                     IsNullOrEmpty, IsReadOnly, Keys, Name, ParameterList
+    '                     Parameters, SingleValue, Tokens
+    ' 
+    '         Function: Assert, CheckMissingRequiredArguments, CheckMissingRequiredParameters, Contains, ContainsParameter
+    '                   GetBoolean, GetByte, GetBytes, GetChar, GetChars
+    '                   GetCommandsOverview, GetDateTime, GetDecimal, GetDictionary, GetDouble
+    '                   GetEnumerator, GetEnumerator1, GetFloat, GetFullDIRPath, GetFullFilePath
+    '                   GetGuid, GetInt16, GetInt32, GetInt64, GetObject
+    '                   GetOrdinal, GetString, GetValue, HavebFlag, IsNull
+    '                   IsTrue, OpenHandle, OpenStreamInput, OpenStreamOutput, ReadInput
+    '                   (+2 Overloads) Remove, ToArgumentVector, ToString
+    ' 
+    '         Sub: (+2 Overloads) Add, Clear, CopyTo
+    ' 
+    '         Operators: (+4 Overloads) -, ^, +, <, (+2 Overloads) <=
+    '                    >, (+2 Overloads) >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -70,6 +100,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property Name As String Implements INamedValue.Key
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _name
             End Get
@@ -92,6 +123,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ParameterList As NamedValue(Of String)()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return __arguments.ToArray
             End Get
@@ -165,7 +197,9 @@ Namespace CommandLine
             Get
                 Dim LQuery As NamedValue(Of String) =
                     __arguments _
-                        .Where(Function(x) String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase)) _
+                        .Where(Function(x)
+                                   Return String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase)
+                               End Function) _
                         .FirstOrDefault
 
                 Dim value As String = LQuery.Value ' 是值类型，不会出现空引用的情况
@@ -220,6 +254,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return CLICommandArgvs
         End Function
@@ -229,6 +265,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="name">parameter name</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFullDIRPath(name As String) As String
             Return FileIO.FileSystem.GetDirectoryInfo(Me(name)).FullName
         End Function
@@ -281,11 +319,13 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function CheckMissingRequiredParameters(list As IEnumerable(Of String)) As String()
-            Dim LQuery As String() =
-                LinqAPI.Exec(Of String) <= From p As String
-                                           In list
-                                           Where String.IsNullOrEmpty(Me(p))
-                                           Select p
+            Dim LQuery$() = LinqAPI.Exec(Of String) _
+ _
+                () <= From p As String
+                      In list
+                      Where String.IsNullOrEmpty(Me(p))
+                      Select p
+
             Return LQuery
         End Function
 
@@ -294,6 +334,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="args"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CheckMissingRequiredArguments(ParamArray args As String()) As String()
             Return CheckMissingRequiredParameters(list:=args)
         End Function
@@ -306,6 +348,7 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property IsNullOrEmpty As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Tokens.IsNullOrEmpty OrElse (Tokens.Length = 1 AndAlso String.IsNullOrEmpty(Tokens.First))
             End Get
@@ -316,6 +359,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property IsNothing As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return String.IsNullOrEmpty(Me.Name) AndAlso IsNullOrEmpty
             End Get
@@ -329,11 +373,13 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Function ContainsParameter(parameterName As String, trim As Boolean) As Boolean
             Dim namer As String = If(trim, parameterName.TrimParamPrefix, parameterName)
-            Dim LQuery As Integer =
-                LinqAPI.DefaultFirst(Of Integer) <= From para As NamedValue(Of String)
-                                                    In Me.__arguments  '  名称都是没有处理过的
-                                                    Where String.Equals(namer, para.Name, StringComparison.OrdinalIgnoreCase)
-                                                    Select 100
+            Dim LQuery = LinqAPI.DefaultFirst(Of Integer) _
+ _
+                () <= From para As NamedValue(Of String)
+                      In Me.__arguments  '  名称都是没有处理过的
+                      Where String.Equals(namer, para.Name, StringComparison.OrdinalIgnoreCase)
+                      Select 100
+
             Return LQuery > 50
         End Function
 
@@ -342,10 +388,13 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="CommandLine"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(CommandLine As String) As CommandLine
             Return TryParse(CommandLine)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(CLI As Func(Of String)) As CommandLine
             Return TryParse(CLI())
         End Operator
@@ -466,6 +515,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="parameter">可以包含有开关参数</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetBoolean(parameter As String) As Boolean
             Return Me.IsTrue(parameter)
         End Function
@@ -475,6 +526,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="parameter"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetByte(parameter As String) As Byte
             Return CByte(Val(Me(parameter)))
         End Function
@@ -506,6 +559,8 @@ Namespace CommandLine
         ''' Reads a stream Of characters from the specified column offset into the buffer As an array, starting at the given buffer offset.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetChars(parameter As String) As Char()
             Return Me(parameter)
         End Function
@@ -514,6 +569,8 @@ Namespace CommandLine
         ''' Gets the Date And time data value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDateTime(parameter As String) As DateTime
             Return Me(parameter).DefaultValue.ParseDateTime
         End Function
@@ -522,30 +579,38 @@ Namespace CommandLine
         ''' Gets the fixed-position numeric value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDecimal(parameter As String) As Decimal
-            Return CDec(Val(Me(parameter)))
+            Return CDec(Val(Me(parameter).DefaultValue))
         End Function
 
         ''' <summary>
         ''' Gets the Double-precision floating point number Of the specified field.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDouble(parameter As String) As Double
-            Return Val(Me(parameter))
+            Return Val(Me(parameter).DefaultValue)
         End Function
 
         ''' <summary>
         ''' Gets the Single-precision floating point number Of the specified field.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFloat(parameter As String) As Single
-            Return CSng(Val(Me(parameter)))
+            Return CSng(Val(Me(parameter).DefaultValue))
         End Function
 
         ''' <summary>
         ''' Returns the GUID value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetGuid(parameter As String) As Guid
             Return Guid.Parse(Me(parameter))
         End Function
@@ -554,24 +619,30 @@ Namespace CommandLine
         ''' Gets the 16-bit signed Integer value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt16(parameter As String) As Int16
-            Return CType(Val(Me(parameter)), Int16)
+            Return CType(Val(Me(parameter).DefaultValue), Int16)
         End Function
 
         ''' <summary>
         ''' Gets the 32-bit signed Integer value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt32(parameter As String) As Int32
-            Return CInt(Val(Me(parameter)))
+            Return CInt(Val(Me(parameter).DefaultValue))
         End Function
 
         ''' <summary>
         ''' Gets the 64-bit signed Integer value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt64(parameter As String) As Int64
-            Return CLng(Val(Me(parameter)))
+            Return CLng(Val(Me(parameter).DefaultValue))
         End Function
 
         ''' <summary>
@@ -579,12 +650,12 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Public Function GetOrdinal(parameter As String) As Integer
-            Dim i As Integer =
-                LinqAPI.DefaultFirst(Of Integer)(-1) <=
-                From entry As NamedValue(Of String)
-                In Me.__arguments
-                Where String.Equals(parameter, entry.Name, StringComparison.OrdinalIgnoreCase)
-                Select __arguments.IndexOf(entry)
+            Dim i% = LinqAPI.DefaultFirst(Of Integer)(-1) _
+ _
+                <= From entry As NamedValue(Of String)
+                   In Me.__arguments
+                   Where String.Equals(parameter, entry.Name, StringComparison.OrdinalIgnoreCase)
+                   Select __arguments.IndexOf(entry)
 
             Return i
         End Function
@@ -593,6 +664,8 @@ Namespace CommandLine
         ''' Gets the String value Of the specified field.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetString(parameter As String) As String
             Return Me(parameter)
         End Function
@@ -601,6 +674,8 @@ Namespace CommandLine
         ''' Return whether the specified field Is Set To null.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsNull(parameter As String) As Boolean
             Return Not Me.ContainsParameter(parameter, False)
         End Function
@@ -691,6 +766,8 @@ Namespace CommandLine
         ''' Adds an item to the System.Collections.Generic.ICollection`1.
         ''' </summary>
         ''' <param name="item"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(item As NamedValue(Of String)) Implements ICollection(Of NamedValue(Of String)).Add
             Call __arguments.Add(item)
         End Sub
@@ -729,6 +806,8 @@ Namespace CommandLine
         ''' <summary>
         ''' Clear the inner list buffer
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Clear() Implements ICollection(Of NamedValue(Of String)).Clear
             Call __arguments.Clear()
         End Sub
@@ -739,14 +818,17 @@ Namespace CommandLine
         ''' <param name="item"></param>
         ''' <returns></returns>
         Public Function Contains(item As NamedValue(Of String)) As Boolean Implements ICollection(Of NamedValue(Of String)).Contains
-            Dim LQuery As Integer =
-                LinqAPI.DefaultFirst(-1) <= From obj As NamedValue(Of String)
-                                            In Me.__arguments
-                                            Where String.Equals(obj.Name, item.Name, StringComparison.OrdinalIgnoreCase)
-                                            Select 100
+            Dim LQuery% = LinqAPI.DefaultFirst(-1) _
+ _
+                <= From obj As NamedValue(Of String)
+                   In Me.__arguments
+                   Where String.Equals(obj.Name, item.Name, StringComparison.OrdinalIgnoreCase)
+                   Select 100
+
             Return LQuery > 50
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub CopyTo(array() As NamedValue(Of String), arrayIndex As Integer) Implements ICollection(Of NamedValue(Of String)).CopyTo
             Call __arguments.ToArray.CopyTo(array, arrayIndex)
         End Sub
@@ -758,12 +840,14 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property Count As Integer Implements ICollection(Of NamedValue(Of String)).Count
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me.__arguments.Count
             End Get
         End Property
 
         Private ReadOnly Property IsReadOnly As Boolean Implements ICollection(Of NamedValue(Of String)).IsReadOnly
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return True
             End Get
@@ -775,12 +859,12 @@ Namespace CommandLine
         ''' <param name="paramName"></param>
         ''' <returns></returns>
         Public Function Remove(paramName As String) As Boolean
-            Dim LQuery As NamedValue(Of String) =
-                LinqAPI.DefaultFirst(Of NamedValue(Of String)) <=
-                    From obj As NamedValue(Of String)
-                    In Me.__arguments
-                    Where String.Equals(obj.Name, paramName, StringComparison.OrdinalIgnoreCase)
-                    Select obj
+            Dim LQuery = LinqAPI.DefaultFirst(Of NamedValue(Of String)) _
+ _
+                () <= From obj As NamedValue(Of String)
+                      In Me.__arguments
+                      Where String.Equals(obj.Name, paramName, StringComparison.OrdinalIgnoreCase)
+                      Select obj
 
             If LQuery.IsEmpty Then
                 Return False
@@ -795,6 +879,8 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="item"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Remove(item As NamedValue(Of String)) As Boolean Implements ICollection(Of NamedValue(Of String)).Remove
             Return Remove(item.Name)
         End Function
@@ -850,6 +936,7 @@ Namespace CommandLine
             End If
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <=(opt As String, args As CommandLine) As CommandLine
             Return TryParse(args(opt))
         End Operator
@@ -872,7 +959,7 @@ Namespace CommandLine
         ''' <param name="args"></param>
         ''' <param name="name"></param>
         ''' <returns></returns>
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator -(args As CommandLine, name As String) As String
             Return args(name)
         End Operator
@@ -882,23 +969,27 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="args"></param>
         ''' <returns></returns>
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator -(args As CommandLine, null As CommandLine) As CommandLine
             Return args
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator -(args As CommandLine, name As IEnumerable(Of String)) As String
             Return args.GetValue(name.First, name.Last)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(args As CommandLine) As CommandLine
             Return args
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >(args As CommandLine, name As String) As String
             Return args(name)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <(args As CommandLine, name As String) As String
             Return args(name)
         End Operator

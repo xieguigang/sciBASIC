@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::21658a0aca1119ab3cd31c6a84e96494, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\SSL\SSLSynchronizationServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::21658a0aca1119ab3cd31c6a84e96494, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\SSL\SSLSynchronizationServicesSocket.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class SSLSynchronizationServicesSocket
+    ' 
+    '         Properties: CA, DeclaringModule, IsRunning, IsShutdown, ISSLServices_InstallCertificates
+    '                     LocalPort, PrivateKeys, RaiseHandshakingEvent, RefuseHandshake, Responsehandler
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __responsehandler, Install, InstallCertificates, (+2 Overloads) Run, ToString
+    ' 
+    '         Sub: (+2 Overloads) Dispose, HandShakingEventDoNothing, WaitForStart
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

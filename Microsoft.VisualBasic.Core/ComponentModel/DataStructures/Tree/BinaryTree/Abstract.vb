@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::3989fb837d9326b2e7d743c74b0605d8, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::3989fb837d9326b2e7d743c74b0605d8, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Delegate Function
+    ' 
+    ' 
+    '     Class TreeMap
+    ' 
+    '         Properties: Key, value
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

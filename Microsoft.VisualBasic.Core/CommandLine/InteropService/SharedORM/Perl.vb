@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b52830da536b47a8c6e0f27c10d6a98b, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\Perl.vb"
+﻿#Region "Microsoft.VisualBasic::b52830da536b47a8c6e0f27c10d6a98b, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\Perl.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Perl
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetSourceCode
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

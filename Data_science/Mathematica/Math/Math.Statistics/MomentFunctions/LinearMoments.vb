@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::baff6fb24adce1abed049be422a66720, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\LinearMoments.vb"
+﻿#Region "Microsoft.VisualBasic::baff6fb24adce1abed049be422a66720, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\LinearMoments.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class LinearMoments
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetL1, GetL2, GetL3, GetL4, GetMax
+    '                   GetMin, GetSampleSize, GetT1, GetT3, GetT4
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::65525e4d64b78f52b8642e2e423677a2, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\MapStream\MSReader.vb"
+﻿#Region "Microsoft.VisualBasic::65525e4d64b78f52b8642e2e423677a2, Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\MapStream\MSReader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,33 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class IMapBase
+    ' 
+    '         Properties: URI
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Read, ToString
+    ' 
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    '     Class MSIOReader
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ReadBadge, ToString
+    ' 
+    '         Sub: __clientThreadElapsed, __threadElapsed, Update
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

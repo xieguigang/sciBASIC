@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::0ea751b114acdf831795adab35301319, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\ImageFormat.vb"
+﻿#Region "Microsoft.VisualBasic::0ea751b114acdf831795adab35301319, Microsoft.VisualBasic.Core\Extensions\Image\ImageFormat.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,31 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Enum ImageFormats
+    ' 
+    '         Base64, Bmp, Emf, Exif, Gif
+    '         Icon, Jpeg, MemoryBmp, Png, Tiff
+    '         Wmf
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Module ImageFormatExtensions
+    ' 
+    '         Properties: Png
+    ' 
+    '         Function: GetFormat, GetSaveImageFormat, ParseImageFormat, SaveAs
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

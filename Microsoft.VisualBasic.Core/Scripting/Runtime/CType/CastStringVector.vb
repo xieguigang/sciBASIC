@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::fdd7e2cc739502aa21f7d26ff59d4f06, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::fdd7e2cc739502aa21f7d26ff59d4f06, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module CastStringVector
+    ' 
+    '         Function: AsBoolean, AsCharacter, AsColor, (+2 Overloads) AsDouble, AsGeneric
+    '                   AsInteger, (+2 Overloads) AsNumeric, AsSingle, AsType
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::07ec111f082af6d8c0a3f8793ff358a3, ..\sciBASIC#\Data_science\MachineLearning\QLearning\QTable.vb"
+﻿#Region "Microsoft.VisualBasic::07ec111f082af6d8c0a3f8793ff358a3, Data_science\MachineLearning\QLearning\QTable.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class QTable
+    ' 
+    '         Properties: ActionRange, ExplorationChance, GammaValue, LearningRate, Table
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Function: __explore, __getActionsQValues, __getBestAction, GetValues, NextAction
+    ' 
+    '         Sub: UpdateQvalue
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

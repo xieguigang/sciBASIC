@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b61cbee56b3372e4bc33afde14322120, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::707fcb642263b12bf7e5d463c77265be, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Extensions
+    ' 
+    '         Function: __innerTry, CopyVector, DATA, DefaultFirst, FirstOrDefault
+    '                   IteratesALL, (+2 Overloads) JoinIterates, MaxInd, Populate, (+2 Overloads) Read
+    '                   RemoveLeft, (+2 Overloads) Removes, Repeats, SafeQuery, (+2 Overloads) SeqIterator
+    '                   (+4 Overloads) Sequence, (+4 Overloads) ToArray, ToVector
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -40,6 +57,19 @@ Namespace Linq
     <Package("LINQ", Category:=APICategories.UtilityTools)>
     <Extension>
     Public Module Extensions
+
+        <Extension>
+        Public Function Populate(Of T)(source As IEnumerable(Of T), parallel As Boolean, Optional degreeOfParallelism% = -1) As IEnumerable(Of T)
+            If parallel Then
+                If degreeOfParallelism > 1 Then
+                    Return source.AsParallel.WithDegreeOfParallelism(degreeOfParallelism)
+                Else
+                    Return source.AsParallel
+                End If
+            Else
+                Return source
+            End If
+        End Function
 
         Public Function DATA(Of T)(src As IEnumerable(Of T)) As DataValue(Of T)
             Return New DataValue(Of T)(src)

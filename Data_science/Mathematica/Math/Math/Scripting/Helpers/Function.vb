@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2e2a62c3f46f0b83dc35be76b47cf84c, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Helpers\Function.vb"
+﻿#Region "Microsoft.VisualBasic::2e2a62c3f46f0b83dc35be76b47cf84c, Data_science\Mathematica\Math\Math\Scripting\Helpers\Function.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class [Function]
+    ' 
+    '         Properties: FunctionList
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Evaluate, RND
+    ' 
+    '         Sub: (+3 Overloads) Add
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b57dcc1227426316a2f91bd0ccfb6c0d, ..\sciBASIC#\Data_science\Mathematica\data\LP\LP_tool\LPPTest.vb"
+﻿#Region "Microsoft.VisualBasic::1194fcf49f307aca5057a36457632a1a, Data_science\Mathematica\data\LP\LP_tool\LPPTest.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module LPPTest
+    ' 
+    '     Sub: assertEquals, main, Main2, testSolveMaximizeExample, testSolveMinimizeExample
+    '          testSolveSmallMinimizeExample, testSolveStrictEqualityExample, testSolveTransshipmentExample
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -103,4 +117,3 @@ Public Module LPPTest
         End If
     End Sub
 End Module
-

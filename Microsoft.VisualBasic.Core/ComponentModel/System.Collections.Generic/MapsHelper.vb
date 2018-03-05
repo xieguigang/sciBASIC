@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::f8e597e4b643390aa537de75539d6e28, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::66f0b60ec1f735a22f5f3204e303ba2f, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\MapsHelper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,38 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure MapsHelper
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetValue, ToString
+    ' 
+    '     Structure Map
+    ' 
+    '         Properties: Key, Maps
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    '         Interface IMap
+    ' 
+    '             Properties: Key, Maps
+    ' 
+    ' 
+    ' 
+    '     Structure IDMap
+    ' 
+    '         Properties: Key, Maps
+    ' 
+    '         Function: ParseFromTsv, ParseTsvFile, ToString, TSV
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

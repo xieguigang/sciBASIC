@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::bcbc0b04f945d77fb8fb9e1f660d3217, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
+﻿#Region "Microsoft.VisualBasic::c252ce7e2743d86c472f5af9a6b501e1, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\ProjectType.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ProjectType
+    ' 
+    '         Properties: [Namespace], Name, Remarks, Summary
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: EnsureEvent, EnsureField, EnsureMethod, EnsureProperty, GetEvent
+    '                   GetField, getInternal, GetMethods, GetProperties, ToString
+    ' 
+    '         Sub: LoadFromNode
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -54,11 +75,11 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         ''' <summary>
         ''' 因为属性存在参数，所以可能会出现重载的情况
         ''' </summary>
-        Protected properties As Dictionary(Of String, List(Of ProjectMember))
+        Protected Friend properties As Dictionary(Of String, List(Of ProjectMember))
         ''' <summary>
         ''' 会出现重载函数，所以这里也应该是一个list
         ''' </summary>
-        Protected methods As Dictionary(Of String, List(Of ProjectMember))
+        Protected Friend methods As Dictionary(Of String, List(Of ProjectMember))
 
         Public ReadOnly Property [Namespace]() As ProjectNamespace
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -70,6 +91,11 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
         Public Property Name As String
         Public Property Summary As String
         Public Property Remarks As String
+
+        Friend Sub New()
+            properties = New Dictionary(Of String, List(Of ProjectMember))
+            methods = New Dictionary(Of String, List(Of ProjectMember))
+        End Sub
 
         Public Sub New(projectNamespace As ProjectNamespace)
             Me.projectNamespace = projectNamespace

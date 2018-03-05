@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::aa2ce89be28d9bbb102c6c1ba1c87a7a, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\LanguageHelper\LanguageHelper.vb"
+﻿#Region "Microsoft.VisualBasic::aa2ce89be28d9bbb102c6c1ba1c87a7a, Microsoft.VisualBasic.Core\ApplicationServices\LanguageHelper\LanguageHelper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class LanguageHelper
+    ' 
+    '         Properties: CurrentLanguage, DeclaringType, LanguageResources
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: __init
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::6e2defc0ea5ce8fddf9a381fe4d2c792, ..\sciBASIC#\Data_science\Mathematica\Math\Math\HashMaps\HashBlizzard.vb"
+﻿#Region "Microsoft.VisualBasic::6e2defc0ea5ce8fddf9a381fe4d2c792, Data_science\Mathematica\Math\Math\HashMaps\HashBlizzard.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,31 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class HashBlizzard
+    ' 
+    ' 
+    '         Enum dwHashTypes
+    ' 
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: (+2 Overloads) HashBlizzard
+    ' 
+    '     Sub: HashBlizzardInit
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

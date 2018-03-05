@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::9ac84b7ab58db6510e0334835e1258d5, ..\sciBASIC#\Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
+﻿#Region "Microsoft.VisualBasic::97b1c26eec49971a07da58b777f3bb42, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module GeneticHelper
+    ' 
+    '         Function: InitialPopulation
+    ' 
+    '         Sub: Crossover, (+2 Overloads) Mutate
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -90,7 +106,7 @@ Namespace Darwinism.GAF.Helper
         ''' in real life it could be more complex
         ''' </summary>
         <Extension>
-        Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize As Integer, Optional parallel As ParallelComputing(Of T) = Nothing) As Population(Of T)
+        Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize%, Optional parallel As ParallelComputing(Of T) = Nothing) As Population(Of T)
             Dim population As New Population(Of T)(parallel) With {
                 .Parallel = True
             }

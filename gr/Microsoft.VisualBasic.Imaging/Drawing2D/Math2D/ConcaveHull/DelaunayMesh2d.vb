@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::35b163e37b0ff58a64b738d0a4baa0fc, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\DelaunayMesh2d.vb"
+﻿#Region "Microsoft.VisualBasic::35b163e37b0ff58a64b738d0a4baa0fc, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\DelaunayMesh2d.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DelaunayMesh2d
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: AddFace, AddVertex, GetBoundaryEdges
+    ' 
+    '         Sub: ExecuteEdgeDecimation, InitEdgesInfo, InitOppEdge, SetEdge, SetInvalid
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

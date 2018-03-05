@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5ecc3ff85482cc46d0a0b91a53b74e2d, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\WebServices\Http\GZStream.vb"
+﻿#Region "Microsoft.VisualBasic::0b7b81e42b19b25de9d6efeff406072a, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\GZStream.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module GZStream
+    ' 
+    '         Function: UnzipBase64, UnzipStream, ZipAsBase64, ZipStream
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::4a34a62bc0d51132428e6ad484092829, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\test\SVGTest.vb"
+﻿#Region "Microsoft.VisualBasic::4a34a62bc0d51132428e6ad484092829, gr\Microsoft.VisualBasic.Imaging\test\SVGTest.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module SVGTest
+    ' 
+    '     Sub: IOtest, Main, Test
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a2dcd9a61ef0689675cdee6130999ffe, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::48d90c128866fb2c8d376c95255fa3cf, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,8 +25,38 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class GeneralMatrix
+    ' 
+    '         Properties: Array, ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector
+    '                     RowDimension, RowPackedCopy
+    ' 
+    '         Constructor: (+6 Overloads) Sub New
+    ' 
+    '         Function: Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals, ArrayMultiply
+    '                   ArrayMultiplyEquals, ArrayRightDivide, ArrayRightDivideEquals, chol, Clone
+    '                   Condition, Copy, Create, Determinant, Eigen
+    '                   (+4 Overloads) GetMatrix, Identity, Inverse, LUD, (+2 Overloads) Multiply
+    '                   MultiplyEquals, Norm1, Norm2, NormF, NormInf
+    '                   QRD, Rank, RowVectors, Solve, SolveTranspose
+    '                   Subtract, SubtractEquals, SVD, ToString, Trace
+    '                   Transpose
+    ' 
+    '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, ISerializable_GetObjectData, (+4 Overloads) SetMatrix
+    ' 
+    '         Operators: (+2 Overloads) -, *, +
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
@@ -154,10 +185,15 @@ Namespace Matrix
             n = A(0).Length
             For i As Integer = 0 To m - 1
                 If A(i).Length <> n Then
-                    Throw New System.ArgumentException("All rows must have the same length.")
+                    Throw New ArgumentException("All rows must have the same length.")
                 End If
             Next
             Me.buffer = A
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(rows As IEnumerable(Of Vector))
+            Call Me.New(rows.Select(Function(v) v.ToArray).ToArray)
         End Sub
 
         ''' <summary>Construct a matrix quickly without checking arguments.</summary>
@@ -904,6 +940,8 @@ Namespace Matrix
         ''' <param name="m1"></param>
         ''' <param name="m2"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(m1 As GeneralMatrix, m2 As GeneralMatrix) As GeneralMatrix
             Return m1.Multiply(m2)
         End Operator
@@ -1128,5 +1166,11 @@ Namespace Matrix
         Public Shared Widening Operator CType(data#()()) As GeneralMatrix
             Return New GeneralMatrix(data)
         End Operator
+
+        Public Iterator Function RowVectors() As IEnumerable(Of Vector)
+            For Each row As Double() In buffer
+                Yield row.AsVector
+            Next
+        End Function
     End Class
 End Namespace

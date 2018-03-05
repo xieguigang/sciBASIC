@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2a646fb97d850a9e813b641b202002cf, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\SwayBar.vb"
+﻿#Region "Microsoft.VisualBasic::2a646fb97d850a9e813b641b202002cf, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\SwayBar.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,32 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class SwayBar
+    ' 
+    ' 
+    '         Enum direction
+    ' 
+    '             left, right
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: BlankPointer
+    ' 
+    '     Sub: [Step], ClearBar, PlacePointer
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::18509104ee1713cd85c7eca88b14e6d1, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::caeef8ca99eff2603deb580812df661b, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,32 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Enum Encodings
+    ' 
+    '         GB2312, Unicode, UTF16, UTF32, UTF7
+    '         UTF8
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Module TextEncodings
+    ' 
+    '         Properties: DefaultEncoding, TextEncodings, UTF8, UTF8WithoutBOM
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: __gbk2312_encoding, CodeArray, (+2 Overloads) CodePage, GetEncodings, ParseEncodingsName
+    '                   TransEncoding
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -222,6 +249,12 @@ Namespace Text
             Next
 
             Return onFailure
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function CodePage(encodingName$, Optional [default] As Encodings = Encodings.Default) As Encoding
+            Return encodingName.ParseEncodingsName(onFailure:=[default]).CodePage
         End Function
 
         Public Function GetEncodings(value As Encoding) As Encodings

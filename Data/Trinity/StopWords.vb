@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a9f0f03357852ee6d1de1a06768c0f74, ..\sciBASIC#\Data\Trinity\StopWords.vb"
+﻿#Region "Microsoft.VisualBasic::a9f0f03357852ee6d1de1a06768c0f74, Data\Trinity\StopWords.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class StopWords
+    ' 
+    '     Properties: Count, DefaultStopWords
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: GetEnumerator, IEnumerable_GetEnumerator, Removes
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

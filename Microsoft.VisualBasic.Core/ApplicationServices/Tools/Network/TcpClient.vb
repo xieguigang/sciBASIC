@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::375a4cb017640027d375913eac94e87e, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\TcpClient.vb"
+﻿#Region "Microsoft.VisualBasic::375a4cb017640027d375913eac94e87e, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\TcpClient.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,29 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class AsynchronousClient
+    ' 
+    ' 
+    '         Delegate Sub
+    ' 
+    '             Properties: LocalIP
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    '             Function: (+2 Overloads) SendMessage, ToString
+    ' 
+    '             Sub: ConnectCallback, Receive, ReceiveCallback, Send, SendCallback
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::7c1ec0b30ea1d430ee7d0926cef0f00a, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Isometric.vb"
+﻿#Region "Microsoft.VisualBasic::7c1ec0b30ea1d430ee7d0926cef0f00a, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Isometric.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class IsometricEngine
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: FindItemForPosition, GetEnumerator, IEnumerable_GetEnumerator, IntersectionWith, (+2 Overloads) IsPointInPoly
+    '                   sortPaths, TranslatePoint
+    ' 
+    '         Sub: (+3 Overloads) Add, AddPath, Clear, Draw, Measure
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

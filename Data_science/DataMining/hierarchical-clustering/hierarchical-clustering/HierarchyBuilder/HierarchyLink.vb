@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::391c318010fad69352d63a0740b3c266, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyLink.vb"
+﻿#Region "Microsoft.VisualBasic::391c318010fad69352d63a0740b3c266, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyLink.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class HierarchyLink
+    ' 
+    '         Properties: HashKey
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: __compareTo, compareTo, ToString
+    ' 
+    '     Module LinkHashCode
+    ' 
+    '         Function: (+2 Overloads) hashCodePair
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::94721e54d1409343e4209f049bee9bc5, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\WebServices\Http\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::94721e54d1409343e4209f049bee9bc5, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\Base64Codec.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Base64Codec
+    ' 
+    '         Function: __getImageFromBase64, __toBase64String, GetImage, (+3 Overloads) ToBase64String
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

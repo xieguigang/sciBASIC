@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::fae593fd387caa422ab075fd28fee89b, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::fae593fd387caa422ab075fd28fee89b, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ContinuousDistribution
+    ' 
+    '         Properties: PeriodOfRecord
+    ' 
+    '         Function: AndersonDarlingTest, (+2 Overloads) BootStrap, Clone, Equals, GetCDF
+    '                   GetHashCode, GetInvCDF, GetParamNames, GetParamValues, GetPDF
+    '                   Kolmogorov_SmirnovTest
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

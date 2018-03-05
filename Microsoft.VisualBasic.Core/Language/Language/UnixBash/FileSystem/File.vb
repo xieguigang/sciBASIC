@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::fdecbd8d60d390a1f14e35fff34fb24c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\UnixBash\FileSystem\File.vb"
+﻿#Region "Microsoft.VisualBasic::fdecbd8d60d390a1f14e35fff34fb24c, Microsoft.VisualBasic.Core\Language\Language\UnixBash\FileSystem\File.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,34 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class File
+    ' 
+    '         Function: Save
+    '         Operators: <, >, >>
+    ' 
+    '     Structure FileHandle
+    ' 
+    '         Properties: IsDirectory, IsFile, IsHTTP
+    ' 
+    '         Function: ToString
+    ' 
+    '     Module FileHandles
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __getHandle, FileOpened, OpenHandle, OpenTemp, Wait
+    ' 
+    '         Sub: Close
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

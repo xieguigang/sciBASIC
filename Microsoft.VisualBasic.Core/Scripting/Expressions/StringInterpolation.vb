@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c407e66a81a465830843639e3a3d15bf, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\Expressions\StringInterpolation.vb"
+﻿#Region "Microsoft.VisualBasic::942bb8d88391cf07f45ae91051f76032, Microsoft.VisualBasic.Core\Scripting\Expressions\StringInterpolation.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,11 +25,27 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module StringInterpolation
+    ' 
+    '         Function: GetValue, (+2 Overloads) Interpolate
+    ' 
+    '         Sub: Interpolate
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 
 Namespace Scripting.Expressions
 
@@ -50,7 +67,7 @@ Namespace Scripting.Expressions
         ''' $obj.property.value.method.etc
         ''' ```
         ''' </summary>
-        Const VariablePattern$ = "[$][_a-z][_a-z0-9]*(\.[a-z][a-z0-9]*)*"
+        Const VariablePattern$ = "[$]" & VBLanguage.IdentiferPattern & "(\." & VBLanguage.IdentiferPattern & ")*"
 
         ''' <summary>
         ''' 不存在的键名会自动返回空字符串

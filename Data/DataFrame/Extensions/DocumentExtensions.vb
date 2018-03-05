@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::e6a6fd4e78f075b60782aff287d18368, ..\sciBASIC#\Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a1039f59e6b4349db979fcb2043c3656, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,28 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module DocumentExtensions
+    ' 
+    '     Function: Apply, CreateTable, DirectAppends, GetColumnObjects, GetColumnValues
+    '               InvalidsAsRLangNA, JoinColumns, LoadCsv, LoadData, LoadDictionary
+    '               LoadMappings, LoadTable, LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
+    '               SaveTsv, StripNaN, TsvLine
+    '     Class GenericTable
+    ' 
+    '         Properties: Data
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

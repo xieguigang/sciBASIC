@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::4160b0cb3e10b50a1fd4239a40633bba, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::5140a0510ea203e3e27533184a0d1f0f, Microsoft.VisualBasic.Core\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,8 +25,26 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ScriptBuilder
+    ' 
+    '         Properties: Preview, Script
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: AppendLine, Replace, (+2 Overloads) Save, ToString
+    '         Operators: +
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Text
@@ -39,6 +58,28 @@ Namespace Scripting.SymbolBuilder
 
         Public ReadOnly Property Script As StringBuilder
 
+        ''' <summary>
+        ''' The variable in target script text should be in format like: ``{$name}``
+        ''' </summary>
+        ''' <param name="name"></param>
+        Default Public WriteOnly Property Assign(name As String) As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Set
+                Call Script.Replace($"{{${name}}}", Value)
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Equals to <see cref="StringBuilder.ToString()"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Preview As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Script.ToString
+            End Get
+        End Property
+
         Sub New(sb As StringBuilder)
             Script = sb
         End Sub
@@ -50,6 +91,15 @@ Namespace Scripting.SymbolBuilder
         Sub New()
             Call Me.New(capacity:=1024)
         End Sub
+
+        Sub New(script$)
+            Call Me.New(New StringBuilder(script))
+        End Sub
+
+        Public Function Replace(key$, value$) As ScriptBuilder
+            Call Script.Replace(key, value)
+            Return Me
+        End Function
 
         ''' <summary>
         ''' Display the string text in the <see cref="StringBuilder"/> object.

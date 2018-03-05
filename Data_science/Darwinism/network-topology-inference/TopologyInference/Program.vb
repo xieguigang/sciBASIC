@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2343629a872ae2b7cc464f6a9b19c4db, ..\sciBASIC#\Data_science\Darwinism\network-topology-inference\TopologyInference\Program.vb"
+﻿#Region "Microsoft.VisualBasic::2343629a872ae2b7cc464f6a9b19c4db, Data_science\Darwinism\network-topology-inference\TopologyInference\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Program
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

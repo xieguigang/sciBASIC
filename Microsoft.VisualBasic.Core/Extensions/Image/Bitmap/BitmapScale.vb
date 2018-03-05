@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::8558b2fb94b68822f62a8bb63df7db18, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\BitmapScale.vb"
+﻿#Region "Microsoft.VisualBasic::8558b2fb94b68822f62a8bb63df7db18, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\BitmapScale.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,29 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module BitmapScale
+    ' 
+    '         Function: GetBinaryBitmap
+    '         Enum BinarizationStyles
+    ' 
+    ' 
+    ' 
+    ' 
+    '         Delegate Sub
+    ' 
+    '             Function: ByteLength, Colors, Grayscale, (+2 Overloads) GrayScale
+    ' 
+    '             Sub: AdjustContrast, Binarization, BitmapPixelScans
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

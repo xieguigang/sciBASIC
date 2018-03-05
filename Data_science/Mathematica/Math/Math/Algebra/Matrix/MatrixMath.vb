@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::da8140bb0b7d69e1c2feaeb7ee42138e, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Matrix\MatrixMath.vb"
+﻿#Region "Microsoft.VisualBasic::da8140bb0b7d69e1c2feaeb7ee42138e, Data_science\Mathematica\Math\Math\Algebra\Matrix\MatrixMath.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module vbMatrix
+    ' 
+    '         Function: Adj, Cond, Cramer22, Det2, DetF
+    '                   DFT, EigenValue, EigSym, GetRank, Hamiltonian
+    '                   Hessenberg, IDFT, Inv, Inv2, LLt
+    '                   LU, Mul, Orth, Pinv, Pinv2
+    '                   PolyDiv, PolyDivEx, PolyGCF, PolyGCFCall, PolyMod
+    '                   PolyMul, PolyRoots2, Pow, QR, QR2
+    '                   QR22, RU, Scatter, Schmidt, SG
+    '                   Sove2, SPD, Sqrt, Svd, SvdSplit
+    '                   SymTridMatrix, VR
+    ' 
+    '         Sub: EigTorF, Lehmer, Magic, Magic_1, Magic_2
+    '              Magic_4, Pascal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b61f25b9dc3e82d7e6676ece6aabda2a, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
+﻿#Region "Microsoft.VisualBasic::b61f25b9dc3e82d7e6676ece6aabda2a, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class LPP
+    ' 
+    '         Properties: ArtificialVariableAssignments
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: choosePivotConstraint, choosePivotVar, displayEqLine, findInitialBasicVariables, increaseArtificialVariableIndices
+    '                   intToBinary, isFeasible, solve, subscriptN, ToString
+    ' 
+    '         Sub: addArtificialVariables, addVariableAt, (+2 Overloads) makeStandardForm, pivot
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::0fab89507788ada7b43732bcda0dfbc1, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\TcpSynchronizationServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::0fab89507788ada7b43732bcda0dfbc1, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\TcpSynchronizationServicesSocket.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,37 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class TcpSynchronizationServicesSocket
+    ' 
+    '         Properties: ClientDecryptionHandle, Connections, IsShutdown, LocalPort, RequestHandler
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: BeginListen, LoopbackEndPoint
+    ' 
+    '         Sub: AcceptCallback, (+2 Overloads) Run, WaitForRunning
+    '         Delegate Sub
+    ' 
+    '             Properties: AcceptCallbackHandleInvoke
+    ' 
+    '             Sub: (+2 Overloads) Dispose, ForceCloseHandle
+    '         Class WorkSocket
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: ReadCallback, Send, SendCallback, SendMessage
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

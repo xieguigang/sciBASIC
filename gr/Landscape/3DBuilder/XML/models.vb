@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b0cc1091df879e9e45e2d892c87e5eb6, ..\sciBASIC#\gr\Landscape\3DBuilder\XML\models.vb"
+﻿#Region "Microsoft.VisualBasic::b0cc1091df879e9e45e2d892c87e5eb6, gr\Landscape\3DBuilder\XML\models.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,31 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class mesh
+    ' 
+    '         Properties: triangles, vertices
+    ' 
+    '         Function: (+2 Overloads) GetSurfaces, ToString
+    ' 
+    '     Class triangle
+    ' 
+    '         Properties: p1, pid, v1, v2, v3
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class component
+    ' 
+    '         Properties: objectid
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

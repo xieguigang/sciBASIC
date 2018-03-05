@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::1eba753adaab5a6a5d83b3bbbb93732f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Linq\Indexer.vb"
+﻿#Region "Microsoft.VisualBasic::a4340f380698df28410faf9ff7a6a08f, Microsoft.VisualBasic.Core\Language\Linq\Indexer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Indexer
+    ' 
+    '         Function: Indexing
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,28 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::ed9f36c089eea486f381dad0812f6d40, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::e61a329b0193769065b97bbb8e07259c, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module StringHelpers
+    ' 
+    '     Properties: NonStrictCompares, StrictCompares
+    ' 
+    '     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
+    '               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
+    '               FormatZero, GetBetween, GetEMails, GetStackValue, GetString
+    '               (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny, (+2 Overloads) Intersection
+    '               IsEmptyStringVector, IsNullOrEmpty, JoinBy, Located, Lookup
+    '               lTokens, (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString
+    '               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
+    '               SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty, StringHashCode
+    '               StringReplace, StringSplit, StripBlank, Strips, TextEquals
+    '               TextLast, TokenCount, TokenCountIgnoreCase, ToTruncateInt32, ToTruncateInt64
+    '               TrimA, TrimNewLine, WildcardsLocated
+    ' 
+    '     Sub: Parts, RemoveLast
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -36,7 +63,6 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -52,23 +78,12 @@ Imports r = System.Text.RegularExpressions.Regex
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
 
-    ''' <summary>
-    ''' Appends a copy of the specified string followed by the default line terminator
-    ''' to the end of the current <see cref="StringBuilder"/> object.
-    ''' </summary>
-    ''' <param name="sb"></param>
-    ''' <param name="html">The html string to append.</param>
-    ''' <returns></returns>
-    ''' <remarks>
-    ''' A reference to this instance after the append operation has completed.
-    ''' </remarks>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function AppendLine(sb As StringBuilder, html As XElement, ParamArray args As Object()) As StringBuilder
-        If args.IsNullOrEmpty Then
-            Return sb.AppendLine(html.ToString)
+    Public Function CharAtOrDefault(s$, index%, Optional [default] As Char = ASCII.NUL) As Char
+        If s.Length <= index Then
+            Return [default]
         Else
-            Return sb.AppendLine(sprintf(html.ToString, args))
+            Return s(index)
         End If
     End Function
 

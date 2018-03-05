@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5b3445922bbbc672716b66fb78723f53, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::c84110ef2762a97b46ffec9cd112055e, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module HtmlStrips
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetHtmlComments, GetImageLinks, GetInput, GetInputGroup, GetLinks
+    '                   GetSelectInputGroup, GetSelectOptions, GetSelectValue, GetValue, href
+    '                   HtmlLines, HTMLTitle, img, RemovesCSSstyles, RemovesFooter
+    '                   RemovesHtmlComments, RemovesHtmlHead, RemovesHtmlStrong, RemovesImageLinks, RemovesJavaScript
+    '                   RemoveTags, (+2 Overloads) src, StripHTMLTags, stripTag, TagAttributes
+    '                   TrimResponseTail
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

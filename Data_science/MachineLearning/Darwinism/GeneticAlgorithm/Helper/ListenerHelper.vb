@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::0c909c73c74d378572733d4daf29c6c0, ..\sciBASIC#\Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\ListenerHelper.vb"
+﻿#Region "Microsoft.VisualBasic::e88b18f5bee10863c1dec6900b86c9d6, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\ListenerHelper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,9 +25,32 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module ListenerHelper
+    ' 
+    '         Sub: AddDefaultListener
+    '         Structure outPrint
+    ' 
+    '             Properties: chromosome, fit, iter
+    ' 
+    '             Function: ToString
+    ' 
+    '         Structure listenerHelper
+    ' 
+    '             Sub: Update
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
-Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
@@ -65,7 +89,7 @@ Namespace Darwinism.GAF.Helper
 
             ' Lets add listener, which prints best chromosome after each iteration
             ga.addIterationListener(
-                New IterartionListenerAnonymousInnerClassHelper(Of T) With {
+                New listenerHelper(Of T) With {
                     .print = print,
                     .threshold = threshold
                 })
@@ -73,7 +97,7 @@ Namespace Darwinism.GAF.Helper
 
         Const DefaultThreshold# = 0.00001
 
-        Private Structure IterartionListenerAnonymousInnerClassHelper(Of T As Chromosome(Of T))
+        Private Structure listenerHelper(Of T As Chromosome(Of T))
             Implements IterartionListener(Of T)
 
             Public threshold As Double

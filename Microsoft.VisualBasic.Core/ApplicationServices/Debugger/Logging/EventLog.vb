@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a2aeb0fdc2ca47b8228145e42599e411, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\EventLog.vb"
+﻿#Region "Microsoft.VisualBasic::a2aeb0fdc2ca47b8228145e42599e411, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\EventLog.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class EventLog
+    ' 
+    '         Properties: Initialized, Product, Services
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: __install, (+3 Overloads) LogException, ToString, (+6 Overloads) WriteEntry
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

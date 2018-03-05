@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d01874a645984fff4bd2c86422f44be5, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Mailto\GMailClient.vb"
+﻿#Region "Microsoft.VisualBasic::d01874a645984fff4bd2c86422f44be5, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Mailto\GMailClient.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class EMailClient
+    ' 
+    '         Properties: ErrMessage
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: __sendMail, GmailClient, QQMail, SendEMail, SendMessagesTo
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

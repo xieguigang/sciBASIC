@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::4c98d5b78e53cf950b5de8a670cfe083, ..\sciBASIC#\Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
+﻿#Region "Microsoft.VisualBasic::4c98d5b78e53cf950b5de8a670cfe083, Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DynamicObjectLoader
+    ' 
+    '         Properties: Attribute, Count, DataRecordItem, FieldCount, Item
+    '                     Keys, LineNumber, RowData, Schema, Values
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: [TryCast], __tryGetValue, ContainsKey, CreateSchema, GetBoolean
+    '                   GetByte, GetBytes, GetChar, GetChars, GetData
+    '                   GetDataTypeName, GetDateTime, GetDecimal, GetDouble, GetDynamicMemberNames
+    '                   GetEnumerator, GetEnumerator1, GetFieldType, GetFloat, GetGuid
+    '                   GetInt16, GetInt32, GetInt64, GetKey, GetName
+    '                   (+2 Overloads) GetOrdinal, GetString, GetValue, (+2 Overloads) GetValues, IDataRecord_GetValue
+    '                   IsDBNull, Read, SetAttributeValue, ToString, TryGetMember
+    '                   TryGetValue, TrySetMember
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

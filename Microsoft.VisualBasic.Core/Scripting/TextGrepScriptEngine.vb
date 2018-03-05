@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::4649dda15aa5bd457d34e27029be72e4, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::94bfff43ee84da6d1d62557ab3b1ea2e, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,32 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Delegate Function
+    ' 
+    ' 
+    '     Delegate Function
+    ' 
+    ' 
+    '     Class TextGrepScriptEngine
+    ' 
+    '         Properties: MethodPointers, PipelinePointer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Compile, Grep, Match, MidString, NoOperation
+    '                   Replace, Reverse, Tokens, ToString
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -40,10 +67,10 @@ Namespace Scripting
     ''' 
     ''' </summary>
     ''' <param name="source">文本源</param>
-    ''' <param name="paras">脚本命令的参数</param>
+    ''' <param name="args">脚本命令的参数</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Public Delegate Function TextGrepMethodToken(source As String, paras As String()) As String
+    Public Delegate Function TextGrepMethodToken(source$, args$()) As String
     Public Delegate Function TextGrepMethod(source As String) As String
 
     ''' <summary>

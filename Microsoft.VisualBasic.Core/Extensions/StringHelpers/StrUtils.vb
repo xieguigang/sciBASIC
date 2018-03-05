@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::7f5ca41e02263302aad9eefd18458573, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "Microsoft.VisualBasic::23ed94bf8957d47f0eb3fdfd6c50d5be, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module StrUtils
+    ' 
+    '     Properties: InvariantCulture
+    ' 
+    '     Function: AddWithDelim, CharCode, CharCodes, CharString, (+6 Overloads) ContactWithDelim
+    '               ContactWithDelimSkipEmpty, ContactWithDelimSkipNull, ContactWithDelimSkipSome, CountWordFrequency, (+2 Overloads) EndsWith
+    '               EscapeQuotesAndBackslashes, GetCompareType, GetHeader, GetLastSubStringBetween, GetString
+    '               GetSubStringBetween, GetWords, LongestTag, LowerCaseFirstChar, RandomASCIIString
+    '               RandomCharString, Remove, SplitIntoLines, SplitRemoveEmptyEntries, SplitWithSeparator
+    '               SplitWithSeparatorFromRight, SplitWithSpaces, (+2 Overloads) StartsWith, StartWithUpperCase, UpperCaseFirstChar
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -165,14 +185,25 @@ Public Module StrUtils
     ''' <param name="len%"></param>
     ''' <returns></returns>
     Public Function RandomASCIIString(len%) As String
-        Dim rnd As New Random(BitConverter.ToInt32(New BigInteger(Now.ToBinary).ToByteArray, Scan0))
+        With New Random
+            Return CharString(len, Function() Chr(.Next(32, 127)))
+        End With
+    End Function
+
+    <Extension>
+    Public Function RandomCharString(chars As IEnumerable(Of Char), len%) As String
+        With New Random
+            Dim buffer = chars.ToArray
+            Return CharString(len, Function() .Next(buffer))
+        End With
+    End Function
+
+    Public Function CharString(len%, getChar As Func(Of Char)) As String
         Dim s As New List(Of Char)
 
-        For i As Integer = 0 To len
-            s.Add(Chr(rnd.Next(32, 127)))
+        For i As Integer = 0 To len - 1
+            s.Add(getChar())
         Next
-
-        Call Randomize()
 
         Return New String(s.ToArray)
     End Function

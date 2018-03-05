@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a7777fd874b89d14b530350b76b58d9a, ..\sciBASIC#\Data_science\Bootstrapping\Darwinism\GAF\ODEs\GAFModel.vb"
+﻿#Region "Microsoft.VisualBasic::a7777fd874b89d14b530350b76b58d9a, Data_science\Bootstrapping\Darwinism\GAF\ODEs\GAFModel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Model
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class RefModel
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

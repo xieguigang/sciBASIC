@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b43dd450ac1875ebd780ed6c399af063, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Win32\WindowsServices.vb"
+﻿#Region "Microsoft.VisualBasic::b43dd450ac1875ebd780ed6c399af063, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Win32\WindowsServices.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module WindowsServices
+    ' 
+    '         Properties: Initialized, ServicesLogs
+    ' 
+    '         Function: (+3 Overloads) Initialize, LogsInstaller
+    ' 
+    '         Sub: RegisterURLProtocol
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c4eee6876f4f11b0af61be7f7b0e4e19, ..\sciBASIC#\mime\text%html\MarkDown\Markdown.vb"
+﻿#Region "Microsoft.VisualBasic::e520174c4e91770fb7c2201cb48e454b, mime\text%html\MarkDown\Markdown.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,37 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class MarkdownHTML
+    ' 
+    '         Properties: AllowEmptyLinkText, AsteriskIntraWordEmphasis, AutoHyperlink, AutoNewLines, DisableHeaders
+    '                     DisableHr, DisableImages, EmptyElementSuffix, LinkEmails, QuoteSingleLine
+    '                     StrictBoldItalic
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: __MarkdownTable, AnchorInlineEvaluator, AnchorRefEvaluator, AnchorRefShortcutEvaluator, AtxHeaderEvaluator
+    '                   BlockQuoteEvaluator, BlockQuoteEvaluator2, CodeBlockEvaluator, CodeSpanEvaluator, DoAnchors
+    '                   DoAutoLinks, DoBlockQuotes, DoCodeBlocks, DoCodeSpans, DoHardBreaks
+    '                   DoHeaders, DoHorizontalRules, DoImages, DoItalicsAndBold, DoLists
+    '                   EmailEvaluator, EncodeAmpsAndAngles, EncodeCode, EncodeCodeEvaluator, EncodeEmailAddress
+    '                   EscapeBackslashes, EscapeBackslashesEvaluator, EscapeBoldItalic, EscapeImageAltText, EscapeSpecialCharsWithinTagAttributes
+    '                   FormParagraphs, GetBlockPattern, GetNestedBracketsPattern, GetNestedParensPattern, HashHTMLBlocks
+    '                   HtmlEvaluator, HyperlinkEvaluator, ImageInlineEvaluator, ImageReferenceEvaluator, ImageTag
+    '                   LinkEvaluator, ListEvaluator, ProcessListItems, RunBlockGamut, RunSpanGamut
+    '                   SaveFromAutoLinking, SetextHeaderEvaluator, StripLinkDefinitions, SyntaxedCodeBlockEvaluator, Transform
+    '                   Unescape, UnescapeEvaluator
+    ' 
+    '         Sub: AddExtension, Cleanup, Setup
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::e0fadaff9351799c69efc4a7f11f09e3, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Count.vb"
+﻿#Region "Microsoft.VisualBasic::e0fadaff9351799c69efc4a7f11f09e3, Microsoft.VisualBasic.Core\ComponentModel\Count.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,6 +25,24 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Counter
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Hit
+    ' 
+    '     Module CounterExtensions
+    ' 
+    '         Function: AsInteger, AsNumeric
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Runtime.CompilerServices
@@ -36,10 +55,14 @@ Namespace ComponentModel
     ''' </summary>
     Public Class Counter : Inherits int
 
+        ''' <summary>
+        ''' Create a new integer counter.(新建一个计数器)
+        ''' </summary>
         Sub New()
             MyBase.New(0)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(hits As Integer)
             Call MyBase.New(x:=hits)
         End Sub
@@ -51,6 +74,11 @@ Namespace ComponentModel
         Public Function Hit() As Integer
             Return ++Me
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Widening Operator CType(c As Integer) As Counter
+            Return New Counter(hits:=c)
+        End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(c As Counter) As Integer

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::1f41dd89904a5f9ed3bc5f419e644a91, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\g\Mapper.vb"
+﻿#Region "Microsoft.VisualBasic::07f576d6802e72d1991665021af6bc1d, Data_science\Mathematica\Plot\Plots\g\Mapper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Mapper
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: ForEach, ForEach_histSample, (+3 Overloads) PointScaler, ScallingWidth, TupleScaler
+    '                   XScaler, YScaler
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

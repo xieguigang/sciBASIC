@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::aee7fbf63af4e3127e69b71438483b32, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\xConsole.vb"
+﻿#Region "Microsoft.VisualBasic::aee7fbf63af4e3127e69b71438483b32, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\xConsole\xConsole.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,47 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module xConsole
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CheckNewVersion, ClearInput, ClosestConsoleColor, ConvertHexStringToByteArray, getColor
+    '                   GetConsoleWindow, (+2 Overloads) Implode, ParseLine, Print, ReadKeys
+    '                   ReadLine, RetrieveLinkerTimestamp, SetWindowPos
+    ' 
+    '         Sub: __checkUpdates, CheckforUpdates, ClearInput, (+2 Overloads) CoolWrite, CoolWriteLine
+    '              Credits, ListFonts, RestoreColors, SetFont, SetIcon
+    '              SetWindowPos, Wait, Write, (+3 Overloads) WriteLine
+    '         Class CoolWriteSettings
+    ' 
+    '             Properties: CoolWriting, CoolWritingDelay, CWRDDelay
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Class Comparer
+    ' 
+    '             Constructor: (+3 Overloads) Sub New
+    '             Function: Find
+    ' 
+    '         Class Spinner
+    ' 
+    '             Constructor: (+2 Overloads) Sub New
+    ' 
+    '             Function: Turn
+    ' 
+    '             Sub: Break, Run, RunTask
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

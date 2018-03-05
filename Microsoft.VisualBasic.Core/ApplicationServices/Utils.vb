@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c0f04ba4a368e85f6d19aa3268681428, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::5a7f6e6c12029e7e628810bd183163fe, Microsoft.VisualBasic.Core\ApplicationServices\Utils.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,6 +25,27 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Utils
+    ' 
+    '         Function: FormatTicks, TaskRun, (+2 Overloads) Time
+    ' 
+    '         Sub: TryRun
+    '         Delegate Function
+    ' 
+    '             Function: CLIPath, CLIToken, FileMimeType, GetMIMEDescrib
+    ' 
+    '             Sub: (+2 Overloads) Wait
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Runtime.CompilerServices
@@ -34,8 +56,17 @@ Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace ApplicationServices
 
+    ''' <summary>
+    ''' App utils
+    ''' </summary>
     Public Module Utils
 
+        ''' <summary>
+        ''' Call target <see cref="Action"/> delegate, if exception occurs in the action, 
+        ''' then this function will logs the exception and exit without thorw an exception. 
+        ''' </summary>
+        ''' <param name="task"></param>
+        ''' <param name="stack$"></param>
         <Extension>
         Public Sub TryRun(task As Action, <CallerMemberName> Optional stack$ = Nothing)
             Try
@@ -164,34 +195,37 @@ Namespace ApplicationServices
         ''' If the path string value is already wrappered by quot, then this function will returns the original string (DO_NOTHING).
         ''' (假若命令行之中的文件名参数之中含有空格的话，则可能会造成错误，需要添加一个双引号来消除歧义)
         ''' </summary>
-        ''' <param name="Path"></param>
+        ''' <param name="path"></param>
         ''' <returns></returns>
         '''
         <ExportAPI("CLI_PATH")>
-        <Extension> Public Function CLIPath(Path As String) As String
-            If String.IsNullOrEmpty(Path) Then
+        <Extension> Public Function CLIPath(path As String) As String
+            If String.IsNullOrEmpty(path) Then
                 Return ""
             Else
-                Path = Path.Replace("\", "/")  '这个是R、Java、Perl等程序对路径的要求所导致的
-                Return Path.CLIToken
+                path = path.Replace("\", "/")  '这个是R、Java、Perl等程序对路径的要求所导致的
+                Return path.CLIToken
             End If
         End Function
 
         ''' <summary>
         ''' <see cref="CLIPath(String)"/>函数为了保持对Linux系统的兼容性会自动替换\为/符号，这个函数则不会执行这个替换
         ''' </summary>
-        ''' <param name="Token"></param>
+        ''' <param name="token"></param>
         ''' <returns></returns>
-        <Extension> Public Function CLIToken(Token As String) As String
-            If String.IsNullOrEmpty(Token) OrElse Not Len(Token) > 2 Then
-                Return Token
+        <Extension> Public Function CLIToken(token As String) As String
+            If String.IsNullOrEmpty(token) OrElse Not Len(token) > 2 Then
+                Return token
             End If
 
-            If Token.First = """"c AndAlso Token.Last = """"c Then
-                Return Token
+            If token.First = """"c AndAlso token.Last = """"c Then
+                Return token
             End If
-            If Token.Contains(" "c) Then Token = $"""{Token}"""
-            Return Token
+            If token.Contains(" "c) Then
+                token = $"""{token}"""
+            End If
+
+            Return token
         End Function
 
         ''' <summary>

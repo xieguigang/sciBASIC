@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::25af564a40cdb3a1f94ef5c0986f0daf, ..\sciBASIC#\Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::f311a5f066c078be54470e9433bca7e9, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,12 +25,37 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Interpreter
+    ' 
+    '         Properties: APIList, APINameList, Count, ExecuteEmptyCli, ExecuteFile
+    '                     ExecuteNotFound, Info, IsReadOnly, ListCommandInfo, Stack
+    '                     Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __executeEmpty, __getsAllCommands, __methodInvoke, Contains, CreateEmptyCLIObject
+    '                   (+3 Overloads) CreateInstance, (+3 Overloads) Execute, ExistsCommand, GetAllCommands, getAPI
+    '                   GetEnumerator, GetEnumerator1, GetPossibleCommand, Help, ListingRelated
+    '                   (+2 Overloads) Remove, SDKdocs, ToDictionary, ToString, TryGetValue
+    ' 
+    '         Sub: (+2 Overloads) Add, AddCommand, Clear, CopyTo, (+2 Overloads) Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.Settings
@@ -59,25 +85,25 @@ Namespace CommandLine
         ''' <summary>
         ''' 在添加之前请确保键名是小写的字符串
         ''' </summary>
-        Protected __API_table As New Dictionary(Of String, APIEntryPoint)
+        Protected Friend __API_table As New Dictionary(Of String, APIEntryPoint)
         Protected __rootNamespace$
 
 #Region "Optional delegates"
 
         ''' <summary>
         ''' Public Delegate Function __ExecuteFile(path As String, args As String()) As Integer,
-        ''' (<seealso cref="__executefile"/>: 假若所传入的命令行的name是文件路径，解释器就会执行这个函数指针)
+        ''' (<seealso cref="VisualBasic.CommandLine.ExecuteFile"/>: 假若所传入的命令行的name是文件路径，解释器就会执行这个函数指针)
         ''' 这个函数指针一般是用作于执行脚本程序的
         ''' </summary>
         ''' <returns></returns>
-        Public Property ExecuteFile As __ExecuteFile
+        Public Property ExecuteFile As ExecuteFile
         ''' <summary>
         ''' Public Delegate Function __ExecuteEmptyCli() As Integer,
-        ''' (<seealso cref="__ExecuteEmptyCLI"/>: 假若所传入的命令行是空的，就会执行这个函数指针)
+        ''' (<seealso cref="VisualBasic.CommandLine.ExecuteEmptyCLI"/>: 假若所传入的命令行是空的，就会执行这个函数指针)
         ''' </summary>
         ''' <returns></returns>
-        Public Property ExecuteEmptyCli As __ExecuteEmptyCLI
-        Public Property ExecuteNotFound As __ExecuteNotFound
+        Public Property ExecuteEmptyCli As ExecuteEmptyCLI
+        Public Property ExecuteNotFound As ExecuteNotFound
 #End Region
 
         ''' <summary>
@@ -276,10 +302,6 @@ Namespace CommandLine
             Return -1
         End Function
 
-        ''' <summary>
-        ''' Bad command, no such a command named ""{0}"", but you probably want to using one of these commands:
-        ''' </summary>
-        Const BAD_COMMAND_LISTING_COMMANDS$ = "Bad command, no such a command named ""{0}"", but you probably want to using one of these commands:"
         Const BAD_COMMAND_NAME$ = "Bad command, no such a command named ""{0}"", ? for command list or ""man"" for all of the commandline detail informations."
 
         ''' <summary>
@@ -334,29 +356,6 @@ Namespace CommandLine
             End If
         End Sub
 
-        Private Sub listingCommands(commands$(), commandName$)
-            Call Console.WriteLine(BAD_COMMAND_LISTING_COMMANDS, commandName)
-            Call Console.WriteLine()
-
-            Dim maxLength = commands.MaxLengthString.Length
-
-            For Each cName As String In commands
-                With cName
-                    Dim msg$
-
-                    msg$ = .ByRef & New String(" "c, maxLength - .Length + 3)
-
-                    With __API_table(.ToLower).Info
-                        If Not .StringEmpty Then
-                            msg$ &= Mid(.ByRef, 1, 60) & "..."
-                        End If
-                    End With
-
-                    Call Console.WriteLine("   " & msg)
-                End With
-            Next
-        End Sub
-
         ''' <summary>
         ''' Gets the help information of a specific command using its name property value.(获取某一个命令的帮助信息)
         ''' </summary>
@@ -368,24 +367,9 @@ Namespace CommandLine
         Public Function Help(CommandName As String) As Integer
             If String.IsNullOrEmpty(CommandName) Then     ' List all commands when command name is empty.
                 Call Console.WriteLine(HelpSummary(False))
-            Else ' listing the help for specific command name
-                Dim name As New Value(Of String)
-
-                If __API_table.ContainsKey(name = CommandName.ToLower) Then
-                    Call __API_table(name).PrintHelp
-                Else
-                    Dim list$() = Me.ListingRelated(CommandName)
-
-                    If list.IsNullOrEmpty Then
-                        Call Console.WriteLine($"Bad command, no such a command named ""{CommandName}"", ? for command list.")
-                        Call Console.WriteLine()
-                        Call Console.WriteLine(PS1.Fedora12.ToString & " ?" & CommandName)
-                    Else
-                        Call listingCommands(list, CommandName)
-                    End If
-
-                    Return -2
-                End If
+            Else
+                ' listing the help for specific command name
+                Call PrintCommandHelp(CommandName)
             End If
 
             Return 0

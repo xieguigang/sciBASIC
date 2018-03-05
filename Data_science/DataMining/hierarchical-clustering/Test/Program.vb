@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a51e9b0f77ab44c5f05eb24fca32ed77, ..\sciBASIC#\Data_science\DataMining\hierarchical-clustering\Test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a51e9b0f77ab44c5f05eb24fca32ed77, Data_science\DataMining\hierarchical-clustering\Test\Program.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Program
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: createSampleCluster
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -350,7 +350,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
@@ -427,9 +427,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algebra\Extensions.vb" />
+    <Compile Include="Algebra\Framework\Iterator.vb" />
     <Compile Include="Algebra\LP\Extensions.vb" />
     <Compile Include="Algebra\LP\LPP.vb" />
     <Compile Include="Algebra\LP\LPPSolution.vb" />
+    <Compile Include="Algebra\PCA.vb" />
     <Compile Include="Algebra\SVD.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
     <Compile Include="Scripting\Factors\NamedVector.vb" />
@@ -587,6 +589,7 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

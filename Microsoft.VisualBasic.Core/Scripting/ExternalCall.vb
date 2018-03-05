@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::dfd55318ac000a31a4dda622dc1b4591, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\ExternalCall.vb"
+﻿#Region "Microsoft.VisualBasic::1472354ab6a5d2b672d99b8df06c3298, Microsoft.VisualBasic.Core\Scripting\ExternalCall.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,11 +25,31 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ExternalCall
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: buildArguments, Run, Shell, ToString
+    ' 
+    '     Structure ShellValue
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetObject, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
+Imports System.Collections.Specialized
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -61,7 +82,7 @@ Namespace Scripting
         ''' <param name="script">The script content</param>
         ''' <param name="args"></param>
         ''' <returns></returns>
-        Public Function Run(script As String, Optional args As Specialized.NameValueCollection = Nothing) As ShellValue
+        Public Function Run(script As String, Optional args As NameValueCollection = Nothing) As ShellValue
             Dim tmp As String = App.GetAppSysTempFile(__ext)
             Call script.SaveTo(tmp, Encodings.ASCII.CodePage)
             Return Shell(path:=tmp, args:=args)
@@ -74,14 +95,24 @@ Namespace Scripting
         ''' <param name="args"></param>
         ''' <returns></returns>
         ''' <remarks>Perl脚本测试通过！</remarks>
-        Public Function Shell(path As String, Optional args As Specialized.NameValueCollection = Nothing) As ShellValue
-            Dim param As String =
-                If(args Is Nothing,
-                   "",
-                   String.Join(" ", args.AllKeys.Select(Function(s) $"{s} {args.Get(s).CLIToken}").ToArray))
+        Public Function Shell(path As String, Optional args As NameValueCollection = Nothing) As ShellValue
+            Dim param As String = buildArguments(args)
             Dim IO As New IORedirect(__host, path & " " & param)
             Dim code As Integer = IO.Start(WaitForExit:=True)
             Return New ShellValue(IO, code)
+        End Function
+
+        Private Shared Function buildArguments(args As NameValueCollection) As String
+            If args Is Nothing Then
+                Return ""
+            Else
+                Return args _
+                    .AllKeys _
+                    .Select(Function(s)
+                                Return $"{s} {args.Get(s).CLIToken}"
+                            End Function) _
+                    .JoinBy(" ")
+            End If
         End Function
 
         Public Overrides Function ToString() As String
@@ -118,6 +149,8 @@ Namespace Scripting
         ''' <typeparam name="T"></typeparam>
         ''' <param name="parser">Object parser</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetObject(Of T)(parser As Func(Of String, T)) As T
             Return parser(STD_OUT)
         End Function

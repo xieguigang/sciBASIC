@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::7a992c9f33967f1e9fa3af6e31d73bb3, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::123611543258b1355fbd43ee3c137137, Data_science\Mathematica\Plot\Plots\3D\Scatter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Scatter
+    ' 
+    '         Function: (+2 Overloads) Plot
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -76,7 +90,8 @@ Namespace Plot3D
                              Optional labX$ = "X",
                              Optional labY$ = "Y",
                              Optional labZ$ = "Z",
-                             Optional legendSize! = 20) As GraphicsData
+                             Optional legendSize! = 20,
+                             Optional arrowFactor$ = "2,2") As GraphicsData
 
             Dim list = serials.ToArray
             Dim points = list _
@@ -98,7 +113,11 @@ Namespace Plot3D
             Dim model As New List(Of Element3D)
 
             model += GridBottom.Grid(X, Y, (X(1) - X(0), Y(1) - Y(0)), Z.Min)
-            model += AxisDraw.Axis(X, Y, Z, font, (labX, labY, labZ), axisStroke)
+            model += AxisDraw.Axis(
+                X, Y, Z, font,
+                (labX, labY, labZ),
+                axisStroke,
+                arrowFactor)
 
             ' 最后混合进入系列点
             For Each serial As Serial3D In list

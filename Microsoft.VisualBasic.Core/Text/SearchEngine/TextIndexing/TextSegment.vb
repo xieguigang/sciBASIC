@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b1e5abfe25fa2913a9c4217e54b9952c, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\SearchEngine\TextIndexing\TextSegment.vb"
+﻿#Region "Microsoft.VisualBasic::f4d500803df92a3b5f6a6b9bd64382f3, Microsoft.VisualBasic.Core\Text\SearchEngine\TextIndexing\TextSegment.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,8 +25,27 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class TextSegment
+    ' 
+    '         Properties: Array, Index, Segment
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    '         Operators: (+2 Overloads) Like
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Text.Levenshtein
 
@@ -43,11 +63,15 @@ Namespace Text.Search
         ''' </summary>
         ''' <returns></returns>
         Public Property Segment As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _text
             End Get
             Set(value As String)
-                Dim ascii As Integer() = value.Select(AddressOf AscW).ToArray
+                Dim ascii%() = value _
+                    .Select(AddressOf AscW) _
+                    .ToArray
+
                 _Array = ascii
                 _text = value
             End Set
@@ -72,14 +96,16 @@ Namespace Text.Search
             Return Segment
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(segment As TextSegment) As String
             Return segment.Segment
         End Operator
 
         Public Shared Operator Like(segment As TextSegment, text$) As DistResult
-            Dim out = LevenshteinDistance.ComputeDistance(segment.Array, text)
-            out.Reference = segment._text
-            Return out
+            With LevenshteinDistance.ComputeDistance(segment.Array, text)
+                .Reference = segment._text
+                Return .ByRef
+            End With
         End Operator
     End Class
 End Namespace

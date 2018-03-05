@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::43385bf242e6efaa5a9e1a74153d02a6, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\CSS.vb"
+﻿#Region "Microsoft.VisualBasic::43385bf242e6efaa5a9e1a74153d02a6, gr\Microsoft.VisualBasic.Imaging\d3js\CSS.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,33 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DirectedForceGraph
+    ' 
+    '         Properties: link, node, text
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class Font
+    ' 
+    '         Properties: color, font, font_size
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class CssValue
+    ' 
+    '         Properties: opacity, stroke, strokeOpacity, strokeWidth
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::3d61066914227954ed8f1594b76eb847, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssBoxWordSplitter.vb"
+﻿#Region "Microsoft.VisualBasic::3d61066914227954ed8f1594b76eb847, mime\text%html\HTML\CSS\Render\CssBoxWordSplitter.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class CssBoxWordSplitter
+    ' 
+    '         Properties: Box, Text, Words
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: CollapsesWhiteSpaces, EliminatesLineBreaks, IsLineBreak, IsSpace, IsTab
+    ' 
+    '         Sub: CutWord, SplitWords
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

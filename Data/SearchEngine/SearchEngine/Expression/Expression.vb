@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::65d758bc125496bf614322f3f6ddcf57, ..\sciBASIC#\Data\SearchEngine\SearchEngine\Expression\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::65d758bc125496bf614322f3f6ddcf57, Data\SearchEngine\SearchEngine\Expression\Expression.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Expression
+    ' 
+    '     Properties: Tokens
+    ' 
+    '     Function: (+2 Overloads) Evaluate, GetEnumerator, IEnumerable_GetEnumerator, Match, ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

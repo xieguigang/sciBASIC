@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::68e66e23e35508140358bb613168c342, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\Groups\DataGroup.vb"
+﻿#Region "Microsoft.VisualBasic::68e66e23e35508140358bb613168c342, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\Groups\DataGroup.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,37 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class TaggedGroupData
+    ' 
+    '         Properties: Tag
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class GroupListNode
+    ' 
+    '         Properties: Count, Group, InitReads
+    ' 
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
+    ' 
+    '     Class GroupResult
+    ' 
+    '         Properties: Count, Group, Tag
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator
+    ' 
+    '         Sub: (+2 Overloads) Add
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

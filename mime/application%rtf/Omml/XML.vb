@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::91c6161d6997c7beb669113adbb8da1d, ..\sciBASIC#\mime\application%rtf\Omml\XML.vb"
+﻿#Region "Microsoft.VisualBasic::91c6161d6997c7beb669113adbb8da1d, mime\application%rtf\Omml\XML.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,79 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Head
+    ' 
+    '         Properties: Title, Xml
+    ' 
+    '     Class DocumentXmlProperty
+    ' 
+    '         Properties: DocumentProperties, OfficeDocumentSettings
+    ' 
+    '     Class DocumentProperties
+    ' 
+    '         Properties: Author, Characters, CharactersWithSpaces, Created, LastAuthor
+    '                     LastSaved, Lines, Pages, Paragraphs, Revision
+    '                     TotalTime, Version, Words
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class OfficeDocumentSettings
+    ' 
+    '         Properties: AllowPNG
+    ' 
+    '     Class WordDocument
+    ' 
+    '         Properties: AlwaysShowPlaceholderText, DisplayHorizontalDrawingGridEvery, DisplayVerticalDrawingGridEvery, DoNotPromoteQF, DoNotShadeFormData
+    '                     DoNotUnderlineInvalidXML, DrawingGridHorizontalSpacing, DrawingGridVerticalSpacing, IgnoreMixedContent, LidThemeAsian
+    '                     LidThemeComplexScript, LidThemeOther, PunctuationKerning, SaveIfXMLInvalid, TrackFormatting
+    '                     TrackMoves, UseMarginsForDrawingGridOrigin, ValidateAgainstSchemas
+    '         Class Compatibility
+    ' 
+    '             Properties: AdjustLineHeightInTable, AlignTablesRowByRow, AutofitLikeWW11, BalanceSingleByteDoubleByteWidth, CachedColBalance
+    '                         DoNotExpandShiftReturn, DoNotLeaveBackslashAlone, DontAutofitConstrainedTables, DontBreakConstrainedForcedTables, DontUseIndentAsNumberingTabStop
+    '                         DontVertAlignCellWithSp, DontVertAlignInTxbx, FELineBreak11, FootnoteLayoutLikeWW8, ForgetLastTabAlignment
+    '                         HangulWidthLikeWW11, LayoutRawTableWidth, LayoutTableRowsApart, SelectEntireFieldWithStartOrEnd, ShapeLayoutLikeWW8
+    '                         SpaceForUL, ULTrailSpace, UnderlineTabInNumList, UseFELayout, UseNormalStyleForList
+    '                         UseWord2002TableStyleRules, UseWord97LineBreakingRules, Word11KerningPairs, WW11IndentRules
+    ' 
+    '         Class mathPr
+    ' 
+    '             Properties: brkBin, brkBinSub, defJc, dispDef, intLim
+    '                         lMargin, mathFont, naryLim, rMargin, smallFrac
+    '                         wrapIndent
+    ' 
+    '         Structure ValueAttribute
+    ' 
+    '             Properties: Value
+    ' 
+    ' 
+    ' 
+    '     Class Paragraph
+    ' 
+    '         Properties: Align, Style
+    ' 
+    '         Function: GenerateDocument
+    ' 
+    '     Class Font
+    ' 
+    ' 
+    ' 
+    '     Class StyleTokens
+    ' 
+    '         Properties: Border, MsoBorderBottomAlt, MsoLayoutGridAlign, MsoPaddingAlt, Padding
+    '                     TextAlign, TextAutospace
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

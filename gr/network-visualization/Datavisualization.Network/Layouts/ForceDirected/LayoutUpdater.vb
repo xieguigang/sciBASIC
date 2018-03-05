@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::e52f3611a0b15cccbe78b1f14113789e, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\LayoutUpdater.vb"
+﻿#Region "Microsoft.VisualBasic::e52f3611a0b15cccbe78b1f14113789e, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\LayoutUpdater.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module LayoutUpdater
+    ' 
+    '         Sub: Updates
+    '         Class __layoutGenerator
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Clear, drawEdge, drawNode
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::349f12cf5df59840c45c6ac898ccc293, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\ConcaveHull.vb"
+﻿#Region "Microsoft.VisualBasic::349f12cf5df59840c45c6ac898ccc293, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\ConcaveHull.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,37 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DelaunayTriangulation
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Diameter, InCircle, MaxEdge, Triangulate, WhichSide
+    ' 
+    '     Structure TriangleIndex
+    ' 
+    '         Function: ToString
+    ' 
+    '     Structure TriangleVertex
+    ' 
+    ' 
+    ' 
+    '     Structure Triangle
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Structure EdgeInfo
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetEdgeType, IsValid
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

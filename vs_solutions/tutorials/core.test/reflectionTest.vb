@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::82a931dc0b83918cb053220a02060b92, ..\sciBASIC#\vs_solutions\tutorials\core.test\reflectionTest.vb"
+﻿#Region "Microsoft.VisualBasic::59a57381d6316f68c065a519faa697bd, vs_solutions\tutorials\core.test\reflectionTest.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,74 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module reflectionTest
+    ' 
+    '     Sub: Main, testDefault
+    ' 
+    ' Structure AAAA
+    ' 
+    '     Properties: BugType
+    ' 
+    ' Structure ColorTheme
+    ' 
+    '     Properties: BackgroundColor, DefaultTheme, IsEmpty, MessageDetailColor, ProgressBarColor
+    '                 ProgressMsgColor
+    ' 
+    '     Function: [Default]
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+#Region "Microsoft.VisualBasic::700ceb977ff257a3ac7674e64f6c5d4a, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module reflectionTest
+    ' 
+    '     Sub: Main, testDefault
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::82a931dc0b83918cb053220a02060b92, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module reflectionTest
+    ' 
+    '     Sub: Main, testDefault
+    ' 
+    ' 
+    ' 
 
 #End Region
 

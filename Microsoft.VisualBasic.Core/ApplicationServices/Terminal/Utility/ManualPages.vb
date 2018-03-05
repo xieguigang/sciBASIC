@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::022c48ff60aa11fbd66b2c657c58ba1c, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ManualPages.vb"
+﻿#Region "Microsoft.VisualBasic::022c48ff60aa11fbd66b2c657c58ba1c, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\Utility\ManualPages.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,31 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ManualPages
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: FromFile, ToString
+    ' 
+    '         Sub: (+2 Overloads) Dispose, ShowManual
+    ' 
+    '     Class IndexedManual
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __sp
+    ' 
+    '         Sub: PrintPrompted, ShowManual
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

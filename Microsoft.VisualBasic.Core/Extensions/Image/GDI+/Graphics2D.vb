@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::645fca5462f4ed149023e70d8b02a794, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Graphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::3758329d241d828305a99b884dcb4fc0, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Graphics2D.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Graphics2D
+    ' 
+    '         Properties: Center, Height, ImageResource, Size, Width
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Function: CreateDevice, CreateObject, Open, (+2 Overloads) Save, ToString
+    ' 
+    '         Sub: __save, DrawCircle
+    '         Structure Context
+    ' 
+    '             Function: Create
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

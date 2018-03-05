@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::760437edec4ce7666647d4a07c89a70b, ..\sciBASIC#\vs_solutions\tutorials\core.test\VectorTest.vb"
+﻿#Region "Microsoft.VisualBasic::98809a4610d68f722cfb481d3b2688a3, vs_solutions\tutorials\core.test\VectorTest.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,105 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module VectorTest
+    ' 
+    '     Sub: Main
+    '     Structure fdddd
+    ' 
+    '         Operators: -, *, \, ^, (+2 Overloads) And
+    '                    (+2 Overloads) Like, (+2 Overloads) Mod, (+2 Overloads) Or, (+2 Overloads) Xor
+    ' 
+    '     Structure str
+    ' 
+    '         Properties: pattern
+    '         Operators: (+2 Overloads) *, +, (+2 Overloads) Like
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+#Region "Microsoft.VisualBasic::d9ae45bdb8829d28941c6b8d97ffc2ba, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module VectorTest
+    ' 
+    '     Sub: Main
+    ' 
+    '     Structure fdddd
+    ' 
+    '         Operators: -, *, \, ^, (+2 Overloads) And
+    '                    (+2 Overloads) Like, (+2 Overloads) Mod, (+2 Overloads) Or, (+2 Overloads) Xor
+    ' 
+    ' 
+    '     Structure str
+    ' 
+    '         Properties: pattern
+    ' 
+    '         Operators: (+2 Overloads) *, +, (+2 Overloads) Like
+    ' 
+    ' 
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::760437edec4ce7666647d4a07c89a70b, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module VectorTest
+    ' 
+    '     Sub: Main
+    ' 
+    ' 
+    '     Structure fdddd
+    ' 
+    '         Operators: -, *, \, ^, (+2 Overloads) And
+    '                    (+2 Overloads) Like, (+2 Overloads) Mod, (+2 Overloads) Or, (+2 Overloads) Xor
+    ' 
+    ' 
+    ' 
+    '     Structure str
+    ' 
+    '         Properties: pattern
+    ' 
+    ' 
+    '         Operators: (+2 Overloads) *, +, (+2 Overloads) Like
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
 
 #End Region
 

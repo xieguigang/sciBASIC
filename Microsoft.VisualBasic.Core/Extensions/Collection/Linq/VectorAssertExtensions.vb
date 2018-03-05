@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::27e0d43c6a03513c1c8dddbd42d59a79, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\VectorAssertExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2aa1d595aa123f2c055f05a31040cfd1, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\VectorAssertExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module VectorAssertExtensions
+    ' 
+    '         Function: InsideAny, LengthEquals, TestPairData
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

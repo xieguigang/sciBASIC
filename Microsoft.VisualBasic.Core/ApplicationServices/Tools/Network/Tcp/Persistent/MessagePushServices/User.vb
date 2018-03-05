@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::e2bedcdf5e58f2ae305d7fadc4f32379, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\MessagePushServices\User.vb"
+﻿#Region "Microsoft.VisualBasic::e2bedcdf5e58f2ae305d7fadc4f32379, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\MessagePushServices\User.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class USER
+    ' 
+    '         Properties: USER_ID
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: __receiveBroadcastMessage, (+3 Overloads) __sendMessage, __sendMessageToMe, IsUserOnLine, (+4 Overloads) SendMessage
+    '                   ToString
+    ' 
+    '         Sub: (+2 Overloads) BeginConnect, (+2 Overloads) BroadCastMessage, (+2 Overloads) Dispose, SetDisconnectHandle
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

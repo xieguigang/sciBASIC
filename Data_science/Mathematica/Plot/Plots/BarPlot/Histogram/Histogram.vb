@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::3eb775d7c026283ab1c96cc3a9c47512, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\Histogram.vb"
+﻿#Region "Microsoft.VisualBasic::5167e9dc74d313dcf7897007450258fe, Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\Histogram.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Histogram
+    ' 
+    '         Function: HistogramPlot, (+5 Overloads) Plot
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -209,7 +223,7 @@ Namespace BarPlot.Histogram
                         ' Y 为什么是从零开始的？
                         Y = d3js.scale.linear _
                             .domain(YTicks) _
-                            .range(integers:={0, .Bottom - .Top})
+                            .range(integers:={ .Bottom, .Top})
                     End With
 
                     Dim scaler As New DataScaler With {

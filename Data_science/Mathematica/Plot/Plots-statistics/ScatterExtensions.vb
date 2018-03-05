@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::ccaf2d8b5ec9b14915ab4a437514e7f0, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\ScatterExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::90ae6022983b5875406e704f66aca3dc, Data_science\Mathematica\Plot\Plots-statistics\ScatterExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module ScatterExtensions
+    ' 
+    '     Function: FromODE, FromODEList, FromODEs, (+2 Overloads) Plot
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

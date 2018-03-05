@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a1bc2787d407848cfa11170d2cdd06dd, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Graph\mxGraphModel.vb"
+﻿#Region "Microsoft.VisualBasic::a1bc2787d407848cfa11170d2cdd06dd, gr\network-visualization\Datavisualization.Network\Graph\mxGraphModel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,106 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' 	Class mxGraphModel
+    ' 
+    ' 	    Properties: Cells, CreateIds, MaintainEdgeParent, Overrides, UpdateLevel
+    ' 
+    ' 	    Constructor: (+2 Overloads) Sub New
+    ' 
+    ' 	    Function: add, cloneCell, cloneCells, collapsedStateForCellChanged, contains
+    '                createId, createRoot, createUndoableEdit, filterCells, (+2 Overloads) filterDescendants
+    '                geometryForCellChanged, getCell, getChildAt, getChildCells, getChildCount
+    '                getChildEdges, getChildren, getChildVertices, getConnections, getDescendants
+    '                (+2 Overloads) getDirectedEdgeCount, getEdgeAt, getEdgeCount, (+2 Overloads) getEdges, (+2 Overloads) getEdgesBetween
+    '                getGeometry, getIncomingEdges, getNearestCommonAncestor, (+2 Overloads) getOpposites, getOrigin
+    '                getOutgoingEdges, getParent, getParents, getStyle, getTerminal
+    '                getTopmostCells, getValue, isAncestor, isCollapsed, isConnectable
+    '                isEdge, isVertex, isVisible, parentForCellChanged, remove
+    '                rootChanged, setCollapsed, setGeometry, setRoot, setStyle
+    '                setTerminal, setValue, setVisible, styleForCellChanged, terminalForCellChanged
+    '                valueForCellChanged, visibleStateForCellChanged
+    ' 
+    ' 	    Sub: beginUpdate, cellAdded, cellRemoved, clear, endUpdate
+    '           execute, mergeChildren, mergeChildrenImpl, readObject, restoreClone
+    '           setTerminals, updateEdgeParent, (+2 Overloads) updateEdgeParents
+    ' 		Class mxUndoableEditAnonymousInnerClassHelper
+    ' 
+    ' 		    Sub: dispatch
+    ' 
+    ' 		Interface Filter
+    ' 
+    ' 
+    ' 
+    ' 		Class mxRootChange
+    ' 
+    ' 		    Properties: Previous, Root
+    ' 
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
+    ' 
+    ' 		Class mxChildChange
+    ' 
+    ' 		    Properties: Child, Index, Parent, Previous, PreviousIndex
+    ' 
+    ' 		    Constructor: (+3 Overloads) Sub New
+    ' 
+    ' 		    Function: getChildIndex, getTerminal
+    ' 
+    ' 		    Sub: connect, execute, setTerminal
+    ' 
+    ' 		Class mxTerminalChange
+    ' 
+    ' 		    Properties: Cell, Previous, Source, Terminal
+    ' 
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
+    ' 
+    ' 		Class mxValueChange
+    ' 
+    ' 		    Properties: Cell, Previous, Value
+    ' 
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
+    ' 
+    ' 		Class mxStyleChange
+    ' 
+    ' 		    Properties: Cell, Previous, Style
+    ' 
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
+    ' 
+    ' 		Class mxGeometryChange
+    ' 
+    ' 		    Properties: Cell, Geometry, Previous
+    ' 
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
+    ' 
+    ' 		Class mxCollapseChange
+    ' 
+    ' 		    Properties: Cell, Collapsed, Previous
+    ' 
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
+    ' 
+    ' 		Class mxVisibleChange
+    ' 
+    ' 		    Properties: Cell, Previous, Visible
+    ' 
+    ' 		    Constructor: (+2 Overloads) Sub New
+    ' 		    Sub: execute
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

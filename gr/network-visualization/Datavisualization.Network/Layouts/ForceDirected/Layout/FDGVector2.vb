@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::f0ccf6fdaa270398907d4b7701547c2a, ..\sciBASIC#\gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\FDGVector2.vb"
+﻿#Region "Microsoft.VisualBasic::f0ccf6fdaa270398907d4b7701547c2a, gr\network-visualization\Datavisualization.Network\Layouts\ForceDirected\Layout\FDGVector2.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,24 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class FDGVector2
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
+    '                   Magnitude, Multiply, Normal, Normalize, Random
+    '                   SetIdentity, SetZero, Subtract, Zero
+    '         Operators: -, (+2 Overloads) *, (+2 Overloads) /, +, <>
+    '                    =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

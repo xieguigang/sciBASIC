@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::6b05bb1a7f66ac6f35727378b94619f7, ..\sciBASIC#\Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::6b05bb1a7f66ac6f35727378b94619f7, Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module DataImports
+    ' 
+    '     Function: (+2 Overloads) [Imports], FixLengthImports, (+3 Overloads) ImportsData, ImportsTsv, (+2 Overloads) RowParsing
+    '               SampleForType
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

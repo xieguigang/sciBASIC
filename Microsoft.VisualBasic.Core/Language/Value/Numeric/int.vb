@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::4db964d77e9ab2fb5ae804dc608e2341, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\Numeric\int.vb"
+﻿#Region "Microsoft.VisualBasic::4db964d77e9ab2fb5ae804dc608e2341, Microsoft.VisualBasic.Core\Language\Value\Numeric\int.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class int
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: (+2 Overloads) CompareTo, Equals, (+2 Overloads) ToString
+    '         Operators: (+2 Overloads) -, (+2 Overloads) /, (+2 Overloads) +, (+4 Overloads) <, <<
+    '                    <=, (+4 Overloads) >, >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

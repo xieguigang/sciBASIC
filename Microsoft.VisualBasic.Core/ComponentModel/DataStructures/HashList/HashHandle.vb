@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::048de01f3a96fdf7e31b42eb1bdd969c, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashList\HashHandle.vb"
+﻿#Region "Microsoft.VisualBasic::048de01f3a96fdf7e31b42eb1bdd969c, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashList\HashHandle.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,38 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DefaultHashHandle
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Sub: (+2 Overloads) Add
+    ' 
+    '         Operators: (+2 Overloads) +
+    ' 
+    '     Class LinkNode
+    ' 
+    '         Properties: [Next], node, Previous
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class HashHandle
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: (+3 Overloads) [Next], (+2 Overloads) Current, GetEnumerator, HasElement, IEnumerable_GetEnumerator
+    '                   IsNull, (+3 Overloads) Previous
+    ' 
+    '         Sub: __allocate, (+2 Overloads) Add, (+2 Overloads) Remove
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::4ed65c0cd77897a12cd980a66dfd2eab, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::c408be4c9dc85ba70422b514d2e21381, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,38 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Delegate Sub
+    ' 
+    ' 
+    '     Module g
+    ' 
+    '         Properties: ActiveDriver
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __getDriver, Allocate, CreateGraphics, (+2 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
+    '                   MeasureWidthOrHeight
+    ' 
+    '         Sub: DropdownShadows, FillBackground
+    '         Class InternalCanvas
+    ' 
+    '             Properties: bg, padding, size
+    ' 
+    '             Function: InvokePlot
+    '             Operators: (+2 Overloads) +, <=, >=
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

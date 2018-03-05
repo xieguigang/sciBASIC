@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::de3f5b5c20ec4458f6409d80fd8be9a5, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Algebra\Solvers\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::de3f5b5c20ec4458f6409d80fd8be9a5, Data_science\Mathematica\Math\Math\Algebra\Solvers\Module1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,29 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Module1
+    ' 
+    '     Function: Hamiltonian, Math_Matrinx_Pinv, Math_Matrinx_Pinv2, Math_Matrinx_SG, Math_Matrix_Adj
+    '               Math_Matrix_Cond, Math_Matrix_Cramer22, Math_Matrix_Det, Math_Matrix_Det2, Math_Matrix_DFT
+    '               Math_Matrix_EigenValue, Math_Matrix_EigSym, Math_Matrix_GetSize, Math_Matrix_Hessenberg, Math_Matrix_IDFT
+    '               Math_Matrix_Inv, Math_Matrix_Inv2, Math_Matrix_LLt, Math_Matrix_LU, Math_Matrix_Mul
+    '               Math_Matrix_Orth, Math_Matrix_PolyDiv, Math_Matrix_PolyDivEx, Math_Matrix_PolyGCF, Math_Matrix_PolyGCF_Call
+    '               Math_Matrix_PolyMod, Math_Matrix_PolyMul, Math_Matrix_PolyRoots2, Math_Matrix_Pow, Math_Matrix_QR
+    '               Math_Matrix_QR2, Math_Matrix_QR22, Math_Matrix_Rank, Math_Matrix_RU, Math_Matrix_Scatter
+    '               Math_Matrix_Schmidt, Math_Matrix_Sove2, Math_Matrix_SPD, Math_Matrix_Sqrt, Math_Matrix_Svd
+    '               Math_Matrix_SvdSplit, Math_Matrix_SymTridMatrix, Math_Matrix_VR
+    ' 
+    '     Sub: Lehmer, Magic, Magic_1, Magic_2, Magic_4
+    '          Math_Matrix_EigTor, Math_Matrix_T, Pascal
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

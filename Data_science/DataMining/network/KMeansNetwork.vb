@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::fbe46196349db25dafa346fdaaae8efb, ..\sciBASIC#\Data_science\DataMining\network\KMeansNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::fbe46196349db25dafa346fdaaae8efb, Data_science\DataMining\network\KMeansNetwork.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,19 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module KMeansNetwork
+    ' 
+    '         Function: ToNetwork
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

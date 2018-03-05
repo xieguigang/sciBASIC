@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d8bc1d00cad0b167ad1d2d6d37f66594, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\MetaData\Type.vb"
+﻿#Region "Microsoft.VisualBasic::d8bc1d00cad0b167ad1d2d6d37f66594, Microsoft.VisualBasic.Core\Scripting\MetaData\Type.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class TypeInfo
+    ' 
+    '         Properties: assm, FullIdentity, SystemKnownType
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: [GetType], LoadAssembly, ToString
+    ' 
+    '         Sub: __infoParser
+    ' 
+    '         Operators: <>, =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

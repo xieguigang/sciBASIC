@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2d47d172003559fd0fd17a3d09cd00be, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Scripting\Helpers\MemoryCollection.vb"
+﻿#Region "Microsoft.VisualBasic::2d47d172003559fd0fd17a3d09cd00be, Data_science\Mathematica\Math\Math\Scripting\Helpers\MemoryCollection.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class MemoryCollection
+    ' 
+    '         Properties: DictData, Objects
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Add, GetEnumerator, GetEnumerator1
+    ' 
+    '         Sub: __buildCache
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

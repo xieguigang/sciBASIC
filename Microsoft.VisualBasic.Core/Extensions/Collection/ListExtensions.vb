@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::023d911e219432dfd5e138e98c5fb44f, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::901039ef179e5b68ae456cfac7dbd199, Microsoft.VisualBasic.Core\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,12 +25,29 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module ListExtensions
+    ' 
+    '     Function: __reversedTake, AsHashList, AsHashSet, AsList, AsLoop
+    '               HasKey, Indexing, rand, Random, ReorderByKeys
+    '               Takes, (+2 Overloads) ToList, TopMostFrequent
+    ' 
+    '     Sub: DoEach, ForEach, Swap
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -231,6 +249,12 @@ Public Module ListExtensions
         End If
 
         Return result
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsLoop(Of T)(src As IEnumerable(Of T)) As LoopArray(Of T)
+        Return New LoopArray(Of T)(src)
     End Function
 
     ''' <summary>

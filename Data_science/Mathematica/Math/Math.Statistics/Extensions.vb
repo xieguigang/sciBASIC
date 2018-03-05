@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::8f66c5e3b613c280f4fa20cf7bc0366c, ..\sciBASIC#\Data_science\Mathematica\Math\Math.Statistics\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::35ed3986afa53fdc102364ae466ee27f, Data_science\Mathematica\Math\Math.Statistics\Extensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Extensions
+    ' 
+    '     Function: CI, CI68, CI95, CI99, SD
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -68,4 +81,3 @@ Public Module Extensions
         Return CI(m, 1, sd, n)
     End Function
 End Module
-

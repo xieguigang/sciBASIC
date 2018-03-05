@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::9a83f1918829b5783719a1b23169aea4, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\mmfsocket.vb"
+﻿#Region "Microsoft.VisualBasic::9a83f1918829b5783719a1b23169aea4, Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\mmfsocket.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,35 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Delegate Sub
+    ' 
+    ' 
+    '     Delegate Sub
+    ' 
+    ' 
+    '     Class MMFSocket
+    ' 
+    '         Properties: NewMessageCallBack, URI
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: CreateObject, getMessage, Ping, ReadData, ReadString
+    '                   SendMessage, ToString, WriteMessage
+    ' 
+    '         Sub: __dataArrival, (+2 Overloads) Dispose, (+3 Overloads) SendMessage
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

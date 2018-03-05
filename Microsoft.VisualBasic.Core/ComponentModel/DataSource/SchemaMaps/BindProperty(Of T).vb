@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d60145d261bd20681ade3ea8ca22ce1d, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::d60145d261bd20681ade3ea8ca22ce1d, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure BindProperty
+    ' 
+    '         Properties: Identity, IsNull, IsPrimitive, Type
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: FromSchemaTable, GetValue, ToString
+    ' 
+    '         Sub: SetValue
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

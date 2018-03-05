@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::af53c1a22c581bd47d2412c64e1d20d8, ..\sciBASIC#\mime\application%rdf+xml\DataTypes.vb"
+﻿#Region "Microsoft.VisualBasic::af53c1a22c581bd47d2412c64e1d20d8, mime\application%rdf+xml\DataTypes.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module DataTypes
+    ' 
+    '     Function: [GetType], (+2 Overloads) SchemaDataType
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

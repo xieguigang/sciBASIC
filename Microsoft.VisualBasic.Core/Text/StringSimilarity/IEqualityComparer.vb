@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::274f12e6ed9f6f3adf2e862cd15cd5df, ..\sciBASIC#\Microsoft.VisualBasic.Core\Text\StringSimilarity\IEqualityComparer.vb"
+﻿#Region "Microsoft.VisualBasic::fd599c599567b68ab309e181369d7838, Microsoft.VisualBasic.Core\Text\StringSimilarity\IEqualityComparer.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,8 +25,25 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class StringEqualityHelper
+    ' 
+    '         Properties: BinaryEquals, TextEquals
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Equals, GetHashCode, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Text.Levenshtein
 
 Namespace Text.Similarity
@@ -83,6 +101,7 @@ Namespace Text.Similarity
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function Equals(x As String, y As String) As Boolean Implements IEqualityComparer(Of String).Equals
             Return compare(x, y)
         End Function

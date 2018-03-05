@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::bfc066dc0ba5e93e074aaa5eb3bd2d2a, ..\sciBASIC#\Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ProfileItem.vb"
+﻿#Region "Microsoft.VisualBasic::bfc066dc0ba5e93e074aaa5eb3bd2d2a, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ProfileItem.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,34 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Enum ValueTypes
+    ' 
+    '         [Double], [Integer], Directory, File, Text
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class ProfileItem
+    ' 
+    '         Properties: Description, Name, Type
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class ProfileNodeItem
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

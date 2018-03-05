@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::329f25fe438a1d34e349abea124c43ad, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\DataModel.vb"
+﻿#Region "Microsoft.VisualBasic::66909df4646eb358f33ca49b94027d28, Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\DataModel.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,34 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure HistogramData
+    ' 
+    '         Properties: LinePoint, width
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class HistogramGroup
+    ' 
+    '         Properties: Samples, XRange, YRange
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Structure HistProfile
+    ' 
+    '         Properties: SerialData
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: GetLine
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

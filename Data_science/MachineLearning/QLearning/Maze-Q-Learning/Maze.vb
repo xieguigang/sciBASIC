@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2ffd1694f7b3bd50ce7b3cb054a35f52, ..\sciBASIC#\Data_science\MachineLearning\QLearning\Maze-Q-Learning\Maze.vb"
+﻿#Region "Microsoft.VisualBasic::2ffd1694f7b3bd50ce7b3cb054a35f52, Data_science\MachineLearning\QLearning\Maze-Q-Learning\Maze.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class Maze
+    ' 
+    '     Properties: ActionRange, AvatarIndex, GoalReached
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: __getMoveName, isValidMove, PrintMap
+    ' 
+    '     Sub: __finishLearn, __goToNextState, __init, __reset, __run
+    '          PrintMap, resetMaze
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

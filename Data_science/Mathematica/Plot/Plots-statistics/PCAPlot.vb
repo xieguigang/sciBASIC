@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::39e2a6e8a06b59e764fc88b69c9accdd, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\PCAPlot.vb"
+﻿#Region "Microsoft.VisualBasic::0f668ed67697eebfc636155765b2dd78, Data_science\Mathematica\Plot\Plots-statistics\PCAPlot.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,13 +25,24 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module PCAPlot
+    ' 
+    '     Function: PC2
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.DataMining.PCA
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -49,9 +61,20 @@ Public Module PCAPlot
                                     Optional size$ = "2000,1800",
                                     Optional colorSchema$ = "Set1:c8") As GraphicsData
 
-        Dim result = input.PrincipalComponentAnalysis(nPC:=2)  ' x,y
-        Dim x As Vector = result.ColumnVector(0)
-        Dim y As Vector = result.ColumnVector(1)
+        Dim result = New PCA(input)  ' x, y
+        Dim x As Vector
+        Dim y As Vector
+        Dim ordinals%() = Nothing
+
+        With result.Project(
+            input.RowVectors.ToArray,
+            nPC:=2,
+            ordinal:=ordinals)
+
+            x = .ByRef(0)
+            y = .ByRef(1)
+        End With
+
         Dim getlabel As Func(Of Integer, String)
 
         If labels.IsNullOrEmpty Then
@@ -64,9 +87,13 @@ Public Module PCAPlot
             .SeqIterator _
             .Select(Function(pt)
                         Dim point As PointF = pt.value
+
                         Return New Entity With {
                             .uid = getlabel(pt.i),
-                            .Properties = {point.X, point.Y}
+                            .Properties = {
+                                point.X,
+                                point.Y
+                            }
                         }
                     End Function) _
             .ToArray

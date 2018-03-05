@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::7c9c474c26fb4e48d9651e5976b144f1, ..\sciBASIC#\mime\text%html\HTML\Head\Meta.vb"
+﻿#Region "Microsoft.VisualBasic::7c9c474c26fb4e48d9651e5976b144f1, mime\text%html\HTML\Head\Meta.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,86 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Charset
+    ' 
+    '         Properties: CharSet
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: __attrs
+    ' 
+    '     Class ContentType
+    ' 
+    '         Properties: type
+    ' 
+    '         Function: __attrs
+    ' 
+    '     Class MetaData
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class Meta
+    ' 
+    '         Properties: content, Name
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class Description
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class Author
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class Copyright
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class Keywords
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class Viewport
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class Link
+    ' 
+    '         Properties: href, rel
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class Script
+    ' 
+    '         Properties: type
+    ' 
+    '     Class ScriptRef
+    ' 
+    '         Properties: src
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class ScriptDeclare
+    ' 
+    '         Properties: Content
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class HeadMeta
+    ' 
+    '         Properties: Links, MetaDatas, Metas, Scripts, Title
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::dbbbd2c41e1657db270004a827fe80eb, ..\sciBASIC#\mime\text%html\HTML\Image.vb"
+﻿#Region "Microsoft.VisualBasic::dbbbd2c41e1657db270004a827fe80eb, mime\text%html\HTML\Image.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Image
+    ' 
+    '         Properties: Align, Alt, Border, HSpace, source
+    '                     Text
+    ' 
+    '         Function: GetImages, ResParser, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

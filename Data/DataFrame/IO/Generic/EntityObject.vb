@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a5e202b3c22a6d28adf79f962be02735, ..\sciBASIC#\Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::b28c2b06d0c2a3c2bbf5aadad9e6ba43, Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class EntityObject
+    ' 
+    '         Properties: ID
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: Copy, GetIDList, (+3 Overloads) LoadDataSet, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

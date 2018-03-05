@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a7d0d795cb792ab19646af4d2ce7b523, ..\sciBASIC#\mime\text%html\HTML\CSS\Render\CssAnonymousBlockBox.vb"
+﻿#Region "Microsoft.VisualBasic::a7d0d795cb792ab19646af4d2ce7b523, mime\text%html\HTML\CSS\Render\CssAnonymousBlockBox.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class CssAnonymousBlockBox
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class CssAnonymousSpaceBlockBox
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::d0ec7d5f1bd886f6b077a0a036dcded0, ..\sciBASIC#\mime\application%rdf+xml\DataModel\DCMI.vb"
+﻿#Region "Microsoft.VisualBasic::d0ec7d5f1bd886f6b077a0a036dcded0, mime\application%rdf+xml\DataModel\DCMI.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class DCMI
+    ' 
+    '     Properties: [Date], Contributor, Coverage, Creator, Description
+    '                 Format, Identifier, Language, Publisher, Relation
+    '                 Rights, Source, Subject, Title, Type
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

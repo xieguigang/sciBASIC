@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::df7cdde33d591d9dcd3e818f8102b1e4, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\Socket\ServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::df7cdde33d591d9dcd3e818f8102b1e4, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\Socket\ServicesSocket.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,32 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ServicesSocket
+    ' 
+    '         Properties: Connections, IsShutdown, LocalPort, Running
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: Run
+    ' 
+    '         Sub: __acceptSocket, __initSocket, __initSocketThread, __runHost, AcceptCallback
+    '              Run, WaitForRunning
+    '         Delegate Sub
+    ' 
+    '             Properties: AcceptCallbackHandleInvoke
+    ' 
+    '             Sub: __socketCleanup, (+2 Overloads) Dispose, ForceCloseHandle
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

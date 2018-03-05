@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::342a6de1f7bc3c807986dc5a2d76b044, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Resources.vb"
+﻿#Region "Microsoft.VisualBasic::342a6de1f7bc3c807986dc5a2d76b044, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Resources.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ResourcesSatellite
+    ' 
+    '         Properties: FileName, MyResource, Resources
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: DirectLoadFrom, (+2 Overloads) GetObject, (+2 Overloads) GetStream, (+3 Overloads) GetString, LoadMy
+    ' 
+    '         Sub: __load, __resParser
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

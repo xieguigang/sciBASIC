@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::428f68cffb11bf82c69327e04c881853, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadPool.vb"
+﻿#Region "Microsoft.VisualBasic::428f68cffb11bf82c69327e04c881853, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadPool.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ThreadPool
+    ' 
+    '         Properties: FullCapacity, NumOfThreads, ServerLoad, WorkingThreads
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: GetAvaliableThread, GetStatus, ToString
+    ' 
+    '         Sub: __allocate, (+2 Overloads) Dispose, OperationTimeOut, RunTask
+    '         Structure __taskInvoke
+    ' 
+    '             Function: Run
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

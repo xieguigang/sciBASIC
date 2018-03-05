@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::2889c36ebd276bb6b62fca20721ad2f5, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::d9c9fb46f29d1d1a3656f6c0273cce3f, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,40 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Delegate Function
+    ' 
+    ' 
+    '     Delegate Function
+    ' 
+    ' 
+    '     Interface IDefaultValue
+    ' 
+    '         Properties: DefaultValue
+    ' 
+    '     Interface IsEmpty
+    ' 
+    '         Properties: IsEmpty
+    ' 
+    '     Structure DefaultValue
+    ' 
+    '         Properties: DefaultValue, IsEmpty
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: [When], ToString
+    '         Operators: +, (+4 Overloads) Or
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -102,6 +137,11 @@ Namespace Language.Default
             Me.LazyValue = lazy.AsLazy
             Me.assert = assert Or defaultAssert
         End Sub
+
+        Public Function [When](expression As Boolean) As DefaultValue(Of T)
+            assert = Function(null) expression
+            Return Me
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"default({Value})"

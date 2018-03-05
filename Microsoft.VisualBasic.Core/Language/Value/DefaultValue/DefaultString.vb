@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5c047713622a5019511e4079d1750c51, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::3986b76b491913c601839409f61c0a78, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,23 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure DefaultString
+    ' 
+    '         Properties: DefaultValue, IsEmpty
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: assertIsNothing, LoadJson, LoadXml, ToString
+    '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+4 Overloads) Or
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -64,10 +82,17 @@ Namespace Language.Default
             Return DefaultValue.LoadXml(Of T)
         End Function
 
+        ''' <summary>
+        ''' 如果文件不存在或者文本内容为空，则函数返回空值
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadJson(Of T)() As T
             If DefaultValue.FileExists Then
                 Return DefaultValue.ReadAllText.LoadObject(Of T)
+            ElseIf DefaultValue.StringEmpty Then
+                Return Nothing
             Else
                 Return DefaultValue.LoadObject(Of T)
             End If
@@ -133,6 +158,14 @@ Namespace Language.Default
                 Return [default]
             Else
                 Return value.DefaultValue
+            End If
+        End Operator
+
+        Public Shared Operator Or(value As DefaultString, x%) As Integer
+            If assertIsNothing(value.DefaultValue) Then
+                Return x
+            Else
+                Return CInt(value.DefaultValue)
             End If
         End Operator
 

@@ -258,3 +258,5 @@ storage.ide-wal
 /vs_solutions/installer/bootstrap/Resources/Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml
 /vs_solutions/installer/bootstrap/Resources/Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.dll.config
 /vs_solutions/installer/bootstrap/Resources/Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.dll
+/CLI_tools/LicenseMgr/App
+/vs_solutions/dev/LicenseMgr/App

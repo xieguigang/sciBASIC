@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::b7ab139cdd32af7ae8c2317e90b15f87, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
+﻿#Region "Microsoft.VisualBasic::e6804ac166911dc0274289ab3365b417, gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,20 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class LinearScale
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+4 Overloads) domain, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

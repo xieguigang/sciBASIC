@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::ba953e8a35ef058e489ed579b7204485, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::ba953e8a35ef058e489ed579b7204485, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,36 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Structure ColorTheme
+    ' 
+    '         Properties: BackgroundColor, IsEmpty, MessageDetailColor, ProgressBarColor, ProgressMsgColor
+    ' 
+    '         Function: [Default], DefaultTheme
+    ' 
+    '     Class ProgressBar
+    ' 
+    '         Properties: ElapsedMilliseconds
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Sub: [Step], __resize, __tick, (+2 Overloads) Dispose, SetProgress
+    '              SetToEchoLine
+    ' 
+    '     Class ProgressProvider
+    ' 
+    '         Properties: Current, Target
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: [Step], (+2 Overloads) ETA, StepProgress, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

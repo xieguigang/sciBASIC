@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::f0f8587ac8df06b006961cdb55ac4352, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Which.vb"
+﻿#Region "Microsoft.VisualBasic::cd80a83a889167997409dd3ad543e4ef, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Which.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Which
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: [True], GetMinIndex, Index, (+2 Overloads) IsFalse, (+2 Overloads) IsGreaterThan
+    '                   (+3 Overloads) IsTrue, Max, Min, Top
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -153,6 +169,14 @@ Namespace Linq
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsFalse([operator] As Func(Of Boolean())) As Integer()
             Return Which.IsFalse([operator]())
+        End Function
+
+        Public Shared Function Top(Of T As IComparable(Of T))(seq As IEnumerable(Of T), n As Integer) As Integer()
+            Return seq.SeqIterator _
+                .OrderByDescending(Function(x) x.value) _
+                .Take(n) _
+                .Ordinals _
+                .ToArray
         End Function
 
         ''' <summary>

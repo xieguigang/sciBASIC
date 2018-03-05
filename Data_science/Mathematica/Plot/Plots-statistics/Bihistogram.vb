@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::da6bf498bd0bb3643e9786e132beff16, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots-statistics\Bihistogram.vb"
+﻿#Region "Microsoft.VisualBasic::6803785d2f3b8fc2e9f8f1fff515d40c, Data_science\Mathematica\Plot\Plots-statistics\Bihistogram.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,18 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Bihistogram
+    ' 
+    '     Function: Plot
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +76,6 @@ Public Module Bihistogram
     ''' </summary>
     ''' <returns></returns>
     Public Function Plot() As GraphicsData
-
+        Throw New NotImplementedException
     End Function
 End Module

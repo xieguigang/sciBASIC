@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c60e2faf059cf1476ebed585647a59f1, ..\sciBASIC#\Data_science\Mathematica\Math\MathApp\Modules\DEBUG.vb"
+﻿#Region "Microsoft.VisualBasic::c60e2faf059cf1476ebed585647a59f1, Data_science\Mathematica\Math\MathApp\Modules\DEBUG.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module DEBUG
+    ' 
+    '     Function: avadsfdsfds, Main, xxx
+    ' 
+    '     Sub: bubblePlots, pieChartTest, randdddTest, scatterWithAnnotation, ShowCharacterData
+    '     Class [Integer]
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

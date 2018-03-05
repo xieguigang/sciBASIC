@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::427ea8653dd32c87b66e91c35462a9ef, ..\sciBASIC#\Data\DataFrame\IO\NetStream\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::427ea8653dd32c87b66e91c35462a9ef, Data\DataFrame\IO\NetStream\StreamHelper.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,25 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module StreamHelper
+    ' 
+    '         Function: GetBytes, LoadHelper
+    '         Class __load
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: Load
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

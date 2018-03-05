@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::0a08b3801a82364052c6d37596d1bd10, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::69feb25fca871999ecfe7ff3693c1592, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,39 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module IteratorExtensions
+    ' 
+    '         Function: [Next], (+2 Overloads) Indices, Ordinals, Previous, (+3 Overloads) SeqIterator
+    '                   ValueArray
+    ' 
+    '     Structure SeqValue
+    ' 
+    '         Properties: Address, Follows, i, value
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Structure SeqValue
+    ' 
+    '         Properties: i, value
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+2 Overloads) CompareTo, ToString
+    '         Operators: (+2 Overloads) +, <>, =, (+2 Overloads) Mod
+    ' 
+    '     Interface IIterator
+    ' 
+    '         Function: GetEnumerator, IGetEnumerator
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -113,7 +147,13 @@ Namespace Linq
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Indices(Of T)(source As IEnumerable(Of SeqValue(Of T))) As Integer()
-            Return source.Select(Function(o) o.i).ToArray
+            Return source.Ordinals.ToArray
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Ordinals(Of T)(source As IEnumerable(Of SeqValue(Of T))) As IEnumerable(Of Integer)
+            Return source.Select(Function(o) o.i)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -1,28 +1,122 @@
-﻿#Region "Microsoft.VisualBasic::ec2108df552351c67b8dd950ce22a8a8, ..\sciBASIC#\mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\worksheets\sheet.xml.vb"
+﻿#Region "Microsoft.VisualBasic::e4a291301a17327262a1ec2d0dc57f7f, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO\xl\worksheets\sheet.xml.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xieguigang (xie.guigang@live.com)
-'       xie (genetics@smrucc.org)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class worksheet
+    ' 
+    '         Properties: cols, conditionalFormattings, dimension, drawing, hyperlinks
+    '                     Ignorable, pageMargins, pageSetup, phoneticPr, sheetData
+    '                     sheetFormatPr, sheetViews, uid
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class drawing
+    ' 
+    '         Properties: id
+    ' 
+    '     Class hyperlink
+    ' 
+    '         Properties: id, ref
+    ' 
+    '     Class conditionalFormatting
+    ' 
+    '         Properties: cfRule, sqref
+    ' 
+    '     Class cfRule
+    ' 
+    '         Properties: [operator], colorScale, dxfId, formula, priority
+    '                     type
+    ' 
+    '     Class colorScale
+    ' 
+    '         Properties: cfvo, colors
+    ' 
+    '     Class sheetFormatPr
+    ' 
+    '         Properties: defaultRowHeight, dyDescent
+    ' 
+    '     Class sheetData
+    ' 
+    '         Properties: rows
+    ' 
+    '     Class sheetView
+    ' 
+    '         Properties: pane, selection, tabSelected, workbookViewId, zoomScale
+    '                     zoomScaleNormal
+    ' 
+    '     Class pane
+    ' 
+    '         Properties: activePane, state, topLeftCell, ySplit
+    ' 
+    '     Class selection
+    ' 
+    '         Properties: activeCell, pane, sqref
+    ' 
+    '     Structure dimension
+    ' 
+    '         Properties: ref
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class col
+    ' 
+    '         Properties: bestFit, customWidth, max, min, style
+    '                     width
+    ' 
+    '     Structure row
+    ' 
+    '         Properties: columns, customFormat, customHeight, dyDescent, ht
+    '                     r, s, spans
+    ' 
+    '         Function: ToString
+    ' 
+    '     Structure c
+    ' 
+    '         Properties: r, s, sharedStringsRef, t, v
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class pageMargins
+    ' 
+    '         Properties: bottom, footer, header, left, right
+    '                     top
+    ' 
+    '     Class pageSetup
+    ' 
+    '         Properties: id, orientation, paperSize
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

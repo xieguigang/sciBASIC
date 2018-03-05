@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::697c8587b63f00cb7d910d7b27e9cbf0, ..\sciBASIC#\Data\DataFrame\Linq\LinqWhere.vb"
+﻿#Region "Microsoft.VisualBasic::697c8587b63f00cb7d910d7b27e9cbf0, Data\DataFrame\Linq\LinqWhere.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,37 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class LinqWhere
+    ' 
+    '         Properties: Tokens
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: __compile, __getTest, Compile, Test
+    '         Class __invoke
+    ' 
+    '             Function: TestToken, ToString
+    ' 
+    '         Delegate Function
+    ' 
+    '             Function: __eq, __getOperator, __gt, __instr, __lt
+    '                       __neq, __regex, __tokenParser, ToString, TryParse
+    ' 
+    '     Class ExprToken
+    ' 
+    '         Properties: [Operator], Column, IsLogical, Value
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

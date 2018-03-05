@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::e933c535623377918a8c6a0f6d714d80, ..\sciBASIC#\Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\PeekToken.vb"
+﻿#Region "Microsoft.VisualBasic::e933c535623377918a8c6a0f6d714d80, Microsoft.VisualBasic.Core\Scripting\TokenIcer\LangModels\PeekToken.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,22 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class PeekToken
+    ' 
+    '         Properties: TokenIndex, TokenPeek
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

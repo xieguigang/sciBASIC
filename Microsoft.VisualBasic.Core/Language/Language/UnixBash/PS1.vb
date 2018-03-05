@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::634dbe616b698b47e77bc25d42608aa9, ..\sciBASIC#\Microsoft.VisualBasic.Core\Language\Language\UnixBash\PS1.vb"
+﻿#Region "Microsoft.VisualBasic::09c17c0e0b744f7438b1c5cf0f976a15, Microsoft.VisualBasic.Core\Language\Language\UnixBash\PS1.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,11 +25,27 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class PS1
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: A, d, Fedora12, n, r
+    '                   T, tl, ToString, u, v
+    '                   W, wl
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Development
 
 Namespace Language.UnixBash
 
@@ -183,7 +200,7 @@ Namespace Language.UnixBash
             Return Environment.UserName
         End Function
 
-        Shared ReadOnly __version As String = ApplicationDetails.GetProductVersion(GetType(PS1).Assembly)
+        Shared ReadOnly __version As String = ApplicationInfoUtils.GetProductVersion(GetType(PS1).Assembly)
 
         ''' <summary>
         ''' ``\v`` ``BASH``的版本信息

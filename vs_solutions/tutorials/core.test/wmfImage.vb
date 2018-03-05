@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::1be04f96bf1e0ee3fedc9390bfca589f, ..\sciBASIC#\vs_solutions\tutorials\core.test\wmfImage.vb"
+﻿#Region "Microsoft.VisualBasic::cccc247a90a767eac97b91db48465b0e, vs_solutions\tutorials\core.test\wmfImage.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,70 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module wmfImage
+    ' 
+    '     Function: colorsTest
+    ' 
+    '     Sub: Main, replaceColorsTest
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+#Region "Microsoft.VisualBasic::f573f300673cb9ee52c4ef73c25a91d5, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module wmfImage
+    ' 
+    '     Function: colorsTest
+    ' 
+    '     Sub: Main, replaceColorsTest
+    ' 
+    ' 
+
+#End Region
+
+#Region "Microsoft.VisualBasic::1be04f96bf1e0ee3fedc9390bfca589f, core.test"
+
+    ' Author:
+    ' 
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+
+
+    ' Source file summaries:
+
+    ' Module wmfImage
+    ' 
+    '     Function: colorsTest
+    ' 
+    ' 
+    '     Sub: Main, replaceColorsTest
+    ' 
+    ' 
+    ' 
 
 #End Region
 

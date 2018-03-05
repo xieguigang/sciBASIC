@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::089529aa3a6de7169fa31baf0ec5d8f6, ..\sciBASIC#\Data_science\Mathematica\Math\Math\HashMaps\HashMap.vb"
+﻿#Region "Microsoft.VisualBasic::089529aa3a6de7169fa31baf0ec5d8f6, Data_science\Mathematica\Math\Math\HashMaps\HashMap.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module HashMap
+    ' 
+    '         Function: (+2 Overloads) HashAP, (+2 Overloads) HashBKDR, (+2 Overloads) HashCMyMap, (+2 Overloads) HashDEK, (+2 Overloads) HashDJB
+    '                   (+2 Overloads) HashELF, (+2 Overloads) HashJS, (+2 Overloads) HashPJW, (+2 Overloads) HashRS, (+2 Overloads) HashSDBM
+    '                   (+2 Overloads) HashTimeMap
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

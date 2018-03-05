@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::76e3fb0e61d4da40cb0271f14dc24133, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\Streams\ArrayBase.vb"
+﻿#Region "Microsoft.VisualBasic::c7aea5ec8ecbd6f1b5aa808239d26fc9, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\Streams\ArrayBase.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,8 +25,23 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class ValueArray
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports System.Xml.Serialization
 
@@ -52,11 +68,11 @@ Namespace Net.Protocols.Streams.Array
 
             If Not rawStream.IsNullOrEmpty Then
                 Dim valueList As New List(Of T)
-                Dim p As Integer = 0
+                Dim p As int = 0
                 Dim byts As Byte() = New Byte(_bufWidth - 1) {}
 
                 Do While p < rawStream.Length - 1
-                    Call System.Array.ConstrainedCopy(rawStream, p.Move(bufWidth), byts, Scan0, bufWidth)
+                    Call System.Array.ConstrainedCopy(rawStream, p + bufWidth, byts, Scan0, bufWidth)
                     Call valueList.Add(__deserialization(byts))
                 Loop
 
@@ -65,13 +81,15 @@ Namespace Net.Protocols.Streams.Array
         End Sub
 
         Public NotOverridable Overrides Function Serialize() As Byte()
-            Dim ChunkBuffer As Byte() = New Byte(Values.Length * _bufWidth - 1) {}
-            Dim p As Integer = 0
+            Dim buffer As Byte() = New Byte(Values.Length * _bufWidth - 1) {}
+            Dim p As int = 0
+
             For Each value As T In Values
                 Dim byts As Byte() = __serialization(value)
-                Call System.Array.ConstrainedCopy(byts, Scan0, ChunkBuffer, p.Move(_bufWidth), _bufWidth)
+                Call System.Array.ConstrainedCopy(byts, Scan0, buffer, p + _bufWidth, _bufWidth)
             Next
-            Return ChunkBuffer
+
+            Return buffer
         End Function
 
         Public Overrides Function ToString() As String

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::0a4243e4879ffde9fa4fc24be8837266, ..\sciBASIC#\gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
+﻿#Region "Microsoft.VisualBasic::0a4243e4879ffde9fa4fc24be8837266, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Path3D
+    ' 
+    '         Properties: Depth, Points
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: CloserThan, CountCloserThan, Reverse, RotateX, RotateY
+    '                   RotateZ, (+3 Overloads) Scale, ToString, Translate, TranslatePoints
+    ' 
+    '         Sub: Push
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

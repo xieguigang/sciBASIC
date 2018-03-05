@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::0ecd7b473e0dc43dfa7dec39c98e5467, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\STDIO.vb"
+﻿#Region "Microsoft.VisualBasic::0ecd7b473e0dc43dfa7dec39c98e5467, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\STDIO.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,27 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module STDIO
+    ' 
+    '         Function: __testEquals, MsgBox, scanf, ZeroFill
+    ' 
+    '         Sub: cat, fprintf, print, printf
+    '         Delegate Function
+    ' 
+    '             Function: InputPassword, Read
+    ' 
+    '             Sub: Write, WriteLine
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

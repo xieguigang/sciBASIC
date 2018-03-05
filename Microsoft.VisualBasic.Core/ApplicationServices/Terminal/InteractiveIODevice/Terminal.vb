@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::de755c18f950681ad1b7ba447cac509a, ..\sciBASIC#\Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
+﻿#Region "Microsoft.VisualBasic::de755c18f950681ad1b7ba447cac509a, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,31 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Terminal
+    ' 
+    '         Properties: [Error], [In], BackgroundColor, BufferHeight, BufferWidth
+    '                     CapsLock, CursorLeft, CursorSize, CursorTop, CursorVisible
+    '                     ForegroundColor, InputEncoding, IsErrorRedirected, IsInputRedirected, IsOutputRedirected
+    '                     KeyAvailable, LargestWindowHeight, LargestWindowWidth, NumberLock, Out
+    '                     OutputEncoding, Title, TreatControlCAsInput, WindowHeight, WindowLeft
+    '                     WindowTop, WindowWidth
+    ' 
+    '         Function: (+2 Overloads) OpenStandardError, (+2 Overloads) OpenStandardInput, (+2 Overloads) OpenStandardOutput, Read, (+2 Overloads) ReadKey
+    '                   ReadLine
+    ' 
+    '         Sub: (+2 Overloads) Beep, Clear, (+2 Overloads) MoveBufferArea, ResetColor, SetBufferSize
+    '              SetCursorPosition, SetError, SetIn, SetOut, SetWindowPosition
+    '              SetWindowSize, (+17 Overloads) Write, (+19 Overloads) WriteLine
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::a70c60e68038379ca55696d85a2ac254, ..\sciBASIC#\Data_science\Mathematica\Plot\Plots\3D\g\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::d0c85cfae97a6f91db89ea16450d2251, Data_science\Mathematica\Plot\Plots\3D\g\Axis.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -24,6 +25,19 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module AxisDraw
+    ' 
+    '         Function: Axis
+    ' 
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Drawing
@@ -32,6 +46,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Plot3D.Model
 
@@ -45,7 +60,8 @@ Namespace Plot3D.Model
                              zrange As DoubleRange,
                              labelFont As Font,
                              labels As (X$, Y$, Z$),
-                             Optional strokeCSS$ = Stroke.AxisStroke) As Element3D()
+                             Optional strokeCSS$ = Stroke.AxisStroke,
+                             Optional arrowFactor$ = "2,2") As Element3D()
 
             ' 交汇于xmax, ymin, zmin
             Dim ZERO As New Point3D With {.X = xrange.Max, .Y = yrange.Min, .Z = zrange.Min}
@@ -56,8 +72,14 @@ Namespace Plot3D.Model
             Dim Y As New Point3D With {.X = xrange.Max, .Y = yrange.Max, .Z = zrange.Min}
             Dim Z As New Point3D With {.X = xrange.Max, .Y = yrange.Min, .Z = zrange.Max}
             Dim color As Pen = Stroke.TryParse(strokeCSS).GDIObject
+            Dim bigArrow As AdjustableArrowCap
 
-            Dim bigArrow As New AdjustableArrowCap(color.Width * 3, color.Width * 3)
+            With arrowFactor.FloatSizeParser
+                bigArrow = New AdjustableArrowCap(
+                    color.Width * .Width,
+                    color.Width * .Height
+                )
+            End With
 
             color.CustomEndCap = bigArrow
 

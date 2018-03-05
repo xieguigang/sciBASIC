@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::5077dd13451cc947342a79043a5fe75b, ..\sciBASIC#\Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3b1b826ce98f4fbc14a16e61641096dd, Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,21 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module Extensions
+    ' 
+    '     Function: (+4 Overloads) AsVector, DoubleRange, FDR, FirstDecrease, FirstIncrease
+    '               IntRange, IsInside, Iterates, (+2 Overloads) Range, Reach
+    '               seq2, Sim, SSM, Tanimoto, X
+    '               Y
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

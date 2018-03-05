@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::cce83c0844ab722134c6732bc9c6f627, ..\sciBASIC#\Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Kernel\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::cce83c0844ab722134c6732bc9c6f627, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Kernel\Neuron.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,29 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Neuron
+    ' 
+    '         Properties: Length, OutputFunction, W
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Output, ToString, Train
+    '         Class Entity
+    ' 
+    '             Properties: Properties, Width, Y
+    ' 
+    '             Function: CastTo, ToString
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

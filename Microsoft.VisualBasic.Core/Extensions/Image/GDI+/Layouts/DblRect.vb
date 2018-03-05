@@ -1,15 +1,16 @@
-﻿#Region "Microsoft.VisualBasic::c91a34f87a4b39b7f5618ef47eb3f0be, ..\sciBASIC#\Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\DblRect.vb"
+﻿#Region "Microsoft.VisualBasic::c91a34f87a4b39b7f5618ef47eb3f0be, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\DblRect.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xieguigang (xie.guigang@live.com)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -23,6 +24,26 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class DblRect
+    ' 
+    '         Properties: CenterX, CenterY, Height, Rectangle, Width
+    ' 
+    '         Constructor: (+6 Overloads) Sub New
+    ' 
+    '         Function: Clone, contains, Equals, intersection, intersectLine
+    '                   ToString
+    ' 
+    '         Sub: add, grow, setRect
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
