@@ -162,10 +162,14 @@ Namespace Language.Default
         End Operator
 
         Public Shared Operator Or(value As DefaultString, x%) As Integer
+            Return CInt(value Or CDbl(x))
+        End Operator
+
+        Public Shared Operator Or(value As DefaultString, x#) As Double
             If assertIsNothing(value.DefaultValue) Then
                 Return x
             Else
-                Return CInt(value.DefaultValue)
+                Return Val(value.DefaultValue)
             End If
         End Operator
 

@@ -62,6 +62,11 @@ Namespace CommandLine.InteropService.SharedORM
             Me.namespace = [namespace]
         End Sub
 
+        Sub New(App As Interpreter)
+            Call MyBase.New(App)
+            Me.namespace = App.Type.Name
+        End Sub
+
         Public Overrides Function GetSourceCode() As String
             Dim vb As New StringBuilder
             Dim className$ = MyBase.exe _

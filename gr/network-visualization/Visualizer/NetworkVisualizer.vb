@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::aac6ab5e543e7db4a5e36f2c4a23c9fb, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module NetworkVisualizer
-    ' 
-    '     Properties: BackgroundColor, DefaultEdgeColor
-    ' 
-    '     Function: __scale, AutoScaler, CentralOffsets, DrawImage, GetBounds
-    '               GetDisplayText
-    ' 
-    ' /********************************************************************************/
+' Module NetworkVisualizer
+' 
+'     Properties: BackgroundColor, DefaultEdgeColor
+' 
+'     Function: __scale, AutoScaler, CentralOffsets, DrawImage, GetBounds
+'               GetDisplayText
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' Image drawing of a network model
@@ -167,7 +168,8 @@ Public Module NetworkVisualizer
                               Optional fontSizeFactor# = 1.5,
                               Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
-                              Optional hideDisconnectedNode As Boolean = False) As GraphicsData
+                              Optional hideDisconnectedNode As Boolean = False,
+                              Optional throwEx As Boolean = True) As GraphicsData
 
         Dim frameSize As Size = canvasSize.SizeParser  ' 所绘制的图像输出的尺寸大小
         Dim br As Brush
@@ -260,7 +262,20 @@ Public Module NetworkVisualizer
                     ' 在这里绘制的是节点之间相连接的边
                     Dim a = scalePos(n), b = scalePos(otherNode)
 
-                    Call g.DrawLine(lineColor, a, b)
+                    Try
+                        Call g.DrawLine(lineColor, a, b)
+                    Catch ex As Exception
+                        Dim line As New Dictionary(Of String, String) From {
+                            {NameOf(a), $"[{a.X}, {a.Y}]"},
+                            {NameOf(b), $"[{b.X}, {b.Y}]"}
+                        }
+
+                        If throwEx Then
+                            Throw New Exception(line.GetJson, ex)
+                        Else
+                            Call $"Ignore of this invalid line range: {line.GetJson}".Warning
+                        End If
+                    End Try
                 Next
 
                 defaultColor = If(defaultColor.IsEmpty, Color.Black, defaultColor)
@@ -298,17 +313,29 @@ Public Module NetworkVisualizer
                         pt = New Point(.X - r / 2, .Y - r / 2)
                     End With
 
+                    Dim invalidRegion As Boolean = False
+
                     rect = New Rectangle(pt, New Size(r, r))
 
                     ' 绘制节点，目前还是圆形
                     If TypeOf g Is Graphics2D Then
-                        Call g.FillPie(br, rect, 0, 360)
-                        Call g.DrawEllipse(stroke, rect)
+                        Try
+                            Call g.FillPie(br, rect, 0, 360)
+                            Call g.DrawEllipse(stroke, rect)
+                        Catch ex As Exception
+                            If throwEx Then
+                                Throw New Exception(rect.GetJson, ex)
+                            Else
+                                Call $"Ignore of this invalid circle region: {rect.GetJson}".Warning
+                            End If
+
+                            invalidRegion = True
+                        End Try
                     Else
                         Call g.DrawCircle(center, DirectCast(br, SolidBrush).Color, stroke, radius:=r)
                     End If
 
-                    If displayId Then
+                    If (Not invalidRegion) AndAlso displayId Then
 
                         Dim fontSize! = (baseFont.Size + r) / fontSizeFactor
                         Dim font As New Font(baseFont.Name, If(fontSize < minFontSize, minFontSize, fontSize))

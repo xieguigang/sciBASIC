@@ -66,6 +66,20 @@ Imports r = System.Text.RegularExpressions.Regex
 Public Module KeyValuePairExtensions
 
     ''' <summary>
+    ''' Create a tuple for two elements
+    ''' </summary>
+    ''' <typeparam name="T1"></typeparam>
+    ''' <typeparam name="T2"></typeparam>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Tuple(Of T1, T2)(a As T1, b As T2) As (T1, T2)
+        Return (a, b)
+    End Function
+
+    ''' <summary>
     ''' 将目标键值对集合保存为一个``Tsv``文件
     ''' </summary>
     ''' <param name="table"></param>

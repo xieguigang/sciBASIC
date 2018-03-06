@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Levenshtein
+Imports VB = Microsoft.VisualBasic.CommandLine.InteropService.SharedORM.VisualBasic
 
 #Const NET_45 = 0
 
@@ -259,6 +260,12 @@ Namespace CommandLine
 
             ElseIf String.Equals(commandName, "/linux-bash", StringComparison.OrdinalIgnoreCase) Then
                 Return BashShell()
+
+            ElseIf String.Equals(commandName, "/CLI.dev", StringComparison.OrdinalIgnoreCase) Then
+                Return New VB(App:=Me) _
+                    .GetSourceCode _
+                    .SaveTo(App.HOME & "/" & Type.Assembly.CodeBase.BaseName & ".vb") _
+                    .CLICode
 
             Else
                 If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then  '命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
