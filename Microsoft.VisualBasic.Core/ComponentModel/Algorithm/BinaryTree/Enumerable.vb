@@ -57,18 +57,25 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' <typeparam name="V"></typeparam>
         ''' <param name="tree"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Iterator Function PopulateSequence(Of K, V)(tree As BinaryTree(Of K, V)) As IEnumerable(Of Map(Of K, V))
+        Public Function PopulateSequence(Of K, V)(tree As BinaryTree(Of K, V)) As IEnumerable(Of Map(Of K, V))
+            Return tree.PopulateNodes.Select(Function(n) New Map(Of K, V)(n.Key, n.Value))
+        End Function
+
+        <Extension>
+        Public Iterator Function PopulateNodes(Of K, V)(tree As BinaryTree(Of K, V)) As IEnumerable(Of BinaryTree(Of K, V))
             If Not tree.Left Is Nothing Then
-                For Each node In tree.Left.PopulateSequence
+                For Each node In tree.Left.PopulateNodes
                     Yield node
                 Next
             End If
 
-            Yield New Map(Of K, V)(tree.Key, tree.Value)
+            Yield tree
 
             If Not tree.Right Is Nothing Then
-                For Each node In tree.Right.PopulateSequence
+                For Each node In tree.Right.PopulateNodes
                     Yield node
                 Next
             End If
