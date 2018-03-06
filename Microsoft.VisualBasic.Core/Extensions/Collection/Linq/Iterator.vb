@@ -100,9 +100,9 @@ Namespace Linq
         End Function
 
         <Extension>
-        Public Iterator Function SeqTuple(Of T1, T2)(a As IEnumerable(Of T1), b As IEnumerable(Of T2), Optional offset% = 0) As IEnumerable(Of SeqValue(Of (a As T1, b As T2)))
-            Dim x As T1() = a.ToArray
-            Dim y As T2() = b.ToArray
+        Public Iterator Function SeqTuple(Of T1, T2)(tuple As (a As IEnumerable(Of T1), b As IEnumerable(Of T2)), Optional offset% = 0) As IEnumerable(Of SeqValue(Of (a As T1, b As T2)))
+            Dim x As T1() = tuple.a.ToArray
+            Dim y As T2() = tuple.b.ToArray
             Dim value As (T1, T2)
             Dim length% = Math.Max(x.Length, y.Length)
 
