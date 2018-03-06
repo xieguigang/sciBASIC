@@ -2,7 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Module SerializationIO
+Public Module SerializationIO
 
     <Extension>
     Public Function SolveListStream(path$, Optional encoding As Encoding = Nothing) As IEnumerable(Of String)
