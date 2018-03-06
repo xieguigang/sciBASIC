@@ -45,6 +45,9 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine.InteropService.SharedORM
 
+    ''' <summary>
+    ''' 创建一个自定义标记来表示这个模块是一个CLI命令接口模块
+    ''' </summary>
     <AttributeUsage(AttributeTargets.Class)>
     Public Class CLIAttribute : Inherits Attribute
 

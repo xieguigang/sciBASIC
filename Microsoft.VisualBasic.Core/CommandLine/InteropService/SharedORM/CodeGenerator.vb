@@ -56,9 +56,17 @@ Namespace CommandLine.InteropService.SharedORM
         ''' </summary>
         Protected ReadOnly exe$
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(CLI As Type)
-            App = New Interpreter(type:=CLI)
-            exe = CLI.Assembly.CodeBase.BaseName
+            Call Me.New(New Interpreter(type:=CLI))
+        End Sub
+
+        Sub New(App As Interpreter)
+            Me.App = App
+            Me.exe = App.Type _
+                .Assembly _
+                .CodeBase _
+                .BaseName
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
