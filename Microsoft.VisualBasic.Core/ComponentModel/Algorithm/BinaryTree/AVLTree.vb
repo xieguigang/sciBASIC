@@ -100,6 +100,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
                         tree.Value = value
                     End If
 
+                    ' 2018.3.6
+                    ' 如果是需要使用二叉树进行聚类操作，那么等于零的值可能都是同一个簇之中的
+                    ' 在这里将这个member添加进来
                     Call DirectCast(tree!values, List(Of V)).Add(value)
 
                 Case Else
