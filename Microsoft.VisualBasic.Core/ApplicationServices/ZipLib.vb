@@ -243,6 +243,7 @@ Namespace ApplicationServices
 
             Dim rel$ = DIR Or "".AsDefault(Function() flatDirectory)
 
+            Call saveZip.ParentPath.MkDIR
             Call rel.SetValue(AddressOf GetDirectoryFullPath)
             Call (ls - l - r - "*.*" <= DIR) _
                 .AddToArchive(
