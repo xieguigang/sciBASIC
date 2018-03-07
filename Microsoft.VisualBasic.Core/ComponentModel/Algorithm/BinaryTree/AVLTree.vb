@@ -70,28 +70,40 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ReadOnly compares As Comparison(Of K)
         ReadOnly views As Func(Of K, String)
 
+        ''' <summary>
+        ''' Create an instance of the AVL binary tree.
+        ''' </summary>
+        ''' <param name="compares">Compare between two keys.</param>
+        ''' <param name="views">Display the key as string</param>
         Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
             Me.compares = compares
             Me.views = views
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(key As K, value As V)
-            _root = Add(key, value, _root)
+        Public Sub Add(key As K, value As V, Optional valueReplace As Boolean = True)
+            _root = Add(key, value, _root, valueReplace)
         End Sub
 
-        Public Function Add(key As K, value As V, tree As BinaryTree(Of K, V)) As BinaryTree(Of K, V)
+        Public Function Add(key As K, value As V, tree As BinaryTree(Of K, V), valueReplace As Boolean) As BinaryTree(Of K, V)
             If tree Is Nothing Then
                 tree = New BinaryTree(Of K, V)(key, value, Nothing, views)
             End If
 
             Select Case compares(key, tree.Key)
-                Case < 0 : Call appendLeft(tree, key, value)
-                Case > 0 : Call appendRight(tree, key, value)
+                Case < 0 : Call appendLeft(tree, key, value, valueReplace)
+                Case > 0 : Call appendRight(tree, key, value, valueReplace)
                 Case = 0
 
                     ' 将value追加到附加值中（也可对应重复元素）
-                    tree.Value = value
+                    If valueReplace Then
+                        tree.Value = value
+                    End If
+
+                    ' 2018.3.6
+                    ' 如果是需要使用二叉树进行聚类操作，那么等于零的值可能都是同一个簇之中的
+                    ' 在这里将这个member添加进来
+                    Call DirectCast(tree!values, List(Of V)).Add(value)
 
                 Case Else
                     ' This will never happend!
@@ -103,8 +115,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Return tree
         End Function
 
-        Private Sub appendRight(ByRef tree As BinaryTree(Of K, V), key As K, value As V)
-            tree.Right = Add(key, value, tree.Right)
+        Private Sub appendRight(ByRef tree As BinaryTree(Of K, V), key As K, value As V, replace As Boolean)
+            tree.Right = Add(key, value, tree.Right, replace)
 
             If tree.Right.height - tree.Left.height = 2 Then
                 If compares(key, tree.Right.Key) > 0 Then
@@ -115,8 +127,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End If
         End Sub
 
-        Private Sub appendLeft(ByRef tree As BinaryTree(Of K, V), key As K, value As V)
-            tree.Left = Add(key, value, tree.Left)
+        Private Sub appendLeft(ByRef tree As BinaryTree(Of K, V), key As K, value As V, replace As Boolean)
+            tree.Left = Add(key, value, tree.Left, replace)
 
             If tree.Left.height - tree.Right.height = 2 Then
                 If compares(key, tree.Left.Key) < 0 Then

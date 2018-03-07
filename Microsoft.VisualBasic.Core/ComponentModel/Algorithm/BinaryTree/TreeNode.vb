@@ -108,6 +108,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
             Call SetValue("name", (toString Or defaultView)(key))
             Call SetValue("parent", parent)
+            Call SetValue("values", New List(Of V))
+
+            DirectCast(Me!values, List(Of V)).Add(value)
         End Sub
 
         ''' <summary>
