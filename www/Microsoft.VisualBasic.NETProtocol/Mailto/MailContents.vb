@@ -46,7 +46,7 @@ Imports System.Net.Mail
 Imports System.Net.Mime
 Imports System.Runtime.CompilerServices
 
-Namespace Net.Mailto
+Namespace Mailto
 
     ''' <summary>
     ''' E-Mail content data model

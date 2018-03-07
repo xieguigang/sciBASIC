@@ -216,6 +216,9 @@
     <Compile Include="HTTP\iana.org\MediaTypes.vb" />
     <Compile Include="HTTP\WebSaveAs.vb" />
     <Compile Include="HTTP\WebCrawling.vb" />
+    <Compile Include="Mailto\MailClient.vb" />
+    <Compile Include="Mailto\MailConfigure.vb" />
+    <Compile Include="Mailto\MailContents.vb" />
     <Compile Include="NETProtocol\AppServer\PushAPI\APIBase.vb" />
     <Compile Include="NETProtocol\AppServer\PushAPI\UserMsgPool.vb" />
     <Compile Include="NETProtocol\AppServer\PushAPI\UserAPI.vb" />
@@ -280,6 +283,7 @@
       <Name>MIME-htmls</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

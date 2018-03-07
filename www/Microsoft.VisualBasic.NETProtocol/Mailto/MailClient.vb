@@ -48,7 +48,7 @@ Imports System.Net.Mail
 Imports System.Text
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Net.Mailto
+Namespace Mailto
 
     ''' <summary>
     ''' A client for send E-mail

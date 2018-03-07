@@ -46,7 +46,7 @@
 Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
 
-Namespace Net.Mailto
+Namespace Mailto
 
     Public Structure MailConfigure
 
