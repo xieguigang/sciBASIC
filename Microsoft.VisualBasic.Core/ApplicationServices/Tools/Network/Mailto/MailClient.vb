@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Namespace Net.Mailto
 
     ''' <summary>
-    ''' A client of gmail.com
+    ''' A client for send E-mail
     ''' </summary>
     ''' <remarks></remarks>
     Public Class EMailClient

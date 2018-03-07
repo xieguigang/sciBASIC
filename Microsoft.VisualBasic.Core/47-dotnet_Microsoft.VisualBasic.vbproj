@@ -1357,7 +1357,7 @@
     <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
     <Compile Include="CommandLine\CommandLine.vb" />
     <Compile Include="Extensions\Math\Math.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Mailto\GMailClient.vb" />
+    <Compile Include="ApplicationServices\Tools\Network\Mailto\MailClient.vb" />
     <Compile Include="CommandLine\CLI\IORedirect.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\LanguageAttribute.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\LanguageHelper.vb" />
