@@ -134,8 +134,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
             ' Compile the property get/set as the delegate
             With prop
-                __setValue = .DeclaringType.PropertySet(.Name)
-                __getValue = .DeclaringType.PropertyGet(.Name)
+                __setValue = AddressOf prop.SetValue  ' .DeclaringType.PropertySet(.Name)
+                __getValue = AddressOf prop.GetValue  ' .DeclaringType.PropertyGet(.Name)
             End With
         End Sub
 
@@ -155,8 +155,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Type = field.FieldType
 
             With field
-                __setValue = .DeclaringType.FieldSet(.Name)
-                __getValue = .DeclaringType.FieldGet(.Name)
+                __setValue = AddressOf field.SetValue  ' .DeclaringType.FieldSet(.Name)
+                __getValue = AddressOf field.GetValue  ' .DeclaringType.FieldGet(.Name)
             End With
         End Sub
 
