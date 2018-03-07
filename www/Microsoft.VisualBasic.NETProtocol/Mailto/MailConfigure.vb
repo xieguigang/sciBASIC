@@ -97,11 +97,22 @@ Namespace Mailto
             End Get
         End Property
 
+        Public Shared ReadOnly Property qiye163(account$, password$) As MailConfigure
+            Get
+                Return New MailConfigure With {
+                    .Account = account,
+                    .Password = password,
+                    .HostAddress = "smtp.qiye.163.com",
+                    .Port = 994
+                }
+            End Get
+        End Property
+
         Public Function GenerateUri(Encryption As Func(Of String, String)) As String
             Return String.Format("mailto://{0}:{1}/mail?account={2}%password={3}", HostAddress, Port, Encryption(Account), Encryption(Password))
         End Function
 
-        Public Shared Function CreateFromUri(uri As String, decrypt As Func(Of String, String)) As MailConfigure
+        Public Shared Function CreateFromUri(uri$, decrypt As Func(Of String, String)) As MailConfigure
             Dim addr As String = Regex.Match(uri, "[^/]+?:\d+").Value
             Dim p As Integer = InStr(uri, "/mail?", CompareMethod.Text)
             uri = Mid(uri, p + 6)

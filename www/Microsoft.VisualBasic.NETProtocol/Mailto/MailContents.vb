@@ -43,7 +43,6 @@
 #End Region
 
 Imports System.Net.Mail
-Imports System.Net.Mime
 Imports System.Runtime.CompilerServices
 
 Namespace Mailto
@@ -52,24 +51,6 @@ Namespace Mailto
     ''' E-Mail content data model
     ''' </summary>
     Public Class MailContents
-
-        ''' <summary>
-        ''' The message html text template.
-        ''' </summary>
-        Shared ReadOnly MessageHtml As String =
-            <html>
-                <body>
-                    <table border="2">
-                        <tr width="100%">
-                            <td><img src="cid:Logo" alt="companyname"/></td>
-                            <td>MY COMPANY DESCRIPTION</td>
-                        </tr>
-                    </table>
-                    <hr/>
-
-                    $text
-                </body>
-            </html>
 
         ''' <summary>
         ''' 
@@ -102,42 +83,7 @@ Namespace Mailto
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(msg As MailContents) As MailMessage
-            Return FromMailContent(msg)
+            Return msg.CreateMailMessage
         End Operator
-
-        Public Shared Function FromMailContent(content As MailContents) As MailMessage
-            Dim altView As AlternateView
-            Dim msg As MailMessage = New MailMessage With {
-                .Subject = content.Subject,
-                .Body = content.Body
-            }
-            Dim html$
-
-            If Not content.Attatchments.IsNullOrEmpty Then
-                For Each path As String In content.Attatchments
-                    Call msg.Attachments.Add(New Attachment(fileName:=path))
-                Next
-            End If
-
-            If Len(content.Body) = 0 Then content.Body = String.Empty
-            If Len(content.Logo) > 0 Then
-                Dim logo As New LinkedResource(content.Logo) With {
-                    .ContentId = "Logo"
-                }
-                html = MessageHtml.Replace("$text", content.Body)
-                altView = AlternateView.CreateAlternateViewFromString(
-                    html, Nothing, MediaTypeNames.Text.Html)
-                altView.LinkedResources.Add(logo)
-            Else
-                html = content.Body
-                altView = AlternateView.CreateAlternateViewFromString(
-                    html, Nothing, MediaTypeNames.Text.Html)
-            End If
-
-            msg.AlternateViews.Add(altView)
-            msg.IsBodyHtml = True
-
-            Return msg
-        End Function
     End Class
 End Namespace
