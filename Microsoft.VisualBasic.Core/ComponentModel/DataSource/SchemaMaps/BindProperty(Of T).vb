@@ -116,7 +116,9 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <summary>
         ''' Gets a value indicating whether the <see cref="System.Type"/> is one of the primitive types.
         ''' </summary>
-        ''' <returns>true if the <see cref="System.Type"/> is one of the primitive types; otherwise, false.</returns>
+        ''' <returns>
+        ''' true if the <see cref="System.Type"/> is one of the primitive types; otherwise, false.
+        ''' </returns>
         Public ReadOnly Property IsPrimitive As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -130,7 +132,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             member = prop
             Type = prop.PropertyType
 
-            With prop ' Compile the property get/set as the delegate
+            ' Compile the property get/set as the delegate
+            With prop
                 __setValue = .DeclaringType.PropertySet(.Name)
                 __getValue = .DeclaringType.PropertyGet(.Name)
             End With
