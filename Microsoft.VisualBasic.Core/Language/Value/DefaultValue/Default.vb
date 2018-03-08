@@ -169,27 +169,20 @@ Namespace Language.Default
         ''' <param name="obj"></param>
         ''' <param name="[default]"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or(obj As T, [default] As DefaultValue(Of T)) As T
-            With [default]
-                Dim assert As Assert(Of Object)
-
-                If .assert Is Nothing Then
-                    assert = AddressOf ExceptionHandler.Default
-                Else
-                    assert = .assert
-                End If
-
-                If assert(obj) Then
-                    Return .DefaultValue
-                Else
-                    Return obj
-                End If
-            End With
+            Return getDefault(obj, [default].DefaultValue, If([default].assert, ExceptionHandler.defaultHandler))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function getDefault(value As T, [default] As T, assert As Assert(Of Object))
+            Return If(assert(value), [default], value)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or([default] As DefaultValue(Of T), obj As T) As T
-            Return obj Or [default]
+            Return getDefault([default].DefaultValue, obj, If([default].assert, ExceptionHandler.defaultHandler))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

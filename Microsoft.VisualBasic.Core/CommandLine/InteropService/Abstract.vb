@@ -82,6 +82,10 @@ Namespace CommandLine.InteropService
             Return App.Shell(_executableAssembly, args, CLR:=True)
         End Function
 
+        Public Shared Function GetLastError(proc As IIORedirectAbstract) As String
+
+        End Function
+
         ''' <summary>
         ''' 请注意，这个函数只是生成了具体的进程调用对象，还需要手动调用
         ''' <see cref="IIORedirectAbstract.Run()"/>或者

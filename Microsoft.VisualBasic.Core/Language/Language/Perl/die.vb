@@ -52,6 +52,8 @@ Namespace Language.Perl
         Dim Message$
         Dim failure As Assert(Of Object)
 
+        Shared ReadOnly defaultHandler As New Assert(Of Object)(AddressOf [Default])
+
         ''' <summary>
         ''' Returns True means test failure
         ''' </summary>
