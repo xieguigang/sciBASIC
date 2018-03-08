@@ -1278,8 +1278,7 @@ Public Module App
     ''' <summary>
     ''' 自动垃圾回收线程
     ''' </summary>
-    ReadOnly __GCThread As UpdateThread =
-        New UpdateThread(10 * 60 * 1000, AddressOf App.__GCThreadInvoke)
+    ReadOnly __GCThread As New UpdateThread(10 * 60 * 1000, AddressOf App.__GCThreadInvoke)
 
     Dim _CLIAutoClean As Boolean = False
     Dim __exitHooks As New List(Of Action)
@@ -1323,8 +1322,10 @@ Public Module App
         Call Console.WriteLine()
 
 #If DEBUG Then
-        ' 应用程序在 debug 模式下会自动停止在这里
-        Call Pause()
+        If Not App.GetVariable("pause.disable").ParseBoolean = True Then
+            ' 应用程序在 debug 模式下会自动停止在这里
+            Call Pause()
+        End If
 #End If
         Return state
     End Function

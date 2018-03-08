@@ -78,6 +78,11 @@ Module Program
         Return 0
     End Function
 
+    ''' <summary>
+    ''' Child throw exception
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     <ExportAPI("/throw.ex")>
     <Usage("/throw.ex /type <name> /message <text>")>
     Public Function CreateException(args As CommandLine) As Integer
@@ -85,9 +90,16 @@ Module Program
         Dim message$ = args("/message")
         Dim ex As Exception = Activator.CreateInstance(System.Type.GetType(type, throwOnError:=True), {message})
 
+        App.JoinVariable("pause.disable", True)
+
         Throw ex
     End Function
 
+    ''' <summary>
+    ''' Catch child exception
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     <ExportAPI("/test.catch")>
     <Usage("/test.catch")>
     Public Function TestException(args As CommandLine) As Integer
@@ -98,6 +110,7 @@ Module Program
 
         Dim err$ = InteropService.GetLastError(child)
 
+        Pause()
 
         Throw New Exception(err)
     End Function

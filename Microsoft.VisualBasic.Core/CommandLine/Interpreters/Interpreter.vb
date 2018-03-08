@@ -334,8 +334,11 @@ Namespace CommandLine
             Dim CommandName As String = CommandLineArgs.First
             Dim argvs As String() = CommandLineArgs.Skip(1).ToArray
             Dim i As Integer = __methodInvoke(CommandName, argvs, help_argvs:=argvs)
+
 #If DEBUG Then
-            Call Pause()
+            If Not App.GetVariable("pause.disable").ParseBoolean = True Then
+                Call Pause()
+            End If
 #Else
             If Stack.TextEquals("Main") Then
                 If AutoPaused Then
