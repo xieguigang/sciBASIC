@@ -1,46 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::4ea800f3fe95e2883ca33dcbdd679aac, docs\guides\Example\PipelineTest\Program.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Program
-    ' 
-    '     Function: JustStdDevice, Main, OnlySupportsFile, SupportsBothFileAndPipeline
-    ' 
-    ' /********************************************************************************/
+' Module Program
+' 
+'     Function: JustStdDevice, Main, OnlySupportsFile, SupportsBothFileAndPipeline
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+Imports Microsoft
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.InteropService
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -74,5 +76,29 @@ Module Program
         End Using
 
         Return 0
+    End Function
+
+    <ExportAPI("/throw.ex")>
+    <Usage("/throw.ex /type <name> /message <text>")>
+    Public Function CreateException(args As CommandLine) As Integer
+        Dim type$ = args("/type")
+        Dim message$ = args("/message")
+        Dim ex As Exception = Activator.CreateInstance(System.Type.GetType(type, throwOnError:=True), {message})
+
+        Throw ex
+    End Function
+
+    <ExportAPI("/test.catch")>
+    <Usage("/test.catch")>
+    Public Function TestException(args As CommandLine) As Integer
+        Dim app As New InteropService(Microsoft.VisualBasic.App.ExecutablePath)
+        Dim child = app.RunDotNetApp($"/throw.ex /type {GetType(NotImplementedException).FullName} /message ""Hello world!""")
+
+        Call child.Run()
+
+        Dim err$ = InteropService.GetLastError(child)
+
+
+        Throw New Exception(err)
     End Function
 End Module

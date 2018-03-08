@@ -60,7 +60,7 @@ Namespace CommandLine.InteropService
     ''' (与目标命令行程序进行命令行交互的编程接口，本类型的对象的作用主要是生成命令行参数)
     ''' </summary>
     ''' <remarks></remarks>
-    Public MustInherit Class InteropService : Inherits CLIBuilder
+    Public Class InteropService : Inherits CLIBuilder
 
         ''' <summary>
         ''' App path
@@ -71,6 +71,13 @@ Namespace CommandLine.InteropService
                 Return _executableAssembly
             End Get
         End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(app As String)
+            _executableAssembly = app
+        End Sub
 
         ''' <summary>
         ''' Assembly path for the target invoked program.
