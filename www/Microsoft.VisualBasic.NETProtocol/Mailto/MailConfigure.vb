@@ -103,7 +103,7 @@ Namespace Mailto
                     .Account = account,
                     .Password = password,
                     .HostAddress = "smtp.qiye.163.com",
-                    .Port = 994
+                    .Port = 465
                 }
             End Get
         End Property

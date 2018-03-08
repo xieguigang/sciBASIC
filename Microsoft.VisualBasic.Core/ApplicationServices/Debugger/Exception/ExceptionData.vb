@@ -19,6 +19,18 @@
                     .ToArray
             }
         End Function
+
+        Public Shared Function GetCurrentStackTrace() As StackFrame()
+            Return Environment.StackTrace _
+                .lTokens _
+                .Where(Function(s) Not s.StringEmpty) _
+                .Skip(3) _
+                .Select(Function(s)
+                            s = Mid(s, 6).Trim
+                            Return StackFrame.Parser(s)
+                        End Function) _
+                .ToArray
+        End Function
     End Class
 
     Public Class StackFrame

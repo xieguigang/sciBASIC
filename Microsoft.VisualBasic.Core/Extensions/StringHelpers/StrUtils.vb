@@ -184,9 +184,26 @@ Public Module StrUtils
     ''' </summary>
     ''' <param name="len%"></param>
     ''' <returns></returns>
-    Public Function RandomASCIIString(len%) As String
+    Public Function RandomASCIIString(len%, Optional skipSymbols As Boolean = False) As String
         With New Random
-            Return CharString(len, Function() Chr(.Next(32, 127)))
+            Return CharString(len, Function()
+                                       If Not skipSymbols Then
+                                           Return Chr(.Next(32, 127))
+                                       Else
+                                           ' 只有字母和数字
+                                           Select Case .NextDouble
+                                               Case <= 0.3
+                                                   ' 数字
+                                                   Return Chr(.Next(48, 58))
+                                               Case <= 0.6
+                                                   ' 小写字母
+                                                   Return Chr(.Next(97, 123))
+                                               Case Else
+                                                   ' 大写字母
+                                                   Return Chr(.Next(65, 91))
+                                           End Select
+                                       End If
+                                   End Function)
         End With
     End Function
 

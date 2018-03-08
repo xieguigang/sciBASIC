@@ -859,7 +859,7 @@ Public Module App
     End Property
 
     ''' <summary>
-    ''' Error default log fie location from function <see cref="App.LogException(Exception, String)"/>.(存放自动存储的错误日志的文件夹)
+    ''' Error default log fie location from function <see cref="App.LogException(Exception, ByRef String)"/>.(存放自动存储的错误日志的文件夹)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property LogErrDIR As String

@@ -57,7 +57,7 @@ Public Module IO
     '  +------- [Content_Types].xml
 
     Public Function CreateReader(xlsx$) As File
-        Dim ROOT$ = App.GetAppSysTempFile(".zip", App.PID)
+        Dim ROOT$ = App.GetAppSysTempFile("-" & RandomASCIIString(6, skipSymbols:=True), App.PID)
 
         Call GZip.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
 
