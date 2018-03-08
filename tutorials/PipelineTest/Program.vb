@@ -40,12 +40,15 @@
 #End Region
 
 Imports System.IO
-Imports Microsoft
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.InteropService
+Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
+Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+<ExceptionHelp>
+<CLI>
 Module Program
 
     Public Function Main() As Integer

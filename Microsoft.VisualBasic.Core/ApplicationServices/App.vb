@@ -754,13 +754,12 @@ Public Module App
     ''' (简单日志记录，函数返回空值)
     ''' </summary>
     ''' <param name="ex"></param>
-    ''' <param name="Trace">调用函数的位置，这个参数一般为空，编译器会自动生成Trace位点参数</param>
-    ''' <returns></returns>
-    '''
+    ''' <param name="trace">调用函数的位置，这个参数一般为空，编译器会自动生成Trace位点参数</param>
+    ''' <returns>这个函数总是返回空值的</returns>
     <ExportAPI("LogException")>
-    Public Function LogException(ex As Exception, <CallerMemberName> Optional Trace$ = "") As Object
+    Public Function LogException(ex As Exception, <CallerMemberName> Optional ByRef trace$ = "") As Object
         Try
-            Call App.TraceBugs(ex, Trace)
+            trace = App.TraceBugs(ex, trace)
         Catch ex2 As Exception
             ' 错误日志文件的存放位置不可用或者被占用了不可写，则可能会出错，
             ' 在这里将原来的错误打印在终端上面就行了， 扔弃掉这个错误日志
