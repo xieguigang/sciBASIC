@@ -36,11 +36,9 @@
     '         Properties: [Mod], Data, Inf, IsNumeric, NAN
     '                     Range, SumMagnitude, Unit, Zero
     ' 
+    '         Constructor: (+8 Overloads) Sub New
     '         Function: DotProduct, Ones, Product, rand, SumMagnitudes
     '                   (+2 Overloads) ToString
-    ' 
-    '         Sub: (+8 Overloads) New
-    ' 
     '         Operators: (+4 Overloads) -, (+3 Overloads) *, (+3 Overloads) /, (+2 Overloads) ^, (+3 Overloads) +
     '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
     '                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor

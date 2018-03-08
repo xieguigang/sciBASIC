@@ -33,9 +33,8 @@
 
     '     Class Perl
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetSourceCode
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

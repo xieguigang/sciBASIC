@@ -35,9 +35,11 @@
     ' 
     '         Properties: DictData, Objects
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Add, GetEnumerator, GetEnumerator1
     ' 
-    '         Sub: __buildCache, New
+    '         Sub: __buildCache
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,7 @@
 
     '     Module Light
     ' 
-    '         Function: Illumination
+    '         Function: Illumination, (+2 Overloads) Lighting
     ' 
     ' 
     ' /********************************************************************************/

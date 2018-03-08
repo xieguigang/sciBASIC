@@ -33,9 +33,8 @@
 
     '     Class Pipeline
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __allocated, __destroy, GetValue
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

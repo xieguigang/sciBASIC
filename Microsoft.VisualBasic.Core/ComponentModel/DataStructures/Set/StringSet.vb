@@ -33,8 +33,7 @@
 
     '     Class StringSet
     ' 
-    '         Sub: (+2 Overloads) New
-    ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Operators: (+2 Overloads) Or
     ' 
     ' 

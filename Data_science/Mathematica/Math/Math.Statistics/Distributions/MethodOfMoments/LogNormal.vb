@@ -33,9 +33,8 @@
 
     ' 	Class LogNormal
     ' 
+    ' 	    Constructor: (+3 Overloads) Sub New
     ' 	    Function: Bullentin17BConfidenceLimit, GetCDF, GetInvCDF, GetPDF, Validate
-    ' 
-    ' 	    Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,7 +35,8 @@
     ' 
     '         Properties: Locked
     ' 
-    '         Sub: (+2 Overloads) Dispose, New, ProcessLockDataArrival
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: (+2 Overloads) Dispose, ProcessLockDataArrival
     ' 
     ' 
     ' /********************************************************************************/

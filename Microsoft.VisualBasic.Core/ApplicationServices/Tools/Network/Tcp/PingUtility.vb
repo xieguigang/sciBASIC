@@ -34,10 +34,14 @@
     '     Module PingUtility
     ' 
     ' 
+    '         Enum ConnectionState
+    ' 
+    ' 
+    ' 
     ' 
     '  
     ' 
-    '     Function: IsOffline, Ping
+    '     Function: InternetGetConnectedState, IsOffline, Ping
     ' 
     ' 
     ' /********************************************************************************/

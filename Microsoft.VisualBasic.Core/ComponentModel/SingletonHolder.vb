@@ -35,7 +35,7 @@
     ' 
     '         Properties: Instance
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

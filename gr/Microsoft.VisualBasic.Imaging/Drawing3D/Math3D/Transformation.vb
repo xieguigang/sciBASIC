@@ -35,8 +35,8 @@
     ' 
     '         Properties: ORIGIN
     ' 
-    '         Function: Offsets, OffSets, RotateX, RotateY, RotateZ
-    '                   (+3 Overloads) Scale, Translate
+    '         Function: Centra, Distance, Offsets, OffSets, RotateX
+    '                   RotateY, RotateZ, (+3 Overloads) Scale, Translate
     ' 
     ' 
     ' /********************************************************************************/

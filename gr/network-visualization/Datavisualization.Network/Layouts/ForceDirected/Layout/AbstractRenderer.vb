@@ -35,7 +35,8 @@
     ' 
     '         Properties: PhysicsEngine
     ' 
-    '         Sub: DirectDraw, Draw, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: DirectDraw, Draw
     ' 
     ' 
     ' /********************************************************************************/

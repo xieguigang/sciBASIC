@@ -33,10 +33,9 @@
 
     '     Class LinqAPI
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) BuildHash, DefaultFirst, (+2 Overloads) Exec, IsEquals, LQuery
     '                   MakeList, Takes
-    ' 
-    '         Sub: New
     ' 
     '         Structure CountHelper
     ' 
@@ -50,16 +49,13 @@
     ' 
     '             Properties: n
     ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Function: ToString
-    ' 
-    '             Sub: New
-    ' 
     '             Operators: <=, >=
     ' 
     '         Structure BuildHashHelper
     ' 
-    '             Sub: New
-    ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Operators: <=, >=
     ' 
     '         Structure ListHelper
@@ -72,14 +68,12 @@
     ' 
     '         Structure FirstOrDefaultHelper
     ' 
-    '             Sub: New
-    ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Operators: <=, >=
     ' 
     '         Structure ToArrayHelper
     ' 
-    '             Sub: New
-    ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Operators: (+2 Overloads) <=, (+2 Overloads) >=
     ' 
     ' 

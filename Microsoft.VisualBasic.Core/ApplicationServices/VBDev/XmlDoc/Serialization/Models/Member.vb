@@ -33,8 +33,8 @@
 
     '     Class member
     ' 
-    '         Properties: memberRef, param, remarks, returns, summary
-    '                     typeparam
+    '         Properties: memberRef, name, param, remarks, returns
+    '                     summary, typeparam
     ' 
     '         Function: ToString
     ' 
@@ -53,6 +53,8 @@
     ' 
     '     Class param
     ' 
+    '         Properties: name, text
+    ' 
     '         Function: ToString
     ' 
     '     Class typeparam
@@ -61,7 +63,7 @@
     ' 
     '     Structure CrossReferred
     ' 
-    ' 
+    '         Properties: cref
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,11 +35,12 @@
     ' 
     '         Properties: Length, Root
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: drawNode, findParent, findSuccessor, FindSymbol, GetAllNodes
     '                   (+2 Overloads) insert, ToString
     ' 
     '         Sub: add, (+2 Overloads) Add, clear, delete, KillTree
-    '              (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

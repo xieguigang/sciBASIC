@@ -33,11 +33,11 @@
 
     '     Structure TimeInterval
     ' 
-    '         Properties: Ticks, TimeSpan
+    '         Properties: Days, Hours, Miliseconds, Minutes, Seconds
+    '                     Ticks, TimeSpan
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

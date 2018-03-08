@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a08b3801a82364052c6d37596d1bd10, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::69feb25fca871999ecfe7ff3693c1592, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -33,24 +33,22 @@
 
     '     Module IteratorExtensions
     ' 
-    '         Function: [Next], (+2 Overloads) Indices, Previous, (+3 Overloads) SeqIterator, ValueArray
+    '         Function: [Next], (+2 Overloads) Indices, Ordinals, Previous, (+3 Overloads) SeqIterator
+    '                   ValueArray
     ' 
     '     Structure SeqValue
     ' 
     '         Properties: Address, Follows, i, value
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Structure SeqValue
     ' 
     '         Properties: i, value
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) CompareTo, ToString
-    ' 
-    '         Sub: New
-    ' 
     '         Operators: (+2 Overloads) +, <>, =, (+2 Overloads) Mod
     ' 
     '     Interface IIterator
@@ -102,14 +100,18 @@ Namespace Linq
         End Function
 
         <Extension>
-        Public Iterator Function SeqIterator(Of T1, T2)(seqFrom As IEnumerable(Of T1),
-                                                        follows As IEnumerable(Of T2),
-                                                        Optional offset% = 0) As IEnumerable(Of SeqValue(Of T1, T2))
-            Dim x As T1() = seqFrom.ToArray
-            Dim y As T2() = follows.ToArray
+        Public Iterator Function SeqTuple(Of T1, T2)(tuple As (a As IEnumerable(Of T1), b As IEnumerable(Of T2)), Optional offset% = 0) As IEnumerable(Of SeqValue(Of (a As T1, b As T2)))
+            Dim x As T1() = tuple.a.ToArray
+            Dim y As T2() = tuple.b.ToArray
+            Dim value As (T1, T2)
+            Dim length% = Math.Max(x.Length, y.Length)
 
-            For i As Integer = 0 To x.Length - 1
-                Yield New SeqValue(Of T1, T2)(i + offset, x(i), y.ElementAtOrDefault(i))
+            For i As Integer = 0 To length - 1
+                value = (
+                    x.ElementAtOrDefault(i),
+                    y.ElementAtOrDefault(i)
+                )
+                Yield New SeqValue(Of (T1, T2))(i + offset, value)
             Next
         End Function
 
@@ -167,32 +169,6 @@ Namespace Linq
                 .Indices
         End Function
     End Module
-
-    Public Structure SeqValue(Of T1, T2) : Implements IAddressOf
-
-        Public Property i As Integer
-        Public Property value As T1
-        Public Property Follows As T2
-
-        Private Property Address As Integer Implements IAddressOf.Address
-            Get
-                Return CLng(i)
-            End Get
-            Set(value As Integer)
-                i = CInt(value)
-            End Set
-        End Property
-
-        Sub New(i%, x As T1, y As T2)
-            Me.i = i
-            value = x
-            Follows = y
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
-    End Structure
 
     ''' <summary>
     ''' Value <typeparamref name="T"/> with sequence index <see cref="i"/>.

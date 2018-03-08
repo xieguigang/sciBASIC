@@ -35,7 +35,8 @@
     ' 
     '         Properties: GoalPenalty, GoalRewards, Q
     ' 
-    '         Sub: __finishLearn, New, RunLearningLoop
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: __finishLearn, RunLearningLoop
     ' 
     ' 
     ' /********************************************************************************/

@@ -36,10 +36,12 @@
     '         Properties: ChildNodes, FullyQualifiedName, IsLeaf, IsRoot, Name
     '                     Parent
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __travelInternal, GetEnumerator, GetLeafNodes, GetNonLeafNodes, GetRootNode
     '                   IEnumerable_GetEnumerator, IteratesAllChilds, MaxTravelDepth
     ' 
-    '         Sub: AddChild, AddChildren, ChildCountsTravel, New
+    '         Sub: AddChild, AddChildren, ChildCountsTravel
     ' 
     ' 
     ' /********************************************************************************/

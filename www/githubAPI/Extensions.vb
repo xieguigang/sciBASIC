@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: __subExcludes, (+2 Overloads) WhoIamNotFollow
+    '     Function: __subExcludes, (+2 Overloads) WhoIamNotFollow, (+2 Overloads) WhoIsNotFollowMe
     ' 
     ' /********************************************************************************/
 

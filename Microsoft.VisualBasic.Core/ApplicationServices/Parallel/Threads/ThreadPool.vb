@@ -35,9 +35,11 @@
     ' 
     '         Properties: FullCapacity, NumOfThreads, ServerLoad, WorkingThreads
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: GetAvaliableThread, GetStatus, ToString
     ' 
-    '         Sub: __allocate, (+2 Overloads) Dispose, (+2 Overloads) New, OperationTimeOut, RunTask
+    '         Sub: __allocate, (+2 Overloads) Dispose, OperationTimeOut, RunTask
     '         Structure __taskInvoke
     ' 
     '             Function: Run

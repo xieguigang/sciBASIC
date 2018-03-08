@@ -45,6 +45,8 @@
     ' 
     '     Class CssValue
     ' 
+    '         Properties: opacity, stroke, strokeOpacity, strokeWidth
+    ' 
     '         Function: ToString
     ' 
     ' 

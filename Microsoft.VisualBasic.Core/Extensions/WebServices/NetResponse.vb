@@ -51,6 +51,8 @@
     '                     RFC_UNKNOWN_ERROR, RFC_UNPROCESSABLE_ENTITY, RFC_UNSUPPORTED_MEDIA_TYPE, RFC_UPGRADE_REQUIRED, RFC_URI_TOO_LONG
     '                     RFC_USE_PROXY, RFC_VERSION_NOT_SUPPORTED
     ' 
+    '         Function: IsHTTP_RFC
+    ' 
     ' 
     ' /********************************************************************************/
 

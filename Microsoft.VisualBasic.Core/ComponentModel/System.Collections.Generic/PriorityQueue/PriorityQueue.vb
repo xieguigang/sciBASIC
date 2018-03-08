@@ -35,11 +35,12 @@
     ' 
     '         Properties: Count
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: Contains, Dequeue, GetEnumerator, IEnumerable_GetEnumerator, Peek
     '                   ToString
     ' 
-    '         Sub: Add, Clear, Enqueue, (+2 Overloads) New, Remove
-    '              Sort
+    '         Sub: Add, Clear, Enqueue, Remove, Sort
     ' 
     ' 
     ' /********************************************************************************/

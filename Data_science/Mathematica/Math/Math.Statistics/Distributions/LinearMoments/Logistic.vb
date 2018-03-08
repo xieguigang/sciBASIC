@@ -33,9 +33,8 @@
 
     ' 	Class Logistic
     ' 
+    ' 	    Constructor: (+3 Overloads) Sub New
     ' 	    Function: GetCDF, GetInvCDF, GetPDF, Validate, Y
-    ' 
-    ' 	    Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

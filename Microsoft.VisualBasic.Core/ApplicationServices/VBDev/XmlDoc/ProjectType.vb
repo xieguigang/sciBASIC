@@ -35,10 +35,12 @@
     ' 
     '         Properties: [Namespace], Name, Remarks, Summary
     ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
     '         Function: EnsureEvent, EnsureField, EnsureMethod, EnsureProperty, GetEvent
     '                   GetField, getInternal, GetMethods, GetProperties, ToString
     ' 
-    '         Sub: LoadFromNode, (+4 Overloads) New
+    '         Sub: LoadFromNode
     ' 
     ' 
     ' /********************************************************************************/

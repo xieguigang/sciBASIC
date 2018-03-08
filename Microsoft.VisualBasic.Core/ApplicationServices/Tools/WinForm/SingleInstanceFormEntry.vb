@@ -35,9 +35,11 @@
     ' 
     '         Properties: Arguments, Form
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: __getDefaultPos
     ' 
-    '         Sub: [AddHandler], __clean, __invokeEntry, Invoke, (+2 Overloads) New
+    '         Sub: [AddHandler], __clean, __invokeEntry, Invoke
     ' 
     ' 
     ' /********************************************************************************/

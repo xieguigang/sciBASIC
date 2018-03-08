@@ -31,9 +31,9 @@
 
     ' Summaries:
 
-    '  
+    '     Class Head
     ' 
-    ' 
+    '         Properties: Title, Xml
     ' 
     '     Class DocumentXmlProperty
     ' 
@@ -74,7 +74,7 @@
     ' 
     '         Structure ValueAttribute
     ' 
-    ' 
+    '             Properties: Value
     ' 
     ' 
     ' 

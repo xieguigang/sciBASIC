@@ -33,7 +33,7 @@
 
     '     Module FormattedParser
     ' 
-    ' 
+    '         Function: CrossFields, FieldParser, FlagSplit
     '         Delegate Function
     ' 
     '             Function: ReadHead, UntilBlank
@@ -93,6 +93,10 @@ Namespace Text
 
                 Call list.Add(line)
             Next
+
+            If list.Count > 0 Then
+                Yield list.ToArray
+            End If
         End Function
 
         ''' <summary>

@@ -44,7 +44,7 @@
     ' 
     ' Class ssfsfs
     ' 
-    ' 
+    '     Properties: dddd, dssssddd, xdddd
     ' 
     ' Class dddddFile
     ' 
@@ -52,11 +52,12 @@
     ' 
     ' Class Test
     ' 
-    ' 
+    '     Properties: asdsadasdada, axfsdfsdfsd, listExample, nnn, sdfsdfsdfsdfs
+    '                 zzzz
     ' 
     ' Class dddd
     ' 
-    ' 
+    '     Properties: axfsdfsdfsd, dsdfsd
     ' 
     ' Class qqq
     ' 
@@ -64,7 +65,7 @@
     ' 
     ' Class sdfsd
     ' 
-    ' 
+    '     Properties: dsadas, safsdfsdf
     ' 
     ' /********************************************************************************/
 

@@ -35,9 +35,8 @@
     ' 
     '         Properties: Max, Mean, Min, SampleSize
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: GetEnumerator, IEnumerable_GetEnumerator, Split, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Module DataSampleExtensions
     ' 

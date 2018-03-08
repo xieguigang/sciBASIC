@@ -33,10 +33,12 @@
 
     '     Class VisualBasic
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __CLI, __defaultValue, __normalizedAsIdentifier, __vbParameters, __xmlComments
     '                   GetSourceCode
     ' 
-    '         Sub: __calls, New
+    '         Sub: __calls
     ' 
     ' 
     ' /********************************************************************************/
@@ -58,6 +60,11 @@ Namespace CommandLine.InteropService.SharedORM
         Public Sub New(CLI As Type, namespace$)
             MyBase.New(CLI)
             Me.namespace = [namespace]
+        End Sub
+
+        Sub New(App As Interpreter)
+            Call MyBase.New(App)
+            Me.namespace = App.Type.Name
         End Sub
 
         Public Overrides Function GetSourceCode() As String

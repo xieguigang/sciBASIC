@@ -35,10 +35,12 @@
     ' 
     '         Properties: MinimalDistance
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: Add, FindByCodePair, Remove, RemoveFirst, ToList
     '                   ToString
     ' 
-    '         Sub: (+2 Overloads) New, Sort
+    '         Sub: Sort
     ' 
     ' 
     ' /********************************************************************************/

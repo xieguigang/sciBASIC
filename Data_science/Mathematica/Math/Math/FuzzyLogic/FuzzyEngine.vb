@@ -35,10 +35,12 @@
     ' 
     '         Properties: Consequent, FuzzyRuleCollection, LinguisticVariableCollection
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Defuzzify, Evaluate, GetConsequent, Parse, (+2 Overloads) Save
     '                   ToModel
     ' 
-    '         Sub: (+2 Overloads) Add, New
+    '         Sub: (+2 Overloads) Add
     ' 
     ' 
     ' /********************************************************************************/

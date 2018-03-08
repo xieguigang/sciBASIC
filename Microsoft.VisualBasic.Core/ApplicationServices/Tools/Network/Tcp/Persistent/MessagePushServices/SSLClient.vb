@@ -35,9 +35,11 @@
     ' 
     '         Properties: PrivateKey, PushUser
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __sslRedirect, SendMessage
     ' 
-    '         Sub: Handshaking, Logon, New, SetDisconnectHandle
+    '         Sub: Handshaking, Logon, SetDisconnectHandle
     ' 
     ' 
     ' /********************************************************************************/

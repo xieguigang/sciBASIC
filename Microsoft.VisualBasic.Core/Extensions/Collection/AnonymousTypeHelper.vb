@@ -33,7 +33,7 @@
 
     ' Module AnonymousTypeHelper
     ' 
-    ' 
+    '     Function: (+2 Overloads) CopyTypeDef
     ' 
     ' /********************************************************************************/
 

@@ -47,9 +47,11 @@
     ' 
     '         Properties: Count, Group, Tag
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: GetEnumerator, IEnumerable_GetEnumerator
     ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) New
+    '         Sub: (+2 Overloads) Add
     ' 
     ' 
     ' /********************************************************************************/

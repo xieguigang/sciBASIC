@@ -43,9 +43,8 @@
     ' 
     '         Properties: Point, X, Y
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: Clone, Equals, ToString
-    ' 
-    '         Sub: (+4 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

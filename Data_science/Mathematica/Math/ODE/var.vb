@@ -35,10 +35,8 @@
     ' 
     '     Properties: Index, Name, value
     ' 
+    '     Constructor: (+4 Overloads) Sub New
     '     Function: Clone, ToString
-    ' 
-    '     Sub: (+4 Overloads) New
-    ' 
     '     Operators: (+2 Overloads) <>, (+2 Overloads) =
     ' 
     ' Interface Ivar

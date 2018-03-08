@@ -33,7 +33,7 @@
 
     ' Class RDFEntity
     ' 
-    '     Properties: comment, Properties, range
+    '     Properties: about, comment, Properties, range, RDFId
     ' 
     '     Function: ToString
     ' 
@@ -43,9 +43,10 @@
     ' 
     ' Class EntityProperty
     ' 
-    '     Function: ToString
+    '     Properties: dataType, resource, value
     ' 
-    '     Sub: (+3 Overloads) New
+    '     Constructor: (+3 Overloads) Sub New
+    '     Function: ToString
     ' 
     ' /********************************************************************************/
 

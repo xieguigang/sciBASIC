@@ -33,7 +33,7 @@
 
     '     Class sharedStrings
     ' 
-    '         Properties: strings
+    '         Properties: count, strings, uniqueCount
     ' 
     '         Function: ToHashTable
     '         Operators: +
@@ -46,7 +46,7 @@
     ' 
     '     Class phoneticPr
     ' 
-    ' 
+    '         Properties: fontId, type
     ' 
     ' 
     ' /********************************************************************************/

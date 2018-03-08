@@ -41,16 +41,16 @@
     ' 
     '         Properties: ElapsedMilliseconds
     ' 
-    '         Sub: [Step], __resize, __tick, (+2 Overloads) Dispose, (+3 Overloads) New
-    '              SetProgress, SetToEchoLine
+    '         Constructor: (+3 Overloads) Sub New
+    '         Sub: [Step], __resize, __tick, (+2 Overloads) Dispose, SetProgress
+    '              SetToEchoLine
     ' 
     '     Class ProgressProvider
     ' 
     '         Properties: Current, Target
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: [Step], (+2 Overloads) ETA, StepProgress, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

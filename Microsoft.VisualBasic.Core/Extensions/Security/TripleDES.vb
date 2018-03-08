@@ -33,10 +33,9 @@
 
     '     Class TripleDES
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Decrypt, DecryptString, Encrypt, EncryptData, InternalCryptoTransform
     '                   ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

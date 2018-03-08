@@ -36,23 +36,24 @@
     '         Properties: borders, cellStyles, cellStyleXfs, cellXfs, dxfs
     '                     extLst, fills, fonts, Ignorable, tableStyles
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class List
     ' 
-    ' 
+    '         Properties: count
     ' 
     '     Class tableStyles
     ' 
-    ' 
+    '         Properties: defaultPivotStyle, defaultTableStyle
     ' 
     '     Class tableStyle
     ' 
-    '         Properties: elements
+    '         Properties: defaultPivotStyle, defaultTableStyle, elements, name, pivot
+    '                     table
     ' 
     '     Class tableStyleElement
     ' 
-    ' 
+    '         Properties: dxfId, type
     ' 
     '     Class dxfs
     ' 
@@ -68,7 +69,7 @@
     ' 
     '     Class cellStyle
     ' 
-    ' 
+    '         Properties: builtinId, name, xfId
     ' 
     '     Class cellXfs
     ' 
@@ -80,7 +81,9 @@
     ' 
     '     Class xf
     ' 
-    ' 
+    '         Properties: applyAlignment, applyBorder, applyFill, applyFont, applyNumberFormat
+    '                     applyProtection, borderId, fillId, fontId, numFmtId
+    '                     xfId
     ' 
     '     Class borders
     ' 
@@ -118,6 +121,8 @@
     '         Function: ToString
     ' 
     '     Class ColorValue
+    ' 
+    '         Properties: indexed, lastClr, rgb, theme
     ' 
     '         Function: ToString
     ' 

@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::0c909c73c74d378572733d4daf29c6c0, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\ListenerHelper.vb"
+﻿#Region "Microsoft.VisualBasic::e88b18f5bee10863c1dec6900b86c9d6, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\ListenerHelper.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module ListenerHelper
-' 
-'         Sub: AddDefaultListener
-'         Structure outPrint
-' 
-'             Properties: chromosome, fit, iter
-' 
-'             Function: ToString
-' 
-'         Structure IterartionListenerAnonymousInnerClassHelper
-' 
-'             Sub: Update
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Module ListenerHelper
+    ' 
+    '         Sub: AddDefaultListener
+    '         Structure outPrint
+    ' 
+    '             Properties: chromosome, fit, iter
+    ' 
+    '             Function: ToString
+    ' 
+    '         Structure listenerHelper
+    ' 
+    '             Sub: Update
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

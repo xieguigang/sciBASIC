@@ -33,7 +33,7 @@
 
     '     Module Paragraph
     ' 
-    '         Function: Trim
+    '         Function: SplitParagraph, Trim
     ' 
     ' 
     ' /********************************************************************************/

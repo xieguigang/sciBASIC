@@ -33,10 +33,8 @@
 
     '     Class int
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) CompareTo, Equals, (+2 Overloads) ToString
-    ' 
-    '         Sub: (+2 Overloads) New
-    ' 
     '         Operators: (+2 Overloads) -, (+2 Overloads) /, (+2 Overloads) +, (+4 Overloads) <, <<
     '                    <=, (+4 Overloads) >, >=
     ' 

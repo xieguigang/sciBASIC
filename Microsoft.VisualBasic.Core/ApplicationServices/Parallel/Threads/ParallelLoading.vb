@@ -43,9 +43,11 @@
     ' 
     '         Class LoadTaskInvoker
     ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
     '             Function: DataProcessor, Load
     ' 
-    '             Sub: FillData, GetSendData, New, StartProcess, WaitForTaskComplete
+    '             Sub: FillData, GetSendData, StartProcess, WaitForTaskComplete
     ' 
     '         Delegate Function
     ' 

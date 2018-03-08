@@ -33,7 +33,7 @@
 
     '     Class NumericVector
     ' 
-    '         Properties: Length
+    '         Properties: Length, Vector
     ' 
     '         Function: ToString
     ' 

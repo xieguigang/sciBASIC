@@ -35,9 +35,8 @@
     ' 
     '         Properties: IsEmpty
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString, Tuple, ValueTuple
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

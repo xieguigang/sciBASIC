@@ -35,10 +35,12 @@
     ' 
     '         Properties: MyLocalPort, RemoteServerShutdown, ServerHash
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: GetMyWANIP, LocalClient, ToString
     ' 
-    '         Sub: BeginConnect, ConnectCallback, (+2 Overloads) Dispose, InternalSend, (+3 Overloads) New
-    '              Receive, ReceiveCallback, WaitForConnected, WaitForHash
+    '         Sub: BeginConnect, ConnectCallback, (+2 Overloads) Dispose, InternalSend, Receive
+    '              ReceiveCallback, WaitForConnected, WaitForHash
     '         Class StateObject
     ' 
     ' 

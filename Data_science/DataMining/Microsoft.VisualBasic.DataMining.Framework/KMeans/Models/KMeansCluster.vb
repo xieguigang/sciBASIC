@@ -31,13 +31,13 @@
 
     ' Summaries:
 
-    '  
+    '     Class KMeansCluster
     ' 
-    '     Properties: Center, ClusterMean, ClusterSum, NumOfEntity
+    '         Properties: Center, ClusterMean, ClusterSum, NumOfEntity
     ' 
-    '     Function: CalculateCenter, CalculateKMeansCost, GetEnumerator, IEnumerable_GetEnumerator, ToString
+    '         Function: CalculateCenter, CalculateKMeansCost, GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
-    '     Sub: Add, refresh
+    '         Sub: Add, refresh
     ' 
     ' 
     ' /********************************************************************************/

@@ -43,9 +43,8 @@
     ' 
     '         Properties: Key, Value
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: CreateObject, ToString
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     '     Class KeyValuePairData
     ' 

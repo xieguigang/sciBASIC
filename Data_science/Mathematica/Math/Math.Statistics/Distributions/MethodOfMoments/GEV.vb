@@ -33,10 +33,9 @@
 
     ' 	Class GEV
     ' 
+    ' 	    Constructor: (+2 Overloads) Sub New
     ' 	    Function: GetCDF, GetInvCDF, GetPDF, T, Tinv
     '                Validate
-    ' 
-    ' 	    Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

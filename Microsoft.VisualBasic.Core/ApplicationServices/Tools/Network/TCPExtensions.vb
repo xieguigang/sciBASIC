@@ -36,9 +36,8 @@
     '         Function: ConnectSocket, GetFirstAvailablePort, PortIsAvailable, PortIsUsed
     '         Structure LoggingClient
     ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Function: GetHandle
-    ' 
-    '             Sub: New
     ' 
     ' 
     ' 

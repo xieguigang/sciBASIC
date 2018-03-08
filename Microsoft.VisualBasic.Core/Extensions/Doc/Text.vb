@@ -33,8 +33,9 @@
 
     ' Module TextDoc
     ' 
-    '     Function: ForEachChar, IterateAllLines, LineIterators, LoadTextDoc, OpenWriter
-    '               ReadAllLines, ReadAllText, SaveTSV, SaveWithHTMLEncoding, TsvHeaders
+    '     Function: ForEachChar, IsTextFile, IterateAllLines, LineIterators, LoadTextDoc
+    '               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, (+4 Overloads) SaveTo
+    '               SaveTSV, SaveWithHTMLEncoding, SolveStream, TsvHeaders
     ' 
     ' /********************************************************************************/
 

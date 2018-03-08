@@ -35,9 +35,8 @@
     ' 
     '     Properties: Font, HaveParFlag, Right, Start, Text
     ' 
+    '     Constructor: (+1 Overloads) Sub New
     '     Function: Contains, GenerateDocumentText, ToString
-    ' 
-    '     Sub: New
     ' 
     ' /********************************************************************************/
 

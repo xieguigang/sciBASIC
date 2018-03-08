@@ -33,10 +33,13 @@
 
     ' Module EmitReflection
     ' 
-    '     Function: __getValue, AsLambda, CreateObject, Description, Enums
-    '               GetAllEnumFlags, (+3 Overloads) GetAssemblyDetails, GetDelegateInvokeEntryPoint, GetDouble, GetInt
-    '               GetTypesHelper, GetVersion, IsNumericType, ModuleVersion, ResourcesSatellite
-    '               Source
+    '     Function: [Get], __getValue, API, AsLambda, Category
+    '               Collection2GenericIEnumerable, CreateObject, (+6 Overloads) Description, Enums, ExampleInfo
+    '               FullName, GetAllEnumFlags, (+3 Overloads) GetAssemblyDetails, (+2 Overloads) GetAttribute, GetDelegateInvokeEntryPoint
+    '               GetDouble, GetFullName, GetInt, (+2 Overloads) GetReadWriteProperties, GetTypeElement
+    '               GetTypesHelper, (+2 Overloads) GetValue, (+2 Overloads) GetVersion, IsInheritsFrom, IsModule
+    '               IsNumericType, ModuleVersion, NamespaceEntry, ResourcesSatellite, Source
+    '               Usage
     ' 
     '     Sub: RunApp
     ' 

@@ -33,7 +33,8 @@
 
     '     Module TCPExtensions
     ' 
-    '         Function: ConnectSocket, GetFirstAvailablePort, (+2 Overloads) Ping, PortIsAvailable, PortIsUsed
+    '         Function: BuildOAuth, ConnectSocket, GetCA, GetFirstAvailablePort, (+2 Overloads) Ping
+    '                   PortIsAvailable, PortIsUsed
     ' 
     ' 
     ' /********************************************************************************/

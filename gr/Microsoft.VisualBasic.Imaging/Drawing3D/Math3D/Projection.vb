@@ -33,7 +33,7 @@
 
     '     Module Projection
     ' 
-    '         Function: Rotate, SpaceToGrid
+    '         Function: Center, PointXY, Projection, Rotate, (+3 Overloads) SpaceToGrid
     ' 
     ' 
     ' /********************************************************************************/

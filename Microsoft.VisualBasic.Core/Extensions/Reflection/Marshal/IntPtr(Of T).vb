@@ -41,9 +41,11 @@
     ' 
     '         Properties: Scan0
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: ToString
     ' 
-    '         Sub: __unsafeWrite, (+2 Overloads) Dispose, (+2 Overloads) New, (+2 Overloads) Write
+    '         Sub: __unsafeWrite, (+2 Overloads) Dispose, (+2 Overloads) Write
     ' 
     '         Operators: -, +
     ' 

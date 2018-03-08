@@ -36,7 +36,8 @@
     '         Properties: AccentColors, FontSizes, Palettes, SelectedAccentColor, SelectedFontSize
     '                     SelectedPalette, SelectedTheme, Themes
     ' 
-    '         Sub: New, OnAppearanceManagerPropertyChanged, SyncThemeAndColor
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: OnAppearanceManagerPropertyChanged, SyncThemeAndColor
     ' 
     ' 
     ' /********************************************************************************/

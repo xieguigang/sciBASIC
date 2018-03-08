@@ -36,9 +36,11 @@
     '         Properties: CA, DeclaringModule, IsRunning, IsShutdown, ISSLServices_InstallCertificates
     '                     LocalPort, PrivateKeys, RaiseHandshakingEvent, RefuseHandshake, Responsehandler
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __responsehandler, Install, InstallCertificates, (+2 Overloads) Run, ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose, HandShakingEventDoNothing, New, WaitForStart
+    '         Sub: (+2 Overloads) Dispose, HandShakingEventDoNothing, WaitForStart
     ' 
     ' 
     ' /********************************************************************************/

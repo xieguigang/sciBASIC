@@ -33,8 +33,8 @@
 
     '     Module LanguageAPI
     ' 
-    '         Function: [Default], AsDefault, AsVector, IsNothing, Let
-    '                   TypeDef, TypeInfo
+    '         Function: [ByRef], [Default], AsDefault, AsVector, IsNothing
+    '                   Let, TypeDef, TypeInfo
     ' 
     ' 
     ' /********************************************************************************/

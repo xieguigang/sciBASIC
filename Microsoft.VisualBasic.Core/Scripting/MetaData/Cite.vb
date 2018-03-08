@@ -38,9 +38,8 @@
     '                     PubMed, StartPage, Title, URL, Volume
     '                     Year
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: __formatAbstractPreview, (+2 Overloads) GetCiteList, HTML, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

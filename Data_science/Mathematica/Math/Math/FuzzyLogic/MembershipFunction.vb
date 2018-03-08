@@ -36,9 +36,8 @@
     '         Properties: Name, Value, X0, X1, X2
     '                     X3
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Area, Centorid
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

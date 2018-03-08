@@ -33,7 +33,8 @@
 
     '     Class TFftAlgorithm
     ' 
-    '         Sub: FourierTransformation, InvDFT, (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
+    '         Sub: FourierTransformation, InvDFT
     ' 
     ' 
     ' /********************************************************************************/

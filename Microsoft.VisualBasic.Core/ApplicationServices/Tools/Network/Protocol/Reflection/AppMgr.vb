@@ -35,9 +35,8 @@
     ' 
     '         Properties: ProtocolApps, ProtocolEntry
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: HandleRequest, Register, RegisterApp
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

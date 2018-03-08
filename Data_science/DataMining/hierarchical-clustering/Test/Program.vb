@@ -33,9 +33,11 @@
 
     ' Module Program
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: createSampleCluster
     ' 
-    '     Sub: Main, New
+    '     Sub: Main
     ' 
     ' /********************************************************************************/
 

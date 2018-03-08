@@ -35,7 +35,7 @@
     ' 
     '         Properties: name, themeElements
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class themeElements
     ' 
@@ -61,7 +61,7 @@
     ' 
     '     Class font
     ' 
-    ' 
+    '         Properties: panose, script, typeface
     ' 
     ' 
     ' /********************************************************************************/

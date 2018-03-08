@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::488388b7e80d2a2e532e8941a3950ff5, vs_solutions\dev\VisualStudio\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::73524d0020c20c514df3ff068d557c68, vs_solutions\dev\VisualStudio\Extensions.vb"
 
     ' Author:
     ' 
@@ -68,4 +68,3 @@ Public Module Extensions
             .IteratesALL
     End Function
 End Module
-

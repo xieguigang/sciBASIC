@@ -33,9 +33,8 @@
 
     '     Module FormatHelper
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: AttributeEncode, AttributeSafeUrl, GetHashKey, handleTrailingParens, Outdent
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,10 +35,9 @@
     ' 
     '         Properties: NormalVector, Offset
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: [Next], Clone, ICloneable_Clone, Minus, Multipy
     '                   Norm, ToLine, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,7 +35,8 @@
     ' 
     '         Properties: BlockSource, Properties, PropertyValues
     ' 
-    '         Sub: AssignTo, (+2 Overloads) New, UpdatePropertyValues
+    '         Constructor: (+2 Overloads) Sub New
+    '         Sub: AssignTo, UpdatePropertyValues
     ' 
     ' 
     ' /********************************************************************************/

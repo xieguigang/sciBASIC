@@ -121,7 +121,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>..\..\..\..\GCModeller\bin\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -783,6 +783,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
     <Compile Include="ApplicationServices\VBDev\AssemblyInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\VBCodeSignature.vb" />
@@ -798,6 +799,7 @@
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLSupports.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
+    <Compile Include="Extensions\IO\SerializationIO.vb" />
     <Compile Include="Extensions\Math\Information\Entropy.vb" />
     <Compile Include="Extensions\WebServices\Http\DataURI.vb" />
     <Compile Include="Language\Value\ByRefValueExtensions.vb" />
@@ -1253,8 +1255,6 @@
     <Compile Include="ComponentModel\TimeSpan.vb" />
     <Compile Include="ApplicationServices\Debugger\Logging\EventLog.vb" />
     <Compile Include="ApplicationServices\Debugger\NETDebugger.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Mailto\MailConfigure.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Mailto\MailContents.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Abstract.vb" />
     <Compile Include="ApplicationServices\Tools\Network\MIME\MIME.vb" />
     <Compile Include="ApplicationServices\Tools\Network\MIME\ContentType.vb" />
@@ -1356,7 +1356,6 @@
     <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
     <Compile Include="CommandLine\CommandLine.vb" />
     <Compile Include="Extensions\Math\Math.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Mailto\GMailClient.vb" />
     <Compile Include="CommandLine\CLI\IORedirect.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\LanguageAttribute.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\LanguageHelper.vb" />

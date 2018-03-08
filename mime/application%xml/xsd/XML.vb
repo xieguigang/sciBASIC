@@ -43,7 +43,7 @@
     ' 
     '     Class attribute
     ' 
-    '         Properties: annotation
+    '         Properties: annotation, name, type, use
     ' 
     '         Function: ToString
     ' 
@@ -55,7 +55,7 @@
     ' 
     '     Class element
     ' 
-    '         Properties: annotation
+    '         Properties: annotation, maxOccurs, minOccurs, name, type
     ' 
     '         Function: ToString
     ' 

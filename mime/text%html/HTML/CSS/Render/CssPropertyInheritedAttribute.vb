@@ -33,7 +33,7 @@
 
     '     Class CssPropertyInheritedAttribute
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

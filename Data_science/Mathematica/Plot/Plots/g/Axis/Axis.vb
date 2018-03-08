@@ -35,9 +35,9 @@
     ' 
     '         Properties: delta
     ' 
-    '         Function: (+2 Overloads) DrawLabel
+    '         Function: __plotLabel, (+2 Overloads) DrawLabel
     ' 
-    '         Sub: (+2 Overloads) DrawAxis, DrawString, DrawYGrid
+    '         Sub: (+2 Overloads) DrawAxis, DrawString, DrawX, DrawY, DrawYGrid
     ' 
     ' 
     ' /********************************************************************************/

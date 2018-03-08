@@ -35,14 +35,13 @@
     ' 
     '         Properties: GroupData
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: New
     '         Class Groups
     ' 
     '             Properties: Data
     ' 
-    '             Sub: New
+    '             Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' 

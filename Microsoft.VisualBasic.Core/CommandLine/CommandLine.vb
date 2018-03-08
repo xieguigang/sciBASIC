@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::327bedaf1a25c1b4f588d1acb92a6b6b, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::8131ed9a4734ae73329de534db8a7e7f, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: BoolFlags, CLICommandArgvs, Count, EnvironmentVariables, IsNothing
     '                     IsNullOrEmpty, IsReadOnly, Keys, Name, ParameterList
-    '                     SingleValue, Tokens
+    '                     Parameters, SingleValue, Tokens
     ' 
     '         Function: Assert, CheckMissingRequiredArguments, CheckMissingRequiredParameters, Contains, ContainsParameter
     '                   GetBoolean, GetByte, GetBytes, GetChar, GetChars

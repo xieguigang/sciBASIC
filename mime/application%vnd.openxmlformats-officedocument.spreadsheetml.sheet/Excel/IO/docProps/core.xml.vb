@@ -35,13 +35,12 @@
     ' 
     '         Properties: created, creator, lastModifiedBy, modified
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: filePath, toXml
-    ' 
-    '         Sub: New
     ' 
     '     Structure W3CDTF
     ' 
-    '         Properties: type
+    '         Properties: [Date], type
     ' 
     ' 
     ' /********************************************************************************/

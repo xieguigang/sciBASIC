@@ -35,17 +35,18 @@
     ' 
     '         Properties: Childs, Node, Parents
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class GraphTree
     ' 
     '         Properties: Count, Trees
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: IterateTrees, ToString
     ' 
-    '         Sub: IterateTrees, New
+    '         Sub: IterateTrees
     ' 
     ' 
     ' /********************************************************************************/

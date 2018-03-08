@@ -33,10 +33,12 @@
 
     ' Class Randomizer
     ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
     '     Function: (+3 Overloads) [Next], __getRandom, __getRandoms, GetRandomInts, GetRandomNormalDeviates
     '               GetRandomPercentages, NextDouble, Sample
     ' 
-    '     Sub: (+2 Overloads) New, NextBytes
+    '     Sub: NextBytes
     ' 
     ' /********************************************************************************/
 

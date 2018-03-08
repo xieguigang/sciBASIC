@@ -41,15 +41,14 @@
     ' 
     '         Properties: Samples, XRange, YRange
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Structure HistProfile
     ' 
     '         Properties: SerialData
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: GetLine
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

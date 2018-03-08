@@ -33,11 +33,10 @@
 
     '     Class NewtonMethod
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: [stop], calculateExponent, firstDerivateB, firstDerivateW, innerOptimize
     '                   invertHesse, newtonMethod, secondDerivateB, secondDerivateW, secondDerivateW2W1
     '                   secondDerivateWB, secondDerTimesfirstDer
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

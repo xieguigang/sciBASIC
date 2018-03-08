@@ -35,9 +35,11 @@
     ' 
     '         Properties: DoublePivot, IsNonSingular, L, Pivot, U
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Determinant, Solve
     ' 
-    '         Sub: ISerializable_GetObjectData, New
+    '         Sub: ISerializable_GetObjectData
     ' 
     ' 
     ' /********************************************************************************/

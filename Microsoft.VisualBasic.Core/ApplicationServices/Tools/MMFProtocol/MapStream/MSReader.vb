@@ -35,15 +35,19 @@
     ' 
     '         Properties: URI
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Read, ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose, New
+    '         Sub: (+2 Overloads) Dispose
     ' 
     '     Class MSIOReader
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ReadBadge, ToString
     ' 
-    '         Sub: __clientThreadElapsed, __threadElapsed, New, Update
+    '         Sub: __clientThreadElapsed, __threadElapsed, Update
     ' 
     ' 
     ' /********************************************************************************/

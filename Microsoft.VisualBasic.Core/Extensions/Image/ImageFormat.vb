@@ -45,7 +45,7 @@
     ' 
     '         Properties: Png
     ' 
-    '         Function: GetSaveImageFormat, ParseImageFormat
+    '         Function: GetFormat, GetSaveImageFormat, ParseImageFormat, SaveAs
     ' 
     ' 
     ' /********************************************************************************/

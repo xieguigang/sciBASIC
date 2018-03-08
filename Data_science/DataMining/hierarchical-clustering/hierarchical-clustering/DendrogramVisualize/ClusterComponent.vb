@@ -36,9 +36,11 @@
     '         Properties: Children, Cluster, InitPoint, LinkPoint, NamePadding
     '                     PrintName, RectMaxX, RectMaxY, RectMinX, RectMinY
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetMaxNameWidth, getNameWidth
     ' 
-    '         Sub: New, Paint
+    '         Sub: Paint
     ' 
     ' 
     ' /********************************************************************************/

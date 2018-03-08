@@ -35,9 +35,11 @@
     ' 
     '         Properties: DIR
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: CopyTo, Exists, GetFullPath, IsAbsolutePath, ToString
     ' 
-    '         Sub: CreateDirectory, Delete, New
+    '         Sub: CreateDirectory, Delete
     ' 
     ' 
     ' /********************************************************************************/

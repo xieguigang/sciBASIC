@@ -35,9 +35,8 @@
     ' 
     '         Properties: Distance, NaN, Weight
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Clone, compareTo, ToString
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

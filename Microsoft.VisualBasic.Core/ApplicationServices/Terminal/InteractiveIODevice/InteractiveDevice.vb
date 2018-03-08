@@ -35,9 +35,11 @@
     ' 
     '         Properties: PromptText
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ReadKey, ReadLine, (+2 Overloads) Save
     ' 
-    '         Sub: (+2 Overloads) Dispose, InternalClearLine, New, PrintPrompted
+    '         Sub: (+2 Overloads) Dispose, InternalClearLine, PrintPrompted
     ' 
     ' 
     ' /********************************************************************************/

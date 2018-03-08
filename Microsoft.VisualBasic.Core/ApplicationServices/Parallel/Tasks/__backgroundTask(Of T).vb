@@ -38,9 +38,11 @@
     ' 
     '         Properties: ExecuteException, TaskHandle, Value
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Start, ToString
     ' 
-    '         Sub: __invokeTask, Abort, New
+    '         Sub: __invokeTask, Abort
     ' 
     ' 
     ' 

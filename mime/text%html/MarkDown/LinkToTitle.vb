@@ -33,9 +33,11 @@
 
     '     Class LinkToTitle
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetExtension, LinkEvaluator, RequestToGoogleApi, Transform, videoIdAlreadyExist
     ' 
-    '         Sub: New, ParseApiResponse
+    '         Sub: ParseApiResponse
     ' 
     ' 
     ' /********************************************************************************/

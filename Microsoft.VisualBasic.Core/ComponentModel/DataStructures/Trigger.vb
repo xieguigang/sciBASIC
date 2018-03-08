@@ -33,7 +33,8 @@
 
     '     Class ITrigger
     ' 
-    '         Sub: New, TestRun
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: TestRun
     ' 
     '     Interface ITimer
     ' 
@@ -45,23 +46,23 @@
     ' 
     '         Properties: Condition
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __test
-    ' 
-    '         Sub: New
     ' 
     '     Class DailyTimerTrigger
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: __test
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Class TimerTrigger
     ' 
     '         Properties: Interval, Time
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __test, Start, ToString
     ' 
-    '         Sub: [Stop], New
+    '         Sub: [Stop]
     ' 
     ' 
     ' /********************************************************************************/

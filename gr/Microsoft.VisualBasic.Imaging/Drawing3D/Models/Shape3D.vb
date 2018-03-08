@@ -33,10 +33,12 @@
 
     '     Class Shape3D
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: (+4 Overloads) Extrude, OrderedPath3Ds, RotateX, RotateY, RotateZ
     '                   (+3 Overloads) Scale, Translate
     ' 
-    '         Sub: (+2 Overloads) New, (+2 Overloads) Push, (+3 Overloads) ScalePath3Ds, TranslatePath3Ds
+    '         Sub: (+2 Overloads) Push, (+3 Overloads) ScalePath3Ds, TranslatePath3Ds
     ' 
     ' 
     ' /********************************************************************************/

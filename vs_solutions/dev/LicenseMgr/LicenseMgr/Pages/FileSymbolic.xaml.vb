@@ -33,7 +33,8 @@
 
     '     Class FileSymbolic
     ' 
-    '         Sub: Admin_Rights, New, Original_File, Symlink_Create, UserControl_Initialized
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Admin_Rights, Original_File, Symlink_Create, UserControl_Initialized
     ' 
     ' 
     ' /********************************************************************************/

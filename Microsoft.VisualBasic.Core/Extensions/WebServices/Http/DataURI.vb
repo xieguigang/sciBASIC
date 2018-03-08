@@ -33,9 +33,8 @@
 
     '     Class DataURI
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: FromFile, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

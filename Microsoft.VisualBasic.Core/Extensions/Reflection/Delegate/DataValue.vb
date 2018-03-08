@@ -35,9 +35,11 @@
     ' 
     '         Properties: PropertyNames
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetProperty, ToString
     ' 
-    '         Sub: New, TestDEMO
+    '         Sub: TestDEMO
     ' 
     ' 
     ' /********************************************************************************/

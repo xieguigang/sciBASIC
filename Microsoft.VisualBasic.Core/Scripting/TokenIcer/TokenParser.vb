@@ -35,9 +35,11 @@
     ' 
     '         Properties: InputString, UNDEFINED
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: GetToken, (+2 Overloads) Peek
     ' 
-    '         Sub: (+2 Overloads) New, PrepareRegex, ResetParser
+    '         Sub: PrepareRegex, ResetParser
     ' 
     ' 
     ' /********************************************************************************/

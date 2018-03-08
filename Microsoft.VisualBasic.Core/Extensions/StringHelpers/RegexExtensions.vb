@@ -35,9 +35,8 @@
     ' 
     '     Properties: RegexpTimeout
     ' 
-    '     Function: (+2 Overloads) EachValue, IsPattern, Locates, ToArray
-    ' 
-    '     Sub: New
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: (+2 Overloads) EachValue, IsPattern, Locates, PythonRawRegexp, (+2 Overloads) ToArray
     '     Structure [NameOf]
     ' 
     ' 

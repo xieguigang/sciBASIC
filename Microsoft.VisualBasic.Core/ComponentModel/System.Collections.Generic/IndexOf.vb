@@ -35,9 +35,11 @@
     ' 
     '         Properties: Count, Map, Objects
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: GetEnumerator, IEnumerable_GetEnumerator, (+2 Overloads) Intersect, NotExists, ToString
     ' 
-    '         Sub: Add, Clear, (+2 Overloads) New
+    '         Sub: Add, Clear
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,47 +1,46 @@
-﻿#Region "Microsoft.VisualBasic::5e790f9193860320fd8094b990075192, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::2c6d3618db23552ede4f7e9cf99a23df, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class APIEntryPoint
-' 
-'         Properties: Arguments, EntryPoint, IsInstanceMethod, target
-' 
-'         Function: __directInvoke, DirectInvoke, EntryPointFullName, HelpInformation, (+2 Overloads) Invoke
-'                   InvokeCLI
-' 
-'         Sub: (+3 Overloads) New
-' 
-' 
-' /********************************************************************************/
+    '     Class APIEntryPoint
+    ' 
+    '         Properties: Arguments, EntryPoint, IsInstanceMethod, target
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: __directInvoke, DirectInvoke, EntryPointFullName, HelpInformation, (+2 Overloads) Invoke
+    '                   InvokeCLI
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -220,33 +219,37 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' </summary>
         ''' <param name="callParameters"></param>
         ''' <param name="target"></param>
-        ''' <param name="[Throw]"></param>
+        ''' <param name="[throw]"></param>
         ''' <returns></returns>
-        Private Function __directInvoke(callParameters As Object(), target As Object, [Throw] As Boolean) As Object
+        Private Function __directInvoke(callParameters As Object(), target As Object, [throw] As Boolean) As Object
             Dim rtvl As Object
 
             Try
                 rtvl = EntryPoint.Invoke(target, callParameters)
             Catch ex As Exception
-                Dim args As String() = callParameters _
+                Dim args$() = callParameters _
                     .Select(AddressOf Scripting.ToString) _
                     .ToArray
                 Dim paramTrace As String = String.Join(vbCrLf, args)
                 Dim source As Exception = ex
+                Dim trace$ = MethodBase.GetCurrentMethod.GetFullName
 
                 ex = New Exception(paramTrace, ex)
                 ex = New VisualBasicAppException(ex, EntryPoint.GetFullName(True))
 
                 VBDebugger.Mute = False ' Enable output the exception details on the console.
 
-                Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
+                Call App.LogException(ex, trace)
                 Call DebuggerArgs.SaveErrorLog(App.BugsFormatter(ex))
                 Call VBDebugger.WaitOutput()
 
-                If [Throw] Then
+                If [throw] Then
                     Throw ex
                 Else
                     Call ExceptionHandler.Print(source, EntryPoint)
+                    Call $"[Log] {trace.GetFullPath}".__INFO_ECHO
+                    Call VBDebugger.WaitOutput()
+
                     rtvl = -100
                 End If
             End Try

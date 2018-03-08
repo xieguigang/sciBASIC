@@ -43,9 +43,8 @@
     ' 
     '         Properties: [Default]
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: EncodingParser, ToString, XmlEncodingString, XmlStandaloneString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

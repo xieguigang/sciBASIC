@@ -35,21 +35,27 @@
     ' 
     '         Properties: Value
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetValue, Start
     ' 
-    '         Sub: __invokeTask, New
+    '         Sub: __invokeTask
     ' 
     '     Class Task
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Start
     ' 
-    '         Sub: __invokeTask, New, RaisingEvent
+    '         Sub: __invokeTask, RaisingEvent
     ' 
     '     Class Task
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Start
     ' 
-    '         Sub: __invokeTask, New, RaisingEvent
+    '         Sub: __invokeTask, RaisingEvent
     ' 
     ' 
     ' /********************************************************************************/

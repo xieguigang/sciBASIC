@@ -33,7 +33,7 @@
 
     '     Module FuncParser
     ' 
-    '         Function: TryParse
+    '         Function: __defineParser, TryParse
     ' 
     ' 
     ' /********************************************************************************/

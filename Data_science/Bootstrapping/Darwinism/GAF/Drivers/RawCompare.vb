@@ -33,9 +33,8 @@
 
     '     Class RawCompare
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Calculate
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

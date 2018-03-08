@@ -35,9 +35,11 @@
     ' 
     '         Properties: CompleteLinkageResultCluster, LloydsResultCluster
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: distanceToOtherPoint, fromStringArray
     ' 
-    '         Sub: CompleteLinkageCluster, (+2 Overloads) New, SetKMeansCluster
+    '         Sub: CompleteLinkageCluster, SetKMeansCluster
     ' 
     ' 
     ' /********************************************************************************/

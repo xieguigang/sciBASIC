@@ -38,9 +38,11 @@
     ' 
     '     Properties: df
     ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
     '     Function: y0
     ' 
-    '     Sub: func, (+2 Overloads) New
+    '     Sub: func
     ' 
     ' 
     ' 

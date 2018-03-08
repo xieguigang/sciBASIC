@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ba74388680da790408354af5cfbdc94, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::ca68fd3a8807462f3364f60b8e5d4144, Microsoft.VisualBasic.Core\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '         Properties: [String], CasterString, Types
     ' 
-    '         Function: [DirectCast], (+2 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, DefaultTextParser
-    '                   IsPrimitive, StringParser, ToString
+    '         Function: [DirectCast], (+2 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+2 Overloads) CTypeDynamic
+    '                   DefaultTextParser, IsPrimitive, StringParser, ToString
     ' 
     '         Sub: CapabilityPromise
     ' 

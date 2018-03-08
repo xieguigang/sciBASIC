@@ -41,7 +41,8 @@
     ' 
     '             Properties: [error], parameter, result
     ' 
-    '             Sub: New, Run
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Run
     ' 
     ' 
     ' 

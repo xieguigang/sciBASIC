@@ -35,9 +35,8 @@
     ' 
     '         Properties: Path, Types
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: [GetType], EnsureType, ToString
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

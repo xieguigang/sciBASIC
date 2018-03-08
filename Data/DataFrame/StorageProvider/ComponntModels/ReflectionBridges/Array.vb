@@ -35,14 +35,12 @@
     ' 
     '         Properties: ArrayDefine, Name, ProviderId
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: CreateObject, ToString
-    ' 
-    '         Sub: New
     '         Class __createArray
     ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Function: LoadData, ToString
-    ' 
-    '             Sub: New
     ' 
     ' 
     ' 

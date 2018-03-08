@@ -33,10 +33,8 @@
 
     '     Structure Vector3D
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: PointXY, Project, RotateX, RotateY, RotateZ
-    ' 
-    '         Sub: New
-    ' 
     '         Operators: -
     ' 
     ' 

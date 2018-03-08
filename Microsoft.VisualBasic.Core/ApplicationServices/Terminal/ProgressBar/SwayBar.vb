@@ -42,9 +42,11 @@
     ' 
     '  
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: BlankPointer
     ' 
-    '     Sub: [Step], ClearBar, New, PlacePointer
+    '     Sub: [Step], ClearBar, PlacePointer
     ' 
     ' 
     ' /********************************************************************************/

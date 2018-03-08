@@ -33,52 +33,59 @@
 
     '     Class node
     ' 
-    '         Properties: attributes, zIndex
+    '         Properties: [class], attributes, fill, id, stroke
+    '                     style, zIndex
     ' 
     '         Function: ToString
     ' 
     '     Class title
     ' 
-    ' 
+    '         Properties: innerHTML
     ' 
     '     Class circle
     ' 
-    '         Properties: title
+    '         Properties: cx, cy, r, title
     '         Operators: +
     ' 
     '     Class polygon
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Properties: points
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Operators: +
     ' 
     '     Class polyline
     ' 
-    ' 
+    '         Properties: points
     ' 
     '     Class rect
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Properties: height, width, x, y
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Operators: +
     ' 
     '     Class path
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Properties: d
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Operators: +
     ' 
     '     Class line
     ' 
+    '         Properties: x1, x2, y1, y2
     '         Operators: +
     ' 
     '     Class text
     ' 
+    '         Properties: anchor, dy, transform, value, x
+    '                     y
     '         Operators: +
     ' 
     '     Class CSSStyles
     ' 
-    ' 
+    '         Properties: id, styles
     ' 
     ' 
     ' /********************************************************************************/

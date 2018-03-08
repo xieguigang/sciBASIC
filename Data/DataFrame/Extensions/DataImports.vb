@@ -33,7 +33,7 @@
 
     ' Module DataImports
     ' 
-    '     Function: [Imports], FixLengthImports, (+3 Overloads) ImportsData, ImportsTsv, (+2 Overloads) RowParsing
+    '     Function: (+2 Overloads) [Imports], FixLengthImports, (+3 Overloads) ImportsData, ImportsTsv, (+2 Overloads) RowParsing
     '               SampleForType
     ' 
     ' /********************************************************************************/

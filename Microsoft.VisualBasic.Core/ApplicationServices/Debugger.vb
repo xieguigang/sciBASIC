@@ -33,16 +33,16 @@
 
     ' Module VBDebugger
     ' 
-    '     Function: die
+    '     Function: die, LinqProc
     '     Delegate Sub
     ' 
     '         Properties: ForceSTDError, Mute, UsingxConsole
     ' 
-    '         Function: Assert, BENCHMARK, getColor, PrintException, this
-    '                   Warning
+    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, getColor, (+2 Overloads) PrintException
+    '                   this, Warning
     ' 
-    '         Sub: __print, (+3 Overloads) Assertion, AttachLoggingDriver, cat, WaitOutput
-    '              WriteLine
+    '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, __print, (+3 Overloads) Assertion, AttachLoggingDriver
+    '              cat, (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
     ' 
     ' 
     ' 

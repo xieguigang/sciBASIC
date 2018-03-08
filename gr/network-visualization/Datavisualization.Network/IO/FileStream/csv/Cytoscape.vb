@@ -42,7 +42,7 @@
     '         Properties: AverageShortestPathLength, BetweennessCentrality, ClosenessCentrality, ClusteringCoefficient, Data
     '                     Degree, Eccentricity, IsSingleNode, name, NeighborhoodConnectivity
     '                     NumberOfDirectedEdges, NumberOfUndirectedEdges, PartnerOfMultiEdgedNodePairs, Radiality, SelfLoops
-    '                     Stress, SUID, TopologicalCoefficient
+    '                     SharedName, Stress, SUID, TopologicalCoefficient
     ' 
     '         Function: ToString
     ' 

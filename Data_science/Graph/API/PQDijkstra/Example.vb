@@ -33,9 +33,8 @@
 
     '     Class Finder
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: getInternodeTraversalCost, GetNearbyNodes, GetRelativePosition
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

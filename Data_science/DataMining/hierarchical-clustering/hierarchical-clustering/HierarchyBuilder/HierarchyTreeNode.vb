@@ -35,9 +35,8 @@
     ' 
     '         Properties: Left, LinkageDistance, Right
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Agglomerate, compareTo, GetOtherCluster, Reverse, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

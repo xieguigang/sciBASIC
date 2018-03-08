@@ -35,9 +35,8 @@
     ' 
     '         Properties: Initialized, Product, Services
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __install, (+3 Overloads) LogException, ToString, (+6 Overloads) WriteEntry
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/
@@ -79,12 +78,12 @@ Namespace ApplicationServices.Debugging.Logging
         End Sub
 
         Private Shared Function __install(Services As String, Product As String) As Boolean
-            If Not (Diagnostics.EventLog.SourceExists(Product, ".")) Then
+            If Not (System.Diagnostics.EventLog.SourceExists(Product, ".")) Then
                 Dim evscd As New EventSourceCreationData(Product, Services) With {
-                    .MachineName = System.Environment.MachineName
+                    .MachineName = Environment.MachineName
                 }
                 Try
-                    Call Diagnostics.EventLog.CreateEventSource(evscd)
+                    Call System.Diagnostics.EventLog.CreateEventSource(evscd)
                 Catch ex As Exception
                     Call ex.PrintException
                     Return False
@@ -107,7 +106,7 @@ Namespace ApplicationServices.Debugging.Logging
 #If DEBUG Then
                 Call message.__DEBUG_ECHO
 #End If
-                Using evLog As New Diagnostics.EventLog(Services, ".", Product)
+                Using evLog As New System.Diagnostics.EventLog(Services, ".", Product)
                     Call evLog.WriteEvent(New EventInstance(10001 + category, category, EventType), {message})
                 End Using
             Catch ex As Exception
@@ -131,7 +130,7 @@ Namespace ApplicationServices.Debugging.Logging
                 Dim s As String = Message.JoinBy(vbCrLf)
                 Call s.__DEBUG_ECHO
 #End If
-                Using evLog As New Diagnostics.EventLog(Services, ".", Product)
+                Using evLog As New System.Diagnostics.EventLog(Services, ".", Product)
                     Dim data As Object() = Message.Select(Function(str) DirectCast(str, Object)).ToArray
                     Call evLog.WriteEvent(New EventInstance(10001 + category * 55, category, EventType), data)
                 End Using

@@ -46,9 +46,8 @@
     '     Properties: HasError, IsPercentage, IsRelative, Length, Number
     '                 Unit
     ' 
+    '     Constructor: (+1 Overloads) Sub New
     '     Function: ConvertEmToPixels, ConvertEmToPoints, ToString
-    ' 
-    '     Sub: New
     ' 
     ' 
     ' /********************************************************************************/

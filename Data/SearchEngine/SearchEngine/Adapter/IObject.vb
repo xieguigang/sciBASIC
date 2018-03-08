@@ -35,9 +35,8 @@
     ' 
     '     Properties: Schema, Type
     ' 
+    '     Constructor: (+2 Overloads) Sub New
     '     Function: EnumerateFields, ToString
-    ' 
-    '     Sub: (+2 Overloads) New
     ' 
     ' /********************************************************************************/
 

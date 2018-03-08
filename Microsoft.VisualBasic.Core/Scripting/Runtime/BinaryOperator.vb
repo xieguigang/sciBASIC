@@ -35,10 +35,9 @@
     ' 
     '         Properties: Name
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: __invokeInternal, CreateOperator, InvokeSelfLeft, InvokeSelfRight, Match
     '                   MatchLeft, MatchRight, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

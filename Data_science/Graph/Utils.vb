@@ -33,7 +33,7 @@
 
     ' Module Utils
     ' 
-    '     Function: Summary, SummaryMe
+    '     Function: Build, Summary, SummaryMe
     ' 
     ' /********************************************************************************/
 

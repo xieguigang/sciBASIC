@@ -33,7 +33,7 @@
 
     '     Class FuzzyModel
     ' 
-    '         Properties: Defuzzify, Output, Rules
+    '         Properties: Defuzzify, Fuzzify, Input, Output, Rules
     ' 
     '         Function: FromXml, Load, Save
     ' 

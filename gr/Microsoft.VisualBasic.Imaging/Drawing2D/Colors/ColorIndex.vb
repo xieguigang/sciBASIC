@@ -33,9 +33,8 @@
 
     '     Class ColorIndex
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: GetLevel, IndexOf
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Structure ColorRange
     ' 

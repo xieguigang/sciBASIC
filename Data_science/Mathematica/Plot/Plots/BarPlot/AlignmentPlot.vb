@@ -33,8 +33,8 @@
 
     '     Module AlignmentPlot
     ' 
-    '         Function: __createHits, HighlightGroups, Keys, PlotAlignment, PlotAlignmentGroups
-    '                   Values
+    '         Function: __createHits, HighlightGroups, Hit, Keys, PlotAlignment
+    '                   PlotAlignmentGroups, Values
     '         Structure Signal
     ' 
     '             Function: ToString

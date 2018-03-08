@@ -33,34 +33,33 @@
 
     '     Class NearestPoint
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class BoundingBox
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class ForceDirected
     ' 
     '         Properties: Damping, graph, Repulsion, Stiffness, Threadshold
     '                     WithinThreashold
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetSpring, getTotalEnergy, Nearest
     ' 
     '         Sub: applyCoulombsLaw, applyHookesLaw, attractToCentre, Calculate, Clear
-    '              EachEdge, EachNode, New, SetPhysics, updatePosition
-    '              updateVelocity
+    '              EachEdge, EachNode, SetPhysics, updatePosition, updateVelocity
     ' 
     '     Class ForceDirected2D
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetBoundingBox, GetPoint
-    ' 
-    '         Sub: New
     ' 
     '     Class ForceDirected3D
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetBoundingBox, GetPoint
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

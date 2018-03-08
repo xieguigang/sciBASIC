@@ -35,9 +35,8 @@
     ' 
     '         Properties: Flags, StringBuilders, StringParsers
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: DictionaryTable, (+2 Overloads) Schema
-    ' 
-    '         Sub: New
     '         Delegate Function
     ' 
     '             Function: __initSchema, CreateObject, GetValue, IscomplexType, IsPrimitive

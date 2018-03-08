@@ -48,15 +48,14 @@
     ' 
     '         Properties: X1, X2, Y1, Y2
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Structure Polygon
     ' 
     '         Properties: Length
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,11 +33,10 @@
 
     '     Class [Namespace]
     ' 
-    '         Properties: [Namespace], Description, TypeInfo
+    '         Properties: [Namespace], AutoExtract, Description, TypeInfo
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: CreateInstance, ToString
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

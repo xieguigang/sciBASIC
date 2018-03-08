@@ -35,9 +35,8 @@
     ' 
     '         Properties: Delimiter, ProviderId, TypeInfo
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) CreateObject, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,9 +35,11 @@
     ' 
     '         Properties: value
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ToString
     ' 
-    '         Sub: EMail, New
+    '         Sub: EMail
     ' 
     ' 
     ' /********************************************************************************/

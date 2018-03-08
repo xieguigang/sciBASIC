@@ -33,13 +33,12 @@
 
     '     Class TreeNode
     ' 
-    '         Properties: ChainPosition, DisplayQualifiedName, Left, Name, Parent
-    '                     QualifiedName, Right, Value
+    '         Properties: AllChilds, ChainPosition, Count, DisplayQualifiedName, IsLeaf
+    '                     Left, Name, Parent, QualifiedName, Right
+    '                     Value
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: GetEnumerator, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
-    ' 
     '         Operators: -, +
     ' 
     ' 

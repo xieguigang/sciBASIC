@@ -35,9 +35,11 @@
     ' 
     '     Properties: Length, URI
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: Open
     ' 
-    '     Sub: Cleanup, (+2 Overloads) Dispose, New, Read
+    '     Sub: Cleanup, (+2 Overloads) Dispose, Read
     ' 
     ' /********************************************************************************/
 

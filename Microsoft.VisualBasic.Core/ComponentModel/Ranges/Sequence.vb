@@ -35,9 +35,8 @@
     ' 
     '         Properties: Max, Min, n, Range, Steps
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) IsInside, IsOverlapping, ToArray, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

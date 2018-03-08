@@ -33,9 +33,8 @@
 
     '     Class Model
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: (+4 Overloads) RunTest, y0
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

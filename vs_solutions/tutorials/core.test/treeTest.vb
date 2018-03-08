@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64a39e66adbca392459cee041c7dd66d, vs_solutions\tutorials\core.test\treeTest.vb"
+﻿#Region "Microsoft.VisualBasic::5c157c208b6659a1ca66836033f2b40e, vs_solutions\tutorials\core.test\treeTest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,12 @@
 
     ' Module treeTest
     ' 
-    '     Sub: Main
+    '     Sub: Main, sortTest
+    '     Structure compares
+    ' 
+    '         Function: Compare
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 

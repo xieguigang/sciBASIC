@@ -35,9 +35,11 @@
     ' 
     '         Properties: Description, Name, Type, value
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: ToString
     ' 
-    '         Sub: (+2 Overloads) New, SetValue
+    '         Sub: SetValue
     ' 
     '     Interface IProfileTable
     ' 

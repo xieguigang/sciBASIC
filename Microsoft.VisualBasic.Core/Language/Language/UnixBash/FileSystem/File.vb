@@ -44,9 +44,11 @@
     ' 
     '     Module FileHandles
     ' 
-    '         Function: __getHandle, OpenTemp, Wait
+    '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Sub: Close, New
+    '         Function: __getHandle, FileOpened, OpenHandle, OpenTemp, Wait
+    ' 
+    '         Sub: Close
     ' 
     ' 
     ' /********************************************************************************/

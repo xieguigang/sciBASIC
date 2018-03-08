@@ -33,9 +33,8 @@
 
     ' 	Class Rayleigh
     ' 
+    ' 	    Constructor: (+3 Overloads) Sub New
     ' 	    Function: GetCDF, GetInvCDF, GetPDF, GetSigma, Validate
-    ' 
-    ' 	    Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

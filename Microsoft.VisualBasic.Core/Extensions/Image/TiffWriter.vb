@@ -33,11 +33,12 @@
 
     '     Class TiffWriter
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __bitmaps, __getPageNumber, ConvertToBitonal, ExistingFileSave, GetCodec
     '                   GetEnumerator, IEnumerable_GetEnumerator, MultipageTiffSave, SaveMultipage, SaveToExistingFile
     ' 
     '         Sub: __saveImageExistingMultiplePage, __saveImageExistingSinglePage, __saveMultipage, __saveToExistingFile, Add
-    '              New
     ' 
     ' 
     ' /********************************************************************************/

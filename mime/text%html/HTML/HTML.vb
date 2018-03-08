@@ -35,9 +35,8 @@
     ' 
     '         Properties: Body, Head, Language
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToArray, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Class HtmlHead
     ' 
@@ -47,9 +46,10 @@
     ' 
     '     Class CSS
     ' 
-    '         Properties: Elements
+    '         Properties: Elements, InnerText
     ' 
-    '         Sub: Add, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Add
     ' 
     '     Class CSSElement
     ' 

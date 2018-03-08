@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f0d335f8af41495d33fcf0362f58090, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::e97147fecf17be6c0e05541fa2e5b449, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -42,15 +42,17 @@
     '                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
     '                 StartupDirectory, StdErr, SysTemp, UserHOME, Version
     ' 
-    '     Function: __CLI, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
-    '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, ElapsedMilliseconds
-    '               GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile, GetAppVariables, GetFile
-    '               GetProductSharedDIR, GetProductSharedTemp, GetTempFile, GetVariable, (+3 Overloads) LogException
-    '               NullDevice, RunCLI, RunCLIInternal, SelfFolk, SelfFolks
-    '               Shell, TraceBugs
+    '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, JoinVariable
-    '          (+2 Overloads) JoinVariables, New, Pause, (+2 Overloads) println, RunAsAdmin
+    '     Function: __CLI, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
+    '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
+    '               ElapsedMilliseconds, Exit, GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile
+    '               GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
+    '               GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal
+    '               SelfFolk, SelfFolks, Shell, TraceBugs
+    ' 
+    '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
+    '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
     '          SetBufferSize, StartGC, StopGC
     ' 
     ' /********************************************************************************/
@@ -752,13 +754,12 @@ Public Module App
     ''' (简单日志记录，函数返回空值)
     ''' </summary>
     ''' <param name="ex"></param>
-    ''' <param name="Trace">调用函数的位置，这个参数一般为空，编译器会自动生成Trace位点参数</param>
-    ''' <returns></returns>
-    '''
+    ''' <param name="trace">调用函数的位置，这个参数一般为空，编译器会自动生成Trace位点参数</param>
+    ''' <returns>这个函数总是返回空值的</returns>
     <ExportAPI("LogException")>
-    Public Function LogException(ex As Exception, <CallerMemberName> Optional Trace$ = "") As Object
+    Public Function LogException(ex As Exception, <CallerMemberName> Optional ByRef trace$ = "") As Object
         Try
-            Call App.TraceBugs(ex, Trace)
+            trace = App.TraceBugs(ex, trace)
         Catch ex2 As Exception
             ' 错误日志文件的存放位置不可用或者被占用了不可写，则可能会出错，
             ' 在这里将原来的错误打印在终端上面就行了， 扔弃掉这个错误日志
@@ -775,12 +776,23 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("TraceBugs")>
-    Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional Trace$ = "") As String
-        Dim Entry As String = App.__getTEMPhash
-        Entry = $"{Now.Year}-{Now.Month}-{Now.Day}, {Format(Now.Hour, "00")}-{Format(Now.Minute, "00")}-{Format(Now.Second, "00")}_{Entry}"
-        Dim log As String = $"{App.LogErrDIR}/{Entry}.log"
-        Call App.LogException(ex, Trace, log)
+    Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
+        Dim entry$ = $"{Now.formatTime}_{App.__getTEMPhash}"
+        Dim log$ = $"{App.LogErrDIR}/{entry}.log"
+        Call App.LogException(ex, trace, log)
         Return log
+    End Function
+
+    <Extension>
+    Private Function formatTime(time As DateTime) As String
+        Dim yy = time.Year
+        Dim mm = time.Month
+        Dim dd = time.Day
+        Dim hh = time.Hour
+        Dim mi = time.Minute
+        Dim ss = time.Second
+
+        Return $"{yy}-{mm}-{dd}, {Format(hh, "00")}-{Format(mi, "00")}-{Format(ss, "00")}"
     End Function
 
     ''' <summary>
@@ -847,7 +859,7 @@ Public Module App
     End Property
 
     ''' <summary>
-    ''' Error default log fie location from function <see cref="App.LogException(Exception, String)"/>.(存放自动存储的错误日志的文件夹)
+    ''' Error default log fie location from function <see cref="App.LogException(Exception, ByRef String)"/>.(存放自动存储的错误日志的文件夹)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property LogErrDIR As String
@@ -871,24 +883,55 @@ Public Module App
     ''' Generates the formatted error log file content.(生成简单的日志板块的内容)
     ''' </summary>
     ''' <param name="ex"></param>
-    ''' <param name="Trace"></param>
+    ''' <param name="trace"></param>
     ''' <returns></returns>
     '''
     <ExportAPI("Bugs.Formatter")>
-    Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional Trace$ = "") As String
-        Dim exMsg As StringBuilder = New StringBuilder()
-        Call exMsg.AppendLine("TIME:  " & Now.ToString)
-        Call exMsg.AppendLine("TRACE: " & Trace)
-        Call exMsg.AppendLine(New String("=", 120))
-        Call exMsg.Append(LogFile.SystemInfo)
-        Call exMsg.AppendLine(New String("=", 120))
-        Call exMsg.AppendLine($"Environment Variables from {GetType(App).FullName}:")
-        Call exMsg.AppendLine()
-        Call exMsg.AppendLine(ConfigEngine.Prints(App.GetAppVariables))
-        Call exMsg.AppendLine()
-        Call exMsg.AppendLine(New String("=", 120))
-        Call exMsg.AppendLine(ex.ToString)
-        Return exMsg.ToString
+    Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
+        Dim logs = ex.ToString.lTokens
+        Dim stackTrace = logs _
+            .Where(Function(s)
+                       Return InStr(s, "   在 ") = 1 OrElse InStr(s, "   at ") = 1
+                   End Function) _
+            .AsList
+        Dim message = logs _
+            .Where(Function(s)
+                       Return Not s.IsPattern("\s+[-]{3}.+?[-]{3}\s*") AndAlso stackTrace.IndexOf(s) = -1
+                   End Function) _
+            .JoinBy(ASCII.LF) _
+            .Trim _
+            .StringSplit("\s[-]{3}>\s")
+
+        Return New StringBuilder() _
+            .AppendLine("TIME:  " & Now.ToString) _
+            .AppendLine("TRACE: " & trace) _
+            .AppendLine(New String("=", 120)) _
+            .Append(LogFile.SystemInfo) _
+            .AppendLine(New String("=", 120)) _
+            .AppendLine() _
+            .AppendLine($"Environment Variables from {GetType(App).FullName}:") _
+            .AppendLine(ConfigEngine.Prints(App.GetAppVariables)) _
+            .AppendLine(New String("=", 120)) _
+            .AppendLine() _
+            .AppendLine(ex.GetType.FullName & ":") _
+            .AppendLine() _
+            .AppendLine(message _
+                .Select(Function(s) "    ---> " & s) _
+                .JoinBy(ASCII.LF)) _
+            .AppendLine() _
+            .AppendLine(stackTrace _
+                .Select(Function(s)
+                            If InStr(s, "   在 ") = 1 Then
+                                Return Mid(s, 6).Trim
+                            ElseIf InStr(s, "   at ") = 1 Then
+                                Return Mid(s, 7).Trim
+                            Else
+                                Return s
+                            End If
+                        End Function) _
+                .Select(Function(s) "   at " & s) _
+                .JoinBy(ASCII.LF)) _
+            .ToString()
     End Function
 
     ''' <summary>
@@ -1276,8 +1319,7 @@ Public Module App
     ''' <summary>
     ''' 自动垃圾回收线程
     ''' </summary>
-    ReadOnly __GCThread As UpdateThread =
-        New UpdateThread(10 * 60 * 1000, AddressOf App.__GCThreadInvoke)
+    ReadOnly __GCThread As New UpdateThread(10 * 60 * 1000, AddressOf App.__GCThreadInvoke)
 
     Dim _CLIAutoClean As Boolean = False
     Dim __exitHooks As New List(Of Action)
@@ -1321,8 +1363,12 @@ Public Module App
         Call Console.WriteLine()
 
 #If DEBUG Then
-        ' 应用程序在 debug 模式下会自动停止在这里
-        Call Pause()
+        ' this option enable you disable the pause in debug mode 
+        ' when the program is going to end.
+        If Not App.GetVariable("pause.disable").ParseBoolean = True Then
+            ' 应用程序在 debug 模式下会自动停止在这里
+            Call Pause()
+        End If
 #End If
         Return state
     End Function

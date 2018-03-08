@@ -33,8 +33,9 @@
 
     '     Class Home
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Sub: __update, Add_Author_Click, AuthorAddCommon, copyright_TextChanged, license_brief_TextChanged
-    '              license_title_TextChanged, Load_Click, New, Save_Click
+    '              license_title_TextChanged, Load_Click, Save_Click
     ' 
     ' 
     ' /********************************************************************************/

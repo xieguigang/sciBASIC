@@ -35,7 +35,8 @@
     ' 
     '         Properties: ForWhichCharacter
     ' 
-    '         Sub: Execute, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Execute
     ' 
     ' 
     ' /********************************************************************************/

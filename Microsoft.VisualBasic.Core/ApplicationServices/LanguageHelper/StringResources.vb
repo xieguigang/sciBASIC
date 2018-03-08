@@ -35,9 +35,8 @@
     ' 
     '         Properties: [Default], Name, Resources
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __getLanguageResources, __getValue, SafelyGenerates, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

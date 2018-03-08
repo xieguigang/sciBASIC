@@ -35,9 +35,11 @@
     ' 
     '     Properties: Left, Right
     ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
     '     Function: Insert, ROOT
     ' 
-    '     Sub: InternalAdd, (+2 Overloads) New
+    '     Sub: InternalAdd
     ' 
     ' /********************************************************************************/
 

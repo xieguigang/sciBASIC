@@ -33,11 +33,9 @@
 
     '     Class VectorShadows
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: [As], binaryOperatorSelfLeft, CreateVector, GetDynamicMemberNames, GetJson
     '                   TryBinaryOperation, (+2 Overloads) TryGetMember, TryInvokeMember, TrySetMember, TryUnaryOperation
-    ' 
-    '         Sub: New
-    ' 
     '         Operators: \, (+2 Overloads) Like
     ' 
     ' 

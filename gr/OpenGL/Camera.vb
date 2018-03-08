@@ -36,9 +36,11 @@
     '     Properties: At, Pitch, Position, Right, Roll
     '                 UP, Yaw
     ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
     '     Function: ToString
     ' 
-    '     Sub: InvokePitch, (+2 Overloads) New, Render, Walk
+    '     Sub: InvokePitch, Render, Walk
     ' 
     ' /********************************************************************************/
 

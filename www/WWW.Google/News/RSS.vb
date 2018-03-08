@@ -33,7 +33,7 @@
 
     '     Class RSS
     ' 
-    '         Properties: channel
+    '         Properties: channel, version
     ' 
     '         Function: Fetch, GetCurrent, ToString
     ' 

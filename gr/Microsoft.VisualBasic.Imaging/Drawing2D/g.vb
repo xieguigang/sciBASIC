@@ -38,10 +38,12 @@
     ' 
     '         Properties: ActiveDriver
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __getDriver, Allocate, CreateGraphics, (+2 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
     '                   MeasureWidthOrHeight
     ' 
-    '         Sub: FillBackground, New
+    '         Sub: DropdownShadows, FillBackground
     '         Class InternalCanvas
     ' 
     '             Properties: bg, padding, size

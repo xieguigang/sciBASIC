@@ -33,10 +33,10 @@
 
     ' Module Bootstraping
     ' 
-    '     Function: [Shadows], AboveStandardDistribution, BelowStandardDistribution, BetweenStandardDistribution, Distributes
-    '               Hist, Logistic, OutsideStandardDistribution, (+2 Overloads) ProbabilityDensity, Sample
-    '               (+2 Overloads) Samples, Sampling, StandardDistribution, TrapezodialRule, TruncNDist
-    '               Z
+    '     Function: [Shadows], AboveStandardDistribution, BelowStandardDistribution, BetweenStandardDistribution, DeviationStandardization
+    '               Distributes, Hist, Logistic, OutsideStandardDistribution, (+2 Overloads) ProbabilityDensity
+    '               Sample, (+2 Overloads) Samples, Sampling, StandardDistribution, TrapezodialRule
+    '               TruncNDist, (+2 Overloads) Z
     ' 
     ' /********************************************************************************/
 

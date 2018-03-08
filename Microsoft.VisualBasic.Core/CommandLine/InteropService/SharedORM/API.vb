@@ -33,7 +33,7 @@
 
     '     Module API
     ' 
-    '         Function: BuildArguments
+    '         Function: BuildArguments, CommandLineModel, Tokenize
     ' 
     '         Sub: Tokenize
     ' 

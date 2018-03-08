@@ -36,10 +36,12 @@
     '         Properties: __keys, __values, (+2 Overloads) Count, IsReadOnly, Keys
     '                     Values
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: Contains, (+2 Overloads) ContainsKey, GetEnumerator, GetEnumerator1, (+2 Overloads) Remove
     '                   (+2 Overloads) TryGetValue
     ' 
-    '         Sub: (+2 Overloads) Add, Clear, CopyTo, (+2 Overloads) Dispose, (+2 Overloads) New
+    '         Sub: (+2 Overloads) Add, Clear, CopyTo, (+2 Overloads) Dispose
     ' 
     ' 
     ' /********************************************************************************/

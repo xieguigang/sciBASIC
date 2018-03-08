@@ -35,18 +35,19 @@
     ' 
     '         Properties: Increase, NormalVector, Offset
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: CalcY, Clone, Equals, GetX, ICloneable_Clone
     '                   ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Class LineBuilder
     ' 
     '         Properties: EndX, EndY, Length, StartX, StartY
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Build, ToString, UpdateEndPoint
     ' 
-    '         Sub: FlipPoints, New
+    '         Sub: FlipPoints
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,11 +35,13 @@
     ' 
     '         Properties: AllItems, FilePath, ProfileItemNode, ProfileItemType
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: (+2 Overloads) [Set], __getDefaultPath, ExistsNode, GetName, GetSettings
     '                   GetSettingsNode, Load, (+2 Overloads) Prints, Save, ToString
     '                   View
     ' 
-    '         Sub: Dispose, (+2 Overloads) New
+    '         Sub: Dispose
     ' 
     ' 
     ' /********************************************************************************/

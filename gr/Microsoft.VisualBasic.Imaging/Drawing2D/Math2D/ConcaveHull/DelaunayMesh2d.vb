@@ -33,10 +33,11 @@
 
     '     Class DelaunayMesh2d
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: AddFace, AddVertex, GetBoundaryEdges
     ' 
-    '         Sub: ExecuteEdgeDecimation, InitEdgesInfo, InitOppEdge, New, SetEdge
-    '              SetInvalid
+    '         Sub: ExecuteEdgeDecimation, InitEdgesInfo, InitOppEdge, SetEdge, SetInvalid
     ' 
     ' 
     ' /********************************************************************************/

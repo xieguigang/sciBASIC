@@ -35,9 +35,8 @@
     ' 
     '         Properties: Dictionary, MetaAttribute, Name, ProviderId
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: CreateDictionary, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,11 +33,13 @@
 
     '     Class CssLayoutEngine
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetAscent, GetDescent, GetLineSpacing, WhiteSpace
     ' 
     '         Sub: ApplyAlignment, ApplyCellVerticalAlignment, ApplyCenterAlignment, ApplyJustifyAlignment, ApplyLeftAlignment
     '              ApplyRightAlignment, ApplyRightToLeft, ApplyVerticalAlignment, BubbleRectangles, CreateLineBoxes
-    '              FlowBox, New
+    '              FlowBox
     ' 
     ' 
     ' /********************************************************************************/

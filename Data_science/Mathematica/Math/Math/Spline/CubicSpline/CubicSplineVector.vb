@@ -35,9 +35,11 @@
     ' 
     '         Properties: Count
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: GetEnumerator, GetPoint, IEnumerable_GetEnumerator, ToString
     ' 
-    '         Sub: Add, CalcNaturalCubic, CalcSpline, (+2 Overloads) New
+    '         Sub: Add, CalcNaturalCubic, CalcSpline
     ' 
     ' 
     ' /********************************************************************************/

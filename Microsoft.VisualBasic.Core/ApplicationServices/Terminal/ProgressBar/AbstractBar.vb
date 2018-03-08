@@ -33,7 +33,8 @@
 
     '     Class AbstractBar
     ' 
-    '         Sub: New, PrintMessage
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: PrintMessage
     ' 
     ' 
     ' /********************************************************************************/

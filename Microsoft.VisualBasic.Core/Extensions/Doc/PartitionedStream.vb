@@ -38,9 +38,11 @@
     ' 
     '         Properties: Current, EOF, Total
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: PartitionByLines, ReadPartition, ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose, (+2 Overloads) New
+    '         Sub: (+2 Overloads) Dispose
     ' 
     ' 
     ' 

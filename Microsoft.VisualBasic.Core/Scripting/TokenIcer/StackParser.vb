@@ -33,9 +33,9 @@
 
     '     Module StackParser
     ' 
-    '         Function: __parsing
+    '         Function: __parsing, Parsing
     ' 
-    '         Sub: __printStack
+    '         Sub: __printStack, PrintStack
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,9 +33,8 @@
 
     '     Class AES
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Decrypt, DecryptString, Encrypt, EncryptData
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

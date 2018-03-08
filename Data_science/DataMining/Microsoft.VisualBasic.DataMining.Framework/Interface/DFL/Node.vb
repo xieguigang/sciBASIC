@@ -35,9 +35,8 @@
     ' 
     '         Properties: State
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: get_FactorsCollectionWeight, MostAppears, ToArray
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

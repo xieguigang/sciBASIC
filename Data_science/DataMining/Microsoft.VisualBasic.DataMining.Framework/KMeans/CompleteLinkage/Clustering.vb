@@ -35,21 +35,20 @@
     ' 
     '         Properties: Points
     ' 
-    '         Sub: __writeCluster, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: __writeCluster
     ' 
     '     Class LloydsMethodClustering
     ' 
     '         Properties: Points
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Clustering
-    ' 
-    '         Sub: New
     ' 
     '     Class CompleteLinkageClustering
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Clustering
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

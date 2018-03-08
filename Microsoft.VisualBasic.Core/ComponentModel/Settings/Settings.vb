@@ -35,9 +35,8 @@
     ' 
     '         Properties: SettingsData
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: __createSave, CreateEmpty, Load, LoadFile
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

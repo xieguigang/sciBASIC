@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cafc7b723499dd4465bc0cf319512ab2, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::7386b09bb639ca6f66861f62e60be45b, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,12 +33,28 @@
 
     ' Module Extensions
     ' 
-    '     Function: (+2 Overloads) Average, Constrain, DriverRun, FirstNotEmpty, FormatTime
-    '               GetHexInteger, IndexOf, KeysJson, NotNull, Range
-    '               RunDriver, SaveAsTabularMapping, SelectFile, SetValue, SplitIterator
-    '               (+2 Overloads) SplitMV
     ' 
-    '     Sub: (+2 Overloads) Swap
+    ' Module Extensions
+    ' 
+    '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, Append
+    '               (+2 Overloads) Average, CheckDuplicated, Constrain, DataCounts, DateToString
+    '               DriverRun, ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching
+    '               GetHexInteger, (+2 Overloads) GetItem, (+2 Overloads) GetLength, IndexOf, InsertOrUpdate
+    '               Invoke, InvokeSet, Is_NA_UHandle, IsNaNImaginary, (+6 Overloads) IsNullOrEmpty
+    '               (+4 Overloads) Join, (+2 Overloads) JoinBy, Keys, KeysJson, Log2
+    '               (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5
+    '               ModifyValue, NormalizeXMLString, NotNull, (+2 Overloads) Offset, ParseDateTime
+    '               Range, Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast
+    '               RunDriver, SaveAsTabularMapping, Second, SelectFile, SeqRandom
+    '               (+2 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles
+    '               Split, SplitIterator, (+2 Overloads) SplitMV, StdError, TakeRandomly
+    '               Takes, ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray
+    '               ToVector, (+3 Overloads) TrimNull, (+2 Overloads) TryGetValue, Unlist, WriteAddress
+    ' 
+    '     Sub: (+5 Overloads) Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
+    '          SwapItem, SwapWith
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -33,7 +33,8 @@
 
     ' Module TextRank
     ' 
-    '     Function: Removes, Similarity, TextRankGraph
+    '     Function: Removes, Sentences, Similarity, StripMessy, TextGraph
+    '               TextRankGraph, Words
     ' 
     ' /********************************************************************************/
 

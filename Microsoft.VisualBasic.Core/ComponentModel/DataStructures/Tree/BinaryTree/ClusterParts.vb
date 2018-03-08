@@ -33,13 +33,15 @@
 
     '     Module ClusterParts
     ' 
-    '         Function: ClusterParts
+    '         Function: __addCluster, ClusterParts
     '         Delegate Function
     ' 
     ' 
     '         Delegate Function
     ' 
+    '             Function: __hashLeaf
     ' 
+    '             Sub: __continuteCluster
     ' 
     ' 
     ' 

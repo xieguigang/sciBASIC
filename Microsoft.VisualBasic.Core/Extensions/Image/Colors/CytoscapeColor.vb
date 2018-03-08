@@ -34,7 +34,7 @@
     '     Module HexColor
     ' 
     '         Function: DeciamlToHexadeciaml, GetNumberFromNotation, HexadecimaltoDecimal, HexToARGB, IsHexadecimal
-    '                   IsNumber
+    '                   IsNumber, ToHtmlColor
     ' 
     ' 
     ' /********************************************************************************/

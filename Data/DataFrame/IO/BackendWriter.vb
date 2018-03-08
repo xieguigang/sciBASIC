@@ -33,7 +33,8 @@
 
     '     Class BackendWriter
     ' 
-    '         Sub: New, Queue
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Queue
     ' 
     ' 
     ' /********************************************************************************/

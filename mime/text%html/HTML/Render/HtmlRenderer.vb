@@ -35,7 +35,8 @@
     ' 
     '         Properties: References
     ' 
-    '         Sub: AddReference, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: AddReference, (+2 Overloads) Render
     ' 
     ' 
     ' /********************************************************************************/

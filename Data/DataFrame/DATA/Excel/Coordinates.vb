@@ -33,7 +33,8 @@
 
     '     Module Coordinates
     ' 
-    '         Function: CellValue, Index, RangeSelects, Spans
+    '         Function: CellValue, ColumnIndex, Dimension, Index, RangeSelects
+    '                   Spans, YValue
     ' 
     ' 
     ' /********************************************************************************/

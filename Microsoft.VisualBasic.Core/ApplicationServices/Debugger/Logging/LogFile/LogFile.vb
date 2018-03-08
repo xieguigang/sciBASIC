@@ -35,10 +35,12 @@
     ' 
     '         Properties: FileName, NowTimeNormalizedString
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __getDefaultPath, Read, ReadLine, Save, SaveLog
     '                   SystemInfo, ToString
     ' 
-    '         Sub: Dispose, (+2 Overloads) LogException, New, (+4 Overloads) WriteLine
+    '         Sub: Dispose, (+2 Overloads) LogException, (+4 Overloads) WriteLine
     ' 
     ' 
     ' /********************************************************************************/

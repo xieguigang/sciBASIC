@@ -33,12 +33,17 @@
 
     ' Module ProgramPathSearchTool
     ' 
-    '     Function: BatchMd5Renamed, BranchRule, ChangeSuffix, DIR, DirectoryExists
-    '               EnumerateFiles, ExtensionSuffix, FileLength, FileName, GetMostAppreancePath
-    '               ListDirectory, ListFiles, (+2 Overloads) LoadSourceEntryList, PathCombine, ReadDirectory
-    '               (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory, SearchDrive, SearchProgram
-    '               SearchScriptFile, SourceCopy, TheFile, ToDIR_URL, TrimDIR
-    '               UnixPath
+    '     Function: BaseName, BatchMd5Renamed, BranchRule, ChangeSuffix, Delete
+    '               DIR, DirectoryExists, DirectoryName, EnumerateFiles, ExtensionSuffix
+    '               FileCopy, (+2 Overloads) FileExists, FileLength, FileName, FileOpened
+    '               GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath, GetMostAppreancePath
+    '               ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList, Long2Short
+    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
+    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory, SearchDrive
+    '               SearchProgram, SearchScriptFile, SourceCopy, TheFile, ToDIR_URL
+    '               ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    ' 
+    '     Sub: MkDIR
     ' 
     ' /********************************************************************************/
 

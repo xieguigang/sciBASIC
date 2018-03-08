@@ -38,9 +38,8 @@
     '         Function: GetExpression, ToString
     '         Class __callerHelper
     ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Function: Evaluate, getValue
-    ' 
-    '             Sub: New
     ' 
     ' 
     ' 

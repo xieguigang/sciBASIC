@@ -33,9 +33,8 @@
 
     '     Class Parser
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Match, (+2 Overloads) Search
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

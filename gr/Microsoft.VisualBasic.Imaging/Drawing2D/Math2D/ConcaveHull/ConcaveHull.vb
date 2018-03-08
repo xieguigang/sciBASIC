@@ -33,9 +33,8 @@
 
     '     Class DelaunayTriangulation
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Diameter, InCircle, MaxEdge, Triangulate, WhichSide
-    ' 
-    '         Sub: New
     ' 
     '     Structure TriangleIndex
     ' 
@@ -47,13 +46,12 @@
     ' 
     '     Structure Triangle
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Structure EdgeInfo
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetEdgeType, IsValid
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

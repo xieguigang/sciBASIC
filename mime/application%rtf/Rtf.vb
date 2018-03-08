@@ -35,10 +35,12 @@
     ' 
     '     Properties: GlobalFormat, Length
     ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
     '     Function: __getMetaDataStr, __toRTF, GetColor, GetFont, InternalSetFormat
     '               Save, SetFormat
     ' 
-    '     Sub: (+3 Overloads) AppendLine, AppendText, (+3 Overloads) New
+    '     Sub: (+3 Overloads) AppendLine, AppendText
     ' 
     ' /********************************************************************************/
 

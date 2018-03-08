@@ -35,7 +35,8 @@
     ' 
     '         Properties: FPS
     ' 
-    '         Sub: ClearFPSCount, device_MouseMove, (+2 Overloads) Dispose, DrawInformation, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: ClearFPSCount, device_MouseMove, (+2 Overloads) Dispose, DrawInformation
     ' 
     ' 
     ' /********************************************************************************/

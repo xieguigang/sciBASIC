@@ -33,7 +33,7 @@
 
     '     Module Selector
     ' 
-    '         Function: GenericSelector
+    '         Function: GenericSelector, SelectEdgeValue, SelectNodeValue
     '         Interface IGraphValueContainer
     ' 
     '             Properties: Data

@@ -35,8 +35,8 @@
     ' 
     '         Properties: NeuronNetwork, TrainingType, XP
     ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, Encouraging, New, RemoveLast
-    '              Train
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, Encouraging, RemoveLast, Train
     ' 
     ' 
     ' /********************************************************************************/

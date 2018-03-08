@@ -35,9 +35,11 @@
     ' 
     '         Properties: Edges, Nodes
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetNode, HaveNode, Load, Save
     ' 
-    '         Sub: New, RemoveDuplicated, RemoveSelfLoop
+    '         Sub: RemoveDuplicated, RemoveSelfLoop
     ' 
     '         Operators: (+4 Overloads) -, (+2 Overloads) ^, (+4 Overloads) +, <=, >=
     ' 

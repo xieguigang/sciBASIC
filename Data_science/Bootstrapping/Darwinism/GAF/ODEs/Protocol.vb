@@ -43,6 +43,8 @@
     '         Function: __runInternal, Balance, CreateVector, (+4 Overloads) Fitting, GetRandomParameters
     '                   y0
     ' 
+    '         Sub: Mutate
+    ' 
     ' 
     ' /********************************************************************************/
 

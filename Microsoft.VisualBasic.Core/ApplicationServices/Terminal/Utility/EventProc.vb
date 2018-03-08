@@ -35,9 +35,8 @@
     ' 
     '         Properties: Capacity
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Tick, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

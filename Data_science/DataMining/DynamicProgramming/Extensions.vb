@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c02a928b394d39427b39093dc007318d, Data_science\DataMining\DynamicProgramming\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0c0946e47aaace3e949e6a982af0e90b, Data_science\DataMining\DynamicProgramming\Extensions.vb"
 
     ' Author:
     ' 
@@ -61,4 +61,3 @@ Public Module Extensions
         Next
     End Function
 End Module
-

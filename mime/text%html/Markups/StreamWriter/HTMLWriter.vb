@@ -33,7 +33,7 @@
 
     '     Module HTMLWriter
     ' 
-    '         Function: ToString
+    '         Function: __generateDocNode, IsBr, Save, ToString
     ' 
     ' 
     ' /********************************************************************************/

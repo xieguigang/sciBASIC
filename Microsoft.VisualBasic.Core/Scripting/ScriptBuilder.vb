@@ -35,10 +35,8 @@
     ' 
     '         Properties: Preview, Script
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: AppendLine, Replace, (+2 Overloads) Save, ToString
-    ' 
-    '         Sub: (+4 Overloads) New
-    ' 
     '         Operators: +
     ' 
     ' 

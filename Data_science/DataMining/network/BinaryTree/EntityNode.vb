@@ -35,9 +35,8 @@
     ' 
     '         Properties: EntityID, MySelf, Type
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __pathName, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -41,7 +41,7 @@
     ' 
     '     Structure Link
     ' 
-    '         Properties: href
+    '         Properties: attr, href, title
     ' 
     '         Function: ToString
     ' 

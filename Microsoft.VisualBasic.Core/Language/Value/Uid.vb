@@ -35,9 +35,11 @@
     ' 
     '         Properties: Key
     ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
     '         Function: __plus, Plus, ToString
     ' 
-    '         Sub: __error, (+4 Overloads) New
+    '         Sub: __error
     ' 
     '         Operators: (+2 Overloads) +
     ' 

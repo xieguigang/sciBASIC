@@ -33,30 +33,33 @@
 
     '     Module xConsole
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: CheckNewVersion, ClearInput, ClosestConsoleColor, ConvertHexStringToByteArray, getColor
     '                   GetConsoleWindow, (+2 Overloads) Implode, ParseLine, Print, ReadKeys
     '                   ReadLine, RetrieveLinkerTimestamp, SetWindowPos
     ' 
     '         Sub: __checkUpdates, CheckforUpdates, ClearInput, (+2 Overloads) CoolWrite, CoolWriteLine
-    '              Credits, ListFonts, New, RestoreColors, SetFont
-    '              SetIcon, SetWindowPos, Wait, Write, (+3 Overloads) WriteLine
+    '              Credits, ListFonts, RestoreColors, SetFont, SetIcon
+    '              SetWindowPos, Wait, Write, (+3 Overloads) WriteLine
     '         Class CoolWriteSettings
     ' 
     '             Properties: CoolWriting, CoolWritingDelay, CWRDDelay
     ' 
-    '             Sub: New
+    '             Constructor: (+1 Overloads) Sub New
     ' 
     '         Class Comparer
     ' 
+    '             Constructor: (+3 Overloads) Sub New
     '             Function: Find
-    ' 
-    '             Sub: (+3 Overloads) New
     ' 
     '         Class Spinner
     ' 
+    '             Constructor: (+2 Overloads) Sub New
+    ' 
     '             Function: Turn
     ' 
-    '             Sub: Break, (+2 Overloads) New, Run, RunTask
+    '             Sub: Break, Run, RunTask
     ' 
     ' 
     ' 

@@ -33,11 +33,11 @@
 
     '     Class CSSFont
     ' 
-    '         Properties: CSSValue, GDIObject
+    '         Properties: [variant], CSSValue, family, GDIObject, size
+    '                     style, weight
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) GetFontStyle, GetStyle, (+2 Overloads) ToString, TryParse
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

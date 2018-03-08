@@ -35,9 +35,11 @@
     ' 
     '         Properties: obj, value
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: [New], GetValue, (+2 Overloads) Read, SetValue, ToString
     ' 
-    '         Sub: (+2 Overloads) New, SetValue
+    '         Sub: SetValue
     ' 
     ' 
     ' /********************************************************************************/

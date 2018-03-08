@@ -33,7 +33,7 @@
 
     '     Module Tree
     ' 
-    '         Function: __buildNET, Partitioning
+    '         Function: __buildNET, bTreeNET, Partitioning
     '         Structure __edgePath
     ' 
     '             Function: ToString

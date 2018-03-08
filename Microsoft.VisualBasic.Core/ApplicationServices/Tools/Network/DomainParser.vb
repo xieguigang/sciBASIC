@@ -35,9 +35,8 @@
     ' 
     '         Properties: Domain, Invalid, TLD
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Module DomainParser
     ' 

@@ -35,9 +35,8 @@
     ' 
     '         Properties: Item1, Item2, Name
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: AsTuple, ToString
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

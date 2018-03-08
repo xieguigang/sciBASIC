@@ -1,52 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::6d5faa6bcf3388d507ff3c10097a01e2, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::f311a5f066c078be54470e9433bca7e9, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'  
-' 
-'     Properties: APIList, APINameList, Count, ExecuteEmptyCli, ExecuteFile
-'                 ExecuteNotFound, Info, IsReadOnly, ListCommandInfo, Stack
-'                 Type
-' 
-'     Function: __executeEmpty, __getsAllCommands, __methodInvoke, Contains, CreateEmptyCLIObject
-'               (+3 Overloads) CreateInstance, (+3 Overloads) Execute, ExistsCommand, GetAllCommands, getAPI
-'               GetEnumerator, GetEnumerator1, GetPossibleCommand, Help, ListingRelated
-'               (+2 Overloads) Remove, SDKdocs, ToDictionary, ToString, TryGetValue
-' 
-'     Sub: (+2 Overloads) Add, AddCommand, Clear, CopyTo, (+2 Overloads) Dispose
-'          listingCommands, New
-' 
-' 
-' /********************************************************************************/
+    '     Class Interpreter
+    ' 
+    '         Properties: APIList, APINameList, Count, ExecuteEmptyCli, ExecuteFile
+    '                     ExecuteNotFound, Info, IsReadOnly, ListCommandInfo, Stack
+    '                     Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __executeEmpty, __getsAllCommands, __methodInvoke, Contains, CreateEmptyCLIObject
+    '                   (+3 Overloads) CreateInstance, (+3 Overloads) Execute, ExistsCommand, GetAllCommands, getAPI
+    '                   GetEnumerator, GetEnumerator1, GetPossibleCommand, Help, ListingRelated
+    '                   (+2 Overloads) Remove, SDKdocs, ToDictionary, ToString, TryGetValue
+    ' 
+    '         Sub: (+2 Overloads) Add, AddCommand, Clear, CopyTo, (+2 Overloads) Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +64,7 @@ Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Levenshtein
+Imports VB = Microsoft.VisualBasic.CommandLine.InteropService.SharedORM.VisualBasic
 
 #Const NET_45 = 0
 
@@ -129,7 +131,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public Overridable Function Execute(args As CommandLine) As Integer
             If Not args.IsNullOrEmpty Then
-                Dim i As Integer = __methodInvoke(args.Name.ToLower, {args}, args.Parameters)
+                Dim i As Integer = apiInvoke(args.Name.ToLower, {args}, args.Parameters)
 #If DEBUG Then
 
 #Else
@@ -173,7 +175,7 @@ Namespace CommandLine
         ''' <param name="argvs">就只有一个命令行对象</param>
         ''' <param name="help_argvs"></param>
         ''' <returns></returns>
-        Private Function __methodInvoke(commandName As String, argvs As Object(), help_argvs As String()) As Integer
+        Private Function apiInvoke(commandName$, argvs As Object(), help_argvs$()) As Integer
 
             If __API_table.ContainsKey(commandName) Then _
                 Return __API_table(commandName).Execute(argvs)
@@ -259,6 +261,12 @@ Namespace CommandLine
             ElseIf String.Equals(commandName, "/linux-bash", StringComparison.OrdinalIgnoreCase) Then
                 Return BashShell()
 
+            ElseIf String.Equals(commandName, "/CLI.dev", StringComparison.OrdinalIgnoreCase) Then
+                Return New VB(App:=Me) _
+                    .GetSourceCode _
+                    .SaveTo(App.HOME & "/" & Type.Assembly.CodeBase.BaseName & ".vb") _
+                    .CLICode
+
             Else
                 If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then  '命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
                     Try
@@ -325,9 +333,12 @@ Namespace CommandLine
         Public Function Execute(CommandLineArgs As String()) As Integer
             Dim CommandName As String = CommandLineArgs.First
             Dim argvs As String() = CommandLineArgs.Skip(1).ToArray
-            Dim i As Integer = __methodInvoke(CommandName, argvs, help_argvs:=argvs)
+            Dim i As Integer = apiInvoke(CommandName, argvs, help_argvs:=argvs)
+
 #If DEBUG Then
-            Call Pause()
+            If Not App.GetVariable("pause.disable").ParseBoolean = True Then
+                Call Pause()
+            End If
 #Else
             If Stack.TextEquals("Main") Then
                 If AutoPaused Then
@@ -339,7 +350,7 @@ Namespace CommandLine
         End Function
 
         Public Function Execute(CommandName As String, args As String()) As Integer
-            Return __methodInvoke(CommandName.ToLower, args, help_argvs:=args)
+            Return apiInvoke(CommandName.ToLower, args, help_argvs:=args)
         End Function
 
         ''' <summary>

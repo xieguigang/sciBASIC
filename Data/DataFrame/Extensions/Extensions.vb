@@ -33,10 +33,13 @@
 
     ' Module Extensions
     ' 
-    '     Function: DataFrame, GetLocusMapName, (+2 Overloads) LoadCsv, LoadTsv, SaveDataSet
-    '               (+2 Overloads) SaveTable, (+2 Overloads) SaveTo, TabExport
+    '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Sub: New
+    '     Function: (+4 Overloads) AsDataSource, AsLinq, (+3 Overloads) DataFrame, GetLocusMapName, (+3 Overloads) LoadCsv
+    '               LoadDblVector, LoadStream, LoadTsv, SaveDataSet, (+2 Overloads) SaveTable
+    '               (+7 Overloads) SaveTo, TabExport, ToCsvDoc
+    ' 
+    '     Sub: Cable, ForEach
     '     Structure __loadHelper
     ' 
     '         Function: LoadObject

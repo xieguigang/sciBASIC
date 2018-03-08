@@ -33,9 +33,11 @@
 
     '     Class Variable
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: [Set], AssignValue, ContainsValue
     ' 
-    '         Sub: (+2 Overloads) [Set], New
+    '         Sub: (+2 Overloads) [Set]
     ' 
     ' 
     ' /********************************************************************************/

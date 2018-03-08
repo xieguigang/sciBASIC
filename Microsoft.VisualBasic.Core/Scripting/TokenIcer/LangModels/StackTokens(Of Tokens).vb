@@ -35,9 +35,8 @@
     ' 
     '         Properties: LPair, ParamDeli, Pretend, RPair, WhiteSpace
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Equals
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

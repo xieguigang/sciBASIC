@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: Enlarge, GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
+    '         Function: (+3 Overloads) Enlarge, GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
     '         Enum MoveTypes
     ' 
     '             BoundsBoxTopLeft, PolygonCentre
@@ -120,6 +120,16 @@ Namespace Drawing2D
             Dim dc = cs - c
             Dim dx = (b / c) * dc
             Dim dy = (a / c) * dc
+
+            For i As Integer = 0 To c.Length - 1
+                ' 2018-3-6 如果有个点是位于shape的中心，那么在scale之后c值为零
+                ' 则计算出来的差异量为NaN，会导致出错
+                ' 在这里将所有c值为零的点都设置为原来的值，即意味着在多边形放大之后其位置没有发生变化
+                If c(i) = 0R Then
+                    dx(i) = 0#
+                    dy(i) = 0#
+                End If
+            Next
 
             x = x + dx
             y = y + dy

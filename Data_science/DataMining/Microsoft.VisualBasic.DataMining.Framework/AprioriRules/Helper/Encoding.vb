@@ -35,9 +35,8 @@
     ' 
     '         Properties: AllCodes, AllItems, CodeMappings
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __transactionEncoding, Decode, GenerateCodes, ToString, TransactionEncoding
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

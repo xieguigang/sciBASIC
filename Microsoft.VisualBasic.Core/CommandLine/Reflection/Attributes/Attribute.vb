@@ -35,25 +35,22 @@
     ' 
     '         Properties: Name, Type
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class UsageAttribute
     ' 
     '         Properties: UsageInfo
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class ExampleAttribute
     ' 
     '         Properties: ExampleInfo
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

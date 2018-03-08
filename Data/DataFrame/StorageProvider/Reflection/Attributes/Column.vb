@@ -35,9 +35,8 @@
     ' 
     '         Properties: CustomParser, ProviderId, TypeInfo
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __innerMsg, GetParser, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

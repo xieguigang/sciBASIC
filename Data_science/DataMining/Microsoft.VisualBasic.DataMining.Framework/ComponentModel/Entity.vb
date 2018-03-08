@@ -37,6 +37,8 @@
     ' 
     '     Class Entity
     ' 
+    '         Properties: [Class]
+    ' 
     '         Function: CastTo, ToString
     ' 
     ' 

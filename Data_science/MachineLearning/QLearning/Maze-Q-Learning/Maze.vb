@@ -35,10 +35,12 @@
     ' 
     '     Properties: ActionRange, AvatarIndex, GoalReached
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: __getMoveName, isValidMove, PrintMap
     ' 
     '     Sub: __finishLearn, __goToNextState, __init, __reset, __run
-    '          New, PrintMap, resetMaze
+    '          PrintMap, resetMaze
     ' 
     ' /********************************************************************************/
 

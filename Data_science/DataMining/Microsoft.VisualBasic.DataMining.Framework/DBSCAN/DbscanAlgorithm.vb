@@ -33,7 +33,8 @@
 
     '     Class DbscanAlgorithm
     ' 
-    '         Sub: ComputeClusterDbscan, ExpandCluster, New, RegionQuery
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: ComputeClusterDbscan, ExpandCluster, RegionQuery
     ' 
     ' 
     ' /********************************************************************************/

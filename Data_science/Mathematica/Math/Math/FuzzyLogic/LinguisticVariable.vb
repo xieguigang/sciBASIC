@@ -35,9 +35,8 @@
     ' 
     '         Properties: InputValue, MembershipFunctionCollection, Name
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Fuzzify, MaxValue, MinValue, Range
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

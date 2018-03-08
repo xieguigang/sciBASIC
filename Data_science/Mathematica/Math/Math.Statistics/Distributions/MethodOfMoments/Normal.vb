@@ -33,10 +33,9 @@
 
     ' 	Class Normal
     ' 
+    ' 	    Constructor: (+3 Overloads) Sub New
     ' 	    Function: FindArea, GetCDF, GetInvCDF, GetMean, GetPDF
     '                GetStDev, TrapazoidalIntegration, Validate
-    ' 
-    ' 	    Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

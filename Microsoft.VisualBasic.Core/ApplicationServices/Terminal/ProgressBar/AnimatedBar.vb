@@ -33,7 +33,8 @@
 
     '     Class AnimatedBar
     ' 
-    '         Sub: [Step], New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: [Step]
     ' 
     ' 
     ' /********************************************************************************/

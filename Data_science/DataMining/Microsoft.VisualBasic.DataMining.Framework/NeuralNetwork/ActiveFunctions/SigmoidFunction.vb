@@ -35,9 +35,8 @@
     ' 
     '         Properties: Alpha
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: [Function], Clone, Derivative, Derivative2
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

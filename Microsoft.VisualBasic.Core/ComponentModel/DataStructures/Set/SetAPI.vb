@@ -46,9 +46,8 @@
     '     Function: Contains, (+3 Overloads) Intersection
     '     Structure __stringCompares
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Equals
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' 

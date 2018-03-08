@@ -35,9 +35,8 @@
     ' 
     '         Properties: BindProperty, CanReadDataFromObject, CanWriteDataToObject, LoadMethod, Ordinal
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: GetValue, ToString
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

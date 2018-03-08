@@ -33,12 +33,10 @@
 
     '     Class FDGVector2
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Add, Divide, (+2 Overloads) Equals, GetHashCode, Identity
     '                   Magnitude, Multiply, Normal, Normalize, Random
     '                   SetIdentity, SetZero, Subtract, Zero
-    ' 
-    '         Sub: (+3 Overloads) New
-    ' 
     '         Operators: -, (+2 Overloads) *, (+2 Overloads) /, +, <>
     '                    =
     ' 

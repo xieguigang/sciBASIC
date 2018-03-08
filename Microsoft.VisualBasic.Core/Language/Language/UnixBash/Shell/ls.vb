@@ -45,9 +45,8 @@
     ' 
     '     Structure SearchOpt
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     '         Enum Options
     ' 
     '             Directory, Ext, LongName, None, Recursive

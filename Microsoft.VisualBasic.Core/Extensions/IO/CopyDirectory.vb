@@ -33,9 +33,11 @@
 
     '     Class CopyDirectoryAction
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: CreateDestinationFolderAndReturnNewPath
     ' 
-    '         Sub: Copy, CopyFilesToTargetDirectory, CopySubDirectoriesWithFiles, New
+    '         Sub: Copy, CopyFilesToTargetDirectory, CopySubDirectoriesWithFiles
     ' 
     ' 
     ' /********************************************************************************/

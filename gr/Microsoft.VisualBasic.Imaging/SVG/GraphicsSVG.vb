@@ -38,6 +38,8 @@
     '                     PageUnit, PixelOffsetMode, RenderingOrigin, Size, SmoothingMode
     '                     TextContrast, TextRenderingHint, Transform, VisibleClipBounds
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, MeasureCharacterRanges
     '                   (+7 Overloads) MeasureString
     ' 
@@ -48,9 +50,9 @@
     '              (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+6 Overloads) DrawString, EndContainer
     '              (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
     '              (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, (+2 Overloads) FillRectangles, FillRegion
-    '              (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, (+3 Overloads) New, ReleaseHdc
-    '              ReleaseHdcInternal, ResetClip, ResetTransform, Restore, (+2 Overloads) RotateTransform
-    '              (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
+    '              (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ReleaseHdc, ReleaseHdcInternal
+    '              ResetClip, ResetTransform, Restore, (+2 Overloads) RotateTransform, (+2 Overloads) ScaleTransform
+    '              (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
     ' 
     ' 
     ' /********************************************************************************/

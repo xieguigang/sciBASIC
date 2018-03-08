@@ -35,10 +35,8 @@
     ' 
     '         Properties: Data, Pinned
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) Equals, GetHashCode, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
-    ' 
     '         Operators: <>, =
     ' 
     ' 

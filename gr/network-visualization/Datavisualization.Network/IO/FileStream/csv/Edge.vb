@@ -33,13 +33,12 @@
 
     '     Class NetworkEdge
     ' 
-    '         Properties: FromNode, Interaction, Key, ToNode, value
+    '         Properties: FromNode, Interaction, Key, SelfLoop, ToNode
+    '                     value
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Contains, Equals, GetConnectedNode, GetDirectedGuid, GetNode
     '                   GetNullDirectedGuid, IsEqual, Nodes, ToString
-    ' 
-    '         Sub: (+3 Overloads) New
-    ' 
     '         Operators: -, +
     ' 
     ' 

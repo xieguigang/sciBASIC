@@ -36,9 +36,8 @@
     '         Function: __trimComment, FindAll
     '         Structure Match
     ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Function: ToString
-    ' 
-    '             Sub: New
     ' 
     ' 
     ' 

@@ -36,8 +36,9 @@
     '         Properties: AllDotNetPrefixColors, ChartColors
     ' 
     '         Function: __getDotNetColors, (+2 Overloads) Alpha, ARGBExpression, AsDefaultColor, Average
-    '                   Dark, EuclideanDistance, HTMLColors, IsColorExpression, IsTransparent
-    '                   Light, RGBExpression
+    '                   Dark, Equals, EuclideanDistance, HTMLColors, IsColorExpression
+    '                   IsNullOrEmpty, IsTransparent, Light, Middle, RGBExpression
+    '                   ToColor, TranslateColor
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,7 @@
 
     '     Module ParallelExtension
     ' 
-    '         Function: AsyncTask
+    '         Function: AsyncTask, RunTask
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,9 +35,11 @@
     ' 
     '         Properties: Capacity
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Enqueue, GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
-    '         Sub: Clear, New
+    '         Sub: Clear
     ' 
     '         Operators: +
     ' 

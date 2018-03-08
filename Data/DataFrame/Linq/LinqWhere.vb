@@ -35,9 +35,8 @@
     ' 
     '         Properties: Tokens
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __compile, __getTest, Compile, Test
-    ' 
-    '         Sub: New
     '         Class __invoke
     ' 
     '             Function: TestToken, ToString

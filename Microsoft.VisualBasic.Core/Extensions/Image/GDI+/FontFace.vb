@@ -35,9 +35,8 @@
     ' 
     '         Properties: InstalledFontFamilies
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: GetFontName
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Module DefaultFontValues
     ' 
@@ -46,7 +45,7 @@
     ' 
     '             Properties: Bold, Large, Normal
     ' 
-    '             Sub: New
+    '             Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' 

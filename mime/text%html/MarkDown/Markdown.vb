@@ -37,6 +37,8 @@
     '                     DisableHr, DisableImages, EmptyElementSuffix, LinkEmails, QuoteSingleLine
     '                     StrictBoldItalic
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: __MarkdownTable, AnchorInlineEvaluator, AnchorRefEvaluator, AnchorRefShortcutEvaluator, AtxHeaderEvaluator
     '                   BlockQuoteEvaluator, BlockQuoteEvaluator2, CodeBlockEvaluator, CodeSpanEvaluator, DoAnchors
     '                   DoAutoLinks, DoBlockQuotes, DoCodeBlocks, DoCodeSpans, DoHardBreaks
@@ -49,7 +51,7 @@
     '                   SaveFromAutoLinking, SetextHeaderEvaluator, StripLinkDefinitions, SyntaxedCodeBlockEvaluator, Transform
     '                   Unescape, UnescapeEvaluator
     ' 
-    '         Sub: AddExtension, Cleanup, (+2 Overloads) New, Setup
+    '         Sub: AddExtension, Cleanup, Setup
     ' 
     ' 
     ' /********************************************************************************/
@@ -66,6 +68,7 @@ Namespace MarkDown
     ''' Markdown is a text-to-HTML conversion tool for web writers. 
     ''' Markdown allows you to write using an easy-to-read, easy-to-write plain text format, 
     ''' then convert it to structurally valid XHTML (or HTML).
+    ''' (Markdown to HTML格式转换引擎)
     ''' </summary>
     Public Class MarkdownHTML
 
@@ -168,6 +171,9 @@ Namespace MarkDown
         ''' see http://en.wikipedia.org/wiki/Markdown
         ''' (好像这个并不支持代码高亮的格式化)
         ''' </summary>
+        ''' <param name="text">
+        ''' Markdown文本
+        ''' </param>
         ''' <remarks>
         ''' The order in which other subs are called here is
         ''' essential. Link and image substitutions need to happen before

@@ -36,15 +36,14 @@
     '         Properties: AlternateContent, bookViews, calcPr, definedNames, extLst
     '                     fileRecoveryPr, fileVersion, Ignorable, sheets, workbookPr
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Add, GetSheetIDByIndex, GetSheetIDByName
-    ' 
-    '         Sub: New
     ' 
     '     Class ext
     ' 
     '         Properties: slicerStyles, timelineStyles, uri, workbookPr
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class slicerStyles
     ' 
@@ -56,7 +55,7 @@
     ' 
     '     Class definedName
     ' 
-    ' 
+    '         Properties: hidden, name, value
     ' 
     '     Class AlternateContent
     ' 
@@ -70,31 +69,34 @@
     ' 
     '         Properties: url
     ' 
-    '         Sub: New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class fileRecoveryPr
     ' 
-    ' 
+    '         Properties: autoRecover
     ' 
     '     Class workbookPr
     ' 
-    ' 
+    '         Properties: chartTrackingRefBase, defaultThemeVersion, filterPrivacy
     ' 
     '     Structure calcPr
     ' 
-    ' 
+    '         Properties: calcId
     ' 
     '     Structure sheet
     ' 
-    '         Properties: rid
+    '         Properties: name, rid, sheetId
     ' 
     '         Function: ToString
     ' 
     '     Structure workbookView
     ' 
-    '         Properties: uid
+    '         Properties: activeTab, uid, windowHeight, windowWidth, xWindow
+    '                     yWindow
     ' 
     '     Structure fileVersion
+    ' 
+    '         Properties: appName, lastEdited, lowestEdited, rupBuild
     ' 
     '         Function: ToString
     ' 

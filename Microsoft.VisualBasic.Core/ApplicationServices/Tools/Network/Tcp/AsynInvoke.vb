@@ -35,9 +35,8 @@
     ' 
     '         Properties: LocalIPAddress
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: LocalConnection, OperationTimeOut, SafelySendMessage, (+2 Overloads) SendMessage, ToString
-    ' 
-    '         Sub: (+4 Overloads) New
     '         Delegate Function
     ' 
     '             Function: __decryptMessageCommon, (+6 Overloads) SendMessage

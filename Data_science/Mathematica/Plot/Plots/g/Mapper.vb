@@ -33,10 +33,9 @@
 
     '     Class Mapper
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ForEach, ForEach_histSample, (+3 Overloads) PointScaler, ScallingWidth, TupleScaler
     '                   XScaler, YScaler
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

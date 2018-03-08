@@ -35,9 +35,8 @@
     ' 
     '         Properties: K, Length, point1, point2
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -39,7 +39,7 @@
     '                   GetConstructorInfo, GetEventInfo, GetEventInfoAccessor, GetFieldInfo, GetFuncDelegateArguments
     '                   GetFuncDelegateReturnType, GetIndexerPropertyInfo, GetMethodInfo, GetPropertyInfo, GetStaticFieldInfo
     '                   GetStaticMethodInfo, GetStaticPropertyInfo, (+8 Overloads) IndexerGet, (+7 Overloads) IndexerSet, (+2 Overloads) InstanceGenericMethod
-    '                   InstanceGenericMethodVoid, (+9 Overloads) InstanceMethod, InstanceMethod2, InstanceMethodVoid, (+5 Overloads) PropertyGet
+    '                   InstanceGenericMethodVoid, (+9 Overloads) InstanceMethod, InstanceMethod2, InstanceMethodVoid, (+6 Overloads) PropertyGet
     '                   PropertyGet2, (+4 Overloads) PropertySet, StaticEventAdd, (+3 Overloads) StaticFieldGet, StaticFieldGetExpr
     '                   (+3 Overloads) StaticFieldSet, StaticGenericMethod, StaticGenericMethodVoid, (+12 Overloads) StaticMethod, StaticMethodVoid
     '                   (+3 Overloads) StaticPropertyGet, StaticPropertyGet2, (+3 Overloads) StaticPropertySet

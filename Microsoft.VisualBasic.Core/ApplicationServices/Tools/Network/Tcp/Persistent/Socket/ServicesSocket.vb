@@ -35,10 +35,12 @@
     ' 
     '         Properties: Connections, IsShutdown, LocalPort, Running
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: Run
     ' 
     '         Sub: __acceptSocket, __initSocket, __initSocketThread, __runHost, AcceptCallback
-    '              (+2 Overloads) New, Run, WaitForRunning
+    '              Run, WaitForRunning
     '         Delegate Sub
     ' 
     '             Properties: AcceptCallbackHandleInvoke

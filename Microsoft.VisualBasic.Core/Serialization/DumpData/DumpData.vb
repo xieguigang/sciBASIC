@@ -34,7 +34,7 @@
     '     Module MemoryDump
     ' 
     '         Function: __dumpInvoke, DumpArray, DumpFieldCollection, DumpPropertyCollection, DumpPropertyOrField
-    '                   GetArray, IsGenericEnumerable
+    '                   GetArray, I_CreateDump, IsGenericEnumerable
     ' 
     ' 
     ' /********************************************************************************/

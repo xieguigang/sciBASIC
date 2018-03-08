@@ -36,11 +36,13 @@
     '     Properties: BroadcastAddress, CIDR, hostAddressRange, IPAddress, Netmask
     '                 netmaskInBinary, numberOfHosts, WildcardMask
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: __invalidIPAddress, __invalidNetMask, contains, Contains, GetAvailableIPs
     '               GetBinary, GetBroadcastAddress, GetCIDR, GetHostAddressRange, GetNumberOfHosts
     '               GetWildcardMask, NumericIpToSymbolic, NumericNetmaskToSymbolic, ToString
     ' 
-    '     Sub: __checkNetMask, IPNumeric, NetMaskNumeric, New
+    '     Sub: __checkNetMask, IPNumeric, NetMaskNumeric
     ' 
     ' /********************************************************************************/
 

@@ -41,9 +41,11 @@
     ' 
     '             Properties: model
     ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
     '             Function: Run
     ' 
-    '             Sub: CreateBuffer, (+2 Overloads) Dispose, New, Pause, RenderingThread
+    '             Sub: CreateBuffer, (+2 Overloads) Dispose, Pause, RenderingThread
     ' 
     ' 
     ' 

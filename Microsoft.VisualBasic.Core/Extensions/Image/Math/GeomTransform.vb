@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    '  
+    '     Module GeomTransform
     ' 
-    '     Function: Area, CenterAlign, (+2 Overloads) CentralOffset, (+2 Overloads) Centre, CircleRectangle
-    '               (+3 Overloads) Distance, (+2 Overloads) GetBounds, (+2 Overloads) InRegion, MirrorX, MirrorY
-    '               Offsets, SquareSize
+    '         Function: Area, CalculateAngle, CenterAlign, (+2 Overloads) CentralOffset, (+4 Overloads) Centre
+    '                   CircleRectangle, (+3 Overloads) Distance, (+2 Overloads) GetBounds, GetCenter, (+2 Overloads) InRegion
+    '                   MirrorX, MirrorY, (+5 Overloads) OffSet2D, Offsets, (+2 Overloads) Scale
+    '                   SquareSize
     ' 
     ' 
     ' /********************************************************************************/

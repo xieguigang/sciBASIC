@@ -33,7 +33,7 @@
 
     '     Structure ContentType
     ' 
-    '         Properties: FileExt, IsEmpty, Name
+    '         Properties: Details, FileExt, IsEmpty, MIMEType, Name
     ' 
     '         Function: __createObject, ToString
     ' 

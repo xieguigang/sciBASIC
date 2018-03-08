@@ -33,9 +33,8 @@
 
     '     Class CLI_Example
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: API1, Code_vb, Test_CLI_Scripting
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

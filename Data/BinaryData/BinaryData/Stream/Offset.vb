@@ -35,7 +35,8 @@
     ' 
     '     Properties: Position, Writer
     ' 
-    '     Sub: New, Satisfy
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: Satisfy
     ' 
     ' /********************************************************************************/
 

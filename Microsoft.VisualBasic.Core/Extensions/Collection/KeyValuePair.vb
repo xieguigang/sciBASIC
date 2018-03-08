@@ -33,12 +33,15 @@
 
     ' Module KeyValuePairExtensions
     ' 
-    '     Function: (+3 Overloads) [Select], AsGroups, AsTable, (+3 Overloads) ContainsKey, DictionaryData
-    '               (+2 Overloads) EnumerateTuples, EnumParser, FlatTable, GroupByKey, HaveData
-    '               IGrouping, IsOneOfA, IterateNameCollections, IterateNameValues, IteratesAll
-    '               Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+2 Overloads) NameValueCollection
-    '               ParserDictionary, RemoveAndGet, ReverseMaps, Selects, (+2 Overloads) Subset
-    '               Takes, (+3 Overloads) ToDictionary, Tsv, (+2 Overloads) Values, XMLModel
+    '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsGroups, AsNamedVector, AsTable
+    '               (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples, EnumParser, FlatTable
+    '               (+2 Overloads) GetByKey, GroupByKey, HaveData, IGrouping, IsOneOfA
+    '               IterateNameCollections, IterateNameValues, IteratesAll, Join, KeyItem
+    '               (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+2 Overloads) NameValueCollection, ParserDictionary, RemoveAndGet
+    '               ReverseMaps, Selects, (+2 Overloads) Subset, Takes, (+3 Overloads) ToDictionary
+    '               Tsv, (+2 Overloads) Values, XMLModel
+    ' 
+    '     Sub: SortByKey, SortByValue
     ' 
     ' /********************************************************************************/
 
@@ -61,6 +64,20 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' KeyValue pair data related extensions API.
 ''' </summary>
 Public Module KeyValuePairExtensions
+
+    ''' <summary>
+    ''' Create a tuple for two elements
+    ''' </summary>
+    ''' <typeparam name="T1"></typeparam>
+    ''' <typeparam name="T2"></typeparam>
+    ''' <param name="a"></param>
+    ''' <param name="b"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Tuple(Of T1, T2)(a As T1, b As T2) As (T1, T2)
+        Return (a, b)
+    End Function
 
     ''' <summary>
     ''' 将目标键值对集合保存为一个``Tsv``文件

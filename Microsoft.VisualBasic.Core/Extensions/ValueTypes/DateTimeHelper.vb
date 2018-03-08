@@ -35,9 +35,8 @@
     ' 
     '         Properties: MonthList
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: DateSeq, FillDateZero, GetMonthInteger, YYMMDD
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

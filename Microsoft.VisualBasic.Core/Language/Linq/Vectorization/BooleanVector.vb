@@ -35,10 +35,8 @@
     ' 
     '         Properties: [False], [True], IsLogical
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Sum, ToString
-    ' 
-    '         Sub: New
-    ' 
     '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+2 Overloads) Not, (+4 Overloads) Or
     ' 
     ' 

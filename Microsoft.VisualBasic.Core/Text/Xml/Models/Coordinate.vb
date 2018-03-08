@@ -33,12 +33,10 @@
 
     '     Structure Coordinate
     ' 
-    '         Properties: ID
+    '         Properties: ID, X, Y
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: (+3 Overloads) New
-    ' 
     '         Operators: <>, =
     ' 
     ' 

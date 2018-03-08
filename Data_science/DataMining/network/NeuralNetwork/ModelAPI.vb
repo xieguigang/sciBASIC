@@ -33,7 +33,7 @@
 
     '     Module NetworkModelAPI
     ' 
-    '         Function: __edges, __node, __synapse
+    '         Function: __edges, __node, __synapse, VisualizeModel
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,7 +33,7 @@
 
     '     Module ResultVisualize
     ' 
-    '         Function: __visualizeHTML, HTMLVisualize
+    '         Function: __innerMatrix, __visualizeHTML, HTMLVisualize
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,11 +33,13 @@
 
     ' Class FormODEsViewer
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     '     Function: __plot, LoadModel
     ' 
-    '     Sub: AddReference, Draw, FormODEsViewer_Load, LoadParametersToolStripMenuItem_Click, New
-    '          OpenToolStripMenuItem_Click, OpenToolStripMenuItem1_Click, SaveAsGAFInputsToolStripMenuItem_Click, SavePlotToolStripMenuItem_Click, SaveResultToolStripMenuItem_Click
-    '          ToolStripButton1_Click, ToolStripTextBox1_TextChanged, ToolStripTextBox2_TextChanged, ToolStripTextBox3_TextChanged
+    '     Sub: AddReference, Draw, FormODEsViewer_Load, LoadParametersToolStripMenuItem_Click, OpenToolStripMenuItem_Click
+    '          OpenToolStripMenuItem1_Click, SaveAsGAFInputsToolStripMenuItem_Click, SavePlotToolStripMenuItem_Click, SaveResultToolStripMenuItem_Click, ToolStripButton1_Click
+    '          ToolStripTextBox1_TextChanged, ToolStripTextBox2_TextChanged, ToolStripTextBox3_TextChanged
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9c4939dedc3a62b71bcd2edc664ad73, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\Models\ClusterCollection.vb"
+﻿#Region "Microsoft.VisualBasic::6db55180833ad667559c1002e91d2e6c, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\Models\ClusterCollection.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,13 @@
 
     ' Summaries:
 
-    '  
+    '     Class ClusterCollection
     ' 
-    '     Properties: NumOfCluster
+    '         Properties: NumOfCluster
     ' 
-    '     Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
-    '     Sub: Add
+    '         Sub: Add
     ' 
     ' 
     ' /********************************************************************************/

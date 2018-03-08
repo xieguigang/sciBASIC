@@ -35,9 +35,11 @@
     ' 
     '         Properties: CurrentLanguage, DeclaringType, LanguageResources
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: ToString
     ' 
-    '         Sub: __init, New
+    '         Sub: __init
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5be37331c26682ab9e874f7f220377ac, analysis\SequenceToolkit\SmithWaterman\Match.vb"
+﻿#Region "Microsoft.VisualBasic::c4149b48c007a4b0627ae2bb8827feb0, Data_science\DataMining\DynamicProgramming\SmithWaterman\Match.vb"
 
     ' Author:
     ' 
@@ -31,18 +31,18 @@
 
     ' Summaries:
 
-    ' Class Match
+    '     Class Match
     ' 
-    '     Properties: FROMA_COMPARATOR
+    '         Properties: FromA, FROMA_COMPARATOR, FromB, Score, ToA
+    '                     ToB
     ' 
-    '     Function: isChainable, notOverlap, ToString
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: isChainable, notOverlap, ToString
+    '         Class ComparatorHelper
     ' 
-    '     Sub: (+2 Overloads) New
-    '     Class ComparatorHelper
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: Compare
     ' 
-    '         Function: Compare
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' 

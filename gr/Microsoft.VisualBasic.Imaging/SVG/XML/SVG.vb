@@ -31,13 +31,19 @@
 
     ' Summaries:
 
-    '  
+    '     Class SVGXml
     ' 
-    '     Properties: defs, enable_background, gs, space, WriterComment
+    '         Properties: circles, defs, enable_background, gs, height
+    '                     id, images, lines, overflow, path
+    '                     polygon, polyline, rect, space, style
+    '                     texts, title, transform, version, viewBox
+    '                     width, WriterComment
     ' 
-    '     Function: GetSVGXml, (+2 Overloads) SaveAsXml, TryLoad
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '     Sub: (+2 Overloads) New, SetSize
+    '         Function: GetSVGXml, (+2 Overloads) SaveAsXml, TryLoad
+    ' 
+    '         Sub: SetSize
     ' 
     ' 
     ' /********************************************************************************/

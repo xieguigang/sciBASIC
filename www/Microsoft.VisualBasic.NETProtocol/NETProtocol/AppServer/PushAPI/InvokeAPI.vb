@@ -33,9 +33,8 @@
 
     '     Class InvokeAPI
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __invokePush, Handler
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

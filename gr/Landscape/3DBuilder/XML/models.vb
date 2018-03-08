@@ -39,6 +39,8 @@
     ' 
     '     Class triangle
     ' 
+    '         Properties: p1, pid, v1, v2, v3
+    ' 
     '         Function: ToString
     ' 
     '     Class component

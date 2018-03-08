@@ -35,11 +35,10 @@
     ' 
     '         Properties: PropertyNames, Type
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: [Concatenate], [IntegerDivision], [Like], binaryOperatorSelfLeft, GetDynamicMemberNames
     '                   ToString, TryBinaryOperation, (+2 Overloads) TryGetMember, TryInvokeMember, TrySetMember
     '                   TryUnaryOperation
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

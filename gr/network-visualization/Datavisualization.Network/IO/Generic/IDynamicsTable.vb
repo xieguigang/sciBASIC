@@ -33,6 +33,8 @@
 
     '     Class IDynamicsTable
     ' 
+    '         Properties: Properties
+    ' 
     '         Sub: Add
     ' 
     ' 

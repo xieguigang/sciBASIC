@@ -36,9 +36,8 @@
     '         Properties: Kurtosis, Max, Mean, Median, Min
     '                     SampleSize, Skew, StandardDeviation
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

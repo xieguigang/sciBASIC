@@ -35,11 +35,10 @@
     ' 
     '         Properties: AppDomain, hash, IsPublicToken, PrivateKey, uid
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: __decrypt, __load, (+2 Overloads) CopyFrom, (+2 Overloads) Decrypt, DecryptString
     '                   (+2 Overloads) Encrypt, EncryptData, (+2 Overloads) Install, InstallPublicToken, PublicEncrypt
     '                   ToString
-    ' 
-    '         Sub: (+4 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

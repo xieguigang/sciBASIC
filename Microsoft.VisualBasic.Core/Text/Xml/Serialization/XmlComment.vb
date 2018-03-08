@@ -35,9 +35,8 @@
     ' 
     '         Properties: Value
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Module XmlCommentExtensions
     ' 

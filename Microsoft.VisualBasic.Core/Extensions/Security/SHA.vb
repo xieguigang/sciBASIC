@@ -35,10 +35,9 @@
     ' 
     '         Properties: CertificateSigned, Passphrase
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Decrypt, DecryptString, Deserialization, Encrypt, EncryptData
     '                   (+2 Overloads) GetDynamicsCertification, Serialization, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

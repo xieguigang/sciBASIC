@@ -35,7 +35,8 @@
     ' 
     '     Properties: PreviousPosition, Stream
     ' 
-    '     Sub: Dispose, New
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: Dispose
     ' 
     ' /********************************************************************************/
 

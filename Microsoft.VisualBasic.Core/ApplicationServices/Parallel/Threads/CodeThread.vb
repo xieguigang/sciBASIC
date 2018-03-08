@@ -33,9 +33,11 @@
 
     '     Class CodeThread
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetThread
     ' 
-    '         Sub: [Resume], New, Pause, Run
+    '         Sub: [Resume], Pause, Run
     ' 
     ' 
     ' /********************************************************************************/

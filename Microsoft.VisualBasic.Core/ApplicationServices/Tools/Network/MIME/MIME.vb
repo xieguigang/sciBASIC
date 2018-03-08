@@ -35,9 +35,8 @@
     ' 
     '         Properties: ContentTypes, SuffixTable, UnknownType
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __loadContents
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

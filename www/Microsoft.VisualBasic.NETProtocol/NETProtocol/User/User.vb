@@ -35,9 +35,11 @@
     ' 
     '         Properties: Id, UserInvoke
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: __pushUpdate, __register
     ' 
-    '         Sub: __close, __downloadMsg, (+2 Overloads) Dispose, New
+    '         Sub: __close, __downloadMsg, (+2 Overloads) Dispose
     ' 
     ' 
     ' /********************************************************************************/

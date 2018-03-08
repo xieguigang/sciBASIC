@@ -33,11 +33,10 @@
 
     '     Class MetaExpression
     ' 
-    '         Properties: IsExpression, IsNumber, ReferenceDepth
+    '         Properties: [Operator], IsExpression, IsNumber, LEFT, ReferenceDepth
     ' 
+    '         Constructor: (+5 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: (+5 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

@@ -42,10 +42,12 @@
     ' 
     '             Properties: LocalPort, ReadLogs, SelfMapping
     ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
     '             Function: BeginListen, IsServerInternalException
     ' 
-    '             Sub: AcceptCallback, (+2 Overloads) Dispose, New, ReadCallback, Run
-    '                  Send, SendCallback
+    '             Sub: AcceptCallback, (+2 Overloads) Dispose, ReadCallback, Run, Send
+    '                  SendCallback
     '         Structure PerformanceLog
     ' 
     '             Properties: Request, Ticks, Time

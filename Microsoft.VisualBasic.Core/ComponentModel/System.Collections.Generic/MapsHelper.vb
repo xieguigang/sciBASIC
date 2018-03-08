@@ -33,17 +33,15 @@
 
     '     Structure MapsHelper
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetValue, ToString
-    ' 
-    '         Sub: New
     ' 
     '     Structure Map
     ' 
     '         Properties: Key, Maps
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     '         Interface IMap
     ' 
     '             Properties: Key, Maps

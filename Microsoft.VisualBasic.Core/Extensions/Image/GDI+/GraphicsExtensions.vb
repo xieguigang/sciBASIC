@@ -33,8 +33,11 @@
 
     '     Module GraphicsExtensions
     ' 
-    '         Function: ColorBrush, EntireImage, GetBrushes, (+2 Overloads) GraphicsPath, LoadImage
-    '                   PointF, SizeF, ToFloat
+    '         Function: BackgroundGraphics, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D, (+2 Overloads) CreateGDIDevice
+    '                   CreateGrayBitmap, EntireImage, GDIPlusDeviceHandleFromImageFile, GetBrush, GetBrushes
+    '                   (+2 Overloads) GetIcon, GetRawStream, (+2 Overloads) GraphicsPath, ImageAddFrame, IsValidGDIParameter
+    '                   (+2 Overloads) LoadImage, OpenDevice, (+2 Overloads) PointF, SaveIcon, SizeF
+    '                   ToFloat, ToPoint, ToPoints
     ' 
     '         Sub: (+5 Overloads) DrawCircle
     ' 

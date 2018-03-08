@@ -33,7 +33,7 @@
 
     '     Module IO
     ' 
-    '         Function: Load3DModel, Open
+    '         Function: Load3DModel, NotNull, Open
     ' 
     ' 
     ' /********************************************************************************/

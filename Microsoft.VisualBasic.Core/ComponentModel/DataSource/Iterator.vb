@@ -35,17 +35,18 @@
     ' 
     '         Properties: GetCurrent
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class Iterator
     ' 
     '         Properties: Current, ReadDone
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetEnumerator, MoveNext, Read
     ' 
-    '         Sub: __moveNext, (+2 Overloads) Dispose, New, Reset
+    '         Sub: __moveNext, (+2 Overloads) Dispose, Reset
     ' 
     ' 
     ' /********************************************************************************/

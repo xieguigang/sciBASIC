@@ -38,12 +38,15 @@
     ' 
     '         Properties: SchemaOridinal
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: AsLinq, BufferProvider, GetOrdinal, OpenHandle
     ' 
-    '         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock, (+2 Overloads) New
+    '         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock
     '         Structure __taskHelper
     ' 
-    '             Sub: New, RunTask
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: RunTask
     ' 
     ' 
     ' 

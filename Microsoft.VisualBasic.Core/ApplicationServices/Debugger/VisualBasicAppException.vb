@@ -35,9 +35,8 @@
     ' 
     '         Properties: args, Environment, System
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Creates
-    ' 
-    '         Sub: New
     ' 
     '     Module ExceptionExtensions
     ' 

@@ -44,7 +44,7 @@
     ' 
     '     Properties: ProtocolEntry
     ' 
-    '     Function: NullMsg
+    '     Function: IsNull, NullMsg
     ' 
     ' 
     ' /********************************************************************************/

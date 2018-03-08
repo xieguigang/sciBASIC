@@ -33,9 +33,8 @@
 
     '     Class ExcelReader
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetColumnsList, GetWorkplace, GetWorksheet, GetWorksheetList, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

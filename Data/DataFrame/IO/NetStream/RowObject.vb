@@ -33,9 +33,8 @@
 
     '     Class RowObject
     ' 
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: CreateObject, Load
-    ' 
-    '         Sub: (+4 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

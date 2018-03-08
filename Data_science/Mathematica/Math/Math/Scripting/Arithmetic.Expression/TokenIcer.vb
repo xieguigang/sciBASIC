@@ -35,7 +35,7 @@
     ' 
     '         Properties: Tokens
     ' 
-    '         Function: IsCloseStack, IsOpenStack, TryParse
+    '         Function: __parseDouble, __parseUNDEFINE, IsCloseStack, IsOpenStack, TryParse
     ' 
     '     Enum ExpressionTokens
     ' 

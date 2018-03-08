@@ -34,7 +34,8 @@
     ' Class SchemaParsingTest
     ' 
     '     Properties: a, b, c, d, e
-    '                 f, ffssdfsd, g, h, KV
+    '                 f, ffssdfsd, g, h, i
+    '                 KV, LINQAlias
     ' 
     ' /********************************************************************************/
 

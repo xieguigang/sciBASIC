@@ -38,9 +38,8 @@
     '     Sub: bubblePlots, pieChartTest, randdddTest, scatterWithAnnotation, ShowCharacterData
     '     Class [Integer]
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' 

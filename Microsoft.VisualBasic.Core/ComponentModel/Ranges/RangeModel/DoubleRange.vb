@@ -35,11 +35,9 @@
     ' 
     '         Properties: Length, Max, Min
     ' 
+    '         Constructor: (+6 Overloads) Sub New
     '         Function: Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping
     '                   ScaleMapping, ToString
-    ' 
-    '         Sub: (+6 Overloads) New
-    ' 
     '         Operators: *, <>, =
     ' 
     ' 

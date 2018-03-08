@@ -35,9 +35,8 @@
     ' 
     '         Properties: DrawingRegion, EnableAutoLayout, Location, TooltipTag
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Draw, MoveOffset, MoveTo, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

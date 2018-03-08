@@ -33,15 +33,18 @@
 
     ' Class Project
     ' 
-    '     Properties: [Imports], ItemGroups, PropertyGroups, Targets
+    '     Properties: [Imports], DefaultTargets, ItemGroups, PropertyGroups, Targets
+    '                 ToolsVersion
     ' 
     '     Function: GetProfile, (+2 Overloads) Save, ToString
     ' 
     ' Class Target
     ' 
-    ' 
+    '     Properties: Name
     ' 
     ' Class Import
+    ' 
+    '     Properties: Condition, Label, Project
     ' 
     '     Function: ToString
     ' 

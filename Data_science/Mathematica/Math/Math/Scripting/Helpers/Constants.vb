@@ -33,9 +33,11 @@
 
     '     Class Constants
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: [GET]
     ' 
-    '         Sub: (+3 Overloads) Add, New
+    '         Sub: (+3 Overloads) Add
     ' 
     ' 
     ' /********************************************************************************/

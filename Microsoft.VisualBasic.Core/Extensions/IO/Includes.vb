@@ -33,9 +33,11 @@
 
     '     Class Includes
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetPath, ToString
     ' 
-    '         Sub: Add, New
+    '         Sub: Add
     ' 
     ' 
     ' /********************************************************************************/

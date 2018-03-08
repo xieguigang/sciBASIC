@@ -33,8 +33,9 @@
 
     ' Module VectorExtensions
     ' 
-    '     Function: (+2 Overloads) After, Coalesce, IndexOf, Last, MappingData
-    '               RepeatCalls, Replicate, (+2 Overloads) Sort, VectorShadows
+    '     Function: (+2 Overloads) After, Coalesce, GetRange, IndexOf, Last
+    '               LoadAsNumericVector, MappingData, Midv, RepeatCalls, Replicate
+    '               (+2 Overloads) Sort, Split, VectorShadows
     ' 
     '     Sub: (+2 Overloads) Memset
     '     Enum DelimiterLocation

@@ -33,11 +33,12 @@
 
     '     Class IsometricEngine
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: FindItemForPosition, GetEnumerator, IEnumerable_GetEnumerator, IntersectionWith, (+2 Overloads) IsPointInPoly
     '                   sortPaths, TranslatePoint
     ' 
     '         Sub: (+3 Overloads) Add, AddPath, Clear, Draw, Measure
-    '              New
     ' 
     ' 
     ' /********************************************************************************/

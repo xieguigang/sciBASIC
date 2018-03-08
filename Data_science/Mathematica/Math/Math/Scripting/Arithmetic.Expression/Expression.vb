@@ -35,9 +35,11 @@
     ' 
     '         Properties: Constant, DefaultEngine, Functions, Variables
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Compile, Evaluate, Evaluation, GetValue
     ' 
-    '         Sub: AddConstant, New, (+2 Overloads) SetVariable
+    '         Sub: AddConstant, (+2 Overloads) SetVariable
     ' 
     ' 
     ' /********************************************************************************/

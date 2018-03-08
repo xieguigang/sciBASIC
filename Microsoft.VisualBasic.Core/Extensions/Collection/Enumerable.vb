@@ -33,7 +33,9 @@
 
     ' Module IEnumerations
     ' 
-    '     Function: [Next], GetItem
+    '     Function: [Next], CreateDictionary, (+2 Overloads) Differ, (+2 Overloads) FindByItemKey, FindByItemValue
+    '               (+2 Overloads) GetItem, GetItems, Take, (+2 Overloads) Takes, ToDictionary
+    '               ToEntryDictionary
     ' 
     ' /********************************************************************************/
 

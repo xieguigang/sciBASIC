@@ -35,9 +35,8 @@
     ' 
     '         Properties: CombList, EOL, NewLine
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __internalQuery, CreateCompleteObjectPairs, CreateObject, GetObjectPair, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

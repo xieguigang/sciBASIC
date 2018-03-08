@@ -33,7 +33,9 @@
 
     '     Module NodeTrees
     ' 
-    '         Function: __cutTrees, PartionTable
+    '         Function: __cutTrees, BuildTree, CutTrees, PartionTable
+    ' 
+    '         Sub: __appendChilds
     ' 
     ' 
     ' /********************************************************************************/

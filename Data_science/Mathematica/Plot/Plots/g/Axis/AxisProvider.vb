@@ -35,9 +35,8 @@
     ' 
     '         Properties: n, Range, Tick
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: AxisTicks, ToString, TryParse
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

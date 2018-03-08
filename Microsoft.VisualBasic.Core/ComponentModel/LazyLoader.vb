@@ -41,17 +41,18 @@
     ' 
     '             Properties: URL, Value
     ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
     '             Function: ToString, WriteData
     ' 
-    '             Sub: __loadData, __printMSG, New
+    '             Sub: __loadData, __printMSG
     ' 
     '     Class Lazy
     ' 
     '         Properties: Value
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' 

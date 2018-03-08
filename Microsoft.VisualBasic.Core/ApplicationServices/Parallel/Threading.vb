@@ -33,7 +33,7 @@
 
     '     Module InvokesHelper
     ' 
-    ' 
+    '         Function: Invoke
     '         Structure __invokeHelper
     ' 
     '             Function: Task

@@ -33,9 +33,8 @@
 
     ' 	Class ContinuousDistributionError
     ' 
+    ' 	    Constructor: (+1 Overloads) Sub New
     ' 	    Function: ErrorMessage
-    ' 
-    ' 	    Sub: New
     ' 
     ' 
     ' /********************************************************************************/

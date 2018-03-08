@@ -35,10 +35,12 @@
     ' 
     '         Properties: Depth, Points
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: CloserThan, CountCloserThan, Reverse, RotateX, RotateY
     '                   RotateZ, (+3 Overloads) Scale, ToString, Translate, TranslatePoints
     ' 
-    '         Sub: (+2 Overloads) New, Push
+    '         Sub: Push
     ' 
     ' 
     ' /********************************************************************************/

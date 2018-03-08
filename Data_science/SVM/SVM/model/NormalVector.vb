@@ -35,9 +35,8 @@
     ' 
     '         Properties: W, W1, W2
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Clone, Equals, ICloneable_Clone, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

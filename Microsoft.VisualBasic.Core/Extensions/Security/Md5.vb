@@ -34,7 +34,7 @@
     '     Module MD5Hash
     ' 
     '         Function: GetFileHashString, (+2 Overloads) GetHashCode, (+3 Overloads) GetMd5Hash, GetMd5Hash2, NewUid
-    '                   SaltValue, StringToByteArray, ToLong, VerifyFile, VerifyMd5Hash
+    '                   SaltValue, StringToByteArray, (+2 Overloads) ToLong, VerifyFile, VerifyMd5Hash
     ' 
     ' 
     ' /********************************************************************************/

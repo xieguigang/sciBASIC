@@ -37,9 +37,8 @@
     '                     Ignorable, pageMargins, pageSetup, phoneticPr, sheetData
     '                     sheetFormatPr, sheetViews, uid
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class drawing
     ' 
@@ -47,7 +46,7 @@
     ' 
     '     Class hyperlink
     ' 
-    '         Properties: id
+    '         Properties: id, ref
     ' 
     '     Class conditionalFormatting
     ' 
@@ -55,7 +54,8 @@
     ' 
     '     Class cfRule
     ' 
-    '         Properties: colorScale, formula
+    '         Properties: [operator], colorScale, dxfId, formula, priority
+    '                     type
     ' 
     '     Class colorScale
     ' 
@@ -67,19 +67,20 @@
     ' 
     '     Class sheetData
     ' 
-    ' 
+    '         Properties: rows
     ' 
     '     Class sheetView
     ' 
-    '         Properties: pane, selection
+    '         Properties: pane, selection, tabSelected, workbookViewId, zoomScale
+    '                     zoomScaleNormal
     ' 
     '     Class pane
     ' 
-    ' 
+    '         Properties: activePane, state, topLeftCell, ySplit
     ' 
     '     Class selection
     ' 
-    ' 
+    '         Properties: activeCell, pane, sqref
     ' 
     '     Structure dimension
     ' 
@@ -89,27 +90,30 @@
     ' 
     '     Class col
     ' 
-    ' 
+    '         Properties: bestFit, customWidth, max, min, style
+    '                     width
     ' 
     '     Structure row
     ' 
-    '         Properties: dyDescent
+    '         Properties: columns, customFormat, customHeight, dyDescent, ht
+    '                     r, s, spans
     ' 
     '         Function: ToString
     ' 
     '     Structure c
     ' 
-    '         Properties: sharedStringsRef, v
+    '         Properties: r, s, sharedStringsRef, t, v
     ' 
     '         Function: ToString
     ' 
     '     Class pageMargins
     ' 
-    ' 
+    '         Properties: bottom, footer, header, left, right
+    '                     top
     ' 
     '     Class pageSetup
     ' 
-    '         Properties: id
+    '         Properties: id, orientation, paperSize
     ' 
     ' 
     ' /********************************************************************************/

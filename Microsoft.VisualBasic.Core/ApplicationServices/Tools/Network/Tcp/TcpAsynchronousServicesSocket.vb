@@ -35,10 +35,12 @@
     ' 
     '         Properties: ClientDecryptionHandle, IsShutdown, LocalPort, RequestHandler
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: BeginListen, IsServerInternalException, LoopbackEndPoint
     ' 
-    '         Sub: AcceptCallback, (+2 Overloads) Dispose, (+2 Overloads) New, ReadCallback, (+2 Overloads) Run
-    '              Send, SendCallback
+    '         Sub: AcceptCallback, (+2 Overloads) Dispose, ReadCallback, (+2 Overloads) Run, Send
+    '              SendCallback
     ' 
     ' 
     ' /********************************************************************************/

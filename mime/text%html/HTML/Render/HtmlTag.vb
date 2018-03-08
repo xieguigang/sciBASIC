@@ -35,9 +35,11 @@
     ' 
     '         Properties: Attributes, IsClosing, IsSingle, TagName
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: HasAttribute, ToString, TranslateLength
     ' 
-    '         Sub: ApplyTableBorder, ApplyTablePadding, (+2 Overloads) New, TranslateAttributes
+    '         Sub: ApplyTableBorder, ApplyTablePadding, TranslateAttributes
     ' 
     ' 
     ' /********************************************************************************/

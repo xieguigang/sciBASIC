@@ -31,11 +31,11 @@
 
     ' Summaries:
 
-    '  
+    '     Class Doc
     ' 
-    '     Properties: assembly, members
+    '         Properties: assembly, members
     ' 
-    '     Function: ToString
+    '         Function: ToString
     ' 
     '     Class assembly
     ' 

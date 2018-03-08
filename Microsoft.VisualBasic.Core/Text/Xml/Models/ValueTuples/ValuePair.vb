@@ -31,13 +31,17 @@
 
     ' Summaries:
 
+    '     Class KeyValuePair
+    ' 
+    '         Properties: Key, Value
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: CreateObject, Distinct, (+2 Overloads) Equals, ToDictionary, ToString
     '         Interface IKeyValuePair
     ' 
-    '             Sub: (+3 Overloads) New
     ' 
-    '  
     ' 
-    '     Function: CreateObject, Distinct, (+2 Overloads) Equals, ToDictionary, ToString
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

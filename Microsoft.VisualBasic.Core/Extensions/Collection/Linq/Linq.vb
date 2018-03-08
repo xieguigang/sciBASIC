@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b61cbee56b3372e4bc33afde14322120, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::707fcb642263b12bf7e5d463c77265be, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,10 @@
 
     '     Module Extensions
     ' 
-    '         Function: __innerTry, CopyVector, DATA, (+2 Overloads) JoinIterates, RemoveLeft
-    '                   SafeQuery, (+2 Overloads) SeqIterator, Sequence, (+2 Overloads) ToArray, ToVector
+    '         Function: __innerTry, CopyVector, DATA, DefaultFirst, FirstOrDefault
+    '                   IteratesALL, (+2 Overloads) JoinIterates, MaxInd, Populate, (+2 Overloads) Read
+    '                   RemoveLeft, (+2 Overloads) Removes, Repeats, SafeQuery, (+2 Overloads) SeqIterator
+    '                   (+4 Overloads) Sequence, (+4 Overloads) ToArray, ToVector
     ' 
     ' 
     ' /********************************************************************************/

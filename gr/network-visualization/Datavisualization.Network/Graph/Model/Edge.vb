@@ -35,10 +35,8 @@
     ' 
     '         Properties: __source, __target, Data, Directed, ID
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
-    ' 
     '         Operators: <>, =
     ' 
     ' 

@@ -35,9 +35,8 @@
     ' 
     '         Properties: Count, EmptyExample, EmptyUsage, GetExample, GetUsage
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

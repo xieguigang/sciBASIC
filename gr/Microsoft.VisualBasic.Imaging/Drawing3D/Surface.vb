@@ -33,9 +33,11 @@
 
     '     Structure Surface
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Copy, GetEnumerator, IEnumerable_GetEnumerator
     ' 
-    '         Sub: Draw, New
+    '         Sub: Draw
     ' 
     ' 
     ' /********************************************************************************/

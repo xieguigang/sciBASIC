@@ -33,7 +33,8 @@
 
     '     Module ParserCommon
     ' 
-    '         Function: GetCodeComment, GetTokens, StartEscaping, TokenParser
+    '         Function: [As], [CType], [TryCast], GetCodeComment, GetTokens
+    '                   StartEscaping, TokenParser
     ' 
     ' 
     ' /********************************************************************************/

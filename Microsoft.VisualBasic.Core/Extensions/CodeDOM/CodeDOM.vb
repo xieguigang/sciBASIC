@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    '  
+    '     Module CodeDOMExtension
     ' 
-    '     Properties: DllProfile, DotNETFramework, ExecutableProfile
+    '         Properties: DllProfile, DotNETFramework, ExecutableProfile
     ' 
-    '     Function: CompileDll, CompileExe, Icon
+    '         Function: (+4 Overloads) Compile, CompileDll, CompileExe, GenerateCode, GetDebugInformation
+    '                   Icon, ImportsNamespace
     ' 
     ' 
     ' /********************************************************************************/

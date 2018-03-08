@@ -35,9 +35,11 @@
     ' 
     '         Properties: SPD
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetL, Solve
     ' 
-    '         Sub: ISerializable_GetObjectData, New
+    '         Sub: ISerializable_GetObjectData
     ' 
     ' 
     ' /********************************************************************************/

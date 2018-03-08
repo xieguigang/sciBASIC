@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68da30f79e3d0efc3a79b52d16d6925d, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\Delegate.vb"
+﻿#Region "Microsoft.VisualBasic::fc4165d5fd937cd4dea7486572a709cc, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\Delegate.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,8 @@
     ' 
     '         Properties: Example, Info, Name, Usage
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Execute, HelpInformation, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

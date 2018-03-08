@@ -37,16 +37,18 @@
     '                     Columns, ColumnWidths, FooterBox, HeaderBox, HorizontalSpacing
     '                     RowCount, TableBox, VerticalSpacing, WidthSpecified
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: (+2 Overloads) CanReduceWidth, CreateColumn, GetAvailableCellWidth, GetAvailableWidth, GetCellRealColumnIndex
     '                   GetCellWidth, GetColSpan, GetReductableColumns, GetRowSpan, GetSpan
     '                   GetSpannedMinWidth, GetWidthSum
     ' 
-    '         Sub: Analyze, Measure, MeasureWords, (+2 Overloads) New
+    '         Sub: Analyze, Measure, MeasureWords
     '         Class SpacingBox
     ' 
     '             Properties: EndRow, StartRow
     ' 
-    '             Sub: New
+    '             Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' 

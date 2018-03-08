@@ -35,16 +35,17 @@
     ' 
     '         Properties: RecomandedRadius
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: CheckValid, CompareAngel, GetCircleCenter, GetConcave_Ball, GetConcave_Edge
     '                   GetCross, GetDistance, GetInRNeighbourList, GetMinEdgeLength, GetNextPoint_BallPivoting
     '                   GetNextPoint_EdgePivoting, GetSortedNeighbours, HasPointsInCircle, IsInCircle
     ' 
-    '         Sub: InitDistanceMap, InitNearestList, New, SortAdjListByAngel
+    '         Sub: InitDistanceMap, InitNearestList, SortAdjListByAngel
     '         Structure Point2dInfo
     ' 
+    '             Constructor: (+1 Overloads) Sub New
     '             Function: CompareTo, ToString
-    ' 
-    '             Sub: New
     ' 
     ' 
     ' 

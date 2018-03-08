@@ -41,11 +41,10 @@
     ' 
     '     Class ProfileItem
     ' 
-    '         Properties: Type
+    '         Properties: Description, Name, Type
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     '     Class ProfileNodeItem
     ' 

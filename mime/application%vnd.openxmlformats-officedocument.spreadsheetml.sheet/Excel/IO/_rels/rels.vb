@@ -39,6 +39,8 @@
     ' 
     '     Class Relationship
     ' 
+    '         Properties: Id, Target, TargetMode, Type
+    ' 
     '         Function: ToString
     ' 
     ' 

@@ -33,15 +33,16 @@
 
     '     Class Serialization
     ' 
+    '         Properties: Sections
+    ' 
     '         Function: __getDefaultPath, Load, Save
     ' 
     '     Class IniMapIO
     ' 
     '         Properties: Path
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     '     Module IOProvider
     ' 

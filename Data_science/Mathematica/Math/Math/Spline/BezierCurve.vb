@@ -35,9 +35,11 @@
     ' 
     '         Properties: BezierPoints, InitPointsList, Iterations
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: MidPoint, ReCalculate
     ' 
-    '         Sub: CreateBezier, (+2 Overloads) New, PopulateBezierPoints
+    '         Sub: CreateBezier, PopulateBezierPoints
     ' 
     ' 
     ' /********************************************************************************/

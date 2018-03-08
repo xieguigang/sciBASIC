@@ -35,13 +35,12 @@
     ' 
     '         Properties: HashKey
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: __compareTo, compareTo, ToString
-    ' 
-    '         Sub: New
     ' 
     '     Module LinkHashCode
     ' 
-    '         Function: hashCodePair
+    '         Function: (+2 Overloads) hashCodePair
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,9 +33,8 @@
 
     '     Structure Cubic
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Eval, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

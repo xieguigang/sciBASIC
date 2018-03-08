@@ -38,6 +38,8 @@
     '         Function: ProcessUsage, ProcessUsageDetails
     '         Structure TaskInfo
     ' 
+    '             Properties: CommandLine, CPU, Memory, PID, ProcessName
+    ' 
     '             Function: ToString
     ' 
     ' 

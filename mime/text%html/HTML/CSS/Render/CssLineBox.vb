@@ -35,10 +35,11 @@
     ' 
     '         Properties: OwnerBox, Rectangles, RelatedBoxes, Words
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetBaseLineHeight, GetMaxWordBottom, ToString, WordsOf
     ' 
-    '         Sub: AssignRectanglesToBoxes, DrawRectangles, New, ReportExistanceOf, SetBaseLine
-    '              UpdateRectangle
+    '         Sub: AssignRectanglesToBoxes, DrawRectangles, ReportExistanceOf, SetBaseLine, UpdateRectangle
     ' 
     ' 
     ' /********************************************************************************/

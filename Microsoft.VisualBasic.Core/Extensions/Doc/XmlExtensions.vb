@@ -33,7 +33,9 @@
 
     ' Module XmlExtensions
     ' 
-    '     Function: GetXml, SafeLoadXml, SetXmlEncoding, SetXmlStandalone
+    '     Function: CodePage, CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, GetXmlAttrValue
+    '               LoadFromXml, (+2 Overloads) LoadXml, SafeLoadXml, SaveAsXml, SetXmlEncoding
+    '               SetXmlStandalone
     ' 
     '     Sub: WriteXML
     ' 

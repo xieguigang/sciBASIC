@@ -36,9 +36,8 @@
     '         Properties: ConstraintTypes, failureMessage, FeasibleSolutionTime, ObjectiveFunctionValue, SolutionLog
     '                     SolveTime
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: coefficientSensitivityString, constraintSensitivityString, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

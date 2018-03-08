@@ -35,23 +35,25 @@
     ' 
     '         Properties: Height, Size, Width
     ' 
-    '         Sub: (+2 Overloads) Dispose, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: (+2 Overloads) Dispose
     ' 
     '     Class ImageData
     ' 
     '         Properties: DefaultFormat, Driver, Image
     ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: (+2 Overloads) Save
     ' 
-    '         Sub: Dispose, (+3 Overloads) New
+    '         Sub: Dispose
     ' 
     '     Class SVGData
     ' 
     '         Properties: Driver, SVG, XmlComment
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Render, (+2 Overloads) Save
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

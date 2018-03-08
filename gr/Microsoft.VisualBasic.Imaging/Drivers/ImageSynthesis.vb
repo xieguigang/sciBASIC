@@ -33,7 +33,7 @@
 
     '     Module ImageSynthesis
     ' 
-    ' 
+    '         Sub: (+30 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped
     ' 
     ' 
     ' /********************************************************************************/

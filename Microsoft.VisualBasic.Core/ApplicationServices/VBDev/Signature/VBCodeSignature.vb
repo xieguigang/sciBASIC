@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d944ce16ce4d711f5bdb02578c94f09, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\VBCodeSignature.vb"
+﻿#Region "Microsoft.VisualBasic::8b06d95a593437f525ad5ead2dcd00ed, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\VBCodeSignature.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module VBCodeSignature
     ' 
-    '         Function: SummaryInternal, typeSummary
+    '         Function: memberList, RemoveAttributes, SummaryInternal, SummaryModules, typeSummary
     ' 
     ' 
     ' /********************************************************************************/
@@ -220,10 +220,22 @@ Namespace ApplicationServices.Development
                 End If
             End If
             If Not methods.IsNullOrEmpty Then
+                Dim constructors = methods _
+                    .Where(Function(s) s.Name = "New") _
+                    .ToArray
                 Dim types = methods _
+                    .Where(Function(s) s.Name <> "New") _
                     .GroupBy(Function(m) m.Value) _
                     .ToDictionary(Function(t) t.Key,
                                   Function(l) l.Keys.memberList)
+
+                If constructors.Length > 0 Then
+                    members += container.Description & $"    Constructor: (+{constructors.Count} Overloads) Sub New"
+
+                    If types.Count > 1 Then
+                        members += ""
+                    End If
+                End If
 
                 If types.ContainsKey("Function") Then
                     prefix = container.Description & $"    Function: "

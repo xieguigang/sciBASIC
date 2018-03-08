@@ -39,9 +39,11 @@
     '         Properties: Ignores, Model, modelVariables, observation, weights
     '                     y0
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: Calculate, RunTest
     ' 
-    '         Sub: __init, (+2 Overloads) New
+    '         Sub: __init
     ' 
     ' 
     ' 

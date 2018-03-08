@@ -35,9 +35,11 @@
     ' 
     '         Properties: Length
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: FormErrorMessage, GetInputSymbol, GetSubSection, GetSubString, HasInput
     ' 
-    '         Sub: GetLineColumnNumber, New
+    '         Sub: GetLineColumnNumber
     ' 
     ' 
     ' /********************************************************************************/

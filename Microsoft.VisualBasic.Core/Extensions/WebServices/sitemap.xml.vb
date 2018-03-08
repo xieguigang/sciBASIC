@@ -31,6 +31,11 @@
 
     ' Summaries:
 
+    '     Class sitemap
+    ' 
+    '         Properties: urls
+    ' 
+    '         Function: ToString
     '         Structure url
     ' 
     '             Properties: changefreq, lastmod, loc, priority
@@ -41,8 +46,6 @@
     ' 
     '             always, daily, hourly, monthly, never
     '             weekly, yearly
-    ' 
-    '  
     ' 
     ' 
     ' 

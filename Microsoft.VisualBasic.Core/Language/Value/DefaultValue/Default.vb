@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2889c36ebd276bb6b62fca20721ad2f5, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::d9c9fb46f29d1d1a3656f6c0273cce3f, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -49,10 +49,8 @@
     ' 
     '         Properties: DefaultValue, IsEmpty
     ' 
-    '         Function: ToString
-    ' 
-    '         Sub: (+2 Overloads) New
-    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: [When], ToString
     '         Operators: +, (+4 Overloads) Or
     ' 
     ' 
@@ -171,27 +169,20 @@ Namespace Language.Default
         ''' <param name="obj"></param>
         ''' <param name="[default]"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or(obj As T, [default] As DefaultValue(Of T)) As T
-            With [default]
-                Dim assert As Assert(Of Object)
-
-                If .assert Is Nothing Then
-                    assert = AddressOf ExceptionHandler.Default
-                Else
-                    assert = .assert
-                End If
-
-                If assert(obj) Then
-                    Return .DefaultValue
-                Else
-                    Return obj
-                End If
-            End With
+            Return getDefault(obj, [default].DefaultValue, If([default].assert, ExceptionHandler.defaultHandler))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function getDefault(value As T, [default] As T, assert As Assert(Of Object))
+            Return If(assert(value), [default], value)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or([default] As DefaultValue(Of T), obj As T) As T
-            Return obj Or [default]
+            Return getDefault([default].DefaultValue, obj, If([default].assert, ExceptionHandler.defaultHandler))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

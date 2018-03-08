@@ -35,9 +35,11 @@
     ' 
     '         Properties: FillColor, Radius, Size
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: Draw
     ' 
-    '         Sub: Draw, (+2 Overloads) New
+    '         Sub: Draw
     ' 
     ' 
     ' /********************************************************************************/

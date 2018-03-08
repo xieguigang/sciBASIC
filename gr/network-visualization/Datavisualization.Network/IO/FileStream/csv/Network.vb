@@ -33,9 +33,8 @@
 
     '     Class NetworkTables
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Links, Load
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

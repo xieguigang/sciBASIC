@@ -33,7 +33,8 @@
 
     ' Class MainWindow
     ' 
-    '     Sub: ModernWindow_Initialized, New
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: ModernWindow_Initialized
     ' 
     ' /********************************************************************************/
 

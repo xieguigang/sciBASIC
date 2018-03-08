@@ -35,7 +35,7 @@
     ' 
     '         Properties: AutoPaused, ErrLogs
     ' 
-    '         Sub: __logShell, SaveErrorLog
+    '         Sub: __logShell, InitDebuggerEnvir, SaveErrorLog
     ' 
     ' 
     ' /********************************************************************************/

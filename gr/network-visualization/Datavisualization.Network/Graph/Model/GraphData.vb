@@ -34,27 +34,24 @@
     '     Class NodeData
     ' 
     '         Properties: Color, Force, initialPostion, mass, Neighborhoods
-    '                     origID, radius
+    '                     Neighbours, origID, radius, Weights
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Clone, ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class EdgeData
     ' 
     '         Properties: length, weight
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Clone, ToString
-    ' 
-    '         Sub: New
     ' 
     '     Class GraphData
     ' 
     '         Properties: label
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,9 +35,11 @@
     ' 
     '         Properties: Name, Namespaces
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: EnsureNamespace, GetNamespace, ToString
     ' 
-    '         Sub: (+2 Overloads) New, processMember, processType, ProcessXmlDoc
+    '         Sub: processMember, processType, ProcessXmlDoc
     ' 
     ' 
     ' /********************************************************************************/

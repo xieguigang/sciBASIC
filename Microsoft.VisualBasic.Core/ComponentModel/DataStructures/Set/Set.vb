@@ -35,10 +35,12 @@
     ' 
     '         Properties: IsEmpty, Length
     ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
     '         Function: Contains, Equals, GetHashCode, IEnumerable_GetEnumerator, Remove
     '                   ToArray, ToString
     ' 
-    '         Sub: Add, Clear, Dispose, (+4 Overloads) New
+    '         Sub: Add, Clear, Dispose
     ' 
     '         Operators: -, +, <>, =, (+2 Overloads) And
     '                    (+4 Overloads) Or

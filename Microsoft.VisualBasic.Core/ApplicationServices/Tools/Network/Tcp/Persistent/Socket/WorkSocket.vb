@@ -33,7 +33,8 @@
 
     '     Class WorkSocket
     ' 
-    '         Sub: New, ReadCallback, SendMessage
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: ReadCallback, SendMessage
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,12 +35,11 @@
     ' 
     '         Properties: Length, OutputFunction, W
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: Output, ToString, Train
-    ' 
-    '         Sub: New
     '         Class Entity
     ' 
-    '             Properties: Width
+    '             Properties: Properties, Width, Y
     ' 
     '             Function: CastTo, ToString
     ' 

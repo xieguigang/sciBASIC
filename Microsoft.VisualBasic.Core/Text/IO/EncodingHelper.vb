@@ -35,9 +35,8 @@
     ' 
     '         Properties: TextEncoding
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: GetBytes, (+2 Overloads) ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

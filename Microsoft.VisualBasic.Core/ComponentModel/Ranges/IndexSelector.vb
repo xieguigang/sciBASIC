@@ -35,15 +35,13 @@
     ' 
     '         Properties: Desc
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: FirstGreaterThan, SelectUntilGreaterThan, SelectUntilLessThan, ToString
-    ' 
-    '         Sub: New
     ' 
     '     Structure IntTag
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: CompareTo, OrderSelector, ToString
-    ' 
-    '         Sub: (+2 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

@@ -33,27 +33,39 @@
 
     '     Class Value
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Properties: Identifier, Range, Type
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class Term
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Properties: Identifier, Points
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class Fuzzify
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Properties: Identifier, Terms
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class Defuzzify
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Properties: Accu, Method
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class Rule
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Properties: Expression, Identifier
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class RuleBlock
     ' 
-    '         Sub: (+2 Overloads) New
+    '         Properties: [AND], [OR], Rules
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

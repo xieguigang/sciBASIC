@@ -33,7 +33,8 @@
 
     '     Class Mouse
     ' 
-    '         Sub: device_MouseDown, device_MouseMove, device_MouseUp, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: device_MouseDown, device_MouseMove, device_MouseUp
     ' 
     ' 
     ' /********************************************************************************/

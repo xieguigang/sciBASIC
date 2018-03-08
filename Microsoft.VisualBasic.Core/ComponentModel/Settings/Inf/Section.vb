@@ -33,6 +33,8 @@
 
     '     Class Section
     ' 
+    '         Properties: Items, Name
+    ' 
     '         Function: GetValue
     ' 
     '         Sub: SetValue

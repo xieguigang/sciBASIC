@@ -33,9 +33,8 @@
 
     '     Class LinearScale
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+4 Overloads) domain, ToString
-    ' 
-    '         Sub: New
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,9 +35,8 @@
     ' 
     '         Properties: Encoding
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: CreateObject
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

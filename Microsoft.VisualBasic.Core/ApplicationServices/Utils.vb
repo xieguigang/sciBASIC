@@ -33,12 +33,14 @@
 
     '     Module Utils
     ' 
-    '         Function: (+2 Overloads) Time
+    '         Function: FormatTicks, TaskRun, (+2 Overloads) Time
     ' 
     '         Sub: TryRun
     '         Delegate Function
     ' 
-    '             Function: FileMimeType
+    '             Function: CLIPath, CLIToken, FileMimeType, GetMIMEDescrib
+    ' 
+    '             Sub: (+2 Overloads) Wait
     ' 
     ' 
     ' 

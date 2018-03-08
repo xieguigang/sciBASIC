@@ -33,27 +33,23 @@
 
     '     Class [Long]
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: __toInt64
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     '     Class [Integer]
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: __toInt32
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     '     Class [Double]
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: __toFloat
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     '     Class [Boolean]
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: __toBoolean
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

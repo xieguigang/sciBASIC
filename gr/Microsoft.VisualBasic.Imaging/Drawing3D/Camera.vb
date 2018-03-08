@@ -33,10 +33,12 @@
 
     '     Class Camera
     ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: Lighting, (+2 Overloads) Project, (+4 Overloads) Rotate, (+2 Overloads) RotateX, (+2 Overloads) RotateY
     '                   (+2 Overloads) RotateZ, ToString
     ' 
-    '         Sub: Draw, New
+    '         Sub: Draw
     ' 
     ' 
     ' /********************************************************************************/

@@ -36,6 +36,7 @@
     '         Properties: Attribute, Count, DataRecordItem, FieldCount, Item
     '                     Keys, LineNumber, RowData, Schema, Values
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: [TryCast], __tryGetValue, ContainsKey, CreateSchema, GetBoolean
     '                   GetByte, GetBytes, GetChar, GetChars, GetData
     '                   GetDataTypeName, GetDateTime, GetDecimal, GetDouble, GetDynamicMemberNames
@@ -44,8 +45,6 @@
     '                   (+2 Overloads) GetOrdinal, GetString, GetValue, (+2 Overloads) GetValues, IDataRecord_GetValue
     '                   IsDBNull, Read, SetAttributeValue, ToString, TryGetMember
     '                   TryGetValue, TrySetMember
-    ' 
-    '         Sub: (+3 Overloads) New
     ' 
     ' 
     ' /********************************************************************************/

@@ -35,7 +35,8 @@
     ' 
     '         Properties: Linq2Symbols, opName2Linq
     ' 
-    '         Sub: __linq2Symbols, __opName2Linq, New
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: __linq2Symbols, __opName2Linq
     ' 
     ' 
     ' /********************************************************************************/
