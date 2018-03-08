@@ -1322,6 +1322,8 @@ Public Module App
         Call Console.WriteLine()
 
 #If DEBUG Then
+        ' this option enable you disable the pause in debug mode 
+        ' when the program is going to end.
         If Not App.GetVariable("pause.disable").ParseBoolean = True Then
             ' 应用程序在 debug 模式下会自动停止在这里
             Call Pause()
