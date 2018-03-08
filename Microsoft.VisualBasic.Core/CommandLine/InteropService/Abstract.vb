@@ -55,6 +55,8 @@
 
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine.InteropService
 
@@ -94,9 +96,20 @@ Namespace CommandLine.InteropService
 
         Public Shared Function GetLastError(proc As IIORedirectAbstract) As ExceptionData
             Dim out$ = proc.StandardOutput
-            Dim Err$ = out.Match("\[ERROR .+", RegexOptions.Singleline)
+            Dim err$ = out _
+                .Match("^\[INFOM .+?\] \[Log\].+$", RegexOptions.Multiline) _
+                .StringReplace("\[.+?\] \[Log\]\s+", "") _
+                .Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)
+            Dim logs As List(Of String()) = err.ReadAllText _
+                .lTokens _
+                .FlagSplit(Function(s) s.IsPattern("[=]+")) _
+                .AsList
 
-            Return New ExceptionData
+            Dim typeINF = logs(-3).Where(Function(s) Not s.StringEmpty).First.Trim(":"c)
+            Dim message = logs(-2).Where(Function(s) Not s.StringEmpty).Select(Function(s) Mid(s, 9).Trim).ToArray
+            Dim tracess = logs(-1).Where(Function(s) Not s.StringEmpty).Select(Function(s) Mid(s, 6).Trim).ToArray
+
+            Return ExceptionData.CreateInstance(message, tracess, typeINF)
         End Function
 
         ''' <summary>

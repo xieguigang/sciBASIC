@@ -98,6 +98,26 @@ Module Program
         Throw ex
     End Function
 
+    Sub call1()
+        Throw New NotImplementedException("afsdfsdffsdfsd")
+    End Sub
+
+    Sub call2()
+        call1()
+    End Sub
+
+    Sub call3()
+        call2()
+    End Sub
+
+    Sub call4()
+        call3()
+    End Sub
+
+    Sub call5()
+        call4()
+    End Sub
+
     ''' <summary>
     ''' Catch child exception
     ''' </summary>
@@ -106,6 +126,14 @@ Module Program
     <ExportAPI("/test.catch")>
     <Usage("/test.catch")>
     Public Function TestException(args As CommandLine) As Integer
+
+        Try
+            '     call5()
+        Catch ex As Exception
+            Call LogException(New Exception("helllllll", ex))
+        End Try
+
+
         Dim app As New InteropService(Microsoft.VisualBasic.App.ExecutablePath)
         Dim child = app.RunDotNetApp($"/throw.ex /type {GetType(NotImplementedException).FullName} /message ""Hello world!""")
 
