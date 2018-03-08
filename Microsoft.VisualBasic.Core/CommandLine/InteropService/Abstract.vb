@@ -53,6 +53,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
 Imports Microsoft.VisualBasic.Language
@@ -90,20 +91,37 @@ Namespace CommandLine.InteropService
         ''' <remarks></remarks>
         Protected Friend _executableAssembly As String
 
+        Dim lastProc As IIORedirectAbstract
+
         Public Function RunDotNetApp(args$) As IIORedirectAbstract
-            Return App.Shell(_executableAssembly, args, CLR:=True)
+            lastProc = App.Shell(_executableAssembly, args, CLR:=True)
+            Return lastProc
+        End Function
+
+        ''' <summary>
+        ''' 线程不安全
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetLastCLRException() As ExceptionData
+            Return GetLastError(lastProc)
         End Function
 
         Public Shared Function GetLastError(proc As IIORedirectAbstract) As ExceptionData
-            Dim out$ = proc.StandardOutput
+            Dim out$ = proc?.StandardOutput Or EmptyString
             Dim err$ = out _
                 .Match("^\[INFOM .+?\] \[Log\].+$", RegexOptions.Multiline) _
                 .StringReplace("\[.+?\] \[Log\]\s+", "") _
                 .Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)
-            Dim logs As List(Of String()) = err.ReadAllText _
+            Dim logs As List(Of String()) = err _
+                .ReadAllText(throwEx:=False, suppress:=True) _
                 .lTokens _
                 .FlagSplit(Function(s) s.IsPattern("[=]+")) _
                 .AsList
+
+            If logs.IsNullOrEmpty Then
+                Return Nothing
+            End If
 
             Dim typeINF = logs(-3).Where(Function(s) Not s.StringEmpty).First.Trim(":"c)
             Dim message = logs(-2).Where(Function(s) Not s.StringEmpty).Select(Function(s) Mid(s, 9).Trim).ToArray
@@ -120,6 +138,8 @@ Namespace CommandLine.InteropService
         ''' </summary>
         ''' <param name="args$"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RunProgram(args$) As IIORedirectAbstract
             Return App.Shell(_executableAssembly, args, CLR:=False)
         End Function
@@ -141,8 +161,8 @@ Namespace CommandLine.InteropService
 
         Public ReadOnly Property value As String
 
-        Sub New(Optional _default As String = "")
-            value = _default
+        Sub New(Optional default$ = "")
+            value = [default]
         End Sub
 
         Public Overrides Function ToString() As String

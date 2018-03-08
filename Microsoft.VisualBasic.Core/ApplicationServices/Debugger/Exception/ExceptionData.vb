@@ -7,7 +7,7 @@
         Public Property StackTrace As StackFrame()
 
         Public Overrides Function ToString() As String
-            Return $"{TypeFullName}::{Message.JoinBy(" ---> ")}"
+            Return TypeFullName
         End Function
 
         Public Shared Function CreateInstance(messages$(), stackTrace$(), type$) As ExceptionData
@@ -23,7 +23,7 @@
 
     Public Class StackFrame
 
-        Public Property Method As String
+        Public Property Method As Method
         Public Property File As String
         Public Property Line As String
 
@@ -48,11 +48,30 @@
                 End If
 
                 Return New StackFrame With {
-                    .Method = method,
+                    .Method = New Method(method),
                     .File = file,
                     .Line = lineNumber
                 }
             End With
+        End Function
+    End Class
+
+    Public Class Method
+
+        Public Property [Namespace] As String
+        Public Property [Module] As String
+        Public Property Method As String
+
+        Sub New(s As String)
+            Dim t = s.Split("."c).AsList
+
+            Method = t(-1)
+            [Module] = t(-2)
+            [Namespace] = t.Take(t.Count - 2).JoinBy(".")
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{[Namespace]}.{[Module]}.{Method}"
         End Function
     End Class
 End Namespace
