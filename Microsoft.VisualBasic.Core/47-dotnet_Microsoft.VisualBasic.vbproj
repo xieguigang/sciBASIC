@@ -783,6 +783,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
     <Compile Include="ApplicationServices\VBDev\AssemblyInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\VBCodeSignature.vb" />

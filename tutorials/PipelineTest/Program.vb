@@ -108,10 +108,10 @@ Module Program
 
         Call child.Run()
 
-        Dim err$ = InteropService.GetLastError(child)
+        Dim err = InteropService.GetLastError(child)
 
         Pause()
 
-        Throw New Exception(err)
+        Throw New Exception(err.ToString)
     End Function
 End Module
