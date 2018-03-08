@@ -776,12 +776,23 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("TraceBugs")>
-    Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional Trace$ = "") As String
-        Dim Entry As String = App.__getTEMPhash
-        Entry = $"{Now.Year}-{Now.Month}-{Now.Day}, {Format(Now.Hour, "00")}-{Format(Now.Minute, "00")}-{Format(Now.Second, "00")}_{Entry}"
-        Dim log As String = $"{App.LogErrDIR}/{Entry}.log"
-        Call App.LogException(ex, Trace, log)
+    Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
+        Dim entry$ = $"{Now.formatTime}_{App.__getTEMPhash}"
+        Dim log$ = $"{App.LogErrDIR}/{entry}.log"
+        Call App.LogException(ex, trace, log)
         Return log
+    End Function
+
+    <Extension>
+    Private Function formatTime(time As DateTime) As String
+        Dim yy = time.Year
+        Dim mm = time.Month
+        Dim dd = time.Day
+        Dim hh = time.Hour
+        Dim mi = time.Minute
+        Dim ss = time.Second
+
+        Return $"{yy}-{mm}-{dd}, {Format(hh, "00")}-{Format(mi, "00")}-{Format(ss, "00")}"
     End Function
 
     ''' <summary>
@@ -872,24 +883,24 @@ Public Module App
     ''' Generates the formatted error log file content.(生成简单的日志板块的内容)
     ''' </summary>
     ''' <param name="ex"></param>
-    ''' <param name="Trace"></param>
+    ''' <param name="trace"></param>
     ''' <returns></returns>
     '''
     <ExportAPI("Bugs.Formatter")>
-    Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional Trace$ = "") As String
-        Dim exMsg As StringBuilder = New StringBuilder()
-        Call exMsg.AppendLine("TIME:  " & Now.ToString)
-        Call exMsg.AppendLine("TRACE: " & Trace)
-        Call exMsg.AppendLine(New String("=", 120))
-        Call exMsg.Append(LogFile.SystemInfo)
-        Call exMsg.AppendLine(New String("=", 120))
-        Call exMsg.AppendLine($"Environment Variables from {GetType(App).FullName}:")
-        Call exMsg.AppendLine()
-        Call exMsg.AppendLine(ConfigEngine.Prints(App.GetAppVariables))
-        Call exMsg.AppendLine()
-        Call exMsg.AppendLine(New String("=", 120))
-        Call exMsg.AppendLine(ex.ToString)
-        Return exMsg.ToString
+    Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
+        Return New StringBuilder() _
+            .AppendLine("TIME:  " & Now.ToString) _
+            .AppendLine("TRACE: " & trace) _
+            .AppendLine(New String("=", 120)) _
+            .Append(LogFile.SystemInfo) _
+            .AppendLine(New String("=", 120)) _
+            .AppendLine($"Environment Variables from {GetType(App).FullName}:") _
+            .AppendLine() _
+            .AppendLine(ConfigEngine.Prints(App.GetAppVariables)) _
+            .AppendLine() _
+            .AppendLine(New String("=", 120)) _
+            .AppendLine(ex.ToString) _
+            .ToString()
     End Function
 
     ''' <summary>
