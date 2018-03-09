@@ -3,7 +3,8 @@ Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.NeedlemanWunsch
 
 Module Module1
     Dim q = "AGTCGCCCCGTCCC"
-    Dim S = "AGTCGCCCCGTCCC"
+    Dim S = "AGTCGCCCCGTCGG"
+    Dim s2 = "AGTCGCCCCGTCGGAAAAAAAAA"
     Dim q1 = "GTCCC"
     Dim q2 = "AGTCGCTCCC"
     Dim q3 = "AGTCGCCCCCCC"
@@ -28,6 +29,14 @@ Module Module1
         nw = New NeedlemanWunsch(Of Char)(q3, q3, Function(x, y) Char.ToUpper(x) = Char.ToUpper(y), "-"c, Function(x) x)
         Call nw.compute()
         Dim l3 = nw.PopulateAlignments.ToArray
+
+        nw = New NeedlemanWunsch(Of Char)(q, S, Function(x, y) Char.ToUpper(x) = Char.ToUpper(y), "-"c, Function(x) x)
+        Call nw.compute()
+        Dim qs = nw.PopulateAlignments.ToArray
+
+        nw = New NeedlemanWunsch(Of Char)(q, s2, Function(x, y) Char.ToUpper(x) = Char.ToUpper(y), "-"c, Function(x) x)
+        Call nw.compute()
+        Dim qs2 = nw.PopulateAlignments.ToArray
 
         Pause()
     End Sub

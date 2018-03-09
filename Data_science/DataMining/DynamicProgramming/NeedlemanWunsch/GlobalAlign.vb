@@ -51,6 +51,22 @@ Namespace NeedlemanWunsch
         Dim query As T()
         Dim subject As T()
 
+        Public ReadOnly Property Length As Integer
+            Get
+                If query.Length <> subject.Length Then
+                    Throw New InvalidExpressionException("")
+                Else
+                    Return query.Length
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property PossibleSimilarity As Double
+            Get
+                Return Score / Length
+            End Get
+        End Property
+
         Public Overloads Function ToString(toChar As Func(Of T, Char)) As String
             Dim q As New List(Of Char)
             Dim c As New List(Of Char)
