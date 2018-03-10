@@ -59,6 +59,14 @@ Public Module IOExtensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
+    Public Function OpenTextWriter(s As Stream, Optional encoding As Encoding = Nothing) As StreamWriter
+        Return New StreamWriter(s, encoding Or UTF8) With {
+            .NewLine = ASCII.LF
+        }
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function FlushStream(stream As MemoryStream, path$) As Boolean
         Return stream.ToArray.FlushStream(path)
     End Function

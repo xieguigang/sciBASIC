@@ -131,7 +131,7 @@ Namespace CommandLine
         ''' <remarks></remarks>
         Public Overridable Function Execute(args As CommandLine) As Integer
             If Not args.IsNullOrEmpty Then
-                Dim i As Integer = __methodInvoke(args.Name.ToLower, {args}, args.Parameters)
+                Dim i As Integer = apiInvoke(args.Name.ToLower, {args}, args.Parameters)
 #If DEBUG Then
 
 #Else
@@ -175,7 +175,7 @@ Namespace CommandLine
         ''' <param name="argvs">就只有一个命令行对象</param>
         ''' <param name="help_argvs"></param>
         ''' <returns></returns>
-        Private Function __methodInvoke(commandName As String, argvs As Object(), help_argvs As String()) As Integer
+        Private Function apiInvoke(commandName$, argvs As Object(), help_argvs$()) As Integer
 
             If __API_table.ContainsKey(commandName) Then _
                 Return __API_table(commandName).Execute(argvs)
@@ -333,9 +333,12 @@ Namespace CommandLine
         Public Function Execute(CommandLineArgs As String()) As Integer
             Dim CommandName As String = CommandLineArgs.First
             Dim argvs As String() = CommandLineArgs.Skip(1).ToArray
-            Dim i As Integer = __methodInvoke(CommandName, argvs, help_argvs:=argvs)
+            Dim i As Integer = apiInvoke(CommandName, argvs, help_argvs:=argvs)
+
 #If DEBUG Then
-            Call Pause()
+            If Not App.GetVariable("pause.disable").ParseBoolean = True Then
+                Call Pause()
+            End If
 #Else
             If Stack.TextEquals("Main") Then
                 If AutoPaused Then
@@ -347,7 +350,7 @@ Namespace CommandLine
         End Function
 
         Public Function Execute(CommandName As String, args As String()) As Integer
-            Return __methodInvoke(CommandName.ToLower, args, help_argvs:=args)
+            Return apiInvoke(CommandName.ToLower, args, help_argvs:=args)
         End Function
 
         ''' <summary>

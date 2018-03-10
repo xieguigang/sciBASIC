@@ -1,57 +1,79 @@
 ﻿#Region "Microsoft.VisualBasic::68e251d403a2620e1f3f3ccc89f18f87, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Dictionary
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: Find, GetValueList, Remove, SafeGetValue, (+2 Overloads) TryGetValue
-    ' 
-    '         Sub: Add, AddRange, InsertOrUpdate
-    ' 
-    '         Operators: (+2 Overloads) -, ^, +, <=, >=
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Dictionary
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: Find, GetValueList, Remove, SafeGetValue, (+2 Overloads) TryGetValue
+' 
+'         Sub: Add, AddRange, InsertOrUpdate
+' 
+'         Operators: (+2 Overloads) -, ^, +, <=, >=
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Collection
+
+    Public Class HashTable(Of T) : Inherits Dictionary(Of String, T)
+
+        ReadOnly assert As Assert(Of Object)
+
+        Default Public Overloads Property Item(key As String) As DefaultValue(Of T)
+            Get
+                Dim value As T = If(ContainsKey(key), MyBase.Item(key), Nothing)
+                Return New DefaultValue(Of T)(value, assert)
+            End Get
+            Set(value As DefaultValue(Of T))
+                MyBase.Item(key) = value.DefaultValue
+            End Set
+        End Property
+
+        Sub New(copy As Dictionary(Of String, T), Optional assert As Assert(Of Object) = Nothing)
+            Call MyBase.New(copy)
+
+            Me.assert = assert
+        End Sub
+    End Class
 
     ''' <summary>
     ''' Represents a collection of keys and values.To browse the .NET Framework source

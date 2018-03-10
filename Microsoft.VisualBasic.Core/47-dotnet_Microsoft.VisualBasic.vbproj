@@ -783,6 +783,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
     <Compile Include="ApplicationServices\VBDev\AssemblyInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\VBCodeSignature.vb" />
@@ -1254,8 +1255,6 @@
     <Compile Include="ComponentModel\TimeSpan.vb" />
     <Compile Include="ApplicationServices\Debugger\Logging\EventLog.vb" />
     <Compile Include="ApplicationServices\Debugger\NETDebugger.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Mailto\MailConfigure.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Mailto\MailContents.vb" />
     <Compile Include="ApplicationServices\Tools\Network\Abstract.vb" />
     <Compile Include="ApplicationServices\Tools\Network\MIME\MIME.vb" />
     <Compile Include="ApplicationServices\Tools\Network\MIME\ContentType.vb" />
@@ -1357,7 +1356,6 @@
     <Compile Include="CommandLine\Reflection\EntryPoints\APIEntryPoint.vb" />
     <Compile Include="CommandLine\CommandLine.vb" />
     <Compile Include="Extensions\Math\Math.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Mailto\GMailClient.vb" />
     <Compile Include="CommandLine\CLI\IORedirect.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\LanguageAttribute.vb" />
     <Compile Include="ApplicationServices\LanguageHelper\LanguageHelper.vb" />
