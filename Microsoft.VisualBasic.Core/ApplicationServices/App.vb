@@ -168,7 +168,7 @@ Public Module App
     ''' <returns>The path to the Desktop directory.</returns>
     Public ReadOnly Property Desktop As String
     Public ReadOnly Property StdErr As New StreamWriter(Console.OpenStandardError)
-    Public ReadOnly Property StdOut As DefaultValue(Of TextWriter) = Console.OpenStandardOutput.opentextwriter
+    Public ReadOnly Property StdOut As DefaultValue(Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
 
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
