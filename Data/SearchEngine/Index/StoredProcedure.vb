@@ -39,7 +39,7 @@ Public Module StoredProcedure
             .Key = tree.Key,
             .My = Scan0,
             .Value = tree.Value,
-            .Additionals = tree!values
+            .Additionals = DirectCast(tree!values, IEnumerable(Of V)).ToArray
         }
 
         With New List(Of BinaryTreeIndex(Of K, V))
@@ -59,7 +59,7 @@ Public Module StoredProcedure
             Dim left As New BinaryTreeIndex(Of K, V) With {
                 .Key = leftNode.Key,
                 .Value = leftNode.Value,
-                .Additionals = leftNode!values,
+                .Additionals = DirectCast(leftNode!values, IEnumerable(Of V)).ToArray,
                 .My = stack.Count
             }
 
@@ -75,7 +75,7 @@ Public Module StoredProcedure
             Dim right As New BinaryTreeIndex(Of K, V) With {
                 .Key = rightNode.Key,
                 .Value = rightNode.Value,
-                .Additionals = rightNode!values,
+                .Additionals = DirectCast(rightNode!values, IEnumerable(Of V)).ToArray,
                 .My = stack.Count
             }
 
