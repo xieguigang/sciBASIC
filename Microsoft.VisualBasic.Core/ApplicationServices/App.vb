@@ -170,7 +170,6 @@ Public Module App
     ''' <returns>The path to the Desktop directory.</returns>
     Public ReadOnly Property Desktop As String
     Public ReadOnly Property StdErr As New StreamWriter(Console.OpenStandardError)
-    Public ReadOnly Property StdOut As DefaultValue(Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
 
     ''' <summary>
     ''' <see cref="Console.OpenStandardOutput()"/> as default text output device.
