@@ -52,6 +52,11 @@ Imports Microsoft.VisualBasic.Language.Default
 
 Namespace ComponentModel.Algorithm.BinaryTree
 
+    ''' <summary>
+    ''' The binary tree node.
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
     Public Class BinaryTree(Of K, V) : Implements Value(Of V).IValueOf
 
         ''' <summary>

@@ -52,7 +52,7 @@ Imports System.Runtime.CompilerServices
 Namespace ComponentModel.Algorithm.BinaryTree
 
     ''' <summary>
-    ''' 
+    ''' The AVL binary tree operator.
     ''' </summary>
     ''' <typeparam name="K"></typeparam>
     ''' <typeparam name="V"></typeparam>

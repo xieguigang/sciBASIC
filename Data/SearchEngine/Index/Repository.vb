@@ -10,6 +10,11 @@ Public Class Repository(Of K, V)
     Public Property Index As BinaryTreeIndex(Of K, V)()
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetRootNode() As BinaryTreeIndex(Of K, V)
+        Return Index(Root)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return Index(Root).ToString
     End Function
