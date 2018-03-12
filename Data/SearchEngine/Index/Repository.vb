@@ -21,6 +21,13 @@ Public Class Repository(Of K, V)
     <XmlElement>
     Public Property Index As BinaryTreeIndex(Of K, V)()
 
+    Sub New()
+    End Sub
+
+    Sub New(index As BinaryTreeIndex(Of K, V)())
+        Me.Index = index
+    End Sub
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetRootNode() As BinaryTreeIndex(Of K, V)
         Return Index(Root)
