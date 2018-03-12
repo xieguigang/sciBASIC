@@ -84,7 +84,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BinaryTree.vb" />
+    <Compile Include="BinaryTreeIndex.vb" />
     <Compile Include="Repository.vb" />
     <Compile Include="StoredProcedure.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
