@@ -5,6 +5,7 @@ Public Class Repository(Of K, V)
 
     <XmlAttribute>
     Public Property Root As Integer
+    <XmlElement>
     Public Property Index As BinaryTree(Of K, V)()
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
