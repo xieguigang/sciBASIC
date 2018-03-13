@@ -64,6 +64,7 @@ Namespace SVG.XML
         Property lines As line()
         Property circles As circle()
         Property title As String
+        Property images As Image()
     End Interface
 
     ''' <summary>
@@ -82,5 +83,6 @@ Namespace SVG.XML
         <XmlElement> Public Property title As String Implements ICanvas.title
         <XmlElement> Public Property polyline As polyline() Implements ICanvas.polyline
         <XmlElement("text")> Public Property texts As text() Implements ICanvas.texts
+        <XmlElement("image")> Public Property images As Image() Implements ICanvas.images
     End Class
 End Namespace

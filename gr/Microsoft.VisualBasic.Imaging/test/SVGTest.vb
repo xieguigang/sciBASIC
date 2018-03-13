@@ -59,7 +59,7 @@ Module SVGTest
         Dim sss As New SVGXml
 
         sss.circles = {New XML.circle With {.fill = "black", .cx = 1, .cy = 200, .r = 20, .id = "ffff"}}
-        sss.SetSize(New Size(100, 20000))
+        sss.Size(New Size(100, 20000))
         sss.images = {New XML.Image("D:\GCModeller\src\runtime\sciBASIC#\logo.png".LoadImage)}
         sss.space = "dddddd"
 
