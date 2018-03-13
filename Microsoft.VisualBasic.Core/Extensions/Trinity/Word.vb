@@ -11,7 +11,11 @@ Namespace Data.Trinity.NLP
         Public Property Text As String Implements Value(Of String).IValueOf.Value
 
         Public Overrides Function ToString() As String
-            Return $"{[Class].Description} {Text}"
+            If [Class] = WordClass.NA Then
+                Return Text
+            Else
+                Return $"{[Class].Description} {Text}"
+            End If
         End Function
     End Class
 End Namespace

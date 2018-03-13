@@ -48,6 +48,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.Trinity.NLP
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -126,6 +127,25 @@ Public Module Translation
     End Function
 
     Private Function GetWords(s As String) As Word()
+        Dim cls = s.GetTagValue(" ")
+        Dim [class] As WordClass
+        Dim words$()
 
+        If cls.Name.Last = "."c Then
+            [class] = Trinity.GetClass(cls.Name)
+            words = cls.Value.Split("；"c)
+        Else
+            [class] = WordClass.NA
+            words = s.Split("；"c)
+        End If
+
+        Return words _
+            .Select(Function(w)
+                        Return New Word With {
+                            .Class = [class],
+                            .Text = w
+                        }
+                    End Function) _
+            .ToArray
     End Function
 End Module
