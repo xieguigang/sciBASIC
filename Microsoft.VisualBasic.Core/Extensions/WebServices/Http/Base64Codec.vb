@@ -115,7 +115,7 @@ Namespace Net.Http
         End Function
 
         Private Function __toBase64String(image As Image, format As ImageFormat) As String
-            Dim ms As MemoryStream = New MemoryStream()
+            Dim ms As New MemoryStream()
             image.Save(ms, format)
             Dim Base64Op As String = Convert.ToBase64String(ms.ToArray())
             Return Base64Op
