@@ -74,7 +74,7 @@ Public Module LICENSE
     End Property
 #End If
 
-    Friend Const githubURL$ = "https://github.com/xieguigang/sciBASIC"
+    Public Const githubURL$ = "https://github.com/xieguigang/sciBASIC"
 
     ''' <summary>
     ''' https://github.com/xieguigang/sciBASIC

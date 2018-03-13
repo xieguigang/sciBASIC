@@ -801,6 +801,9 @@
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\IO\SerializationIO.vb" />
     <Compile Include="Extensions\Math\Information\Entropy.vb" />
+    <Compile Include="Extensions\Trinity\Extensions.vb" />
+    <Compile Include="Extensions\Trinity\Word.vb" />
+    <Compile Include="Extensions\Trinity\WordClass.vb" />
     <Compile Include="Extensions\WebServices\Http\DataURI.vb" />
     <Compile Include="Language\Value\ByRefValueExtensions.vb" />
     <Compile Include="NamespaceDoc.vb" />

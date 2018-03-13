@@ -510,6 +510,7 @@
     <Compile Include="SVG\SVGWriter.vb" />
     <Compile Include="SVG\Renderer.vb" />
     <Compile Include="SVG\GraphicsSVG.vb" />
+    <Compile Include="SVG\XML\CommentHelper.vb" />
     <Compile Include="SVG\XML\g.vb" />
     <Compile Include="SVG\XML\Image.vb" />
     <Compile Include="SVG\XML\SVG.vb" />
