@@ -120,6 +120,13 @@ Namespace Language
             Return [Default](x, [If])
         End Function
 
+        Public Function DefaultValue(Of T)(value As T) As DefaultValue(Of T)
+            Return New DefaultValue(Of T) With {
+                .Value = value,
+                .assert = defaultAssert
+            }
+        End Function
+
         ''' <summary>
         ''' Helper for update the value property of <see cref="Value(Of T)"/>
         ''' 
