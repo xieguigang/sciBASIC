@@ -48,6 +48,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Trinity.NLP
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.HtmlParser
@@ -99,25 +100,22 @@ Public Module Translation
 
     <Extension>
     Private Function parseResult(content$, word$) As WordTranslation
-        Dim result$()
+        Dim result As Word()
         Dim pronunciation As Index(Of String)
 
-        content = r _
+        result = r _
             .Replace(content, "必应词典为您提供.+?的释义，", "") _
-            .Replace("un.", "") _
-            .Replace("n.", "")
-        result = content _
             .Split("；"c) _
-            .Select(Function(t) t.Split("："c).Last.Split("，"c)) _
+            .Select(AddressOf GetWords) _
             .IteratesALL _
-            .Select(AddressOf Strings.Trim) _
-            .Where(Function(s) Not s.StringEmpty) _
+            .Where(Function(s) Not s Is Nothing) _
             .ToArray
         pronunciation = result _
-            .Where(Function(s) r.Match(s, "[美英德日法]\[.+\]").Success) _
+            .Where(Function(s) r.Match(s.Text, "[美英德日法]\[.+\]").Success) _
+            .ValueArray _
             .Indexing
         result = result _
-            .Where(Function(s) Not s.IsOneOfA(pronunciation)) _
+            .Where(Function(s) Not s.Text.IsOneOfA(pronunciation)) _
             .ToArray
 
         Return New WordTranslation With {
@@ -125,5 +123,9 @@ Public Module Translation
             .Translations = result,
             .Pronunciation = pronunciation.Objects
         }
+    End Function
+
+    Private Function GetWords(s As String) As Word()
+
     End Function
 End Module
