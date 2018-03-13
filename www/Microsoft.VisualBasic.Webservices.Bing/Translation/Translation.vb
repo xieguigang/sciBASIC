@@ -45,9 +45,11 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.HtmlParser
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -58,7 +60,23 @@ Public Module Translation
     ''' </summary>
     ''' <param name="word"></param>
     ''' <returns></returns>
-    Public Function GetTranslation(word As String) As WordTranslation
+    Public Function GetTranslation(word As Value(Of String)) As WordTranslation
+        If (word = Strings.Trim(word)).StringEmpty Then
+            Return Nothing
+        Else
+            With Translation.webGet(word)
+                If .IsNothing Then
+                    Return Nothing
+                Else
+                    Return !content _
+                        .Value _
+                        .parseResult(word)
+                End If
+            End With
+        End If
+    End Function
+
+    Private Function webGet(word As String) As Dictionary(Of NamedValue(Of String))
         Dim term$ = word.UrlEncode
         Dim url$ = $"https://cn.bing.com/dict/search?q={term}&qs=n&form=Z9LH5&sp=-1&pq={term}&sc=6-10&sk=&cvid=0BC4AECB5070489794D29912A900BEF5"
         Dim headers As New Dictionary(Of String, String) From {
@@ -76,58 +94,36 @@ Public Module Translation
                    End Function) _
             .FirstOrDefault
 
-        If parsed Is Nothing Then
-            Return Nothing
-        Else
-            Dim content$ = parsed!content.Value
-            Dim result$()
-            Dim pronunciation As Index(Of String)
+        Return parsed
+    End Function
 
-            content = r _
-                .Replace(content, "必应词典为您提供.+?的释义，", "") _
-                .Replace("un.", "") _
-                .Replace("n.", "")
-            result = content _
-                .Split("；"c) _
-                .Select(Function(t) t.Split("："c).Last.Split("，"c)) _
-                .IteratesALL _
-                .Select(AddressOf Strings.Trim) _
-                .Where(Function(s) Not s.StringEmpty) _
-                .ToArray
-            pronunciation = result _
-                .Where(Function(s) r.Match(s, "[美英德日法]\[.+\]").Success) _
-                .Indexing
-            result = result _
-                .Where(Function(s) Not s.IsOneOfA(pronunciation)) _
-                .ToArray
+    <Extension>
+    Private Function parseResult(content$, word$) As WordTranslation
+        Dim result$()
+        Dim pronunciation As Index(Of String)
 
-            Return New WordTranslation With {
-                .Word = word,
-                .Translations = result,
-                .Pronunciation = pronunciation.Objects
-            }
-        End If
+        content = r _
+            .Replace(content, "必应词典为您提供.+?的释义，", "") _
+            .Replace("un.", "") _
+            .Replace("n.", "")
+        result = content _
+            .Split("；"c) _
+            .Select(Function(t) t.Split("："c).Last.Split("，"c)) _
+            .IteratesALL _
+            .Select(AddressOf Strings.Trim) _
+            .Where(Function(s) Not s.StringEmpty) _
+            .ToArray
+        pronunciation = result _
+            .Where(Function(s) r.Match(s, "[美英德日法]\[.+\]").Success) _
+            .Indexing
+        result = result _
+            .Where(Function(s) Not s.IsOneOfA(pronunciation)) _
+            .ToArray
+
+        Return New WordTranslation With {
+            .Word = word,
+            .Translations = result,
+            .Pronunciation = pronunciation.Objects
+        }
     End Function
 End Module
-
-''' <summary>
-''' 单词翻译的结果
-''' </summary>
-Public Class WordTranslation
-
-    ''' <summary>
-    ''' 输入的目标单词
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Word As String
-    ''' <summary>
-    ''' 该单词所产生的翻译结果列表
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Translations As String()
-    Public Property Pronunciation As String()
-
-    Public Overrides Function ToString() As String
-        Return $"{Word} -> {Translations.GetJson}"
-    End Function
-End Class
