@@ -102,10 +102,18 @@ Public Module Translation
     <Extension>
     Private Function parseResult(content$, word$) As WordTranslation
         Dim result As Word()
-        Dim pronunciation As Index(Of String)
+        Dim pronunciation$()
 
-        result = r _
-            .Replace(content, "必应词典为您提供.+?的释义，", "") _
+        content = r.Replace(content, "必应词典为您提供.+?的释义，", "")
+        pronunciation = r _
+            .Matches(content, "[美英德日法]\[.+?\]") _
+            .ToArray
+
+        For Each pro In pronunciation
+            content = content.Replace(pro, "")
+        Next
+
+        result = r.Replace(content, "(，\s*){2,}", "") _
             .Split("；"c) _
             .Select(AddressOf GetWords) _
             .IteratesALL _
@@ -113,18 +121,11 @@ Public Module Translation
                        Return Not s Is Nothing AndAlso Not s.Text.StringEmpty
                    End Function) _
             .ToArray
-        pronunciation = result _
-            .Where(Function(s) r.Match(s.Text, "[美英德日法]\[.+\]").Success) _
-            .ValueArray _
-            .Indexing
-        result = result _
-            .Where(Function(s) Not s.Text.IsOneOfA(pronunciation)) _
-            .ToArray
 
         Return New WordTranslation With {
             .Word = word,
             .Translations = result,
-            .Pronunciation = pronunciation.Objects
+            .Pronunciation = pronunciation
         }
     End Function
 
