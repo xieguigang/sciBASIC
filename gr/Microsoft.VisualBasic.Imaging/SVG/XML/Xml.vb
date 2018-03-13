@@ -220,6 +220,10 @@ Namespace SVG.XML
 
         <XmlAttribute> Public Property points As String()
 
+        Public Shared Operator +(line As polyline, offset As PointF) As polyline
+            ' Throw New NotImplementedException
+            Return Nothing
+        End Operator
     End Class
 
     ''' <summary>

@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::0a86da51515c0329f02f968397ae3213, gr\Microsoft.VisualBasic.Imaging\SVG\XML\g.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface ICanvas
-    ' 
-    '         Properties: circles, gs, lines, path, polygon
-    '                     polyline, rect, texts, title, transform
-    ' 
-    '     Class g
-    ' 
-    '         Properties: circles, gs, lines, path, polygon
-    '                     polyline, rect, texts, title, transform
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface ICanvas
+' 
+'         Properties: circles, gs, lines, path, polygon
+'                     polyline, rect, texts, title, transform
+' 
+'     Class g
+' 
+'         Properties: circles, gs, lines, path, polygon
+'                     polyline, rect, texts, title, transform
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Xml.Serialization
 
 Namespace SVG.XML
@@ -84,5 +85,28 @@ Namespace SVG.XML
         <XmlElement> Public Property polyline As polyline() Implements ICanvas.polyline
         <XmlElement("text")> Public Property texts As text() Implements ICanvas.texts
         <XmlElement("image")> Public Property images As Image() Implements ICanvas.images
+
+        Public Shared Operator +(layer As g, offset As PointF) As g
+            Return New g With {
+                .circles = layer.circles.Select(Function(c) c + offset).ToArray,
+                .polygon = layer.polygon.Select(Function(pl) pl + offset).ToArray,
+                .rect = layer.rect.Select(Function(rt) rt + offset).ToArray,
+                .lines = layer.lines.Select(Function(l) l + offset).ToArray,
+                .images = layer.images.Select(Function(img) img + offset).ToArray,
+                .path = layer.path.Select(Function(d) d + offset).ToArray,
+                .texts = layer.texts.Select(Function(t) t + offset).ToArray,
+                .Layers = layer.Layers.Select(Function(l) l + offset).ToArray,
+                .polyline = layer.polyline.Select(Function(p) p + offset).ToArray,
+                .attributes = layer.attributes,
+                .class = layer.class,
+                .fill = layer.fill,
+                .id = layer.id,
+                .stroke = layer.stroke,
+                .style = layer.style,
+                .title = layer.title,
+                .transform = layer.transform,
+                .zIndex = layer.zIndex
+            }
+        End Operator
     End Class
 End Namespace
