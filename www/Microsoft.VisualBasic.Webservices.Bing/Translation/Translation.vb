@@ -109,7 +109,9 @@ Public Module Translation
             .Split("；"c) _
             .Select(AddressOf GetWords) _
             .IteratesALL _
-            .Where(Function(s) Not s Is Nothing) _
+            .Where(Function(s)
+                       Return Not s Is Nothing AndAlso Not s.Text.StringEmpty
+                   End Function) _
             .ToArray
         pronunciation = result _
             .Where(Function(s) r.Match(s.Text, "[美英德日法]\[.+\]").Success) _
@@ -131,19 +133,19 @@ Public Module Translation
         Dim [class] As WordClass
         Dim words$()
 
-        If cls.Name.Last = "."c Then
+        If Not cls.Name.StringEmpty AndAlso cls.Name.Last = "."c Then
             [class] = Trinity.GetClass(cls.Name)
-            words = cls.Value.Split("；"c)
+            words = cls.Value.Split("："c).Last.Split("；"c)
         Else
             [class] = WordClass.NA
-            words = s.Split("；"c)
+            words = s.Split("："c).Last.Split("；"c)
         End If
 
         Return words _
             .Select(Function(w)
                         Return New Word With {
                             .Class = [class],
-                            .Text = w
+                            .Text = w.Trim
                         }
                     End Function) _
             .ToArray
