@@ -75,6 +75,10 @@ Namespace SVG.XML
 #Region "xml root property"
         <XmlNamespaceDeclarations()>
         Public xmlns As New XmlSerializerNamespaces
+
+        ''' <summary>
+        ''' 这个字段只是用于存储作者注释数据所使用的，并不会被显示在XML文档之中，在这里忽略掉
+        ''' </summary>
         <XmlIgnore>
         Public XmlComment$
 
@@ -116,37 +120,15 @@ Namespace SVG.XML
         <XmlElement("style")> Public Shadows Property style As XmlMeta.CSS
         <XmlElement("image")> Public Property images As Image() Implements ICanvas.images
 
-        Const declare$ = "SVG document was created by sciBASIC svg image driver:"
-
         ''' <summary>
         ''' Xml comment for <see cref="Layers"/>
         ''' </summary>
         ''' <returns></returns>
         <XmlAnyElement("gComment")>
         Public Property WriterComment As XmlComment
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Dim [rem] As New StringBuilder
-                Dim indent As New String(" "c, 6)
-
-                Call [rem].AppendLine _
-                          .Append(indent) _
-                          .AppendLine([declare]) _
-                          .AppendLine _
-                          .Append(indent & New String(" "c, 3)) _
-                          .AppendLine("visit: " & LICENSE.githubURL)
-
-                If Not XmlComment.StringEmpty Then
-                    For Each line As String In XmlComment.lTokens
-                        [rem].AppendLine _
-                             .Append(indent) _
-                             .Append(line)
-                    Next
-                End If
-
-                [rem].AppendLine _
-                     .Append("  ")
-
-                Return New XmlDocument().CreateComment([rem].ToString)
+                Return CreateComment
             End Get
             Set
             End Set
@@ -164,9 +146,11 @@ Namespace SVG.XML
         ''' </remarks>
         <XmlElement("g")>
         Public Property Layers As g() Implements ICanvas.Layers
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _layers.ToArray
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As g())
                 _layers = New List(Of g)(value)
             End Set
