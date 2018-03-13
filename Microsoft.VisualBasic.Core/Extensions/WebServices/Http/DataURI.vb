@@ -41,9 +41,11 @@
 
 #End Region
 
+Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Net.Http
 
@@ -55,12 +57,12 @@ Namespace Net.Http
         ''' <summary>
         ''' File mime type
         ''' </summary>
-        ReadOnly mime$
+        Public ReadOnly Property mime As String
         ''' <summary>
         ''' The base64 string
         ''' </summary>
-        ReadOnly base64$
-        ReadOnly chartSet$
+        Public ReadOnly Property base64 As String
+        Public ReadOnly Property chartSet As String
 
         ''' <summary>
         ''' 
@@ -69,10 +71,15 @@ Namespace Net.Http
         ''' <param name="codepage$">
         ''' The chartset codepage name, by default is ``ASCII``.
         ''' </param>
-        Sub New(file As String, Optional codepage$ = Nothing)
+        Sub New(file$, Optional codepage$ = Nothing)
             mime = Strings.LCase(file.FileMimeType.MIMEType)
             base64 = file.ReadBinary.ToBase64String
             codepage = codepage
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(image As Image)
+            Call Me.New(image.ToBase64String, ContentTypes.MIME.Png, Nothing)
         End Sub
 
         Public Sub New(base64$, mine$, Optional charset$ = Nothing)

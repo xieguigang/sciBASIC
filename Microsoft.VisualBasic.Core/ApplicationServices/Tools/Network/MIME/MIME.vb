@@ -72,6 +72,7 @@ Namespace Net.Protocols.ContentTypes
         Public Const MsDownload As String = "application/x-msdownload"
         Public Const Json As String = "application/json"
         Public Const ZIP As String = "application/zip"
+        Public Const Png As String = "image/png"
 
         Public ReadOnly Property UnknownType As New ContentType With {
             .FileExt = "*.*",
