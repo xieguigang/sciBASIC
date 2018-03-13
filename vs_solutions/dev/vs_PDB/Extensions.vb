@@ -8,7 +8,7 @@ Public Module Extensions
     ''' <param name="pdb"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function PointLocal2Github(pdb As PDB)
+    Public Function PointLocal2Github(pdb As PDB, userName$, repoName$, commitID$) As PDB
 
     End Function
 End Module
