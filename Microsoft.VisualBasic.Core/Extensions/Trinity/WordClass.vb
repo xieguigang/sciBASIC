@@ -9,6 +9,11 @@ Namespace Data.Trinity.NLP
     Public Enum WordClass As Integer
 
         ''' <summary>
+        ''' 未知的词性
+        ''' </summary>
+        NA = 0
+
+        ''' <summary>
         ''' 名词：to describe a person or thing
         ''' </summary>
         <Description("n.")> noun
