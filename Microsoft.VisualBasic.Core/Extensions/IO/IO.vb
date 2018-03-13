@@ -47,6 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
@@ -56,6 +57,8 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 <Package("IO")>
 Public Module IOExtensions
+
+    ReadOnly UTF8 As DefaultValue(Of Encoding) = Encoding.UTF8
 
     ''' <summary>
     ''' Open text writer interface from a given <see cref="Stream"/> <paramref name="s"/>. 
