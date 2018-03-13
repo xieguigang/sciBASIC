@@ -104,6 +104,10 @@ Public Module Translation
         Dim result As Word()
         Dim pronunciation$()
 
+        If InStr(content, "等在线英语服务。") > 0 OrElse content = "词典" Then
+            Return Nothing
+        End If
+
         content = r.Replace(content, "必应词典为您提供.+?的释义，", "")
         pronunciation = r _
             .Matches(content, "[美英德日法]\[.+?\]") _
@@ -115,7 +119,7 @@ Public Module Translation
 
         result = r.Replace(content, "(，\s*){2,}", "") _
             .Split("；"c) _
-            .Select(AddressOf GetWords) _
+            .Select(Function(s) s.Trim.GetWords) _
             .IteratesALL _
             .Where(Function(s)
                        Return Not s Is Nothing AndAlso Not s.Text.StringEmpty
@@ -129,6 +133,7 @@ Public Module Translation
         }
     End Function
 
+    <Extension>
     Private Function GetWords(s As String) As Word()
         Dim cls = s.GetTagValue(" ")
         Dim [class] As WordClass
