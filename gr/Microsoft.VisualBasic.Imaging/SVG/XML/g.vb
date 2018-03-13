@@ -56,7 +56,7 @@ Namespace SVG.XML
     Public Interface ICanvas
         Property transform As String
         Property texts As text()
-        Property gs As g()
+        Property Layers As g()
         Property path As path()
         Property rect As rect()
         Property polygon As polygon()
@@ -73,7 +73,7 @@ Namespace SVG.XML
         Implements ICanvas
 
         <XmlAttribute> Public Property transform As String Implements ICanvas.transform
-        <XmlElement("g")> Public Property gs As g() Implements ICanvas.gs
+        <XmlElement("g")> Public Property Layers As g() Implements ICanvas.Layers
         <XmlElement> Public Property path As path() Implements ICanvas.path
         <XmlElement> Public Property rect As rect() Implements ICanvas.rect
         <XmlElement> Public Property polygon As polygon() Implements ICanvas.polygon

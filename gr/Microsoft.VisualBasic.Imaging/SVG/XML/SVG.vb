@@ -117,7 +117,7 @@ Namespace SVG.XML
         <XmlElement("image")> Public Property images As Image()
 
         ''' <summary>
-        ''' Xml comment for <see cref="gs"/>
+        ''' Xml comment for <see cref="Layers"/>
         ''' </summary>
         ''' <returns></returns>
         <XmlAnyElement("gComment")>
@@ -139,12 +139,25 @@ Namespace SVG.XML
             End Set
         End Property
 
+        Dim _layers As List(Of g)
+
         ''' <summary>
         ''' Graphic layers
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' SVG无法通过调整``z-index``来设置图层位置，在这里需要使用一个List动态列表
+        ''' 调整呈现SVG里面的图层元素
+        ''' </remarks>
         <XmlElement("g")>
-        Public Property gs As g() Implements ICanvas.gs
+        Public Property Layers As g() Implements ICanvas.Layers
+            Get
+                Return _layers.ToArray
+            End Get
+            Set(value As g())
+                _layers = New List(Of g)(value)
+            End Set
+        End Property
 
         <XmlAttribute> Public Property transform As String Implements ICanvas.transform
         <XmlElement("text")> Public Property texts As text() Implements ICanvas.texts
@@ -160,6 +173,11 @@ Namespace SVG.XML
             width = size.Width & "px"
             height = size.Height & "px"
         End Sub
+
+        Public Function AddLayer(layer As g) As SVGXml
+            _layers.Add(item:=layer)
+            Return Me
+        End Function
 
         ''' <summary>
         ''' Load SVG object from a specific xml file path or xml file text content.

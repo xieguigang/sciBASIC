@@ -150,7 +150,7 @@ Namespace SVG
         ''' <returns></returns>
         Public Function GetSVG(Optional size As Size = Nothing, Optional xmlComment$ = Nothing) As SVGXml
             Dim SVG As New SVGXml() With {
-                .gs = {
+                .Layers = {
                     New g With {
                         .circles = circles,
                         .polygon = polygons,
