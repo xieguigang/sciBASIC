@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::daad7ebeb349d8bb7dabbc3353c2e4d3, www\Microsoft.VisualBasic.Webservices.Bing\Translation.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Translation
-    ' 
-    '     Function: GetTranslation
-    ' 
-    ' Class WordTranslation
-    ' 
-    '     Properties: Translations, Word
-    ' 
-    '     Function: ToString
-    ' 
-    ' /********************************************************************************/
+' Module Translation
+' 
+'     Function: GetTranslation
+' 
+' Class WordTranslation
+' 
+'     Properties: Translations, Word
+' 
+'     Function: ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.HtmlParser
@@ -79,20 +80,31 @@ Public Module Translation
             Return Nothing
         Else
             Dim content$ = parsed!content.Value
+            Dim result$()
+            Dim pronunciation As Index(Of String)
+
             content = r _
                 .Replace(content, "必应词典为您提供.+?的释义，", "") _
                 .Replace("un.", "") _
                 .Replace("n.", "")
+            result = content _
+                .Split("；"c) _
+                .Select(Function(t) t.Split("："c).Last.Split("，"c)) _
+                .IteratesALL _
+                .Select(AddressOf Strings.Trim) _
+                .Where(Function(s) Not s.StringEmpty) _
+                .ToArray
+            pronunciation = result _
+                .Where(Function(s) r.Match(s, "[美英德日法]\[.+\]").Success) _
+                .Indexing
+            result = result _
+                .Where(Function(s) Not s.IsOneOfA(pronunciation)) _
+                .ToArray
 
             Return New WordTranslation With {
                 .Word = word,
-                .Translations = content _
-                    .Split("；"c) _
-                    .Select(Function(t) t.Split("："c).Last.Split("，"c)) _
-                    .IteratesALL _
-                    .Select(AddressOf Strings.Trim) _
-                    .Where(Function(s) Not s.StringEmpty) _
-                    .ToArray
+                .Translations = result,
+                .Pronunciation = pronunciation.Objects
             }
         End If
     End Function
@@ -113,6 +125,7 @@ Public Class WordTranslation
     ''' </summary>
     ''' <returns></returns>
     Public Property Translations As String()
+    Public Property Pronunciation As String()
 
     Public Overrides Function ToString() As String
         Return $"{Word} -> {Translations.GetJson}"
