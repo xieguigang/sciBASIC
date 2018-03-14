@@ -1,6 +1,20 @@
-﻿Namespace ComponentModel.Ranges
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 
-    Public Class UnitValue(Of TUnit As {Structure, IComparable(Of TUnit)})
+Namespace ComponentModel.Ranges
+
+    Public Class Convertor : Inherits Attribute
+
+        Public ReadOnly Property UnitType As Type
+
+        Public Delegate Function Convertor(Of TUnit)(value As UnitValue(Of TUnit), toUnit As TUnit) As UnitValue(Of TUnit)
+
+        Sub New(type As Type)
+
+        End Sub
+    End Class
+
+    Public Class UnitValue(Of TUnit) : Inherits float
 
         ''' <summary>
         ''' 分（d） ``10^-1``
@@ -36,15 +50,19 @@
         Public Const a = 10 ^ -18
 
         Public Property Unit As TUnit
-        Public Property Value As Double
 
         Sub New(value#, unit As TUnit)
             Me.Value = value
             Me.Unit = unit
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{Value} ({DirectCast(CObj(Unit), [Enum]).Description})"
         End Function
+
+        Public Overloads Shared Operator ^(value As UnitValue(Of TUnit), unit As TUnit) As UnitValue(Of TUnit)
+
+        End Operator
     End Class
 End Namespace
