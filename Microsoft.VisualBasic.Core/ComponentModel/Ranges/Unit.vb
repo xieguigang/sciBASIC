@@ -1,9 +1,6 @@
 ﻿Namespace ComponentModel.Ranges
 
-    Public NotInheritable Class Unit
-
-        Private Sub New()
-        End Sub
+    Public Class UnitValue(Of TUnit As {Structure, IComparable(Of TUnit)})
 
         ''' <summary>
         ''' 分（d） ``10^-1``
@@ -38,5 +35,16 @@
         ''' </summary>
         Public Const a = 10 ^ -18
 
+        Public Property Unit As TUnit
+        Public Property Value As Double
+
+        Sub New(value#, unit As TUnit)
+            Me.Value = value
+            Me.Unit = unit
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{Value} ({DirectCast(CObj(Unit), [Enum]).Description})"
+        End Function
     End Class
 End Namespace
