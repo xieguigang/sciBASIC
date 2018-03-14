@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::d9c9fb46f29d1d1a3656f6c0273cce3f, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Interface IDefaultValue
-    ' 
-    '         Properties: DefaultValue
-    ' 
-    '     Interface IsEmpty
-    ' 
-    '         Properties: IsEmpty
-    ' 
-    '     Structure DefaultValue
-    ' 
-    '         Properties: DefaultValue, IsEmpty
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: [When], ToString
-    '         Operators: +, (+4 Overloads) Or
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Delegate Function
+' 
+' 
+'     Interface IDefaultValue
+' 
+'         Properties: DefaultValue
+' 
+'     Interface IsEmpty
+' 
+'         Properties: IsEmpty
+' 
+'     Structure DefaultValue
+' 
+'         Properties: DefaultValue, IsEmpty
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: [When], ToString
+'         Operators: +, (+4 Overloads) Or
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Linq.Expressions
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Perl
 
@@ -108,6 +109,7 @@ Namespace Language.Default
         End Property
 
         Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return LazyValue Is Nothing AndAlso assert(Value)
             End Get
@@ -158,6 +160,14 @@ Namespace Language.Default
         Public Shared Operator +([default] As DefaultValue(Of T), assert As Assert(Of Object)) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .assert = assert,
+                .Value = [default].Value
+            }
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +([default] As DefaultValue(Of T), assert As Expression(Of Func(Of Boolean))) As DefaultValue(Of T)
+            Return New DefaultValue(Of T) With {
+                .assert = Function(null) (assert.Compile())(),
                 .Value = [default].Value
             }
         End Operator

@@ -56,14 +56,7 @@ Namespace SVG
 
     Friend Class SVGDataCache
 
-        Protected Friend texts As New List(Of XML.text)
-        Protected Friend rects As New List(Of rect)
-        Protected Friend lines As New List(Of line)
-        Protected Friend circles As New List(Of circle)
-        Protected Friend paths As New List(Of path)
-        Protected Friend polygons As New List(Of polygon)
-        Protected Friend polylines As New List(Of polyline)
-        Protected Friend images As New List(Of XML.Image)
+        Protected Friend layers As New List(Of g)
         Protected Friend bg$
         Protected Friend Size As Size
 
@@ -86,49 +79,65 @@ Namespace SVG
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(text As XML.text)
-            texts += updateLayerIndex(text)
+            layers += New g With {
+                .texts = {text},
+                .zIndex = ++zlayer
+            }
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(rect As rect)
-            rects += updateLayerIndex(rect)
+            layers += New g With {
+                .rect = {rect},
+                .zIndex = ++zlayer
+            }
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(line As line)
-            lines += updateLayerIndex(line)
+            layers += New g With {
+                .lines = {line},
+                .zIndex = ++zlayer
+            }
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(circle As circle)
-            circles += updateLayerIndex(circle)
+            layers += New g With {
+                .circles = {circle},
+                .zIndex = ++zlayer
+            }
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(path As path)
-            paths += updateLayerIndex(path)
+            layers += New g With {
+                .path = {path},
+                .zIndex = ++zlayer
+            }
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(polygon As polygon)
-            polygons += updateLayerIndex(polygon)
+            layers += New g With {
+                .polygon = {polygon},
+                .zIndex = ++zlayer
+            }
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(image As XML.Image)
-            images += updateLayerIndex(image)
+            layers += New g With {
+                .images = {image},
+                .zIndex = ++zlayer
+            }
         End Sub
 
         Public Sub Add(data As SVGDataCache)
-            With data
-                Call Me.texts.AddRange(updateLayerIndex(.texts))
-                Call Me.circles.AddRange(updateLayerIndex(.circles))
-                Call Me.images.AddRange(updateLayerIndex(.images))
-                Call Me.lines.AddRange(updateLayerIndex(.lines))
-                Call Me.paths.AddRange(updateLayerIndex(.paths))
-                Call Me.polygons.AddRange(updateLayerIndex(.polygons))
-                Call Me.rects.AddRange(updateLayerIndex(.rects))
-            End With
+            For Each layer In data.layers
+                layer.zIndex = ++zlayer
+                layers += layer
+            Next
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -150,16 +159,7 @@ Namespace SVG
         ''' <returns></returns>
         Public Function GetSVG(Optional size As Size = Nothing, Optional xmlComment$ = Nothing) As SVGXml
             Dim SVG As New SVGXml() With {
-                .gs = {
-                    New g With {
-                        .circles = circles,
-                        .polygon = polygons,
-                        .rect = rects,
-                        .path = paths,
-                        .texts = texts,
-                        .lines = lines
-                    }
-                },
+                .Layers = layers,
                 .width = size.Width Or innerDefaultWidth(),
                 .height = size.Height Or innerDefaultHeight(),
                 .XmlComment = xmlComment
@@ -190,13 +190,7 @@ Namespace SVG
         Public Shared Operator +(data As SVGDataCache, offset As PointF) As SVGDataCache
             Return New SVGDataCache With {
                 .bg = data.bg,
-                .circles = data.circles.Select(Function(c) c + offset).AsList,
-                .polygons = data.polygons.Select(Function(pl) pl + offset).AsList,
-                .rects = data.rects.Select(Function(rt) rt + offset).AsList,
-                .lines = data.lines.Select(Function(l) l + offset).AsList,
-                .images = data.images.Select(Function(img) img + offset).AsList,
-                .paths = data.paths.Select(Function(d) d + offset).AsList,
-                .texts = data.texts.Select(Function(t) t + offset).AsList
+                .layers = data.layers.Select(Function(l) l + offset).aslist
             }
         End Operator
     End Class

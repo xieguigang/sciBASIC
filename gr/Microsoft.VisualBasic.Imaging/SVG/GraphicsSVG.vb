@@ -260,16 +260,9 @@ Namespace SVG
         ''' <param name="color"></param>
         Public Overrides Sub Clear(color As Color)
             __svgData.bg$ = color.ToHtmlColor
-            __svgData.circles *= 0
-            __svgData.images *= 0
-            __svgData.lines *= 0
-            __svgData.paths *= 0
-            __svgData.polygons *= 0
-            __svgData.polylines *= 0
-            __svgData.rects *= 0
-            __svgData.texts *= 0
 
             ' reset
+            __svgData.layers *= 0
             __svgData.zlayer = 0
         End Sub
 
