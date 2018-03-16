@@ -90,7 +90,7 @@ Module ConvexHull_demo
                 .DashStyle = DashStyle.Dot
             }
 
-            Call g.DrawHullPolygon(vex, Color.Red, 10, 50)
+            Call g.DrawHullPolygon(vex, Color.SkyBlue, 8.5, 100)
             ' Call g.DrawPolygon(Pens.Blue, vex.BSpline(degree:=2))
 
             Call g.Save(App.HOME & $"/{method}.png", ImageFormats.Png)

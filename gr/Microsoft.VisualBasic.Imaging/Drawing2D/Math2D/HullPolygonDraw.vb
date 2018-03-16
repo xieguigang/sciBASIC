@@ -11,8 +11,8 @@ Namespace Drawing2D.Math2D
         Public Sub DrawHullPolygon(g As IGraphics,
                                    polygon As IEnumerable(Of PointF),
                                    color As Color,
-                                   Optional strokeWidth! = 5,
-                                   Optional alpha% = 60,
+                                   Optional strokeWidth! = 8.5,
+                                   Optional alpha% = 95,
                                    Optional shadow As Boolean = True)
 
             Dim shape As PointF() = polygon.ToArray
