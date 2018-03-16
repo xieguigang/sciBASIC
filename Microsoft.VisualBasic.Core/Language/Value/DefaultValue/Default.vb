@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9c9fb46f29d1d1a3656f6c0273cce3f, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::46c34e4ed658057f1dfe9b0ce4525a68, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -50,8 +50,8 @@
     '         Properties: DefaultValue, IsEmpty
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: [When], ToString
-    '         Operators: +, (+4 Overloads) Or
+    '         Function: [When], getDefault, ToString
+    '         Operators: (+2 Overloads) +, (+4 Overloads) Or
     ' 
     ' 
     ' 
@@ -61,6 +61,7 @@
 
 #End Region
 
+Imports System.Linq.Expressions
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Perl
 
@@ -108,6 +109,7 @@ Namespace Language.Default
         End Property
 
         Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return LazyValue Is Nothing AndAlso assert(Value)
             End Get
@@ -158,6 +160,14 @@ Namespace Language.Default
         Public Shared Operator +([default] As DefaultValue(Of T), assert As Assert(Of Object)) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .assert = assert,
+                .Value = [default].Value
+            }
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +([default] As DefaultValue(Of T), assert As Expression(Of Func(Of Boolean))) As DefaultValue(Of T)
+            Return New DefaultValue(Of T) With {
+                .assert = Function(null) (assert.Compile())(),
                 .Value = [default].Value
             }
         End Operator

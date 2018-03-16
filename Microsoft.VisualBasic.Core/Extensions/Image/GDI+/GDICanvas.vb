@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d146e50c58211b75c50537094b6a0e3d, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::8d1b13cd42b2ce42eb1aab8b3e5bbe4a, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -528,7 +528,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawArc(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-
+            Call Graphics.DrawArc(pen, rect, startAngle, sweepAngle)
         End Sub
         '
         ' Summary:
@@ -554,7 +554,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null
         Public Overrides Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
-
+            Call Graphics.DrawArc(pen, rect, startAngle, sweepAngle)
         End Sub
         '
         ' Summary:

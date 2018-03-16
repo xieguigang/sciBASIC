@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37bdd4e6b6a4686138d108592f43fae6, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::18d4047bed67c21ceb35469e9c65792c, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\DataURI.vb"
 
     ' Author:
     ' 
@@ -33,16 +33,21 @@
 
     '     Class DataURI
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: FromFile, ToString
+    '         Properties: base64, chartSet, mime
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: FromFile, ToStream, ToString, URIParser
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Net.Protocols
 
 Namespace Net.Http
 
@@ -51,24 +56,64 @@ Namespace Net.Http
     ''' </summary>
     Public Class DataURI
 
-        ReadOnly mime$
-        ReadOnly base64$
-        ReadOnly chartSet$
+        ''' <summary>
+        ''' File mime type
+        ''' </summary>
+        Public ReadOnly Property mime As String
+        ''' <summary>
+        ''' The base64 string
+        ''' </summary>
+        Public ReadOnly Property base64 As String
+        Public ReadOnly Property chartSet As String
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="file"></param>
-        ''' <param name="codepage$">The chartset codepage name, by default is ``ASCII``.</param>
-        Sub New(file As String, Optional codepage$ = Nothing)
+        ''' <param name="codepage$">
+        ''' The chartset codepage name, by default is ``ASCII``.
+        ''' </param>
+        Sub New(file$, Optional codepage$ = Nothing)
             mime = Strings.LCase(file.FileMimeType.MIMEType)
             base64 = file.ReadBinary.ToBase64String
             codepage = codepage
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(image As Image)
+            Call Me.New(image.ToBase64String, ContentTypes.MIME.Png, Nothing)
+        End Sub
+
+        Public Sub New(base64$, mine$, Optional charset$ = Nothing)
+            Me.base64 = base64
+            Me.mime = mime
+            Me.chartSet = charset
+        End Sub
+
+        ''' <summary>
+        ''' <see cref="Convert.FromBase64String"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function ToStream() As Stream
+            Return New MemoryStream(Convert.FromBase64String(base64))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function FromFile(file As String) As DataURI
             Return New DataURI(file)
+        End Function
+
+        Public Shared Function URIParser(uri As String) As DataURI
+            Dim t = uri.Split(";"c) _
+                .Select(Function(p) p.StringSplit("[:=,]")) _
+                .ToDictionary(Function(k) k(0).ToLower,
+                              Function(value) value(1))
+
+            Return New DataURI(
+                base64:=t.TryGetValue("base64"),
+                charset:=t.TryGetValue("charset"),
+                mine:=t.TryGetValue("data")
+            )
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

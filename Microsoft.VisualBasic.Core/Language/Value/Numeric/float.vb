@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f40ff0c8221f5dd1f693f374e0df200, Microsoft.VisualBasic.Core\Language\Value\Numeric\float.vb"
+﻿#Region "Microsoft.VisualBasic::91f74f236ca476476fb4ecfd5dea9440, Microsoft.VisualBasic.Core\Language\Value\Numeric\float.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 Namespace Language
 
     ''' <summary>
@@ -57,7 +59,7 @@ Namespace Language
         Implements IEquatable(Of Double)
 
         Sub New(x#)
-            value = x#
+            Value = x#
         End Sub
 
         Sub New()
@@ -65,16 +67,16 @@ Namespace Language
         End Sub
 
         Public Overrides Function ToString() As String
-            Return value
+            Return Value
         End Function
 
         Public Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
             Dim type As Type = obj.GetType
 
             If type.Equals(GetType(Double)) Then
-                Return value.CompareTo(DirectCast(obj, Double))
+                Return Value.CompareTo(DirectCast(obj, Double))
             ElseIf type.Equals(GetType(float)) Then
-                Return value.CompareTo(DirectCast(obj, float).value)
+                Return Value.CompareTo(DirectCast(obj, float).Value)
             Else
                 Throw New Exception($"Miss-match of type:  {GetType(float).FullName} --> {type.FullName}")
             End If
@@ -90,43 +92,45 @@ Namespace Language
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Shared Operator <(n#, x As float) As float
-            If n >= x.value Then
+            If n >= x.Value Then
                 Return New float(Double.MaxValue)
             Else
                 Return x
             End If
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(n#, x As float) As Double
-            Return n * x.value
+            Return n * x.Value
         End Operator
 
         Public Overloads Shared Operator +(x As float, y As float) As Double
-            Return x.value + y.value
+            Return x.Value + y.Value
         End Operator
 
         Public Overloads Shared Operator /(x As float, y As float) As Double
-            Return x.value / y.value
+            Return x.Value / y.Value
         End Operator
 
         Public Overloads Shared Operator +(x#, y As float) As Double
-            Return x + y.value
+            Return x + y.Value
         End Operator
 
-        Public Overloads Shared Widening Operator CType(x#) As float
+        Public Overloads Shared Widening Operator CType(x As Double) As float
             Return New float(x)
         End Operator
 
         Public Overloads Shared Operator <=(x As float, n As Double) As Boolean
-            Return x.value <= n
+            Return x.Value <= n
         End Operator
 
         Public Overloads Shared Operator >=(x As float, n As Double) As Boolean
-            Return x.value >= n
+            Return x.Value >= n
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator /(x As float, n As Double) As Double
-            Return x.value / n
+            Return x.Value / n
         End Operator
 
         Public Shared Operator >(n As Double, x As float) As float
@@ -134,19 +138,19 @@ Namespace Language
         End Operator
 
         Public Shared Operator ^(x As float, power As Double) As Double
-            Return x.value ^ power
+            Return x.Value ^ power
         End Operator
 
         Public Overloads Shared Narrowing Operator CType(f As float) As Double
-            Return f.value
+            Return f.Value
         End Operator
 
         Public Overloads Shared Operator -(a As float, b As float) As Double
-            Return a.value - b.value
+            Return a.Value - b.Value
         End Operator
 
         Public Overloads Shared Operator *(a As float, b As float) As Double
-            Return a.value * b.value
+            Return a.Value * b.Value
         End Operator
 #End Region
 
@@ -157,7 +161,7 @@ Namespace Language
         End Function
 
         Public Function ToBoolean(provider As IFormatProvider) As Boolean Implements IConvertible.ToBoolean
-            If value = 0R Then
+            If Value = 0R Then
                 Return False
             Else
                 Return True
@@ -165,69 +169,69 @@ Namespace Language
         End Function
 
         Public Function ToChar(provider As IFormatProvider) As Char Implements IConvertible.ToChar
-            Return ChrW(CInt(value))
+            Return ChrW(CInt(Value))
         End Function
 
         Public Function ToSByte(provider As IFormatProvider) As SByte Implements IConvertible.ToSByte
-            Return CSByte(value)
+            Return CSByte(Value)
         End Function
 
         Public Function ToByte(provider As IFormatProvider) As Byte Implements IConvertible.ToByte
-            Return CByte(value)
+            Return CByte(Value)
         End Function
 
         Public Function ToInt16(provider As IFormatProvider) As Short Implements IConvertible.ToInt16
-            Return CShort(value)
+            Return CShort(Value)
         End Function
 
         Public Function ToUInt16(provider As IFormatProvider) As UShort Implements IConvertible.ToUInt16
-            Return CUShort(value)
+            Return CUShort(Value)
         End Function
 
         Public Function ToInt32(provider As IFormatProvider) As Integer Implements IConvertible.ToInt32
-            Return CInt(value)
+            Return CInt(Value)
         End Function
 
         Public Function ToUInt32(provider As IFormatProvider) As UInteger Implements IConvertible.ToUInt32
-            Return CUInt(value)
+            Return CUInt(Value)
         End Function
 
         Public Function ToInt64(provider As IFormatProvider) As Long Implements IConvertible.ToInt64
-            Return CLng(value)
+            Return CLng(Value)
         End Function
 
         Public Function ToUInt64(provider As IFormatProvider) As ULong Implements IConvertible.ToUInt64
-            Return CULng(value)
+            Return CULng(Value)
         End Function
 
         Public Function ToSingle(provider As IFormatProvider) As Single Implements IConvertible.ToSingle
-            Return CSng(value)
+            Return CSng(Value)
         End Function
 
         Public Function ToDouble(provider As IFormatProvider) As Double Implements IConvertible.ToDouble
-            Return value
+            Return Value
         End Function
 
         Public Function ToDecimal(provider As IFormatProvider) As Decimal Implements IConvertible.ToDecimal
-            Return CDec(value)
+            Return CDec(Value)
         End Function
 
         Public Function ToDateTime(provider As IFormatProvider) As Date Implements IConvertible.ToDateTime
-            Return Date.FromBinary(CLng(value))
+            Return Date.FromBinary(CLng(Value))
         End Function
 
         Public Overloads Function ToString(provider As IFormatProvider) As String Implements IConvertible.ToString
-            Return value.ToString(provider)
+            Return Value.ToString(provider)
         End Function
 
         Public Function ToType(conversionType As Type, provider As IFormatProvider) As Object Implements IConvertible.ToType
-            Return CTypeDynamic(value, conversionType)
+            Return CTypeDynamic(Value, conversionType)
         End Function
 #End Region
 
 #Region "Implements IEquatable(Of Double)"
         Public Overloads Function Equals(other As Double) As Boolean Implements IEquatable(Of Double).Equals
-            Return value = other
+            Return Value = other
         End Function
 #End Region
 

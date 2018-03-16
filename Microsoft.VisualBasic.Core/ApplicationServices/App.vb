@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e97147fecf17be6c0e05541fa2e5b449, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::3f24298a6db7eed7a6777a3eac2781fd, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -40,16 +40,17 @@
     '                 NanoTime, NextTempName, OutFile, PID, Platform
     '                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
     '                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
-    '                 StartupDirectory, StdErr, SysTemp, UserHOME, Version
+    '                 StartupDirectory, StdErr, StdOut, SysTemp, UserHOME
+    '                 Version
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: __CLI, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
     '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
-    '               ElapsedMilliseconds, Exit, GenerateTemp, (+2 Overloads) GetAppLocalData, GetAppSysTempFile
-    '               GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
-    '               GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI, RunCLIInternal
-    '               SelfFolk, SelfFolks, Shell, TraceBugs
+    '               ElapsedMilliseconds, Exit, formatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
+    '               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
+    '               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
+    '               RunCLIInternal, SelfFolk, SelfFolks, Shell, TraceBugs
     ' 
     '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
     '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
@@ -79,6 +80,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Settings
 Imports Microsoft.VisualBasic.Emit.CodeDOM_VBC
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
@@ -145,7 +147,8 @@ Public Module App
     End Property
 
     ''' <summary>
-    ''' Numbers of the CPU kernels on the current machine.(获取当前的系统主机的CPU核心数)
+    ''' Numbers of the CPU kernels on the current machine.
+    ''' (获取当前的系统主机的CPU核心数)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property CPUCoreNumbers As Integer = LQuerySchedule.CPU_NUMBER
@@ -157,7 +160,8 @@ Public Module App
     ''' <returns></returns>
     Public ReadOnly Property IsConsoleApp As Boolean = Not Console.IsErrorRedirected
     ''' <summary>
-    ''' 获取得到当前的这个所运行的应用程序所引用的dll文件列表
+    ''' Get the referenced dll list of current running ``*.exe`` program.
+    ''' (获取得到当前的这个所运行的应用程序所引用的dll文件列表)
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property References As New Lazy(Of String())(Function() ReferenceSolver.ExecutingReferences)
@@ -167,6 +171,12 @@ Public Module App
     ''' <returns>The path to the Desktop directory.</returns>
     Public ReadOnly Property Desktop As String
     Public ReadOnly Property StdErr As New StreamWriter(Console.OpenStandardError)
+
+    ''' <summary>
+    ''' <see cref="Console.OpenStandardOutput()"/> as default text output device.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property StdOut As DefaultValue(Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
 
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
@@ -246,6 +256,10 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property ExecutablePath As String
+    ''' <summary>
+    ''' Get assembly info of current running ``*.exe`` program.
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Info As DevAssmInfo
 
     ''' <summary>

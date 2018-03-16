@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ae578dfd9270db35bb59126fc69449c, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::3ac7537512ae754d4a9411ee66b10053, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Enumerable
     ' 
-    '         Function: PopulateSequence
+    '         Function: PopulateNodes, PopulateSequence
     ' 
     ' 
     ' /********************************************************************************/

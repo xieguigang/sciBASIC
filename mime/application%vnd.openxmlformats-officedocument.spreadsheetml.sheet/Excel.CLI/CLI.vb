@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54870ae503741d5848ed26c9ab34ef1c, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::2526e47de81731e1bc850e7aa3419b9d, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     ' Module CLI
     ' 
     '     Function: Association, cbind, Extract, newEmpty, Print
-    '               PushTable, rbind
+    '               PushTable, rbind, rbindGroup
     ' 
     ' /********************************************************************************/
 

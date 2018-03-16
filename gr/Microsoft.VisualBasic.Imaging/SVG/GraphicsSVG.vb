@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2aae47a7bbecddb358c2535d159bca4, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::86e1c5b2084eadbd4224b086f56df339, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -260,16 +260,9 @@ Namespace SVG
         ''' <param name="color"></param>
         Public Overrides Sub Clear(color As Color)
             __svgData.bg$ = color.ToHtmlColor
-            __svgData.circles *= 0
-            __svgData.images *= 0
-            __svgData.lines *= 0
-            __svgData.paths *= 0
-            __svgData.polygons *= 0
-            __svgData.polylines *= 0
-            __svgData.rects *= 0
-            __svgData.texts *= 0
 
             ' reset
+            __svgData.layers *= 0
             __svgData.zlayer = 0
         End Sub
 
@@ -910,7 +903,7 @@ Namespace SVG
 
         Public Overrides Sub FillPath(brush As Brush, path As GraphicsPath)
             Dim pathData As New path(path) With {
-                .style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
+                .fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor
             }
             Call __svgData.Add(pathData)
         End Sub
@@ -937,7 +930,7 @@ Namespace SVG
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
             Dim polygon As New polygon(points) With {
-                .style = "fill: " & DirectCast(brush, SolidBrush).Color.ToHtmlColor
+                .fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor
             }
             Call __svgData.Add(polygon)
         End Sub

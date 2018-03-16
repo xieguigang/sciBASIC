@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bdad1f125e231779d2ad13d3081475e, Data_science\Mathematica\Plot\Chart\Program.vb"
+﻿#Region "Microsoft.VisualBasic::74f8093a9d4e15d82034734e94cab12c, Data_science\Mathematica\Plot\Chart\Program.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@ Module Program
         Return GetType(CLI).RunCLI(App.CommandLine)
     End Function
 End Module
-

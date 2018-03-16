@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b649e76d5c6b26cb8101dfcf5bd42d47, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::3244f74453c2ff24e544c7e38ac5d8c6, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -72,6 +72,7 @@ Namespace Net.Protocols.ContentTypes
         Public Const MsDownload As String = "application/x-msdownload"
         Public Const Json As String = "application/json"
         Public Const ZIP As String = "application/zip"
+        Public Const Png As String = "image/png"
 
         Public ReadOnly Property UnknownType As New ContentType With {
             .FileExt = "*.*",

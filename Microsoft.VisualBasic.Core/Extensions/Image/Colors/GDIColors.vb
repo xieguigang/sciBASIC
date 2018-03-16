@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38682dd625e219011733b1dbcb54751e, Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::4f043e6b3f366d00e305ca8c83cfc1d6, Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -122,6 +122,8 @@ Namespace Imaging
         ''' <param name="base">The <see cref="System.Drawing.Color"/> to be lightened.</param>
         ''' <param name="percent!">The percentage to lighten the specified <see cref="System.Drawing.Color"/>.</param>
         ''' <returns>A <see cref="System.Drawing.Color"/> that represents the light color on the control.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Light(base As Color, percent!) As Color
             Return ControlPaint.Light(base, percent)
@@ -134,6 +136,8 @@ Namespace Imaging
         ''' <param name="base">The <see cref="System.Drawing.Color"/> to be darkened.</param>
         ''' <param name="percent!">The percentage to darken the specified <see cref="System.Drawing.Color"/>.</param>
         ''' <returns>A <see cref="System.Drawing.Color"/> that represent the dark color on the control.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Dark(base As Color, percent!) As Color
             Return ControlPaint.Dark(base, percent)
@@ -195,6 +199,7 @@ Namespace Imaging
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property AllDotNetPrefixColors As Color()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return __allDotNETPrefixColors.Values.Shuffles
             End Get

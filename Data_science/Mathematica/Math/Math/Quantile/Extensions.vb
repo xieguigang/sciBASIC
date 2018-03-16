@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6ad18d44c60a0315f75a32265da7eff, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::6cf8034f9987e9fdc1d6c68d1a82d00b, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,16 @@
 
     '     Module Extensions
     ' 
-    '         Function: (+2 Overloads) GKQuantile, QuantileLevels, QuantileThreshold, SelectByQuantile, Summary
+    '         Function: (+2 Overloads) GKQuantile, QuantileLevels, QuantileThreshold, SelectByQuantile
+    ' 
+    '         Sub: Summary
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
@@ -172,7 +175,7 @@ Namespace Quantile
         Const window_size As Integer = 10000
 
         ''' <summary>
-        ''' Selector for object sequence that by using quantile calculation.
+        ''' Selector for object sequence that by using quantile calculation.(对指定的序列按照所给定的quantile值进行分块)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="data"></param>
@@ -190,10 +193,8 @@ Namespace Quantile
                                                         quantiles#(),
                                                         Optional epsilon# = Extensions.epsilon,
                                                         Optional compact_size% = 1000) As IEnumerable(Of DoubleTagged(Of T()))
-            Dim cache = (From x As T
-                         In data
-                         Select x,
-                             v = getValue(x)).ToArray
+
+            Dim cache = (From x As T In data Select x, v = getValue(x)).ToArray
             Dim vals As Long() = cache.Select(Function(x) x.v).ToArray
             Dim estimator As QuantileEstimationGK = vals.GKQuantile(epsilon, compact_size)
 
@@ -206,7 +207,7 @@ Namespace Quantile
 
                 Yield New DoubleTagged(Of T()) With {
                     .Tag = q,
-                    .value = up.ToArray
+                    .Value = up.ToArray
                 }
             Next
         End Function
@@ -236,18 +237,18 @@ Namespace Quantile
         'End Sub
 
         <Extension>
-        Public Function Summary(data As IEnumerable(Of Double)) As String
+        Public Sub Summary(data As IEnumerable(Of Double), Optional dev As TextWriter = Nothing)
             Dim v#() = data.ToArray
             Dim q As QuantileEstimationGK = v.GKQuantile
-            Dim sb As New StringBuilder
 
-            For Each quantile# In {0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1}
-                Dim estimate# = q.Query(quantile)
-                Dim out As String = String.Format("Estimated {0:F2}% quantile as {1}", quantile * 100, estimate)
-                sb.AppendLine(out)
-            Next
+            With dev Or App.StdOut
+                For Each quantile# In {0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1}
+                    Dim estimate# = q.Query(quantile)
+                    Dim out$ = String.Format("Estimated {0:F2}% quantile as {1}", quantile * 100, estimate)
 
-            Return sb.ToString
-        End Function
+                    .WriteLine(out)
+                Next
+            End With
+        End Sub
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d82bc6c81d8a9f9aa3c6f0c55321f3eb, Data_science\MachineLearning\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::bd8d8f8267e3104286ab6b9402a16cf8, Data_science\MachineLearning\Extensions.vb"
 
     ' Author:
     ' 
@@ -60,4 +60,3 @@ Public Module Extensions
         Return small
     End Function
 End Module
-
