@@ -284,14 +284,19 @@ Namespace SVG.XML
         End Sub
 
         Sub New(path As GraphicsPath)
-            Dim points = path.PathData.Points.Select(Function(pt) $"{pt.X} {pt.Y}")
-            Dim sb As New StringBuilder
-            Call sb.Append("M" & points.First)
+            Dim points = path.PathData _
+                .Points _
+                .Select(Function(pt) $"{pt.X} {pt.Y}")
+            Dim sb As New StringBuilder("M" & points.First)
+
             For Each pt In points.Skip(1)
                 Call sb.Append(" ")
                 Call sb.Append("L" & pt)
             Next
+
+            Call sb.Append(" ")
             Call sb.Append("Z")
+
             d = sb.ToString
         End Sub
 
