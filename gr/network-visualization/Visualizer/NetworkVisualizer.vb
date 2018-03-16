@@ -234,6 +234,11 @@ Public Module NetworkVisualizer
             getNodeLabel = Function(node) node.GetDisplayText
         End If
 
+        ' 在这里不可以使用 <=，否则会导致等于最小值的时候出现无限循环的bug
+        Dim minLinkWidthValue = minLinkWidth.AsDefault(Function(width) CInt(width) < minLinkWidth)
+        Dim minFontSizeValue = minFontSize.AsDefault(Function(size) Val(size) < minFontSize)
+        Dim minRadiusValue = minRadius.AsDefault(Function(r) Val(r) < minRadius)
+
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
@@ -252,8 +257,7 @@ Public Module NetworkVisualizer
                         cl = Color.Blue
                     End If
 
-                    Dim w As Integer = 5 * edge.Data.weight * scale
-                    w = If(w < minLinkWidth, minLinkWidth, w)
+                    Dim w! = CSng(5 * edge.Data.weight * scale) Or minLinkWidthValue
                     Dim lineColor As New Pen(cl, w)
 
                     With edge.Data!interaction_type
@@ -291,7 +295,14 @@ Public Module NetworkVisualizer
                 ' 然后将网络之中的节点绘制出来，同时记录下节点的位置作为label text的锚点
                 ' 最后通过退火算法计算出合适的节点标签文本的位置之后，再使用一个循环绘制出
                 ' 所有的节点的标签文本
-                For Each n As Node In net.nodes Or net.connectedNodes.AsDefault(Function() hideDisconnectedNode)  ' 在这里进行节点的绘制
+
+                ' if required hide disconnected nodes, then only the connected node in the network 
+                ' Graph will be draw
+                ' otherwise all of the nodes in target network graph will be draw onto the canvas.
+                Dim connectedNodes = net.connectedNodes.AsDefault(Function() hideDisconnectedNode)
+
+                ' 在这里进行节点的绘制
+                For Each n As Node In net.nodes Or connectedNodes
                     Dim r# = n.Data.radius
 
                     ' 当网络之中没有任何边的时候，r的值会是NAN
@@ -300,11 +311,7 @@ Public Module NetworkVisualizer
                         r = If(r = 0, 9, r)
                     End If
 
-                    r *= radiusScale
-
-                    If r < minRadius Then
-                        r = minRadius
-                    End If
+                    r = (r * radiusScale) Or minRadiusValue
 
                     With DirectCast(New SolidBrush(defaultColor), Brush).AsDefault(n.NodeBrushAssert)
                         br = n.Data.Color Or .ByRef
@@ -341,7 +348,7 @@ Public Module NetworkVisualizer
                     If (Not invalidRegion) AndAlso displayId Then
 
                         Dim fontSize! = (baseFont.Size + r) / fontSizeFactor
-                        Dim font As New Font(baseFont.Name, If(fontSize < minFontSize, minFontSize, fontSize))
+                        Dim font As New Font(baseFont.Name, fontSize Or minFontSizeValue)
                         Dim label As New Label With {
                             .text = n.GetDisplayText
                         }
@@ -382,7 +389,7 @@ Public Module NetworkVisualizer
                                 )
                             End With
 
-                            Dim path = Imaging.GetStringPath(
+                            Dim path As GraphicsPath = Imaging.GetStringPath(
                                 .label.text,
                                 g.DpiX,
                                 rect.ToFloat,
@@ -393,7 +400,7 @@ Public Module NetworkVisualizer
                             ' Call g.DrawString(.label.text, .style, br, .label.X, .label.Y)
                             ' 绘制轮廓（描边）
                             Call g.FillPath(br, path)
-                            Call g.DrawPath(Pens.White, path)
+                            Call g.DrawPath(New Pen(DirectCast(br, SolidBrush).Color.Dark(0.05), 2), path)
                         End With
                     Next
                 End If
