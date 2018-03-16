@@ -16,7 +16,7 @@ Namespace Data.Trinity
                 ElseIf .Length < 8 Then
                     Return .Take(.Length - 1).JoinBy(comma & " ") & $" {[andalso]} " & .Last
                 Else
-                    Return .Take(7).JoinBy(comma & " ") & $" {[andalso]} " & .ByRef(8) & $"{comma} {etc}"
+                    Return .Take(7).JoinBy(comma & " ") & $" {[andalso]} " & .ByRef(7) & $"{comma} {etc}"
                 End If
             End With
         End Function
