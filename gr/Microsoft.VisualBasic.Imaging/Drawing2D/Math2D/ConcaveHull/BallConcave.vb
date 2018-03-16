@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports sys = System.Math
 
 Namespace Drawing2D.Math2D.ConcaveHull
@@ -115,7 +116,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             distanceMap = New Double(points.Count - 1, points.Count - 1) {}
             For i As Integer = 0 To points.Count - 1
                 For j As Integer = 0 To points.Count - 1
-                    distanceMap(i, j) = GetDistance(points(i), points(j))
+                    distanceMap(i, j) = points(i).Distance(points(j))
                 Next
             Next
         End Sub
@@ -238,13 +239,13 @@ Namespace Drawing2D.Math2D.ConcaveHull
                         min = list(j)
                     Else
                         Dim t As Point = points(list(j))
-                        If CompareAngel(points(min), t, points(current), dp) AndAlso GetDistance(t, points(current)) < radius Then
+                        If CompareAngel(points(min), t, points(current), dp) AndAlso t.Distance(points(current)) < radius Then
                             min = list(j)
                         End If
                     End If
                 End If
             Next
-            'main.ShowMessage("seek P" + points[min].Index);
+
             Return min
         End Function
 
@@ -342,10 +343,6 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 adj.Add(infos(i).Index)
             Next
             Return adj
-        End Function
-
-        Public Shared Function GetDistance(p1 As Point, p2 As Point) As Double
-            Return sys.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y))
         End Function
 
         Public Shared Function GetCross(a As Point, b As Point) As Double

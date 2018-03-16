@@ -222,7 +222,14 @@ Namespace Imaging.Math2D
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
         Public Function Distance(a As Point, b As Point) As Double
+            Return Distance(a.X, a.Y, b.X, b.Y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Distance(a As PointF, b As PointF) As Double
             Return Distance(a.X, a.Y, b.X, b.Y)
         End Function
 
