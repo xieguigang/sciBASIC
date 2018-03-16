@@ -62,7 +62,7 @@ Namespace Drawing2D.Shapes
                                         Optional br As Brush = Nothing,
                                         Optional border As Stroke = Nothing)
 
-            Call g.FillRectangle(If(br Is Nothing, Brushes.Black, br), New Rectangle(topLeft, size))
+            Call g.FillRectangle(br Or BlackBrush, New Rectangle(topLeft, size))
 
             If Not border Is Nothing Then
                 Call g.DrawRectangle(border.GDIObject, New Rectangle(topLeft, size))

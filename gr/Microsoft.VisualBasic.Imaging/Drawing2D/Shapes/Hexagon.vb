@@ -69,7 +69,7 @@ Namespace Drawing2D.Shapes
             Call hex.AddLine(f, a)
             Call hex.CloseAllFigures()
 
-            Call g.FillPath(If(br Is Nothing, Brushes.Black, br), hex)
+            Call g.FillPath(br Or BlackBrush, hex)
 
             If Not border Is Nothing Then
                 Call g.DrawPath(border.GDIObject, hex)

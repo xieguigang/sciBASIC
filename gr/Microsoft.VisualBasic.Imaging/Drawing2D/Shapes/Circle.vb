@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::7a18f5fdf0071732caa582cc385bdefb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Circle
-    ' 
-    '         Properties: FillColor, Radius, Size
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: Draw
-    ' 
-    '         Sub: Draw
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Circle
+' 
+'         Properties: FillColor, Radius, Size
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: Draw
+' 
+'         Sub: Draw
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,6 +50,7 @@ Imports System.Drawing
 Imports System.Math
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Shapes
@@ -97,6 +98,8 @@ Namespace Drawing2D.Shapes
             Return rect
         End Function
 
+        Shared ReadOnly black As DefaultValue(Of String) = NameOf(black)
+
         ''' <summary>
         ''' 绘制圆
         ''' </summary>
@@ -104,27 +107,27 @@ Namespace Drawing2D.Shapes
         ''' <param name="center"></param>
         ''' <param name="radius"></param>
         ''' <param name="br"></param>
-        Public Overloads Shared Sub Draw(ByRef g As IGraphics,
-                                         center As Point,
-                                         radius As Single,
+        Public Overloads Shared Sub Draw(ByRef g As IGraphics, center As Point, radius!,
                                          Optional br As Brush = Nothing,
                                          Optional border As Stroke = Nothing)
-            Dim rect As New Rectangle(
-                New Point(center.X - radius, center.Y - radius),
-                New Size(radius * 2, radius * 2))
-            Call g.FillPie(
-                If(br Is Nothing, Brushes.Black, br), rect, 0, 360)
+
+            Dim rect As New Rectangle With {
+                .Location = New Point(center.X - radius, center.Y - radius),
+                .Size = New Size With {
+                    .Width = radius * 2,
+                    .Height = .Width
+                }
+            }
+            Call g.FillPie(br Or BlackBrush, rect, 0, 360)
 
             If Not border Is Nothing Then
-                rect = New Rectangle(
-                    center.X - radius - border.width,
-                    center.Y - radius - border.width,
-                    radius * 2 + 1,
-                    radius * 2 + 1)
-                border.fill = If(
-                    border.fill.StringEmpty,
-                    "Black",
-                    border.fill)
+                rect = New Rectangle With {
+                    .X = center.X - radius - border.width,
+                    .Y = center.Y - radius - border.width,
+                    .Width = radius * 2 + 1,
+                    .Height = .Width
+                }
+                border.fill = border.fill Or black.When(border.fill.StringEmpty)
 
                 Call g.DrawCircle(
                     rect.Centre, radius, border.GDIObject, fill:=False)

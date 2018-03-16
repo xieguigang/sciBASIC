@@ -66,7 +66,7 @@ Namespace Drawing2D.Shapes
             diamond.AddLine(d, a)
             diamond.CloseFigure()
 
-            Call g.FillPath(If(br Is Nothing, Brushes.Black, br), diamond)
+            Call g.FillPath(br Or BlackBrush, diamond)
 
             If Not border Is Nothing Then
                 Call g.DrawPath(border.GDIObject, diamond)

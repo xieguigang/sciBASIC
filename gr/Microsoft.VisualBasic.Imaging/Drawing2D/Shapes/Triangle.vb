@@ -94,7 +94,7 @@ Namespace Drawing2D.Shapes
             Call t.AddLine(c, a)
             Call t.CloseAllFigures()
 
-            Call g.FillPath(If(br Is Nothing, Brushes.Black, br), t)
+            Call g.FillPath(br Or BlackBrush, t)
 
             If Not border Is Nothing Then
                 Call g.DrawPath(border.GDIObject, t)
