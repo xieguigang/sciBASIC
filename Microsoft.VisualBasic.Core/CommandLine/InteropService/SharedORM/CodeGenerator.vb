@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88d12848b6118f8ddbb52ff613da00f8, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\CodeGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::87020d8218ea65c37654d8a0eb74b76f, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\CodeGenerator.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class CodeGenerator
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: EnumeratesAPI, GetManualPage
     ' 
     ' 

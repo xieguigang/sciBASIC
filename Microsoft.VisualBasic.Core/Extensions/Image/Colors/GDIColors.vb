@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38682dd625e219011733b1dbcb54751e, Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::4f043e6b3f366d00e305ca8c83cfc1d6, Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 

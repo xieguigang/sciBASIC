@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::23ed94bf8957d47f0eb3fdfd6c50d5be, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
+﻿#Region "Microsoft.VisualBasic::509ad5f16164f9699b72fcc689e57862, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,10 @@
     '     Function: AddWithDelim, CharCode, CharCodes, CharString, (+6 Overloads) ContactWithDelim
     '               ContactWithDelimSkipEmpty, ContactWithDelimSkipNull, ContactWithDelimSkipSome, CountWordFrequency, (+2 Overloads) EndsWith
     '               EscapeQuotesAndBackslashes, GetCompareType, GetHeader, GetLastSubStringBetween, GetString
-    '               GetSubStringBetween, GetWords, LongestTag, LowerCaseFirstChar, RandomASCIIString
-    '               RandomCharString, Remove, SplitIntoLines, SplitRemoveEmptyEntries, SplitWithSeparator
-    '               SplitWithSeparatorFromRight, SplitWithSpaces, (+2 Overloads) StartsWith, StartWithUpperCase, UpperCaseFirstChar
+    '               GetSubStringBetween, GetWords, LongestTag, LowerCaseFirstChar, RandomASCII
+    '               RandomASCIIString, RandomCharString, Remove, SplitIntoLines, SplitRemoveEmptyEntries
+    '               SplitWithSeparator, SplitWithSeparatorFromRight, SplitWithSpaces, (+2 Overloads) StartsWith, StartWithUpperCase
+    '               UpperCaseFirstChar
     ' 
     ' /********************************************************************************/
 

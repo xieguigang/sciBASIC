@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb55c3f9622f833b75d651f1a1558e46, Data_science\Mathematica\Plot\Chart\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::f0c22137a2283a14c452ecc8f47f666f, Data_science\Mathematica\Plot\Chart\CLI.vb"
 
     ' Author:
     ' 
@@ -63,4 +63,3 @@ Module CLI
 
     End Function
 End Module
-

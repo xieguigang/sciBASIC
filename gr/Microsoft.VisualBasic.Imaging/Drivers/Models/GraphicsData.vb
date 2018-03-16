@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bf0e2207e54e9b3f68f4185d40d7957, gr\Microsoft.VisualBasic.Imaging\Drivers\GraphicsData.vb"
+﻿#Region "Microsoft.VisualBasic::d75375f4fb80981642b60f943b564a19, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\GraphicsData.vb"
 
     ' Author:
     ' 
@@ -37,23 +37,6 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: (+2 Overloads) Dispose
-    ' 
-    '     Class ImageData
-    ' 
-    '         Properties: DefaultFormat, Driver, Image
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) Save
-    ' 
-    '         Sub: Dispose
-    ' 
-    '     Class SVGData
-    ' 
-    '         Properties: Driver, SVG, XmlComment
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Render, (+2 Overloads) Save
     ' 
     ' 
     ' /********************************************************************************/

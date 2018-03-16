@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::caeef8ca99eff2603deb580812df661b, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::ac5dbf6c5a6b5e59a15f9e97c1f171fb, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Enum Encodings
     ' 
     '         GB2312, Unicode, UTF16, UTF32, UTF7
-    '         UTF8
+    '         UTF8, UTF8WithoutBOM
     ' 
     '  
     ' 
@@ -45,8 +45,8 @@
     '         Properties: DefaultEncoding, TextEncodings, UTF8, UTF8WithoutBOM
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: __gbk2312_encoding, CodeArray, (+2 Overloads) CodePage, GetEncodings, ParseEncodingsName
-    '                   TransEncoding
+    '         Function: __gbk2312_encoding, CodeArray, (+2 Overloads) CodePage, codePageTable, GetEncodings
+    '                   ParseEncodingsName, TransEncoding
     ' 
     ' 
     ' /********************************************************************************/

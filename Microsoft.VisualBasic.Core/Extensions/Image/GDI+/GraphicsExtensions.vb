@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b340240f6c004390e9c5e1a77bbce8a, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::3283f0685afd4e3116d16fec1a0667a5, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,9 @@
     ' 
     '         Function: BackgroundGraphics, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D, (+2 Overloads) CreateGDIDevice
     '                   CreateGrayBitmap, EntireImage, GDIPlusDeviceHandleFromImageFile, GetBrush, GetBrushes
-    '                   (+2 Overloads) GetIcon, GetRawStream, (+2 Overloads) GraphicsPath, ImageAddFrame, IsValidGDIParameter
-    '                   (+2 Overloads) LoadImage, OpenDevice, (+2 Overloads) PointF, SaveIcon, SizeF
-    '                   ToFloat, ToPoint, ToPoints
+    '                   (+2 Overloads) GetIcon, GetRawStream, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame
+    '                   IsValidGDIParameter, (+2 Overloads) LoadImage, OpenDevice, (+2 Overloads) PointF, SaveIcon
+    '                   SizeF, ToFloat, ToPoint, ToPoints
     ' 
     '         Sub: (+5 Overloads) DrawCircle
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1961bdeb7728f35e26d87dfd32bc10e, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
+﻿#Region "Microsoft.VisualBasic::412a82f2b79f7e09020db0881fd25712, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class NeedlemanWunsch
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: fillTracebackMatrix
     ' 

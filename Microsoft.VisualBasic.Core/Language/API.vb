@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd70ac1fbe3cd04aa5eb22740182b640, Microsoft.VisualBasic.Core\Language\API.vb"
+﻿#Region "Microsoft.VisualBasic::dff727ac76a2cd9dd6fa1e6c78322672, Microsoft.VisualBasic.Core\Language\API.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module LanguageAPI
     ' 
-    '         Function: [ByRef], [Default], AsDefault, AsVector, IsNothing
-    '                   Let, TypeDef, TypeInfo
+    '         Function: [ByRef], [Default], AsDefault, AsVector, DefaultValue
+    '                   IsNothing, Let, TypeDef, TypeInfo
     ' 
     ' 
     ' /********************************************************************************/

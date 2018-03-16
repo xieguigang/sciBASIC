@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32cdbba84824b3bc7f8741c7d2c49442, Data_science\Mathematica\Plot\Plots-statistics\JointPlot.vb"
+﻿#Region "Microsoft.VisualBasic::221e6d408005fd8deae7fbf420a8ba93, Data_science\Mathematica\Plot\Plots-statistics\JointPlot.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Public Module JointPlot
 
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d838ec61117bf8ca3e8306711a7ad1d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Hexagon.vb"
+﻿#Region "Microsoft.VisualBasic::7968c2fca2743f9f9f49eac206b53d2d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Hexagon.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c56fac22e37fb77948b7bb50703a061e, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::ce3286597f13a22c582fa83f6d88ba5f, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeomTransform.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module GeomTransform
     ' 
-    '         Function: Area, CalculateAngle, CenterAlign, (+2 Overloads) CentralOffset, (+4 Overloads) Centre
-    '                   CircleRectangle, (+3 Overloads) Distance, (+2 Overloads) GetBounds, GetCenter, (+2 Overloads) InRegion
+    '         Function: Area, (+2 Overloads) CalculateAngle, CenterAlign, (+2 Overloads) CentralOffset, (+4 Overloads) Centre
+    '                   CircleRectangle, (+4 Overloads) Distance, (+2 Overloads) GetBounds, GetCenter, (+2 Overloads) InRegion
     '                   MirrorX, MirrorY, (+5 Overloads) OffSet2D, Offsets, (+2 Overloads) Scale
     '                   SquareSize
     ' 

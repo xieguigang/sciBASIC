@@ -1,48 +1,48 @@
-﻿#Region "Microsoft.VisualBasic::1f40ff0c8221f5dd1f693f374e0df200, Microsoft.VisualBasic.Core\Language\Value\Numeric\float.vb"
+﻿#Region "Microsoft.VisualBasic::91f74f236ca476476fb4ecfd5dea9440, Microsoft.VisualBasic.Core\Language\Value\Numeric\float.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class float
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: CompareTo, Equals, GetTypeCode, ToBoolean, ToByte
-'                   ToChar, ToDateTime, ToDecimal, ToDouble, ToInt16
-'                   ToInt32, ToInt64, ToSByte, ToSingle, (+2 Overloads) ToString
-'                   ToType, ToUInt16, ToUInt32, ToUInt64
-'         Operators: -, (+2 Overloads) *, (+2 Overloads) /, ^, (+2 Overloads) +
-'                    <, <=, >, >=
-' 
-' 
-' /********************************************************************************/
+    '     Class float
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: CompareTo, Equals, GetTypeCode, ToBoolean, ToByte
+    '                   ToChar, ToDateTime, ToDecimal, ToDouble, ToInt16
+    '                   ToInt32, ToInt64, ToSByte, ToSingle, (+2 Overloads) ToString
+    '                   ToType, ToUInt16, ToUInt32, ToUInt64
+    '         Operators: -, (+2 Overloads) *, (+2 Overloads) /, ^, (+2 Overloads) +
+    '                    <, <=, >, >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0f38dbe1416334893e75a7357a574e3, Data_science\algorithms\PCA\PCA\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::231cb62b0ac6553d3669a815f2aa6ad1, Data_science\algorithms\PCA\PCA\Module1.vb"
 
     ' Author:
     ' 
@@ -69,4 +69,3 @@ Module Module1
         Pause()
     End Sub
 End Module
-
