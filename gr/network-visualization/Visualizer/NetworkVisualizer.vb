@@ -137,7 +137,8 @@ Public Module NetworkVisualizer
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
     ''' <summary>
-    ''' 假若属性是空值的话，在绘图之前可以调用<see cref="ApplyAnalysis"/>拓展方法进行一些分析
+    ''' Rendering png or svg image from a given network graph model.
+    ''' (假若属性是空值的话，在绘图之前可以调用<see cref="ApplyAnalysis"/>拓展方法进行一些分析)
     ''' </summary>
     ''' <param name="net"></param>
     ''' <param name="canvasSize">画布的大小</param>
@@ -187,7 +188,9 @@ Public Module NetworkVisualizer
                           Function(node)
                               Return node.Data.initialPostion.Point2D
                           End Function)
-        Dim offset As Point = scalePos.CentralOffsets(frameSize).ToPoint
+        Dim offset As Point = scalePos _
+            .CentralOffsets(frameSize) _
+            .ToPoint
 
         ' 进行位置偏移
         scalePos = scalePos.ToDictionary(Function(node) node.Key,
@@ -370,7 +373,27 @@ Public Module NetworkVisualizer
                                 br = .color
                             End If
 
-                            Call g.DrawString(.label.text, .style, br, .label.X, .label.Y)
+                            With g.MeasureString(.label.text, .style)
+                                rect = New Rectangle(
+                                    label.label.X,
+                                    label.label.Y,
+                                    .Width,
+                                    .Height
+                                )
+                            End With
+
+                            Dim path = Imaging.GetStringPath(
+                                .label.text,
+                                g.DpiX,
+                                rect.ToFloat,
+                                .style,
+                                StringFormat.GenericTypographic
+                            )
+
+                            ' Call g.DrawString(.label.text, .style, br, .label.X, .label.Y)
+                            ' 绘制轮廓（描边）
+                            Call g.FillPath(br, path)
+                            Call g.DrawPath(Pens.White, path)
                         End With
                     Next
                 End If

@@ -219,7 +219,7 @@ Namespace HTML.CSS
                 .GetTagValue(":", trim:=True)
 
             If value.Name.StringEmpty AndAlso css.IndexOf(","c) > -1 Then
-                Dim size As Drawing.Size = css.SizeParser
+                Dim size As Size = css.SizeParser
                 Return New Padding(margin:=size)
             End If
 
