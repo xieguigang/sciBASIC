@@ -68,6 +68,8 @@ Namespace Drawing2D.Math2D.ConvexHull
         ''' </summary>
         ''' <param name="points"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function JarvisMatch(points As IEnumerable(Of PointF)) As PointF()
             Return Math2D.ConvexHull.JarvisMatch.ConvexHull(points)
         End Function
@@ -77,6 +79,8 @@ Namespace Drawing2D.Math2D.ConvexHull
         ''' </summary>
         ''' <param name="points"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function GrahamScan(points As IEnumerable(Of PointF)) As PointF()
             Return Math2D.ConvexHull.GrahamScan.ConvexHull(points)
         End Function

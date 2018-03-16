@@ -46,11 +46,14 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
@@ -97,7 +100,7 @@ Public Module NetworkVisualizer
     ''' <param name="size"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function CentralOffsets(nodes As Dictionary(Of Node, Point), size As Size) As PointF
+    Public Function CentralOffsets(nodes As Dictionary(Of Node, PointF), size As Size) As PointF
         Return nodes.Values.CentralOffset(size)
     End Function
 
@@ -147,6 +150,7 @@ Public Module NetworkVisualizer
     ''' <param name="defaultColor"></param>
     ''' <param name="nodePoints">如果还需要获取得到节点的绘图位置的话，则可以使用这个可选参数来获取返回</param>
     ''' <param name="fontSizeFactor">这个参数值越小，字体会越大</param>
+    ''' <param name="showHullPolygon">需要显示分组的多边形的分组的名称</param>
     ''' <returns></returns>
     <ExportAPI("Draw.Image")>
     <Extension>
@@ -165,12 +169,13 @@ Public Module NetworkVisualizer
                               Optional minRadius# = 5,
                               Optional minFontSize! = 10,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
-                              Optional ByRef nodePoints As Dictionary(Of Node, Point) = Nothing,
+                              Optional ByRef nodePoints As Dictionary(Of Node, PointF) = Nothing,
                               Optional fontSizeFactor# = 1.5,
                               Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
-                              Optional throwEx As Boolean = True) As GraphicsData
+                              Optional throwEx As Boolean = True,
+                              Optional showHullPolygon As Index(Of String) = Nothing) As GraphicsData
 
         Dim frameSize As Size = canvasSize.SizeParser  ' 所绘制的图像输出的尺寸大小
         Dim br As Brush
@@ -182,11 +187,11 @@ Public Module NetworkVisualizer
         ' 3. 执行绘图操作
 
         ' 获取得到当前的这个网络对象相对于图像的中心点的位移值
-        Dim scalePos As Dictionary(Of Node, Point) = net _
+        Dim scalePos As Dictionary(Of Node, PointF) = net _
             .nodes _
             .ToDictionary(Function(n) n,
                           Function(node)
-                              Return node.Data.initialPostion.Point2D
+                              Return node.Data.initialPostion.Point2D.PointF
                           End Function)
         Dim offset As Point = scalePos _
             .CentralOffsets(frameSize) _
@@ -300,9 +305,23 @@ Public Module NetworkVisualizer
                 ' Graph will be draw
                 ' otherwise all of the nodes in target network graph will be draw onto the canvas.
                 Dim connectedNodes = net.connectedNodes.AsDefault(Function() hideDisconnectedNode)
+                Dim drawPoints = net.nodes Or connectedNodes
+
+                If Not showHullPolygon.IsNullOrEmpty Then
+                    For Each group In drawPoints.GroupBy(Function(n) n.Data.Properties!type)
+                        If group.Count > 2 AndAlso group.Key.IsOneOfA(showHullPolygon) Then
+                            Dim positions = group.Select(Function(p) scalePos(p)).JarvisMatch
+                            Dim color As Color = group _
+                                .Select(Function(p) DirectCast(p.Data.Color, SolidBrush).Color) _
+                                .Average
+
+                            Call g.DrawHullPolygon(positions, color)
+                        End If
+                    Next
+                End If
 
                 ' 在这里进行节点的绘制
-                For Each n As Node In net.nodes Or connectedNodes
+                For Each n As Node In drawPoints
                     Dim r# = n.Data.radius
 
                     ' 当网络之中没有任何边的时候，r的值会是NAN

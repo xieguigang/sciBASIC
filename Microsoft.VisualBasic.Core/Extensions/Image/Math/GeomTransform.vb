@@ -264,6 +264,8 @@ Namespace Imaging.Math2D
         ''' </summary>
         ''' <param name="points"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetBounds(points As IEnumerable(Of Point)) As RectangleF
             Return points.Select(Function(pt) pt.PointF).GetBounds
@@ -337,6 +339,7 @@ Namespace Imaging.Math2D
             Return New PointF(x.Average, y.Average)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Centre(shape As IEnumerable(Of Point)) As PointF
             Return shape.PointF.Centre
@@ -347,6 +350,8 @@ Namespace Imaging.Math2D
         ''' </summary>
         ''' <param name="rect"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Center")>
         <Extension> Public Function Centre(rect As RectangleF) As PointF
             Return New PointF(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
@@ -358,6 +363,8 @@ Namespace Imaging.Math2D
         ''' <param name="pts"></param>
         ''' <param name="frameSize"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CentralOffset(pts As IEnumerable(Of Point), frameSize As Size) As PointF
             Return pts _
