@@ -348,7 +348,7 @@ Public Module NetworkVisualizer
                     If (Not invalidRegion) AndAlso displayId Then
 
                         Dim fontSize! = (baseFont.Size + r) / fontSizeFactor
-                        Dim font As New Font(baseFont.Name, fontSize Or minFontSizeValue)
+                        Dim font As New Font(baseFont.Name, fontSize Or minFontSizeValue, FontStyle.Bold)
                         Dim label As New Label With {
                             .text = n.GetDisplayText
                         }
@@ -378,6 +378,7 @@ Public Module NetworkVisualizer
                                 br = Brushes.Black
                             Else
                                 br = .color
+                                br = New SolidBrush(DirectCast(br, SolidBrush).Color.Dark(0.005))
                             End If
 
                             With g.MeasureString(.label.text, .style)
@@ -397,10 +398,11 @@ Public Module NetworkVisualizer
                                 StringFormat.GenericTypographic
                             )
 
-                            ' Call g.DrawString(.label.text, .style, br, .label.X, .label.Y)
+                            Call g.DrawString(.label.text, .style, br, .label.X, .label.Y)
+
                             ' 绘制轮廓（描边）
-                            Call g.FillPath(br, path)
-                            Call g.DrawPath(New Pen(DirectCast(br, SolidBrush).Color.Dark(0.05), 2), path)
+                            ' Call g.FillPath(br, path)
+                            ' Call g.DrawPath(New Pen(DirectCast(br, SolidBrush).Color.Dark(0.005), 4), path)
                         End With
                     Next
                 End If
