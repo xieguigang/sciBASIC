@@ -304,8 +304,8 @@ Public Module NetworkVisualizer
                 ' if required hide disconnected nodes, then only the connected node in the network 
                 ' Graph will be draw
                 ' otherwise all of the nodes in target network graph will be draw onto the canvas.
-                Dim connectedNodes = net.connectedNodes.AsDefault(Function() hideDisconnectedNode)
-                Dim drawPoints = net.nodes Or connectedNodes
+                Dim connectedNodes = net.connectedNodes.AsDefault
+                Dim drawPoints = net.nodes Or connectedNodes.When(hideDisconnectedNode)
 
                 If Not hullPolygonGroups.StringEmpty Then
                     Dim hullPolygon As Index(Of String)
