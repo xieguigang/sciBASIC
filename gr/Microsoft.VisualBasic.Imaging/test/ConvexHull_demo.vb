@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Module ConvexHull_demo
 
     <Extension>
-    Private Sub GrahamScanDemo(points As List(Of Point))
+    Private Sub GrahamScanDemo(points As List(Of PointF))
         Dim stopwatch As Stopwatch = Stopwatch.StartNew
         Dim result = ConvexHull.GrahamScan(points)
         stopwatch.[Stop]()
@@ -65,7 +65,7 @@ Module ConvexHull_demo
     End Sub
 
     <Extension>
-    Private Sub JarvisMarchDemo(points As List(Of Point))
+    Private Sub JarvisMarchDemo(points As List(Of PointF))
         Dim stopwatch = New Stopwatch()
         stopwatch.Start()
         Dim result = ConvexHull.JarvisMatch(points)
@@ -76,22 +76,22 @@ Module ConvexHull_demo
     End Sub
 
     <Extension>
-    Public Sub Draw(points As IEnumerable(Of Point), vex As Point(), <CallerMemberName> Optional method$ = Nothing)
+    Public Sub Draw(points As IEnumerable(Of PointF), vex As PointF(), <CallerMemberName> Optional method$ = Nothing)
         Using g As Graphics2D = vex.GetBounds.Size.Enlarge(1.25).CreateGDIDevice
 
             For Each p In points.AsList
-                Call g.FillPie(Brushes.Black, New Rectangle(p, New Size(8, 8)), 0, 360)
+                Call g.FillPie(Brushes.Black, New RectangleF(p, New SizeF(8, 8)), 0, 360)
             Next
             For Each p In vex
-                Call g.FillPie(Brushes.Blue, New Rectangle(p, New Size(5, 5)), 0, 360)
+                Call g.FillPie(Brushes.Blue, New RectangleF(p, New SizeF(5, 5)), 0, 360)
             Next
 
             Dim red As New Pen(Color.Red, 5) With {
                 .DashStyle = DashStyle.Dot
             }
 
-            Call g.DrawPolygon(red, vex)
-            Call g.DrawPolygon(Pens.Blue, vex.BSpline(degree:=2))
+            Call g.DrawHullPolygon(vex, Color.Red, 10, 50)
+            ' Call g.DrawPolygon(Pens.Blue, vex.BSpline(degree:=2))
 
             Call g.Save(App.HOME & $"/{method}.png", ImageFormats.Png)
 
@@ -99,10 +99,13 @@ Module ConvexHull_demo
     End Sub
 
     Public Sub Main()
+
+        Call Randomize()
+
         Dim size = 30
         Dim x = New DoubleRange(150, 2000).rand(size)
         Dim y = New DoubleRange(150, 1200).rand(size)
-        Dim points = size.Sequence.Select(Function(i) New Point(x(i), y(i))).AsList
+        Dim points = size.Sequence.Select(Function(i) New PointF(x(i), y(i))).AsList
 
         Call points.GrahamScanDemo()
         Call points.JarvisMarchDemo()

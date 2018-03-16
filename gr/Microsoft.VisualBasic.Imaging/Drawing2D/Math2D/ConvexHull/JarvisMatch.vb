@@ -40,9 +40,9 @@
 
 #End Region
 
-Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Point = System.Drawing.PointF
 
 Namespace Drawing2D.Math2D.ConvexHull
 

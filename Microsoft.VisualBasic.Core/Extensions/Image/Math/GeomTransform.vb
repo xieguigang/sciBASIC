@@ -153,10 +153,16 @@ Namespace Imaging.Math2D
             Return New Point(offset.X + p.X, offset.Y + p.Y)
         End Function
 
+        ''' <summary>
+        ''' Default is ``A + B``
+        ''' </summary>
+        ''' <param name="pt"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(pt As PointF, offset As PointF) As PointF
+        <Extension> Public Function OffSet2D(pt As PointF, offset As PointF, Optional d% = 1) As PointF
             With pt
-                Return New PointF(offset.X + .X, offset.Y + .Y)
+                Return New PointF(d * offset.X + .X, d * offset.Y + .Y)
             End With
         End Function
 
@@ -242,10 +248,15 @@ Namespace Imaging.Math2D
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
+        <Extension> Public Function CalculateAngle(p1 As PointF, p2 As PointF) As Double
             Dim xDiff As Single = p2.X - p1.X
             Dim yDiff As Single = p2.Y - p1.Y
             Return sys.Atan2(yDiff, xDiff) * 180.0 / PI
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
+            Return CalculateAngle(p1.PointF, p2.PointF)
         End Function
 
         ''' <summary>

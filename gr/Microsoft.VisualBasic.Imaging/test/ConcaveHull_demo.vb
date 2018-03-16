@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConcaveHull
 Module ConcaveHull_demo
 
     <Extension>
-    Sub Run_ConcaveHull_demo(points As List(Of Point))
+    Sub Run_ConcaveHull_demo(points As List(Of PointF))
         'Dim size = 200
         'Dim x = New DoubleRange(100, 900).rand(size)
         'Dim y = New DoubleRange(100, 800).rand(size)

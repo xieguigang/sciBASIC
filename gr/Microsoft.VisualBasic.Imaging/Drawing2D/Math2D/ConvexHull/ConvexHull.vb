@@ -59,7 +59,7 @@ Namespace Drawing2D.Math2D.ConvexHull
         Public Const TURN_NONE = 0
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Function turn(p As Point, q As Point, r As Point) As Integer
+        Friend Function turn(p As PointF, q As PointF, r As PointF) As Integer
             Return ((q.X - p.X) * (r.Y - p.Y()) - (r.X - p.X) * (q.Y - p.Y)).CompareTo(0)
         End Function
 
@@ -68,7 +68,7 @@ Namespace Drawing2D.Math2D.ConvexHull
         ''' </summary>
         ''' <param name="points"></param>
         ''' <returns></returns>
-        Public Function JarvisMatch(points As IEnumerable(Of Point)) As Point()
+        Public Function JarvisMatch(points As IEnumerable(Of PointF)) As PointF()
             Return Math2D.ConvexHull.JarvisMatch.ConvexHull(points)
         End Function
 
@@ -77,7 +77,7 @@ Namespace Drawing2D.Math2D.ConvexHull
         ''' </summary>
         ''' <param name="points"></param>
         ''' <returns></returns>
-        Public Function GrahamScan(points As IEnumerable(Of Point)) As Point()
+        Public Function GrahamScan(points As IEnumerable(Of PointF)) As PointF()
             Return Math2D.ConvexHull.GrahamScan.ConvexHull(points)
         End Function
     End Module
