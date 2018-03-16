@@ -423,6 +423,7 @@
     <Compile Include="Drawing2D\Math2D\ConvexHull\ConvexHull.vb" />
     <Compile Include="Drawing2D\Math2D\ConvexHull\GrahamScan.vb" />
     <Compile Include="Drawing2D\Math2D\ConvexHull\JarvisMatch.vb" />
+    <Compile Include="Drawing2D\Math2D\HullPolygonDraw.vb" />
     <Compile Include="Drawing2D\Math2D\Spline.vb" />
     <Compile Include="Drawing2D\Path2D.vb" />
     <Compile Include="Drawing2D\Colors\ColorIndex.vb" />
@@ -485,7 +486,9 @@
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
     <Compile Include="Drivers\CSS\Driver.vb" />
     <Compile Include="Drivers\CSS\RuntimeInvoker.vb" />
-    <Compile Include="Drivers\GraphicsData.vb" />
+    <Compile Include="Drivers\Models\SVGData.vb" />
+    <Compile Include="Drivers\Models\ImageData.vb" />
+    <Compile Include="Drivers\Models\GraphicsData.vb" />
     <Compile Include="Drivers\Drivers.vb" />
     <Compile Include="Drivers\ImageSynthesis.vb" />
     <Compile Include="Extensions.vb" />

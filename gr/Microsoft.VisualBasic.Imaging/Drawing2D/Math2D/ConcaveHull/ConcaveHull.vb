@@ -78,8 +78,17 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Me.maxTriangles = MaxTriangles
         End Sub
 
-        Private Function InCircle(xp As Long, yp As Long, x1 As Long, y1 As Long, x2 As Long, y2 As Long,
-            x3 As Long, y3 As Long, xc As Double, yc As Double, r As Double) As Boolean
+        Private Function InCircle(xp As Long,
+                                  yp As Long,
+                                  x1 As Long,
+                                  y1 As Long,
+                                  x2 As Long,
+                                  y2 As Long,
+                                  x3 As Long,
+                                  y3 As Long,
+                                  xc As Double,
+                                  yc As Double,
+                                  r As Double) As Boolean
             Dim eps As Double
             Dim m1 As Double
             Dim m2 As Double
@@ -97,6 +106,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             If Abs(y1 - y2) < eps AndAlso Abs(y2 - y3) < eps Then
                 Return False
             End If
+
             If Abs(y2 - y1) < eps Then
                 m2 = (-(Convert.ToDouble(x3) - Convert.ToDouble(x2)) / (Convert.ToDouble(y3) - Convert.ToDouble(y2)))
                 mx2 = Convert.ToDouble((x2 + x3) / 2.0)
@@ -136,8 +146,8 @@ Namespace Drawing2D.Math2D.ConcaveHull
         End Function
 
         Private Function WhichSide(xp As Long, yp As Long, x1 As Long, y1 As Long, x2 As Long, y2 As Long) As Integer
-            Dim equation As Double
-            equation = ((Convert.ToDouble(yp) - Convert.ToDouble(y1)) * (Convert.ToDouble(x2) - Convert.ToDouble(x1))) - ((Convert.ToDouble(y2) - Convert.ToDouble(y1)) * (Convert.ToDouble(xp) - Convert.ToDouble(x1)))
+            Dim equation# = ((Convert.ToDouble(yp) - Convert.ToDouble(y1)) * (Convert.ToDouble(x2) - Convert.ToDouble(x1))) - ((Convert.ToDouble(y2) - Convert.ToDouble(y1)) * (Convert.ToDouble(xp) - Convert.ToDouble(x1)))
+
             If equation > 0 Then
                 'WhichSide = -1;
                 Return -1
@@ -174,10 +184,12 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Dim yc As Double = 0.0
             Dim r As Double = 0.0
             Dim inc As Boolean
+
             xmin = Vertex(1).X
             ymin = Vertex(1).Y
             xmax = xmin
             ymax = ymin
+
             For i = 2 To nvert
                 If Vertex(i).X < xmin Then
                     xmin = Vertex(i).X
@@ -192,13 +204,16 @@ Namespace Drawing2D.Math2D.ConcaveHull
                     ymax = Vertex(i).Y
                 End If
             Next
+
             dx = Convert.ToDouble(xmax) - Convert.ToDouble(xmin)
             dy = Convert.ToDouble(ymax) - Convert.ToDouble(ymin)
+
             If dx > dy Then
                 dmax = dx
             Else
                 dmax = dy
             End If
+
             xmid = (xmax + xmin) \ 2
             ymid = (ymax + ymin) \ 2
             Vertex(nvert + 1).X = Convert.ToInt64(xmid - 2 * dmax)
@@ -212,6 +227,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Triangle(1).vv2 = nvert + 3
             Complete(1) = False
             ntri = 1
+
             For i = 1 To nvert
                 Nedge = 0
                 j = 0
@@ -274,6 +290,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
                     ntri = ntri - 1
                 End If
             Loop While i < ntri
+
             Return ntri
         End Function
 

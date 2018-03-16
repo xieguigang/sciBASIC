@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::60582a44f3844eb21baae691f6586e87, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\BallConcave.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class BallConcave
-    ' 
-    '         Properties: RecomandedRadius
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CheckValid, CompareAngel, GetCircleCenter, GetConcave_Ball, GetConcave_Edge
-    '                   GetCross, GetDistance, GetInRNeighbourList, GetMinEdgeLength, GetNextPoint_BallPivoting
-    '                   GetNextPoint_EdgePivoting, GetSortedNeighbours, HasPointsInCircle, IsInCircle
-    ' 
-    '         Sub: InitDistanceMap, InitNearestList, SortAdjListByAngel
-    '         Structure Point2dInfo
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Function: CompareTo, ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class BallConcave
+' 
+'         Properties: RecomandedRadius
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CheckValid, CompareAngel, GetCircleCenter, GetConcave_Ball, GetConcave_Edge
+'                   GetCross, GetDistance, GetInRNeighbourList, GetMinEdgeLength, GetNextPoint_BallPivoting
+'                   GetNextPoint_EdgePivoting, GetSortedNeighbours, HasPointsInCircle, IsInCircle
+' 
+'         Sub: InitDistanceMap, InitNearestList, SortAdjListByAngel
+'         Structure Point2dInfo
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Function: CompareTo, ToString
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Point = System.Drawing.PointF
 Imports sys = System.Math
 
 Namespace Drawing2D.Math2D.ConcaveHull
@@ -115,7 +116,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             distanceMap = New Double(points.Count - 1, points.Count - 1) {}
             For i As Integer = 0 To points.Count - 1
                 For j As Integer = 0 To points.Count - 1
-                    distanceMap(i, j) = GetDistance(points(i), points(j))
+                    distanceMap(i, j) = points(i).Distance(points(j))
                 Next
             Next
         End Sub
@@ -229,7 +230,10 @@ Namespace Drawing2D.Math2D.ConcaveHull
             If prev = -1 Then
                 dp = New Point(1, 0)
             Else
-                dp = points(prev) - points(current)
+                dp = New Point With {
+                    .X = points(prev).X - points(current).X,
+                    .Y = points(prev).Y - points(current).Y
+                }
             End If
             Dim min As Integer = -1
             For j As Integer = 0 To list.Count - 1
@@ -238,27 +242,29 @@ Namespace Drawing2D.Math2D.ConcaveHull
                         min = list(j)
                     Else
                         Dim t As Point = points(list(j))
-                        If CompareAngel(points(min), t, points(current), dp) AndAlso GetDistance(t, points(current)) < radius Then
+                        If CompareAngel(points(min), t, points(current), dp) AndAlso t.Distance(points(current)) < radius Then
                             min = list(j)
                         End If
                     End If
                 End If
             Next
-            'main.ShowMessage("seek P" + points[min].Index);
+
             Return min
         End Function
 
         Public Function GetNextPoint_BallPivoting(prev As Integer, current As Integer, list As List(Of Integer), radius As Double) As Integer
             SortAdjListByAngel(list, prev, current)
+
             For j As Integer = 0 To list.Count - 1
                 If flags(list(j)) Then
                     Continue For
                 End If
+
                 Dim adjIndex As Integer = list(j)
                 Dim xianp As Point = points(adjIndex)
                 Dim rightCirleCenter As Point = GetCircleCenter(points(current), xianp, radius)
+
                 If Not HasPointsInCircle(list, rightCirleCenter, radius, adjIndex) Then
-                    ' main.DrawCircleWithXian(rightCirleCenter, points(current), points(adjIndex), radius)
                     Return list(j)
                 End If
             Next
@@ -342,10 +348,6 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 adj.Add(infos(i).Index)
             Next
             Return adj
-        End Function
-
-        Public Shared Function GetDistance(p1 As Point, p2 As Point) As Double
-            Return sys.Sqrt((p1.X - p2.X) * (p1.X - p2.X) + (p1.Y - p2.Y) * (p1.Y - p2.Y))
         End Function
 
         Public Shared Function GetCross(a As Point, b As Point) As Double

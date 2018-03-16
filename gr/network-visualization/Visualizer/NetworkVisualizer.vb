@@ -46,11 +46,14 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
@@ -97,7 +100,7 @@ Public Module NetworkVisualizer
     ''' <param name="size"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function CentralOffsets(nodes As Dictionary(Of Node, Point), size As Size) As PointF
+    Public Function CentralOffsets(nodes As Dictionary(Of Node, PointF), size As Size) As PointF
         Return nodes.Values.CentralOffset(size)
     End Function
 
@@ -137,7 +140,8 @@ Public Module NetworkVisualizer
     Const WhiteStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
     ''' <summary>
-    ''' 假若属性是空值的话，在绘图之前可以调用<see cref="ApplyAnalysis"/>拓展方法进行一些分析
+    ''' Rendering png or svg image from a given network graph model.
+    ''' (假若属性是空值的话，在绘图之前可以调用<see cref="ApplyAnalysis"/>拓展方法进行一些分析)
     ''' </summary>
     ''' <param name="net"></param>
     ''' <param name="canvasSize">画布的大小</param>
@@ -146,6 +150,7 @@ Public Module NetworkVisualizer
     ''' <param name="defaultColor"></param>
     ''' <param name="nodePoints">如果还需要获取得到节点的绘图位置的话，则可以使用这个可选参数来获取返回</param>
     ''' <param name="fontSizeFactor">这个参数值越小，字体会越大</param>
+    ''' <param name="hullPolygonGroups">需要显示分组的多边形的分组的名称的列表，也可以是一个表达式max或者min，分别表示最大或者最小的分组</param>
     ''' <returns></returns>
     <ExportAPI("Draw.Image")>
     <Extension>
@@ -164,12 +169,13 @@ Public Module NetworkVisualizer
                               Optional minRadius# = 5,
                               Optional minFontSize! = 10,
                               Optional labelFontBase$ = CSSFont.Win7Normal,
-                              Optional ByRef nodePoints As Dictionary(Of Node, Point) = Nothing,
+                              Optional ByRef nodePoints As Dictionary(Of Node, PointF) = Nothing,
                               Optional fontSizeFactor# = 1.5,
                               Optional edgeDashTypes As Dictionary(Of String, DashStyle) = Nothing,
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
-                              Optional throwEx As Boolean = True) As GraphicsData
+                              Optional throwEx As Boolean = True,
+                              Optional hullPolygonGroups$ = Nothing) As GraphicsData
 
         Dim frameSize As Size = canvasSize.SizeParser  ' 所绘制的图像输出的尺寸大小
         Dim br As Brush
@@ -181,13 +187,15 @@ Public Module NetworkVisualizer
         ' 3. 执行绘图操作
 
         ' 获取得到当前的这个网络对象相对于图像的中心点的位移值
-        Dim scalePos As Dictionary(Of Node, Point) = net _
+        Dim scalePos As Dictionary(Of Node, PointF) = net _
             .nodes _
             .ToDictionary(Function(n) n,
                           Function(node)
-                              Return node.Data.initialPostion.Point2D
+                              Return node.Data.initialPostion.Point2D.PointF
                           End Function)
-        Dim offset As Point = scalePos.CentralOffsets(frameSize).ToPoint
+        Dim offset As Point = scalePos _
+            .CentralOffsets(frameSize) _
+            .ToPoint
 
         ' 进行位置偏移
         scalePos = scalePos.ToDictionary(Function(node) node.Key,
@@ -231,6 +239,11 @@ Public Module NetworkVisualizer
             getNodeLabel = Function(node) node.GetDisplayText
         End If
 
+        ' 在这里不可以使用 <=，否则会导致等于最小值的时候出现无限循环的bug
+        Dim minLinkWidthValue = minLinkWidth.AsDefault(Function(width) CInt(width) < minLinkWidth)
+        Dim minFontSizeValue = minFontSize.AsDefault(Function(size) Val(size) < minFontSize)
+        Dim minRadiusValue = minRadius.AsDefault(Function(r) Val(r) < minRadius)
+
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
@@ -249,8 +262,7 @@ Public Module NetworkVisualizer
                         cl = Color.Blue
                     End If
 
-                    Dim w As Integer = 5 * edge.Data.weight * scale
-                    w = If(w < minLinkWidth, minLinkWidth, w)
+                    Dim w! = CSng(5 * edge.Data.weight * scale) Or minLinkWidthValue
                     Dim lineColor As New Pen(cl, w)
 
                     With edge.Data!interaction_type
@@ -288,7 +300,55 @@ Public Module NetworkVisualizer
                 ' 然后将网络之中的节点绘制出来，同时记录下节点的位置作为label text的锚点
                 ' 最后通过退火算法计算出合适的节点标签文本的位置之后，再使用一个循环绘制出
                 ' 所有的节点的标签文本
-                For Each n As Node In net.nodes Or net.connectedNodes.AsDefault(Function() hideDisconnectedNode)  ' 在这里进行节点的绘制
+
+                ' if required hide disconnected nodes, then only the connected node in the network 
+                ' Graph will be draw
+                ' otherwise all of the nodes in target network graph will be draw onto the canvas.
+                Dim connectedNodes = net.connectedNodes.AsDefault(Function() hideDisconnectedNode)
+                Dim drawPoints = net.nodes Or connectedNodes
+
+                If Not hullPolygonGroups.StringEmpty Then
+                    Dim hullPolygon As Index(Of String)
+                    Dim groups = drawPoints _
+                        .GroupBy(Function(n) n.Data.Properties!nodeType) _
+                        .ToArray
+
+                    If hullPolygonGroups.TextEquals("max") Then
+                        hullPolygon = {
+                            groups.OrderByDescending(Function(node) node.Count) _
+                                  .First _
+                                  .Key
+                        }
+                    ElseIf hullPolygonGroups.TextEquals("min") Then
+                        hullPolygon = {
+                            groups.Where(Function(group) group.Count > 2) _
+                                  .OrderBy(Function(node) node.Count) _
+                                  .First _
+                                  .Key
+                        }
+                    Else
+                        hullPolygon = hullPolygonGroups.Split(","c)
+                    End If
+
+                    For Each group In groups
+                        If group.Count > 2 AndAlso group.Key.IsOneOfA(hullPolygon) Then
+                            Dim positions = group _
+                                .Select(Function(p) scalePos(p)) _
+                                .JarvisMatch _
+                                .Enlarge(1.25)
+                            Dim color As Color = group _
+                                .Select(Function(p)
+                                            Return DirectCast(p.Data.Color, SolidBrush).Color
+                                        End Function) _
+                                .Average
+
+                            Call g.DrawHullPolygon(positions, color)
+                        End If
+                    Next
+                End If
+
+                ' 在这里进行节点的绘制
+                For Each n As Node In drawPoints
                     Dim r# = n.Data.radius
 
                     ' 当网络之中没有任何边的时候，r的值会是NAN
@@ -297,11 +357,7 @@ Public Module NetworkVisualizer
                         r = If(r = 0, 9, r)
                     End If
 
-                    r *= radiusScale
-
-                    If r < minRadius Then
-                        r = minRadius
-                    End If
+                    r = (r * radiusScale) Or minRadiusValue
 
                     With DirectCast(New SolidBrush(defaultColor), Brush).AsDefault(n.NodeBrushAssert)
                         br = n.Data.Color Or .ByRef
@@ -338,7 +394,7 @@ Public Module NetworkVisualizer
                     If (Not invalidRegion) AndAlso displayId Then
 
                         Dim fontSize! = (baseFont.Size + r) / fontSizeFactor
-                        Dim font As New Font(baseFont.Name, If(fontSize < minFontSize, minFontSize, fontSize))
+                        Dim font As New Font(baseFont.Name, fontSize Or minFontSizeValue, FontStyle.Bold)
                         Dim label As New Label With {
                             .text = n.GetDisplayText
                         }
@@ -368,9 +424,31 @@ Public Module NetworkVisualizer
                                 br = Brushes.Black
                             Else
                                 br = .color
+                                br = New SolidBrush(DirectCast(br, SolidBrush).Color.Dark(0.005))
                             End If
 
+                            With g.MeasureString(.label.text, .style)
+                                rect = New Rectangle(
+                                    label.label.X,
+                                    label.label.Y,
+                                    .Width,
+                                    .Height
+                                )
+                            End With
+
+                            Dim path As GraphicsPath = Imaging.GetStringPath(
+                                .label.text,
+                                g.DpiX,
+                                rect.ToFloat,
+                                .style,
+                                StringFormat.GenericTypographic
+                            )
+
                             Call g.DrawString(.label.text, .style, br, .label.X, .label.Y)
+
+                            ' 绘制轮廓（描边）
+                            ' Call g.FillPath(br, path)
+                            ' Call g.DrawPath(New Pen(DirectCast(br, SolidBrush).Color.Dark(0.005), 4), path)
                         End With
                     Next
                 End If

@@ -528,7 +528,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public Overrides Sub DrawArc(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-
+            Call Graphics.DrawArc(pen, rect, startAngle, sweepAngle)
         End Sub
         '
         ' Summary:
@@ -554,7 +554,7 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null
         Public Overrides Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
-
+            Call Graphics.DrawArc(pen, rect, startAngle, sweepAngle)
         End Sub
         '
         ' Summary:

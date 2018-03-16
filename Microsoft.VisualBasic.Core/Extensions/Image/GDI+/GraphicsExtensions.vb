@@ -73,6 +73,15 @@ Namespace Imaging
                   Url:="http://gcmodeller.org")>
     Public Module GraphicsExtensions
 
+        <Extension>
+        Public Function GetStringPath(s$, dpi!, rect As RectangleF, font As Font, format As StringFormat) As GraphicsPath
+            Dim path As New GraphicsPath()
+            ' Convert font size into appropriate coordinates
+            Dim emSize! = dpi * font.SizeInPoints / 72
+            path.AddString(s, font.FontFamily, font.Style, emSize, rect, format)
+            Return path
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function PointF(polygon As IEnumerable(Of Point)) As IEnumerable(Of PointF)
             Return polygon.Select(Function(pt) New PointF(pt.X, pt.Y))

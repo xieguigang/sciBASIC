@@ -153,10 +153,16 @@ Namespace Imaging.Math2D
             Return New Point(offset.X + p.X, offset.Y + p.Y)
         End Function
 
+        ''' <summary>
+        ''' Default is ``A + B``
+        ''' </summary>
+        ''' <param name="pt"></param>
+        ''' <param name="offset"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(pt As PointF, offset As PointF) As PointF
+        <Extension> Public Function OffSet2D(pt As PointF, offset As PointF, Optional d% = 1) As PointF
             With pt
-                Return New PointF(offset.X + .X, offset.Y + .Y)
+                Return New PointF(d * offset.X + .X, d * offset.Y + .Y)
             End With
         End Function
 
@@ -222,7 +228,14 @@ Namespace Imaging.Math2D
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
         Public Function Distance(a As Point, b As Point) As Double
+            Return Distance(a.X, a.Y, b.X, b.Y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Distance(a As PointF, b As PointF) As Double
             Return Distance(a.X, a.Y, b.X, b.Y)
         End Function
 
@@ -235,10 +248,15 @@ Namespace Imaging.Math2D
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
+        <Extension> Public Function CalculateAngle(p1 As PointF, p2 As PointF) As Double
             Dim xDiff As Single = p2.X - p1.X
             Dim yDiff As Single = p2.Y - p1.Y
             Return sys.Atan2(yDiff, xDiff) * 180.0 / PI
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
+            Return CalculateAngle(p1.PointF, p2.PointF)
         End Function
 
         ''' <summary>
@@ -246,6 +264,8 @@ Namespace Imaging.Math2D
         ''' </summary>
         ''' <param name="points"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetBounds(points As IEnumerable(Of Point)) As RectangleF
             Return points.Select(Function(pt) pt.PointF).GetBounds
@@ -319,6 +339,7 @@ Namespace Imaging.Math2D
             Return New PointF(x.Average, y.Average)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Centre(shape As IEnumerable(Of Point)) As PointF
             Return shape.PointF.Centre
@@ -329,6 +350,8 @@ Namespace Imaging.Math2D
         ''' </summary>
         ''' <param name="rect"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Center")>
         <Extension> Public Function Centre(rect As RectangleF) As PointF
             Return New PointF(rect.Left + rect.Width / 2, rect.Top + rect.Height / 2)
@@ -340,6 +363,8 @@ Namespace Imaging.Math2D
         ''' <param name="pts"></param>
         ''' <param name="frameSize"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CentralOffset(pts As IEnumerable(Of Point), frameSize As Size) As PointF
             Return pts _

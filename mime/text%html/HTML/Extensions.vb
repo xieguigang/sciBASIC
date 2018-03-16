@@ -1,50 +1,71 @@
 ﻿#Region "Microsoft.VisualBasic::82dab1efbafb9869441295f946ef6076, mime\text%html\HTML\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: StripHTMLDirectly, StripHTMLSafely
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Extensions
+' 
+'         Function: StripHTMLDirectly, StripHTMLSafely
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 
 Namespace HTML
 
     Public Module Extensions
+
+        ''' <summary>
+        ''' Since Markdown accepts plain HTML and CSS, simply add this line 
+        ''' wherever you want to force page break.
+        '''
+        ''' ```html
+        ''' &lt;div style="page-break-after: always;">&lt;/div>
+        ''' ```
+        ''' 
+        ''' If your Markdown editor have trouble exporting PDF correctly, 
+        ''' first Try To export As HTML, Then open With your browser And 
+        ''' print As PDF.
+        ''' 
+        ''' > https://stackoverflow.com/questions/22601053/pagebreak-in-markdown-while-creating-pdf#29642392
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Pagebreak() As String
+            Return (<div style="page-break-after: always;"></div>).ToString
+        End Function
 
         ''' <summary>
         ''' Strip out HTML tags while preserving the basic formatting
@@ -53,7 +74,11 @@ Namespace HTML
         ''' <returns></returns>
         Public Function StripHTMLSafely(source As String) As String
             Try
-                Return StripHTMLDirectly(source)
+                If source.StringEmpty Then
+                    Return ""
+                Else
+                    Return StripHTMLDirectly(source)
+                End If
             Catch ex As Exception
                 Call App.LogException(New Exception(source, ex))
                 Return source
@@ -164,7 +189,8 @@ Namespace HTML
                 tabs = tabs & vbTab
             Next
 
-            Return result    ' That's it.
+            ' That's it.
+            Return result
         End Function
     End Module
 End Namespace
