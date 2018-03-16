@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2868dc480736b9e350184a809b09a805, mime\text%html\HTML\CSS\Padding.vb"
+﻿#Region "Microsoft.VisualBasic::a771a68b6b7a9c599249e4676f5e593c, mime\text%html\HTML\CSS\Padding.vb"
 
     ' Author:
     ' 
@@ -219,7 +219,7 @@ Namespace HTML.CSS
                 .GetTagValue(":", trim:=True)
 
             If value.Name.StringEmpty AndAlso css.IndexOf(","c) > -1 Then
-                Dim size As Drawing.Size = css.SizeParser
+                Dim size As Size = css.SizeParser
                 Return New Padding(margin:=size)
             End If
 

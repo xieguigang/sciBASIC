@@ -1,0 +1,73 @@
+﻿#Region "Microsoft.VisualBasic::91570dd6dea001a77b19ecd25b5d98df, Data\SearchEngine\Index\BinaryTreeIndex.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Class BinaryTreeIndex
+    ' 
+    '     Properties: Additionals, Key, Left, My, Right
+    '                 Value
+    ' 
+    '     Function: ToString
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel
+
+''' <summary>
+''' File save model for binary tree
+''' </summary>
+Public Class BinaryTreeIndex(Of K, V) : Implements IAddress(Of Integer)
+
+    Public Property Key As K
+    Public Property Value As V
+
+    <XmlElement>
+    Public Property Additionals As V()
+
+    <XmlAttribute>
+    Public Property Left As Integer
+    <XmlAttribute>
+    Public Property Right As Integer
+    <XmlAttribute>
+    Public Property My As Integer Implements IAddress(Of Integer).Address
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function ToString() As String
+        Return Scripting.ToString(Key)
+    End Function
+
+End Class
+

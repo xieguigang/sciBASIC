@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82dab1efbafb9869441295f946ef6076, mime\text%html\HTML\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::fc42ddb0915efacf0db8c023d076e22d, mime\text%html\HTML\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,18 +33,39 @@
 
     '     Module Extensions
     ' 
-    '         Function: StripHTMLDirectly, StripHTMLSafely
+    '         Function: Pagebreak, StripHTMLDirectly, StripHTMLSafely
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 
 Namespace HTML
 
     Public Module Extensions
+
+        ''' <summary>
+        ''' Since Markdown accepts plain HTML and CSS, simply add this line 
+        ''' wherever you want to force page break.
+        '''
+        ''' ```html
+        ''' &lt;div style="page-break-after: always;">&lt;/div>
+        ''' ```
+        ''' 
+        ''' If your Markdown editor have trouble exporting PDF correctly, 
+        ''' first Try To export As HTML, Then open With your browser And 
+        ''' print As PDF.
+        ''' 
+        ''' > https://stackoverflow.com/questions/22601053/pagebreak-in-markdown-while-creating-pdf#29642392
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Pagebreak() As String
+            Return (<div style="page-break-after: always;"></div>).ToString
+        End Function
 
         ''' <summary>
         ''' Strip out HTML tags while preserving the basic formatting
@@ -53,7 +74,11 @@ Namespace HTML
         ''' <returns></returns>
         Public Function StripHTMLSafely(source As String) As String
             Try
-                Return StripHTMLDirectly(source)
+                If source.StringEmpty Then
+                    Return ""
+                Else
+                    Return StripHTMLDirectly(source)
+                End If
             Catch ex As Exception
                 Call App.LogException(New Exception(source, ex))
                 Return source
@@ -164,7 +189,8 @@ Namespace HTML
                 tabs = tabs & vbTab
             Next
 
-            Return result    ' That's it.
+            ' That's it.
+            Return result
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb40ad8c897258ce0e4e0fd8e96cf05b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
+﻿#Region "Microsoft.VisualBasic::24b279c51eaa0ba051197529d1650c0b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,7 @@ Namespace Drawing2D.Shapes
                                         Optional br As Brush = Nothing,
                                         Optional border As Stroke = Nothing)
 
-            Call g.FillRectangle(If(br Is Nothing, Brushes.Black, br), New Rectangle(topLeft, size))
+            Call g.FillRectangle(br Or BlackBrush, New Rectangle(topLeft, size))
 
             If Not border Is Nothing Then
                 Call g.DrawRectangle(border.GDIObject, New Rectangle(topLeft, size))

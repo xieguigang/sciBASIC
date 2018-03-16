@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28a924dec6309908a209a63adf2ab715, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::535b740397535d358558312d680f74e7, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: asCharacter, AsCharacter, (+2 Overloads) AsDataSet, CreateObject, DataFrame
     '                   EuclideanDistance, GroupBy, NamedMatrix, Project, (+2 Overloads) PropertyNames
-    '                   Transpose, Values, Vector
+    '                   Transpose, Values, (+2 Overloads) Vector
     ' 
     ' 
     ' /********************************************************************************/
@@ -143,7 +143,7 @@ Namespace IO
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function PropertyNames(list As IEnumerable(Of DataSet)) As String()
+        Public Function PropertyNames(Of T)(list As IEnumerable(Of DynamicPropertyBase(Of T))) As String()
             Return list _
                 .Select(Function(o) o.EnumerateKeys(False)) _
                 .IteratesALL _
@@ -154,6 +154,14 @@ Namespace IO
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Vector(datasets As IEnumerable(Of DataSet), property$) As Double()
+            Return datasets _
+                .Select(Function(x) x([property])) _
+                .ToArray
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Vector(datasets As IEnumerable(Of EntityObject), property$) As String()
             Return datasets _
                 .Select(Function(x) x([property])) _
                 .ToArray

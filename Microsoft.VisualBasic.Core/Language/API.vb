@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd70ac1fbe3cd04aa5eb22740182b640, Microsoft.VisualBasic.Core\Language\API.vb"
+﻿#Region "Microsoft.VisualBasic::dff727ac76a2cd9dd6fa1e6c78322672, Microsoft.VisualBasic.Core\Language\API.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module LanguageAPI
     ' 
-    '         Function: [ByRef], [Default], AsDefault, AsVector, IsNothing
-    '                   Let, TypeDef, TypeInfo
+    '         Function: [ByRef], [Default], AsDefault, AsVector, DefaultValue
+    '                   IsNothing, Let, TypeDef, TypeInfo
     ' 
     ' 
     ' /********************************************************************************/
@@ -118,6 +118,13 @@ Namespace Language
         <Extension>
         Public Function AsDefault(Of T)(x As T, Optional [If] As Assert(Of Object) = Nothing) As DefaultValue(Of T)
             Return [Default](x, [If])
+        End Function
+
+        Public Function DefaultValue(Of T)(value As T) As DefaultValue(Of T)
+            Return New DefaultValue(Of T) With {
+                .Value = value,
+                .assert = defaultAssert
+            }
         End Function
 
         ''' <summary>

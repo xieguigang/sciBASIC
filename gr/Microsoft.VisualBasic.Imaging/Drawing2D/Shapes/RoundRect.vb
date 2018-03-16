@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a31a741c2c4f218ffa9df6366239b30, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\RoundRect.vb"
+﻿#Region "Microsoft.VisualBasic::4b51e549edb08b91e65f7cb62bbb97f8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\RoundRect.vb"
 
     ' Author:
     ' 
@@ -78,9 +78,10 @@ Namespace Drawing2D.Shapes
             With rect
 
                 .Offset(-1, -1)
-                roundRect = New Rectangle(
-                    rect.Location,
-                    New Size(radius - 1, radius - 1))
+                roundRect = New Rectangle With {
+                    .Location = rect.Location,
+                    .Size = New Size(radius - 1, radius - 1)
+                }
 
                 path.AddArc(roundRect, 180, 90)     ' 左上角
                 roundRect.X = .Right - radius       ' 右上角

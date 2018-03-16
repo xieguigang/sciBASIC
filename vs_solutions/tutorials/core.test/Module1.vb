@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37ee0a4777dc7422ac349594460589d4, vs_solutions\tutorials\core.test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::51b82af846498d009ad5eaaf4fc69fdc, vs_solutions\tutorials\core.test\Module1.vb"
 
     ' Author:
     ' 
@@ -122,6 +122,7 @@
 
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Language
 
 Module Module1
 
@@ -146,8 +147,15 @@ Module Module1
 
     Sub New()
 
-        Call matchTest()
+        ' Call matchTest()
 
+
+        Dim xx As String = "" Or DefaultValue("hello world!") + Function() False
+
+
+        Console.WriteLine(xx)
+
+        Pause()
 
         'Dim test As Boolean
 

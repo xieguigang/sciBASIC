@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92d086042c8879f5cdd71877639e27f4, Microsoft.VisualBasic.Core\Extensions\IO\IO.vb"
+﻿#Region "Microsoft.VisualBasic::ce22196c1fcc0198d4e8eb299d600c09, Microsoft.VisualBasic.Core\Extensions\IO\IO.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     ' Module IOExtensions
     ' 
     '     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
-    '               ReadBinary, ReadVector
+    '               OpenTextWriter, ReadBinary, ReadVector
     ' 
     '     Sub: ClearFileBytes, FlushTo
     ' 
@@ -47,6 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
@@ -56,6 +57,22 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 <Package("IO")>
 Public Module IOExtensions
+
+    ReadOnly UTF8 As DefaultValue(Of Encoding) = Encoding.UTF8
+
+    ''' <summary>
+    ''' Open text writer interface from a given <see cref="Stream"/> <paramref name="s"/>. 
+    ''' </summary>
+    ''' <param name="s"></param>
+    ''' <param name="encoding">By default is using <see cref="UTF8"/> text encoding.</param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function OpenTextWriter(s As Stream, Optional encoding As Encoding = Nothing) As StreamWriter
+        Return New StreamWriter(s, encoding Or UTF8) With {
+            .NewLine = ASCII.LF
+        }
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::383837f3faae66f7da7758925e9ffa1a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\GrahamScan.vb"
+﻿#Region "Microsoft.VisualBasic::9d90deff852096edc55b231535c331cb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\GrahamScan.vb"
 
     ' Author:
     ' 
@@ -42,9 +42,9 @@
 
 #End Region
 
-Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
+Imports Point = System.Drawing.PointF
 
 Namespace Drawing2D.Math2D.ConvexHull
 

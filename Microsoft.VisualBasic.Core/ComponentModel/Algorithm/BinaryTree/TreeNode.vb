@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58779165466e1902de5a807b41a7f2f8, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::0b8175766291acd77bf7f61cb5a409cc, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
 
     ' Author:
     ' 
@@ -52,6 +52,11 @@ Imports Microsoft.VisualBasic.Language.Default
 
 Namespace ComponentModel.Algorithm.BinaryTree
 
+    ''' <summary>
+    ''' The binary tree node.
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
     Public Class BinaryTree(Of K, V) : Implements Value(Of V).IValueOf
 
         ''' <summary>

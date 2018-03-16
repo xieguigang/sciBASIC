@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a86da51515c0329f02f968397ae3213, gr\Microsoft.VisualBasic.Imaging\SVG\XML\g.vb"
+﻿#Region "Microsoft.VisualBasic::51a410bc94c90e8e86d6f3ee8c60cbd4, gr\Microsoft.VisualBasic.Imaging\SVG\XML\g.vb"
 
     ' Author:
     ' 
@@ -33,19 +33,23 @@
 
     '     Interface ICanvas
     ' 
-    '         Properties: circles, gs, lines, path, polygon
-    '                     polyline, rect, texts, title, transform
+    '         Properties: circles, images, Layers, lines, path
+    '                     polygon, polyline, rect, texts, title
+    '                     transform
     ' 
     '     Class g
     ' 
-    '         Properties: circles, gs, lines, path, polygon
-    '                     polyline, rect, texts, title, transform
+    '         Properties: circles, images, Layers, lines, path
+    '                     polygon, polyline, rect, texts, title
+    '                     transform
+    '         Operators: +
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Xml.Serialization
 
 Namespace SVG.XML
@@ -56,7 +60,7 @@ Namespace SVG.XML
     Public Interface ICanvas
         Property transform As String
         Property texts As text()
-        Property gs As g()
+        Property Layers As g()
         Property path As path()
         Property rect As rect()
         Property polygon As polygon()
@@ -64,6 +68,7 @@ Namespace SVG.XML
         Property lines As line()
         Property circles As circle()
         Property title As String
+        Property images As Image()
     End Interface
 
     ''' <summary>
@@ -73,7 +78,7 @@ Namespace SVG.XML
         Implements ICanvas
 
         <XmlAttribute> Public Property transform As String Implements ICanvas.transform
-        <XmlElement("g")> Public Property gs As g() Implements ICanvas.gs
+        <XmlElement("g")> Public Property Layers As g() Implements ICanvas.Layers
         <XmlElement> Public Property path As path() Implements ICanvas.path
         <XmlElement> Public Property rect As rect() Implements ICanvas.rect
         <XmlElement> Public Property polygon As polygon() Implements ICanvas.polygon
@@ -82,5 +87,29 @@ Namespace SVG.XML
         <XmlElement> Public Property title As String Implements ICanvas.title
         <XmlElement> Public Property polyline As polyline() Implements ICanvas.polyline
         <XmlElement("text")> Public Property texts As text() Implements ICanvas.texts
+        <XmlElement("image")> Public Property images As Image() Implements ICanvas.images
+
+        Public Shared Operator +(layer As g, offset As PointF) As g
+            Return New g With {
+                .circles = layer.circles.Select(Function(c) c + offset).ToArray,
+                .polygon = layer.polygon.Select(Function(pl) pl + offset).ToArray,
+                .rect = layer.rect.Select(Function(rt) rt + offset).ToArray,
+                .lines = layer.lines.Select(Function(l) l + offset).ToArray,
+                .images = layer.images.Select(Function(img) img + offset).ToArray,
+                .path = layer.path.Select(Function(d) d + offset).ToArray,
+                .texts = layer.texts.Select(Function(t) t + offset).ToArray,
+                .Layers = layer.Layers.Select(Function(l) l + offset).ToArray,
+                .polyline = layer.polyline.Select(Function(p) p + offset).ToArray,
+                .attributes = layer.attributes,
+                .class = layer.class,
+                .fill = layer.fill,
+                .id = layer.id,
+                .stroke = layer.stroke,
+                .style = layer.style,
+                .title = layer.title,
+                .transform = layer.transform,
+                .zIndex = layer.zIndex
+            }
+        End Operator
     End Class
 End Namespace

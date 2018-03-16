@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41455e122c4a369aead946810ce9f74f, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Mailto\MailConfigure.vb"
+﻿#Region "Microsoft.VisualBasic::cb7d8bc3130cbd43657e225c90fa2d43, www\Microsoft.VisualBasic.NETProtocol\Mailto\MailConfigure.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Structure MailConfigure
     ' 
     '         Properties: Account, GMail, HostAddress, LiveMail, Password
-    '                     Port, QQMail
+    '                     Port, qiye163, QQMail
     ' 
     '         Function: CreateFromUri, GenerateUri, ToString
     ' 

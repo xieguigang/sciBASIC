@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ac4cd10210283ed4cfecfa9e1d2fc6c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::91c55fa213b144d2cb39eaf7ed4b3789, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 
@@ -52,6 +52,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
@@ -59,6 +60,8 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
 Namespace Drawing2D
 
     Public Module Extensions
+
+        Public ReadOnly BlackBrush As DefaultValue(Of Brush) = Brushes.Black
 
         <Extension>
         Public Function Move(pt As Point, distance#, angle#) As Point

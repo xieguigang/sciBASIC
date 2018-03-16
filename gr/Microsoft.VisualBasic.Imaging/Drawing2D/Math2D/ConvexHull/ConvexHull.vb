@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56c3fa26e3e0e3e8745bb3f1160015f8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\ConvexHull.vb"
+﻿#Region "Microsoft.VisualBasic::3396794c52a4e0e8eb8e69381b9bcb53, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\ConvexHull.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 
 Namespace Drawing2D.Math2D.ConvexHull
 
@@ -57,7 +58,8 @@ Namespace Drawing2D.Math2D.ConvexHull
         Public Const TURN_RIGHT% = -1
         Public Const TURN_NONE = 0
 
-        Friend Function turn(p As Point, q As Point, r As Point) As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Friend Function turn(p As PointF, q As PointF, r As PointF) As Integer
             Return ((q.X - p.X) * (r.Y - p.Y()) - (r.X - p.X) * (q.Y - p.Y)).CompareTo(0)
         End Function
 
@@ -66,7 +68,9 @@ Namespace Drawing2D.Math2D.ConvexHull
         ''' </summary>
         ''' <param name="points"></param>
         ''' <returns></returns>
-        Public Function JarvisMatch(points As IEnumerable(Of Point)) As Point()
+        ''' 
+        <Extension>
+        Public Function JarvisMatch(points As IEnumerable(Of PointF)) As PointF()
             Return Math2D.ConvexHull.JarvisMatch.ConvexHull(points)
         End Function
 
@@ -75,7 +79,9 @@ Namespace Drawing2D.Math2D.ConvexHull
         ''' </summary>
         ''' <param name="points"></param>
         ''' <returns></returns>
-        Public Function GrahamScan(points As IEnumerable(Of Point)) As Point()
+        ''' 
+        <Extension>
+        Public Function GrahamScan(points As IEnumerable(Of PointF)) As PointF()
             Return Math2D.ConvexHull.GrahamScan.ConvexHull(points)
         End Function
     End Module

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51dba4d29dfb299b41fcbe4af9308717, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\JarvisMatch.vb"
+﻿#Region "Microsoft.VisualBasic::e1cd62e2e1647bae0a275a0f4b2034eb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\JarvisMatch.vb"
 
     ' Author:
     ' 
@@ -40,17 +40,17 @@
 
 #End Region
 
-Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Point = System.Drawing.PointF
 
 Namespace Drawing2D.Math2D.ConvexHull
 
     Public Module JarvisMatch
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function dist(p As Point, q As Point) As Integer
-            Dim dx As Integer = q.X - p.X
-            Dim dy As Integer = q.Y - p.Y
-            Return dx * dx + dy * dy
+            Return (q.X - p.X) ^ 2 + (q.Y - p.Y) ^ 2
         End Function
 
         Private Function nextHullPoint(points As Point(), p As Point) As Point

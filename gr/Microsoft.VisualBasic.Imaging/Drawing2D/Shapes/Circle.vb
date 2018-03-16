@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a18f5fdf0071732caa582cc385bdefb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
+﻿#Region "Microsoft.VisualBasic::3847b4a6286dc3a21e902cdc4f8cc4d4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
 
     ' Author:
     ' 
@@ -50,6 +50,7 @@ Imports System.Drawing
 Imports System.Math
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Drawing2D.Shapes
@@ -97,6 +98,8 @@ Namespace Drawing2D.Shapes
             Return rect
         End Function
 
+        Shared ReadOnly black As DefaultValue(Of String) = NameOf(black)
+
         ''' <summary>
         ''' 绘制圆
         ''' </summary>
@@ -104,27 +107,27 @@ Namespace Drawing2D.Shapes
         ''' <param name="center"></param>
         ''' <param name="radius"></param>
         ''' <param name="br"></param>
-        Public Overloads Shared Sub Draw(ByRef g As IGraphics,
-                                         center As Point,
-                                         radius As Single,
+        Public Overloads Shared Sub Draw(ByRef g As IGraphics, center As Point, radius!,
                                          Optional br As Brush = Nothing,
                                          Optional border As Stroke = Nothing)
-            Dim rect As New Rectangle(
-                New Point(center.X - radius, center.Y - radius),
-                New Size(radius * 2, radius * 2))
-            Call g.FillPie(
-                If(br Is Nothing, Brushes.Black, br), rect, 0, 360)
+
+            Dim rect As New Rectangle With {
+                .Location = New Point(center.X - radius, center.Y - radius),
+                .Size = New Size With {
+                    .Width = radius * 2,
+                    .Height = .Width
+                }
+            }
+            Call g.FillPie(br Or BlackBrush, rect, 0, 360)
 
             If Not border Is Nothing Then
-                rect = New Rectangle(
-                    center.X - radius - border.width,
-                    center.Y - radius - border.width,
-                    radius * 2 + 1,
-                    radius * 2 + 1)
-                border.fill = If(
-                    border.fill.StringEmpty,
-                    "Black",
-                    border.fill)
+                rect = New Rectangle With {
+                    .X = center.X - radius - border.width,
+                    .Y = center.Y - radius - border.width,
+                    .Width = radius * 2 + 1,
+                    .Height = .Width
+                }
+                border.fill = border.fill Or black.When(border.fill.StringEmpty)
 
                 Call g.DrawCircle(
                     rect.Centre, radius, border.GDIObject, fill:=False)

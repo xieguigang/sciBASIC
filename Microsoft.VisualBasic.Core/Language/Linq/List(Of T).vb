@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d810441c6e952a6e4fde6ea28e74c765, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::57d2eabef8da6fedfecc9dca7d02e0ef, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: First, Last
     ' 
     '         Constructor: (+5 Overloads) Sub New
-    '         Function: Pop, PopAll, ValuesEnumerator
+    '         Function: [Default], Pop, PopAll, ValuesEnumerator
     '         Operators: (+5 Overloads) -, *, ^, (+6 Overloads) +, (+2 Overloads) <
     '                    (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) >, >>
     ' 
@@ -49,6 +49,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
@@ -590,6 +591,11 @@ Namespace Language
                 o.Value = x
                 Yield o
             Next
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function [Default]() As DefaultValue(Of List(Of T))
+            Return New List(Of T)
         End Function
 
         ''' <summary>

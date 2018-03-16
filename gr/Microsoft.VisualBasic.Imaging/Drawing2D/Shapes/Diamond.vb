@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5f1c7b2629511f136a7d2d58a36927e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Diamond.vb"
+﻿#Region "Microsoft.VisualBasic::6d74f93d76061ef74bce15538772d2b8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Diamond.vb"
 
     ' Author:
     ' 
@@ -66,7 +66,7 @@ Namespace Drawing2D.Shapes
             diamond.AddLine(d, a)
             diamond.CloseFigure()
 
-            Call g.FillPath(If(br Is Nothing, Brushes.Black, br), diamond)
+            Call g.FillPath(br Or BlackBrush, diamond)
 
             If Not border Is Nothing Then
                 Call g.DrawPath(border.GDIObject, diamond)

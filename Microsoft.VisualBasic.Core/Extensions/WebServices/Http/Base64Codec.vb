@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94721e54d1409343e4209f049bee9bc5, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::eeb4ebd0dac2073cfb7ecd90c7191d25, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\Base64Codec.vb"
 
     ' Author:
     ' 
@@ -115,7 +115,7 @@ Namespace Net.Http
         End Function
 
         Private Function __toBase64String(image As Image, format As ImageFormat) As String
-            Dim ms As MemoryStream = New MemoryStream()
+            Dim ms As New MemoryStream()
             image.Save(ms, format)
             Dim Base64Op As String = Convert.ToBase64String(ms.ToArray())
             Return Base64Op

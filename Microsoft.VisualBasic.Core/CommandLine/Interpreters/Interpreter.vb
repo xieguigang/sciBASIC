@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f311a5f066c078be54470e9433bca7e9, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::e39216fb1cbf3b82e1f0513f34b76577, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __executeEmpty, __getsAllCommands, __methodInvoke, Contains, CreateEmptyCLIObject
+    '         Function: __executeEmpty, __getsAllCommands, apiInvoke, Contains, CreateEmptyCLIObject
     '                   (+3 Overloads) CreateInstance, (+3 Overloads) Execute, ExistsCommand, GetAllCommands, getAPI
     '                   GetEnumerator, GetEnumerator1, GetPossibleCommand, Help, ListingRelated
     '                   (+2 Overloads) Remove, SDKdocs, ToDictionary, ToString, TryGetValue

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee831d7babbf291004412992f9ad991f, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::4dd62a7e10e76a67e4779416910cb9e1, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     '               IterateNameCollections, IterateNameValues, IteratesAll, Join, KeyItem
     '               (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+2 Overloads) NameValueCollection, ParserDictionary, RemoveAndGet
     '               ReverseMaps, Selects, (+2 Overloads) Subset, Takes, (+3 Overloads) ToDictionary
-    '               Tsv, (+2 Overloads) Values, XMLModel
+    '               Tsv, Tuple, (+2 Overloads) Values, XMLModel
     ' 
     '     Sub: SortByKey, SortByValue
     ' 

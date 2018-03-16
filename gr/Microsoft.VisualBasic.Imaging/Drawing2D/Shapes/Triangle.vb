@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e0f75115d9a2a8e6ad42fdfeab95fb2, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Triangle.vb"
+﻿#Region "Microsoft.VisualBasic::ccc24d08a78d0fb403581b9b696f05ca, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Triangle.vb"
 
     ' Author:
     ' 
@@ -94,7 +94,7 @@ Namespace Drawing2D.Shapes
             Call t.AddLine(c, a)
             Call t.CloseAllFigures()
 
-            Call g.FillPath(If(br Is Nothing, Brushes.Black, br), t)
+            Call g.FillPath(br Or BlackBrush, t)
 
             If Not border Is Nothing Then
                 Call g.DrawPath(border.GDIObject, t)

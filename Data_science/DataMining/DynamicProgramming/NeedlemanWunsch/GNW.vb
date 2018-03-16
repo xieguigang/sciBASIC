@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1961bdeb7728f35e26d87dfd32bc10e, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
+﻿#Region "Microsoft.VisualBasic::412a82f2b79f7e09020db0881fd25712, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class NeedlemanWunsch
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: fillTracebackMatrix
     ' 
@@ -59,12 +59,19 @@ Namespace NeedlemanWunsch
         Dim matrix%()() = Nothing
         Dim tracebackMatrix%()() = Nothing
 
+        ReadOnly __empty As T
+
+        Sub New(q As IEnumerable(Of T), s As IEnumerable(Of T), equals As Equals(Of T), empty As T, toChar As Func(Of T, Char))
+            Call Me.New(equals, empty, toChar)
+
+            Sequence1 = q.ToArray
+            Sequence2 = s.ToArray
+        End Sub
+
         Sub New(match As Equals(Of T), empty As T, toChar As Func(Of T, Char))
             Call MyBase.New(match, toChar)
             __empty = empty
         End Sub
-
-        ReadOnly __empty As T
 
         ''' <summary>
         '''	this function is called for the first time with two empty stacks

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03e76218133e6625d786c5afd72b0cc0, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
+﻿#Region "Microsoft.VisualBasic::f8ac5b7f98541ffac405f7d26aed7b06, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sys = System.Math
@@ -115,6 +116,7 @@ Namespace Quantile
                 .GetJson
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Insert(v&)
             Call Insert(CDbl(v))
         End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec8a0a12d3f64bf78c82cb60c4642305, gr\Microsoft.VisualBasic.Imaging\SVG\SVGWriter.vb"
+﻿#Region "Microsoft.VisualBasic::4e6212339d4c3fea664442c6032fff25, gr\Microsoft.VisualBasic.Imaging\SVG\SVGWriter.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Text
 
 Namespace SVG
 
@@ -85,7 +86,7 @@ Namespace SVG
             Dim sz As Size = size.SizeParser
             Dim svg As SVGXml = g.__svgData.GetSVG(sz, comments)
             Dim XML$ = svg.GetSVGXml
-            Dim bytes As Byte() = Encoding.Unicode.GetBytes(XML)
+            Dim bytes As Byte() = TextEncodings.UTF8WithoutBOM.GetBytes(XML)
 
             Call out.Write(bytes, Scan0, bytes.Length)
             Call out.Flush()

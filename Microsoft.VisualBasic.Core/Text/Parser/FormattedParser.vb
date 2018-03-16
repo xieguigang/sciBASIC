@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bed923f37d45f93be0c383bedfcb13b, Microsoft.VisualBasic.Core\Text\Parser\FormattedParser.vb"
+﻿#Region "Microsoft.VisualBasic::60fa801360bc7899c7ad5b95b2bdab62, Microsoft.VisualBasic.Core\Text\Parser\FormattedParser.vb"
 
     ' Author:
     ' 

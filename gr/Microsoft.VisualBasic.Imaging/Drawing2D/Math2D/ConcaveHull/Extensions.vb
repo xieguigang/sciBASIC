@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7aa2ae0d3ddcfe0280267d24fd404ea4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::37e0c2a1c638ef72d00b5316eaac2d46, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConcaveHull\Extensions.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
 
     Public Module Extensions
 
-        <Extension> Public Function ConcaveHull(points As IEnumerable(Of Point), Optional r# = -1) As Point()
+        <Extension> Public Function ConcaveHull(points As IEnumerable(Of PointF), Optional r# = -1) As PointF()
             With New BallConcave(points)
                 If r# <= 0 Then
                     r# = .RecomandedRadius
