@@ -150,7 +150,7 @@ Public Module NetworkVisualizer
     ''' <param name="defaultColor"></param>
     ''' <param name="nodePoints">如果还需要获取得到节点的绘图位置的话，则可以使用这个可选参数来获取返回</param>
     ''' <param name="fontSizeFactor">这个参数值越小，字体会越大</param>
-    ''' <param name="showHullPolygon">需要显示分组的多边形的分组的名称</param>
+    ''' <param name="hullPolygonGroups">需要显示分组的多边形的分组的名称的列表，也可以是一个表达式max或者min，分别表示最大或者最小的分组</param>
     ''' <returns></returns>
     <ExportAPI("Draw.Image")>
     <Extension>
@@ -175,7 +175,7 @@ Public Module NetworkVisualizer
                               Optional getNodeLabel As Func(Of Node, String) = Nothing,
                               Optional hideDisconnectedNode As Boolean = False,
                               Optional throwEx As Boolean = True,
-                              Optional showHullPolygon As Index(Of String) = Nothing) As GraphicsData
+                              Optional hullPolygonGroups$ = Nothing) As GraphicsData
 
         Dim frameSize As Size = canvasSize.SizeParser  ' 所绘制的图像输出的尺寸大小
         Dim br As Brush
@@ -307,12 +307,39 @@ Public Module NetworkVisualizer
                 Dim connectedNodes = net.connectedNodes.AsDefault(Function() hideDisconnectedNode)
                 Dim drawPoints = net.nodes Or connectedNodes
 
-                If Not showHullPolygon.IsNullOrEmpty Then
-                    For Each group In drawPoints.GroupBy(Function(n) n.Data.Properties!nodeType)
-                        If group.Count > 2 AndAlso group.Key.IsOneOfA(showHullPolygon) Then
-                            Dim positions = group.Select(Function(p) scalePos(p)).JarvisMatch.Enlarge(1.25)
+                If Not hullPolygonGroups.StringEmpty Then
+                    Dim hullPolygon As Index(Of String)
+                    Dim groups = drawPoints _
+                        .GroupBy(Function(n) n.Data.Properties!nodeType) _
+                        .ToArray
+
+                    If hullPolygonGroups.TextEquals("max") Then
+                        hullPolygon = {
+                            groups.OrderByDescending(Function(node) node.Count) _
+                                  .First _
+                                  .Key
+                        }
+                    ElseIf hullPolygonGroups.TextEquals("min") Then
+                        hullPolygon = {
+                            groups.Where(Function(group) group.Count > 2) _
+                                  .OrderBy(Function(node) node.Count) _
+                                  .First _
+                                  .Key
+                        }
+                    Else
+                        hullPolygon = hullPolygonGroups.Split(","c)
+                    End If
+
+                    For Each group In groups
+                        If group.Count > 2 AndAlso group.Key.IsOneOfA(hullPolygon) Then
+                            Dim positions = group _
+                                .Select(Function(p) scalePos(p)) _
+                                .JarvisMatch _
+                                .Enlarge(1.25)
                             Dim color As Color = group _
-                                .Select(Function(p) DirectCast(p.Data.Color, SolidBrush).Color) _
+                                .Select(Function(p)
+                                            Return DirectCast(p.Data.Color, SolidBrush).Color
+                                        End Function) _
                                 .Average
 
                             Call g.DrawHullPolygon(positions, color)
