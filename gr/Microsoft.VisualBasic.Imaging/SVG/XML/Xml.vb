@@ -95,7 +95,6 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -284,20 +283,7 @@ Namespace SVG.XML
         End Sub
 
         Sub New(path As GraphicsPath)
-            Dim points = path.PathData _
-                .Points _
-                .Select(Function(pt) $"{pt.X} {pt.Y}")
-            Dim sb As New StringBuilder("M" & points.First)
-
-            For Each pt In points.Skip(1)
-                Call sb.Append(" ")
-                Call sb.Append("L" & pt)
-            Next
-
-            Call sb.Append(" ")
-            Call sb.Append("Z")
-
-            d = sb.ToString
+            d = path.SVGPathData
         End Sub
 
         Public Shared Operator +(path As path, offset As PointF) As path

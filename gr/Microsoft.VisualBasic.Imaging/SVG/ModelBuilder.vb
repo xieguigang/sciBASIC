@@ -42,6 +42,7 @@
 
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports sys = System.Math
 
@@ -64,9 +65,50 @@ Namespace SVG
             }
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function SVGPath(path As GraphicsPath) As path
             Return New path(path)
+        End Function
+
+        ''' <summary>
+        ''' 下面的命令可用于路径数据：
+        ''' 
+        ''' M = moveto
+        ''' L = lineto
+        ''' H = horizontal lineto
+        ''' V = vertical lineto
+        ''' C = curveto
+        ''' S = smooth curveto
+        ''' Q = quadratic Belzier curve
+        ''' T = smooth quadratic Belzier curveto
+        ''' A = elliptical Arc
+        ''' Z = closepath
+        ''' 
+        ''' 注释：以上所有命令均允许小写字母。大写表示绝对定位，小写表示相对定位。
+        ''' </summary>
+        ''' <returns></returns>
+        <Extension>
+        Public Function SVGPathData(path As GraphicsPath) As String
+            Dim points = path.PathData _
+               .Points _
+               .Select(Function(pt) $"{pt.X} {pt.Y}")
+            Dim sb As New StringBuilder("M" & points.First)
+
+            For Each pt In points.Skip(1)
+                Call sb.Append(" ")
+                Call sb.Append("L" & pt)
+            Next
+
+            Call sb.Append(" ")
+            Call sb.Append("Z")
+
+            Return sb.ToString
+        End Function
+
+        <Extension>
+        Public Function ParseSVGPathData(path As path)
+            Throw New NotImplementedException
         End Function
     End Module
 End Namespace
