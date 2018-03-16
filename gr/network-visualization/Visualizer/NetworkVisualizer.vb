@@ -308,7 +308,7 @@ Public Module NetworkVisualizer
                 Dim drawPoints = net.nodes Or connectedNodes
 
                 If Not showHullPolygon.IsNullOrEmpty Then
-                    For Each group In drawPoints.GroupBy(Function(n) n.Data.Properties!type)
+                    For Each group In drawPoints.GroupBy(Function(n) n.Data.Properties!nodeType)
                         If group.Count > 2 AndAlso group.Key.IsOneOfA(showHullPolygon) Then
                             Dim positions = group.Select(Function(p) scalePos(p)).JarvisMatch
                             Dim color As Color = group _
