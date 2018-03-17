@@ -137,6 +137,8 @@ Namespace Net.Http
         Public Function ToStream(image As Image, format As ImageFormat) As MemoryStream
             With New MemoryStream
                 Call image.Save(.ByRef, format)
+                Call .Flush()
+                Call .Seek(Scan0, SeekOrigin.Begin)
                 Return .ByRef
             End With
         End Function

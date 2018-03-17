@@ -358,7 +358,7 @@ Namespace Text.HtmlParser
         ''' <summary>
         ''' The regexp pattern for the attributes in a html tag.
         ''' </summary>
-        Const attributeParse$ = "\S+?\s*[=]\s*"".+?"""
+        Const attributeParse$ = "(\S+?\s*[=]\s*"".+?"")|(\S+?\s*[=]\s*\S+)"
 
         <Extension>
         Private Function stripTag(ByRef tag$) As String
