@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::eeb4ebd0dac2073cfb7ecd90c7191d25, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\Base64Codec.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Base64Codec
-    ' 
-    '         Function: __getImageFromBase64, __toBase64String, GetImage, (+3 Overloads) ToBase64String
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Base64Codec
+' 
+'         Function: __getImageFromBase64, __toBase64String, GetImage, (+3 Overloads) ToBase64String
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -45,6 +45,7 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 
 Namespace Net.Http
 
@@ -53,6 +54,7 @@ Namespace Net.Http
     ''' </summary>
     Public Module Base64Codec
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToBase64String(byts As IEnumerable(Of Byte)) As String
             Return Convert.ToBase64String(byts.ToArray)
@@ -66,8 +68,12 @@ Namespace Net.Http
         ''' <returns></returns>
         <Extension> Public Function GetImage(Base64String As String, Optional format As ImageFormats = ImageFormats.Png) As Bitmap
             Try
-                If String.IsNullOrEmpty(Base64String) Then Return Nothing  ''Checking The Base64 string validity
-                Return __getImageFromBase64(Base64String, GetFormat(format))
+                If String.IsNullOrEmpty(Base64String) Then
+                    ' Checking The Base64 string validity
+                    Return Nothing
+                Else
+                    Return Base64String.__getImageFromBase64(GetFormat(format))
+                End If
             Catch ex As Exception
                 Call ex.PrintException
                 Return Nothing
@@ -77,16 +83,21 @@ Namespace Net.Http
         ''' <summary>
         ''' Function to Get Image from Base64 Encoded String
         ''' </summary>
-        ''' <param name="Base64String"></param>
+        ''' <param name="base64String"></param>
         ''' <param name="format"></param>
         ''' <returns></returns>
-        Private Function __getImageFromBase64(Base64String As String, format As ImageFormat) As Bitmap
+        ''' 
+        <Extension>
+        Private Function __getImageFromBase64(base64String$, format As ImageFormat) As Bitmap
             Dim bytData As Byte(), streamImage As Bitmap
 
-            bytData = Convert.FromBase64String(Base64String) ''Convert Base64 to Byte Array
+            ' Convert Base64 to Byte Array
+            bytData = Convert.FromBase64String(base64String)
 
-            Using ms As New MemoryStream(bytData) ''Using Memory stream to save image
-                streamImage = Image.FromStream(ms) ''Converting image from Memory stream
+            ' Using Memory stream to save image
+            Using ms As New MemoryStream(bytData)
+                ' Converting image from Memory stream
+                streamImage = Image.FromStream(ms)
             End Using
 
             Return streamImage
@@ -110,15 +121,29 @@ Namespace Net.Http
         ''' Convert the Image from Input to Base64 Encoded String
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ToBase64String(bmp As Bitmap, Optional format As ImageFormats = ImageFormats.Png) As String
             Return ToBase64String(ImageInput:=bmp, format:=format)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ToStream(image As Image, Optional format As ImageFormats = ImageFormats.Png) As MemoryStream
+            Return image.ToStream(format.GetFormat)
+        End Function
+
+        <Extension>
+        Public Function ToStream(image As Image, format As ImageFormat) As MemoryStream
+            With New MemoryStream
+                Call image.Save(.ByRef, format)
+                Return .ByRef
+            End With
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function __toBase64String(image As Image, format As ImageFormat) As String
-            Dim ms As New MemoryStream()
-            image.Save(ms, format)
-            Dim Base64Op As String = Convert.ToBase64String(ms.ToArray())
-            Return Base64Op
+            Return Convert.ToBase64String(image.ToStream(format).ToArray)
         End Function
     End Module
 End Namespace
