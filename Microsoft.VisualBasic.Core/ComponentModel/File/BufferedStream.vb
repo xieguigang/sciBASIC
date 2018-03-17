@@ -168,7 +168,7 @@ Namespace ComponentModel
                     Call Array.ConstrainedCopy(lefts, Scan0, buffer, Scan0, lefts.Length)
 
                     Dim s As String = __encoding.GetString(buffer)
-                    Dim sbuf As String() = s.lTokens()
+                    Dim sbuf As String() = s.LineTokens()
 
                     If Not EndRead Then
                         Dim last As String = sbuf.Last

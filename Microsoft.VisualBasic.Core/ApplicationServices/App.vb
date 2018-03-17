@@ -902,7 +902,7 @@ Public Module App
     '''
     <ExportAPI("Bugs.Formatter")>
     Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
-        Dim logs = ex.ToString.lTokens
+        Dim logs = ex.ToString.LineTokens
         Dim stackTrace = logs _
             .Where(Function(s)
                        Return InStr(s, "   在 ") = 1 OrElse InStr(s, "   at ") = 1

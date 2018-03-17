@@ -83,7 +83,7 @@ Namespace Net.Protocols.ContentTypes
         Sub New()
             SuffixTable = My.Resources _
                 .List_of_MIME_types___Internet_Media_Types_ _
-                .lTokens _
+                .LineTokens _
                 .__loadContents _
                 .Where(Function(x) Not x.IsEmpty) _
                 .GroupBy(Function(x) x.FileExt.ToLower) _

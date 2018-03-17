@@ -120,7 +120,7 @@ Namespace CommandLine.ManView
             Dim assm As AssemblyInfo = ApplicationInfoUtils.FromTypeModule(App.Type)
 
             Call sb.AppendLine()
-            Call sb.AppendLine("> " & App.Type.NamespaceEntry.Description.lTokens.JoinBy(vbCrLf & "> "))
+            Call sb.AppendLine("> " & App.Type.NamespaceEntry.Description.LineTokens.JoinBy(vbCrLf & "> "))
             Call sb.AppendLine()
             Call sb.AppendLine("<!--more-->")
             Call sb.AppendLine()
@@ -160,7 +160,7 @@ Namespace CommandLine.ManView
 
                 Call sb.Append($"<h3 id=""{api.Name}""> {i.i + 1}. ")
                 Call sb.AppendLine(api.HelpInformation(md:=True) _
-                    .lTokens _
+                    .LineTokens _
                     .Select(Function(s) s.Trim) _
                     .JoinBy(vbCrLf))
 

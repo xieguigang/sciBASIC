@@ -403,6 +403,6 @@ Public Module DocumentExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseDoc(csv$, Optional removesBlank As Boolean = False) As IO.File
-        Return IO.File.Load(csv.lTokens, trimBlanks:=removesBlank)
+        Return IO.File.Load(csv.LineTokens, trimBlanks:=removesBlank)
     End Function
 End Module
