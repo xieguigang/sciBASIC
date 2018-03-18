@@ -201,6 +201,17 @@ Module VectorTest
         Dim f4 = a.ToArray.Fill(10, 4)
         Dim f0 = a.ToArray.Fill(10, 0)
 
+        Dim i7 = a.ToArray
+
+        Call i7.InsertAt(100, 7)
+
+        Dim i0 = a.ToArray
+
+        Call i0.InsertAt(100, 0)
+
+        Dim ilast = a.ToArray
+        Call ilast.InsertAt(100, ilast.Length - 1)
+
         Pause()
     End Sub
 

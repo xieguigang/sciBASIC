@@ -215,10 +215,10 @@ Public Module VectorExtensions
 
     <Extension>
     Public Sub InsertAt(Of T)(ByRef vector As T(), value As T, index%)
-        Dim newVector As T() = New T(vector.Length + 1) {}
+        Dim newVector As T() = New T(vector.Length) {}
 
         Call Array.ConstrainedCopy(vector, Scan0, newVector, Scan0, index)
-        Call Array.ConstrainedCopy(vector, index + 2, newVector, index + 1, vector.Length - index)
+        Call Array.ConstrainedCopy(vector, index, newVector, index + 1, vector.Length - index)
 
         vector = newVector
         vector(index) = value
