@@ -189,7 +189,7 @@ Namespace Darwinism.GAF
                 Next
             End If
 
-            chromosomes = (From c In chromosomes Order By comparator.Fitness(c) Ascending).AsList
+            chromosomes = (From c In chromosomes.AsParallel Order By comparator.Fitness(c) Ascending).AsList
         End Sub
 
         ''' <summary>

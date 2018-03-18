@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Public Class Demo
 
     Public Shared Sub Main(args As String())
-        Dim population As Population(Of MyVector) = New MyVector().InitialPopulation(5000)
+        Dim population As Population(Of MyVector) = New MyVector().InitialPopulation(500)
         Dim fitness As Fitness(Of MyVector) = New MyVectorFitness()
         Dim ga As New GeneticAlgorithm(Of MyVector)(population, fitness)
         '   Dim out As New List(Of outPrint)
