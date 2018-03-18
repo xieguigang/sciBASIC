@@ -213,6 +213,17 @@ Public Module VectorExtensions
         Return newVector
     End Function
 
+    <Extension>
+    Public Sub InsertAt(Of T)(ByRef vector As T(), value As T, index%)
+        Dim newVector As T() = New T(vector.Length + 1) {}
+
+        Call Array.ConstrainedCopy(vector, Scan0, newVector, Scan0, index)
+        Call Array.ConstrainedCopy(vector, index + 2, newVector, index + 1, vector.Length - index)
+
+        vector = newVector
+        vector(index) = value
+    End Sub
+
     ''' <summary>
     ''' Create a vector shadow of your data collection.
     ''' </summary>
