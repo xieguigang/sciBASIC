@@ -6,7 +6,7 @@ Module toStringTest
 
     Sub Main()
 
-        Call reflectionTest()
+        ' Call reflectionTest()
 
         Dim list1 = populatestrings(True)
         Dim list2 = populatestrings(False)

@@ -105,6 +105,8 @@ Namespace Scripting.Runtime
             End If
         End Function
 
+        ReadOnly cstrCache As New Dictionary(Of Type, INarrowingOperator(Of Object, String))
+
         ''' <summary>
         ''' 安全的将目标对象转换为字符串值
         ''' </summary>
@@ -117,9 +119,29 @@ Namespace Scripting.Runtime
                 ElseIf Convert.IsDBNull(obj) Then
                     Return String.Empty
                 Else
-                    ' 目标类型可能定义了Narrow为String类型的操作符，所以在这里不会调用ToString的结果
-                    ' 出错了之后才会调用ToString
-                    Return CStr(obj)
+
+                    Dim type As Type = obj.GetType
+
+                    If cstrCache.ContainsKey(type) Then
+                        Return cstrCache(type)(obj)
+                    Else
+                        Dim delg = type.GetNarrowingOperator(Of String)
+
+                        If delg Is Nothing Then
+                            Try
+                                ' 调用ToString函数来返回字符串值
+                                Return obj.ToString
+                            Catch ex2 As Exception
+                                Return [default]
+                            End Try
+                        Else
+                            SyncLock cstrCache
+                                Call cstrCache.Add(type, delg)
+                            End SyncLock
+
+                            Return delg(obj)
+                        End If
+                    End If
                 End If
             Catch ex As Exception
                 Try
