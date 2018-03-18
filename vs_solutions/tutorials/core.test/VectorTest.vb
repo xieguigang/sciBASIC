@@ -190,9 +190,24 @@ Module VectorTest
         End Operator
     End Structure
 
+    Sub testssss()
+
+        Dim a = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+        Dim r5 = a.ToArray.Delete(5)
+        Dim r0 = a.ToArray.Delete(0)
+        Dim rlast = a.ToArray.Delete(a.Length - 1)
+
+        Dim f4 = a.ToArray.Fill(10, 4)
+        Dim f0 = a.ToArray.Fill(10, 0)
+
+        Pause()
+    End Sub
+
+
     Sub Main()
 
-
+        Call testssss()
 
 
         'Dim strings = {"", "sdafa", "sssssss"}.VectorShadows

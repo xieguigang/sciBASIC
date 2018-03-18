@@ -93,15 +93,20 @@ Public Module VectorExtensions
 
     <Extension>
     Public Function Fill(Of T)(vector As T(), item As T, count%) As T()
-        Dim newVector As T() = New T(vector.Length + count - 1) {}
+        If count <= 0 Then
+            ' should returns a copy
+            Return vector.ToArray
+        Else
+            Dim newVector As T() = New T(vector.Length + count - 1) {}
 
-        Call Array.ConstrainedCopy(vector, Scan0, newVector, Scan0, vector.Length)
+            Call Array.ConstrainedCopy(vector, Scan0, newVector, Scan0, vector.Length)
 
-        For i As Integer = vector.Length To newVector.Length - 1
-            newVector(i) = item
-        Next
+            For i As Integer = vector.Length To newVector.Length - 1
+                newVector(i) = item
+            Next
 
-        Return newVector
+            Return newVector
+        End If
     End Function
 
     ''' <summary>
@@ -116,7 +121,7 @@ Public Module VectorExtensions
         Dim newVector As T() = New T(vector.Length - 2) {}
 
         Call Array.ConstrainedCopy(vector, Scan0, newVector, Scan0, index)
-        Call Array.ConstrainedCopy(vector, index, newVector, index - 1, newVector.Length - index)
+        Call Array.ConstrainedCopy(vector, index + 1, newVector, index, newVector.Length - index)
 
         Return newVector
     End Function
