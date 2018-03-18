@@ -91,6 +91,93 @@ Public Module VectorExtensions
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' Dynamics add a element into the target array.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="value"></param>
+    <Extension> Public Sub Add(Of T)(ByRef vector As T(), value As T)
+        If vector.IsNullOrEmpty Then
+            vector = {value}
+        Else
+            Dim appendBuffer As T() = New T(vector.Length) {}
+            Call Array.ConstrainedCopy(vector, Scan0, appendBuffer, Scan0, vector.Length)
+            appendBuffer(vector.Length) = value
+            vector = appendBuffer
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Append value collection to the end of the target <paramref name="vector"/>
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="values"></param>
+    <Extension> Public Sub Add(Of T)(ByRef vector As T(), values As IEnumerable(Of T))
+        Dim data = values.SafeQuery.ToArray
+        Dim appendBuffer As T() = New T(vector.Length + data.Length - 1) {}
+
+        With vector
+            Call Array.ConstrainedCopy(
+                vector, Scan0, appendBuffer, Scan0, .Length)
+
+            For Each x As SeqValue(Of T) In data.SeqIterator
+                appendBuffer(.Length + x.i) = x.value
+            Next
+        End With
+
+        vector = appendBuffer
+    End Sub
+
+    ''' <summary>
+    ''' Add given elements into an array object.(会自动跳过空集合，这个方法是安全的)
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="value"></param>
+    <Extension> Public Sub Add(Of T)(ByRef vector As T(), ParamArray value As T())
+        If value.IsNullOrEmpty Then
+            Return
+        End If
+        If vector Is Nothing Then
+            vector = New T() {}
+        End If
+
+        Dim chunkBuffer As T() = New T(vector.Length + value.Length - 1) {}
+        Call Array.ConstrainedCopy(vector, Scan0, chunkBuffer, Scan0, vector.Length)
+        Call Array.ConstrainedCopy(value, Scan0, chunkBuffer, vector.Length, value.Length)
+        vector = chunkBuffer
+    End Sub
+
+    ''' <summary>
+    ''' Add given elements into an array object and then returns the target array object <paramref name="buffer"/>.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="buffer"></param>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Append(Of T)(buffer As T(), value As IEnumerable(Of T)) As T()
+        If buffer Is Nothing Then
+            Return value.ToArray
+        End If
+
+        Call buffer.Add(value.ToArray)
+        Return buffer
+    End Function
+
+    ''' <summary>
+    ''' Add given elements into an array object.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="array"></param>
+    ''' <param name="value"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Sub Add(Of T)(ByRef array As T(), value As List(Of T))
+        Call Add(Of T)(array, value.ToArray)
+    End Sub
+
     <Extension>
     Public Function Fill(Of T)(vector As T(), item As T, count%) As T()
         If count <= 0 Then
