@@ -44,7 +44,7 @@ Module toStringTest
     End Sub
 
     Public Iterator Function populatestrings(no As Boolean) As IEnumerable(Of NoCStr)
-        For i As Integer = 0 To 200
+        For i As Integer = 0 To 2000
             If no Then
                 Yield New NoCStr
             Else
