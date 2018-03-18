@@ -111,7 +111,7 @@ Namespace Darwinism.Models
         ''' </summary>
         ''' <param name="another">The another chromosome.</param>
         ''' <returns></returns>
-        Function Crossover(another As Chr) As IList(Of Chr)
+        Function Crossover(another As Chr) As IEnumerable(Of Chr)
 
         ''' <summary>
         ''' Mutation is a genetic operator used to maintain genetic diversity from one generation 
