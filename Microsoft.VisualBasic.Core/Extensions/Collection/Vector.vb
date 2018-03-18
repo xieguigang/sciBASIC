@@ -91,6 +91,19 @@ Public Module VectorExtensions
             .ToArray
     End Function
 
+    <Extension>
+    Public Function Fill(Of T)(vector As T(), item As T, count%) As T()
+        Dim newVector As T() = New T(vector.Length + count - 1) {}
+
+        Call Array.ConstrainedCopy(vector, Scan0, newVector, Scan0, vector.Length)
+
+        For i As Integer = vector.Length To newVector.Length - 1
+            newVector(i) = item
+        Next
+
+        Return newVector
+    End Function
+
     ''' <summary>
     ''' Removes array element at index
     ''' </summary>
