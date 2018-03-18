@@ -143,7 +143,7 @@ Namespace Darwinism.GAF.ODEs
             }
         End Function
 
-        Public Function Crossover(anotherChromosome As IIndividual) As IList(Of IIndividual) Implements Chromosome(Of IIndividual).Crossover
+        Public Function Crossover(anotherChromosome As IIndividual) As IEnumerable(Of IIndividual) Implements Chromosome(Of IIndividual).Crossover
             Return Crossover(TryCast(anotherChromosome, ParameterVector))
         End Function
 
@@ -152,7 +152,7 @@ Namespace Darwinism.GAF.ODEs
         ''' </summary>
         ''' <param name="anotherChromosome"></param>
         ''' <returns></returns>
-        Public Function Crossover(anotherChromosome As ParameterVector) As IList(Of ParameterVector) Implements Chromosome(Of ParameterVector).Crossover
+        Public Function Crossover(anotherChromosome As ParameterVector) As IEnumerable(Of ParameterVector) Implements Chromosome(Of ParameterVector).Crossover
             Dim thisClone As ParameterVector = DirectCast(Clone(), ParameterVector)
             Dim otheClone As ParameterVector = DirectCast(anotherChromosome.Clone, ParameterVector)
 

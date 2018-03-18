@@ -64,11 +64,11 @@ Namespace Darwinism.GAF.Abstract
             Throw New NotImplementedException()
         End Function
 
-        Private Function Crossover(anotherChromosome As IIndividual) As IList(Of IIndividual) Implements Chromosome(Of IIndividual).Crossover
+        Private Function Crossover(anotherChromosome As IIndividual) As IEnumerable(Of IIndividual) Implements Chromosome(Of IIndividual).Crossover
             Return Crossover(TryCast(anotherChromosome, ParameterVector(Of T)))
         End Function
 
-        Public Function Crossover(anotherChromosome As ParameterVector(Of T)) As IList(Of ParameterVector(Of T)) Implements Chromosome(Of ParameterVector(Of T)).Crossover
+        Public Function Crossover(anotherChromosome As ParameterVector(Of T)) As IEnumerable(Of ParameterVector(Of T)) Implements Chromosome(Of ParameterVector(Of T)).Crossover
             Throw New NotImplementedException()
         End Function
 
