@@ -99,8 +99,8 @@ Namespace Darwinism.Models
     ''' external agents capable of handling those representations, allowing for 
     ''' free-form And evolving genetic representations.
     ''' </summary>
-    ''' <typeparam name="C"></typeparam>
-    Public Interface Chromosome(Of C As Chromosome(Of C))
+    ''' <typeparam name="Chr"></typeparam>
+    Public Interface Chromosome(Of Chr As Chromosome(Of Chr))
 
         ''' <summary>
         ''' In genetic algorithms, crossover is a genetic operator used to vary the programming 
@@ -109,9 +109,10 @@ Namespace Darwinism.Models
         ''' Cross over is a process of taking more than one parent solutions and producing a 
         ''' child solution from them. There are methods for selection of the chromosomes.
         ''' </summary>
-        ''' <param name="anotherChromosome"></param>
+        ''' <param name="another">The another chromosome.</param>
         ''' <returns></returns>
-        Function Crossover(anotherChromosome As C) As IList(Of C)
+        Function Crossover(another As Chr) As IList(Of Chr)
+
         ''' <summary>
         ''' Mutation is a genetic operator used to maintain genetic diversity from one generation 
         ''' of a population of genetic algorithm chromosomes to the next. It is analogous to 
@@ -137,6 +138,6 @@ Namespace Darwinism.Models
         ''' With a weighting toward those that are fitter.
         ''' </summary>
         ''' <returns></returns>
-        Function Mutate() As C
+        Function Mutate() As Chr
     End Interface
 End Namespace
