@@ -92,6 +92,23 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
+    ''' Removes array element at index
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="index%"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Delete(Of T)(vector As T(), index%) As T()
+        Dim newVector As T() = New T(vector.Length - 2) {}
+
+        Call Array.ConstrainedCopy(vector, Scan0, newVector, Scan0, index)
+        Call Array.ConstrainedCopy(vector, index, newVector, index - 1, newVector.Length - index)
+
+        Return newVector
+    End Function
+
+    ''' <summary>
     ''' Create a vector shadow of your data collection.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
