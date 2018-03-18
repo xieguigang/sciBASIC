@@ -34,7 +34,7 @@ Module toStringTest
 
         Dim op = type.GetNarrowingOperator(Of String)
 
-        Console.WriteLine(op(New NoCStr))
+        '  Console.WriteLine(op(New NoCStr))
 
         op = type2.GetNarrowingOperator(Of String)
 
