@@ -287,7 +287,8 @@ Namespace Emit.Marshal
         End Operator
 
         ''' <summary>
-        ''' 指针的位置往回移动一个单位，然后返回原来的位置的元素的值
+        ''' The stack trace back operator.
+        ''' (指针的位置往回移动一个单位，然后返回原来的位置的元素的值)
         ''' </summary>
         ''' <param name="ptr"></param>
         ''' <returns></returns>
