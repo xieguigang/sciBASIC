@@ -297,7 +297,7 @@ Namespace Emit.Marshal
 
             Return New SeqValue(Of T) With {
                 .i = i,
-                .value = ptr.buffer(i)
+                .value = ptr.buffer.ElementAtOrDefault(i, Nothing)
             }
         End Operator
 
