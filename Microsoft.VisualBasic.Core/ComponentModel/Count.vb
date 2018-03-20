@@ -56,7 +56,7 @@ Namespace ComponentModel
     Public Class Counter : Inherits int
 
         ''' <summary>
-        ''' Create a new integer counter.(新建一个计数器)
+        ''' Create a new integer counter start from ZERO.(新建一个计数器)
         ''' </summary>
         Sub New()
             MyBase.New(0)
