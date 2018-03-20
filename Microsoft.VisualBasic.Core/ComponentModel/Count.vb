@@ -67,6 +67,10 @@ Namespace ComponentModel
             Call MyBase.New(x:=hits)
         End Sub
 
+        Public Sub Add(n As Integer)
+            Value += n
+        End Sub
+
         ''' <summary>
         ''' ``++i``
         ''' </summary>
