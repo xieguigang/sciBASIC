@@ -14,26 +14,43 @@ Namespace Scripting.Runtime
         Public Delegate Function INarrowingOperator(Of TIn, TOut)(obj As TIn) As TOut
 
         Public Function GetNarrowingOperator(Of TIn, TOut)() As INarrowingOperator(Of TIn, TOut)
-            ' 函数找不到会返回Nothing
-            Dim methods = GetType(TIn).GetMethod(op_Explicit, NarrowingOperator)
+            Dim op As MethodInfo = CType(GetType(TIn), TypeInfo).GetOperatorMethod(Of TOut)
 
-            If methods Is Nothing Then
+            If op Is Nothing Then
                 Return Nothing
             Else
-                Dim op_Explicit As INarrowingOperator(Of TIn, TOut) = methods.CreateDelegate(GetType(INarrowingOperator(Of TIn, TOut)))
+                Dim op_Explicit As INarrowingOperator(Of TIn, TOut) = op.CreateDelegate(GetType(INarrowingOperator(Of TIn, TOut)))
                 Return op_Explicit
             End If
+        End Function
+
+        ''' <summary>
+        ''' 直接使用GetMethod方法仍然会出错？？如果目标类型是继承类型，基类型也有一个收缩的操作符的话，会爆出目标不明确的错误
+        ''' 
+        ''' ```vbnet
+        ''' type.GetMethod(op_Explicit, NarrowingOperator)
+        ''' ```
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="type"></param>
+        ''' <returns>函数找不到会返回Nothing</returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Function GetOperatorMethod(Of T)(type As TypeInfo) As MethodInfo
+            Return type.DeclaredMethods _
+                       .Where(Function(m) m.Name = op_Explicit AndAlso m.ReturnType Is GetType(T)) _
+                       .FirstOrDefault
         End Function
 
         <Extension>
         Public Function GetNarrowingOperator(Of T)(type As Type) As INarrowingOperator(Of Object, T)
             ' 函数找不到会返回Nothing
-            Dim methods = type.GetMethod(op_Explicit, NarrowingOperator)
+            Dim op As MethodInfo = CType(type, TypeInfo).GetOperatorMethod(Of T)
 
-            If methods Is Nothing Then
+            If op Is Nothing Then
                 Return Nothing
             Else
-                Dim op_Explicit As INarrowingOperator(Of Object, T) = Function(obj) DirectCast(methods.Invoke(Nothing, {obj}), T)
+                Dim op_Explicit As INarrowingOperator(Of Object, T) = Function(obj) DirectCast(op.Invoke(Nothing, {obj}), T)
                 Return op_Explicit
             End If
         End Function
