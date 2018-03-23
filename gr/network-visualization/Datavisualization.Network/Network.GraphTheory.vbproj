@@ -424,6 +424,7 @@
     <Compile Include="IO\Generic\Network%28Of T%29.vb" />
     <Compile Include="IO\FileStream\csv\Node.vb" />
     <Compile Include="Graph\Abstract.vb" />
+    <Compile Include="NamespaceDoc.vb" />
     <Compile Include="NetworkAPI.vb" />
     <Compile Include="TreeAPI\TREE.vb" />
     <Compile Include="TreeAPI\Operations.vb" />
