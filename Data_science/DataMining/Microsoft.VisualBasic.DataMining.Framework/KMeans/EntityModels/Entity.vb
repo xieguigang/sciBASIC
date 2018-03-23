@@ -63,25 +63,6 @@ Namespace KMeans
             Return $"{uid}  ({Length} Properties)"
         End Function
 
-        ''' <summary>
-        '''
-        ''' </summary>
-        ''' <param name="path">Csv文件之中除了第一列是名称标识符，其他的都必须是该实体对象的属性</param>
-        ''' <returns></returns>
-        Public Shared Function Load(path As String, Optional map As String = "Name") As Entity()
-            Dim data As EntityClusterModel() = EntityClusterModel.Load(path, map)
-            Dim source As Entity() = data _
-                .Select(Function(x)
-                            Return New Entity With {
-                                .uid = x.ID,
-                                .Properties = x.Properties.Values.ToArray
-                            }
-                        End Function) _
-                .ToArray
-
-            Return source
-        End Function
-
         Public Function ToLDM() As EntityClusterModel
             Return New EntityClusterModel With {
                 .ID = uid,

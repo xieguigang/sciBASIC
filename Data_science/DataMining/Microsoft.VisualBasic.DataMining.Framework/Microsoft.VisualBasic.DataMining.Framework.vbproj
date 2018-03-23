@@ -435,7 +435,6 @@
     <Compile Include="NeuralNetwork\Synapse.vb" />
     <Compile Include="PeriodAnalysis\Variables.vb" />
     <Compile Include="Statistics.vb" />
-    <Compile Include="ShellScriptAPI.vb" />
     <Compile Include="PeriodAnalysis\PeriodAnalysis.vb" />
     <Compile Include="ValueMapping.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BeliefNetwork.vb" />
