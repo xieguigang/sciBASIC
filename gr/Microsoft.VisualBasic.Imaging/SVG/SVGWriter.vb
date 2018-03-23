@@ -43,7 +43,6 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
@@ -64,9 +63,11 @@ Namespace SVG
         ''' <param name="g"></param>
         ''' <param name="size$">默认是使用<see cref="GraphicsSVG"/>对象的内部大小</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function SVG(g As GraphicsSVG, Optional size$ = Nothing) As SVGXml
-            Return g.__svgData.GetSVG(size.SizeParser)
+        Public Function SVG(g As GraphicsSVG, Optional size$ = Nothing, Optional comment$ = Nothing) As SVGXml
+            Return g.__svgData.GetSVG(size.SizeParser, xmlComment:=comment)
         End Function
 
         ''' <summary>

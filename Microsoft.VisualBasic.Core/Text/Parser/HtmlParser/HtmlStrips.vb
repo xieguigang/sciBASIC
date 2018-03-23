@@ -117,7 +117,7 @@ Namespace Text.HtmlParser
             If String.IsNullOrEmpty(title) Then
                 title = "null"
             Else
-                title = title.GetValue
+                title = title.GetValue.TrimNewLine.Trim(" "c, ASCII.TAB)
             End If
 
             Return title
