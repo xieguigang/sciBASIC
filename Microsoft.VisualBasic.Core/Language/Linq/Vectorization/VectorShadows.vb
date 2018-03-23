@@ -64,7 +64,7 @@ Namespace Language.Vectorization
         ''' <summary>
         ''' 无参数的属性
         ''' </summary>
-        ReadOnly linq As DataValue(Of T)
+        Protected linq As DataValue(Of T)
         ReadOnly type As New VectorSchemaProvider(GetType(T))
 
         Default Public Overloads Property Item(exp$) As Object
@@ -104,7 +104,11 @@ Namespace Language.Vectorization
 #End Region
 
         Sub New(source As IEnumerable(Of T))
-            buffer = source.ToArray
+            Call writeBuffer(source)
+        End Sub
+
+        Protected Sub writeBuffer(seq As IEnumerable(Of T))
+            buffer = seq.ToArray
             linq = New DataValue(Of T)(buffer)
         End Sub
 
