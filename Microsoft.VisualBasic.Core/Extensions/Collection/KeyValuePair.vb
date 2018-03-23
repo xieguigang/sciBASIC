@@ -187,6 +187,16 @@ Public Module KeyValuePairExtensions
                           Function(map) map.Value)
     End Function
 
+    ''' <summary>
+    ''' 按照给定的键名列表<paramref name="keys"/>将字典之中的对应的元素按照键名的顺序取出来
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="keys"></param>
+    ''' <param name="nonExitsNULL">
+    ''' 如果这个参数为真，则对于不存在的键名，则使用
+    ''' </param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Takes(Of T)(table As IDictionary(Of String, T), keys As IEnumerable(Of String), Optional nonExitsNULL As Boolean = True) As T()
