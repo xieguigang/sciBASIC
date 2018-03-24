@@ -56,7 +56,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
-Imports V = Microsoft.VisualBasic.Data.Graph.Vertex
+Imports V = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 
 ''' <summary>
 ''' 图之中的节点

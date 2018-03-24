@@ -83,7 +83,7 @@
 '
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.Graph
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 
 Namespace Graph
