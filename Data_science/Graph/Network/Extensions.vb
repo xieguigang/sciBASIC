@@ -41,10 +41,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 
-Namespace FindPath
+Namespace Network
 
     Public Module Extensions
 
@@ -55,10 +54,10 @@ Namespace FindPath
         ''' <returns></returns>
         <Extension>
         Public Function EndPoints(network As NetworkGraph) As (input As Node(), output As Node())
-            Dim inputs As New List(Of Node)(network.nodes)
-            Dim output As New List(Of Node)(network.nodes)
+            Dim inputs As New List(Of Node)(network.Vertex)
+            Dim output As New List(Of Node)(inputs)
             Dim removes = Sub(ByRef list As List(Of Node), getNode As Func(Of Edge, Node))
-                              For Each edge As Edge In network.edges
+                              For Each edge As Edge In network
                                   Dim node = getNode(edge)
 
                                   If list.IndexOf(node) > -1 Then
@@ -82,24 +81,24 @@ Namespace FindPath
         Public Iterator Function IteratesSubNetworks(network As NetworkGraph) As IEnumerable(Of NetworkGraph)
             Dim popEdge = Function(node As Node) As Edge
                               Return network _
-                                  .edges _
                                   .Where(Function(e) e.U Is node OrElse e.V Is node) _
                                   .FirstOrDefault
                           End Function
+            Dim edges = network.edges.Values.AsList
 
-            Do While network.edges > 0
+            Do While edges > 0
                 Dim subnetwork As New NetworkGraph
-                Dim edge As Edge = network.edges.First
+                Dim edge As Edge = edges.First
                 Dim list As New List(Of Node)
 
                 Call list.Add(edge.U)
                 Call list.Add(edge.V)
 
                 Do While list > 0
-                    subnetwork.AddNode(edge.U)
-                    subnetwork.AddNode(edge.V)
-                    subnetwork.AddEdge(edge)
-                    network.edges.Remove(edge)
+                    subnetwork.AddVertex(edge.U)
+                    subnetwork.AddVertex(edge.V)
+                    subnetwork.AddEdge(edge.U, edge.V)
+                    edges.Remove(edge)
 
                     If -1 = list.IndexOf(edge.U) Then
                         Call list.Add(edge.U)

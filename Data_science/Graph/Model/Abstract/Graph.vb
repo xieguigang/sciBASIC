@@ -58,6 +58,7 @@ Imports TV = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 ''' A graph ``G = (V, E)`` consists of a set V of vertices and a set E edges, that is, unordered
 ''' pairs Of vertices. Unless explicitly stated otherwise, we assume that the graph Is simple,
 ''' that Is, it has no multiple edges And no self-loops.
+''' (使用迭代器来访问这个图之中的边连接的集合)
 ''' </summary>
 Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G As Graph(Of V, Edge, G))
     Implements IEnumerable(Of Edge)
@@ -75,6 +76,10 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     Protected Friend buffer As New HashList(Of V)
 #End Region
 
+    ''' <summary>
+    ''' ``[numof(vertex), numof(edges)]``
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Size As (Vertex%, Edges%)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
@@ -82,6 +87,10 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         End Get
     End Property
 
+    ''' <summary>
+    ''' 这个图之中的所有的节点的集合
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Vertex As V()
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
@@ -89,6 +98,10 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         End Get
     End Property
 
+    ''' <summary>
+    ''' 返回所有至少具有一条边连接的节点的集合
+    ''' </summary>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetConnectedVertex() As V()
         Return edges.Values _
@@ -246,6 +259,10 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 因为图的主要关注点是放在节点对象的相互关系之上，所以在这里图对象是表现为一个边连接的集合
+    ''' </summary>
+    ''' <returns></returns>
     Public Iterator Function GetEnumerator() As IEnumerator(Of Edge) Implements IEnumerable(Of Edge).GetEnumerator
         For Each edge As Edge In edges.Values
             Yield edge
