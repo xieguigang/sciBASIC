@@ -41,6 +41,6 @@
 
 Namespace ComponentModel.Algorithm.DynamicProgramming
 
-    Public Delegate Function ISimilarity(Of T)(x As T, y As T) As Integer
+    Public Delegate Function ISimilarity(Of T)(x As T, y As T) As Double
 
 End Namespace

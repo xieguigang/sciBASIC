@@ -71,13 +71,13 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Swap the location of <see cref="Edge.U"/> and <see cref="Edge.V"/> in <paramref name="edge"/>.
+    ''' Swap the location of <see cref="VertexEdge.U"/> and <see cref="VertexEdge.V"/> in <paramref name="edge"/>.
     ''' </summary>
     ''' <param name="edge"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Reverse(edge As Edge) As Edge
-        Return New Edge With {
+    Public Function Reverse(edge As VertexEdge) As VertexEdge
+        Return New VertexEdge With {
             .U = edge.V,
             .V = edge.U,
             .Weight = edge.Weight

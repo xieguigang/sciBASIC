@@ -83,7 +83,7 @@ Namespace Language.Java
         ''' <returns>a view of the specified range within this list</returns>
         ''' 
         <Extension>
-        Public Function sublist(Of T)(list As List(Of T), fromIndex%, toIndex%) As List(Of T)
+        Public Function SubList(Of T)(list As List(Of T), fromIndex%, toIndex%) As List(Of T)
             Return list.Skip(fromIndex).Take(toIndex - fromIndex).AsList
         End Function
 

@@ -63,7 +63,7 @@ Namespace SVG.XML
                         .AppendLine("visit: " & LICENSE.githubURL)
 
             If Not svg.XmlComment.StringEmpty Then
-                For Each line$ In svg.XmlComment.lTokens
+                For Each line$ In svg.XmlComment.LineTokens
                     comment.AppendLine _
                            .Append(indent) _
                            .Append(line)

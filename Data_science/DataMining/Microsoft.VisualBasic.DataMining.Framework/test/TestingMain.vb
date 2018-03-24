@@ -219,27 +219,27 @@ Module TestingMain
         nnn = (-1).Sequence
 
         Dim Data0 = Microsoft.VisualBasic.Data.csv.IO.File.FastLoad("E:\xcb_vcell\xcb_model\Result\MAT_OUT.csv")
-        Dim MAT = Microsoft.VisualBasic.DataMining.Serials.PeriodAnalysis.SerialsVarialble.Load(Data0)
+        '  Dim MAT = Microsoft.VisualBasic.DataMining.Serials.PeriodAnalysis.SerialsVarialble.Load(Data0)
 
-        Dim datad = Microsoft.VisualBasic.Math.Interpolation.BezierExtensions.BezierSmoothInterpolation(MAT(1).SerialsData, 100)
+        ' Dim datad = Microsoft.VisualBasic.Math.Interpolation.BezierExtensions.BezierSmoothInterpolation(MAT(1).SerialsData, 100)
 
-        Call datad.SaveTo("./Bezier.csv")
+        'Call datad.SaveTo("./Bezier.csv")
 
-        Dim DFT = New Microsoft.VisualBasic.Math.Signals.TFftAlgorithm(datad)
+        '    Dim DFT = New Microsoft.VisualBasic.Math.Signals.TFftAlgorithm(datad)
         '   Call MAT(1).SerialsData.SaveTo("./vec.csv")
 
-        Call DFT.FourierTransformation()
+        '  Call DFT.FourierTransformation()
 
-        Call DFT.a.SaveTo("./dft.a.csv")
-        Call DFT.b.SaveTo("./dft.b.csv")
-        Call DFT.cosine.SaveTo("./dft.cosine.csv")
-        Call DFT.sine.SaveTo("./dft.sine.csv")
-        Call DFT.xw.SaveTo("./dft.xw.csv")
-        Call DFT.y.SaveTo("./dft.y.csv")
+        '   Call DFT.a.SaveTo("./dft.a.csv")
+        '   Call DFT.b.SaveTo("./dft.b.csv")
+        '   Call DFT.cosine.SaveTo("./dft.cosine.csv")
+        '   Call DFT.sine.SaveTo("./dft.sine.csv")
+        '   Call DFT.xw.SaveTo("./dft.xw.csv")
+        '   Call DFT.y.SaveTo("./dft.y.csv")
 
 
-        Call Microsoft.VisualBasic.Math.Signals.WaveletTransform.FWT(datad)
-        Call datad.SaveTo("./wat.csv")
+        ' Call Microsoft.VisualBasic.Math.Signals.WaveletTransform.FWT(datad)
+        '  Call datad.SaveTo("./wat.csv")
 
         Dim Factors = New List(Of Microsoft.VisualBasic.DataMining.DFL_Driver.I_FactorElement)
         Call Factors.Add(New DataMining.DFL_Driver.I_FactorElement() With {.Weight = 0.5}.set_Quantity(2))

@@ -46,16 +46,16 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace KMeans
 
     ''' <summary>
     ''' 存储在Csv文件里面的数据模型，近似等价于<see cref="DataSet"/>，只不过多带了一个用来描述cluster的<see cref="Cluster"/>属性标签
     ''' </summary>
-    Public Class EntityClusterModel : Inherits DataSet
+    Public Class EntityClusterModel : Inherits DynamicPropertyBase(Of Double)
         Implements INamedValue
+
+        Public Property ID As String Implements INamedValue.Key
 
         ''' <summary>
         ''' 聚类结果的类编号
@@ -71,22 +71,11 @@ Namespace KMeans
             Return ID
         End Function
 
-        Public Shared Function Load(path As String) As Entity()
-            Return Entity.Load(path)
-        End Function
-
         Public Function ToModel() As Entity
             Return New Entity With {
                 .uid = ID,
                 .Properties = Properties.Values.ToArray
             }
-        End Function
-
-        Public Shared Function Load(path As String, map As String) As EntityClusterModel()
-            Dim maps As New Dictionary(Of String, String) From {
-                {map, NameOf(EntityClusterModel.ID)}
-            }
-            Return path.LoadCsv(Of EntityClusterModel)(maps:=maps).ToArray
         End Function
 
         Public Shared Iterator Function FromModel(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of EntityClusterModel)

@@ -199,7 +199,7 @@ Namespace Language.UnixBash
             If grep.__isFile Then
                 Return grep.__grep(source.IterateAllLines)
             Else
-                Return grep.__grep(source.lTokens)
+                Return grep.__grep(source.LineTokens)
             End If
         End Operator
 

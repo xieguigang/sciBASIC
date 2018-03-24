@@ -168,7 +168,7 @@ THE SOFTWARE.",
             Call sb.AppendLine("    ' " & info.Title)
             Call sb.AppendLine("    ' ")
 
-            For Each line As String In info.Brief.lTokens
+            For Each line As String In info.Brief.LineTokens
                 Call sb.AppendLine("    ' " & line)
             Next
 
@@ -180,7 +180,7 @@ THE SOFTWARE.",
             sb.AppendLine("    ' Summaries:")
             sb.AppendLine()
 
-            For Each line As String In VBCodeSignature.SummaryModules(vb:=src).lTokens
+            For Each line As String In VBCodeSignature.SummaryModules(vb:=src).LineTokens
                 Call sb.AppendLine("    ' " & line)
             Next
 

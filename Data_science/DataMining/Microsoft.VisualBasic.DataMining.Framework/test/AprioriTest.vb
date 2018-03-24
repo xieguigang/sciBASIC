@@ -44,6 +44,7 @@ Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.AprioriRules
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Entities
+Imports Microsoft.VisualBasic.DataMining
 
 Module AprioriTest
     Sub Main()

@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::8aff8945bb31377009959a13bb3de6d6, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\AprioriRules\Algorithm\Entities\Rule.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Rule
-    ' 
-    '         Properties: Confidence, SupportX, SupportXY, X, Y
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: CompareTo, Equals, GetHashCode, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Rule
+' 
+'         Properties: Confidence, SupportX, SupportXY, X, Y
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: CompareTo, Equals, GetHashCode, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports System.Data.Linq.Mapping
 Imports Microsoft.VisualBasic.DataMining.AprioriRules.Impl
 
 Namespace AprioriRules.Entities
@@ -63,21 +63,21 @@ Namespace AprioriRules.Entities
 
 #Region "Public Properties"
 
-        <Column("rule.X")> Public ReadOnly Property X As String
+        <Column(Name:="rule.X")> Public ReadOnly Property X As String
             Get
                 Return combination
             End Get
         End Property
 
-        <Column("rule.Y")> Public ReadOnly Property Y As String
+        <Column(Name:="rule.Y")> Public ReadOnly Property Y As String
             Get
                 Return remaining
             End Get
         End Property
 
-        <Column("support(XY)")>
+        <Column(Name:="support(XY)")>
         Public ReadOnly Property SupportXY As Double
-        <Column("support(X)")>
+        <Column(Name:="support(X)")>
         Public ReadOnly Property SupportX As Double
 
         ''' <summary>
@@ -86,7 +86,7 @@ Namespace AprioriRules.Entities
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Column("confidence")> Public ReadOnly Property Confidence As Double
+        <Column(Name:="confidence")> Public ReadOnly Property Confidence As Double
 
         Public Sub New(combination$, remaining$, confidence#, supports As (XY#, X#))
             Me.combination = combination

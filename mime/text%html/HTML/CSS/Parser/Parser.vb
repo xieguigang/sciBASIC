@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::408d510dc25db09123f75088bc448af6, mime\text%html\HTML\CSS\Parser\Parser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module CssParser
-    ' 
-    '         Function: BuildSelector, GetProperty, GetTagWithCSS, IndivisualTags, RemoveWhitespace
-    '                   RemoveWitespaceFormStartAndEnd
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module CssParser
+' 
+'         Function: BuildSelector, GetProperty, GetTagWithCSS, IndivisualTags, RemoveWhitespace
+'                   RemoveWitespaceFormStartAndEnd
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -45,6 +45,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace HTML.CSS.Parser
@@ -90,9 +91,18 @@ Namespace HTML.CSS.Parser
         ''' </summary>
         ''' <param name="CSS">CSS文本内容</param>
         ''' <returns></returns>
-        Public Function GetTagWithCSS(CSS As String) As CSSFile
-            Dim TagWithCSSList As New List(Of Selector)
+        Public Function GetTagWithCSS(CSS$, Optional selectorFilter$ = Nothing) As CSSFile
+            Dim tagWithCSSList As New List(Of Selector)
             Dim IndivisualTag As List(Of String) = IndivisualTags(CSS)
+            Dim filter As Assert(Of String)
+
+            If selectorFilter.StringEmpty Then
+                filter = Function() True
+            Else
+                With New Regex(selectorFilter, RegexICSng)
+                    filter = Function(selector$) .Match(selector).Success
+                End With
+            End If
 
             For Each tag As String In IndivisualTag
                 Dim tagname$() = r.Split(tag, "[{]")
@@ -105,15 +115,17 @@ Namespace HTML.CSS.Parser
                         .ToDictionary(Function(prop) prop.key,
                                       Function(prop) prop.value)
 
-                    TagWithCSSList += New Selector With {
-                        .Selector = selector,
-                        .Properties = properties
-                    }
+                    If filter(selector) Then
+                        tagWithCSSList += New Selector With {
+                            .Selector = selector,
+                            .Properties = properties
+                        }
+                    End If
                 End If
             Next
 
             Return New CSSFile With {
-                .Selectors = TagWithCSSList.ToDictionary
+                .Selectors = tagWithCSSList.ToDictionary
             }
         End Function
 

@@ -1163,7 +1163,7 @@ Public Module StringHelpers
     ''' Set <see cref="Boolean.FalseString"/> to avoid a reader bug in the csv data reader <see cref="BufferedStream"/>
     ''' </param>
     <ExportAPI("LineTokens")>
-    <Extension> Public Function lTokens(s$, Optional trim As Boolean = True) As String()
+    <Extension> Public Function LineTokens(s$, Optional trim As Boolean = True) As String()
         If String.IsNullOrEmpty(s) Then
             Return {}
         End If

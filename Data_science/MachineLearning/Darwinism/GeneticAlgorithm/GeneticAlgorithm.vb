@@ -72,19 +72,19 @@ Namespace Darwinism.GAF
     ''' <summary>
     ''' The GA engine core
     ''' </summary>
-    ''' <typeparam name="C"></typeparam>
-    Public Class GeneticAlgorithm(Of C As Chromosome(Of C))
+    ''' <typeparam name="Chr"></typeparam>
+    Public Class GeneticAlgorithm(Of Chr As Chromosome(Of Chr))
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        ReadOnly _chromosomesComparator As FitnessPool(Of C)
+        ReadOnly _chromosomesComparator As FitnessPool(Of Chr)
 
-        Public ReadOnly Property Fitness As Fitness(Of C)
+        Public ReadOnly Property Fitness As Fitness(Of Chr)
 
         ''' <summary>
         ''' listeners of genetic algorithm iterations (handle callback afterwards)
         ''' </summary>
-        ReadOnly iterationListeners As New List(Of IterartionListener(Of C))
+        ReadOnly iterationListeners As New List(Of IterartionListener(Of Chr))
         ReadOnly seeds As IRandomSeeds
 
         Dim _terminate As Boolean = False
@@ -97,10 +97,10 @@ Namespace Darwinism.GAF
         ''' Calculates the fitness of the mutated chromesome in <paramref name="population"/>
         ''' </param>
         ''' <param name="seeds"></param>
-        Public Sub New(population As Population(Of C), fitnessFunc As Fitness(Of C), Optional seeds As IRandomSeeds = Nothing)
+        Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr), Optional seeds As IRandomSeeds = Nothing)
             Me._Population = population
             Me.Fitness = fitnessFunc
-            Me._chromosomesComparator = New FitnessPool(Of C)(AddressOf fitnessFunc.Calculate)
+            Me._chromosomesComparator = New FitnessPool(Of Chr)(AddressOf fitnessFunc.Calculate)
             Me._Population.SortPopulationByFitness(Me, _chromosomesComparator)
 
             If population.Parallel Then
@@ -115,7 +115,7 @@ Namespace Darwinism.GAF
 
         Public Sub Evolve()
             Dim parentPopulationSize As Integer = Population.Size
-            Dim newPopulation As New Population(Of C)(_Population.Pcompute) With {
+            Dim newPopulation As New Population(Of Chr)(_Population.Pcompute) With {
                 .Parallel = Population.Parallel
             }
             Dim i As Integer = 0
@@ -127,7 +127,7 @@ Namespace Darwinism.GAF
 
             ' 新的突变的种群
             ' 这一步并不是限速的部分
-            For Each c As C In parentPopulationSize% _
+            For Each c As Chr In parentPopulationSize% _
                 .Sequence _
                 .Select(AddressOf __iterate) _
                 .IteratesALL ' 并行化计算每一个突变迭代
@@ -145,12 +145,12 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="i%"></param>
         ''' <returns></returns>
-        Private Iterator Function __iterate(i%) As IEnumerable(Of C)
-            Dim chromosome As C = Population(i)
-            Dim mutated As C = chromosome.Mutate()   ' 突变
+        Private Iterator Function __iterate(i%) As IEnumerable(Of Chr)
+            Dim chromosome As Chr = Population(i)
+            Dim mutated As Chr = chromosome.Mutate()   ' 突变
             Dim rnd As Random = seeds()
-            Dim otherChromosome As C = Population.Random(rnd)  ' 突变体和其他个体随机杂交
-            Dim crossovered As IList(Of C) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
+            Dim otherChromosome As Chr = Population.Random(rnd)  ' 突变体和其他个体随机杂交
+            Dim crossovered As IList(Of Chr) = mutated.Crossover(otherChromosome) ' chromosome.Crossover(otherChromosome)
 
             ' --------- 新修改的
             otherChromosome = Population.Random(rnd)
@@ -159,7 +159,7 @@ Namespace Darwinism.GAF
 
             Yield mutated
 
-            For Each c As C In crossovered
+            For Each c As Chr In crossovered
                 Yield c
             Next
         End Function
@@ -175,7 +175,7 @@ Namespace Darwinism.GAF
                 Call Evolve()
                 _Iteration = i
 
-                For Each l As IterartionListener(Of C) In iterationListeners
+                For Each l As IterartionListener(Of Chr) In iterationListeners
                     Call l.Update(Me)
                 Next
             Next
@@ -187,15 +187,15 @@ Namespace Darwinism.GAF
             Me._terminate = True
         End Sub
 
-        Public ReadOnly Property Population As Population(Of C)
+        Public ReadOnly Property Population As Population(Of Chr)
 
-        Public ReadOnly Property Best As C
+        Public ReadOnly Property Best As Chr
             Get
                 Return Population(0)
             End Get
         End Property
 
-        Public ReadOnly Property Worst As C
+        Public ReadOnly Property Worst As Chr
             Get
                 Return Population(Population.Size - 1)
             End Get
@@ -208,15 +208,15 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         Public Property ParentChromosomesSurviveCount As Integer = ALL_PARENTAL_CHROMOSOMES
 
-        Public Sub addIterationListener(listener As IterartionListener(Of C))
+        Public Sub addIterationListener(listener As IterartionListener(Of Chr))
             Me.iterationListeners.Add(listener)
         End Sub
 
-        Public Sub removeIterationListener(listener As IterartionListener(Of C))
+        Public Sub removeIterationListener(listener As IterartionListener(Of Chr))
             iterationListeners.Remove(listener)
         End Sub
 
-        Public Function GetFitness(chromosome As C) As Double
+        Public Function GetFitness(chromosome As Chr) As Double
             Return _chromosomesComparator.Fitness(chromosome)
         End Function
 

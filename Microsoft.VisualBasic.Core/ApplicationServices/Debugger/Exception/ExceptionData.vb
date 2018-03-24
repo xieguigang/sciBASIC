@@ -79,7 +79,7 @@ Namespace ApplicationServices.Debugging.Diagnostics
 
         Public Shared Function GetCurrentStackTrace() As StackFrame()
             Return Environment.StackTrace _
-                .lTokens _
+                .LineTokens _
                 .Where(Function(s) Not s.StringEmpty) _
                 .Skip(3) _
                 .Select(Function(s)

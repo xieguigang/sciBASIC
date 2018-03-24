@@ -125,7 +125,7 @@ Public Module DataImports
     ''' <returns></returns>
     <Extension>
     Public Function ImportsData(Of T As Class)(text$, Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As T()
-        Return ImportsData(text.lTokens, delimiter) _
+        Return ImportsData(text.LineTokens, delimiter) _
             .AsDataSource(Of T)(maps:=maps)
     End Function
 

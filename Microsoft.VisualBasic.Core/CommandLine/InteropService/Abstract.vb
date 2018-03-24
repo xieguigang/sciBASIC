@@ -116,7 +116,7 @@ Namespace CommandLine.InteropService
                 .Trim(" "c, ASCII.TAB, ASCII.CR, ASCII.LF)
             Dim logs As List(Of String()) = err _
                 .ReadAllText(throwEx:=False, suppress:=True) _
-                .lTokens _
+                .LineTokens _
                 .FlagSplit(Function(s) s.IsPattern("[=]+")) _
                 .AsList
 

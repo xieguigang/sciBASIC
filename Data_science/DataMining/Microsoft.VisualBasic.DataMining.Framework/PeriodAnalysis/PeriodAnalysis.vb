@@ -224,45 +224,5 @@ Namespace Serials.PeriodAnalysis
 
             Return Sample
         End Function
-
-        <ExportAPI("Data.ConvertToCsv")>
-        Public Function ConvertData(sample As SamplingData) As IO.File
-            Dim DataFile As New IO.File
-            Dim Row As New IO.RowObject From {"Sampling"}
-
-            For i As Integer = 0 To sample.TimePoints
-                Dim n = TimePoint.GetData(i, sample.Peaks)
-                If n = 0.0R Then
-                    n = TimePoint.GetData(i, sample.Trough)
-                End If
-                Call Row.Add(n)
-            Next
-
-            Call DataFile.Add(Row)
-            Row = New IO.RowObject From {"Filted"}
-
-            Dim avg = (From p In sample.FiltedData Select p.Value).Average
-            For i As Integer = 0 To sample.TimePoints
-                Dim n = TimePoint.GetData(i, sample.FiltedData)
-                If n = 0.0R Then
-                    n = avg
-                End If
-                Call Row.Add(n)
-            Next
-            Call DataFile.Add(Row)
-
-            Return DataFile
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="path"></param>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        <ExportAPI("Load.From.Csv")>
-        Public Function LoadDataFromCsv(path As String) As SerialsVarialble()
-            Return SerialsVarialble.Load(path)
-        End Function
     End Module
 End Namespace

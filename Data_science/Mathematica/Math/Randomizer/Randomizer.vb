@@ -78,7 +78,7 @@ Public Class Randomizer : Inherits Random
     Shared ReadOnly digits%()()
 
     Shared Sub New()
-        Dim lines$() = My.Resources.deviates.lTokens
+        Dim lines$() = My.Resources.deviates.LineTokens
 
         deviates# = LinqAPI.Exec(Of Double()) <=
             From line As String
@@ -90,7 +90,7 @@ Public Class Randomizer : Inherits Random
                 .ToArray
             Select n
 
-        lines$ = My.Resources.digits.lTokens
+        lines$ = My.Resources.digits.LineTokens
 
         digits% = LinqAPI.Exec(Of Integer()) <=
             From line As String

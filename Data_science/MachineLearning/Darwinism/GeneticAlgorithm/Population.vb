@@ -76,12 +76,12 @@ Namespace Darwinism.GAF
 
     Public Delegate Function ParallelComputing(Of chr As Chromosome(Of chr))(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
 
-    Public Class Population(Of chr As Chromosome(Of chr))
-        Implements IEnumerable(Of chr)
+    Public Class Population(Of Chr As Chromosome(Of Chr))
+        Implements IEnumerable(Of Chr)
 
         Const DEFAULT_NUMBER_OF_CHROMOSOMES As Integer = 32
 
-        Dim chromosomes As New List(Of chr)(DEFAULT_NUMBER_OF_CHROMOSOMES)
+        Dim chromosomes As New List(Of Chr)(DEFAULT_NUMBER_OF_CHROMOSOMES)
 
         ''' <summary>
         ''' 是否使用并行模式在排序之前来计算出fitness
@@ -93,7 +93,7 @@ Namespace Darwinism.GAF
         ''' Add chromosome
         ''' </summary>
         ''' <param name="chromosome"></param>
-        Public Sub Add(chromosome As chr)
+        Public Sub Add(chromosome As Chr)
             Call chromosomes.Add(chromosome)
         End Sub
 
@@ -111,7 +111,7 @@ Namespace Darwinism.GAF
         ''' Gets random chromosome
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Random(rnd As Random) As chr
+        Public ReadOnly Property Random(rnd As Random) As Chr
             Get
                 Dim numOfChromosomes As Integer = chromosomes.Count
                 ' TODO improve random generator
@@ -126,14 +126,14 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="index%"></param>
         ''' <returns></returns>
-        Default Public ReadOnly Property Item(index%) As chr
+        Default Public ReadOnly Property Item(index%) As Chr
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return chromosomes(index)
             End Get
         End Property
 
-        Public Sub SortPopulationByFitness(comparator As IComparer(Of chr))
+        Public Sub SortPopulationByFitness(comparator As IComparer(Of Chr))
             Call Arrays.Shuffle(chromosomes)
             Call chromosomes.Sort(comparator)
         End Sub
@@ -144,8 +144,8 @@ Namespace Darwinism.GAF
         ''' <param name="GA"></param>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        Private Shared Function GA_PLinq(GA As GeneticAlgorithm(Of chr), source As NamedValue(Of chr)()) As IEnumerable(Of NamedValue(Of Double))
-            Return From x As NamedValue(Of chr)
+        Private Shared Function GA_PLinq(GA As GeneticAlgorithm(Of Chr), source As NamedValue(Of Chr)()) As IEnumerable(Of NamedValue(Of Double))
+            Return From x As NamedValue(Of Chr)
                    In source.AsParallel
                    Let fit As Double = GA.Fitness.Calculate(x.Value)
                    Select New NamedValue(Of Double) With {
@@ -154,9 +154,9 @@ Namespace Darwinism.GAF
                    }
         End Function
 
-        Friend ReadOnly Pcompute As ParallelComputing(Of chr) = AddressOf GA_PLinq
+        Friend ReadOnly Pcompute As ParallelComputing(Of Chr) = AddressOf GA_PLinq
 
-        Public Sub New(Optional parallel As ParallelComputing(Of chr) = Nothing)
+        Public Sub New(Optional parallel As ParallelComputing(Of Chr) = Nothing)
             If Not parallel Is Nothing Then
                 Pcompute = parallel
             End If
@@ -167,12 +167,12 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="GA"></param>
         ''' <param name="comparator"></param>
-        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of chr), comparator As FitnessPool(Of chr))
+        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
             Call Arrays.Shuffle(chromosomes)
 
             If Parallel Then
                 Dim source = chromosomes _
-                    .Select(Function(x) New NamedValue(Of chr) With {
+                    .Select(Function(x) New NamedValue(Of Chr) With {
                         .Name = x.ToString,
                         .Value = x
                     }) _
@@ -189,18 +189,18 @@ Namespace Darwinism.GAF
                 Next
             End If
 
-            chromosomes = (From c In chromosomes Order By comparator.Fitness(c) Ascending).AsList
+            chromosomes = (From c In chromosomes.AsParallel Order By comparator.Fitness(c) Ascending).AsList
         End Sub
 
         ''' <summary>
         ''' shortening population till specific number
         ''' </summary>
         Public Sub Trim(len As Integer)
-            chromosomes = chromosomes.sublist(0, len)
+            chromosomes = chromosomes.SubList(0, len)
         End Sub
 
-        Public Iterator Function GetEnumerator() As IEnumerator(Of chr) Implements IEnumerable(Of chr).GetEnumerator
-            For Each x As chr In chromosomes
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Chr) Implements IEnumerable(Of Chr).GetEnumerator
+            For Each x As Chr In chromosomes
                 Yield x
             Next
         End Function

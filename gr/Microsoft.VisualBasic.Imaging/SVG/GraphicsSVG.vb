@@ -550,14 +550,17 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
             DrawLine(pen, pt1.X, pt1.Y, pt2.X, pt2.Y)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
             DrawLine(pen, pt1.X, pt1.Y, pt2.X, pt2.Y)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawLine(pen As Pen, x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
             DrawLine(pen, x1:=CSng(x1), x2:=CSng(x2), y1:=CSng(y1), y2:=CSng(y2))
         End Sub
@@ -604,6 +607,7 @@ Namespace SVG
             End With
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawPie(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
             Call DrawPie(pen, x, y, width, height, CSng(startAngle), CSng(sweepAngle))
         End Sub
@@ -621,6 +625,7 @@ Namespace SVG
             Call __svgData.Add(polygon)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawPolygon(pen As Pen, points() As Point)
             DrawPolygon(pen, points.Select(Function(pt) pt.PointF).ToArray)
         End Sub
@@ -643,6 +648,7 @@ Namespace SVG
             Call __svgData.Add(rectangle)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
             DrawRectangle(pen, CSng(x), CSng(y), CSng(width), CSng(height))
         End Sub
@@ -689,6 +695,7 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
             Call DrawString(s, font, brush, New PointF(x, y))
         End Sub
@@ -914,6 +921,7 @@ Namespace SVG
             End With
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
             Call FillPie(brush, CSng(x), CSng(y), CSng(width), CSng(height), CSng(startAngle), CSng(sweepAngle))
         End Sub
@@ -924,6 +932,7 @@ Namespace SVG
             Call __svgData.Add(path)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point)
             Call FillPolygon(brush, points.PointF.ToArray)
         End Sub
@@ -955,6 +964,7 @@ Namespace SVG
             End With
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub FillRectangle(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
             FillRectangle(brush, CSng(x), CSng(y), CSng(width), CSng(height))
         End Sub
@@ -1162,38 +1172,47 @@ Namespace SVG
             Throw New NotImplementedException()
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
             Return __graphics.MeasureCharacterRanges(text, font, layoutRect, stringFormat)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font) As SizeF
             Return __graphics.MeasureString(text, font)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, width As Integer) As SizeF
             Return __graphics.MeasureString(text, font, width)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
             Return __graphics.MeasureString(text, font, layoutArea)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, width As Integer, format As StringFormat) As SizeF
             Return __graphics.MeasureString(text, font, width, format)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, origin As PointF, stringFormat As StringFormat) As SizeF
             Return __graphics.MeasureString(text, font, origin, stringFormat)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat) As SizeF
             Return __graphics.MeasureString(text, font, layoutArea, stringFormat)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF, stringFormat As StringFormat, ByRef charactersFitted As Integer, ByRef linesFilled As Integer) As SizeF
             Return __graphics.MeasureString(text, font, layoutArea, stringFormat, charactersFitted, linesFilled)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawRectangle(pen As Pen, rect As RectangleF)
             Call Me.DrawRectangles(pen, {rect})
         End Sub

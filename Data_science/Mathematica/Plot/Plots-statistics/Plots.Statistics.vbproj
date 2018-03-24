@@ -305,9 +305,9 @@
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
       <Name>Microsoft.VisualBasic.DataMining.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Graph\Graph.vbproj">
-      <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
-      <Name>Graph</Name>
+    <ProjectReference Include="..\..\..\Graph\GraphTheory.vbproj">
+      <Project>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</Project>
+      <Name>GraphTheory</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Math\DataFittings\DataFittings.vbproj">
       <Project>{fc125b0d-1942-496f-b502-9c0eb80e35b6}</Project>
