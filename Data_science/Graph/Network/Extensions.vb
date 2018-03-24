@@ -122,5 +122,27 @@ Namespace Network
                 Yield subnetwork
             Loop
         End Function
+
+        <Extension>
+        Public Function ComputeDegreeData(edges As IEnumerable(Of Edge)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
+            Dim [in] As New Dictionary(Of String, Integer)
+            Dim out As New Dictionary(Of String, Integer)
+            Dim count = Sub(node$, ByRef table As Dictionary(Of String, Integer))
+                            If table.ContainsKey(node) Then
+                                table(node) += 1
+                            Else
+                                table.Add(node, 1)
+                            End If
+                        End Sub
+            Dim countIn = Sub(node$) Call count(node, [in])
+            Dim countOut = Sub(node$) Call count(node, out)
+
+            For Each edge As Edge In edges
+                Call countIn(edge.U.Label)
+                Call countOut(edge.V.Label)
+            Next
+
+            Return ([in], out)
+        End Function
     End Module
 End Namespace
