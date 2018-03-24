@@ -90,7 +90,7 @@ Namespace Graph
     ''' <summary>
     ''' <see cref="Node.Label"/> -> <see cref="INamedValue.Key"/>
     ''' </summary>
-    Public Class Node : Inherits Data.GraphTheory.Vertex
+    Public Class Node : Inherits GraphTheory.Network.Node
         Implements INamedValue
         Implements IGraphValueContainer(Of NodeData)
 

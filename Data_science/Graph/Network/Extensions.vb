@@ -53,21 +53,21 @@ Namespace Network
         ''' <param name="network"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function EndPoints(network As NetworkGraph) As (input As Node(), output As Node())
+        Public Function EndPoints(Of Node As {New, Network.Node}, Edge As {New, Network.Edge(Of Node)})(network As NetworkGraph(Of Node, Edge)) As (input As Node(), output As Node())
             Dim inputs As New List(Of Node)(network.Vertex)
             Dim output As New List(Of Node)(inputs)
             Dim removes = Sub(ByRef list As List(Of Node), getNode As Func(Of Edge, Node))
-                              For Each edge As Edge In network
-                                  Dim node = getNode(edge)
+                              For Each link As Edge In network
+                                  Dim n = getNode(link)
 
-                                  If list.IndexOf(node) > -1 Then
-                                      Call list.Remove(node)
+                                  If list.IndexOf(n) > -1 Then
+                                      Call list.Remove(n)
                                   End If
                               Next
                           End Sub
 
-            Call removes(inputs, Function(edge) edge.V)  ' 如果是target(output)就removes掉
-            Call removes(output, Function(edge) edge.U)  ' 如果是source(inputs)就removes掉
+            Call removes(inputs, Function(e) e.V)  ' 如果是target(output)就removes掉
+            Call removes(output, Function(e) e.U)  ' 如果是source(inputs)就removes掉
 
             Return (inputs, output)
         End Function
@@ -78,17 +78,17 @@ Namespace Network
         ''' <param name="network"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function IteratesSubNetworks(network As NetworkGraph) As IEnumerable(Of NetworkGraph)
-            Dim popEdge = Function(node As Node) As Edge
+        Public Iterator Function IteratesSubNetworks(Of Node As {New, Network.Node}, U As {New, Network.Edge(Of Node)})(network As NetworkGraph(Of Node, U)) As IEnumerable(Of NetworkGraph(Of Node, U))
+            Dim popEdge = Function(n As Node) As U
                               Return network _
-                                  .Where(Function(e) e.U Is node OrElse e.V Is node) _
+                                  .Where(Function(e) e.U Is n OrElse e.V Is n) _
                                   .FirstOrDefault
                           End Function
             Dim edges = network.edges.Values.AsList
 
             Do While edges > 0
-                Dim subnetwork As New NetworkGraph
-                Dim edge As Edge = edges.First
+                Dim subnetwork As New NetworkGraph(Of Node, U)
+                Dim edge As U = edges.First
                 Dim list As New List(Of Node)
 
                 Call list.Add(edge.U)
@@ -123,8 +123,7 @@ Namespace Network
             Loop
         End Function
 
-        <Extension>
-        Public Function ComputeDegreeData(edges As IEnumerable(Of Edge)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
+        Public Function ComputeDegreeData(Of T As {New, Network.Node}, Edge As {New, Network.Edge(Of T)})(edges As IEnumerable(Of Edge)) As ([in] As Dictionary(Of String, Integer), out As Dictionary(Of String, Integer))
             Dim [in] As New Dictionary(Of String, Integer)
             Dim out As New Dictionary(Of String, Integer)
             Dim count = Sub(node$, ByRef table As Dictionary(Of String, Integer))
@@ -137,9 +136,9 @@ Namespace Network
             Dim countIn = Sub(node$) Call count(node, [in])
             Dim countOut = Sub(node$) Call count(node, out)
 
-            For Each edge As Edge In edges
-                Call countIn(edge.U.Label)
-                Call countOut(edge.V.Label)
+            For Each link As Edge In edges
+                Call countIn(link.U.Label)
+                Call countOut(link.V.Label)
             Next
 
             Return ([in], out)
