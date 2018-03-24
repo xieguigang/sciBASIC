@@ -300,6 +300,7 @@
     <Compile Include="Model\Grid.vb" />
     <Compile Include="Model\TimeSerialsGraph.vb" />
     <Compile Include="NamespaceDoc.vb" />
+    <Compile Include="Network\NetworkGraph.vb" />
     <Compile Include="Network\Node.vb" />
     <Compile Include="Network\Edge.vb" />
     <Compile Include="Network\NamespaceDoc.vb" />
