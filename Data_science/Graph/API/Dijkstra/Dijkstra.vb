@@ -60,7 +60,7 @@ Namespace Dijkstra
         ''' 存在方向的
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Links() As Edge()
+        Public ReadOnly Property Links() As VertexEdge()
         Public ReadOnly Property Points() As Vertex()
 
         ''' <summary>
@@ -122,11 +122,11 @@ Namespace Dijkstra
                 Next
 
                 ' Select all connections where the startposition is the location to Process
-                Dim selectedConnections = From c As Edge In _Links Where c.U Is locationToProcess Select c
+                Dim selectedConnections = From c As VertexEdge In _Links Where c.U Is locationToProcess Select c
                 Dim cost#
 
                 ' Iterate through all connections and search for a connection which is shorter
-                For Each conn As Edge In selectedConnections
+                For Each conn As VertexEdge In selectedConnections
                     cost = conn.Weight + shortestPaths(conn.U).Cost
 
                     If shortestPaths(conn.V).Cost > cost Then

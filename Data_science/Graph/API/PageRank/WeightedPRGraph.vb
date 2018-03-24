@@ -107,7 +107,7 @@ Namespace Analysis.PageRank
         ''' <returns></returns>
         Public Overrides Function AddEdge(u As String, v As String, Optional weight As Double = 0) As WeightedPRGraph
             Dim j% = vertices(v).ID
-            Dim edgeKey$ = Edge.EdgeKey(vertices(u).ID, j)
+            Dim edgeKey$ = VertexEdge.EdgeKey(vertices(u).ID, j)
 
             vertices(u).Outbound += weight
 

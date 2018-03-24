@@ -3,7 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports V = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 
-Public Class Edge : Inherits Edge(Of V)
+Public Class VertexEdge : Inherits Edge(Of V)
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function EdgeKey(U%, V%) As String
@@ -39,7 +39,7 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
     Friend Property Key As String Implements IKeyedEntity(Of String).Key
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return Edge.EdgeKey(U.ID, V.ID)
+            Return VertexEdge.EdgeKey(U.ID, V.ID)
         End Get
         Set(value As String)
             ' DO Nothing

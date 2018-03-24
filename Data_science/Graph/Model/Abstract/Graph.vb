@@ -262,6 +262,6 @@ End Class
 ''' pairs Of vertices. Unless explicitly stated otherwise, we assume that the graph Is simple,
 ''' that Is, it has no multiple edges And no self-loops.
 ''' </summary>
-Public Class Graph : Inherits Graph(Of TV, Edge, Graph)
+Public Class Graph : Inherits Graph(Of TV, VertexEdge, Graph)
 
 End Class
