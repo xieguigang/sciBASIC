@@ -111,14 +111,14 @@ Public Module Extensions
 
     <Extension>
     Private Function translateRegion(left%, regionSize As Size, size As Size) As Rectangle
-        Dim width = (regionSize.Width - size.Width)
+        Dim width = (size.Width - regionSize.Width)
         Dim x = left Mod width
         Dim y = left \ width
 
         Return New Rectangle With {
             .X = x,
             .Y = y,
-            .Size = size
+            .Size = regionSize
         }
     End Function
 
