@@ -56,6 +56,11 @@ Namespace Imaging.Math2D
 
     <Package("GDI.Transform")> Public Module GeomTransform
 
+        ''' <summary>
+        ''' Returns a size value that its width equals height. 
+        ''' </summary>
+        ''' <param name="width%"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function SquareSize(width%) As Size
@@ -233,12 +238,24 @@ Namespace Imaging.Math2D
             Return Distance(a.X, a.Y, b.X, b.Y)
         End Function
 
+        ''' <summary>
+        ''' 计算任意两点之间的欧几里得距离
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Distance(a As PointF, b As PointF) As Double
             Return Distance(a.X, a.Y, b.X, b.Y)
         End Function
 
+        ''' <summary>
+        ''' 计算每一个顶点到同一个锚点的距离值的集合
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <param name="anchor"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Distance(points As IEnumerable(Of Point), anchor As Point) As Double()
@@ -247,6 +264,12 @@ Namespace Imaging.Math2D
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 函数返回角度
+        ''' </summary>
+        ''' <param name="p1"></param>
+        ''' <param name="p2"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function CalculateAngle(p1 As PointF, p2 As PointF) As Double
             Dim xDiff As Single = p2.X - p1.X
@@ -254,6 +277,12 @@ Namespace Imaging.Math2D
             Return sys.Atan2(yDiff, xDiff) * 180.0 / PI
         End Function
 
+        ''' <summary>
+        ''' 函数返回角度
+        ''' </summary>
+        ''' <param name="p1"></param>
+        ''' <param name="p2"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function CalculateAngle(p1 As Point, p2 As Point) As Double
             Return CalculateAngle(p1.PointF, p2.PointF)
