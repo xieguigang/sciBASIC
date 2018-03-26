@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Scanner
@@ -46,5 +47,27 @@ Public Module Scanner
                 Yield vector.AsVector
             Next
         Next
+    End Function
+
+    <Extension>
+    Public Function DrawRegion(pixels As Vector, size As Size) As Image
+        Using g = size.CreateGDIDevice
+            Dim i As int = 0
+
+            For y As Integer = 0 To size.Height - 1
+                For x As Integer = 0 To size.Width - 1
+                    Select Case pixels(++i)
+                        Case 0R
+                            ' white
+                        Case 1.0R
+                            Call g.DrawRectangle(Pens.Black, New Rectangle(x, y, 1, 1))
+                        Case -1.0R
+                            Call g.DrawRectangle(Pens.Red, New Rectangle(x, y, 1, 1))
+                    End Select
+                Next
+            Next
+
+            Return g.ImageResource
+        End Using
     End Function
 End Module

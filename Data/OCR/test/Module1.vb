@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Language
 Imports OCR
 
 Module Module1
@@ -37,6 +38,17 @@ Module Module1
             Call g.DrawString("0708665", font, Brushes.Black, New Point(50, font.Height + 60))
 
             view = g.ImageResource
+        End Using
+
+        Using buffer = BitmapBuffer.FromImage(view)
+            Dim objSize = obj.Size
+            Dim i As int = 0
+
+            For Each region In buffer.RegionScan(Color.White, objSize)
+                Call region.DrawRegion(objSize).SaveAs($"./dddddd/{++i}.png")
+            Next
+
+            Pause()
         End Using
 
         Dim locations = view.FindObjects(obj).ToArray
