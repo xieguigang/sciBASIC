@@ -49,9 +49,11 @@ Imports sys = System.Math
 Namespace Imaging.Math2D
 
     Public Class PolygonD
+
         Public npoints As Integer = 0
         Public xpoints As Double() = New Double(3) {}
         Public ypoints As Double() = New Double(3) {}
+
         Protected Friend bounds1 As Vector2D = Nothing
         Protected Friend bounds2 As Vector2D = Nothing
 

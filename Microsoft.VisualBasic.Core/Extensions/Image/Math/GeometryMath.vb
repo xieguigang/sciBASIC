@@ -236,104 +236,24 @@ Namespace Imaging.Math2D
             '  (4) Apply the discovered position to line A-B in the original coordinate system.
             Return Intersection.Intersection
         End Function
-
-        ''' <summary>
-        ''' 几何体之间的关系类型
-        ''' </summary>
-        Public Enum Intersection As Byte
-            None
-            Tangent
-            Intersection
-            Containment
-        End Enum
     End Module
 
-    Public Structure Line
-
-        Public Shared ReadOnly Empty As New Line
-
-        Public Sub New(p1 As PointF, p2 As PointF)
-            Me.P1 = p1
-            Me.P2 = p2
-        End Sub
-
-        Public P1 As PointF
-        Public P2 As PointF
-
-        Public Property X1() As Single
-            Get
-                Return P1.X
-            End Get
-            Set
-                P1.X = Value
-            End Set
-        End Property
-
-        Public Property X2() As Single
-            Get
-                Return P2.X
-            End Get
-            Set
-                P2.X = Value
-            End Set
-        End Property
-
-        Public Property Y1() As Single
-            Get
-                Return P1.Y
-            End Get
-            Set
-                P1.Y = Value
-            End Set
-        End Property
-
-        Public Property Y2() As Single
-            Get
-                Return P2.Y
-            End Get
-            Set
-                P2.Y = Value
-            End Set
-        End Property
-    End Structure
-
-    Public Structure Polygon : Implements IEnumerable(Of PointF)
-
-        Public Sub New(points As PointF())
-            Me.Points = points
-        End Sub
-
-        Public Points As PointF()
-
-        Public ReadOnly Property Length() As Integer
-            Get
-                Return Points.Length
-            End Get
-        End Property
-
-        Default Public Property Item(index As Integer) As PointF
-            Get
-                Return Points(index)
-            End Get
-            Set
-                Points(index) = Value
-            End Set
-        End Property
-
-        Public Shared Widening Operator CType(polygon As Polygon) As PointF()
-            Return polygon.Points
-        End Operator
-
-        Public Shared Widening Operator CType(points As PointF()) As Polygon
-            Return New Polygon(points)
-        End Operator
-
-        Private Function IEnumerable_GetEnumerator() As IEnumerator(Of PointF) Implements IEnumerable(Of PointF).GetEnumerator
-            Return DirectCast(Points.GetEnumerator(), IEnumerator(Of PointF))
-        End Function
-
-        Public Function GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Return Points.GetEnumerator()
-        End Function
-    End Structure
+    ''' <summary>
+    ''' 几何体之间的关系类型
+    ''' </summary>
+    Public Enum Intersection As Byte
+        None
+        ''' <summary>
+        ''' 正切
+        ''' </summary>
+        Tangent
+        ''' <summary>
+        ''' 相交
+        ''' </summary>
+        Intersection
+        ''' <summary>
+        ''' 包围
+        ''' </summary>
+        Containment
+    End Enum
 End Namespace

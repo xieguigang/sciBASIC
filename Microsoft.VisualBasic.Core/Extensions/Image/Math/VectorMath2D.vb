@@ -46,8 +46,8 @@ Imports sys = System.Math
 
 Namespace Imaging.Math2D
 
+    Public Class VectorMath2D
 
-    Public Class VecMath2D
         Public Shared Function add(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Vector2D
             Return New Vector2D(paramVector2D1.x + paramVector2D2.x, paramVector2D1.y + paramVector2D2.y)
         End Function
@@ -61,8 +61,8 @@ Namespace Imaging.Math2D
         End Function
 
         Public Shared Function absAngle(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Double
-            Dim d1 As Double = paramVector2D1.length()
-            Dim d2 As Double = paramVector2D2.length()
+            Dim d1 As Double = paramVector2D1.Length()
+            Dim d2 As Double = paramVector2D2.Length()
             If d1 = 0.0 Then
                 Return 0.0
             End If
