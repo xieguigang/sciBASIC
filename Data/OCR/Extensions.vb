@@ -2,9 +2,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.SmithWaterman
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Extensions
@@ -19,60 +19,11 @@ Public Module Extensions
     <Extension> Public Function ToVector(image As Image, Optional size As Size = Nothing, Optional background As Color = Nothing) As Vector
         Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(image)
             If size.IsEmpty Then
-                Return bitmap.fullScan(background Or blank)
+                Return bitmap.FullScan(background Or blank)
             Else
-                Return bitmap.regionScan(background Or blank, size)
+                Return bitmap.RegionScan(background Or blank, size).IteratesALL.AsVector
             End If
         End Using
-    End Function
-
-    <Extension>
-    Private Function regionScan(bitmap As BitmapBuffer, blank As Color, size As Size) As Vector
-        Dim vector As New List(Of Double)
-
-        For top As Integer = 0 To bitmap.Height - 1 - size.Height
-            For left As Integer = 0 To bitmap.Width - 1 - size.Width
-
-                For y As Integer = top To size.Height - 1
-                    For x As Integer = left To size.Width - 1
-                        Dim pixel = bitmap.GetPixel(x, y)
-
-                        If GDIColors.Equals(pixel, blank) Then
-                            Call vector.Add(0)
-                        Else
-                            Call vector.Add(1)
-                        End If
-                    Next
-
-                    ' Call vector.Add(-1)
-                Next
-
-            Next
-        Next
-
-        Return vector.AsVector
-    End Function
-
-    <Extension>
-    Private Function fullScan(bitmap As BitmapBuffer, blank As Color) As Vector
-        Dim vector As New List(Of Double)
-
-        ' 逐行扫描
-        For y As Integer = 0 To bitmap.Height - 1
-            For x As Integer = 0 To bitmap.Width - 1
-                Dim pixel = bitmap.GetPixel(x, y)
-
-                If GDIColors.Equals(pixel, blank) Then
-                    Call vector.Add(0)
-                Else
-                    Call vector.Add(1)
-                End If
-            Next
-
-            ' Call vector.Add(-1)
-        Next
-
-        Return vector.AsVector
     End Function
 
     ''' <summary>
@@ -91,12 +42,16 @@ Public Module Extensions
             Function(a, b)
                 If a = b Then
                     Return 1
+                ElseIf a = -1.0R OrElse b = -1.0R Then
+                    Return -1
                 Else
                     Return 0
                 End If
             End Function
         Dim local As New GSW(Of Double)(subject, query, equals, AddressOf asChar)
-        Dim objects = local.GetMatches(local.MaxScore * cutoff)
+        Dim objects = local.GetMatches(local.MaxScore * cutoff) _
+                           .Select(Function(m) m - 1) _
+                           .ToArray
         Dim viewSize = view.Size
 
         For Each region As Match In objects
