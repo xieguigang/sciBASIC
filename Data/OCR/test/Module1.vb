@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports OCR
 
 Module Module1
@@ -22,7 +23,14 @@ Module Module1
             view = g.ImageResource
         End Using
 
-        Dim locations = view.FindObjects(obj).ToArray
+        Dim locations = view.FindObjects(obj).Where(Function(r) r.Right <= view.Width AndAlso r.Bottom <= view.Height).ToArray
+
+        Call obj.SaveAs("./obj.png")
+        Call view.SaveAs("./view.png")
+
+        For Each window In locations
+            Call view.ImageCrop(window).SaveAs($"./sub/{window.ToString}.png")
+        Next
 
         Pause()
     End Sub
