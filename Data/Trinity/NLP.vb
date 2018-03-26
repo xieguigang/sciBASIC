@@ -41,10 +41,8 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
 Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.PageRank
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' 从现有的理论和技术现状看，通用的、高质量的自然语言处理系统，仍然是较长期的努力目标，
