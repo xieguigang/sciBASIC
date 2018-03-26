@@ -4,33 +4,73 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.SmithWaterman
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Extensions
+
+    ReadOnly blank As DefaultValue(Of Color) = Color.White
 
     ''' <summary>
     ''' 
     ''' </summary>
     ''' <param name="image">Should be black and white</param>
     ''' <returns></returns>
-    <Extension> Public Function ToVector(image As Image) As Vector
+    <Extension> Public Function ToVector(image As Image, Optional size As Size = Nothing, Optional background As Color = Nothing) As Vector
+        Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(image)
+            If size.IsEmpty Then
+                Return bitmap.fullScan(background Or blank)
+            Else
+                Return bitmap.regionScan(background Or blank, size)
+            End If
+        End Using
+    End Function
+
+    <Extension>
+    Private Function regionScan(bitmap As BitmapBuffer, blank As Color, size As Size) As Vector
         Dim vector As New List(Of Double)
 
-        Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(image)
-            For x As Integer = 0 To bitmap.Width - 1
-                For y As Integer = 0 To bitmap.Height - 1
-                    Dim pixel = bitmap.GetPixel(x, y)
+        For top As Integer = 0 To bitmap.Height - 1 - size.Height
+            For left As Integer = 0 To bitmap.Width - 1 - size.Width
 
-                    If GDIColors.Equals(pixel, Color.White) Then
-                        vector.Add(0)
-                    Else
-                        vector.Add(1)
-                    End If
+                For y As Integer = top To size.Height - 1
+                    For x As Integer = left To size.Width - 1
+                        Dim pixel = bitmap.GetPixel(x, y)
+
+                        If GDIColors.Equals(pixel, blank) Then
+                            Call vector.Add(0)
+                        Else
+                            Call vector.Add(1)
+                        End If
+                    Next
+
+                    Call vector.Add(-1)
                 Next
 
-                vector.Add(-1)
             Next
-        End Using
+        Next
+
+        Return vector.AsVector
+    End Function
+
+    <Extension>
+    Private Function fullScan(bitmap As BitmapBuffer, blank As Color) As Vector
+        Dim vector As New List(Of Double)
+
+        ' 逐行扫描
+        For y As Integer = 0 To bitmap.Height - 1
+            For x As Integer = 0 To bitmap.Width - 1
+                Dim pixel = bitmap.GetPixel(x, y)
+
+                If GDIColors.Equals(pixel, blank) Then
+                    Call vector.Add(0)
+                Else
+                    Call vector.Add(1)
+                End If
+            Next
+
+            Call vector.Add(-1)
+        Next
 
         Return vector.AsVector
     End Function
@@ -44,8 +84,9 @@ Public Module Extensions
     ''' 
     <Extension>
     Public Iterator Function FindObjects(view As Image, obj As Image, Optional cutoff# = 0.95) As IEnumerable(Of Rectangle)
+        Dim size As Size = obj.Size
         Dim query = obj.ToVector
-        Dim subject = view.ToVector
+        Dim subject = view.ToVector(size)
         Dim equals As ISimilarity(Of Double) =
             Function(a, b)
                 If a = b Then
@@ -56,14 +97,21 @@ Public Module Extensions
             End Function
         Dim local As New GSW(Of Double)(query, subject, equals, AddressOf asChar)
         Dim objects = local.GetMatches(local.MaxScore * cutoff)
+        Dim viewSize = view.Size
 
         For Each region As Match In objects
             If (region.ToA - region.FromA) / query.Length >= 0.9 Then
                 Dim left = region.FromB
                 Dim length = region.ToB - left
 
+                Yield left.translateRegion(size, viewSize)
             End If
         Next
+    End Function
+
+    <Extension>
+    Private Function translateRegion(left%, regionSize As Size, size As Size) As Rectangle
+
     End Function
 
     Private Function asChar(d As Double) As Char
