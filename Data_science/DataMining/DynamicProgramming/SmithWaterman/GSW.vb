@@ -381,6 +381,11 @@ Namespace SmithWaterman
             End Get
         End Property
 
+        ''' <summary>
+        ''' 返回局部最优匹配的查找结果，请注意，匹配的位置都是``从下标1开始的``！
+        ''' </summary>
+        ''' <param name="scoreThreshold"></param>
+        ''' <returns></returns>
         Public Function GetMatches(Optional scoreThreshold As Double = 19.9) As Match()
             Dim matchList As New List(Of Match)
             Dim fA As Integer = 0, fB As Integer = 0

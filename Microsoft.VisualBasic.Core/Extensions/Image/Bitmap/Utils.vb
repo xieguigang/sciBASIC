@@ -46,7 +46,6 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Imaging.BitmapImage
@@ -63,13 +62,17 @@ Namespace Imaging.BitmapImage
         ''' <param name="size">剪裁的区域的大小</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Image.Corp")>
         <Extension> Public Function ImageCrop(source As Image, pos As Point, size As Size) As Image
+            Return source.ImageCrop(New Rectangle(pos, size))
+        End Function
+
+        <Extension>
+        Public Function ImageCrop(source As Image, rect As Rectangle) As Image
             SyncLock source
-                Dim CloneRect As New Rectangle(pos, size)
-                Dim CloneBitmap As Bitmap = CType(source.Clone, Bitmap)
-                Dim crop As Bitmap = CloneBitmap.Clone(CloneRect, source.PixelFormat)
+                Dim bitmap As Bitmap = CType(source.Clone, Bitmap)
+                Dim crop As Bitmap = bitmap.Clone(rect, source.PixelFormat)
                 Return crop
             End SyncLock
         End Function
