@@ -31,9 +31,9 @@ Public Module Scanner
             For left As Integer = 0 To bitmap.Width - 1 - size.Width
                 Dim vector As New List(Of Double)
 
-                For y As Integer = top To size.Height - 1
+                For y As Integer = top To (size.Height + top) - 1
 
-                    For x As Integer = left To size.Width - 1
+                    For x As Integer = left To (size.Width + left) - 1
                         Dim pixel = bitmap.GetPixel(x, y)
 
                         If GDIColors.Equals(pixel, blank) Then
