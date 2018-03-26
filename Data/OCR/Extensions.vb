@@ -90,9 +90,9 @@ Public Module Extensions
         Dim equals As ISimilarity(Of Double) =
             Function(a, b)
                 If a = b Then
-                    Return 1
-                Else
                     Return 0
+                Else
+                    Return 1
                 End If
             End Function
         Dim local As New GSW(Of Double)(query, subject, equals, AddressOf asChar)
@@ -104,16 +104,16 @@ Public Module Extensions
                 Dim left = region.FromB
                 Dim length = region.ToB - left
 
-                Yield left.translateRegion(size, viewSize)
+                Yield left.TranslateRegion(size, viewSize)
             End If
         Next
     End Function
 
     <Extension>
-    Private Function translateRegion(left%, regionSize As Size, size As Size) As Rectangle
+    Public Function TranslateRegion(left%, regionSize As Size, size As Size) As Rectangle
         Dim width = (size.Width - regionSize.Width)
         Dim x = left Mod width
-        Dim y = left \ width
+        Dim y = Fix(left / width)
 
         Return New Rectangle With {
             .X = x,
