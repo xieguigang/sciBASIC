@@ -52,7 +52,6 @@
 
 Imports System.Text
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Data.csv.IO
 
 Namespace Kernel.Classifier
 
@@ -115,17 +114,6 @@ Namespace Kernel.Classifier
                 Call sBuilder.Remove(sBuilder.Length - 1, length:=1)
 
                 Return String.Format("<{0}> --> {1}", sBuilder.ToString, Y)
-            End Function
-
-            ''' <summary>
-            ''' 
-            ''' </summary>
-            ''' <param name="row">第一个元素为分类，其余元素为属性</param>
-            ''' <returns></returns>
-            ''' <remarks></remarks>
-            Public Shared Function CastTo(row As RowObject) As Entity
-                Dim LQuery = From s As String In row.Skip(1) Select Val(s) '
-                Return New Entity With {.Y = Val(row.First), .Properties = LQuery.ToArray}
             End Function
 
             Default Public ReadOnly Property Item(Index As Integer) As Integer

@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::9448ac6eb1900fa9366bfd8a6049f39b, Data_science\Graph\Model\Graph.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Graph
-    ' 
-    '     Properties: Size, Vertex
-    ' 
-    '     Function: (+3 Overloads) AddEdge, AddEdges, (+2 Overloads) AddVertex, CreateEdge, (+3 Overloads) Delete
-    '               ExistEdge, ExistVertex, GetConnectedVertex, GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    ' Class Graph
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Class Graph
+' 
+'     Properties: Size, Vertex
+' 
+'     Function: (+3 Overloads) AddEdge, AddEdges, (+2 Overloads) AddVertex, CreateEdge, (+3 Overloads) Delete
+'               ExistEdge, ExistVertex, GetConnectedVertex, GetEnumerator, IEnumerable_GetEnumerator
+' 
+' Class Graph
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,12 +52,13 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports TV = Microsoft.VisualBasic.Data.Graph.Vertex
+Imports TV = Microsoft.VisualBasic.Data.GraphTheory.Vertex
 
 ''' <summary>
 ''' A graph ``G = (V, E)`` consists of a set V of vertices and a set E edges, that is, unordered
 ''' pairs Of vertices. Unless explicitly stated otherwise, we assume that the graph Is simple,
 ''' that Is, it has no multiple edges And no self-loops.
+''' (使用迭代器来访问这个图之中的边连接的集合)
 ''' </summary>
 Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G As Graph(Of V, Edge, G))
     Implements IEnumerable(Of Edge)
@@ -75,6 +76,10 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     Protected Friend buffer As New HashList(Of V)
 #End Region
 
+    ''' <summary>
+    ''' ``[numof(vertex), numof(edges)]``
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Size As (Vertex%, Edges%)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
@@ -82,6 +87,10 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         End Get
     End Property
 
+    ''' <summary>
+    ''' 这个图之中的所有的节点的集合
+    ''' </summary>
+    ''' <returns></returns>
     Public ReadOnly Property Vertex As V()
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
@@ -89,6 +98,10 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         End Get
     End Property
 
+    ''' <summary>
+    ''' 返回所有至少具有一条边连接的节点的集合
+    ''' </summary>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetConnectedVertex() As V()
         Return edges.Values _
@@ -191,7 +204,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     End Function
 
     ''' <summary>
-    ''' <paramref name="u"/> and <paramref name="v"/> is the property ``<see cref="Data.Graph.Vertex.label"/>``
+    ''' <paramref name="u"/> and <paramref name="v"/> is the property ``<see cref="Data.GraphTheory.Vertex.label"/>``
     ''' </summary>
     ''' <param name="u$"></param>
     ''' <param name="v$"></param>
@@ -246,6 +259,10 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 因为图的主要关注点是放在节点对象的相互关系之上，所以在这里图对象是表现为一个边连接的集合
+    ''' </summary>
+    ''' <returns></returns>
     Public Iterator Function GetEnumerator() As IEnumerator(Of Edge) Implements IEnumerable(Of Edge).GetEnumerator
         For Each edge As Edge In edges.Values
             Yield edge
@@ -262,6 +279,6 @@ End Class
 ''' pairs Of vertices. Unless explicitly stated otherwise, we assume that the graph Is simple,
 ''' that Is, it has no multiple edges And no self-loops.
 ''' </summary>
-Public Class Graph : Inherits Graph(Of TV, Edge, Graph)
+Public Class Graph : Inherits Graph(Of TV, VertexEdge, Graph)
 
 End Class

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Microsoft.VisualBasic.Data.Graph</RootNamespace>
-    <AssemblyName>Microsoft.VisualBasic.Data.Graph</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.Data.GraphTheory</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.Data.GraphTheory</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -48,7 +48,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
@@ -57,7 +57,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -67,7 +67,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -77,7 +77,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\.vs\installer\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -88,7 +88,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -98,7 +98,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -110,7 +110,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -119,7 +119,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -129,7 +129,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -139,7 +139,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -149,7 +149,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\..\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\App\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -159,7 +159,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\..\smartnucl_integrative\biodeepDB\METLINApp\App\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -169,7 +169,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\..\plot\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -179,7 +179,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -189,7 +189,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -199,7 +199,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -209,7 +209,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -219,7 +219,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\..\..\..\..\GCModeller\bin\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -229,7 +229,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -239,7 +239,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Biodeep_UNIX_x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -249,7 +249,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x64'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x64\Biodeep_UNIX_x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -259,7 +259,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep_UNIX_x64|x86'">
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\x86\Biodeep_UNIX_x64\</OutputPath>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Graph.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.GraphTheory.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>pdbonly</DebugType>
@@ -296,16 +296,22 @@
     <Compile Include="API\PQDijkstra\Example.vb" />
     <Compile Include="API\PQDijkstra\HeapNode.vb" />
     <Compile Include="API\PQDijkstra\PQDijkstraProvider.vb" />
+    <Compile Include="Model\Abstract\Edge.vb" />
     <Compile Include="Model\Grid.vb" />
     <Compile Include="Model\TimeSerialsGraph.vb" />
     <Compile Include="NamespaceDoc.vb" />
+    <Compile Include="Network\Extensions.vb" />
+    <Compile Include="Network\NetworkGraph.vb" />
+    <Compile Include="Network\Node.vb" />
+    <Compile Include="Network\Edge.vb" />
+    <Compile Include="Network\NamespaceDoc.vb" />
     <Compile Include="Utils.vb" />
     <Compile Include="API\Dijkstra\Dijkstra.vb" />
     <Compile Include="API\Dijkstra\DijkstraAPI.vb" />
     <Compile Include="API\Dijkstra\Route.vb" />
     <Compile Include="Model\BinaryTree.vb" />
-    <Compile Include="Model\Graph.vb" />
-    <Compile Include="Model\Component.vb" />
+    <Compile Include="Model\Abstract\Graph.vb" />
+    <Compile Include="Model\Abstract\Vertex.vb" />
     <Compile Include="Model\Tree.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

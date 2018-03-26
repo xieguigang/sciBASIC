@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::f910cf2c25167a0b71a61fd09d59ae50, Data\Trinity\TextRank.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module TextRank
-    ' 
-    '     Function: Removes, Sentences, Similarity, StripMessy, TextGraph
-    '               TextRankGraph, Words
-    ' 
-    ' /********************************************************************************/
+' Module TextRank
+' 
+'     Function: Removes, Sentences, Similarity, StripMessy, TextGraph
+'               TextRankGraph, Words
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
-Imports Microsoft.VisualBasic.Data.Graph
-Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
+Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.PageRank
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
@@ -119,7 +119,7 @@ Public Module TextRank
     ''' <returns></returns>
     <Extension>
     Public Function TextRankGraph(sentences As IEnumerable(Of String), Optional win_size% = 2, Optional stopwords As StopWords = Nothing) As GraphMatrix
-        Dim g As New Graph.Graph
+        Dim g As New Graph
         Dim source As String() = sentences _
             .Select(AddressOf Trim) _
             .Where(Function(s) Not String.IsNullOrEmpty(s)) _
@@ -146,7 +146,7 @@ Public Module TextRank
                 Next
 
                 For Each combine As (a$, b$) In textBlock.FullCombination
-                    Dim edge As Edge = g.CreateEdge(combine.a, combine.b)
+                    Dim edge As VertexEdge = g.CreateEdge(combine.a, combine.b)
 
                     If Not g.ExistEdge(edge) Then
                         Call g.AddEdge(combine.a, combine.b)

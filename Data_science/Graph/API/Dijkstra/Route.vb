@@ -50,7 +50,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Connection = Microsoft.VisualBasic.Data.Graph.Edge
+Imports Connection = Microsoft.VisualBasic.Data.GraphTheory.VertexEdge
 
 Namespace Dijkstra
 
