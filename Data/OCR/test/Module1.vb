@@ -51,7 +51,18 @@ Module Module1
         '    Pause()
         'End Using
 
+        For Each region In view.FindObjects(obj)
+            Using gr = view.CreateCanvas2D
+                Call gr.DrawRectangle(Pens.Red, region)
+                Call gr.ImageResource.SaveAs($"./cfdddd/{region.ToString}.png")
+            End Using
+        Next
+
+        Pause()
+
         Dim locations = view.FindObjects(obj).ToArray
+
+
 
         Call obj.SaveAs("./obj.png")
         Call view.SaveAs("./view.png")
