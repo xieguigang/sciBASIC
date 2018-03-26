@@ -85,8 +85,8 @@ Public Module Extensions
     <Extension>
     Public Iterator Function FindObjects(view As Image, obj As Image, Optional cutoff# = 0.95) As IEnumerable(Of Rectangle)
         Dim size As Size = obj.Size
-        Dim query = obj.ToVector
-        Dim subject = view.ToVector(size)
+        Dim query As Vector = obj.ToVector
+        Dim subject As Vector = view.ToVector(size)
         Dim equals As ISimilarity(Of Double) =
             Function(a, b)
                 If a = b Then

@@ -98,7 +98,7 @@ Namespace Language.Perl
                             Return DirectCast(obj, Array).Length = 0
 
                         ElseIf .ImplementInterface(GetType(IEnumerable)) Then
-                            Return DirectCast(obj, IEnumerable).ToArray(Of Object).Length = 0
+                            Return (From o In DirectCast(obj, IEnumerable).AsQueryable).Count = 0
 
                         ElseIf .ImplementInterface(GetType(IsEmpty)) Then
                             Return DirectCast(obj, IsEmpty).IsEmpty
