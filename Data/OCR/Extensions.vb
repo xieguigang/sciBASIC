@@ -44,7 +44,7 @@ Public Module Extensions
                         End If
                     Next
 
-                    Call vector.Add(-1)
+                    ' Call vector.Add(-1)
                 Next
 
             Next
@@ -69,7 +69,7 @@ Public Module Extensions
                 End If
             Next
 
-            Call vector.Add(-1)
+            ' Call vector.Add(-1)
         Next
 
         Return vector.AsVector
@@ -111,7 +111,15 @@ Public Module Extensions
 
     <Extension>
     Private Function translateRegion(left%, regionSize As Size, size As Size) As Rectangle
+        Dim width = (regionSize.Width - size.Width)
+        Dim x = left Mod width
+        Dim y = left \ width
 
+        Return New Rectangle With {
+            .X = x,
+            .Y = y,
+            .Size = size
+        }
     End Function
 
     Private Function asChar(d As Double) As Char
