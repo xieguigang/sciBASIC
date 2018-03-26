@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Language
@@ -26,7 +27,7 @@ Public Module Scanner
         Return vector.AsVector
     End Function
 
-    <Extension> Public Iterator Function RegionScan(bitmap As BitmapBuffer, blank As Color, size As Size) As IEnumerable(Of Vector)
+    <Extension> Public Iterator Function RegionScan(bitmap As BitmapBuffer, blank As Color, size As Size) As IEnumerable(Of Map(Of Point, Vector))
         For top As Integer = 0 To bitmap.Height - 1 - size.Height
             For left As Integer = 0 To bitmap.Width - 1 - size.Width
                 Dim vector As New List(Of Double)
@@ -44,7 +45,10 @@ Public Module Scanner
                     Next
                 Next
 
-                Yield vector.AsVector
+                Yield New Map(Of Point, Vector)(
+                    New Point(left, top),
+                    vector.AsVector
+                )
             Next
         Next
     End Function

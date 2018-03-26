@@ -40,16 +40,16 @@ Module Module1
             view = g.ImageResource
         End Using
 
-        Using buffer = BitmapBuffer.FromImage(view)
-            Dim objSize = obj.Size
-            Dim i As int = 0
+        'Using buffer = BitmapBuffer.FromImage(view)
+        '    Dim objSize = obj.Size
+        '    Dim i As int = 0
 
-            For Each region In buffer.RegionScan(Color.White, objSize)
-                Call region.DrawRegion(objSize).SaveAs($"./dddddd/{++i}.png")
-            Next
+        '    For Each region In buffer.RegionScan(Color.White, objSize)
+        '        Call region.DrawRegion(objSize).SaveAs($"./dddddd/{++i}.png")
+        '    Next
 
-            Pause()
-        End Using
+        '    Pause()
+        'End Using
 
         Dim locations = view.FindObjects(obj).ToArray
 
