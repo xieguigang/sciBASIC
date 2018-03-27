@@ -77,6 +77,15 @@ Module Module1
             view = g.ImageResource
         End Using
 
+        ' OCR test 
+        Dim library As New Library(font)
+
+        For Each c In view.GetCharacters(library)
+            Call $"[{c.position}] {c.obj} = {c.score}".__DEBUG_ECHO
+        Next
+
+        Pause()
+
         'Using buffer = BitmapBuffer.FromImage(view)
         '    Dim objSize = obj.Size
         '    Dim i As int = 0
