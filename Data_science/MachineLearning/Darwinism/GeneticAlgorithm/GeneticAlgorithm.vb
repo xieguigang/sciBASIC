@@ -97,10 +97,10 @@ Namespace Darwinism.GAF
         ''' Calculates the fitness of the mutated chromesome in <paramref name="population"/>
         ''' </param>
         ''' <param name="seeds"></param>
-        Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr), Optional seeds As IRandomSeeds = Nothing)
+        Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr), Optional seeds As IRandomSeeds = Nothing, Optional cacheSize% = 10000)
             Me._Population = population
             Me.Fitness = fitnessFunc
-            Me._chromosomesComparator = New FitnessPool(Of Chr)(AddressOf fitnessFunc.Calculate)
+            Me._chromosomesComparator = New FitnessPool(Of Chr)(AddressOf fitnessFunc.Calculate, capacity:=cacheSize)
             Me._Population.SortPopulationByFitness(Me, _chromosomesComparator)
 
             If population.Parallel Then

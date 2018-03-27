@@ -461,11 +461,21 @@ Public Module WebServiceUtils
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
     <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function POST(url$, params As NameValueCollection, Optional Referer$ = "", Optional proxy$ = Nothing) As String
+    <Extension> Public Function POST(url$, params As NameValueCollection,
+                                     Optional headers As Dictionary(Of String, String) = Nothing,
+                                     Optional Referer$ = "",
+                                     Optional proxy$ = Nothing) As String
+
         Using request As New WebClient
 
             Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
             Call request.Headers.Add(NameOf(Referer), Referer)
+
+            For Each header In headers
+                If Not request.Headers.ContainsKey(header.Key) Then
+                    request.Headers.Add(header.Key, header.Value)
+                End If
+            Next
 
             If String.IsNullOrEmpty(proxy) Then
                 proxy = WebServiceUtils.Proxy
