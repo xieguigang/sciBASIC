@@ -32,26 +32,26 @@ Module Module1
         Return obj
     End Function
 
-    Sub CompareTest2()
-        Dim a = draw("8")
-        Dim b = draw(1)
-        Dim C = draw(8)
-        Dim query As Vector = a.ToVector.First
-        Dim subject As Vector = b.ToVector.First
-        Dim subject2 As Vector = C.ToVector.First
-        Dim local As New GSW(Of Double)(query, subject, AddressOf Equals, AddressOf AsChar)
-        Dim cutoff = 0.9
-        Dim match1 As Match = local.GetMatches(local.MaxScore * cutoff).FirstOrDefault
+    'Sub CompareTest2()
+    '    Dim a = draw("8")
+    '    Dim b = draw(1)
+    '    Dim C = draw(8)
+    '    Dim query As Vector = a.ToVector.First
+    '    Dim subject As Vector = b.ToVector.First
+    '    Dim subject2 As Vector = C.ToVector.First
+    '    Dim local As New GSW(Of Double)(query, subject, AddressOf Equals, AddressOf AsChar)
+    '    Dim cutoff = 0.9
+    '    Dim match1 As Match = local.GetMatches(local.MaxScore * cutoff).FirstOrDefault
 
-        local = New GSW(Of Double)(query, subject2, AddressOf Equals, AddressOf AsChar)
-        Dim match2 As Match = local.GetMatches(local.MaxScore * cutoff).FirstOrDefault
+    '    local = New GSW(Of Double)(query, subject2, AddressOf Equals, AddressOf AsChar)
+    '    Dim match2 As Match = local.GetMatches(local.MaxScore * cutoff).FirstOrDefault
 
 
-        Dim s1 = SSM(query, subject)
-        Dim s2 = SSM(query, subject2)
+    '    Dim s1 = SSM(query, subject)
+    '    Dim s2 = SSM(query, subject2)
 
-        Pause()
-    End Sub
+    '    Pause()
+    'End Sub
 
     Sub Main()
         ' Call CompareTest2()
