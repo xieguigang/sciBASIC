@@ -85,7 +85,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Character.vb" />
+    <Compile Include="Library.vb" />
+    <Compile Include="OpticalCharacter.vb" />
     <Compile Include="Scanner.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
