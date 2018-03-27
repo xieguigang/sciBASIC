@@ -1,5 +1,6 @@
 ﻿
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
@@ -12,11 +13,12 @@ Public Class OpticalCharacter
     ''' 使用-1分割，按照行进行排列
     ''' </summary>
     Public PixelsVector As Vector
+    Public [char] As Char
 
     Sub New()
     End Sub
 
-    Sub New(character As Image)
+    Sub New(character As Image, Optional [char] As Char = Nothing)
         Dim vector As New List(Of Double)
 
         Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(character)
@@ -34,6 +36,8 @@ Public Class OpticalCharacter
                 vector.Add(-1)
             Next
         End Using
+
+        Me.char = [char]
     End Sub
 
     ''' <summary>
@@ -41,6 +45,8 @@ Public Class OpticalCharacter
     ''' </summary>
     ''' <param name="test">模板样本数据</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Compare(test As OpticalCharacter) As Double
         Return SSM(PixelsVector, test.PixelsVector)
     End Function
