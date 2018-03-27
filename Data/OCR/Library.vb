@@ -13,9 +13,9 @@ Public Class Library
 
     ReadOnly font As Font
 
-    Const Numeric$ = "0123456789.+-"
-    Const Symbols$ = "/*-+()=^\<>,:;""'{}[]_&%$#@!~`?"
-    Const enUS$ = Numeric & Symbols & "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    Public Const Numeric$ = "0123456789.+-"
+    Public Const Symbols$ = "/*-+()=^\<>,:;""'{}[]_&%$#@!~`?"
+    Public Const enUS$ = Numeric & Symbols & "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
     ReadOnly tree As BinaryTree(Of OpticalCharacter, Char)
     ReadOnly cutoff#
@@ -60,7 +60,7 @@ Public Class Library
     End Function
 
     Public Overrides Function ToString() As String
-        Return $"[{font.ToString}] {tree.PopulateNodes.Values.CharString}"
+        Return $"[{font}, {Window}] {tree.PopulateNodes.Values.CharString}"
     End Function
 
     Public Shared Function BuildLibraryTree(font As Font, characters$, ByRef size As Size, Optional color$ = "black", Optional cutoff# = 0.98) As BinaryTree(Of OpticalCharacter, Char)

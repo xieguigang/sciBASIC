@@ -53,7 +53,30 @@ Module Module1
     '    Pause()
     'End Sub
 
+    Sub OCRtest2()
+        Dim font As New Font(FontFace.MicrosoftYaHei, 20, FontStyle.Bold)
+        Dim view As Image
+
+        Using g = New Size(font.Height * 30, font.Height * 1.2).CreateGDIDevice
+            Call g.DrawString("3.14159265353", font, Brushes.Black, New Point)
+            view = g.ImageResource
+        End Using
+
+        ' OCR test 
+        Dim library As New Library(font, Library.Numeric)
+
+        For Each c In view.GetCharacters(library)
+            ' Call $"[{c.position}] {c.obj} = {c.score}".__DEBUG_ECHO
+            Call Console.Write(c.obj)
+        Next
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+        Call OCRtest2()
+
         ' Call CompareTest2()
 
 
