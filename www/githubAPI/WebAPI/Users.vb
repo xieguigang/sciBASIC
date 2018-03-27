@@ -133,8 +133,8 @@ Namespace WebAPI
                 Dim avatar As String = Regex.Match(u, "<img .+? />").Value.img.src
                 Dim display As String = Regex.Match(u, "<span class=""f4 link-gray-dark"">.*?</span>").Value.GetValue
                 Dim bio As String = Regex.Match(u, "<p class="".*?text-gray text-small"">.*?</p>").Value.GetValue
-                Dim location = TryInvoke(Function() u.Match(locationPattern, RegexICSng).GetBetween("</svg>", "</p>").lTokens.FirstOrDefault?.Trim)
-                Dim org = TryInvoke(Function() u.Match(organizationPattern, RegexICSng).GetBetween("</svg>", "</span>").lTokens.FirstOrDefault?.Trim)
+                Dim location = TryInvoke(Function() u.Match(locationPattern, RegexICSng).GetBetween("</svg>", "</p>").LineTokens.FirstOrDefault?.Trim)
+                Dim org = TryInvoke(Function() u.Match(organizationPattern, RegexICSng).GetBetween("</svg>", "</span>").LineTokens.FirstOrDefault?.Trim)
 
                 out += New User With {
                     .login = userName,
