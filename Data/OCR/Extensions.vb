@@ -16,15 +16,19 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="image">Should be black and white</param>
     ''' <returns></returns>
-    <Extension> Public Iterator Function ToVector(image As Image, Optional size As Size = Nothing, Optional background As Color = Nothing) As IEnumerable(Of Map(Of Point, Vector))
+    <Extension> Public Iterator Function ToVector(image As Image,
+                                                  Optional size As Size = Nothing,
+                                                  Optional background As Color = Nothing,
+                                                  Optional fillDeli As Boolean = False) As IEnumerable(Of Map(Of Point, Vector))
+
         Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(image)
             If size.IsEmpty Then
                 Yield New Map(Of Point, Vector)(
                     Nothing,
-                    bitmap.FullScan(background Or blank)
+                    bitmap.FullScan(background Or blank, fillDeli)
                 )
             Else
-                For Each X As Map(Of Point, Vector) In bitmap.RegionScan(background Or blank, size)
+                For Each X As Map(Of Point, Vector) In bitmap.RegionScan(background Or blank, size, fillDeli)
                     Yield X
                 Next
             End If

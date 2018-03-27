@@ -6,7 +6,7 @@ Public Module OCR
 
     <Extension>
     Public Iterator Function GetCharacters(view As Image, library As Library) As IEnumerable(Of (position As Rectangle, obj As Char, score#))
-        For Each block In view.ToVector(size:=library.Window)
+        For Each block In view.ToVector(size:=library.Window, fillDeli:=True)
             Dim pixels As Vector = block.Maps
             Dim subject As New OpticalCharacter With {
                 .PixelsVector = pixels

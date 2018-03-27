@@ -2,8 +2,6 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -19,26 +17,8 @@ Public Class OpticalCharacter
     End Sub
 
     Sub New(character As Image, Optional [char] As Char = Nothing)
-        Dim vector As New List(Of Double)
-
-        Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(character)
-            For x As Integer = 0 To bitmap.Width - 1
-                For y As Integer = 0 To bitmap.Height - 1
-                    Dim pixel = bitmap.GetPixel(x, y)
-
-                    If GDIColors.Equals(pixel, Color.White) Then
-                        vector.Add(0)
-                    Else
-                        vector.Add(1)
-                    End If
-                Next
-
-                vector.Add(-1)
-            Next
-        End Using
-
         Me.char = [char]
-        Me.PixelsVector = vector.AsVector
+        Me.PixelsVector = character.ToVector(fillDeli:=True).First
     End Sub
 
     ''' <summary>
