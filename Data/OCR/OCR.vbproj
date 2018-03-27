@@ -86,6 +86,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Library.vb" />
+    <Compile Include="OCR.vb" />
     <Compile Include="OpticalCharacter.vb" />
     <Compile Include="Scanner.vb" />
     <Compile Include="Extensions.vb" />

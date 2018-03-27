@@ -18,11 +18,14 @@ Public Class Library
     ReadOnly cutoff#
     ReadOnly compares As Comparison(Of OpticalCharacter)
 
+    Public ReadOnly Property Window As Size
+
     Sub New(font As Font, Optional characters$ = enUS, Optional cutoff# = 0.98)
         Me.font = font
         Me.cutoff = cutoff
         Me.tree = BuildLibraryTree(font, characters, cutoff)
         Me.compares = CompareTo(cutoff)
+        Me.Window = font.Height.SquareSize
     End Sub
 
     Public Shared Function CompareTo(cutoff As Double) As Comparison(Of OpticalCharacter)
@@ -39,6 +42,11 @@ Public Class Library
                End Function
     End Function
 
+    ''' <summary>
+    ''' 查找失败的时候，返回来的分数值为-1，小于零
+    ''' </summary>
+    ''' <param name="OpticalCharacter"></param>
+    ''' <returns></returns>
     Public Function Match(OpticalCharacter As OpticalCharacter) As (score#, recognized As Char)
         Dim find = tree.Find(OpticalCharacter, compares)
 
