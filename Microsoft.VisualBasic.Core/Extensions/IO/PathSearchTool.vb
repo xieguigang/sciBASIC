@@ -261,7 +261,7 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 这个函数只会返回文件列表之中的第一个文件，故而需要提取某一个文件夹之中的某一个特定的文件，推荐使用这个函数
+    ''' 这个函数只会返回文件列表之中的第一个文件，故而需要提取某一个文件夹之中的某一个特定的文件，推荐使用这个函数（这个函数默认只查找第一级文件夹，不会进行递归搜索）
     ''' </summary>
     ''' <param name="DIR$"></param>
     ''' <param name="keyword$"></param>

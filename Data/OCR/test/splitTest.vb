@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.SmithWaterman
-Imports Microsoft.VisualBasic.Language
+﻿Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -22,8 +21,8 @@ Module splitTest
         Dim vector = bitmap.IteratesALL.AsVector
         Dim target As Vector = {11, 12, 13, 14, 15}
 
-        Dim local As New GSW(Of Double)(target, vector, Function(a, b) If(a = b, 1, 0), AddressOf asChar)
-        Dim matches = local.GetMatches(local.MaxScore * 0.95).Select(Function(m) m - 1).ToArray
+        'Dim local As New GSW(Of Double)(target, vector, Function(a, b) If(a = b, 1, 0), AddressOf asChar)
+        'Dim matches = local.GetMatches(local.MaxScore * 0.95).Select(Function(m) m - 1).ToArray
 
 
 

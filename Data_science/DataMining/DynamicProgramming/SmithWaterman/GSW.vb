@@ -1,53 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::f32ba74424c72aa0a16718d9aaed066f, Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GSW
-    ' 
-    '         Properties: AlignmentScore, Matches, MaxScore, query, subject
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __similarity, GetDPMAT, GetMatches, GetTraceback, traceback
-    ' 
-    '         Sub: __buildMatrix, __getTrackback
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GSW
+' 
+'         Properties: AlignmentScore, Matches, MaxScore, query, subject
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __similarity, GetDPMAT, GetMatches, GetTraceback, traceback
+' 
+'         Sub: __buildMatrix, __getTrackback
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
@@ -377,7 +378,9 @@ Namespace SmithWaterman
         Public ReadOnly Property Matches(Optional scoreThreshold As Double = 19.9) As Match()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return GetMatches(scoreThreshold)
+                Return GetMatches(scoreThreshold) _
+                    .OrderByDescending(Function(m) m.Score) _
+                    .ToArray
             End Get
         End Property
 
@@ -385,33 +388,36 @@ Namespace SmithWaterman
         ''' 返回局部最优匹配的查找结果，请注意，匹配的位置都是``从下标1开始的``！
         ''' </summary>
         ''' <param name="scoreThreshold"></param>
-        ''' <returns></returns>
-        Public Function GetMatches(Optional scoreThreshold As Double = 19.9) As Match()
-            Dim matchList As New List(Of Match)
-            Dim fA As Integer = 0, fB As Integer = 0
-            '	skip the first row and column, find the next maxScore after prevmaxScore 
+        ''' <returns>could be empty if no HSP scores are > scoreThreshold</returns>
+        Public Iterator Function GetMatches(Optional scoreThreshold As Double = 19.9) As IEnumerable(Of Match)
+            Dim fA As Integer = 0
+            Dim fB As Integer = 0
+
+            ' skip the first row and column, find the next maxScore after prevmaxScore 
             For i As Integer = 1 To queryLength
                 For j As Integer = 1 To subjectLength
+
                     If score(i)(j) > scoreThreshold AndAlso
-                    score(i)(j) > score(i - 1)(j - 1) AndAlso
-                    score(i)(j) > score(i - 1)(j) AndAlso
-                    score(i)(j) > score(i)(j - 1) Then
+                       score(i)(j) > score(i - 1)(j - 1) AndAlso
+                       score(i)(j) > score(i - 1)(j) AndAlso
+                       score(i)(j) > score(i)(j - 1) Then
 
                         If i = queryLength OrElse
-                        j = subjectLength OrElse
-                        score(i)(j) > score(i + 1)(j + 1) Then
+                           j = subjectLength OrElse
+                           score(i)(j) > score(i + 1)(j + 1) Then
+
                             ' should be lesser than prev maxScore					    	
                             fA = i
                             fB = j
-                            Dim f As Integer() = traceback(fA, fB)
-                            ' sets the x, y to startAlignment coordinates
-                            matchList.Add(New Match(f(0), i, f(1), j, score(i)(j) / NORM_FACTOR))
+
+                            With traceback(fA, fB)
+                                ' sets the x, y to startAlignment coordinates
+                                Yield New Match(.ByRef(0), i, .ByRef(1), j, score(i)(j) / NORM_FACTOR)
+                            End With
                         End If
                     End If
                 Next
             Next
-            ' could be empty if no HSP scores are > scoreThreshold
-            Return (From x As Match In matchList Select x Order By x.Score Descending).ToArray
         End Function
     End Class
 End Namespace

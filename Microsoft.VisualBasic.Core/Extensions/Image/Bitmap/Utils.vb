@@ -71,9 +71,13 @@ Namespace Imaging.BitmapImage
         <Extension>
         Public Function ImageCrop(source As Image, rect As Rectangle) As Image
             SyncLock source
-                Dim bitmap As Bitmap = CType(source.Clone, Bitmap)
-                Dim crop As Bitmap = bitmap.Clone(rect, source.PixelFormat)
-                Return crop
+                With CType(source.Clone, Bitmap)
+                    Try
+                        Return .Clone(rect, source.PixelFormat)
+                    Catch ex As Exception
+                        Throw New InvalidExpressionException($"Image size: {source.Size.ToString} AND clone rectangle: {rect.ToString}")
+                    End Try
+                End With
             End SyncLock
         End Function
 
