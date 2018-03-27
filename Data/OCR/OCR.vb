@@ -69,10 +69,11 @@ Public Module OCR
         Dim yproject = view.Projection(False).Split(Function(d) d = 0R).ToArray
         Dim x%, y%
         Dim right%, bottom%
-        Dim size = view.Size
+        Dim slice As Image
+        Dim rect As Rectangle
 
         For i As Integer = 0 To yproject.Length - 1
-            y = bottom + 1
+            y = bottom
 
             If yproject(i).Length = 0 Then
                 bottom += 1
@@ -85,7 +86,7 @@ Public Module OCR
             right = 0
 
             For j As Integer = 0 To xproject.Length - 1
-                x = right + 1
+                x = right
 
                 If xproject(j).Length = 0 Then
                     right += 1
@@ -94,8 +95,15 @@ Public Module OCR
                     right = xproject(j).Length + x
                 End If
 
-                Dim rect As New Rectangle(x, y, xproject(j).Length, yproject(i).Length)
-                Yield New Map(Of Rectangle, Image)(rect, view.ImageCrop(rect))
+                rect = New Rectangle With {
+                    .X = x,
+                    .Y = y,
+                    .Width = xproject(j).Length,
+                    .Height = yproject(i).Length
+                }
+                slice = view.ImageCrop(rect)
+
+                Yield New Map(Of Rectangle, Image)(rect, slice)
             Next
         Next
     End Function
