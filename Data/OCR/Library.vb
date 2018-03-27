@@ -23,7 +23,7 @@ Public Class Library
     Sub New(font As Font, Optional characters$ = enUS, Optional cutoff# = 0.98)
         Me.font = font
         Me.cutoff = cutoff
-        Me.tree = BuildLibraryTree(font, characters, cutoff)
+        Me.tree = BuildLibraryTree(font, characters, cutoff:=cutoff)
         Me.compares = CompareTo(cutoff)
         Me.Window = font.Height.SquareSize
     End Sub

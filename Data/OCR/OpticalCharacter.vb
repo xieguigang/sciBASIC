@@ -13,6 +13,14 @@ Public Class OpticalCharacter
     Public PixelsVector As Vector
     Public [char] As Char
 
+    Public ReadOnly Property PixelLines As Vector()
+        Get
+            Return PixelsVector.Split(Function(x) x = -1.0R) _
+                               .Select(Function(p) p.AsVector) _
+                               .ToArray
+        End Get
+    End Property
+
     Sub New()
     End Sub
 
