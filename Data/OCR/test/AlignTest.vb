@@ -14,12 +14,14 @@ Public Module AlignTest
     Sub Main()
         Dim symbols As New List(Of Map(Of Vector, Char))
         Dim font As New Font(FontFace.Arial, 20, FontStyle.Bold)
+        Dim images As New Dictionary(Of Char, Image)
 
         For Each c As Char In "0123456789."
             Using g = New Size(font.Height, font.Height * 2).CreateGDIDevice
                 Call g.DrawString(c, font, Brushes.Black, New Point)
+                Call images.Add(c, g.ImageResource.CorpBlank)
                 symbols += New Map(Of Vector, Char) With {
-                    .Key = g.ImageResource.CorpBlank.SliceSegments(New Size(3, 3)).Project(6),
+                    .Key = images(c).SliceSegments(New Size(3, 3)).Project(6),
                     .Maps = c
                     }
             End Using
@@ -36,6 +38,8 @@ Public Module AlignTest
         Dim s As New StringBuilder
 
         s.AppendLine(vbTab & symbols.Select(Function(sss) sss.Maps).JoinBy(vbTab))
+
+        Dim d = view.Slicing.Select(Function(m) m.Maps).ToArray
 
         For Each sss In view.Slicing()
             Call s.Append(sss.Key.ToString)
