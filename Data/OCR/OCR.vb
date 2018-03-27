@@ -63,17 +63,25 @@ Public Module OCR
         End Using
     End Function
 
+    ''' <summary>
+    ''' 使用两个方向的投影对图片上的文字区域进行自动切片
+    ''' </summary>
+    ''' <param name="view"></param>
+    ''' <param name="threshold#"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Iterator Function Slicing(view As Image) As IEnumerable(Of Map(Of Rectangle, Image))
-        Dim xproject = view.Projection(True).Split(Function(d) d = 0R).ToArray
-        Dim yproject = view.Projection(False).Split(Function(d) d = 0R).ToArray
+    Public Iterator Function Slicing(view As Image, Optional threshold# = 1) As IEnumerable(Of Map(Of Rectangle, Image))
+        Dim pixelX As Vector = view.Projection(True)
+        Dim pixelY As Vector = view.Projection(False)
+        Dim xproject = pixelX.Split(Function(d) d <= threshold).ToArray
+        Dim yproject = pixelY.Split(Function(d) d <= threshold).ToArray
         Dim x%, y%
         Dim right%, bottom%
         Dim slice As Image
         Dim rect As Rectangle
 
         For i As Integer = 0 To yproject.Length - 1
-            y = bottom
+            y = bottom + 1
 
             If yproject(i).Length = 0 Then
                 bottom += 1
@@ -86,7 +94,7 @@ Public Module OCR
             right = 0
 
             For j As Integer = 0 To xproject.Length - 1
-                x = right
+                x = right + 1
 
                 If xproject(j).Length = 0 Then
                     right += 1
@@ -98,12 +106,20 @@ Public Module OCR
                 rect = New Rectangle With {
                     .X = x,
                     .Y = y,
-                    .Width = xproject(j).Length,
-                    .Height = yproject(i).Length
+                    .Width = xproject(j).Length - 1,
+                    .Height = yproject(i).Length - 1
                 }
-                slice = view.ImageCrop(rect)
 
-                Yield New Map(Of Rectangle, Image)(rect, slice)
+                If rect.Width > 0 AndAlso rect.Height > 0 Then
+                    slice = view.ImageCrop(rect)
+
+                    If slice.Projection.Sum > 0R Then
+                        ' 不是空白的切片
+                        Yield New Map(Of Rectangle, Image)(
+                            rect, slice
+                        )
+                    End If
+                End If
             Next
         Next
     End Function
