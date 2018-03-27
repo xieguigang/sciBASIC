@@ -402,9 +402,7 @@
     <Compile Include="FuzzyCMeans\Entity.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
-    <Compile Include="KMeans\EntityModels\csv.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="KMeans\EntityModels\csv.vb" />
     <Compile Include="KMeans\Extensions.vb" />
     <Compile Include="KMeans\CompleteLinkage\Cluster.vb" />
     <Compile Include="KMeans\CompleteLinkage\Clustering.vb" />

@@ -45,6 +45,9 @@
 
 Namespace Imaging.Math2D
 
+    ''' <summary>
+    ''' <see cref="Drawing.PointF"/>
+    ''' </summary>
     Public Class Vector2D
 
         Public x As Double
