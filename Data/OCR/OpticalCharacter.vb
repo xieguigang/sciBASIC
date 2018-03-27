@@ -38,6 +38,7 @@ Public Class OpticalCharacter
         End Using
 
         Me.char = [char]
+        Me.PixelsVector = vector.AsVector
     End Sub
 
     ''' <summary>
