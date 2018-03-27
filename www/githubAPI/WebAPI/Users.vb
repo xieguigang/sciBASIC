@@ -105,7 +105,7 @@ Namespace WebAPI
             }
         End Function
 
-        ReadOnly UserSplitter$ = (<div class="d-table col-12 width-full py-4 border-bottom border-gray-light"/>).ToString
+        ReadOnly UserSplitter$ = (<div class="d-table .+?"/>).ToString.Replace("=", "[=]")
         ReadOnly Splitter$ = (<div class="js-repo-filter position-relative"/>).ToString
 
         Const locationPattern$ = "<svg .+? class=""octicon octicon-location"".+?</p>"
@@ -121,7 +121,7 @@ Namespace WebAPI
             html = Strings.Split(html, sp).Last
             sp = UserSplitter.Replace(" /", "")
 
-            Dim users$() = Strings.Split(html, sp).Skip(1).ToArray
+            Dim users$() = r.Split(html, sp, RegexICSng).Skip(1).ToArray
             Dim out As New List(Of User)
 
             For Each u$ In users
