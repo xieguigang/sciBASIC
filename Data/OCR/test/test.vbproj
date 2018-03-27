@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{079CDF26-2510-499D-A9BA-787223BEB1CC}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.Module1</StartupObject>
+    <StartupObject>test.AlignTest</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -92,6 +92,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlignTest.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="splitTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -131,6 +132,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\DataFittings\DataFittings.vbproj">
+      <Project>{fc125b0d-1942-496f-b502-9c0eb80e35b6}</Project>
+      <Name>DataFittings</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>

@@ -204,6 +204,7 @@
     <Compile Include="LeastSquares.vb" />
     <Compile Include="FitResult.vb" />
     <Compile Include="Extensions.vb" />
+    <Compile Include="FeatureProjection.vb" />
     <Compile Include="TestPoint.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

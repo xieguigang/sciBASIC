@@ -48,6 +48,10 @@ Namespace LinearAlgebra
 
     Public Class Polynomial
 
+        ''' <summary>
+        ''' 多项式系数向量
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Factors As Double()
 
         Default Public ReadOnly Property F(x#) As Double

@@ -64,6 +64,46 @@ Public Module OCR
     End Function
 
     ''' <summary>
+    ''' 因为切片的大小和标准库之中的图片的大小肯定不一样
+    ''' 则无法直接使用SSM算法来计算相似度
+    ''' 在这里需要进行切割为例如3*3的小块，降低细节，使用动态规划的方法来计算全局相似度
+    ''' </summary>
+    ''' <param name="slice"></param>
+    ''' <param name="[step]"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function SliceSegments(slice As Image, [step] As Size, Optional background As Color = Nothing) As Vector
+        Using bitmap As BitmapBuffer = BitmapBuffer.FromImage(slice)
+            Dim vector As New List(Of Double)
+            Dim pixelScan As Func(Of Color, Double) = BackgroundMatch(background Or blank)
+            Dim n% = 0
+
+            For y As Integer = 0 To bitmap.Height - 1 Step [step].Height
+                For x As Integer = 0 To bitmap.Width - 1 Step [step].Width
+
+                    ' 统计出这个小块内的1的数量
+                    For i As Integer = x To x + [step].Width
+                        If i = bitmap.Width Then
+                            Exit For
+                        End If
+
+                        For j As Integer = y To y + [step].Height
+                            If j = bitmap.Height Then
+                                Exit For
+                            End If
+                            n += pixelScan(bitmap.GetPixel(i, j))
+                        Next
+                    Next
+
+                    vector += n
+                Next
+            Next
+
+            Return vector.AsVector
+        End Using
+    End Function
+
+    ''' <summary>
     ''' 使用两个方向的投影对图片上的文字区域进行自动切片
     ''' </summary>
     ''' <param name="view"></param>
@@ -79,6 +119,23 @@ Public Module OCR
         Dim right%, bottom%
         Dim slice As Image
         Dim rect As Rectangle
+
+        If xproject.Length = 1 AndAlso yproject.Length = 1 Then
+            ' 只有一个唯一的切片，已经无法再进行切片了
+            ' 返回原始图片
+            rect = New Rectangle With {
+                .X = 0,
+                .Y = 0,
+                .Width = pixelX.Length,
+                .Height = pixelY.Length
+            }
+
+            Yield New Map(Of Rectangle, Image)(rect, view)
+            Return
+        ElseIf pixelX.Sum = 0R OrElse pixelY.Sum = 0R Then
+            ' 整张图片都是空白的，没有任何内容
+            Return
+        End If
 
         For i As Integer = 0 To yproject.Length - 1
             y = bottom + 1
@@ -114,10 +171,19 @@ Public Module OCR
                     slice = view.ImageCrop(rect)
 
                     If slice.Projection.Sum > 0R Then
+                        Dim pos As Point = rect.Location
+
                         ' 不是空白的切片
-                        Yield New Map(Of Rectangle, Image)(
-                            rect, slice
-                        )
+                        For Each subRegion In slice.Slicing(threshold)
+                            rect = New Rectangle With {
+                                .Location = pos + subRegion.Key.Location,
+                                .Size = subRegion.Key.Size
+                            }
+
+                            Yield New Map(Of Rectangle, Image)(
+                                rect, subRegion.Maps
+                            )
+                        Next
                     End If
                 End If
             Next
