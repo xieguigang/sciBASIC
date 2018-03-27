@@ -53,11 +53,23 @@ Public Module Scanner
                     End If
                 Next
 
+#If DEBUG Then
+                If GDIColors.Equals(bitmap.GetPixel(left, top), blank) Then
+                    Console.Write(" "c)
+                Else
+                    Console.Write("*"c)
+                End If
+#End If
+
                 Yield New Map(Of Point, Vector)(
                     New Point(left, top),
                     vector.AsVector
                 )
             Next
+
+#If DEBUG Then
+            Console.WriteLine()
+#End If
         Next
     End Function
 
