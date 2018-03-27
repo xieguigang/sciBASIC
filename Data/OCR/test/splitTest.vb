@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.SmithWaterman
-Imports Microsoft.VisualBasic.Language
+﻿Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 

@@ -73,7 +73,31 @@ Module Module1
         Pause()
     End Sub
 
+    Public Sub projectionTest()
+        Dim font As New Font(FontFace.MicrosoftYaHei, 20, FontStyle.Bold)
+        Dim view As Image
+
+        Using g = New Size(font.Height * 30, font.Height * 1.2).CreateGDIDevice
+            Call g.DrawString("3.14159265353", font, Brushes.Black, New Point)
+            view = g.ImageResource
+        End Using
+
+        '  Dim hv = view.Projection(True).Split(Function(d) d = 0R).ToArray
+        '  Dim vv = view.Projection(False)
+
+        For Each s In view.Slicing
+            Call s.Maps.SaveAs($"./asfsdfsdfsd/{s.Key}.png")
+        Next
+
+        Call view.SaveAs("./view.png")
+
+        Pause()
+
+    End Sub
+
     Sub Main()
+
+        Call projectionTest()
 
         Call OCRtest2()
 
