@@ -24,9 +24,9 @@ Public Class OpticalCharacter
     Sub New()
     End Sub
 
-    Sub New(character As Image, Optional [char] As Char = Nothing)
+    Sub New(optical As Image, Optional [char] As Char = Nothing)
         Me.char = [char]
-        Me.PixelsVector = character.ToVector(fillDeli:=True).First
+        Me.PixelsVector = optical.ToVector(fillDeli:=True).First
     End Sub
 
     ''' <summary>
