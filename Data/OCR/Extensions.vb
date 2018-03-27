@@ -1,11 +1,10 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
-Imports Microsoft.VisualBasic.DataMining.DynamicProgramming.SmithWaterman
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Extensions
@@ -25,8 +24,8 @@ Public Module Extensions
                     bitmap.FullScan(background Or blank)
                 )
             Else
-                For Each x In bitmap.RegionScan(background Or blank, size)
-                    Yield x
+                For Each X As Map(Of Point, Vector) In bitmap.RegionScan(background Or blank, size)
+                    Yield X
                 Next
             End If
         End Using
@@ -44,23 +43,14 @@ Public Module Extensions
         Dim size As Size = obj.Size
         Dim query As Vector = obj.ToVector.First
         Dim area = query.Length
-        Dim equals As ISimilarity(Of Double) =
-            Function(a, b)
-                If a = b Then
-                    Return 1
-                ElseIf a = -1.0R OrElse b = -1.0R Then
-                    Return -1
-                Else
-                    Return 0
-                End If
-            End Function
 
         For Each block In view.ToVector(size)
             Dim subject As Vector = block.Maps
-            Dim local As New GSW(Of Double)(query, subject, equals, AddressOf asChar)
-            Dim match As Match = local.GetMatches(local.MaxScore * cutoff).FirstOrDefault
+            ' Dim local As New GSW(Of Double)(query, subject, AddressOf Equals, AddressOf AsChar)
+            ' Dim match As Match = local.GetMatches(local.MaxScore * cutoff).FirstOrDefault
+            Dim score = SSM(query, subject)
 
-            If Not match Is Nothing AndAlso (match.ToA - match.FromA) / area >= cutoff Then
+            If score >= cutoff Then
                 Yield New Rectangle(block.Key, size)
             End If
         Next
@@ -79,7 +69,17 @@ Public Module Extensions
         }
     End Function
 
-    Private Function asChar(d As Double) As Char
+    Public Function Equals(a#, b#) As Double
+        If a = b Then
+            Return 1
+        ElseIf a = -1.0R OrElse b = -1.0R Then
+            Return -1
+        Else
+            Return 0
+        End If
+    End Function
+
+    Public Function AsChar(d As Double) As Char
         If d = 0R OrElse d = 1.0R Then
             Return d.ToString.First
         ElseIf d = -1.0R Then
