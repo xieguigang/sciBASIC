@@ -54,6 +54,7 @@ Namespace Darwinism.Models
         Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
         Protected caclFitness As Func(Of Individual, Double)
         Protected indivToString As Func(Of Individual, String)
+        Protected maxCapacity%
 
         Shared ReadOnly objToString As New DefaultValue(Of Func(Of Individual, String))(AddressOf Scripting.ToString)
 
@@ -62,9 +63,10 @@ Namespace Darwinism.Models
         ''' </summary>
         ''' <param name="cacl">Expression for descript how to calculate the fitness.</param>
         ''' <param name="toString">Obj to dictionary key</param>
-        Sub New(cacl As Func(Of Individual, Double), Optional toString As Func(Of Individual, String) = Nothing)
+        Sub New(cacl As Func(Of Individual, Double), capacity%, Optional toString As Func(Of Individual, String) = Nothing)
             caclFitness = cacl
             indivToString = toString Or objToString
+            maxCapacity = capacity
         End Sub
 
         Sub New()
@@ -85,6 +87,22 @@ Namespace Darwinism.Models
                 Else
                     fit = caclFitness([in])
                     cache.Add(key$, fit)
+
+                    If cache.Count >= maxCapacity Then
+                        Dim asc = From fitValue
+                                  In cache
+                                  Order By fitValue.Value Ascending
+                                  Take CInt(maxCapacity * 0.9)
+                                  Select ID = fitValue.Key
+
+                        With asc.Indexing
+                            For Each key In cache.Keys.ToArray
+                                If .NotExists(key) Then
+                                    Call cache.Remove(key)
+                                End If
+                            Next
+                        End With
+                    End If
                 End If
             End SyncLock
 

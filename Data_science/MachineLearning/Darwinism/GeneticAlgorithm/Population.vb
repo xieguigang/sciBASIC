@@ -172,10 +172,12 @@ Namespace Darwinism.GAF
 
             If Parallel Then
                 Dim source = chromosomes _
-                    .Select(Function(x) New NamedValue(Of Chr) With {
+                    .Select(Function(x)
+                                Return New NamedValue(Of Chr) With {
                         .Name = x.ToString,
                         .Value = x
-                    }) _
+                    }
+                            End Function) _
                     .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
                     .ToArray
                 Dim fitness As NamedValue(Of Double)() =
