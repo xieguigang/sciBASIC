@@ -96,6 +96,12 @@ Namespace Scripting.SymbolBuilder
             Call Me.New(New StringBuilder(script))
         End Sub
 
+        ''' <summary>
+        ''' <see cref="StringBuilder.Replace(String, String)"/>
+        ''' </summary>
+        ''' <param name="key$"></param>
+        ''' <param name="value$"></param>
+        ''' <returns></returns>
         Public Function Replace(key$, value$) As ScriptBuilder
             Call Script.Replace(key, value)
             Return Me
@@ -105,6 +111,8 @@ Namespace Scripting.SymbolBuilder
         ''' Display the string text in the <see cref="StringBuilder"/> object.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return Script.ToString
         End Function
@@ -125,6 +133,8 @@ Namespace Scripting.SymbolBuilder
         ''' </summary>
         ''' <param name="sb"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(sb As ScriptBuilder) As String
             Return sb.Script.ToString
         End Operator
@@ -151,10 +161,12 @@ Namespace Scripting.SymbolBuilder
             Return sb
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Save(Optional path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
             Return Script.ToString.SaveTo(path, encoding)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Save(Optional path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return Script.ToString.SaveTo(path, encoding.CodePage)
         End Function
