@@ -608,8 +608,8 @@ Public Module WebServiceUtils
 RE0:
         Try
             Using browser As New WebClient()
-                If Not String.IsNullOrEmpty(proxy) Then
-                    Call browser.SetProxy(proxy)
+                If Not String.IsNullOrEmpty(Proxy) Then
+                    Call browser.SetProxy(Proxy)
                 End If
                 If Not refer.StringEmpty Then
                     browser.Headers.Add(NameOf(refer), refer)
