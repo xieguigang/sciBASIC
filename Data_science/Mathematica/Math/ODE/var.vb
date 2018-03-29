@@ -122,6 +122,10 @@ Public Class var : Inherits float
     Public Function Clone() As Object Implements ICloneable.Clone
         Return New var(Me)
     End Function
+
+    Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+        Index = address
+    End Sub
 End Class
 
 Public Interface Ivar : Inherits INamedValue
