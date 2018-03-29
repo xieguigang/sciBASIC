@@ -85,8 +85,8 @@ Namespace ComponentModel
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
-        ''' <remarks></remarks>
-        Property Address As T
+        ''' <remarks>因为索引号在赋值之后是不可以被修改了的，所以这个属性使用ReadOnly</remarks>
+        ReadOnly Property Address As T
     End Interface
 
     Public Interface IHashHandle : Inherits IAddressOf, INamedValue
