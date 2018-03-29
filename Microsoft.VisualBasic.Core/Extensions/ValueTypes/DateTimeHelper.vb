@@ -118,12 +118,14 @@ Namespace ValueTypes
         ''' </summary>
         ''' <param name="d"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FillDateZero(d As Integer) As String
             Return If(d >= 10, d, "0" & d)
         End Function
 
         ''' <summary>
-        ''' 枚举出在<paramref name="start"/>到<paramref name="ends"/>这个时间窗里面的所有日期
+        ''' 枚举出在<paramref name="start"/>到<paramref name="ends"/>这个时间窗里面的所有日期，单位为天
         ''' </summary>
         ''' <param name="start"></param>
         ''' <param name="ends"></param>
