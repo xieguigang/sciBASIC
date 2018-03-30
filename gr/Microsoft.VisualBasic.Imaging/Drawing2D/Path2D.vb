@@ -71,6 +71,22 @@ Namespace Drawing2D
             last = location
         End Sub
 
+        Public Sub HorizontalTo(x!, Optional relative As Boolean = False)
+            If Not relative Then
+                Call LineTo(x, last.Y)
+            Else
+                Call LineTo(last.X + x, last.Y)
+            End If
+        End Sub
+
+        Public Sub VerticalTo(y!, Optional relative As Boolean = False)
+            If Not relative Then
+                Call LineTo(last.X, y)
+            Else
+                Call LineTo(last.X, last.Y + y)
+            End If
+        End Sub
+
         Public Sub LineTo(x!, y!, Optional relative As Boolean = False)
             If Not relative Then
                 Call LineTo(New PointF(x, y))

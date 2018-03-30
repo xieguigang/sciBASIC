@@ -159,7 +159,19 @@ Namespace SVG
                                 Call gdiPath.LineTo(a, b)
                             Case "l"c
                                 Call gdiPath.LineTo(a, b, relative:=True)
-                            Case "Z"c
+                            Case "H"c
+                                ' 水平平行线
+                                ' 变X不变Y
+                                Call gdiPath.HorizontalTo(a)
+                            Case "h"c
+                                Call gdiPath.HorizontalTo(a, relative:=True)
+                            Case "V"c
+                                ' 垂直平行线
+                                ' 变Y不变X
+                                Call gdiPath.VerticalTo(a)
+                            Case "v"c
+                                Call gdiPath.VerticalTo(a, relative:=True)
+                            Case "Z"c, "z"c
                                 Call gdiPath.CloseAllFigures()
                             Case Else
                                 Throw New NotImplementedException($"Action ""{action}""@{path.d}")
