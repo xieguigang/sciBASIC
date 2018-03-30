@@ -153,8 +153,12 @@ Namespace SVG
                         Select Case action
                             Case "M"c
                                 Call gdiPath.MoveTo(a, b)
+                            Case "m"c
+                                Call gdiPath.MoveTo(a, b, relative:=True)
                             Case "L"c
                                 Call gdiPath.LineTo(a, b)
+                            Case "l"c
+                                Call gdiPath.LineTo(a, b, relative:=True)
                             Case "Z"c
                                 Call gdiPath.CloseAllFigures()
                             Case Else
