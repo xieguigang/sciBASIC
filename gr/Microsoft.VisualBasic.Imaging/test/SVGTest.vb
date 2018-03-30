@@ -63,6 +63,11 @@ Module SVGTest
         Call path.LineTo(500, 100)
         Call path.LineTo(300, 699)
         Call path.CloseAllFigures()
+        Call path.MoveTo(800, 800)
+        Call path.LineTo(200, 300)
+        Call path.HorizontalTo(1000)
+        Call path.VerticalTo(602)
+        Call path.CloseAllFigures()
 
         Dim svgPath = path.SVGPath
 
