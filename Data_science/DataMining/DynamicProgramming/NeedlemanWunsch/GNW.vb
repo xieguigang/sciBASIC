@@ -154,7 +154,7 @@ Namespace NeedlemanWunsch
         '''    (make sure to use object oriented programming concepts, i.e. use objects to abstract your code 
         '''   	-> don't do everything in a single class)    	 
         ''' </remarks>
-        Public Sub compute()
+        Public Function Compute() As NeedlemanWunsch(Of T)
 
             ' Set the number of rows and columns
             Dim rows As Integer = Me.Sequence2.Length + 1 ' number of rows
@@ -202,7 +202,9 @@ Namespace NeedlemanWunsch
 
             ' call the traceback function
             Me.traceback(New Stack(Of T), New Stack(Of T), rows, columns)
-        End Sub
+
+            Return Me
+        End Function
 
         ''' <summary>
         ''' return the maximizing cell(s)

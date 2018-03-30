@@ -45,6 +45,7 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Namespace Drawing2D
 
@@ -57,19 +58,41 @@ Namespace Drawing2D
 
         Dim last As PointF
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub MoveTo(x!, y!)
-            last = New PointF(x, y)
+        Public Sub MoveTo(x!, y!, Optional relative As Boolean = False)
+            If Not relative Then
+                last = New PointF(x, y)
+            Else
+                last = last.OffSet2D(x, y)
+            End If
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub MoveTo(location As PointF)
+        Public Sub MoveTo(location As PointF, Optional relative As Boolean = False)
             last = location
         End Sub
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub LineTo(x!, y!)
-            Call LineTo(New PointF(x, y))
+        Public Sub HorizontalTo(x!, Optional relative As Boolean = False)
+            If Not relative Then
+                Call LineTo(x, last.Y)
+            Else
+                Call LineTo(last.X + x, last.Y)
+            End If
+        End Sub
+
+        Public Sub VerticalTo(y!, Optional relative As Boolean = False)
+            If Not relative Then
+                Call LineTo(last.X, y)
+            Else
+                Call LineTo(last.X, last.Y + y)
+            End If
+        End Sub
+
+        Public Sub LineTo(x!, y!, Optional relative As Boolean = False)
+            If Not relative Then
+                Call LineTo(New PointF(x, y))
+            Else
+                Call LineTo(last.OffSet2D(x, y))
+            End If
         End Sub
 
         Public Sub LineTo(location As PointF)

@@ -1,49 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::5955d7b2da023f839fdeac0247017e8f, gr\Microsoft.VisualBasic.Imaging\SVG\ModelBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ModelBuilder
-    ' 
-    '         Function: ParseSVGPathData, PiePath, SVGPath, SVGPathData
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ModelBuilder
+' 
+'         Function: ParseSVGPathData, PiePath, SVGPath, SVGPathData
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Emit.Marshal
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 Imports sys = System.Math
 
 Namespace SVG
@@ -69,6 +73,12 @@ Namespace SVG
         <Extension>
         Public Function SVGPath(path As GraphicsPath) As path
             Return New path(path)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SVGPath(path As Path2D) As path
+            Return SVGPath(path.Path)
         End Function
 
         ''' <summary>
@@ -106,9 +116,95 @@ Namespace SVG
             Return sb.ToString
         End Function
 
+        ''' <summary>
+        ''' 解析SVG之中的path数据，并转换为等价的gdi+的path对象
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' ```vbnet
+        ''' ' M0 0 L15 0 L8 15 L0 0 Z
+        ''' 
+        ''' Move(0, 0)
+        ''' LineTo(15, 0)
+        ''' LineTo(8, 15)
+        ''' LineTo(0, 0)
+        ''' Close()
+        ''' ```
+        ''' </remarks>
         <Extension>
-        Public Function ParseSVGPathData(path As path)
-            Throw New NotImplementedException
+        Public Function ParseSVGPathData(path As path) As GraphicsPath
+            Dim scanner As New Pointer(Of Char)(path.d)
+            Dim c As Char
+            Dim a#
+            Dim b#
+            Dim buffer As New List(Of Char)
+            Dim action As Char = ASCII.NUL
+            Dim gdiPath As New Path2D
+
+            Do While Not scanner.EndRead
+                ' Get current value and move forward the Pointer 
+                ' by one step.
+                c = ++scanner
+
+                If Char.IsLetter(c) Then
+
+                    If (Not a.IsNaNImaginary OrElse Not b.IsNaNImaginary) AndAlso Not action = ASCII.NUL Then
+                        Select Case action
+                            Case "M"c
+                                Call gdiPath.MoveTo(a, b)
+                            Case "m"c
+                                Call gdiPath.MoveTo(a, b, relative:=True)
+                            Case "L"c
+                                Call gdiPath.LineTo(a, b)
+                            Case "l"c
+                                Call gdiPath.LineTo(a, b, relative:=True)
+                            Case "H"c
+                                ' 水平平行线
+                                ' 变X不变Y
+                                Call gdiPath.HorizontalTo(a)
+                            Case "h"c
+                                Call gdiPath.HorizontalTo(a, relative:=True)
+                            Case "V"c
+                                ' 垂直平行线
+                                ' 变Y不变X
+                                Call gdiPath.VerticalTo(a)
+                            Case "v"c
+                                Call gdiPath.VerticalTo(a, relative:=True)
+                            Case "Z"c, "z"c
+                                Call gdiPath.CloseAllFigures()
+                            Case Else
+                                Throw New NotImplementedException($"Action ""{action}""@{path.d}")
+                        End Select
+                    End If
+
+                    ' clear buffer
+                    action = c
+                    a = Double.NaN
+                    b = Double.NaN
+                    buffer *= 0
+
+                ElseIf c = " "c Then
+
+                    ' 结束当前的token
+                    If a.IsNaNImaginary Then
+                        a = Val(buffer.CharString)
+                    ElseIf b.IsNaNImaginary Then
+                        b = Val(buffer.CharString)
+                    Else
+                        Throw New NotImplementedException(path.d)
+                    End If
+
+                    buffer *= 0
+
+                ElseIf Char.IsDigit(c) Then
+                    buffer += c
+                Else
+                    Throw New NotImplementedException($"Unknown ""{c}""@{path.d}")
+                End If
+            Loop
+
+            Return gdiPath.Path
         End Function
     End Module
 End Namespace

@@ -116,6 +116,10 @@ Namespace ComponentModel.Algorithm.base
             End Get
         End Property
 
+        Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+            Index = address
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{Index} --> {Items.GetJson}"
         End Function

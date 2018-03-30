@@ -49,7 +49,10 @@ Namespace ComponentModel.TagData
         Implements Value(Of T).IValueOf
 
         Public Property Line As Integer Implements IAddress(Of Integer).Address
-        Public Property value As T Implements Value(Of T).IValueOf.value
+        Public Property value As T Implements Value(Of T).IValueOf.Value
 
+        Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+            Line = address
+        End Sub
     End Structure
 End Namespace

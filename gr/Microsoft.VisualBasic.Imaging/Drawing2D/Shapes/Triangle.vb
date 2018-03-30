@@ -82,18 +82,43 @@ Namespace Drawing2D.Shapes
             End Get
         End Property
 
-        Public Overloads Shared Sub Draw(ByRef g As IGraphics, topLeft As Point, size As Size, Optional br As Brush = Nothing, Optional border As Stroke = Nothing)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="topLeft"></param>
+        ''' <param name="size"></param>
+        ''' <param name="br"></param>
+        ''' <param name="border"></param>
+        ''' <param name="reversed">默认是顶部向上，如果reverse为真的话，则顶部向下</param>
+        Public Overloads Shared Sub Draw(ByRef g As IGraphics,
+                                         topLeft As Point,
+                                         size As Size,
+                                         Optional br As Brush = Nothing,
+                                         Optional border As Stroke = Nothing,
+                                         Optional reversed As Boolean = False)
             Dim t As New GraphicsPath
-            Dim a As New Point(topLeft.X + size.Width / 2, topLeft.Y)
-            Dim rect As New Rectangle(topLeft, size)
-            Dim b As New Point(rect.Right, rect.Bottom)
-            Dim c As New Point(rect.Left, rect.Bottom)
 
-            Call t.AddLine(a, b)
-            Call t.AddLine(b, c)
-            Call t.AddLine(c, a)
+            If Not reversed Then
+                Dim a As New Point(topLeft.X + size.Width / 2, topLeft.Y)
+                Dim rect As New Rectangle(topLeft, size)
+                Dim b As New Point(rect.Right, rect.Bottom)
+                Dim c As New Point(rect.Left, rect.Bottom)
+
+                Call t.AddLine(a, b)
+                Call t.AddLine(b, c)
+                Call t.AddLine(c, a)
+            Else
+                Dim b = topLeft
+                Dim c = New Point(topLeft.X + size.Width, topLeft.Y)
+                Dim a = New Point(topLeft.X + size.Width / 2, topLeft.Y + size.Height)
+
+                Call t.AddLine(b, c)
+                Call t.AddLine(c, a)
+                Call t.AddLine(a, b)
+            End If
+
             Call t.CloseAllFigures()
-
             Call g.FillPath(br Or BlackBrush, t)
 
             If Not border Is Nothing Then
