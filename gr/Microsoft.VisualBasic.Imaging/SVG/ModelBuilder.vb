@@ -230,6 +230,11 @@ Namespace SVG
                 Case "s"c
                     Call gdiPath.SmoothCurveTo(parameters(0), parameters(1), parameters(2), parameters(4), relative:=True)
 
+                Case "Q"c
+                    Call gdiPath.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4))
+                Case "q"c
+                    Call gdiPath.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4), relative:=True)
+
                 Case "Z"c, "z"c
                     Call gdiPath.CloseAllFigures()
                 Case Else
