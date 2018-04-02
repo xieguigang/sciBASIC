@@ -46,6 +46,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language
 
 Namespace Drawing2D
 
@@ -98,6 +99,47 @@ Namespace Drawing2D
         Public Sub LineTo(location As PointF)
             Call Path.AddLine(last, location)
             last = location
+        End Sub
+
+        ''' <summary>
+        ''' 三次贝塞曲线
+        ''' </summary>
+        ''' <param name="x1#">第一控制点X</param>
+        ''' <param name="y1#">第一控制点Y</param>
+        ''' <param name="x2#">第二控制点X</param>
+        ''' <param name="y2#">第二控制点Y</param>
+        ''' <param name="endX#">曲线结束点X</param>
+        ''' <param name="endY#">曲线结束点Y</param>
+        Public Sub CurveTo(x1#, y1#, x2#, y2#, endX#, endY#, Optional relative As Boolean = False)
+            If relative Then
+                With last.OffSet2D(endX, endY)
+                    Call Path.AddBezier(
+                        last, last.OffSet2D(x1, y1), last.OffSet2D(x2, y2), .ByRef
+                    )
+                    last = .ByRef
+                End With
+            Else
+                With New PointF(endX, endY)
+                    Call Path.AddBezier(
+                        last, New PointF(x1, y1), New PointF(x2, y2), .ByRef
+                    )
+                    last = .ByRef
+                End With
+            End If
+        End Sub
+
+        Public Sub SmoothCurveTo(x2#, y2#, endX#, endY#, Optional relative As Boolean = False)
+            If relative Then
+                With last.OffSet2D(endX, endY)
+                    Call Path.AddCurve({last, last.OffSet2D(x2, y2), .ByRef})
+                    last = .ByRef
+                End With
+            Else
+                With New PointF(endX, endY)
+                    Call Path.AddCurve({last, New PointF(x2, y2), .ByRef})
+                    last = .ByRef
+                End With
+            End If
         End Sub
 
         ''' <summary>
