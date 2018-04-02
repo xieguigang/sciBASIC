@@ -1,5 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
 
+''' <summary>
+''' Crc32校验码
+''' </summary>
 Public Class Crc32
 
     ''' <summary>
