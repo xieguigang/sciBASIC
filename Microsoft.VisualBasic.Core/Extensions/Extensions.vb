@@ -1536,7 +1536,8 @@ Public Module Extensions
         Dim i As Integer = offset
 
         For Each x As T In source
-            x.Address = i
+            Call x.Assign(address:=i)
+
             i += 1
             list += x
         Next

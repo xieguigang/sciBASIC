@@ -171,6 +171,13 @@ Namespace Imaging.Math2D
             End With
         End Function
 
+        ''' <summary>
+        ''' <see cref="Point"/> <paramref name="pt"/> + offset
+        ''' </summary>
+        ''' <param name="pt"></param>
+        ''' <param name="x!"></param>
+        ''' <param name="y!"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function OffSet2D(pt As PointF, x!, y!) As PointF
             With pt

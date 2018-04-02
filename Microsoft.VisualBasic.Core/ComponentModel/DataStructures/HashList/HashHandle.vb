@@ -234,7 +234,9 @@ Namespace ComponentModel
             End If
 
             Dim i As Integer = __emptys.Dequeue
-            x.Address = i
+
+            Call x.Assign(address:=i)
+
             __innerList(i) = x
             __innerHash(x.Key) = x
         End Sub
