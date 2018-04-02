@@ -47,6 +47,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
+Imports Line2D = Microsoft.VisualBasic.Imaging.Drawing2D.Shapes.Line
 
 Namespace Drawing2D
 
@@ -143,7 +144,17 @@ Namespace Drawing2D
         End Sub
 
         Public Sub QuadraticBelzier(x#, y#, endX#, endY#, Optional relative As Boolean = False)
-            ' Call Path.
+            If Not relative Then
+                With New PointF(endX, endY)
+                    Call Path.AddLines(Line2D.QuadraticBelzier(last, New PointF(x, y), .ByRef).ToArray)
+                    last = .ByRef
+                End With
+            Else
+                With last.OffSet2D(endX, endY)
+                    Call Path.AddLines(Line2D.QuadraticBelzier(last, last.OffSet2D(x, y), .ByRef).ToArray)
+                    last = .ByRef
+                End With
+            End If
         End Sub
 
         ''' <summary>
