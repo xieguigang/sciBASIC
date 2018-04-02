@@ -136,8 +136,7 @@ Namespace SVG
         Public Function ParseSVGPathData(path As path) As GraphicsPath
             Dim scanner As New Pointer(Of Char)(path.d)
             Dim c As Char
-            Dim a#
-            Dim b#
+            Dim parameters As New List(Of Double)
             Dim buffer As New List(Of Char)
             Dim action As Char = ASCII.NUL
             Dim gdiPath As New Path2D
@@ -149,28 +148,28 @@ Namespace SVG
 
                 If Char.IsLetter(c) Then
 
-                    If (Not a.IsNaNImaginary OrElse Not b.IsNaNImaginary) AndAlso Not action = ASCII.NUL Then
+                    If Not action = ASCII.NUL Then
                         Select Case action
                             Case "M"c
-                                Call gdiPath.MoveTo(a, b)
+                                Call gdiPath.MoveTo(parameters(0), parameters(1))
                             Case "m"c
-                                Call gdiPath.MoveTo(a, b, relative:=True)
+                                Call gdiPath.MoveTo(parameters(0), parameters(1), relative:=True)
                             Case "L"c
-                                Call gdiPath.LineTo(a, b)
+                                Call gdiPath.LineTo(parameters(0), parameters(1))
                             Case "l"c
-                                Call gdiPath.LineTo(a, b, relative:=True)
+                                Call gdiPath.LineTo(parameters(0), parameters(1), relative:=True)
                             Case "H"c
                                 ' 水平平行线
                                 ' 变X不变Y
-                                Call gdiPath.HorizontalTo(a)
+                                Call gdiPath.HorizontalTo(parameters(0))
                             Case "h"c
-                                Call gdiPath.HorizontalTo(a, relative:=True)
+                                Call gdiPath.HorizontalTo(parameters(0), relative:=True)
                             Case "V"c
                                 ' 垂直平行线
                                 ' 变Y不变X
-                                Call gdiPath.VerticalTo(a)
+                                Call gdiPath.VerticalTo(parameters(0))
                             Case "v"c
-                                Call gdiPath.VerticalTo(a, relative:=True)
+                                Call gdiPath.VerticalTo(parameters(0), relative:=True)
                             Case "Z"c, "z"c
                                 Call gdiPath.CloseAllFigures()
                             Case Else
@@ -180,21 +179,13 @@ Namespace SVG
 
                     ' clear buffer
                     action = c
-                    a = Double.NaN
-                    b = Double.NaN
+                    parameters *= 0
                     buffer *= 0
 
                 ElseIf c = " "c Then
 
                     ' 结束当前的token
-                    If a.IsNaNImaginary Then
-                        a = Val(buffer.CharString)
-                    ElseIf b.IsNaNImaginary Then
-                        b = Val(buffer.CharString)
-                    Else
-                        Throw New NotImplementedException(path.d)
-                    End If
-
+                    parameters += Val(buffer.CharString)
                     buffer *= 0
 
                 ElseIf Char.IsDigit(c) Then
