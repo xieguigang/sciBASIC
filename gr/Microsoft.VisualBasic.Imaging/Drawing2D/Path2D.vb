@@ -142,6 +142,10 @@ Namespace Drawing2D
             End If
         End Sub
 
+        Public Sub QuadraticBelzier(x#, y#, endX#, endY#, Optional relative As Boolean = False)
+            ' Call Path.
+        End Sub
+
         ''' <summary>
         ''' 重置
         ''' </summary>
