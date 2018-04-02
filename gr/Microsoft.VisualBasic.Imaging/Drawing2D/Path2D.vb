@@ -158,6 +158,21 @@ Namespace Drawing2D
         End Sub
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="rX!">所在椭圆的半轴大小</param>
+        ''' <param name="rY!">所在椭圆的半轴大小</param>
+        ''' <param name="xrotation!">椭圆的X轴与水平方向顺时针方向夹角，可以想像成一个水平的椭圆绕中心点顺时针旋转XROTATION的角度。</param>
+        ''' <param name="flag1!">1表示大角度弧线，0为小角度弧线。</param>
+        ''' <param name="flag2!">确定从起点至终点的方向，1为顺时针，0为逆时针</param>
+        ''' <param name="x!">终点坐标</param>
+        ''' <param name="y!">终点坐标</param>
+        ''' <param name="relative"></param>
+        Public Sub EllipticalArc(rX!, rY!, xrotation!, flag1!, flag2!, x!, y!, Optional relative As Boolean = False)
+
+        End Sub
+
+        ''' <summary>
         ''' 重置
         ''' </summary>
         ''' 

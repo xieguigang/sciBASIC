@@ -235,6 +235,33 @@ Namespace SVG
                 Case "q"c
                     Call gdiPath.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4), relative:=True)
 
+                Case "A"c
+                    Dim i As int = 0
+
+                    Call gdiPath.EllipticalArc(
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i)
+                    )
+                Case "a"c
+                    Dim i As int = 0
+
+                    Call gdiPath.EllipticalArc(
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+ _
+                        relative:=True
+                    )
+
                 Case "Z"c, "z"c
                     Call gdiPath.CloseAllFigures()
                 Case Else
