@@ -799,6 +799,7 @@
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeNode.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLSupports.vb" />
     <Compile Include="ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb" />
+    <Compile Include="ComponentModel\DataSource\DefaultAttribute.vb" />
     <Compile Include="ComponentModel\Ranges\Unit.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
