@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::412a82f2b79f7e09020db0881fd25712, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class NeedlemanWunsch
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: fillTracebackMatrix
-    ' 
-    '         Sub: compute, traceback
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class NeedlemanWunsch
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: fillTracebackMatrix
+' 
+'         Sub: compute, traceback
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 
 Namespace NeedlemanWunsch
 
@@ -154,7 +154,7 @@ Namespace NeedlemanWunsch
         '''    (make sure to use object oriented programming concepts, i.e. use objects to abstract your code 
         '''   	-> don't do everything in a single class)    	 
         ''' </remarks>
-        Public Sub compute()
+        Public Function Compute() As NeedlemanWunsch(Of T)
 
             ' Set the number of rows and columns
             Dim rows As Integer = Me.Sequence2.Length + 1 ' number of rows
@@ -202,7 +202,9 @@ Namespace NeedlemanWunsch
 
             ' call the traceback function
             Me.traceback(New Stack(Of T), New Stack(Of T), rows, columns)
-        End Sub
+
+            Return Me
+        End Function
 
         ''' <summary>
         ''' return the maximizing cell(s)

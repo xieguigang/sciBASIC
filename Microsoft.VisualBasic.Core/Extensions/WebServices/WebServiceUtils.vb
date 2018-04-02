@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::a350c1159d362c5eb5224145c6c7cf3e, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module WebServiceUtils
-    ' 
-    '     Properties: DefaultUA, Protocols, Proxy
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
-    '               CopyStream, (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress
-    '               GetProxy, (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL
-    '               (+2 Overloads) POST, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
-    '               UrlEncode, UrlPathEncode
-    ' 
-    '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
-    ' 
-    ' /********************************************************************************/
+' Module WebServiceUtils
+' 
+'     Properties: DefaultUA, Protocols, Proxy
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
+'               CopyStream, (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress
+'               GetProxy, (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL
+'               (+2 Overloads) POST, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
+'               UrlEncode, UrlPathEncode
+' 
+'     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,7 @@ Imports System.Text.RegularExpressions
 Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -461,10 +462,13 @@ Public Module WebServiceUtils
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
     <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function POST(url$, params As NameValueCollection,
+    <Extension> Public Function POST(url$,
+                                     Optional params As NameValueCollection = Nothing,
                                      Optional headers As Dictionary(Of String, String) = Nothing,
                                      Optional Referer$ = "",
                                      Optional proxy$ = Nothing) As String
+
+        Static emptyBody As DefaultValue(Of NameValueCollection) = New NameValueCollection
 
         Using request As New WebClient
 
@@ -486,7 +490,7 @@ Public Module WebServiceUtils
 
             Call $"[POST] {url}....".__DEBUG_ECHO
 
-            Dim response As Byte() = request.UploadValues(url, "POST", params)
+            Dim response As Byte() = request.UploadValues(url, "POST", params Or emptyBody)
             Dim strData As String = Encoding.UTF8.GetString(response)
 
             Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
@@ -604,8 +608,8 @@ Public Module WebServiceUtils
 RE0:
         Try
             Using browser As New WebClient()
-                If Not String.IsNullOrEmpty(proxy) Then
-                    Call browser.SetProxy(proxy)
+                If Not String.IsNullOrEmpty(Proxy) Then
+                    Call browser.SetProxy(Proxy)
                 End If
                 If Not refer.StringEmpty Then
                     browser.Headers.Add(NameOf(refer), refer)
