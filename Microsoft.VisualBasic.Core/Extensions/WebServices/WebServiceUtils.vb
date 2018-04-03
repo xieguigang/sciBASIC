@@ -686,7 +686,9 @@ RE0:
     <Extension> Public Function GetDownload(url As String, savePath As String) As Boolean
         Try
             Dim responseStream As Stream = GetRequestRaw(url)
-            Dim buffer As Byte() = responseStream.CopyStream
+            Dim buffer As Byte() = responseStream _
+                .CopyStream _
+                .ToArray
             Call $"[{buffer.Length} Bytes]".__DEBUG_ECHO
             Return buffer.FlushStream(savePath)
         Catch ex As Exception
