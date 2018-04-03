@@ -500,6 +500,54 @@ Public Module WebServiceUtils
     End Function
 
     ''' <summary>
+    ''' 通过post上传文件
+    ''' </summary>
+    ''' <param name="url$"></param>
+    ''' <param name="file$"></param>
+    ''' <param name="name$"></param>
+    ''' <param name="referer$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function POSTFile(url$, file$, Optional name$ = "", Optional referer$ = Nothing) As String
+        Dim request As HttpWebRequest = DirectCast(WebRequest.Create(url), HttpWebRequest)
+
+        request.Method = "POST"
+        request.Accept = "application/json"
+        request.ContentLength = file.FileLength
+        request.ContentType = "application/x-www-form-urlencoded; charset=utf-8"
+        request.UserAgent = UserAgent.GoogleChrome
+        request.Referer = referer
+        request.Headers("fileName") = name Or file.FileName.AsDefault
+
+        If Not String.IsNullOrEmpty(Proxy) Then
+            Call request.SetProxy(Proxy)
+        End If
+
+        Call $"[POST] {url}....".__DEBUG_ECHO
+
+        ' post data Is sent as a stream
+        Using sender As New StreamWriter(request.GetRequestStream())
+            Call sender.Write(file.ReadBinary)
+        End Using
+
+        ' returned values are returned as a stream, then read into a string
+        Dim response = DirectCast(request.GetResponse(), HttpWebResponse)
+
+        Using responseStream As New StreamReader(response.GetResponseStream())
+            Dim html As New StringBuilder
+            Dim s As New Value(Of String)
+
+            Do While Not (s = responseStream.ReadLine) Is Nothing
+                Call html.AppendLine(+s)
+            Loop
+
+            Call $"Get {html.Length} bytes from server response...".__DEBUG_ECHO
+
+            Return html.ToString
+        End Using
+    End Function
+
+    ''' <summary>
     ''' POST http request for get html
     ''' </summary>
     ''' <param name="url$"></param>
@@ -608,8 +656,8 @@ Public Module WebServiceUtils
 RE0:
         Try
             Using browser As New WebClient()
-                If Not String.IsNullOrEmpty(Proxy) Then
-                    Call browser.SetProxy(Proxy)
+                If Not String.IsNullOrEmpty(proxy) Then
+                    Call browser.SetProxy(proxy)
                 End If
                 If Not refer.StringEmpty Then
                     browser.Headers.Add(NameOf(refer), refer)
