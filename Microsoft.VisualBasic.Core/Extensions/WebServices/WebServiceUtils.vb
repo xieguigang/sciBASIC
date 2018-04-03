@@ -315,30 +315,6 @@ Public Module WebServiceUtils
         Return hash
     End Function
 
-    ''' <summary>
-    ''' Download stream data from the http response.
-    ''' </summary>
-    ''' <param name="stream">
-    ''' Create from <see cref="WebServiceUtils.GetRequestRaw(String, Boolean, String)"/>
-    ''' </param>
-    ''' <returns></returns>
-    <ExportAPI("Stream.Copy", Info:="Download stream data from the http response.")>
-    <Extension> Public Function CopyStream(stream As Stream) As Byte()
-        If stream Is Nothing Then
-            Return New Byte() {}
-        End If
-
-        Dim stmMemory As MemoryStream = New MemoryStream()
-        Dim buffer As Byte() = New Byte(64 * 1024) {}
-        Dim i As New Value(Of Integer)
-        Do While i = stream.Read(buffer, 0, buffer.Length) > 0
-            Call stmMemory.Write(buffer, 0, +i)
-        Loop
-        buffer = stmMemory.ToArray()
-        Call stmMemory.Close()
-        Return buffer
-    End Function
-
     <ExportAPI("GET", Info:="GET http request")>
     <Extension> Public Function GetRequest(strUrl As String, ParamArray args As String()()) As String
         If args.IsNullOrEmpty Then
@@ -526,9 +502,14 @@ Public Module WebServiceUtils
         Call $"[POST] {url}....".__DEBUG_ECHO
 
         ' post data Is sent as a stream
-        Using sender As New StreamWriter(request.GetRequestStream())
-            Call sender.Write(file.ReadBinary)
-        End Using
+        With request.GetRequestStream()
+            Dim buffer = file.ReadBinary
+
+            Call New StreamWriter(.ByRef).Write(vbCrLf)
+            Call .Flush()
+            Call .Write(buffer, Scan0, buffer.Length)
+            Call .Flush()
+        End With
 
         ' returned values are returned as a stream, then read into a string
         Dim response = DirectCast(request.GetResponse(), HttpWebResponse)
