@@ -77,6 +77,10 @@ Namespace ApplicationServices.Debugging.Diagnostics
             }
         End Function
 
+        ''' <summary>
+        ''' Parsing <see cref="Environment.StackTrace"/>, gets current stack trace information.
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared Function GetCurrentStackTrace() As StackFrame()
             Return Environment.StackTrace _
                 .LineTokens _
@@ -92,8 +96,20 @@ Namespace ApplicationServices.Debugging.Diagnostics
 
     Public Class StackFrame
 
+        ''' <summary>
+        ''' Method call
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Method As Method
+        ''' <summary>
+        ''' The file path of the source file
+        ''' </summary>
+        ''' <returns></returns>
         Public Property File As String
+        ''' <summary>
+        ''' The line number in current source <see cref="File"/>.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Line As String
 
         Public Overrides Function ToString() As String
