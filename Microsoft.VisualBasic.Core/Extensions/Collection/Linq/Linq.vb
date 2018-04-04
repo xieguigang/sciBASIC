@@ -153,11 +153,15 @@ Namespace Linq
             End If
         End Function
 
-        Public Function __innerTry(Of T)(source As Func(Of T), msg As String, Optional throwEx As Boolean = True) As T
+        Public Function __innerTry(Of T)(source As Func(Of T),
+                                         msg$,
+                                         Optional throwEx As Boolean = True,
+                                         Optional ByRef exception As Exception = Nothing) As T
             Try
                 Return source()
             Catch ex As Exception
-                ex = New Exception(msg)
+                ex = New Exception(msg, ex)
+                exception = ex
 
                 Call App.LogException(ex, source.ToString)
 
