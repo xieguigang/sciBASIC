@@ -444,14 +444,19 @@ Public Module WebServiceUtils
                                      Optional Referer$ = "",
                                      Optional proxy$ = Nothing) As String
 
-        Static emptyBody As DefaultValue(Of NameValueCollection) = New NameValueCollection
+        Static emptyBody As New DefaultValue(Of NameValueCollection) With {
+            .Value = New NameValueCollection,
+            .assert = Function(c)
+                          Return c Is Nothing OrElse DirectCast(c, NameValueCollection).Count = 0
+                      End Function
+        }
 
         Using request As New WebClient
 
             Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
             Call request.Headers.Add(NameOf(Referer), Referer)
 
-            For Each header In headers
+            For Each header In headers.SafeQuery
                 If Not request.Headers.ContainsKey(header.Key) Then
                     request.Headers.Add(header.Key, header.Value)
                 End If
