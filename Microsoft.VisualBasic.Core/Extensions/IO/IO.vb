@@ -165,11 +165,12 @@ Public Module IOExtensions
     ''' <param name="path"></param>
     ''' <param name="encoding">使用系统默认的编码方案</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Open.Reader")>
     <Extension>
     Public Function OpenReader(path$, Optional encoding As Encoding = Nothing) As StreamReader
-        encoding = If(encoding Is Nothing, Encoding.Default, encoding)
-        Return New StreamReader(IO.File.Open(path, FileMode.OpenOrCreate), encoding)
+        Return New StreamReader(IO.File.Open(path, FileMode.OpenOrCreate), encoding Or UTF8)
     End Function
 
     ''' <summary>
@@ -181,8 +182,9 @@ Public Module IOExtensions
     Public Function ReadBinary(path As String) As Byte()
         If Not path.FileExists Then
             Return {}
+        Else
+            Return File.ReadAllBytes(path)
         End If
-        Return IO.File.ReadAllBytes(path)
     End Function
 
     ''' <summary>
@@ -193,6 +195,8 @@ Public Module IOExtensions
     ''' <param name="saveTo"></param>
     ''' <param name="encoding"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function FlushAllLines(Of T)(data As IEnumerable(Of T), saveTo$, Optional encoding As Encodings = Encodings.Default) As Boolean
         Return data.FlushAllLines(saveTo, encoding.CodePage)
     End Function
@@ -217,7 +221,7 @@ Public Module IOExtensions
     End Function
 
     <ExportAPI("FlushStream")>
-    <Extension> Public Function FlushStream(stream As Net.Protocols.ISerializable, savePath As String) As Boolean
+    <Extension> Public Function FlushStream(stream As Net.Protocols.ISerializable, savePath$) As Boolean
         Dim rawStream As Byte() = stream.Serialize
         If rawStream Is Nothing Then
             rawStream = New Byte() {}

@@ -84,16 +84,16 @@ Namespace SVG
         ''' <summary>
         ''' 下面的命令可用于路径数据：
         ''' 
-        ''' M = moveto
-        ''' L = lineto
-        ''' H = horizontal lineto
-        ''' V = vertical lineto
-        ''' C = curveto
-        ''' S = smooth curveto
-        ''' Q = quadratic Belzier curve
-        ''' T = smooth quadratic Belzier curveto
-        ''' A = elliptical Arc
-        ''' Z = closepath
+        ''' M = moveto(``M X,Y``)
+        ''' L = lineto(``L X,Y``)
+        ''' H = horizontal lineto(``H X``)
+        ''' V = vertical lineto(``V Y``)
+        ''' C = curveto(``C X1,Y1,X2,Y2,ENDX,ENDY``)
+        ''' S = smooth curveto(``S X2,Y2,ENDX,ENDY``)
+        ''' Q = quadratic Belzier curve(``Q X,Y,ENDX,ENDY``)
+        ''' T = smooth quadratic Belzier curveto(``T ENDX,ENDY``)
+        ''' A = elliptical Arc(``A RX,RY,XROTATION,FLAG1,FLAG2,X,Y``)
+        ''' Z = closepath()
         ''' 
         ''' 注释：以上所有命令均允许小写字母。大写表示绝对定位，小写表示相对定位。
         ''' </summary>
@@ -136,8 +136,7 @@ Namespace SVG
         Public Function ParseSVGPathData(path As path) As GraphicsPath
             Dim scanner As New Pointer(Of Char)(path.d)
             Dim c As Char
-            Dim a#
-            Dim b#
+            Dim parameters As New List(Of Double)
             Dim buffer As New List(Of Char)
             Dim action As Char = ASCII.NUL
             Dim gdiPath As New Path2D
@@ -149,52 +148,19 @@ Namespace SVG
 
                 If Char.IsLetter(c) Then
 
-                    If (Not a.IsNaNImaginary OrElse Not b.IsNaNImaginary) AndAlso Not action = ASCII.NUL Then
-                        Select Case action
-                            Case "M"c
-                                Call gdiPath.MoveTo(a, b)
-                            Case "m"c
-                                Call gdiPath.MoveTo(a, b, relative:=True)
-                            Case "L"c
-                                Call gdiPath.LineTo(a, b)
-                            Case "l"c
-                                Call gdiPath.LineTo(a, b, relative:=True)
-                            Case "H"c
-                                ' 水平平行线
-                                ' 变X不变Y
-                                Call gdiPath.HorizontalTo(a)
-                            Case "h"c
-                                Call gdiPath.HorizontalTo(a, relative:=True)
-                            Case "V"c
-                                ' 垂直平行线
-                                ' 变Y不变X
-                                Call gdiPath.VerticalTo(a)
-                            Case "v"c
-                                Call gdiPath.VerticalTo(a, relative:=True)
-                            Case "Z"c, "z"c
-                                Call gdiPath.CloseAllFigures()
-                            Case Else
-                                Throw New NotImplementedException($"Action ""{action}""@{path.d}")
-                        End Select
+                    If Not action = ASCII.NUL Then
+                        Call gdiPath.Call(action, parameters, path)
                     End If
 
                     ' clear buffer
                     action = c
-                    a = Double.NaN
-                    b = Double.NaN
+                    parameters *= 0
                     buffer *= 0
 
                 ElseIf c = " "c Then
 
                     ' 结束当前的token
-                    If a.IsNaNImaginary Then
-                        a = Val(buffer.CharString)
-                    ElseIf b.IsNaNImaginary Then
-                        b = Val(buffer.CharString)
-                    Else
-                        Throw New NotImplementedException(path.d)
-                    End If
-
+                    parameters += Val(buffer.CharString)
                     buffer *= 0
 
                 ElseIf Char.IsDigit(c) Then
@@ -206,5 +172,101 @@ Namespace SVG
 
             Return gdiPath.Path
         End Function
+
+        <Extension>
+        Private Sub [Call](gdiPath As Path2D, action As Char, parameters As List(Of Double), path As path)
+            Select Case action
+                Case "M"c
+                    Call gdiPath.MoveTo(parameters(0), parameters(1))
+                Case "m"c
+                    Call gdiPath.MoveTo(parameters(0), parameters(1), relative:=True)
+
+                Case "L"c
+                    Call gdiPath.LineTo(parameters(0), parameters(1))
+                Case "l"c
+                    Call gdiPath.LineTo(parameters(0), parameters(1), relative:=True)
+
+                Case "H"c
+                    ' 水平平行线
+                    ' 变X不变Y
+                    Call gdiPath.HorizontalTo(parameters(0))
+                Case "h"c
+                    Call gdiPath.HorizontalTo(parameters(0), relative:=True)
+
+                Case "V"c
+                    ' 垂直平行线
+                    ' 变Y不变X
+                    Call gdiPath.VerticalTo(parameters(0))
+                Case "v"c
+                    Call gdiPath.VerticalTo(parameters(0), relative:=True)
+
+                Case "C"c
+                    Dim i As int = 0
+
+                    Call gdiPath.CurveTo(
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i)
+                    )
+                Case "c"c
+                    Dim i As int = 0
+
+                    Call gdiPath.CurveTo(
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+ _
+                        relative:=True
+                    )
+
+                Case "S"c
+                    Call gdiPath.SmoothCurveTo(parameters(0), parameters(1), parameters(2), parameters(4))
+                Case "s"c
+                    Call gdiPath.SmoothCurveTo(parameters(0), parameters(1), parameters(2), parameters(4), relative:=True)
+
+                Case "Q"c
+                    Call gdiPath.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4))
+                Case "q"c
+                    Call gdiPath.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4), relative:=True)
+
+                Case "A"c
+                    Dim i As int = 0
+
+                    Call gdiPath.EllipticalArc(
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i)
+                    )
+                Case "a"c
+                    Dim i As int = 0
+
+                    Call gdiPath.EllipticalArc(
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+                        parameters(++i),
+ _
+                        relative:=True
+                    )
+
+                Case "Z"c, "z"c
+                    Call gdiPath.CloseAllFigures()
+                Case Else
+                    Throw New NotImplementedException($"Action ""{action}""@{path.d}")
+            End Select
+        End Sub
     End Module
 End Namespace

@@ -305,46 +305,23 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     '''
     <ExportAPI("PostRequest.Parsing")>
-    <Extension> Public Function PostUrlDataParser(data As String, Optional TransLower As Boolean = True) As NameValueCollection
+    <Extension> Public Function PostUrlDataParser(data$, Optional toLower As Boolean = True) As NameValueCollection
         If String.IsNullOrEmpty(data) Then
             Return New NameValueCollection
         End If
 
-        Dim Tokens As String() = data.UrlDecode.Split("&"c)
-        Dim hash = GenerateDictionary(Tokens, TransLower)
-        Return hash
-    End Function
-
-    ''' <summary>
-    ''' Download stream data from the http response.
-    ''' </summary>
-    ''' <param name="stream">
-    ''' Create from <see cref="WebServiceUtils.GetRequestRaw(String, Boolean, String)"/>
-    ''' </param>
-    ''' <returns></returns>
-    <ExportAPI("Stream.Copy", Info:="Download stream data from the http response.")>
-    <Extension> Public Function CopyStream(stream As Stream) As Byte()
-        If stream Is Nothing Then
-            Return New Byte() {}
-        End If
-
-        Dim stmMemory As MemoryStream = New MemoryStream()
-        Dim buffer As Byte() = New Byte(64 * 1024) {}
-        Dim i As New Value(Of Integer)
-        Do While i = stream.Read(buffer, 0, buffer.Length) > 0
-            Call stmMemory.Write(buffer, 0, +i)
-        Loop
-        buffer = stmMemory.ToArray()
-        Call stmMemory.Close()
-        Return buffer
+        Dim params$() = data.UrlDecode.Split("&"c)
+        Dim table = GenerateDictionary(params, toLower)
+        Return table
     End Function
 
     <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(strUrl As String, ParamArray args As String()()) As String
+    <Extension> Public Function GetRequest(strUrl$, ParamArray args As String()()) As String
         If args.IsNullOrEmpty Then
             Return GetRequest(strUrl)
         Else
             Dim params As String = BuildArgs(args)
+
             If String.IsNullOrEmpty(params) Then
                 Return GetRequest(strUrl)
             Else
@@ -359,13 +336,13 @@ Public Module WebServiceUtils
     ''' <param name="url"></param>
     ''' <returns></returns>
     <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(url As String, Optional https As Boolean = False, Optional userAgent As String = "Microsoft.VisualBasic.[HTTP/GET]") As String
+    <Extension> Public Function GetRequest(url$, Optional https As Boolean = False, Optional userAgent As String = "Microsoft.VisualBasic.[HTTP/GET]") As String
         Dim strData As String = ""
         Dim strValue As New List(Of String)
-        Dim Reader As New StreamReader(GetRequestRaw(url, https, userAgent), Encoding.UTF8)
+        Dim reader As New StreamReader(GetRequestRaw(url, https, userAgent), Encoding.UTF8)
 
         Do While True
-            strData = Reader.ReadLine()
+            strData = reader.ReadLine()
             If strData Is Nothing Then
                 Exit Do
             Else
@@ -378,8 +355,7 @@ Public Module WebServiceUtils
     End Function
 
     Sub New()
-        ServicePointManager.ServerCertificateValidationCallback =
-            New RemoteCertificateValidationCallback(AddressOf CheckValidationResult)
+        ServicePointManager.ServerCertificateValidationCallback = New RemoteCertificateValidationCallback(AddressOf CheckValidationResult)
     End Sub
 
     Private Function CheckValidationResult(sender As Object,
@@ -468,14 +444,19 @@ Public Module WebServiceUtils
                                      Optional Referer$ = "",
                                      Optional proxy$ = Nothing) As String
 
-        Static emptyBody As DefaultValue(Of NameValueCollection) = New NameValueCollection
+        Static emptyBody As New DefaultValue(Of NameValueCollection) With {
+            .Value = New NameValueCollection,
+            .assert = Function(c)
+                          Return c Is Nothing OrElse DirectCast(c, NameValueCollection).Count = 0
+                      End Function
+        }
 
         Using request As New WebClient
 
             Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
             Call request.Headers.Add(NameOf(Referer), Referer)
 
-            For Each header In headers
+            For Each header In headers.SafeQuery
                 If Not request.Headers.ContainsKey(header.Key) Then
                     request.Headers.Add(header.Key, header.Value)
                 End If
@@ -496,6 +477,59 @@ Public Module WebServiceUtils
             Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
 
             Return strData
+        End Using
+    End Function
+
+    ''' <summary>
+    ''' 通过post上传文件
+    ''' </summary>
+    ''' <param name="url$"></param>
+    ''' <param name="file$"></param>
+    ''' <param name="name$"></param>
+    ''' <param name="referer$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function POSTFile(url$, file$, Optional name$ = "", Optional referer$ = Nothing) As String
+        Dim request As HttpWebRequest = DirectCast(WebRequest.Create(url), HttpWebRequest)
+
+        request.Method = "POST"
+        request.Accept = "application/json"
+        request.ContentLength = file.FileLength
+        request.ContentType = "application/x-www-form-urlencoded; charset=utf-8"
+        request.UserAgent = UserAgent.GoogleChrome
+        request.Referer = referer
+        request.Headers("fileName") = name Or file.FileName.AsDefault
+
+        If Not String.IsNullOrEmpty(Proxy) Then
+            Call request.SetProxy(Proxy)
+        End If
+
+        Call $"[POST] {url}....".__DEBUG_ECHO
+
+        ' post data Is sent as a stream
+        With request.GetRequestStream()
+            Dim buffer = file.ReadBinary
+
+            Call New StreamWriter(.ByRef).Write(vbCrLf)
+            Call .Flush()
+            Call .Write(buffer, Scan0, buffer.Length)
+            Call .Flush()
+        End With
+
+        ' returned values are returned as a stream, then read into a string
+        Dim response = DirectCast(request.GetResponse(), HttpWebResponse)
+
+        Using responseStream As New StreamReader(response.GetResponseStream())
+            Dim html As New StringBuilder
+            Dim s As New Value(Of String)
+
+            Do While Not (s = responseStream.ReadLine) Is Nothing
+                Call html.AppendLine(+s)
+            Loop
+
+            Call $"Get {html.Length} bytes from server response...".__DEBUG_ECHO
+
+            Return html.ToString
         End Using
     End Function
 
@@ -608,8 +642,8 @@ Public Module WebServiceUtils
 RE0:
         Try
             Using browser As New WebClient()
-                If Not String.IsNullOrEmpty(Proxy) Then
-                    Call browser.SetProxy(Proxy)
+                If Not String.IsNullOrEmpty(proxy) Then
+                    Call browser.SetProxy(proxy)
                 End If
                 If Not refer.StringEmpty Then
                     browser.Headers.Add(NameOf(refer), refer)
@@ -657,7 +691,9 @@ RE0:
     <Extension> Public Function GetDownload(url As String, savePath As String) As Boolean
         Try
             Dim responseStream As Stream = GetRequestRaw(url)
-            Dim buffer As Byte() = responseStream.CopyStream
+            Dim buffer As Byte() = responseStream _
+                .CopyStream _
+                .ToArray
             Call $"[{buffer.Length} Bytes]".__DEBUG_ECHO
             Return buffer.FlushStream(savePath)
         Catch ex As Exception

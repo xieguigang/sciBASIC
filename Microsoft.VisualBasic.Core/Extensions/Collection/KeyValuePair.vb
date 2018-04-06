@@ -244,6 +244,12 @@ Public Module KeyValuePairExtensions
                              End Function)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsNamedValueTuples(Of T)(tuples As IEnumerable(Of KeyValuePair(Of String, T))) As IEnumerable(Of NamedValue(Of T))
+        Return tuples.Select(Function(p) New NamedValue(Of T)(p.Key, p.Value))
+    End Function
+
     <Extension>
     Public Function AsGroups(Of T)(table As Dictionary(Of String, T())) As IEnumerable(Of NamedCollection(Of T))
         Return table.Select(Function(item)

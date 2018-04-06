@@ -111,6 +111,11 @@ Namespace SVG.XML
         ''' <returns></returns>
         Public Property defs As CSSStyles
         ''' <summary>
+        ''' All SVG documents should have a description
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property desc As String
+        ''' <summary>
         ''' SVG对象也会在这里面定义CSS
         ''' </summary>
         ''' <returns></returns>

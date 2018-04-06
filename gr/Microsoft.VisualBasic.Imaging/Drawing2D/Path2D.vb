@@ -46,6 +46,8 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language
+Imports Line2D = Microsoft.VisualBasic.Imaging.Drawing2D.Shapes.Line
 
 Namespace Drawing2D
 
@@ -98,6 +100,76 @@ Namespace Drawing2D
         Public Sub LineTo(location As PointF)
             Call Path.AddLine(last, location)
             last = location
+        End Sub
+
+        ''' <summary>
+        ''' 三次贝塞曲线
+        ''' </summary>
+        ''' <param name="x1#">第一控制点X</param>
+        ''' <param name="y1#">第一控制点Y</param>
+        ''' <param name="x2#">第二控制点X</param>
+        ''' <param name="y2#">第二控制点Y</param>
+        ''' <param name="endX#">曲线结束点X</param>
+        ''' <param name="endY#">曲线结束点Y</param>
+        Public Sub CurveTo(x1#, y1#, x2#, y2#, endX#, endY#, Optional relative As Boolean = False)
+            If relative Then
+                With last.OffSet2D(endX, endY)
+                    Call Path.AddBezier(
+                        last, last.OffSet2D(x1, y1), last.OffSet2D(x2, y2), .ByRef
+                    )
+                    last = .ByRef
+                End With
+            Else
+                With New PointF(endX, endY)
+                    Call Path.AddBezier(
+                        last, New PointF(x1, y1), New PointF(x2, y2), .ByRef
+                    )
+                    last = .ByRef
+                End With
+            End If
+        End Sub
+
+        Public Sub SmoothCurveTo(x2#, y2#, endX#, endY#, Optional relative As Boolean = False)
+            If relative Then
+                With last.OffSet2D(endX, endY)
+                    Call Path.AddCurve({last, last.OffSet2D(x2, y2), .ByRef})
+                    last = .ByRef
+                End With
+            Else
+                With New PointF(endX, endY)
+                    Call Path.AddCurve({last, New PointF(x2, y2), .ByRef})
+                    last = .ByRef
+                End With
+            End If
+        End Sub
+
+        Public Sub QuadraticBelzier(x#, y#, endX#, endY#, Optional relative As Boolean = False)
+            If Not relative Then
+                With New PointF(endX, endY)
+                    Call Path.AddLines(Line2D.QuadraticBelzier(last, New PointF(x, y), .ByRef).ToArray)
+                    last = .ByRef
+                End With
+            Else
+                With last.OffSet2D(endX, endY)
+                    Call Path.AddLines(Line2D.QuadraticBelzier(last, last.OffSet2D(x, y), .ByRef).ToArray)
+                    last = .ByRef
+                End With
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="rX!">所在椭圆的半轴大小</param>
+        ''' <param name="rY!">所在椭圆的半轴大小</param>
+        ''' <param name="xrotation!">椭圆的X轴与水平方向顺时针方向夹角，可以想像成一个水平的椭圆绕中心点顺时针旋转XROTATION的角度。</param>
+        ''' <param name="flag1!">1表示大角度弧线，0为小角度弧线。</param>
+        ''' <param name="flag2!">确定从起点至终点的方向，1为顺时针，0为逆时针</param>
+        ''' <param name="x!">终点坐标</param>
+        ''' <param name="y!">终点坐标</param>
+        ''' <param name="relative"></param>
+        Public Sub EllipticalArc(rX!, rY!, xrotation!, flag1!, flag2!, x!, y!, Optional relative As Boolean = False)
+
         End Sub
 
         ''' <summary>

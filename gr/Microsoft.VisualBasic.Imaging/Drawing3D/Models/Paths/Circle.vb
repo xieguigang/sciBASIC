@@ -1,51 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::e14ed256f7a6a944872966adcf4787c9, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Paths\Circle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Circle
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Class Arc
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Circle
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Circle
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'     Class Arc
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Circle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Math
+Imports Circle2D = Microsoft.VisualBasic.Imaging.Drawing2D.Shapes.Circle
 
 Namespace Drawing3D.Models.Isometric.Paths
 
@@ -55,7 +57,7 @@ Namespace Drawing3D.Models.Isometric.Paths
     Public Class Circle : Inherits Path3D
 
         <Obsolete>
-        Public Sub New(origin As Point3D, radius As Double)
+        Public Sub New(origin As Point3D, radius#)
             Call Me.New(origin, radius, 20)
         End Sub
 
@@ -65,18 +67,11 @@ Namespace Drawing3D.Models.Isometric.Paths
         ''' <param name="origin">相对坐标系原点</param>
         ''' <param name="radius"></param>
         ''' <param name="vertices">构成这个圆形的顶点的数量</param>
-        Public Sub New(origin As Point3D, radius As Double, vertices As Double)
+        Public Sub New(origin As Point3D, radius#, vertices%)
             Call MyBase.New()
 
-            Dim deltaAngle# = 2 * Math.PI / vertices
-
-            For i As Integer = 0 To vertices - 1
-                Dim p As New Point3D(
-                    (radius * Cos(i * deltaAngle)) + origin.X,
-                    (radius * Sin(i * deltaAngle)) + origin.Y,
-                    origin.Z)
-
-                Call Push(p)
+            For Each v As PointF In Circle2D.PathIterator(origin.X, origin.Y, radius, vertices)
+                Call Push(v.TupleZ(origin.Z))
             Next
         End Sub
     End Class
