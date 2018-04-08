@@ -117,8 +117,14 @@ Namespace StorageProvider.Reflection
         Public Function LoadDataToObject(csv As DataFrame, type As Type, Optional explicit As Boolean = False) As IEnumerable(Of Object)
             Dim schema As SchemaProvider = SchemaProvider.CreateObject(type, explicit).CopyWriteDataToObject
             Dim rowBuilder As New RowBuilder(schema)
+            Dim parallel As Boolean = True
+
+#If DEBUG Then
+            parallel = False
+#End If
+
             Dim buf = From line As SeqValue(Of RowObject)
-                      In csv._innerTable.SeqIterator.AsParallel
+                      In csv._innerTable.SeqIterator.Populate(parallel)
                       Select LineNumber = line.i,
                           FilledObject = Activator.CreateInstance(type),
                           row = line.value
@@ -127,7 +133,7 @@ Namespace StorageProvider.Reflection
             Call rowBuilder.SolveReadOnlyMetaConflicts()
 
             Dim LQuery = From item
-                         In buf.AsParallel
+                         In buf.Populate(parallel)
                          Select item.LineNumber,
                              item.row,
                              Data = rowBuilder.FillData(item.row, item.FilledObject)
