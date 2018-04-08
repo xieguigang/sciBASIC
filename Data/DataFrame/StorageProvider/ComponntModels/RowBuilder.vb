@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::f40e4dd9890cba570666cb8d1d5444af, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface ISchema
-    ' 
-    '         Properties: SchemaOridinal
-    ' 
-    '         Function: GetOrdinal
-    ' 
-    '     Class RowBuilder
-    ' 
-    '         Properties: Columns, HaveMetaAttribute, IndexedFields, NonIndexed, SchemaProvider
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __tryFill, FillData, ToString
-    ' 
-    '         Sub: Indexof, SolveReadOnlyMetaConflicts
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface ISchema
+' 
+'         Properties: SchemaOridinal
+' 
+'         Function: GetOrdinal
+' 
+'     Class RowBuilder
+' 
+'         Properties: Columns, HaveMetaAttribute, IndexedFields, NonIndexed, SchemaProvider
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __tryFill, FillData, ToString
+' 
+'         Sub: Indexof, SolveReadOnlyMetaConflicts
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -85,45 +86,53 @@ Namespace StorageProvider.ComponentModels
         Public ReadOnly Property NonIndexed As Dictionary(Of String, Integer)
         Public ReadOnly Property HaveMetaAttribute As Boolean
 
-        Sub New(SchemaProvider As SchemaProvider)
+        ''' <summary>
+        ''' ``{propertyName, defaultValue}``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Defaults As Dictionary(Of String, Object)
+
+        Sub New(schemaProvider As SchemaProvider)
             Dim M = {
-                SchemaProvider.Columns _
+                schemaProvider.Columns _
                     .Select(Function(field) DirectCast(field, StorageProvider)).ToArray,
-                SchemaProvider.EnumColumns _
+                schemaProvider.EnumColumns _
                     .Select(Function(field) DirectCast(field, StorageProvider)).ToArray,
-                SchemaProvider.KeyValuePairColumns _
+                schemaProvider.KeyValuePairColumns _
                     .Select(Function(field) DirectCast(field, StorageProvider)).ToArray,
-                SchemaProvider.CollectionColumns _
+                schemaProvider.CollectionColumns _
                     .Select(Function(field) DirectCast(field, StorageProvider)).ToArray
             }
 
-            Me.SchemaProvider = SchemaProvider
+            Me.SchemaProvider = schemaProvider
             Me.Columns = M.IteratesALL _
-                .Join(DirectCast(SchemaProvider.MetaAttributes, StorageProvider)) _
+                .Join(DirectCast(schemaProvider.MetaAttributes, StorageProvider)) _
                 .ToArray
-            Me.Columns = LinqAPI.Exec(Of StorageProvider) <=
+            Me.Columns = LinqAPI.Exec(Of StorageProvider) _
  _
-                From field As StorageProvider
-                In Me.Columns
-                Where Not field Is Nothing
-                Select field
+                () <= From field As StorageProvider
+                      In Me.Columns
+                      Where Not field Is Nothing
+                      Select field
 
-            HaveMetaAttribute = Not SchemaProvider.MetaAttributes Is Nothing
+            HaveMetaAttribute = Not schemaProvider.MetaAttributes Is Nothing
+            Defaults = DefaultAttribute.GetDefaultValues(schemaProvider.DeclaringType)
         End Sub
 
         ''' <summary>
         ''' 从外部源之中获取本数据集的Schema的信息
         ''' </summary>
         ''' <param name="schema"></param>
-        Public Sub Indexof(schema As ISchema)
+        Public Sub IndexOf(schema As ISchema)
             Dim setValue = New SetValue(Of StorageProvider)() _
                 .GetSet(NameOf(StorageProvider.Ordinal))
-            Dim LQuery As StorageProvider() =
-                LinqAPI.Exec(Of StorageProvider) <= From field As StorageProvider
-                                                    In Columns
-                                                    Let ordinal As Integer =
-                                                        schema.GetOrdinal(field.Name)
-                                                    Select setValue(field, ordinal)
+            Dim LQuery() = LinqAPI.Exec(Of StorageProvider) _
+ _
+                () <= From field As StorageProvider
+                      In Columns
+                      Let ordinal = schema.GetOrdinal(field.Name)
+                      Select setValue(field, ordinal)
+
             _IndexedFields = LQuery _
                 .Where(Function(field) field.Ordinal > -1) _
                 .ToArray
@@ -132,12 +141,16 @@ Namespace StorageProvider.ComponentModels
                 .Select(Function(field) field.Name.ToLower) _
                 .ToArray
 
-            '没有被建立索引的都可能会当作为字典数据
-            _NonIndexed = (From colum As KeyValuePair(Of String, Integer)
-                           In schema.SchemaOridinal
-                           Where Array.IndexOf(Indexed, colum.Key.ToLower) = -1
-                           Select colum).ToDictionary(Function(field) field.Key,
-                                                      Function(field) field.Value)
+            ' 没有被建立索引的都可能会当作为字典数据
+            With From colum As KeyValuePair(Of String, Integer)
+                 In schema.SchemaOridinal
+                 Let key = colum.Key.ToLower
+                 Where Array.IndexOf(Indexed, key) = -1
+                 Select colum
+
+                _NonIndexed = .ToDictionary(Function(field) field.Key,
+                                            Function(field) field.Value)
+            End With
         End Sub
 
         ''' <summary>
@@ -145,13 +158,16 @@ Namespace StorageProvider.ComponentModels
         ''' 故而需要在这里将字典属性之中的只读属性的名称移除掉
         ''' </summary>
         Public Sub SolveReadOnlyMetaConflicts()
-            If HaveMetaAttribute Then ' 假若存在字典属性的话，则需要进行额外的处理
-                Dim schema As SchemaProvider = SchemaProvider.Raw.Raw ' why two reference that have the effects????
+            ' 假若存在字典属性的话，则需要进行额外的处理
+            If HaveMetaAttribute Then
+                ' why two reference that have the effects????
+                Dim schema As SchemaProvider = SchemaProvider.Raw.Raw
 
                 Call "Schema has meta dictionary property...".__DEBUG_ECHO
 
                 For Each name In NonIndexed.Keys.ToArray
-                    If Not schema.GetField(name) Is Nothing Then  ' 在原始的数据之中可以找得到这个域，则说明是只读属性，移除他
+                    ' 在原始的数据之中可以找得到这个域，则说明是只读属性，移除他
+                    If Not schema.GetField(name) Is Nothing Then
                         Call NonIndexed.Remove(name)
 #If DEBUG Then
                         Call $"{name} was removed!".__DEBUG_ECHO
@@ -168,30 +184,45 @@ Namespace StorageProvider.ComponentModels
                 Dim values = From field As KeyValuePair(Of String, Integer)
                              In NonIndexed
                              Let s = row(field.Value)
-                             Select name = field.Key,
-                                  value = SchemaProvider.MetaAttributes.LoadMethod(s)
+                             Let value = SchemaProvider.MetaAttributes.LoadMethod(s)
+                             Select name = field.Key, value
+
                 Dim meta As IDictionary = SchemaProvider.MetaAttributes.CreateDictionary
 
                 For Each x In values
                     Call meta.Add(x.name, x.value)
                 Next
 
-                Call SchemaProvider.MetaAttributes.BindProperty.SetValue(obj, meta, Nothing)
+                Call SchemaProvider.MetaAttributes _
+                                   .BindProperty _
+                                   .SetValue(obj, meta, Nothing)
             End If
 
             Return obj
         End Function
 
+        ''' <summary>
+        ''' Cast <see cref="RowObject"/> to a specific .NET <see cref="Type"/> object.
+        ''' </summary>
+        ''' <param name="row"></param>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Private Function __tryFill(row As RowObject, obj As Object) As Object
-            Dim i As Integer, column As StorageProvider = Nothing
+            Dim column As StorageProvider = Nothing
+            Dim value$
+            Dim propValue As Object
 
-            For i = 0 To IndexedFields.Length - 1
+            For i As Integer = 0 To IndexedFields.Length - 1
                 column = IndexedFields(i)
+                value = row.Column(column.Ordinal)
 
-                Dim value As String = row.Column(column.Ordinal)
-                Dim propValue As Object = column.LoadMethod()(value)
+                If String.IsNullOrEmpty(value) Then
+                    propValue = Defaults(column.BindProperty.Name)
+                Else
+                    propValue = column.LoadMethod()(value)
+                End If
 
-                Call column.BindProperty.SetValue(obj, propValue, Nothing)
+                Call column.SetValue(obj, propValue)
             Next
 
             Return obj
