@@ -76,13 +76,27 @@ Namespace StorageProvider.ComponentModels
     Public Class RowBuilder
 
         ''' <summary>
-        ''' 总的列表
+        ''' 总的列表：出现在csv文件之中的列以及未出现在csv文件之中的列
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Columns As StorageProvider()
         Public ReadOnly Property SchemaProvider As SchemaProvider
 
+        ''' <summary>
+        ''' 出现在csv文件之中的列的列表
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IndexedFields As StorageProvider()
+        ''' <summary>
+        ''' 未出现在csv文件之中的列的字段的集合，请注意，字典属性不会出现在这个集合之中
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property MissingFields As StorageProvider()
+
+        ''' <summary>
+        ''' 在csv文件之中未被索引的列的名称和其顺序索引编号
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property NonIndexed As Dictionary(Of String, Integer)
         Public ReadOnly Property HaveMetaAttribute As Boolean
 
@@ -150,6 +164,14 @@ Namespace StorageProvider.ComponentModels
 
                 _NonIndexed = .ToDictionary(Function(field) field.Key,
                                             Function(field) field.Value)
+            End With
+
+            With IndexedFields.Select(Function(i) i.BindProperty.Name).Indexing
+                _MissingFields = Columns _
+                    .Where(Function(field)
+                               Return Not field.BindProperty.Name.IsOneOfA(.ByRef) AndAlso Not field.IsMetaField
+                           End Function) _
+                    .ToArray
             End With
         End Sub
 
@@ -223,6 +245,10 @@ Namespace StorageProvider.ComponentModels
                 End If
 
                 Call column.SetValue(obj, propValue)
+            Next
+
+            For Each missing In MissingFields
+                Call missing.SetValue(obj, Defaults(missing.BindProperty.Name))
             Next
 
             Return obj

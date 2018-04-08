@@ -224,6 +224,8 @@ Namespace StorageProvider.Reflection
         ''' </summary>
         ''' <param name="[property]"></param>
         ''' <returns></returns>
+        ''' 
+        <Extension>
         Public Function IsKeyValuePair([property] As PropertyInfo) As Boolean
             Dim type As Type = [property].PropertyType
             Dim fullName As String = $"{type.Namespace }.{type.Name}"

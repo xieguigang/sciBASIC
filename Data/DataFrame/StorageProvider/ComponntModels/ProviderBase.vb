@@ -45,6 +45,7 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Scripting
 
 Namespace StorageProvider.ComponentModels
@@ -106,6 +107,16 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property LoadMethod As Func(Of String, Object)
+
+        Public ReadOnly Property IsMetaField As Boolean
+            Get
+                Dim hasAttribute As Boolean = Not BindProperty _
+                    .GetCustomAttributes(GetType(Reflection.MetaAttribute), inherit:=True) _
+                    .IsNullOrEmpty
+
+                Return hasAttribute OrElse BindProperty.IsKeyValuePair
+            End Get
+        End Property
 
         ''' <summary>
         ''' By using this function that save the property value as a cell value string.
