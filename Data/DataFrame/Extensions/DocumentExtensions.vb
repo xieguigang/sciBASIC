@@ -329,21 +329,28 @@ Public Module DocumentExtensions
     End Function
 
     ''' <summary>
-    ''' 必须要保证第一列是键名，第二列才是数据
+    ''' 从一个csv文件数据之中加载一个字典对象，必须要保证第一列是键名，第二列才是数据
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="path$"></param>
-    ''' <param name="parser"></param>
+    ''' <param name="parser">值<typeparamref name="T"/>的字符串解析函数</param>
     ''' <returns></returns>
     <Extension>
     Public Function LoadDictionary(Of T)(path$, Optional parser As IStringParser(Of T) = Nothing) As Dictionary(Of String, T)
         With parser Or Scripting.DefaultTextParser(Of T)
             Dim table As New Dictionary(Of String, T)
+            Dim key$
+            Dim value$
 
             For Each line As String In path.IterateAllLines.Skip(1)
-                Dim key$ = Tokenizer.CharsParser(line).First
-                Dim value$ = Mid(line, key.Length + 1)
+                With Tokenizer.CharsParser(line)
+                    ' 2018-4-8
+                    ' 因为line里面可能会存在双引号，所以不可以直接使用mid函数来进行取值
+                    key$ = .First
+                    value$ = .ElementAtOrDefault(1)
+                End With
 
+                ' parsing string value to object
                 table(key) = .ByRef(value)
             Next
 
