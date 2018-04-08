@@ -114,7 +114,7 @@ Namespace StorageProvider.ComponentModels
                     .GetCustomAttributes(GetType(Reflection.MetaAttribute), inherit:=True) _
                     .IsNullOrEmpty
 
-                Return hasAttribute OrElse BindProperty.IsKeyValuePair
+                Return hasAttribute OrElse Not BindProperty.PropertyType.GetMetaAttribute Is Nothing
             End Get
         End Property
 

@@ -299,6 +299,7 @@ Namespace StorageProvider.Reflection
             End If
         End Function
 
+        <Extension>
         Public Function GetMetaAttribute(type As Type) As Type
             If Not type.IsGenericType Then
                 If (type.Equals(GetType(Object))) OrElse type.BaseType.Equals(GetType(Object)) Then
