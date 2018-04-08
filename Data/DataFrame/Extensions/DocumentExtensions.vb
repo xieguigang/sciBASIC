@@ -329,7 +329,7 @@ Public Module DocumentExtensions
     End Function
 
     ''' <summary>
-    ''' 从一个csv文件数据之中加载一个字典对象，必须要保证第一列是键名，第二列才是数据
+    ''' 从一个csv文件数据之中加载一个字典对象，必须要保证第一列是键名，第二列才是数据，文件不存在或者内容为空的时候，会返回空字典
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="path$"></param>
@@ -337,6 +337,10 @@ Public Module DocumentExtensions
     ''' <returns></returns>
     <Extension>
     Public Function LoadDictionary(Of T)(path$, Optional parser As IStringParser(Of T) = Nothing) As Dictionary(Of String, T)
+        If path.FileLength <= 0 Then
+            Return New Dictionary(Of String, T)
+        End If
+
         With parser Or Scripting.DefaultTextParser(Of T)
             Dim table As New Dictionary(Of String, T)
             Dim key$
