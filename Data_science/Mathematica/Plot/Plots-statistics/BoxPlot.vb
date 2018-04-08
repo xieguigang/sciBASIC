@@ -162,7 +162,7 @@ Public Module BoxPlot
                         ' 先填充盒子
                         ' y 分别为q1和q3
                         Dim box As New Rectangle With {
-                            .Location = New Point(x0, y(quartile.Q3)),
+                            .Location = New Drawing.Point(x0, y(quartile.Q3)),
                             .Size = New Size(boxWidth, y(quartile.Q1) - y(quartile.Q3))
                         }
                         g.FillRectangle(brush, rect:=box)
@@ -176,37 +176,37 @@ Public Module BoxPlot
 
                     ' max
                     y0 = y(quartile.range.Max)
-                    g.DrawLine(pen, New Point(x0, y0), New Point(x0 + boxWidth, y0))
+                    g.DrawLine(pen, New Drawing.Point(x0, y0), New Drawing.Point(x0 + boxWidth, y0))
 
                     ' min
                     y0 = y(quartile.range.Min)
-                    g.DrawLine(pen, New Point(x0, y0), New Point(x0 + boxWidth, y0))
+                    g.DrawLine(pen, New Drawing.Point(x0, y0), New Drawing.Point(x0 + boxWidth, y0))
 
                     ' q1
                     Dim q1Y = y(quartile.Q1)
-                    g.DrawLine(pen, New Point(x0, q1Y), New Point(x0 + boxWidth, q1Y))
+                    g.DrawLine(pen, New Drawing.Point(x0, q1Y), New Drawing.Point(x0 + boxWidth, q1Y))
 
                     ' q2
                     Dim q2Y = y(quartile.Q2)
-                    g.DrawLine(pen, New Point(x0, q2Y), New Point(x0 + boxWidth, q2Y))
-                    g.DrawLine(pen, New Point(x0, q2Y + lineWidth), New Point(x0 + boxWidth, q2Y + lineWidth))
-                    g.DrawLine(pen, New Point(x0, q2Y + 2 * lineWidth), New Point(x0 + boxWidth, q2Y + 2 * lineWidth))
+                    g.DrawLine(pen, New Drawing.Point(x0, q2Y), New Drawing.Point(x0 + boxWidth, q2Y))
+                    g.DrawLine(pen, New Drawing.Point(x0, q2Y + lineWidth), New Drawing.Point(x0 + boxWidth, q2Y + lineWidth))
+                    g.DrawLine(pen, New Drawing.Point(x0, q2Y + 2 * lineWidth), New Drawing.Point(x0 + boxWidth, q2Y + 2 * lineWidth))
 
                     ' q3
                     Dim q3Y = y(quartile.Q3)
-                    g.DrawLine(pen, New Point(x0, q3Y), New Point(x0 + boxWidth, q3Y))
+                    g.DrawLine(pen, New Drawing.Point(x0, q3Y), New Drawing.Point(x0 + boxWidth, q3Y))
 
                     ' box
-                    g.DrawLine(pen, New Point(x0, q3Y), New Point(x0, q1Y))
-                    g.DrawLine(pen, New Point(x0 + boxWidth, q3Y), New Point(x0 + boxWidth, q1Y))
+                    g.DrawLine(pen, New Drawing.Point(x0, q3Y), New Drawing.Point(x0, q1Y))
+                    g.DrawLine(pen, New Drawing.Point(x0 + boxWidth, q3Y), New Drawing.Point(x0 + boxWidth, q1Y))
 
                     ' dashline to min/max
                     pen = New Pen(brush.Color, lineWidth) With {
                         .DashStyle = DashStyle.Dash
                     }
 
-                    g.DrawLine(pen, New Point(x1, y(quartile.range.Min)), New Point(x1, q1Y))
-                    g.DrawLine(pen, New Point(x1, y(quartile.range.Max)), New Point(x1, q3Y))
+                    g.DrawLine(pen, New Drawing.Point(x1, y(quartile.range.Min)), New Drawing.Point(x1, q1Y))
+                    g.DrawLine(pen, New Drawing.Point(x1, y(quartile.range.Max)), New Drawing.Point(x1, q3Y))
 
                     If fillBox Then
                         brush = Brushes.Black
@@ -227,7 +227,7 @@ Public Module BoxPlot
                     ' draw group label
                     labelSize = g.MeasureString(group.Name, groupLabelFont)
                     g.DrawString(group.Name, groupLabelFont, Brushes.Black, New PointF(x1 - labelSize.Width / 2, bottom + 20))
-                    g.DrawLine(tickPen, New Point(x1, bottom + 20), New Point(x1, bottom))
+                    g.DrawLine(tickPen, New Drawing.Point(x1, bottom + 20), New Drawing.Point(x1, bottom))
 
                     x0 += boxWidth + interval
                 Next
@@ -240,7 +240,7 @@ Public Module BoxPlot
                 ' 绘制y坐标轴
                 For Each d As Double In ticks
                     y0 = y(d)
-                    g.DrawLine(tickPen, New Point(x0, y0), New Point(x0 - 10, y0))
+                    g.DrawLine(tickPen, New Drawing.Point(x0, y0), New Drawing.Point(x0 - 10, y0))
                     ' label = d.ToString("F2")
                     label = d
                     labelSize = g.MeasureString(label, tickLabelFont)
