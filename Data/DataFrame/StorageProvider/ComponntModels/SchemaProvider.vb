@@ -313,7 +313,8 @@ Namespace StorageProvider.ComponentModels
                     If(MetaAttributes IsNot Nothing AndAlso
                        MetaAttributes.CanWriteDataToObject,
                        MetaAttributes,
-                       Nothing)
+                       Nothing),
+                .DeclaringType = DeclaringType
             }
         End Function
 

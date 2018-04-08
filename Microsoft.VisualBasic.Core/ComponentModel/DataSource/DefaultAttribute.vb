@@ -30,7 +30,9 @@ Namespace ComponentModel.DataSourceModel
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetDefaultAttribute([property] As PropertyInfo) As DefaultValueAttribute
-            Return [property].GetCustomAttribute(Of DefaultValueAttribute)(inherit:=True)
+            Return [property] _
+                .GetCustomAttributes(Of DefaultValueAttribute)(inherit:=True) _
+                .FirstOrDefault
         End Function
     End Class
 End Namespace
