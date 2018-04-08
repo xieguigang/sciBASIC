@@ -305,22 +305,23 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     '''
     <ExportAPI("PostRequest.Parsing")>
-    <Extension> Public Function PostUrlDataParser(data As String, Optional TransLower As Boolean = True) As NameValueCollection
+    <Extension> Public Function PostUrlDataParser(data$, Optional toLower As Boolean = True) As NameValueCollection
         If String.IsNullOrEmpty(data) Then
             Return New NameValueCollection
         End If
 
-        Dim Tokens As String() = data.UrlDecode.Split("&"c)
-        Dim hash = GenerateDictionary(Tokens, TransLower)
-        Return hash
+        Dim params$() = data.UrlDecode.Split("&"c)
+        Dim table = GenerateDictionary(params, toLower)
+        Return table
     End Function
 
     <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(strUrl As String, ParamArray args As String()()) As String
+    <Extension> Public Function GetRequest(strUrl$, ParamArray args As String()()) As String
         If args.IsNullOrEmpty Then
             Return GetRequest(strUrl)
         Else
             Dim params As String = BuildArgs(args)
+
             If String.IsNullOrEmpty(params) Then
                 Return GetRequest(strUrl)
             Else
@@ -335,13 +336,13 @@ Public Module WebServiceUtils
     ''' <param name="url"></param>
     ''' <returns></returns>
     <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(url As String, Optional https As Boolean = False, Optional userAgent As String = "Microsoft.VisualBasic.[HTTP/GET]") As String
+    <Extension> Public Function GetRequest(url$, Optional https As Boolean = False, Optional userAgent As String = "Microsoft.VisualBasic.[HTTP/GET]") As String
         Dim strData As String = ""
         Dim strValue As New List(Of String)
-        Dim Reader As New StreamReader(GetRequestRaw(url, https, userAgent), Encoding.UTF8)
+        Dim reader As New StreamReader(GetRequestRaw(url, https, userAgent), Encoding.UTF8)
 
         Do While True
-            strData = Reader.ReadLine()
+            strData = reader.ReadLine()
             If strData Is Nothing Then
                 Exit Do
             Else
@@ -354,8 +355,7 @@ Public Module WebServiceUtils
     End Function
 
     Sub New()
-        ServicePointManager.ServerCertificateValidationCallback =
-            New RemoteCertificateValidationCallback(AddressOf CheckValidationResult)
+        ServicePointManager.ServerCertificateValidationCallback = New RemoteCertificateValidationCallback(AddressOf CheckValidationResult)
     End Sub
 
     Private Function CheckValidationResult(sender As Object,
@@ -444,14 +444,19 @@ Public Module WebServiceUtils
                                      Optional Referer$ = "",
                                      Optional proxy$ = Nothing) As String
 
-        Static emptyBody As DefaultValue(Of NameValueCollection) = New NameValueCollection
+        Static emptyBody As New DefaultValue(Of NameValueCollection) With {
+            .Value = New NameValueCollection,
+            .assert = Function(c)
+                          Return c Is Nothing OrElse DirectCast(c, NameValueCollection).Count = 0
+                      End Function
+        }
 
         Using request As New WebClient
 
             Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
             Call request.Headers.Add(NameOf(Referer), Referer)
 
-            For Each header In headers
+            For Each header In headers.SafeQuery
                 If Not request.Headers.ContainsKey(header.Key) Then
                     request.Headers.Add(header.Key, header.Value)
                 End If
