@@ -96,11 +96,11 @@ Namespace StorageProvider.Reflection
                             .Value = ptype
                         }
 
-            Dim hash As Dictionary(Of String, Type) = cols _
+            Dim table As Dictionary(Of String, Type) = cols _
                 .Join(array) _
                 .ToDictionary(Function(x) x.Name,
                               Function(x) x.Value)
-            Return hash
+            Return table
         End Function
 #End If
 
@@ -123,7 +123,7 @@ Namespace StorageProvider.Reflection
                           FilledObject = Activator.CreateInstance(type),
                           row = line.value
 
-            Call rowBuilder.Indexof(csv)
+            Call rowBuilder.IndexOf(csv)
             Call rowBuilder.SolveReadOnlyMetaConflicts()
 
             Dim LQuery = From item
@@ -234,18 +234,19 @@ Namespace StorageProvider.Reflection
             Dim rowWriter As RowWriter = New RowWriter(Schema, metaBlank, layout) _
                 .CacheIndex(source, reorderKeys)
 
-            schemaOut = rowWriter.Columns.ToDictionary(
-                Function(x) x.Name,
-                Function(x) x.BindProperty.PropertyType)
+            schemaOut = rowWriter.Columns _
+                                 .ToDictionary(Function(x) x.Name,
+                                               Function(x) x.BindProperty.PropertyType)
 
-            Dim title As RowObject =
-                rowWriter.GetRowNames(maps).Join(rowWriter.GetMetaTitles)
+            Dim title As RowObject = rowWriter.GetRowNames(maps).Join(rowWriter.GetMetaTitles)
 
             Yield title
 
             If Not rowWriter.MetaRow Is Nothing Then  ' 只读属性会和字典属性产生冲突
-                Dim valueType As Type =
-                    rowWriter.MetaRow.Dictionary.GenericTypeArguments.Last
+                Dim valueType As Type = rowWriter.MetaRow _
+                                                 .Dictionary _
+                                                 .GenericTypeArguments _
+                                                 .Last
                 Dim key$ = Nothing
 
                 Try

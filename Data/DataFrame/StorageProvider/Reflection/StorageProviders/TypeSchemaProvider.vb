@@ -201,12 +201,13 @@ Namespace StorageProvider.Reflection
             Return Nothing
         End Function
 
-        Private Function IsEnum([Property] As PropertyInfo) As Boolean
-            If [Property].PropertyType.Equals(GetType(Object)) Then
-                Call [Property].ToString.Warning
+        Private Function IsEnum([property] As PropertyInfo) As Boolean
+            If [property].PropertyType.Equals(GetType(Object)) Then
+                Call [property].ToString.Warning
                 Return False ' System.Object的basetype是空值，所以要先判断一下是不是Object
             End If
-            If Not [Property].PropertyType _
+
+            If Not [property].PropertyType _
                 .BaseType _
                 .Equals(GetType(System.Enum)) Then
                 Return False
@@ -215,27 +216,27 @@ Namespace StorageProvider.Reflection
             Return True
         End Function
 
-        Const KeyValuePair As String = "System.Collections.Generic.KeyValuePair`2"
-        Const KeyValuePairObject As String = "Microsoft.VisualBasic.ComponentModel.Collection.Generic.KeyValuePairObject`2"
+        Const KeyValuePair$ = "System.Collections.Generic.KeyValuePair`2"
+        Const KeyValuePairObject$ = "Microsoft.VisualBasic.ComponentModel.Collection.Generic.KeyValuePairObject`2"
 
         ''' <summary>
         ''' 这个属性的类型可以同时允许系统的内建的键值对类型，也可以是<see cref="KeyValuePairObject"/>
         ''' </summary>
-        ''' <param name="Property"></param>
+        ''' <param name="[property]"></param>
         ''' <returns></returns>
-        Public Function IsKeyValuePair([Property] As PropertyInfo) As Boolean
-            Dim Type As System.Type = [Property].PropertyType
-            Dim TypeFullName As String = $"{Type.Namespace }.{Type.Name }"
+        Public Function IsKeyValuePair([property] As PropertyInfo) As Boolean
+            Dim type As Type = [property].PropertyType
+            Dim fullName As String = $"{type.Namespace }.{type.Name}"
 
-            If Not (String.Equals(KeyValuePair, TypeFullName) OrElse
-                String.Equals(KeyValuePairObject, TypeFullName)) Then
+            If Not (String.Equals(KeyValuePair, fullName) OrElse
+                    String.Equals(KeyValuePairObject, fullName)) Then
 
                 Return False
             End If
 
-            Dim GenericEntries As Type() = Type.GetGenericArguments
-            Dim TKey As Type = GenericEntries.First
-            Dim TValue As Type = GenericEntries.Last
+            Dim genericTypes As Type() = type.GetGenericArguments
+            Dim TKey As Type = genericTypes.First
+            Dim TValue As Type = genericTypes.Last
 
             If Not Scripting.IsPrimitive(TKey) OrElse Not Scripting.IsPrimitive(TValue) Then
                 Return False
@@ -256,7 +257,7 @@ Namespace StorageProvider.Reflection
         Public Function GetThisElement(type As Type, Optional forcePrimitive As Boolean = True) As Type
             Dim intfs As Type() = type.GetInterfaces
 
-            If System.Array.IndexOf(intfs, GetType(IEnumerable)) = -1 Then
+            If Array.IndexOf(intfs, GetType(IEnumerable)) = -1 Then
                 If forcePrimitive Then
                     Return GetType(Void)
                 Else
@@ -264,31 +265,34 @@ Namespace StorageProvider.Reflection
                 End If
             End If
 
-            Dim elType As Type = type.GetElementType
+            Dim elementType As Type = type.GetElementType
 
-            If elType Is Nothing Then
-                Dim TypeFullName As String = $"{type.Namespace}.{type.Name}"    ' 可能是List对象类型
+            If elementType Is Nothing Then
+                ' 可能是List对象类型
+                Dim fullName$ = $"{type.Namespace}.{type.Name}"
 
-                If Not String.Equals(List, TypeFullName) Then
+                If Not String.Equals(List, fullName) Then
                     If forcePrimitive Then
                         Return GetType(Void)
                     End If
                 End If
 
-                elType = type.GetGenericArguments.FirstOrDefault
+                elementType = type.GetGenericArguments.FirstOrDefault
 
-                If elType Is Nothing AndAlso Not forcePrimitive Then
+                If elementType Is Nothing AndAlso Not forcePrimitive Then
                     Return type
                 End If
             End If
 
-            If Scripting.IsPrimitive(elType) Then
-                Return elType
-            Else  '  目标类型不是基本类型，但是被指定强制输出基本类型，所以在这里只能够输出空值
+            If Scripting.IsPrimitive(elementType) Then
+                Return elementType
+            Else
+                ' 目标类型不是基本类型，但是被指定强制输出基本类型，所以在这里只能够输出空值
                 If forcePrimitive Then
                     Return GetType(Void)
-                Else ' 不强制函数输出基本类型，则这里直接返回目标类型
-                    Return elType
+                Else
+                    ' 不强制函数输出基本类型，则这里直接返回目标类型
+                    Return elementType
                 End If
             End If
         End Function
@@ -302,24 +306,24 @@ Namespace StorageProvider.Reflection
                 End If
             End If
 
-            Dim gType As Type = type.GetGenericTypeDefinition
+            Dim genericType As Type = type.GetGenericTypeDefinition
 
-            If Not gType.Equals(GetType(Dictionary(Of ,))) Then
+            If Not genericType.Equals(GetType(Dictionary(Of ,))) Then
                 Return Nothing
             End If
 
-            Dim TypeDef As Type() = type.GetGenericArguments
+            Dim generics As Type() = type.GetGenericArguments
 
-            '第一个参数类型只能是字符串，后面的参数类型只能是简单类型
-            If Not TypeDef.First.Equals(GetType(String)) Then
+            ' 第一个参数类型只能是字符串，后面的参数类型只能是简单类型
+            If Not generics.First.Equals(GetType(String)) Then
                 Return Nothing
             End If
 
-            If Not Scripting.IsPrimitive(TypeDef.Last) Then
+            If Not Scripting.IsPrimitive(generics.Last) Then
                 Return Nothing
             End If
 
-            Return TypeDef.Last
+            Return generics.Last
         End Function
     End Module
 End Namespace
