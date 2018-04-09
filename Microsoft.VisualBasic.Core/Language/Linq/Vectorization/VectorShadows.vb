@@ -156,6 +156,12 @@ Namespace Language.Vectorization
             Return TryGetMember(binder.Name, result)
         End Function
 
+        ''' <summary>
+        ''' 大小写不敏感
+        ''' </summary>
+        ''' <param name="name$"></param>
+        ''' <param name="result"></param>
+        ''' <returns></returns>
         Public Overloads Function TryGetMember(name$, ByRef result As Object) As Boolean
             With type.TryGetMember(name, False)
                 If .IsNothing Then

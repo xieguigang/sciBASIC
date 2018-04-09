@@ -50,6 +50,11 @@ Namespace Scripting
 
     Public Class IVector(Of T) : Inherits VectorShadows(Of T)
 
+        ''' <summary>
+        ''' <paramref name="name"/>大小写不敏感
+        ''' </summary>
+        ''' <param name="name$"></param>
+        ''' <returns></returns>
         Default Public Overloads ReadOnly Property Item(name$) As Vector
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
