@@ -4474,7 +4474,7 @@ Namespace Imaging
         Public MustOverride Function MeasureCharacterRanges(text As String, font As Font, layoutRect As RectangleF, stringFormat As StringFormat) As Region()
 
         ''' <summary>
-        ''' Measures the specified string when drawn with the specified System.Drawing.Font.
+        ''' Measures the specified string when drawn with the specified <see cref="System.Drawing.Font"/>.
         ''' </summary>
         ''' <param name="text">String to measure.</param>
         ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>

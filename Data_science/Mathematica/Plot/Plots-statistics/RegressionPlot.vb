@@ -64,10 +64,12 @@ Public Module RegressionPlot
     Public Function Plot(fit As FitResult,
                          Optional size$ = "2100,1600",
                          Optional bg$ = "white",
-                         Optional margin$ = g.DefaultLargerPadding,
+                         Optional margin$ = g.DefaultPadding,
                          Optional xLabel$ = "X",
                          Optional yLabel$ = "Y",
                          Optional pointSize! = 5,
+                         Optional title$ = Nothing,
+                         Optional titleFontCss$ = CSSFont.PlotTitle,
                          Optional pointBrushStyle$ = "red",
                          Optional errorFitPointStyle$ = "blue",
                          Optional predictPointStyle$ = "green",
@@ -267,6 +269,15 @@ Public Module RegressionPlot
                     }
 
                     Call g.DrawString(R2, legendLabelFont, Brushes.Black, pt)
+                End If
+
+                If Not title.StringEmpty Then
+                    Dim titleFont As Font = CSSFont.TryParse(titleFontCss)
+                    Dim titleSize = g.MeasureString(title, titleFont)
+                    Dim top = (rect.Top - titleSize.Height) / 2
+                    Dim left = rect.Left + (rect.Width - titleSize.Width) / 2
+
+                    Call g.DrawString(title, titleFont, Brushes.Black, New PointF(left, top))
                 End If
             End Sub
 
