@@ -72,7 +72,7 @@ Namespace Interpolation
 
             Dim LQuery As SeqValue(Of Double())()
             Dim slideWindows = data _
-                .CreateSlideWindows(slideWindowSize:=windowSize,
+                .CreateSlideWindows(winSize:=windowSize,
                                     offset:=windowSize - 1)
 
             If parallel Then

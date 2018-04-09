@@ -296,6 +296,18 @@ Namespace Imaging.Math2D
         End Function
 
         ''' <summary>
+        ''' 函数返回切线和X轴之间的夹角
+        ''' </summary>
+        ''' <param name="tangent"></param>
+        ''' <returns>单位为角度</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Angle(tangent As (A As PointF, B As PointF)) As Double
+            Return CalculateAngle(tangent.A, tangent.B)
+        End Function
+
+        ''' <summary>
         ''' 获取目标多边形对象的边界结果，包括左上角的位置以及所占的矩形区域的大小
         ''' </summary>
         ''' <param name="points"></param>
