@@ -507,6 +507,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="SVG\CSS\Gradients.vb" />
     <Compile Include="SVG\CSS\ObjectStyle.vb" />
     <Compile Include="SVG\ModelBuilder.vb" />
     <Compile Include="SVG\SVGDataCache.vb" />

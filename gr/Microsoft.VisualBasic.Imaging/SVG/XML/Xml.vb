@@ -98,7 +98,6 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports System.Xml
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -365,13 +364,5 @@ Namespace SVG.XML
             text.y += offset.Y
             Return text
         End Operator
-    End Class
-
-    ''' <summary>
-    ''' 在这个SVG对象之中所定义的CSS样式数据
-    ''' </summary>
-    Public Class CSSStyles
-        <XmlElement("style")> Public Property styles As XmlMeta.CSS()
-        <XmlAttribute> Public Property id As String
     End Class
 End Namespace
