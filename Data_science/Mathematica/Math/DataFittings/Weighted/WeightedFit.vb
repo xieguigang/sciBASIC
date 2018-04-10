@@ -7,7 +7,7 @@
     Public Property FisherF() As Double
 
     ''' <summary>
-    ''' RYSQ: Multiple correlation coefficient
+    ''' RYSQ: Multiple correlation coefficient (R2，相关系数)
     ''' </summary>
     ''' <returns></returns>
     Public Property CorrelationCoefficient() As Double
@@ -19,7 +19,7 @@
     Public Property StandardDeviation() As Double
 
     ''' <summary>
-    ''' Ycalc: Calculated values of Y
+    ''' Ycalc: Calculated values of Y.(根据所拟合的公式所计算出来的预测值)
     ''' </summary>
     ''' <returns></returns>
     Public Property CalculatedValues() As Double()
@@ -31,7 +31,7 @@
     Public Property Residuals() As Double()
 
     ''' <summary>
-    ''' C: Coefficients
+    ''' C: Coefficients.(拟合出来的多项式系数)
     ''' </summary>
     ''' <returns></returns>
     Public Property Coefficients() As Double()

@@ -5,7 +5,7 @@
 ''' </summary>
 Public Module WeightedLinearRegression
 
-    Public Function Regress(Y#(), X#(), W#(), Optional orderOfPolynomial% = 2) As WeightedFit
+    Public Function Regress(X#(), Y#(), W#(), Optional orderOfPolynomial% = 2) As WeightedFit
         Dim Xmatrix#(,) = New Double(orderOfPolynomial, X.Length - 1) {}
         Dim term#
         Dim xx#
