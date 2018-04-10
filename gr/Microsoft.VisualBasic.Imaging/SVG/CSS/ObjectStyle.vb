@@ -45,6 +45,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.XmlMeta
 
 Namespace SVG.CSS
 
@@ -67,10 +68,7 @@ Namespace SVG.CSS
     ''' <summary>
     ''' 在这个SVG对象之中所定义的CSS样式数据
     ''' </summary>
-    Public Class CSSStyles
-
-        <XmlAttribute>
-        Public Property id As String
+    Public Class CSSStyles : Inherits Node
 
         <XmlElement("linearGradient")>
         Public Property linearGradients As linearGradient()
