@@ -1,4 +1,6 @@
-﻿''' <summary>
+﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra
+
+''' <summary>
 ''' ## An Algorithm for Weighted Linear Regression
 ''' 
 ''' > https://www.codeproject.com/Articles/25335/An-Algorithm-for-Weighted-Linear-Regression
@@ -119,7 +121,9 @@ Public Module WeightedLinearRegression
 
         Return New WeightedFit With {
             .CalculatedValues = Ycalc,
-            .Coefficients = C,
+            .Polynomial = New Polynomial With {
+                .Factors = C
+            },
             .CoefficientsStandardError = SEC,
             .CorrelationCoefficient = RYSQ,
             .FisherF = FReg,
