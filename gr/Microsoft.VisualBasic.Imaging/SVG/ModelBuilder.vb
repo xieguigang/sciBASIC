@@ -52,6 +52,9 @@ Imports sys = System.Math
 
 Namespace SVG
 
+    ''' <summary>
+    ''' gdi+ object to svg model convertor
+    ''' </summary>
     Public Module ModelBuilder
 
         Public Function PiePath(x!, y!, width!, height!, startAngle!, sweepAngle!) As path
@@ -84,16 +87,16 @@ Namespace SVG
         ''' <summary>
         ''' 下面的命令可用于路径数据：
         ''' 
-        ''' M = moveto(``M X,Y``)
-        ''' L = lineto(``L X,Y``)
-        ''' H = horizontal lineto(``H X``)
-        ''' V = vertical lineto(``V Y``)
-        ''' C = curveto(``C X1,Y1,X2,Y2,ENDX,ENDY``)
-        ''' S = smooth curveto(``S X2,Y2,ENDX,ENDY``)
-        ''' Q = quadratic Belzier curve(``Q X,Y,ENDX,ENDY``)
-        ''' T = smooth quadratic Belzier curveto(``T ENDX,ENDY``)
-        ''' A = elliptical Arc(``A RX,RY,XROTATION,FLAG1,FLAG2,X,Y``)
-        ''' Z = closepath()
+        ''' + ``M`` = moveto(``M X,Y``)
+        ''' + ``L`` = lineto(``L X,Y``)
+        ''' + ``H`` = horizontal lineto(``H X``)
+        ''' + ``V`` = vertical lineto(``V Y``)
+        ''' + ``C`` = curveto(``C X1,Y1,X2,Y2,ENDX,ENDY``)
+        ''' + ``S`` = smooth curveto(``S X2,Y2,ENDX,ENDY``)
+        ''' + ``Q`` = quadratic Belzier curve(``Q X,Y,ENDX,ENDY``)
+        ''' + ``T`` = smooth quadratic Belzier curveto(``T ENDX,ENDY``)
+        ''' + ``A`` = elliptical Arc(``A RX,RY,XROTATION,FLAG1,FLAG2,X,Y``)
+        ''' + ``Z`` = closepath()
         ''' 
         ''' 注释：以上所有命令均允许小写字母。大写表示绝对定位，小写表示相对定位。
         ''' </summary>
@@ -173,6 +176,13 @@ Namespace SVG
             Return gdiPath.Path
         End Function
 
+        ''' <summary>
+        ''' Invoke gdi+ path build action
+        ''' </summary>
+        ''' <param name="gdiPath"></param>
+        ''' <param name="action"></param>
+        ''' <param name="parameters"></param>
+        ''' <param name="path"></param>
         <Extension>
         Private Sub [Call](gdiPath As Path2D, action As Char, parameters As List(Of Double), path As path)
             Select Case action
