@@ -116,12 +116,17 @@ Namespace SVG.XML
         ''' </summary>
         ''' <returns></returns>
         Public Property desc As String
+
         ''' <summary>
         ''' SVG对象也会在这里面定义CSS
         ''' </summary>
         ''' <returns></returns>
-        <XmlElement("style")> Public Shadows Property style As XmlMeta.CSS
-        <XmlElement("image")> Public Property images As Image() Implements ICanvas.images
+        <XmlElement("style")>
+        Public Shadows Property style As XmlMeta.CSS
+        Public Property filter As Filter
+
+        <XmlElement("image")>
+        Public Property images As Image() Implements ICanvas.images
 
         ''' <summary>
         ''' Xml comment for <see cref="Layers"/>
