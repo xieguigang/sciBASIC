@@ -3,6 +3,9 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace HTML.XmlMeta
 
+    ''' <summary>
+    ''' The base of the html node
+    ''' </summary>
     Public MustInherit Class Node
 
         <XmlAttribute> Public Property id As String
