@@ -201,6 +201,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WeightedLinearRegression.vb" />
     <Compile Include="LeastSquares.vb" />
     <Compile Include="FitResult.vb" />
     <Compile Include="Extensions.vb" />
