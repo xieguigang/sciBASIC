@@ -66,6 +66,13 @@ Namespace LinearAlgebra
             End Get
         End Property
 
+        Public ReadOnly Property IsLinear As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Factors.Length <= 2
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return ToString(format:="F2")

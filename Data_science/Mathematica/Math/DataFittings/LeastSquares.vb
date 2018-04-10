@@ -125,7 +125,6 @@ Public Module LeastSquares
     End Function
 
     Public Function PolyFit(x As Double(), y As Double(), length%, poly_n%) As FitResult
-
         Dim i As Integer
         Dim j As Integer
         ' double *tempx,*tempy,*sumxx,*sumxy,*ata;
