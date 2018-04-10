@@ -5,6 +5,32 @@
 ''' </summary>
 Public Module WeightedLinearRegression
 
+    Public Function Regress(Y#(), X#(), W#(), Optional orderOfPolynomial% = 2) As WeightedFit
+        Dim Xmatrix#(,) = New Double(orderOfPolynomial, X.Length - 1) {}
+        Dim term#
+        Dim xx#
+
+        For i As Integer = 0 To X.Length - 1
+            Xmatrix(0, i) = 1
+            term = X(i)
+            xx = term
+
+            For j As Integer = 1 To orderOfPolynomial
+                Xmatrix(j, i) = term
+                term *= xx
+            Next
+        Next
+
+        Return Regress(Y, Xmatrix, W)
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="Y">Y[j]   = j-th observed data point</param>
+    ''' <param name="X">X[i,j] = j-th value of the i-th independent varialble</param>
+    ''' <param name="W">W[j]   = j-th weight value</param>
+    ''' <returns></returns>
     Public Function Regress(Y As Double(), X As Double(,), W As Double()) As WeightedFit
         Dim M As Integer = Y.Length
         ' M = Number of data points
