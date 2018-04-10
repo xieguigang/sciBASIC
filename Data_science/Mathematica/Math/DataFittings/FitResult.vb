@@ -81,7 +81,7 @@ Public Class FitResult : Implements IFitted
     ''' <summary>
     ''' 保存拟合后的y值，在拟合时可设置为不保存节省内存
     ''' </summary>
-    Public Property ErrorTest As TestPoint()
+    Public Property ErrorTest As TestPoint() Implements IFitted.ErrorTest
 
     ''' <summary>
     ''' 根据x获取拟合方程的y值

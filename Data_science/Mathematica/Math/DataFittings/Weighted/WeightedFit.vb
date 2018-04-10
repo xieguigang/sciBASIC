@@ -22,12 +22,6 @@ Public Class WeightedFit : Implements IFitted
     Public Property StandardDeviation() As Double
 
     ''' <summary>
-    ''' Ycalc: Calculated values of Y.(根据所拟合的公式所计算出来的预测值)
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property CalculatedValues() As Double()
-
-    ''' <summary>
     ''' DY: Residual values of Y
     ''' </summary>
     ''' <returns></returns>
@@ -53,6 +47,12 @@ Public Class WeightedFit : Implements IFitted
     End Property
 
     Public Property Polynomial As Polynomial Implements IFitted.Polynomial
+
+    ''' <summary>
+    ''' Ycalc: Calculated values of Y.(根据所拟合的公式所计算出来的预测值)
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property ErrorTest As TestPoint() Implements IFitted.ErrorTest
 
     Public Overrides Function ToString() As String
         Return $"{Polynomial.ToString("F4")} @ R2={CorrelationCoefficient.ToString("F4")}"

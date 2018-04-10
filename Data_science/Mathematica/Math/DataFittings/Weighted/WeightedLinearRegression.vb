@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ''' <summary>
 ''' ## An Algorithm for Weighted Linear Regression
@@ -6,6 +7,11 @@
 ''' > https://www.codeproject.com/Articles/25335/An-Algorithm-for-Weighted-Linear-Regression
 ''' </summary>
 Public Module WeightedLinearRegression
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Regress(X As Vector, Y As Vector, W As Vector, Optional orderOfPolynomial% = 1) As WeightedFit
+        Return Regress(X.ToArray, Y.ToArray, W.ToArray, orderOfPolynomial)
+    End Function
 
     Public Function Regress(X#(), Y#(), W#(), Optional orderOfPolynomial% = 2) As WeightedFit
         Dim Xmatrix#(,) = New Double(orderOfPolynomial, X.Length - 1) {}
@@ -26,6 +32,11 @@ Public Module WeightedLinearRegression
         Return Regress(Y, Xmatrix, W)
     End Function
 
+    <Extension>
+    Private Function XVector(M As Double(,)) As Double()
+
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -33,7 +44,7 @@ Public Module WeightedLinearRegression
     ''' <param name="X">X[i,j] = j-th value of the i-th independent varialble</param>
     ''' <param name="W">W[j]   = j-th weight value</param>
     ''' <returns></returns>
-    Public Function Regress(Y As Double(), X As Double(,), W As Double()) As WeightedFit
+    Public Function Regress(Y#(), X#(,), W#()) As WeightedFit
         Dim M As Integer = Y.Length
         ' M = Number of data points
         Dim N As Integer = X.Length \ M
@@ -120,7 +131,15 @@ Public Module WeightedLinearRegression
         Next
 
         Return New WeightedFit With {
-            .CalculatedValues = Ycalc,
+            .ErrorTest = X.XVector _
+                .Select(Function(xi, i)
+                            Return New TestPoint With {
+                                .X = xi,
+                                .Y = Y(i),
+                                .Yfit = Ycalc(i)
+                            }
+                        End Function) _
+                .ToArray,
             .Polynomial = New Polynomial With {
                 .Factors = C
             },
