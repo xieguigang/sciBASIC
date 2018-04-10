@@ -66,8 +66,11 @@ Namespace SVG
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function SVG(g As GraphicsSVG, Optional size$ = Nothing, Optional comment$ = Nothing) As SVGXml
-            Return g.__svgData.GetSVG(size.SizeParser, xmlComment:=comment)
+        Public Function SVG(g As GraphicsSVG,
+                            Optional size$ = Nothing,
+                            Optional comment$ = Nothing,
+                            Optional desc$ = Nothing) As SVGXml
+            Return g.__svgData.GetSVG(size.SizeParser, xmlComment:=comment, desc:=desc)
         End Function
 
         ''' <summary>
@@ -76,16 +79,27 @@ Namespace SVG
         ''' <param name="g"></param>
         ''' <param name="path$">``*.svg``保存的SVG文件的路径</param>
         ''' <returns></returns>
-        <Extension> Public Function WriteSVG(g As GraphicsSVG, path$, Optional size$ = "1440,900", Optional comments$ = Nothing) As Boolean
+        <Extension> Public Function WriteSVG(g As GraphicsSVG, path$,
+                                             Optional size$ = "1440,900",
+                                             Optional comments$ = Nothing,
+                                             Optional desc$ = Nothing) As Boolean
             Using file As FileStream = path.Open
-                Call g.WriteSVG(out:=file, size:=size, comments:=comments)
+                Call g.WriteSVG(
+                    out:=file,
+                    size:=size,
+                    comments:=comments,
+                    desc:=desc
+                )
                 Return True
             End Using
         End Function
 
-        <Extension> Public Function WriteSVG(g As GraphicsSVG, out As Stream, Optional size$ = "1440,900", Optional comments$ = Nothing) As Boolean
+        <Extension> Public Function WriteSVG(g As GraphicsSVG, out As Stream,
+                                             Optional size$ = "1440,900",
+                                             Optional comments$ = Nothing,
+                                             Optional desc$ = Nothing) As Boolean
             Dim sz As Size = size.SizeParser
-            Dim svg As SVGXml = g.__svgData.GetSVG(sz, comments)
+            Dim svg As SVGXml = g.__svgData.GetSVG(sz, comments, desc)
             Dim XML$ = svg.GetSVGXml
             Dim bytes As Byte() = TextEncodings.UTF8WithoutBOM.GetBytes(XML)
 

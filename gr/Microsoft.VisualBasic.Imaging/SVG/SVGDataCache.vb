@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::fd62aa3ae26ed0a05e7cef88390a4572, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataCache.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SVGDataCache
-    ' 
-    '         Function: GetSVG, innerDefaultHeight, innerDefaultWidth, (+2 Overloads) updateLayerIndex
-    ' 
-    '         Sub: (+8 Overloads) Add
-    ' 
-    '         Operators: (+2 Overloads) +
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SVGDataCache
+' 
+'         Function: GetSVG, innerDefaultHeight, innerDefaultWidth, (+2 Overloads) updateLayerIndex
+' 
+'         Sub: (+8 Overloads) Add
+' 
+'         Operators: (+2 Overloads) +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -157,17 +157,18 @@ Namespace SVG
         ''' If this argument is ignored, then the default internal <see cref="Size"/> value will be used.
         ''' </param>
         ''' <returns></returns>
-        Public Function GetSVG(Optional size As Size = Nothing, Optional xmlComment$ = Nothing) As SVGXml
+        Public Function GetSVG(Optional size As Size = Nothing, Optional xmlComment$ = Nothing, Optional desc$ = Nothing) As SVGXml
             Dim SVG As New SVGXml() With {
                 .Layers = layers,
                 .width = size.Width Or innerDefaultWidth(),
                 .height = size.Height Or innerDefaultHeight(),
-                .XmlComment = xmlComment
+                .XmlComment = xmlComment,
+                .desc = desc
             }
 
             If Not bg.StringEmpty Then
                 SVG.style = New XmlMeta.CSS With {
-                    .style = "svg{ background-color: " & bg & "; }"
+                   .style = "svg{ background-color: " & bg & "; }"
                 }
             End If
 
