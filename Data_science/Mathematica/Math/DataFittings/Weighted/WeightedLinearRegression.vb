@@ -32,9 +32,23 @@ Public Module WeightedLinearRegression
         Return Regress(Y, Xmatrix, W)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="M">
+    ''' i=1: X vector
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
     Private Function XVector(M As Double(,)) As Double()
+        Dim i% = 1
+        Dim X As New List(Of Double)
 
+        For j As Integer = 0 To M.GetUpperBound(1)
+            X.Add(M(i, j))
+        Next
+
+        Return X.ToArray
     End Function
 
     ''' <summary>
