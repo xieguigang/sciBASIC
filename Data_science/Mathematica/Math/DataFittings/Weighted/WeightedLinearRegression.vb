@@ -3,87 +3,24 @@
 ''' 
 ''' > https://www.codeproject.com/Articles/25335/An-Algorithm-for-Weighted-Linear-Regression
 ''' </summary>
-Public Class WeightedLinearRegression
-    Private V As Double(,)
-    ' Least squares and var/covar matrix
-    Public C As Double()
-    ' Coefficients
-    Public SEC As Double()
-    ' Std Error of coefficients
-    Private RYSQ As Double
-    ' Multiple correlation coefficient
-    Private SDV As Double
-    ' Standard deviation of errors
-    Private FReg As Double
-    ' Fisher F statistic for regression
-    Private Ycalc As Double()
-    ' Calculated values of Y
-    Private DY As Double()
-    ' Residual values of Y
-    Public ReadOnly Property FisherF() As Double
-        Get
-            Return FReg
-        End Get
-    End Property
+Public Module WeightedLinearRegression
 
-    Public ReadOnly Property CorrelationCoefficient() As Double
-        Get
-            Return RYSQ
-        End Get
-    End Property
-
-    Public ReadOnly Property StandardDeviation() As Double
-        Get
-            Return SDV
-        End Get
-    End Property
-
-    Public ReadOnly Property CalculatedValues() As Double()
-        Get
-            Return Ycalc
-        End Get
-    End Property
-
-    Public ReadOnly Property Residuals() As Double()
-        Get
-            Return DY
-        End Get
-    End Property
-
-    Public ReadOnly Property Coefficients() As Double()
-        Get
-            Return C
-        End Get
-    End Property
-
-    Public ReadOnly Property CoefficientsStandardError() As Double()
-        Get
-            Return SEC
-        End Get
-    End Property
-
-    Public ReadOnly Property VarianceMatrix() As Double(,)
-        Get
-            Return V
-        End Get
-    End Property
-
-    Public Function Regress(Y As Double(), X As Double(,), W As Double()) As Boolean
+    Public Function Regress(Y As Double(), X As Double(,), W As Double()) As WeightedFit
         Dim M As Integer = Y.Length
         ' M = Number of data points
         Dim N As Integer = X.Length \ M
         ' N = Number of linear terms
         Dim NDF As Integer = M - N
         ' Degrees of freedom
-        Ycalc = New Double(M - 1) {}
-        DY = New Double(M - 1) {}
+        Dim Ycalc = New Double(M - 1) {}
+        Dim DY = New Double(M - 1) {}
         ' If not enough data, don't attempt regression
         If NDF < 1 Then
-            Return False
+            Return Nothing
         End If
-        V = New Double(N - 1, N - 1) {}
-        C = New Double(N - 1) {}
-        SEC = New Double(N - 1) {}
+        Dim V = New Double(N - 1, N - 1) {}
+        Dim C = New Double(N - 1) {}
+        Dim SEC = New Double(N - 1) {}
         Dim B As Double() = New Double(N - 1) {}
         ' Vector for LSQ
         ' Clear the matrices to start out
@@ -108,7 +45,7 @@ Public Class WeightedLinearRegression
         Next
         ' V now contains the raw least squares matrix
         If Not SymmetricMatrixInvert(V) Then
-            Return False
+            Return Nothing
         End If
         ' V now contains the inverted least square matrix
         ' Matrix multpily to get coefficients C = VB
@@ -139,12 +76,12 @@ Public Class WeightedLinearRegression
             RSS = RSS + W(k) * DY(k) * DY(k)
         Next
         Dim SSQ As Double = RSS / NDF
-        RYSQ = 1 - RSS / TSS
-        FReg = 9999999
+        Dim RYSQ = 1 - RSS / TSS
+        Dim FReg = 9999999
         If RYSQ < 0.9999999 Then
             FReg = RYSQ / (1 - RYSQ) * NDF / (N - 1)
         End If
-        SDV = Math.Sqrt(SSQ)
+        Dim SDV = Math.Sqrt(SSQ)
 
         ' Calculate var-covar matrix and std error of coefficients
         For i As Integer = 0 To N - 1
@@ -153,9 +90,18 @@ Public Class WeightedLinearRegression
             Next
             SEC(i) = Math.Sqrt(V(i, i))
         Next
-        Return True
-    End Function
 
+        Return New WeightedFit With {
+            .CalculatedValues = Ycalc,
+            .Coefficients = C,
+            .CoefficientsStandardError = SEC,
+            .CorrelationCoefficient = RYSQ,
+            .FisherF = FReg,
+            .Residuals = DY,
+            .StandardDeviation = SDV,
+            .VarianceMatrix = V
+        }
+    End Function
 
     Public Function SymmetricMatrixInvert(V As Double(,)) As Boolean
         Dim N As Integer = CInt(Math.Truncate(Math.Sqrt(V.Length)))
@@ -225,27 +171,4 @@ Public Class WeightedLinearRegression
         Next
         Return True
     End Function
-
-    Public Function RunTest(X As Double()) As Double
-        Dim NRuns As Integer = 1
-        Dim N1 As Integer = 0
-        Dim N2 As Integer = 0
-        If X(0) > 0 Then
-            N1 = 1
-        Else
-            N2 = 1
-        End If
-
-        For k As Integer = 1 To X.Length - 1
-            If X(k) > 0 Then
-                N1 += 1
-            Else
-                N2 += 1
-            End If
-            If X(k) * X(k - 1) < 0 Then
-                NRuns += 1
-            End If
-        Next
-        Return 1
-    End Function
-End Class
+End Module
