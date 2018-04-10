@@ -55,6 +55,6 @@ Public Class WeightedFit : Implements IFitted
     Public Property Polynomial As Polynomial Implements IFitted.Polynomial
 
     Public Overrides Function ToString() As String
-        Return $"{Polynomial} @ R2={CorrelationCoefficient.ToString("F4")}"
+        Return $"{Polynomial.ToString("F4")} @ R2={CorrelationCoefficient.ToString("F4")}"
     End Function
 End Class
