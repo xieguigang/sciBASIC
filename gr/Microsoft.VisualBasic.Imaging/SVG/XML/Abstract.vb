@@ -35,14 +35,18 @@ Namespace SVG.XML
         Public Property attributes As Dictionary(Of String, String)
 
         ''' <summary>
-        ''' 
+        ''' 对当前的文档节点/图层信息的注释
+        ''' </summary>
+        Public XmlCommentValue$
+
+        ''' <summary>
+        ''' Read Only
         ''' </summary>
         ''' <returns></returns>
-        <XmlAnyElement("gComment")>
-        Public Property XmlComment As XmlComment
+        <XmlAnyElement("gComment")> Public Property XmlComment As XmlComment
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-
+                Return XmlCommentValue.CreateComment()
             End Get
             Set
             End Set

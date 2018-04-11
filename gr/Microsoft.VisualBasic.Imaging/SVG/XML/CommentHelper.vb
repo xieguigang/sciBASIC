@@ -51,7 +51,7 @@ Namespace SVG.XML
         Const declare$ = "SVG document was created by sciBASIC svg image driver:"
 
         <Extension>
-        Public Function CreateComment(svg As SVGXml) As XmlComment
+        Public Function CreateComment(xmlComment As String) As XmlComment
             Dim comment As New StringBuilder
             Dim indent As New String(" "c, 6)
 
@@ -62,8 +62,8 @@ Namespace SVG.XML
                         .Append(indent & New String(" "c, 3)) _
                         .AppendLine("visit: " & LICENSE.githubURL)
 
-            If Not svg.XmlComment.StringEmpty Then
-                For Each line$ In svg.XmlComment.LineTokens
+            If Not xmlComment.StringEmpty Then
+                For Each line$ In xmlComment.LineTokens
                     comment.AppendLine _
                            .Append(indent) _
                            .Append(line)

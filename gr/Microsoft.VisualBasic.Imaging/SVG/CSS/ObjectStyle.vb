@@ -76,6 +76,8 @@ Namespace SVG.CSS
         Public Property radialGradients As radialGradient()
         <XmlElement("style")>
         Public Property styles As XmlMeta.CSS()
+        <XmlElement("filter")>
+        Public Property filters As Filter()
 
     End Class
 End Namespace
