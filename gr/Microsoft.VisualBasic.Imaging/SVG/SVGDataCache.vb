@@ -65,10 +65,12 @@ Namespace SVG
         ''' </summary>
         Friend zlayer As int = 0
 
-        Private Function updateLayerIndex(Of T As CSSLayer)(node As T) As T
-            node.zIndex = ++zlayer
-            Return node
-        End Function
+        Default Public ReadOnly Property GetLayer(zindex As Integer) As g
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return layers(zindex)
+            End Get
+        End Property
 
         Private Iterator Function updateLayerIndex(Of T As CSSLayer)(nodes As IEnumerable(Of T)) As IEnumerable(Of T)
             For Each node As T In nodes
@@ -76,6 +78,8 @@ Namespace SVG
                 Yield node
             Next
         End Function
+
+#Region "Add svg shape element"
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Add(text As XML.text) As Integer
@@ -146,6 +150,7 @@ Namespace SVG
                 layers += layer
             Next
         End Sub
+#End Region
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function innerDefaultWidth() As DefaultValue(Of Integer)
