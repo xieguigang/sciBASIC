@@ -241,6 +241,11 @@ Namespace SVG.XML
         <XmlAttribute> Public Property y As String
         <XmlAttribute> Public Property x As String
 
+#Region "圆角矩形"
+        Public Property rx As String
+        Public Property ry As String
+#End Region
+
         Sub New()
         End Sub
 
