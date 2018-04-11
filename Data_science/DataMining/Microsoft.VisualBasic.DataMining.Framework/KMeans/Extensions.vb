@@ -41,31 +41,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace KMeans
 
     Public Module Extensions
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function ToEntityObjects(dataset As IEnumerable(Of EntityClusterModel)) As IEnumerable(Of EntityObject)
-            Return dataset _
-                .Select(Function(data)
-                            Dim cluster As New NamedValue(Of String) With {
-                                .Name = NameOf(data.Cluster),
-                                .Value = data.Cluster
-                            }
-                            Return New EntityObject With {
-                                .ID = data.ID,
-                                .Properties = cluster + data.Properties.AsCharacter
-                            }
-                        End Function)
-        End Function
 
         ''' <summary>
         ''' Grouping the numeric values by using the kmeans cluserting operations.
@@ -124,16 +105,6 @@ Namespace KMeans
             Next
 
             Return result
-        End Function
-
-        <Extension>
-        Public Function ToKMeansModels(data As IEnumerable(Of DataSet)) As EntityClusterModel()
-            Return data.Select(
-                Function(d) New EntityClusterModel With {
-                    .ID = d.ID,
-                    .Cluster = "",
-                    .Properties = New Dictionary(Of String, Double)(d.Properties)
-                }).ToArray
         End Function
     End Module
 End Namespace

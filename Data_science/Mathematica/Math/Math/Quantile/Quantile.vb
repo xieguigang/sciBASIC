@@ -59,7 +59,7 @@
 
 Namespace Quantile
 
-    Public Structure Quantile
+    Public Structure Point
 
         Public ReadOnly quantile#, error#, u#, v#
 

@@ -163,7 +163,7 @@ Namespace Darwinism
             ' linked list that has our population inside
 
             Dim bestFit# = Integer.MaxValue
-            Dim fitnessFunction As Func(Of Individual, Double) = AddressOf New FitnessPool(Of Individual)(target).Fitness
+            Dim fitnessFunction As Func(Of Individual, Double) = AddressOf New FitnessPool(Of Individual)(target, capacity:=PopulationSize * 100).Fitness
             Dim i As int = Scan0
 
             If randomGenerator Is Nothing Then

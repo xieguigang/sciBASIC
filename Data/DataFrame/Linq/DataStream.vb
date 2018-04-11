@@ -161,7 +161,7 @@ Namespace IO.Linq
             Dim RowBuilder As New RowBuilder(schema)
             Dim type As Type = GetType(T)
 
-            Call RowBuilder.Indexof(Me)
+            Call RowBuilder.IndexOf(Me)
             Call RowBuilder.SolveReadOnlyMetaConflicts()
 
             Do While True
@@ -199,7 +199,7 @@ Namespace IO.Linq
             Dim RowBuilder As New RowBuilder(schema)
             Dim type As Type = GetType(T)
 
-            Call RowBuilder.Indexof(Me)
+            Call RowBuilder.IndexOf(Me)
             Call RowBuilder.SolveReadOnlyMetaConflicts()
 
             Do While True
@@ -273,7 +273,7 @@ Namespace IO.Linq
             Dim RowBuilder As New RowBuilder(schema)
             Dim type As Type = GetType(T)
 
-            Call RowBuilder.Indexof(Me)
+            Call RowBuilder.IndexOf(Me)
             Call RowBuilder.SolveReadOnlyMetaConflicts()
 
             Do While Not EndRead

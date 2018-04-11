@@ -41,12 +41,7 @@
 #End Region
 
 Imports System.Text.RegularExpressions
-Imports System.Runtime.CompilerServices
-Imports System.Net
-Imports System.IO
-Imports System.Text
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Scripting
 
 Namespace HTML
 

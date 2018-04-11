@@ -73,7 +73,7 @@ Namespace ApplicationServices.Development
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function SummaryModules(vb As String) As String
             Dim vblines As Pointer(Of String) = vb _
-                .lTokens _
+                .LineTokens _
                 .Select(AddressOf RemoveAttributes) _
                 .ToArray
 
@@ -112,7 +112,7 @@ Namespace ApplicationServices.Development
                     If type = "Enum" Then
                         Dim members = vb _
                             .Match("Enum\s+" & name & ".+?End Enum", RegexICSng) _
-                            .lTokens _
+                            .LineTokens _
                             .Where(Function(s) s.IsPattern("\s+" & VBLanguage.IdentiferPattern & "\s*([=].+?)?\s*")) _
                             .Select(AddressOf Trim) _
                             .Where(Function(s) Not s.StringEmpty) _

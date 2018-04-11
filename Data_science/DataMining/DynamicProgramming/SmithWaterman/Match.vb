@@ -118,16 +118,15 @@ Namespace SmithWaterman
             Return $"[query: {{{FromA}, {ToA}}}, ref: {{{FromB}, {ToB}}}], score:={Score}"
         End Function
 
-        Public Shared ReadOnly Property FROMA_COMPARATOR As IComparer(Of Match) = New ComparatorHelper()
-
-        Private Class ComparatorHelper : Implements IComparer(Of Match)
-
-            Public Sub New()
-            End Sub
-
-            Public Function Compare(x As Match, y As Match) As Integer Implements IComparer(Of Match).Compare
-                Return x.FromA - y.FromA
-            End Function
-        End Class
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator -(match As Match, offset%) As Match
+            Return New Match With {
+                .FromA = match.FromA - offset,
+                .FromB = match.FromB - offset,
+                .Score = match.Score,
+                .ToA = match.ToA - offset,
+                .ToB = match.ToB - offset
+            }
+        End Operator
     End Class
 End Namespace

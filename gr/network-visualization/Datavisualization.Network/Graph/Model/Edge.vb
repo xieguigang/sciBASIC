@@ -83,12 +83,11 @@
 '
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 
 Namespace Graph
 
-    Public Class Edge : Inherits Edge(Of Node)
+    Public Class Edge : Inherits GraphTheory.Network.Edge(Of Node)
         Implements IInteraction
         Implements IGraphValueContainer(Of EdgeData)
 

@@ -283,7 +283,7 @@ Namespace MarkDown
         ''' <param name="text$"></param>
         ''' <returns></returns>
         Private Shared Function __MarkdownTable(text$) As String
-            Dim lines$() = text.lTokens
+            Dim lines$() = text.LineTokens
 
             If text.StringEmpty OrElse lines.Length < 2 Then
                 Return text
@@ -1183,7 +1183,7 @@ Namespace MarkDown
 
         Private Function SyntaxedCodeBlockEvaluator(match As Match) As String
             Dim codeBlock As String = match.Value
-            Dim lines = codeBlock.lTokens
+            Dim lines = codeBlock.LineTokens
             Dim language$ = Mid(lines(Scan0), 4).Trim
 
             codeBlock = lines.Skip(1).Take(lines.Length - 2).JoinBy(vbLf)

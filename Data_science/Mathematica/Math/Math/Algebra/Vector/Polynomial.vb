@@ -48,6 +48,10 @@ Namespace LinearAlgebra
 
     Public Class Polynomial
 
+        ''' <summary>
+        ''' 多项式系数向量
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Factors As Double()
 
         Default Public ReadOnly Property F(x#) As Double
@@ -59,6 +63,13 @@ Namespace LinearAlgebra
                 Next
 
                 Return ans
+            End Get
+        End Property
+
+        Public ReadOnly Property IsLinear As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Factors.Length <= 2
             End Get
         End Property
 

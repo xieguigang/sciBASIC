@@ -150,12 +150,12 @@ Module Module1
         ' Call matchTest()
 
 
-        Dim xx As String = "" Or DefaultValue("hello world!") + Function() False
+        ' Dim xx As String = "" Or DefaultValue("hello world!") + Function() False
 
 
-        Console.WriteLine(xx)
+        '  Console.WriteLine(xx)
 
-        Pause()
+        '  Pause()
 
         'Dim test As Boolean
 
@@ -209,12 +209,24 @@ Module Module1
     End Sub
 
     Sub Main()
+
+        Call takesTest()
+
         Call New Lazy().show()
 
 
         Pause()
     End Sub
 
+
+    Sub takesTest()
+        Dim seq = "abcdefghijklmnopqrstuvwxyz"
+        Dim subsss = seq.Takes({0, 3, 2, 1, 9, 13, 12}, offSet:=1)
+
+        Call subsss.CharString.__DEBUG_ECHO
+
+        Pause()
+    End Sub
 
     Public Structure Lazy
 

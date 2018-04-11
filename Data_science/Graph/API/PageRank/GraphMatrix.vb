@@ -56,7 +56,7 @@ Namespace Analysis.PageRank
 
         Dim indices As New Dictionary(Of String, List(Of Integer))
         Dim nodes As Vertex()
-        Dim edges As Edge()
+        Dim edges As VertexEdge()
 
         ''' <summary>
         ''' 
@@ -71,7 +71,7 @@ Namespace Analysis.PageRank
                 indices(node.Label) = New List(Of Integer)
             Next
 
-            For Each edge As Edge In edges
+            For Each edge As VertexEdge In edges
                 With edge
                     Call indices(.U.Label) _
                         .Add(index(.V.Label))
@@ -88,10 +88,10 @@ Namespace Analysis.PageRank
         ''' </summary>
         ''' <returns></returns>
         Public Function GetEdgeCount() As Dictionary(Of String, Integer)
-            Dim counts As New Dictionary(Of String, (Edge As Edge, C As int))
+            Dim counts As New Dictionary(Of String, (Edge As VertexEdge, C As int))
             Dim uid$
 
-            For Each edge As Edge In edges
+            For Each edge As VertexEdge In edges
                 uid = edge.Key
 
                 If Not counts.ContainsKey(uid) Then

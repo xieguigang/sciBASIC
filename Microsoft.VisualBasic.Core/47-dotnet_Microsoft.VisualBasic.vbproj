@@ -783,6 +783,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
     <Compile Include="ApplicationServices\VBDev\AssemblyInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
@@ -797,15 +798,21 @@
     <Compile Include="ComponentModel\Algorithm\BinaryTree\Enumerable.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeNode.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLSupports.vb" />
+    <Compile Include="ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb" />
+    <Compile Include="ComponentModel\DataSource\DefaultAttribute.vb" />
     <Compile Include="ComponentModel\Ranges\Unit.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
+    <Compile Include="Extensions\Image\Math\Models\Polygon.vb" />
+    <Compile Include="Extensions\Image\Math\Models\Line.vb" />
+    <Compile Include="Extensions\IO\StreamHelper.vb" />
     <Compile Include="Extensions\IO\SerializationIO.vb" />
     <Compile Include="Extensions\Math\Information\Entropy.vb" />
     <Compile Include="Extensions\Trinity\Extensions.vb" />
     <Compile Include="Extensions\Trinity\Expression.vb" />
     <Compile Include="Extensions\Trinity\Word.vb" />
     <Compile Include="Extensions\Trinity\WordClass.vb" />
+    <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
     <Compile Include="Extensions\WebServices\Http\DataURI.vb" />
     <Compile Include="Language\Value\ByRefValueExtensions.vb" />
     <Compile Include="NamespaceDoc.vb" />
@@ -918,8 +925,8 @@
     <Compile Include="Extensions\Image\GDI+\Layouts\DblRect.vb" />
     <Compile Include="Extensions\Image\Math\GeometryMath.vb" />
     <Compile Include="Extensions\Image\Math\PolygonD.vb" />
-    <Compile Include="Extensions\Image\Math\VecMath2D.vb" />
-    <Compile Include="Extensions\Image\Math\Vector2D.vb" />
+    <Compile Include="Extensions\Image\Math\VectorMath2D.vb" />
+    <Compile Include="Extensions\Image\Math\Models\Vector2D.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
     <Compile Include="Extensions\Math\Correlations\Scripting.vb" />
     <Compile Include="Extensions\Math\NumeralSystem.vb" />
@@ -942,6 +949,7 @@
     <Compile Include="Language\Value\DefaultValue\DefaultExtensions.vb" />
     <Compile Include="Scripting\Expressions\Aggregate.vb" />
     <Compile Include="Scripting\Runtime\CType\Abstract.vb" />
+    <Compile Include="Scripting\Runtime\CType\Narrowing.vb" />
     <Compile Include="Serialization\Abstract.vb" />
     <Compile Include="Text\Patterns\Regexp.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />

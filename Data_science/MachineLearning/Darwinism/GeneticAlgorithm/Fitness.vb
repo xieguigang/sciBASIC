@@ -60,16 +60,28 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF
 
-    Public Interface Fitness(Of C As Chromosome(Of C))
+    ''' <summary>
+    ''' 描述了如何从将目标染色体计算为fitness，从而能够量化突变带来的的优点
+    ''' </summary>
+    ''' <typeparam name="Chr"></typeparam>
+    Public Interface Fitness(Of Chr As Chromosome(Of Chr))
 
         ''' <summary>
-        ''' Assume that chromosome1 is better than chromosome2 <br/>
-        ''' fit1 = calculate(chromosome1) <br/>
-        ''' fit2 = calculate(chromosome2) <br/>
-        ''' So the following condition must be true <br/>
-        ''' fit1.compareTo(fit2) &lt;= 0 <br/>
+        ''' Assume that ``chromosome1`` is better than ``chromosome2``
+        ''' 
+        ''' ```vbnet
+        ''' fit1 = calculate(chromosome1)
+        ''' fit2 = calculate(chromosome2)
+        ''' ```
+        ''' 
+        ''' So the following condition must be true:
+        ''' 
+        ''' ```vbnet
+        ''' fit1.compareTo(fit2) &lt;= 0
+        ''' ```
+        ''' 
         ''' (假若是并行模式的之下，还要求这个函数是线程安全的)
         ''' </summary>
-        Function Calculate(chromosome As C) As Double
+        Function Calculate(chromosome As Chr) As Double
     End Interface
 End Namespace

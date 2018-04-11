@@ -157,7 +157,7 @@ Namespace Text
 #End Region
 
         Public Shared Function PartitionByLines(block As String, ByRef Left As String) As String()
-            Dim Tokens As String() = block.lTokens
+            Dim Tokens As String() = block.LineTokens
 
             Left = Tokens.LastOrDefault
             Tokens = Tokens.Takes(Tokens.Length - 1).ToArray

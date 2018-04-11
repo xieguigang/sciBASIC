@@ -242,7 +242,7 @@ Namespace Quantile
             Dim q As QuantileEstimationGK = v.GKQuantile
 
             With dev Or App.StdOut
-                For Each quantile# In {0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1}
+                For Each quantile As Double In {0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1}
                     Dim estimate# = q.Query(quantile)
                     Dim out$ = String.Format("Estimated {0:F2}% quantile as {1}", quantile * 100, estimate)
 

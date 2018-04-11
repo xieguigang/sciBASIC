@@ -1,56 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::83bf4cc0bd899533a3ceb93d1b9bccdb, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SchemaProvider
-    ' 
-    '         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
-    '                     KeyValuePairColumns, MetaAttributes, Raw
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __columnType, __gets, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField
-    '                   ContainsProperty, CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, GetCollectionColumns
-    '                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
-    '                   GetMetaAttributeColumn, IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: Remove
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SchemaProvider
+' 
+'         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
+'                     KeyValuePairColumns, MetaAttributes, Raw
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __columnType, __gets, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField
+'                   ContainsProperty, CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, GetCollectionColumns
+'                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
+'                   GetMetaAttributeColumn, IEnumerable_GetEnumerator, ToString
+' 
+'         Sub: Remove
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -209,6 +210,7 @@ Namespace StorageProvider.ComponentModels
         End Sub
 
         Public ReadOnly Property HasMetaAttributes As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Not MetaAttributes Is Nothing
             End Get
@@ -216,6 +218,10 @@ Namespace StorageProvider.ComponentModels
 
         Dim __type As Type
 
+        ''' <summary>
+        ''' The object <see cref="Type"/> that will be convert to csv row or convert from the csv row.
+        ''' </summary>
+        ''' <returns></returns>
         Public Property DeclaringType As Type
             Get
                 Return __type
@@ -245,6 +251,7 @@ Namespace StorageProvider.ComponentModels
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return DeclaringType.FullName
         End Function
@@ -252,20 +259,20 @@ Namespace StorageProvider.ComponentModels
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="Name">支持属性名称或者域名称</param>
+        ''' <param name="name">支持属性名称或者域名称</param>
         ''' <returns></returns>
-        Public Function GetField(Name As String) As StorageProvider
-            If _dictColumns.ContainsKey(Name) Then
-                Return _dictColumns(Name)
+        Public Function GetField(name As String) As StorageProvider
+            If _dictColumns.ContainsKey(name) Then
+                Return _dictColumns(name)
             End If
-            If _dictCollectionColumns.ContainsKey(Name) Then
-                Return _dictCollectionColumns(Name)
+            If _dictCollectionColumns.ContainsKey(name) Then
+                Return _dictCollectionColumns(name)
             End If
-            If _dictEnumColumns.ContainsKey(Name) Then
-                Return _dictEnumColumns(Name)
+            If _dictEnumColumns.ContainsKey(name) Then
+                Return _dictEnumColumns(name)
             End If
-            If _dictKeyMeta.ContainsKey(Name) Then
-                Return _dictKeyMeta(Name)
+            If _dictKeyMeta.ContainsKey(name) Then
+                Return _dictKeyMeta(name)
             End If
 
             Return Nothing
@@ -306,12 +313,14 @@ Namespace StorageProvider.ComponentModels
                     If(MetaAttributes IsNot Nothing AndAlso
                        MetaAttributes.CanWriteDataToObject,
                        MetaAttributes,
-                       Nothing)
+                       Nothing),
+                .DeclaringType = DeclaringType
             }
         End Function
 
-        Public Function CacheOrdinal(Df As DataFrame) As SchemaProvider
-            Return CacheOrdinal(AddressOf Df.GetOrdinal)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CacheOrdinal(df As DataFrame) As SchemaProvider
+            Return CacheOrdinal(AddressOf df.GetOrdinal)
         End Function
 
         Public Function CacheOrdinal(GetOrdinal As GetOrdinal) As SchemaProvider
@@ -334,15 +343,15 @@ Namespace StorageProvider.ComponentModels
         ''' <summary>
         ''' 从域名称来判断
         ''' </summary>
-        ''' <param name="Name">从csv文件的header行数据之中所得到的列名称</param>
+        ''' <param name="name">从csv文件的header行数据之中所得到的列名称</param>
         ''' <returns></returns>
-        Public Function ContainsField(Name As String) As Boolean
+        Public Function ContainsField(name As String) As Boolean
             Dim LQuery As StorageProvider =
                 LinqAPI.DefaultFirst(Of Column) <=
  _
                 From p As Column
                 In Columns
-                Where String.Equals(Name, p.Name)
+                Where String.Equals(name, p.Name)
                 Select p
 
             If Not LQuery Is Nothing Then
@@ -353,7 +362,7 @@ Namespace StorageProvider.ComponentModels
  _
                 From p As CollectionColumn
                 In Me.CollectionColumns
-                Where String.Equals(Name, p.Name)
+                Where String.Equals(name, p.Name)
                 Select p
 
             Return Not LQuery Is Nothing
@@ -437,6 +446,7 @@ Namespace StorageProvider.ComponentModels
             Return CreateObject(GetType(T), strict)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function GetKeyValuePairColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As KeyValuePair()
             Return __gets(Of KeyValuePair)(Properties, Function(type) type = ProviderIds.KeyValuePair)
         End Function

@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::4bda002946253311a53c6d05b6d123dc, Data_science\Mathematica\Math\DataFittings\FitResult.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class FitResult
-    ' 
-    '     Properties: ErrorTest, FactorSize, Intercept, IsPolyFit, Polynomial
-    '                 R_square, RMSE, Slope, SSE, SSR
-    ' 
-    '     Function: ToString
-    ' 
-    ' /********************************************************************************/
+' Class FitResult
+' 
+'     Properties: ErrorTest, FactorSize, Intercept, IsPolyFit, Polynomial
+'                 R_square, RMSE, Slope, SSE, SSR
+' 
+'     Function: ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,12 +60,12 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 ''' |双对数模型  |log(y) = c + b*log(x) +         u|
 ''' |二次回归模型|    y  = c + b*    x  + r*x^2 + u|
 ''' </remarks>
-Public Class FitResult
+Public Class FitResult : Implements IFitted
 
     ''' <summary>
     ''' 拟合后的方程系数，根据阶次获取拟合方程的系数，如getFactor(2),就是获取``y = a0 + a1*x + a2*x^2 + ... + apoly_n*x^poly_n``中a2的值
     ''' </summary>
-    Public Property Polynomial As Polynomial
+    Public Property Polynomial As Polynomial Implements IFitted.Polynomial
     ''' <summary>
     ''' 回归平方和
     ''' </summary>
@@ -81,14 +81,14 @@ Public Class FitResult
     ''' <summary>
     ''' 保存拟合后的y值，在拟合时可设置为不保存节省内存
     ''' </summary>
-    Public Property ErrorTest As TestPoint()
+    Public Property ErrorTest As TestPoint() Implements IFitted.ErrorTest
 
     ''' <summary>
     ''' 根据x获取拟合方程的y值
     ''' </summary>
     ''' <param name="x"></param>
     ''' <returns></returns>
-    Default Public ReadOnly Property GetY(x As Double) As Double
+    Default Public ReadOnly Property GetY(x As Double) As Double Implements IFitted.GetY
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return Polynomial(x)
@@ -128,7 +128,7 @@ Public Class FitResult
     ''' 确定系数，系数是0~1之间的数，是数理上判定拟合优度的一个量
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property R_square() As Double
+    Public ReadOnly Property R_square() As Double Implements IFitted.CorrelationCoefficient
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return 1 - (SSE / (SSR + SSE))

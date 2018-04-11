@@ -58,8 +58,7 @@ Namespace Darwinism.GAF.Helper
             ' just select random element of vector
             ' and increase or decrease it on small value
             Dim index As Integer = random.Next(v.Length)
-            Dim mutationValue# =
-                random.Next(v.Length) - (random.NextDouble * v.Length)
+            Dim mutationValue# = random.Next(v.Length) - (random.NextDouble * v.Length)
 
             v(index) += mutationValue
         End Sub
@@ -84,6 +83,8 @@ Namespace Darwinism.GAF.Helper
         ''' Returns list of siblings 
         ''' Siblings are actually new chromosomes, 
         ''' created using any of crossover strategy
+        ''' 
+        ''' (两个向量的长度必须要一致)
         ''' </summary>
         ''' <param name="random"></param>
         ''' <param name="v1#"></param>

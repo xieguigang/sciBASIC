@@ -156,7 +156,7 @@ Namespace Driver
                     Call svg.__svgData.Add(img)
                 Else
                     ' 直接合并SVG的节点
-                    Dim imageData As SVGDataCache = DirectCast(image, SVGData).SVG
+                    Dim imageData As SVGDataLayers = DirectCast(image, SVGData).SVG
                     '在这里还需要根据位置计算出位移
                     Call svg.__svgData.Add(imageData + point)
                 End If
@@ -201,7 +201,7 @@ Namespace Driver
                 Else
                     ' 直接合并SVG的节点
                     ' 还需要根据原始的大小与现在的rect参数之中的大小进行缩放合成
-                    Dim imageData As SVGDataCache = DirectCast(image, SVGData).SVG
+                    Dim imageData As SVGDataLayers = DirectCast(image, SVGData).SVG
                     '在这里还需要根据位置计算出位移
                     Call svg.__svgData.Add(imageData + Point)
                 End If

@@ -172,14 +172,14 @@ Namespace ComponentModel.DataSourceModel
         ''' <remarks></remarks>
         Public ReadOnly Property StringParsers As New Dictionary(Of Type, IStringParser) From {
  _
-                {GetType(String), Function(strValue As String) strValue},
-                {GetType(Boolean), AddressOf ParseBoolean},
-                {GetType(DateTime), Function(strValue As String) CType(strValue, DateTime)},
-                {GetType(Double), AddressOf Val},
-                {GetType(Integer), Function(strValue As String) CInt(strValue)},
-                {GetType(Long), Function(strValue As String) CLng(strValue)},
-                {GetType(Single), Function(s) CSng(Val(s))},
-                {GetType(Char), Function(s) s.FirstOrDefault}
+            {GetType(String), Function(strValue As String) strValue},
+            {GetType(Boolean), AddressOf ParseBoolean},
+            {GetType(DateTime), Function(strValue As String) CType(strValue, DateTime)},
+            {GetType(Double), AddressOf Val},
+            {GetType(Integer), Function(strValue As String) CInt(strValue)},
+            {GetType(Long), Function(strValue As String) CLng(strValue)},
+            {GetType(Single), Function(s) CSng(Val(s))},
+            {GetType(Char), Function(s) s.FirstOrDefault}
         }
 
         ''' <summary>
@@ -188,20 +188,20 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         Public ReadOnly Property StringBuilders As New Dictionary(Of Type, IStringBuilder) From {
  _
-                {GetType(String), Function(s) If(s Is Nothing, "", CStr(s))},
-                {GetType(Boolean), AddressOf DataFramework.valueToString},
-                {GetType(DateTime), AddressOf DataFramework.valueToString},
-                {GetType(Double), AddressOf DataFramework.valueToString},
-                {GetType(Integer), AddressOf DataFramework.valueToString},
-                {GetType(Long), AddressOf DataFramework.valueToString},
-                {GetType(Byte), AddressOf DataFramework.valueToString},
-                {GetType(ULong), AddressOf DataFramework.valueToString},
-                {GetType(UInteger), AddressOf DataFramework.valueToString},
-                {GetType(Short), AddressOf DataFramework.valueToString},
-                {GetType(UShort), AddressOf DataFramework.valueToString},
-                {GetType(Char), AddressOf DataFramework.valueToString},
-                {GetType(Single), AddressOf DataFramework.valueToString},
-                {GetType(SByte), AddressOf DataFramework.valueToString}
+            {GetType(String), Function(s) If(s Is Nothing, "", CStr(s))},
+            {GetType(Boolean), AddressOf DataFramework.valueToString},
+            {GetType(DateTime), AddressOf DataFramework.valueToString},
+            {GetType(Double), AddressOf DataFramework.valueToString},
+            {GetType(Integer), AddressOf DataFramework.valueToString},
+            {GetType(Long), AddressOf DataFramework.valueToString},
+            {GetType(Byte), AddressOf DataFramework.valueToString},
+            {GetType(ULong), AddressOf DataFramework.valueToString},
+            {GetType(UInteger), AddressOf DataFramework.valueToString},
+            {GetType(Short), AddressOf DataFramework.valueToString},
+            {GetType(UShort), AddressOf DataFramework.valueToString},
+            {GetType(Char), AddressOf DataFramework.valueToString},
+            {GetType(Single), AddressOf DataFramework.valueToString},
+            {GetType(SByte), AddressOf DataFramework.valueToString}
         }
 
         Public Delegate Function CTypeDynamics(obj As Object, ConvertType As Type) As Object
@@ -237,7 +237,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function IscomplexType(type As Type) As Boolean
+        Public Function IsComplexType(type As Type) As Boolean
             Return Not type _
                 .Schema(PropertyAccess.NotSure, PublicProperty, True) _
                 .Values _

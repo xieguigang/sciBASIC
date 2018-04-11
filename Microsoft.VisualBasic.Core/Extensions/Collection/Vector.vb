@@ -92,6 +92,139 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
+    ''' Dynamics add a element into the target array.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="value"></param>
+    <Extension> Public Sub Add(Of T)(ByRef vector As T(), value As T)
+        If vector.IsNullOrEmpty Then
+            vector = {value}
+        Else
+            Dim appendBuffer As T() = New T(vector.Length) {}
+            Call Array.ConstrainedCopy(vector, Scan0, appendBuffer, Scan0, vector.Length)
+            appendBuffer(vector.Length) = value
+            vector = appendBuffer
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Append value collection to the end of the target <paramref name="vector"/>
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="values"></param>
+    <Extension> Public Sub Add(Of T)(ByRef vector As T(), values As IEnumerable(Of T))
+        Dim data = values.SafeQuery.ToArray
+        Dim appendBuffer As T() = New T(vector.Length + data.Length - 1) {}
+
+        With vector
+            Call Array.ConstrainedCopy(
+                vector, Scan0, appendBuffer, Scan0, .Length)
+
+            For Each x As SeqValue(Of T) In data.SeqIterator
+                appendBuffer(.Length + x.i) = x.value
+            Next
+        End With
+
+        vector = appendBuffer
+    End Sub
+
+    ''' <summary>
+    ''' Add given elements into an array object.(会自动跳过空集合，这个方法是安全的)
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="value"></param>
+    <Extension> Public Sub Add(Of T)(ByRef vector As T(), ParamArray value As T())
+        If value.IsNullOrEmpty Then
+            Return
+        End If
+        If vector Is Nothing Then
+            vector = New T() {}
+        End If
+
+        Dim chunkBuffer As T() = New T(vector.Length + value.Length - 1) {}
+        Call Array.ConstrainedCopy(vector, Scan0, chunkBuffer, Scan0, vector.Length)
+        Call Array.ConstrainedCopy(value, Scan0, chunkBuffer, vector.Length, value.Length)
+        vector = chunkBuffer
+    End Sub
+
+    ''' <summary>
+    ''' Add given elements into an array object and then returns the target array object <paramref name="buffer"/>.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="buffer"></param>
+    ''' <param name="value"></param>
+    ''' <returns></returns>
+    <Extension> Public Function Append(Of T)(buffer As T(), value As IEnumerable(Of T)) As T()
+        If buffer Is Nothing Then
+            Return value.ToArray
+        End If
+
+        Call buffer.Add(value.ToArray)
+        Return buffer
+    End Function
+
+    ''' <summary>
+    ''' Add given elements into an array object.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="array"></param>
+    ''' <param name="value"></param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Sub Add(Of T)(ByRef array As T(), value As List(Of T))
+        Call Add(Of T)(array, value.ToArray)
+    End Sub
+
+    <Extension>
+    Public Function Fill(Of T)(vector As T(), item As T, count%) As T()
+        If count <= 0 Then
+            ' should returns a copy
+            Return vector.ToArray
+        Else
+            Dim newVector As T() = New T(vector.Length + count - 1) {}
+
+            Call Array.ConstrainedCopy(vector, Scan0, newVector, Scan0, vector.Length)
+
+            For i As Integer = vector.Length To newVector.Length - 1
+                newVector(i) = item
+            Next
+
+            Return newVector
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Removes array element at index
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="index%"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Delete(Of T)(vector As T(), index%) As T()
+        Dim newVector As T() = New T(vector.Length - 2) {}
+
+        Call Array.ConstrainedCopy(vector, Scan0, newVector, Scan0, index)
+        Call Array.ConstrainedCopy(vector, index + 1, newVector, index, newVector.Length - index)
+
+        Return newVector
+    End Function
+
+    <Extension>
+    Public Sub InsertAt(Of T)(ByRef vector As T(), value As T, index%)
+        Dim newVector As T() = New T(vector.Length) {}
+
+        Call Array.ConstrainedCopy(vector, Scan0, newVector, Scan0, index)
+        Call Array.ConstrainedCopy(vector, index, newVector, index + 1, vector.Length - index)
+
+        vector = newVector
+        vector(index) = value
+    End Sub
+
+    ''' <summary>
     ''' Create a vector shadow of your data collection.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
@@ -351,43 +484,39 @@ Public Module VectorExtensions
     ''' <param name="delimiter">和字符串的Split函数一样，这里作为delimiter的元素都不会出现在结果之中</param>
     ''' <param name="deliPosition">是否还应该在分区的结果之中包含有分隔符对象？默认不包含</param>
     ''' <returns></returns>
-    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), delimiter As Assert(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As T()()
-        Dim array As T() = source.ToArray
-        Dim blocks As New List(Of T())  ' The returned split blocks
+    <Extension> Public Iterator Function Split(Of T)(source As IEnumerable(Of T), delimiter As Assert(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
         Dim tmp As New List(Of T)
 
-        For i As Integer = 0 To array.Length - 1
-            Dim x As T = array(i)
-
+        For Each x As T In source.SafeQuery
             ' 当前的x元素是分隔符对象
             If delimiter(x) = True Then
+
                 ' 是否将这个分隔符也包含在分组内
                 ' 如果是，则包含在下一个分组内
                 If deliPosition <> DelimiterLocation.NotIncludes Then
                     If deliPosition = DelimiterLocation.NextFirst Then
-                        Call blocks.Add(tmp.ToArray)
+                        Yield tmp.ToArray
+
                         Call tmp.Clear()
                         Call tmp.Add(x)
                     Else
                         ' 包含在上一个分块的末尾
                         Call tmp.Add(x)
-                        Call blocks.Add(tmp.ToArray)
-                        Call tmp.Clear()
+                        Yield tmp.ToArray
+                        tmp *= 0
                     End If
                 Else
-                    Call blocks.Add(tmp.ToArray)
-                    Call tmp.Clear()
+                    Yield tmp.ToArray
+                    tmp *= 0
                 End If
             Else
                 Call tmp.Add(x)
             End If
         Next
 
-        If Not tmp.Count = 0 Then
-            blocks += tmp.ToArray
+        If Not tmp = 0 Then
+            Yield tmp.ToArray
         End If
-
-        Return blocks.ToArray
     End Function
 
     ''' <summary>

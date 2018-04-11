@@ -153,7 +153,9 @@ Public Module ListExtensions
     ''' <param name="reversed">是否为反向选择，即返回所有不在目标index集合之中的元素列表</param>
     ''' <param name="OffSet">当进行反选的时候，本参数将不会起作用</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' ###### 2018-3-30 函数经过测试没有问题
+    ''' </remarks>
     <ExportAPI("takes")>
     <Extension> Public Function Takes(Of T)(source As IEnumerable(Of T),
                                             index%(),
@@ -302,6 +304,12 @@ Public Module ListExtensions
         Return table
     End Function
 
+    ''' <summary>
+    ''' <see cref="HashList(Of T)"/>
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsHashList(Of T As IAddressOf)(source As IEnumerable(Of T)) As HashList(Of T)

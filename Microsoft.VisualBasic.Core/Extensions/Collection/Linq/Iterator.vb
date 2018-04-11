@@ -241,6 +241,24 @@ Namespace Linq
         End Operator
 
         ''' <summary>
+        ''' Get value from <see cref="value"/> property.
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Syntax helper for the <see cref="Pointer(Of T)"/>:
+        ''' 
+        ''' ```vbnet
+        ''' Dim p As Pointer(Of T) = T()
+        ''' Dim x As T = --p
+        ''' ```
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator -(x As SeqValue(Of T)) As T
+            Return x.value
+        End Operator
+
+        ''' <summary>
         ''' Compares the index value <see cref="i"/>.
         ''' </summary>
         ''' <param name="other"></param>
@@ -262,6 +280,10 @@ Namespace Linq
 
             Return i.CompareTo(DirectCast(obj, SeqValue(Of T)).i)
         End Function
+
+        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+            i = address
+        End Sub
     End Structure
 
     ''' <summary>

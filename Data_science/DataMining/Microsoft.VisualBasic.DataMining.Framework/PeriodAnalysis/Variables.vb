@@ -1,63 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::b4025bae2e9c757d57e7667e704d3c39, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\Variables.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure SerialsVarialble
-    ' 
-    '         Properties: Identifier
-    ' 
-    '         Function: Load, ToString
-    ' 
-    '     Class TimePoint
-    ' 
-    '         Properties: Time, Value
-    ' 
-    '         Function: CreateBufferObject, (+2 Overloads) GetData, ToString
-    ' 
-    '     Class SamplingData
-    ' 
-    '         Properties: FiltedData, Peaks, TimePoints, Trough, TSerials
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure SerialsVarialble
+' 
+'         Properties: Identifier
+' 
+'         Function: Load, ToString
+' 
+'     Class TimePoint
+' 
+'         Properties: Time, Value
+' 
+'         Function: CreateBufferObject, (+2 Overloads) GetData, ToString
+' 
+'     Class SamplingData
+' 
+'         Properties: FiltedData, Peaks, TimePoints, Trough, TSerials
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.IEnumerations
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace Serials.PeriodAnalysis
 
@@ -69,21 +65,6 @@ Namespace Serials.PeriodAnalysis
 
         Public Overrides Function ToString() As String
             Return Identifier
-        End Function
-
-        Public Shared Function Load(source As File) As SerialsVarialble()
-            Dim LQuery = LinqAPI.Exec(Of SerialsVarialble) <=
- _
-                From Line As RowObject
-                In source
-                Let Tag As String = Line.First
-                Let Data As Double() = (From col As String In Line.Skip(1) Select Val(col)).ToArray
-                Select New SerialsVarialble With {
-                    .Identifier = Tag,
-                    .SerialsData = Data
-                }
-
-            Return LQuery
         End Function
     End Structure
 
@@ -100,7 +81,7 @@ Namespace Serials.PeriodAnalysis
             Return LQuery
         End Function
 
-        Friend Shared Function GetData(Time As Integer, source As IEnumerable(Of TimePoint)) As Double
+        Public Shared Function GetData(Time As Integer, source As IEnumerable(Of TimePoint)) As Double
             Dim LQuery = (From p In source Where p.Time = Time Select p).ToArray
             If LQuery.IsNullOrEmpty Then
                 Return 0

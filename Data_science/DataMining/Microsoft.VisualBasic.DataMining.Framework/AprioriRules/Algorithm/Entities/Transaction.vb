@@ -48,7 +48,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Linq
 
 Namespace AprioriRules.Entities
@@ -74,19 +73,6 @@ Namespace AprioriRules.Entities
                             Return New Transaction With {
                                 .Name = t.Name,
                                 .Items = t.Value
-                            }
-                        End Function)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function BuildTransactions(data As IEnumerable(Of EntityObject)) As IEnumerable(Of Transaction)
-            Return data _
-                .SafeQuery _
-                .Select(Function(t)
-                            Return New Transaction With {
-                                .Name = t.ID,
-                                .Items = t.Properties.Values.ToArray
                             }
                         End Function)
         End Function

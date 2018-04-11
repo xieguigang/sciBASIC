@@ -110,7 +110,7 @@ Namespace Quantile
         Dim sample As New List(Of X)
 
         Public Overrides Function ToString() As String
-            Return seq(0, 1, 0.1) _
+            Return seq(0, 1, 0.25) _
                 .ToDictionary(Function(pct) (100 * pct).ToString("F2") & "%",
                               Function(pct) Query(pct).ToString("F2")) _
                 .GetJson

@@ -80,9 +80,15 @@ Namespace Drawing3D
             End Get
         End Property
 
-        Public Sub New(x As Single, y As Single, Optional z As Single = 0)
+        Public Sub New(x!, y!, Optional z! = 0)
             Me.X = x
             Me.Y = y
+            Me.Z = z
+        End Sub
+
+        Public Sub New(p As PointF, z!)
+            Me.X = p.X
+            Me.Y = p.Y
             Me.Z = z
         End Sub
 

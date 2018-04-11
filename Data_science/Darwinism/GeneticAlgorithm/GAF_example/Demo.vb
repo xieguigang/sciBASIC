@@ -92,11 +92,11 @@ Public Class Demo
         ''' Siblings are actually new chromosomes, <br/>
         ''' created using any of crossover strategy
         ''' </summary>
-        Public Function Crossover(other As MyVector) As IList(Of MyVector) Implements Chromosome(Of MyVector).Crossover
+        Public Function Crossover(other As MyVector) As IEnumerable(Of MyVector) Implements Chromosome(Of MyVector).Crossover
             Dim thisClone As MyVector = Me.clone()
             Dim otherClone As MyVector = other.clone()
             Call random.Crossover(thisClone._vector, other._vector)
-            Return New List(Of MyVector)({thisClone, otherClone})
+            Return {thisClone, otherClone}
         End Function
 
         Protected Friend Function clone() As Object Implements ICloneable.Clone

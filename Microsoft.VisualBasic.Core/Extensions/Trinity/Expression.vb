@@ -51,14 +51,16 @@ Namespace Data.Trinity
     Public Module Expression
 
         <Extension>
-        Public Function Concatenate(list As IEnumerable(Of String), Optional comma$ = ",", Optional andalso$ = "and", Optional etc$ = "etc") As String
+        Public Function Concatenate(list As IEnumerable(Of String), Optional comma$ = ",", Optional andalso$ = "and", Optional etc$ = "etc", Optional joinSpace As Boolean = True) As String
+            Dim space$ = If(joinSpace, " ", "")
+
             With list.ToArray
                 If .Length = 1 Then
                     Return .ByRef(0)
                 ElseIf .Length < 8 Then
-                    Return .Take(.Length - 1).JoinBy(comma & " ") & $" {[andalso]} " & .Last
+                    Return .Take(.Length - 1).JoinBy(comma & space) & $"{space}{[andalso]}{space}" & .Last
                 Else
-                    Return .Take(7).JoinBy(comma & " ") & $" {[andalso]} " & .ByRef(7) & $"{comma} {etc}"
+                    Return .Take(7).JoinBy(comma & space) & $"{space}{[andalso]}{space}" & .ByRef(7) & $"{comma}{space}{etc}"
                 End If
             End With
         End Function

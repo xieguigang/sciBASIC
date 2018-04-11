@@ -76,7 +76,7 @@ Namespace MarkDown
         ''' <remarks>在这个函数之中只是解析区块的文本数据，段落型的格式则是在另外的一个模块之中解析的</remarks>
         <Extension>
         Public Function SyntaxParser(md As String) As Markup
-            Dim lines As String() = md.lTokens
+            Dim lines As String() = md.LineTokens
             Dim result As New List(Of PlantText)
 
             For i As Integer = 0 To lines.Length - 1

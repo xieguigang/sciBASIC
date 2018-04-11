@@ -97,7 +97,7 @@ Namespace Language.Python
         ''' <returns></returns>
         Public Function FindAll(pattern$, input$, Optional options As RegexOptions = RegexOptions.None) As Array(Of Match)
             Dim tokens As String() = pattern.Trim _
-                .lTokens _
+                .LineTokens _
                 .Select(AddressOf __trimComment) _
                 .Where(Function(s) Not String.IsNullOrEmpty(s)) _
                 .ToArray

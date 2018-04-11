@@ -56,17 +56,15 @@ Namespace ComponentModel.Algorithm.base
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="data"></param>
-        ''' <param name="slideWindowSize">The windows size of the created slide window.(窗口的大小)</param>
+        ''' <param name="winSize">The windows size of the created slide window.(窗口的大小)</param>
         ''' <param name="offset">在序列之上移动的步长</param>
         ''' <returns></returns>
         ''' <param name="extTails">引用类型不建议打开这个参数</param>
         ''' <remarks></remarks>
-        <Extension> Public Function CreateSlideWindows(Of T)(
-                                    data As IEnumerable(Of T),
-                                    slideWindowSize As Integer,
-                           Optional offset As Integer = 1,
+        <Extension> Public Function CreateSlideWindows(Of T)(data As IEnumerable(Of T), winSize%,
+                           Optional offset% = 1,
                            Optional extTails As Boolean = False) As SlideWindow(Of T)()
-            Return data.SlideWindows(slideWindowSize, offset, extTails).ToArray
+            Return data.SlideWindows(winSize, offset, extTails).ToArray
         End Function
 
         ''' <summary>
@@ -74,24 +72,19 @@ Namespace ComponentModel.Algorithm.base
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="data"></param>
-        ''' <param name="slideWindowSize">The windows size of the created slide window.(窗口的大小)</param>
+        ''' <param name="winSize">The windows size of the created slide window.(窗口的大小)</param>
         ''' <param name="offset">在序列之上移动的步长</param>
         ''' <returns></returns>
         ''' <param name="extTails">引用类型不建议打开这个参数</param>
         ''' <remarks></remarks>
-        <Extension> Public Iterator Function SlideWindows(Of T)(
-                                    data As IEnumerable(Of T),
-                                    slideWindowSize As Integer,
-                           Optional offset As Integer = 1,
-                           Optional extTails As Boolean = False) As IEnumerable(Of SlideWindow(Of T))
-
+        <Extension> Public Iterator Function SlideWindows(Of T)(data As IEnumerable(Of T), winSize%, Optional offset% = 1, Optional extTails As Boolean = False) As IEnumerable(Of SlideWindow(Of T))
             Dim tmp As New List(Of T)(data)
-            Dim n As Integer = tmp.Count
+            Dim n% = tmp.Count
 
             If n = 0 Then
                 ' 没有任何数据，则返回一个空集合
                 Return
-            ElseIf slideWindowSize >= n Then
+            ElseIf winSize >= n Then
                 Yield New SlideWindow(Of T)() With {
                     .Left = 0,
                     .Items = tmp.ToArray
@@ -105,29 +98,29 @@ Namespace ComponentModel.Algorithm.base
                 offset = 1
             End If
 
-            Dim p As Integer = 0
+            Dim p As int = 0
 
-            n = n - slideWindowSize - 1
+            n = n - winSize - 1
 
             For i As Integer = 0 To n Step offset
-                Dim buf As T() = tmp.Take(slideWindowSize).ToArray
+                Dim buf As T() = tmp.Take(winSize).ToArray
 
                 Yield New SlideWindow(Of T)() With {
                     .Items = buf,
                     .Left = i,
-                    .Index = p
+                    .Index = ++p
                 }
-                tmp.RemoveRange(0, offset)
 
-                p += 1
+                tmp.RemoveRange(0, offset)
             Next
 
             If Not tmp.IsNullOrEmpty Then
-
-                Dim left As Integer = n + 1
+                Dim left = n + 1
 
                 If extTails Then
-                    For Each x In __extendTails(tmp, slideWindowSize, left, p)
+                    ' 在这里需要使用CInt拷贝一下指针p的值，否则会以引用的方式
+                    ' 传递进入下一层函数之中造成当前的函数调用栈被修改
+                    For Each x In __extendTails(tmp, winSize, left, CInt(p))
                         Yield x
                     Next
                 Else
@@ -140,22 +133,16 @@ Namespace ComponentModel.Algorithm.base
             End If
         End Function
 
-        Private Iterator Function __extendTails(Of T)(
-                                  lstTemp As List(Of T),
-                                  slideWindowSize As Integer,
-                                  left As Integer,
-                                  p As Integer) As IEnumerable(Of SlideWindow(Of T))
+        Private Iterator Function __extendTails(Of T)(tempList As List(Of T), winSize%, left%, p As int) As IEnumerable(Of SlideWindow(Of T))
+            Dim array As T() = tempList.ToArray
 
-            Dim array As T() = lstTemp.ToArray
-
-            For i As Integer = 0 To slideWindowSize - 1
+            For i As Integer = 0 To winSize - 1
                 Yield New SlideWindow(Of T) With {
                     .Left = left,
-                    .Index = p,
+                    .Index = ++p,
                     .Items = array
                 }
 
-                p += 1
                 left += 1
             Next
         End Function

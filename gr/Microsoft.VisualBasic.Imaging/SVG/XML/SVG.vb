@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::b5ddc6add523bbaa6733ddd74d3e2094, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SVG.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SVGXml
-    ' 
-    '         Properties: circles, defs, enable_background, height, id
-    '                     images, Layers, lines, overflow, path
-    '                     polygon, polyline, rect, space, style
-    '                     texts, title, transform, version, viewBox
-    '                     width, WriterComment
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: AddLayer, GetSVGXml, (+2 Overloads) SaveAsXml, Size, TryLoad
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SVGXml
+' 
+'         Properties: circles, defs, enable_background, height, id
+'                     images, Layers, lines, overflow, path
+'                     polygon, polyline, rect, space, style
+'                     texts, title, transform, version, viewBox
+'                     width, WriterComment
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: AddLayer, GetSVGXml, (+2 Overloads) SaveAsXml, Size, TryLoad
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,7 @@ Imports System.Text
 Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.Text
 
@@ -111,11 +112,20 @@ Namespace SVG.XML
         ''' <returns></returns>
         Public Property defs As CSSStyles
         ''' <summary>
+        ''' All SVG documents should have a description
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property desc As String
+
+        ''' <summary>
         ''' SVG对象也会在这里面定义CSS
         ''' </summary>
         ''' <returns></returns>
-        <XmlElement("style")> Public Shadows Property style As XmlMeta.CSS
-        <XmlElement("image")> Public Property images As Image() Implements ICanvas.images
+        <XmlElement("style")>
+        Public Shadows Property style As XmlMeta.CSS
+
+        <XmlElement("image")>
+        Public Property images As Image() Implements ICanvas.images
 
         ''' <summary>
         ''' Xml comment for <see cref="Layers"/>
@@ -125,7 +135,7 @@ Namespace SVG.XML
         Public Property WriterComment As XmlComment
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return CreateComment
+                Return XmlComment.CreateComment
             End Get
             Set
             End Set

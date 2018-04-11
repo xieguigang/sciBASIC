@@ -140,6 +140,4 @@ Namespace Net.Protocols
             Throw New NotSupportedException
         End Operator
     End Class
-
-    Public Delegate Function LoadObject(Of T)(source As String) As T
 End Namespace

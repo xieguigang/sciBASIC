@@ -99,7 +99,7 @@ Public Module TextDoc
     ''' </summary>
     ''' <param name="handle$">
     ''' + 当这个参数为文件路径的时候会返回<see cref="Linq.IteratesALL(Of T)(IEnumerable(Of IEnumerable(Of T)))"/>函数的结果
-    ''' + 当这个参数只是为文本字符串的时候，则会返回<see cref="lTokens"/>函数的结果
+    ''' + 当这个参数只是为文本字符串的时候，则会返回<see cref="LineTokens"/>函数的结果
     ''' </param>
     ''' <returns></returns>
     <Extension>
@@ -107,7 +107,7 @@ Public Module TextDoc
         If handle.FileExists Then
             Return handle.IterateAllLines
         Else
-            Return handle.lTokens
+            Return handle.LineTokens
         End If
     End Function
 

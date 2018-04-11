@@ -56,7 +56,7 @@ Namespace ComponentModel
     Public Class Counter : Inherits int
 
         ''' <summary>
-        ''' Create a new integer counter.(新建一个计数器)
+        ''' Create a new integer counter start from ZERO.(新建一个计数器)
         ''' </summary>
         Sub New()
             MyBase.New(0)
@@ -65,6 +65,10 @@ Namespace ComponentModel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(hits As Integer)
             Call MyBase.New(x:=hits)
+        End Sub
+
+        Public Sub Add(n As Integer)
+            Value += n
         End Sub
 
         ''' <summary>

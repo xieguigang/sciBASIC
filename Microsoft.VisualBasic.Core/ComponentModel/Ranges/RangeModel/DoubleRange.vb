@@ -68,14 +68,14 @@ Namespace ComponentModel.Ranges.Model
         ''' Minimum value
         ''' </summary>
         ''' 
-        <XmlAttribute>
+        <XmlAttribute("min")>
         Public Property Min As Double Implements IRanges(Of Double).Min
 
         ''' <summary>
         ''' Maximum value
         ''' </summary>
         '''   
-        <XmlAttribute>
+        <XmlAttribute("max")>
         Public Property Max As Double Implements IRanges(Of Double).Max
 
         ''' <summary>
@@ -95,7 +95,7 @@ Namespace ComponentModel.Ranges.Model
         ''' 
         ''' <param name="min">Minimum value of the range</param>
         ''' <param name="max">Maximum value of the range</param>
-        Public Sub New(min As Double, max As Double)
+        Public Sub New(min#, max#)
             Me.Min = min
             Me.Max = max
         End Sub
@@ -128,6 +128,9 @@ Namespace ComponentModel.Ranges.Model
             Call Me.New(range.Min, range.Max)
         End Sub
 
+        ''' <summary>
+        ''' For xml serialization.
+        ''' </summary>
         Sub New()
         End Sub
 

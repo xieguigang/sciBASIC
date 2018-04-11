@@ -66,7 +66,7 @@ Namespace CommandLine.ManView
             ' 因为在编写帮助信息的时候可能会有多行字符串，则在vb源代码里面会出现前导的空格，
             ' 所以在这里需要将每一行的前导空格删除掉， 否则会破坏掉输出的文本对齐格式。
             Dim infoLines = api.Info _
-                .lTokens _
+                .LineTokens _
                 .Select(Function(s) s.Trim(" "c, ASCII.TAB)) _
                 .JoinBy(vbCrLf) _
                 .SplitParagraph(90) _
@@ -257,7 +257,7 @@ Namespace CommandLine.ManView
                     ' 这里的blank调整的是命令开关名称与描述之间的字符间距
                     blank = New String(" "c, helpOffset - l + 2)
                     infoLines$ = param.Description _
-                        .lTokens _
+                        .LineTokens _
                         .Select(Function(str) str.Trim(" "c, ASCII.TAB)) _
                         .JoinBy(vbCrLf) _
                         .SplitParagraph(120) _

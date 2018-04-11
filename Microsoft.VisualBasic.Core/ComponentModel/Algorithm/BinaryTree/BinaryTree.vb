@@ -47,6 +47,15 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
     Public Module Extensions
 
+        ''' <summary>
+        ''' 查找失败会返回空值
+        ''' </summary>
+        ''' <typeparam name="K"></typeparam>
+        ''' <typeparam name="V"></typeparam>
+        ''' <param name="tree"></param>
+        ''' <param name="key"></param>
+        ''' <param name="compares"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Find(Of K, V)(tree As BinaryTree(Of K, V), key As K, compares As Comparison(Of K)) As BinaryTree(Of K, V)
             Do While Not tree Is Nothing

@@ -111,7 +111,7 @@ Namespace Scripting.MetaData
         ''' %X Rfam Is a collection of multiple sequence alignments And covariance models representing non-coding RNA families. Rfam Is available on the web in the UK at http://www.sanger.ac.uk/Software/Rfam/ And in the US at http://rfam.wustl.edu/. These websites allow the user to search a query sequence against a library of covariance models, And view multiple sequence alignments And family annotation. The database can also be downloaded in flatfile form And searched locally using the INFERNAL package (http://infernal.wustl.edu/). The first release of Rfam (1.0) contains 25 families, which annotate over 50 000 non-coding RNA genes in the taxonomic divisions of the EMBL nucleotide database. 
         ''' </remarks>
         Sub New(EndNoteImports As String)
-            Dim lines As String() = EndNoteImports.lTokens
+            Dim lines As String() = EndNoteImports.LineTokens
             Dim dict As Dictionary(Of String, String()) = (From line As String In lines
                                                            Where Not String.IsNullOrWhiteSpace(line)
                                                            Let flag As String = line.Split.First
