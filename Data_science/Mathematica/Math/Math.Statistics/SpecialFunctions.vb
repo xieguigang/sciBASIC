@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::8055387fb0b448248b48ca35d6938d01, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module SpecialFunctions
-    ' 
-    '     Function: BetaFunction, Binomial, Choose, Correlation, Covariance
-    '               EvaluatePolynomial, (+2 Overloads) Factorial, gamma, gammaln, incbcf
-    '               incbd, IncompleteGamma, IncompleteGammaComplement, InvBinomal, MutualProbability
-    '               pseries, RegularizedIncompleteBetaFunction, StirlingsFormula
-    ' 
-    ' /********************************************************************************/
+' Module SpecialFunctions
+' 
+'     Function: BetaFunction, Binomial, Choose, Correlation, Covariance
+'               EvaluatePolynomial, (+2 Overloads) Factorial, gamma, gammaln, incbcf
+'               incbd, IncompleteGamma, IncompleteGammaComplement, InvBinomal, MutualProbability
+'               pseries, RegularizedIncompleteBetaFunction, StirlingsFormula
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports sys = System.Math
 
 ''' <summary>
@@ -91,16 +92,6 @@ Public Module SpecialFunctions
     ''' could be improved with unsigned integers or the gamma function
     ''' </summary>
     ''' <param name="N"></param>
-    ''' <returns></returns>
-    Public Function Factorial(N As Integer) As Integer
-        If N = 1 Then Return 1
-        Return Factorial(N - 1)
-    End Function
-
-    ''' <summary>
-    ''' could be improved with unsigned integers or the gamma function
-    ''' </summary>
-    ''' <param name="N"></param>
     ''' <param name="k"></param>
     ''' <returns></returns>
     Public Function Factorial(N As Integer, k As Integer) As Integer
@@ -113,8 +104,9 @@ Public Module SpecialFunctions
         Return ret
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Choose(n As Integer, k As Integer) As Integer
-        Return Factorial(n, k) \ Factorial(n - k)
+        Return Factorial(n, k) \ VBMath.Factorial(n - k)
     End Function
 
     Public Function Binomial(probability As Double, n As Integer, k As Integer) As Double
