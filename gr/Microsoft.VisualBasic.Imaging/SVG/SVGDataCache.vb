@@ -78,60 +78,67 @@ Namespace SVG
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(text As XML.text)
+        Public Function Add(text As XML.text) As Integer
             layers += New g With {
                 .texts = {text},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(rect As rect)
+        Public Function Add(rect As rect) As Integer
             layers += New g With {
                 .rect = {rect},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(line As line)
+        Public Function Add(line As line) As Integer
             layers += New g With {
                 .lines = {line},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(circle As circle)
+        Public Function Add(circle As circle) As Integer
             layers += New g With {
                 .circles = {circle},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(path As path)
+        Public Function Add(path As path) As Integer
             layers += New g With {
                 .path = {path},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(polygon As polygon)
+        Public Function Add(polygon As polygon) As Integer
             layers += New g With {
                 .polygon = {polygon},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(image As XML.Image)
+        Public Function Add(image As XML.Image) As Integer
             layers += New g With {
                 .images = {image},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         Public Sub Add(data As SVGDataCache)
             For Each layer In data.layers
