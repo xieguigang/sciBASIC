@@ -1,12 +1,43 @@
-﻿
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
+
 ''' <summary>
 ''' ### Fisher's exact test
 ''' 
 ''' > https://en.wikipedia.org/wiki/Fisher's_exact_test
+''' 
+''' Fisher 's exact test is a statistical significance test used in the 
+''' analysis of contingency tables.[1][2][3] Although in practice it is 
+''' employed when sample sizes are small, it is valid for all sample sizes. 
+''' It is named after its inventor, Ronald Fisher, and is one of a class 
+''' of exact tests, so called because the significance of the deviation 
+''' from a null hypothesis (e.g., P-value) can be calculated exactly, 
+''' rather than relying on an approximation that becomes exact in the limit 
+''' as the sample size grows to infinity, as with many statistical tests.
+''' 
+''' Fisher Is said To have devised the test following a comment from Muriel 
+''' Bristol, who claimed to be able to detect whether the tea Or the milk was 
+''' added first to her cup. He tested her claim in the "lady tasting tea" 
+''' experiment.
 ''' </summary>
 Public Module FisherTest
 
+    ''' <summary>
+    ''' 
+    ''' |                |**Men**|**Women**|*Row Total*|
+    ''' |----------------|-------|---------|-----------|
+    ''' |**Studying**    |   a   |    b    |   a + b   | 
+    ''' |**Non-Studying**|   c   |    d    |   c + d   |
+    ''' |*Column Total*  | a + c |  b + d  | a+b+c+d=n |
+    ''' 
+    ''' ```
+    ''' p = ((a+b)!(c+d)!(a+c)!(b+d)!)/(a!b!c!d!n!)
+    ''' ```
+    ''' </summary>
+    ''' <param name="a#"></param>
+    ''' <param name="b#"></param>
+    ''' <param name="c#"></param>
+    ''' <param name="d#"></param>
+    ''' <returns></returns>
     Public Function FisherPvalue(a#, b#, c#, d#) As Double
         Dim sX = FactorialSequence(a + b).AsList +
                  FactorialSequence(c + d) +
