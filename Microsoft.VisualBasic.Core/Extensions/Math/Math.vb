@@ -1460,6 +1460,25 @@ Namespace Math
 #End Region
 
         ''' <summary>
+        ''' 阶乘
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <returns></returns>
+        Public Function Factorial(a As Integer) As Double
+            If a <= 0 Then
+                Return 1
+            Else
+                Dim n As Long = a
+
+                For i As Long = n - 1 To 1 Step -1
+                    n *= i
+                Next
+
+                Return n
+            End If
+        End Function
+
+        ''' <summary>
         ''' Returns the covariance of two data vectors. </summary>
         ''' <param name="a">	double[] of data </param>
         ''' <param name="b">	double[] of data

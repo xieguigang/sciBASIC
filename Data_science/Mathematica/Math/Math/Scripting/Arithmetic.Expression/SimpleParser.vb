@@ -44,7 +44,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Math.Scripting.Types
-Imports Microsoft.VisualBasic.Math.Scripting.Helpers.Arithmetic
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
 Namespace Scripting
@@ -87,7 +86,8 @@ Namespace Scripting
                     n = Val(s.Text)
 
                     If o = "!"c Then
-                        n = Factorial(n, 0)
+                        n = Factorial(n)
+
                         If tokens.EndRead Then
                             Call sep.Add(n, "+"c)
                             Exit Do
