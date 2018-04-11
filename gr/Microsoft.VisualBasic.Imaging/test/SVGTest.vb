@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::678fd07d82d953b7b85105c0942a12e9, gr\Microsoft.VisualBasic.Imaging\test\SVGTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module SVGTest
-    ' 
-    '     Sub: IOtest, Main, Test
-    ' 
-    ' /********************************************************************************/
+' Module SVGTest
+' 
+'     Sub: IOtest, Main, Test
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
@@ -49,9 +50,36 @@ Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Module SVGTest
 
     Sub Main()
+        Call pathParserTest()
         '   Call IOtest()
         Call Test()
     End Sub
+
+    Sub pathParserTest()
+        Dim path As New Path2D
+
+        Call path.MoveTo(100, 100)
+        Call path.LineTo(200, 200)
+        Call path.LineTo(500, 100)
+        Call path.LineTo(300, 699)
+        Call path.CloseAllFigures()
+        Call path.MoveTo(800, 800)
+        Call path.LineTo(200, 300)
+        Call path.HorizontalTo(1000)
+        Call path.VerticalTo(602)
+        Call path.CloseAllFigures()
+
+        Dim svgPath = path.SVGPath
+
+        Dim gdi As GraphicsPath = svgPath.ParseSVGPathData
+
+
+        Call gdi.SVGPath.d.__DEBUG_ECHO
+        Call svgPath.d.__DEBUG_ECHO
+
+        Pause()
+    End Sub
+
 
     Sub IOtest()
 

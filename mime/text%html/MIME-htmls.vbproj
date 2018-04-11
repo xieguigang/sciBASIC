@@ -505,6 +505,8 @@
     <Compile Include="HTML\CSS\Render\CssRectangle.vb" />
     <Compile Include="HTML\CSS\Render\CssTable.vb" />
     <Compile Include="HTML\CSS\Render\CssValue.vb" />
+    <Compile Include="HTML\jQuery\jQuery.vb" />
+    <Compile Include="HTML\jQuery\Extensions.vb" />
     <Compile Include="HTML\Render\HtmlConstants.vb" />
     <Compile Include="HTML\Render\HtmlRenderer.vb" />
     <Compile Include="HTML\Render\HtmlTag.vb" />
@@ -517,6 +519,7 @@
     <Compile Include="HTML\HTML.vb" />
     <Compile Include="HTML\HtmlParser\HtmlDocument.vb" />
     <Compile Include="HTML\HtmlParser\HtmlElement.vb" />
+    <Compile Include="HTML\Xml\Node.vb" />
     <Compile Include="MarkDown\Articles.vb" />
     <Compile Include="MarkDown\IExtensionInterface.vb" />
     <Compile Include="MarkDown\LinkToTitle.vb" />

@@ -1,53 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::cb7d8bc3130cbd43657e225c90fa2d43, www\Microsoft.VisualBasic.NETProtocol\Mailto\MailConfigure.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure MailConfigure
-    ' 
-    '         Properties: Account, GMail, HostAddress, LiveMail, Password
-    '                     Port, qiye163, QQMail
-    ' 
-    '         Function: CreateFromUri, GenerateUri, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure MailConfigure
+' 
+'         Properties: Account, GMail, HostAddress, LiveMail, Password
+'                     Port, qiye163, QQMail
+' 
+'         Function: CreateFromUri, GenerateUri, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Mailto
 
+    ''' <summary>
+    ''' The smtp mail server config
+    ''' </summary>
     Public Structure MailConfigure
 
         <XmlAttribute> Public Property Account As String
@@ -97,13 +101,15 @@ Namespace Mailto
             End Get
         End Property
 
-        Public Shared ReadOnly Property qiye163(account$, password$) As MailConfigure
+        Public Shared ReadOnly Property qiye163(account$, password$, Optional SSL As Boolean = True) As MailConfigure
             Get
+                Dim smtpSSLPort994 As DefaultValue(Of Integer) = 994
+
                 Return New MailConfigure With {
                     .Account = account,
                     .Password = password,
                     .HostAddress = "smtp.qiye.163.com",
-                    .Port = 465
+                    .Port = 25 Or smtpSSLPort994.When(SSL)
                 }
             End Get
         End Property

@@ -107,7 +107,7 @@ Namespace Interpolation
         ''' <param name="ctrl3">third initial point</param>
         ''' <param name="iteration">number of iteration of the algorithm</param>
         ''' <returns>the list of points in the curve</returns>
-        Public Function ReCalculate(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF, iteration As Integer) As List(Of PointF)
+        Public Function ReCalculate(ctrl1 As PointF, ctrl2 As PointF, ctrl3 As PointF, iteration%) As List(Of PointF)
             Iterations = iteration
             _initPoints.Clear()
             _initPoints.AddRange({ctrl1, ctrl2, ctrl3})

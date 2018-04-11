@@ -484,43 +484,39 @@ Public Module VectorExtensions
     ''' <param name="delimiter">和字符串的Split函数一样，这里作为delimiter的元素都不会出现在结果之中</param>
     ''' <param name="deliPosition">是否还应该在分区的结果之中包含有分隔符对象？默认不包含</param>
     ''' <returns></returns>
-    <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), delimiter As Assert(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As T()()
-        Dim array As T() = source.ToArray
-        Dim blocks As New List(Of T())  ' The returned split blocks
+    <Extension> Public Iterator Function Split(Of T)(source As IEnumerable(Of T), delimiter As Assert(Of T), Optional deliPosition As DelimiterLocation = DelimiterLocation.NotIncludes) As IEnumerable(Of T())
         Dim tmp As New List(Of T)
 
-        For i As Integer = 0 To array.Length - 1
-            Dim x As T = array(i)
-
+        For Each x As T In source.SafeQuery
             ' 当前的x元素是分隔符对象
             If delimiter(x) = True Then
+
                 ' 是否将这个分隔符也包含在分组内
                 ' 如果是，则包含在下一个分组内
                 If deliPosition <> DelimiterLocation.NotIncludes Then
                     If deliPosition = DelimiterLocation.NextFirst Then
-                        Call blocks.Add(tmp.ToArray)
+                        Yield tmp.ToArray
+
                         Call tmp.Clear()
                         Call tmp.Add(x)
                     Else
                         ' 包含在上一个分块的末尾
                         Call tmp.Add(x)
-                        Call blocks.Add(tmp.ToArray)
-                        Call tmp.Clear()
+                        Yield tmp.ToArray
+                        tmp *= 0
                     End If
                 Else
-                    Call blocks.Add(tmp.ToArray)
-                    Call tmp.Clear()
+                    Yield tmp.ToArray
+                    tmp *= 0
                 End If
             Else
                 Call tmp.Add(x)
             End If
         Next
 
-        If Not tmp.Count = 0 Then
-            blocks += tmp.ToArray
+        If Not tmp = 0 Then
+            Yield tmp.ToArray
         End If
-
-        Return blocks.ToArray
     End Function
 
     ''' <summary>

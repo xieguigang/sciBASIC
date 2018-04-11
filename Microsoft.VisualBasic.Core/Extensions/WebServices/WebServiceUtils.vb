@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::a350c1159d362c5eb5224145c6c7cf3e, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module WebServiceUtils
-    ' 
-    '     Properties: DefaultUA, Protocols, Proxy
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
-    '               CopyStream, (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress
-    '               GetProxy, (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL
-    '               (+2 Overloads) POST, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
-    '               UrlEncode, UrlPathEncode
-    ' 
-    '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
-    ' 
-    ' /********************************************************************************/
+' Module WebServiceUtils
+' 
+'     Properties: DefaultUA, Protocols, Proxy
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
+'               CopyStream, (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress
+'               GetProxy, (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL
+'               (+2 Overloads) POST, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
+'               UrlEncode, UrlPathEncode
+' 
+'     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,7 @@ Imports System.Text.RegularExpressions
 Imports System.Web
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -304,46 +305,23 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     '''
     <ExportAPI("PostRequest.Parsing")>
-    <Extension> Public Function PostUrlDataParser(data As String, Optional TransLower As Boolean = True) As NameValueCollection
+    <Extension> Public Function PostUrlDataParser(data$, Optional toLower As Boolean = True) As NameValueCollection
         If String.IsNullOrEmpty(data) Then
             Return New NameValueCollection
         End If
 
-        Dim Tokens As String() = data.UrlDecode.Split("&"c)
-        Dim hash = GenerateDictionary(Tokens, TransLower)
-        Return hash
-    End Function
-
-    ''' <summary>
-    ''' Download stream data from the http response.
-    ''' </summary>
-    ''' <param name="stream">
-    ''' Create from <see cref="WebServiceUtils.GetRequestRaw(String, Boolean, String)"/>
-    ''' </param>
-    ''' <returns></returns>
-    <ExportAPI("Stream.Copy", Info:="Download stream data from the http response.")>
-    <Extension> Public Function CopyStream(stream As Stream) As Byte()
-        If stream Is Nothing Then
-            Return New Byte() {}
-        End If
-
-        Dim stmMemory As MemoryStream = New MemoryStream()
-        Dim buffer As Byte() = New Byte(64 * 1024) {}
-        Dim i As New Value(Of Integer)
-        Do While i = stream.Read(buffer, 0, buffer.Length) > 0
-            Call stmMemory.Write(buffer, 0, +i)
-        Loop
-        buffer = stmMemory.ToArray()
-        Call stmMemory.Close()
-        Return buffer
+        Dim params$() = data.UrlDecode.Split("&"c)
+        Dim table = GenerateDictionary(params, toLower)
+        Return table
     End Function
 
     <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(strUrl As String, ParamArray args As String()()) As String
+    <Extension> Public Function GetRequest(strUrl$, ParamArray args As String()()) As String
         If args.IsNullOrEmpty Then
             Return GetRequest(strUrl)
         Else
             Dim params As String = BuildArgs(args)
+
             If String.IsNullOrEmpty(params) Then
                 Return GetRequest(strUrl)
             Else
@@ -358,13 +336,13 @@ Public Module WebServiceUtils
     ''' <param name="url"></param>
     ''' <returns></returns>
     <ExportAPI("GET", Info:="GET http request")>
-    <Extension> Public Function GetRequest(url As String, Optional https As Boolean = False, Optional userAgent As String = "Microsoft.VisualBasic.[HTTP/GET]") As String
+    <Extension> Public Function GetRequest(url$, Optional https As Boolean = False, Optional userAgent As String = "Microsoft.VisualBasic.[HTTP/GET]") As String
         Dim strData As String = ""
         Dim strValue As New List(Of String)
-        Dim Reader As New StreamReader(GetRequestRaw(url, https, userAgent), Encoding.UTF8)
+        Dim reader As New StreamReader(GetRequestRaw(url, https, userAgent), Encoding.UTF8)
 
         Do While True
-            strData = Reader.ReadLine()
+            strData = reader.ReadLine()
             If strData Is Nothing Then
                 Exit Do
             Else
@@ -377,8 +355,7 @@ Public Module WebServiceUtils
     End Function
 
     Sub New()
-        ServicePointManager.ServerCertificateValidationCallback =
-            New RemoteCertificateValidationCallback(AddressOf CheckValidationResult)
+        ServicePointManager.ServerCertificateValidationCallback = New RemoteCertificateValidationCallback(AddressOf CheckValidationResult)
     End Sub
 
     Private Function CheckValidationResult(sender As Object,
@@ -461,11 +438,29 @@ Public Module WebServiceUtils
     ''' <param name="Referer$"></param>
     ''' <returns></returns>
     <ExportAPI("POST", Info:="POST http request")>
-    <Extension> Public Function POST(url$, params As NameValueCollection, Optional Referer$ = "", Optional proxy$ = Nothing) As String
+    <Extension> Public Function POST(url$,
+                                     Optional params As NameValueCollection = Nothing,
+                                     Optional headers As Dictionary(Of String, String) = Nothing,
+                                     Optional Referer$ = "",
+                                     Optional proxy$ = Nothing) As String
+
+        Static emptyBody As New DefaultValue(Of NameValueCollection) With {
+            .Value = New NameValueCollection,
+            .assert = Function(c)
+                          Return c Is Nothing OrElse DirectCast(c, NameValueCollection).Count = 0
+                      End Function
+        }
+
         Using request As New WebClient
 
             Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
             Call request.Headers.Add(NameOf(Referer), Referer)
+
+            For Each header In headers.SafeQuery
+                If Not request.Headers.ContainsKey(header.Key) Then
+                    request.Headers.Add(header.Key, header.Value)
+                End If
+            Next
 
             If String.IsNullOrEmpty(proxy) Then
                 proxy = WebServiceUtils.Proxy
@@ -476,12 +471,65 @@ Public Module WebServiceUtils
 
             Call $"[POST] {url}....".__DEBUG_ECHO
 
-            Dim response As Byte() = request.UploadValues(url, "POST", params)
+            Dim response As Byte() = request.UploadValues(url, "POST", params Or emptyBody)
             Dim strData As String = Encoding.UTF8.GetString(response)
 
             Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
 
             Return strData
+        End Using
+    End Function
+
+    ''' <summary>
+    ''' 通过post上传文件
+    ''' </summary>
+    ''' <param name="url$"></param>
+    ''' <param name="file$"></param>
+    ''' <param name="name$"></param>
+    ''' <param name="referer$"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function POSTFile(url$, file$, Optional name$ = "", Optional referer$ = Nothing) As String
+        Dim request As HttpWebRequest = DirectCast(WebRequest.Create(url), HttpWebRequest)
+
+        request.Method = "POST"
+        request.Accept = "application/json"
+        request.ContentLength = file.FileLength
+        request.ContentType = "application/x-www-form-urlencoded; charset=utf-8"
+        request.UserAgent = UserAgent.GoogleChrome
+        request.Referer = referer
+        request.Headers("fileName") = name Or file.FileName.AsDefault
+
+        If Not String.IsNullOrEmpty(Proxy) Then
+            Call request.SetProxy(Proxy)
+        End If
+
+        Call $"[POST] {url}....".__DEBUG_ECHO
+
+        ' post data Is sent as a stream
+        With request.GetRequestStream()
+            Dim buffer = file.ReadBinary
+
+            Call New StreamWriter(.ByRef).Write(vbCrLf)
+            Call .Flush()
+            Call .Write(buffer, Scan0, buffer.Length)
+            Call .Flush()
+        End With
+
+        ' returned values are returned as a stream, then read into a string
+        Dim response = DirectCast(request.GetResponse(), HttpWebResponse)
+
+        Using responseStream As New StreamReader(response.GetResponseStream())
+            Dim html As New StringBuilder
+            Dim s As New Value(Of String)
+
+            Do While Not (s = responseStream.ReadLine) Is Nothing
+                Call html.AppendLine(+s)
+            Loop
+
+            Call $"Get {html.Length} bytes from server response...".__DEBUG_ECHO
+
+            Return html.ToString
         End Using
     End Function
 
@@ -643,7 +691,9 @@ RE0:
     <Extension> Public Function GetDownload(url As String, savePath As String) As Boolean
         Try
             Dim responseStream As Stream = GetRequestRaw(url)
-            Dim buffer As Byte() = responseStream.CopyStream
+            Dim buffer As Byte() = responseStream _
+                .CopyStream _
+                .ToArray
             Call $"[{buffer.Length} Bytes]".__DEBUG_ECHO
             Return buffer.FlushStream(savePath)
         Catch ex As Exception

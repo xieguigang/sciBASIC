@@ -280,6 +280,10 @@ Namespace Linq
 
             Return i.CompareTo(DirectCast(obj, SeqValue(Of T)).i)
         End Function
+
+        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+            i = address
+        End Sub
     End Structure
 
     ''' <summary>

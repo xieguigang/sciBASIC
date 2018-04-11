@@ -54,18 +54,16 @@ Namespace StorageProvider.Reflection
 
         Public Function GetEntry(type As Type) As ComponentModels.MetaAttribute
             Dim attrEntry As Type = GetType(Reflection.MetaAttribute)
-            Dim MetaAttr As ComponentModels.MetaAttribute =
-                LinqAPI.DefaultFirst(Of ComponentModels.MetaAttribute) <=
+            Dim metaAttr = LinqAPI.DefaultFirst(Of ComponentModels.MetaAttribute) _
  _
-                    From prop As PropertyInfo
-                    In type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
-                    Let attrs As Object() =
-                        prop.GetCustomAttributes(attrEntry, inherit:=True)
-                    Where Not attrs.IsNullOrEmpty
-                    Let mattr As MetaAttribute = DirectCast(attrs.First, Reflection.MetaAttribute)
-                    Select New ComponentModels.MetaAttribute(mattr, prop)
+                () <= From prop As PropertyInfo
+                      In type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
+                      Let attrs As Object() = prop.GetCustomAttributes(attrEntry, inherit:=True)
+                      Where Not attrs.IsNullOrEmpty
+                      Let mattr As MetaAttribute = DirectCast(attrs.First, MetaAttribute)
+                      Select New ComponentModels.MetaAttribute(mattr, prop)
 
-            Return MetaAttr
+            Return metaAttr
         End Function
 
         ''' <summary>

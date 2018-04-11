@@ -52,7 +52,7 @@ Namespace Driver
 
     Public Class SVGData : Inherits GraphicsData
 
-        Friend ReadOnly Property SVG As SVGDataCache
+        Friend ReadOnly Property SVG As SVGDataLayers
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return engine.__svgData

@@ -61,13 +61,15 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Public Module RegressionPlot
 
     <Extension>
-    Public Function Plot(fit As FitResult,
+    Public Function Plot(Of Result As IFitted)(fit As Result,
                          Optional size$ = "2100,1600",
                          Optional bg$ = "white",
-                         Optional margin$ = g.DefaultLargerPadding,
+                         Optional margin$ = g.DefaultPadding,
                          Optional xLabel$ = "X",
                          Optional yLabel$ = "Y",
                          Optional pointSize! = 5,
+                         Optional title$ = Nothing,
+                         Optional titleFontCss$ = CSSFont.PlotTitle,
                          Optional pointBrushStyle$ = "red",
                          Optional errorFitPointStyle$ = "blue",
                          Optional predictPointStyle$ = "green",
@@ -122,7 +124,7 @@ Public Module RegressionPlot
                     )
                 Next
 
-                If fit.IsPolyFit Then
+                If Not fit.Polynomial.IsLinear Then
                     For Each t In XTicks.SlideWindows(2)
                         Dim A As New PointF With {.X = t(0), .Y = fit(.X)}
                         Dim B As New PointF With {.X = t(1), .Y = fit(.X)}
@@ -253,7 +255,7 @@ Public Module RegressionPlot
 
                 If showLegend Then
                     Dim eq$ = "f(x) = " & fit.Polynomial.ToString("G2")
-                    Dim R2$ = "R2 = " & fit.R_square.ToString("F4")
+                    Dim R2$ = "R2 = " & fit.CorrelationCoefficient.ToString("F4")
                     Dim pt As New PointF With {
                         .X = rect.Left + g.MeasureString("00", legendLabelFont).Width,
                         .Y = rect.Top + 20
@@ -267,6 +269,15 @@ Public Module RegressionPlot
                     }
 
                     Call g.DrawString(R2, legendLabelFont, Brushes.Black, pt)
+                End If
+
+                If Not title.StringEmpty Then
+                    Dim titleFont As Font = CSSFont.TryParse(titleFontCss)
+                    Dim titleSize = g.MeasureString(title, titleFont)
+                    Dim top = (rect.Top - titleSize.Height) / 2
+                    Dim left = rect.Left + (rect.Width - titleSize.Width) / 2
+
+                    Call g.DrawString(title, titleFont, Brushes.Black, New PointF(left, top))
                 End If
             End Sub
 

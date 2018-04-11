@@ -44,6 +44,9 @@ Imports System.Xml.Serialization
 
 Namespace HTML.CSS
 
+    ''' <summary>
+    ''' 进行样式渲染的图层对象
+    ''' </summary>
     Public Interface CSSLayer
 
         ''' <summary>

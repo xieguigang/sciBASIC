@@ -173,7 +173,12 @@ Namespace Serialization.JSON
         ''' <returns></returns>
         <ExportAPI("LoadObject")>
         <Extension>
-        Public Function LoadObject(json As String, type As Type, Optional simpleDict As Boolean = True) As Object
+        Public Function LoadObject(json$,
+                                   type As Type,
+                                   Optional simpleDict As Boolean = True,
+                                   Optional throwEx As Boolean = True,
+                                   Optional ByRef exception As Exception = Nothing) As Object
+
             If String.Equals(json, "null", StringComparison.OrdinalIgnoreCase) Then
                 Return Nothing
             End If
@@ -184,7 +189,8 @@ Namespace Serialization.JSON
                     .SerializeReadOnlyTypes = True
                 }
                 Dim ser As New DataContractJsonSerializer(type, settings)
-                Dim obj As Object = ser.ReadObject(MS)
+                Dim de As Func(Of Object) = Function() ser.ReadObject(MS)
+                Dim obj = __innerTry(de, $"Incorrect JSON string format => >>>{json}<<<", throwEx, exception)
                 Return obj
             End Using
         End Function
@@ -207,8 +213,12 @@ Namespace Serialization.JSON
         ''' 从文本文件或者文本内容之中进行JSON反序列化
         ''' </summary>
         ''' <param name="json">This string value can be json text or json file path.</param>
-        <Extension> Public Function LoadObject(Of T)(json$, Optional simpleDict As Boolean = True) As T
-            Dim value As Object = LoadObject(json.SolveStream(Encodings.UTF8), GetType(T), simpleDict)
+        <Extension> Public Function LoadObject(Of T)(json$,
+                                                     Optional simpleDict As Boolean = True,
+                                                     Optional throwEx As Boolean = True,
+                                                     Optional ByRef exception As Exception = Nothing) As T
+            Dim text$ = json.SolveStream(Encodings.UTF8)
+            Dim value As Object = text.LoadObject(GetType(T), simpleDict, throwEx, exception)
             Dim obj As T = DirectCast(value, T)
             Return obj
         End Function
