@@ -1,4 +1,4 @@
-﻿Namespace HTML
+﻿Namespace HTML.jQuery
 
     Public Class jQuery
 

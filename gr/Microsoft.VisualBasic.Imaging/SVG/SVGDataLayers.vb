@@ -46,6 +46,8 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
@@ -54,20 +56,48 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace SVG
 
-    Friend Class SVGDataCache
+    ''' <summary>
+    ''' 使用<see cref="g"/>图层的方式构建出一个完整的SVG模型
+    ''' </summary>
+    Public Class SVGDataLayers
 
-        Protected Friend layers As New List(Of g)
+        Protected Friend layers As New HashList(Of g)
         Protected Friend bg$
         Protected Friend Size As Size
+
+        ''' <summary>
+        ''' <see cref="Filter.id"/>为字典的键名
+        ''' </summary>
+        Protected Friend filters As Dictionary(Of String, Filter)
 
         ''' <summary>
         ''' Generates the <see cref="CSSLayer"/> index order value.
         ''' </summary>
         Friend zlayer As int = 0
 
-        Private Function updateLayerIndex(Of T As CSSLayer)(node As T) As T
-            node.zIndex = ++zlayer
-            Return node
+        Default Public ReadOnly Property GetLayer(zindex As Integer) As g
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return layers(zindex)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="zindex%">图层的编号</param>
+        ''' <param name="filter$">filter的id编号</param>
+        Public Sub ApplyFilter(zindex%, filter$)
+            layers(zindex).filter = $"url(#filter)"
+        End Sub
+
+        ''' <summary>
+        ''' 通过元素选择器来设置滤镜，函数返回所有<paramref name="selector"/>查找成功的图层的编号
+        ''' </summary>
+        ''' <param name="selector$"></param>
+        ''' <param name="filter$"></param>
+        Public Iterator Function ApplyFilter(selector$, filter$) As IEnumerable(Of Integer)
+
         End Function
 
         Private Iterator Function updateLayerIndex(Of T As CSSLayer)(nodes As IEnumerable(Of T)) As IEnumerable(Of T)
@@ -77,68 +107,78 @@ Namespace SVG
             Next
         End Function
 
+#Region "Add svg shape element"
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(text As XML.text)
+        Public Function Add(text As XML.text) As Integer
             layers += New g With {
                 .texts = {text},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(rect As rect)
+        Public Function Add(rect As rect) As Integer
             layers += New g With {
                 .rect = {rect},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(line As line)
+        Public Function Add(line As line) As Integer
             layers += New g With {
                 .lines = {line},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(circle As circle)
+        Public Function Add(circle As circle) As Integer
             layers += New g With {
                 .circles = {circle},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(path As path)
+        Public Function Add(path As path) As Integer
             layers += New g With {
                 .path = {path},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(polygon As polygon)
+        Public Function Add(polygon As polygon) As Integer
             layers += New g With {
                 .polygon = {polygon},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(image As XML.Image)
+        Public Function Add(image As XML.Image) As Integer
             layers += New g With {
                 .images = {image},
                 .zIndex = ++zlayer
             }
-        End Sub
+            Return zlayer
+        End Function
 
-        Public Sub Add(data As SVGDataCache)
+        Public Sub Add(data As SVGDataLayers)
             For Each layer In data.layers
                 layer.zIndex = ++zlayer
                 layers += layer
             Next
         End Sub
+#End Region
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function innerDefaultWidth() As DefaultValue(Of Integer)
@@ -183,15 +223,17 @@ Namespace SVG
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator +(data As SVGDataCache, offset As Point) As SVGDataCache
+        Public Shared Operator +(data As SVGDataLayers, offset As Point) As SVGDataLayers
             Return data + offset.PointF
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator +(data As SVGDataCache, offset As PointF) As SVGDataCache
-            Return New SVGDataCache With {
+        Public Shared Operator +(data As SVGDataLayers, offset As PointF) As SVGDataLayers
+            Return New SVGDataLayers With {
                 .bg = data.bg,
-                .layers = data.layers.Select(Function(l) l + offset).AsList
+                .layers = data.layers _
+                              .Select(Function(l) l + offset) _
+                              .AsHashList
             }
         End Operator
     End Class

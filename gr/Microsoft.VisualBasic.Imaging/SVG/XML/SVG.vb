@@ -123,7 +123,6 @@ Namespace SVG.XML
         ''' <returns></returns>
         <XmlElement("style")>
         Public Shadows Property style As XmlMeta.CSS
-        Public Property filter As Filter
 
         <XmlElement("image")>
         Public Property images As Image() Implements ICanvas.images
@@ -136,7 +135,7 @@ Namespace SVG.XML
         Public Property WriterComment As XmlComment
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return CreateComment
+                Return XmlComment.CreateComment
             End Get
             Set
             End Set
