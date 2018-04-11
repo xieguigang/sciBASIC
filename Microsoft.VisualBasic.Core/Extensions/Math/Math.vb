@@ -1465,16 +1465,26 @@ Namespace Math
         ''' <param name="a"></param>
         ''' <returns></returns>
         Public Function Factorial(a As Integer) As Double
-            If a <= 0 Then
+            If a <= 1 Then
                 Return 1
             Else
-                Dim n As Long = a
+                Dim n As Double = a
 
-                For i As Long = n - 1 To 1 Step -1
+                For i As Integer = a - 1 To 1 Step -1
                     n *= i
                 Next
 
                 Return n
+            End If
+        End Function
+
+        Public Iterator Function FactorialSequence(a As Integer) As IEnumerable(Of Integer)
+            If a <= 1 Then
+                Yield 1
+            Else
+                For i As Integer = a To 1 Step -1
+                    Yield i
+                Next
             End If
         End Function
 
@@ -1758,6 +1768,18 @@ Namespace Math
             Next
 
             Return product
+        End Function
+
+        ''' <summary>
+        ''' 计算出所有的数的乘积
+        ''' </summary>
+        ''' <param name="[in]"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ProductALL([in] As IEnumerable(Of Integer)) As Double
+            Return [in].Select(Function(x) CDbl(x)).ProductALL
         End Function
 
         ''' <summary>
