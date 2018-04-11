@@ -80,6 +80,7 @@ Namespace ComponentModel
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Count As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return list.Where(Function(x) Not isNothing(x)).Count
             End Get
@@ -164,10 +165,12 @@ Namespace ComponentModel
             Return Not Me(index) Is Nothing
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Clear()
             Call list.Clear()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Remove(x As T)
             list(x.Address) = Nothing
         End Sub
@@ -220,6 +223,18 @@ Namespace ComponentModel
 
         Public Shared Operator +(list As HashList(Of T), element As T) As HashList(Of T)
             Call list.Add(element)
+            Return list
+        End Operator
+
+        Public Shared Operator *(list As HashList(Of T), n%) As HashList(Of T)
+            If n = 0 Then
+                Call list.Clear()
+            ElseIf n < 0 Then
+                Throw New NotImplementedException
+            Else
+                Throw New NotImplementedException
+            End If
+
             Return list
         End Operator
     End Class
