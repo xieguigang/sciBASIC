@@ -304,6 +304,12 @@ Public Module ListExtensions
         Return table
     End Function
 
+    ''' <summary>
+    ''' <see cref="HashList(Of T)"/>
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsHashList(Of T As IAddressOf)(source As IEnumerable(Of T)) As HashList(Of T)

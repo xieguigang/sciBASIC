@@ -80,15 +80,15 @@ Namespace SVG
         ''' 主要是需要进行字体的大小计算所需要使用的一个内部gdi+对象
         ''' </summary>
         ReadOnly __graphics As Graphics = Graphics.FromImage(New Bitmap(100, 100))
-        Friend ReadOnly __svgData As SVGDataCache
+        Friend ReadOnly __svgData As SVGDataLayers
 
         Public Sub New(size As Size)
-            __svgData = New SVGDataCache With {
+            __svgData = New SVGDataLayers With {
                 .Size = size
             }
         End Sub
 
-        Friend Sub New(svg As SVGDataCache)
+        Friend Sub New(svg As SVGDataLayers)
             __svgData = svg
         End Sub
 

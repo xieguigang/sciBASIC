@@ -54,7 +54,7 @@ Imports Microsoft.VisualBasic.Linq
 Namespace ComponentModel
 
     ''' <summary>
-    ''' 
+    ''' 指针位置应该是只读的，因为在这个列表之中，元素的读取时直接和位置以及指针值相关的
     ''' </summary>
     ''' <typeparam name="T">
     ''' Class object that can be dispose by the system automatically and the class object that should 
@@ -183,6 +183,10 @@ Namespace ComponentModel
             Next
         End Sub
 
+        ''' <summary>
+        ''' 将要被添加的元素对象<paramref name="x"/>在这个列表之中的位置应该是提前设置好了的
+        ''' </summary>
+        ''' <param name="x"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(x As T)
             If list.Count <= x.Address Then
@@ -213,5 +217,10 @@ Namespace ComponentModel
         Public Iterator Function GetEnumerator1() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
+
+        Public Shared Operator +(list As HashList(Of T), element As T) As HashList(Of T)
+            Call list.Add(element)
+            Return list
+        End Operator
     End Class
 End Namespace

@@ -512,7 +512,7 @@
     <Compile Include="SVG\CSS\Gradients.vb" />
     <Compile Include="SVG\CSS\ObjectStyle.vb" />
     <Compile Include="SVG\ModelBuilder.vb" />
-    <Compile Include="SVG\SVGDataCache.vb" />
+    <Compile Include="SVG\SVGDataLayers.vb" />
     <Compile Include="SVG\SVGWriter.vb" />
     <Compile Include="SVG\Renderer.vb" />
     <Compile Include="SVG\GraphicsSVG.vb" />

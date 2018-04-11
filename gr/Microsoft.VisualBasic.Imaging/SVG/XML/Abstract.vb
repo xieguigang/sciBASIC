@@ -16,6 +16,7 @@ Namespace SVG.XML
 
         <XmlAttribute> Public Property fill As String
         <XmlAttribute> Public Property stroke As String
+        <XmlAttribute> Public Property filter As String
 
         ''' <summary>
         ''' Css layer index, this will controls the rendering order of the graphics layer.
