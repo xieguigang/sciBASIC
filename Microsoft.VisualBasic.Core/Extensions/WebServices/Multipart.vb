@@ -2,6 +2,8 @@
 
 Namespace Net.Http
 
+' https://stackoverflow.com/questions/566462/upload-files-with-httpwebrequest-multipart-form-data
+
     Public Class MultipartForm
 
         Dim buffer As New MemoryStream
