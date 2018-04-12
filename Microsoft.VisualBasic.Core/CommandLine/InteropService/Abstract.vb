@@ -82,6 +82,10 @@ Namespace CommandLine.InteropService
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' 通过应用程序的可执行文件路径来构建命令行的交互对象
+        ''' </summary>
+        ''' <param name="app"></param>
         Sub New(app As String)
             _executableAssembly = app
         End Sub
