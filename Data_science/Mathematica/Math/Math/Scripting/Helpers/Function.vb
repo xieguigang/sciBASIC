@@ -62,8 +62,7 @@ Namespace Scripting.Helpers
         ''' (具有特定名称的数学计算委托方法的集合) 
         ''' </summary>
         ''' <remarks></remarks>
-        Protected Shared ReadOnly SystemPrefixFunctions As Dictionary(Of String, Func(Of Double(), Double)) =
-            New Dictionary(Of String, Func(Of Double(), Double)) From {
+        Protected Shared ReadOnly SystemPrefixFunctions As New Dictionary(Of String, Func(Of Double(), Double)) From {
  _
                 {"abs", Function(args) sys.Abs(args(Scan0))},
                 {"acos", Function(args) sys.Acos(args(Scan0))},

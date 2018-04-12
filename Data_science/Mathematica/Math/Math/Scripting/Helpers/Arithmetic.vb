@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::9a0318106f797199a71081a16dd6916b, Data_science\Mathematica\Math\Math\Scripting\Helpers\Arithmetic.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Arithmetic
-    ' 
-    '         Properties: Arithmetic
-    ' 
-    '         Function: Evaluate, Factorial
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Arithmetic
+' 
+'         Properties: Arithmetic
+' 
+'         Function: Evaluate, Factorial
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports sys = System.Math
 
 Namespace Scripting.Helpers
@@ -105,25 +106,17 @@ Namespace Scripting.Helpers
         ''' 故而本函数保持着两个双精度浮点型数的函数参数的输入形式，也就是说本函数的第二个参数'b'是没有任何用途的)
         ''' </summary>
         ''' <param name="a">The number that will be calculated(将要被计算的数字)</param>
-        ''' <param name="b">Useless parameter 'b'(无用的参数'b')</param>
+        ''' <param name="b">Useless parameter 'b'(为了保持函数接口兼容性而设置的一个无用的参数'b')</param>
         ''' <returns>
         ''' Return the factorial value of the number 'a', if 'a' is a negative number then this function
         ''' return value 1.
         ''' (函数返回参数'a'的阶乘计算值，假若'a'是一个负数的话，则会返回1)
         ''' </returns>
         ''' <remarks></remarks>
-        Public Function Factorial(a As Double, b As Double) As Double
-            If a <= 0 Then
-                Return 1
-            Else
-                Dim n As Long = a
-
-                For i As Long = n - 1 To 1 Step -1
-                    n *= i
-                Next
-
-                Return n
-            End If
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function Factorial(a As Double, b As Double) As Double
+            Return VBMath.Factorial(a)
         End Function
     End Module
 End Namespace
