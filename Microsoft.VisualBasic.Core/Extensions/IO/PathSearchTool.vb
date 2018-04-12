@@ -87,6 +87,12 @@ Public Module ProgramPathSearchTool
         Return path.TrimSuffix & "." & newSuffix
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function SplitPath(path As String) As String()
+        Return path.Replace("/"c, "\"c).Split("\"c)
+    End Function
+
     ''' <summary>
     ''' Execute file delete
     ''' </summary>

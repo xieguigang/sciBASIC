@@ -68,6 +68,12 @@ Namespace CommandLine
     Public Module CLITools
 
         <Extension>
+        Public Function ShellExec(cli As IIORedirectAbstract) As String
+            Call cli.Run()
+            Return cli.StandardOutput
+        End Function
+
+        <Extension>
         Public Function Print(args As CommandLine, Optional sep As Char = " "c, Optional leftMargin% = 0) As String
             Dim sb As New StringBuilder("ArgumentsOf: `" & args.Name & "`")
             Dim device As New StringWriter(sb)
