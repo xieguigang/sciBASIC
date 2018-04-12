@@ -484,21 +484,20 @@ Public Module WebServiceUtils
     ''' 通过post上传文件
     ''' </summary>
     ''' <param name="url$"></param>
-    ''' <param name="file$"></param>
     ''' <param name="name$"></param>
     ''' <param name="referer$"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function POSTFile(url$, file$, Optional name$ = "", Optional referer$ = Nothing) As String
+    Public Function POSTFile(url$, buffer As Byte(), Optional name$ = "", Optional referer$ = Nothing) As String
         Dim request As HttpWebRequest = DirectCast(WebRequest.Create(url), HttpWebRequest)
 
         request.Method = "POST"
         request.Accept = "application/json"
-        request.ContentLength = file.FileLength
-        request.ContentType = "application/x-www-form-urlencoded; charset=utf-8"
+        request.ContentLength = buffer.Length
+        request.ContentType = "multipart/form-data; boundary=------WebKitFormBoundaryBpijhG6dKsQpCMdN--;"
         request.UserAgent = UserAgent.GoogleChrome
         request.Referer = referer
-        request.Headers("fileName") = name Or file.FileName.AsDefault
+        '  request.Headers("fileName") = name Or File.FileName.AsDefault
 
         If Not String.IsNullOrEmpty(Proxy) Then
             Call request.SetProxy(Proxy)
@@ -508,10 +507,10 @@ Public Module WebServiceUtils
 
         ' post data Is sent as a stream
         With request.GetRequestStream()
-            Dim buffer = file.ReadBinary
+            ' Dim buffer = File.ReadBinary
 
-            Call New StreamWriter(.ByRef).Write(vbCrLf)
-            Call .Flush()
+            ' Call New StreamWriter(.ByRef).Write(vbCrLf)
+            ' Call .Flush()
             Call .Write(buffer, Scan0, buffer.Length)
             Call .Flush()
         End With

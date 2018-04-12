@@ -813,6 +813,7 @@
     <Compile Include="Extensions\Trinity\Word.vb" />
     <Compile Include="Extensions\Trinity\WordClass.vb" />
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
+    <Compile Include="Extensions\WebServices\Multipart.vb" />
     <Compile Include="Extensions\WebServices\Http\DataURI.vb" />
     <Compile Include="Language\Value\ByRefValueExtensions.vb" />
     <Compile Include="NamespaceDoc.vb" />
