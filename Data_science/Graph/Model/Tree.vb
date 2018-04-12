@@ -49,7 +49,7 @@
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
-''' Tree node with data.(����ֱ�ӱ�ʹ�õ�����������)
+''' Tree node with data..(可以直接被使用的树对象类型)
 ''' </summary>
 ''' <typeparam name="T"></typeparam>
 Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T))
@@ -73,12 +73,14 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
                 .ToArray
 
             If childs.IsNullOrEmpty Then
-                Return 1  ' �Լ���һ���ڵ㣬������������1��
+                ' 自己算一个节点，所以数量总是1的
+                Return 1
             Else
                 Dim n% = childs.Length
 
                 For Each node In childs
-                    n += node.Count ' ����ڵ�û��childs����᷵��1����Ϊ���������һ���ڵ�
+                    ' 如果节点没有childs，则会返回1，因为他自身就是一个节点
+                    n += node.Count
                 Next
 
                 Return n
@@ -113,7 +115,7 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
     End Function
 
     ''' <summary>
-    ''' ��������е�Ҷ�ڵ�������������Լ���child��Ҷ�ڵ�
+    ''' 计算出所有的叶节点的总数，包括自己的child的叶节点
     ''' </summary>
     ''' <returns></returns>
     Public Function CountLeafs() As Integer
@@ -121,7 +123,7 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
     End Function
 
     ''' <summary>
-    ''' ��ĳһ���ڵ�����е�Ҷ�ڵ���м���
+    ''' 对某一个节点的所有的叶节点进行计数
     ''' </summary>
     ''' <param name="node"></param>
     ''' <param name="count"></param>
