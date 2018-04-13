@@ -24,19 +24,17 @@ Namespace Net.Http
         ''' 字符串键值对是使用<see cref="Encoding.UTF8"/>编码的
         ''' </remarks>
         Public Sub Add(name$, value$)
-            Using writer As New StreamWriter(buffer, Encoding.UTF8) With {
+            With New StreamWriter(buffer, Encoding.UTF8) With {
                 .NewLine = vbCrLf
             }
-                With writer
-                    Call .WriteLine()
-                    Call .WriteLine(Boundary)
-                    Call .WriteLine($"Content-Disposition: form-data; name=""{name}"";")
-                    Call .WriteLine()
-                    Call .WriteLine(value)
-                End With
+                Call .WriteLine()
+                Call .WriteLine(Boundary)
+                Call .WriteLine($"Content-Disposition: form-data; name=""{name}"";")
+                Call .WriteLine()
+                Call .WriteLine(value)
 
-                Call writer.Flush()
-            End Using
+                Call .Flush()
+            End With
         End Sub
 
         ''' <summary>
