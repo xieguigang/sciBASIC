@@ -42,13 +42,12 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' 扇形/金字塔的数据模型
 ''' </summary>
-Public Class Fractions
+Public Class FractionData
 
     ''' <summary>
     ''' 值范围为``[0, 1]``, 对象在整体中所占的百分比

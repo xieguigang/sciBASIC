@@ -62,14 +62,14 @@ Public Module Pyramid
     ''' <param name="legendBorder"></param>
     ''' <param name="wp#"></param>
     ''' <returns></returns>
-    Public Function Plot(data As IEnumerable(Of Fractions),
+    Public Function Plot(data As IEnumerable(Of FractionData),
                          Optional size As Size = Nothing,
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
                          Optional legendBorder As Stroke = Nothing,
                          Optional wp# = 0.8) As GraphicsData
 
-        Dim array As Fractions() =
+        Dim array As FractionData() =
             data _
             .OrderByDescending(Function(x) x.Percentage) _
             .ToArray
@@ -88,7 +88,7 @@ Public Module Pyramid
                 Dim right! = (left + width)
                 Dim bottom! = region.PlotRegion.Bottom
 
-                For Each l As Fractions In array
+                For Each l As FractionData In array
                     Dim dh! = height * l.Percentage
                     Dim dw! = dh / tan_ab
                     ' b/| dh |\c
@@ -121,7 +121,7 @@ Public Module Pyramid
                 Dim top = margin.Top
                 Dim legends As New List(Of Legend)
 
-                For Each x As Fractions In data
+                For Each x As FractionData In data
                     legends += New Legend With {
                        .color = x.Color.RGBExpression,
                        .style = LegendStyles.Rectangle,

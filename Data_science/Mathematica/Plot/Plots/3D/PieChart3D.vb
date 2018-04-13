@@ -64,7 +64,7 @@ Namespace Plot3D
         End Function
 
         <Extension>
-        Public Function Plot3D(data As IEnumerable(Of Fractions), camera As Camera, Optional valueLabel As ValueLabels = ValueLabels.Percentage) As GraphicsData
+        Public Function Plot3D(data As IEnumerable(Of FractionData), camera As Camera, Optional valueLabel As ValueLabels = ValueLabels.Percentage) As GraphicsData
             Dim start As New float
             Dim sweep As New float
             Dim alpha As Double, pt As PointF
@@ -74,7 +74,7 @@ Namespace Plot3D
             Dim pie As Pie
             Dim pieChart As New List(Of Surface)
 
-            For Each x As Fractions In data
+            For Each x As FractionData In data
                 pie = New Pie(centra, r, (start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - sweep.Value, sweep, 20, 1)
                 pieChart += pie.Model3D(x.Color)
                 alpha = (+start) - (+sweep / 2)

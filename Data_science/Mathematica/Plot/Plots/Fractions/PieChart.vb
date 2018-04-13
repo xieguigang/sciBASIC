@@ -87,7 +87,7 @@ Public Module PieChart
     ''' + 文本的位置应该是startAngle + 0.5 * sweepAngle的更加大的半径的一个圆的位置
     ''' </remarks>
     <Extension>
-    Public Function Plot(data As IEnumerable(Of Fractions),
+    Public Function Plot(data As IEnumerable(Of FractionData),
                          Optional size$ = "1600,1200",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
@@ -149,7 +149,7 @@ Public Module PieChart
                     ' 填充浅灰色底层
                     Call g.FillPie(Brushes.LightGray, layoutRect, 0, 360)
 
-                    For Each x As Fractions In data
+                    For Each x As FractionData In data
                         br = New SolidBrush(x.Color)
                         Call g.FillPie(br, layoutRect,
                                        CSng(start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - CSng(sweep.Value),
@@ -197,7 +197,7 @@ Public Module PieChart
 #If DEBUG Then
                          Dim list As New List(Of Rectangle)
 #End If
-                    For Each x As Fractions In data
+                    For Each x As FractionData In data
                         Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
                         Dim vTopleft As New Point(gSize.Width / 2 - r2, gSize.Height / 2 - r2)
                         Dim rect As New Rectangle(vTopleft, New Size(r2 * 2, r2 * 2))
@@ -224,7 +224,7 @@ Public Module PieChart
                     ' Excel之中的饼图的示例样式位置为默认右居中的
                     Dim top = (gSize.Height - height) / 2 - margin.Top
 
-                    For Each x As Fractions In data
+                    For Each x As FractionData In data
                         legends += New Legend With {
                             .color = x.Color.RGBExpression,
                             .style = LegendStyles.Square,
@@ -247,7 +247,7 @@ Public Module PieChart
     ''' <param name="colors"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors$() = Nothing) As Fractions()
+    Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors$() = Nothing) As FractionData()
         Dim array As NamedValue(Of Integer)() = data.ToArray
         Dim all = array.Select(Function(x) x.Value).Sum
         Dim s = From x
@@ -267,7 +267,7 @@ Public Module PieChart
     ''' <param name="schema"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Fractions(data As IEnumerable(Of NamedValue(Of Integer)), Optional schema$ = NameOf(Office2016)) As Fractions()
+    Public Function Fractions(data As IEnumerable(Of NamedValue(Of Integer)), Optional schema$ = NameOf(Office2016)) As FractionData()
         Dim array As NamedValue(Of Integer)() = data.ToArray
         Dim all As Integer = array _
             .Select(Function(x) x.Value) _
@@ -292,9 +292,9 @@ Public Module PieChart
     ''' <param name="colors">Default is using schema of <see cref="Office2016"/></param>
     ''' <returns></returns>
     <Extension>
-    Public Function FromPercentages(data As IEnumerable(Of NamedValue(Of Double)), Optional colors As Color() = Nothing) As Fractions()
+    Public Function FromPercentages(data As IEnumerable(Of NamedValue(Of Double)), Optional colors As Color() = Nothing) As FractionData()
         Dim array = data.ToArray
-        Dim out As Fractions() = New Fractions(array.Length - 1) {}
+        Dim out As FractionData() = New FractionData(array.Length - 1) {}
         Dim c As Color() = If(
             colors.IsNullOrEmpty,
             Designer.FromSchema(NameOf(Office2016), array.Length),
@@ -306,7 +306,7 @@ Public Module PieChart
                 Dim tag = .Name
                 Dim v# = .Value
 
-                out(i) = New Fractions With {
+                out(i) = New FractionData With {
                     .Color = c(i),
                     .Name = tag,
                     .Percentage = v#,

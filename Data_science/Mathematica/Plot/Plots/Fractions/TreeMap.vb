@@ -57,12 +57,12 @@ Public Module TreeMap
     ''' <param name="size"></param>
     ''' <param name="bg$"></param>
     ''' <returns></returns>
-    Public Function Plot(data As IEnumerable(Of Fractions),
+    Public Function Plot(data As IEnumerable(Of FractionData),
                          Optional size As Size = Nothing,
                          Optional padding$ = "padding: 350 100 350 100;",
                          Optional bg$ = "white") As GraphicsData
 
-        Dim array As List(Of Fractions) =
+        Dim array As List(Of FractionData) =
             data _
             .OrderByDescending(Function(x) x.Percentage) _
             .AsList
@@ -78,10 +78,10 @@ Public Module TreeMap
                 Dim width! = rect.Width, height! = rect.Height
                 Dim x! = margin.Left, y! = margin.Top
                 Dim drawW!, drawH!
-                Dim labels As New List(Of Fractions)
+                Dim labels As New List(Of FractionData)
 
                 Do While array.Count > 0
-                    Dim p As Fractions = array.First
+                    Dim p As FractionData = array.First
 
                     If f Then  ' 计算宽度百分比
                         drawW = p.GetPercentage(array) * width
@@ -116,7 +116,7 @@ Public Module TreeMap
     End Function
 
     <Extension>
-    Public Function GetPercentage(f As Fractions, all As IEnumerable(Of Fractions)) As Double
+    Public Function GetPercentage(f As FractionData, all As IEnumerable(Of FractionData)) As Double
         Return f.Percentage / all.Sum(Function(x) x.Percentage)
     End Function
 End Module
