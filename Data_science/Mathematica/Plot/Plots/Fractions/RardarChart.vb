@@ -69,10 +69,12 @@ Namespace Fractions
 
                                 If f Is Nothing Then
                                     value = axisRange.Min
+                                Else
+                                    value = f.Value
                                 End If
 
                                 r = axisRange.ScaleMapping(value, radius)
-                                shape += (r, alpha).ToCartesianPoint
+                                shape += (r, alpha).ToCartesianPoint.OffSet2D(center)
                                 alpha += dDegree
                             Next
 
@@ -81,6 +83,7 @@ Namespace Fractions
                             Call g.DrawPolygon(pen, shape)
                         End With
 
+                        shape *= 0
                         alpha = 0
                     Next
                 End Sub
