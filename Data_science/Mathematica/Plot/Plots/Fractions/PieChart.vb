@@ -130,7 +130,7 @@ Namespace Fractions
 
                     Dim start As New float
                     Dim sweep As New float
-                    Dim alpha As Double, pt As PointF
+                    Dim alpha As Single, pt As PointF
                     Dim labelSize As SizeF
                     Dim label$
                     Dim br As SolidBrush
@@ -158,7 +158,7 @@ Namespace Fractions
                                        CSng(sweep))
 
                         alpha = (+start) - (+sweep / 2)
-                        pt = (r / 1.5).ToPoint(alpha)  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                        pt = (r / 1.5, alpha).ToPoint()  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
                         pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
                         label = x.GetValueLabel(valueLabel)
                         labelSize = g.MeasureString(label, valueLabelFont)
@@ -184,7 +184,7 @@ Namespace Fractions
                             g.DrawString(x.Name, font, Brushes.Black, layout)
 
                             ' 还需要绘制标签文本和pie的连接线
-                            With (r).ToPoint(alpha)
+                            With (r, alpha).ToPoint()
                                 pt = New PointF(centra.X + .X, centra.Y + .Y)
                             End With
 

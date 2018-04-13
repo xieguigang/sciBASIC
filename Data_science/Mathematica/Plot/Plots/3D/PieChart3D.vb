@@ -68,7 +68,8 @@ Namespace Plot3D
         Public Function Plot3D(data As IEnumerable(Of FractionData), camera As Camera, Optional valueLabel As ValueLabels = ValueLabels.Percentage) As GraphicsData
             Dim start As New float
             Dim sweep As New float
-            Dim alpha As Double, pt As PointF
+            Dim alpha!
+            Dim pt As PointF
             Dim centra As Point3D = camera.screen.GetCenter
             Dim r! = 2.0!
             Dim label$
@@ -79,7 +80,7 @@ Namespace Plot3D
                 pie = New Pie(centra, r, (start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - sweep.Value, sweep, 20, 1)
                 pieChart += pie.Model3D(x.Color)
                 alpha = (+start) - (+sweep / 2)
-                pt = (r / 1.5).ToPoint(alpha)  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                pt = (r / 1.5, alpha).ToPoint()  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
                 pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
                 label = x.GetValueLabel(valueLabel)
             Next
