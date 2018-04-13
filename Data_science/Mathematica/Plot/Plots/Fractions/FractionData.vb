@@ -44,46 +44,49 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-''' <summary>
-''' 扇形/金字塔的数据模型
-''' </summary>
-Public Class FractionData
+Namespace Fractions
 
     ''' <summary>
-    ''' 值范围为``[0, 1]``, 对象在整体中所占的百分比
+    ''' 扇形/金字塔的数据模型
     ''' </summary>
-    ''' <returns></returns>
-    Public Property Percentage As Double
-    ''' <summary>
-    ''' 对象的名称标签
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Name As String
-    ''' <summary>
-    ''' 扇形、金字塔梯形的填充颜色
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Color As Color
-    ''' <summary>
-    ''' 与占整体的百分比相对应的实际数量
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property Value As Double
+    Public Class FractionData
 
-    Public Overrides Function ToString() As String
-        Return Me.GetJson
-    End Function
+        ''' <summary>
+        ''' 值范围为``[0, 1]``, 对象在整体中所占的百分比
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Percentage As Double
+        ''' <summary>
+        ''' 对象的名称标签
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Name As String
+        ''' <summary>
+        ''' 扇形、金字塔梯形的填充颜色
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Color As Color
+        ''' <summary>
+        ''' 与占整体的百分比相对应的实际数量
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Value As Double
 
-    Public Function GetValueLabel(type As ValueLabels) As String
-        Select Case type
-            Case ValueLabels.None
-                Return Nothing
-            Case ValueLabels.Value
-                Return Value.ToString("F" & 2)
-            Case ValueLabels.Percentage
-                Return (Percentage * 100).ToString("F2") & "%"
-            Case Else
-                Return Value
-        End Select
-    End Function
-End Class
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
+        Public Function GetValueLabel(type As ValueLabels) As String
+            Select Case type
+                Case ValueLabels.None
+                    Return Nothing
+                Case ValueLabels.Value
+                    Return Value.ToString("F" & 2)
+                Case ValueLabels.Percentage
+                    Return (Percentage * 100).ToString("F2") & "%"
+                Case Else
+                    Return Value
+            End Select
+        End Function
+    End Class
+End Namespace

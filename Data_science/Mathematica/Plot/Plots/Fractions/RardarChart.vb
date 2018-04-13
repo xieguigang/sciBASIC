@@ -1,6 +1,9 @@
-﻿Public Module RardarChart
+﻿Namespace Fractions
 
-    Public Function Plot()
+    Public Module RardarChart
 
-    End Function
-End Module
+        Public Function Plot()
+
+        End Function
+    End Module
+End Namespace
