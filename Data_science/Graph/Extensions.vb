@@ -48,6 +48,34 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Module Extensions
 
+    ''' <summary>
+    ''' Visit tree node by a given path token
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="tree"></param>
+    ''' <param name="path">Collection of <see cref="Tree(Of T).Label"/></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function VisitTree(Of T)(tree As Tree(Of T), path As IEnumerable(Of String)) As Tree(Of T)
+        Dim node As Tree(Of T) = tree
+
+        For Each name As String In path
+            ' 如果路径不存在是会报出键名没有找到的错误的
+            node = node.Childs(name)
+        Next
+
+        Return node
+    End Function
+
+    <Extension>
+    Public Function BacktrackingRoot(Of T)(tree As Tree(Of T)) As Tree(Of T)
+        Do While Not tree.IsRoot
+            tree = tree.Parent
+        Loop
+
+        Return tree
+    End Function
+
     <Extension>
     Public Function CreateGraph(Of T)(tree As Tree(Of T)) As Graph
         Return New Graph().Add(tree)
