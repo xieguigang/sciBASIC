@@ -50,12 +50,12 @@ Namespace Math
     Public Module Trigonometric
 
         ''' <summary>
-        ''' 将极坐标转换为直角坐标系
+        ''' Polar to cartesian coordinate system point.(将极坐标转换为笛卡尔坐标系直角坐标系)
         ''' </summary>
         ''' <param name="polar">(半径, 角度)</param>
         ''' <param name="fromDegree">alpha角度参数是否是度为单位，默认是真，即函数会在这里自动转换为弧度</param>
         ''' <returns></returns>
-        <Extension> Public Function ToPoint(polar As (r#, alpha!), Optional fromDegree As Boolean = True) As PointF
+        <Extension> Public Function ToCartesianPoint(polar As (r#, alpha!), Optional fromDegree As Boolean = True) As PointF
             Dim alpha = polar.alpha
 
             If fromDegree Then

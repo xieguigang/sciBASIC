@@ -158,7 +158,7 @@ Namespace Fractions
                                        CSng(sweep))
 
                         alpha = (+start) - (+sweep / 2)
-                        pt = (r / 1.5, alpha).ToPoint()  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                        pt = (r / 1.5, alpha).ToCartesianPoint()  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
                         pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
                         label = x.GetValueLabel(valueLabel)
                         labelSize = g.MeasureString(label, valueLabelFont)
@@ -184,7 +184,7 @@ Namespace Fractions
                             g.DrawString(x.Name, font, Brushes.Black, layout)
 
                             ' 还需要绘制标签文本和pie的连接线
-                            With (r, alpha).ToPoint()
+                            With (r, alpha).ToCartesianPoint()
                                 pt = New PointF(centra.X + .X, centra.Y + .Y)
                             End With
 

@@ -72,7 +72,7 @@ Namespace Fractions
                                 End If
 
                                 r = axisRange.ScaleMapping(value, radius)
-                                shape += (r, alpha).ToPoint
+                                shape += (r, alpha).ToCartesianPoint
                                 alpha += dDegree
                             Next
 
