@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16733df755f642b827c77f884b4bfdb6, Data_science\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4e7f4939a0d34d8ea930c27f40a71899, Data_science\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     ' Module Extensions
     ' 
-    '     Function: Add, CreateGraph, DefaultSteps, Grid, Reverse
+    '     Function: Add, BacktrackingRoot, CreateGraph, DefaultSteps, Grid
+    '               Reverse, VisitTree
     ' 
     ' /********************************************************************************/
 

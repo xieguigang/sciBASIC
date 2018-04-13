@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87b55668a76a0449fc6e9f1942e9c3c2, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\VectorShadows.vb"
+﻿#Region "Microsoft.VisualBasic::4c3ef470bc191751be922d0905d4d8a5, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\VectorShadows.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,12 @@
     '     Class VectorShadows
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: [As], binaryOperatorSelfLeft, CreateVector, GetDynamicMemberNames, GetJson
     '                   TryBinaryOperation, (+2 Overloads) TryGetMember, TryInvokeMember, TrySetMember, TryUnaryOperation
+    ' 
+    '         Sub: writeBuffer
+    ' 
     '         Operators: \, (+2 Overloads) Like
     ' 
     ' 

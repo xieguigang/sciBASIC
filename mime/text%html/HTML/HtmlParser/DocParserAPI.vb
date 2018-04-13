@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47d165b81cea09087abc0afd903e5098, mime\text%html\HTML\HtmlParser\DocParserAPI.vb"
+﻿#Region "Microsoft.VisualBasic::b153ff7749d7659e97d65ec7a8702d99, mime\text%html\HTML\HtmlParser\DocParserAPI.vb"
 
     ' Author:
     ' 

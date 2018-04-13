@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edc02f0ef2106c24d1ca39a8b7f5d50c, vs_solutions\dev\vs_PDB\Stream.vb"
+﻿#Region "Microsoft.VisualBasic::50d78f84fe9741478a1f09ce125898b1, vs_solutions\dev\vs_PDB\Stream.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
 
 #End Region
 
-
 ''' <summary>
 ''' Sub file for multiple stream pdb file.
 ''' 
@@ -50,4 +49,3 @@
 Public Class Stream
 
 End Class
-

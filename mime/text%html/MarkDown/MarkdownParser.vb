@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2feca8414382d82df439073a5db4c2eb, mime\text%html\MarkDown\MarkdownParser.vb"
+﻿#Region "Microsoft.VisualBasic::bea8b77d3adad70abcec7ff1b9ec03a0, mime\text%html\MarkDown\MarkdownParser.vb"
 
     ' Author:
     ' 

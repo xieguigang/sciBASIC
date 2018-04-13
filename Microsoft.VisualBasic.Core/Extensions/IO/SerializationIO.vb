@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3f88acaa3aee62820bf10f83811c764, Microsoft.VisualBasic.Core\Extensions\IO\SerializationIO.vb"
+﻿#Region "Microsoft.VisualBasic::002942b1bfed738780e4867660d9e277, Microsoft.VisualBasic.Core\Extensions\IO\SerializationIO.vb"
 
     ' Author:
     ' 
@@ -59,4 +59,3 @@ Module SerializationIO
         End Select
     End Function
 End Module
-

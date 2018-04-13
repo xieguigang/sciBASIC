@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91570dd6dea001a77b19ecd25b5d98df, Data\SearchEngine\Index\BinaryTreeIndex.vb"
+﻿#Region "Microsoft.VisualBasic::bffb2faa3638e71df376c0028bee4b3d, Data\SearchEngine\Index\BinaryTreeIndex.vb"
 
     ' Author:
     ' 
@@ -38,6 +38,8 @@
     ' 
     '     Function: ToString
     ' 
+    '     Sub: Assign
+    ' 
     ' /********************************************************************************/
 
 #End Region
@@ -74,4 +76,3 @@ Public Class BinaryTreeIndex(Of K, V) : Implements IAddress(Of Integer)
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cce83c0844ab722134c6732bc9c6f627, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Kernel\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::8246b597a3904d0388a575bdd6b8edce, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Kernel\Neuron.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     ' 
     '             Properties: Properties, Width, Y
     ' 
-    '             Function: CastTo, ToString
+    '             Function: ToString
     ' 
     ' 
     ' 

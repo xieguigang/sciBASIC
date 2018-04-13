@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f66b04a5dd972a43f0977d2549a4e5dc, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\ManualBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::3c699bc9019711f804c65a69292fd44d, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\ManualBuilder.vb"
 
     ' Author:
     ' 

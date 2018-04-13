@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e4ff85ede771efe6b352b34c22910b1, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::420d0916663cd0c830c73e4bbe4ce05b, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,12 @@
     '         Properties: i, value
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: (+2 Overloads) CompareTo, ToString
-    '         Operators: (+2 Overloads) +, <>, =, (+2 Overloads) Mod
+    ' 
+    '         Sub: Assign
+    ' 
+    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) Mod
     ' 
     '     Interface IIterator
     ' 

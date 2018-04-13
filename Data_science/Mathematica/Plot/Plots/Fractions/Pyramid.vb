@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::574e43e95675c74de5f7828ac14900bd, Data_science\Mathematica\Plot\Plots\Fractions\Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::edaf109102c304333ac7bb1211f54781, Data_science\Mathematica\Plot\Plots\Fractions\Pyramid.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module Pyramid
+    '     Module Pyramid
     ' 
-    '     Function: Plot
+    '         Function: Plot
+    ' 
     ' 
     ' /********************************************************************************/
 

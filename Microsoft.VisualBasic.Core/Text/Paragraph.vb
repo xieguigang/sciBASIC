@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1024636aadb2f79749b14b4f4f1491d1, Microsoft.VisualBasic.Core\Text\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::166490a59654f5745868a4fc5fb9deae, Microsoft.VisualBasic.Core\Text\Paragraph.vb"
 
     ' Author:
     ' 

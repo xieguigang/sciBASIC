@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95023b0b53a9e88f269b159ac92282bd, Microsoft.VisualBasic.Core\Language\Language\Java\Arrays.vb"
+﻿#Region "Microsoft.VisualBasic::82520ba44d3e3aca83a3bf08a8ba3429, Microsoft.VisualBasic.Core\Language\Language\Java\Arrays.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Arrays
     ' 
-    '         Function: copyOfRange, Max, Min, Shuffle, sublist
+    '         Function: copyOfRange, Max, Min, Shuffle, SubList
     ' 
     '         Sub: Fill
     ' 

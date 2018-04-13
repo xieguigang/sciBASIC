@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37c9cc216067139acef954a639eb5e68, www\Microsoft.VisualBasic.Webservices.Bing\Translation\WordTranslation.vb"
+﻿#Region "Microsoft.VisualBasic::ff59edeffaca059d1d279df0d2890c18, www\Microsoft.VisualBasic.Webservices.Bing\Translation\WordTranslation.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
 
 #End Region
 
-
 Imports Microsoft.VisualBasic.Data.Trinity.NLP
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -66,4 +65,3 @@ Public Class WordTranslation
         Return $"{Word} -> {Translations.GetJson}"
     End Function
 End Class
-

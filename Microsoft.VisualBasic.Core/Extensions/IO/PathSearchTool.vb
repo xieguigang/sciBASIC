@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f48713fda8f725dcd17dded55bea865, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::2b89f6012e5eacf910864a14771a21ae, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,8 @@
     '               ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList, Long2Short
     '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
     '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory, SearchDrive
-    '               SearchProgram, SearchScriptFile, SourceCopy, TheFile, ToDIR_URL
-    '               ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    '               SearchProgram, SearchScriptFile, SourceCopy, SplitPath, TheFile
+    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
     ' 
     '     Sub: MkDIR
     ' 

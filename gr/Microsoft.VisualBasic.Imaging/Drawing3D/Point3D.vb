@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25e801f6bd80f52ad92879456bda921f, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::ec83ea7061871d7421bdc864d5b7c877, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Depth, X, Y, Z
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: Project, RotateX, RotateY, RotateZ, ToString
     ' 

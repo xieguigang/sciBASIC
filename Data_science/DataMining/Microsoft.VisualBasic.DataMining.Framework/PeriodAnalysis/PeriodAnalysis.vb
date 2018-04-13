@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c3b502a1524f0eb72a8052b6228940d, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::f2fd43d2193f885ab527b98f035e4575, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\PeriodAnalysis\PeriodAnalysis.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module PeriodAnalysis
     ' 
-    '         Function: (+2 Overloads) Analysis, ConvertData, FilteringData, LoadDataFromCsv
+    '         Function: (+2 Overloads) Analysis, FilteringData
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb0e137e4467b9924ecd030098c7f115, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::561754ae5d93806b99ce48032480f8e6, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Function: __checkKeyDuplicated, __innerWrapper, Args, CreateObject, CreateParameterValues
     '                   Equals, GetLogicalArguments, GetTokens, IsPossibleLogicFlag, Join
-    '                   Print, SingleValueOrStdIn, TrimParamPrefix, (+3 Overloads) TryParse
+    '                   Print, ShellExec, SingleValueOrStdIn, TrimParamPrefix, (+3 Overloads) TryParse
     ' 
     ' 
     ' /********************************************************************************/

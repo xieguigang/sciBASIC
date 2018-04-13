@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2631b90e1db8fe2743b399cfd83a34a1, Data_science\Mathematica\Plot\Plots\Fractions\TreeMap.vb"
+﻿#Region "Microsoft.VisualBasic::4c97ff1f97f0c15c1155d1901d7ac2fb, Data_science\Mathematica\Plot\Plots\Fractions\TreeMap.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module TreeMap
+    '     Module TreeMap
     ' 
-    '     Function: GetPercentage, Plot
+    '         Function: GetPercentage, Plot
+    ' 
     ' 
     ' /********************************************************************************/
 

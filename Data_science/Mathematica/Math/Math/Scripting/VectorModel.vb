@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da79eed48069a21fac08af5e85ae045c, Data_science\Mathematica\Math\Math\Scripting\VectorModel.vb"
+﻿#Region "Microsoft.VisualBasic::f3252248410965a47334b05e70e60b7d, Data_science\Mathematica\Math\Math\Scripting\VectorModel.vb"
 
     ' Author:
     ' 

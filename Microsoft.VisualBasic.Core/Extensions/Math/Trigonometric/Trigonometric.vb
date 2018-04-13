@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::030238ed0884edb287a0b1172845b20c, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Trigonometric.vb"
+﻿#Region "Microsoft.VisualBasic::caafb1f7e4829b52d05c2c8ad42bc96d, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Trigonometric.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module Trigonometric
     ' 
     '         Function: Angle, (+2 Overloads) Distance, GetAngle, GetAngleVector, MovePoint
-    '                   NearestPoint, ToDegrees, ToPoint, ToRadians
+    '                   NearestPoint, ToCartesianPoint, ToDegrees, ToRadians
     ' 
     ' 
     ' /********************************************************************************/

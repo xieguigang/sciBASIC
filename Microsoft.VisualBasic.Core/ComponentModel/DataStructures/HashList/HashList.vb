@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6e35f4af9789681b00f54761d3f0602, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashList\HashList.vb"
+﻿#Region "Microsoft.VisualBasic::a4ff0e70d96771d2639cf71d3eb7ca13, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashList\HashList.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,8 @@
     '         Function: (+2 Overloads) Contains, GetAvailablePos, GetEnumerator, GetEnumerator1
     ' 
     '         Sub: (+2 Overloads) Add, Clear, (+2 Overloads) Remove
+    ' 
+    '         Operators: *, +
     ' 
     ' 
     ' /********************************************************************************/
