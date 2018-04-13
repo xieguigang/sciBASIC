@@ -91,6 +91,7 @@ Public Module ProgramPathSearchTool
     Public Function SplitPath(path As String) As String()
         Return path.Replace("/"c, "\"c) _
                    .StringReplace("\\{2,}", "\") _
+                   .Trim("\"c) _
                    .Split("\"c)
     End Function
 
