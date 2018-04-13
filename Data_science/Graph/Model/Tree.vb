@@ -54,7 +54,12 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 ''' <typeparam name="T"></typeparam>
 Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T))
+
     Public Property Data As T
+
+    Sub New(Optional qualDeli$ = ".")
+        MyBase.New(qualDeli)
+    End Sub
 End Class
 
 Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
@@ -65,6 +70,8 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
     ''' <returns></returns>
     Public Property Childs As Dictionary(Of String, T)
     Public Property Parent As T
+
+    Dim qualDeli$ = "."
 
     ''' <summary>
     ''' Not null child count in this tree node.
@@ -96,7 +103,7 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
     Public ReadOnly Property QualifyName As String
         Get
             If Not Parent Is Nothing Then
-                Return Parent.QualifyName & "." & Label
+                Return Parent.QualifyName & qualDeli & Label
             Else
                 Return Label
             End If
@@ -114,6 +121,10 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
             Return Childs.IsNullOrEmpty
         End Get
     End Property
+
+    Sub New(Optional qualDeli$ = ".")
+        Me.qualDeli = qualDeli
+    End Sub
 
     ''' <summary>
     ''' Returns the values of <see cref="Childs"/>
