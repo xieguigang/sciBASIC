@@ -62,7 +62,7 @@ Public Module Utils
             Return tree.ID
         Else
             Dim children = tree _
-                .Childs _
+                .EnumerateChilds _
                 .Select(Function(tr) tr.Build) _
                 .JoinBy(", ")
 
@@ -88,7 +88,7 @@ Public Module Utils
 
         Yield tree.SummaryMe(schema)
 
-        For Each c As Tree(Of T) In tree.Childs.SafeQuery
+        For Each c As Tree(Of T) In tree.EnumerateChilds.SafeQuery
             For Each value In c.Summary(schema)
                 Yield value
             Next

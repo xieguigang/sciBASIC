@@ -1,7 +1,9 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Public Module StreamHelper
 
@@ -29,4 +31,18 @@ Public Module StreamHelper
             Return .ByRef
         End With
     End Function
+
+    <Extension>
+    Public Sub Write(stream As Stream, value$, Optional encoding As Encoding = Nothing)
+        With (encoding Or UTF8).GetBytes(value)
+            Call stream.Write(.ByRef, Scan0, .Length)
+            Call stream.Flush()
+        End With
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Sub WriteLine(stream As Stream, Optional value$ = "", Optional encoding As Encoding = Nothing, Optional newLine$ = vbCrLf)
+        Call stream.Write(value & newLine, encoding)
+    End Sub
 End Module

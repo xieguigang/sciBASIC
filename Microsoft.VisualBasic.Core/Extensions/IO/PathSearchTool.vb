@@ -70,8 +70,7 @@ Imports Microsoft.VisualBasic.Text
 ''' Search the path from a specific keyword.(通过关键词来推测路径)
 ''' </summary>
 ''' <remarks></remarks>
-<Package("Program.Path.Search",
-                    Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
+<Package("Program.Path.Search", Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
 Public Module ProgramPathSearchTool
 
     ''' <summary>
@@ -90,7 +89,10 @@ Public Module ProgramPathSearchTool
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function SplitPath(path As String) As String()
-        Return path.Replace("/"c, "\"c).Split("\"c)
+        Return path.Replace("/"c, "\"c) _
+                   .StringReplace("\\{2,}", "\") _
+                   .Trim("\"c) _
+                   .Split("\"c)
     End Function
 
     ''' <summary>
