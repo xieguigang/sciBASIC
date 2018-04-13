@@ -62,7 +62,7 @@ Namespace Drawing3D
         ''' <summary>
         ''' Using for the project result 
         ''' </summary>
-        Public offset As Point
+        Public offset As PointF
 
         ''' <summary>
         ''' Light

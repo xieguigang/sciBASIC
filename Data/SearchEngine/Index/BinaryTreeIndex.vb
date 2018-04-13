@@ -64,6 +64,10 @@ Public Class BinaryTreeIndex(Of K, V) : Implements IAddress(Of Integer)
     <XmlAttribute>
     Public Property My As Integer Implements IAddress(Of Integer).Address
 
+    Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+        Me.My = address
+    End Sub
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return Scripting.ToString(Key)

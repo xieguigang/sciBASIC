@@ -61,7 +61,12 @@ Namespace ComponentModel
     ''' have a handle property to specific its position in this list class. 
     ''' (能够被系统所自动销毁的对象类型，并且该类型的对象必须含有一个Handle属性来指明其在本列表中的位置)
     ''' </typeparam>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' 创建这个列表类型的初衷是能够将数据对象和其所在的位置绑定在一起：
+    ''' 
+    ''' 当目标对象添加进入这个列表之后，列表会自动寻找空余位置，然后将新的元素添加进入空余位置，之后将位置索引值写入对象
+    ''' 所以在这个列表进行添加方法之后，元素可能不是按照顺序排列的
+    ''' </remarks>
     Public Class HashList(Of T As IAddressOf) : Implements IEnumerable(Of T)
 
         ''' <summary>
