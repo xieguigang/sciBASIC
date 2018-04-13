@@ -48,7 +48,6 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Drawing2D.Colors
 
@@ -56,7 +55,7 @@ Namespace Drawing2D.Colors
     ''' ```vbnet
     ''' lighter(term, percentage)
     ''' darker(term, percentage)
-    ''' alpha(term, percentage)
+    ''' alpha(term, percentage) percentage = [0, 1]
     ''' reverse(term)
     ''' skip(term, n)
     ''' take(term, n)

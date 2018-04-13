@@ -97,6 +97,11 @@ Namespace ComponentModel.Collection
             End Set
         End Property
 
+        ''' <summary>
+        ''' 不存在的键名会返回Nothing
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(key As String) As V
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

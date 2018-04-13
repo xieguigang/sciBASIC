@@ -98,6 +98,12 @@ Namespace Imaging
             Return out
         End Function
 
+        ''' <summary>
+        ''' alpha=[0, 255]
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <param name="alphaValue%"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Alpha(c As Color, alphaValue%) As Color
