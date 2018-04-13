@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::16198bd10b3c29360bb8ca688db23a57, Data_science\Graph\Model\Tree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Tree
-    ' 
-    '     Properties: Data
-    ' 
-    ' Class AbstractTree
-    ' 
-    '     Properties: Childs, Count, IsLeaf, IsRoot, Parent
-    '                 QualifyName
-    ' 
-    '     Function: (+2 Overloads) CountLeafs, ToString
-    ' 
-    ' /********************************************************************************/
+' Class Tree
+' 
+'     Properties: Data
+' 
+' Class AbstractTree
+' 
+'     Properties: Childs, Count, IsLeaf, IsRoot, Parent
+'                 QualifyName
+' 
+'     Function: (+2 Overloads) CountLeafs, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -58,7 +59,11 @@ End Class
 
 Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
 
-    Public Property Childs As List(Of T)
+    ''' <summary>
+    ''' Childs table, key is the property <see cref="Vertex.Label"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Childs As Dictionary(Of String, T)
     Public Property Parent As T
 
     ''' <summary>
@@ -67,7 +72,7 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
     ''' <returns></returns>
     Public ReadOnly Property Count As Integer
         Get
-            Dim childs = Me.Childs _
+            Dim childs = Me.EnumerateChilds _
                 .SafeQuery _
                 .Where(Function(c) Not c Is Nothing) _
                 .ToArray
@@ -110,6 +115,14 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
         End Get
     End Property
 
+    ''' <summary>
+    ''' Returns the values of <see cref="Childs"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function EnumerateChilds() As IEnumerable(Of T)
+        Return Childs?.Values
+    End Function
+
     Public Overrides Function ToString() As String
         Return QualifyName
     End Function
@@ -118,6 +131,8 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
     ''' 计算出所有的叶节点的总数，包括自己的child的叶节点
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CountLeafs() As Integer
         Return CountLeafs(Me, 0)
     End Function
@@ -133,7 +148,7 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
             count += 1
         End If
 
-        For Each child As T In node.Childs.SafeQuery
+        For Each child As T In node.EnumerateChilds.SafeQuery
             count += child.CountLeafs()
         Next
 

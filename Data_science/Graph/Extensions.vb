@@ -56,7 +56,7 @@ Public Module Extensions
     <Extension>
     Private Function Add(Of T)(g As Graph, tree As Tree(Of T)) As Graph
         Dim childs = tree _
-            .Childs _
+            .EnumerateChilds _
             .SafeQuery _
             .Where(Function(c) Not c Is Nothing)
 

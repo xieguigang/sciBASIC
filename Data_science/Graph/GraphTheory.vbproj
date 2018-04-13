@@ -309,7 +309,6 @@
     <Compile Include="API\Dijkstra\Dijkstra.vb" />
     <Compile Include="API\Dijkstra\DijkstraAPI.vb" />
     <Compile Include="API\Dijkstra\Route.vb" />
-    <Compile Include="Model\BinaryTree.vb" />
     <Compile Include="Model\Abstract\Graph.vb" />
     <Compile Include="Model\Abstract\Vertex.vb" />
     <Compile Include="Model\Tree.vb" />
