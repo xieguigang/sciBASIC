@@ -73,6 +73,13 @@ Namespace Fractions
                         alpha += dDegree
                     Next
 
+                    Dim dr = radius.Max / 5
+
+                    For i As Integer = 1 To 4
+                        r = dr * i
+                        g.DrawEllipse(axisPen, New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
+                    Next
+
                     For i As Integer = 0 To serials.Length - 1
                         serial = serials(i)
                         color = serialColors(i)
