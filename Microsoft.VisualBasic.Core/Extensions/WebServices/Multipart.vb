@@ -11,12 +11,14 @@ Namespace Net.Http
 
     Public Class MultipartForm
 
-        Dim buffer As New MemoryStream
-
-        Const Boundary$ = "------WebKitFormBoundaryBpijhG6dKsQpCMdN--"
+        ReadOnly buffer As New MemoryStream
+        ''' <summary>
+        ''' 需要使用<see cref="Encoding.ASCII"/>来进行编码
+        ''' </summary>
+        ReadOnly boundary$ = "---------------------------" & DateTime.Now.Ticks.ToString("x")
 
         ''' <summary>
-        ''' 添加键值对
+        ''' Add form data.(添加键值对数据)
         ''' </summary>
         ''' <param name="name$"></param>
         ''' <param name="value$"></param>
@@ -24,16 +26,12 @@ Namespace Net.Http
         ''' 字符串键值对是使用<see cref="Encoding.UTF8"/>编码的
         ''' </remarks>
         Public Sub Add(name$, value$)
-            With New StreamWriter(buffer, Encoding.UTF8) With {
-                .NewLine = vbCrLf
-            }
+            With Me.buffer
+                Call .WriteLine(, Encoding.ASCII)
+                Call .WriteLine("--" & boundary, Encoding.ASCII)
+                Call .WriteLine($"Content-Disposition: form-data; name=""{name}""")
                 Call .WriteLine()
-                Call .WriteLine(Boundary)
-                Call .WriteLine($"Content-Disposition: form-data; name=""{name}"";")
-                Call .WriteLine()
-                Call .WriteLine(value)
-
-                Call .Flush()
+                Call .Write(value)
             End With
         End Sub
 
@@ -43,7 +41,7 @@ Namespace Net.Http
         ''' <param name="name$"></param>
         ''' <param name="buffer"></param>
         ''' <remarks>
-        ''' 数据包则需要使用<see cref="Encoding.ASCII"/>来进行编码
+        ''' 
         ''' </remarks>
         Public Sub Add(name$,
                        buffer As IEnumerable(Of Byte),
@@ -51,8 +49,8 @@ Namespace Net.Http
                        Optional contentType$ = ContentTypes.Unknown)
 
             With Me.buffer
-                Call .WriteLine()
-                Call .WriteLine(Boundary, Encoding.ASCII)
+                Call .WriteLine(, Encoding.ASCII)
+                Call .WriteLine("--" & boundary, Encoding.ASCII)
                 Call .WriteLine($"Content-Disposition: form-data; name=""{name}""; filename=""{fileName}""")
                 Call .WriteLine($"Content-Type: {contentType}")
                 Call .WriteLine()
@@ -63,8 +61,8 @@ Namespace Net.Http
             End With
 
             With Me.buffer
-                Call .WriteLine()
-                Call .WriteLine(Boundary & "--", Encoding.ASCII)
+                Call .WriteLine(, Encoding.ASCII)
+                Call .WriteLine("--" & boundary & "--", Encoding.ASCII)
             End With
         End Sub
 
@@ -76,10 +74,10 @@ Namespace Net.Http
         ''' <returns></returns>
         Public Function POST(api$, Optional headers As Dictionary(Of String, String) = Nothing) As String
             Dim request As HttpWebRequest = WebRequest.Create(api)
-            request.ContentType = "multipart/form-data; boundary=" & Boundary
+            request.ContentType = "multipart/form-data; boundary=" & boundary
             request.Method = "POST"
             request.KeepAlive = True
-            request.ContentLength = buffer.Length
+            request.Credentials = CredentialCache.DefaultCredentials
 
             For Each header In headers.SafeQuery
                 Call request.Headers.Add(header.Key, header.Value)
@@ -91,8 +89,11 @@ Namespace Net.Http
                 requestStream.Flush()
             End Using
 
-            Using response = request.GetResponse, stream As Stream = response.GetResponseStream
-                Return New StreamReader(stream).ReadToEnd
+            Using response = request.GetResponse, responseStream As Stream = response.GetResponseStream
+                Using responseReader As New IO.StreamReader(responseStream)
+                    Dim responseText = responseReader.ReadToEnd()
+                    Return responseText
+                End Using
             End Using
         End Function
     End Class
