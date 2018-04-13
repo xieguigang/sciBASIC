@@ -11,6 +11,7 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports sys = System.Math
@@ -27,7 +28,8 @@ Namespace Fractions
                              Optional serialColorSchema$ = "alpha(Set1:c8, 0.65)",
                              Optional axisRange As DoubleRange = Nothing,
                              Optional shapeBorderWidth! = 2,
-                             Optional axisStrokeStyle$ = Stroke.HighlightStroke) As GraphicsData
+                             Optional axisStrokeStyle$ = Stroke.HighlightStroke,
+                             Optional spline% = 0) As GraphicsData
 
             Dim serialColors As Color() = Designer.GetColors(serialColorSchema)
             Dim borderPens As Pen() = serialColors _
@@ -92,6 +94,10 @@ Namespace Fractions
                                 shape += (r, alpha).ToCartesianPoint.OffSet2D(center)
                                 alpha += dDegree
                             Next
+
+                            If spline > 0 Then
+                                shape = shape.CubicSpline(spline).AsList
+                            End If
 
                             ' 填充区域
                             Call g.FillPolygon(New SolidBrush(color), shape)

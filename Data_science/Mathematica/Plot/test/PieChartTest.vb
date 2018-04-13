@@ -82,7 +82,7 @@ Public Module PieChartTest
         Dim s = data _
             .Fractions(ColorBrewer.QualitativeSchemes.Accent8)
 
-        Call RardarChart.Plot({New NamedValue(Of FractionData())("test1", s)}).Save("./test_radar.png")
+        Call RardarChart.Plot({New NamedValue(Of FractionData())("test1", s)}, spline:=200).Save("./test_radar.png")
 
         Pause()
     End Sub
