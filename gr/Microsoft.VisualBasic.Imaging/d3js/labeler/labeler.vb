@@ -102,12 +102,12 @@ Namespace d3js.Layout
         ''' </summary>
         ''' <param name="index%"></param>
         ''' <returns></returns>
-        Private Function energy(index%) As Double
+        Public Function energy(index%) As Double
             Dim m = lab.Length,
                 ener# = 0,
                 dx = lab(index).X - anc(index).x,
                 dy = anc(index).y - lab(index).Y,
-                dist = Math.Sqrt(dx * dx + dy * dy),
+                dist = Math.Sqrt(dx * dx + dy * dy),  ' 标签与anchor锚点之间的距离
                 overlap = True,
                 amount = 0
 

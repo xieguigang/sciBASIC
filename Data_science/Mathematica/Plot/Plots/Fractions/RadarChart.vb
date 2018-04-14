@@ -1,46 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::1b76d3f6683f498d69d4026346cbd8cf, Data_science\Mathematica\Plot\Plots\Fractions\RardarChart.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module RardarChart
-    ' 
-    '         Function: Plot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module RardarChart
+' 
+'         Function: Plot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -67,9 +68,12 @@ Namespace Fractions
                              Optional size$ = "3000,2700",
                              Optional margin$ = g.DefaultPadding,
                              Optional bg$ = "white",
+                             Optional regionFill$ = "lightgray",
                              Optional serialColorSchema$ = "alpha(Set1:c8, 0.65)",
                              Optional axisRange As DoubleRange = Nothing,
-                             Optional shapeBorderWidth! = 2,
+                             Optional shapeBorderWidth! = 10,
+                             Optional pointRadius! = 25,
+                             Optional labelFontCSS$ = CSSFont.Win7VeryLarge,
                              Optional axisStrokeStyle$ = Stroke.HighlightStroke,
                              Optional spline% = 0) As GraphicsData
 
@@ -84,6 +88,8 @@ Namespace Fractions
                                        .ToArray
             Dim dDegree# = 360 / directions.Length
             Dim axisPen As Pen = Stroke.TryParse(axisStrokeStyle).GDIObject
+            Dim labelFont As Font = CSSFont.TryParse(labelFontCSS).GDIObject
+            Dim regionFillColor As New SolidBrush(regionFill.TranslateColor)
 
             If axisRange Is Nothing Then
                 axisRange = serials.Values _
@@ -95,31 +101,80 @@ Namespace Fractions
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    Dim center As PointF = region.PlotRegion.Centre
-                    Dim radius As DoubleRange = {0, sys.Min(region.Width, region.Height) / 2}
+                    Dim plotRect = region.PlotRegion
+                    Dim center As PointF = plotRect.Centre
+                    Dim radius As DoubleRange = {0, sys.Min(plotRect.Width, plotRect.Height) / 2}
                     Dim serial As NamedValue(Of FractionData())
-                    Dim r#, alpha!
+                    Dim r#
+                    Dim alpha! = -90
                     Dim shape As New List(Of PointF)
                     Dim f As FractionData
                     Dim value#
                     Dim color As Color
                     Dim pen As Pen
                     Dim label$
+                    Dim maxAxis As PointF
 
                     ' 绘制出中心点以及坐标轴
-                    Call g.FillPie(Brushes.Gray, New Rectangle(center.X - 2, center.Y - 2, 4, 4), 0, 360)
-
-                    For i As Integer = 0 To directions.Length - 1
-                        label = directions(i)
-                        g.DrawLine(axisPen, (radius.Max, alpha).ToCartesianPoint.OffSet2D(center), center)
-                        alpha += dDegree
-                    Next
+                    ' Call g.FillPie(Brushes.Gray, New Rectangle(center.X - 2, center.Y - 2, 4, 4), 0, 360)
 
                     Dim dr = radius.Max / 5
+
+                    ' 填充坐标轴区域
+                    r = dr * 5
+                    g.FillEllipse(regionFillColor, New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
 
                     For i As Integer = 1 To 4
                         r = dr * i
                         g.DrawEllipse(axisPen, New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
+                    Next
+
+                    Dim labelSize As SizeF
+
+                    ' 绘制极坐标轴
+                    For i As Integer = 0 To directions.Length - 1
+                        label = directions(i)
+                        maxAxis = (radius.Max, alpha).ToCartesianPoint.OffSet2D(center)
+                        g.DrawLine(axisPen, maxAxis, center)
+                        alpha += dDegree
+
+                        ' 绘制坐标轴标签
+                        label = directions(i)
+                        labelSize = g.MeasureString(label, labelFont)
+
+                        Select Case center.QuadrantRegion(maxAxis)
+
+                            Case QuadrantRegions.RightTop
+                                ' 右上角
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height)
+
+                            Case QuadrantRegions.YTop
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, -labelSize.Height)
+
+                            Case QuadrantRegions.LeftTop
+                                ' 左上角
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height)
+
+                            Case QuadrantRegions.XLeft
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height / 2)
+
+                            Case QuadrantRegions.LeftBottom
+                                ' 左下角
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, 0)
+
+                            Case QuadrantRegions.YBottom
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, 0)
+
+                            Case QuadrantRegions.XRight
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height / 2)
+
+                            Case Else
+                                ' 右下角
+                                maxAxis = maxAxis.OffSet2D(0, 0)
+
+                        End Select
+
+                        g.DrawString(label, labelFont, Brushes.Black, maxAxis)
                     Next
 
                     For i As Integer = 0 To serials.Length - 1
@@ -127,7 +182,7 @@ Namespace Fractions
                         color = serialColors(i)
                         pen = borderPens(i)
                         shape *= 0
-                        alpha = 0
+                        alpha = -90
 
                         With serial.Value.ToDictionary
                             For Each key As String In directions
@@ -149,8 +204,18 @@ Namespace Fractions
                             End If
 
                             ' 填充区域
-                            Call g.FillPolygon(New SolidBrush(color), shape)
-                            Call g.DrawPolygon(pen, shape)
+                            With New GraphicsPath
+                                Call .AddPolygon(shape)
+                                Call .CloseAllFigures()
+
+                                Call g.ShapeGlow(.ByRef, color.Light(0.75), shapeBorderWidth * 3)
+                                Call g.FillPath(New SolidBrush(color), .ByRef)
+                                Call g.DrawPath(pen, .ByRef)
+                            End With
+
+                            For Each point As PointF In shape
+                                Call g.DrawCircle(point, pointRadius, New SolidBrush(color))
+                            Next
                         End With
                     Next
                 End Sub

@@ -44,10 +44,10 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Public Module JointPlot
 
     Public Function JointScatter() As GraphicsData
-
+        Throw New NotImplementedException
     End Function
 
     Public Function JointContour() As GraphicsData
-
+        Throw New NotImplementedException
     End Function
 End Module

@@ -80,6 +80,21 @@ Namespace Imaging.Math2D
         End Function
 
         ''' <summary>
+        ''' left,top -> right, top -> right, bottom -> left, bottom
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function ShapePoints(rect As RectangleF) As IEnumerable(Of PointF)
+            With rect
+                Yield New PointF(.Left, .Top)
+                Yield New PointF(.Right, .Top)
+                Yield New PointF(.Right, .Bottom)
+                Yield New PointF(.Left, .Bottom)
+            End With
+        End Function
+
+        ''' <summary>
         ''' Is target point in the target region?
         ''' </summary>
         ''' <param name="x"></param>
