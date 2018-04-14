@@ -289,6 +289,7 @@ Namespace Drawing2D.Colors
         Private Function IsColorNameList(exp$) As Boolean
             If Not exp.IsPattern(DesignerExpression.FunctionPattern) AndAlso InStr(exp, ",") > 0 Then
                 If exp.IsPattern("rgb\(\d+\s*(,\s*\d+\s*)+\)") Then
+                    ' 单个rgb表达式的情况，肯定不是颜色列表
                     Return False
                 Else
                     Return True

@@ -68,16 +68,19 @@ Namespace Fractions
                              Optional size$ = "3000,2700",
                              Optional margin$ = g.DefaultPadding,
                              Optional bg$ = "white",
-                             Optional regionFill$ = "lightgray",
+                             Optional regionFill$ = "#fafafa",
                              Optional serialColorSchema$ = "alpha(Set1:c8, 0.65)",
+                             Optional colorAlpha% = 120,
                              Optional axisRange As DoubleRange = Nothing,
                              Optional shapeBorderWidth! = 10,
                              Optional pointRadius! = 25,
-                             Optional labelFontCSS$ = CSSFont.Win7VeryLarge,
+                             Optional labelFontCSS$ = CSSFont.Win7VeryVeryLarge,
                              Optional axisStrokeStyle$ = Stroke.HighlightStroke,
                              Optional spline% = 0) As GraphicsData
 
-            Dim serialColors As Color() = Designer.GetColors(serialColorSchema)
+            Dim serialColors As Color() = Designer.GetColors(serialColorSchema) _
+                                                  .Select(Function(c) c.Alpha(colorAlpha)) _
+                                                  .ToArray
             Dim borderPens As Pen() = serialColors _
                 .Select(Function(c) New Pen(c.Alpha(255), shapeBorderWidth)) _
                 .ToArray
