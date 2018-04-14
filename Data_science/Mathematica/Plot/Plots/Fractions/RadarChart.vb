@@ -60,7 +60,7 @@ Imports sys = System.Math
 
 Namespace Fractions
 
-    Public Module RardarChart
+    Public Module RadarChart
 
         <Extension>
         Public Function Plot(serials As NamedValue(Of FractionData())(),
