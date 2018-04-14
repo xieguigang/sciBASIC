@@ -1,72 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::7bc6884824e06fb764836a71aa358d8f, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\ls.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Search
-    ' 
-    '         Properties: SearchType, wildcards
-    ' 
-    '         Function: Clone, ToString
-    '         Operators: (+3 Overloads) -, <, <<, <=, >
-    '                    >=
-    ' 
-    '     Structure wildcardsCompatible
-    ' 
-    '         Function: IsMatch
-    ' 
-    '     Structure SearchOpt
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
-    '         Enum Options
-    ' 
-    '             Directory, Ext, LongName, None, Recursive
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Search
+' 
+'         Properties: SearchType, wildcards
+' 
+'         Function: Clone, ToString
+'         Operators: (+3 Overloads) -, <, <<, <=, >
+'                    >=
+' 
+'     Structure wildcardsCompatible
+' 
+'         Function: IsMatch
+' 
+'     Structure SearchOpt
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: ToString
+'         Enum Options
+' 
+'             Directory, Ext, LongName, None, Recursive
+' 
+' 
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
+Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Patterns
+Imports SearchOptions = System.Int32
 
 Namespace Language.UnixBash
 
@@ -102,6 +103,14 @@ Namespace Language.UnixBash
             Else
                 Return ls
             End If
+        End Operator
+
+        Public Shared Operator <<(ls As Search, opt As SearchOptions) As Search
+            If CType(opt, SearchOption) = SearchOption.SearchAllSubDirectories Then
+                ls.__opts.Add(SearchOpt.Options.Recursive, r)
+            End If
+
+            Return ls
         End Operator
 
         ''' <summary>
@@ -147,17 +156,6 @@ Namespace Language.UnixBash
                 End If
             End Get
         End Property
-
-        ''' <summary>
-        ''' Search the files in the specific directory
-        ''' </summary>
-        ''' <param name="ls"></param>
-        ''' <param name="DIR"></param>
-        ''' <returns></returns>
-        Public Shared Operator <<(ls As Search, DIR As Integer) As IEnumerable(Of String)
-            Dim url As String = __getHandle(DIR).FileName
-            Return ls < url
-        End Operator
 
         ''' <summary>
         ''' Search the files in the specific directory
