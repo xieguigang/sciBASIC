@@ -137,12 +137,18 @@ Namespace CommandLine
                 _TempRedirect = stdRedirect.CLIPath
             End If
 
-            Try
-                file = FileIO.FileSystem.GetFileInfo(file).FullName
-            Catch ex As Exception
-                ex = New Exception(file, ex)
-                Throw ex
-            End Try
+            ' 没有小数点，说明可能只是一个命令，而不是具体的可执行程序文件名
+            If InStr(file, ".") = 0 Then
+                ' do nothing
+            Else
+                ' 对于具体的程序文件的调用，在这里获取其完整路径
+                Try
+                    file = FileIO.FileSystem.GetFileInfo(file).FullName
+                Catch ex As Exception
+                    ex = New Exception(file, ex)
+                    Throw ex
+                End Try
+            End If
 
             Bin = file
             argv = $"{argv} > {_TempRedirect}"
