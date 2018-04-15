@@ -60,23 +60,24 @@ Namespace SVG.CSS
     ''' <summary>
     ''' 图层滤镜
     ''' </summary>
+    ''' <remarks>
+    ''' 请注意：filter里面的元素是有执行顺序的
+    ''' </remarks>
     Public Class Filter : Inherits Node
-
-        <XmlElement("feGaussianBlur")>
-        Public Property GaussianBlurs As feGaussianBlur()
-        <XmlElement("feOffset")>
-        Public Property Offsets As feOffset()
-        <XmlArray("feMerge")>
-        Public Property Merges As feMergeNode()
 
         <XmlElement("feMorphology")>
         Public Property Morphologys As feMorphology()
 
+        <XmlElement("feGaussianBlur")>
+        Public Property GaussianBlurs As feGaussianBlur()
         <XmlElement("feFlood")>
         Public Property Floods As feFlood()
-
         <XmlElement("feComposite")>
         Public Property Composites As feComposite()
+        <XmlElement("feOffset")>
+        Public Property Offsets As feOffset()
+        <XmlArray("feMerge")>
+        Public Property Merges As feMergeNode()
 
         <XmlAttribute> Public Property x As String
         <XmlAttribute> Public Property y As String
