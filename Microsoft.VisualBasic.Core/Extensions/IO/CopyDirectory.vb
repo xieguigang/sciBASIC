@@ -58,11 +58,11 @@ Namespace FileIO
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' 这个函数会在这个模块内被递归调用
         ''' </summary>
         ''' <param name="src$"></param>
         ''' <param name="destination$"></param>
-        Public Sub Copy(src$, destination$, Optional includeSrc As Boolean = False)
+        Public Sub Copy(src$, destination$, Optional includeSrc As Boolean = True)
             Dim directory As New DirectoryInfo(src)
 
             If includeSrc Then
@@ -105,7 +105,7 @@ Namespace FileIO
 
         Private Sub CopySubDirectoriesWithFiles(pathToSourceFolder As String, pathToDestinationFolder As String)
             For Each subDirectory As String In IO.Directory.GetDirectories(pathToSourceFolder)
-                Copy(subDirectory, pathToDestinationFolder)
+                Copy(subDirectory, pathToDestinationFolder, includeSrc:=True)
             Next
         End Sub
     End Class
