@@ -1,50 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::3ba627325ccb94b8f87991aa386d1838, Microsoft.VisualBasic.Core\Extensions\IO\Directory.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Directory
-    ' 
-    '         Properties: DIR
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CopyTo, Exists, GetFullPath, IsAbsolutePath, ToString
-    ' 
-    '         Sub: CreateDirectory, Delete
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Directory
+' 
+'         Properties: DIR
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CopyTo, Exists, GetFullPath, IsAbsolutePath, ToString
+' 
+'         Sub: CreateDirectory, Delete
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace FileIO
 
@@ -97,11 +99,11 @@ Namespace FileIO
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 将当前的这个文件夹之中的内容拷贝到<paramref name="target"/>目标文件夹
         ''' </summary>
         ''' <param name="target">The directory path of target folder.</param>
         ''' <returns></returns>
-        Public Function CopyTo(target$, Optional progress As Progress(Of String) = Nothing) As IEnumerable(Of String)
+        Public Function CopyTo(target$, Optional progress As Progress(Of String) = Nothing, Optional includeSrc As Boolean = False) As IEnumerable(Of String)
             Dim list As New List(Of String)
             Dim action = Sub(path$)
                              If Not progress Is Nothing Then
@@ -111,7 +113,7 @@ Namespace FileIO
                              Call list.Add(path)
                          End Sub
 
-            Call New CopyDirectoryAction(New Progress(Of String)(action)).Copy(Me.DIR, target)
+            Call New CopyDirectoryAction(New Progress(Of String)(action)).Copy(DIR, target, includeSrc)
 
             Return list
         End Function
@@ -120,6 +122,7 @@ Namespace FileIO
             Return DIR
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Exists(DIR As String) As Boolean
             Return IO.Directory.Exists(DIR)
         End Function
@@ -149,10 +152,13 @@ Namespace FileIO
         '''   T:System.UnauthorizedAccessException:
         '''     The user does not have permission to create the directory.
         ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub CreateDirectory(junctionPoint As String)
             Call FileSystem.CreateDirectory(junctionPoint)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Sub Delete(DIR As String)
             Call IO.Directory.Delete(DIR)
         End Sub

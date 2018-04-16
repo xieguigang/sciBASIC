@@ -62,14 +62,20 @@ Namespace FileIO
         ''' </summary>
         ''' <param name="src$"></param>
         ''' <param name="destination$"></param>
-        Public Sub Copy(src$, destination$)
+        Public Sub Copy(src$, destination$, Optional includeSrc As Boolean = False)
             Dim directory As New DirectoryInfo(src)
 
-            If FileIO.Directory.Exists(Path.Combine(destination, directory.Name)) Then
-                Call $"Directory '{directory.Name}' already exists in '{destination}'".Warning
-            End If
+            If includeSrc Then
+                If FileIO.Directory.Exists(Path.Combine(destination, directory.Name)) Then
+                    Call $"Directory '{directory.Name}' already exists in '{destination}'".Warning
+                End If
 
-            destination = CreateDestinationFolderAndReturnNewPath(src, destination)
+                destination = CreateDestinationFolderAndReturnNewPath(src, destination)
+            Else
+                If FileIO.Directory.Exists(destination) Then
+                    Call $"Directory '{destination.DirectoryName}' already exists in '{destination}'".Warning
+                End If
+            End If
 
             Call CopyFilesToTargetDirectory(src, destination)
             Call CopySubDirectoriesWithFiles(src, destination)
