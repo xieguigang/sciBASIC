@@ -315,6 +315,7 @@ Public Module Bootstraping
 
     ''' <summary>
     ''' ###### 频数分布表与直方图
+    ''' 
     ''' 返回来的标签数据之中的标签是在某个区间范围内的数值集合的平均值
     ''' </summary>
     ''' <param name="data"></param>
@@ -364,11 +365,14 @@ Public Module Bootstraping
 
     ''' <summary>
     ''' ###### 频数分布表与直方图
+    ''' 
     ''' 这个函数返回来的是频数以及区间内的所有的数的平均值
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="step!"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' 返回来的数据为区间的下限 -> {频数, 平均值}
+    ''' </returns>
     <Extension>
     Public Function Hist(data As Double(), Optional step! = 1) As Dictionary(Of Double, IntegerTagged(Of Double))
         Dim out As New Dictionary(Of Double, IntegerTagged(Of Double))
