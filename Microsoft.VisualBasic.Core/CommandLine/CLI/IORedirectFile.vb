@@ -151,7 +151,7 @@ Namespace CommandLine
             End If
 
             Bin = file
-            argv = $"{argv} > {_TempRedirect}"
+            argv = $"{argv.TrimNewLine(" ")} > {_TempRedirect}"
             CLIArguments = argv
 
             ' 系统可能不会自动创建文件夹，则需要在这里使用这个方法来手工创建，

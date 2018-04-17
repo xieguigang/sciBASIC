@@ -583,7 +583,7 @@ Public Module StringHelpers
 
         Do While pos > 0
             n += 1
-            pos = InStr(pos, text, phrase, method)
+            pos = InStr(pos + 1, text, phrase, method)
         Loop
 
         Return n
