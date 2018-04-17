@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::a62c155f43573716a7a1e9de7c794ca1, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SVG.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SVGXml
-    ' 
-    '         Properties: circles, defs, desc, enable_background, height
-    '                     id, images, Layers, lines, overflow
-    '                     path, polygon, polyline, rect, space
-    '                     style, texts, title, transform, version
-    '                     viewBox, width, WriterComment
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: AddLayer, GetSVGXml, (+2 Overloads) SaveAsXml, Size, TryLoad
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SVGXml
+' 
+'         Properties: circles, defs, desc, enable_background, height
+'                     id, images, Layers, lines, overflow
+'                     path, polygon, polyline, rect, space
+'                     style, texts, title, transform, version
+'                     viewBox, width, WriterComment
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: AddLayer, GetSVGXml, (+2 Overloads) SaveAsXml, Size, TryLoad
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.MIME.Markup.HTML
 Imports Microsoft.VisualBasic.Text
+Imports htmlNode = Microsoft.VisualBasic.MIME.Markup.HTML.XmlMeta.Node
 
 Namespace SVG.XML
 
@@ -66,7 +67,7 @@ Namespace SVG.XML
     ''' <summary>
     ''' The svg vector graphics in Xml document format.
     ''' </summary>
-    <XmlRoot("svg", [Namespace]:=SVGWriter.Xmlns)> Public Class SVGXml
+    <XmlRoot("svg", [Namespace]:=SVGWriter.Xmlns)> Public Class SVGXml : Inherits htmlNode
         Implements ISaveHandle
         Implements ICanvas
 
@@ -91,7 +92,6 @@ Namespace SVG.XML
 
         <XmlAttribute> Public Property width As String
         <XmlAttribute> Public Property height As String
-        <XmlAttribute> Public Property id As String
         <XmlAttribute> Public Property version As String
         <XmlAttribute> Public Property viewBox As String()
         <XmlAttribute> Public Property overflow As String
@@ -121,8 +121,11 @@ Namespace SVG.XML
         ''' SVG对象也会在这里面定义CSS
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个属性会和<see cref="htmlNode.style"/>在进行XML序列化的时候产生冲突？
+        ''' </remarks>
         <XmlElement("style")>
-        Public Shadows Property style As XmlMeta.CSS
+        Public Property styleCSS As XmlMeta.CSS
 
         <XmlElement("image")>
         Public Property images As Image() Implements ICanvas.images
