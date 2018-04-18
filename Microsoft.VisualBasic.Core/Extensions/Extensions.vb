@@ -466,7 +466,9 @@ Public Module Extensions
                                                              index As TKey,
                                                              Optional [default] As TValue = Nothing,
                                                              <CallerMemberName> Optional trace$ = Nothing) As TValue
-        If table Is Nothing Then
+        ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
+        ' 直接返回默认值
+        If table Is Nothing OrElse index Is Nothing Then
 #If DEBUG Then
             Call PrintException("hash table is nothing!")
 #End If
