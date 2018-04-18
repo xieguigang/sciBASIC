@@ -472,6 +472,21 @@ Public Module ProgramPathSearchTool
         Return True
     End Function
 
+    <Extension>
+    Public Function FileMove(source$, target$) As Boolean
+        Try
+            Call My.Computer.FileSystem.MoveFile(source, target)
+            Return True
+        Catch ex As Exception
+            ex = New Exception("source: " & source, ex)
+            ex = New Exception("target: " & target, ex)
+
+            Call App.LogException(ex)
+
+            Return False
+        End Try
+    End Function
+
     ''' <summary>
     ''' Check if the target file object is exists on your file system or not.
     ''' (这个函数也会自动检查目标<paramref name="path"/>参数是否为空)
