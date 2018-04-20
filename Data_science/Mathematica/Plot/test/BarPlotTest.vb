@@ -1,51 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::b4f5cf6c6ec79697c77296151d6f893f, Data_science\Mathematica\Plot\test\BarPlotTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module BarPlotTest
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Module BarPlotTest
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
+Imports Microsoft.VisualBasic.Imaging
 
 Module BarPlotTest
 
+    Sub variableWidthTest()
+
+        Dim data = {
+            New VariableBarData With {.Name = "测试1", .Data = (120, 366)},
+            New VariableBarData With {.Name = "测试1", .Data = (220, 1366)},
+            New VariableBarData With {.Name = "测试1", .Data = (1120, 36)},
+            New VariableBarData With {.Name = "测试1", .Data = (620, 866)},
+            New VariableBarData With {.Name = "测试1", .Data = (920, 766)},
+            New VariableBarData With {.Name = "测试1", .Data = (1000, 366)},
+            New VariableBarData With {.Name = "测试1", .Data = (2120, 466)},
+            New VariableBarData With {.Name = "测试1", .Data = (1820, 2366)},
+            New VariableBarData With {.Name = "测试1", .Data = (320, 1766)}
+        }
+
+
+        Call VariableWidthBarPlot.Plot(data.OrderByDescending(Function(d) d.Data.height), title:="测试标题").AsGDIImage.SaveAs("./test_bar.png")
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+        Call variableWidthTest()
 
         'Dim dara = BarPlotDataExtensions _
         '    .LoadDataSet("C:\Users\xieguigang\Desktop\test.csv") _

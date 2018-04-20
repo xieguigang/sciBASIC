@@ -94,6 +94,10 @@ Namespace Graphic.Axis
             Dim range = max - min
             Dim inputRange As New DoubleRange(min, max)
 
+            If min = max AndAlso min + max <> 0 Then
+                Return {0, max}
+            End If
+
             If range = 0R Then
                 Return {}
             End If
