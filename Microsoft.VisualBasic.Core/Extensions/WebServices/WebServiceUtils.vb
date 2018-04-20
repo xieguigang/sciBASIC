@@ -233,7 +233,10 @@ Public Module WebServiceUtils
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension> <ExportAPI("URL.Decode")>
-    Public Function UrlDecode(s As String, Optional encoding As Encoding = Nothing) As String
+    Public Function UrlDecode(s$, Optional encoding As Encoding = Nothing) As String
+        If s.StringEmpty Then
+            Return ""
+        End If
         If encoding IsNot Nothing Then
             Return HttpUtility.UrlDecode(s, encoding)
         Else

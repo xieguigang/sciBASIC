@@ -1,48 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::5052009369fdea0a3894d4e8c350f19b, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module HttpGet
-    ' 
-    '     Function: [GET], __get, __httpRequest, Get_PageContent, LogException
-    ' 
-    ' /********************************************************************************/
+' Module HttpGet
+' 
+'     Function: [GET], __get, __httpRequest, Get_PageContent, LogException
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Net
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.HtmlParser
@@ -164,7 +166,14 @@ RETRY:      Return __get(url, headers, proxy, UA)
         Using respStream As Stream = webRequest.GetResponse.GetResponseStream,
             reader As New StreamReader(respStream)
 
-            Dim html As String = reader.ReadToEnd
+            Dim htmlBuilder As New StringBuilder
+            Dim line As Value(Of String) = ""
+
+            Do While Not (line = reader.ReadLine) Is Nothing
+                htmlBuilder.AppendLine(line)
+            Loop
+
+            Dim html As String = htmlBuilder.ToString
             Dim title As String = html.HTMLTitle
 
             ' 判断是否是由于还没有登陆校园网客户端而导致的错误

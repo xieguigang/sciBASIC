@@ -145,8 +145,8 @@ Namespace CommandLine.InteropService
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function RunProgram(args$) As IIORedirectAbstract
-            Return App.Shell(_executableAssembly, args, CLR:=False)
+        Public Function RunProgram(args$, stdin$) As IIORedirectAbstract
+            Return App.Shell(_executableAssembly, args, CLR:=False, stdin:=stdin)
         End Function
 
         Public Overrides Function ToString() As String
