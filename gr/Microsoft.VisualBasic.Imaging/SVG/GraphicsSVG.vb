@@ -282,6 +282,45 @@ Namespace SVG
             Throw New NotImplementedException()
         End Sub
 
+
+#Region "Add svg shape element"
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(text As XML.text) As Integer
+            Return __svgData.Add(text)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(rect As rect) As Integer
+            Return __svgData.Add(rect)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(line As line) As Integer
+            Return __svgData.Add(line)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(circle As circle) As Integer
+            Return __svgData.Add(circle)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(path As path) As Integer
+            Return __svgData.Add(path)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(polygon As polygon) As Integer
+            Return __svgData.Add(polygon)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(image As XML.Image) As Integer
+            Return __svgData.Add(image)
+        End Function
+#End Region
+
 #Region "向SVG之中嵌入图片图像数据"
 
         Public Overrides Sub DrawIcon(icon As Icon, targetRect As Rectangle)
