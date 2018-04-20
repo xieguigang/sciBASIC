@@ -69,7 +69,7 @@ Namespace Language.Vectorization
         ''' 无参数的属性
         ''' </summary>
         Protected linq As DataValue(Of T)
-        ReadOnly type As New VectorSchemaProvider(GetType(T))
+        Protected ReadOnly type As New VectorSchemaProvider(GetType(T))
 
         Default Public Overloads Property Item(exp$) As Object
             Get

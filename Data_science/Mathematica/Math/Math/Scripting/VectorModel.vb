@@ -1,46 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::f3252248410965a47334b05e70e60b7d, Data_science\Mathematica\Math\Math\Scripting\VectorModel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class IVector
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetVector, readInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class IVector
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetVector, readInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
@@ -55,11 +56,25 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="name$"></param>
         ''' <returns></returns>
-        Default Public Overloads ReadOnly Property Item(name$) As Vector
+        Default Public Overloads Property Item(name$) As Vector
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return readInternal(name)
             End Get
+            Set(value As Vector)
+                Dim writer As PropertyInfo = type.TryGetMember(name, caseSensitive:=False)
+
+                Select Case writer.PropertyType
+                    Case GetType(Double)
+                        MyBase.Item(name) = value
+                    Case GetType(Single)
+                        MyBase.Item(name) = value.AsSingle
+                    Case GetType(Integer)
+                        MyBase.Item(name) = value.AsInteger
+                    Case Else
+                        Throw New NotImplementedException(writer.PropertyType.ToString)
+                End Select
+            End Set
         End Property
 
         Private Function readInternal(name As String) As Vector
