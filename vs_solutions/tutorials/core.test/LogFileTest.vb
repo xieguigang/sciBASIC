@@ -138,4 +138,6 @@ End Class
 Public Class inherittttt : Inherits XmlDataModelTest
 
     Public Property ddddd_sfsdfsd As String() = {"dfgdfgdfg", "werwer43444", "898789////"}
+
+    Public Property mybaseClass As New XmlDataModelTest
 End Class
