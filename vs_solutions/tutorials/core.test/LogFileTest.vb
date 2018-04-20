@@ -100,13 +100,13 @@ Module LogFileTest
     End Sub
 
     Sub xmlModelTraceTest()
-        Dim model As New XmlDataModelTest
+        Dim model As New inherittttt
 
         Dim xml = model.GetXml
 
         Call xml.__DEBUG_ECHO
 
-        Dim obj = xml.LoadFromXml(Of XmlDataModelTest)
+        Dim obj = xml.LoadFromXml(Of inherittttt)
 
         Call obj.GetJson.__DEBUG_ECHO
 
@@ -133,4 +133,9 @@ Public Class XmlDataModelTest : Inherits XmlDataModel
     <XmlAttribute>
     Public Property dddddd As Date = Now
 
+End Class
+
+Public Class inherittttt : Inherits XmlDataModelTest
+
+    Public Property ddddd_sfsdfsd As String() = {"dfgdfgdfg", "werwer43444", "898789////"}
 End Class
