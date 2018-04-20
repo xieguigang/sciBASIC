@@ -131,7 +131,8 @@ Namespace CommandLine
                 Optional argv$ = "",
                 Optional environment As IEnumerable(Of ValueTuple) = Nothing,
                 Optional FolkNew As Boolean = False,
-                Optional stdRedirect$ = "")
+                Optional stdRedirect$ = "",
+                Optional stdin$ = Nothing)
 
             If Not String.IsNullOrEmpty(stdRedirect) Then
                 _TempRedirect = stdRedirect.CLIPath
@@ -161,9 +162,9 @@ Namespace CommandLine
             Call "".SaveTo(_TempRedirect)
 
             If App.IsMicrosoftPlatform Then
-                shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew)
+                shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew, stdin)
             Else
-                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew)
+                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew, stdin)
             End If
 
             Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO

@@ -1,45 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::e806889b896225f58a7134b6fb5a14bd, Microsoft.VisualBasic.Core\CommandLine\CLI\Scripting.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ScriptingExtensions
-    ' 
-    '         Function: Bash, Cmd
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ScriptingExtensions
+' 
+'         Function: Bash, Cmd
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports ValueTuple = System.Collections.Generic.KeyValuePair(Of String, String)
@@ -48,7 +49,7 @@ Namespace CommandLine
 
     Module ScriptingExtensions
 
-        Public Function Cmd(program$, argv$, environment As IEnumerable(Of ValueTuple), folkNew As Boolean) As String
+        Public Function Cmd(program$, argv$, environment As IEnumerable(Of ValueTuple), folkNew As Boolean, stdin$) As String
             Dim bat As New StringBuilder(1024)
 
             ' 切换工作目录至当前的进程所处的文件夹
@@ -79,14 +80,23 @@ Namespace CommandLine
                 ' 生成IO重定向的命令行
                 ' https://stackoverflow.com/questions/3680977/can-a-batch-file-capture-the-exit-codes-of-the-commands-it-is-invoking
                 Call bat.AppendLine("set errorlevel=")
-                Call bat.AppendLine($"""{program}"" {argv}")
+                Call bat.start(program, argv, stdin)
                 Call bat.AppendLine("exit /b %errorlevel%")
             End If
 
             Return bat.ToString
         End Function
 
-        Public Function Bash(program$, argv$, environment As IEnumerable(Of ValueTuple), folkNew As Boolean) As String
+        <Extension>
+        Private Sub start(script As StringBuilder, program$, argv$, stdin$)
+            If stdin.StringEmpty Then
+                Call script.AppendLine($"""{program}"" {argv}")
+            Else
+                Call script.AppendLine($"echo {stdin} | ""{program}"" {argv}")
+            End If
+        End Sub
+
+        Public Function Bash(program$, argv$, environment As IEnumerable(Of ValueTuple), folkNew As Boolean, stdin$) As String
             Dim shell As New StringBuilder("#!/bin/bash")
 
             Call shell.AppendLine()
@@ -102,7 +112,7 @@ Namespace CommandLine
             End If
 
             Call shell.AppendLine($"cd {App.CurrentDirectory.CLIPath}")
-            Call shell.AppendLine($"""{program}"" {argv}")
+            Call shell.start(program, argv, stdin)
 
             Return shell.ToString
         End Function
