@@ -60,14 +60,16 @@ Public Module Extensions
     Public Function VisitTree(Of T)(tree As Tree(Of T), path As IEnumerable(Of String)) As Tree(Of T)
         Dim node As Tree(Of T) = tree
 
-        For Each name As String In path
-            ' 如果路径不存在是会报出键名没有找到的错误的
-            If Not node.Childs.ContainsKey(name) Then
-                Throw New EntryPointNotFoundException("entry=" & name)
-            Else
-                node = node.Childs(name)
-            End If
-        Next
+        With path.ToArray
+            For Each name As String In .ByRef
+                ' 如果路径不存在是会报出键名没有找到的错误的
+                If Not node.Childs.ContainsKey(name) Then
+                    Throw New EntryPointNotFoundException("entry=" & name & $" on path: {path.JoinBy("/")}")
+                Else
+                    node = node.Childs(name)
+                End If
+            Next
+        End With
 
         Return node
     End Function
