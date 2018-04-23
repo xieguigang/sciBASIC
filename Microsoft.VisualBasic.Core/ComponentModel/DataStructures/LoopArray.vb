@@ -1,52 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::1ff6d585b5c471e35e106e7ac7908575, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\LoopArray.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LoopArray
-    ' 
-    '         Properties: Buffer, Length
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: [GET], [Next], GetEnumerator, IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: [Set], Break, Reset
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LoopArray
+' 
+'         Properties: Buffer, Length
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: [GET], [Next], GetEnumerator, IEnumerable_GetEnumerator, ToString
+' 
+'         Sub: [Set], Break, Reset
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.DataStructures
@@ -57,26 +58,35 @@ Namespace ComponentModel.DataStructures
     ''' <typeparam name="T"></typeparam>
     Public Class LoopArray(Of T) : Implements IEnumerable(Of T)
 
-        Dim __innerArray As T()
-        Dim __p As Integer
+        Dim array As T()
+        Dim p%
 
         Public ReadOnly Property Buffer As T()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __innerArray
+                Return array
             End Get
         End Property
 
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __innerArray.Length
+                Return array.Length
+            End Get
+        End Property
+
+        Public ReadOnly Property Current As SeqValue(Of T)
+            Get
+                Return New SeqValue(Of T)() With {
+                    .i = p,
+                    .value = array(.i)
+                }
             End Get
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(source As IEnumerable(Of T))
-            __innerArray = source.ToArray
+            array = source.ToArray
         End Sub
 
         ''' <summary>
@@ -84,27 +94,27 @@ Namespace ComponentModel.DataStructures
         ''' </summary>
         ''' <returns></returns>
         Public Function [Next]() As T
-            If __p < __innerArray.Length - 1 Then
-                __p += 1
+            If p < array.Length - 1 Then
+                p += 1
             Else
-                __p = 0
+                p = 0
             End If
 
-            Return __innerArray(__p)
+            Return array(p)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub [Set](i%)
-            __p = i%
+            p = i%
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Reset()
-            __p = 0
+            p = 0
         End Sub
 
         Public Overrides Function ToString() As String
-            Return __innerArray.Take(10).ToArray.GetJson
+            Return array.Take(10).ToArray.GetJson
         End Function
 
         ''' <summary>
@@ -113,19 +123,19 @@ Namespace ComponentModel.DataStructures
         ''' <param name="delta%">The pointer move delta</param>
         ''' <returns></returns>
         Public Function [GET](delta%) As T
-            __p += delta
+            p += delta
 
-            If __p >= 0 Then
-                If __p <= __innerArray.Length - 1 Then
+            If p >= 0 Then
+                If p <= array.Length - 1 Then
                     ' 正常的下标范围内，不需要进行任何处理
                 Else
-                    __p = __p - __innerArray.Length
+                    p = p - array.Length
                 End If
             Else
-                __p = __innerArray.Length + __p
+                p = array.Length + p
             End If
 
-            Return __innerArray(__p)
+            Return array(p)
         End Function
 
         Public Shared Narrowing Operator CType(array As LoopArray(Of T)) As T()
@@ -134,6 +144,11 @@ Namespace ComponentModel.DataStructures
 
         Public Shared Widening Operator CType(array As T()) As LoopArray(Of T)
             Return New LoopArray(Of T)(array)
+        End Operator
+
+        Public Shared Operator +(array As LoopArray(Of T)) As SeqValue(Of T)
+            Call array.Next()
+            Return array.Current
         End Operator
 
         Dim _break As Boolean
