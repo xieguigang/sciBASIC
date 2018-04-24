@@ -68,6 +68,11 @@ Namespace IO
             Return Math.Sqrt(d)
         End Function
 
+        ''' <summary>
+        ''' 矩阵转置：将矩阵的行列进行颠倒
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Transpose(source As IEnumerable(Of DataSet)) As DataSet()
             Dim list As DataSet() = source.ToArray

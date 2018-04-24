@@ -346,6 +346,7 @@ Public Module DocumentExtensions
             Dim key$
             Dim value$
 
+            ' 需要跳过第一行标题行
             For Each line As String In path.IterateAllLines.Skip(1)
                 With Tokenizer.CharsParser(line)
                     ' 2018-4-8
