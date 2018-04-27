@@ -122,6 +122,10 @@ Namespace Net.Http
             )
         End Function
 
+        ''' <summary>
+        ''' Output this data uri string text
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             If chartSet.StringEmpty Then
