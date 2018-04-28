@@ -238,11 +238,14 @@ Namespace CommandLine
                 commandName = Mid(commandName, 3)     ' 去除前面的两个??问号，得到查询的term
                 Return Help(commandName)
 
-            ElseIf String.Equals(commandName, "~") Then  ' 打印出应用程序的位置，linux里面的HOME
+            ElseIf String.Equals(commandName, "~") Then
+                ' 打印出应用程序的位置，linux里面的HOME
                 Call Console.WriteLine(App.ExecutablePath)
+
                 Return 0
 
-            ElseIf String.Equals(commandName, "man") Then  ' 默认是分段打印帮助信息，假若加上了  --print参数的话，则才会一次性的打印所有的信息出来
+            ElseIf String.Equals(commandName, "man") Then
+                ' 默认是分段打印帮助信息，假若加上了  --print参数的话，则才会一次性的打印所有的信息出来
                 Dim CLI As CommandLine = DirectCast(argvs(Scan0), CommandLine)
                 Dim doc As String = SDKdocs()
 
@@ -268,7 +271,8 @@ Namespace CommandLine
                     .CLICode
 
             Else
-                If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then  '命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
+                ' 命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
+                If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then
                     Try
                         App.InputFile = commandName
                         Return ExecuteFile()(path:=commandName, args:=DirectCast(argvs(Scan0), CommandLine))
@@ -375,7 +379,8 @@ Namespace CommandLine
         ''' <remarks></remarks>
         <ExportAPI("?", Usage:="? [CommandName]", Info:="Show Application help", Example:="? example_commandName")>
         Public Function Help(CommandName As String) As Integer
-            If String.IsNullOrEmpty(CommandName) Then     ' List all commands when command name is empty.
+            If String.IsNullOrEmpty(CommandName) Then
+                ' List all commands when command name is empty.
                 Call Console.WriteLine(HelpSummary(False))
             Else
                 ' listing the help for specific command name

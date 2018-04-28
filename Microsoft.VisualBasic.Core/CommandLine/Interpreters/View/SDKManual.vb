@@ -203,17 +203,27 @@ Namespace CommandLine.ManView
             If Not markdown Then
                 Dim descr = VBCore.Info.AssemblyDescription
 
-                descr = Trim(descr)
+                Call sb.AppendLine()
 
-                Call sb.AppendLine(New String("="c, descr.Length))
-                Call sb.AppendLine(descr)
-                Call sb.AppendLine(New String("="c, descr.Length))
+                Call sb.AppendLine(" // ")
+                Call sb.AppendLine(" // " & Strings.Trim(descr))
+                Call sb.AppendLine(" // ")
+                Call sb.AppendLine(" // VERSION:   " & (VBCore.Info.AssemblyVersion Or "1.0.0.*".AsDefault))
+                Call sb.AppendLine(" // COPYRIGHT: " & VBCore.Info.AssemblyCopyright)
+                Call sb.AppendLine(" // GUID:      " & VBCore.Info.Guid)
+                Call sb.AppendLine(" // ")
+
+                Call sb.AppendLine()
                 Call sb.AppendLine()
 
                 For Each line$ In Paragraph.SplitParagraph(App.Info.Description, 110)
-                    Call sb.AppendLine(line$)
+                    Call sb.AppendLine(" " & line$)
                 Next
 
+                Call sb.AppendLine()
+                Call sb.AppendLine()
+                Call sb.AppendLine("SYNOPSIS")
+                Call sb.AppendLine($"{VBCore.AssemblyName} command [/argument argument-value...] [/@set environment-variable=value...]")
                 Call sb.AppendLine()
             End If
 
@@ -306,7 +316,7 @@ Namespace CommandLine.ManView
                 Call sb.AppendLine("   " & $"You can using ""{AssemblyName} ??<commandName>"" for getting more details command help.")
             End If
 
-            Return sb.ToString.Trim(ASCII.CR, ASCII.LF, " "c)
+            Return sb.ToString.TrimEnd(ASCII.CR, ASCII.LF, " "c)
         End Function
 
         Public Const ListAllCommandsPrompt As String = "All of the command that available in this program has been list below:"
