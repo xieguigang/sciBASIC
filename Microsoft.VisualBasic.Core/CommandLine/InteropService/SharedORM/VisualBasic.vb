@@ -96,7 +96,7 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine("    End Sub")
 
             For Each API In Me.EnumeratesAPI
-                Call __calls(vb, API)
+                Call __calls(vb, API.CLI, incompatible:=Not InCompatibleAttribute.CLRProcessCompatible(API.API))
             Next
 
             Call vb.AppendLine("End Class")
@@ -129,7 +129,7 @@ Namespace CommandLine.InteropService.SharedORM
         ''' <param name="API"></param>
         ''' <remarks>
         ''' </remarks>
-        Private Sub __calls(vb As StringBuilder, API As NamedValue(Of CommandLine))
+        Private Sub __calls(vb As StringBuilder, API As NamedValue(Of CommandLine), incompatible As Boolean)
             ' Public Function CommandName(args$,....Optional args$....) As Integer
             ' Dim CLI$ = "commandname arguments"
             ' Dim proc As IIORedirectAbstract = RunDotNetApp(CLI$)
@@ -159,7 +159,15 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine("    Call CLI.Append("" "")") ' 插入命令名称和参数值之间的一个必须的空格
             Call vb.AppendLine(__CLI(+API))
             Call vb.AppendLine()
-            Call vb.AppendLine($"    Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunDotNetApp)}(CLI.ToString())")
+
+            If incompatible Then
+                ' 这个CLI是不兼容的方法
+                Call vb.AppendLine($"    Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunProgram)}(CLI.ToString(), Nothing)")
+            Else
+                ' 兼容的
+                Call vb.AppendLine($"    Dim proc As {NameOf(IIORedirectAbstract)} = {NameOf(InteropService.RunDotNetApp)}(CLI.ToString())")
+            End If
+
             Call vb.AppendLine($"    Return proc.{NameOf(IIORedirectAbstract.Run)}()")
             Call vb.AppendLine("End Function")
         End Sub
