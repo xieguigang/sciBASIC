@@ -133,6 +133,9 @@ Public Module IOExtensions
     ''' </summary>
     ''' <param name="path">文件的路径</param>
     ''' <param name="mode">File open mode, default is create a new file.(文件指针的打开模式)</param>
+    ''' <param name="doClear">
+    ''' 是否将原来的文件之中的数据清空？默认是，否则将会以追加模式工作
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("Open.File")>
     <Extension>
