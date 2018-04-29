@@ -76,6 +76,18 @@ Namespace Language.Vectorization
             End Get
         End Property
 
+        ''' <summary>
+        ''' 请注意，这个属性是直接返回内部数组的引用，所以对这个属性的数组内的元素的修改将会直接修改这个向量的值
+        ''' 如果不希望将内部引用进行修改，请使用迭代器或者<see cref="Enumerable.ToArray"/> Linq拓展
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Array As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return buffer
+            End Get
+        End Property
+
 #Region ""
         ''' <summary>
         ''' The last elements in the collection <see cref="List(Of T)"/>

@@ -75,12 +75,15 @@ Namespace Darwinism.GAF.Helper
         ''' <remarks>
         ''' 在进行突变的时候应该是按照给定的范围来进行突变的
         ''' </remarks>
-        <Extension> Public Sub Mutate(ByRef v#(), random As Random)
+        <Extension> Public Sub Mutate(ByRef v#(), random As Random, Optional index% = -1000)
             Dim delta# = (v.Max - v.Min) / 10
-            Dim index# = random.Next(v.Length)
             Dim mutationValue# = (random.NextDouble * delta) * If(random.NextDouble >= 0.5, 1, -1)
 
-            v(index) += mutationValue
+            If index < 0 Then
+                v(random.Next(v.Length)) += mutationValue
+            Else
+                v(index) += mutationValue
+            End If
         End Sub
 
         ''' <summary>
