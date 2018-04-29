@@ -146,5 +146,38 @@ Namespace ComponentModel.Algorithm.base
                 left += 1
             Next
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function [Select](Of T, TOut)(windows As IEnumerable(Of SlideWindow(Of T)), projection As Func(Of T, T, TOut)) As IEnumerable(Of TOut)
+            Return windows.Select(selector:=Function(win) projection(win(0), win(1)))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function [Select](Of T, TOut)(windows As IEnumerable(Of SlideWindow(Of T)), projection As Func(Of T, T, T, TOut)) As IEnumerable(Of TOut)
+            Return windows.Select(selector:=Function(win) projection(win(0), win(1), win(2)))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function [Select](Of T, TOut)(windows As IEnumerable(Of SlideWindow(Of T)), projection As Func(Of T, T, T, T, TOut)) As IEnumerable(Of TOut)
+            Return windows.Select(selector:=Function(win) projection(win(0), win(1), win(2), win(3)))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function [Select](Of T, TOut)(windows As IEnumerable(Of SlideWindow(Of T)), projection As Func(Of T, T, T, T, T, TOut)) As IEnumerable(Of TOut)
+            Return windows.Select(selector:=Function(win) projection(win(0), win(1), win(2), win(3), win(4)))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function [Select](Of T, TOut)(windows As IEnumerable(Of SlideWindow(Of T)), projection As Func(Of T, T, T, T, T, T, TOut)) As IEnumerable(Of TOut)
+            Return windows.Select(selector:=Function(win)
+                                                Dim i As int = Scan0
+                                                Return projection(win(++i), win(++i), win(++i), win(++i), win(++i), win(++i))
+                                            End Function)
+        End Function
     End Module
 End Namespace
