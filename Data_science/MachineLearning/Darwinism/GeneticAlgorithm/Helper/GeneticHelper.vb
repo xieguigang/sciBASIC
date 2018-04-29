@@ -49,16 +49,36 @@ Namespace Darwinism.GAF.Helper
 
     Public Module GeneticHelper
 
+        ' 2018-4-29
+        '
+        ' 关于random对象的食用说明：尽量不要创建新的random对象
+        ' 从下面的测试可以看得出来，当使用就的random对象的时候，可以生成一系列的伪随机数
+        ' 但是如果进行random对象的创建的话，则几乎不会再生成新的随机数
+        '
+        ' With New Random
+        '    For i As Integer = 0 To 100
+        '        Call .NextDouble.__DEBUG_ECHO
+        '    Next
+        '
+        '    Call "==============================================".__INFO_ECHO
+        '
+        '    For i As Integer = 0 To 100
+        '        Call New Random().NextDouble.__DEBUG_ECHO
+        '    Next
+        ' End With
+
         ''' <summary>
         ''' Returns clone of current chromosome, which is mutated a bit
         ''' </summary>
         ''' <param name="v#"></param>
         ''' <param name="random"></param>
+        ''' <remarks>
+        ''' 在进行突变的时候应该是按照给定的范围来进行突变的
+        ''' </remarks>
         <Extension> Public Sub Mutate(ByRef v#(), random As Random)
-            ' just select random element of vector
-            ' and increase or decrease it on small value
-            Dim index As Integer = random.Next(v.Length)
-            Dim mutationValue# = random.Next(v.Length) - (random.NextDouble * v.Length)
+            Dim delta# = (v.Max - v.Min) / 10
+            Dim index# = random.Next(v.Length)
+            Dim mutationValue# = (random.NextDouble * delta) * If(random.NextDouble >= 0.5, 1, -1)
 
             v(index) += mutationValue
         End Sub
