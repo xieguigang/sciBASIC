@@ -116,7 +116,7 @@ Namespace ComponentModel.Ranges
         End Function
 
         Public Overloads Shared Operator ^(value As UnitValue(Of TUnit), unit As TUnit) As UnitValue(Of TUnit)
-
+            Throw New NotImplementedException
         End Operator
     End Class
 End Namespace

@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::8a453db702a61b8a9d130bb3630473e7, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module WebServiceUtils
-    ' 
-    '     Properties: DefaultUA, Protocols, Proxy
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
-    '               (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress, GetProxy
-    '               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, (+2 Overloads) POST
-    '               POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
-    '               UrlEncode, UrlPathEncode
-    ' 
-    '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
-    ' 
-    ' /********************************************************************************/
+' Module WebServiceUtils
+' 
+'     Properties: DefaultUA, Protocols, Proxy
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
+'               (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress, GetProxy
+'               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, (+2 Overloads) POST
+'               POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
+'               UrlEncode, UrlPathEncode
+' 
+'     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -201,19 +201,19 @@ Public Module WebServiceUtils
         Return GenerateDictionary(tokens, transLower)
     End Function
 
+    ReadOnly urlEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
+    ReadOnly noEscaping As New Func(Of String, String)(Function(s) s)
+
     ''' <summary>
     ''' 生成URL请求的参数
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="escaping">是否进行对value部分的字符串数据进行转义</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function BuildUrlData(data As IEnumerable(Of KeyValuePair(Of String, String)), Optional escaping As Boolean = False) As String
-        Dim __get As Func(Of String, String) = If(escaping,
-            AddressOf UrlDecode,
-            Function(s) s)
-        Dim urlData As String = data _
-            .Select(Function(x) $"{x.Key}={__get(x.Value)}").JoinBy("&")
-        Return urlData
+        Return data.Select(Function(x) $"{x.Key}={(noEscaping Or urlEscaping.When(escaping))(x.Value) }").JoinBy("&")
     End Function
 
     <ExportAPI("Build.Args")>

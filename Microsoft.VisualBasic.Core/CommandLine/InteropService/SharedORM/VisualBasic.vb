@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::cf50b552fbe9ab599c6cda0d060669fe, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\VisualBasic.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class VisualBasic
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: __CLI, __defaultValue, __normalizedAsIdentifier, __vbParameters, __xmlComments
-    '                   GetSourceCode
-    ' 
-    '         Sub: __calls
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class VisualBasic
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: __CLI, __defaultValue, __normalizedAsIdentifier, __vbParameters, __xmlComments
+'                   GetSourceCode
+' 
+'         Sub: __calls
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace CommandLine.InteropService.SharedORM
 
@@ -73,6 +74,7 @@ Namespace CommandLine.InteropService.SharedORM
                 .NormalizePathString(OnlyASCII:=True) _
                 .Replace(" ", "_")
             Dim rel$ = ProgramPathSearchTool.RelativePath(App.Type.Assembly.Location.GetFullPath)
+            Dim info$ = App.Type.NamespaceEntry.Description
 
             Call vb.AppendLine("Imports " & GetType(StringBuilder).Namespace)
             Call vb.AppendLine("Imports " & GetType(IIORedirectAbstract).Namespace)
@@ -86,7 +88,7 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine()
             Call vb.AppendLine("Namespace " & [namespace])
             Call vb.AppendLine()
-            Call vb.AppendLine(__xmlComments(App.Type.NamespaceEntry.Description))
+            Call vb.AppendLine(__xmlComments(XmlEntity.EscapingXmlEntity(info)))
             Call vb.AppendLine($"Public Class {VBLanguage.AutoEscapeVBKeyword(className)} : Inherits {GetType(InteropService).Name}")
             Call vb.AppendLine()
             Call vb.AppendLine($"    Public Const App$ = ""{exe}.exe""")
@@ -130,12 +132,20 @@ Namespace CommandLine.InteropService.SharedORM
         ''' <remarks>
         ''' </remarks>
         Private Sub __calls(vb As StringBuilder, API As NamedValue(Of CommandLine), incompatible As Boolean)
+
+#Region "Code template"
+
             ' Public Function CommandName(args$,....Optional args$....) As Integer
-            ' Dim CLI$ = "commandname arguments"
-            ' Dim proc As IIORedirectAbstract = RunDotNetApp(CLI$)
-            ' Return proc.Run()
+            '     Dim CLI$ = "commandname arguments"
+            '     Dim proc As IIORedirectAbstract = RunDotNetApp(CLI$)
+            '
+            '     Return proc.Run()
             ' End Function
-            Dim func$ = API.Name ' 直接使用函数原型的名字了，会比较容易辨别一些
+#End Region
+
+            ' 直接使用函数原型的名字了，会比较容易辨别一些
+            Dim func$ = API.Name
+            ' Xml comment 已经是经过转义了的，所以不需要再做xml entity的转义了
             Dim xmlComments$ = __xmlComments(API.Description)
             Dim params$()
 
