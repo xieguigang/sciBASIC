@@ -111,6 +111,10 @@ Namespace Matrix
     ''' </author>
     ''' <version>  5 August 1998
     ''' </version>
+    ''' <remarks>
+    ''' Access the internal two-dimensional array.
+    ''' Pointer to the two-dimensional array of matrix elements.
+    ''' </remarks>
     <Serializable>
     Public Class GeneralMatrix : Inherits Vector(Of Double())
         Implements ICloneable
@@ -240,14 +244,7 @@ Namespace Matrix
 
 
 #Region "Public Properties"
-        ''' <summary>Access the internal two-dimensional array.</summary>
-        ''' <returns>     Pointer to the two-dimensional array of matrix elements.
-        ''' </returns>
-        Public Overridable ReadOnly Property Array() As Double()()
-            Get
-                Return buffer
-            End Get
-        End Property
+
         ''' <summary>Copy the internal two-dimensional array.</summary>
         ''' <returns>     Two-dimensional array copy of matrix elements.
         ''' </returns>

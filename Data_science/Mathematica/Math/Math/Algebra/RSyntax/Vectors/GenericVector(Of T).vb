@@ -122,7 +122,7 @@ Namespace SyntaxAPI.Vectors
             Get
                 Dim x As Integer = a(0), y As Integer = b(0)
                 Dim ChunkBuffer As T() = New T(y - x - 1) {}
-                Call Array.ConstrainedCopy(Me.ToArray, x, ChunkBuffer, 0, ChunkBuffer.Length)
+                Call System.Array.ConstrainedCopy(Me.ToArray, x, ChunkBuffer, 0, ChunkBuffer.Length)
                 Return ChunkBuffer
             End Get
             Set(value As T())
