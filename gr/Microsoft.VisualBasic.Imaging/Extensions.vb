@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffd3eb5c8a34715e4ca5120cb86de6d3, gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::422192766447956499018257821163cb, gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: AsGDIImage, AsSVG
     ' 
-    '     Sub: (+2 Overloads) FillCircles
+    '     Sub: (+4 Overloads) FillCircles
     ' 
     ' /********************************************************************************/
 

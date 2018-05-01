@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9ef40e622f7bea04717a24f2e29bc8b, Data\OCR\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3a5e57143b7d97ff5548587405fe1595, Data\OCR\test\Module1.vb"
 
     ' Author:
     ' 
@@ -257,4 +257,3 @@ Module Module1
         Pause()
     End Sub
 End Module
-

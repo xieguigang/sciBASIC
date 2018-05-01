@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::467b49bf9e90136441fa13b0314394d2, Data\OCR\Library.vb"
+﻿#Region "Microsoft.VisualBasic::bdc1c09bffdad9d62610d317cea0cdec, Data\OCR\Library.vb"
 
     ' Author:
     ' 
@@ -183,4 +183,3 @@ Public Class Library
         Return resize
     End Function
 End Class
-

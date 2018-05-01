@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::458414e51abeeeaf8472ac6dd30aab79, Data\OCR\OCR.vb"
+﻿#Region "Microsoft.VisualBasic::f55d7cdb7989564ab3adbe57c32cf364, Data\OCR\OCR.vb"
 
     ' Author:
     ' 
@@ -231,4 +231,3 @@ Public Module OCR
         Next
     End Function
 End Module
-

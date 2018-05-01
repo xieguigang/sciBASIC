@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b81344d7ae404d5e455459b09d6a47dc, gr\network-visualization\Datavisualization.Network\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5cc762d6b158f4952d945fa5dd68b834, gr\network-visualization\Datavisualization.Network\NamespaceDoc.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@
 Friend Class NamespaceDoc
 
 End Class
-

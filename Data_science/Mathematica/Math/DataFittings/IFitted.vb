@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f53ebc9df85a814ac48ad8ab84138992, Data_science\Mathematica\Math\DataFittings\IFitted.vb"
+﻿#Region "Microsoft.VisualBasic::42bd38ccfe993e3987882d5222e28a6e, Data_science\Mathematica\Math\DataFittings\IFitted.vb"
 
     ' Author:
     ' 
@@ -58,4 +58,3 @@ Public Interface IFitted
     Property ErrorTest As TestPoint()
 
 End Interface
-

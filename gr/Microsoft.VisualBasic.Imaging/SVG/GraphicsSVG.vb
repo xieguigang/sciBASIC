@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34658b62fdeaa08d0ef0199c67967311, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::662c12e31ffad2e6b3b04d99ac3526e8, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,8 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, MeasureCharacterRanges
-    '                   (+7 Overloads) MeasureString
+    '         Function: (+7 Overloads) Add, (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible
+    '                   MeasureCharacterRanges, (+7 Overloads) MeasureString
     ' 
     '         Sub: AddMetafileComment, Clear, (+4 Overloads) CopyFromScreen, Dispose, (+4 Overloads) DrawArc
     '              (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, DrawCircle, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve

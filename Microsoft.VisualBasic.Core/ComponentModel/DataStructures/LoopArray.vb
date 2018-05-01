@@ -1,48 +1,50 @@
-﻿#Region "Microsoft.VisualBasic::1ff6d585b5c471e35e106e7ac7908575, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\LoopArray.vb"
+﻿#Region "Microsoft.VisualBasic::095eadeb4f32a2a5c55846088f4d4722, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\LoopArray.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class LoopArray
-' 
-'         Properties: Buffer, Length
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: [GET], [Next], GetEnumerator, IEnumerable_GetEnumerator, ToString
-' 
-'         Sub: [Set], Break, Reset
-' 
-' 
-' /********************************************************************************/
+    '     Class LoopArray
+    ' 
+    '         Properties: Buffer, Current, Length
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: [GET], [Next], GetEnumerator, IEnumerable_GetEnumerator, ToString
+    ' 
+    '         Sub: [Set], Break, Reset
+    ' 
+    '         Operators: +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

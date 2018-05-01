@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48d90c128866fb2c8d376c95255fa3cf, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::a69d465612a4a7a05ecc4d56df0b725e, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class GeneralMatrix
     ' 
-    '         Properties: Array, ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector
-    '                     RowDimension, RowPackedCopy
+    '         Properties: ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension
+    '                     RowPackedCopy
     ' 
     '         Constructor: (+6 Overloads) Sub New
     ' 

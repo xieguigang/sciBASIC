@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64fa4cf5507e5a9129b4eed249b1d641, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::db6ceb32e039b6697df305bab8374184, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
 
     ' Author:
     ' 
@@ -33,12 +33,12 @@
 
     '     Module Casting
     ' 
-    '         Function: (+3 Overloads) [As], CastChar, CastCharArray, CastCommandLine, CastDate
-    '                   CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage, CastInteger
-    '                   CastIPEndPoint, CastLogFile, CastLong, CastProcess, CastRegexOptions
-    '                   CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser, FloatSizeParser
-    '                   NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble, ScriptValue
-    '                   SizeParser
+    '         Function: (+3 Overloads) [As], AsBaseType, CastChar, CastCharArray, CastCommandLine
+    '                   CastDate, CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage
+    '                   CastInteger, CastIPEndPoint, CastLogFile, CastLong, CastProcess
+    '                   CastRegexOptions, CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser
+    '                   FloatSizeParser, NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble
+    '                   ScriptValue, SizeParser
     ' 
     ' 
     ' /********************************************************************************/

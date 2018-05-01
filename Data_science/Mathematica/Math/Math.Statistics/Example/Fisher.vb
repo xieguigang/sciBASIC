@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d18e9892721ea31ee315b7ad7e31e253, Data_science\Mathematica\Math\Math.Statistics\Example\Fisher.vb"
+﻿#Region "Microsoft.VisualBasic::c34204250eaeef9094e055522fb33ca2, Data_science\Mathematica\Math\Math.Statistics\Example\Fisher.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Module Fisher
         Pause()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18d60b01da7705f666dd5ef62bc09dfd, Data\OCR\GlobalMatch.vb"
+﻿#Region "Microsoft.VisualBasic::4c40f93b52d56ff6f9144226d60eb43a, Data\OCR\GlobalMatch.vb"
 
     ' Author:
     ' 
@@ -65,4 +65,3 @@ Public Module GlobalMatch
         End If
     End Function
 End Module
-

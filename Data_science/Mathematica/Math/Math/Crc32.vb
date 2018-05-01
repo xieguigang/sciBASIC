@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad6f9dad20af09041a563468663954b2, Data_science\Mathematica\Math\Math\Crc32.vb"
+﻿#Region "Microsoft.VisualBasic::57494a88c004043ce4c5fbcbe6746563, Data_science\Mathematica\Math\Math\Crc32.vb"
 
     ' Author:
     ' 
@@ -157,4 +157,3 @@ Public Class Crc32
         Return (Crc32.crc_32_tab(CInt((((crc) Xor octet) And &HFF))) Xor (crc >> 8))
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c54c11ab948405fbc7f0ec2f7e23bd59, Microsoft.VisualBasic.Core\Extensions\ValueTypes\TimeSpanScale.vb"
+﻿#Region "Microsoft.VisualBasic::f15c3bec8897be389b15949bd09eb9f2, Microsoft.VisualBasic.Core\Extensions\ValueTypes\TimeSpanScale.vb"
 
     ' Author:
     ' 
@@ -58,5 +58,3 @@ Namespace ValueTypes
         Ticks = 5
     End Enum
 End Namespace
-
-

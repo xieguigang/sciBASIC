@@ -1,41 +1,49 @@
-﻿#Region "Microsoft.VisualBasic::ab85ef7bf77c9d598a80c3525b1d4c13, vs_solutions\tutorials\core.test\LogFileTest.vb"
+﻿#Region "Microsoft.VisualBasic::b92d41ffb8cc3ca385037b7bcaa47ca6, vs_solutions\tutorials\core.test\LogFileTest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module LogFileTest
-' 
-'     Sub: Main, PrintTest, WriteTes
-' 
-' /********************************************************************************/
+    ' Module LogFileTest
+    ' 
+    '     Sub: Main, PrintTest, WriteTes, xmlModelTraceTest
+    ' 
+    ' Class XmlDataModelTest
+    ' 
+    '     Properties: ddd, dddddd
+    ' 
+    ' Class inherittttt
+    ' 
+    '     Properties: ddddd_sfsdfsd, mybaseClass
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

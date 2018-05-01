@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7d7dbd816a58cc136f4799b0a38de05, Data_science\Mathematica\Math\DataFittings\Weighted\WeightedFit.vb"
+﻿#Region "Microsoft.VisualBasic::df4decaecef9ee6e22832cf9f435b386, Data_science\Mathematica\Math\DataFittings\Weighted\WeightedFit.vb"
 
     ' Author:
     ' 
@@ -102,4 +102,3 @@ Public Class WeightedFit : Implements IFitted
         Return $"{Polynomial.ToString("F4")} @ R2={CorrelationCoefficient.ToString("F4")}"
     End Function
 End Class
-

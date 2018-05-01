@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90d0a4469700ea2efaa16fc3bc73ad48, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\SlideWindow\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5460c30408e9b56911770355f1ae9d85, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\SlideWindow\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module SlideWindowExtensions
     ' 
-    '         Function: __extendTails, CreateSlideWindows, SlideWindows
+    '         Function: (+5 Overloads) [Select], __extendTails, CreateSlideWindows, SlideWindows
     ' 
     ' 
     ' /********************************************************************************/

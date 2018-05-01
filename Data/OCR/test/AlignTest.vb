@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b96dd6f150f9cf4cf9b6bd16edf648b4, Data\OCR\test\AlignTest.vb"
+﻿#Region "Microsoft.VisualBasic::0de791d2c279a2b59edf032ed8c262ab, Data\OCR\test\AlignTest.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Public Module AlignTest
         Pause()
     End Sub
 End Module
-
