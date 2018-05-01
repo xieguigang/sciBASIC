@@ -375,6 +375,18 @@ Namespace Imaging.Math2D
             Return New RectangleF(location, size)
         End Function
 
+        ''' <summary>
+        ''' 宽和高进行等比缩放
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <param name="factor#"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Scale(size As SizeF, factor#) As SizeF
+            Return New SizeF(size.Width * factor, size.Height * factor)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Scale(rect As Rectangle, factor As SizeF) As Rectangle
             With rect
