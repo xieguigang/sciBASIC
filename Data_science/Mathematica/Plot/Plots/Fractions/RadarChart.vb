@@ -201,6 +201,26 @@ Namespace Fractions
 
                         End Select
 
+                        ' 计算标签是否已经越出绘图的边界线而无法被显示出来了
+                        Dim labelRect As New RectangleF(maxAxis, labelSize)
+
+                        If labelRect.Top < 0 Then
+                            maxAxis = New PointF(maxAxis.X, 1)
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+                        If labelRect.Left < 0 Then
+                            maxAxis = New PointF(1, maxAxis.Y)
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+                        If labelRect.Right > region.Size.Width Then
+                            maxAxis = New PointF(region.Size.Width - labelSize.Width - 1, maxAxis.Y)
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+                        If labelRect.Bottom > region.Size.Height Then
+                            maxAxis = New PointF(maxAxis.X, region.Size.Height - labelSize.Height - 1)
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+
                         g.DrawString(label, labelFont, Brushes.Black, maxAxis)
                     Next
 
