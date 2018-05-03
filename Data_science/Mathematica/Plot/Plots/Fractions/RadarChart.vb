@@ -95,7 +95,7 @@ Namespace Fractions
                              Optional colorAlpha% = 120,
                              Optional axisRange As DoubleRange = Nothing,
                              Optional shapeBorderWidth! = 10,
-                             Optional pointRadius! = 35,
+                             Optional pointRadius! = 30,
                              Optional labelFontCSS$ = CSSFont.Win7VeryVeryLarge,
                              Optional axisStrokeStyle$ = Stroke.HighlightStroke,
                              Optional spline As Boolean = True) As GraphicsData
@@ -319,7 +319,7 @@ Namespace Fractions
 #End If
                             End With
 
-                            ' color = color.Dark(0.05)
+                            color = color.Alpha(255)
 
                             For Each point As PointF In axisPoints
                                 Call g.DrawCircle(point, pointRadius, New SolidBrush(color))
