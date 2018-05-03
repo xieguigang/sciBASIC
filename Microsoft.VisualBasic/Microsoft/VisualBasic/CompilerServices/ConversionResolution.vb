@@ -461,9 +461,9 @@ Namespace Microsoft.VisualBasic.CompilerServices
             Ambiguous = 5
             Bad = 0
             Identity = 1
-            Narrowing = 3
+            [Narrowing] = 3
             None = 4
-            Widening = 2
+            [Widening] = 2
         End Enum
     End Class
 End Namespace

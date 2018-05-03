@@ -1,6 +1,4 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.Dynamic
 Imports System.Globalization
@@ -8,6 +6,7 @@ Imports System.Reflection
 Imports System.Security
 Imports System.Security.Permissions
 Imports System.Threading
+Imports Microsoft.VisualBasic.CompilerServices.ConversionResolution
 
 Namespace Microsoft.VisualBasic.CompilerServices
     <EditorBrowsable(EditorBrowsableState.Never), DynamicallyInvokableAttribute> _
@@ -21,7 +20,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
             If (((ConversionResolution.ClassifyPredefinedConversion(TargetType, sourceType) = ConversionClass.None) AndAlso (Symbols.IsClassOrValueType(sourceType) OrElse Symbols.IsClassOrValueType(TargetType))) AndAlso (Not Symbols.IsIntrinsicType(sourceType) OrElse Not Symbols.IsIntrinsicType(TargetType))) Then
                 Dim operatorMethod As Method = Nothing
                 ConversionResolution.ClassifyUserDefinedConversion(TargetType, sourceType, operatorMethod)
-                Return (operatorMethod > Nothing)
+                Return (operatorMethod IsNot Nothing)
             End If
             Return False
         End Function

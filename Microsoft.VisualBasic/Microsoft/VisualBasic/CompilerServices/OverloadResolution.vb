@@ -50,7 +50,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
         End Function
 
         Friend Shared Function CanMatchArguments(TargetProcedure As Method, Arguments As Object(), ArgumentNames As String(), TypeArguments As Type(), RejectNarrowingConversions As Boolean, Errors As List(Of String)) As Boolean
-            Dim flag2 As Boolean = (Errors > Nothing)
+            Dim flag2 As Boolean = (Errors IsNot Nothing)
             TargetProcedure.ArgumentsValidated = True
             If (TargetProcedure.IsMethod AndAlso Symbols.IsRawGeneric(TargetProcedure.AsMethod)) Then
                 If (TypeArguments.Length = 0) Then
@@ -511,7 +511,7 @@ Label_020E:
         End Function
 
         Private Shared Function InferTypeArguments(TargetProcedure As Method, Arguments As Object(), ArgumentNames As String(), TypeArguments As Type(), Errors As List(Of String)) As Boolean
-            Dim flag2 As Boolean = (Errors > Nothing)
+            Dim flag2 As Boolean = (Errors IsNot Nothing)
             Dim rawParameters As ParameterInfo() = TargetProcedure.RawParameters
             Dim length As Integer = ArgumentNames.Length
             Dim index As Integer = 0
@@ -770,7 +770,7 @@ Label_0149:
         End Sub
 
         Private Shared Function InstantiateGenericMethod(TargetProcedure As Method, TypeArguments As Type(), Errors As List(Of String)) As Boolean
-            Dim flag2 As Boolean = (Errors > Nothing)
+            Dim flag2 As Boolean = (Errors IsNot Nothing)
             Dim num As Integer = (TypeArguments.Length - 1)
             Dim i As Integer = 0
             Do While (i <= num)

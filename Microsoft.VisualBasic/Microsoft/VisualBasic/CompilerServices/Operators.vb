@@ -549,7 +549,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
             Else
                 list = New List(Of Method)
             End If
-            If (((Type2 > Nothing) AndAlso Not Symbols.IsRootObjectType(Type2)) AndAlso Symbols.IsClassOrValueType(Type2)) Then
+            If (((Type2 IsNot Nothing) AndAlso Not Symbols.IsRootObjectType(Type2)) AndAlso Symbols.IsClassOrValueType(Type2)) Then
                 Dim baseType As Type = Type1
                 Do While (Not baseType Is Nothing)
                     If Symbols.IsOrInheritsFrom(Type2, baseType) Then

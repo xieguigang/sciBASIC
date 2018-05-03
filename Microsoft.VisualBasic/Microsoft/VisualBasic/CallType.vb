@@ -6,12 +6,12 @@ Namespace Microsoft.VisualBasic
         ' Fields
         <DynamicallyInvokableAttribute>
         [Get] = 2
-        <DynamicallyInvokableAttribute> _
-        Let = 4
         <DynamicallyInvokableAttribute>
-    Method = 1
-    <DynamicallyInvokableAttribute>
-    [Set] = 8
+        [Let] = 4
+        <DynamicallyInvokableAttribute>
+        Method = 1
+        <DynamicallyInvokableAttribute>
+        [Set] = 8
     End Enum
 End Namespace
 

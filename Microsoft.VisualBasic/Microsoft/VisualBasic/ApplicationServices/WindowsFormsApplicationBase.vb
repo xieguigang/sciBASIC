@@ -83,12 +83,12 @@ Namespace Microsoft.VisualBasic.ApplicationServices
                 End If
             End RaiseEvent
         End Event
-        <Field:  > _
-        Public Custom Event Shutdown As ShutdownEventHandler
-        <Field:  > _
-        Public Custom Event Startup As StartupEventHandler
-        <Field:  > _
-        Public Custom Event StartupNextInstance As StartupNextInstanceEventHandler
+
+        Public Event Shutdown As ShutdownEventHandler
+
+        Public Event Startup As StartupEventHandler
+
+        Public Event StartupNextInstance As StartupNextInstanceEventHandler
         Public Custom Event UnhandledException As UnhandledExceptionEventHandler
             AddHandler(value As UnhandledExceptionEventHandler)
                 If (Me.m_UnhandledExceptionHandlers Is Nothing) Then
@@ -555,7 +555,7 @@ Namespace Microsoft.VisualBasic.ApplicationServices
 
         Protected Property MainForm As Form
             Get
-                Return Interaction.IIf(Of Form)((Me.m_AppContext > Nothing), Me.m_AppContext.MainForm, Nothing)
+                Return Interaction.IIf(Of Form)((Me.m_AppContext IsNot Nothing), Me.m_AppContext.MainForm, Nothing)
             End Get
             Set(value As Form)
                 If (value Is Nothing) Then

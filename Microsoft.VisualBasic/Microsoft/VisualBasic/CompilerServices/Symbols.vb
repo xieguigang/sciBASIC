@@ -874,7 +874,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
             ' Properties
             Friend ReadOnly Property IsArray As Boolean
                 Get
-                    Return (Symbols.IsArrayType(Me.m_Type) AndAlso (Me.m_Instance > Nothing))
+                    Return (Symbols.IsArrayType(Me.m_Type) AndAlso (Me.m_Instance IsNot Nothing))
                 End Get
             End Property
 
@@ -886,7 +886,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
 
             Friend ReadOnly Property IsValueType As Boolean
                 Get
-                    Return (Symbols.IsValueType(Me.m_Type) AndAlso (Me.m_Instance > Nothing))
+                    Return (Symbols.IsValueType(Me.m_Type) AndAlso (Me.m_Instance IsNot Nothing))
                 End Get
             End Property
 
