@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f337cb2a20c4d8bc4b7a0a851569ce96, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
+﻿#Region "Microsoft.VisualBasic::2094e049a790edb1109bb01ad4be7a90, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,16 @@
 
     '     Module GeometryMath
     ' 
-    '         Function: (+4 Overloads) IntersectionOf
+    '         Function: GetLineIntersection, (+4 Overloads) IntersectionOf, (+2 Overloads) QuadrantRegion
+    ' 
+    '     Enum QuadrantRegions
+    ' 
+    '         LeftBottom, LeftTop, RightBottom, RightTop, XLeft
+    '         XRight, YBottom, YTop
+    ' 
+    '  
+    ' 
+    ' 
     ' 
     '     Enum Intersection
     ' 
@@ -174,55 +183,106 @@ Namespace Imaging.Math2D
         ''' </summary>
         ''' <param name="line1"></param>
         ''' <param name="line2"></param>
+        ''' <param name="i">可以从这个参数取得交点</param>
         ''' <returns></returns>
-        Public Function IntersectionOf(line1 As Line, line2 As Line) As Intersection
+        ''' 
+        <Extension>
+        Public Function IntersectionOf(line1 As Line, line2 As Line, Optional ByRef i As PointF = Nothing) As Intersection
             '  Fail if either line segment is zero-length.
-            If line1.X1 = line1.X2 AndAlso line1.Y1 = line1.Y2 OrElse line2.X1 = line2.X2 AndAlso line2.Y1 = line2.Y2 Then
+            If line1.Length = 0R OrElse line2.Length = 0R Then
                 Return Intersection.None
             End If
 
-            If line1.X1 = line2.X1 AndAlso line1.Y1 = line2.Y1 OrElse line1.X2 = line2.X1 AndAlso line1.Y2 = line2.Y1 Then
+            If (line1.X1 = line2.X1 AndAlso line1.Y1 = line2.Y1) OrElse
+               (line1.X1 = line2.X2 AndAlso line1.Y1 = line2.Y2) Then
+
+                i = line1.P1
                 Return Intersection.Intersection
-            End If
-            If line1.X1 = line2.X2 AndAlso line1.Y1 = line2.Y2 OrElse line1.X2 = line2.X2 AndAlso line1.Y2 = line2.Y2 Then
+            ElseIf (line1.X2 = line2.X1 AndAlso line1.Y2 = line2.Y1) OrElse
+                   (line1.X2 = line2.X2 AndAlso line1.Y2 = line2.Y2) Then
+
+                i = line1.P2
                 Return Intersection.Intersection
+            Else
+
+                Return GetLineIntersection(
+                    line1.X1, line1.Y1, line1.X2, line1.Y2,
+                    line2.X1, line2.Y1, line2.X2, line2.Y2,
+                    i:=i
+                )
+
             End If
+        End Function
 
-            '  (1) Translate the system so that point A is on the origin.
-            line1.X2 -= line1.X1
-            line1.Y2 -= line1.Y1
-            line2.X1 -= line1.X1
-            line2.Y1 -= line1.Y1
-            line2.X2 -= line1.X1
-            line2.Y2 -= line1.Y1
+        ''' <summary>
+        ''' + [(<paramref name="AX"/>, <paramref name="AY"/>), (<paramref name="BX"/>, <paramref name="BY"/>)]
+        ''' + [(<paramref name="CX"/>, <paramref name="CY"/>), (<paramref name="DX"/>, <paramref name="DY"/>)]
+        ''' </summary>
+        ''' <param name="AX!"></param>
+        ''' <param name="AY!"></param>
+        ''' <param name="BX!"></param>
+        ''' <param name="BY!"></param>
+        ''' <param name="CX!"></param>
+        ''' <param name="CY!"></param>
+        ''' <param name="DX!"></param>
+        ''' <param name="DY!"></param>
+        ''' <param name="i">可以从这个参数取得交点</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect/565282#
+        ''' </remarks>
+        Public Function GetLineIntersection(AX!, AY!, BX!, BY!, CX!, CY!, DX!, DY!, Optional ByRef i As PointF = Nothing) As Intersection
+            Dim s02_x As Single
+            Dim s02_y As Single
+            Dim s10_x As Single
+            Dim s10_y As Single
+            Dim s32_x As Single
+            Dim s32_y As Single
+            Dim s_numer As Single
+            Dim t_numer As Single
+            Dim denom As Single
+            Dim t As Single
 
-            '  Discover the length of segment A-B.
-            Dim distAB As Double = Math.Sqrt(line1.X2 * line1.X2 + line1.Y2 * line1.Y2)
+            s10_x = BX - AX
+            s10_y = BY - AY
+            s32_x = DX - CX
+            s32_y = DY - CY
 
-            '  (2) Rotate the system so that point B is on the positive X axis.
-            Dim theCos As Double = line1.X2 / distAB
-            Dim theSin As Double = line1.Y2 / distAB
-            Dim newX As Double = line2.X1 * theCos + line2.Y1 * theSin
-            line2.Y1 = CSng(line2.Y1 * theCos - line2.X1 * theSin)
-            line2.X1 = CSng(newX)
-            newX = line2.X2 * theCos + line2.Y2 * theSin
-            line2.Y2 = CSng(line2.Y2 * theCos - line2.X2 * theSin)
-            line2.X2 = CSng(newX)
+            denom = s10_x * s32_y - s32_x * s10_y
 
-            '  Fail if segment C-D doesn't cross line A-B.
-            If line2.Y1 < 0 AndAlso line2.Y2 < 0 OrElse line2.Y1 >= 0 AndAlso line2.Y2 >= 0 Then
+            If denom = 0 Then
+                ' Collinear(平行或共线)       
                 Return Intersection.None
             End If
 
-            '  (3) Discover the position of the intersection point along line A-B.
-            Dim posAB As Double = line2.X2 + (line2.X1 - line2.X2) * line2.Y2 / (line2.Y2 - line2.Y1)
+            Dim denomPositive As Boolean = denom > 0
 
-            '  Fail if segment C-D crosses line A-B outside of segment A-B.
-            If posAB < 0 OrElse posAB > distAB Then
+            s02_x = AX - CX
+            s02_y = AY - CY
+            s_numer = s10_x * s02_y - s10_y * s02_x
+
+            If (s_numer < 0) = denomPositive Then
+                ' 参数是大于等亿且小于等亿的，分子分母必须同号且分子小于等于分毿        
                 Return Intersection.None
             End If
 
-            '  (4) Apply the discovered position to line A-B in the original coordinate system.
+            t_numer = s32_x * s02_y - s32_y * s02_x
+
+            If (t_numer < 0) = denomPositive Then
+                Return Intersection.None
+            End If
+
+            If ((s_numer > denom) = denomPositive) OrElse ((t_numer > denom) = denomPositive) Then
+                Return Intersection.None
+            End If
+
+            ' Collision detected
+            t = t_numer / denom
+            i = New PointF With {
+                .X = AX + (t * s10_x),
+                .Y = AY + (t * s10_y)
+            }
+
             Return Intersection.Intersection
         End Function
 
@@ -262,7 +322,7 @@ Namespace Imaging.Math2D
                 Return QuadrantRegions.RightTop
             ElseIf p.X = origin.X AndAlso p.Y < origin.Y Then
                 Return QuadrantRegions.YTop
-            ElseIf p.x < origin.X AndAlso p.Y < origin.Y Then
+            ElseIf p.X < origin.X AndAlso p.Y < origin.Y Then
                 Return QuadrantRegions.LeftTop
             ElseIf p.X < origin.X AndAlso p.Y = origin.Y Then
                 Return QuadrantRegions.XLeft

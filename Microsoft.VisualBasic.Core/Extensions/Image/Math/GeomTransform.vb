@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6324907a193becbb1383e939c9bf4d67, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::71378490a7a35c2c967fcd61fa45b447, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeomTransform.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Function: Angle, Area, (+2 Overloads) CalculateAngle, CenterAlign, (+2 Overloads) CentralOffset
     '                   (+4 Overloads) Centre, CircleRectangle, (+4 Overloads) Distance, (+2 Overloads) GetBounds, GetCenter
     '                   (+2 Overloads) InRegion, MirrorX, MirrorY, (+5 Overloads) OffSet2D, Offsets
-    '                   (+2 Overloads) Scale, SquareSize
+    '                   (+4 Overloads) Scale, ShapePoints, SquareSize
     ' 
     ' 
     ' /********************************************************************************/
@@ -373,6 +373,30 @@ Namespace Imaging.Math2D
             Dim delta = size - rect.Size
             Dim location As New PointF(rect.Left - delta.Width / 2, rect.Top - delta.Height / 2)
             Return New RectangleF(location, size)
+        End Function
+
+        ''' <summary>
+        ''' 宽和高进行等比缩放
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <param name="factor#"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Scale(size As SizeF, factor#) As SizeF
+            Return New SizeF(size.Width * factor, size.Height * factor)
+        End Function
+
+        ''' <summary>
+        ''' 宽和高进行等比缩放
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <param name="factor#"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Scale(size As Size, factor#) As Size
+            Return New Size(size.Width * factor, size.Height * factor)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

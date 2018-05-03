@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f226011d8c504f209b92aaa30e2fcfcf, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::00dde34ef075f4a0fbfe133e6cf0db56, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Vector.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Vector
     ' 
-    '         Properties: First, Last, Length
+    '         Properties: Array, First, Last, Length
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: GetEnumerator, IEnumerable_GetEnumerator, Subset, ToString, Which
@@ -73,6 +73,18 @@ Namespace Language.Vectorization
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return buffer.Length
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 请注意，这个属性是直接返回内部数组的引用，所以对这个属性的数组内的元素的修改将会直接修改这个向量的值
+        ''' 如果不希望将内部引用进行修改，请使用迭代器或者<see cref="Enumerable.ToArray"/> Linq拓展
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Array As T()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return buffer
             End Get
         End Property
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f76891599227842fcfeffad69c28926, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::ceb6354319261aae8d03df0bc8bc2aac, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\DataURI.vb"
 
     ' Author:
     ' 

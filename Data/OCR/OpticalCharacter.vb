@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a514fe61fcfccbfc84b19fd5d2b645d, Data\OCR\OpticalCharacter.vb"
+﻿#Region "Microsoft.VisualBasic::518e99c49cc149033d90d0cddccafbb7, Data\OCR\OpticalCharacter.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices

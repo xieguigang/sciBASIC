@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d65ce5e32de13636b6b46ef7b2d3c7f9, Microsoft.VisualBasic.Core\Extensions\IO\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::b22512d298306a8f55edfe28f56f0cf4, Microsoft.VisualBasic.Core\Extensions\IO\StreamHelper.vb"
 
     ' Author:
     ' 
@@ -89,4 +89,3 @@ Public Module StreamHelper
         Call stream.Write(value & newLine, encoding)
     End Sub
 End Module
-

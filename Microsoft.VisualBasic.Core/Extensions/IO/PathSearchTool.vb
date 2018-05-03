@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b89f6012e5eacf910864a14771a21ae, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::1c42bd61c25b24e15da0d0b8a9122cae, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
 
     ' Author:
     ' 
@@ -35,13 +35,14 @@
     ' 
     '     Function: BaseName, BatchMd5Renamed, BranchRule, ChangeSuffix, Delete
     '               DIR, DirectoryExists, DirectoryName, EnumerateFiles, ExtensionSuffix
-    '               FileCopy, (+2 Overloads) FileExists, FileLength, FileName, FileOpened
-    '               GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath, GetMostAppreancePath
-    '               ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList, Long2Short
-    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
-    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory, SearchDrive
-    '               SearchProgram, SearchScriptFile, SourceCopy, SplitPath, TheFile
-    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    '               FileCopy, (+2 Overloads) FileExists, FileLength, FileMove, FileName
+    '               FileOpened, GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath
+    '               GetMostAppreancePath, ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList
+    '               Long2Short, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine
+    '               PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory
+    '               SearchDrive, SearchProgram, SearchScriptFile, SourceCopy, SplitPath
+    '               TheFile, ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix
+    '               UnixPath
     ' 
     '     Sub: MkDIR
     ' 

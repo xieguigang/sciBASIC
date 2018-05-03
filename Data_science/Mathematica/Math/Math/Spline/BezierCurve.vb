@@ -66,7 +66,7 @@ Namespace Interpolation
     Public Class BezierCurve
 
         ''' <summary>
-        ''' store the list of points in the bezier curve
+        ''' store the list of points in the bezier curve.(贝塞尔曲线插值的结果列表)
         ''' </summary>
         Public ReadOnly Property BezierPoints() As List(Of PointF)
 

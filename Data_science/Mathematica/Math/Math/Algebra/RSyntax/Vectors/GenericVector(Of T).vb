@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abc6a2f111a002a38a3f9033076e9444, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::af948e22c5aa23040ccd9dbec9665bfd, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Vectors\GenericVector(Of T).vb"
 
     ' Author:
     ' 
@@ -122,7 +122,7 @@ Namespace SyntaxAPI.Vectors
             Get
                 Dim x As Integer = a(0), y As Integer = b(0)
                 Dim ChunkBuffer As T() = New T(y - x - 1) {}
-                Call Array.ConstrainedCopy(Me.ToArray, x, ChunkBuffer, 0, ChunkBuffer.Length)
+                Call System.Array.ConstrainedCopy(Me.ToArray, x, ChunkBuffer, 0, ChunkBuffer.Length)
                 Return ChunkBuffer
             End Get
             Set(value As T())

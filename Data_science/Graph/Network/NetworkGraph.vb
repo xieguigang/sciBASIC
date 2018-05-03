@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15f0c8b0aa55dbb21fd7192a66c017e7, Data_science\Graph\Network\NetworkGraph.vb"
+﻿#Region "Microsoft.VisualBasic::35eea96e3adbb5fd72d68482545a1e08, Data_science\Graph\Network\NetworkGraph.vb"
 
     ' Author:
     ' 
@@ -57,5 +57,3 @@ Namespace Network
         End Sub
     End Class
 End Namespace
-
-

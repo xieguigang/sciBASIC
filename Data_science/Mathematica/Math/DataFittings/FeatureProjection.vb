@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::773f243cc62d6d51ba47c796f0812f87, Data_science\Mathematica\Math\DataFittings\FeatureProjection.vb"
+﻿#Region "Microsoft.VisualBasic::556ba1608e5808ad66895519effb6209, Data_science\Mathematica\Math\DataFittings\FeatureProjection.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Public Module FeatureProjection
             .Project(dimension)
     End Function
 End Module
-

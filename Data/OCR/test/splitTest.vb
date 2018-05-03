@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05eb944be03f9a8f55fda51b94e89dd5, Data\OCR\test\splitTest.vb"
+﻿#Region "Microsoft.VisualBasic::1515647ca552f9fe3d0b014160f76fd5, Data\OCR\test\splitTest.vb"
 
     ' Author:
     ' 
@@ -82,4 +82,3 @@ Module splitTest
         End If
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42269f4c1a758a7b341ecbaf8d84a249, Data_science\Graph\Model\Abstract\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::6539514bdd20d050ebc9b07e3d816552, Data_science\Graph\Model\Abstract\Edge.vb"
 
     ' Author:
     ' 
@@ -103,4 +103,3 @@ Public Class Edge(Of Vertex As V) : Implements INamedValue
         Return $"({GetHashCode()}) {U} => {V}"
     End Function
 End Class
-

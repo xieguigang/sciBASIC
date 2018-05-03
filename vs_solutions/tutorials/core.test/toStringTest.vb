@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dca962a5bd921475a512b0798d101a80, vs_solutions\tutorials\core.test\toStringTest.vb"
+﻿#Region "Microsoft.VisualBasic::0d6977e6cc48f640143bc3cece698813, vs_solutions\tutorials\core.test\toStringTest.vb"
 
     ' Author:
     ' 
@@ -124,4 +124,3 @@ Module toStringTest
         End Operator
     End Class
 End Module
-

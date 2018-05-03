@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb9f26853f695f1d762ce15a04e28cca, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
+﻿#Region "Microsoft.VisualBasic::3077025daac512ad8e4a80f6b623e2b6, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\ApplicationInfoUtils.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,8 @@
     '     Module ApplicationInfoUtils
     ' 
     '         Function: CurrentExe, FromAssembly, FromTypeModule, GetCompanyName, GetCopyRightsDetail
-    '                   GetProductDescription, GetProductName, GetProductTitle, GetProductVersion, VBCore
+    '                   GetGuid, GetProductDescription, GetProductName, GetProductTitle, GetProductVersion
+    '                   VBCore
     ' 
     ' 
     ' /********************************************************************************/
@@ -43,6 +44,7 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 
 Namespace ApplicationServices.Development
 
@@ -62,7 +64,8 @@ Namespace ApplicationServices.Development
                 .AssemblyProduct = GetProductName(assm),
                 .AssemblyCopyright = GetCopyRightsDetail(assm),
                 .AssemblyTitle = GetProductTitle(assm),
-                .AssemblyDescription = GetProductDescription(assm)
+                .AssemblyDescription = GetProductDescription(assm),
+                .Guid = GetGuid(assm)
             }
         End Function
 
@@ -93,6 +96,20 @@ Namespace ApplicationServices.Development
         <Extension>
         Public Function FromTypeModule(type As Type) As AssemblyInfo
             Return type.Assembly.FromAssembly
+        End Function
+
+        Public Function GetGuid(assm As Assembly) As String
+            If assm IsNot Nothing Then
+                Dim attrs = assm.GetCustomAttributes(GetType(GuidAttribute), False)
+
+                If attrs.IsNullOrEmpty Then
+                    Return ""
+                Else
+                    Return DirectCast(attrs(Scan0), GuidAttribute).Value
+                End If
+            Else
+                Return ""
+            End If
         End Function
 
         ''' <summary>

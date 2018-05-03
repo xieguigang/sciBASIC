@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf50b552fbe9ab599c6cda0d060669fe, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\VisualBasic.vb"
+﻿#Region "Microsoft.VisualBasic::345a0252b689d3c891f91c1810aca5fb, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\VisualBasic.vb"
 
     ' Author:
     ' 
@@ -50,6 +50,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Xml
 
 Namespace CommandLine.InteropService.SharedORM
 
@@ -73,6 +74,7 @@ Namespace CommandLine.InteropService.SharedORM
                 .NormalizePathString(OnlyASCII:=True) _
                 .Replace(" ", "_")
             Dim rel$ = ProgramPathSearchTool.RelativePath(App.Type.Assembly.Location.GetFullPath)
+            Dim info$ = App.Type.NamespaceEntry.Description
 
             Call vb.AppendLine("Imports " & GetType(StringBuilder).Namespace)
             Call vb.AppendLine("Imports " & GetType(IIORedirectAbstract).Namespace)
@@ -86,7 +88,7 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine()
             Call vb.AppendLine("Namespace " & [namespace])
             Call vb.AppendLine()
-            Call vb.AppendLine(__xmlComments(App.Type.NamespaceEntry.Description))
+            Call vb.AppendLine(__xmlComments(XmlEntity.EscapingXmlEntity(info)))
             Call vb.AppendLine($"Public Class {VBLanguage.AutoEscapeVBKeyword(className)} : Inherits {GetType(InteropService).Name}")
             Call vb.AppendLine()
             Call vb.AppendLine($"    Public Const App$ = ""{exe}.exe""")
@@ -130,12 +132,20 @@ Namespace CommandLine.InteropService.SharedORM
         ''' <remarks>
         ''' </remarks>
         Private Sub __calls(vb As StringBuilder, API As NamedValue(Of CommandLine), incompatible As Boolean)
+
+#Region "Code template"
+
             ' Public Function CommandName(args$,....Optional args$....) As Integer
-            ' Dim CLI$ = "commandname arguments"
-            ' Dim proc As IIORedirectAbstract = RunDotNetApp(CLI$)
-            ' Return proc.Run()
+            '     Dim CLI$ = "commandname arguments"
+            '     Dim proc As IIORedirectAbstract = RunDotNetApp(CLI$)
+            '
+            '     Return proc.Run()
             ' End Function
-            Dim func$ = API.Name ' 直接使用函数原型的名字了，会比较容易辨别一些
+#End Region
+
+            ' 直接使用函数原型的名字了，会比较容易辨别一些
+            Dim func$ = API.Name
+            ' Xml comment 已经是经过转义了的，所以不需要再做xml entity的转义了
             Dim xmlComments$ = __xmlComments(API.Description)
             Dim params$()
 

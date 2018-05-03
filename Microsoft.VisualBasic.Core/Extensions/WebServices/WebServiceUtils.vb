@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a453db702a61b8a9d130bb3630473e7, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::2ba0871779282725d13c43e9a4cc68e0, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -201,19 +201,19 @@ Public Module WebServiceUtils
         Return GenerateDictionary(tokens, transLower)
     End Function
 
+    ReadOnly urlEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
+    ReadOnly noEscaping As New Func(Of String, String)(Function(s) s)
+
     ''' <summary>
     ''' 生成URL请求的参数
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="escaping">是否进行对value部分的字符串数据进行转义</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function BuildUrlData(data As IEnumerable(Of KeyValuePair(Of String, String)), Optional escaping As Boolean = False) As String
-        Dim __get As Func(Of String, String) = If(escaping,
-            AddressOf UrlDecode,
-            Function(s) s)
-        Dim urlData As String = data _
-            .Select(Function(x) $"{x.Key}={__get(x.Value)}").JoinBy("&")
-        Return urlData
+        Return data.Select(Function(x) $"{x.Key}={(noEscaping Or urlEscaping.When(escaping))(x.Value) }").JoinBy("&")
     End Function
 
     <ExportAPI("Build.Args")>

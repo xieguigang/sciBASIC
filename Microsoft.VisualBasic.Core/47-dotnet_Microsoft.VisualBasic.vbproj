@@ -805,6 +805,7 @@
     <Compile Include="ComponentModel\Ranges\Unit.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
+    <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
     <Compile Include="Extensions\Image\Math\Models\Polygon.vb" />
     <Compile Include="Extensions\Image\Math\Models\Line.vb" />
     <Compile Include="Extensions\IO\StreamHelper.vb" />
@@ -1110,6 +1111,7 @@
     <Compile Include="Text\Xml\Linq\Entity.vb" />
     <Compile Include="Text\Xml\Models\Vector.vb" />
     <Compile Include="Text\Xml\HtmlBuilder.vb" />
+    <Compile Include="Text\Xml\XmlEntity.vb" />
     <Compile Include="Text\Xml\Serialization\XmlComment.vb" />
     <Compile Include="Text\Xml\OpenXml\Content_Types.vb" />
     <Compile Include="Text\Xml\XmlBuilder.vb" />

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df0b5c79143a31df0d640d4a50061193, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::2216b94294077ebc4cafff613ec82cb8, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -145,7 +145,7 @@ Namespace CommandLine.InteropService
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function RunProgram(args$, stdin$) As IIORedirectAbstract
+        Public Function RunProgram(args$, Optional stdin$ = Nothing) As IIORedirectAbstract
             Return App.Shell(_executableAssembly, args, CLR:=False, stdin:=stdin)
         End Function
 

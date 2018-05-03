@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f08ab51517a32c8f1b4453b871845b4a, Data\OCR\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f4849a805b581d350f1799be145cf449, Data\OCR\Extensions.vb"
 
     ' Author:
     ' 
@@ -134,4 +134,3 @@ Public Module Extensions
         End If
     End Function
 End Module
-

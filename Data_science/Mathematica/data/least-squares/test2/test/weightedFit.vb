@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a3f05670308b8f29b1e32b6a03050d7, Data_science\Mathematica\data\least-squares\test2\test\weightedFit.vb"
+﻿#Region "Microsoft.VisualBasic::64103c6b88a2c25c029928323655c5fa, Data_science\Mathematica\data\least-squares\test2\test\weightedFit.vb"
 
     ' Author:
     ' 
@@ -59,4 +59,3 @@ Module weightedFitTest
         Pause()
     End Sub
 End Module
-

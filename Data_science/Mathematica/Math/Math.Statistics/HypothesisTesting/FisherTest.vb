@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71ebedd42ba550d6aa58aff665a25cfb, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
+﻿#Region "Microsoft.VisualBasic::ad506eeaa5d74a029216b6bbf93c0c34, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FisherTest.vb"
 
     ' Author:
     ' 
@@ -128,4 +128,3 @@ Public Module FisherTest
         Return x.Select(Function(n) n.Key ^ n.Value).ProductALL
     End Function
 End Module
-

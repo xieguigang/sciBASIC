@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48d90c128866fb2c8d376c95255fa3cf, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::a69d465612a4a7a05ecc4d56df0b725e, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class GeneralMatrix
     ' 
-    '         Properties: Array, ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector
-    '                     RowDimension, RowPackedCopy
+    '         Properties: ArrayCopy, ColumnDimension, ColumnPackedCopy, DiagonalVector, RowDimension
+    '                     RowPackedCopy
     ' 
     '         Constructor: (+6 Overloads) Sub New
     ' 
@@ -111,6 +111,10 @@ Namespace Matrix
     ''' </author>
     ''' <version>  5 August 1998
     ''' </version>
+    ''' <remarks>
+    ''' Access the internal two-dimensional array.
+    ''' Pointer to the two-dimensional array of matrix elements.
+    ''' </remarks>
     <Serializable>
     Public Class GeneralMatrix : Inherits Vector(Of Double())
         Implements ICloneable
@@ -240,14 +244,7 @@ Namespace Matrix
 
 
 #Region "Public Properties"
-        ''' <summary>Access the internal two-dimensional array.</summary>
-        ''' <returns>     Pointer to the two-dimensional array of matrix elements.
-        ''' </returns>
-        Public Overridable ReadOnly Property Array() As Double()()
-            Get
-                Return buffer
-            End Get
-        End Property
+
         ''' <summary>Copy the internal two-dimensional array.</summary>
         ''' <returns>     Two-dimensional array copy of matrix elements.
         ''' </returns>

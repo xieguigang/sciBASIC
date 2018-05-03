@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::deb04a6d02971b2c8d2193ec45779223, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
+﻿#Region "Microsoft.VisualBasic::92c51eb650a793bc4cef6c68c6e7af5e, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Class Label
     ' 
-    '         Properties: height, text, width, X, Y
+    '         Properties: height, Rectangle, text, width, X
+    '                     Y
     ' 
     '         Function: ToString
     ' 

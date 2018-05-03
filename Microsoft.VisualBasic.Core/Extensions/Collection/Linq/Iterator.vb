@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::420d0916663cd0c830c73e4bbe4ce05b, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::dae4b5fab322d08be6da737f009262e8, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module IteratorExtensions
-' 
-'         Function: [Next], (+2 Overloads) Indices, Ordinals, Previous, (+2 Overloads) SeqIterator
-'                   SeqTuple, ValueArray
-' 
-'     Structure SeqValue
-' 
-'         Properties: i, value
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: (+2 Overloads) CompareTo, ToString
-' 
-'         Sub: Assign
-' 
-'         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) Mod
-' 
-'     Interface IIterator
-' 
-'         Function: GetEnumerator, IGetEnumerator
-' 
-' 
-' /********************************************************************************/
+    '     Module IteratorExtensions
+    ' 
+    '         Function: [Next], (+2 Overloads) Indices, Ordinals, Previous, (+2 Overloads) SeqIterator
+    '                   (+2 Overloads) SeqTuple, ValueArray
+    ' 
+    '     Structure SeqValue
+    ' 
+    '         Properties: i, value
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) CompareTo, ToString
+    ' 
+    '         Sub: Assign
+    ' 
+    '         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) Mod
+    ' 
+    '     Interface IIterator
+    ' 
+    '         Function: GetEnumerator, IGetEnumerator
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

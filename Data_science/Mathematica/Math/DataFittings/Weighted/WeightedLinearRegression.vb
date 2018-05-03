@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b738b6913923e743175caca5cd8e95c, Data_science\Mathematica\Math\DataFittings\Weighted\WeightedLinearRegression.vb"
+﻿#Region "Microsoft.VisualBasic::459b0ade95423c563bef525335e44089, Data_science\Mathematica\Math\DataFittings\Weighted\WeightedLinearRegression.vb"
 
     ' Author:
     ' 
@@ -276,4 +276,3 @@ Public Module WeightedLinearRegression
         Return True
     End Function
 End Module
-
