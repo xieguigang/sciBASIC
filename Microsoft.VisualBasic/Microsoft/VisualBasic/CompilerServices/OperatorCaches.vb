@@ -1,5 +1,5 @@
-﻿Imports System
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.CompilerServices.ConversionResolution
 
 Namespace Microsoft.VisualBasic.CompilerServices
     Friend Class OperatorCaches
@@ -63,7 +63,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
 
             Private Sub MoveToFront(Item As Integer)
                 If (Item <> Me.m_First) Then
-                    Dim next As Integer = Me.m_List(Item).Next
+                    Dim [next] As Integer = Me.m_List(Item).Next
                     Dim previous As Integer = Me.m_List(Item).Previous
                     Me.m_List(previous).Next = [next]
                     Me.m_List([next]).Previous = previous
@@ -150,7 +150,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
 
             Private Sub MoveToFront(Item As Integer)
                 If (Item <> Me.m_First) Then
-                    Dim next As Integer = Me.m_List(Item).Next
+                    Dim [next] As Integer = Me.m_List(Item).Next
                     Dim previous As Integer = Me.m_List(Item).Previous
                     Me.m_List(previous).Next = [next]
                     Me.m_List([next]).Previous = previous

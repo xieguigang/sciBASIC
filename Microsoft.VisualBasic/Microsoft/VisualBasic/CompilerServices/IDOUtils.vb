@@ -1,12 +1,11 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Dynamic
 Imports System.Linq.Expressions
 Imports System.Reflection
 Imports System.Reflection.Emit
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
 Imports System.Runtime.Remoting
+Imports Microsoft.VisualBasic.CompilerServices.Symbols
 
 Namespace Microsoft.VisualBasic.CompilerServices
     Friend Class IDOUtils

@@ -56,7 +56,9 @@ Namespace Microsoft.VisualBasic.CompilerServices
 
         Public Shared Function SystemTypeName(VbName As String) As String
             Dim s As String = Strings.Trim(VbName).ToUpperInvariant
-            Select Case <PrivateImplementationDetails>.ComputeStringHash(s)
+
+            ' <PrivateImplementationDetails>
+            Select Case ComputeStringHash(s)
                 Case &H1B2E0F7A
                     If (s = "OBJECT") Then
                         Return "System.Object"
@@ -161,7 +163,9 @@ Namespace Microsoft.VisualBasic.CompilerServices
                 SystemName = Strings.Mid(SystemName, 8)
             End If
             Dim s As String = SystemName
-            Select Case <PrivateImplementationDetails>.ComputeStringHash(s)
+
+            ' <PrivateImplementationDetails>
+            Select Case ComputeStringHash(s)
                 Case &HBECAA04
                     If (s = "INT64") Then
                         Return "Long"

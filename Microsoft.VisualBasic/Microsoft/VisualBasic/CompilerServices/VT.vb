@@ -22,7 +22,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
         [Single] = 4
         [String] = 8
         [Structure] = &H24
-        Variant = 12
+        [variant] = 12
     End Enum
 End Namespace
 

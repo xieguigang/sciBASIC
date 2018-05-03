@@ -1,9 +1,8 @@
-﻿Imports Microsoft.VisualBasic.CompilerServices
-Imports System
-Imports System.Globalization
+﻿Imports System.Globalization
 Imports System.Runtime.InteropServices
 Imports System.Security.Permissions
 Imports System.Threading
+Imports Microsoft.VisualBasic.CompilerServices
 
 Namespace Microsoft.VisualBasic
     <StandardModule> _
@@ -118,7 +117,9 @@ Namespace Microsoft.VisualBasic
                 Interval = Interval.ToUpperInvariant
             End If
             Dim s As String = Interval
-            Dim num As UInt32 = <PrivateImplementationDetails>.ComputeStringHash(s)
+
+            ' <PrivateImplementationDetails>
+            Dim num As UInt32 = ComputeStringHash(s)
             If (num <= &HCD0C04F7) Then
                 Select Case num
                 Case &HC80BFD18

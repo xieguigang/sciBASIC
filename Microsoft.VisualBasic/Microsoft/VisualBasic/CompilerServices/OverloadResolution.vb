@@ -1,10 +1,8 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Reflection
-Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
 Imports System.Text
+Imports Microsoft.VisualBasic.CompilerServices.ConversionResolution
+Imports Microsoft.VisualBasic.CompilerServices.Symbols
 
 Namespace Microsoft.VisualBasic.CompilerServices
     Friend Class OverloadResolution
@@ -492,7 +490,7 @@ Label_020E:
             If (Argument Is Nothing) Then
                 Return Nothing
             End If
-            Dim nothing As TypedNothing = TryCast(Argument, TypedNothing)
+            Dim [nothing] As TypedNothing = TryCast(Argument, TypedNothing)
             If (Not [nothing] Is Nothing) Then
                 Return [nothing].Type
             End If

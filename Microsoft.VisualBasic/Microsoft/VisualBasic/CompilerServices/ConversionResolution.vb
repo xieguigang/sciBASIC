@@ -1,8 +1,7 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.Diagnostics
 Imports System.Reflection
+Imports Microsoft.VisualBasic.CompilerServices.Symbols
 
 Namespace Microsoft.VisualBasic.CompilerServices
     Friend Class ConversionResolution
@@ -19,7 +18,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
             ConversionResolution.NumericSpecificityRank(15) = 9
             ConversionResolution.NumericSpecificityRank(13) = 10
             ConversionResolution.NumericSpecificityRank(14) = 11
-            ConversionResolution.ForLoopWidestTypeCode = New TypeCode()() { New TypeCode(&H13  - 1) {}, New TypeCode(&H13  - 1) {}, New TypeCode(&H13  - 1) {}, New TypeCode() { TypeCode.Empty }, New TypeCode(&H13  - 1) {}, New TypeCode() { TypeCode.Empty }, New TypeCode() { TypeCode.Empty }, New TypeCode() { TypeCode.Empty }, New TypeCode() { TypeCode.Empty }, New TypeCode() { TypeCode.Empty }, New TypeCode() { TypeCode.Empty }, New TypeCode() { TypeCode.Empty }, New TypeCode() { TypeCode.Empty }, New TypeCode() { TypeCode.Empty }, New TypeCode() { TypeCode.Empty }, New TypeCode() { TypeCode.Empty }, New TypeCode(&H13  - 1) {}, New TypeCode(&H13  - 1) {}, New TypeCode(&H13  - 1) {} }
+            ConversionResolution.ForLoopWidestTypeCode = New TypeCode()() {New TypeCode(&H13 - 1) {}, New TypeCode(&H13 - 1) {}, New TypeCode(&H13 - 1) {}, New TypeCode() {TypeCode.Empty}, New TypeCode(&H13 - 1) {}, New TypeCode() {TypeCode.Empty}, New TypeCode() {TypeCode.Empty}, New TypeCode() {TypeCode.Empty}, New TypeCode() {TypeCode.Empty}, New TypeCode() {TypeCode.Empty}, New TypeCode() {TypeCode.Empty}, New TypeCode() {TypeCode.Empty}, New TypeCode() {TypeCode.Empty}, New TypeCode() {TypeCode.Empty}, New TypeCode() {TypeCode.Empty}, New TypeCode() {TypeCode.Empty}, New TypeCode(&H13 - 1) {}, New TypeCode(&H13 - 1) {}, New TypeCode(&H13 - 1) {}}
         End Sub
 
         Private Sub New()
@@ -445,15 +444,15 @@ Namespace Microsoft.VisualBasic.CompilerServices
             Return operatorList
         End Function
 
-        <Conditional("DEBUG")> _
+        <Conditional("DEBUG")>
         Private Shared Sub VerifyTypeCodeEnum()
         End Sub
 
 
         ' Fields
-        Private Shared ReadOnly ConversionTable As ConversionClass()() = New ConversionClass()() { New ConversionClass(&H13  - 1) {}, New ConversionClass() { ConversionClass.Bad }, New ConversionClass(&H13  - 1) {}, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass() { ConversionClass.Bad }, New ConversionClass(&H13  - 1) {}, New ConversionClass() { ConversionClass.Bad } }
+        Private Shared ReadOnly ConversionTable As ConversionClass()() = New ConversionClass()() {New ConversionClass(&H13 - 1) {}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass(&H13 - 1) {}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass() {ConversionClass.Bad}, New ConversionClass(&H13 - 1) {}, New ConversionClass() {ConversionClass.Bad}}
         Friend Shared ReadOnly ForLoopWidestTypeCode As TypeCode()()
-        Friend Shared ReadOnly NumericSpecificityRank As Integer() = New Integer(&H13  - 1) {}
+        Friend Shared ReadOnly NumericSpecificityRank As Integer() = New Integer(&H13 - 1) {}
 
         ' Nested Types
         Friend Enum ConversionClass As SByte

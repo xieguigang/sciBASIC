@@ -1,12 +1,10 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.Globalization
 Imports System.Reflection
-Imports System.Runtime.InteropServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.CompilerServices.Symbols
 
 Namespace Microsoft.VisualBasic.CompilerServices
     <EditorBrowsable(EditorBrowsableState.Never), DynamicallyInvokableAttribute> _
@@ -1325,18 +1323,18 @@ Namespace Microsoft.VisualBasic.CompilerServices
 
         Private Shared Function GetEnumResult(Left As Object, Right As Object) As Type
             If (Not Left Is Nothing) Then
-                If TypeOf Left Is Enum Then
+                If TypeOf Left Is [Enum] Then
                     If (Right Is Nothing) Then
                         Return Left.GetType
                     End If
-                    If TypeOf Right Is Enum Then
+                    If TypeOf Right Is [Enum] Then
                         Dim type As Type = Left.GetType
                         If (type Is Right.GetType) Then
                             Return type
                         End If
                     End If
                 End If
-            ElseIf TypeOf Right Is Enum Then
+            ElseIf TypeOf Right Is [Enum] Then
                 Return Right.GetType
             End If
             Return Nothing

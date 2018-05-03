@@ -352,7 +352,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
         End Function
 
         Friend Shared Function IsRootEnumType(Type As Type) As Boolean
-            Return (Type Is GetType(Enum))
+            Return (Type Is GetType([Enum]))
         End Function
 
         Friend Shared Function IsRootObjectType(Type As Type) As Boolean

@@ -161,67 +161,67 @@ Namespace Microsoft.VisualBasic.CompilerServices
 
         Friend Overrides Sub GetObject(ByRef Value As Object, Optional RecordNumber As Long = 0, Optional ContainedInVariant As Boolean = True)
             Dim type As Type = Nothing
-            Dim variant As VT
+            Dim [variant] As VT
             Me.ValidateReadable()
             MyBase.SetRecord(RecordNumber)
             If ContainedInVariant Then
                 Dim numRef As Long
-                variant = DirectCast(MyBase.m_br.ReadInt16, VT)
+                [variant] = DirectCast(MyBase.m_br.ReadInt16, VT)
                 numRef = CLng(AddressOf Me.m_position) = (numRef + 2)
             Else
                 type = Value.GetType
                 Select Case Type.GetTypeCode(type)
                     Case TypeCode.Object
                         If Not type.IsValueType Then
-                            variant = VT.Variant
+                            [variant] = VT.Variant
                         Else
-                            variant = VT.Structure
+                            [variant] = VT.Structure
                         End If
                         GoTo Label_00D8
                     Case TypeCode.Boolean
-                        variant = VT.Boolean
+                        [variant] = VT.Boolean
                         GoTo Label_00D8
                     Case TypeCode.Char
-                        variant = VT.Char
+                        [variant] = VT.Char
                         GoTo Label_00D8
                     Case TypeCode.Byte
-                        variant = VT.Byte
+                        [variant] = VT.Byte
                         GoTo Label_00D8
                     Case TypeCode.Int16
-                        variant = VT.Short
+                        [variant] = VT.Short
                         GoTo Label_00D8
                     Case TypeCode.Int32
-                        variant = VT.Integer
+                        [variant] = VT.Integer
                         GoTo Label_00D8
                     Case TypeCode.Int64
-                        variant = VT.Long
+                        [variant] = VT.Long
                         GoTo Label_00D8
                     Case TypeCode.Single
-                        variant = VT.Single
+                        [variant] = VT.Single
                         GoTo Label_00D8
                     Case TypeCode.Double
-                        variant = VT.Double
+                        [variant] = VT.Double
                         GoTo Label_00D8
                     Case TypeCode.Decimal
-                        variant = VT.Decimal
+                        [variant] = VT.Decimal
                         GoTo Label_00D8
                     Case TypeCode.DateTime
-                        variant = VT.Date
+                        [variant] = VT.Date
                         GoTo Label_00D8
                     Case TypeCode.String
-                        variant = VT.String
+                        [variant] = VT.String
                         GoTo Label_00D8
                 End Select
-                variant = VT.Variant
+                [variant] = VT.variant
             End If
 Label_00D8:
-            If ((variant And VT.Array) <> VT.Empty) Then
+            If (([variant] And VT.Array) <> VT.Empty) Then
                 Dim arr As Array = Nothing
-                Dim vtype As VT = (variant Xor VT.Array)
+                Dim vtype As VT = ([variant] Xor VT.Array)
                 MyBase.GetDynamicArray(arr, MyBase.ComTypeFromVT(vtype), -1)
                 Value = arr
             Else
-                Select Case variant
+                Select Case [variant]
                     Case VT.String
                         Value = Me.GetLengthPrefixedString(0)
                         Return
@@ -264,17 +264,17 @@ Label_00D8:
                         Value = o
                         Return
                 End Select
-                If ((variant = VT.DBNull) AndAlso ContainedInVariant) Then
+                If (([variant] = VT.DBNull) AndAlso ContainedInVariant) Then
                     Value = DBNull.Value
                 Else
-                    If (variant = VT.DBNull) Then
+                    If ([variant] = VT.DBNull) Then
                         Dim args As String() = New String() {"DBNull"}
                         Throw ExceptionUtils.VbMakeException(New ArgumentException(Utils.GetResourceString("Argument_UnsupportedIOType1", args)), 5)
                     End If
-                    If (variant = VT.Empty) Then
+                    If ([variant] = VT.Empty) Then
                         Value = Nothing
                     Else
-                        If (variant = VT.Currency) Then
+                        If ([variant] = VT.Currency) Then
                             Dim textArray2 As String() = New String() {"Currency"}
                             Throw ExceptionUtils.VbMakeException(New ArgumentException(Utils.GetResourceString("Argument_UnsupportedIOType1", textArray2)), 5)
                         End If

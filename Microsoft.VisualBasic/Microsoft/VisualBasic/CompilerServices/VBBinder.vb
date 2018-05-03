@@ -1521,7 +1521,7 @@ Label_0AD2:
         Public Enum BindScore
             ' Fields
             Exact = 0
-            Narrowing = 3
+            [Narrowing] = 3
             Unknown = 4
             Widening0 = 1
             Widening1 = 2

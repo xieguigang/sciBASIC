@@ -2,6 +2,8 @@
 Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Threading
+Imports Microsoft.VisualBasic.CompilerServices.ConversionResolution
+Imports Microsoft.VisualBasic.CompilerServices.Symbols
 
 Namespace Microsoft.VisualBasic.CompilerServices
     <EditorBrowsable(EditorBrowsableState.Never), DynamicallyInvokableAttribute> _
@@ -262,7 +264,7 @@ Label_0142:
                 End If
                 Dim info As MethodInfo = TryCast(callableUserDefinedOperator.AsMethod, MethodInfo)
                 Dim parameters As ParameterInfo() = info.GetParameters
-                Dim operator As UserDefinedOperator = Op
+                Dim [operator] As UserDefinedOperator = Op
                 If ([operator] <= UserDefinedOperator.Minus) Then
                     Select Case [operator]
                         Case UserDefinedOperator.Plus, UserDefinedOperator.Minus

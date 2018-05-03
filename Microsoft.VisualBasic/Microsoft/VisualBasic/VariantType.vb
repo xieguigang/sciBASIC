@@ -22,7 +22,7 @@ Namespace Microsoft.VisualBasic
         [Single] = 4
         [String] = 8
         UserDefinedType = &H24
-        Variant = 12
+        [variant] = 12
     End Enum
 End Namespace
 
