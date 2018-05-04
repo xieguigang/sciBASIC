@@ -91,13 +91,14 @@ Namespace Fractions
                              Optional margin$ = g.DefaultPadding,
                              Optional bg$ = "white",
                              Optional regionFill$ = "#fafafa",
-                             Optional serialColorSchema$ = "alpha(Set1:c8, 0.65)",
+                             Optional serialColorSchema$ = "alpha(Set1:c8, 0.5)",
+                             Optional labelTextColor$ = "black",
                              Optional colorAlpha% = 120,
                              Optional axisRange As DoubleRange = Nothing,
                              Optional shapeBorderWidth! = 10,
                              Optional pointRadius! = 30,
                              Optional labelFontCSS$ = CSSFont.Win7VeryVeryLarge,
-                             Optional axisStrokeStyle$ = Stroke.HighlightStroke,
+                             Optional axisStrokeStyle$ = Stroke.WhiteLineStroke,
                              Optional spline As Boolean = True) As GraphicsData
 
             Dim serialColors As Color() = Designer.GetColors(serialColorSchema) _
@@ -168,6 +169,7 @@ Namespace Fractions
                     Next
 
                     Dim labelSize As SizeF
+                    Dim labelColor As New SolidBrush(labelTextColor.TranslateColor)
 
                     ' 绘制极坐标轴
                     For i As Integer = 0 To directions.Length - 1
@@ -232,7 +234,7 @@ Namespace Fractions
                             labelRect = New RectangleF(maxAxis, labelSize)
                         End If
 
-                        g.DrawString(label, labelFont, Brushes.Black, maxAxis)
+                        g.DrawString(label, labelFont, labelColor, maxAxis)
                     Next
 
                     For i As Integer = 0 To serials.Length - 1
@@ -269,7 +271,7 @@ Namespace Fractions
                                                 Return p.Point.OffSet2D(center)
                                             End Function) _
                                     .AsList
-                                shape = B_Spline.BSpline(shape, 2, 5)
+                                shape = CubicSpline.RecalcSpline(shape, expected:=50).AsList
 
                                 '' 使用AB两个坐标轴的中间夹角处作为控制点
                                 '' 控制点的值为AB两个点的平均值
