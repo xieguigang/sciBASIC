@@ -264,47 +264,53 @@ Namespace Fractions
                             Next
 
                             If spline Then
-                                ' 使用AB两个坐标轴的中间夹角处作为控制点
-                                ' 控制点的值为AB两个点的平均值
-                                ' 使用滑窗进行计算
-                                Dim avg#
-                                Dim centerAngle!
-                                Dim adjacent = (polarShape + polarShape(0)).SlideWindows(winSize:=2).ToArray
-                                Dim control As PointF
-                                Dim c1, c2 As PointF
+                                shape = (polarShape + polarShape(0)) _
+                                    .Select(Function(p)
+                                                Return p.Point.OffSet2D(center)
+                                            End Function) _
+                                    .AsList
+                                shape = B_Spline.BSpline(shape, 1.5!, 5)
 
-                                shape *= 0
+                                '' 使用AB两个坐标轴的中间夹角处作为控制点
+                                '' 控制点的值为AB两个点的平均值
+                                '' 使用滑窗进行计算
+                                'Dim avg#
+                                'Dim centerAngle!
+                                'Dim adjacent = (polarShape + polarShape(0)).SlideWindows(winSize:=2).ToArray
+                                'Dim control As PointF
+                                'Dim c1, c2 As PointF
 
-                                For Each between As SlideWindow(Of PolarPoint) In adjacent
-                                    avg = between.Average(Function(p) p.Radius)
-                                    If between.Index = adjacent.Length - 1 Then
-                                        ' 2018-5-3
-                                        '
-                                        ' 由于雷达图的绘制是从-90度开始的，所以-90度相当于0，270度相当于360
-                                        ' 因为最后一个滑窗为240度左右回到原点-90度
-                                        ' 所以直接计算平均值的话会出现 (240 + -90) / 2 = 70 的错误
-                                        '
-                                        ' 需要进行额外处理
-                                        centerAngle = (270 + between.First.Angle) / 2
-                                    Else
-                                        centerAngle = between.Average(Function(p) p.Angle)
-                                    End If
-                                    ' 得到中间的这个控制点
-                                    control = (avg, centerAngle).ToCartesianPoint.OffSet2D(center)
-                                    ' 进行贝塞尔曲线插值
-                                    c1 = between.First.Point.OffSet2D(center)
-                                    c2 = between.Last.Point.OffSet2D(center)
+                                'shape *= 0
 
-                                    shape += c1
+                                'For Each between As SlideWindow(Of PolarPoint) In adjacent
+                                '    avg = between.Average(Function(p) p.Radius)
 
-                                    With New BezierCurve(c1, control, c2, 3).BezierPoints
-                                        .RemoveFirst
-                                        .Pop()
-                                        shape += .AsEnumerable
-                                    End With
+                                '    If between.Index = adjacent.Length - 1 Then
+                                '        ' 2018-5-3
+                                '        '
+                                '        ' 由于雷达图的绘制是从-90度开始的，所以-90度相当于0，270度相当于360
+                                '        ' 因为最后一个滑窗为240度左右回到原点-90度
+                                '        ' 所以直接计算平均值的话会出现 (240 + -90) / 2 = 70 的错误
+                                '        '
+                                '        ' 需要进行额外处理
+                                '        centerAngle = (270 + between.First.Angle) / 2
+                                '    Else
+                                '        centerAngle = between.Average(Function(p) p.Angle)
+                                '    End If
+                                '    ' 得到中间的这个控制点
+                                '    control = (avg, centerAngle).ToCartesianPoint.OffSet2D(center)
+                                '    ' 进行贝塞尔曲线插值
+                                '    c1 = between.First.Point.OffSet2D(center)
+                                '    c2 = between.Last.Point.OffSet2D(center)
 
-                                    shape += c2
-                                Next
+                                '    Dim seq = {c1, control, c2}.NewtonPolynomial(3)
+
+                                '    shape += seq.Take(seq.Length - 1)
+                                'Next
+
+                                'shape = shape _
+                                '    .Where(Function(p) Not p.Y.IsNaNImaginary) _
+                                '    .AsList
                             Else
                                 shape = polarShape.Select(Function(p)
                                                               Return p.Point.OffSet2D(center)
