@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
@@ -22,20 +23,19 @@ Namespace Interpolation
                 Dim X As Vector = .X
                 ' 在这里不可以使用Linq，因为需要将原始序列之中的X点插进入向量之中
                 Dim xi As New List(Of Double)
-                Dim i As int = Scan0
-                Dim xn# = X(++i)
-                Dim previous = X(0)
 
-                For Each xj As Double In seq(X.First, X.Last, (X.Last - X.First) / divided)
-                    If xn >= previous Then
-                        ' 需要插入一个原始序列之中的X
-                        xi += xn
-                        xn = X(++i)
-                    End If
+                For Each t In X.SlideWindows(2)
+                    Dim x1 = t(0)
+                    Dim x2 = t(1)
+                    Dim sequence = seq(x1, x2, (x2 - x1) / divided).ToArray
 
-                    xi += xj
-                    previous = xj
+                    ' 为了防止重复出现元素，在这里将最后一个点删除
+                    ' 然后在最末尾添加上即可
+                    xi += sequence.Take(sequence.Length - 1)
                 Next
+
+                ' 添加上最后一个元素
+                xi += X.Last
 
                 Return xi.AsVector.NewtonPolynomial(.ByRef)
             End With
