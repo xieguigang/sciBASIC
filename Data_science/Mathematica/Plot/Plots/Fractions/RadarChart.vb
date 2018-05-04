@@ -269,7 +269,7 @@ Namespace Fractions
                                                 Return p.Point.OffSet2D(center)
                                             End Function) _
                                     .AsList
-                                shape = B_Spline.BSpline(shape, 1.5!, 5)
+                                shape = B_Spline.BSpline(shape, 2, 5)
 
                                 '' 使用AB两个坐标轴的中间夹角处作为控制点
                                 '' 控制点的值为AB两个点的平均值
