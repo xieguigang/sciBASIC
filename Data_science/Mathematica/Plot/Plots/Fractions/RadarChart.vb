@@ -146,14 +146,25 @@ Namespace Fractions
                     ' Call g.FillPie(Brushes.Gray, New Rectangle(center.X - 2, center.Y - 2, 4, 4), 0, 360)
 
                     Dim dr = radius.Max / 5
+                    Dim grayColor% = 230
+                    Dim ellipsePen As New Pen(Color.White, axisPen.Width * 1.25) With {
+                        .DashStyle = axisPen.DashStyle
+                    }
 
                     ' 填充坐标轴区域
                     r = dr * 5
                     g.FillEllipse(regionFillColor, New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
 
+                    ' 区域是从大到小进行填充
+                    For i As Integer = 4 To 1 Step -1
+                        r = dr * i
+                        g.FillEllipse(New SolidBrush(Color.FromArgb(grayColor, grayColor, grayColor)), New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
+                        grayColor = grayColor * 0.95
+                    Next
+
                     For i As Integer = 1 To 4
                         r = dr * i
-                        g.DrawEllipse(axisPen, New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
+                        g.DrawEllipse(ellipsePen, New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
                     Next
 
                     Dim labelSize As SizeF
