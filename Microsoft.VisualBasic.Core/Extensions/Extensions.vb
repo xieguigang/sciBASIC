@@ -1239,6 +1239,13 @@ Public Module Extensions
             Double.IsPositiveInfinity(n)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function IsNaNImaginary(n As Single) As Boolean
+        Return Single.IsNaN(n) OrElse
+            Single.IsInfinity(n) OrElse
+            Single.IsNegativeInfinity(n) OrElse
+            Single.IsPositiveInfinity(n)
+    End Function
 #If FRAMEWORD_CORE Then
 
     ''' <summary>

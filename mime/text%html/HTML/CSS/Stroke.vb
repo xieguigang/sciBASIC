@@ -62,6 +62,7 @@ Namespace HTML.CSS
         Public Const HighlightStroke$ = "stroke: gray; stroke-width: 5px; stroke-dash: dash;"
         Public Const StrongHighlightStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: dash;"
         Public Const ScatterLineStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;"
+        Public Const WhiteLineStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
         Public Property fill As String
         Public Property width As Single

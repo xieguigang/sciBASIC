@@ -91,13 +91,14 @@ Namespace Fractions
                              Optional margin$ = g.DefaultPadding,
                              Optional bg$ = "white",
                              Optional regionFill$ = "#fafafa",
-                             Optional serialColorSchema$ = "alpha(Set1:c8, 0.65)",
+                             Optional serialColorSchema$ = "alpha(Set1:c8, 0.5)",
+                             Optional labelTextColor$ = "black",
                              Optional colorAlpha% = 120,
                              Optional axisRange As DoubleRange = Nothing,
                              Optional shapeBorderWidth! = 10,
                              Optional pointRadius! = 30,
                              Optional labelFontCSS$ = CSSFont.Win7VeryVeryLarge,
-                             Optional axisStrokeStyle$ = Stroke.HighlightStroke,
+                             Optional axisStrokeStyle$ = Stroke.WhiteLineStroke,
                              Optional spline As Boolean = True) As GraphicsData
 
             Dim serialColors As Color() = Designer.GetColors(serialColorSchema) _
@@ -146,17 +147,29 @@ Namespace Fractions
                     ' Call g.FillPie(Brushes.Gray, New Rectangle(center.X - 2, center.Y - 2, 4, 4), 0, 360)
 
                     Dim dr = radius.Max / 5
+                    Dim grayColor% = 230
+                    Dim ellipsePen As New Pen(Color.White, axisPen.Width * 1.25) With {
+                        .DashStyle = axisPen.DashStyle
+                    }
 
                     ' 填充坐标轴区域
                     r = dr * 5
                     g.FillEllipse(regionFillColor, New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
 
+                    ' 区域是从大到小进行填充
+                    For i As Integer = 4 To 1 Step -1
+                        r = dr * i
+                        g.FillEllipse(New SolidBrush(Color.FromArgb(grayColor, grayColor, grayColor)), New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
+                        grayColor = grayColor * 0.95
+                    Next
+
                     For i As Integer = 1 To 4
                         r = dr * i
-                        g.DrawEllipse(axisPen, New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
+                        g.DrawEllipse(ellipsePen, New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
                     Next
 
                     Dim labelSize As SizeF
+                    Dim labelColor As New SolidBrush(labelTextColor.TranslateColor)
 
                     ' 绘制极坐标轴
                     For i As Integer = 0 To directions.Length - 1
@@ -221,7 +234,7 @@ Namespace Fractions
                             labelRect = New RectangleF(maxAxis, labelSize)
                         End If
 
-                        g.DrawString(label, labelFont, Brushes.Black, maxAxis)
+                        g.DrawString(label, labelFont, labelColor, maxAxis)
                     Next
 
                     For i As Integer = 0 To serials.Length - 1
@@ -253,47 +266,53 @@ Namespace Fractions
                             Next
 
                             If spline Then
-                                ' 使用AB两个坐标轴的中间夹角处作为控制点
-                                ' 控制点的值为AB两个点的平均值
-                                ' 使用滑窗进行计算
-                                Dim avg#
-                                Dim centerAngle!
-                                Dim adjacent = (polarShape + polarShape(0)).SlideWindows(winSize:=2).ToArray
-                                Dim control As PointF
-                                Dim c1, c2 As PointF
+                                shape = (polarShape + polarShape(0)) _
+                                    .Select(Function(p)
+                                                Return p.Point.OffSet2D(center)
+                                            End Function) _
+                                    .AsList
+                                shape = CubicSpline.RecalcSpline(shape, expected:=50).AsList
 
-                                shape *= 0
+                                '' 使用AB两个坐标轴的中间夹角处作为控制点
+                                '' 控制点的值为AB两个点的平均值
+                                '' 使用滑窗进行计算
+                                'Dim avg#
+                                'Dim centerAngle!
+                                'Dim adjacent = (polarShape + polarShape(0)).SlideWindows(winSize:=2).ToArray
+                                'Dim control As PointF
+                                'Dim c1, c2 As PointF
 
-                                For Each between As SlideWindow(Of PolarPoint) In adjacent
-                                    avg = between.Average(Function(p) p.Radius)
-                                    If between.Index = adjacent.Length - 1 Then
-                                        ' 2018-5-3
-                                        '
-                                        ' 由于雷达图的绘制是从-90度开始的，所以-90度相当于0，270度相当于360
-                                        ' 因为最后一个滑窗为240度左右回到原点-90度
-                                        ' 所以直接计算平均值的话会出现 (240 + -90) / 2 = 70 的错误
-                                        '
-                                        ' 需要进行额外处理
-                                        centerAngle = (270 + between.First.Angle) / 2
-                                    Else
-                                        centerAngle = between.Average(Function(p) p.Angle)
-                                    End If
-                                    ' 得到中间的这个控制点
-                                    control = (avg, centerAngle).ToCartesianPoint.OffSet2D(center)
-                                    ' 进行贝塞尔曲线插值
-                                    c1 = between.First.Point.OffSet2D(center)
-                                    c2 = between.Last.Point.OffSet2D(center)
+                                'shape *= 0
 
-                                    shape += c1
+                                'For Each between As SlideWindow(Of PolarPoint) In adjacent
+                                '    avg = between.Average(Function(p) p.Radius)
 
-                                    With New BezierCurve(c1, control, c2, 3).BezierPoints
-                                        .RemoveFirst
-                                        .Pop()
-                                        shape += .AsEnumerable
-                                    End With
+                                '    If between.Index = adjacent.Length - 1 Then
+                                '        ' 2018-5-3
+                                '        '
+                                '        ' 由于雷达图的绘制是从-90度开始的，所以-90度相当于0，270度相当于360
+                                '        ' 因为最后一个滑窗为240度左右回到原点-90度
+                                '        ' 所以直接计算平均值的话会出现 (240 + -90) / 2 = 70 的错误
+                                '        '
+                                '        ' 需要进行额外处理
+                                '        centerAngle = (270 + between.First.Angle) / 2
+                                '    Else
+                                '        centerAngle = between.Average(Function(p) p.Angle)
+                                '    End If
+                                '    ' 得到中间的这个控制点
+                                '    control = (avg, centerAngle).ToCartesianPoint.OffSet2D(center)
+                                '    ' 进行贝塞尔曲线插值
+                                '    c1 = between.First.Point.OffSet2D(center)
+                                '    c2 = between.Last.Point.OffSet2D(center)
 
-                                    shape += c2
-                                Next
+                                '    Dim seq = {c1, control, c2}.NewtonPolynomial(3)
+
+                                '    shape += seq.Take(seq.Length - 1)
+                                'Next
+
+                                'shape = shape _
+                                '    .Where(Function(p) Not p.Y.IsNaNImaginary) _
+                                '    .AsList
                             Else
                                 shape = polarShape.Select(Function(p)
                                                               Return p.Point.OffSet2D(center)
