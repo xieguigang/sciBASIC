@@ -59,11 +59,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Parallel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.ComponentModel.TagData
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Math.Statistics
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace Math
 
@@ -125,38 +126,6 @@ Namespace Math
                 .Value = minX
             }
         End Function
-
-        Public Class Average
-
-            Public Sum#, N%
-
-            Public ReadOnly Property Average As Double
-                <MethodImpl(MethodImplOptions.AggressiveInlining)>
-                Get
-                    Return Sum / N
-                End Get
-            End Property
-
-            Sub New()
-            End Sub
-
-            Sub New(data As IEnumerable(Of Double))
-                With data.ToArray
-                    Sum = .Sum
-                    N = .Length
-                End With
-            End Sub
-
-            Public Overrides Function ToString() As String
-                Return $"Means of {N} samples = {Average}"
-            End Function
-
-            Public Shared Operator +(avg As Average, x#) As Average
-                avg.Sum += x
-                avg.N += 1
-                Return avg
-            End Operator
-        End Class
 
         ''' <summary>
         ''' Returns ``-1`` means no search result
@@ -230,6 +199,7 @@ Namespace Math
                 '     Yield group
                 ' Next
 
+                ' 先进行预处理：求值然后进行排序
                 Dim tagValues = source _
                     .Select(Function(o) (evaluate(o), o)) _
                     .OrderBy(Function(o) o.Item1) _
@@ -237,9 +207,11 @@ Namespace Math
                 Dim means As New Average
                 Dim members As New List(Of T)
 
-                For Each x In tagValues
+                ' 根据分组的平均值来进行分组操作
+                For Each x As (val#, o As T) In tagValues
                     If means.N = 0 Then
                         means += x.Item1
+                        members += x.Item2
                     Else
                         If equals(means.Average, x.Item1) Then
                             means += x.Item1
