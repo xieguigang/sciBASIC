@@ -1,6 +1,4 @@
-﻿Imports Microsoft.VisualBasic.CompilerServices
-Imports System
-Imports System.Collections
+﻿Imports System.Collections
 Imports System.Collections.ObjectModel
 Imports System.Collections.Specialized
 Imports System.ComponentModel
@@ -11,6 +9,8 @@ Imports System.Runtime.InteropServices
 Imports System.Security
 Imports System.Security.Permissions
 Imports System.Text
+Imports Microsoft.VisualBasic.CompilerServices
+Imports Microsoft.VisualBasic.CompilerServices.NativeMethods
 
 Namespace Microsoft.VisualBasic.FileIO
     <HostProtection(SecurityAction.LinkDemand, Resources:=HostProtectionResource.ExternalProcessMgmt)>
@@ -171,8 +171,8 @@ Namespace Microsoft.VisualBasic.FileIO
             If (operation = CopyOrMove.Move) Then
                 read = (read Or FileIOPermissionAccess.Write)
             End If
-            New FileIOPermission(read, path).Demand
-            New FileIOPermission(FileIOPermissionAccess.Write, str2).Demand
+            Call New FileIOPermission(read, path).Demand()
+            Call New FileIOPermission(FileIOPermissionAccess.Write, str2).Demand()
             FileSystem.ThrowIfDevicePath(path)
             FileSystem.ThrowIfDevicePath(str2)
             If Not File.Exists(path) Then
@@ -190,7 +190,8 @@ Namespace Microsoft.VisualBasic.FileIO
                 File.Copy(path, str2, overwrite)
             ElseIf overwrite Then
                 If (Environment.OSVersion.Platform = PlatformID.Win32NT) Then
-                    New SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert
+                    Call New SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert()
+
                     Try
                         If Not NativeMethods.MoveFileEx(path, str2, 11) Then
                             FileSystem.ThrowWinIOError(Marshal.GetLastWin32Error)
@@ -270,7 +271,7 @@ Namespace Microsoft.VisualBasic.FileIO
             FileSystem.VerifyRecycleOption("recycle", recycle)
             FileSystem.VerifyUICancelOption("onUserCancel", onUserCancel)
             Dim path As String = FileSystem.NormalizeFilePath(file, "file")
-            New FileIOPermission(FileIOPermissionAccess.Write, path).Demand
+            Call New FileIOPermission(FileIOPermissionAccess.Write, path).Demand()
             FileSystem.ThrowIfDevicePath(path)
             If Not file.Exists(path) Then
                 Dim placeHolders As String() = New String() {file}
@@ -288,7 +289,7 @@ Namespace Microsoft.VisualBasic.FileIO
             If Not (fullDirectoryPath.EndsWith(Conversions.ToString(Path.DirectorySeparatorChar), StringComparison.Ordinal) Or fullDirectoryPath.EndsWith(Conversions.ToString(Path.AltDirectorySeparatorChar), StringComparison.Ordinal)) Then
                 fullDirectoryPath = (fullDirectoryPath & Conversions.ToString(Path.DirectorySeparatorChar))
             End If
-            New FileIOPermission(access, fullDirectoryPath).Demand
+            Call New FileIOPermission(access, fullDirectoryPath).Demand()
         End Sub
 
         Public Shared Function DirectoryExists(ByVal directory As String) As Boolean
@@ -786,17 +787,18 @@ Namespace Microsoft.VisualBasic.FileIO
             If (FileOrDirectory = FileOrDirectory.Directory) Then
                 FileSystem.DemandDirectoryPermission(fullDirectoryPath, noAccess)
             Else
-                New FileIOPermission(noAccess, fullDirectoryPath).Demand
+                Call New FileIOPermission(noAccess, fullDirectoryPath).Demand()
             End If
             If (OperationType <> SHFileOperationType.FO_DELETE) Then
                 If (FileOrDirectory = FileOrDirectory.Directory) Then
                     FileSystem.DemandDirectoryPermission(FullTarget, FileIOPermissionAccess.Write)
                 Else
-                    New FileIOPermission(FileIOPermissionAccess.Write, FullTarget).Demand
+                    Call New FileIOPermission(FileIOPermissionAccess.Write, FullTarget).Demand()
                 End If
             End If
             Dim lpFileOp As SHFILEOPSTRUCT = FileSystem.GetShellOperationInfo(OperationType, OperationFlags, FullSource, FullTarget)
-            New SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert
+            Call New SecurityPermission(SecurityPermissionFlag.UnmanagedCode).Assert()
+
             Try
                 num = NativeMethods.SHFileOperation(lpFileOp)
                 NativeMethods.SHChangeNotify(&H2381F, 3, IntPtr.Zero, IntPtr.Zero)
