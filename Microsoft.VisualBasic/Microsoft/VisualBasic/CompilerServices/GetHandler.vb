@@ -1,6 +1,4 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports System.Reflection
 
 Namespace Microsoft.VisualBasic.CompilerServices

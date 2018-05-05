@@ -1,14 +1,16 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
-Imports System.Collections.Generic
+﻿Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.Dynamic
 Imports System.Reflection
+Imports Microsoft.VisualBasic.CompilerServices.OverloadResolution
+Imports Microsoft.VisualBasic.CompilerServices.Symbols
 
 Namespace Microsoft.VisualBasic.CompilerServices
-    <EditorBrowsable(EditorBrowsableState.Never), DynamicallyInvokableAttribute> _
+
+    <EditorBrowsable(EditorBrowsableState.Never), DynamicallyInvokableAttribute>
     Public NotInheritable Class NewLateBinding
+
         ' Methods
         Private Sub New()
         End Sub

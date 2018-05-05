@@ -1,8 +1,9 @@
-﻿Imports System
-Imports System.Dynamic
+﻿Imports System.Dynamic
 Imports System.Linq.Expressions
+Imports Microsoft.VisualBasic.CompilerServices.Symbols
 
 Namespace Microsoft.VisualBasic.CompilerServices
+
     Friend Class VBUnaryOperatorBinder
         Inherits UnaryOperationBinder
         ' Methods

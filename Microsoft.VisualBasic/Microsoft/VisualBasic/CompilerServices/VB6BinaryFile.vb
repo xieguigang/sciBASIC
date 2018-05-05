@@ -6,9 +6,11 @@ Imports System.Runtime.InteropServices
 Imports System.Security
 
 Namespace Microsoft.VisualBasic.CompilerServices
-    <EditorBrowsable(EditorBrowsableState.Never)> _
+
+    <EditorBrowsable(EditorBrowsableState.Never)>
     Friend Class VB6BinaryFile
         Inherits VB6RandomFile
+
         ' Methods
         Public Sub New(FileName As String, access As OpenAccess, share As OpenShare)
             MyBase.New(FileName, access, share, -1)

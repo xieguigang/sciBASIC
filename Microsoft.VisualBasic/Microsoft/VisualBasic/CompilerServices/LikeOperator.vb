@@ -7,7 +7,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 
 Namespace Microsoft.VisualBasic.CompilerServices
-    <EditorBrowsable(EditorBrowsableState.Never)> _
+    <EditorBrowsable(EditorBrowsableState.Never)>
     Public NotInheritable Class LikeOperator
         ' Methods
         Shared Sub New()
@@ -211,7 +211,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
                         End If
                         Input = Strings.vbLCMapString(cultureInfo, dwMapFlags, Input)
                         flag = True
-                        If (Not Input.Length Is Length) Then
+                        If (Not Input.Length = Length) Then
                             Length = Input.Length
                             WidthChanged = True
                         End If
@@ -627,7 +627,7 @@ Label_02E8:
             End If
             Dim ch As Char = Pattern.Chars(PatternIndex)
             Select Case ch
-                Case "!"c, &HFF01
+                Case "!"c, ChrW(&HFF01)
                     SeenNot = True
                     PatternIndex += 1
                     If (PatternIndex >= PatternLength) Then
@@ -637,7 +637,7 @@ Label_02E8:
                     ch = Pattern.Chars(PatternIndex)
                     Exit Select
             End Select
-            If ((ch = "]"c) OrElse (ch = &HFF3D)) Then
+            If ((ch = "]"c) OrElse (AscW(ch) = &HFF3D)) Then
                 If SeenNot Then
                     SeenNot = False
                     If Not ValidatePatternWithoutMatching Then
@@ -658,7 +658,7 @@ Label_02E8:
 Label_00C9:
             str = Nothing
             Dim right As String = Nothing
-            If ((ch = "]"c) OrElse (ch = &HFF3D)) Then
+            If ((ch = "]"c) OrElse (AscW(ch) = &HFF3D)) Then
                 Mismatch = Not SeenNot
                 Return
             End If
@@ -684,7 +684,7 @@ Label_013B:
                 str = Pattern.Substring(PatternIndex, ((num2 - PatternIndex) + 1))
                 PatternIndex = num2
             End If
-            If ((((num2 + 2) >= PatternLength) OrElse ((Pattern.Chars((num2 + 1)) <> "-"c) AndAlso (Pattern.Chars((num2 + 1)) <> &HFF0D))) OrElse ((Pattern.Chars((num2 + 2)) = "]"c) OrElse (Pattern.Chars((num2 + 2)) = &HFF3D))) Then
+            If ((((num2 + 2) >= PatternLength) OrElse ((Pattern.Chars((num2 + 1)) <> "-"c) AndAlso (AscW(Pattern.Chars((num2 + 1))) <> &HFF0D))) OrElse ((Pattern.Chars((num2 + 2)) = "]"c) OrElse (Pattern.Chars((num2 + 2)) = &HFF3D))) Then
                 If Not ValidatePatternWithoutMatching Then
                     num3 = 0
                     If (LikeOperator.CompareChars(Source, SourceLength, SourceIndex, num, SourceLigatureInfo, Pattern, (range.Start + range.StartLength), range.Start, num3, PatternLigatureInfo, Comparer, Options, False, True) = 0) Then
@@ -743,7 +743,7 @@ Label_0369:
                     PatternError = True
                     Return
                 End If
-            Loop While ((Pattern.Chars(PatternIndex) <> "]"c) AndAlso (Pattern.Chars(PatternIndex) <> &HFF3D))
+            Loop While ((Pattern.Chars(PatternIndex) <> "]"c) AndAlso (AscW(Pattern.Chars(PatternIndex)) <> &HFF3D))
             SourceIndex = num
             Return
 Label_03EE:
@@ -839,8 +839,8 @@ Label_03EE:
 
 
         ' Fields
-        Private Shared LigatureExpansions As String() = New String() { "", "ss", "sz", "AE", "ae", "TH", "th", "OE", "oe" }
-        Private Shared LigatureMap As Byte() = New Byte(&H8E  - 1) {}
+        Private Shared LigatureExpansions As String() = New String() {"", "ss", "sz", "AE", "ae", "TH", "th", "OE", "oe"}
+        Private Shared LigatureMap As Byte() = New Byte(&H8E - 1) {}
 
         ' Nested Types
         Private Enum CharKind
@@ -850,7 +850,7 @@ Label_03EE:
             None = 0
         End Enum
 
-        <StructLayout(LayoutKind.Sequential)> _
+        <StructLayout(LayoutKind.Sequential)>
         Private Structure LigatureInfo
             Friend Kind As CharKind
             Friend CharBeforeExpansion As Char
@@ -871,7 +871,7 @@ Label_03EE:
             thUpper = &HDE
         End Enum
 
-        <StructLayout(LayoutKind.Sequential)> _
+        <StructLayout(LayoutKind.Sequential)>
         Private Structure PatternGroup
             Friend PatType As PatternType
             Friend MaxSourceIndex As Integer
@@ -894,7 +894,7 @@ Label_03EE:
             [STRING] = 0
         End Enum
 
-        <StructLayout(LayoutKind.Sequential)> _
+        <StructLayout(LayoutKind.Sequential)>
         Private Structure Range
             Friend Start As Integer
             Friend StartLength As Integer

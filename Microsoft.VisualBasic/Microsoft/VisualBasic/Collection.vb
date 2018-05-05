@@ -1,6 +1,4 @@
-﻿Imports Microsoft.VisualBasic.CompilerServices
-Imports System
-Imports System.Collections
+﻿Imports System.Collections
 Imports System.Collections.Generic
 Imports System.ComponentModel
 Imports System.Diagnostics
@@ -10,6 +8,9 @@ Imports System.Runtime.InteropServices
 Imports System.Runtime.Serialization
 Imports System.Security
 Imports System.Threading
+Imports Microsoft.VisualBasic.Collection
+Imports Microsoft.VisualBasic.CompilerServices
+Imports Microsoft.VisualBasic.ForEachEnum
 
 Namespace Microsoft.VisualBasic
     <Serializable, DefaultMember("Item"), DebuggerTypeProxy(GetType(CollectionDebugView)), DebuggerDisplay("Count = {Count}")> _
@@ -377,17 +378,17 @@ Namespace Microsoft.VisualBasic
 
         Private Property IListItem(index As Integer) As Object
             Get
-                Return Me.m_ItemsList.get_Item(index).m_Value
+                Return Me.m_ItemsList.Item(index).m_Value
             End Get
             Set(value As Object)
-                Me.m_ItemsList.get_Item(index).m_Value = value
+                Me.m_ItemsList.Item(index).m_Value = value
             End Set
         End Property
 
         Default Public ReadOnly Property Item(Index As Integer) As Object
             Get
                 Me.IndexCheck(Index)
-                Return Me.m_ItemsList.get_Item((Index - 1)).m_Value
+                Return Me.m_ItemsList.Item((Index - 1)).m_Value
             End Get
         End Property
 
@@ -430,47 +431,47 @@ Namespace Microsoft.VisualBasic
         End Property
 
         <DynamicallyInvokableAttribute>
-        Private ReadOnly Property System.Collections.ICollection.Count As Integer
+        Private ReadOnly Property Count As Integer Implements System.Collections.ICollection.Count
             Get
                 Return Me.m_ItemsList.Count
             End Get
         End Property
 
         <DynamicallyInvokableAttribute>
-        Private ReadOnly Property System.Collections.ICollection.IsSynchronized As Boolean
+        Private ReadOnly Property IsSynchronized As Boolean Implements System.Collections.ICollection.IsSynchronized
             Get
                 Return False
             End Get
         End Property
 
         <DynamicallyInvokableAttribute>
-        Private ReadOnly Property System.Collections.ICollection.SyncRoot As Object
+        Private ReadOnly Property SyncRoot As Object Implements System.Collections.ICollection.SyncRoot
             Get
                 Return Me
             End Get
         End Property
 
         <DynamicallyInvokableAttribute>
-        Private ReadOnly Property System.Collections.IList.IsFixedSize As Boolean
+        Private ReadOnly Property IsFixedSize As Boolean Implements System.Collections.IList.IsFixedSize
             Get
                 Return False
             End Get
         End Property
 
         <DynamicallyInvokableAttribute>
-        Private ReadOnly Property System.Collections.IList.IsReadOnly As Boolean
+        Private ReadOnly Property IsReadOnly As Boolean Implements System.Collections.IList.IsReadOnly
             Get
                 Return False
             End Get
         End Property
 
         <DynamicallyInvokableAttribute>
-        Private Property System.Collections.IList.Item( index As Integer) As Object
+        Private Property Item(index As Integer) As Object Implements System.Collections.IList.Item
             Get
-                Return Me.m_ItemsList.get_Item(index).m_Value
+                Return Me.m_ItemsList.Item(index).m_Value
             End Get
             Set(value As Object)
-                Me.m_ItemsList.get_Item(index).m_Value = value
+                Me.m_ItemsList.Item(index).m_Value = value
             End Set
         End Property
 
@@ -507,7 +508,7 @@ Namespace Microsoft.VisualBasic
                     Dim num2 As Integer = count
                     Dim i As Integer = 1
                     Do While (i <= num2)
-                        Dim node As Node = Me.m_InstanceBeingWatched.InternalItemsList.get_Item((i - 1))
+                        Dim node As Node = Me.m_InstanceBeingWatched.InternalItemsList.Item((i - 1))
                         objArray2(i) = New KeyValuePair(node.m_Key, node.m_Value)
                         i += 1
                     Loop

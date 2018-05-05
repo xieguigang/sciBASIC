@@ -12,7 +12,7 @@ Imports System.Text
 Imports System.Threading
 
 Namespace Microsoft.VisualBasic.CompilerServices
-    <EditorBrowsable(EditorBrowsableState.Never), DynamicallyInvokableAttribute> _
+    <EditorBrowsable(EditorBrowsableState.Never), DynamicallyInvokableAttribute>
     Public NotInheritable Class Utils
         ' Methods
         Private Sub New()
@@ -917,7 +917,7 @@ Label_008B:
                     ObjectFlowControl.CheckForSyncLockOnValueType(resourceManagerSyncObj)
                     SyncLock resourceManagerSyncObj
                         If Not Utils.m_TriedLoadingResourceManager Then
-                            Try 
+                            Try
                                 Utils.m_VBAResourceManager = New ResourceManager("Microsoft.VisualBasic", Assembly.GetExecutingAssembly)
                             Catch exception As StackOverflowException
                                 Throw exception
@@ -947,29 +947,29 @@ Label_008B:
 
         ' Fields
         Friend Const chBackslash As Char = "\"c
-        Friend Const chCharH0A As Char = ChrW(10)
-        Friend Const chCharH0B As Char = ChrW(11)
-        Friend Const chCharH0C As Char = ChrW(12)
-        Friend Const chCharH0D As Char = ChrW(13)
+        Friend Const chCharH0A As Char = Chr(10)
+        Friend Const chCharH0B As Char = Chr(11)
+        Friend Const chCharH0C As Char = Chr(12)
+        Friend Const chCharH0D As Char = Chr(13)
         Friend Const chColon As Char = ":"c
         Friend Const chDblQuote As Char = """"c
         Friend Const chGenericManglingChar As Char = "`"c
         Friend Const chHyphen As Char = "-"c
-        Friend Const chIntlSpace As Char = ChrW(12288)
+        Friend Const chIntlSpace As Char = Chr(12288)
         Friend Const chLetterA As Char = "A"c
         Friend Const chLetterZ As Char = "Z"c
-        Friend Const chLineFeed As Char = ChrW(10)
+        Friend Const chLineFeed As Char = Chr(10)
         Friend Const chPeriod As Char = "."c
         Friend Const chPlus As Char = "+"c
         Friend Const chSlash As Char = "/"c
         Friend Const chSpace As Char = " "c
-        Friend Const chTab As Char = ChrW(9)
+        Friend Const chTab As Char = Chr(9)
         Friend Const chZero As Char = "0"c
         Private Const ERROR_INVALID_PARAMETER As Integer = &H57
         Friend Const FACILITY_CONTROL As Integer = &HA0000
         Friend Const FACILITY_ITF As Integer = &H40000
         Friend Const FACILITY_RPC As Integer = &H10000
-        Friend Shared m_achIntlSpace As Char() = New Char() { " "c, ChrW(12288) }
+        Friend Shared m_achIntlSpace As Char() = New Char() {" "c, ChrW(12288)}
         Private Shared m_TriedLoadingResourceManager As Boolean
         Private Shared m_VBAResourceManager As ResourceManager
         Private Shared m_VBRuntimeAssembly As Assembly

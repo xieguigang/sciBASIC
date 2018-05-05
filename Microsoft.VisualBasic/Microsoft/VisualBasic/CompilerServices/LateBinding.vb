@@ -1,6 +1,4 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports System.Diagnostics
 Imports System.Reflection
 Imports System.Runtime.InteropServices

@@ -1,6 +1,4 @@
-﻿Imports Microsoft.VisualBasic.CompilerServices
-Imports System
-Imports System.Globalization
+﻿Imports System.Globalization
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
@@ -9,6 +7,7 @@ Imports System.Security
 Imports System.Security.Permissions
 Imports System.Text
 Imports System.Threading
+Imports Microsoft.VisualBasic.CompilerServices
 
 Namespace Microsoft.VisualBasic
     <StandardModule, SecurityCritical, HostProtection(SecurityAction.LinkDemand, Resources:=HostProtectionResource.ExternalProcessMgmt)> _

@@ -11,6 +11,7 @@ Namespace Microsoft.VisualBasic.CompilerServices
     <EditorBrowsable(EditorBrowsableState.Never)> _
     Friend Class VB6RandomFile
         Inherits VB6File
+
         ' Methods
         Public Sub New(FileName As String, access As OpenAccess, share As OpenShare, lRecordLen As Integer)
             MyBase.New(FileName, access, share, lRecordLen)

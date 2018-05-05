@@ -1,12 +1,10 @@
-﻿Imports Microsoft.VisualBasic
-Imports System
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports System.Globalization
-Imports System.Runtime.InteropServices
 Imports System.Threading
 
 Namespace Microsoft.VisualBasic.CompilerServices
-    <EditorBrowsable(EditorBrowsableState.Never)> _
+
+    <EditorBrowsable(EditorBrowsableState.Never)>
     Public NotInheritable Class ObjectType
         ' Methods
         Private Shared Function AddByte(i1 As Byte, i2 As Byte) As Object
@@ -2260,9 +2258,9 @@ Label_01A3:
 
 
         ' Fields
-        Private Shared ReadOnly ConversionClassTable As CC(0 To .,0 To .) = New CC() { CC.Err }
+        Private Shared ReadOnly ConversionClassTable As CC() = New CC() {CC.Err}
         Private Const TCMAX As Integer = &H13
-        Private Shared ReadOnly WiderType As VType(0 To .,0 To .) = New VType() { VType.t_bad }
+        Private Shared ReadOnly WiderType As VType() = New VType() {VType.t_bad}
 
         ' Nested Types
         Private Enum CC As Byte
