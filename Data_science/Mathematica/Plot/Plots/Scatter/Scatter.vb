@@ -169,19 +169,19 @@ Public Module Scatter
     ''' <returns></returns>
     <Extension>
     Public Function Plot(c As IEnumerable(Of SerialData),
-                         Optional size$ = "1600,1200",
-                         Optional padding$ = g.MediumPadding,
+                         Optional size$ = "3600,2700",
+                         Optional padding$ = g.DefaultUltraLargePadding,
                          Optional bg$ = "white",
                          Optional showGrid As Boolean = True,
                          Optional showLegend As Boolean = True,
                          Optional legendPosition As Point = Nothing,
-                         Optional legendSize$ = "100,20",
+                         Optional legendSize$ = "100,50",
                          Optional drawLine As Boolean = True,
                          Optional legendBorder As Stroke = Nothing,
                          Optional legendRegionBorder As Stroke = Nothing,
                          Optional fill As Boolean = False,
                          Optional fillPie As Boolean = True,
-                         Optional legendFontSize! = 14,
+                         Optional legendFontSize! = 48,
                          Optional absoluteScaling As Boolean = True,
                          Optional XaxisAbsoluteScalling As Boolean = False,
                          Optional YaxisAbsoluteScalling As Boolean = False,
@@ -195,7 +195,9 @@ Public Module Scatter
                          Optional ticksY# = -1,
                          Optional preferPositive As Boolean = False,
                          Optional interplot As Splines = Splines.None,
-                         Optional densityColor As Boolean = False) As GraphicsData
+                         Optional densityColor As Boolean = False,
+                         Optional tickFontStyle$ = CSSFont.Win7VeryLarge,
+                         Optional labelFontStyle$ = CSSFont.Win7VeryVeryLarge) As GraphicsData
 
         Dim margin As Padding = padding
         Dim array As SerialData() = c.ToArray
@@ -238,7 +240,9 @@ Public Module Scatter
                     Call g.DrawAxis(
                         rect, scaler, showGrid,
                         xlabel:=Xlabel, ylabel:=Ylabel,
-                        htmlLabel:=htmlLabel
+                        htmlLabel:=htmlLabel,
+                        tickFontStyle:=tickFontStyle,
+                        labelFont:=labelFontStyle
                     )
                 End If
 
