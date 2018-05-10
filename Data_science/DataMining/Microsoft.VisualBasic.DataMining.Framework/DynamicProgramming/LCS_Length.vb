@@ -66,7 +66,7 @@ Namespace DynamicProgramming
             Return a = b
         End Function
 
-        Public Function MaxSet(Of T)(a As T(), b As T(), equals As Equals(Of T)) As T()
+        Public Function MaxSet(Of T)(a As T(), b As T(), equals As IEquals(Of T)) As T()
             Dim m As Integer = a.Length
             Dim n As Integer = b.Length
             Dim len()() As Integer = MAT(Of Integer)(m + 1, n + 1)

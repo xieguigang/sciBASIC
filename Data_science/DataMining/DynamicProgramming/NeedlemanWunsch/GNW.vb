@@ -61,14 +61,14 @@ Namespace NeedlemanWunsch
 
         ReadOnly __empty As T
 
-        Sub New(q As IEnumerable(Of T), s As IEnumerable(Of T), equals As Equals(Of T), empty As T, toChar As Func(Of T, Char))
+        Sub New(q As IEnumerable(Of T), s As IEnumerable(Of T), equals As IEquals(Of T), empty As T, toChar As Func(Of T, Char))
             Call Me.New(equals, empty, toChar)
 
             Sequence1 = q.ToArray
             Sequence2 = s.ToArray
         End Sub
 
-        Sub New(match As Equals(Of T), empty As T, toChar As Func(Of T, Char))
+        Sub New(match As IEquals(Of T), empty As T, toChar As Func(Of T, Char))
             Call MyBase.New(match, toChar)
             __empty = empty
         End Sub

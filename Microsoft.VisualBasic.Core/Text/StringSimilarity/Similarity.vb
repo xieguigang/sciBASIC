@@ -50,7 +50,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
+Imports Microsoft.VisualBasic.GenericLambda(Of String)
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Text.Levenshtein
@@ -65,7 +65,7 @@ Namespace Text.Similarity
 
     Public Module Evaluations
 
-        ReadOnly ignoreCase As New DefaultValue(Of Equals(Of String))(AddressOf tokenEqualsIgnoreCase)
+        ReadOnly ignoreCase As New DefaultValue(Of IEquals)(AddressOf tokenEqualsIgnoreCase)
 
         ''' <summary>
         ''' 两个字符串之间是通过单词的排布的相似度来比较相似度的
@@ -85,7 +85,7 @@ Namespace Text.Similarity
                 Return 1
             End If
 
-            Dim tokenEquals As Equals(Of String) = New Equals(Of String)(AddressOf Evaluations.tokenEquals) Or Evaluations.ignoreCase.When(ignoreCase)
+            Dim tokenEquals As IEquals = New IEquals(AddressOf Evaluations.tokenEquals) Or Evaluations.ignoreCase.When(ignoreCase)
 
             dist = LevenshteinDistance.ComputeDistance(
                 s1.Split,

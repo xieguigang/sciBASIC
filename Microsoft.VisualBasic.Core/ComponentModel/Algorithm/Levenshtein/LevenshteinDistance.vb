@@ -99,7 +99,7 @@ Vladimir I",
         ''' <param name="cost"></param>
         ''' <param name="equals">泛型化的元素等价性的比较方法</param>
         ''' <returns></returns>
-        Public Function CreateTable(Of T)(reference As T(), hypotheses As T(), cost As Cost(Of T), equals As Equals(Of T)) As Double(,)
+        Public Function CreateTable(Of T)(reference As T(), hypotheses As T(), cost As Cost(Of T), equals As GenericLambda(Of T).IEquals) As Double(,)
             Dim distTable As Double(,) = New Double(reference.Length, hypotheses.Length) {}
 
             For i As Integer = 0 To reference.Length - 1
@@ -144,7 +144,7 @@ Vladimir I",
         ''' <param name="equals"></param>
         ''' <param name="cost"></param>
         ''' <returns></returns>
-        Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(), equals As Equals(Of T), Optional cost As Double = 0.7) As Double
+        Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(), equals As GenericLambda(Of T).IEquals, Optional cost As Double = 0.7) As Double
             If hypotheses Is Nothing Then hypotheses = New T() {}
             If reference Is Nothing Then reference = New T() {}
 
@@ -164,7 +164,7 @@ Vladimir I",
         ''' <param name="asChar">这个只是用于进行显示输出的</param>
         ''' <param name="cost"></param>
         ''' <returns></returns>
-        Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(), equals As Equals(Of T), asChar As ToChar(Of T), Optional cost As Double = 0.7) As DistResult
+        Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(), equals As GenericLambda(Of T).IEquals, asChar As ToChar(Of T), Optional cost As Double = 0.7) As DistResult
             If hypotheses Is Nothing Then hypotheses = New T() {}
             If reference Is Nothing Then reference = New T() {}
 

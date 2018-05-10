@@ -46,7 +46,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
 
     Public Module DamerauLevenshteinDistance
 
-        Public Function DamerauLevenshtein(Of T)(down As T(), across As T(), equals As Equals(Of T), insert#, remove#, substitute As Func(Of T, T, Double), transpose As Func(Of T, T, Double)) As Double
+        Public Function DamerauLevenshtein(Of T)(down As T(), across As T(), equals As GenericLambda(Of T).IEquals, insert#, remove#, substitute As Func(Of T, T, Double), transpose As Func(Of T, T, Double)) As Double
             Dim matrix As New List(Of Double())
 
             For i As Integer = 0 To down.Length - 1

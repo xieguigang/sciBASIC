@@ -41,16 +41,16 @@
 
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Levenshtein
-Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
+Imports Microsoft.VisualBasic.GenericLambda(Of Double)
 
 Public Module GlobalMatch
 
     Public Function Similarity(a As Vector, b As Vector, threshold#) As Double
-        Dim equals As Equals(Of Double) = Function(x, y)
-                                              x = threshold <= x
-                                              y = threshold <= y
-                                              Return x = y
-                                          End Function
+        Dim equals As IEquals = Function(x, y)
+                                    x = threshold <= x
+                                    y = threshold <= y
+                                    Return x = y
+                                End Function
         Dim dist = LevenshteinDistance.ComputeDistance(
             a.ToArray,
             b.ToArray,

@@ -64,7 +64,7 @@ Namespace NeedlemanWunsch
         Dim aligned2 As New List(Of T())
 
         Protected ReadOnly __toChar As Func(Of T, Char)
-        ReadOnly __equals As Equals(Of T)
+        ReadOnly __equals As IEquals(Of T)
 
         ''' <summary>
         ''' get numberOfAlignments </summary>
@@ -151,7 +151,7 @@ Namespace NeedlemanWunsch
         ''' <returns> score </returns>
         Public Property Score As Integer
 
-        Sub New(match As Equals(Of T), toChar As Func(Of T, Char))
+        Sub New(match As IEquals(Of T), toChar As Func(Of T, Char))
             __equals = match
             __toChar = toChar
         End Sub
