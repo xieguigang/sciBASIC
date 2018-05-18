@@ -149,6 +149,11 @@ Namespace Language
 
 #Region "Helper for ``With``"
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Self(Of T)() As Func(Of T, T)
+            Return AddressOf [ByRef]
+        End Function
+
         ''' <summary>
         ''' Extension method for VisualBasic ``With`` anonymous variable syntax source reference helper
         ''' </summary>

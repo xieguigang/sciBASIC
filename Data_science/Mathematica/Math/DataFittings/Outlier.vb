@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
@@ -22,5 +23,25 @@ Public Module Outlier
                 End If
             Next
         Next
+    End Function
+
+    <Extension>
+    Public Function RemovesOutlier(index As IEnumerable(Of Integer), x As Vector, y As Vector) As (X As Vector, Y As Vector)
+        With index.OrderBy(Self(Of Integer)).ToArray
+            x = .removesByIndex(x.AsList)
+            y = .removesByIndex(y.AsList)
+        End With
+
+        Return (x, y)
+    End Function
+
+    <Extension>
+    Private Function removesByIndex(index%(), list As List(Of Double)) As Vector
+        For i As Integer = 0 To index.Length - 1
+            Dim ind% = index(i) - i
+            list -= ind
+        Next
+
+        Return list.AsVector
     End Function
 End Module
