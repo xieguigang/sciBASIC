@@ -141,7 +141,8 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' Gets the union collection of the keys from <see cref="DataSet.Properties"/> 
+        ''' Gets the union collection of the keys from <see cref="DataSet.Properties"/>.
+        ''' (包含所有的已经去除重复了的属性名称)
         ''' </summary>
         ''' <param name="list"></param>
         ''' <returns></returns>
