@@ -6,6 +6,8 @@ Module testoutlier
 
     Sub Main()
 
+        Call orderSeq()
+
         Dim x As Vector = {0.010228592, 2.278282642, 0.922615588, 0.472233653, 0.234864831, 0.117762581, 0.051605649}
 
         Dim index = x.OutlierIndex.ToArray
@@ -23,5 +25,15 @@ Module testoutlier
 
         Pause()
 
+    End Sub
+
+    Sub orderSeq()
+        Dim x As Vector = {0.010228592, 2.278282642, 0.922615588, 0.472233653, 0.234864831, 0.117762581, 0.051605649}
+
+        Dim index = x.OrderSequenceOutlierIndex.ToArray
+
+        Dim xy = index.RemovesOutlier(x.AsVector, x.AsVector)
+
+        Pause()
     End Sub
 End Module

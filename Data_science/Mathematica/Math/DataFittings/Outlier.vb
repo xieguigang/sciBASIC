@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -44,4 +45,39 @@ Public Module Outlier
 
         Return list.AsVector
     End Function
+
+#Region "Order sequence outlier"
+
+    ' 假设有这样子的一个有序序列
+    ' 可以发现除了第一个数据点，序列中其他的点都是递减的
+    ' 所以第一个点应该是这个有序序列之中的异常点
+    '
+    ' 0.010228592, 2.278282642, 0.922615588, 0.472233653, 0.234864831, 0.117762581, 0.051605649
+    '
+    ' 因为四分位数方法是无差别对待序列之中的所有点的，所以按照四分位数方法计算出来的异常点为2.278282642
+    ' 所以在这里不可以使用四分位数方法来检查有序序列中的异常点
+
+    ''' <summary>
+    ''' 采用滑窗外加变异量计算来得到异常点
+    ''' </summary>
+    ''' <param name="seq"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function OrderSequenceOutlierIndex(seq As Vector) As IEnumerable(Of Integer)
+        Dim delta = seq.SlideWindows(winSize:=2) _
+                       .Select(Function(d)
+                                   ' 计算当前的这个滑窗内的变异量
+                                   Return d(1) - d(0)
+                               End Function) _
+                       .AsVector
+
+        Dim normalSign = If(delta(delta > 0).Count > delta(delta <= 0).Count, 1, -1)
+
+        If normalSign = 1 Then
+            Return Which.IsTrue(delta < 0)
+        Else
+            Return Which.IsTrue(delta > 0)
+        End If
+    End Function
+#End Region
 End Module
