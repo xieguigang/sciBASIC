@@ -10,9 +10,8 @@ Public Module Outlier
     ''' </summary>
     ''' <param name="seq">采用四分位数方法进行异常点的计算分析</param>
     ''' <returns></returns>
-    <Extension>
-    Public Iterator Function OutlierIndex(seq As Vector) As IEnumerable(Of Integer)
-        Dim quartile = seq.Quartile
+    <Extension> Public Iterator Function OutlierIndex(seq As Vector) As IEnumerable(Of Integer)
+        Dim quartile = seq.Quartile(altPosition:=True)
         Dim out = seq.Outlier(quartile).Outlier
 
         For Each x As SeqValue(Of Double) In seq.SeqIterator
