@@ -83,13 +83,13 @@ Namespace Imaging
         End Function
 
         Public Function hexToRbgNew(Hex As String) As Color
-            Hex = Replace(Hex, "#", "")
+            Hex = Strings.Replace(Hex, "#", "")
             Dim red As String = "&H" & Hex.Substring(0, 2)
-            Hex = Replace(Hex, red, "", , 1)
+            Hex = Strings.Replace(Hex, red, "", , 1)
             Dim green As String = "&H" & Hex.Substring(0, 2)
-            Hex = Replace(Hex, green, "", , 1)
+            Hex = Strings.Replace(Hex, green, "", , 1)
             Dim blue As String = "&H" & Hex.Substring(0, 2)
-            Hex = Replace(Hex, blue, "", , 1)
+            Hex = Strings.Replace(Hex, blue, "", , 1)
             Return Color.FromArgb(red, green, blue)
         End Function
 
@@ -99,7 +99,7 @@ Namespace Imaging
         ''' <param name="c">Example: ``#ffffff``</param>
         ''' <returns></returns>
         Public Function OLE(c As String) As Color
-            c = Replace(c, "#", "")
+            c = Strings.Replace(c, "#", "")
             c = "&H" & c
             ColorTranslator.FromOle(c)
         End Function
