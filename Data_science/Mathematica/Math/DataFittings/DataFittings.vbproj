@@ -222,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IFitted.vb" />
+    <Compile Include="Outlier.vb" />
     <Compile Include="Weighted\WeightedFit.vb" />
     <Compile Include="Weighted\WeightedLinearRegression.vb" />
     <Compile Include="LeastSquares.vb" />
