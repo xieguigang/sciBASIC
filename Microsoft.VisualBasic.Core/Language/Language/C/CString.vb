@@ -64,6 +64,49 @@ Namespace Language.C
     ''' </summary>
     Public Module CString
 
+        <Extension> Public Function Decode(s As String) As String
+            If s.StringEmpty Then
+                Return s
+            Else
+                s = s.Replace("\U", "\u").Replace("\A", "\a")
+            End If
+
+            Try
+                ' Hex Unicode \u0000
+                Do
+                    Dim i = s.IndexOf("\u")
+
+                    If i = -1 Then
+                        Exit Do
+                    End If
+
+                    Dim u = s.Substring(i, 6)
+                    Dim n = Convert.ToInt16(u.Replace("\u", ""), 16)
+
+                    s = s.Replace(u, ChrW(n))
+                Loop
+
+                ' Decimal ASCII \a000
+                Do
+                    Dim i = s.IndexOf("\a")
+
+                    If i = -1 Then
+                        Exit Do
+                    End If
+
+                    Dim a = s.Substring(i, 5)
+                    Dim n = CByte(a.Replace("\a", ""))
+
+                    s = s.Replace(a, Chr(n))
+                Loop
+
+            Catch ex As Exception
+                Throw New Exception("bad format")
+            End Try
+
+            Return s
+        End Function
+
         ''' <summary>
         ''' This method allows replacing a single character in a string, to help convert
         ''' C++ code where a single character in a character array is replaced.

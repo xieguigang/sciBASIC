@@ -97,7 +97,8 @@ Namespace Graphic.Axis
                             Optional gridFill$ = "rgb(245,245,245)",
                             Optional htmlLabel As Boolean = True,
                             Optional XtickFormat$ = "F2",
-                            Optional YtickFormat$ = "F2")
+                            Optional YtickFormat$ = "F2",
+                            Optional tickFontStyle$ = CSSFont.Win7LargeBold)
             With region
                 Call g.DrawAxis(
                     scaler,
@@ -109,7 +110,8 @@ Namespace Graphic.Axis
                     labelFontStyle:=labelFont,
                     axisStroke:=axisStroke, gridFill:=gridFill, htmlLabel:=htmlLabel,
                     XtickFormat:=XtickFormat,
-                    YtickFormat:=YtickFormat)
+                    YtickFormat:=YtickFormat,
+                    tickFontStyle:=tickFontStyle)
             End With
         End Sub
 
