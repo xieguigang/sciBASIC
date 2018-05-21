@@ -149,6 +149,12 @@ Public Module StringHelpers
         Return s.ToString
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Replace(sb As StringBuilder, find$, value As Func(Of String)) As StringBuilder
+        Return sb.Replace(find, value())
+    End Function
+
     ''' <summary>
     ''' 判断这个字符串数组之中的所有的元素都是空字符串？
     ''' </summary>
