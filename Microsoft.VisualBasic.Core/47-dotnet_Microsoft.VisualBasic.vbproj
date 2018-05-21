@@ -812,6 +812,7 @@
     <Compile Include="Extensions\IO\SerializationIO.vb" />
     <Compile Include="Extensions\Math\Information\Entropy.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Average.vb" />
+    <Compile Include="Extensions\StringHelpers\StringBuilders.vb" />
     <Compile Include="Extensions\Trinity\Extensions.vb" />
     <Compile Include="Extensions\Trinity\Expression.vb" />
     <Compile Include="Extensions\Trinity\Word.vb" />
