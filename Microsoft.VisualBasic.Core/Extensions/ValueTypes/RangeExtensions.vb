@@ -47,6 +47,15 @@ Namespace ValueTypes
 
     Public Module RangeExtensions
 
+        ''' <summary>
+        ''' ```
+        ''' d = <paramref name="value"/> - <see cref="DoubleRange.Min"/>
+        ''' p% = d / <see cref="DoubleRange.Length"/> * 100%
+        ''' ```
+        ''' </summary>
+        ''' <param name="range"></param>
+        ''' <param name="value#"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function Percentage(range As DoubleRange, value#) As Double
             Return If(value = range.Min, 0, (value - range.Min) / range.Length)
