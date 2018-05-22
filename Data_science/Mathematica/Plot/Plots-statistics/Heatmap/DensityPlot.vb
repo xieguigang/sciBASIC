@@ -146,7 +146,9 @@ Namespace Heatmap
                 Ylabel:=labY,
                 xaxis:=xAxis,
                 yaxis:=yAxis,
-                htmlLabel:=htmlLabel).CreateGraphics
+                htmlLabel:=htmlLabel,
+                labelFontStyle:=CSSFont.Win7VeryLarge,
+                tickFontStyle:=CSSFont.Win7Large).CreateGraphics
 
                 ' 在这里还需要绘制颜色谱的legend
                 ' 计算出legend的layout信息
