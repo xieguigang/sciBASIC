@@ -244,6 +244,11 @@ Public Module Extensions
         Return Nothing
     End Function
 
+    ''' <summary>
+    ''' Get target string's md5 hash code
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function MD5(s$) As String
         Return s.GetMd5Hash

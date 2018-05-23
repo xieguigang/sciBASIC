@@ -54,15 +54,15 @@ Namespace SecurityString
     ''' <remarks></remarks>
     Public Class Md5HashProvider : Implements IDisposable
 
-        ReadOnly md5Hash As Security.Cryptography.MD5 =
-            Security.Cryptography.MD5.Create()
+        ReadOnly md5Hash As MD5 = Security.Cryptography.MD5.Create()
 
         Public Function GetMd5Hash(input As String) As String
             If String.IsNullOrEmpty(input) Then
                 Return ""
             End If
 
-            Dim data As Byte() = Encoding.UTF8.GetBytes(input)  ' Convert the input string to a byte array and compute the hash.
+            ' Convert the input string to a byte array and compute the hash.
+            Dim data As Byte() = Encoding.UTF8.GetBytes(input)
             Return GetMd5Hash(input:=data)
         End Function
 
@@ -91,7 +91,8 @@ Namespace SecurityString
                 Return ""
             End If
 
-            Dim data As Byte() = md5Hash.ComputeHash(input)    ' Convert the input string to a byte array and compute the hash.
+            ' Convert the input string to a byte array and compute the hash.
+            Dim data As Byte() = md5Hash.ComputeHash(input)
             ' Create a new Stringbuilder to collect the bytes
             ' and create a string.
             Dim sBuilder As New StringBuilder()
@@ -102,7 +103,8 @@ Namespace SecurityString
                 sBuilder.Append(data(i).ToString("x2"))
             Next i
 
-            Return sBuilder.ToString() ' Return the hexadecimal string.
+            ' Return the hexadecimal string.
+            Return sBuilder.ToString()
         End Function
 
 #Region "IDisposable Support"
