@@ -54,6 +54,14 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 Public Module PrimitiveParser
 
+    Public Function Eval(expression$, default#) As Double
+        If expression Is Nothing Then
+            Return [default]
+        Else
+            Return Conversion.Val(expression)
+        End If
+    End Function
+
     Const NumericPattern$ = "[-]?\d*(\.\d+)?([eE][-]?\d*)?"
 
     ''' <summary>
