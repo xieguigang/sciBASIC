@@ -46,6 +46,10 @@ Module Module1
 
     Sub Main()
 
+        Call CharsParser(<string>45274,562.162767808,Vialinin A,"4,4"",5\',6\'-tetrahydroxy[1,1\':4\',1""-terphenyl]-2\',3\'-diyl ester benzeneacetic acid",C34H26O8,858134-23-3,,,,-1,,</string>).GetJson(True).__DEBUG_ECHO
+
+        Pause()
+
         Call CharsParser(<string>A,"","","","NA"</string>).GetJson(True).__DEBUG_ECHO
 
         Call CharsParser(<string>"Iron ion, (Fe2+)","Iron homeostasis",PM0352,"Iron homeostasis","Fur - Pasteurellales",+,XC_2767,"XC_1988; XC_1989"</string>).GetJson(True).__INFO_ECHO
