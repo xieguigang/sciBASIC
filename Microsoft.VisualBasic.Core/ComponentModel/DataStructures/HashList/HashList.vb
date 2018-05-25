@@ -149,16 +149,22 @@ Namespace ComponentModel
             End Set
         End Property
 
-        Sub New()
+        Sub New(Optional isNothing As Assert(Of T) = Nothing)
+            If Not isNothing Is Nothing Then
+                Me.isNothing = isNothing
+            End If
         End Sub
 
-        Sub New(capacity%)
+        Sub New(capacity%, Optional isNothing As Assert(Of T) = Nothing)
+            Call Me.New(isNothing)
+
             For i As Integer = 0 To capacity - 1
                 Call list.Add(Nothing)
             Next
         End Sub
 
-        Sub New(source As IEnumerable(Of T))
+        Sub New(source As IEnumerable(Of T), Optional isNothing As Assert(Of T) = Nothing)
+            Call Me.New(isNothing)
             Call Add(source)
         End Sub
 
