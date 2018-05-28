@@ -66,8 +66,6 @@ Namespace CommandLine.ManView
     ''' </summary>
     Module SDKManual
 
-        Public ReadOnly Property DocPath As String = $"{App.ExecutablePath.TrimSuffix}.md"
-
         ''' <summary>
         ''' 这个是用于在终端上面显示的无格式的文本输出
         ''' </summary>

@@ -86,9 +86,10 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Active(type As Type) As String
-            Dim obj As Object = type.__active
-            Return GetObjectJson(obj, type)
+            Return type.GetObjectJson(obj:=type.__active)
         End Function
 
         ''' <summary>

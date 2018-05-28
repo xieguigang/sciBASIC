@@ -248,6 +248,7 @@ Namespace CommandLine
                 ' 默认是分段打印帮助信息，假若加上了  --print参数的话，则才会一次性的打印所有的信息出来
                 Dim CLI As CommandLine = DirectCast(argvs(Scan0), CommandLine)
                 Dim doc As String = SDKdocs()
+                Dim output$ = CLI("/out") Or "./"
 
                 If Not CLI.GetBoolean("--file") Then
                     If CLI.GetBoolean("--print") Then
@@ -259,7 +260,7 @@ Namespace CommandLine
                     ' 只会写文件而不会在终端打开帮助窗口
                 End If
 
-                Return doc.SaveTo(DocPath, Encoding.UTF8).CLICode
+                Return doc.SaveTo($"{output}/{App.AssemblyName}.md", Encoding.UTF8).CLICode
 
             ElseIf String.Equals(commandName, "/linux-bash", StringComparison.OrdinalIgnoreCase) Then
                 Return BashShell()
