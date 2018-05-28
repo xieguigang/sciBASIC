@@ -99,7 +99,8 @@ Namespace CommandLine.ManView
                 From api As SeqValue(Of APIEntryPoint)
                 In CLI.APIList.SeqIterator(offset:=1)
                 Let index As String = api.i & ".   "
-                Select index & api.value.HelpInformation
+                Let info As String = api.value.HelpInformation
+                Select index & info
 
             Call New IndexedManual(pages, title).ShowManual()
 
@@ -253,7 +254,7 @@ Namespace CommandLine.ManView
                                     End If
                                 Else
                                     Call sb.AppendLine(
-                                        $"|[{API.Name}](#{API.Name})|{API.Info}|")
+                                        $"|[{API.Name}](#{API.Name})|{API.Info.LineTokens.JoinBy("<br />")}|")
                                 End If
                             Next
 
