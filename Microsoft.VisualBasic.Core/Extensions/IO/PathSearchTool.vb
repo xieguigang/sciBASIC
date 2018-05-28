@@ -1149,7 +1149,8 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' Gets the full path of the specific directory.
+    ''' Gets the full path of the specific directory. 
+    ''' (这个函数为了兼容linux的文件系统，也会自动的将所有的``\``替换为``/``)
     ''' </summary>
     ''' <param name="dir"></param>
     ''' <param name="stack">当程序出错误的时候记录进入日志的一个追踪目标参数，调试用</param>
