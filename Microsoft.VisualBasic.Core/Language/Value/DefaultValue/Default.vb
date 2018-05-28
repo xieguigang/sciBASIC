@@ -145,6 +145,11 @@ Namespace Language.Default
             Return Me
         End Function
 
+        Public Function [When](expression As Assert(Of T)) As DefaultValue(Of T)
+            assert = Function(o) expression(DirectCast(o, T))
+            Return Me
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"default({Value})"
         End Function
