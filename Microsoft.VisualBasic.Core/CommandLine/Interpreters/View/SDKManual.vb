@@ -127,7 +127,7 @@ Namespace CommandLine.ManView
             Call sb.AppendLine(assm.AssemblyCopyright)
             Call sb.AppendLine()
 
-            Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.ToFileURL}<br/>")
+            Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.BaseName}<br/>")
             Call sb.AppendLine($"**Root namespace**: ``{App.Type.FullName}``<br/>")
 
             Dim helps As ExceptionHelp = type.GetAttribute(Of ExceptionHelp)
