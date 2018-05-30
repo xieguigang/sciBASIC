@@ -822,6 +822,7 @@
     <Compile Include="Extensions\WebServices\Multipart.vb" />
     <Compile Include="Extensions\WebServices\Http\DataURI.vb" />
     <Compile Include="Language\Value\ByRefValueExtensions.vb" />
+    <Compile Include="Language\Value\DefaultValue\BooleanAssert.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="CommandLine\CLI\Scripting.vb" />
     <Compile Include="CommandLine\InteropService\Abstract.vb" />

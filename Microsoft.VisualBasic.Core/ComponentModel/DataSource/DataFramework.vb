@@ -145,13 +145,22 @@ Namespace ComponentModel.DataSourceModel
             Return props.ToDictionary(Function(x) x.Name)
         End Function
 
+        ReadOnly alwaysTrue As DefaultValue(Of Assert(Of Object)) = New Assert(Of Object)(Function() True)
+
+        ''' <summary>
+        ''' 将对象之中的所有属性值都取出来以字符串的形式生成一个字典对象
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="where">用来判断属性值是否应该被添加进入字典之中</param>
+        ''' <returns></returns>
         <Extension>
         Public Function DictionaryTable(Of T)(x As T, Optional where As Assert(Of Object) = Nothing) As Dictionary(Of String, String)
-            Dim schema = GetType(T).Schema(PropertyAccess.Readable, PublicProperty, nonIndex:=True)
+            Dim schema As Dictionary(Of String, PropertyInfo) = GetType(T).getOrCache
             Dim table As New Dictionary(Of String, String)
             Dim obj
 
-            where = where Or New Assert(Of Object)(Function() True).AsDefault
+            where = where Or alwaysTrue
 
             For Each key As String In schema.Keys
                 obj = schema(key).GetValue(x)
@@ -162,6 +171,39 @@ Namespace ComponentModel.DataSourceModel
             Next
 
             Return table
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ValueTable(Of T)(x As T) As Dictionary(Of String, Object)
+            Return GetType(T).getOrCache _
+                             .ToDictionary(Function(p) p.Key,
+                                           Function(p)
+                                               Return p.Value.GetValue(x)
+                                           End Function)
+        End Function
+
+        ''' <summary>
+        ''' Helper for <see cref="DictionaryTable(Of T)(T, Assert(Of Object))"/>
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function getOrCache(type As Type) As Dictionary(Of String, PropertyInfo)
+            Static schemaCache As New Dictionary(Of Type, Dictionary(Of String, PropertyInfo))
+
+            If Not schemaCache.ContainsKey(type) Then
+                ' Gets all object instance property and also 
+                ' the properties should be public access 
+                ' without index access
+                schemaCache(type) = type.Schema(
+                    PropertyAccess.Readable,
+                    PublicProperty,
+                    nonIndex:=True
+                )
+            End If
+
+            Return schemaCache(type)
         End Function
 
 #If NET_40 = 0 Then
