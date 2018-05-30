@@ -810,6 +810,7 @@
     <Compile Include="Extensions\Image\Math\Models\Line.vb" />
     <Compile Include="Extensions\IO\StreamHelper.vb" />
     <Compile Include="Extensions\IO\SerializationIO.vb" />
+    <Compile Include="Extensions\Math\NumberEqualityComparer.vb" />
     <Compile Include="Extensions\Math\Information\Entropy.vb" />
     <Compile Include="Extensions\Math\Information\UncheckHelpers.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\Average.vb" />
