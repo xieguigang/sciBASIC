@@ -219,6 +219,11 @@ Namespace ComponentModel.Collection
             Return New Index(Of T)(source:=objs)
         End Operator
 
+        Public Shared Operator +(index As Index(Of T), element As T) As Index(Of T)
+            Call index.Add(element)
+            Return index
+        End Operator
+
         Public Iterator Function GetEnumerator() As IEnumerator(Of SeqValue(Of T)) Implements IEnumerable(Of SeqValue(Of T)).GetEnumerator
             For Each o As SeqValue(Of T) In index
                 Yield o

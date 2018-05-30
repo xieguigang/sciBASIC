@@ -59,22 +59,34 @@ Imports Microsoft.VisualBasic.Linq
 Public Module ListExtensions
 
     ''' <summary>
-    ''' 查找出序列之中最频繁出现的对象
+    ''' 查找出序列之中最频繁出现的对象(这个函数会自动跳过空值)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="list"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function TopMostFrequent(Of T)(list As IEnumerable(Of T)) As T
-        Return list _
-            .SafeQuery _
-            .Where(Function(x) Not x Is Nothing) _
-            .GroupBy(Function(x) x) _
-            .OrderByDescending(Function(g) g.Count) _
-            .FirstOrDefault _
-            .SafeQuery _
-            .FirstOrDefault ' 因为可能会碰到list是空的情况，所以在这里需要使用FirstOrDefault
+    Public Function TopMostFrequent(Of T)(list As IEnumerable(Of T), Optional equals As IEqualityComparer(Of T) = Nothing) As T
+        ' 因为可能会碰到list是空的情况，所以在这里需要使用FirstOrDefault
+        If equals Is Nothing Then
+            Return list _
+                .SafeQuery _
+                .Where(Function(x) Not x Is Nothing) _
+                .GroupBy(Function(x) x) _
+                .OrderByDescending(Function(g) g.Count) _
+                .FirstOrDefault _
+                .SafeQuery _
+                .FirstOrDefault
+        Else
+            Return list _
+                .SafeQuery _
+                .Where(Function(x) Not x Is Nothing) _
+                .GroupBy(Function(x) x, equals) _
+                .OrderByDescending(Function(g) g.Count) _
+                .FirstOrDefault _
+                .SafeQuery _
+                .FirstOrDefault
+        End If
     End Function
 
     ''' <summary>
