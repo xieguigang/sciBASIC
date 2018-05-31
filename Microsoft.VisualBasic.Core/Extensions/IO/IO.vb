@@ -74,10 +74,21 @@ Public Module IOExtensions
         }
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="stream">
+    ''' 必须要能够支持<see cref="Stream.Length"/>，对于有些网络服务器的HttpResponseStream可能不支持
+    ''' <see cref="Stream.Length"/>的话，这个函数将会报错
+    ''' </param>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function FlushStream(stream As MemoryStream, path$) As Boolean
-        Return stream.ToArray.FlushStream(path)
+    Public Function FlushStream(stream As Stream, path$) As Boolean
+        Dim buffer As Byte() = New Byte(stream.Length - 1) {}
+        Call stream.Read(buffer, Scan0, stream.Length)
+        Return buffer.FlushStream(path)
     End Function
 
     ''' <summary>

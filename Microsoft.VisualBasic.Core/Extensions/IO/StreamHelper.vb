@@ -58,16 +58,16 @@ Public Module StreamHelper
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("Stream.Copy", Info:="Download stream data from the http response.")>
-    <Extension> Public Function CopyStream(stream As Stream) As MemoryStream
+    <Extension> Public Function CopyStream(stream As Stream, Optional target As Stream = Nothing, Optional bufferSize% = 64 * 1024) As Stream
         If stream Is Nothing Then
-            Return New MemoryStream
+            Return If(target, New MemoryStream)
         End If
 
-        Dim buffer As Byte() = New Byte(64 * 1024) {}
-        Dim i As New Value(Of Integer)
+        Dim buffer As Byte() = New Byte(bufferSize - 1) {}
+        Dim i As int = Scan0
 
-        With New MemoryStream()
-            Do While i = stream.Read(buffer, 0, buffer.Length) > 0
+        With target Or DirectCast(New MemoryStream(), Stream).AsDefault
+            Do While (i = stream.Read(buffer, 0, buffer.Length)) > 0
                 Call .Write(buffer, 0, i)
             Loop
 
