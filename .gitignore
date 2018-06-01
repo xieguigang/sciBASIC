@@ -261,3 +261,4 @@ storage.ide-wal
 /CLI_tools/LicenseMgr/App
 /vs_solutions/dev/LicenseMgr/App
 *.dtbcache
+/www/data/github/App
