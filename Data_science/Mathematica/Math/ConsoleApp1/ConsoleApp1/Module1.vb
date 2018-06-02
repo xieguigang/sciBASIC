@@ -239,6 +239,47 @@ Module Module1
         Return (R_separation_line)
     End Function
 
+    Public Function pi_rcalc(N, B, R_separation_line) As Matrix
+        '# Consider an urn With N balls, B Of which are black And W white. pi_r stores 
+        '# The probability Of drawing w white And b black balls In n draws (n = w + b)
+        '# With the constraint Of P(w,b) = 0 If (w, b) Is On Or above separation line.
+        '# Row 1 Of the matrix represents w = -1, Col 1 represents b = -1.
+        '#
+        '# Input:
+        '#   N - total number Of white And black balls (according To the hypergeometric problem definition).
+        '#   B - number Of black balls.
+        '#   R_separation_line - represented As a vector size B + 1, index b + 1 containing 
+        '#                       the first (high enough) w To the right Of the R separation line.
+        '# See:
+        '#   Eden, E. (2007). Discovering Motifs In Ranked Lists Of DNA Sequences. Haifa. 
+        '#   Retrieved from http://bioinfo.cs.technion.ac.il/people/zohar/thesis/eran.pdf
+        '#   (pages 20)
+        Dim W As Double = N - B
+
+        Dim pi_r As New Matrix(DATA() = 0, nrow = W + 2, ncol = B + 2)
+        pi_r(1,) = 0 ' NOTE: Different from the thesis (see page 20 last paragraph),
+        ' should be 1 according To that paragraph, but this seems wrong.
+        pi_r(, 1) = 0
+
+        For bi As Integer = 0 To B
+            Dim wi = R_separation_line(bi + 1)
+            Do While (wi < (W + 1))
+                If ((wi = 0) AndAlso (bi = 0)) Then
+                    pi_r(2, 2) = 1 ' Note, this cell will be 0 If it's left to the R separation line (should not occure) 
+                Else
+                    ' Apply the recursion rule:
+                    ' P(w,b) = P((w,b)|(w-1,b))*P(w-1,b)+P((w,b)|(w,b-1))*P(w,b-1)
+                    pi_r(wi + 2, bi + 2) = (W - wi + 1) / (B + W - bi - wi + 1) * pi_r(wi + 1, bi + 2) +
+                        (B - bi + 1) / (B + W - bi - wi + 1) * pi_r(wi + 2, bi + 1)
+                End If
+                wi = wi + 1
+            Loop
+        Next
+        Return (pi_r)
+    End Function
+
+
+
 End Module
 
 Public Class htest
