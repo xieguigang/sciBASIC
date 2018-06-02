@@ -73,6 +73,9 @@ Namespace Language.Perl
                 Case GetType(String)
                     Return String.IsNullOrEmpty(DirectCast(obj, String))
 
+                Case GetType(Double)
+                    Return CDbl(obj).IsNaNImaginary
+
                 Case GetType(TimeSpan)
                     Return DirectCast(obj, TimeSpan) = TimeSpan.Zero
 

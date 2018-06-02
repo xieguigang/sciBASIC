@@ -112,9 +112,17 @@ Namespace LinearAlgebra
         End Property
 
         ''' <summary>
-        ''' Creates vector with m element and init value set to zero
+        ''' Creates vector with <paramref name="m"/> element and init value set to zero
+        ''' It creates a double-precision vector of the specified length with each element equal to 0.
         ''' </summary>
         ''' <param name="m"></param>
+        ''' <remarks>
+        ''' equality to R expression
+        ''' 
+        ''' ```R
+        ''' numeric(<paramref name="m"/>)
+        ''' ```
+        ''' </remarks>
         Public Sub New(m As Integer)
             Call Me.New(0R, m)
         End Sub
@@ -122,7 +130,7 @@ Namespace LinearAlgebra
         ''' <summary>
         ''' 创建一个空的向量，包含有零个元素
         ''' </summary>
-        Private Sub New()
+        Public Sub New()
             Call MyBase.New()
         End Sub
 
