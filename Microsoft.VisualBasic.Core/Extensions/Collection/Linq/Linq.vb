@@ -246,16 +246,16 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' Copy <paramref name="source"/> <paramref name="n"/> times to construct a new vector.
+        ''' Copy <paramref name="source"/> <paramref name="times"/> times to construct a new vector.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
-        ''' <param name="n"></param>
+        ''' <param name="times"></param>
         ''' <returns>An array consist of source with n elements.</returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function Repeats(Of T)(source As T, n%) As T()
-            Return n.Sequence.Select(Function(x) source).ToArray
+        <Extension> Public Function Repeats(Of T)(source As T, times%) As T()
+            Return times.Sequence.Select(Function(x) source).ToArray
         End Function
 
         ''' <summary>

@@ -2,6 +2,7 @@
 Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
+Imports Microsoft.VisualBasic.Linq
 
 ' author: Kobi Perl
 ' Based On the following thesis:
@@ -167,6 +168,75 @@ Module Module1
         Dim p_corrected As Double = 1 - pi_r(W + 2, B + 2)
 
         Return p_corrected
+    End Function
+
+    Public Function R_separation_linecalc(p#, N%, B%, n_max%) As Vector
+        '# Determine R separation line - This Is the highest (broken) line crossing the B*W matrix horizontally, that underneath it all
+        '# the associated p-values are higher than p, Or w + b > n_max.
+        '#
+        '# (This Is a bit different from the original definition To make the calculation more efficient)
+        '#
+        '# Input:
+        '#   p - the mHG statistic. Marked As p, As it represenets an "uncorrected" p-value.
+        '#   N - total number Of white And black balls (according To the hypergeometric problem definition).
+        '#   B - number Of black balls.
+        '#   n_max - Part Of the constraint On the line, the null hypothesis Is calculated under
+        '#           the assumption that the first n_max partitions are taken into account In determining the minimum.
+        '# Output:
+        '#   R_separation_line - represented As a vector size B + 1, index b + 1 containing 
+        '#                       the first (high enough) w To the right Of the R separation line (Or W + 1 If no such w exist).
+        '# See:
+        '#   Eden, E. (2007). Discovering Motifs In Ranked Lists Of DNA Sequences. Haifa. 
+        '#   Retrieved from http://bioinfo.cs.technion.ac.il/people/zohar/thesis/eran.pdf
+        '#   (pages 11-12)
+        Dim W As Double = N - B
+        Dim R_separation_line As Vector = Repeats(W + 1, times:=B + 1)
+
+        Dim HG_row As New Vector(B) ' First B in HG_row
+        HG_row(1) = 1 ' For n = 0, b = 0
+        B = 0
+        W = 0
+        Dim HGT = 1 ' Initial HGT
+
+        ' We are tracing the R line - increasing b until we Get To a cell where the associated p-values are smaller
+        ' than p, And Then increasing w until we Get To a cell where the associated p-values are bigger than p
+        Dim should_inc_w = (HGT <= (p + EPSILON)) AndAlso (W < W) AndAlso (B <= (n_max - W))
+        Dim should_inc_b = (HGT > (p + EPSILON)) AndAlso (B < B) AndAlso (B <= (n_max - W))
+
+        Do While (should_inc_w OrElse should_inc_b)
+            Do While (should_inc_b)  ' Increase b until we Get To the R line (Or going outside the n_max zone)
+                R_separation_line(B + 1) = W
+                B = B + 1
+                HG_row(B + 1) = HG_row(B) * d_ratio(B + W, B, N, B)
+                HG_row("1:B") = HG_row("1:b") * v_ratio(B + W, seq(0, B - 1), N, B)
+                HGT = 1 - HG_row("1:B").Sum  ' P(X >= b) = 1 - P(X <b)
+                should_inc_b = (HGT > (p + EPSILON)) AndAlso (B < B) AndAlso (B <= (n_max - W))
+            Loop
+            If (B > (n_max - W)) Then
+                ' We can Stop immediately And we Do Not need To calculate HG_row anymore
+                R_separation_line("(b+1):(B+1)") = W
+                should_inc_w = False
+            Else
+                should_inc_w = (HGT <= (p + EPSILON)) AndAlso (W < W)
+                Do While (should_inc_w) ' Increase w until we Get outside the R line (Or going outside the n_max zone)
+                    W = W + 1
+                    HG_row("1:(b+1)") = HG_row("1:(b+1)") * v_ratio(B + W, Seq(0, B), N, B)
+                    HGT = 1 - HG_row("1:B").Sum  ' P(X >= b) = 1 - P(X <b)
+                    should_inc_w = (HGT <= (p + EPSILON)) AndAlso (W < W) AndAlso (B <= (n_max - W))
+                Loop
+                If (B > (n_max - W)) Then
+                    ' We can stop immediately And we do Not need to calculate HG_row anymore
+                    R_separation_line("(b+1):(B+1)") = W
+                    should_inc_b = False
+                Else
+                    should_inc_b = (HGT > (p + EPSILON)) AndAlso (B < B) AndAlso (B <= (n_max - W))
+                End If
+            End If
+        Loop
+        If (HGT > (p + EPSILON)) Then ' Last one
+            R_separation_line(B + 1) = W
+        End If
+        Return (R_separation_line)
     End Function
 
 End Module
