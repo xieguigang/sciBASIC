@@ -1,8 +1,7 @@
-﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Vectorization
+﻿Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
 
 ' author: Kobi Perl
 ' Based On the following thesis:
