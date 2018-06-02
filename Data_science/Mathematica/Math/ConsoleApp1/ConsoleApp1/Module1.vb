@@ -278,7 +278,7 @@ Module Module1
         Return (pi_r)
     End Function
 
-    Public Function HG_row_ncalc(HG_row_m, m, n, b_n, N, B)
+    Public Function HG_row_ncalc(HG_row_m, m, ni, b_n, N, B)
         '# Calculate HG row n. This row contains the first (b_n  + 1)
         '# hypergeometric probabilities, HG[i] = Prob(X == (i - 1)), For number Of tries n.
         '# Does so given an updated HG row m (m < n), which contains the first (b_n)
@@ -299,13 +299,48 @@ Module Module1
         Const RECURSION_OVERHEAD_MULTIPLIER = 20
 
         Dim HG_row_ncalcfunc = Nothing
-        If ((n - m) <= (RECURSION_OVERHEAD_MULTIPLIER * Log2(b_n))) Then
+        If ((N - m) <= (RECURSION_OVERHEAD_MULTIPLIER * Log2(b_n))) Then
             HG_row_ncalcfunc = AddressOf HG_row_ncalciter
         Else
             HG_row_ncalcfunc = AddressOf HG_row_ncalcrecur
         End If
 
-        Return (HG_row_ncalcfunc(HG_row_m, m, n, b_n, n, B))
+        Return (HG_row_ncalcfunc(HG_row_m, m, ni, b_n, N, B))
+    End Function
+
+
+    Public Function HG_row_ncalciter(HG_row_m As Vector, m#, ni#, b_n#, N#, B#) As Vector
+        '# Calculate HG row n iteratively.
+        '# See function documentation for "HG_row_n.calc", to gain insight on input And outputs. 
+
+        '# NOTE: The code works directly on HG_row_m, m - increasing m until it becomes n.
+
+        '# Go upwards (increasing only m) until we get to row n-1.    
+        Dim b_to_update = seq(0, b_n - 1)
+
+        Do While (m < (N - 1))
+            m = m + 1
+            HG_row_m(b_to_update + 1) = HG_row_m(b_to_update + 1) * v_ratio(m, b_to_update, N, B)
+        Loop
+
+        m = m + 1
+        ' Last row To go - first update b_n from the diagonal, Then the rest vertically
+        HG_row_m(b_n + 1) = HG_row_m(b_n) * d_ratio(m, b_n, N, B)
+        HG_row_m(b_to_update + 1) = HG_row_m(b_to_update + 1) * v_ratio(m, b_to_update, N, B)
+
+        Return (HG_row_m)
+    End Function
+
+    Public Function d_ratio(ni, bi, N, B)
+        ' The ratio between HG(n,b,B,N) And HG(n-1,b-1,B,N)
+        ' See page 19 In Eden's theis.
+        Return (N * (B - (B - 1)) / (B * (N - (N - 1))))
+    End Function
+
+    Public Function v_ratio(ni, bi, N, B)
+        ' The ratio between HG(n,b,B,N) And HG(n-1,b,B,N)
+        ' See page 19 In Eden's theis
+        Return ((N * (N - N - B + B + 1)) / ((N - B) * (N - N + 1)))
     End Function
 
 End Module
