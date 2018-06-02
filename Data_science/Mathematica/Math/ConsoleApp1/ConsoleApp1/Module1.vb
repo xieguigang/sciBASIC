@@ -278,7 +278,35 @@ Module Module1
         Return (pi_r)
     End Function
 
+    Public Function HG_row_ncalc(HG_row_m, m, n, b_n, N, B)
+        '# Calculate HG row n. This row contains the first (b_n  + 1)
+        '# hypergeometric probabilities, HG[i] = Prob(X == (i - 1)), For number Of tries n.
+        '# Does so given an updated HG row m (m < n), which contains the first (b_n)
+        '# hypergeometric probabilities.
+        '#
+        '# Input:
+        '#   HG_row_m - updated HG row m (m < n), which contains the first (b_n)
+        '#              hypergeometric probabilities.
+        '#   m - the number Of tries (m < n) For which the HG_row_m fits.
+        '#   n - the number Of tries (n > m) For which we want To calculate the HG row
+        '#   b_n - The maximal b For which we need To calculate the hypergeometric probabilities.
+        '#   N - total number Of white And black balls (according To the hypergeometric problem definition).
+        '#   B - number Of black balls.
 
+        '# The Function directs the calculation To an iteration solution (With the cost Of B(n-m)) 
+        '# Or a recursive solution (With the cost B * log(B)). This multiplier helps To determine
+        '# When To use the recursion solution - it Is Not a theoretical result, but an empirical one.
+        Const RECURSION_OVERHEAD_MULTIPLIER = 20
+
+        Dim HG_row_ncalcfunc = Nothing
+        If ((n - m) <= (RECURSION_OVERHEAD_MULTIPLIER * Log2(b_n))) Then
+            HG_row_ncalcfunc = AddressOf HG_row_ncalciter
+        Else
+            HG_row_ncalcfunc = AddressOf HG_row_ncalcrecur
+        End If
+
+        Return (HG_row_ncalcfunc(HG_row_m, m, n, b_n, n, B))
+    End Function
 
 End Module
 
