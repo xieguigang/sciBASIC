@@ -133,6 +133,42 @@ Module Module1
         Return New mHGstatisticInfo With {.mHG = mHG, .n = mHGn, .b = mHGb}
     End Function
 
+    Public Function mHGpvalcalc(p#, N#, B#, Optional n_max# = Double.NaN) As Double
+        '# Calculates the p-value associated with the mHG statistic.
+        '# Guidelines for the calculation are to be found in:
+        '#   Eden, E. (2007). Discovering Motifs in Ranked Lists of DNA Sequences. Haifa. 
+        '#   Retrieved from http://bioinfo.cs.technion.ac.il/people/zohar/thesis/eran.pdf
+        '# (pages 11-12, 19-20)
+        '# Input:
+        '#   p - the mHG statistic. Marked as p, as it represenets an "uncorrected" p-value.
+        '#   N - total number of white And black balls (according to the hypergeometric problem definition).
+        '#   B - number of black balls.
+        '#   n_max - the algorithm will calculate the p-value under the null hypothesis that only the 
+        '#           first n_max partitions are taken into account in determining in minimum.
+        '# Output: p-value.
+
+        n_max = n_max Or N.AsDefault.When(n_max.IsNaNImaginary)
+
+        ' Input check
+        'stopifnot(n_max > 0)
+        'stopifnot(n_max <= N)
+        'stopifnot(N >= B)
+        'stopifnot(p <= 1)
+
+        If (p < -EPSILON) Then
+            Warning("p-value calculation will be highly inaccurate due to an extremely small mHG statistic")
+        End If
+
+        ' p - the statistic.
+        ' N\B - number Of all \ black balls.
+        Dim W = N - B
+        Dim R_separation_line = R_separation_linecalc(p, N, B, n_max)
+        Dim pi_r = pi_rcalc(N, B, R_separation_line)
+        Dim p_corrected As Double = 1 - pi_r(W + 2, B + 2)
+
+        Return p_corrected
+    End Function
+
 End Module
 
 Public Class htest
