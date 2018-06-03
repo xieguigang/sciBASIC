@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::cf2a2d27c2045d7e705b0446b4cabfe0, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module KeyValuePairExtensions
-    ' 
-    '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsGroups, AsNamedValueTuples, AsNamedVector
-    '               AsTable, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples, EnumParser
-    '               FlatTable, (+2 Overloads) GetByKey, GroupByKey, HaveData, IGrouping
-    '               IsOneOfA, IterateNameCollections, IterateNameValues, IteratesAll, Join
-    '               KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+2 Overloads) NameValueCollection, ParserDictionary
-    '               RemoveAndGet, ReverseMaps, Selects, (+2 Overloads) Subset, Takes
-    '               (+3 Overloads) ToDictionary, Tsv, Tuple, (+2 Overloads) Values, XMLModel
-    ' 
-    '     Sub: SortByKey, SortByValue
-    ' 
-    ' /********************************************************************************/
+' Module KeyValuePairExtensions
+' 
+'     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsGroups, AsNamedValueTuples, AsNamedVector
+'               AsTable, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples, EnumParser
+'               FlatTable, (+2 Overloads) GetByKey, GroupByKey, HaveData, IGrouping
+'               IsOneOfA, IterateNameCollections, IterateNameValues, IteratesAll, Join
+'               KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+2 Overloads) NameValueCollection, ParserDictionary
+'               RemoveAndGet, ReverseMaps, Selects, (+2 Overloads) Subset, Takes
+'               (+3 Overloads) ToDictionary, Tsv, Tuple, (+2 Overloads) Values, XMLModel
+' 
+'     Sub: SortByKey, SortByValue
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports r = System.Text.RegularExpressions.Regex
@@ -654,16 +655,21 @@ Public Module KeyValuePairExtensions
     <Extension>
     Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T)) As Dictionary(Of T)
         If source Is Nothing Then
+#If DEBUG Then
             Call sourceEmpty.Warning
+#End If
             Return New Dictionary(Of T)
         End If
 
         Dim i As Integer = 0
+        Dim keys As New List(Of String)
 
         Try
             With New Dictionary(Of T)
                 For Each item As T In source
                     Call .Add(item.Key, item)
+                    Call keys.Add(item.Key)
+
                     i += 1
                 Next
 
@@ -671,6 +677,8 @@ Public Module KeyValuePairExtensions
             End With
         Catch ex As Exception
             ex = New Exception("key --> [ " & source(i).Key & " ]", ex)
+            ex = New Exception("keys --> " & keys.GetJson, ex)
+
             Throw ex
         End Try
     End Function

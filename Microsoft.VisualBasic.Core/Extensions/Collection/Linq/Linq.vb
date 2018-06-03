@@ -153,10 +153,10 @@ Namespace Linq
             End If
         End Function
 
-        Public Function __innerTry(Of T)(source As Func(Of T),
-                                         msg$,
-                                         Optional throwEx As Boolean = True,
-                                         Optional ByRef exception As Exception = Nothing) As T
+        Public Function TryCatch(Of T)(source As Func(Of T),
+                                       msg$,
+                                       Optional throwEx As Boolean = True,
+                                       Optional ByRef exception As Exception = Nothing) As T
             Try
                 Return source()
             Catch ex As Exception

@@ -190,7 +190,7 @@ Namespace Serialization.JSON
                 }
                 Dim ser As New DataContractJsonSerializer(type, settings)
                 Dim de As Func(Of Object) = Function() ser.ReadObject(MS)
-                Dim obj = __innerTry(de, $"Incorrect JSON string format => >>>{json}<<<", throwEx, exception)
+                Dim obj = TryCatch(de, $"Incorrect JSON string format => >>>{json}<<<", throwEx, exception)
                 Return obj
             End Using
         End Function
