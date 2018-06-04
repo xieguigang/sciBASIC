@@ -473,21 +473,24 @@ Public Module Extensions
                                                              <CallerMemberName> Optional trace$ = Nothing) As TValue
         ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
         ' 直接返回默认值
-        If table Is Nothing OrElse index Is Nothing Then
+        If table Is Nothing Then
 #If DEBUG Then
-            Call PrintException("hash table is nothing!")
+            Call PrintException("Hash_table is nothing!")
 #End If
             Return [default]
-        End If
-
-        If table.ContainsKey(index) Then
-            Return table(index)
-        Else
+        ElseIf index Is Nothing Then
+#If DEBUG Then
+            Call PrintException("Index key is nothing!")
+#End If
+            Return [default]
+        ElseIf Not table.ContainsKey(index) Then
 #If DEBUG Then
             Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
 #End If
             Return [default]
         End If
+
+        Return table(index)
     End Function
 
     <Extension> Public Function TryGetValue(Of TKey, TValue, TProp)(hash As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
