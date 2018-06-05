@@ -112,6 +112,23 @@ Namespace LinearAlgebra
         End Property
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="rangeExpression"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' syntax helper
+        ''' </remarks>
+        Default Public Overloads Property Item(rangeExpression As String) As Vector
+            Get
+                Return MyBase.Item(rangeExpression).AsVector
+            End Get
+            Set(value As Vector)
+                MyBase.Item(rangeExpression) = value.AsList
+            End Set
+        End Property
+
+        ''' <summary>
         ''' Creates vector with <paramref name="m"/> element and init value set to zero
         ''' It creates a double-precision vector of the specified length with each element equal to 0.
         ''' </summary>
@@ -731,6 +748,18 @@ Namespace LinearAlgebra
                 Return New Vector(array)
 
             End If
+        End Operator
+
+        Public Shared Widening Operator CType(x As Double) As Vector
+            Return New Vector() From {x}
+        End Operator
+
+        Public Shared Widening Operator CType(x As Integer) As Vector
+            Return New Vector() From {CDbl(x)}
+        End Operator
+
+        Public Shared Widening Operator CType(x As Long) As Vector
+            Return New Vector() From {CDbl(x)}
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
