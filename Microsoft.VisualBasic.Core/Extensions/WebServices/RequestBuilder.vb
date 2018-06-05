@@ -78,7 +78,7 @@ Namespace Net.Http
 
                     args += New NamedValue(Of String) With {
                         .Value = str,
-                        .Name = p.Field.Name
+                        .Name = p.field.Name
                     }
                 End If
             Next
