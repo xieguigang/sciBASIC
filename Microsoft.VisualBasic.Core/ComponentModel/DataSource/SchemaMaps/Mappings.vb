@@ -125,18 +125,39 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="explict"></param>
+        ''' <param name="reversed">
+        ''' 当这个参数为真的时候，将会：
+        ''' 
+        ''' ```
+        ''' <see cref="ColumnAttribute.Name"/> => <see cref="MemberInfo.Name"/>
+        ''' ```
+        ''' </param>
         ''' <returns></returns>
-        Public Function FieldNameMappings(Of T)(Optional explict As Boolean = False) As Dictionary(Of String, String)
+        Public Function FieldNameMappings(Of T)(Optional explict As Boolean = False, Optional reversed As Boolean = False) As Dictionary(Of String, String)
             Dim fields As BindProperty(Of ColumnAttribute)() = GetFields(Of T)(explict)
-            Dim table As Dictionary(Of String, String) = fields _
-                .ToDictionary(Function(field)
-                                  ' 获取类型定义之中的成员的属性的反射名称
-                                  Return field.member.Name
-                              End Function,
-                              Function(map)
-                                  ' 获取该成员上面的自定义属性之中所记录的名称
-                                  Return map.GetColumnName
-                              End Function)
+            Dim table As Dictionary(Of String, String)
+
+            If Not reversed Then
+                table = fields.ToDictionary(Function(field)
+                                                ' 获取类型定义之中的成员的属性的反射名称
+                                                Return field.member.Name
+                                            End Function,
+                                            Function(map)
+                                                ' 获取该成员上面的自定义属性之中所记录的名称
+                                                Return map.GetColumnName
+                                            End Function)
+            Else
+                table = fields _
+                    .ToDictionary(Function(map)
+                                      ' 获取该成员上面的自定义属性之中所记录的名称
+                                      Return map.GetColumnName
+                                  End Function,
+                                  Function(field)
+                                      ' 获取类型定义之中的成员的属性的反射名称
+                                      Return field.member.Name
+                                  End Function)
+            End If
+
             Return table
         End Function
 
