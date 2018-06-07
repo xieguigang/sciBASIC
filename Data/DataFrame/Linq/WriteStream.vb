@@ -164,8 +164,7 @@ Namespace IO.Linq
                 From line As T
                 In source.AsParallel
                 Where Not line Is Nothing  ' 忽略掉空值对象，否则会生成空行
-                Let CreatedRow As RowObject =
-                    RowWriter.ToRow(line)
+                Let CreatedRow As RowObject = RowWriter.ToRow(line)
                 Select CreatedRow.AsLine  ' 对象到数据的投影
 
             If join Then

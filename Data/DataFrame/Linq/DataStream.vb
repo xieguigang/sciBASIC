@@ -72,7 +72,7 @@ Namespace IO.Linq
     ''' </summary>
     ''' <param name="Column"></param>
     ''' <returns></returns>
-    Public Delegate Function GetOrdinal(Column As String) As Integer
+    Public Delegate Function GetOrdinal(column As String) As Integer
 
     ''' <summary>
     ''' Buffered large text dataset Table reader
@@ -82,26 +82,21 @@ Namespace IO.Linq
         Implements IDisposable
 
         ''' <summary>
-        ''' The columns and their index order
-        ''' </summary>
-        ReadOnly _schema As Dictionary(Of String, Integer)
-        ''' <summary>
         ''' The title row, which is the mapping source of the class property name.
         ''' </summary>
         ReadOnly _title As RowObject
 
+        ''' <summary>
+        ''' The columns and their index order
+        ''' </summary>
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
-            Get
-                Return _schema
-            End Get
-        End Property
 
         Sub New()
             _schema = New Dictionary(Of String, Integer)
             _title = New RowObject
         End Sub
 
-        Sub New(file As String, Optional encoding As Encoding = Nothing, Optional bufSize As Integer = 64 * 1024 * 1024)
+        Sub New(file$, Optional encoding As Encoding = Nothing, Optional bufSize% = 64 * 1024 * 1024)
             Call MyBase.New(file, encoding, bufSize)
 
             Dim first As String = file.ReadFirstLine
@@ -121,8 +116,8 @@ Namespace IO.Linq
         Public Function GetOrdinal(Name As String) As Integer Implements ISchema.GetOrdinal
             Name = Name.ToLower
 
-            If _schema.ContainsKey(Name) Then
-                Return _schema(Name)
+            If _SchemaOridinal.ContainsKey(Name) Then
+                Return _SchemaOridinal(Name)
             Else
                 Return -1
             End If
