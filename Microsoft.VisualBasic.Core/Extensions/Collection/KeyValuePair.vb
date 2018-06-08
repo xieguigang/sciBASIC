@@ -683,6 +683,12 @@ Public Module KeyValuePairExtensions
         End Try
     End Function
 
+    ''' <summary>
+    ''' 将命名变量对象进行降维，名字作为键名，值作为键值，生成字典
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function FlatTable(Of T)(table As Dictionary(Of NamedValue(Of T))) As Dictionary(Of String, T)

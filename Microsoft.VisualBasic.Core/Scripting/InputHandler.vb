@@ -168,6 +168,11 @@ Namespace Scripting
             End If
         End Function
 
+        ''' <summary>
+        ''' 默认的字符串解析方法为<see cref="CTypeDynamic"/>脚本值动态转换函数
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function DefaultTextParser(Of T)() As DefaultValue(Of IStringParser(Of T))
             Return New IStringParser(Of T)(AddressOf CTypeDynamic(Of T)).AsDefault
