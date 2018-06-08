@@ -148,8 +148,6 @@ Public Module IOExtensions
     ''' <param name="doClear">
     ''' By default is clear all of the data in source file.
     ''' (写模式下默认将原来的文件数据清空)
-    ''' </param>
-    ''' <param name="doClear">
     ''' 是否将原来的文件之中的数据清空？默认是，否则将会以追加模式工作
     ''' </param>
     ''' <returns></returns>
