@@ -129,10 +129,15 @@ Public Module IOExtensions
     End Function
 
     ''' <summary>
-    ''' Safe open a local file handle.(打开本地文件指针，这是一个安全的函数，会自动创建不存在的文件夹)
+    ''' Safe open a local file handle.
+    ''' (打开本地文件指针，这是一个安全的函数，会自动创建不存在的文件夹。这个函数默认是写模式的)
     ''' </summary>
     ''' <param name="path">文件的路径</param>
     ''' <param name="mode">File open mode, default is create a new file.(文件指针的打开模式)</param>
+    ''' <param name="doClear">
+    ''' By default is clear all of the data in source file.
+    ''' (写模式下默认将原来的文件数据清空)
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("Open.File")>
     <Extension>
