@@ -309,6 +309,7 @@
     <Reference Include="System.Data.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\FixLengthString.vb" />
     <Compile Include="Repository\BinarySearchIndex.vb" />
     <Compile Include="Storage\Reflection.vb" />
     <Compile Include="Storage\StringWriter.vb" />
