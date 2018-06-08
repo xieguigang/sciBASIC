@@ -176,9 +176,13 @@ Public Module TextDoc
     ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
     ''' </summary>
     ''' <param name="path"></param>
-    ''' <returns></returns>
+    ''' <returns>不存在的文件会返回空集合</returns>
     <Extension>
     Public Iterator Function IterateAllLines(path$, Optional encoding As Encodings = Encodings.Default) As IEnumerable(Of String)
+        If Not path.FileExists Then
+            Return
+        End If
+
         Using fs As New FileStream(path, FileMode.Open, access:=FileAccess.Read, share:=FileShare.Read)
             Using reader As New StreamReader(fs, encoding.CodePage)
 

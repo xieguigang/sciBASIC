@@ -793,7 +793,7 @@ Public Module App
     Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
         Dim entry$ = $"{Now.formatTime}_{App.__getTEMPhash}"
         Dim log$ = $"{App.LogErrDIR}/{entry}.log"
-        Call App.LogException(ex, trace, log)
+        Call App.LogException(ex, trace:=trace, fileName:=log)
         Return log
     End Function
 
@@ -888,8 +888,8 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("LogException")>
-    Public Function LogException(ex As Exception, Trace$, FileName$) As Object
-        Call BugsFormatter(ex, Trace).SaveTo(FileName)
+    Public Function LogException(ex As Exception, fileName$, <CallerMemberName> Optional trace$ = Nothing) As Object
+        Call BugsFormatter(ex, trace).SaveTo(fileName)
         Return Nothing
     End Function
 

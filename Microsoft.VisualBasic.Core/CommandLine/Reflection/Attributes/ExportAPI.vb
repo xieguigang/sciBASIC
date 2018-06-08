@@ -52,6 +52,24 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace CommandLine.Reflection
 
+    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
+    Public Class LastUpdatedAttribute : Inherits Attribute
+
+        Public ReadOnly [Date] As Date
+
+        Sub New([date] As String)
+            Me.Date = Date.Parse([date])
+        End Sub
+
+        Sub New(yy%, mm%, dd%, H%, M%, S%)
+            Me.Date = New Date(yy, mm, dd, H, M, S)
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return [Date].ToString
+        End Function
+    End Class
+
     ''' <summary>
     ''' A command object that with a specific name.(一个具有特定名称命令执行对象)
     ''' </summary>

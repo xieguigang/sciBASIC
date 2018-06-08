@@ -153,10 +153,10 @@ Namespace Linq
             End If
         End Function
 
-        Public Function __innerTry(Of T)(source As Func(Of T),
-                                         msg$,
-                                         Optional throwEx As Boolean = True,
-                                         Optional ByRef exception As Exception = Nothing) As T
+        Public Function TryCatch(Of T)(source As Func(Of T),
+                                       msg$,
+                                       Optional throwEx As Boolean = True,
+                                       Optional ByRef exception As Exception = Nothing) As T
             Try
                 Return source()
             Catch ex As Exception
@@ -246,16 +246,16 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' Copy <paramref name="source"/> <paramref name="n"/> times to construct a new vector.
+        ''' Copy <paramref name="source"/> <paramref name="times"/> times to construct a new vector.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
-        ''' <param name="n"></param>
+        ''' <param name="times"></param>
         ''' <returns>An array consist of source with n elements.</returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function Repeats(Of T)(source As T, n%) As T()
-            Return n.Sequence.Select(Function(x) source).ToArray
+        <Extension> Public Function Repeats(Of T)(source As T, times%) As T()
+            Return times.Sequence.Select(Function(x) source).ToArray
         End Function
 
         ''' <summary>
@@ -441,10 +441,10 @@ Namespace Linq
         ''' </param>
         ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
         <Extension> Public Function DefaultFirst(Of T)(source As IEnumerable(Of T), Optional [default] As T = Nothing) As T
-            If source.IsNullOrEmpty Then
+            If source Is Nothing Then
                 Return [default]
             Else
-                Return source.First
+                Return source.FirstOrDefault
             End If
         End Function
 
