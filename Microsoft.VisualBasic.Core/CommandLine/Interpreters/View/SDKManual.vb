@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::314ba81b6933ce602104922cc2f0b69e, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::0d941800040bee624da8032940ee2786, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\SDKManual.vb"
 
     ' Author:
     ' 
@@ -66,8 +66,6 @@ Namespace CommandLine.ManView
     ''' </summary>
     Module SDKManual
 
-        Public ReadOnly Property DocPath As String = $"{App.ExecutablePath.TrimSuffix}.md"
-
         ''' <summary>
         ''' 这个是用于在终端上面显示的无格式的文本输出
         ''' </summary>
@@ -101,7 +99,8 @@ Namespace CommandLine.ManView
                 From api As SeqValue(Of APIEntryPoint)
                 In CLI.APIList.SeqIterator(offset:=1)
                 Let index As String = api.i & ".   "
-                Select index & api.value.HelpInformation
+                Let info As String = api.value.HelpInformation
+                Select index & info
 
             Call New IndexedManual(pages, title).ShowManual()
 
@@ -129,7 +128,7 @@ Namespace CommandLine.ManView
             Call sb.AppendLine(assm.AssemblyCopyright)
             Call sb.AppendLine()
 
-            Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.ToFileURL}<br/>")
+            Call sb.AppendLine($"**Module AssemblyName**: {type.Assembly.Location.BaseName}<br/>")
             Call sb.AppendLine($"**Root namespace**: ``{App.Type.FullName}``<br/>")
 
             Dim helps As ExceptionHelp = type.GetAttribute(Of ExceptionHelp)
@@ -203,17 +202,27 @@ Namespace CommandLine.ManView
             If Not markdown Then
                 Dim descr = VBCore.Info.AssemblyDescription
 
-                descr = Trim(descr)
+                Call sb.AppendLine()
 
-                Call sb.AppendLine(New String("="c, descr.Length))
-                Call sb.AppendLine(descr)
-                Call sb.AppendLine(New String("="c, descr.Length))
+                Call sb.AppendLine(" // ")
+                Call sb.AppendLine(" // " & Strings.Trim(descr))
+                Call sb.AppendLine(" // ")
+                Call sb.AppendLine(" // VERSION:   " & (VBCore.Info.AssemblyVersion Or "1.0.0.*".AsDefault))
+                Call sb.AppendLine(" // COPYRIGHT: " & VBCore.Info.AssemblyCopyright)
+                Call sb.AppendLine(" // GUID:      " & VBCore.Info.Guid)
+                Call sb.AppendLine(" // ")
+
+                Call sb.AppendLine()
                 Call sb.AppendLine()
 
                 For Each line$ In Paragraph.SplitParagraph(App.Info.Description, 110)
-                    Call sb.AppendLine(line$)
+                    Call sb.AppendLine(" " & line$)
                 Next
 
+                Call sb.AppendLine()
+                Call sb.AppendLine()
+                Call sb.AppendLine("SYNOPSIS")
+                Call sb.AppendLine($"{VBCore.AssemblyName} command [/argument argument-value...] [/@set environment-variable=value...]")
                 Call sb.AppendLine()
             End If
 
@@ -245,7 +254,7 @@ Namespace CommandLine.ManView
                                     End If
                                 Else
                                     Call sb.AppendLine(
-                                        $"|[{API.Name}](#{API.Name})|{API.Info}|")
+                                        $"|[{API.Name}](#{API.Name})|{API.Info.LineTokens.JoinBy("<br />")}|")
                                 End If
                             Next
 
@@ -306,7 +315,7 @@ Namespace CommandLine.ManView
                 Call sb.AppendLine("   " & $"You can using ""{AssemblyName} ??<commandName>"" for getting more details command help.")
             End If
 
-            Return sb.ToString.Trim(ASCII.CR, ASCII.LF, " "c)
+            Return sb.ToString.TrimEnd(ASCII.CR, ASCII.LF, " "c)
         End Function
 
         Public Const ListAllCommandsPrompt As String = "All of the command that available in this program has been list below:"

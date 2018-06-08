@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::030238ed0884edb287a0b1172845b20c, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Trigonometric.vb"
+﻿#Region "Microsoft.VisualBasic::caafb1f7e4829b52d05c2c8ad42bc96d, Microsoft.VisualBasic.Core\Extensions\Math\Trigonometric\Trigonometric.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module Trigonometric
     ' 
     '         Function: Angle, (+2 Overloads) Distance, GetAngle, GetAngleVector, MovePoint
-    '                   NearestPoint, ToDegrees, ToPoint, ToRadians
+    '                   NearestPoint, ToCartesianPoint, ToDegrees, ToRadians
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,19 +50,20 @@ Namespace Math
     Public Module Trigonometric
 
         ''' <summary>
-        ''' 
+        ''' Polar to cartesian coordinate system point.(将极坐标转换为笛卡尔坐标系直角坐标系)
         ''' </summary>
-        ''' <param name="r#"></param>
-        ''' <param name="alpha!"></param>
-        ''' <param name="fromDegree"><paramref name="alpha"/>角度参数是否是度为单位，默认是真，即函数会在这里自动转换为弧度</param>
+        ''' <param name="polar">(半径, 角度)</param>
+        ''' <param name="fromDegree">alpha角度参数是否是度为单位，默认是真，即函数会在这里自动转换为弧度</param>
         ''' <returns></returns>
-        <Extension> Public Function ToPoint(r#, alpha!, Optional fromDegree As Boolean = True) As PointF
+        <Extension> Public Function ToCartesianPoint(polar As (r#, alpha!), Optional fromDegree As Boolean = True) As PointF
+            Dim alpha = polar.alpha
+
             If fromDegree Then
                 alpha = alpha * sys.PI / 180
             End If
 
-            Dim x = r * sys.Cos(alpha)
-            Dim y = r * sys.Sin(alpha)
+            Dim x = polar.r * sys.Cos(alpha)
+            Dim y = polar.r * sys.Sin(alpha)
 
             Return New PointF(x, y)
         End Function
@@ -88,14 +89,15 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Angle(p As PointF) As Double
-            Dim a As Double = sys.Atan2(p.Y, p.X)
-            Return a
+            Return sys.Atan2(p.Y, p.X)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Distance(a As Point, b As Point) As Double
             Return sys.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Distance(a As PointF, b As PointF) As Double
             Return sys.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
         End Function
@@ -124,6 +126,8 @@ Namespace Math
         ''' <returns>  the measurement of the angle {@code angdeg}
         '''          in radians.
         ''' @since   1.2 </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ToRadians(angdeg As Double) As Double
             Return angdeg / 180.0 * sys.PI
         End Function
@@ -139,18 +143,22 @@ Namespace Math
         ''' <returns>  the measurement of the angle {@code angrad}
         '''          in degrees.
         ''' @since   1.2 </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function ToDegrees(angrad As Double) As Double
             Return angrad * 180.0 / sys.PI
         End Function
 
         <Extension>
-        Public Function NearestPoint(points As IEnumerable(Of Point), x As Integer, y As Integer, radius As Integer) As Point
+        Public Function NearestPoint(points As IEnumerable(Of Point), x%, y%, radius#) As Point
             For Each pos As Point In points
-                Dim dist As Double = sys.Sqrt((x - pos.X) ^ 2 + sys.Pow(y - pos.Y, 2))
+                Dim dist = sys.Sqrt((x - pos.X) ^ 2 + (y - pos.Y) ^ 2)
+
                 If dist <= radius Then
                     Return pos
                 End If
             Next
+
             Return Nothing
         End Function
     End Module

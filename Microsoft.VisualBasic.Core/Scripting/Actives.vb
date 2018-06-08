@@ -64,8 +64,15 @@ Namespace Scripting
         <Extension> Public Function DisplayType(type As Type) As String
             Dim sb As New StringBuilder
             Dim view As ActiveViews = type.GetCustomAttribute(Of ActiveViews)
+            Dim fullName$ = type.FullName
 
-            Call sb.AppendLine($"**Decalre**:  _{type.FullName}_")
+            If fullName.Split("."c).First = "System" Then
+                Call sb.AppendLine($"**Decalre**:  _<a href=""https://msdn.microsoft.com/en-us/library/{fullName.ToLower}(v=vs.110).aspx?cs-save-lang=1&cs-lang=vb#code-snippet-1"">{fullName}</a>_")
+            Else
+                Call sb.AppendLine($"**Decalre**:  _{fullName}_")
+            End If
+
+            Call sb.AppendLine()
             Call sb.AppendLine("Example: ")
 
             If view Is Nothing Then
@@ -86,9 +93,10 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Active(type As Type) As String
-            Dim obj As Object = type.__active
-            Return GetObjectJson(obj, type)
+            Return type.GetObjectJson(obj:=type.__active)
         End Function
 
         ''' <summary>

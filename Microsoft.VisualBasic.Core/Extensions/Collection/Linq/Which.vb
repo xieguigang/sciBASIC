@@ -55,6 +55,13 @@ Namespace Linq
     ''' </summary>
     Public NotInheritable Class Which
 
+        'Default Public Shared ReadOnly Property Items(booleans As IEnumerable(Of Boolean)) As IEnumerable(Of Integer)
+        '    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        '    Get
+        '        Return Which.Index(booleans)
+        '    End Get
+        'End Property
+
         ''' <summary>
         ''' Returns the collection element its index where the test expression <paramref name="predicate"/> result is TRUE
         ''' </summary>

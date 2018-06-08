@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::535b740397535d358558312d680f74e7, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::cca9a0736b831097e1c1a819bfdf4135, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -68,6 +68,11 @@ Namespace IO
             Return Math.Sqrt(d)
         End Function
 
+        ''' <summary>
+        ''' 矩阵转置：将矩阵的行列进行颠倒
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Transpose(source As IEnumerable(Of DataSet)) As DataSet()
             Dim list As DataSet() = source.ToArray
@@ -136,7 +141,8 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' Gets the union collection of the keys from <see cref="DataSet.Properties"/> 
+        ''' Gets the union collection of the keys from <see cref="DataSet.Properties"/>.
+        ''' (包含所有的已经去除重复了的属性名称)
         ''' </summary>
         ''' <param name="list"></param>
         ''' <returns></returns>

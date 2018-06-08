@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab7e9994670afaf494c63d1f84861ce0, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::ecaebdc046433067d6995949a1717047, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\Entity.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: uid
     ' 
-    '         Function: Load, (+2 Overloads) ToLDM, ToString
+    '         Function: (+2 Overloads) ToLDM, ToString
     '         Operators: <>, =
     ' 
     ' 

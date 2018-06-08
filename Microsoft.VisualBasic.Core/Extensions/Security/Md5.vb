@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2119c18e26df155f5156663d42230b4, Microsoft.VisualBasic.Core\Extensions\Security\Md5.vb"
+﻿#Region "Microsoft.VisualBasic::d4e24ef5df87a839ca5674d4f8d08eb5, Microsoft.VisualBasic.Core\Extensions\Security\Md5.vb"
 
     ' Author:
     ' 
@@ -228,6 +228,7 @@ Namespace SecurityString
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("File.Md5", Info:="Get the md5 hash calculation value for a specific file.")>
+        <Extension>
         Public Function GetFileHashString(<Parameter("Path.Uri", "The file path of the target file to be calculated.")> PathUri As String) As String
             If Not PathUri.FileExists OrElse FileIO.FileSystem.GetFileInfo(PathUri).Length = 0 Then
                 Return ""
@@ -245,8 +246,17 @@ Namespace SecurityString
         <ExportAPI("SaltValue", Info:="SHA256 8 bits salt value for the private key.")>
         Public Function SaltValue(value As String) As String
             Dim hash As String = GetMd5Hash(value)
-            Dim chars As Char() = New Char() {hash(0), hash(1), hash(3), hash(5), hash(15), hash(23), hash(28), hash(31)}
-            Return New String(chars)
+            Dim chars() = {
+                hash(0),
+                hash(1),
+                hash(3),
+                hash(5),
+                hash(15),
+                hash(23),
+                hash(28),
+                hash(31)
+            }
+            Return chars.CharString
         End Function
     End Module
 End Namespace

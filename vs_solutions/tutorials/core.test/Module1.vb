@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51b82af846498d009ad5eaaf4fc69fdc, vs_solutions\tutorials\core.test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::364af627922019fa5b8ee65261ef3093, vs_solutions\tutorials\core.test\Module1.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     ' Module Module1
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Sub: Main, matchTest
+    '     Sub: Main, matchTest, takesTest
     '     Structure Foo
     ' 
     '         Operators: (+2 Overloads) Like

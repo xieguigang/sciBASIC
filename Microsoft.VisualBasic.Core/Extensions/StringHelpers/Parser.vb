@@ -54,7 +54,18 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 Public Module PrimitiveParser
 
-    Const NumericPattern$ = "[-]?\d*(\.\d+)?([eE][-]?\d*)?"
+    Public Function Eval(expression$, default#) As Double
+        If expression Is Nothing Then
+            Return [default]
+        Else
+            Return Conversion.Val(expression)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 用于匹配任意实数的正则表达式
+    ''' </summary>
+    Public Const NumericPattern$ = "[-]?\d*(\.\d+)?([eE][-]?\d*)?"
 
     ''' <summary>
     ''' Is this token value string is a number?

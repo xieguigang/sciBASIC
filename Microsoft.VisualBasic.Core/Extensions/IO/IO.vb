@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce22196c1fcc0198d4e8eb299d600c09, Microsoft.VisualBasic.Core\Extensions\IO\IO.vb"
+﻿#Region "Microsoft.VisualBasic::3ee38d51e387c9942938288849098074, Microsoft.VisualBasic.Core\Extensions\IO\IO.vb"
 
     ' Author:
     ' 
@@ -74,10 +74,21 @@ Public Module IOExtensions
         }
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="stream">
+    ''' 必须要能够支持<see cref="Stream.Length"/>，对于有些网络服务器的HttpResponseStream可能不支持
+    ''' <see cref="Stream.Length"/>的话，这个函数将会报错
+    ''' </param>
+    ''' <param name="path$"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function FlushStream(stream As MemoryStream, path$) As Boolean
-        Return stream.ToArray.FlushStream(path)
+    Public Function FlushStream(stream As Stream, path$) As Boolean
+        Dim buffer As Byte() = New Byte(stream.Length - 1) {}
+        Call stream.Read(buffer, Scan0, stream.Length)
+        Return buffer.FlushStream(path)
     End Function
 
     ''' <summary>
@@ -133,6 +144,9 @@ Public Module IOExtensions
     ''' </summary>
     ''' <param name="path">文件的路径</param>
     ''' <param name="mode">File open mode, default is create a new file.(文件指针的打开模式)</param>
+    ''' <param name="doClear">
+    ''' 是否将原来的文件之中的数据清空？默认是，否则将会以追加模式工作
+    ''' </param>
     ''' <returns></returns>
     <ExportAPI("Open.File")>
     <Extension>

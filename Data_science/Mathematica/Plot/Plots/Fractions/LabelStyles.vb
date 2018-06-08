@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37253c62613e2943d78df3091961f256, Data_science\Mathematica\Plot\Plots\Fractions\LabelStyles.vb"
+﻿#Region "Microsoft.VisualBasic::26351168e2be3aacca53da138d7ea5ef, Data_science\Mathematica\Plot\Plots\Fractions\LabelStyles.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    ' Enum ValueLabels
+    '     Enum ValueLabels
     ' 
-    '     None, Percentage, Value
+    '         None, Percentage, Value
     ' 
     '  
+    ' 
     ' 
     ' 
     ' 
@@ -43,8 +44,11 @@
 
 #End Region
 
-Public Enum ValueLabels
-    None
-    Percentage
-    Value
-End Enum
+Namespace Fractions
+
+    Public Enum ValueLabels
+        None
+        Percentage
+        Value
+    End Enum
+End Namespace

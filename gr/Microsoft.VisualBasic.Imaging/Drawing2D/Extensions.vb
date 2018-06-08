@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91c55fa213b144d2cb39eaf7ed4b3789, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2eec335da07d7c3145ac68b4f7d60a93, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     '     Module Extensions
     ' 
     '         Function: (+3 Overloads) Enlarge, GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
+    ' 
+    '         Sub: ShapeGlow
     '         Enum MoveTypes
     ' 
     '             BoundsBoxTopLeft, PolygonCentre
@@ -50,6 +52,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language.Default
@@ -60,6 +63,17 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
 Namespace Drawing2D
 
     Public Module Extensions
+
+        <Extension>
+        Public Sub ShapeGlow(ByRef g As IGraphics, path As GraphicsPath, glowColor As Color, Optional glowSize! = 10)
+            For i As Integer = 1 To glowSize
+                Using pen As New Pen(glowColor, i) With {
+                    .LineJoin = LineJoin.Round
+                }
+                    g.DrawPath(pen, path)
+                End Using
+            Next
+        End Sub
 
         Public ReadOnly BlackBrush As DefaultValue(Of Brush) = Brushes.Black
 

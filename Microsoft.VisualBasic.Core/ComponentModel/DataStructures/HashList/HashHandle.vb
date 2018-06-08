@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::048de01f3a96fdf7e31b42eb1bdd969c, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashList\HashHandle.vb"
+﻿#Region "Microsoft.VisualBasic::c5da2c7c9f66a99c46fb50c58beb6d7a, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashList\HashHandle.vb"
 
     ' Author:
     ' 

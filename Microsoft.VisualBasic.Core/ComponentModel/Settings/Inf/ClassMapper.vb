@@ -130,7 +130,7 @@ Namespace ComponentModel.Settings.Inf
             Dim maps = MapParser(type)
 
             For Each map In maps.Value
-                Dim key As String = map.Field.Name
+                Dim key As String = map.field.Name
                 Dim value As String = ini.ReadValue(maps.Name, key)
                 Dim o As Object = Scripting.CTypeDynamic(value, map.Type)
                 Call map.SetValue(obj, o)
@@ -149,7 +149,7 @@ Namespace ComponentModel.Settings.Inf
             Dim maps = MapParser(type)
 
             For Each map In maps.Value
-                Dim key As String = map.Field.Name
+                Dim key As String = map.field.Name
                 Dim value As String = Scripting.ToString(map.GetValue(x))
                 Call ini.WriteValue(maps.Name, key, value)
             Next

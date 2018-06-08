@@ -57,5 +57,11 @@ Namespace Language.Vectorization
         Public Function AsVector(Of T)(list As IEnumerable(Of T)) As Vector(Of T)
             Return New Vector(Of T)(list)
         End Function
+
+        <Extension>
+        Public Function Add(Of T)(x As Vector(Of T), obj As T) As Vector(Of T)
+            Call x.Array.Add(obj)
+            Return x
+        End Function
     End Module
 End Namespace

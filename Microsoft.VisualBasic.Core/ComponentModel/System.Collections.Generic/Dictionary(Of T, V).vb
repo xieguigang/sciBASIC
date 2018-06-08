@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a938b9d3dd9155c943fce840af6a0fd, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::ad7a3c47299b15f41723848f61a8a249, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
@@ -97,6 +97,11 @@ Namespace ComponentModel.Collection
             End Set
         End Property
 
+        ''' <summary>
+        ''' 不存在的键名会返回Nothing
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(key As String) As V
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

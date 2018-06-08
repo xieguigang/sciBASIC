@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ee9960ce1b150ba076ed191350e15b1, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::91aa2f00c4507832c498edc591109700, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirectFile.vb"
 
     ' Author:
     ' 
@@ -131,21 +131,28 @@ Namespace CommandLine
                 Optional argv$ = "",
                 Optional environment As IEnumerable(Of ValueTuple) = Nothing,
                 Optional FolkNew As Boolean = False,
-                Optional stdRedirect$ = "")
+                Optional stdRedirect$ = "",
+                Optional stdin$ = Nothing)
 
             If Not String.IsNullOrEmpty(stdRedirect) Then
                 _TempRedirect = stdRedirect.CLIPath
             End If
 
-            Try
-                file = FileIO.FileSystem.GetFileInfo(file).FullName
-            Catch ex As Exception
-                ex = New Exception(file, ex)
-                Throw ex
-            End Try
+            ' 没有小数点，说明可能只是一个命令，而不是具体的可执行程序文件名
+            If InStr(file, ".") = 0 Then
+                ' do nothing
+            Else
+                ' 对于具体的程序文件的调用，在这里获取其完整路径
+                Try
+                    file = FileIO.FileSystem.GetFileInfo(file).FullName
+                Catch ex As Exception
+                    ex = New Exception(file, ex)
+                    Throw ex
+                End Try
+            End If
 
             Bin = file
-            argv = $"{argv} > {_TempRedirect}"
+            argv = $"{argv.TrimNewLine(" ")} > {_TempRedirect}"
             CLIArguments = argv
 
             ' 系统可能不会自动创建文件夹，则需要在这里使用这个方法来手工创建，
@@ -155,9 +162,9 @@ Namespace CommandLine
             Call "".SaveTo(_TempRedirect)
 
             If App.IsMicrosoftPlatform Then
-                shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew)
+                shellScript = ScriptingExtensions.Cmd(file, argv, environment, FolkNew, stdin)
             Else
-                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew)
+                shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew, stdin)
             End If
 
             Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO

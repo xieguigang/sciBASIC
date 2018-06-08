@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd416f30a56b5ec9a10c02f70f3f6007, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointer(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::ec54297c3c4eae55fc3d57041d0e5861, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointer(Of T).vb"
 
     ' Author:
     ' 

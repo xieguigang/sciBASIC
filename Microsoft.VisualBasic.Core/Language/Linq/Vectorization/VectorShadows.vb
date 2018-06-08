@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87b55668a76a0449fc6e9f1942e9c3c2, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\VectorShadows.vb"
+﻿#Region "Microsoft.VisualBasic::5dba054f8202fb1c3e062be7fe3156d2, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\VectorShadows.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,12 @@
     '     Class VectorShadows
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: [As], binaryOperatorSelfLeft, CreateVector, GetDynamicMemberNames, GetJson
     '                   TryBinaryOperation, (+2 Overloads) TryGetMember, TryInvokeMember, TrySetMember, TryUnaryOperation
+    ' 
+    '         Sub: writeBuffer
+    ' 
     '         Operators: \, (+2 Overloads) Like
     ' 
     ' 
@@ -65,7 +69,7 @@ Namespace Language.Vectorization
         ''' 无参数的属性
         ''' </summary>
         Protected linq As DataValue(Of T)
-        ReadOnly type As New VectorSchemaProvider(GetType(T))
+        Protected ReadOnly type As New VectorSchemaProvider(GetType(T))
 
         Default Public Overloads Property Item(exp$) As Object
             Get

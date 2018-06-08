@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e79598ba319eeeb1d5dbcfe81a99a05, Data_science\Mathematica\Math\ODE\var.vb"
+﻿#Region "Microsoft.VisualBasic::8f015998f7d2e4b786a9ca9b8e8b2f60, Data_science\Mathematica\Math\ODE\var.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,11 @@
     '     Properties: Index, Name, value
     ' 
     '     Constructor: (+4 Overloads) Sub New
+    ' 
     '     Function: Clone, ToString
+    ' 
+    '     Sub: Assign
+    ' 
     '     Operators: (+2 Overloads) <>, (+2 Overloads) =
     ' 
     ' Interface Ivar

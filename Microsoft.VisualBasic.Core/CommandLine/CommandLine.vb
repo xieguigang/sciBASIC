@@ -168,7 +168,13 @@ Namespace CommandLine
         Public ReadOnly Property EnvironmentVariables As Dictionary(Of String, String)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return GetDictionary("/@set")
+                ' 在命令行之中没有任何其他的参数，但是存在一个/@set的话，这个标记会被当作为命令名称
+                ' 则在读取环境变量的时候就会失败
+                If Name.TextEquals("/@set") Then
+                    Return DictionaryParser.TryParse(Parameters(Scan0))
+                Else
+                    Return GetDictionary("/@set")
+                End If
             End Get
         End Property
 

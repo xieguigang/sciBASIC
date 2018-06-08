@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78f0fc27d5c52ec49394f1a6a6764316, Data_science\Graph\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::4d42f47ca04f59ff94e2eeb2dba0a891, Data_science\Graph\Utils.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,7 @@ Public Module Utils
             Return tree.ID
         Else
             Dim children = tree _
-                .Childs _
+                .EnumerateChilds _
                 .Select(Function(tr) tr.Build) _
                 .JoinBy(", ")
 
@@ -88,7 +88,7 @@ Public Module Utils
 
         Yield tree.SummaryMe(schema)
 
-        For Each c As Tree(Of T) In tree.Childs.SafeQuery
+        For Each c As Tree(Of T) In tree.EnumerateChilds.SafeQuery
             For Each value In c.Summary(schema)
                 Yield value
             Next

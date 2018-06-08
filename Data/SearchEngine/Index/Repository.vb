@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fa973224369954403195e011e8dc885, Data\SearchEngine\Index\Repository.vb"
+﻿#Region "Microsoft.VisualBasic::e3e7b30a981a91f050e4bc2d619f0b02, Data\SearchEngine\Index\Repository.vb"
 
     ' Author:
     ' 
@@ -82,4 +82,3 @@ Public Class Repository(Of K, V)
         Return Index(Root).ToString
     End Function
 End Class
-

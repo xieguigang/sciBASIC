@@ -52,7 +52,7 @@ Namespace Text.HtmlParser
     Public Module TableParser
 
         ''' <summary>
-        ''' Parsing the html text betweens the tag &lt;table>&lt;/table> by using regex expression.
+        ''' Parsing the html text betweens the tag ``&lt;table>&lt;/table>`` by using regex expression.
         ''' </summary>
         ''' <param name="html"></param>
         ''' <returns></returns>

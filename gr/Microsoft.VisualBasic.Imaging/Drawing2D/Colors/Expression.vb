@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a12f36e5335ed7b5e9c5c966ddac4d2f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::df1faa3b7c1c8e44d05d0056093c9a39, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,6 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Drawing2D.Colors
 
@@ -56,7 +55,7 @@ Namespace Drawing2D.Colors
     ''' ```vbnet
     ''' lighter(term, percentage)
     ''' darker(term, percentage)
-    ''' alpha(term, percentage)
+    ''' alpha(term, percentage) percentage = [0, 1]
     ''' reverse(term)
     ''' skip(term, n)
     ''' take(term, n)

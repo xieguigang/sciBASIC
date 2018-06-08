@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c36d5fe151883dcc8d16466516203f99, vs_solutions\dev\vs_PDB\PDB.vb"
+﻿#Region "Microsoft.VisualBasic::aab1e9b22cee0f292629446ecdd06390, vs_solutions\dev\vs_PDB\PDB.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
 
 #End Region
 
-
 ''' <summary>
 ''' Program database (``PDB``) is a proprietary file format (developed by Microsoft) for storing debugging information 
 ''' about a program (or, commonly, program modules such as a DLL or EXE). PDB files commonly have a ``.pdb`` extension. 
@@ -50,4 +49,3 @@
 Public Class PDB
 
 End Class
-

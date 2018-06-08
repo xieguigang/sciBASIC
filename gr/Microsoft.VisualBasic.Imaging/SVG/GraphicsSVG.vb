@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86e1c5b2084eadbd4224b086f56df339, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::662c12e31ffad2e6b3b04d99ac3526e8, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,8 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible, MeasureCharacterRanges
-    '                   (+7 Overloads) MeasureString
+    '         Function: (+7 Overloads) Add, (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+8 Overloads) IsVisible
+    '                   MeasureCharacterRanges, (+7 Overloads) MeasureString
     ' 
     '         Sub: AddMetafileComment, Clear, (+4 Overloads) CopyFromScreen, Dispose, (+4 Overloads) DrawArc
     '              (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, DrawCircle, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve
@@ -281,6 +281,45 @@ Namespace SVG
         Public Overrides Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
             Throw New NotImplementedException()
         End Sub
+
+
+#Region "Add svg shape element"
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(text As XML.text) As Integer
+            Return __svgData.Add(text)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(rect As rect) As Integer
+            Return __svgData.Add(rect)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(line As line) As Integer
+            Return __svgData.Add(line)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(circle As circle) As Integer
+            Return __svgData.Add(circle)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(path As path) As Integer
+            Return __svgData.Add(path)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(polygon As polygon) As Integer
+            Return __svgData.Add(polygon)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Add(image As XML.Image) As Integer
+            Return __svgData.Add(image)
+        End Function
+#End Region
 
 #Region "向SVG之中嵌入图片图像数据"
 

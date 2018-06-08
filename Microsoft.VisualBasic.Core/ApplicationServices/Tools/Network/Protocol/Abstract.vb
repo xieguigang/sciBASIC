@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd1da9c15ad7480818e8fe5489594bc5, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::7a8bf67890c25f2a47b3165bb957f4bf, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\Abstract.vb"
 
     ' Author:
     ' 
@@ -42,9 +42,6 @@
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetRawStream
     '         Operators: <=, >=
-    ' 
-    '     Delegate Function
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

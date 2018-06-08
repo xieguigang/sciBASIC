@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dacd296a4dcdcebba75e9fb16fa9e583, Microsoft.VisualBasic.Core\Extensions\Image\Math\VecMath2D.vb"
+﻿#Region "Microsoft.VisualBasic::d5b1ce7d4e0a365aa6eb8e8f7ba1b7de, Microsoft.VisualBasic.Core\Extensions\Image\Math\VectorMath2D.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class VecMath2D
+    '     Class VectorMath2D
     ' 
     '         Function: absAngle, absAngleDeg, add, angle, angleDeg
     '                   (+3 Overloads) createPointAuto, innerProduct, isNear, length, subtract

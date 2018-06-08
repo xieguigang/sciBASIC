@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8856043bb5d3bae551ba0264e784eb23, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::a4cff9924e487c7ef32c5c677b0bf53e, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,7 @@ Namespace Drawing3D
         ''' <summary>
         ''' Using for the project result 
         ''' </summary>
-        Public offset As Point
+        Public offset As PointF
 
         ''' <summary>
         ''' Light

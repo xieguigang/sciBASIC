@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d99fc1e8b426e21d7c75247a461a043, mime\text%html\HTML\CSS\Stroke.vb"
+﻿#Region "Microsoft.VisualBasic::632811d854ac708272332e99cf6eb9d1, mime\text%html\HTML\CSS\Stroke.vb"
 
     ' Author:
     ' 
@@ -59,9 +59,10 @@ Namespace HTML.CSS
 
         Public Const AxisStroke$ = "stroke: black; stroke-width: 4px; stroke-dash: solid;"
         Public Const AxisGridStroke$ = "stroke: lightgray; stroke-width: 2px; stroke-dash: dash;"
-        Public Const HighlightStroke$ = "stroke: gray; stroke-width: 1px; stroke-dash: dash;"
+        Public Const HighlightStroke$ = "stroke: gray; stroke-width: 5px; stroke-dash: dash;"
         Public Const StrongHighlightStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: dash;"
         Public Const ScatterLineStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;"
+        Public Const WhiteLineStroke$ = "stroke: white; stroke-width: 2px; stroke-dash: solid;"
 
         Public Property fill As String
         Public Property width As Single

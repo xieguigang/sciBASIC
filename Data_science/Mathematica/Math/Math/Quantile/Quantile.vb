@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::447183a032b2c1ce802c6f892852bfe6, Data_science\Mathematica\Math\Math\Quantile\Quantile.vb"
+﻿#Region "Microsoft.VisualBasic::f4fdb039183b9a69943bf62d88e05470, Data_science\Mathematica\Math\Math\Quantile\Quantile.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Structure Quantile
+    '     Structure Point
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString

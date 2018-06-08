@@ -59,7 +59,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -214,11 +213,18 @@ Namespace Language.UnixBash.FileSystem
             End If
         End Function
 
-        Public Function Wait(file As String, Optional timeout As Integer = 1000 * 100) As Boolean
+        ''' <summary>
+        ''' 等待文件句柄的关闭
+        ''' </summary>
+        ''' <param name="file$"></param>
+        ''' <param name="timeout">等待的时间长度，默认为100s，单位为毫秒</param>
+        ''' <returns></returns>
+        Public Function Wait(file$, Optional timeout& = 1000 * 100) As Boolean
             Dim sw As Stopwatch = Stopwatch.StartNew
 
             Do While file.FileOpened
                 Call Thread.Sleep(1)
+
                 If sw.ElapsedMilliseconds >= timeout Then
                     Return False
                 End If

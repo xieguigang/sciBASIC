@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b06c4a6eaeff7cb31813c0ae2d0924d, Data_science\Graph\Testing\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::aa87a5e3ed09cefef7301cf14f37ed58, Microsoft.VisualBasic.Core\Text\Xml\XmlEntity.vb"
 
     ' Author:
     ' 
@@ -31,28 +31,42 @@
 
     ' Summaries:
 
-    ' Module Module1
+    '     Module XmlEntity
     ' 
-    '     Sub: Main
+    '         Function: EscapingXmlEntity, UnescapingXmlEntity
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports Graph
+Imports System.Text
 
-Module Module1
+Namespace Text.Xml
 
-    Sub Main()
-        Dim tree As BinaryTree(Of String) = BinaryTree(Of String).ROOT
-        Dim rand As New Random
+    ''' <summary>
+    ''' https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references
+    ''' </summary>
+    Public Module XmlEntity
 
-        For i As Integer = 10 To 100
-            tree.Insert(i, rand.Next(10, 10000000))
-        Next
+        Public Function EscapingXmlEntity(str As String) As String
+            Return New StringBuilder(str) _
+                .Replace("&", "&amp;") _
+                .Replace("""", "&quot;") _
+                .Replace("'", "&apos;") _
+                .Replace("<", "&lt;") _
+                .Replace(">", "&gt;") _
+                .ToString
+        End Function
 
-        Dim g = tree.CreateGraph
-
-        Pause()
-    End Sub
-End Module
+        Public Function UnescapingXmlEntity(str As String) As String
+            Return New StringBuilder(str) _
+                .Replace("&quot;", """") _
+                .Replace("&apos;", "'") _
+                .Replace("&lt;", "<") _
+                .Replace("&gt;", ">") _
+                .Replace("&amp;", "&") _
+                .ToString
+        End Function
+    End Module
+End Namespace

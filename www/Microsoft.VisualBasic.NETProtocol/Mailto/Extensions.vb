@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52139f6d26868b9188bd7c21f436c276, www\Microsoft.VisualBasic.NETProtocol\Mailto\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::49f2e8ba21bd96ee6694c43c6b36c2af, www\Microsoft.VisualBasic.NETProtocol\Mailto\Extensions.vb"
 
     ' Author:
     ' 
@@ -122,4 +122,3 @@ Namespace Mailto
         End Function
     End Module
 End Namespace
-

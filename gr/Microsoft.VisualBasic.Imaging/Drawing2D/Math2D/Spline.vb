@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70941426519c48ee2fea5493ec40f84f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Spline.vb"
+﻿#Region "Microsoft.VisualBasic::d977f01706ae33c90174c19ea88ddb8e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Spline.vb"
 
     ' Author:
     ' 

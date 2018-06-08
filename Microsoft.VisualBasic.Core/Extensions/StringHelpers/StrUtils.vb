@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::509ad5f16164f9699b72fcc689e57862, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StrUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module StrUtils
-    ' 
-    '     Properties: InvariantCulture
-    ' 
-    '     Function: AddWithDelim, CharCode, CharCodes, CharString, (+6 Overloads) ContactWithDelim
-    '               ContactWithDelimSkipEmpty, ContactWithDelimSkipNull, ContactWithDelimSkipSome, CountWordFrequency, (+2 Overloads) EndsWith
-    '               EscapeQuotesAndBackslashes, GetCompareType, GetHeader, GetLastSubStringBetween, GetString
-    '               GetSubStringBetween, GetWords, LongestTag, LowerCaseFirstChar, RandomASCII
-    '               RandomASCIIString, RandomCharString, Remove, SplitIntoLines, SplitRemoveEmptyEntries
-    '               SplitWithSeparator, SplitWithSeparatorFromRight, SplitWithSpaces, (+2 Overloads) StartsWith, StartWithUpperCase
-    '               UpperCaseFirstChar
-    ' 
-    ' /********************************************************************************/
+' Module StrUtils
+' 
+'     Properties: InvariantCulture
+' 
+'     Function: AddWithDelim, CharCode, CharCodes, CharString, (+6 Overloads) ContactWithDelim
+'               ContactWithDelimSkipEmpty, ContactWithDelimSkipNull, ContactWithDelimSkipSome, CountWordFrequency, (+2 Overloads) EndsWith
+'               EscapeQuotesAndBackslashes, GetCompareType, GetHeader, GetLastSubStringBetween, GetString
+'               GetSubStringBetween, GetWords, LongestTag, LowerCaseFirstChar, RandomASCII
+'               RandomASCIIString, RandomCharString, Remove, SplitIntoLines, SplitRemoveEmptyEntries
+'               SplitWithSeparator, SplitWithSeparatorFromRight, SplitWithSpaces, (+2 Overloads) StartsWith, StartWithUpperCase
+'               UpperCaseFirstChar
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -83,6 +83,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports r = System.Text.RegularExpressions.Regex
@@ -180,13 +181,15 @@ Public Module StrUtils
         Return AscW(c)
     End Function
 
+    ReadOnly newRandom As New DefaultValue(Of Random)(Function() New Random)
+
     ''' <summary>
     ''' 32-126
     ''' </summary>
     ''' <param name="len%"></param>
     ''' <returns></returns>
-    Public Function RandomASCIIString(len%, Optional skipSymbols As Boolean = False) As String
-        With New Random
+    Public Function RandomASCIIString(len%, Optional skipSymbols As Boolean = False, Optional seed As Random = Nothing) As String
+        With seed Or newRandom
             Return CharString(len, Function() .RandomASCII(skipSymbols))
         End With
     End Function

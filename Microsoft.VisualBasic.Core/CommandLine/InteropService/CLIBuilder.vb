@@ -89,15 +89,15 @@ Namespace CommandLine.InteropService
                 Where Not attrs.IsNullOrEmpty
                 Let attr As [Optional] = DirectCast(attrs.First, [Optional])
                 Select New BindProperty(Of [Optional]) With {
-                    .Field = attr,
+                    .field = attr,
                     .member = [property]
                 }
             Dim sb As New StringBuilder(1024)
 
             For Each argum As BindProperty(Of [Optional]) In args
-                Dim getCLIToken As __getCLIToken = __getMethods(argum.Field.Type)
+                Dim getCLIToken As __getCLIToken = __getMethods(argum.field.Type)
                 Dim value As Object = argum.GetValue(app)
-                Dim cliToken As String = getCLIToken(value, argum.Field, DirectCast(argum.member, PropertyInfo))
+                Dim cliToken As String = getCLIToken(value, argum.field, DirectCast(argum.member, PropertyInfo))
 
                 If Not String.IsNullOrEmpty(cliToken) Then
                     Call sb.Append(cliToken & " ")

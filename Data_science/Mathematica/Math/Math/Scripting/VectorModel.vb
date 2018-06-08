@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da79eed48069a21fac08af5e85ae045c, Data_science\Mathematica\Math\Math\Scripting\VectorModel.vb"
+﻿#Region "Microsoft.VisualBasic::7ae85307c230647741750bff2121fbbc, Data_science\Mathematica\Math\Math\Scripting\VectorModel.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
 
 #End Region
 
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
@@ -55,11 +56,25 @@ Namespace Scripting
         ''' </summary>
         ''' <param name="name$"></param>
         ''' <returns></returns>
-        Default Public Overloads ReadOnly Property Item(name$) As Vector
+        Default Public Overloads Property Item(name$) As Vector
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return readInternal(name)
             End Get
+            Set(value As Vector)
+                Dim writer As PropertyInfo = type.TryGetMember(name, caseSensitive:=False)
+
+                Select Case writer.PropertyType
+                    Case GetType(Double)
+                        MyBase.Item(name) = value
+                    Case GetType(Single)
+                        MyBase.Item(name) = value.AsSingle
+                    Case GetType(Integer)
+                        MyBase.Item(name) = value.AsInteger
+                    Case Else
+                        Throw New NotImplementedException(writer.PropertyType.ToString)
+                End Select
+            End Set
         End Property
 
         Private Function readInternal(name As String) As Vector

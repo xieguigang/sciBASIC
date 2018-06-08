@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50d3d0685aaaf63ecd96b3c5a32f863b, Data_science\Mathematica\Plot\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::03fba17b20b9ad29f136c764bf22a047, Data_science\Mathematica\Plot\Plots\Fractions\PieChart.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module PieChart
+    '     Module PieChart
     ' 
-    '     Function: Fractions, FromData, FromPercentages, Plot
+    '         Function: Fractions, FromData, FromPercentages, Plot
+    ' 
     ' 
     ' /********************************************************************************/
 
@@ -56,38 +57,40 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports sys = System.Math
 
-Public Module PieChart
+Namespace Fractions
 
-    ''' <summary>
-    ''' Plot pie chart
-    ''' </summary>
-    ''' <param name="data"></param>
-    ''' <param name="size"></param>
-    ''' <param name="bg"></param>
-    ''' <param name="legendAlt">不再绘制出传统的legend，而是将标签信息跟随pie的位置而变化</param>
-    ''' <param name="legendBorder"></param>
-    ''' <param name="minRadius">
-    ''' 当这个参数值大于0的时候，除了扇形的面积会不同外，半径也会不同，这个参数指的是最小的半径
-    ''' </param>
-    ''' <param name="reorder">
-    ''' 是否按照数据比例重新对数据排序？
-    ''' +  0 : 不需要
-    ''' +  1 : 从小到大排序
-    ''' + -1 : 从大到小排序 
-    ''' </param>
-    ''' <returns></returns>
-    ''' <remarks>
-    ''' ''' 生成饼图的文本的布局位置
-    ''' 
-    ''' + 根据startAngle + 0.5 * sweepAngle来判断文本的位置
-    ''' +   0 -  90  右下
-    ''' +  90 - 180  左下
-    ''' + 180 - 270  左上
-    ''' + 270 - 360  右上
-    ''' + 文本的位置应该是startAngle + 0.5 * sweepAngle的更加大的半径的一个圆的位置
-    ''' </remarks>
-    <Extension>
-    Public Function Plot(data As IEnumerable(Of Fractions),
+    Public Module PieChart
+
+        ''' <summary>
+        ''' Plot pie chart
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="size"></param>
+        ''' <param name="bg"></param>
+        ''' <param name="legendAlt">不再绘制出传统的legend，而是将标签信息跟随pie的位置而变化</param>
+        ''' <param name="legendBorder"></param>
+        ''' <param name="minRadius">
+        ''' 当这个参数值大于0的时候，除了扇形的面积会不同外，半径也会不同，这个参数指的是最小的半径
+        ''' </param>
+        ''' <param name="reorder">
+        ''' 是否按照数据比例重新对数据排序？
+        ''' +  0 : 不需要
+        ''' +  1 : 从小到大排序
+        ''' + -1 : 从大到小排序 
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' ''' 生成饼图的文本的布局位置
+        ''' 
+        ''' + 根据startAngle + 0.5 * sweepAngle来判断文本的位置
+        ''' +   0 -  90  右下
+        ''' +  90 - 180  左下
+        ''' + 180 - 270  左上
+        ''' + 270 - 360  右上
+        ''' + 文本的位置应该是startAngle + 0.5 * sweepAngle的更加大的半径的一个圆的位置
+        ''' </remarks>
+        <Extension>
+        Public Function Plot(data As IEnumerable(Of FractionData),
                          Optional size$ = "1600,1200",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
@@ -102,21 +105,21 @@ Public Module PieChart
                          Optional shadowDistance# = 80,
                          Optional shadowAngle# = 35) As GraphicsData
 
-        Dim margin As Padding = padding
-        Dim font As Font = CSSFont.TryParse(legendFont)
+            Dim margin As Padding = padding
+            Dim font As Font = CSSFont.TryParse(legendFont)
 
 #Const DEBUG = 0
-        If reorder <> 0 Then
-            If reorder > 0 Then
-                data = data.OrderBy(
+            If reorder <> 0 Then
+                If reorder > 0 Then
+                    data = data.OrderBy(
                     Function(x) x.Percentage)
-            Else
-                data = data.OrderByDescending(
+                Else
+                    data = data.OrderByDescending(
                     Function(x) x.Percentage)
+                End If
             End If
-        End If
 
-        Dim __plot =
+            Dim __plot =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim gSize = region.PlotRegion.Size
                 Dim r# = sys.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
@@ -128,7 +131,7 @@ Public Module PieChart
 
                     Dim start As New float
                     Dim sweep As New float
-                    Dim alpha As Double, pt As PointF
+                    Dim alpha As Single, pt As PointF
                     Dim labelSize As SizeF
                     Dim label$
                     Dim br As SolidBrush
@@ -149,14 +152,14 @@ Public Module PieChart
                     ' 填充浅灰色底层
                     Call g.FillPie(Brushes.LightGray, layoutRect, 0, 360)
 
-                    For Each x As Fractions In data
+                    For Each x As FractionData In data
                         br = New SolidBrush(x.Color)
                         Call g.FillPie(br, layoutRect,
                                        CSng(start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - CSng(sweep.Value),
                                        CSng(sweep))
 
                         alpha = (+start) - (+sweep / 2)
-                        pt = (r / 1.5).ToPoint(alpha)  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                        pt = (r / 1.5, alpha).ToCartesianPoint()  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
                         pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
                         label = x.GetValueLabel(valueLabel)
                         labelSize = g.MeasureString(label, valueLabelFont)
@@ -182,7 +185,7 @@ Public Module PieChart
                             g.DrawString(x.Name, font, Brushes.Black, layout)
 
                             ' 还需要绘制标签文本和pie的连接线
-                            With (r).ToPoint(alpha)
+                            With (r, alpha).ToCartesianPoint()
                                 pt = New PointF(centra.X + .X, centra.Y + .Y)
                             End With
 
@@ -197,7 +200,7 @@ Public Module PieChart
 #If DEBUG Then
                          Dim list As New List(Of Rectangle)
 #End If
-                    For Each x As Fractions In data
+                    For Each x As FractionData In data
                         Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
                         Dim vTopleft As New Point(gSize.Width / 2 - r2, gSize.Height / 2 - r2)
                         Dim rect As New Rectangle(vTopleft, New Size(r2 * 2, r2 * 2))
@@ -224,7 +227,7 @@ Public Module PieChart
                     ' Excel之中的饼图的示例样式位置为默认右居中的
                     Dim top = (gSize.Height - height) / 2 - margin.Top
 
-                    For Each x As Fractions In data
+                    For Each x As FractionData In data
                         legends += New Legend With {
                             .color = x.Color.RGBExpression,
                             .style = LegendStyles.Square,
@@ -237,84 +240,85 @@ Public Module PieChart
                 End If
             End Sub
 
-        Return g.GraphicsPlots(size.SizeParser, margin, bg, __plot)
-    End Function
+            Return g.GraphicsPlots(size.SizeParser, margin, bg, __plot)
+        End Function
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="data">每个标记的数量，函数会自动根据这些数量计算出百分比</param>
-    ''' <param name="colors"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors$() = Nothing) As Fractions()
-        Dim array As NamedValue(Of Integer)() = data.ToArray
-        Dim all = array.Select(Function(x) x.Value).Sum
-        Dim s = From x
-                In array
-                Select New NamedValue(Of Double) With {
-                    .Name = x.Name,
-                    .Value = x.Value / all,
-                    .Description = x.Value
-                }
-        Return s.FromPercentages(colors.FromNames(array.Length))
-    End Function
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data">每个标记的数量，函数会自动根据这些数量计算出百分比</param>
+        ''' <param name="colors"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function FromData(data As IEnumerable(Of NamedValue(Of Integer)), Optional colors$() = Nothing) As FractionData()
+            Dim array As NamedValue(Of Integer)() = data.ToArray
+            Dim all = array.Select(Function(x) x.Value).Sum
+            Dim s = From x
+                    In array
+                    Select New NamedValue(Of Double) With {
+                        .Name = x.Name,
+                        .Value = x.Value / all,
+                        .Description = x.Value
+                    }
+            Return s.FromPercentages(colors.FromNames(array.Length))
+        End Function
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="data">每个标记的数量，函数会自动根据这些数量计算出百分比</param>
-    ''' <param name="schema"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function Fractions(data As IEnumerable(Of NamedValue(Of Integer)), Optional schema$ = NameOf(Office2016)) As Fractions()
-        Dim array As NamedValue(Of Integer)() = data.ToArray
-        Dim all As Integer = array _
-            .Select(Function(x) x.Value) _
-            .Sum
-        Dim s = From x
-                In array
-                Select New NamedValue(Of Double) With {
-                    .Name = x.Name,
-                    .Value = x.Value / all,
-                    .Description = x.Value
-                }
-        Dim colors As Color() = Designer.FromSchema(
-            schema, array.Length
-        )
-        Return s.FromPercentages(colors)
-    End Function
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data">每个标记的数量，函数会自动根据这些数量计算出百分比</param>
+        ''' <param name="schema"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Fractions(data As IEnumerable(Of NamedValue(Of Integer)), Optional schema$ = NameOf(Office2016)) As FractionData()
+            Dim array As NamedValue(Of Integer)() = data.ToArray
+            Dim all As Integer = array _
+                .Select(Function(x) x.Value) _
+                .Sum
+            Dim s = From x
+                    In array
+                    Select New NamedValue(Of Double) With {
+                        .Name = x.Name,
+                        .Value = x.Value / all,
+                        .Description = x.Value
+                    }
+            Dim colors As Color() = Designer.FromSchema(
+                schema, array.Length
+            )
+            Return s.FromPercentages(colors)
+        End Function
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="data">手工计算出来的百分比</param>
-    ''' <param name="colors">Default is using schema of <see cref="Office2016"/></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function FromPercentages(data As IEnumerable(Of NamedValue(Of Double)), Optional colors As Color() = Nothing) As Fractions()
-        Dim array = data.ToArray
-        Dim out As Fractions() = New Fractions(array.Length - 1) {}
-        Dim c As Color() = If(
-            colors.IsNullOrEmpty,
-            Designer.FromSchema(NameOf(Office2016), array.Length),
-            colors
-        )
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="data">手工计算出来的百分比</param>
+        ''' <param name="colors">Default is using schema of <see cref="Office2016"/></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function FromPercentages(data As IEnumerable(Of NamedValue(Of Double)), Optional colors As Color() = Nothing) As FractionData()
+            Dim array = data.ToArray
+            Dim out As FractionData() = New FractionData(array.Length - 1) {}
+            Dim c As Color() = If(
+                colors.IsNullOrEmpty,
+                Designer.FromSchema(NameOf(Office2016), array.Length),
+                colors
+            )
 
-        For i As Integer = 0 To array.Length - 1
-            With array(i)
-                Dim tag = .Name
-                Dim v# = .Value
+            For i As Integer = 0 To array.Length - 1
+                With array(i)
+                    Dim tag = .Name
+                    Dim v# = .Value
 
-                out(i) = New Fractions With {
-                    .Color = c(i),
-                    .Name = tag,
-                    .Percentage = v#,
-                    .Value = Val(array(i).Description)
-                }
-            End With
-        Next
+                    out(i) = New FractionData With {
+                        .Color = c(i),
+                        .Name = tag,
+                        .Percentage = v#,
+                        .Value = Val(array(i).Description)
+                    }
+                End With
+            Next
 
-        Return out
-    End Function
-End Module
+            Return out
+        End Function
+    End Module
+End Namespace

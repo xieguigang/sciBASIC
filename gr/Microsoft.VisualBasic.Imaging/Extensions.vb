@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffd3eb5c8a34715e4ca5120cb86de6d3, gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::422192766447956499018257821163cb, gr\Microsoft.VisualBasic.Imaging\Extensions.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: AsGDIImage, AsSVG
     ' 
-    '     Sub: (+2 Overloads) FillCircles
+    '     Sub: (+4 Overloads) FillCircles
     ' 
     ' /********************************************************************************/
 
@@ -70,23 +70,36 @@ Public Module Extensions
         End If
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Sub FillCircles(ByRef g As IGraphics, brush As Brush, points As Point(), radius#)
+        Call g.FillCircles(brush, points.Select(Function(p) p.PointF).ToArray, radius)
+    End Sub
+
+    <Extension>
+    Public Sub FillCircles(ByRef g As IGraphics, brush As Brush, points As PointF(), radius#)
         Dim size As New Size(radius * 2, radius * 2)
         Dim offset = -radius
-        For Each point As Point In points
-            Dim rect As New Rectangle(point.OffSet2D(offset, offset), size)
+
+        For Each point As PointF In points
+            Dim rect As New RectangleF(point.OffSet2D(offset, offset), size)
             Call g.FillEllipse(brush, rect)
         Next
     End Sub
 
     <Extension>
     Public Sub FillCircles(ByRef g As IGraphics, points As Point(), fill As Func(Of Integer, Point, Brush), radius#)
+        Dim fillHandler As Func(Of Integer, PointF, Brush) = Function(i%, p As PointF) fill(i, p.ToPoint)
+        Call g.FillCircles(points.PointF, fillHandler, radius)
+    End Sub
+
+    <Extension>
+    Public Sub FillCircles(ByRef g As IGraphics, points As PointF(), fill As Func(Of Integer, PointF, Brush), radius#)
         Dim size As New Size(radius * 2, radius * 2)
         Dim offset = -radius
 
-        For Each point As SeqValue(Of Point) In points.SeqIterator
-            Dim rect As New Rectangle((+point).OffSet2D(offset, offset), size)
+        For Each point As SeqValue(Of PointF) In points.SeqIterator
+            Dim rect As New RectangleF((+point).OffSet2D(offset, offset), size)
             Call g.FillEllipse(fill(point, point), rect)
         Next
     End Sub

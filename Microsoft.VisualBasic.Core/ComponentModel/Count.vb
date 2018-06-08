@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dffad878d9dc4b3213fed7f43079d000, Microsoft.VisualBasic.Core\ComponentModel\Count.vb"
+﻿#Region "Microsoft.VisualBasic::6b030f0461a20a69d4f660cc57c2e051, Microsoft.VisualBasic.Core\ComponentModel\Count.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,10 @@
     '     Class Counter
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: Hit
+    ' 
+    '         Sub: Add
     ' 
     '     Module CounterExtensions
     ' 

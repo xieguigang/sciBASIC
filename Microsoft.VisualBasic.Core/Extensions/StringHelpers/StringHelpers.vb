@@ -1,62 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::e61a329b0193769065b97bbb8e07259c, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::5bb2ac444add8e90fd59a98852a81e2e, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module StringHelpers
-    ' 
-    '     Properties: NonStrictCompares, StrictCompares
-    ' 
-    '     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
-    '               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
-    '               FormatZero, GetBetween, GetEMails, GetStackValue, GetString
-    '               (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny, (+2 Overloads) Intersection
-    '               IsEmptyStringVector, IsNullOrEmpty, JoinBy, Located, Lookup
-    '               lTokens, (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString
-    '               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
-    '               SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty, StringHashCode
-    '               StringReplace, StringSplit, StripBlank, Strips, TextEquals
-    '               TextLast, TokenCount, TokenCountIgnoreCase, ToTruncateInt32, ToTruncateInt64
-    '               TrimA, TrimNewLine, WildcardsLocated
-    ' 
-    '     Sub: Parts, RemoveLast
-    ' 
-    ' /********************************************************************************/
+' Module StringHelpers
+' 
+'     Properties: NonStrictCompares, StrictCompares
+' 
+'     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
+'               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
+'               FormatZero, GetBetween, GetEMails, GetStackValue, GetString
+'               (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny, (+2 Overloads) Intersection
+'               IsEmptyStringVector, IsNullOrEmpty, JoinBy, LineTokens, Located
+'               Lookup, (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString
+'               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
+'               SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty, StringHashCode
+'               StringReplace, StringSplit, StripBlank, Strips, TextEquals
+'               TextLast, TokenCount, TokenCountIgnoreCase, ToTruncateInt32, ToTruncateInt64
+'               TrimA, TrimNewLine, WildcardsLocated
+' 
+'     Sub: Parts, RemoveLast
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Numerics
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -66,6 +65,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Math.Information
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -164,10 +164,15 @@ Public Module StringHelpers
         End If
     End Function
 
+    ''' <summary>
+    ''' Is text equals to the R nothing?
+    ''' </summary>
+    ''' <param name="c$"></param>
+    ''' <returns></returns>
     Private Function RNull(c$) As Boolean
         Return c.StringEmpty OrElse
-            c.TextEquals("NULL") OrElse
-            c.TextEquals("NA")
+               c.TextEquals("NULL") OrElse
+               c.TextEquals("NA")
     End Function
 
     <Extension>
@@ -180,7 +185,7 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s$"></param>
     ''' <returns></returns>
-    <Extension> Public Function StringHashCode(s$) As Long
+    <Extension> Public Function StringHashCode(s As String) As Long
         Dim hash& = 5381
         Dim chars%() = s.Select(AddressOf Convert.ToInt32).ToArray
 
@@ -191,33 +196,6 @@ Public Module StringHelpers
         hash = hash >> 0
 
         Return hash
-    End Function
-
-    ReadOnly sizeOfInt64% = Marshal.SizeOf(Long.MaxValue)
-    ReadOnly sizeOfInt32% = Marshal.SizeOf(Integer.MaxValue)
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function ToTruncateInt64(bi As BigInteger) As Long
-        With bi.ToByteArray
-            If .Length < sizeOfInt64 Then
-                Return CType(bi, Long)
-            Else
-                Return BitConverter.ToInt64(.ByRef, Scan0)
-            End If
-        End With
-    End Function
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function ToTruncateInt32(bi As BigInteger) As Integer
-        With bi.ToByteArray
-            If .Length < sizeOfInt32 Then
-                Return CType(bi, Long)
-            Else
-                Return BitConverter.ToInt32(.ByRef, Scan0)
-            End If
-        End With
     End Function
 
     ''' <summary>
@@ -583,7 +561,7 @@ Public Module StringHelpers
 
         Do While pos > 0
             n += 1
-            pos = InStr(pos, text, phrase, method)
+            pos = InStr(pos + 1, text, phrase, method)
         Loop
 
         Return n
@@ -751,7 +729,7 @@ Public Module StringHelpers
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Matched?")>
     <Extension> Public Function MatchPattern(str$, regex$, Optional opt As RegexOptions = RegexICSng) As Boolean
-        Return r.Match(str, regex).Success
+        Return r.Match(str, regex, opt).Success
     End Function
 
     ''' <summary>
@@ -800,14 +778,20 @@ Public Module StringHelpers
     ''' <param name="dict"></param>
     ''' <param name="path"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 其实，对于字典类型是可以直接使用JSON序列化得到json字符串的，但是在这里是需要
+    ''' 保存接口类型的对象，但是在这里不能够将接口类型进行json序列化，所以进行字符串
+    ''' 的序列化然后拼接出json数据
+    ''' </remarks>
     <Extension>
     <ExportAPI("Write.Dictionary")>
-    Public Function SaveTo(dict As IDictionary(Of String, String), path As String) As Boolean
-        ' 在这里不能够将接口类型进行json序列化，所以进行字符串的序列化然后拼接出json数据
-        Dim lines As String() = dict.Select(AddressOf __json).ToArray
-        Return "{" &
+    Public Function SaveTo(dict As IDictionary(Of String, String), path$) As Boolean
+        Dim lines$() = dict.Select(AddressOf __json).ToArray
+        Dim json$ = "{" &
             vbTab & String.Join("," & vbCrLf & vbTab, lines) &
         "}"
+
+        Return json.SaveTo(path, TextEncodings.UTF8WithoutBOM)
     End Function
 
     Private Function __json(x As KeyValuePair(Of String, String)) As String

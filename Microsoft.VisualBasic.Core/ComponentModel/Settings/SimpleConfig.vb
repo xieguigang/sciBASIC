@@ -128,15 +128,15 @@ Namespace ComponentModel.Settings
                     End If
                 End If
 INSERT:
-                If String.IsNullOrEmpty(line.Field._Name) Then
-                    line.Field._Name =
-                        If(line.Field._ToLower,
+                If String.IsNullOrEmpty(line.field._Name) Then
+                    line.field._Name =
+                        If(line.field._ToLower,
                         line.Identity.ToLower,
                         line.Identity)
                 End If
 
                 ' 这里为什么会出现重复的键名？？？
-                Schema += New BindProperty(Of TConfig)(line.Field, [property])
+                Schema += New BindProperty(Of TConfig)(line.field, [property])
             Next
 
             Return Schema.ToArray
@@ -152,12 +152,12 @@ INSERT:
         Public Shared Function GenerateConfigurations(Of T As Class)(target As T) As String()
             Dim type As Type = GetType(T)
             Dim Schema = TryParse(Of T, SimpleConfig)(canRead:=True, canWrite:=False)
-            Dim mlen As Integer = (From cfg As SimpleConfig In Schema.Select(Function(x) x.Field) Select Len(cfg._Name)).Max
+            Dim mlen As Integer = (From cfg As SimpleConfig In Schema.Select(Function(x) x.field) Select Len(cfg._Name)).Max
             Dim bufs As New List(Of String)
 
             For Each [property] As BindProperty(Of SimpleConfig) In Schema
-                Dim blank As New String(" ", mlen - Len([property].Field._Name) + 2)
-                Dim Name As String = [property].Field._Name & blank
+                Dim blank As New String(" ", mlen - Len([property].field._Name) + 2)
+                Dim Name As String = [property].field._Name & blank
                 Dim value As String = Scripting.ToString([property].GetValue(target))
 
                 bufs += $"{Name}= {value}"

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1039f59e6b4349db979fcb2043c3656, Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::59549495a0c2c4ac6a67d3960d37dea6, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -329,7 +329,10 @@ Public Module DocumentExtensions
     End Function
 
     ''' <summary>
-    ''' 从一个csv文件数据之中加载一个字典对象，必须要保证第一列是键名，第二列才是数据，文件不存在或者内容为空的时候，会返回空字典
+    ''' Default using <see cref="Scripting.CTypeDynamic(Of T)(String, T)"/> 
+    ''' scripting type casting helper.
+    ''' (从一个csv文件数据之中加载一个字典对象，必须要保证第一列是键名，第二列
+    ''' 才是数据，文件不存在或者内容为空的时候，会返回空字典)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="path$"></param>
@@ -346,6 +349,7 @@ Public Module DocumentExtensions
             Dim key$
             Dim value$
 
+            ' 需要跳过第一行标题行
             For Each line As String In path.IterateAllLines.Skip(1)
                 With Tokenizer.CharsParser(line)
                     ' 2018-4-8

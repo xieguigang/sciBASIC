@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4f5cf6c6ec79697c77296151d6f893f, Data_science\Mathematica\Plot\test\BarPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::b3edf9795bf80c1c3e0e55c8929b7021, Data_science\Mathematica\Plot\test\BarPlotTest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module BarPlotTest
     ' 
-    '     Sub: Main
+    '     Sub: Main, variableWidthTest
     ' 
     ' /********************************************************************************/
 
@@ -42,10 +42,33 @@
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
+Imports Microsoft.VisualBasic.Imaging
 
 Module BarPlotTest
 
+    Sub variableWidthTest()
+
+        Dim data = {
+            New VariableBarData With {.Name = "测试1", .Data = (120, 366)},
+            New VariableBarData With {.Name = "测试1", .Data = (220, 1366)},
+            New VariableBarData With {.Name = "测试1", .Data = (1120, 36)},
+            New VariableBarData With {.Name = "测试1", .Data = (620, 866)},
+            New VariableBarData With {.Name = "测试1", .Data = (920, 766)},
+            New VariableBarData With {.Name = "测试1", .Data = (1000, 366)},
+            New VariableBarData With {.Name = "测试1", .Data = (2120, 466)},
+            New VariableBarData With {.Name = "测试1", .Data = (1820, 2366)},
+            New VariableBarData With {.Name = "测试1", .Data = (320, 1766)}
+        }
+
+
+        Call VariableWidthBarPlot.Plot(data.OrderByDescending(Function(d) d.Data.height), title:="测试标题").AsGDIImage.SaveAs("./test_bar.png")
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+        Call variableWidthTest()
 
         'Dim dara = BarPlotDataExtensions _
         '    .LoadDataSet("C:\Users\xieguigang\Desktop\test.csv") _
