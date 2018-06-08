@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94b7d2f657850e09829efe2af1c54eab, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
+﻿#Region "Microsoft.VisualBasic::9add571c7a2504023e62adcb4befa499, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     '     Structure LineValue
     ' 
     '         Properties: Line, value
+    ' 
+    '         Sub: Assign
     ' 
     ' 
     ' /********************************************************************************/

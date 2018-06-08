@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45ca11577f2f792b9ff731880326d0ed, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3cb534bfb4cbbfeb78326ee9daf66229, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: Kmeans, ToEntityObjects, ToKMeansModels, ValueGroups
+    '         Function: Kmeans, ValueGroups
     ' 
     ' 
     ' /********************************************************************************/

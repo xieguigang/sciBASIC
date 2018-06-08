@@ -119,7 +119,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x86\</OutputPath>
     <DefineConstants>TRACE=1</DefineConstants>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.HierarchicalClustering.xml</DocumentationFile>
     <Optimize>true</Optimize>

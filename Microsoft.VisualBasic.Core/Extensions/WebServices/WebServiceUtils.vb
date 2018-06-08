@@ -1,51 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::a350c1159d362c5eb5224145c6c7cf3e, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::2ba0871779282725d13c43e9a4cc68e0, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module WebServiceUtils
-' 
-'     Properties: DefaultUA, Protocols, Proxy
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
-'               CopyStream, (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress
-'               GetProxy, (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL
-'               (+2 Overloads) POST, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
-'               UrlEncode, UrlPathEncode
-' 
-'     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
-' 
-' /********************************************************************************/
+    ' Module WebServiceUtils
+    ' 
+    '     Properties: DefaultUA, Protocols, Proxy
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
+    '               (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress, GetProxy
+    '               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, (+2 Overloads) POST
+    '               POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
+    '               UrlEncode, UrlPathEncode
+    ' 
+    '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -201,19 +201,19 @@ Public Module WebServiceUtils
         Return GenerateDictionary(tokens, transLower)
     End Function
 
+    ReadOnly urlEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
+    ReadOnly noEscaping As New Func(Of String, String)(Function(s) s)
+
     ''' <summary>
     ''' 生成URL请求的参数
     ''' </summary>
     ''' <param name="data"></param>
     ''' <param name="escaping">是否进行对value部分的字符串数据进行转义</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function BuildUrlData(data As IEnumerable(Of KeyValuePair(Of String, String)), Optional escaping As Boolean = False) As String
-        Dim __get As Func(Of String, String) = If(escaping,
-            AddressOf UrlDecode,
-            Function(s) s)
-        Dim urlData As String = data _
-            .Select(Function(x) $"{x.Key}={__get(x.Value)}").JoinBy("&")
-        Return urlData
+        Return data.Select(Function(x) $"{x.Key}={(noEscaping Or urlEscaping.When(escaping))(x.Value) }").JoinBy("&")
     End Function
 
     <ExportAPI("Build.Args")>
@@ -233,7 +233,10 @@ Public Module WebServiceUtils
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension> <ExportAPI("URL.Decode")>
-    Public Function UrlDecode(s As String, Optional encoding As Encoding = Nothing) As String
+    Public Function UrlDecode(s$, Optional encoding As Encoding = Nothing) As String
+        If s.StringEmpty Then
+            Return ""
+        End If
         If encoding IsNot Nothing Then
             Return HttpUtility.UrlDecode(s, encoding)
         Else
@@ -484,21 +487,20 @@ Public Module WebServiceUtils
     ''' 通过post上传文件
     ''' </summary>
     ''' <param name="url$"></param>
-    ''' <param name="file$"></param>
     ''' <param name="name$"></param>
     ''' <param name="referer$"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function POSTFile(url$, file$, Optional name$ = "", Optional referer$ = Nothing) As String
+    Public Function POSTFile(url$, buffer As Byte(), Optional name$ = "", Optional referer$ = Nothing) As String
         Dim request As HttpWebRequest = DirectCast(WebRequest.Create(url), HttpWebRequest)
 
         request.Method = "POST"
         request.Accept = "application/json"
-        request.ContentLength = file.FileLength
-        request.ContentType = "application/x-www-form-urlencoded; charset=utf-8"
+        request.ContentLength = buffer.Length
+        request.ContentType = "multipart/form-data; boundary=------WebKitFormBoundaryBpijhG6dKsQpCMdN--;"
         request.UserAgent = UserAgent.GoogleChrome
         request.Referer = referer
-        request.Headers("fileName") = name Or file.FileName.AsDefault
+        '  request.Headers("fileName") = name Or File.FileName.AsDefault
 
         If Not String.IsNullOrEmpty(Proxy) Then
             Call request.SetProxy(Proxy)
@@ -508,10 +510,10 @@ Public Module WebServiceUtils
 
         ' post data Is sent as a stream
         With request.GetRequestStream()
-            Dim buffer = file.ReadBinary
+            ' Dim buffer = File.ReadBinary
 
-            Call New StreamWriter(.ByRef).Write(vbCrLf)
-            Call .Flush()
+            ' Call New StreamWriter(.ByRef).Write(vbCrLf)
+            ' Call .Flush()
             Call .Write(buffer, Scan0, buffer.Length)
             Call .Flush()
         End With
@@ -691,11 +693,9 @@ RE0:
     <Extension> Public Function GetDownload(url As String, savePath As String) As Boolean
         Try
             Dim responseStream As Stream = GetRequestRaw(url)
-            Dim buffer As Byte() = responseStream _
-                .CopyStream _
-                .ToArray
-            Call $"[{buffer.Length} Bytes]".__DEBUG_ECHO
-            Return buffer.FlushStream(savePath)
+            Dim localBuffer As Stream = responseStream.CopyStream
+            Call $"[{localBuffer.Length} Bytes]".__DEBUG_ECHO
+            Return localBuffer.FlushStream(savePath)
         Catch ex As Exception
             ex = New Exception(url, ex)
             Call ex.PrintException

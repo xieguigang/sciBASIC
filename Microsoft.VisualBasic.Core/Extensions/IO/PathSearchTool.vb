@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f48713fda8f725dcd17dded55bea865, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::1c42bd61c25b24e15da0d0b8a9122cae, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
 
     ' Author:
     ' 
@@ -35,13 +35,14 @@
     ' 
     '     Function: BaseName, BatchMd5Renamed, BranchRule, ChangeSuffix, Delete
     '               DIR, DirectoryExists, DirectoryName, EnumerateFiles, ExtensionSuffix
-    '               FileCopy, (+2 Overloads) FileExists, FileLength, FileName, FileOpened
-    '               GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath, GetMostAppreancePath
-    '               ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList, Long2Short
-    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
-    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory, SearchDrive
-    '               SearchProgram, SearchScriptFile, SourceCopy, TheFile, ToDIR_URL
-    '               ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    '               FileCopy, (+2 Overloads) FileExists, FileLength, FileMove, FileName
+    '               FileOpened, GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath
+    '               GetMostAppreancePath, ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList
+    '               Long2Short, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine
+    '               PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory
+    '               SearchDrive, SearchProgram, SearchScriptFile, SourceCopy, SplitPath
+    '               TheFile, ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix
+    '               UnixPath
     ' 
     '     Sub: MkDIR
     ' 
@@ -70,8 +71,7 @@ Imports Microsoft.VisualBasic.Text
 ''' Search the path from a specific keyword.(通过关键词来推测路径)
 ''' </summary>
 ''' <remarks></remarks>
-<Package("Program.Path.Search",
-                    Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
+<Package("Program.Path.Search", Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
 Public Module ProgramPathSearchTool
 
     ''' <summary>
@@ -85,6 +85,15 @@ Public Module ProgramPathSearchTool
     <Extension>
     Public Function ChangeSuffix(path$, newSuffix$) As String
         Return path.TrimSuffix & "." & newSuffix
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function SplitPath(path As String) As String()
+        Return path.Replace("/"c, "\"c) _
+                   .StringReplace("\\{2,}", "\") _
+                   .Trim("\"c) _
+                   .Split("\"c)
     End Function
 
     ''' <summary>
@@ -462,6 +471,21 @@ Public Module ProgramPathSearchTool
         End Try
 
         Return True
+    End Function
+
+    <Extension>
+    Public Function FileMove(source$, target$) As Boolean
+        Try
+            Call My.Computer.FileSystem.MoveFile(source, target)
+            Return True
+        Catch ex As Exception
+            ex = New Exception("source: " & source, ex)
+            ex = New Exception("target: " & target, ex)
+
+            Call App.LogException(ex)
+
+            Return False
+        End Try
     End Function
 
     ''' <summary>
@@ -1125,7 +1149,8 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' Gets the full path of the specific directory.
+    ''' Gets the full path of the specific directory. 
+    ''' (这个函数为了兼容linux的文件系统，也会自动的将所有的``\``替换为``/``)
     ''' </summary>
     ''' <param name="dir"></param>
     ''' <param name="stack">当程序出错误的时候记录进入日志的一个追踪目标参数，调试用</param>

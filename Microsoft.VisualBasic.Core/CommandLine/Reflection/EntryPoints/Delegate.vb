@@ -118,9 +118,11 @@ Namespace CommandLine.Reflection.EntryPoints
                 Dim prototype$ = APIPrototype(_metaData.Target.GetFullName)
 
                 Call sb.AppendLine(Info)
+                Call sb.AppendLine()
                 Call sb.AppendLine($"**Prototype**: ``{prototype}``")
                 Call sb.AppendLine()
                 Call sb.AppendLine("###### Usage")
+                Call sb.AppendLine()
                 Call sb.AppendLine("```bash")
                 Call sb.AppendLine($"{App.AssemblyName} {Usage}")
                 Call sb.AppendLine("```")

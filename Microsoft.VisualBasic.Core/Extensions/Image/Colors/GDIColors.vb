@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f043e6b3f366d00e305ca8c83cfc1d6, Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::ca2b7ce5a34fb486948900d2d2c75a71, Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -98,6 +98,12 @@ Namespace Imaging
             Return out
         End Function
 
+        ''' <summary>
+        ''' alpha=[0, 255]
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <param name="alphaValue%"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Alpha(c As Color, alphaValue%) As Color

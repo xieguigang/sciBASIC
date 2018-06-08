@@ -53,8 +53,7 @@ Namespace Scripting.MetaData
         ''' <see cref="PackageAttribute"/>
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property TypeInfo As Type =
-            GetType(PackageAttribute)
+        Public ReadOnly Property TypeInfo As Type = GetType(PackageAttribute)
 
         <Extension> Public Function GetCLIMod(assm As Assembly) As Type
             Dim types As Type() = assm.GetTypes
@@ -76,6 +75,9 @@ Namespace Scripting.MetaData
             Catch ex As Exception
                 ex = New Exception(path.ToFileURL, ex)
                 Call App.LogException(ex)
+#If DEBUG Then
+                Call ex.PrintException
+#End If
                 Return Nothing
             End Try
         End Function

@@ -1,10 +1,52 @@
-﻿Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
+﻿#Region "Microsoft.VisualBasic::1be3c1f8e7f71683ca9bbc0deb31892c, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module DamerauLevenshteinDistance
+    ' 
+    '         Function: DamerauLevenshtein
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Text.Levenshtein.LevenshteinDistance
 
 Namespace ComponentModel.Algorithm.DynamicProgramming
 
     Public Module DamerauLevenshteinDistance
 
-        Public Function DamerauLevenshtein(Of T)(down As T(), across As T(), equals As Equals(Of T), insert#, remove#, substitute As Func(Of T, T, Double), transpose As Func(Of T, T, Double)) As Double
+        Public Function DamerauLevenshtein(Of T)(down As T(), across As T(), equals As GenericLambda(Of T).IEquals, insert#, remove#, substitute As Func(Of T, T, Double), transpose As Func(Of T, T, Double)) As Double
             Dim matrix As New List(Of Double())
 
             For i As Integer = 0 To down.Length - 1

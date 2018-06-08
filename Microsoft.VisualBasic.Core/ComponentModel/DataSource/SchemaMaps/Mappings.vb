@@ -75,20 +75,16 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="type"></param>
-        ''' <param name="getFieldName"></param>
+        ''' <param name="getName"></param>
         ''' <param name="explict">
         ''' 当自定义属性不存在的时候，隐式的使用域名或者属性名作为名称，否则会跳过该对象，默认是跳过该对象
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetFields(Of T As {Attribute})(
-                                 Type As Type,
-                                 getFieldName As Func(Of T, String),
-                                 Optional explict As Boolean = False) As BindProperty(Of T)()
-
+        Public Function GetFields(Of T As {Attribute})(type As Type, getName As Func(Of T, String), Optional explict As Boolean = False) As BindProperty(Of T)()
             Dim out As New List(Of BindProperty(Of T))
 
-            For Each field As FieldInfo In Type.GetFields
+            For Each field As FieldInfo In type.GetFields
                 Dim attr As T = field.GetCustomAttribute(Of T)
 
                 If attr Is Nothing Then
@@ -97,12 +93,12 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                     End If
                 Else
                     out += New BindProperty(Of T)(attr, field) With {
-                        .Identity = getFieldName(attr)
+                        .Identity = getName(attr)
                     }
                 End If
             Next
 
-            For Each [property] As PropertyInfo In Type.GetProperties
+            For Each [property] As PropertyInfo In type.GetProperties
                 Dim attr As T = [property].GetCustomAttribute(Of T)
 
                 If attr Is Nothing Then
@@ -111,7 +107,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                     End If
                 Else
                     out += New BindProperty(Of T)(attr, [property]) With {
-                        .Identity = getFieldName(attr)
+                        .Identity = getName(attr)
                     }
                 End If
             Next
@@ -125,25 +121,52 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Function
 
         ''' <summary>
-        ''' 获取从域名称映射到列名称的哈希表
+        ''' 获取从目标类型定义之中的从类型成员域名称映射到列名称的哈希表
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="explict"></param>
+        ''' <param name="reversed">
+        ''' 当这个参数为真的时候，将会：
+        ''' 
+        ''' ```
+        ''' <see cref="ColumnAttribute.Name"/> => <see cref="MemberInfo.Name"/>
+        ''' ```
+        ''' </param>
         ''' <returns></returns>
-        Public Function FieldNameMappings(Of T)(Optional explict As Boolean = False) As Dictionary(Of String, String)
+        Public Function FieldNameMappings(Of T)(Optional explict As Boolean = False, Optional reversed As Boolean = False) As Dictionary(Of String, String)
             Dim fields As BindProperty(Of ColumnAttribute)() = GetFields(Of T)(explict)
-            Dim table As Dictionary(Of String, String) = fields _
-                .ToDictionary(Function(field) field.Identity,
-                              Function(map) map.GetColumnName)
+            Dim table As Dictionary(Of String, String)
+
+            If Not reversed Then
+                table = fields.ToDictionary(Function(field)
+                                                ' 获取类型定义之中的成员的属性的反射名称
+                                                Return field.member.Name
+                                            End Function,
+                                            Function(map)
+                                                ' 获取该成员上面的自定义属性之中所记录的名称
+                                                Return map.GetColumnName
+                                            End Function)
+            Else
+                table = fields _
+                    .ToDictionary(Function(map)
+                                      ' 获取该成员上面的自定义属性之中所记录的名称
+                                      Return map.GetColumnName
+                                  End Function,
+                                  Function(field)
+                                      ' 获取类型定义之中的成员的属性的反射名称
+                                      Return field.member.Name
+                                  End Function)
+            End If
+
             Return table
         End Function
 
         <Extension>
         Public Function GetColumnName([property] As BindProperty(Of ColumnAttribute)) As String
-            If [property].Field Is Nothing OrElse [property].Field.Name.StringEmpty Then
+            If [property].field Is Nothing OrElse [property].field.Name.StringEmpty Then
                 Return [property].Identity
             Else
-                Return [property].Field.Name
+                Return [property].field.Name
             End If
         End Function
 

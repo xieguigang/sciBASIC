@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbc6a0bde016be2b453cca8330197e55, vs_solutions\dev\vs_PDB\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::994b6174c2f49bd3bfc90d40d4f31545, vs_solutions\dev\vs_PDB\Extensions.vb"
 
     ' Author:
     ' 
@@ -53,4 +53,3 @@ Public Module Extensions
 
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5052009369fdea0a3894d4e8c350f19b, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::30d8ecee757f177cabcb218d0be052d8, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,9 @@
 Imports System.IO
 Imports System.Net
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.HtmlParser
@@ -164,7 +166,14 @@ RETRY:      Return __get(url, headers, proxy, UA)
         Using respStream As Stream = webRequest.GetResponse.GetResponseStream,
             reader As New StreamReader(respStream)
 
-            Dim html As String = reader.ReadToEnd
+            Dim htmlBuilder As New StringBuilder
+            Dim line As Value(Of String) = ""
+
+            Do While Not (line = reader.ReadLine) Is Nothing
+                htmlBuilder.AppendLine(line)
+            Loop
+
+            Dim html As String = htmlBuilder.ToString
             Dim title As String = html.HTMLTitle
 
             ' 判断是否是由于还没有登陆校园网客户端而导致的错误

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6278a45c5ead005eebd8e4a7d2630817, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashList\HashModel.vb"
+﻿#Region "Microsoft.VisualBasic::6865bc93e0c1e1c2ed06c0102388141a, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\HashList\HashModel.vb"
 
     ' Author:
     ' 
@@ -39,6 +39,8 @@
     ' 
     '         Properties: Address
     ' 
+    '         Sub: Assign
+    ' 
     '     Interface IHashHandle
     ' 
     ' 
@@ -46,6 +48,8 @@
     '     Class IHashValue
     ' 
     '         Properties: Address, ID, obj
+    ' 
+    '         Sub: Assign
     ' 
     '     Module AddressedValueExtensions
     ' 

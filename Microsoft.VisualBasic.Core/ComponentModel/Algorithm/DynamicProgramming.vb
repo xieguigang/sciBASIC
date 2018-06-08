@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::448e0d3f3ebd793e44872c41dfc48189, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming.vb"
+﻿#Region "Microsoft.VisualBasic::d517c368cd2f8a39777ef32c2d414697, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming.vb"
 
 ' Author:
 ' 
@@ -34,6 +34,16 @@
 '     Delegate Function
 ' 
 ' 
+'     Delegate Function
+' 
+' 
+'     Class Cost
+' 
+'         Function: DefaultCost, DefaultSubstituteCost
+' 
+' 
+' 
+' 
 ' 
 ' /********************************************************************************/
 
@@ -43,9 +53,6 @@ Imports Microsoft.VisualBasic.Language.Default
 
 Namespace ComponentModel.Algorithm.DynamicProgramming
 
-    Public Delegate Function ISimilarity(Of T)(x As T, y As T) As Double
-    Public Delegate Function Equals(Of T)(a As T, b As T) As Boolean
-
     Public Class Cost(Of T)
 
         Public insert As Func(Of T, Double)
@@ -53,7 +60,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
         Public substitute As Func(Of T, T, Double)
         Public transpose As Func(Of T, T, Double)
 
-        Public Shared Function DefaultSubstituteCost(a As T, b As T, equals As Equals(Of T)) As Double
+        Public Shared Function DefaultSubstituteCost(a As T, b As T, equals As GenericLambda(Of T).IEquals) As Double
             Return If(equals(a, b), 0, 1)
         End Function
 
@@ -65,4 +72,8 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
             }
         End Function
     End Class
+
+    Public Delegate Function ISimilarity(Of T)(x As T, y As T) As Double
+    Public Delegate Function IEquals(Of T)(x As T, y As T) As Boolean
+
 End Namespace

@@ -114,9 +114,9 @@ Namespace ComponentModel.DataSourceModel
                 .LoadMapping(type, mapsAll:=False) _
                 .Values _
                 .OrderBy(Function(field)
-                             Return field.Field.Index
+                             Return field.field.Index
                          End Function) _
-                .ToDictionary(Function(i) i.Field.Index)
+                .ToDictionary(Function(i) i.field.Index)
             Dim str$
             Dim fields As PropertyInfo() = data _
                 .First _

@@ -1,55 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::6e4ff85ede771efe6b352b34c22910b1, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::dae4b5fab322d08be6da737f009262e8, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Iterator.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module IteratorExtensions
-    ' 
-    '         Function: [Next], (+2 Overloads) Indices, Ordinals, Previous, (+2 Overloads) SeqIterator
-    '                   SeqTuple, ValueArray
-    ' 
-    '     Structure SeqValue
-    ' 
-    '         Properties: i, value
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) CompareTo, ToString
-    '         Operators: (+2 Overloads) +, <>, =, (+2 Overloads) Mod
-    ' 
-    '     Interface IIterator
-    ' 
-    '         Function: GetEnumerator, IGetEnumerator
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module IteratorExtensions
+' 
+'         Function: [Next], (+2 Overloads) Indices, Ordinals, Previous, (+2 Overloads) SeqIterator
+'                   (+2 Overloads) SeqTuple, ValueArray
+' 
+'     Structure SeqValue
+' 
+'         Properties: i, value
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) CompareTo, ToString
+' 
+'         Sub: Assign
+' 
+'         Operators: -, (+2 Overloads) +, <>, =, (+2 Overloads) Mod
+' 
+'     Interface IIterator
+' 
+'         Function: GetEnumerator, IGetEnumerator
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,6 +61,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Linq
@@ -92,17 +97,21 @@ Namespace Linq
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Iterator Function SeqTuple(Of T1, T2)(tuple As (a As IEnumerable(Of T1), b As IEnumerable(Of T2)), Optional offset% = 0) As IEnumerable(Of SeqValue(Of (a As T1, b As T2)))
-            Dim x As T1() = tuple.a.ToArray
-            Dim y As T2() = tuple.b.ToArray
+        Public Function SeqTuple(Of T1, T2)(tuple As (a As IEnumerable(Of T1), b As IEnumerable(Of T2)), Optional offset% = 0) As IEnumerable(Of SeqValue(Of (a As T1, b As T2)))
+            Return (tuple.a.ToArray, tuple.b.ToArray).SeqTuple(offset)
+        End Function
+
+        <Extension>
+        Public Iterator Function SeqTuple(Of T1, T2)(tuple As (x As T1(), y As T2()), Optional offset% = 0) As IEnumerable(Of SeqValue(Of (a As T1, b As T2)))
             Dim value As (T1, T2)
-            Dim length% = Math.Max(x.Length, y.Length)
+            Dim length% = Math.Max(tuple.x.Length, tuple.y.Length)
 
             For i As Integer = 0 To length - 1
                 value = (
-                    x.ElementAtOrDefault(i),
-                    y.ElementAtOrDefault(i)
+                    tuple.x.ElementAtOrDefault(i),
+                    tuple.y.ElementAtOrDefault(i)
                 )
                 Yield New SeqValue(Of (T1, T2))(i + offset, value)
             Next
@@ -138,7 +147,7 @@ Namespace Linq
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ValueArray(Of T)(source As IEnumerable(Of Value(Of T).IValueOf)) As T()
-            Return source.Select(Function(o) o.value).ToArray
+            Return source.Select(Function(o) o.Value).ToArray
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -171,6 +180,7 @@ Namespace Linq
         Implements IComparable(Of Integer)
         Implements IComparable
         Implements Value(Of T).IValueOf
+        Implements IsEmpty
 
         ''' <summary>
         ''' The position of this object value in the original sequence.
@@ -182,6 +192,12 @@ Namespace Linq
         ''' </summary>
         ''' <returns></returns>
         Public Property value As T Implements Value(Of T).IValueOf.Value
+
+        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            Get
+                Return i = 0 AndAlso value Is Nothing
+            End Get
+        End Property
 
         Sub New(i%, x As T)
             Me.i = i

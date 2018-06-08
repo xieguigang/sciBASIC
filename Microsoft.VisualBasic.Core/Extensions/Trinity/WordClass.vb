@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6eb27063b76845a789acddbdcea40a92, Microsoft.VisualBasic.Core\Extensions\Trinity\WordClass.vb"
+﻿#Region "Microsoft.VisualBasic::5723dc4e4812a32ed1a2cb43dabb24e9, Microsoft.VisualBasic.Core\Extensions\Trinity\WordClass.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.ComponentModel
 

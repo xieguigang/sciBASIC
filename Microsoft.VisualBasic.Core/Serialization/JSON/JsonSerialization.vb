@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef78107edb2e0a31ea6f6eaf61c26b9a, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::e5dbeaec1a44c005764fd668cd6e4c81, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -190,7 +190,7 @@ Namespace Serialization.JSON
                 }
                 Dim ser As New DataContractJsonSerializer(type, settings)
                 Dim de As Func(Of Object) = Function() ser.ReadObject(MS)
-                Dim obj = __innerTry(de, $"Incorrect JSON string format => >>>{json}<<<", throwEx, exception)
+                Dim obj = TryCatch(de, $"Incorrect JSON string format => >>>{json}<<<", throwEx, exception)
                 Return obj
             End Using
         End Function

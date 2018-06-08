@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66294ad26695fc8de6d4aa3bd8878c79, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\Text\Grep.vb"
+﻿#Region "Microsoft.VisualBasic::d43fd89abf03a6b7bb7ee5c49bae1c92, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\Text\Grep.vb"
 
     ' Author:
     ' 

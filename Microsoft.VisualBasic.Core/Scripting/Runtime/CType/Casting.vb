@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64fa4cf5507e5a9129b4eed249b1d641, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::db6ceb32e039b6697df305bab8374184, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
 
     ' Author:
     ' 
@@ -33,12 +33,12 @@
 
     '     Module Casting
     ' 
-    '         Function: (+3 Overloads) [As], CastChar, CastCharArray, CastCommandLine, CastDate
-    '                   CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage, CastInteger
-    '                   CastIPEndPoint, CastLogFile, CastLong, CastProcess, CastRegexOptions
-    '                   CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser, FloatSizeParser
-    '                   NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble, ScriptValue
-    '                   SizeParser
+    '         Function: (+3 Overloads) [As], AsBaseType, CastChar, CastCharArray, CastCommandLine
+    '                   CastDate, CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage
+    '                   CastInteger, CastIPEndPoint, CastLogFile, CastLong, CastProcess
+    '                   CastRegexOptions, CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser
+    '                   FloatSizeParser, NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble
+    '                   ScriptValue, SizeParser
     ' 
     ' 
     ' /********************************************************************************/
@@ -160,19 +160,25 @@ Namespace Scripting.Runtime
             End If
         End Function
 
-        ' 因为和向量的As类型转换有冲突，所以在这里移除下面的这个As拓展
-        '''' <summary>
-        '''' ``DirectCast(obj, T)``
-        '''' </summary>
-        '''' <typeparam name="T"></typeparam>
-        '''' <param name="obj"></param>
-        '''' <returns></returns>
-        '<Extension> Public Function [As](Of T)(obj) As T
-        '    If obj Is Nothing Then
-        '        Return Nothing
-        '    End If
-        '    Return DirectCast(obj, T)
-        'End Function
+        ''' <summary>
+        ''' ``DirectCast(obj, T)``. 这个函数主要是为了解决Class类型之间的继承类型的转换，例如子类型向基础类型转换
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 可能会和向量的As类型转换有冲突
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsBaseType(Of TIn As Class, T)(obj As TIn) As T
+            If obj Is Nothing Then
+                Return Nothing
+            Else
+                Return DirectCast(CObj(obj), T)
+            End If
+        End Function
 
         ''' <summary>
         ''' Cast array type

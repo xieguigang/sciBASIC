@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16733df755f642b827c77f884b4bfdb6, Data_science\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::38c93fa3e02b272ea5079d188104b354, Data_science\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     ' Module Extensions
     ' 
-    '     Function: Add, CreateGraph, DefaultSteps, Grid, Reverse
+    '     Function: Add, BacktrackingRoot, CreateGraph, DefaultSteps, Grid
+    '               Reverse, VisitTree
     ' 
     ' /********************************************************************************/
 
@@ -48,6 +49,40 @@ Imports Microsoft.VisualBasic.Linq
 
 Public Module Extensions
 
+    ''' <summary>
+    ''' Visit tree node by a given path token
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="tree"></param>
+    ''' <param name="path">Collection of <see cref="Tree(Of T).Label"/></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function VisitTree(Of T)(tree As Tree(Of T), path As IEnumerable(Of String)) As Tree(Of T)
+        Dim node As Tree(Of T) = tree
+
+        With path.ToArray
+            For Each name As String In .ByRef
+                ' 如果路径不存在是会报出键名没有找到的错误的
+                If Not node.Childs.ContainsKey(name) Then
+                    Throw New EntryPointNotFoundException("entry=" & name & $" on path: {path.JoinBy("/")}")
+                Else
+                    node = node.Childs(name)
+                End If
+            Next
+        End With
+
+        Return node
+    End Function
+
+    <Extension>
+    Public Function BacktrackingRoot(Of T)(tree As Tree(Of T)) As Tree(Of T)
+        Do While Not tree.IsRoot
+            tree = tree.Parent
+        Loop
+
+        Return tree
+    End Function
+
     <Extension>
     Public Function CreateGraph(Of T)(tree As Tree(Of T)) As Graph
         Return New Graph().Add(tree)
@@ -56,7 +91,7 @@ Public Module Extensions
     <Extension>
     Private Function Add(Of T)(g As Graph, tree As Tree(Of T)) As Graph
         Dim childs = tree _
-            .Childs _
+            .EnumerateChilds _
             .SafeQuery _
             .Where(Function(c) Not c Is Nothing)
 

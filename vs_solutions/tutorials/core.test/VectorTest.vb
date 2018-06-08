@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::98809a4610d68f722cfb481d3b2688a3, vs_solutions\tutorials\core.test\VectorTest.vb"
+﻿#Region "Microsoft.VisualBasic::664005568a5e27baa0e81f411d0e585f, vs_solutions\tutorials\core.test\VectorTest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module VectorTest
     ' 
-    '     Sub: Main
+    '     Sub: Main, testssss
     '     Structure fdddd
     ' 
     '         Operators: -, *, \, ^, (+2 Overloads) And

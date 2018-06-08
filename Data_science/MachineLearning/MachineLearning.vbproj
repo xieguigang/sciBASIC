@@ -158,7 +158,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x86\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MachineLearning.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -290,6 +290,7 @@
     <Compile Include="Darwinism\DifferentialEvolution.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Fitness.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb" />
+    <Compile Include="Darwinism\GeneticAlgorithm\Helper\MemoryDump.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\FitnessHelper.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\ListenerHelper.vb" />

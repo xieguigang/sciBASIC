@@ -228,8 +228,11 @@ Public Module RegexExtensions
     ''' <param name="pattern"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function IsPattern(s As String, pattern As String, Optional opt As RegexOptions = RegexICSng) As Boolean
-        Return Regex.Match(s, pattern, opt).Value = s
+    Public Function IsPattern(s$, pattern$, Optional opt As RegexOptions = RegexICSng) As Boolean
+        ' 2018-6-1 因为空字符串肯定无法匹配上目标模式
+        ' 所以match函数总回返回空字符串
+        ' 由于s参数本身就是空字符串，所以会造成空字符串可以被任意模式完全匹配的bug
+        Return Not s.StringEmpty AndAlso Regex.Match(s, pattern, opt).Value = s
     End Function
 
     ''' <summary>
@@ -237,7 +240,7 @@ Public Module RegexExtensions
     ''' </summary>
     ''' <param name="raw$"></param>
     ''' <returns></returns>
-    <Extension> Public Function PythonRawRegexp(raw$) As Regex
+    <Extension> Public Function PythonRawRegexp(raw As String) As Regex
         Return New Regex(raw, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace)
     End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc2a951ddc6febfaf1e2c7fa2e2e29cd, Data_science\Mathematica\Plot\Plots\3D\PieChart3D.vb"
+﻿#Region "Microsoft.VisualBasic::58cce4f77fd62586549bb3eb6458e494, Data_science\Mathematica\Plot\Plots\3D\PieChart3D.vb"
 
     ' Author:
     ' 
@@ -43,6 +43,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.Fractions
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
@@ -64,21 +65,22 @@ Namespace Plot3D
         End Function
 
         <Extension>
-        Public Function Plot3D(data As IEnumerable(Of Fractions), camera As Camera, Optional valueLabel As ValueLabels = ValueLabels.Percentage) As GraphicsData
+        Public Function Plot3D(data As IEnumerable(Of FractionData), camera As Camera, Optional valueLabel As ValueLabels = ValueLabels.Percentage) As GraphicsData
             Dim start As New float
             Dim sweep As New float
-            Dim alpha As Double, pt As PointF
+            Dim alpha!
+            Dim pt As PointF
             Dim centra As Point3D = camera.screen.GetCenter
             Dim r! = 2.0!
             Dim label$
             Dim pie As Pie
             Dim pieChart As New List(Of Surface)
 
-            For Each x As Fractions In data
+            For Each x As FractionData In data
                 pie = New Pie(centra, r, (start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - sweep.Value, sweep, 20, 1)
                 pieChart += pie.Model3D(x.Color)
                 alpha = (+start) - (+sweep / 2)
-                pt = (r / 1.5).ToPoint(alpha)  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                pt = (r / 1.5, alpha).ToCartesianPoint()  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
                 pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
                 label = x.GetValueLabel(valueLabel)
             Next

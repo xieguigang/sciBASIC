@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0355c4295462c52aa6c8fbb7790340a9, Data_science\DataMining\DynamicProgramming\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::6852125b1f51ea3a4df953ff7556cf72, Data_science\DataMining\DynamicProgramming\test\Module1.vb"
 
     ' Author:
     ' 
@@ -83,4 +83,3 @@ Module Module1
     End Sub
 
 End Module
-

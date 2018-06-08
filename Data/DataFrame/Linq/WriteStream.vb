@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::641cc93a7a03bb5734bcd4e8c77a1b56, Data\DataFrame\Linq\WriteStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class WriteStream
-    ' 
-    '         Properties: BaseStream, IsMetaIndexed
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: [Ctype], (+2 Overloads) Flush, ToArray, ToString
-    ' 
-    '         Sub: (+2 Overloads) Dispose, Flush
-    '         Class __ctypeTransform
-    ' 
-    '             Function: ToString
-    ' 
-    '             Sub: WriteArray, WriteObj
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class WriteStream
+' 
+'         Properties: BaseStream, IsMetaIndexed
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: [Ctype], (+2 Overloads) Flush, ToArray, ToString
+' 
+'         Sub: (+2 Overloads) Dispose, Flush
+'         Class __ctypeTransform
+' 
+'             Function: ToString
+' 
+'             Sub: WriteArray, WriteObj
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Option Strict Off
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 
@@ -69,18 +70,20 @@ Namespace IO.Linq
     Public Class WriteStream(Of T As Class)
         Implements IDisposable
 
-        ReadOnly handle As String
+        ReadOnly handle$
 
         ''' <summary>
         ''' File system object handle for write csv row data.
         ''' </summary>
         ReadOnly _fileIO As StreamWriter
+
         ''' <summary>
         ''' Schema for creates row data from the inputs object.
         ''' </summary>
-        ReadOnly RowWriter As RowWriter
+        ReadOnly rowWriter As RowWriter
 
         Public ReadOnly Property BaseStream As StreamWriter
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _fileIO
             End Get
@@ -90,10 +93,10 @@ Namespace IO.Linq
         ''' 
         ''' </summary>
         ''' <param name="path"></param>
-        ''' <param name="Explicit">Schema parsing of the object strictly?</param>
+        ''' <param name="explicit">Schema parsing of the object strictly?</param>
         ''' <param name="metaKeys">预设的标题头部</param>
         Sub New(path As String,
-                Optional Explicit As Boolean = False,
+                Optional explicit As Boolean = False,
                 Optional metaBlank As String = "",
                 Optional metaKeys As String() = Nothing,
                 Optional maps As Dictionary(Of String, String) = Nothing,
@@ -102,12 +105,10 @@ Namespace IO.Linq
             Dim typeDef As Type = GetType(T)
             Dim Schema As SchemaProvider =
                 SchemaProvider _
-                .CreateObject(typeDef, Explicit) _
+                .CreateObject(typeDef, explicit) _
                 .CopyReadDataFromObject
 
-            Call path.ParentPath.MkDIR
-
-            RowWriter = New RowWriter(Schema, metaBlank, layout)
+            rowWriter = New RowWriter(Schema, metaBlank, layout)
             handle = FileIO.FileSystem.GetFileInfo(path).FullName
 
             Call "".SaveTo(handle)
@@ -122,9 +123,9 @@ Namespace IO.Linq
                 .AutoFlush = True,
                 .NewLine = vbLf
             }
-            RowWriter.__cachedIndex = metaKeys
+            rowWriter.__cachedIndex = metaKeys
 
-            Dim title As RowObject = RowWriter.GetRowNames(maps)
+            Dim title As RowObject = rowWriter.GetRowNames(maps)
 
             If Not metaKeys.IsNullOrEmpty Then
                 title = New RowObject(title.Join(metaKeys))
@@ -144,7 +145,7 @@ Namespace IO.Linq
         ''' <returns></returns>
         Public ReadOnly Property IsMetaIndexed As Boolean
             Get
-                Return RowWriter.IsMetaIndexed
+                Return rowWriter.IsMetaIndexed
             End Get
         End Property
 
@@ -159,14 +160,13 @@ Namespace IO.Linq
                 Return True  ' 要不然会出现空行，会造成误解的，所以要在这里提前结束
             End If
 
-            Dim LQuery As String() = LinqAPI.Exec(Of String) <=
+            Dim LQuery As String() = LinqAPI.Exec(Of String) _
  _
-                From line As T
-                In source.AsParallel
-                Where Not line Is Nothing  ' 忽略掉空值对象，否则会生成空行
-                Let CreatedRow As RowObject =
-                    RowWriter.ToRow(line)
-                Select CreatedRow.AsLine  ' 对象到数据的投影
+                () <= From line As T
+                      In source.AsParallel
+                      Where Not line Is Nothing  ' 忽略掉空值对象，否则会生成空行
+                      Let CreatedRow As RowObject = rowWriter.ToRow(line)
+                      Select CreatedRow.AsLine  ' 对象到数据的投影
 
             If join Then
                 Call _fileIO.WriteLine(String.Join(_fileIO.NewLine, LQuery))
@@ -182,14 +182,14 @@ Namespace IO.Linq
         Public Function Flush(obj As T) As Boolean
             If obj Is Nothing Then
                 Return False
+            Else
+                Call _fileIO.WriteLine(rowWriter.ToRow(obj).AsLine)
             End If
-
-            Dim line As String = RowWriter.ToRow(obj).AsLine
-            Call _fileIO.WriteLine(line)
 
             Return True
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Flush()
             Call _fileIO.Flush()
         End Sub

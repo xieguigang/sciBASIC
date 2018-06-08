@@ -90,6 +90,18 @@ Namespace Scripting
             {"reverse", AddressOf TextGrepScriptEngine.Reverse}
         }
 
+        Public Shared Function EnsureNotEmpty(ptr As TextGrepMethod) As TextGrepMethod
+            Return Function(str) As String
+                       Dim gs$ = ptr(str)
+
+                       If gs.StringEmpty Then
+                           Return str
+                       Else
+                           Return gs
+                       End If
+                   End Function
+        End Function
+
         ''' <summary>
         ''' Source,Script,ReturnValue
         ''' </summary>

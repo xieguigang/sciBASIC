@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::806df24a72c2d82c573948ee8e9e9101, Microsoft.VisualBasic.Core\Extensions\IO\CopyDirectory.vb"
+﻿#Region "Microsoft.VisualBasic::b62bde2bf71d64669151efc2987e6471, Microsoft.VisualBasic.Core\Extensions\IO\CopyDirectory.vb"
 
     ' Author:
     ' 
@@ -58,18 +58,24 @@ Namespace FileIO
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' 这个函数会在这个模块内被递归调用
         ''' </summary>
         ''' <param name="src$"></param>
         ''' <param name="destination$"></param>
-        Public Sub Copy(src$, destination$)
+        Public Sub Copy(src$, destination$, Optional includeSrc As Boolean = True)
             Dim directory As New DirectoryInfo(src)
 
-            If FileIO.Directory.Exists(Path.Combine(destination, directory.Name)) Then
-                Call $"Directory '{directory.Name}' already exists in '{destination}'".Warning
-            End If
+            If includeSrc Then
+                If FileIO.Directory.Exists(Path.Combine(destination, directory.Name)) Then
+                    Call $"Directory '{directory.Name}' already exists in '{destination}'".Warning
+                End If
 
-            destination = CreateDestinationFolderAndReturnNewPath(src, destination)
+                destination = CreateDestinationFolderAndReturnNewPath(src, destination)
+            Else
+                If FileIO.Directory.Exists(destination) Then
+                    Call $"Directory '{destination.DirectoryName}' already exists in '{destination}'".Warning
+                End If
+            End If
 
             Call CopyFilesToTargetDirectory(src, destination)
             Call CopySubDirectoriesWithFiles(src, destination)
@@ -99,7 +105,7 @@ Namespace FileIO
 
         Private Sub CopySubDirectoriesWithFiles(pathToSourceFolder As String, pathToDestinationFolder As String)
             For Each subDirectory As String In IO.Directory.GetDirectories(pathToSourceFolder)
-                Copy(subDirectory, pathToDestinationFolder)
+                Copy(subDirectory, pathToDestinationFolder, includeSrc:=True)
             Next
         End Sub
     End Class

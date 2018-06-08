@@ -138,6 +138,11 @@ Namespace Language.Default
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(str As String) As DefaultString
+            Return New DefaultString(str)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator IsTrue(str As DefaultString) As Boolean
             Return CType(str, Boolean)
         End Operator

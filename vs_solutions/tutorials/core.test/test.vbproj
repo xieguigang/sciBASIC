@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{066C1C60-28CF-4A04-94B0-0CDD161482AB}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>TestProject.Module1</StartupObject>
+    <StartupObject>TestProject.XmlBugTest</StartupObject>
     <RootNamespace>TestProject</RootNamespace>
     <AssemblyName>TestProject</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -100,6 +100,8 @@
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -120,6 +122,7 @@
   <ItemGroup>
     <Compile Include="devToolTest.vb" />
     <Compile Include="Module2.vb" />
+    <Compile Include="XmlBugTest.vb" />
     <Compile Include="toStringTest.vb" />
     <Compile Include="treeTest.vb" />
     <Compile Include="TableTest.vb" />
@@ -175,6 +178,9 @@
       <Project>{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

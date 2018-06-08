@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::957b2e1b536f5cd622a3e46659a40143, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::2216b94294077ebc4cafff613ec82cb8, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -82,6 +82,10 @@ Namespace CommandLine.InteropService
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' 通过应用程序的可执行文件路径来构建命令行的交互对象
+        ''' </summary>
+        ''' <param name="app"></param>
         Sub New(app As String)
             _executableAssembly = app
         End Sub
@@ -141,8 +145,8 @@ Namespace CommandLine.InteropService
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function RunProgram(args$) As IIORedirectAbstract
-            Return App.Shell(_executableAssembly, args, CLR:=False)
+        Public Function RunProgram(args$, Optional stdin$ = Nothing) As IIORedirectAbstract
+            Return App.Shell(_executableAssembly, args, CLR:=False, stdin:=stdin)
         End Function
 
         Public Overrides Function ToString() As String

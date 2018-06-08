@@ -64,16 +64,28 @@ Namespace Text.Xml.Linq
         ''' using internally XDocument.Load to parse whole XML at once
         ''' </remarks>
         <Extension>
-        Public Function LoadXmlDocument(pathOrDoc$) As XmlDocument
-            Dim XmlDoc As New XmlDocument()
+        Public Function LoadXmlDocument(pathOrDoc$, Optional preprocess As Func(Of String, String) = Nothing) As XmlDocument
+            Dim xmlDoc As New XmlDocument()
+            Dim doc$
 
             If pathOrDoc.FileExists Then
-                Call XmlDoc.Load(pathOrDoc)
+                If Not preprocess Is Nothing Then
+                    doc = preprocess(pathOrDoc.ReadAllText)
+                    xmlDoc.LoadXml(doc)
+                Else
+                    Call xmlDoc.Load(pathOrDoc)
+                End If
             Else
-                Call XmlDoc.LoadXml(pathOrDoc)
+                If Not preprocess Is Nothing Then
+                    doc = preprocess(pathOrDoc)
+                Else
+                    doc = pathOrDoc
+                End If
+
+                Call xmlDoc.LoadXml(doc)
             End If
 
-            Return XmlDoc
+            Return xmlDoc
         End Function
 
         ''' <summary>

@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::1cd50f12a89b734474066be79f74e21a, Microsoft.VisualBasic.Core\Text\StringSimilarity\Similarity.vb"
+﻿#Region "Microsoft.VisualBasic::d947932cb5a26ac93c2116ef99dc82e9, Microsoft.VisualBasic.Core\Text\StringSimilarity\Similarity.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Delegate Function
-' 
-' 
-'     Module Evaluations
-' 
-'         Function: Evaluate, tokenEquals, tokenEqualsIgnoreCase
-'         Delegate Function
-' 
-'             Function: (+4 Overloads) IsOrdered, LevenshteinEvaluate, StringSelection, (+3 Overloads) TokenOrders
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Delegate Function
+    ' 
+    ' 
+    '     Module Evaluations
+    ' 
+    '         Function: Evaluate, tokenEquals, tokenEqualsIgnoreCase
+    '         Delegate Function
+    ' 
+    '             Function: (+4 Overloads) IsOrdered, LevenshteinEvaluate, StringSelection, (+3 Overloads) TokenOrders
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
+Imports Microsoft.VisualBasic.GenericLambda(Of String)
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Text.Levenshtein
@@ -65,7 +65,7 @@ Namespace Text.Similarity
 
     Public Module Evaluations
 
-        ReadOnly ignoreCase As New DefaultValue(Of Equals(Of String))(AddressOf tokenEqualsIgnoreCase)
+        ReadOnly ignoreCase As New DefaultValue(Of IEquals)(AddressOf tokenEqualsIgnoreCase)
 
         ''' <summary>
         ''' 两个字符串之间是通过单词的排布的相似度来比较相似度的
@@ -85,7 +85,7 @@ Namespace Text.Similarity
                 Return 1
             End If
 
-            Dim tokenEquals As Equals(Of String) = New Equals(Of String)(AddressOf Evaluations.tokenEquals) Or Evaluations.ignoreCase.When(ignoreCase)
+            Dim tokenEquals As IEquals = New IEquals(AddressOf Evaluations.tokenEquals) Or Evaluations.ignoreCase.When(ignoreCase)
 
             dist = LevenshteinDistance.ComputeDistance(
                 s1.Split,

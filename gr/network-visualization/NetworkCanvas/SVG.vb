@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bbe2c548ae75d41c8224a91a8cb7fd1, gr\network-visualization\NetworkCanvas\SVG.vb"
+﻿#Region "Microsoft.VisualBasic::e0bea63a5303a0284e283fa9c046f405, gr\network-visualization\NetworkCanvas\SVG.vb"
 
     ' Author:
     ' 
@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Imaging.d3js.SVG.CSS
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.SVG
+Imports Microsoft.VisualBasic.Imaging.SVG.CSS
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Markup.HTML

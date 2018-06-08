@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::742b3eb0d9becea24097429ae366bf17, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\AprioriRules\Algorithm\Entities\Transaction.vb"
+﻿#Region "Microsoft.VisualBasic::3145582edf54a2b53a31cacd2168be8e, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\AprioriRules\Algorithm\Entities\Transaction.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '     Module TransactionExtensions
     ' 
-    '         Function: AllItems, (+2 Overloads) BuildTransactions
+    '         Function: AllItems, BuildTransactions
     ' 
     ' 
     ' /********************************************************************************/

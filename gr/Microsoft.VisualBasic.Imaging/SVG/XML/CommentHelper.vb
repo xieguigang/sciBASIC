@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83bde54d14c29185050b92504f0c3587, gr\Microsoft.VisualBasic.Imaging\SVG\XML\CommentHelper.vb"
+﻿#Region "Microsoft.VisualBasic::de11401d5f361830e4c906c74a52a0ca, gr\Microsoft.VisualBasic.Imaging\SVG\XML\CommentHelper.vb"
 
     ' Author:
     ' 

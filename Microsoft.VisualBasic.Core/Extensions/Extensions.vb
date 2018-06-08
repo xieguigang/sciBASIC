@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7386b09bb639ca6f66861f62e60be45b, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c52857d123c7511ea60e7080d9558f2c, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -36,22 +36,22 @@
     ' 
     ' Module Extensions
     ' 
-    '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, Append
-    '               (+2 Overloads) Average, CheckDuplicated, Constrain, DataCounts, DateToString
-    '               DriverRun, ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching
-    '               GetHexInteger, (+2 Overloads) GetItem, (+2 Overloads) GetLength, IndexOf, InsertOrUpdate
-    '               Invoke, InvokeSet, Is_NA_UHandle, IsNaNImaginary, (+6 Overloads) IsNullOrEmpty
-    '               (+4 Overloads) Join, (+2 Overloads) JoinBy, Keys, KeysJson, Log2
-    '               (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5
-    '               ModifyValue, NormalizeXMLString, NotNull, (+2 Overloads) Offset, ParseDateTime
-    '               Range, Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast
-    '               RunDriver, SaveAsTabularMapping, Second, SelectFile, SeqRandom
-    '               (+2 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles
-    '               Split, SplitIterator, (+2 Overloads) SplitMV, StdError, TakeRandomly
-    '               Takes, ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray
-    '               ToVector, (+3 Overloads) TrimNull, (+2 Overloads) TryGetValue, Unlist, WriteAddress
+    '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, (+2 Overloads) Average
+    '               CheckDuplicated, Constrain, DataCounts, DateToString, DriverRun
+    '               ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching, GetHexInteger
+    '               (+2 Overloads) GetItem, (+2 Overloads) GetLength, IndexOf, InsertOrUpdate, Invoke
+    '               InvokeSet, Is_NA_UHandle, IsNaNImaginary, (+6 Overloads) IsNullOrEmpty, (+4 Overloads) Join
+    '               (+2 Overloads) JoinBy, Keys, KeysJson, Log2, (+2 Overloads) LongSeq
+    '               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
+    '               NormalizeXMLString, NotNull, (+2 Overloads) Offset, ParseDateTime, Range
+    '               Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver
+    '               SaveAsTabularMapping, Second, SelectFile, SeqRandom, (+2 Overloads) Sequence
+    '               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Split
+    '               SplitIterator, (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes
+    '               ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray, ToVector
+    '               (+3 Overloads) TrimNull, (+2 Overloads) TryGetValue, Unlist, WriteAddress
     ' 
-    '     Sub: (+5 Overloads) Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
+    '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
     '          SwapItem, SwapWith
     ' 
     ' 
@@ -244,6 +244,11 @@ Public Module Extensions
         Return Nothing
     End Function
 
+    ''' <summary>
+    ''' Get target string's md5 hash code
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function MD5(s$) As String
         Return s.GetMd5Hash
@@ -466,21 +471,26 @@ Public Module Extensions
                                                              index As TKey,
                                                              Optional [default] As TValue = Nothing,
                                                              <CallerMemberName> Optional trace$ = Nothing) As TValue
+        ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
+        ' 直接返回默认值
         If table Is Nothing Then
 #If DEBUG Then
-            Call PrintException("hash table is nothing!")
+            Call PrintException("Hash_table is nothing!")
 #End If
             Return [default]
-        End If
-
-        If table.ContainsKey(index) Then
-            Return table(index)
-        Else
+        ElseIf index Is Nothing Then
+#If DEBUG Then
+            Call PrintException("Index key is nothing!")
+#End If
+            Return [default]
+        ElseIf Not table.ContainsKey(index) Then
 #If DEBUG Then
             Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
 #End If
             Return [default]
         End If
+
+        Return table(index)
     End Function
 
     <Extension> Public Function TryGetValue(Of TKey, TValue, TProp)(hash As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
@@ -1237,6 +1247,13 @@ Public Module Extensions
             Double.IsPositiveInfinity(n)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function IsNaNImaginary(n As Single) As Boolean
+        Return Single.IsNaN(n) OrElse
+            Single.IsInfinity(n) OrElse
+            Single.IsNegativeInfinity(n) OrElse
+            Single.IsPositiveInfinity(n)
+    End Function
 #If FRAMEWORD_CORE Then
 
     ''' <summary>
@@ -1658,13 +1675,20 @@ Public Module Extensions
         Dim i As Integer = -1
 
         For Each x As T In source
-            i += 1   ' 假若是存在元素的，则i的值会为零
-            Return False  ' If is not empty, then this For loop will be used.
+            ' 假若是存在元素的，则i的值会为零
+            i += 1
+            ' If is not empty, then this For loop will be used.
+            Return False
         Next
 
         ' 由于没有元素，所以For循环没有进行，i变量的值没有发生变化
-        If i = -1 Then ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，主需要查看第一个元素而不是便利整个Linq查询枚举，从而提高了效率
-            Return True  ' Due to the reason of source is empty, no elements, so that i value is not changed as the For loop didn't used.
+        ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，
+        ' 主需要查看第一个元素而不是便利整个Linq查询枚举， 从而提高了效率
+        If i = -1 Then
+            ' Due to the reason of source is empty, no elements, 
+            ' so that i value Is Not changed as the For loop 
+            ' didn 't used.
+            Return True
         Else
             Return False
         End If

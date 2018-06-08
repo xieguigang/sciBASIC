@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::628e2b6e0dfac287848c73edfe6d5fa8, vs_solutions\tutorials\core.test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::5e8d1f4cbf48d04d3aa303a224d63a8a, vs_solutions\tutorials\core.test\Module2.vb"
 
     ' Author:
     ' 
@@ -72,4 +72,3 @@ Module Module2
         Return Nothing
     End Function
 End Module
-

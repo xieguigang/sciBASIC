@@ -149,6 +149,11 @@ Namespace Language
 
 #Region "Helper for ``With``"
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Self(Of T)() As Func(Of T, T)
+            Return AddressOf [ByRef]
+        End Function
+
         ''' <summary>
         ''' Extension method for VisualBasic ``With`` anonymous variable syntax source reference helper
         ''' </summary>
@@ -178,6 +183,23 @@ Namespace Language
         <Extension>
         Public Function AsVector(strings As IEnumerable(Of String)) As StringVector
             Return New StringVector(strings)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function list(ParamArray args As ArgumentReference()) As Dictionary(Of String, Object)
+            Return args.ToDictionary(Function(a) a.name, Function(a) a.value)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsNumeric(list As Dictionary(Of String, Object)) As Dictionary(Of String, Double)
+            Return list.ToDictionary(Function(t) t.Key, Function(t) CDbl(t.Value))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsString(list As Dictionary(Of String, Object)) As Dictionary(Of String, String)
+            Return list.ToDictionary(Function(t) t.Key, Function(t) Scripting.ToString(t.Value))
         End Function
     End Module
 End Namespace

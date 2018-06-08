@@ -1,55 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::28d79c9a315dcebdf9f61f5c995d5405, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\Levenshtein\LevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::9a756ee4a6efdcb854d399d517b8a904, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\Levenshtein\LevenshteinDistance.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module LevenshteinDistance
-' 
-'         Function: __createTable, __int32Equals
-'         Delegate Function
-' 
-'             Function: (+2 Overloads) ComputeDistance, CreateTable, GetVisulization, SaveMatch
-'         Structure Cost
-' 
-'             Function: DefaultCost, DefaultSubstituteCost
-' 
-'         Delegate Function
-' 
-'             Function: __computeRoute, (+2 Overloads) ComputeDistance, Similarity
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Module LevenshteinDistance
+    ' 
+    '         Function: __createTable, __int32Equals, (+2 Overloads) ComputeDistance, CreateTable, GetVisulization
+    '                   SaveMatch
+    '         Delegate Function
+    ' 
+    '             Function: __computeRoute, (+2 Overloads) ComputeDistance, Similarity
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -107,7 +99,7 @@ Vladimir I",
         ''' <param name="cost"></param>
         ''' <param name="equals">泛型化的元素等价性的比较方法</param>
         ''' <returns></returns>
-        Public Function CreateTable(Of T)(reference As T(), hypotheses As T(), cost As Cost(Of T), equals As Equals(Of T)) As Double(,)
+        Public Function CreateTable(Of T)(reference As T(), hypotheses As T(), cost As Cost(Of T), equals As GenericLambda(Of T).IEquals) As Double(,)
             Dim distTable As Double(,) = New Double(reference.Length, hypotheses.Length) {}
 
             For i As Integer = 0 To reference.Length - 1
@@ -152,7 +144,7 @@ Vladimir I",
         ''' <param name="equals"></param>
         ''' <param name="cost"></param>
         ''' <returns></returns>
-        Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(), equals As Equals(Of T), Optional cost As Double = 0.7) As Double
+        Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(), equals As GenericLambda(Of T).IEquals, Optional cost As Double = 0.7) As Double
             If hypotheses Is Nothing Then hypotheses = New T() {}
             If reference Is Nothing Then reference = New T() {}
 
@@ -172,7 +164,7 @@ Vladimir I",
         ''' <param name="asChar">这个只是用于进行显示输出的</param>
         ''' <param name="cost"></param>
         ''' <returns></returns>
-        Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(), equals As Equals(Of T), asChar As ToChar(Of T), Optional cost As Double = 0.7) As DistResult
+        Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(), equals As GenericLambda(Of T).IEquals, asChar As ToChar(Of T), Optional cost As Double = 0.7) As DistResult
             If hypotheses Is Nothing Then hypotheses = New T() {}
             If reference Is Nothing Then reference = New T() {}
 

@@ -451,7 +451,7 @@ Namespace Language
         ''' <param name="list"></param>
         ''' <param name="index"></param>
         ''' <returns></returns>
-        Public Shared Operator -(list As List(Of T), index As Integer) As List(Of T)
+        Public Shared Operator -(list As List(Of T), index%) As List(Of T)
             Call list.RemoveAt(index)
             Return list
         End Operator

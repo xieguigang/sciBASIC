@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16198bd10b3c29360bb8ca688db23a57, Data_science\Graph\Model\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::5da2667554f7cb39d33e0deadbaf50fc, Data_science\Graph\Model\Tree.vb"
 
     ' Author:
     ' 
@@ -35,31 +35,46 @@
     ' 
     '     Properties: Data
     ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
     ' Class AbstractTree
     ' 
     '     Properties: Childs, Count, IsLeaf, IsRoot, Parent
     '                 QualifyName
     ' 
-    '     Function: (+2 Overloads) CountLeafs, ToString
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: (+2 Overloads) CountLeafs, EnumerateChilds, ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
-''' Tree node with data.(����ֱ�ӱ�ʹ�õ�����������)
+''' Tree node with data..(可以直接被使用的树对象类型)
 ''' </summary>
 ''' <typeparam name="T"></typeparam>
 Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T))
+
     Public Property Data As T
+
+    Sub New(Optional qualDeli$ = ".")
+        MyBase.New(qualDeli)
+    End Sub
 End Class
 
 Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
 
-    Public Property Childs As List(Of T)
+    ''' <summary>
+    ''' Childs table, key is the property <see cref="Vertex.Label"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property Childs As Dictionary(Of String, T)
     Public Property Parent As T
+
+    Dim qualDeli$ = "."
 
     ''' <summary>
     ''' Not null child count in this tree node.
@@ -67,18 +82,20 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
     ''' <returns></returns>
     Public ReadOnly Property Count As Integer
         Get
-            Dim childs = Me.Childs _
+            Dim childs = Me.EnumerateChilds _
                 .SafeQuery _
                 .Where(Function(c) Not c Is Nothing) _
                 .ToArray
 
             If childs.IsNullOrEmpty Then
-                Return 1  ' �Լ���һ���ڵ㣬������������1��
+                ' 自己算一个节点，所以数量总是1的
+                Return 1
             Else
                 Dim n% = childs.Length
 
                 For Each node In childs
-                    n += node.Count ' ����ڵ�û��childs����᷵��1����Ϊ���������һ���ڵ�
+                    ' 如果节点没有childs，则会返回1，因为他自身就是一个节点
+                    n += node.Count
                 Next
 
                 Return n
@@ -89,7 +106,7 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
     Public ReadOnly Property QualifyName As String
         Get
             If Not Parent Is Nothing Then
-                Return Parent.QualifyName & "." & Label
+                Return Parent.QualifyName & qualDeli & Label
             Else
                 Return Label
             End If
@@ -108,20 +125,34 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
         End Get
     End Property
 
+    Sub New(Optional qualDeli$ = ".")
+        Me.qualDeli = qualDeli
+    End Sub
+
+    ''' <summary>
+    ''' Returns the values of <see cref="Childs"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function EnumerateChilds() As IEnumerable(Of T)
+        Return Childs?.Values
+    End Function
+
     Public Overrides Function ToString() As String
         Return QualifyName
     End Function
 
     ''' <summary>
-    ''' ��������е�Ҷ�ڵ�������������Լ���child��Ҷ�ڵ�
+    ''' 计算出所有的叶节点的总数，包括自己的child的叶节点
     ''' </summary>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function CountLeafs() As Integer
         Return CountLeafs(Me, 0)
     End Function
 
     ''' <summary>
-    ''' ��ĳһ���ڵ�����е�Ҷ�ڵ���м���
+    ''' 对某一个节点的所有的叶节点进行计数
     ''' </summary>
     ''' <param name="node"></param>
     ''' <param name="count"></param>
@@ -131,7 +162,7 @@ Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
             count += 1
         End If
 
-        For Each child As T In node.Childs.SafeQuery
+        For Each child As T In node.EnumerateChilds.SafeQuery
             count += child.CountLeafs()
         Next
 

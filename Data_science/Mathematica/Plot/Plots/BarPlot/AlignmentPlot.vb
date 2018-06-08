@@ -423,11 +423,13 @@ Namespace BarPlot
 #End Region
                         rect = region.PlotRegion
 
+                        Dim boxWidth! = 350
+
                         ' legend 的圆角矩形
                         Call Shapes.RoundRect.Draw(
                             g,
-                            New Point(rect.Right - 340, rect.Top + 6),
-                            New Size(330, 80), 8,
+                            New Point(rect.Right - (boxWidth + 10), rect.Top + 6),
+                            New Size(boxWidth, 80), 8,
                             Brushes.White,
                             New Stroke With {
                                 .dash = DashStyle.Solid,
@@ -443,7 +445,7 @@ Namespace BarPlot
 
                         y = 3
 
-                        box = New Rectangle(New Point(rect.Right - 330, rect.Top + 20), New Size(20, 20))
+                        box = New Rectangle(New Point(rect.Right - boxWidth, rect.Top + 20), New Size(20, 20))
                         Call g.FillRectangle(query.Last.Color.GetBrush, box)
                         Call g.DrawString(queryName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
 
