@@ -62,7 +62,10 @@ Public Module PrimitiveParser
         End If
     End Function
 
-    Const NumericPattern$ = "[-]?\d*(\.\d+)?([eE][-]?\d*)?"
+    ''' <summary>
+    ''' 用于匹配任意实数的正则表达式
+    ''' </summary>
+    Public Const NumericPattern$ = "[-]?\d*(\.\d+)?([eE][-]?\d*)?"
 
     ''' <summary>
     ''' Is this token value string is a number?

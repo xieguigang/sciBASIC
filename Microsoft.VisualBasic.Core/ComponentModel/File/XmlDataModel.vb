@@ -53,14 +53,15 @@ Namespace ComponentModel
     Public MustInherit Class XmlDataModel
 
         ''' <summary>
-        ''' ReadOnly
+        ''' ReadOnly, Data model type tracking use Xml Comment.
         ''' </summary>
         ''' <returns></returns>
-        ''' 
-        <XmlAnyElement>
+        '''
+        <DataMember>
+        <IgnoreDataMember>
         <ScriptIgnore>
-        <IgnoreDataMember()>
         <SoapIgnore>
+        <XmlAnyElement>
         Public Property TypeComment As XmlComment
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -68,6 +69,7 @@ Namespace ComponentModel
             End Get
             Set(value As XmlComment)
                 ' Do Nothing
+                ' 2018-6-5 this xml comment node cause bug when using xml deserialization
             End Set
         End Property
 

@@ -1,67 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::272b2d18348c646d5546d5dd16fc418a, Data\DataFrame\Linq\DataStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class DataStream
-    ' 
-    '         Properties: SchemaOridinal
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: AsLinq, BufferProvider, GetOrdinal, OpenHandle
-    ' 
-    '         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock
-    '         Structure __taskHelper
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: RunTask
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Class DataStream
+' 
+'         Properties: SchemaOridinal
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: AsLinq, BufferProvider, GetOrdinal, OpenHandle
+' 
+'         Sub: (+2 Overloads) Dispose, ForEach, ForEachBlock
+'         Structure __taskHelper
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Sub: RunTask
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Text
 
@@ -72,7 +73,89 @@ Namespace IO.Linq
     ''' </summary>
     ''' <param name="Column"></param>
     ''' <returns></returns>
-    Public Delegate Function GetOrdinal(Column As String) As Integer
+    Public Delegate Function GetOrdinal(column As String) As Integer
+
+    Public Class SchemaReader : Implements ISchema
+
+        Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
+        Public ReadOnly Property Headers As IReadOnlyCollection(Of String)
+
+        Sub New(fileName$, Optional encoding As Encoding = Nothing)
+            Call Me.New(RowObject.TryParse(fileName.ReadFirstLine(encoding)))
+        End Sub
+
+        Sub New(firstLineHeaders As RowObject)
+            Headers = New RowObject(firstLineHeaders)
+            SchemaOridinal = Headers _
+                .SeqIterator _
+                .ToDictionary(Function(x) x.value.ToLower,
+                              Function(x) x.i)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetOrdinal(name As String) As Integer Implements ISchema.GetOrdinal
+            Return _SchemaOridinal.TryGetValue(name.ToLower, [default]:=-1)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"[{Headers.JoinBy(", ")}]"
+        End Function
+    End Class
+
+    Public Module DataLinqStream
+
+        ''' <summary>
+        ''' 所返回来的tuple对象之中的table字段，是跳过了第一行标题行的Linq迭代器
+        ''' </summary>
+        ''' <param name="fileName$"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function OpenHandle(fileName$, Optional encoding As Encoding = Nothing) As (schema As SchemaReader, table As IEnumerable(Of RowObject))
+            Dim schema As New SchemaReader(fileName, encoding)
+            Dim source As IEnumerable(Of RowObject) = fileName _
+                .IterateAllLines _
+                .Skip(1) _
+                .Select(Function(line)
+                            Return New RowObject(line)
+                        End Function)
+            Return (schema, source)
+        End Function
+
+        <Extension>
+        Public Function CastObject(Of T As Class)(schema As SchemaReader) As Func(Of RowObject, T)
+            Dim provider As SchemaProvider = SchemaProvider _
+                .CreateObject(Of T)(strict:=False) _
+                .CopyWriteDataToObject
+            Dim rowBuilder As New RowBuilder(provider)
+            Dim type As Type = GetType(T)
+
+            Call rowBuilder.IndexOf(schema)
+            Call rowBuilder.SolveReadOnlyMetaConflicts()
+
+            Return Function(row As RowObject) As T
+                       Dim obj As Object = Activator.CreateInstance(type)
+                       Dim data As Object = rowBuilder.FillData(row, obj)
+
+                       Return DirectCast(data, T)
+                   End Function
+        End Function
+
+        <Extension>
+        Public Function AsLinq(Of T As Class)(handle As (schema As SchemaReader, table As IEnumerable(Of RowObject)), Optional parallel As Boolean = False) As IEnumerable(Of T)
+            Dim castObject = handle.schema.CastObject(Of T)
+            Return handle.table.Populate(parallel,).Select(castObject)
+        End Function
+
+        <Extension>
+        Public Iterator Function ForEach(Of T As Class)(handle As (schema As SchemaReader, table As IEnumerable(Of RowObject)),
+                                                        apply As Action(Of T),
+                                                        Optional parallel As Boolean = False) As IEnumerable(Of Exception)
+            For Each obj As T In handle.AsLinq(Of T)(parallel)
+                Call apply(obj)
+            Next
+        End Function
+    End Module
 
     ''' <summary>
     ''' Buffered large text dataset Table reader
@@ -82,26 +165,21 @@ Namespace IO.Linq
         Implements IDisposable
 
         ''' <summary>
-        ''' The columns and their index order
-        ''' </summary>
-        ReadOnly _schema As Dictionary(Of String, Integer)
-        ''' <summary>
         ''' The title row, which is the mapping source of the class property name.
         ''' </summary>
         ReadOnly _title As RowObject
 
+        ''' <summary>
+        ''' The columns and their index order
+        ''' </summary>
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
-            Get
-                Return _schema
-            End Get
-        End Property
 
         Sub New()
             _schema = New Dictionary(Of String, Integer)
             _title = New RowObject
         End Sub
 
-        Sub New(file As String, Optional encoding As Encoding = Nothing, Optional bufSize As Integer = 64 * 1024 * 1024)
+        Sub New(file$, Optional encoding As Encoding = Nothing, Optional bufSize% = 64 * 1024 * 1024)
             Call MyBase.New(file, encoding, bufSize)
 
             Dim first As String = file.ReadFirstLine
@@ -121,8 +199,8 @@ Namespace IO.Linq
         Public Function GetOrdinal(Name As String) As Integer Implements ISchema.GetOrdinal
             Name = Name.ToLower
 
-            If _schema.ContainsKey(Name) Then
-                Return _schema(Name)
+            If _SchemaOridinal.ContainsKey(Name) Then
+                Return _SchemaOridinal(Name)
             Else
                 Return -1
             End If

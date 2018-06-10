@@ -61,6 +61,10 @@ Namespace CommandLine.Reflection
             Me.Date = Date.Parse([date])
         End Sub
 
+        Sub New(yy%, mm%, dd%, H%, M%, S%)
+            Me.Date = New Date(yy, mm, dd, H, M, S)
+        End Sub
+
         Public Overrides Function ToString() As String
             Return [Date].ToString
         End Function

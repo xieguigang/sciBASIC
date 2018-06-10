@@ -64,13 +64,13 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Implements IProperty
 
         ''' <summary>
-        ''' The property/field object that bind with its custom attribute <see cref="Field"/> of type <typeparamref name="T"/>
+        ''' The property/field object that bind with its custom attribute <see cref="field"/> of type <typeparamref name="T"/>
         ''' </summary>
         Dim member As MemberInfo
         ''' <summary>
         ''' The flag for this field binding.
         ''' </summary>
-        Dim Field As T
+        Dim field As T
         Dim name As String
 
         ReadOnly __setValue As Action(Of Object, Object)
@@ -85,7 +85,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Public ReadOnly Property Type As Type
 
         ''' <summary>
-        ''' The map name or the <see cref="PropertyInfo.Name"/>
+        ''' The map name or the <see cref="PropertyInfo.Name"/>.
+        ''' (这个属性会首先查找标记的自定义属性的名称结果，如果不存在才会使用属性或者字段的反射成员名称)
         ''' </summary>
         ''' <returns></returns>
         Public Property Identity As String Implements IReadOnlyId.Identity, INamedValue.Key
@@ -109,7 +110,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         Public ReadOnly Property IsNull As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return member Is Nothing OrElse Field Is Nothing
+                Return member Is Nothing OrElse field Is Nothing
             End Get
         End Property
 
@@ -128,7 +129,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 #End Region
 
         Sub New(attr As T, prop As PropertyInfo)
-            Field = attr
+            field = attr
             member = prop
             Type = prop.PropertyType
 
@@ -150,7 +151,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Sub
 
         Sub New(attr As T, field As FieldInfo)
-            Me.Field = attr
+            Me.field = attr
             Me.member = field
             Type = field.FieldType
 
@@ -247,7 +248,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function FromSchemaTable(x As KeyValuePair(Of T, PropertyInfo)) As BindProperty(Of T)
             Return New BindProperty(Of T) With {
-                .Field = x.Key,
+                .field = x.Key,
                 .member = x.Value
             }
         End Function

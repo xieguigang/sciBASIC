@@ -778,14 +778,20 @@ Public Module StringHelpers
     ''' <param name="dict"></param>
     ''' <param name="path"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 其实，对于字典类型是可以直接使用JSON序列化得到json字符串的，但是在这里是需要
+    ''' 保存接口类型的对象，但是在这里不能够将接口类型进行json序列化，所以进行字符串
+    ''' 的序列化然后拼接出json数据
+    ''' </remarks>
     <Extension>
     <ExportAPI("Write.Dictionary")>
-    Public Function SaveTo(dict As IDictionary(Of String, String), path As String) As Boolean
-        ' 在这里不能够将接口类型进行json序列化，所以进行字符串的序列化然后拼接出json数据
-        Dim lines As String() = dict.Select(AddressOf __json).ToArray
-        Return "{" &
+    Public Function SaveTo(dict As IDictionary(Of String, String), path$) As Boolean
+        Dim lines$() = dict.Select(AddressOf __json).ToArray
+        Dim json$ = "{" &
             vbTab & String.Join("," & vbCrLf & vbTab, lines) &
         "}"
+
+        Return json.SaveTo(path, TextEncodings.UTF8WithoutBOM)
     End Function
 
     Private Function __json(x As KeyValuePair(Of String, String)) As String

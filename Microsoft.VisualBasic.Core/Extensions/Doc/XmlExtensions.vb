@@ -365,20 +365,25 @@ Public Module XmlExtensions
     ''' <remarks></remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function CreateObjectFromXmlFragment(Of T)(Xml As String) As T
-        Dim docText$ =
+    <Extension> Public Function CreateObjectFromXmlFragment(Of T)(Xml$, Optional preprocess As Func(Of String, String) = Nothing) As T
+        Dim xmlDoc$ =
             "<?xml version=""1.0"" encoding=""UTF-8""?>" &
             ASCII.LF &
             Xml
+
+        If Not preprocess Is Nothing Then
+            xmlDoc = preprocess(xmlDoc)
+        End If
+
         Try
-            Using s As New StringReader(s:=docText)
+            Using s As New StringReader(s:=xmlDoc)
                 Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(s), T)
             End Using
         Catch ex As Exception
             Dim root$ = Xml.GetBetween("<", ">").Split.First
             Dim file$ = App.LogErrDIR & "/" & $"{root}-{Path.GetTempFileName.BaseName}.Xml"
 
-            Call docText.SaveTo(file)
+            Call xmlDoc.SaveTo(file)
 
             Throw New Exception("Details at file dump: " & file, ex)
         End Try

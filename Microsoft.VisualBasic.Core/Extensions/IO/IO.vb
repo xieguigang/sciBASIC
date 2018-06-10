@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::3ee38d51e387c9942938288849098074, Microsoft.VisualBasic.Core\Extensions\IO\IO.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module IOExtensions
-    ' 
-    '     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
-    '               OpenTextWriter, ReadBinary, ReadVector
-    ' 
-    '     Sub: ClearFileBytes, FlushTo
-    ' 
-    ' /********************************************************************************/
+' Module IOExtensions
+' 
+'     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
+'               OpenTextWriter, ReadBinary, ReadVector
+' 
+'     Sub: ClearFileBytes, FlushTo
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -140,11 +140,14 @@ Public Module IOExtensions
     End Function
 
     ''' <summary>
-    ''' Safe open a local file handle.(打开本地文件指针，这是一个安全的函数，会自动创建不存在的文件夹)
+    ''' Safe open a local file handle.
+    ''' (打开本地文件指针，这是一个安全的函数，会自动创建不存在的文件夹。这个函数默认是写模式的)
     ''' </summary>
     ''' <param name="path">文件的路径</param>
     ''' <param name="mode">File open mode, default is create a new file.(文件指针的打开模式)</param>
     ''' <param name="doClear">
+    ''' By default is clear all of the data in source file.
+    ''' (写模式下默认将原来的文件数据清空)
     ''' 是否将原来的文件之中的数据清空？默认是，否则将会以追加模式工作
     ''' </param>
     ''' <returns></returns>

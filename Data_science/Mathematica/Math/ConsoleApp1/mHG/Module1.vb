@@ -218,7 +218,7 @@ Module Module1
 
             If (bi > (n_max - wi)) Then
                 ' We can Stop immediately And we Do Not need To calculate HG_row anymore
-                R_separation_line($"({bi}+1):({B}+1)") = {W}
+                R_separation_line($"({bi}+1):({B}+1)") = W
                 should_inc_w = False
             Else
                 should_inc_w = (HGT <= (p + EPSILON)) AndAlso (W < W)
@@ -259,11 +259,12 @@ Module Module1
         '#   Retrieved from http://bioinfo.cs.technion.ac.il/people/zohar/thesis/eran.pdf
         '#   (pages 20)
         Dim W As Double = N - B
+        Dim pi_r As Matrix = Matrix.Create(nrow:=W + 2, ncol:=B + 2)
 
-        Dim pi_r As New Matrix(DATA() = 0, nrow = W + 2, ncol = B + 2)
-        pi_r(1,) = 0 ' NOTE: Different from the thesis (see page 20 last paragraph),
+        ' NOTE: Different from the thesis (see page 20 last paragraph),
         ' should be 1 according To that paragraph, but this seems wrong.
-        pi_r(, 1) = 0
+        pi_r.Row(1) = 0
+        pi_r.Column(1) = 0
 
         For bi As Integer = 0 To B
             Dim wi = R_separation_line(bi + 1)
@@ -282,27 +283,27 @@ Module Module1
         Return (pi_r)
     End Function
 
-    Public Function HG_row_ncalc(HG_row_m As Vector, m, ni, b_n, N, B)
-        '# Calculate HG row n. This row contains the first (b_n  + 1)
-        '# hypergeometric probabilities, HG[i] = Prob(X == (i - 1)), For number Of tries n.
-        '# Does so given an updated HG row m (m < n), which contains the first (b_n)
-        '# hypergeometric probabilities.
-        '#
-        '# Input:
-        '#   HG_row_m - updated HG row m (m < n), which contains the first (b_n)
-        '#              hypergeometric probabilities.
-        '#   m - the number Of tries (m < n) For which the HG_row_m fits.
-        '#   n - the number Of tries (n > m) For which we want To calculate the HG row
-        '#   b_n - The maximal b For which we need To calculate the hypergeometric probabilities.
-        '#   N - total number Of white And black balls (according To the hypergeometric problem definition).
-        '#   B - number Of black balls.
-
-        '# The Function directs the calculation To an iteration solution (With the cost Of B(n-m)) 
-        '# Or a recursive solution (With the cost B * log(B)). This multiplier helps To determine
-        '# When To use the recursion solution - it Is Not a theoretical result, but an empirical one.
-        Const RECURSION_OVERHEAD_MULTIPLIER = 20
-
-        Dim HG_row_ncalcfunc = Nothing
+    ''' <summary>
+    ''' Calculate HG row n. This row contains the first (b_n  + 1)
+    ''' hypergeometric probabilities, HG[i] = Prob(X == (i - 1)), For number Of tries n.
+    ''' Does so given an updated HG row m (m &lt; n), which contains the first (b_n)
+    ''' hypergeometric probabilities.
+    ''' </summary>
+    ''' <param name="HG_row_m">updated HG row m (m &lt; n), which contains the first (b_n)
+    ''' hypergeometric probabilities.</param>
+    ''' <param name="m">the number Of tries (m &lt; n) For which the HG_row_m fits.</param>
+    ''' <param name="ni">the number Of tries (n > m) For which we want To calculate the HG row</param>
+    ''' <param name="b_n">The maximal b For which we need To calculate the hypergeometric probabilities.</param>
+    ''' <param name="N">total number Of white And black balls (according To the hypergeometric problem definition).</param>
+    ''' <param name="B">number Of black balls.</param>
+    ''' <param name="RECURSION_OVERHEAD_MULTIPLIER">
+    ''' The Function directs the calculation To an iteration solution (With the cost Of B(n-m)) 
+    ''' Or a recursive solution (With the cost B * log(B)). This multiplier helps To determine
+    ''' When To use the recursion solution - it Is Not a theoretical result, but an empirical one.
+    ''' </param>
+    ''' <returns></returns>
+    Public Function HG_row_ncalc(HG_row_m As Vector, m%, ni%, b_n#, N%, B%, Optional RECURSION_OVERHEAD_MULTIPLIER% = 20) As Vector
+        Dim HG_row_ncalcfunc As HG_row_n.Calculator = Nothing
 
         If ((N - m) <= (RECURSION_OVERHEAD_MULTIPLIER * Log2(b_n))) Then
             HG_row_ncalcfunc = AddressOf HG_row_n.calc.iter
@@ -315,14 +316,25 @@ Module Module1
 
     Public Structure HG_row_n
 
+        Public Delegate Function Calculator(HG_row_m As Vector, m%, ni%, b_n#, N%, B%) As Vector
+
         Public Structure calc
-            Public Shared Function recur(HG_row_m, m, n, b_n, N, B)
-                '# Calculate HG row n recursively.
-                '# See Function documentation For "HG_row_n.calc", To gain insight On input And outputs. 
 
-                '# NOTE: This implementation Is my interpretation Of a very unclear statement In Eden's thesis that a row can be
-                '# calculated In O(B) without considering previous rows. I did this In O(B * log(B)).
-
+            ''' <summary>
+            ''' Calculate HG row n recursively.
+            ''' See Function documentation For "HG_row_n.calc", To gain insight On input And outputs. 
+            '''
+            ''' NOTE: This implementation Is my interpretation Of a very unclear statement In Eden's thesis that a row can be
+            ''' calculated In O(B) without considering previous rows. I did this In O(B * log(B)).
+            ''' </summary>
+            ''' <param name="HG_row_m"></param>
+            ''' <param name="m"></param>
+            ''' <param name="ni"></param>
+            ''' <param name="b_n"></param>
+            ''' <param name="N"></param>
+            ''' <param name="B"></param>
+            ''' <returns></returns>
+            Public Shared Function recur(HG_row_m As Vector, m%, ni%, b_n#, N%, B%) As Vector
                 Dim HG_row_ncalcrecurinner As Action(Of Integer, Integer, Integer) =
                     Sub(b_n_start%, b_n_end%, m_start%)
                         '# The code works directly On HG_row_m - updating it recursively, filling the right
@@ -339,7 +351,7 @@ Module Module1
                         '#   m_start.
 
                         ' # Stop condition
-                        If ((n - m_start) = 0) Then
+                        If ((N - m_start) = 0) Then
                             Return
                         Else
                             ' split the tree To two subtrees To be evaluated separately.
@@ -356,19 +368,19 @@ Module Module1
                             Dim i = rows_already_calc
                             Do While (i < l_split) ' Needs To occur sequentially
                                 i = i + 1
-                                HG_row_m(b_n_start + i + 1) = HG_row_m(b_n_start + i) * d_ratio(m_start + i, b_n_start + i, n, B)
+                                HG_row_m(b_n_start + i + 1) = HG_row_m(b_n_start + i) * d_ratio(m_start + i, b_n_start + i, N, B)
                             Loop
                             ' Calculate the right tree.
                             HG_row_ncalcrecurinner(b_n_start + l_split, b_n_end, m_start + l_split)
 
                             ' Go upwards (increasing only m) until we Get To the root Of the left tree.      
                             i = rows_already_calc
-                            Do While (i < (n + 1 - l_split - m_start)) ' Needs To occur sequentially
+                            Do While (i < (N + 1 - l_split - m_start)) ' Needs To occur sequentially
                                 i = i + 1
-                                HG_row_m(b_n_start + 1) = HG_row_m(b_n_start + 1) * v_ratio(m_start + i, b_n_start, n, B)
+                                HG_row_m(b_n_start + 1) = HG_row_m(b_n_start + 1) * v_ratio(m_start + i, b_n_start, N, B)
                             Loop
                             ' Calculate the left tree.
-                            HG_row_ncalcrecurinner(b_n_start, b_n_start + l_split - 1, n + 1 - l_split)
+                            HG_row_ncalcrecurinner(b_n_start, b_n_start + l_split - 1, N + 1 - l_split)
                         End If
                     End Sub
 
@@ -379,21 +391,33 @@ Module Module1
                 '# we have some rows calculated above m_start, In the recursion.
                 '# NOTE: We can technically initialize HG_row_m[2:] To 0, but knowing that we will
                 '# only use the cell In index 1, we Do Not bother.
-                Dim m_start = n - b_n
-                Do While (m < m_start)
+                Dim i_start = N - b_n
+
+                Do While (m < i_start)
                     m = m + 1
-                    HG_row_m(1) = HG_row_m(1) * v_ratio(m, 0, n, B)
+                    HG_row_m(1) = HG_row_m(1) * v_ratio(m, 0, N, B)
                 Loop
-                HG_row_ncalcrecurinner(0, b_n, m_start) ' NOTE: this code works On HG_row_m directly.
-                Return (HG_row_m)
+
+                ' NOTE: this code works On HG_row_m directly.
+                HG_row_ncalcrecurinner(0, b_n, i_start)
+
+                Return HG_row_m
             End Function
 
-            Public Shared Function iter(HG_row_m As Vector, m#, ni#, b_n#, N#, B#) As Vector
-                '# Calculate HG row n iteratively.
-                '# See function documentation for "HG_row_n.calc", to gain insight on input And outputs. 
-
-                '# NOTE: The code works directly on HG_row_m, m - increasing m until it becomes n.
-
+            ''' <summary>
+            ''' Calculate HG row n iteratively.
+            ''' See function documentation for "HG_row_n.calc", to gain insight on input And outputs. 
+            '''
+            ''' NOTE: The code works directly on HG_row_m, m - increasing m until it becomes n.
+            ''' </summary>
+            ''' <param name="HG_row_m"></param>
+            ''' <param name="m#"></param>
+            ''' <param name="ni#"></param>
+            ''' <param name="b_n#"></param>
+            ''' <param name="N#"></param>
+            ''' <param name="B#"></param>
+            ''' <returns></returns>
+            Public Shared Function iter(HG_row_m As Vector, m%, ni%, b_n#, N%, B%) As Vector
                 '# Go upwards (increasing only m) until we get to row n-1.    
                 Dim b_to_update As Vector = seq(0, b_n - 1)
 
@@ -403,11 +427,12 @@ Module Module1
                 Loop
 
                 m = m + 1
-                ' Last row To go - first update b_n from the diagonal, Then the rest vertically
+                ' Last row To go - first update b_n from the diagonal, 
+                ' Then the rest vertically
                 HG_row_m(b_n + 1) = HG_row_m(b_n) * d_ratio(m, b_n, N, B)
                 HG_row_m(b_to_update + 1) = HG_row_m(b_to_update + 1) * v_ratio(m, b_to_update, N, B)
 
-                Return (HG_row_m)
+                Return HG_row_m
             End Function
         End Structure
     End Structure
@@ -443,47 +468,3 @@ Module Module1
     End Function
 
 End Module
-
-Public Class htest
-    Public statistic As Dictionary(Of String, Double)
-    Public parameters As Dictionary(Of String, Double)
-    Public pvalue As Double
-    Public n As Integer
-    Public b As Double
-End Class
-
-''' <summary>
-''' mHG definition:
-''' 
-''' ```
-'''   mHG(lambdas) = min over 1 &lt;= n &lt;= N Of HGT (b_n(lambdas); N, B, n)
-''' ```
-'''   
-''' Where ``HGT`` Is the hypergeometric tail:
-''' 
-''' ```
-'''   HGT(b; N, B, n) = Probability(X >= b)
-''' ```
-'''   
-''' And:
-''' 
-''' ```
-'''   b_n = sum over 1 &lt;= i &lt;= n Of lambdas[i]
-''' ```
-''' </summary>
-Class mHGstatisticInfo
-
-    ''' <summary>
-    ''' the statistic itself
-    ''' </summary>
-    Public mHG As Double
-    ''' <summary>
-    ''' the index For which it was obtained
-    ''' </summary>
-    Public n As Double
-    ''' <summary>
-    ''' (Short For b_n) - sum over ``1 &lt;= i &lt;= n`` Of lambdas[i]
-    ''' </summary>
-    Public b As Double
-End Class
-

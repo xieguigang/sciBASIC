@@ -67,6 +67,9 @@ Namespace LinearAlgebra
     Public Class Vector : Inherits GenericVector(Of Double)
         Implements IVector
 
+#Region "Properties"
+
+#Region "Default values"
         ''' <summary>
         ''' <see cref="System.Double.NaN"/>
         ''' </summary>
@@ -99,6 +102,7 @@ Namespace LinearAlgebra
                 Return New Vector(Linq.Extensions.Repeats(0R, [Dim]))
             End Get
         End Property
+#End Region
 
         ''' <summary>
         ''' <see cref="[Dim]"/>为1?即当前的向量对象是否是只包含有一个数字？
@@ -110,6 +114,76 @@ Namespace LinearAlgebra
                 Return [Dim] = 1
             End Get
         End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="rangeExpression"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' syntax helper
+        ''' </remarks>
+        Default Public Overloads Property Item(rangeExpression As String) As Vector
+            Get
+                Return MyBase.Item(rangeExpression).AsVector
+            End Get
+            Set(value As Vector)
+                MyBase.Item(rangeExpression) = value.AsList
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' ``norm2()``
+        ''' 
+        ''' 向量模的平方，``||x||``是向量``x=(x1，x2，…，xp)``的欧几里得范数
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        Public ReadOnly Property [Mod] As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return (Me ^ 2).Sum
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' ``norm()``
+        ''' 
+        ''' http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property SumMagnitude As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return sys.Sqrt(Me.Mod)
+            End Get
+        End Property
+
+        Public ReadOnly Property Unit As Vector
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Me / SumMagnitude
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' ``[min, max]``
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Range As DoubleRange
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New DoubleRange(Me)
+            End Get
+        End Property
+
+        Private ReadOnly Property Data As Double() Implements IVector.Data
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return buffer
+            End Get
+        End Property
+#End Region
 
         ''' <summary>
         ''' Creates vector with <paramref name="m"/> element and init value set to zero
@@ -176,6 +250,7 @@ Namespace LinearAlgebra
             Next
         End Sub
 
+#Region "Operators"
         ''' <summary>
         ''' 两个向量加法算符重载，分量分别相加
         ''' </summary>
@@ -438,65 +513,6 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' ``norm2()``
-        ''' 
-        ''' 向量模的平方，``||x||``是向量``x=(x1，x2，…，xp)``的欧几里得范数
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property [Mod] As Double
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return (Me ^ 2).Sum
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' ``norm()``
-        ''' 
-        ''' http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property SumMagnitude As Double
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return sys.Sqrt(Me.Mod)
-            End Get
-        End Property
-
-        Public ReadOnly Property Unit As Vector
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return Me / SumMagnitude
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' + http://mathworld.wolfram.com/DotProduct.html
-        ''' + http://www.mathsisfun.com/algebra/vectors-dot-product.html
-        ''' </summary>
-        ''' <param name="v2"></param>
-        ''' <returns></returns>
-        Public Function DotProduct(v2 As Vector) As Double
-            Dim sum#
-
-            For i As Integer = 0 To Me.Count - 1
-                sum += Me(i) * v2(i)
-            Next
-
-            Return sum
-        End Function
-
-        ''' <summary>
-        ''' 返回这个向量之中的所有的元素的乘积
-        ''' </summary>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Product() As Double
-            Return Me.ProductALL
-        End Function
-
-        ''' <summary>
         ''' 负向量 
         ''' </summary>
         ''' <param name="v1"></param>
@@ -512,70 +528,6 @@ Namespace LinearAlgebra
 
             Return v2
         End Operator
-
-        ''' <summary>
-        ''' Display member's data as json array
-        ''' </summary>
-        ''' <returns></returns>
-        Public Overrides Function ToString() As String
-            Return "[" & Me.ToString("G4").JoinBy(", ") & "]"
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Function ToString(format$) As String()
-            Return Me _
-                .Select(Function(x) x.ToString(format)) _
-                .ToArray
-        End Function
-
-        ''' <summary>
-        ''' http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector
-        ''' </summary>
-        ''' <param name="x1"></param>
-        ''' <param name="x2"></param>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function SumMagnitudes(x1 As Vector, x2 As Vector) As Double
-            Return (x1 + x2).Mod
-        End Function
-
-        ''' <summary>
-        ''' Returns a numeric vector with all elements is value ``1``
-        ''' </summary>
-        ''' <param name="n"></param>
-        ''' <returns></returns>
-        Public Shared Function Ones(n As Integer) As Vector
-            Dim result As New Vector(n)
-
-            For i As Integer = 0 To result.Count - 1
-                result(i) = 1.0
-            Next
-
-            Return result
-        End Function
-
-        ''' <summary>
-        ''' ``[min, max]``
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property Range As DoubleRange
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New DoubleRange(Me)
-            End Get
-        End Property
-
-        Private ReadOnly Property Data As Double() Implements IVector.Data
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return buffer
-            End Get
-        End Property
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function rand(size%) As Vector
-            Return Extensions.rand(size)
-        End Function
 
         ''' <summary>
         ''' <paramref name="x"/>向量之中的每一个元素是否都等于<paramref name="n"/>?
@@ -673,6 +625,8 @@ Namespace LinearAlgebra
             Return Not x <= y
         End Operator
 
+#Region "CType"
+
 #Region "Syntax support for: Dim v As Vector = {1, 2, 3, 4, 5, 6}"
         Public Shared Widening Operator CType(v As Double()) As Vector
             Return New Vector(v)
@@ -720,6 +674,7 @@ Namespace LinearAlgebra
                     .Select(AddressOf Trim) _
                     .Select(AddressOf ParseNumeric) _
                     .ToArray
+
                 Return New Vector(array)
 
             Else
@@ -731,6 +686,18 @@ Namespace LinearAlgebra
                 Return New Vector(array)
 
             End If
+        End Operator
+
+        Public Shared Widening Operator CType(x As Double) As Vector
+            Return New Vector() From {x}
+        End Operator
+
+        Public Shared Widening Operator CType(x As Integer) As Vector
+            Return New Vector() From {CDbl(x)}
+        End Operator
+
+        Public Shared Widening Operator CType(x As Long) As Vector
+            Return New Vector() From {CDbl(x)}
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -752,5 +719,78 @@ Namespace LinearAlgebra
         Public Overloads Shared Narrowing Operator CType(v As Vector) As List(Of Double)
             Return v.buffer.AsList
         End Operator
+#End Region
+#End Region
+
+        ''' <summary>
+        ''' + http://mathworld.wolfram.com/DotProduct.html
+        ''' + http://www.mathsisfun.com/algebra/vectors-dot-product.html
+        ''' </summary>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
+        Public Function DotProduct(v2 As Vector) As Double
+            Dim sum#
+
+            For i As Integer = 0 To Me.Count - 1
+                sum += Me(i) * v2(i)
+            Next
+
+            Return sum
+        End Function
+
+        ''' <summary>
+        ''' 返回这个向量之中的所有的元素的乘积
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Product() As Double
+            Return Me.ProductALL
+        End Function
+
+        ''' <summary>
+        ''' Display member's data as json array
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function ToString() As String
+            Return "[" & Me.ToString("G4").JoinBy(", ") & "]"
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function ToString(format$) As String()
+            Return Me _
+                .Select(Function(x) x.ToString(format)) _
+                .ToArray
+        End Function
+
+        ''' <summary>
+        ''' http://math.stackexchange.com/questions/440320/what-is-magnitude-of-sum-of-two-vector
+        ''' </summary>
+        ''' <param name="x1"></param>
+        ''' <param name="x2"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function SumMagnitudes(x1 As Vector, x2 As Vector) As Double
+            Return (x1 + x2).Mod
+        End Function
+
+        ''' <summary>
+        ''' Returns a numeric vector with all elements is value ``1``
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        Public Shared Function Ones(n As Integer) As Vector
+            Dim result As New Vector(n)
+
+            For i As Integer = 0 To result.Count - 1
+                result(i) = 1.0
+            Next
+
+            Return result
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function rand(size%) As Vector
+            Return Extensions.rand(size)
+        End Function
     End Class
 End Namespace

@@ -473,21 +473,24 @@ Public Module Extensions
                                                              <CallerMemberName> Optional trace$ = Nothing) As TValue
         ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
         ' 直接返回默认值
-        If table Is Nothing OrElse index Is Nothing Then
+        If table Is Nothing Then
 #If DEBUG Then
-            Call PrintException("hash table is nothing!")
+            Call PrintException("Hash_table is nothing!")
 #End If
             Return [default]
-        End If
-
-        If table.ContainsKey(index) Then
-            Return table(index)
-        Else
+        ElseIf index Is Nothing Then
+#If DEBUG Then
+            Call PrintException("Index key is nothing!")
+#End If
+            Return [default]
+        ElseIf Not table.ContainsKey(index) Then
 #If DEBUG Then
             Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
 #End If
             Return [default]
         End If
+
+        Return table(index)
     End Function
 
     <Extension> Public Function TryGetValue(Of TKey, TValue, TProp)(hash As Dictionary(Of TKey, TValue), Index As TKey, prop As String) As TProp
@@ -1672,13 +1675,20 @@ Public Module Extensions
         Dim i As Integer = -1
 
         For Each x As T In source
-            i += 1   ' 假若是存在元素的，则i的值会为零
-            Return False  ' If is not empty, then this For loop will be used.
+            ' 假若是存在元素的，则i的值会为零
+            i += 1
+            ' If is not empty, then this For loop will be used.
+            Return False
         Next
 
         ' 由于没有元素，所以For循环没有进行，i变量的值没有发生变化
-        If i = -1 Then ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，主需要查看第一个元素而不是便利整个Linq查询枚举，从而提高了效率
-            Return True  ' Due to the reason of source is empty, no elements, so that i value is not changed as the For loop didn't used.
+        ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，
+        ' 主需要查看第一个元素而不是便利整个Linq查询枚举， 从而提高了效率
+        If i = -1 Then
+            ' Due to the reason of source is empty, no elements, 
+            ' so that i value Is Not changed as the For loop 
+            ' didn 't used.
+            Return True
         Else
             Return False
         End If
