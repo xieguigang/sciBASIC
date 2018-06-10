@@ -1,7 +1,12 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Data",
+    "\\Data\\BinaryData",
+    "\\Data\\BinaryData\\BinaryData",
+    "\\Data\\BinaryData\\BinaryData\\Extensions",
+    "\\Data\\BinaryData\\BinaryData\\Stream"
   ],
-  "SelectedNode": "\\README.md",
+  "SelectedNode": "\\Data\\BinaryData\\BinaryData\\Stream\\BinaryDataReader.vb",
   "PreviewInSolutionExplorer": false
 }

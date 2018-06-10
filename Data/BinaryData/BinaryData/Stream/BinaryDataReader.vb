@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::a1070cd911d93e5b9079541d6c5482a5, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class BinaryDataReader
-    ' 
-    '     Properties: ByteOrder, Encoding, EndOfStream, Length, Position
-    ' 
-    '     Constructor: (+5 Overloads) Sub New
-    ' 
-    '     Function: DecimalFromBytes, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal, ReadDecimals
-    '               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadInt16, ReadInt16s
-    '               ReadInt32, ReadInt32s, ReadInt64, ReadInt64s, ReadMultiple
-    '               ReadSBytes, ReadSingle, ReadSingles, (+4 Overloads) ReadString, ReadUInt16
-    '               ReadUInt16s, ReadUInt32, ReadUInt32s, ReadUInt64, ReadUInt64s
-    '               ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
-    ' 
-    '     Sub: Align
-    ' 
-    ' /********************************************************************************/
+' Class BinaryDataReader
+' 
+'     Properties: ByteOrder, Encoding, EndOfStream, Length, Position
+' 
+'     Constructor: (+5 Overloads) Sub New
+' 
+'     Function: DecimalFromBytes, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal, ReadDecimals
+'               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadInt16, ReadInt16s
+'               ReadInt32, ReadInt32s, ReadInt64, ReadInt64s, ReadMultiple
+'               ReadSBytes, ReadSingle, ReadSingles, (+4 Overloads) ReadString, ReadUInt16
+'               ReadUInt16s, ReadUInt32, ReadUInt32s, ReadUInt64, ReadUInt64s
+'               ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
+' 
+'     Sub: Align
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Collections.Generic
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Text
@@ -397,6 +398,8 @@ Public Class BinaryDataReader
                 Return ReadDwordLengthPrefixString(encoding)
             Case BinaryStringFormat.ZeroTerminated
                 Return ReadZeroTerminatedString(encoding)
+            Case BinaryStringFormat.UInt32LengthPrefix
+                Return ReadString(ReadUInt32, encoding)
             Case BinaryStringFormat.NoPrefixOrTermination
                 Throw New ArgumentException("NoPrefixOrTermination cannot be used for read operations if no length has been specified.", "format")
             Case Else
@@ -421,8 +424,15 @@ Public Class BinaryDataReader
     ''' <param name="length">The length of the string.</param>
     ''' <param name="encoding">The encoding to use for reading the string.</param>
     ''' <returns>The string read from the current stream.</returns>
-    Public Overloads Function ReadString(length As Integer, encoding As Encoding) As String
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Function ReadString(length%, encoding As Encoding) As String
         Return encoding.GetString(ReadBytes(length))
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overloads Function ReadString(length As UInteger, encoding As Encoding) As String
+        Return encoding.GetString(ReadBytes(CInt(length)))
     End Function
 
     ''' <summary>
@@ -453,10 +463,10 @@ Public Class BinaryDataReader
     End Function
 
     ''' <summary>
-    ''' Reads an 8-byte unsigned integer from the current stream and advances the position of the stream by eight
+    ''' Reads an 4-byte unsigned integer from the current stream and advances the position of the stream by eight
     ''' bytes.
     ''' </summary>
-    ''' <returns>The 8-byte unsigned integer read from the current stream.</returns>
+    ''' <returns>The 4-byte unsigned integer read from the current stream.</returns>
     Public Overrides Function ReadUInt32() As UInt32
         If _needsReversion Then
             Dim bytes As Byte() = MyBase.ReadBytes(4)
@@ -633,5 +643,9 @@ Public Class BinaryDataReader
             i += Marshal.SizeOf(GetType(Integer))
         End While
         Return New Decimal(intValues)
+    End Function
+
+    Public Overrides Function ToString() As String
+        Return $"[{Position}/{Length}] {Encoding.ToString}"
     End Function
 End Class

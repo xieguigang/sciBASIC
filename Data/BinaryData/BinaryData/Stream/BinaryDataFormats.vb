@@ -80,15 +80,21 @@ Public Enum BinaryStringFormat
 	''' </summary>
 	WordLengthPrefix
 
-	''' <summary>
-	''' The string has a prefix of 4 bytes determining the length of the string and no postfix.
-	''' </summary>
-	DwordLengthPrefix
+    ''' <summary>
+    ''' The string has a prefix of 4 bytes determining the length of the string and no postfix.
+    ''' (<see cref="Integer"/>)
+    ''' </summary>
+    DwordLengthPrefix
+    ''' <summary>
+    ''' The string has a prefix of 4 bytes determining the length of the string and no postfix.
+    ''' (<see cref="UInteger"/>)
+    ''' </summary>
+    UInt32LengthPrefix
 
-	''' <summary>
-	''' The string has no prefix and is terminated with a byte of the value 0.
-	''' </summary>
-	ZeroTerminated
+    ''' <summary>
+    ''' The string has no prefix and is terminated with a byte of the value 0.
+    ''' </summary>
+    ZeroTerminated
 
 	''' <summary>
 	''' The string has neither prefix nor postfix. This format is only valid for writing strings. For reading
