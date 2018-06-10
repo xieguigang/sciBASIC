@@ -145,8 +145,8 @@ Namespace Language.Default
             Return Me
         End Function
 
-        Public Function [When](expression As Assert(Of T)) As DefaultValue(Of T)
-            assert = Function(o) expression(DirectCast(o, T))
+        Public Function [When](assert As Assert(Of T)) As DefaultValue(Of T)
+            Me.assert = Function(o) assert(DirectCast(o, T))
             Return Me
         End Function
 
