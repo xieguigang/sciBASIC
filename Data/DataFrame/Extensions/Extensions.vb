@@ -212,7 +212,7 @@ Public Module Extensions
     ''' <param name="path"></param>
     ''' <returns></returns>
     <Extension> Public Function AsLinq(Of T As Class)(path$, Optional parallel As Boolean = False) As IEnumerable(Of T)
-        Return DataStream.OpenHandle(path).AsLinq(Of T)(parallel)
+        Return DataLinqStream.OpenHandle(path).AsLinq(Of T)(parallel)
     End Function
 
     ''' <summary>

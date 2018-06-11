@@ -99,7 +99,7 @@ Namespace StorageProvider.Reflection
         End Function
 
         Public Shared Function CreateObject(Of T)(source As IEnumerable(Of T), delimiter$) As String
-            If source.IsNullOrEmpty Then
+            If source Is Nothing Then
                 Return ""
             End If
 

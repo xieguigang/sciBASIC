@@ -188,8 +188,8 @@ Namespace Scripting.Runtime
         ''' <param name="list">在这里使用向量而非使用通用接口是因为和单个元素的As转换有冲突</param>
         ''' <returns></returns>
         <Extension> Public Function [As](Of T, TOut)(list As IEnumerable(Of T)) As TOut()
-            If list.IsNullOrEmpty Then
-                Return Nothing
+            If list Is Nothing Then
+                Return {}
             Else
                 Return list _
                     .Select(Function(x) CType(CObj(x), TOut)) _

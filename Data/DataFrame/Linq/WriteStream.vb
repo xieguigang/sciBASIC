@@ -156,17 +156,22 @@ Namespace IO.Linq
         ''' <param name="source"></param>
         ''' <returns></returns>
         Public Function Flush(source As IEnumerable(Of T), Optional join As Boolean = True) As Boolean
-            If source.IsNullOrEmpty Then
-                Return True  ' 要不然会出现空行，会造成误解的，所以要在这里提前结束
+            If source Is Nothing Then
+                ' 要不然会出现空行，会造成误解的，所以要在这里提前结束
+                Return True
             End If
 
-            Dim LQuery As String() = LinqAPI.Exec(Of String) _
+            Dim LQuery$() = LinqAPI.Exec(Of String) _
  _
                 () <= From line As T
                       In source.AsParallel
                       Where Not line Is Nothing  ' 忽略掉空值对象，否则会生成空行
                       Let CreatedRow As RowObject = rowWriter.ToRow(line)
                       Select CreatedRow.AsLine  ' 对象到数据的投影
+
+            If LQuery.Length = 0 Then
+                Return True
+            End If
 
             If join Then
                 Call _fileIO.WriteLine(String.Join(_fileIO.NewLine, LQuery))
