@@ -1672,28 +1672,27 @@ Public Module Extensions
             Return True
         End If
 
-        Dim i As Integer = -1
+        Dim i% = -1
 
-        For Each x As T In source
-            ' 假若是存在元素的，则i的值会为零
-            i += 1
-            ' If is not empty, then this For loop will be used.
-            Return False
-        Next
+        Using [try] = source.GetEnumerator
+            Do While [try].MoveNext
+                ' 假若是存在元素的，则i的值会为零
+                ' Some type of linq sequence not support this method.
+                ' [try].Reset()
+                i += 1
+
+                ' If is not empty, then this For loop will be used.
+                Return False
+            Loop
+        End Using
 
         ' 由于没有元素，所以For循环没有进行，i变量的值没有发生变化
         ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，
         ' 主需要查看第一个元素而不是便利整个Linq查询枚举， 从而提高了效率
-        If i = -1 Then
-            ' Due to the reason of source is empty, no elements, 
-            ' so that i value Is Not changed as the For loop 
-            ' didn 't used.
-            Return True
-        Else
-            Return False
-        End If
-
-        Return False
+        ' Due to the reason of source is empty, no elements, 
+        ' so that i value Is Not changed as the For loop 
+        ' didn 't used.
+        Return i = -1
     End Function
 
     ''' <summary>

@@ -215,8 +215,36 @@ Module VectorTest
         Pause()
     End Sub
 
+    Sub linqTest()
+        Dim populate = Iterator Function(test As String()) As IEnumerable(Of String)
+                           For Each s In test
+                               Yield s
+                           Next
+                       End Function
+        Dim source = Iterator Function() As IEnumerable(Of IEnumerable(Of String))
+
+                         Yield populate({"1"})
+                         Yield populate({"A"})
+                         Yield populate({"B"})
+                         Yield populate({"C"})
+                         Yield populate({"D", "E", "F"})
+                         Yield populate({"G", "H"})
+                         Yield populate({"2"})
+                         Yield populate({"Z"})
+
+                     End Function
+
+        For Each s In source().IteratesALL
+            Console.WriteLine(s)
+        Next
+
+        Pause()
+    End Sub
 
     Sub Main()
+
+
+        Call linqTest()
 
         Call testssss()
 
