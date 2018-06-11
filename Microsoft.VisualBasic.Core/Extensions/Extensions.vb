@@ -60,6 +60,7 @@
 
 #End Region
 
+Imports System.Collections.ObjectModel
 Imports System.Drawing
 Imports System.Globalization
 Imports System.Reflection
@@ -69,6 +70,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -1721,6 +1723,15 @@ Public Module Extensions
         Return dict.Count = 0
     End Function
 
+    <Extension>
+    Public Function IsNullOrEmpty(Of T As INamedValue)(table As Dictionary(Of T)) As Boolean
+        If table Is Nothing Then
+            Return True
+        Else
+            Return table.Count = 0
+        End If
+    End Function
+
     ''' <summary>
     ''' 字典之中是否是没有任何数据的？
     ''' </summary>
@@ -1729,6 +1740,13 @@ Public Module Extensions
     ''' <param name="dict"></param>
     ''' <returns></returns>
     <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As IReadOnlyDictionary(Of TKey, TValue)) As Boolean
+        If dict Is Nothing Then
+            Return True
+        End If
+        Return dict.Count = 0
+    End Function
+
+    <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As ReadOnlyDictionary(Of TKey, TValue)) As Boolean
         If dict Is Nothing Then
             Return True
         End If
@@ -1798,7 +1816,7 @@ Public Module Extensions
         Return list.Count = 0
     End Function
 
-    <Extension> Public Function IsNullOrEmpty(Of T)(list As Generic.List(Of T)) As Boolean
+    <Extension> Public Function IsNullOrEmpty(Of T)(list As System.Collections.Generic.List(Of T)) As Boolean
         If list Is Nothing Then
             Return True
         End If
@@ -1807,6 +1825,15 @@ Public Module Extensions
 
     <Extension>
     Public Function IsNullOrEmpty(Of T)(collection As IReadOnlyCollection(Of T)) As Boolean
+        If collection Is Nothing Then
+            Return True
+        Else
+            Return collection.Count = 0
+        End If
+    End Function
+
+    <Extension>
+    Public Function IsNullOrEmpty(Of T)(collection As ReadOnlyCollection(Of T)) As Boolean
         If collection Is Nothing Then
             Return True
         Else
@@ -1935,7 +1962,7 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="dotNETlist"></param>
     ''' <returns></returns>
-    <Extension> Public Function RemoveLast(Of T)(ByRef dotNETlist As Generic.List(Of T)) As Generic.List(Of T)
+    <Extension> Public Function RemoveLast(Of T)(ByRef dotNETlist As System.Collections.Generic.List(Of T)) As System.Collections.Generic.List(Of T)
         If dotNETlist.IsNullOrEmpty Then
             dotNETlist = New List(Of T)
 
