@@ -1661,6 +1661,8 @@ Public Module Extensions
         End If
     End Function
 
+    ' 2018-6-11
+    '
     ' 因为迭代器在访问linq序列的时候，对于非空序列，下面的IsNullOrEmpty函数总是会产生一次迭代
     ' 这个迭代可能会导致元素丢失的bug产生
     ' 所以在这里将这个linq函数注释掉
@@ -1712,6 +1714,34 @@ Public Module Extensions
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="dict"></param>
     ''' <returns></returns>
+    <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As IDictionary(Of TKey, TValue)) As Boolean
+        If dict Is Nothing Then
+            Return True
+        End If
+        Return dict.Count = 0
+    End Function
+
+    ''' <summary>
+    ''' 字典之中是否是没有任何数据的？
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="dict"></param>
+    ''' <returns></returns>
+    <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As IReadOnlyDictionary(Of TKey, TValue)) As Boolean
+        If dict Is Nothing Then
+            Return True
+        End If
+        Return dict.Count = 0
+    End Function
+
+    ''' <summary>
+    ''' 字典之中是否是没有任何数据的？
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="dict"></param>
+    ''' <returns></returns>
     <Extension> Public Function IsNullOrEmpty(Of TKey, TValue)(dict As Dictionary(Of TKey, TValue)) As Boolean
         If dict Is Nothing Then
             Return True
@@ -1754,11 +1784,34 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="list"></param>
     ''' <returns></returns>
+    <Extension> Public Function IsNullOrEmpty(Of T)(list As ICollection(Of T)) As Boolean
+        If list Is Nothing Then
+            Return True
+        End If
+        Return list.Count = 0
+    End Function
+
+    <Extension> Public Function IsNullOrEmpty(Of T)(list As IList(Of T)) As Boolean
+        If list Is Nothing Then
+            Return True
+        End If
+        Return list.Count = 0
+    End Function
+
     <Extension> Public Function IsNullOrEmpty(Of T)(list As Generic.List(Of T)) As Boolean
         If list Is Nothing Then
             Return True
         End If
         Return list.Count = 0
+    End Function
+
+    <Extension>
+    Public Function IsNullOrEmpty(Of T)(collection As IReadOnlyCollection(Of T)) As Boolean
+        If collection Is Nothing Then
+            Return True
+        Else
+            Return collection.Count = 0
+        End If
     End Function
 
     ''' <summary>
