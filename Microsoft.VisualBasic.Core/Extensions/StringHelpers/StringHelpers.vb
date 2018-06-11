@@ -1175,31 +1175,6 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' 判断这个字符串集合是否为空集合，函数会首先按照常规的集合为空进行判断，然后假若不为空的话，假若只含有一个元素并且该唯一的元素的值为空字符串，则也认为这个字符串集合为空集合
-    ''' </summary>
-    ''' <param name="values"></param>
-    ''' <param name="strict">FALSE 为非严谨，只进行常规判断，TRUE 为严谨模式，会假若不为空的话，假若只含有一个元素并且该唯一的元素的值为空字符串，则也认为这个字符串集合为空集合</param>
-    ''' <returns></returns>
-    <ExportAPI("IsNullOrEmpty")>
-    Public Function IsNullOrEmpty(values As IEnumerable(Of String), Optional strict As Boolean = False) As Boolean
-        If Not strict Then
-            Return Extensions.IsNullOrEmpty(values)
-        End If
-
-        With values.ToArray
-            If .IsNullOrEmpty Then
-                Return True
-            End If
-
-            If .Count = 1 AndAlso String.IsNullOrEmpty(.First) Then
-                Return True
-            End If
-        End With
-
-        Return False
-    End Function
-
-    ''' <summary>
     ''' Does the <paramref name="token"/> is located at the last of <paramref name="s"/> text string.
     ''' </summary>
     ''' <param name="s$"></param>

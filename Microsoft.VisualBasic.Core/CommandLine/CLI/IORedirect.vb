@@ -343,7 +343,7 @@ Namespace CommandLine
             pInfo.WindowStyle = ProcessWindowStyle.Hidden
             pInfo.CreateNoWindow = True
 
-            If Not envir.IsNullOrEmpty Then
+            If Not envir Is Nothing Then
                 For Each para As KeyValuePair(Of String, String) In envir
                     Call pInfo.EnvironmentVariables.Add(para.Key, para.Value)
                 Next

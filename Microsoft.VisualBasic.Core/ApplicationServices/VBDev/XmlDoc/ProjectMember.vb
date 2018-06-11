@@ -129,7 +129,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
 
                 For Each x As XmlNode In ns
                     text = x.InnerText Or "-".AsDefault(Function()
-                                                            Return Strings.Trim(x.InnerText).IsNullOrEmpty
+                                                            Return Strings.Trim(x.InnerText).StringEmpty
                                                         End Function)
                     name = x.Attributes _
                         .GetNamedItem("name") _

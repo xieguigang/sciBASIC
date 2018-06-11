@@ -875,7 +875,7 @@ Public Module ProgramPathSearchTool
     <ExportAPI("Get.FrequentPath",
                Info:="Gets a directory path which is most frequent appeared in the file list.")>
     Public Function GetMostAppreancePath(files As IEnumerable(Of String)) As String
-        If files.IsNullOrEmpty Then
+        If files Is Nothing Then
             Return ""
         End If
 
@@ -885,7 +885,7 @@ Public Module ProgramPathSearchTool
         Return LQuery _
             .TokenCount(ignoreCase:=True) _
             .OrderByDescending(Function(x) x.Value) _
-            .First _
+            .FirstOrDefault _
             .Key
     End Function
 

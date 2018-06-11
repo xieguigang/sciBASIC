@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::c52857d123c7511ea60e7080d9558f2c, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Extensions
-    ' 
-    ' 
-    ' Module Extensions
-    ' 
-    '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, (+2 Overloads) Average
-    '               CheckDuplicated, Constrain, DataCounts, DateToString, DriverRun
-    '               ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching, GetHexInteger
-    '               (+2 Overloads) GetItem, (+2 Overloads) GetLength, IndexOf, InsertOrUpdate, Invoke
-    '               InvokeSet, Is_NA_UHandle, IsNaNImaginary, (+6 Overloads) IsNullOrEmpty, (+4 Overloads) Join
-    '               (+2 Overloads) JoinBy, Keys, KeysJson, Log2, (+2 Overloads) LongSeq
-    '               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
-    '               NormalizeXMLString, NotNull, (+2 Overloads) Offset, ParseDateTime, Range
-    '               Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver
-    '               SaveAsTabularMapping, Second, SelectFile, SeqRandom, (+2 Overloads) Sequence
-    '               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Split
-    '               SplitIterator, (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes
-    '               ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray, ToVector
-    '               (+3 Overloads) TrimNull, (+2 Overloads) TryGetValue, Unlist, WriteAddress
-    ' 
-    '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
-    '          SwapItem, SwapWith
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module Extensions
+' 
+' 
+' Module Extensions
+' 
+'     Function: [Get], [Set], Add, (+3 Overloads) AddRange, (+2 Overloads) Average
+'               CheckDuplicated, Constrain, DataCounts, DateToString, DriverRun
+'               ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching, GetHexInteger
+'               (+2 Overloads) GetItem, (+2 Overloads) GetLength, IndexOf, InsertOrUpdate, Invoke
+'               InvokeSet, Is_NA_UHandle, IsNaNImaginary, (+6 Overloads) IsNullOrEmpty, (+4 Overloads) Join
+'               (+2 Overloads) JoinBy, Keys, KeysJson, Log2, (+2 Overloads) LongSeq
+'               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
+'               NormalizeXMLString, NotNull, (+2 Overloads) Offset, ParseDateTime, Range
+'               Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver
+'               SaveAsTabularMapping, Second, SelectFile, SeqRandom, (+2 Overloads) Sequence
+'               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Split
+'               SplitIterator, (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes
+'               ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray, ToVector
+'               (+3 Overloads) TrimNull, (+2 Overloads) TryGetValue, Unlist, WriteAddress
+' 
+'     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
+'          SwapItem, SwapWith
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -73,6 +73,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel
@@ -356,7 +357,7 @@ Public Module Extensions
     ''' <param name="[default]">Default value for invalid index is nothing.</param>
     ''' <returns></returns>
     <Extension> Public Function [Get](Of T)(array As IEnumerable(Of T), index As Integer, Optional [default] As T = Nothing) As T
-        If array.IsNullOrEmpty Then
+        If array Is Nothing Then
             Return [default]
         End If
 
@@ -430,7 +431,7 @@ Public Module Extensions
     ''' <typeparam name="Tbase">基类</typeparam>
     ''' <returns></returns>
     Public Function Constrain(Of Tbase As Class, T As Tbase)(source As IEnumerable(Of T)) As Tbase()
-        If source.IsNullOrEmpty Then
+        If source Is Nothing Then
             Return New Tbase() {}
         End If
 
@@ -514,7 +515,7 @@ Public Module Extensions
     End Function
 
     <Extension> Public Function AddRange(Of TKey, TValue)(ByRef table As Dictionary(Of TKey, TValue), data As IEnumerable(Of KeyValuePair(Of TKey, TValue))) As Dictionary(Of TKey, TValue)
-        If data.IsNullOrEmpty Then
+        If data Is Nothing Then
             Return table
         End If
 
@@ -632,8 +633,8 @@ Public Module Extensions
     ''' <param name="target"></param>
     ''' <returns></returns>
     <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), target As IEnumerable(Of T)) As List(Of T)
-        Dim srcList As List(Of T) = If(source.IsNullOrEmpty, New List(Of T), source.AsList)
-        If Not target.IsNullOrEmpty Then
+        Dim srcList As List(Of T) = If(source Is Nothing, New List(Of T), source.AsList)
+        If Not target Is Nothing Then
             Call srcList.AddRange(target)
         End If
         Return srcList
@@ -687,7 +688,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension> Public Function Join(Of T)(obj As T, collection As IEnumerable(Of T)) As List(Of T)
         With New List(Of T) From {obj}
-            If Not collection.IsNullOrEmpty Then
+            If Not collection Is Nothing Then
                 Call .AddRange(collection)
             End If
 
@@ -767,11 +768,11 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function DataCounts(Of T)(collection As IEnumerable(Of T)) As Integer
-        If collection.IsNullOrEmpty Then
+        If collection Is Nothing Then
             Return 0
         ElseIf TypeOf collection Is T() Then
             Return DirectCast(collection, T()).Length
-        ElseIf TypeOf collection Is System.Collections.Generic.List(Of T) Then
+        ElseIf collection.GetType.IsInheritsFrom(GetType(System.Collections.Generic.List(Of T))) Then
             Return DirectCast(collection, System.Collections.Generic.List(Of T)).Count
         Else
             Return Enumerable.Count(collection)
@@ -1295,10 +1296,10 @@ Public Module Extensions
 #Else
     <Extension> Public Function GetItem(Of T)(source As IEnumerable(Of T), index As Integer) As T
 #End If
-        If source.IsNullOrEmpty OrElse index >= source.Count Then
+        If source Is Nothing Then
             Return Nothing
         Else
-            Return source(index)
+            Return source.ElementAtOrDefault(index)
         End If
     End Function
 
@@ -1391,7 +1392,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Function TrimNull(Of T As Class)(source As IEnumerable(Of T)) As T()
 #End If
-        If source.IsNullOrEmpty Then
+        If source Is Nothing Then
             Return New T() {}
         Else
             Return (From x In source Where Not x Is Nothing Select x).ToArray
@@ -1405,7 +1406,7 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function TrimNull(source As IEnumerable(Of String)) As String()
-        If source.IsNullOrEmpty Then
+        If source Is Nothing Then
             Return New String() {}
         Else
             Return (From x In source Where Not x.StringEmpty Select x).ToArray
@@ -1660,40 +1661,49 @@ Public Module Extensions
         End If
     End Function
 
-    ''' <summary>
-    ''' This object collection is a null object or contains zero count items.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="source"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <Extension> Public Function IsNullOrEmpty(Of T)(source As IEnumerable(Of T)) As Boolean
-        If source Is Nothing Then
-            Return True
-        End If
+    ' 因为迭代器在访问linq序列的时候，对于非空序列，下面的IsNullOrEmpty函数总是会产生一次迭代
+    ' 这个迭代可能会导致元素丢失的bug产生
+    ' 所以在这里将这个linq函数注释掉
+    ' 以后只需要判断迭代器是否是空值即可
 
-        Dim i% = -1
+    '''' <summary>
+    '''' This object collection is a null object or contains zero count items.
+    '''' </summary>
+    '''' <typeparam name="T"></typeparam>
+    '''' <param name="source"></param>
+    '''' <returns></returns>
+    '''' <remarks></remarks>
+    '<Extension> Public Function IsNullOrEmpty(Of T)(source As IEnumerable(Of T)) As Boolean
+    '    If source Is Nothing Then
+    '        Return True
+    '    End If
 
-        Using [try] = source.GetEnumerator
-            Do While [try].MoveNext
-                ' 假若是存在元素的，则i的值会为零
-                ' Some type of linq sequence not support this method.
-                ' [try].Reset()
-                i += 1
+    '    Dim i% = -1
 
-                ' If is not empty, then this For loop will be used.
-                Return False
-            Loop
-        End Using
+    '    Using [try] = source.GetEnumerator
+    '        Do While [try].MoveNext
 
-        ' 由于没有元素，所以For循环没有进行，i变量的值没有发生变化
-        ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，
-        ' 主需要查看第一个元素而不是便利整个Linq查询枚举， 从而提高了效率
-        ' Due to the reason of source is empty, no elements, 
-        ' so that i value Is Not changed as the For loop 
-        ' didn 't used.
-        Return i = -1
-    End Function
+    '            ' debug view
+    '            Dim null = [try].Current
+
+    '            ' 假若是存在元素的，则i的值会为零
+    '            ' Some type of linq sequence not support this method.
+    '            ' [try].Reset()
+    '            i += 1
+
+    '            ' If is not empty, then this For loop will be used.
+    '            Return False
+    '        Loop
+    '    End Using
+
+    '    ' 由于没有元素，所以For循环没有进行，i变量的值没有发生变化
+    '    ' 使用count拓展进行判断或导致Linq被执行两次，现在使用FirstOrDefault来判断，
+    '    ' 主需要查看第一个元素而不是便利整个Linq查询枚举， 从而提高了效率
+    '    ' Due to the reason of source is empty, no elements, 
+    '    ' so that i value Is Not changed as the For loop 
+    '    ' didn 't used.
+    '    Return i = -1
+    'End Function
 
     ''' <summary>
     ''' 字典之中是否是没有任何数据的？
@@ -1722,13 +1732,29 @@ Public Module Extensions
         Return queue.Count = 0
     End Function
 
+    <Extension>
+    Public Function IsNullorEmpty(Of T)(vector As Vector(Of T)) As Boolean
+        If vector Is Nothing Then
+            Return True
+        End If
+        Return vector.Length = 0
+    End Function
+
+    <Extension>
+    Public Function IsNullOrEmpty(args As ArgumentCollection) As Boolean
+        If args Is Nothing Then
+            Return True
+        End If
+        Return args.Count = 0
+    End Function
+
     ''' <summary>
     ''' 这个动态列表之中是否是没有任何数据的？
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="list"></param>
     ''' <returns></returns>
-    <Extension> Public Function IsNullOrEmpty(Of T)(list As List(Of T)) As Boolean
+    <Extension> Public Function IsNullOrEmpty(Of T)(list As Generic.List(Of T)) As Boolean
         If list Is Nothing Then
             Return True
         End If
@@ -1791,17 +1817,23 @@ Public Module Extensions
     '''
     <ExportAPI("PI")>
     <Extension> Public Function π(source As IEnumerable(Of Double)) As Double
-        If source.IsNullOrEmpty Then
+        If source Is Nothing Then
             Return 0
         End If
 
-        Dim result As Double = 1
+        Dim result# = 1
+        Dim stepInto As Boolean = False
 
         For Each x As Double In source
+            stepInto = True
             result *= x
         Next
 
-        Return result
+        If Not stepInto Then
+            Return 0
+        Else
+            Return result
+        End If
     End Function
 
 #If FRAMEWORD_CORE Then

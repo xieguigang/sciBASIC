@@ -69,7 +69,7 @@ Namespace ComponentModel.Collection.Generic
         Sub New(data As IDictionary(Of String, T))
             Call Me.New
 
-            If Not data.IsNullOrEmpty Then
+            If Not data Is Nothing Then
                 For Each ItemObject In data
                     Call Add(ItemObject)
                 Next

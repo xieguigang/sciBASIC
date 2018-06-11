@@ -85,7 +85,7 @@ Namespace IO.Linq
         End Sub
 
         Sub New(firstLineHeaders As RowObject)
-            Headers = New RowObject(firstLineHeaders)
+            Headers = firstLineHeaders.ToArray
             SchemaOridinal = Headers _
                 .SeqIterator _
                 .ToDictionary(Function(x) x.value.ToLower,

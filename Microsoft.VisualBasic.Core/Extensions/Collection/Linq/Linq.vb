@@ -85,17 +85,18 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' A query proxy function makes your linq not so easily crashed due to the unexpected null reference collection as linq source.
+        ''' A query proxy function makes your linq not so easily crashed due to the 
+        ''' unexpected null reference collection as linq source.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function SafeQuery(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
+        Public Function SafeQuery(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
             If Not source Is Nothing Then
-                For Each x As T In source
-                    Yield x
-                Next
+                Return source
+            Else
+                Return {}
             End If
         End Function
 
@@ -184,10 +185,12 @@ Namespace Linq
         ''' <returns></returns>
         <Extension> Public Iterator Function IteratesALL(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
             For Each line As IEnumerable(Of T) In source
-                If Not line.IsNullOrEmpty Then
-                    For Each x As T In line
-                        Yield x
-                    Next
+                If Not line Is Nothing Then
+                    Using iterator = line.GetEnumerator
+                        Do While iterator.MoveNext
+                            Yield iterator.Current
+                        Loop
+                    End Using
                 End If
             Next
         End Function

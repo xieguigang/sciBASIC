@@ -137,7 +137,7 @@ Public Module IEnumerations
     ''' <param name="strict">是否大小写敏感，默认大小写敏感</param>
     ''' <returns></returns>
     <Extension> Public Function Takes(Of T As INamedValue)(source As IEnumerable(Of T), uniqueId As String, Optional strict As Boolean = True) As T()
-        If source.IsNullOrEmpty Then
+        If source Is Nothing Then
             Return New T() {}
         End If
 
