@@ -215,8 +215,52 @@ Module VectorTest
         Pause()
     End Sub
 
+    Sub linqTest()
+        Dim pop1 = Iterator Function() As IEnumerable(Of String)
+                       Yield "1"
+                       Yield "A"
+                       Yield "B"
+                       Yield "C"
+                   End Function
+        Dim pop2 = Iterator Function() As IEnumerable(Of String)
+                       Yield "D"
+                       Yield "E"
+                       Yield "F"
+                   End Function
+        Dim pop3 = Iterator Function() As IEnumerable(Of String)
+                       Yield "G"
+                       Yield "H"
+                   End Function
+        Dim pop4 = Iterator Function() As IEnumerable(Of String)
+                       Yield "2"
+                   End Function
+        Dim pop5 = Iterator Function() As IEnumerable(Of String)
+                       Yield "X"
+                       Yield "Y"
+                       Yield "Z"
+                   End Function
+
+        Dim source = Iterator Function() As IEnumerable(Of IEnumerable(Of String))
+
+                         Yield pop1()
+                         Yield pop2()
+                         Yield pop3()
+                         Yield pop4()
+                         Yield pop5()
+
+                     End Function
+
+        For Each s In source().IteratesALL
+            Console.WriteLine(s)
+        Next
+
+        Pause()
+    End Sub
 
     Sub Main()
+
+
+        Call linqTest()
 
         Call testssss()
 

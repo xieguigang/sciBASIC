@@ -343,7 +343,7 @@ Namespace CommandLine
                    Info:="ReGenerate the cli command line argument string text. 
                    NOTE: If the token have a space character, then this function will be wrap that token with quot character automatically.")>
         Public Function Join(tokens As IEnumerable(Of String)) As String
-            If tokens.IsNullOrEmpty Then
+            If tokens Is Nothing Then
                 Return ""
             Else
                 Return String.Join(" ", tokens.Select(AddressOf __innerWrapper).ToArray)
@@ -470,7 +470,7 @@ Namespace CommandLine
                 .Name = name,
                 .__arguments = parameters,
                 .Tokens = tokens.Join(bFlags).ToArray,
-                .BoolFlags = If(bFlags.IsNullOrEmpty, New String() {}, bFlags.ToArray)
+                .BoolFlags = bFlags.SafeQuery.ToArray
             }
         End Function
 

@@ -74,23 +74,6 @@ Namespace SyntaxAPI
         ''' Currently missing can only be used in the immediate body of the function that defines the argument, not in the body of a nested function or a local call. This may change in the future.
         ''' This is a ‘special’ primitive function: it must not evaluate its argument.
         ''' </remarks>
-        Public Function Missing(Of T)(x As IEnumerable(Of T)) As Boolean
-            Return x.IsNullOrEmpty
-        End Function
-
-        ''' <summary>
-        ''' Does a Formal Argument have a Value?
-        ''' missing can be used to test whether a value was specified as an argument to a function.
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="x">a formal argument.</param>
-        ''' <returns></returns>
-        ''' <remarks>
-        ''' Missing(x) is only reliable if x has not been altered since entering the function: in particular it will always be false after x &lt;- match.arg(x).
-        ''' The example shows how a plotting function can be written to work with either a pair of vectors giving x and y coordinates of points to be plotted or a single vector giving y values to be plotted against their indices.
-        ''' Currently missing can only be used in the immediate body of the function that defines the argument, not in the body of a nested function or a local call. This may change in the future.
-        ''' This is a ‘special’ primitive function: it must not evaluate its argument.
-        ''' </remarks>
         Public Function Missing(Of T)(x As T) As Boolean
             Return x Is Nothing
         End Function
@@ -299,7 +282,7 @@ Namespace SyntaxAPI
         ''' <remarks></remarks>
         '''
         <ExportAPI("Paste")>
-        Public Function Paste(args As Generic.IEnumerable(Of String), Optional sep As String = " ") As String
+        Public Function Paste(args As IEnumerable(Of String), Optional sep As String = " ") As String
             Return String.Join(sep, args)
         End Function
 
@@ -308,8 +291,8 @@ Namespace SyntaxAPI
             Return String.Join("", (From obj In args Select str = obj.ToString).ToArray)
         End Function
 
-        Public Function Length(Of T)(obj As Generic.IEnumerable(Of T)) As Integer
-            If obj.IsNullOrEmpty Then
+        Public Function Length(Of T)(obj As IEnumerable(Of T)) As Integer
+            If obj Is Nothing Then
                 Return 0
             Else
                 Return obj.Count
