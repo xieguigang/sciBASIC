@@ -68,6 +68,7 @@ Public Class FormLandscape
         }
         Controls.Add(canvas)
         canvas.Run()
+        canvas.RefreshInterval = 1
     End Sub
 
     Private Sub AutoRotateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoRotateToolStripMenuItem.Click
