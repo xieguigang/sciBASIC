@@ -136,6 +136,7 @@ Namespace CommandLine.InteropService
         End Function
 
         ''' <summary>
+        ''' 运行非.NET应用程序
         ''' 请注意，这个函数只是生成了具体的进程调用对象，还需要手动调用
         ''' <see cref="IIORedirectAbstract.Run()"/>或者
         ''' <see cref="IIORedirectAbstract.Start(Boolean)"/>
