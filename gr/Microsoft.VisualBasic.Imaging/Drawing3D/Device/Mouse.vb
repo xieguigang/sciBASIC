@@ -46,13 +46,15 @@ Imports System.Windows.Forms
 
 Namespace Drawing3D.Device
 
-    Public Class Mouse : Inherits IDevice
+    Public Class Mouse : Inherits IDevice(Of UserControl)
 
         Dim _rotate As Boolean
         Dim oldXY As Point
+        Dim camera As Camera
 
-        Public Sub New(dev As GDIDevice)
+        Public Sub New(dev As UserControl, camera As Camera)
             MyBase.New(dev)
+            Me.camera = camera
         End Sub
 
         Private Sub device_MouseDown(sender As Object, e As MouseEventArgs) Handles device.MouseDown
@@ -68,18 +70,18 @@ Namespace Drawing3D.Device
             End If
 
             If xy.X > oldXY.X Then  ' right
-                device._camera.angleY += 1
+                camera.angleY += 1
             End If
             If xy.X < oldXY.X Then ' left
-                device._camera.angleY -= 1
+                camera.angleY -= 1
             End If
             If xy.Y > oldXY.Y Then ' down
                 'device._camera.angleZ -= 1
-                device._camera.angleX -= 1
+                camera.angleX -= 1
             End If
             If xy.Y < oldXY.Y Then ' up
                 'device._camera.angleZ += 1
-                device._camera.angleX += 1
+                camera.angleX += 1
             End If
 
             oldXY = xy
