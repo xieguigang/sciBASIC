@@ -163,13 +163,16 @@ Namespace Drawing3D
             Dim sv As New List(Of Surface)
 
             For Each s As Surface In surfaces
+                Dim color As Color
                 Dim v As Point3D() = camera _
                     .Project(s.vertices) _
                     .ToArray
-                Dim color As Color = If(
-                    illumination,
-                    camera.Lighting(s),
-                    DirectCast(s.brush, SolidBrush).Color)
+
+                If illumination Then
+                    color = camera.Lighting(s)
+                Else
+                    color = DirectCast(s.brush, SolidBrush).Color
+                End If
 
                 sv += New Surface With {
                     .vertices = v,
@@ -177,10 +180,12 @@ Namespace Drawing3D
                 }
             Next
 
-            Dim order As List(Of Integer) = sv.OrderProvider(
-                Function(surface) surface _
-                    .vertices _
-                    .Average(Function(z) z.Z))
+            Dim order As List(Of Integer) = sv _
+                .OrderProvider(Function(surface)
+                                   Return surface _
+                                       .vertices _
+                                       .Average(Function(z) z.Z)
+                               End Function)
             Dim screen As Size = camera.screen
             Dim out As New List(Of Polygon)
 
@@ -190,7 +195,9 @@ Namespace Drawing3D
                 Dim s As Surface = sv(index)
                 Dim points() As Point = s _
                     .vertices _
-                    .Select(Function(p3D) p3D.PointXY(screen)) _
+                    .Select(Function(p3D)
+                                Return p3D.PointXY(screen)
+                            End Function) _
                     .ToArray
 
                 out += New Polygon With {
@@ -218,7 +225,7 @@ Namespace Drawing3D
         End Structure
 
         ''' <summary>
-        ''' ``PAINTERS ALGORITHM`` kernel
+        ''' ``PAINTERS ALGORITHM`` kernel.(调用这个排序函数应该是发生在三维投影操作之后)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
