@@ -187,15 +187,19 @@ Public Module DocumentExtensions
     ''' <param name="EXPORT$"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function DirectAppends(files As IEnumerable(Of String), EXPORT$) As Boolean
+    Public Function DirectAppends(files As IEnumerable(Of String), EXPORT$, Optional orderBy As Func(Of Dictionary(Of String, String), Double) = Nothing) As Boolean
         Dim data As New List(Of GenericTable)
+        Dim table As IEnumerable(Of GenericTable)
 
         For Each path$ In files
             ' List(Of T) 对象的 + 语法有冲突，所以在这里需要先进行转换
-            data += DirectCast(path.LoadCsv(Of GenericTable), IEnumerable(Of GenericTable))
+            table = path.LoadCsv(Of GenericTable)
+            data += table
         Next
 
-        Return data.SaveTo(EXPORT)
+        Return data _
+            .OrderBy(Function(r) orderBy(r.Data)) _
+            .SaveTo(EXPORT)
     End Function
 
     <Extension>
