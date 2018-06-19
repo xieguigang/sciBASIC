@@ -75,6 +75,24 @@ Namespace Language
             End Set
         End Property
 
+        Public ReadOnly Property Expression(Optional null$ = "Nothing", Optional stringEscaping As Func(Of String, String) = Nothing) As String
+            Get
+                Dim val$
+
+                If value Is Nothing Then
+                    val = null
+                ElseIf value.GetType Is GetType(String) Then
+                    val = $"""{(stringEscaping Or noEscaping)(value)}"""
+                ElseIf value.GetType Is GetType(Char) Then
+                    val = $"""{value}"""
+                Else
+                    val = value
+                End If
+
+                Return $"{name} = {val}"
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return $"Dim {name} As Object = {Scripting.ToString(value, "null")}"
         End Function
