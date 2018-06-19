@@ -262,3 +262,4 @@ storage.ide-wal
 /vs_solutions/dev/LicenseMgr/App
 *.dtbcache
 /www/data/github/App
+/gr/3DEngineTest/App

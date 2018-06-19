@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace Drawing3D.Device
 
-    Public Class Debugger : Inherits IDevice
+    Public Class Debugger : Inherits IDevice(Of GDIDevice)
         Implements IDisposable
 
         Public BufferWorker As Long

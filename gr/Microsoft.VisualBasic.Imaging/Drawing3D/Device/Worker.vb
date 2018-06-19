@@ -68,7 +68,7 @@ Namespace Drawing3D.Device
     ''' <summary>
     ''' 三维图形设备的工作线程管理器
     ''' </summary>
-    Public Class Worker : Inherits IDevice
+    Public Class Worker : Inherits IDevice(Of GDIDevice)
         Implements IDisposable
         Implements ITaskDriver
 
