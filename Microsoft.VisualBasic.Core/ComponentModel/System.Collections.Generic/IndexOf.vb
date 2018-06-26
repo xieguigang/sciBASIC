@@ -125,7 +125,7 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <param name="base"></param>
         Sub New(base As Integer)
-            Me.base = base
+            Call Me.New({}, base:=base)
         End Sub
 
         ''' <summary>
