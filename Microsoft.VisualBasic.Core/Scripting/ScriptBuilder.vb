@@ -139,6 +139,11 @@ Namespace Scripting.SymbolBuilder
             Return sb.Script.ToString
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(script As String) As ScriptBuilder
+            Return New ScriptBuilder(script)
+        End Operator
+
         ''' <summary>
         ''' <see cref="StringBuilder.Append"/>
         ''' </summary>
