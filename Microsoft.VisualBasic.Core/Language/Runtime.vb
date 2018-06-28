@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::8d9d9af82ad13243dfeea72500e90966, Microsoft.VisualBasic.Core\Language\Runtime.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ArgumentReference
-    ' 
-    '         Properties: Key
-    ' 
-    '         Function: ToString
-    '         Operators: <>, =
-    ' 
-    '     Class TypeSchema
-    ' 
-    '         Properties: Type
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Equals, ToString
-    '         Operators: (+2 Overloads) And, (+2 Overloads) Or
-    ' 
-    '     Class Runtime
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ArgumentReference
+' 
+'         Properties: Key
+' 
+'         Function: ToString
+'         Operators: <>, =
+' 
+'     Class TypeSchema
+' 
+'         Properties: Type
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Equals, ToString
+'         Operators: (+2 Overloads) And, (+2 Overloads) Or
+' 
+'     Class Runtime
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Language
 
@@ -75,14 +76,22 @@ Namespace Language
             End Set
         End Property
 
-        Public ReadOnly Property Expression(Optional null$ = "Nothing", Optional stringEscaping As Func(Of String, String) = Nothing) As String
+        Public ReadOnly Property Expression(Optional null$ = "Nothing",
+                                            Optional stringEscaping As Func(Of String, String) = Nothing,
+                                            Optional isVar As Assert(Of String) = Nothing) As String
             Get
                 Dim val$
+
+                Static [isNot] As New DefaultValue(Of Assert(Of String))(Function(var) False)
 
                 If value Is Nothing Then
                     val = null
                 ElseIf value.GetType Is GetType(String) Then
-                    val = $"""{(stringEscaping Or noEscaping)(value)}"""
+                    If (isVar Or [isNot])(value) Then
+                        val = value
+                    Else
+                        val = $"""{(stringEscaping Or noEscaping)(value)}"""
+                    End If
                 ElseIf value.GetType Is GetType(Char) Then
                     val = $"""{value}"""
                 Else
