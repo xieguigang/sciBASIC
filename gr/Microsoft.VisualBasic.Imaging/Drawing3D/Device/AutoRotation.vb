@@ -50,8 +50,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing3D.Device
 
-    Public Class AutoRotation
-        Inherits IDevice
+    Public Class AutoRotation : Inherits IDevice(Of GDIDevice)
 
         Public Property X! = 1
         Public Property Y! = 1

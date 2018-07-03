@@ -420,7 +420,7 @@ Public Module __DEBUG_MAIN
 
         Dim files As String() = LinqAPI.Exec(Of String) <= From path As String
                                                            In ls - l - ShellSyntax.r - wildcards("*.txt") <= "D:\MyDocuments"
-                                                           Where (grep * "/\*.../\*" <= path).IsNullOrEmpty
+                                                           Where (grep * "/\*.../\*" <= path).Count = 0
                                                            Select path
 
 

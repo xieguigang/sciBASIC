@@ -202,7 +202,7 @@ Public Module WebServiceUtils
     End Function
 
     ReadOnly urlEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
-    ReadOnly noEscaping As New Func(Of String, String)(Function(s) s)
+    Friend ReadOnly noEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(Function(s) s)
 
     ''' <summary>
     ''' 生成URL请求的参数

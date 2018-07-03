@@ -135,9 +135,6 @@ Public Structure AAAA
 
 End Structure
 
-''' <summary>
-''' The <see cref="ConsoleColor"/> theme for the <see cref="ProgressBar"/>
-''' </summary>
 Public Structure ColorTheme
 
     ' [ERROR 2017/11/5 下午 0704:37] <Print>:System.Exception: Print 

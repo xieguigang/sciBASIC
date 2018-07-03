@@ -66,7 +66,7 @@ Namespace CommandLine
             Call bat.AppendLine(Drive)
             Call bat.AppendLine("CD " & App.CurrentDirectory.CLIPath)
 
-            If Not environment.IsNullOrEmpty Then
+            If Not environment Is Nothing Then
                 ' 写入临时的环境变量
                 For Each para As ValueTuple In environment
                     Call bat.AppendLine($"set {para.Key}={para.Value}")
@@ -104,7 +104,7 @@ Namespace CommandLine
             Call shell.AppendLine()
             Call shell.AppendLine()
 
-            If Not environment.IsNullOrEmpty Then
+            If Not environment Is Nothing Then
                 For Each param As ValueTuple In environment
                     ' To set it for current shell And all processes started from current shell
                     ' shorter, less portable version

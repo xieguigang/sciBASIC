@@ -152,7 +152,7 @@ Namespace ComponentModel.Ranges
         ''' <returns></returns>
         <Extension>
         Public Function RangeTransform(from As IEnumerable(Of Double), [to] As DoubleRange) As Double()
-            If from.IsNullOrEmpty Then
+            If from Is Nothing Then
                 Return {}
             End If
 

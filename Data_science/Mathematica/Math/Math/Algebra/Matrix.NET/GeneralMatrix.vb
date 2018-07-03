@@ -108,6 +108,7 @@ Namespace Matrix
     ''' The MathWorks, Inc. and the National Institute of Standards and Technology.
     ''' 
     ''' http://www.codeproject.com/Articles/5835/DotNetMatrix-Simple-Matrix-Library-for-NET
+    ''' https://github.com/fiji/Jama/blob/master/src/main/java/Jama/Matrix.java
     ''' </author>
     ''' <version>  5 August 1998
     ''' </version>
@@ -878,14 +879,15 @@ Namespace Matrix
             Return Me
         End Function
 
-        ''' <summary>Linear algebraic matrix multiplication, A * B</summary>
-        ''' <param name="B">   another matrix
-        ''' </param>
-        ''' <returns>     Matrix product, A * B
-        ''' </returns>
-        ''' <exception cref="System.ArgumentException">  Matrix inner dimensions must agree.
+        ''' <summary>
+        ''' Linear algebraic matrix multiplication, ``A * B``
+        ''' 
+        ''' ``Jama.Matrix.times``
+        ''' </summary>
+        ''' <param name="B">another matrix</param>
+        ''' <returns>Matrix product, A * B</returns>
+        ''' <exception cref="System.ArgumentException">Matrix inner dimensions must agree.
         ''' </exception>
-
         Public Overridable Function Multiply(B As GeneralMatrix) As GeneralMatrix
             If B.m <> n Then
                 Throw New System.ArgumentException("GeneralMatrix inner dimensions must agree.")

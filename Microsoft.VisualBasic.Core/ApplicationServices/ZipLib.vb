@@ -127,27 +127,82 @@ Namespace ApplicationServices
         Public Sub ImprovedExtractToDirectory(<Parameter("Zip", "The name of the zip file to be extracted")> sourceArchiveFileName$,
                                               <Parameter("Dir", "The directory to extract the zip file to")> destinationDirectoryName$,
                                               <Parameter("Overwrite.HowTo", "Specifies how we are going to handle an existing file. The default is IfNewer.")>
-                                              Optional overwriteMethod As Overwrite = Overwrite.IfNewer)
+                                              Optional overwriteMethod As Overwrite = Overwrite.IfNewer,
+                                              Optional extractToFlat As Boolean = False)
+
             ' Opens the zip file up to be read
             Using archive As ZipArchive = ZipFile.OpenRead(sourceArchiveFileName)
+
+                Dim rootDir$ = Nothing
+                Dim isFolderArchive = sourceArchiveFileName.IsSourceFolderZip(folder:=rootDir)
+                Dim fullName$
+
                 ' Loops through each file in the zip file
                 For Each file As ZipArchiveEntry In archive.Entries
+                    If extractToFlat AndAlso isFolderArchive Then
+                        fullName = file.FullName.Replace(rootDir, "")
+                    Else
+                        fullName = file.FullName
+                    End If
+
                     If file.IsADirectoryEntry Then
                         Call Path _
-                            .Combine(destinationDirectoryName, file.FullName) _
+                            .Combine(destinationDirectoryName, fullName) _
                             .MkDIR
                     Else
-                        Call ImprovedExtractToFile(
-                            file:=file,
+                        Call file.ExtractToFileInternal(
                             destinationPath:=destinationDirectoryName,
-                            overwriteMethod:=overwriteMethod
+                            overwriteMethod:=overwriteMethod,
+                            overridesFullName:=fullName
                         )
                     End If
                 Next
             End Using
         End Sub
 
-        Public Function ExtractToSelfDirectory(zip As String, Optional overwriteMethod As Overwrite = Overwrite.IfNewer) As String
+        ''' <summary>
+        ''' 判断目标zip文件是否是直接将文件夹进行压缩的
+        ''' 如果是直接将文件夹压缩的，那么肯定会在每一个entry的起始存在一个共同的文件夹名
+        ''' 例如：
+        ''' 
+        ''' ```
+        ''' 95-1.D/
+        ''' 95-1.D/AcqData/
+        ''' 95-1.D/AcqData/Contents.xml
+        ''' 95-1.D/AcqData/Devices.xml
+        ''' ```
+        ''' </summary>
+        ''' <param name="zip"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function IsSourceFolderZip(zip$, Optional ByRef folder$ = Nothing) As Boolean
+            Using archive As ZipArchive = ZipFile.OpenRead(zip)
+                Dim fileNames = archive.Entries _
+                    .Where(Function(e) Not e.IsADirectoryEntry) _
+                    .Select(Function(file) file.FullName) _
+                    .ToArray
+                Dim rootDir = archive.Entries _
+                    .Where(Function(e) e.IsADirectoryEntry) _
+                    .Select(Function(d) d.FullName) _
+                    .OrderBy(Function(d) d.Length) _
+                    .FirstOrDefault
+
+                If rootDir.StringEmpty OrElse rootDir = "/" OrElse rootDir = "\" Then
+                    ' 没有root文件夹，说明不是
+                    Return False
+                End If
+
+                If fileNames.All(Function(path) path.StartsWith(rootDir)) Then
+                    folder = rootDir
+                Else
+                    folder = Nothing
+                End If
+
+                Return Not folder Is Nothing
+            End Using
+        End Function
+
+        Public Function ExtractToSelfDirectory(zip$, Optional overwriteMethod As Overwrite = Overwrite.IfNewer) As String
             Dim Dir As String = FileIO.FileSystem.GetParentPath(zip)
             Dim Name As String = BaseName(zip)
             Dir = Dir & "/" & Name
@@ -161,6 +216,48 @@ Namespace ApplicationServices
         Public Function IsADirectoryEntry(file As ZipArchiveEntry) As Boolean
             Return file.FullName.Last = "/"c OrElse file.FullName.Last = "\"c
         End Function
+
+        <Extension> Private Sub ExtractToFileInternal(file As ZipArchiveEntry, destinationPath$, overwriteMethod As Overwrite, overridesFullName$)
+            ' Gets the complete path for the destination file, including any
+            ' relative paths that were in the zip file
+            Dim destinationFileName As String = Path.Combine(destinationPath, overridesFullName Or file.FullName.AsDefault)
+
+            ' Gets just the new path, minus the file name so we can create the
+            ' directory if it does not exist
+            Dim destinationFilePath As String = Path.GetDirectoryName(destinationFileName)
+
+            ' Creates the directory (if it doesn't exist) for the new path
+            ' 2018-2-2 在原先的代码之中直接使用CreateDirectory，如果目标文件夹存在的话会报错
+            ' 在这里使用安全一点的mkdir函数
+            Call destinationFilePath.MkDIR(throwEx:=False)
+
+            ' Determines what to do with the file based upon the
+            ' method of overwriting chosen
+            Select Case overwriteMethod
+                Case Overwrite.Always
+
+                    ' Just put the file in and overwrite anything that is found
+                    file.ExtractToFile(destinationFileName, True)
+
+                Case Overwrite.IfNewer
+                    ' Checks to see if the file exists, and if so, if it should
+                    ' be overwritten
+                    If Not IO.File.Exists(destinationFileName) OrElse IO.File.GetLastWriteTime(destinationFileName) < file.LastWriteTime Then
+                        ' Either the file didn't exist or this file is newer, so
+                        ' we will extract it and overwrite any existing file
+                        file.ExtractToFile(destinationFileName, True)
+                    End If
+
+                Case Overwrite.Never
+                    ' Put the file in if it is new but ignores the 
+                    ' file if it already exists
+                    If Not IO.File.Exists(destinationFileName) Then
+                        file.ExtractToFile(destinationFileName)
+                    End If
+
+                Case Else
+            End Select
+        End Sub
 
         ''' <summary>
         ''' Safely extracts a single file from a zip file
@@ -177,51 +274,12 @@ Namespace ApplicationServices
         ''' </param>
         ''' 
         <ExportAPI("Extract", Info:="Safely extracts a single file from a zip file.")>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Sub ImprovedExtractToFile(<Parameter("Zip.Entry", "The zip entry we are pulling the file from")>
                                                      file As ZipArchiveEntry,
-                                                     destinationPath As String,
+                                                     destinationPath$,
                                                      Optional overwriteMethod As Overwrite = Overwrite.IfNewer)
-
-            'Gets the complete path for the destination file, including any
-            'relative paths that were in the zip file
-            Dim destinationFileName As String = Path.Combine(destinationPath, file.FullName)
-
-            'Gets just the new path, minus the file name so we can create the
-            'directory if it does not exist
-            Dim destinationFilePath As String = Path.GetDirectoryName(destinationFileName)
-
-            ' Creates the directory (if it doesn't exist) for the new path
-            ' 2018-2-2 在原先的代码之中直接使用CreateDirectory，如果目标文件夹存在的话会报错
-            ' 在这里使用安全一点的mkdir函数
-            Call destinationFilePath.MkDIR(throwEx:=False)
-
-            'Determines what to do with the file based upon the
-            'method of overwriting chosen
-            Select Case overwriteMethod
-                Case Overwrite.Always
-
-                    ' Just put the file in and overwrite anything that is found
-                    file.ExtractToFile(destinationFileName, True)
-
-                Case Overwrite.IfNewer
-                    'Checks to see if the file exists, and if so, if it should
-                    'be overwritten
-                    If Not IO.File.Exists(destinationFileName) OrElse IO.File.GetLastWriteTime(destinationFileName) < file.LastWriteTime Then
-                        'Either the file didn't exist or this file is newer, so
-                        'we will extract it and overwrite any existing file
-                        file.ExtractToFile(destinationFileName, True)
-                    End If
-
-                Case Overwrite.Never
-                    'Put the file in if it is new but ignores the 
-                    'file if it already exists
-                    If Not IO.File.Exists(destinationFileName) Then
-                        file.ExtractToFile(destinationFileName)
-                    End If
-
-                Case Else
-
-            End Select
+            Call file.ExtractToFileInternal(destinationPath, overwriteMethod, Nothing)
         End Sub
 
         <ExportAPI("File.Zip")>

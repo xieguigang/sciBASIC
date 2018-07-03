@@ -127,6 +127,18 @@ Namespace Language
             }
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function [When](Of T)([default] As T, expression As Boolean) As DefaultValue(Of T)
+            Return [default].AsDefault().When(expression)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function [When](Of T)([default] As T, expression As Assert(Of T)) As DefaultValue(Of T)
+            Return [default].AsDefault().When(assert:=expression)
+        End Function
+
         ''' <summary>
         ''' Helper for update the value property of <see cref="Value(Of T)"/>
         ''' 

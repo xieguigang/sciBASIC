@@ -46,47 +46,69 @@ Imports System.Windows.Forms
 
 Namespace Drawing3D.Device
 
-    Public Class Mouse : Inherits IDevice
+    Public Class Mouse : Inherits IDevice(Of UserControl)
 
-        Dim _rotate As Boolean
+        Dim press As Boolean
+
         Dim oldXY As Point
+        Dim camera As Camera
 
-        Public Sub New(dev As GDIDevice)
+        Public Sub New(dev As UserControl, camera As Camera)
             MyBase.New(dev)
+            Me.camera = camera
         End Sub
 
         Private Sub device_MouseDown(sender As Object, e As MouseEventArgs) Handles device.MouseDown
-            _rotate = True
+            press = True
             oldXY = e.Location
         End Sub
 
         Private Sub device_MouseMove(sender As Object, e As MouseEventArgs) Handles device.MouseMove
             Dim xy = e.Location
 
-            If Not _rotate Then
+            If Not press Then
                 Return
             End If
 
-            If xy.X > oldXY.X Then  ' right
-                device._camera.angleY += 1
-            End If
-            If xy.X < oldXY.X Then ' left
-                device._camera.angleY -= 1
-            End If
-            If xy.Y > oldXY.Y Then ' down
-                'device._camera.angleZ -= 1
-                device._camera.angleX -= 1
-            End If
-            If xy.Y < oldXY.Y Then ' up
-                'device._camera.angleZ += 1
-                device._camera.angleX += 1
+            If e.Button = MouseButtons.Left Then
+
+                ' 左键旋转
+
+                If xy.X > oldXY.X Then  ' right
+                    camera.angleY += 1
+                End If
+                If xy.X < oldXY.X Then ' left
+                    camera.angleY -= 1
+                End If
+                If xy.Y > oldXY.Y Then ' down
+                    'device._camera.angleZ -= 1
+                    camera.angleX -= 1
+                End If
+                If xy.Y < oldXY.Y Then ' up
+                    'device._camera.angleZ += 1
+                    camera.angleX += 1
+                End If
+
+            ElseIf e.Button = MouseButtons.Right Then
+
+                ' 右键进行位移
+                Dim dx = xy.X - oldXY.X
+                Dim dy = xy.Y - oldXY.Y
+
+                camera.offset = New PointF With {
+                    .X = camera.offset.X + dx,
+                    .Y = camera.offset.Y + dy
+                }
+
+            Else
+
             End If
 
             oldXY = xy
         End Sub
 
         Private Sub device_MouseUp(sender As Object, e As MouseEventArgs) Handles device.MouseUp
-            _rotate = False
+            press = False
         End Sub
     End Class
 End Namespace

@@ -153,7 +153,7 @@ Namespace Drawing3D.Math3D
         ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Translate(base As Point3D, dx As Double, dy As Double, dz As Double) As Point3D
+        Public Function Translate(base As Point3D, dx#, dy#, dz#) As Point3D
             With base
                 Return New Point3D(.X + dx, .Y + dy, .Z + dz)
             End With
@@ -164,12 +164,13 @@ Namespace Drawing3D.Math3D
         ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Scale(base As Point3D, origin As Point3D, dx As Double, dy As Double, dz As Double) As Point3D
+        Public Function Scale(base As Point3D, origin As Point3D, dx#, dy#, dz#) As Point3D
             With base
                 Return New Point3D(
-                    (.X - origin.X) * dx + origin.X,
-                    (.Y - origin.Y) * dy + origin.Y,
-                    (.Z - origin.Z) * dz + origin.Z)
+                    x:=(.X - origin.X) * dx + origin.X,
+                    y:=(.Y - origin.Y) * dy + origin.Y,
+                    z:=(.Z - origin.Z) * dz + origin.Z
+                )
             End With
         End Function
 

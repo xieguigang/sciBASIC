@@ -50,7 +50,7 @@ Imports sys = System.Math
 
 Namespace Drawing3D.Math3D
 
-    Public Structure Vector3D
+    Public Structure Vector3D : Implements IEnumerable(Of Point3D)
 
         Public X As Vector
         Public Y As Vector
@@ -110,6 +110,14 @@ Namespace Drawing3D.Math3D
                 .X = x
                 .Y = y
                 .Z = z
+            End With
+        End Sub
+
+        Sub New(points As IEnumerable(Of Point3D))
+            With points.ToArray
+                Me.X = .Select(Function(p) CDbl(p.X)).ToArray
+                Me.Y = .Select(Function(p) CDbl(p.Y)).ToArray
+                Me.Z = .Select(Function(p) CDbl(p.Z)).ToArray
             End With
         End Sub
 
@@ -180,5 +188,15 @@ Namespace Drawing3D.Math3D
                 .Z = p3D.Z - offset.Z
             }
         End Operator
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Point3D) Implements IEnumerable(Of Point3D).GetEnumerator
+            For i As Integer = 0 To X.Length - 1
+                Yield New Point3D(X(i), Y(i), Z(i))
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
     End Structure
 End Namespace

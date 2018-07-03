@@ -53,11 +53,16 @@ Module LandscapeModel
 
         Return New Landscape.Data.Graphics With {
             .bg = "lightblue",
-            .Surfaces = faces.ToArray(
-            Function(f, i) New Landscape.Data.Surface With {
-                .paint = colors(i),
-                .vertices = f.vertices.ToArray(Function(pt) New Landscape.Data.Vector(pt))
-            })
+            .Surfaces = faces _
+                .Select(Function(f, i)
+                            Return New Landscape.Data.Surface With {
+                                .paint = colors(i),
+                                .vertices = f.vertices _
+                                    .Select(Function(pt) New Landscape.Data.Vector(pt)) _
+                                    .ToArray
+                            }
+                        End Function) _
+                .ToArray
         }
     End Function
 
