@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::ced01ef1b9c96a858cbd3d0a6c87f4bd, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Index
-    ' 
-    '         Properties: Count, Map, Objects
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator, (+2 Overloads) Intersect, NotExists, ToString
-    ' 
-    '         Sub: Add, Clear
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Index
+' 
+'         Properties: Count, Map, Objects
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: GetEnumerator, IEnumerable_GetEnumerator, (+2 Overloads) Intersect, NotExists, ToString
+' 
+'         Sub: Add, Clear
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,6 +65,7 @@ Namespace ComponentModel.Collection
 
         Dim maps As New Dictionary(Of T, Integer)
         Dim index As HashList(Of SeqValue(Of T))
+        Dim base%
 
         ''' <summary>
         ''' 获取包含在<see cref="System.Collections.Generic.Dictionary"/>中的键/值对的数目。
@@ -92,27 +93,39 @@ Namespace ComponentModel.Collection
         ''' 请注意，这里的数据源请尽量使用Distinct的，否则对于重复的数据，只会记录下第一个位置
         ''' </summary>
         ''' <param name="source"></param>
-        Sub New(source As IEnumerable(Of T))
+        Sub New(source As IEnumerable(Of T), Optional base% = 0)
             If source Is Nothing Then
                 source = {}
             End If
 
             For Each x As SeqValue(Of T) In source.SeqIterator
                 If Not maps.ContainsKey(x) Then
-                    Call maps.Add(+x, x.i)
+                    Call maps.Add(+x, x.i + base)
                 End If
             Next
 
-            index = maps.Select(
-                Function(s) New SeqValue(Of T) With {
-                    .i = s.Value,
-                    .value = s.Key
-                }).AsHashList
+            Me.base = base
+            Me.index = maps _
+                .Select(Function(s)
+                            Return New SeqValue(Of T) With {
+                                .i = s.Value,
+                                .value = s.Key
+                            }
+                        End Function) _
+                .AsHashList
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(ParamArray vector As T())
             Call Me.New(source:=DirectCast(vector, IEnumerable(Of T)))
+        End Sub
+
+        ''' <summary>
+        ''' 默认是从0开始的
+        ''' </summary>
+        ''' <param name="base"></param>
+        Sub New(base As Integer)
+            Call Me.New({}, base:=base)
         End Sub
 
         ''' <summary>
@@ -174,16 +187,18 @@ Namespace ComponentModel.Collection
         ''' 这个函数是线程不安全的
         ''' </summary>
         ''' <param name="x"></param>
-        Public Sub Add(x As T)
+        Public Function Add(x As T) As Integer
             If Not maps.ContainsKey(x) Then
-                Call maps.Add(x, maps.Count)
+                Call maps.Add(x, maps.Count + base)
                 Call index.Add(
-                    New SeqValue(Of T) With {
-                        .i = maps.Count,
+                    x:=New SeqValue(Of T) With {
+                        .i = maps(x),
                         .value = x
                     })
             End If
-        End Sub
+
+            Return maps(x)
+        End Function
 
         Public Sub Clear()
             Call maps.Clear()
