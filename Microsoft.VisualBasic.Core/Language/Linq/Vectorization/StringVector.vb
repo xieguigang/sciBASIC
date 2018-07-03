@@ -95,5 +95,16 @@ Namespace Language.Vectorization
         Public Shared Function IsPattern(strings As StringVector, pattern$, Optional opt As RegexOptions = RegexICSng) As BooleanVector
             Return strings.Select(Function(s) s.IsPattern(pattern, opt)).AsVector
         End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="expression">a,b,c,d,e</param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(expression As String) As StringVector
+            Return New StringVector(Strings.Split(expression, ","))
+        End Operator
     End Class
 End Namespace

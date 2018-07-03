@@ -592,6 +592,8 @@ Public Module App
     Public Sub println(s$, ParamArray args As Object())
         If Not args.IsNullOrEmpty Then
             s = sprintf(s, args)
+        Else
+            s = CLangStringFormatProvider.ReplaceMetaChars(s)
         End If
 
         Call InnerQueue.AddToQueue(
@@ -655,10 +657,15 @@ Public Module App
     ''' <remarks></remarks>
     '''
     <ExportAPI("Pause", Info:="Pause the console program.")>
-    Public Sub Pause(Optional Prompted As String = "Press any key to continute...")
+    Public Sub Pause(Optional prompted$ = "Press any key to continute...")
         Call InnerQueue.WaitQueue()
-        Call Console.WriteLine(Prompted)
-        Call Console.Read()
+        Call Console.WriteLine(prompted)
+
+        ' 2018-6-26 如果不是命令行程序的话，可能会因为没有地方进行输入而导致程序在这里停止运行
+        ' 所以会需要进行一些判断，只在命令行模式下才会要求输入
+        If App.IsConsoleApp Then
+            Call Console.Read()
+        End If
     End Sub
 
     ''' <summary>

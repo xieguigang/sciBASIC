@@ -444,7 +444,7 @@ Public Module VectorExtensions
     ''' <param name="length"></param>
     ''' <returns></returns>
     <Extension> Public Function Midv(Of T)(source As IEnumerable(Of T), start%, length%) As T()
-        If source.IsNullOrEmpty Then
+        If source Is Nothing Then
             Return New T() {}
         ElseIf source.Count < length Then
             Return source.ToArray

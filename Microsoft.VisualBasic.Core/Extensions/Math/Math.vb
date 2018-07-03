@@ -1746,7 +1746,7 @@ Namespace Math
         ''' 
         <ExportAPI("Sum")>
         <Extension> Public Function Sum(bc As IEnumerable(Of Boolean)) As Double
-            If bc.IsNullOrEmpty Then
+            If bc Is Nothing Then
                 Return 0
             Else
                 Return bc _

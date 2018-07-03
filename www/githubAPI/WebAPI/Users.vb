@@ -108,8 +108,8 @@ Namespace WebAPI
         ReadOnly UserSplitter$ = (<div class="d-table .+?"/>).ToString.Replace("=", "[=]")
         ReadOnly Splitter$ = (<div class="js-repo-filter position-relative"/>).ToString
 
-        Const locationPattern$ = "<svg .+? class=""octicon octicon-location"".+?</p>"
-        Const organizationPattern$ = "<svg .+? class=""octicon octicon-organization"".+?</span>"
+        Const organizationPattern$ = "<svg.+?class=""octicon octicon-organization"".+?</span>"
+        Const locationPattern$ = "<svg.+?class=""octicon octicon-location"".+?</p>"
 
         Private Function ParserInternal(user$, page%, url$) As User()
             Dim html$
@@ -119,20 +119,21 @@ Namespace WebAPI
             sp = "<div class=""position-relative"">"
             html = url.GET
             html = Strings.Split(html, sp).Last
-            sp = UserSplitter.Replace(" /", "")
+            sp = UserSplitter.Replace("""/", "")
 
             Dim users$() = r.Split(html, sp, RegexICSng).Skip(1).ToArray
             Dim out As New List(Of User)
 
             For Each u$ In users
                 Dim userName As String = Regex _
-                    .Match(u, "<a href=""/.+?"">") _
+                    .Match(u, "<a .+?href=""/.+?"">") _
                     .Value _
                     .href _
                     .Replace("/", "")
-                Dim avatar As String = Regex.Match(u, "<img .+? />").Value.img.src
+                Dim userID = r.Match(u, "user[-]id[=]""\d+""").Value.GetStackValue("""", """")
+                Dim avatar As String = $"https://avatars0.githubusercontent.com/u/{userID}?s=100&v=4"
                 Dim display As String = Regex.Match(u, "<span class=""f4 link-gray-dark"">.*?</span>").Value.GetValue
-                Dim bio As String = Regex.Match(u, "<p class="".*?text-gray text-small"">.*?</p>").Value.GetValue
+                Dim bio As String = Regex.Match(u, "<div class="".*?text[-]gray text[-]small.+?"">.*?</div>").Value.GetValue
                 Dim location = TryInvoke(Function() u.Match(locationPattern, RegexICSng).GetBetween("</svg>", "</p>").LineTokens.FirstOrDefault?.Trim)
                 Dim org = TryInvoke(Function() u.Match(organizationPattern, RegexICSng).GetBetween("</svg>", "</span>").LineTokens.FirstOrDefault?.Trim)
 
@@ -142,7 +143,9 @@ Namespace WebAPI
                     .name = display,
                     .bio = bio,
                     .location = location,
-                    .organizations_url = org
+                    .organizations_url = org,
+                    .updated_at = Now.ToLocalTime,
+                    .id = userID
                 }
             Next
 

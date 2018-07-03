@@ -78,7 +78,7 @@ Namespace Drawing3D.Device
 
         Dim rotationWorker As New AutoRotation(Me)
         Dim worker As New Worker(Me)
-        Dim mouse As New Mouse(Me)
+        Dim mouse As New Mouse(Me, _camera)
 
         ''' <summary>
         ''' 是否绘制出模型的边界线

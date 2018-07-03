@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::1c42bd61c25b24e15da0d0b8a9122cae, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ProgramPathSearchTool
-    ' 
-    '     Function: BaseName, BatchMd5Renamed, BranchRule, ChangeSuffix, Delete
-    '               DIR, DirectoryExists, DirectoryName, EnumerateFiles, ExtensionSuffix
-    '               FileCopy, (+2 Overloads) FileExists, FileLength, FileMove, FileName
-    '               FileOpened, GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath
-    '               GetMostAppreancePath, ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList
-    '               Long2Short, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine
-    '               PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory
-    '               SearchDrive, SearchProgram, SearchScriptFile, SourceCopy, SplitPath
-    '               TheFile, ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix
-    '               UnixPath
-    ' 
-    '     Sub: MkDIR
-    ' 
-    ' /********************************************************************************/
+' Module ProgramPathSearchTool
+' 
+'     Function: BaseName, BatchMd5Renamed, BranchRule, ChangeSuffix, Delete
+'               DIR, DirectoryExists, DirectoryName, EnumerateFiles, ExtensionSuffix
+'               FileCopy, (+2 Overloads) FileExists, FileLength, FileMove, FileName
+'               FileOpened, GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath
+'               GetMostAppreancePath, ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList
+'               Long2Short, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine
+'               PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory
+'               SearchDrive, SearchProgram, SearchScriptFile, SourceCopy, SplitPath
+'               TheFile, ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix
+'               UnixPath
+' 
+'     Sub: MkDIR
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -201,18 +202,22 @@ Public Module ProgramPathSearchTool
         End If
     End Function
 
+    ReadOnly allKinds As New DefaultValue(Of String())({"*.*"}, Function(o) TryCast(o, String()).IsNullOrEmpty)
+
     ''' <summary>
     ''' 使用<see cref="FileIO.FileSystem.GetFiles"/>函数枚举
     ''' **当前的**(不是递归的搜索所有的子文件夹)文件夹之中的
     ''' 所有的符合条件的文件路径
     ''' </summary>
     ''' <param name="DIR">文件夹路径</param>
-    ''' <param name="keyword">文件名进行匹配的关键词</param>
+    ''' <param name="keyword">
+    ''' Default is ``*.*`` for match any kind of files.
+    ''' (文件名进行匹配的关键词)
+    ''' </param>
     ''' <returns></returns>
     <Extension>
     Public Function EnumerateFiles(DIR$, ParamArray keyword$()) As IEnumerable(Of String)
-        Dim files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword)
-        Return files
+        Return FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword Or allKinds)
     End Function
 
     ''' <summary>
@@ -445,10 +450,22 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' Safe file copy operation.(请注意，<paramref name="copyTo"/>参数的字符串最末尾必须是``/``或者``\``才会被认作为目录路径)
+    ''' Safe file copy operation.
+    ''' (请注意，<paramref name="copyTo"/>参数的字符串最末尾必须是``/``或者``\``才会被认作为目录路径)
     ''' </summary>
     ''' <param name="source$"></param>
-    ''' <param name="copyTo$">Can be file name or directory name</param>
+    ''' <param name="copyTo$">
+    ''' Can be file name or directory name.
+    ''' 
+    ''' + If this paramter is a file path, then you can copy the 
+    '''   source file to another location with renamed.
+    ''' + If this parameter is a directory location, then you can 
+    '''   copy the source file to another location with the 
+    '''   identical file name.
+    ''' 
+    ''' Please notice that, the directory path should end with 
+    ''' path seperator symbol: ``\`` or ``/``.
+    ''' </param>
     ''' <returns></returns>
     <Extension> Public Function FileCopy(source$, copyTo$) As Boolean
         Try
@@ -875,7 +892,7 @@ Public Module ProgramPathSearchTool
     <ExportAPI("Get.FrequentPath",
                Info:="Gets a directory path which is most frequent appeared in the file list.")>
     Public Function GetMostAppreancePath(files As IEnumerable(Of String)) As String
-        If files.IsNullOrEmpty Then
+        If files Is Nothing Then
             Return ""
         End If
 
@@ -885,7 +902,7 @@ Public Module ProgramPathSearchTool
         Return LQuery _
             .TokenCount(ignoreCase:=True) _
             .OrderByDescending(Function(x) x.Value) _
-            .First _
+            .FirstOrDefault _
             .Key
     End Function
 

@@ -78,7 +78,10 @@ Namespace LinearAlgebra
     ''' </remarks>
     Public Class Matrix
 
-        Public M As Integer, N As Integer
+        ''' <summary>
+        ''' [nrow, ncol] = [M, N]
+        ''' </summary>
+        Public M, N As Integer
         Public X As Double(,)
 
         ''' <summary>

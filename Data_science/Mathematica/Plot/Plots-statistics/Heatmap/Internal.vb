@@ -516,9 +516,8 @@ Namespace Heatmap
 
                         scaleData = array _
                             .Select(Function(x)
-                                        Dim vector As Vector = names _
-                                            .AsVector(x.Properties) _
-                                            .Log(logScale)
+                                        Dim vector As Vector = names.AsVector(x.Properties)
+                                        vector = Vector.Log(vector, logScale)
 
                                         Return New DataSet With {
                                             .ID = x.ID,
