@@ -314,6 +314,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MLR.vb" />
+    <Compile Include="LMA.vb" />
     <Compile Include="IFitted.vb" />
     <Compile Include="Outlier.vb" />
     <Compile Include="Weighted\WeightedFit.vb" />
