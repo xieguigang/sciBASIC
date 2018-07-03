@@ -22,7 +22,7 @@ Public Module AssemblyInfoExtensions
 
     <Extension>
     Public Function ParseAssemblyInfo(vb As String) As DevAssemblyInfo
-        Dim lines = vb.lTokens _
+        Dim lines = vb.LineTokens _
             .Select(AddressOf Trim) _
             .Where(Function(l)
                        Return Not l.StringEmpty AndAlso l.First = "<"c AndAlso l.Last = ">"c
