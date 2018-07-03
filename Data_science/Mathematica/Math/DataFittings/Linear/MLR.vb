@@ -62,6 +62,18 @@ Public Class MLRFit
         }
     End Function
 
+    ''' <summary>
+    ''' ```
+    ''' h(X) = a + b*x1 + c*x2^2 + d*x3^3 + ... 
+    ''' ```
+    ''' </summary>
+    ''' <param name="X"></param>
+    ''' <returns></returns>
+    <MethodImpl>
+    Public Function CurveScale(X As IEnumerable(Of Double)) As Vector
+        Return X.Select(Function(xi, i) xi ^ (i + 1)).AsVector
+    End Function
+
     Public Shared Function left(beta#, t#, S#) As Double
         Return beta - (t * S)
     End Function
