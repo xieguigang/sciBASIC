@@ -592,6 +592,8 @@ Public Module App
     Public Sub println(s$, ParamArray args As Object())
         If Not args.IsNullOrEmpty Then
             s = sprintf(s, args)
+        Else
+            s = CLangStringFormatProvider.ReplaceMetaChars(s)
         End If
 
         Call InnerQueue.AddToQueue(

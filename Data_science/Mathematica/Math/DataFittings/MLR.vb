@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Matrix
 
@@ -8,24 +10,24 @@ Imports Microsoft.VisualBasic.Math.Matrix
 ''' Problem of predicting appropriate values of given feature set as inputvector
 ''' using supervised linear regression with multiple dimensional sample input 
 ''' </summary>
-Public Class MLR
+Public Class MLRFit
 
     ''' <summary>
     ''' 
     ''' </summary>
-    Dim N%
+    Public Property N As Integer
     ''' <summary>
     ''' number of dependent variables
     ''' </summary>
-    Dim p%
+    Public Property p As Integer
     ''' <summary>
     ''' regression coefficients
     ''' </summary>
-    Dim beta As GeneralMatrix
+    Public Property beta As Double()
     ''' <summary>
     ''' sum of squared
     ''' </summary>
-    Dim SSE#, SST#
+    Public SSE#, SST#
 
     Public ReadOnly Property R2 As Double
         Get
@@ -33,21 +35,32 @@ Public Class MLR
         End Get
     End Property
 
-    Public Sub DoRegression(x As GeneralMatrix, f As Vector)
-        N = f.Length
-        p = x.ColumnDimension
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function LinearFitting(x As Double(,), y#()) As MLRFit
+        Return LinearFitting(New GeneralMatrix(x.RowIterator.ToArray), y)
+    End Function
 
+    Public Shared Function LinearFitting(x As GeneralMatrix, f As Vector) As MLRFit
+        Dim N = f.Length
+        Dim p = x.ColumnDimension
         Dim Y As New GeneralMatrix(f, N)
-        Dim sum# = f.Sum
-        Dim mean# = sum / N
-
-        beta = x.QRD.Solve(Y)
-        SST = ((f - mean) ^ 2).Sum
-
+        Dim mean# = f.Average
+        Dim beta = x.QRD.Solve(Y)
+        Dim SST = ((f - mean) ^ 2).Sum
         Dim residuals As GeneralMatrix = x.Multiply(beta) - Y
+        Dim SSE = residuals.Norm2 ^ 2
 
-        SSE = residuals.Norm2 ^ 2
-    End Sub
+        Return New MLRFit With {
+            .beta = x.ColumnDimension _
+                .Sequence _
+                .Select(Function(i) beta(i, 0)) _
+                .ToArray,
+            .N = N,
+            .p = p,
+            .SSE = SSE,
+            .SST = SST
+        }
+    End Function
 
     Public Shared Function left(beta#, t#, S#) As Double
         Return beta - (t * S)
@@ -58,7 +71,7 @@ Public Class MLR
     End Function
 
     Public Shared Function ConfidenceInterval(beta#, t#, S#) As DoubleRange
-        Dim left = MLR.left(beta, t, S), right = MLR.right(beta, t, S)
+        Dim left = MLRFit.left(beta, t, S), right = MLRFit.right(beta, t, S)
         Dim min# = If(left < right, left, right)
         Dim max# = If(left > right, left, right)
 
