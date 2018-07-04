@@ -77,7 +77,7 @@ Namespace Scripting
             Dim vector#() = New Double(factors.Length - 1) {}
 
             For Each factor As Factor(Of String) In factors
-                vector(factor.Value) = data(factor)
+                vector(CInt(factor.Value)) = data.TryGetValue(factor)
             Next
 
             Return vector.AsVector
