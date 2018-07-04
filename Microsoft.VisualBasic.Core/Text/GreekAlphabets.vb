@@ -78,41 +78,46 @@ Namespace Text
         Const Ψ$ = "psi"
         Const Ω$ = "omega"
 
-        Public ReadOnly Property Alphabets As New Dictionary(Of String, String) From {
-            {"α", GreekAlphabets.Α}, {"Α", GreekAlphabets.Α},
-            {"β", GreekAlphabets.Β}, {"Β", GreekAlphabets.Β},
-            {"γ", GreekAlphabets.Γ}, {"Γ", GreekAlphabets.Γ},
-            {"δ", GreekAlphabets.Δ}, {"Δ", GreekAlphabets.Δ},
-            {"ε", GreekAlphabets.Ε}, {"Ε", GreekAlphabets.Ε},
-            {"ζ", GreekAlphabets.Ζ}, {"Ζ", GreekAlphabets.Ζ},
-            {"η", GreekAlphabets.Η}, {"Η", GreekAlphabets.Η},
-            {"θ", GreekAlphabets.Θ}, {"Θ", GreekAlphabets.Θ},
-            {"ι", GreekAlphabets.Ι}, {"Ι", GreekAlphabets.Ι},
-            {"κ", GreekAlphabets.Κ}, {"Κ", GreekAlphabets.Κ},
-            {"λ", GreekAlphabets.Λ}, {"Λ", GreekAlphabets.Λ},
-            {"μ", GreekAlphabets.Μ}, {"Μ", GreekAlphabets.Μ},
-            {"ν", GreekAlphabets.Ν}, {"Ν", GreekAlphabets.Ν},
-            {"ξ", GreekAlphabets.Ξ}, {"Ξ", GreekAlphabets.Ξ},
-            {"ο", GreekAlphabets.Ο}, {"Ο", GreekAlphabets.Ο},
-            {"π", GreekAlphabets.Π}, {"Π", GreekAlphabets.Π},
-            {"ρ", GreekAlphabets.Ρ}, {"Ρ", GreekAlphabets.Ρ},
-            {"σ", GreekAlphabets.Σ}, {"Σ", GreekAlphabets.Σ},
-            {"τ", GreekAlphabets.Τ}, {"Τ", GreekAlphabets.Τ},
-            {"υ", GreekAlphabets.Υ}, {"Υ", GreekAlphabets.Υ},
-            {"φ", GreekAlphabets.Φ}, {"Φ", GreekAlphabets.Φ},
-            {"χ", GreekAlphabets.Χ}, {"Χ", GreekAlphabets.Χ},
-            {"ψ", GreekAlphabets.Ψ}, {"Ψ", GreekAlphabets.Ψ},
-            {"ω", GreekAlphabets.Ω}, {"Ω", GreekAlphabets.Ω}
-        }
+        Public ReadOnly Property Alphabets As Dictionary(Of String, String)
+        Public ReadOnly Property upper As Dictionary(Of String, String)
+        Public ReadOnly Property lower As Dictionary(Of String, String)
 
-        ReadOnly upper As Dictionary(Of String, String) = Alphabets.Subset({
-            "Α", "Β", "Γ", "Δ", "Ε", "Ζ",
-            "Η", "Θ", "Ι", "Κ", "Λ", "Μ",
-            "Ν", "Ξ", "Ο", "Π", "Ρ", "Σ",
-            "Τ", "Υ", "Φ", "Χ", "Ψ", "Ω"
-        })
+        Sub New()
+            _Alphabets = New Dictionary(Of String, String) From {
+               {"α", GreekAlphabets.Α}, {"Α", GreekAlphabets.Α},
+               {"β", GreekAlphabets.Β}, {"Β", GreekAlphabets.Β},
+               {"γ", GreekAlphabets.Γ}, {"Γ", GreekAlphabets.Γ},
+               {"δ", GreekAlphabets.Δ}, {"Δ", GreekAlphabets.Δ},
+               {"ε", GreekAlphabets.Ε}, {"Ε", GreekAlphabets.Ε},
+               {"ζ", GreekAlphabets.Ζ}, {"Ζ", GreekAlphabets.Ζ},
+               {"η", GreekAlphabets.Η}, {"Η", GreekAlphabets.Η},
+               {"θ", GreekAlphabets.Θ}, {"Θ", GreekAlphabets.Θ},
+               {"ι", GreekAlphabets.Ι}, {"Ι", GreekAlphabets.Ι},
+               {"κ", GreekAlphabets.Κ}, {"Κ", GreekAlphabets.Κ},
+               {"λ", GreekAlphabets.Λ}, {"Λ", GreekAlphabets.Λ},
+               {"μ", GreekAlphabets.Μ}, {"Μ", GreekAlphabets.Μ},
+               {"ν", GreekAlphabets.Ν}, {"Ν", GreekAlphabets.Ν},
+               {"ξ", GreekAlphabets.Ξ}, {"Ξ", GreekAlphabets.Ξ},
+               {"ο", GreekAlphabets.Ο}, {"Ο", GreekAlphabets.Ο},
+               {"π", GreekAlphabets.Π}, {"Π", GreekAlphabets.Π},
+               {"ρ", GreekAlphabets.Ρ}, {"Ρ", GreekAlphabets.Ρ},
+               {"σ", GreekAlphabets.Σ}, {"Σ", GreekAlphabets.Σ},
+               {"τ", GreekAlphabets.Τ}, {"Τ", GreekAlphabets.Τ},
+               {"υ", GreekAlphabets.Υ}, {"Υ", GreekAlphabets.Υ},
+               {"φ", GreekAlphabets.Φ}, {"Φ", GreekAlphabets.Φ},
+               {"χ", GreekAlphabets.Χ}, {"Χ", GreekAlphabets.Χ},
+               {"ψ", GreekAlphabets.Ψ}, {"Ψ", GreekAlphabets.Ψ},
+               {"ω", GreekAlphabets.Ω}, {"Ω", GreekAlphabets.Ω}
+            }
 
-        ReadOnly lower As Dictionary(Of String, String) = Alphabets.Subset(Alphabets.Keys.AsSet - upper.Keys)
+            _upper = Alphabets.Subset({
+                "Α", "Β", "Γ", "Δ", "Ε", "Ζ",
+                "Η", "Θ", "Ι", "Κ", "Λ", "Μ",
+                "Ν", "Ξ", "Ο", "Π", "Ρ", "Σ",
+                "Τ", "Υ", "Φ", "Χ", "Ψ", "Ω"
+            })
+            _lower = Alphabets.Subset(Alphabets.Keys.AsSet - upper.Keys)
+        End Sub
 
         ''' <summary>
         ''' 将字符串文本之中的希腊字母替换为英文单词
