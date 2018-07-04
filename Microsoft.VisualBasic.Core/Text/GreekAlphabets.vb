@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::7ce2456a32bc0deaf78d7ef143d540f8, Microsoft.VisualBasic.Core\Text\GreekAlphabets.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GreekAlphabets
-    ' 
-    '         Properties: Alphabets
-    ' 
-    '         Function: (+2 Overloads) StripGreek
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GreekAlphabets
+' 
+'         Properties: Alphabets
+' 
+'         Function: (+2 Overloads) StripGreek
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Namespace Text
 
@@ -104,6 +105,15 @@ Namespace Text
             {"ω", GreekAlphabets.Ω}, {"Ω", GreekAlphabets.Ω}
         }
 
+        ReadOnly upper As Dictionary(Of String, String) = Alphabets.Subset({
+            "Α", "Β", "Γ", "Δ", "Ε", "Ζ",
+            "Η", "Θ", "Ι", "Κ", "Λ", "Μ",
+            "Ν", "Ξ", "Ο", "Π", "Ρ", "Σ",
+            "Τ", "Υ", "Φ", "Χ", "Ψ", "Ω"
+        })
+
+        ReadOnly lower As Dictionary(Of String, String) = Alphabets.Subset(Alphabets.Keys.AsSet - upper.Keys)
+
         ''' <summary>
         ''' 将字符串文本之中的希腊字母替换为英文单词
         ''' </summary>
@@ -123,6 +133,40 @@ Namespace Text
         ''' <returns></returns>
         <Extension> Public Function StripGreek(s$) As String
             Return New StringBuilder(s).StripGreek.ToString
+        End Function
+
+        Const contactSymbols = "[\-\(\)&;\s ,\.:\|\[\]\+\*]"
+        Const escapePattern$ = contactSymbols & "[a-z]{2,10}" & contactSymbols
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="s$"></param>
+        ''' <param name="removesContacts"></param>
+        ''' <param name="upperCase"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function AlphabetUnescape(s$, Optional removesContacts As Boolean = False, Optional upperCase As Boolean = False) As String
+            ' 如果直接匹配替换的话，可能会将单词之中的一部分给错误的替换掉，
+            ' 所以在这里假设希腊字母是在连接符周围的
+            Dim matches = s.Matches(escapePattern, RegexICSng)
+            Dim sb As New StringBuilder(s)
+            Dim alphabets = (upper Or lower.When(Not upperCase)).ReverseMaps
+
+            For Each match As String In matches
+                Dim term$ = Mid(match, 2, Length:=match.Length - 2)
+                Dim greek$ = alphabets.TryGetValue(term.ToLower)
+
+                If Not greek Is Nothing Then
+                    If Not removesContacts Then
+                        match = term
+                    End If
+
+                    Call sb.Replace(match, greek)
+                End If
+            Next
+
+            Return sb.ToString
         End Function
     End Module
 End Namespace

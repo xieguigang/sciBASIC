@@ -722,7 +722,7 @@ Public Module KeyValuePairExtensions
     End Function
 
     ''' <summary>
-    ''' 使用这个函数应该要确保value是没有重复的
+    ''' 使用这个函数应该要确保value是没有重复的，假若<paramref name="removeDuplicated"/>是默认值的话.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <typeparam name="V"></typeparam>

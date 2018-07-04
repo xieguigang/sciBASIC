@@ -120,6 +120,11 @@ Public Module SetsExtension
         Return [set].ToArray
     End Function
 
+    ''' <summary>
+    ''' Create a string set
+    ''' </summary>
+    ''' <param name="strings"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AsSet(strings As IEnumerable(Of String)) As StringSet
