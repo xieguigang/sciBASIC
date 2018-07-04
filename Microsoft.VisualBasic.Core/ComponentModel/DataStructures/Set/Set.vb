@@ -281,7 +281,7 @@ Namespace ComponentModel.DataStructures
         ''' <returns>A new <see cref="[Set]">Set</see> object that contains the members
         ''' that were common to both of the input sets.</returns>
         Public Shared Operator And(s1 As [Set], s2 As [Set]) As [Set]
-            Dim result As New [Set]()
+            Dim result As New [Set](s1._equals)
 
             result._behaviour = BadBehaviourResponses.BeCool
 

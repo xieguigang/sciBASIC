@@ -40,6 +40,33 @@ Public Class MLRFit
         Return LinearFitting(New GeneralMatrix(x.RowIterator.ToArray), y)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="x">
+    ''' A matrix like:
+    ''' 
+    ''' ```
+    ''' x1  x2  x3  x4
+    '''  a   b   c   d
+    '''  a   b   c   d
+    '''  a   b   c   d 
+    '''  a   b   c   d
+    '''  a   b   c   d 
+    ''' ```
+    ''' </param>
+    ''' <param name="f">
+    ''' A vector like:
+    ''' 
+    ''' ```
+    ''' y1
+    ''' y2
+    ''' y3
+    ''' y4
+    ''' y5
+    ''' ```
+    ''' </param>
+    ''' <returns></returns>
     Public Shared Function LinearFitting(x As GeneralMatrix, f As Vector) As MLRFit
         Dim N = f.Length
         Dim p = x.ColumnDimension
