@@ -145,8 +145,15 @@ Namespace Text
         ''' <param name="removesContacts"></param>
         ''' <param name="upperCase"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AlphabetUnescape(s$, Optional removesContacts As Boolean = False, Optional upperCase As Boolean = False) As String
+            Return s.unescapeInternal(escapePattern, upperCase, removesContacts)
+        End Function
+
+        <Extension>
+        Private Function unescapeInternal(s$, escapePattern$, upperCase As Boolean, removesContacts As Boolean) As String
             ' 如果直接匹配替换的话，可能会将单词之中的一部分给错误的替换掉，
             ' 所以在这里假设希腊字母是在连接符周围的
             Dim matches = s.Matches(escapePattern, RegexICSng)
@@ -167,6 +174,12 @@ Namespace Text
             Next
 
             Return sb.ToString
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AlphabetUnescape(s$, contacts As (left As Char, right As Char), Optional upperCase As Boolean = False) As String
+            Return s.unescapeInternal($"[{contacts.left}][a-z]{{2,10}}[{contacts.right}]", upperCase, True)
         End Function
     End Module
 End Namespace
