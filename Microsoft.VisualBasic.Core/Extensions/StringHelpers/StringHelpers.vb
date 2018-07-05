@@ -646,12 +646,12 @@ Public Module StringHelpers
     ''' <summary>
     ''' 在字符串前面填充指定长度的00序列，假若输入的字符串长度大于fill的长度，则不再进行填充
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="T">限定类型为字符串或者数值基础类型</typeparam>
     ''' <param name="n"></param>
     ''' <param name="fill"></param>
     ''' <returns></returns>
     <ExportAPI("FormatZero")>
-    <Extension> Public Function FormatZero(Of T)(n As T, Optional fill$ = "00") As String
+    <Extension> Public Function FormatZero(Of T As {IComparable(Of T)})(n As T, Optional fill$ = "00") As String
         Dim s As String = n.ToString
         Dim d As Integer = Len(fill) - Len(s)
 
