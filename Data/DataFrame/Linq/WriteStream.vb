@@ -97,8 +97,26 @@ Namespace IO.Linq
         ''' <param name="metaKeys">预设的标题头部</param>
         Sub New(path As String,
                 Optional explicit As Boolean = False,
-                Optional metaBlank As String = "",
-                Optional metaKeys As String() = Nothing,
+                Optional metaBlank$ = "",
+                Optional metaKeys$() = Nothing,
+                Optional maps As Dictionary(Of String, String) = Nothing,
+                Optional layout As Dictionary(Of String, Integer) = Nothing)
+
+            Call Me.New(csvWriter(path),
+                        explicit:=explicit,
+                        metaBlank:=metaBlank,
+                        metaKeys:=metaKeys,
+                        maps:=maps,
+                        layout:=layout
+                 )
+
+            handle = FileIO.FileSystem.GetFileInfo(path).FullName
+        End Sub
+
+        Sub New(write As StreamWriter,
+                Optional explicit As Boolean = False,
+                Optional metaBlank$ = "",
+                Optional metaKeys$() = Nothing,
                 Optional maps As Dictionary(Of String, String) = Nothing,
                 Optional layout As Dictionary(Of String, Integer) = Nothing)
 
@@ -108,21 +126,8 @@ Namespace IO.Linq
                 .CreateObject(typeDef, explicit) _
                 .CopyReadDataFromObject
 
+            _fileIO = write
             rowWriter = New RowWriter(Schema, metaBlank, layout)
-            handle = FileIO.FileSystem.GetFileInfo(path).FullName
-
-            Call "".SaveTo(handle)
-
-            Dim file As New FileStream(
-                handle,
-                FileMode.OpenOrCreate,
-                FileAccess.ReadWrite,
-                share:=FileShare.Read)
-
-            _fileIO = New StreamWriter(file) With {
-                .AutoFlush = True,
-                .NewLine = vbLf
-            }
             rowWriter.__cachedIndex = metaKeys
 
             Dim title As RowObject = rowWriter.GetRowNames(maps)
@@ -131,9 +136,30 @@ Namespace IO.Linq
                 title = New RowObject(title.Join(metaKeys))
             End If
 
-            Dim sTitle As String = title.AsLine
-            Call _fileIO.WriteLine(sTitle)
+            Call _fileIO.WriteLine(title.AsLine)
         End Sub
+
+        Private Shared Function csvWriter(path As String) As StreamWriter
+            With path.ParentPath
+                If Not .DirectoryExists Then
+                    Call .MkDIR
+                End If
+
+                Call ClearFileBytes(path)
+            End With
+
+            Dim file As New FileStream(
+               path,
+               FileMode.OpenOrCreate,
+               FileAccess.ReadWrite,
+               share:=FileShare.Read
+            )
+
+            Return New StreamWriter(file) With {
+                .AutoFlush = True,
+                .NewLine = vbLf
+            }
+        End Function
 
         Public Overrides Function ToString() As String
             Return handle.ToFileURL
