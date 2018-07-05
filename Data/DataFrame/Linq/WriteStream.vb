@@ -221,6 +221,11 @@ Namespace IO.Linq
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function TryFlushObject(any As Object) As Boolean
+            Return Flush(DirectCast(any, T))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Flush()
             Call _fileIO.Flush()
         End Sub

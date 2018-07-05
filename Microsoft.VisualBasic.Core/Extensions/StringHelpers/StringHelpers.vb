@@ -415,6 +415,18 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
+    ''' Not <see cref="StringEmpty(String, Boolean)"/>
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="whitespaceAsEmpty"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function NotEmpty(s$, Optional whitespaceAsEmpty As Boolean = True) As Boolean
+        Return Not s.StringEmpty(whitespaceAsEmpty)
+    End Function
+
+    ''' <summary>
     ''' Call <see cref="StringBuilder.Remove"/>(<see cref="StringBuilder.Length"/> - 1, 1) for removes the last character in the string sequence.
     ''' </summary>
     ''' <param name="s"></param>
