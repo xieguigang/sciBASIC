@@ -287,20 +287,34 @@ Namespace LinearAlgebra
         End Operator
 
         ''' <summary>
-        ''' 向量乘法算符重载，分量分别相乘，相当于MATLAB中的  .*算符
+        ''' 向量乘法算符重载，分量分别相乘，相当于MATLAB中的``.*``算符
         ''' </summary>
         ''' <param name="v1"></param>
         ''' <param name="v2"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Operator *(v1 As Vector, v2 As Vector) As Vector
+        Public Overloads Shared Operator *(v1 As Vector, v2#()) As Vector
             Dim N0 As Integer = v1.[Dim]        '获取变量维数
             Dim v3 As New Vector(N0)
 
             For j As Integer = 0 To N0 - 1
                 v3(j) = v1(j) * v2(j)
             Next
+
             Return v3
+        End Operator
+
+        ''' <summary>
+        ''' 向量乘法算符重载，分量分别相乘，相当于MATLAB中的``.*``算符
+        ''' </summary>
+        ''' <param name="v1"></param>
+        ''' <param name="v2"></param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator *(v1 As Vector, v2 As Vector) As Vector
+            Return v1 * v2.buffer
         End Operator
 
         ''' <summary>
@@ -327,7 +341,7 @@ Namespace LinearAlgebra
         ''' <param name="a"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overloads Shared Operator +(v1 As Vector, a As Double) As Vector
+        Public Overloads Shared Operator +(v1 As Vector, a#) As Vector
             '向量数加算符重载
             Dim N0 As Integer = v1.[Dim]         ' 获取变量维数
             Dim v2 As New Vector(N0)
@@ -336,6 +350,11 @@ Namespace LinearAlgebra
                 v2(j) = v1(j) + a
             Next
             Return v2
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator +(v1 As Vector, a As Int16) As Vector
+            Return v1 + CDbl(a)
         End Operator
 
         ''' <summary>

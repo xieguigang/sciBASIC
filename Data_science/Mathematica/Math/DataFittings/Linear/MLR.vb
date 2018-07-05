@@ -35,9 +35,48 @@ Public Class MLRFit
         End Get
     End Property
 
+    ''' <summary>
+    ''' Evaluate the regression value from a given X vector
+    ''' 
+    ''' ```
+    ''' f(x) = ax1 + bx2 + cx3 + dx4 + ...
+    ''' ```
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    Public Overridable ReadOnly Property Fx(x As Vector) As Double
+        Get
+            Return (x * beta).Sum
+        End Get
+    End Property
+
+    Public Structure [Error]
+
+        Dim X As Vector
+        Dim Y#
+        Dim Yfit#
+
+        Public Overrides Function ToString() As String
+            Return $"{Math.Abs(Y - Yfit)} = |{Y} - {Yfit}|"
+        End Function
+
+        Public Shared Iterator Function RunTest(MLR As MLRFit, X As GeneralMatrix, Y As Vector) As IEnumerable(Of [Error])
+            For Each xi In X.RowVectors.SeqIterator
+                Dim yi = Y.Item(index:=xi)
+                Dim yfit = MLR.Fx(xi)
+
+                Yield New [Error] With {
+                    .X = xi,
+                    .Y = yi,
+                    .Yfit = yfit
+                }
+            Next
+        End Function
+    End Structure
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function LinearFitting(x As Double(,), y#()) As MLRFit
-        Return LinearFitting(New GeneralMatrix(x.RowIterator.ToArray), y)
+    Public Shared Function LinearFitting(x As Double(,), y#(), Optional ByRef errors As [Error]() = Nothing) As MLRFit
+        Return LinearFitting(New GeneralMatrix(x.RowIterator.ToArray), y, errors)
     End Function
 
     ''' <summary>
@@ -67,7 +106,7 @@ Public Class MLRFit
     ''' ```
     ''' </param>
     ''' <returns></returns>
-    Public Shared Function LinearFitting(x As GeneralMatrix, f As Vector) As MLRFit
+    Public Shared Function LinearFitting(x As GeneralMatrix, f As Vector, Optional ByRef errors As [Error]() = Nothing) As MLRFit
         Dim N = f.Length
         Dim p = x.ColumnDimension
         Dim Y As New GeneralMatrix(f, N)
@@ -76,8 +115,7 @@ Public Class MLRFit
         Dim SST = ((f - mean) ^ 2).Sum
         Dim residuals As GeneralMatrix = x.Multiply(beta) - Y
         Dim SSE = residuals.Norm2 ^ 2
-
-        Return New MLRFit With {
+        Dim MLR = New MLRFit With {
             .beta = x.ColumnDimension _
                 .Sequence _
                 .Select(Function(i) beta(i, 0)) _
@@ -87,6 +125,10 @@ Public Class MLRFit
             .SSE = SSE,
             .SST = SST
         }
+
+        errors = [Error].RunTest(MLR, x, f).ToArray
+
+        Return MLR
     End Function
 
     ''' <summary>
@@ -96,24 +138,23 @@ Public Class MLRFit
     ''' </summary>
     ''' <param name="X"></param>
     ''' <returns></returns>
-    <MethodImpl>
-    Public Function CurveScale(X As IEnumerable(Of Double)) As Vector
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function CurveScale(X As IEnumerable(Of Double)) As Vector
         Return X.Select(Function(xi, i) xi ^ (i + 1)).AsVector
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function left(beta#, t#, S#) As Double
         Return beta - (t * S)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function right(beta#, t#, S#) As Double
         Return beta + (t * S)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function ConfidenceInterval(beta#, t#, S#) As DoubleRange
-        Dim left = MLRFit.left(beta, t, S), right = MLRFit.right(beta, t, S)
-        Dim min# = If(left < right, left, right)
-        Dim max# = If(left > right, left, right)
-
-        Return {min, max}
+        Return {MLRFit.left(beta, t, S), MLRFit.right(beta, t, S)}
     End Function
 End Class
