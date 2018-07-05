@@ -729,7 +729,11 @@ Public Module StringHelpers
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Matched?")>
     <Extension> Public Function MatchPattern(str$, regex$, Optional opt As RegexOptions = RegexICSng) As Boolean
-        Return r.Match(str, regex, opt).Success
+        If str.StringEmpty Then
+            Return False
+        Else
+            Return r.Match(str, regex, opt).Success
+        End If
     End Function
 
     ''' <summary>
