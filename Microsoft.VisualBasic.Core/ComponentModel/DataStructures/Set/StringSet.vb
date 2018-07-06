@@ -46,8 +46,18 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.DataStructures
 
+    ''' <summary>
+    ''' A string set collection object.
+    ''' </summary>
     Public Class StringSet : Inherits [Set]
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="strings"></param>
+        ''' <param name="caseSensitive">
+        ''' String comparision should be in case sensitive mode? By default is yes.
+        ''' </param>
         Sub New(strings As IEnumerable(Of String), Optional caseSensitive As CompareMethod = CompareMethod.Binary)
             Call MyBase.New
 
@@ -74,6 +84,17 @@ Namespace ComponentModel.DataStructures
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(s As StringSet) As String()
             Return s.ToArray(Of String)
+        End Operator
+
+        ''' <summary>
+        ''' Removes all of the <paramref name="s2"/> from <see cref="StringSet"/> <paramref name="s1"/>
+        ''' </summary>
+        ''' <param name="s1"></param>
+        ''' <param name="s2"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator -(s1 As [StringSet], s2 As IEnumerable(Of String)) As StringSet
+            Return New StringSet(s1 - s2.AsSet)
         End Operator
     End Class
 End Namespace

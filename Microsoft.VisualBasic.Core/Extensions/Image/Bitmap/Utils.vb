@@ -81,6 +81,12 @@ Namespace Imaging.BitmapImage
             End SyncLock
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ImageCrop(source As Bitmap, rect As RectangleF) As Bitmap
+            Return source.Clone(rect, source.PixelFormat)
+        End Function
+
         <ExportAPI("Image.Resize")>
         <Extension>
         Public Function Resize(Image As Image, newSize As Size) As Image

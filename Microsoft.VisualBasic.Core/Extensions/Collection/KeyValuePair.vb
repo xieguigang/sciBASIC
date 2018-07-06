@@ -66,6 +66,15 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 Public Module KeyValuePairExtensions
 
+    <Extension>
+    Public Iterator Function AsEnumerable(keys As NameObjectCollectionBase.KeysCollection) As IEnumerable(Of String)
+        If Not keys Is Nothing AndAlso keys.Count > 0 Then
+            For i As Integer = 0 To keys.Count - 1
+                Yield keys.Item(i)
+            Next
+        End If
+    End Function
+
     ''' <summary>
     ''' Create a tuple for two elements
     ''' </summary>
@@ -722,7 +731,7 @@ Public Module KeyValuePairExtensions
     End Function
 
     ''' <summary>
-    ''' 使用这个函数应该要确保value是没有重复的
+    ''' 使用这个函数应该要确保value是没有重复的，假若<paramref name="removeDuplicated"/>是默认值的话.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <typeparam name="V"></typeparam>
