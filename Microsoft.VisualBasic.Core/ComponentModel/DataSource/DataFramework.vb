@@ -155,12 +155,23 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="where">用来判断属性值是否应该被添加进入字典之中</param>
         ''' <returns></returns>
         <Extension>
-        Public Function DictionaryTable(Of T)(x As T, Optional where As Assert(Of Object) = Nothing) As Dictionary(Of String, String)
+        Public Function DictionaryTable(Of T)(x As T,
+                                              Optional primitiveType As Boolean = False,
+                                              Optional where As Assert(Of Object) = Nothing) As Dictionary(Of String, String)
+
             Dim schema As Dictionary(Of String, PropertyInfo) = GetType(T).getOrCache
             Dim table As New Dictionary(Of String, String)
             Dim obj
 
             where = where Or alwaysTrue
+
+            If primitiveType Then
+                For Each key As String In schema.Keys.ToArray
+                    If Not schema(key).PropertyType.IsPrimitive Then
+                        Call schema.Remove(key)
+                    End If
+                Next
+            End If
 
             For Each key As String In schema.Keys
                 obj = schema(key).GetValue(x)
@@ -184,7 +195,7 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         ''' <summary>
-        ''' Helper for <see cref="DictionaryTable(Of T)(T, Assert(Of Object))"/>
+        ''' Helper for <see cref="DictionaryTable(Of T)"/>
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
@@ -203,7 +214,7 @@ Namespace ComponentModel.DataSourceModel
                 )
             End If
 
-            Return schemaCache(type)
+            Return New Dictionary(Of String, PropertyInfo)(schemaCache(type))
         End Function
 
 #If NET_40 = 0 Then
