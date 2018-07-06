@@ -1498,7 +1498,7 @@ Public Module Extensions
  _
             () <= From item As T
                   In source
-                  Let strItem As String = item.ToString
+                  Let strItem As String = item?.ToString
                   Select strItem
 
         Return LQuery
