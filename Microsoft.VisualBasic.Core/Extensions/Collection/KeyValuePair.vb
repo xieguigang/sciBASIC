@@ -528,6 +528,17 @@ Public Module KeyValuePairExtensions
         Return nc
     End Function
 
+    <Extension>
+    Public Function NameValueCollection(maps As IEnumerable(Of KeyValuePair(Of String, String))) As NameValueCollection
+        Dim nv As New NameValueCollection
+
+        For Each tuple As KeyValuePair(Of String, String) In maps
+            Call nv.Add(tuple.Key, tuple.Value)
+        Next
+
+        Return nv
+    End Function
+
     ''' <summary>
     ''' 获取得到的集合对象是一个安全的集合对象，不存在的键名会直接返回空值
     ''' </summary>

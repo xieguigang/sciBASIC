@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::2ba0871779282725d13c43e9a4cc68e0, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module WebServiceUtils
-    ' 
-    '     Properties: DefaultUA, Protocols, Proxy
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
-    '               (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress, GetProxy
-    '               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, (+2 Overloads) POST
-    '               POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
-    '               UrlEncode, UrlPathEncode
-    ' 
-    '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
-    ' 
-    ' /********************************************************************************/
+' Module WebServiceUtils
+' 
+'     Properties: DefaultUA, Protocols, Proxy
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
+'               (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress, GetProxy
+'               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, (+2 Overloads) POST
+'               POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
+'               UrlEncode, UrlPathEncode
+' 
+'     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' The extension module for web services works.
@@ -82,14 +83,23 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     Public ReadOnly Property Protocols As String() = {"http://", "https://", "ftp://", "sftp://"}
 
+    Public Const URLPattern$ = "http(s)?://([\w+?\.\w+])+([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?"
+
     ''' <summary>
     ''' Determine that is this uri string is a network location?
     ''' (判断这个uri字符串是否是一个网络位置)
     ''' </summary>
     ''' <param name="url"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function isURL(url As String) As Boolean
         Return url.InStrAny(Protocols) > -1
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function IsURLPattern(str As String) As Boolean
+        Return str.isURL OrElse str.IsPattern(URLPattern)
     End Function
 
     ''' <summary>
@@ -99,11 +109,13 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     <ExportAPI("Build.Reqparm",
                Info:="Build the request parameters for the HTTP POST")>
-    <Extension> Public Function BuildReqparm(dict As Dictionary(Of String, String)) As Specialized.NameValueCollection
-        Dim reqparm As New Specialized.NameValueCollection
+    <Extension> Public Function BuildReqparm(dict As Dictionary(Of String, String)) As NameValueCollection
+        Dim reqparm As New NameValueCollection
+
         For Each Value As KeyValuePair(Of String, String) In dict
             Call reqparm.Add(Value.Key, Value.Value)
         Next
+
         Return reqparm
     End Function
 
@@ -445,7 +457,8 @@ Public Module WebServiceUtils
                                      Optional params As NameValueCollection = Nothing,
                                      Optional headers As Dictionary(Of String, String) = Nothing,
                                      Optional Referer$ = "",
-                                     Optional proxy$ = Nothing) As String
+                                     Optional proxy$ = Nothing,
+                                     Optional contentEncoding As Encodings = Encodings.UTF8) As String
 
         Static emptyBody As New DefaultValue(Of NameValueCollection) With {
             .Value = New NameValueCollection,
@@ -475,11 +488,11 @@ Public Module WebServiceUtils
             Call $"[POST] {url}....".__DEBUG_ECHO
 
             Dim response As Byte() = request.UploadValues(url, "POST", params Or emptyBody)
-            Dim strData As String = Encoding.UTF8.GetString(response)
+            Dim str$ = contentEncoding.CodePage.GetString(response)
 
             Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
 
-            Return strData
+            Return str
         End Using
     End Function
 

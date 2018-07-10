@@ -88,7 +88,7 @@ Namespace CommandLine
         ''' <summary>
         ''' 原始的命令行字符串
         ''' </summary>
-        Friend _CLICommandArgvs As String
+        Friend cliCommandArgvs As String
 
         Dim _name As String
 
@@ -184,10 +184,10 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property CLICommandArgvs As String
+        Public ReadOnly Property cli As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _CLICommandArgvs
+                Return cliCommandArgvs
             End Get
         End Property
 
@@ -484,16 +484,12 @@ Namespace CommandLine
         ''' <param name="param"></param>
         ''' <returns></returns>
         Public Function OpenStreamOutput(param$, Optional encoding As Encodings = Encodings.UTF8) As StreamWriter
-            Dim path As String = Me(param)
-            Dim textEncode As Encoding = encoding.CodePage
+            Dim path$ = Me(param)
 
             If path.StringEmpty Then
-                Return New StreamWriter(Console.OpenStandardOutput, textEncode)
+                Return New StreamWriter(Console.OpenStandardOutput, encoding.CodePage)
             Else
-                Call path.ParentPath.MkDIR
-
-                Dim fs As New FileStream(path, FileMode.OpenOrCreate, access:=FileAccess.ReadWrite)
-                Return New StreamWriter(fs, textEncode)
+                Return path.OpenWriter(encoding)
             End If
         End Function
 
