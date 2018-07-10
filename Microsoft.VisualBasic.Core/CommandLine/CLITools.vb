@@ -400,6 +400,8 @@ Namespace CommandLine
             'End If
 
             Dim tokens$() = Regex.Split(CLI, SPLIT_REGX_EXPRESSION)
+            Dim argv As New List(Of String)
+
             tokens = tokens _
                 .TakeWhile(Function(Token)
                                Return Not String.IsNullOrEmpty(Token.Trim)
@@ -408,13 +410,57 @@ Namespace CommandLine
 
             For i As Integer = 0 To tokens.Length - 1
                 Dim s As String = tokens(i)
+
                 If s.First = QUOT AndAlso s.Last = QUOT Then    '消除单词单元中的双引号
                     tokens(i) = Mid(s, 2, Len(s) - 2)
+                End If
+
+                ' argv='dddddd'
+                ' 键值对语法
+                If s.Contains("="c) AndAlso Not s.IsURLPattern Then
+                    Call s.tupleParser(argv)
+                Else
+                    argv += s
                 End If
             Next
 
             Return tokens
         End Function
+
+        ''' <summary>
+        ''' 只取第一个=符号出现的位置
+        ''' </summary>
+        ''' <param name="s$"></param>
+        ''' <param name="argv"></param>
+        <Extension>
+        Private Sub tupleParser(s$, ByRef argv As List(Of String))
+            Dim splitIndex% = -1
+
+            For j As Integer = 0 To s.Length - 1
+                Dim c = s(j)
+
+                If c = "="c AndAlso splitIndex = -1 Then
+                    ' 如果前一个字符是\转义，则不是键值对
+                    If splitIndex > 1 AndAlso s(splitIndex - 1) <> "\"c Then
+                        ' 这是第一个符号
+                        splitIndex = j
+                        Exit For
+                    Else
+                        splitIndex = -1
+                    End If
+                End If
+            Next
+
+            If splitIndex > -1 Then
+                Dim name$ = s.Substring(0, splitIndex)
+                Dim value = s.Substring(splitIndex + 1)
+
+                argv += name
+                argv += value
+            Else
+                argv += s
+            End If
+        End Sub
 
         ''' <summary>
         ''' 会对%进行替换的

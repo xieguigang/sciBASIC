@@ -93,8 +93,18 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Module CLI
 
     Function Main() As Integer
+        Call ParserTest()
+
+
         Return GetType(CLI).RunCLI(App.CommandLine)
     End Function
+
+    Sub ParserTest()
+        Dim cli$ = "/POST /url ""http://metauhealth.com/api/index.php?act=user&op=verifyBindingManually"" openId=9IofUCKdgfdddddddd5lEeWiUDseee barcode=123456 name=xieguigang /out D:/test.json"
+        Dim argv = CLITools.TryParse(cli)
+
+        Pause()
+    End Sub
 
     <ExportAPI("/CLI.docs.test")>
     <Description("Test description text")>

@@ -484,16 +484,12 @@ Namespace CommandLine
         ''' <param name="param"></param>
         ''' <returns></returns>
         Public Function OpenStreamOutput(param$, Optional encoding As Encodings = Encodings.UTF8) As StreamWriter
-            Dim path As String = Me(param)
-            Dim textEncode As Encoding = encoding.CodePage
+            Dim path$ = Me(param)
 
             If path.StringEmpty Then
-                Return New StreamWriter(Console.OpenStandardOutput, textEncode)
+                Return New StreamWriter(Console.OpenStandardOutput, encoding.CodePage)
             Else
-                Call path.ParentPath.MkDIR
-
-                Dim fs As New FileStream(path, FileMode.OpenOrCreate, access:=FileAccess.ReadWrite)
-                Return New StreamWriter(fs, textEncode)
+                Return path.OpenWriter(encoding)
             End If
         End Function
 
