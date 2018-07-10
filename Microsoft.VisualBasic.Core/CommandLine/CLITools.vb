@@ -424,7 +424,7 @@ Namespace CommandLine
                 End If
             Next
 
-            Return tokens
+            Return argv
         End Function
 
         ''' <summary>
@@ -441,7 +441,7 @@ Namespace CommandLine
 
                 If c = "="c AndAlso splitIndex = -1 Then
                     ' 如果前一个字符是\转义，则不是键值对
-                    If splitIndex > 1 AndAlso s(splitIndex - 1) <> "\"c Then
+                    If j > 1 AndAlso s(j - 1) <> "\"c Then
                         ' 这是第一个符号
                         splitIndex = j
                         Exit For
