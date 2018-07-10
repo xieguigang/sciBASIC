@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::561754ae5d93806b99ce48032480f8e6, Microsoft.VisualBasic.Core\CommandLine\CLITools.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module CLITools
-    ' 
-    '         Function: __checkKeyDuplicated, __innerWrapper, Args, CreateObject, CreateParameterValues
-    '                   Equals, GetLogicalArguments, GetTokens, IsPossibleLogicFlag, Join
-    '                   Print, ShellExec, SingleValueOrStdIn, TrimParamPrefix, (+3 Overloads) TryParse
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module CLITools
+' 
+'         Function: __checkKeyDuplicated, __innerWrapper, Args, CreateObject, CreateParameterValues
+'                   Equals, GetLogicalArguments, GetTokens, IsPossibleLogicFlag, Join
+'                   Print, ShellExec, SingleValueOrStdIn, TrimParamPrefix, (+3 Overloads) TryParse
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,6 +52,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 Imports StringList = System.Collections.Generic.IEnumerable(Of String)
 Imports ValueTuple = System.Collections.Generic.KeyValuePair(Of String, String)
 
@@ -160,7 +161,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="args">要求第一个对象不能够是命令的名称</param>
         ''' <returns></returns>
-        <Extension> Public Function GetLogicalArguments(args As IEnumerable(Of String), ByRef SingleValue$) As String()
+        <Extension> Public Function GetLogicalFlags(args As IEnumerable(Of String), ByRef SingleValue$) As String()
             Dim tokens$() = args.SafeQuery.ToArray
 
             If tokens.IsNullOrEmpty Then
@@ -173,10 +174,9 @@ Namespace CommandLine
             Dim tkList As New List(Of String)
 
             For i As Integer = 0 To tokens.Length - 1 '数目多于一个的
+                Dim next% = i + 1
 
-                Dim [Next] As Integer = i + 1
-
-                If [Next] = tokens.Length Then
+                If [next] = tokens.Length Then
                     If IsPossibleLogicFlag(obj:=tokens(i)) Then
                         tkList += tokens(i)  '
                     End If
@@ -184,7 +184,7 @@ Namespace CommandLine
                     Exit For
                 End If
 
-                Dim s As String = tokens([Next])
+                Dim s As String = tokens([next])
 
                 If IsPossibleLogicFlag(obj:=s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
                     If IsPossibleLogicFlag(obj:=tokens(i)) Then
@@ -214,9 +214,13 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         <ExportAPI("TryParse", Info:="Try parsing the cli command String from the String value.")>
-        Public Function TryParse(args As StringList, Optional duplicatedAllows As Boolean = False) As CommandLine
+        <Extension>
+        Public Function TryParse(args As StringList,
+                                 Optional duplicatedAllows As Boolean = False,
+                                 Optional rawInput$ = Nothing) As CommandLine
+
             Dim tokens$() = args.SafeQuery.ToArray
-            Dim singleValue As String = ""
+            Dim singleValue$ = ""
 
             If tokens.Length = 0 Then
                 Return New CommandLine
@@ -224,26 +228,27 @@ Namespace CommandLine
 
             Dim bools$() = tokens _
                 .Skip(1) _
-                .GetLogicalArguments(singleValue)
-            Dim CLI As New CommandLine With {
+                .GetLogicalFlags(singleValue)
+            Dim cli As New CommandLine With {
                 .Name = tokens(Scan0).ToLower,
                 .Tokens = tokens,
                 .BoolFlags = bools,
-                ._CLICommandArgvs = Join(tokens)
+                .cliCommandArgvs = Join(tokens)
             }
 
-            CLI.SingleValue = singleValue
+            cli.SingleValue = singleValue
+            cli.cliCommandArgvs = rawInput
 
-            If CLI.Parameters.Length = 1 AndAlso
-                String.IsNullOrEmpty(CLI.SingleValue) Then
+            If cli.Parameters.Length = 1 AndAlso
+                String.IsNullOrEmpty(cli.SingleValue) Then
 
-                CLI.SingleValue = CLI.Parameters(0)
+                cli.SingleValue = cli.Parameters(0)
             End If
 
             If tokens.Length > 1 Then
-                CLI.__arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
+                cli.__arguments = tokens.Skip(1).ToArray.CreateParameterValues(False)
 
-                Dim Dk As String() = __checkKeyDuplicated(CLI.__arguments)
+                Dim Dk As String() = __checkKeyDuplicated(cli.__arguments)
 
                 If Not duplicatedAllows AndAlso Not Dk.IsNullOrEmpty Then
                     Dim Key$ = String.Join(", ", Dk)
@@ -253,7 +258,7 @@ Namespace CommandLine
                 End If
             End If
 
-            Return CLI
+            Return cli
         End Function
 
         Const KeyDuplicated As String = "The command line switch key ""{0}"" Is already been added! Here Is your input data:  CMD {1}."
@@ -277,6 +282,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         <ExportAPI("args", Info:="Gets the commandline object for the current program.")>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Args() As CommandLine
             Return App.CommandLine
         End Function
@@ -304,9 +310,9 @@ Namespace CommandLine
 #End If
             End If
 
-            Dim tokens As String() = CLITools.GetTokens(CLI)
-            Dim args As CommandLine = TryParse(tokens, duplicateAllowed)
-            args._CLICommandArgvs = CLI
+            Dim args As CommandLine = CLITools _
+                .GetTokens(CLI) _
+                .TryParse(duplicateAllowed, rawInput:=CLI)
 
             Return args
         End Function
@@ -324,8 +330,10 @@ Namespace CommandLine
             If IsNumeric(obj) Then
                 Return False
             End If
+
+            ' Linux上面全路径总是从/，即根目录开始的
             If obj.Count("/"c) > 1 Then
-                Return False ' Linux上面全路径总是从/，即根目录开始的
+                Return False
             End If
 
             Return obj.StartsWith("-") OrElse
@@ -346,20 +354,21 @@ Namespace CommandLine
             If tokens Is Nothing Then
                 Return ""
             Else
-                Return String.Join(" ", tokens.Select(AddressOf __innerWrapper).ToArray)
+                Return tokens _
+                    .Select(AddressOf makesureQuot) _
+                    .JoinBy(" ")
             End If
         End Function
 
-        Private Function __innerWrapper(Token As String) As String
-            If InStr(Token, " ") > 0 Then
-
-                If Token.First = """"c AndAlso Token.Last = """"c Then
-                    Return Token
+        Private Function makesureQuot(token As String) As String
+            If InStr(token, " ") > 0 Then
+                If token.First = """"c AndAlso token.Last = """"c Then
+                    Return token
                 Else
-                    Return $"""{Token}"""
+                    Return $"""{token}"""
                 End If
             Else
-                Return Token
+                Return token
             End If
         End Function
 
@@ -369,7 +378,6 @@ Namespace CommandLine
         ''' </summary>
         ''' <remarks></remarks>
         Public Const SPLIT_REGX_EXPRESSION As String = "\s+(?=(?:[^""]|""[^""]*"")*$)"
-        Public Const QUOT As Char = """"c
 
         ''' <summary>
         ''' Try parse the argument tokens which comes from the user input commandline string. 
@@ -411,7 +419,8 @@ Namespace CommandLine
             For i As Integer = 0 To tokens.Length - 1
                 Dim s As String = tokens(i)
 
-                If s.First = QUOT AndAlso s.Last = QUOT Then    '消除单词单元中的双引号
+                ' 消除单词单元中的双引号
+                If s.First = ASCII.Quot AndAlso s.Last = ASCII.Quot Then
                     tokens(i) = Mid(s, 2, Len(s) - 2)
                 End If
 
@@ -480,16 +489,18 @@ Namespace CommandLine
                 Return New String() {""}
             End If
 
-            Dim RegxPattern As String = TokenDelimited & TokenSplitRegex.Replace("%"c, InnerDelimited)
-            Dim Tokens = Regex.Split(CommandLine, RegxPattern)
-            For i As Integer = 0 To Tokens.Length - 1
-                Dim s As String = Tokens(i)
+            Dim regxPattern$ = TokenDelimited & TokenSplitRegex.Replace("%"c, InnerDelimited)
+            Dim tokens = Regex.Split(CommandLine, regxPattern)
+
+            For i As Integer = 0 To tokens.Length - 1
+                Dim s As String = tokens(i)
+
                 If s.First = InnerDelimited AndAlso s.Last = InnerDelimited Then    '消除单词单元中的双引号
-                    Tokens(i) = Mid(s, 2, Len(s) - 2)
+                    tokens(i) = Mid(s, 2, Len(s) - 2)
                 End If
             Next
 
-            Return Tokens
+            Return tokens
         End Function
 
         ''' <summary>
@@ -559,6 +570,7 @@ Namespace CommandLine
 
             For Each arg As NamedValue(Of String) In args1.__arguments
                 Dim value2 As String = args2(arg.Name)
+
                 If Not String.Equals(value2, arg.Value, StringComparison.OrdinalIgnoreCase) Then
                     Return False
                 End If

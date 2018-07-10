@@ -100,7 +100,7 @@ Namespace CommandLine.InteropService.SharedORM
                 .Name = name,
                 .__arguments = params.AsList,
                 .BoolFlags = booleans.Select(AddressOf LCase).ToArray,
-                ._CLICommandArgvs = usage
+                .cliCommandArgvs = usage
             }
 
             Return model
@@ -125,7 +125,7 @@ Namespace CommandLine.InteropService.SharedORM
                         End Function) _
                 .AsList
 
-            booleans = GetLogicalArguments(optionals, Nothing)
+            booleans = GetLogicalFlags(optionals, Nothing)
             out += optionals _
                 .CreateParameterValues(False, note:=NameOf(optionals)) _
                 .ToArray

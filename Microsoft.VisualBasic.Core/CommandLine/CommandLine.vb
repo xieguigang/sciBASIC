@@ -88,7 +88,7 @@ Namespace CommandLine
         ''' <summary>
         ''' 原始的命令行字符串
         ''' </summary>
-        Friend _CLICommandArgvs As String
+        Friend cliCommandArgvs As String
 
         Dim _name As String
 
@@ -184,10 +184,10 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property CLICommandArgvs As String
+        Public ReadOnly Property cli As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _CLICommandArgvs
+                Return cliCommandArgvs
             End Get
         End Property
 
