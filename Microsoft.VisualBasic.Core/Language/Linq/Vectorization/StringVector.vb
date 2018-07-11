@@ -56,7 +56,7 @@ Namespace Language.Vectorization
         ''' Returns the length of each strings
         ''' </summary>
         ''' <returns></returns>
-        Public Overloads ReadOnly Property Length As IEnumerable(Of Integer)
+        Public Overloads ReadOnly Property Len As IEnumerable(Of Integer)
             Get
                 Return Strings.Len(Me)
             End Get
