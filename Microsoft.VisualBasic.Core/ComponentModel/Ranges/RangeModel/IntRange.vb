@@ -91,6 +91,10 @@ Namespace ComponentModel.Ranges.Model
             Me.Max = max
         End Sub
 
+        ''' <summary>
+        ''' 这个构造函数之中会自动求出最大值和最小值
+        ''' </summary>
+        ''' <param name="source"></param>
         Sub New(source As IEnumerable(Of Integer))
             With source.ToArray
                 Min = .Min

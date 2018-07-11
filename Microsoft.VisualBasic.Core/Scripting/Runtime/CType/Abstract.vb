@@ -53,11 +53,13 @@ Namespace Scripting.Runtime
         ''' <param name="obj"></param>
         ''' <returns></returns>
         Function ToString(obj As Object) As String
+
         ''' <summary>
         ''' 从Csv文件之中所读取出来的字符串之中解析出目标对象
         ''' </summary>
-        ''' <param name="cell$"></param>
+        ''' <param name="content"></param>
         ''' <returns></returns>
-        Function TryParse(cell$) As Object
+        Function TryParse(content As String) As Object
+
     End Interface
 End Namespace

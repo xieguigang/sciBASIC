@@ -394,6 +394,11 @@ Namespace LinearAlgebra
             Return v2
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator *(v1 As Vector, a!) As Vector
+            Return v1 * CDbl(a)
+        End Operator
+
         ''' <summary>
         ''' 向量 数除，各分量分别除以实数
         ''' </summary>
