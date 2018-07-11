@@ -1603,6 +1603,23 @@ Public Module Extensions
         End If
     End Function
 
+    ''' <summary>
+    ''' Alias of the linq function <see cref="Enumerable.Range"/>
+    ''' </summary>
+    ''' <param name="range"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Sequence(range As IntRange) As IEnumerable(Of Integer)
+        Return Enumerable.Range(range.Min, range.Length)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsRange(ints As IEnumerable(Of Integer)) As IntRange
+        Return New IntRange(ints)
+    End Function
+
     <Extension> Public Iterator Function LongSeq(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of Long)
         If source Is Nothing Then
             Return

@@ -135,7 +135,7 @@ Namespace SmithWaterman
 #End Region
 
         ''' <summary>
-        ''' 
+        ''' <paramref name="similarity"/>这个函数返回来的分数越高说明二者越相似
         ''' </summary>
         ''' <param name="query"></param>
         ''' <param name="subject"></param>
