@@ -46,10 +46,21 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports base = Microsoft.VisualBasic.Strings
 
 Namespace Language.Vectorization
 
     Public Class StringVector : Inherits Vector(Of String)
+
+        ''' <summary>
+        ''' Returns the length of each strings
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overloads ReadOnly Property Length As IEnumerable(Of Integer)
+            Get
+                Return Strings.Len(Me)
+            End Get
+        End Property
 
         Sub New()
         End Sub
@@ -88,7 +99,7 @@ Namespace Language.Vectorization
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function InStr(string1 As StringVector, string2$, Optional method As CompareMethod = CompareMethod.Binary) As Vector(Of Integer)
-            Return string1.Select(Function(str) Strings.InStr(str, string2, method)).AsVector
+            Return string1.Select(Function(str) base.InStr(str, string2, method)).AsVector
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -104,7 +115,7 @@ Namespace Language.Vectorization
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(expression As String) As StringVector
-            Return New StringVector(Strings.Split(expression, ","))
+            Return New StringVector(base.Split(expression, ","))
         End Operator
     End Class
 End Namespace
