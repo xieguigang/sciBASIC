@@ -23,7 +23,7 @@ Namespace Language.Vectorization
         ''' Returns an integer containing either the number of characters in a string or 
         ''' the nominal number of bytes required to store a variable.
         ''' </returns>
-        Public Shared Function Len(strings As IEnumerable(Of String)) As IEnumerable(Of String)
+        Public Shared Function Len(strings As IEnumerable(Of String)) As IEnumerable(Of Integer)
             Return strings.Select(AddressOf Base.Len)
         End Function
     End Class
