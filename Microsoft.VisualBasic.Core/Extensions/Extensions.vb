@@ -1610,8 +1610,17 @@ Public Module Extensions
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Sequence(range As IntRange) As IEnumerable(Of Integer)
-        Return Enumerable.Range(range.Min, range.Length)
+    Iterator Public Function Sequence(range As IntRange, Optional stepOffset% = 1) As IEnumerable(Of Integer)
+        If stepOffset = 0 Then
+            stepOffset = 1
+#If DEBUG Then
+            Call $"step_offset is ZERO! This will caused a infinity loop, using default step `1`!".Warning
+#End If
+        End If
+
+        For i As Integer = range.Min To range.Max Step stepOffset
+            Yield i
+        Next
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
