@@ -154,7 +154,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
                 Case > 0 : Call removeRight(tree, key)
                 Case = 0 : Call removeCurrent(tree)
                 Case Else
-                    Throw New Exception
+                    ' This will never happed!
+                    Throw New Exception("This will never happed!")
             End Select
 
             If Not tree Is Nothing Then

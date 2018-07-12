@@ -45,9 +45,11 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports r = System.Text.RegularExpressions.Regex
+Imports sys = System.Math
 
 Namespace ComponentModel.Ranges
 
@@ -178,6 +180,34 @@ Namespace ComponentModel.Ranges
                    .RangeTransform(New DoubleRange([to])) _
                    .Select(Function(x) CInt(x)) _
                    .ToArray
+        End Function
+
+        <Extension>
+        Public Function Union(fragments As IEnumerable(Of IntRange)) As IEnumerable(Of IntRange)
+            Dim unions As New List(Of IntRange)
+
+            For Each f In fragments.OrderBy(Function(r) r.Min)
+                If unions = 0 Then
+                    unions += New IntRange(f.Min, f.Max)
+                Else
+                    Dim isUnion As Boolean = False
+
+                    For Each region In unions
+                        If region.IsOverlapping(f) OrElse region.IsInside(f) Then
+                            region.Min = sys.Min(region.Min, f.Min)
+                            region.Max = sys.Max(region.Max, f.Max)
+
+                            isUnion = True
+                        End If
+                    Next
+
+                    If Not isUnion Then
+                        unions += New IntRange(f.Min, f.Max)
+                    End If
+                End If
+            Next
+
+            Return unions
         End Function
     End Module
 End Namespace
