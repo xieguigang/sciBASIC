@@ -179,5 +179,10 @@ Namespace ComponentModel.Ranges
                    .Select(Function(x) CInt(x)) _
                    .ToArray
         End Function
+
+        <Extension>
+        Public Function Union(fragments As IEnumerable(Of IntRange)) As IEnumerable(Of IntRange)
+
+        End Function
     End Module
 End Namespace
