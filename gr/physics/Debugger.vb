@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Debugger
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Vector2D(v As Vector) As PointF
         Return New PointF(v(X), v(Y))
