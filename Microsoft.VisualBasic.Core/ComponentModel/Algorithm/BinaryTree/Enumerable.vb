@@ -96,7 +96,11 @@ Namespace ComponentModel.Algorithm.BinaryTree
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ClusterMembers(Of K, V)(node As BinaryTree(Of K, V)) As V()
-            Return DirectCast(node!values, List(Of V)).ToArray
+            If node Is Nothing Then
+                Return {}
+            Else
+                Return DirectCast(node!values, List(Of V)).ToArray
+            End If
         End Function
     End Module
 End Namespace
