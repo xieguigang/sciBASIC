@@ -165,10 +165,21 @@ Namespace ComponentModel.Ranges
             Me.Unit = unit
         End Sub
 
+        ''' <summary>
+        ''' Unit convert
+        ''' </summary>
+        ''' <param name="convert"></param>
+        ''' <returns></returns>
+        Public Function Scale(convert As TUnit) As UnitValue(Of TUnit)
+            Return Me = convert
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{Value} ({DirectCast(CObj(Unit), [Enum]).Description})"
         End Function
+
+        Shared ReadOnly converts As (unit As TUnit, value#)() = UnitConvertorExtensions.GetUnitConvertor(Of TUnit)
 
         ''' <summary>
         ''' 将当前的单位值转换为目标<paramref name="unit"/>单位制
@@ -178,11 +189,10 @@ Namespace ComponentModel.Ranges
         ''' <returns></returns>
         Public Overloads Shared Operator =(value As UnitValue(Of TUnit), unit As TUnit) As UnitValue(Of TUnit)
             ' 先计算出当前的单位值对基础单位值的结果
-            Dim converts = UnitConvertorExtensions.GetUnitConvertor(Of TUnit)
             Dim index% = converts.IndexOf(value.Unit)
+            Dim index2 = converts.IndexOf(unit)
             ' 计算出对基底的结果值
-            Dim val# = value * converts(index).value
-            val = val / converts(converts.IndexOf(unit)).value
+            Dim val# = value * converts(index).value / converts(index2).value
 
             Return New UnitValue(Of TUnit)(val, unit)
         End Operator
