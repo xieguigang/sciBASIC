@@ -71,10 +71,10 @@ Namespace ComponentModel
     ''' 其实这个对象就是字典查询的一个简化操作而已
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure MapsHelper(Of T)
+    Public Class MapsHelper(Of T)
 
-        ReadOnly __default As T
-        ReadOnly __maps As IReadOnlyDictionary(Of String, T)
+        Protected ReadOnly __default As T
+        Protected ReadOnly __maps As IReadOnlyDictionary(Of String, T)
 
         Default Public ReadOnly Property Value(key$) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -100,7 +100,33 @@ Namespace ComponentModel
         Public Overrides Function ToString() As String
             Return __maps.DictionaryData.GetJson
         End Function
-    End Structure
+    End Class
+
+    Public Class NameMapping : Inherits MapsHelper(Of String)
+
+        Sub New(Optional dictionary As Dictionary(Of String, String) = Nothing,
+                Optional default$ = Nothing)
+            Call MyBase.New(
+                dictionary Or New Dictionary(Of String, String)().AsDefault,
+                [default]
+            )
+        End Sub
+
+        Public Shared Widening Operator CType(table$(,)) As NameMapping
+            Dim dictionary As New Dictionary(Of String, String)
+
+            For Each map In table.RowIterator
+                Call dictionary.Add(map(0), map(1))
+            Next
+
+            Return New NameMapping(dictionary, "")
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(maps As NameMapping) As Dictionary(Of String, String)
+            Return New Dictionary(Of String, String)(dictionary:=maps.__maps)
+        End Operator
+    End Class
 
     Public Structure Map(Of T1, V)
         Implements IMap
