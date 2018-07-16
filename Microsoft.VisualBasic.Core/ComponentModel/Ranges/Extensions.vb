@@ -173,6 +173,8 @@ Namespace ComponentModel.Ranges
         ''' <param name="from"></param>
         ''' <param name="[to]"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function RangeTransform(from As IEnumerable(Of Integer), [to] As IntRange) As Integer()
             Return from _

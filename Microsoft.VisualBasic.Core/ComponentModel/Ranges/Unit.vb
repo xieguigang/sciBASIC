@@ -61,14 +61,69 @@ Namespace ComponentModel.Ranges
 
         Public ReadOnly Property UnitType As Type
 
-        Public Delegate Function Convertor(Of TUnit)(value As UnitValue(Of TUnit), toUnit As TUnit) As UnitValue(Of TUnit)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="TUnit">枚举类型？</typeparam>
+        ''' <param name="value"></param>
+        ''' <param name="toUnit"></param>
+        ''' <returns></returns>
+        Public Delegate Function Convertor(Of TUnit As Structure)(value As UnitValue(Of TUnit), toUnit As TUnit) As UnitValue(Of TUnit)
 
         Sub New(type As Type)
-
+            UnitType = type
         End Sub
     End Class
 
-    Public Class UnitValue(Of TUnit) : Inherits float
+    Public Module UnitConvertorExtensions
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetUnitConvertor(Of T As Structure)() As (unit As T, value As Double)()
+            Return Enums(Of T)() _
+                .Select(Function(e)
+                            Dim size As Double = CDbl(CObj(e))
+                            Return (e, size)
+                        End Function) _
+                .OrderBy(Function(u) u.Item2) _
+                .ToArray
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Friend Function Base(Of T)(convertors As IEnumerable(Of (unit As T, value As Double))) As (unit As T, value As Double)
+            Return convertors.Where(Function(u) u.value = 1.0#).FirstOrDefault
+        End Function
+
+        <Extension>
+        Friend Function IndexOf(Of T)(convertors As (unit As T, value As Double)(), target As T) As Integer
+            For i As Integer = 0 To convertors.Length - 1
+                If (convertors(i).unit.Equals(target)) Then
+                    Return i
+                End If
+            Next
+
+            Return -1
+        End Function
+
+        <Extension>
+        Public Function TagUnit(Of T As Structure)(value#, unit As T) As UnitValue(Of T)
+            Return New UnitValue(Of T)(value, unit)
+        End Function
+    End Module
+
+    Public Enum ByteSize As Long
+        B = 1
+        KB = 1024
+        MB = KB * 1024
+        GB = MB * 1024
+        TB = GB * 1024
+    End Enum
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="TUnit">枚举类型，基础类型必须是值等于1</typeparam>
+    Public Class UnitValue(Of TUnit As Structure) : Inherits float
 
         ''' <summary>
         ''' 分（d） ``10^-1``
@@ -115,7 +170,30 @@ Namespace ComponentModel.Ranges
             Return $"{Value} ({DirectCast(CObj(Unit), [Enum]).Description})"
         End Function
 
-        Public Overloads Shared Operator ^(value As UnitValue(Of TUnit), unit As TUnit) As UnitValue(Of TUnit)
+        ''' <summary>
+        ''' 将当前的单位值转换为目标<paramref name="unit"/>单位制
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <param name="unit"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator =(value As UnitValue(Of TUnit), unit As TUnit) As UnitValue(Of TUnit)
+            ' 先计算出当前的单位值对基础单位值的结果
+            Dim converts = UnitConvertorExtensions.GetUnitConvertor(Of TUnit)
+            Dim val# = value
+            Dim index% = converts.IndexOf(value.Unit)
+
+            For i As Integer = index To 0 Step -1
+                val *= converts(i).value
+            Next
+
+            For i As Integer = 0 To converts.IndexOf(unit)
+                val /= converts(i).value
+            Next
+
+            Return New UnitValue(Of TUnit)(val, unit)
+        End Operator
+
+        Public Overloads Shared Operator <>(value As UnitValue(Of TUnit), unit As TUnit) As UnitValue(Of TUnit)
             Throw New NotImplementedException
         End Operator
     End Class
