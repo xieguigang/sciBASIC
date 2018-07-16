@@ -179,16 +179,10 @@ Namespace ComponentModel.Ranges
         Public Overloads Shared Operator =(value As UnitValue(Of TUnit), unit As TUnit) As UnitValue(Of TUnit)
             ' 先计算出当前的单位值对基础单位值的结果
             Dim converts = UnitConvertorExtensions.GetUnitConvertor(Of TUnit)
-            Dim val# = value
             Dim index% = converts.IndexOf(value.Unit)
-
-            For i As Integer = index To 0 Step -1
-                val *= converts(i).value
-            Next
-
-            For i As Integer = 0 To converts.IndexOf(unit)
-                val /= converts(i).value
-            Next
+            ' 计算出对基底的结果值
+            Dim val# = value * converts(index).value
+            val = val / converts(converts.IndexOf(unit)).value
 
             Return New UnitValue(Of TUnit)(val, unit)
         End Operator

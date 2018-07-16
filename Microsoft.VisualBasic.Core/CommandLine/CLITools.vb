@@ -122,12 +122,13 @@ Namespace CommandLine
                 End If
             End If
 
-            '下面都是多余或者等于两个元素的情况
-
-            For i As Integer = 0 To tokens.Length - 1 '数目多于一个的
+            ' 下面都是多余或者等于两个元素的情况
+            ' 数目多于一个的
+            For i As Integer = 0 To tokens.Length - 1
                 Dim [next] As Integer = i + 1
 
-                If [next] = tokens.Length Then  '这个元素是开关，已经到达最后则没有了，跳出循环
+                If [next] = tokens.Length Then
+                    ' 这个元素是开关，已经到达最后则没有了，跳出循环
                     If IsPossibleLogicFlag(tokens(i)) AndAlso IncludeLogicSW Then
                         list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
@@ -137,7 +138,8 @@ Namespace CommandLine
 
                 Dim s As String = tokens([next])
 
-                If IsPossibleLogicFlag(s) Then  '当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
+                ' 当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
+                If IsPossibleLogicFlag(s) Then
                     If IncludeLogicSW Then
                         list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
@@ -427,7 +429,12 @@ Namespace CommandLine
                 ' argv='dddddd'
                 ' 键值对语法
                 If s.Contains("="c) AndAlso Not s.IsURLPattern Then
-                    Call s.tupleParser(argv)
+                    If i > 0 AndAlso tokens(i - 1).TextEquals("/@set") Then
+                        ' 在这里是环境变量，不需要进行解析
+                        argv += s
+                    Else
+                        Call s.tupleParser(argv)
+                    End If
                 Else
                     argv += s
                 End If
@@ -437,7 +444,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' 只取第一个=符号出现的位置
+        ''' 只取第一个=符号出现的位置，结果会被添加进入<paramref name="argv"/>列表之中
         ''' </summary>
         ''' <param name="s$"></param>
         ''' <param name="argv"></param>
