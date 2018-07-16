@@ -124,7 +124,11 @@ Namespace ComponentModel
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(maps As NameMapping) As Dictionary(Of String, String)
-            Return New Dictionary(Of String, String)(dictionary:=maps.__maps)
+            If maps Is Nothing Then
+                Return Nothing
+            Else
+                Return New Dictionary(Of String, String)(dictionary:=maps.__maps)
+            End If
         End Operator
     End Class
 
