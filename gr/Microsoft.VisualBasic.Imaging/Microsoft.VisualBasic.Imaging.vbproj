@@ -374,6 +374,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -385,6 +386,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml.Serialization" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -486,6 +488,9 @@
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
     <Compile Include="Drivers\CSS\Driver.vb" />
     <Compile Include="Drivers\CSS\RuntimeInvoker.vb" />
+    <Compile Include="Drivers\Exif\JpegMetadata.vb" />
+    <Compile Include="Drivers\Exif\JpegMetadataAdapter.vb" />
+    <Compile Include="Drivers\Exif\JpegMetadataSaveResult.vb" />
     <Compile Include="Drivers\Models\SVGData.vb" />
     <Compile Include="Drivers\Models\ImageData.vb" />
     <Compile Include="Drivers\Models\GraphicsData.vb" />
