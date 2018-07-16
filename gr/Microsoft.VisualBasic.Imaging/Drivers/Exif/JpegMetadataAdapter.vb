@@ -34,6 +34,14 @@ Namespace Driver
             End Try
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="filePath"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Png文件之中为什么不可以包含有exif元数据？
+        ''' </remarks>
         Private Function ReadMetadata(filePath As String) As JpegMetadata
             Using jpegStream = New FileStream(filePath, FileMode.Open, FileAccess.Read)
                 Dim decoder = BitmapDecoder.Create(jpegStream, BitmapCreateOptions.None, BitmapCacheOption.[Default])
@@ -135,7 +143,8 @@ Namespace Driver
                 .Subject = metadata.Subject Or EmptyString,
                 .Rating = metadata.Rating,
                 .Keywords = metadata.Keywords.AsList,
-                .Comments = metadata.Comment Or EmptyString
+                .Comments = metadata.Comment Or EmptyString,
+                .Author = metadata.Author.AsList
             }
         End Function
 
@@ -143,6 +152,7 @@ Namespace Driver
             destination.Title = source.Title
             destination.Subject = source.Subject
             destination.Rating = source.Rating
+            destination.Author = New ReadOnlyCollection(Of String)(source.Author)
             destination.Keywords = New ReadOnlyCollection(Of String)(source.Keywords)
             destination.Comment = source.Comments
         End Sub
