@@ -279,7 +279,7 @@ Public Module DocumentExtensions
     <Extension>
     Public Function LoadTsv(Of T As Class)(path$,
                                            Optional encoding As Encodings = Encodings.Default,
-                                           Optional nameMaps As Dictionary(Of String, String) = Nothing) As T()
+                                           Optional nameMaps As NameMapping = Nothing) As T()
         Return [Imports](Of T)(path,
                                delimiter:=ASCII.TAB,
                                encoding:=encoding.CodePage,

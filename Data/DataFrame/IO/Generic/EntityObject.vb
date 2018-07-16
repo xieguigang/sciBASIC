@@ -141,13 +141,14 @@ Namespace IO
                     uidMap = path.ReadFirstLine.Split(ASCII.TAB).First
                 End If
             End If
-            Dim map As New Dictionary(Of String, String) From {
-                {uidMap, NameOf(EntityObject.ID)}
-            }
             If tsv Then
-                Return path.LoadTsv(Of T)(nameMaps:=map)
+                Return path.LoadTsv(Of T)(nameMaps:={{uidMap, NameOf(EntityObject.ID)}})
             Else
-                Return path.LoadCsv(Of T)(explicit:=False, maps:=map)
+                Return path.LoadCsv(Of T)(
+                    explicit:=False,
+                    maps:={
+                        {uidMap, NameOf(EntityObject.ID)}
+                    })
             End If
         End Function
 

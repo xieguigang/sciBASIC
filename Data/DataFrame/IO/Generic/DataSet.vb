@@ -127,10 +127,7 @@ Namespace IO
             Dim mapFrom$ = uidMap Or New DefaultValue(Of String) With {
                 .LazyValue = New Func(Of String)(Function() __getID(path)).AsLazy
             }
-            Dim map As New Dictionary(Of String, String) From {
-                {mapFrom, NameOf(DataSet.ID)}
-            }
-            Return path.LoadCsv(Of T)(explicit:=False, maps:=map)
+            Return path.LoadCsv(Of T)(explicit:=False, maps:={{mapFrom, NameOf(DataSet.ID)}})
         End Function
 
         Private Shared Function __getID(path$) As String
