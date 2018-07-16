@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e82a4369065b9f19cc4601aae46834d1, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::1f4280c7815032d115487633aa4e258f, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DataFramework.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Flags, StringBuilders, StringParsers
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: DictionaryTable, (+2 Overloads) Schema
+    '         Function: DictionaryTable, getOrCache, (+2 Overloads) Schema, ValueTable
     '         Delegate Function
     ' 
     '             Function: __initSchema, CreateObject, GetValue, IsComplexType, IsPrimitive

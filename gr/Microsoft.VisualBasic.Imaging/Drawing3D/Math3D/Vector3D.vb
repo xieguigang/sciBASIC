@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab85b592a41ab742e71fde500af1494e, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
+﻿#Region "Microsoft.VisualBasic::6dcbbf2b725595b2e5d0df0c011a0504, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,9 @@
 
     '     Structure Vector3D
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: PointXY, Project, RotateX, RotateY, RotateZ
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator, PointXY, Project, RotateX
+    '                   RotateY, RotateZ
     '         Operators: -
     ' 
     ' 

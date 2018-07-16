@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1b878af12a2dab00e3e21b334f24162, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
+﻿#Region "Microsoft.VisualBasic::2e2bb4b6c20175c4bc506113448aa214, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
 
     ' Author:
     ' 
@@ -38,14 +38,22 @@
     ' 
     '             Constructor: (+1 Overloads) Sub New
     ' 
+    '     Module UnitConvertorExtensions
+    ' 
+    '         Function: Base, GetUnitConvertor, IndexOf, TagUnit
+    ' 
+    '     Enum ByteSize
+    ' 
+    ' 
+    ' 
+    ' 
     '     Class UnitValue
     ' 
     '         Properties: Unit
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    '         Operators: ^
-    ' 
+    '         Function: Scale, ToString
+    '         Operators: <>, =
     ' 
     ' 
     ' /********************************************************************************/

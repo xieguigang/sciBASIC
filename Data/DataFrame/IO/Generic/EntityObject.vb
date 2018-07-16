@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b28c2b06d0c2a3c2bbf5aadad9e6ba43, Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::ee761031e1d6cb8d322ed1360f1a6408, Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4494537fabd04dcbb6c56a3906c9591b, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\Table.vb"
+﻿#Region "Microsoft.VisualBasic::bde583f1131d313ae3648166dd2beacd, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\Table.vb"
 
     ' Author:
     ' 

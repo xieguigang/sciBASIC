@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8131ed9a4734ae73329de534db8a7e7f, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::6fd0d8a0383cdab07b170574ab8be26c, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class CommandLine
     ' 
-    '         Properties: BoolFlags, CLICommandArgvs, Count, EnvironmentVariables, IsNothing
+    '         Properties: BoolFlags, cli, Count, EnvironmentVariables, IsNothing
     '                     IsNullOrEmpty, IsReadOnly, Keys, Name, ParameterList
     '                     Parameters, SingleValue, Tokens
     ' 

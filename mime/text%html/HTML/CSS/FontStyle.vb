@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9e7e81daf468c9c3b1415bd26f51c53, mime\text%html\HTML\CSS\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::58d878f851fd750b3d8d1be7a225f234, mime\text%html\HTML\CSS\FontStyle.vb"
 
     ' Author:
     ' 

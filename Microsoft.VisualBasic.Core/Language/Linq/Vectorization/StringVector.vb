@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3a6a3b66fc156c868468c8499cea068, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\StringVector.vb"
+﻿#Region "Microsoft.VisualBasic::eafd4e14e04b9bed9fcbb767806f7d0d, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\StringVector.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Class StringVector
+    ' 
+    '         Properties: Len
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: InStr, IsPattern, ToString
