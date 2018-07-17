@@ -18,7 +18,7 @@ Namespace Graphic.Axis
             }.CreateAxisTicks
 
             Me.From = CLng(ticks(0)).FromUnixTimeStamp
-            Me.To = CLng(ticks(1)).FromUnixTimeStamp
+            Me.To = CLng(ticks.Last).FromUnixTimeStamp
             Me.Ticks = ticks _
                 .Select(Function(d) CLng(d).FromUnixTimeStamp) _
                 .ToArray
