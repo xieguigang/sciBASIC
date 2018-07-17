@@ -114,6 +114,10 @@ Namespace Drawing2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' ``[left, right]`` as <see cref="DoubleRange"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property XRange As String
             Get
                 With Padding
@@ -122,6 +126,10 @@ Namespace Drawing2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' ``[top, bottom]`` as <see cref="DoubleRange"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property YRange As String
             Get
                 With Padding
