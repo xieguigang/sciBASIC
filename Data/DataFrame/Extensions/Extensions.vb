@@ -93,8 +93,8 @@ Public Module Extensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function LoadTsv(Of T As Class)(path As DefaultString) As T()
-        Return path.DefaultValue.LoadTsv(Of T)
+    Public Function LoadTsv(Of T As Class)(path As DefaultString, Optional encoding As Encoding = Nothing) As T()
+        Return path.DefaultValue.LoadTsv(Of T)(encoding)
     End Function
 
     ''' <summary>

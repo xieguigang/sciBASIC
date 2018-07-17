@@ -1,11 +1,12 @@
 ﻿Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics.TimeTrends
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Text
 
 Module timeRangesTest
 
     Sub Main()
-        Dim avg = DataSet.LoadDataSet("..\data\history.average.csv")
-        Dim range = DataSet.LoadDataSet("..\data\history.range.csv").ToDictionary
+        Dim avg = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\history.average.csv", encoding:=TextEncodings.UTF8)
+        Dim range = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\history.range.csv", encoding:=TextEncodings.UTF8).ToDictionary
         Dim data = avg _
             .Select(Function(d)
                         Dim r As DataSet = range(d.ID)
@@ -18,6 +19,6 @@ Module timeRangesTest
                     End Function) _
             .ToArray
 
-        Call data.Plot().Save("../data/time.trends.jpg")
+        Call data.Plot().Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\history.range.jpg")
     End Sub
 End Module
