@@ -230,6 +230,7 @@
   <ItemGroup>
     <Compile Include="BoxPlot.vb" />
     <Compile Include="BoxData.vb" />
+    <Compile Include="TimeTrends.vb" />
     <Compile Include="VariableWidthBarPlot.vb" />
     <Compile Include="JointPlot.vb" />
     <Compile Include="RegressionPlot.vb" />
