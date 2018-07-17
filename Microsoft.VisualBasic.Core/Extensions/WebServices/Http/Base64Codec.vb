@@ -1,42 +1,43 @@
-﻿#Region "Microsoft.VisualBasic::a3e29c4c9a353ba410134637bb269f37, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::d0707d00d8702b95f89a654b32b25d8e, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\Base64Codec.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module Base64Codec
-' 
-'         Function: __getImageFromBase64, __toBase64String, GetImage, (+3 Overloads) ToBase64String, (+2 Overloads) ToStream
-' 
-' 
-' /********************************************************************************/
+    '     Module Base64Codec
+    ' 
+    '         Function: __getImageFromBase64, __toBase64String, Base64String, DecodeBase64, GetImage
+    '                   (+3 Overloads) ToBase64String, (+2 Overloads) ToStream
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

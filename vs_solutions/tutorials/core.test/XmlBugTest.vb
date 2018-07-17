@@ -1,4 +1,115 @@
-﻿Imports System.Xml
+﻿#Region "Microsoft.VisualBasic::6a05fd4bf8761d08c9ac2da83197fbb4, vs_solutions\tutorials\core.test\XmlBugTest.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    ' Module XmlBugTest
+    ' 
+    '     Function: getCompleteEntity
+    ' 
+    '     Sub: Main, test2
+    ' 
+    '     Class Working
+    ' 
+    '         Properties: p1, p2, p3, p4
+    ' 
+    '     Structure REST
+    ' 
+    '         Properties: [return]
+    ' 
+    '         Function: ParsingRESTData
+    ' 
+    '     Class ChEBIEntity_XmlCommentBug
+    ' 
+    '         Properties: charge, chebiAsciiName, chebiId, ChemicalStructures, Citations
+    '                     CompoundOrigins, DatabaseLinks, definition, entityStar, Formula
+    '                     Formulae, inchi, inchiKey, IupacNames, mass
+    '                     OntologyChildren, OntologyParents, RegistryNumbers, SecondaryChEBIIds, smiles
+    '                     status, Synonyms
+    ' 
+    '     Class ChEBIEntity
+    ' 
+    '         Properties: charge, chebiAsciiName, chebiId, ChemicalStructures, Citations
+    '                     CompoundOrigins, DatabaseLinks, definition, entityStar, Formula
+    '                     Formulae, inchi, inchiKey, IupacNames, mass
+    '                     OntologyChildren, OntologyParents, RegistryNumbers, SecondaryChEBIIds, smiles
+    '                     status, Synonyms
+    ' 
+    '     Class CompoundOrigin
+    ' 
+    '         Properties: componentAccession, componentText, SourceAccession, SourceType, speciesAccession
+    '                     speciesText
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class OntologyParents
+    ' 
+    '         Properties: chebiId, chebiName, cyclicRelationship, status, type
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class DatabaseLinks
+    ' 
+    '         Properties: data, type
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class ChemicalStructures
+    ' 
+    '         Properties: [structure], defaultStructure, dimension, type
+    ' 
+    '     Class Synonyms
+    ' 
+    '         Properties: data, source, type
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class RegistryNumbers
+    ' 
+    '         Properties: data, source, type
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class Formulae
+    ' 
+    '         Properties: data, source
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language

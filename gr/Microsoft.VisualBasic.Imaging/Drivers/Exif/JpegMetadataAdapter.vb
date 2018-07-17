@@ -1,3 +1,52 @@
+ï»¿#Region "Microsoft.VisualBasic::68f6de77d0cf309fe3fec35126311d56, gr\Microsoft.VisualBasic.Imaging\Drivers\Exif\JpegMetadataAdapter.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class JpegMetadataAdapter
+    ' 
+    '         Properties: Metadata
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CreateJpegBitmapEncoderWithMetadata, CreateMetadata, ReadMetadata, Save, TryPadAndSave
+    '                   TrySave
+    ' 
+    '         Sub: PadAndSave, SetMetadata
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Collections.ObjectModel
 Imports System.IO
 Imports System.Threading
@@ -40,7 +89,7 @@ Namespace Driver
         ''' <param name="filePath"></param>
         ''' <returns></returns>
         ''' <remarks>
-        ''' PngÎÄ¼þÖ®ÖÐÎªÊ²Ã´²»¿ÉÒÔ°üº¬ÓÐexifÔªÊý¾Ý£¿
+        ''' Pngï¿½Ä¼ï¿½Ö®ï¿½ï¿½ÎªÊ²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½Ô°ï¿½ï¿½ï¿½ï¿½ï¿½exifÔªï¿½ï¿½ï¿½Ý£ï¿½
         ''' </remarks>
         Private Function ReadMetadata(filePath As String) As JpegMetadata
             Using jpegStream = New FileStream(filePath, FileMode.Open, FileAccess.Read)

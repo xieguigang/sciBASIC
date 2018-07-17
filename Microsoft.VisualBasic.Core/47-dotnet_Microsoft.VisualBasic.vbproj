@@ -904,6 +904,7 @@
     <Compile Include="Language\Linq\Vectorization\Strings.vb" />
     <Compile Include="Language\Value\ByRefValueExtensions.vb" />
     <Compile Include="Language\Value\DefaultValue\BooleanAssert.vb" />
+    <Compile Include="My\Log4VB.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="CommandLine\CLI\Scripting.vb" />
     <Compile Include="CommandLine\InteropService\Abstract.vb" />

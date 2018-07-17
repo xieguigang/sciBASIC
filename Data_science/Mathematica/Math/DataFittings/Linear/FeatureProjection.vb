@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::556ba1608e5808ad66895519effb6209, Data_science\Mathematica\Math\DataFittings\FeatureProjection.vb"
+﻿#Region "Microsoft.VisualBasic::556ba1608e5808ad66895519effb6209, Data_science\Mathematica\Math\DataFittings\Linear\FeatureProjection.vb"
 
     ' Author:
     ' 

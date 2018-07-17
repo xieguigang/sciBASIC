@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6de57fe7a6bc39608a12899ed0f537a1, Data_science\Mathematica\Math\Math\test\SplineTest.vb"
+﻿#Region "Microsoft.VisualBasic::d61e571361b47479cd668c3569bba6a1, vs_solutions\tutorials\core.test\unitTest.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    ' Module SplineTest
+    ' Module unitTest
     ' 
     '     Sub: Main
     ' 
@@ -39,28 +39,22 @@
 
 #End Region
 
-Imports System.Drawing
-Imports Microsoft.VisualBasic.Math.Interpolation
-Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
 
-Module SplineTest
+Module unitTest
 
     Sub Main()
-        Dim points = {
-            New PointF(10, 10),
-            New PointF(20, 20),
-            New PointF(25, 30),
-            New PointF(30, 60),
-            New PointF(40, 50),
-            New PointF(50, 10),
-            New PointF(60, 1),
-            New PointF(70, -5)
-        }
+        Dim KB As New UnitValue(Of ByteSize)(128 * 1024 * 1024, ByteSize.KB)
 
-        Dim spline = PolynomialNewton.NewtonPolynomial(points).ToArray
+        Call KB.__DEBUG_ECHO
+        Call KB.Scale(ByteSize.GB).__DEBUG_ECHO
+        Call KB.Scale(ByteSize.B).__DEBUG_ECHO
+        Call KB.Scale(ByteSize.MB).__DEBUG_ECHO
+        Call KB.Scale(ByteSize.TB).__DEBUG_ECHO
+        Call KB.Scale(ByteSize.KB).__DEBUG_ECHO
+        Call KB.Scale(ByteSize.TB).Scale(ByteSize.MB).__DEBUG_ECHO
 
-        Call points.DumpSerial("./in.csv")
-        Call spline.DumpSerial("./out.csv")
+        Pause()
     End Sub
 End Module
 

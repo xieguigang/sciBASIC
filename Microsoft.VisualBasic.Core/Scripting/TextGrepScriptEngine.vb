@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94bfff43ee84da6d1d62557ab3b1ea2e, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::aae02cab3a6609775d983ada55d47a16, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
 
     ' Author:
     ' 
@@ -42,8 +42,8 @@
     '         Properties: MethodPointers, PipelinePointer
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Compile, Grep, Match, MidString, NoOperation
-    '                   Replace, Reverse, Tokens, ToString
+    '         Function: Compile, EnsureNotEmpty, Grep, Match, MidString
+    '                   NoOperation, Replace, Reverse, Tokens, ToString
     ' 
     ' 
     ' 

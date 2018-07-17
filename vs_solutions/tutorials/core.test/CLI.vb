@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8ecd15e172e2199c6fdb38eef5ce3fc, vs_solutions\tutorials\core.test\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::9140f8dec533bc2fddb52916894e07ca, vs_solutions\tutorials\core.test\CLI.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     ' Module CLI
     ' 
     '     Function: CLIDocumentTest, ExceptionHandlerTest, Main
+    ' 
+    '     Sub: ParserTest
     ' 
     ' /********************************************************************************/
 

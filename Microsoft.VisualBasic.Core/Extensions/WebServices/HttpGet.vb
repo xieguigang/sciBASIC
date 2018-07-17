@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30d8ecee757f177cabcb218d0be052d8, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::dbd20cf658b0a6f0d7af0f57abd85033, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     ' Module HttpGet
+    ' 
+    '     Properties: HttpRequestTimeOut
     ' 
     '     Function: [GET], __get, __httpRequest, Get_PageContent, LogException
     ' 

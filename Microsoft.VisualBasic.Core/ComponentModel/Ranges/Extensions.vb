@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5315adb7af81bfbb9b35846cd37c6e0d, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9b1e1c05c972f9fb87a019455680f7c2, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: (+2 Overloads) GetScaler, (+2 Overloads) RangeTransform, SymmetricalRange
+    '         Function: (+2 Overloads) GetScaler, (+2 Overloads) RangeTransform, SymmetricalRange, Union
     ' 
     '         Sub: Parser
     ' 

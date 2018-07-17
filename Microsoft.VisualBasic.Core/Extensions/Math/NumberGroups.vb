@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab2db79bacb79aed10ef42e61443e47e, Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
+﻿#Region "Microsoft.VisualBasic::7718166f8b47b164a9b150d47027004c, Microsoft.VisualBasic.Core\Extensions\Math\NumberGroups.vb"
 
     ' Author:
     ' 
@@ -38,14 +38,6 @@
     '         Interface IVector
     ' 
     '             Properties: Data
-    ' 
-    '         Class Average
-    ' 
-    '             Properties: Average
-    ' 
-    '             Constructor: (+2 Overloads) Sub New
-    '             Function: ToString
-    '             Operators: +
     ' 
     ' 
     ' 

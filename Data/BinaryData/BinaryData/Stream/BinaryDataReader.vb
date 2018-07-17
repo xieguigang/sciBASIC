@@ -1,52 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::a1070cd911d93e5b9079541d6c5482a5, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::657b4b8b01381177facdf7e309c0362a, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class BinaryDataReader
-' 
-'     Properties: ByteOrder, Encoding, EndOfStream, Length, Position
-' 
-'     Constructor: (+5 Overloads) Sub New
-' 
-'     Function: DecimalFromBytes, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal, ReadDecimals
-'               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadInt16, ReadInt16s
-'               ReadInt32, ReadInt32s, ReadInt64, ReadInt64s, ReadMultiple
-'               ReadSBytes, ReadSingle, ReadSingles, (+4 Overloads) ReadString, ReadUInt16
-'               ReadUInt16s, ReadUInt32, ReadUInt32s, ReadUInt64, ReadUInt64s
-'               ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
-' 
-'     Sub: Align
-' 
-' /********************************************************************************/
+    ' Class BinaryDataReader
+    ' 
+    '     Properties: ByteOrder, Encoding, EndOfStream, Length, Position
+    ' 
+    '     Constructor: (+5 Overloads) Sub New
+    ' 
+    '     Function: DecimalFromBytes, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal, ReadDecimals
+    '               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadInt16, ReadInt16s
+    '               ReadInt32, ReadInt32s, ReadInt64, ReadInt64s, ReadMultiple
+    '               ReadSBytes, ReadSingle, ReadSingles, (+5 Overloads) ReadString, ReadUInt16
+    '               ReadUInt16s, ReadUInt32, ReadUInt32s, ReadUInt64, ReadUInt64s
+    '               ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek, ToString
+    ' 
+    '     Sub: Align
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

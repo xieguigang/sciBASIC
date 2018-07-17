@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d941800040bee624da8032940ee2786, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::7f52c28b4c18522b380dfe632b7fe770, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\SDKManual.vb"
 
     ' Author:
     ' 
@@ -32,8 +32,6 @@
     ' Summaries:
 
     '     Module SDKManual
-    ' 
-    '         Properties: DocPath
     ' 
     '         Function: HelpSummary, LaunchManual, MarkdownDoc
     ' 

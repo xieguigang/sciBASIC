@@ -1,51 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::59549495a0c2c4ac6a67d3960d37dea6, Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::9a9df65a58632cd78e9b63e07734398f, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module DocumentExtensions
-' 
-'     Function: Apply, CreateTable, DirectAppends, GetColumnObjects, GetColumnValues
-'               InvalidsAsRLangNA, JoinColumns, LoadCsv, LoadData, LoadDictionary
-'               LoadMappings, LoadTable, LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
-'               SaveTsv, StripNaN, TsvLine
-'     Class GenericTable
-' 
-'         Properties: Data
-' 
-'         Function: ToString
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Module DocumentExtensions
+    ' 
+    '     Function: Apply, CreateTable, DirectAppends, GetColumnObjects, GetColumnValues
+    '               InvalidsAsRLangNA, JoinColumns, LoadCsv, LoadData, LoadDictionary
+    '               LoadMappings, LoadTable, LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
+    '               SaveTsv, StripNaN, TsvLine
+    '     Class GenericTable
+    ' 
+    '         Properties: Data
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

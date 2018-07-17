@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b61de16d2ae57d372c3eba82c6521787, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::b2be756d6700b2f582a7f0b902cbff76, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\Utils.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Utils
     ' 
-    '         Function: (+2 Overloads) ColorReplace, CorpBlank, (+2 Overloads) ImageCrop, Resize, ResizeUnscaled
+    '         Function: (+2 Overloads) ColorReplace, CorpBlank, (+3 Overloads) ImageCrop, Resize, ResizeUnscaled
     '                   ResizeUnscaledByHeight, TrimRoundAvatar
     ' 
     ' 
