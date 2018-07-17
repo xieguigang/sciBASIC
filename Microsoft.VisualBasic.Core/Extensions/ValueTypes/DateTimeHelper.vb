@@ -158,7 +158,17 @@ Namespace ValueTypes
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function UnixTimeStamp(time As DateTime) As Long
-            Return (time.ToUniversalTime - New DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds
+            Static ZERO As New DateTime(1970, 1, 1, 0, 0, 0)
+            Return (time.ToUniversalTime - ZERO).TotalSeconds
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function FromUnixTimeStamp(unixDateTime As Long) As Date
+            Return DateTimeOffset _
+                .FromUnixTimeSeconds(unixDateTime) _
+                .DateTime _
+                .ToLocalTime()
         End Function
     End Module
 End Namespace
