@@ -1,12 +1,17 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Data",
-    "\\Data\\BinaryData",
-    "\\Data\\BinaryData\\BinaryData",
-    "\\Data\\BinaryData\\BinaryData\\Extensions",
-    "\\Data\\BinaryData\\BinaryData\\Stream"
+    "\\CLI_tools",
+    "\\CLI_tools\\URI",
+    "\\Microsoft.VisualBasic.Core",
+    "\\Microsoft.VisualBasic.Core\\ComponentModel",
+    "\\Microsoft.VisualBasic.Core\\ComponentModel\\Algorithm",
+    "\\Microsoft.VisualBasic.Core\\ComponentModel\\Algorithm\\BinaryTree",
+    "\\mime",
+    "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\\Excel",
+    "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\\Excel\\Model"
   ],
-  "SelectedNode": "\\Data\\BinaryData\\BinaryData\\Stream\\BinaryDataReader.vb",
+  "SelectedNode": "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\\Excel\\Model\\Worksheet.vb",
   "PreviewInSolutionExplorer": false
 }
