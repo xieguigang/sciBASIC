@@ -39,6 +39,8 @@ Public Module TimeTrends
                          Optional size$ = "3600,2400",
                          Optional padding$ = Canvas.Resolution2K.PaddingWithRightLegend,
                          Optional bg$ = "white",
+                         Optional title$ = "Time trends",
+                         Optional subTitle$ = "Time trends chart",
                          Optional lineWidth! = 20,
                          Optional lineColor$ = "darkblue",
                          Optional pointSize! = 30,
@@ -52,6 +54,8 @@ Public Module TimeTrends
                          Optional valueLabelFormat$ = "G2",
                          Optional valueLabelFontCSS$ = CSSFont.Win7VeryVeryLarge,
                          Optional tickLabelFontCSS$ = CSSFont.Win7VeryLarge,
+                         Optional titleFontCSS$ = CSSFont.Win7UltraLarge,
+                         Optional subTitleFontCSS$ = CSSFont.Win7VeryVeryLarge,
                          Optional dateFormat As Func(Of Date, String) = Nothing) As GraphicsData
 
         Static shortDateString As New DefaultValue(Of Func(Of Date, String))(Function(d) d.ToShortDateString)
@@ -73,6 +77,9 @@ Public Module TimeTrends
 
         Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelFontCSS)
         Dim tickLabelFont As Font = CSSFont.TryParse(tickLabelFontCSS)
+        Dim titleFont As Font = CSSFont.TryParse(titleFontCSS)
+        Dim subTitleFont As Font = CSSFont.TryParse(subTitleFontCSS)
+
         Dim lineStyle As New Pen(lineColor.TranslateColor, lineWidth)
         Dim axisPen As Pen = Stroke.TryParse(axisStrokeCSS).GDIObject
         Dim yTickPen As Pen = Stroke.TryParse(yTickStrokeCSS).GDIObject
@@ -81,6 +88,7 @@ Public Module TimeTrends
             .TranslateColor _
             .Alpha(255 * rangeOpacity)
         Dim pointBrush As New SolidBrush(pointColor.TranslateColor)
+
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim yScaler = region.YScaler(yTicks)
@@ -207,6 +215,18 @@ Public Module TimeTrends
                 For Each label As Label In labels
                     Call g.DrawString(label.text, valueLabelFont, Brushes.Black, label.X, label.Y)
                 Next
+
+                labelSize = g.MeasureString(title, titleFont)
+                x = rect.Left + (rect.Width - labelSize.Width) / 2
+                y = rect.Top / 2 - labelSize.Height / 2
+
+                g.DrawString(title, titleFont, Brushes.Black, x, y)
+
+                labelSize = g.MeasureString(subTitle, subTitleFont)
+                x = rect.Left + (rect.Width - labelSize.Width) / 2
+                y = y + labelSize.Height * 1.25
+
+                g.DrawString(subTitle, subTitleFont, Brushes.Black, x, y)
 
                 Dim legends As Legend() = {
                     New Legend With {
