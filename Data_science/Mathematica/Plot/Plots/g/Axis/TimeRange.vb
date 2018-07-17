@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace Graphic.Axis
@@ -33,5 +34,12 @@ Namespace Graphic.Axis
         Public Overrides Function ToString() As String
             Return $"[{From}, {[To]}]"
         End Function
+
+        Public Overloads Shared Widening Operator CType(dateList As Date()) As TimeRange
+            Dim order = dateList _
+                .OrderBy(Self(Of Date)) _
+                .ToArray
+            Return New TimeRange(order(0), order.Last)
+        End Operator
     End Class
 End Namespace
