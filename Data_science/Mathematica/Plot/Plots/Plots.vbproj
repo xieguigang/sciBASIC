@@ -333,6 +333,7 @@
     <Compile Include="BarPlot\BarPlot2.vb" />
     <Compile Include="BarPlot\Histogram\DataModel.vb" />
     <Compile Include="g\Axis\TimeRange.vb" />
+    <Compile Include="g\Canvas.vb" />
     <Compile Include="Scatter\Bubble.vb" />
     <Compile Include="csv\BarData.vb" />
     <Compile Include="Fractions\TreeMap.vb" />

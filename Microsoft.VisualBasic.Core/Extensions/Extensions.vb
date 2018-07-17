@@ -87,7 +87,6 @@ Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports Microsoft.VisualBasic.Text.Similarity
 Imports sys = System.Math
-Imports v = System.Array
 
 #Const FRAMEWORD_CORE = 1
 #Const Yes = 1
@@ -104,6 +103,7 @@ Imports v = System.Array
                     Publisher:="xie.guigang@gmail.com",
                     Revision:=8655,
                     Url:="http://github.com/xieguigang/sciBASIC#")>
+<HideModuleName>
 <Extension> Public Module Extensions
 #Else
 
