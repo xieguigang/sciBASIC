@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0053847bd50f382643b99df2ae43f29e, Microsoft.VisualBasic.Core\Extensions\Collection\IsNullOrEmptyExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::870b4c19f9899b56486233a41135f1a2, Microsoft.VisualBasic.Core\Extensions\Collection\IsNullOrEmptyExtensions.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Public Module IsNullOrEmptyExtensions
         Return list Is Nothing OrElse Not list.Any
     End Function
 End Module
-

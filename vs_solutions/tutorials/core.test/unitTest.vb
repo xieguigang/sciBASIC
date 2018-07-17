@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d61e571361b47479cd668c3569bba6a1, vs_solutions\tutorials\core.test\unitTest.vb"
+﻿#Region "Microsoft.VisualBasic::582aa8308621545cc9a989afc86a8c49, vs_solutions\tutorials\core.test\unitTest.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@ Module unitTest
         Pause()
     End Sub
 End Module
-

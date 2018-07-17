@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7d085878b23c3b36d10c5a27202b7c3, Data_science\Mathematica\Math\DataFittings\Outlier.vb"
+﻿#Region "Microsoft.VisualBasic::3f72107729b5ade1220f801d6a65eb37, Data_science\Mathematica\Math\DataFittings\Outlier.vb"
 
     ' Author:
     ' 
@@ -122,4 +122,3 @@ Public Module Outlier
     End Function
 #End Region
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c567243277adbf406a640b8d96a9d80f, Data_science\Mathematica\data\least-squares\test2\test\testoutlier.vb"
+﻿#Region "Microsoft.VisualBasic::ef98dc3daff41a201f2c02d8de3b6be8, Data_science\Mathematica\data\least-squares\test2\test\testoutlier.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Module testoutlier
         Pause()
     End Sub
 End Module
-

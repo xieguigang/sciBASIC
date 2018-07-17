@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45d848091a597338deac565eea84633c, Data_science\Mathematica\Math\mHG\DATA.vb"
+﻿#Region "Microsoft.VisualBasic::a6942910f23bbb1dd6479d47c9df6249, Data_science\Mathematica\Math\mHG\DATA.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,6 @@
     ' Class mHGstatisticInfo
     ' 
     '     Properties: b, mHG, n
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -89,5 +88,3 @@ Public Class mHGstatisticInfo
     Public Property b As Double
 
 End Class
-
-

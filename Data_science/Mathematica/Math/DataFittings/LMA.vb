@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65472a2256d0cdbb2378be4bab7b0e7c, Data_science\Mathematica\Math\DataFittings\LMA.vb"
+﻿#Region "Microsoft.VisualBasic::8ad981531706c76e2a730306dd29ed19, Data_science\Mathematica\Math\DataFittings\LMA.vb"
 
     ' Author:
     ' 
@@ -79,4 +79,3 @@ Public Module LMA
 
     End Function
 End Module
-

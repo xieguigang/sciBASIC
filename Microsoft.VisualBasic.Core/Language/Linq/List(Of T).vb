@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a326a472592cf06de733abcab8035ae, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::79e1e46330ff926edba373d6b8bbb991, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: First, Last
     ' 
     '         Constructor: (+5 Overloads) Sub New
-    '         Function: [Default], Pop, PopAll, ValuesEnumerator
+    '         Function: [Default], Pop, PopAll, ReverseIterator, ValuesEnumerator
     '         Operators: (+5 Overloads) -, *, ^, (+6 Overloads) +, (+2 Overloads) <
     '                    (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) >, >>
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a3410bff042ed8526aa30f8681b7d3e, Microsoft.VisualBasic.Core\My\Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::16030fa647567f089107450095d90f20, Microsoft.VisualBasic.Core\My\Log4VB.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Namespace My
 
     End Module
 End Namespace
-

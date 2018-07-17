@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6de57fe7a6bc39608a12899ed0f537a1, Data_science\Mathematica\Math\Math\test\SplineTest.vb"
+﻿#Region "Microsoft.VisualBasic::2cc647a87c1072853036d6f9bc3cba98, Data_science\Mathematica\Math\Math\test\SplineTest.vb"
 
     ' Author:
     ' 
@@ -63,4 +63,3 @@ Module SplineTest
         Call spline.DumpSerial("./out.csv")
     End Sub
 End Module
-

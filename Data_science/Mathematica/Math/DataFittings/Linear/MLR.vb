@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b14f7b131833aefb8c41bfdcf415926f, Data_science\Mathematica\Math\DataFittings\Linear\MLR.vb"
+﻿#Region "Microsoft.VisualBasic::aab1b9b2169a2514e9852e9ae7370649, Data_science\Mathematica\Math\DataFittings\Linear\MLR.vb"
 
     ' Author:
     ' 
@@ -206,4 +206,3 @@ Public Class MLRFit
         Return {MLRFit.left(beta, t, S), MLRFit.right(beta, t, S)}
     End Function
 End Class
-

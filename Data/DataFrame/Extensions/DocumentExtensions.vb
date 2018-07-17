@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a9df65a58632cd78e9b63e07734398f, Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d1ad40a6f873537d652f71cd867ecd0f, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: Apply, CreateTable, DirectAppends, GetColumnObjects, GetColumnValues
     '               InvalidsAsRLangNA, JoinColumns, LoadCsv, LoadData, LoadDictionary
-    '               LoadMappings, LoadTable, LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
+    '               LoadMappings, LoadTable, (+2 Overloads) LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
     '               SaveTsv, StripNaN, TsvLine
     '     Class GenericTable
     ' 

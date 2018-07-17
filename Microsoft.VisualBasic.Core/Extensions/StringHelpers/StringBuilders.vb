@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb55edd0fee0edee1736018c67776692, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringBuilders.vb"
+﻿#Region "Microsoft.VisualBasic::aa8449cebc12766d2bfe1f1ba3a03faf, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringBuilders.vb"
 
     ' Author:
     ' 
@@ -77,4 +77,3 @@ Public Module StringBuilders
         Return sb.Replace(find, value())
     End Function
 End Module
-

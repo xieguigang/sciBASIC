@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::804cec6ca192294472fe7bdcf3ebc895, Data\BinaryData\BinaryData\Extensions\FixLengthString.vb"
+﻿#Region "Microsoft.VisualBasic::caee8921de8aef7e1ccec0d478fa11a3, Data\BinaryData\BinaryData\Extensions\FixLengthString.vb"
 
     ' Author:
     ' 
@@ -67,4 +67,3 @@ Public Class FixLengthString
         Return encoding.ToString
     End Function
 End Class
-
