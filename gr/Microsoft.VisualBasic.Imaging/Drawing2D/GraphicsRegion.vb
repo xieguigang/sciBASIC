@@ -165,7 +165,7 @@ Namespace Drawing2D
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function scaler(range As DoubleRange, plotRange As Double) As Func(Of Double, Double)
+        Private Shared Function scaler(range As DoubleRange, plotRange As DoubleRange) As Func(Of Double, Double)
             Return Function(x)
                        Return range.ScaleMapping(x, plotRange)
                    End Function
