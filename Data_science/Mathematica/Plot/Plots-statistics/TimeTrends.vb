@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Driver
 
 Public Module TimeTrends
@@ -17,7 +18,8 @@ Public Module TimeTrends
         End Function
     End Structure
 
-    Public Function Plot() As GraphicsData
+    <Extension>
+    Public Function Plot(data As IEnumerable(Of TimePoint)) As GraphicsData
 
     End Function
 End Module
