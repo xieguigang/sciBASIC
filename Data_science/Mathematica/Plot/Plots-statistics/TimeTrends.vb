@@ -16,6 +16,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 
 Public Module TimeTrends
 
@@ -206,6 +207,32 @@ Public Module TimeTrends
                 For Each label As Label In labels
                     Call g.DrawString(label.text, valueLabelFont, Brushes.Black, label.X, label.Y)
                 Next
+
+                Dim legends As Legend() = {
+                    New Legend With {
+                        .color = lineColor,
+                        .fontstyle = valueLabelFontCSS,
+                        .style = LegendStyles.SolidLine,
+                        .title = "Average"
+                    },
+                    New Legend With {
+                        .color = rangeColor,
+                        .fontstyle = valueLabelFontCSS,
+                        .style = LegendStyles.RoundRectangle,
+                        .title = "[min, max]"
+                    }
+                }
+
+                x = rect.Right + 5
+                y = rect.Top + rect.Height / 3
+
+                Call g.DrawLegends(
+                    topLeft:=New Point(x, y),
+                    legends:=legends,
+                    regionBorder:=New Stroke With {
+                        .dash = DashStyle.Solid, .fill = "black", .width = 5
+                    }
+                )
             End Sub
 
         Return g.GraphicsPlots(
