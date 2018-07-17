@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -43,7 +44,10 @@ Public Module TimeTrends
                          Optional rangeStroke$ = "stroke: darkblue; stroke-width: 1px; stroke-dash: solid;",
                          Optional axisStrokeCSS$ = Stroke.AxisStroke,
                          Optional yTickStrokeCSS$ = Stroke.AxisGridStroke,
-                         Optional cubicSplineExpected% = 25) As GraphicsData
+                         Optional cubicSplineExpected% = 25,
+                         Optional valueLabelFormat$ = "G2",
+                         Optional valueLabelFontCSS$ = CSSFont.Win7VeryVeryLarge,
+                         Optional tickLabelFontCSS$ = CSSFont.Win7VeryLarge) As GraphicsData
 
         Dim dates = data.OrderBy(Function(d) d.date).ToArray
         Dim timer As TimeRange = dates _
@@ -57,9 +61,11 @@ Public Module TimeTrends
                     End Function) _
             .IteratesALL _
             .Range _
-            .CreateAxisTicks
+            .CreateAxisTicks(5)
         Dim rangePoly As (min As List(Of PointF), max As List(Of PointF))
 
+        Dim valueLabelFont As Font = CSSFont.TryParse(valueLabelFontCSS)
+        Dim tickLabelFont As Font = CSSFont.TryParse(tickLabelFontCSS)
         Dim lineStyle As New Pen(lineColor.TranslateColor, lineWidth)
         Dim axisPen As Pen = Stroke.TryParse(axisStrokeCSS).GDIObject
         Dim yTickPen As Pen = Stroke.TryParse(yTickStrokeCSS).GDIObject
@@ -76,10 +82,19 @@ Public Module TimeTrends
                 Dim x#, y#
                 Dim ty#() = {0, 0, 0}
                 Dim trends As New List(Of PointF)
+                Dim labelSize As SizeF
+                Dim labelText$
 
                 For Each yVal As Double In yTicks
                     y = yScaler(yVal)
+                    labelText = yVal
+                    labelSize = g.MeasureString(labelText, tickLabelFont)
+
                     g.DrawLine(yTickPen, CSng(rect.Left), CSng(y), CSng(rect.Right), CSng(y))
+                    g.DrawString(labelText, tickLabelFont, Brushes.Gray,
+                         x:=rect.Left - labelSize.Width - 5,
+                         y:=y - labelSize.Height / 2
+                    )
                 Next
 
                 rangePoly = (New List(Of PointF), New List(Of PointF))
@@ -126,11 +141,38 @@ Public Module TimeTrends
                     Call g.DrawLine(lineStyle, line(0), line(1))
                 Next
 
+                Dim labels As New List(Of Label)
+                Dim anchors As New List(Of Anchor)
+
                 For Each time As TimePoint In dates
                     x = xScaler(time.date)
                     y = yScaler(time.average)
+                    labelText = time.average.ToString(valueLabelFormat)
+                    labelSize = g.MeasureString(labelText, valueLabelFont)
+                    labels += New Label With {
+                        .width = labelSize.Width,
+                        .height = labelSize.Height,
+                        .text = labelText,
+                        .X = x,
+                        .Y = y
+                    }
+                    anchors += New Anchor With {
+                        .r = 5,
+                        .x = x,
+                        .y = y
+                    }
 
                     Call g.DrawCircle(New PointF(x, y), pointSize, pointBrush)
+                Next
+
+                Call d3js.labeler _
+                    .Size(rect.Size) _
+                    .Labels(labels) _
+                    .Anchors(anchors) _
+                    .Start(500)
+
+                For Each label As Label In labels
+                    Call g.DrawString(label.text, valueLabelFont, Brushes.Black, label.X, label.Y)
                 Next
             End Sub
 
