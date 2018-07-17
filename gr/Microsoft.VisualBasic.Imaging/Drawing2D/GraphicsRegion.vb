@@ -161,7 +161,10 @@ Namespace Drawing2D
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function YScaler(yrange As DoubleRange) As Func(Of Double, Double)
-            Return scaler(yrange, Me.YRange)
+            Dim scaler = GraphicsRegion.scaler(yrange, {0, PlotRegion.Height})
+            Dim bottom = PlotRegion.Bottom
+
+            Return Function(y) bottom - scaler(y)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

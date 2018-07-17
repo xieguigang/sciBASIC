@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -30,15 +31,19 @@ Public Module TimeTrends
 
     <Extension>
     Public Function Plot(data As IEnumerable(Of TimePoint),
-                         Optional size$ = "3300,2700",
+                         Optional size$ = "3600,2400",
                          Optional padding$ = g.DefaultPadding,
                          Optional bg$ = "white",
-                         Optional lineWidth! = 5,
+                         Optional lineWidth! = 20,
                          Optional lineColor$ = "darkblue",
+                         Optional pointSize! = 30,
+                         Optional pointColor$ = "blue",
                          Optional rangeColor$ = "skyblue",
                          Optional rangeOpacity! = 0.45,
+                         Optional rangeStroke$ = "stroke: darkblue; stroke-width: 1px; stroke-dash: solid;",
                          Optional axisStrokeCSS$ = Stroke.AxisStroke,
-                         Optional yTickStrokeCSS$ = Stroke.AxisGridStroke) As GraphicsData
+                         Optional yTickStrokeCSS$ = Stroke.AxisGridStroke,
+                         Optional cubicSplineExpected% = 25) As GraphicsData
 
         Dim dates = data.OrderBy(Function(d) d.date).ToArray
         Dim timer As TimeRange = dates _
@@ -58,16 +63,19 @@ Public Module TimeTrends
         Dim lineStyle As New Pen(lineColor.TranslateColor, lineWidth)
         Dim axisPen As Pen = Stroke.TryParse(axisStrokeCSS).GDIObject
         Dim yTickPen As Pen = Stroke.TryParse(yTickStrokeCSS).GDIObject
+        Dim rgPen As Pen = Stroke.TryParse(rangeStroke).GDIObject
         Dim rgColor As Color = rangeColor _
             .TranslateColor _
             .Alpha(255 * rangeOpacity)
+        Dim pointBrush As New SolidBrush(pointColor.TranslateColor)
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim yScaler = region.YScaler(yTicks)
                 Dim xScaler = timer.Scaler(region.XRange)
                 Dim rect As Rectangle = region.PlotRegion
                 Dim x#, y#
-                Dim p1, p2 As PointF
+                Dim ty#() = {0, 0, 0}
+                Dim trends As New List(Of PointF)
 
                 For Each yVal As Double In yTicks
                     y = yScaler(yVal)
@@ -75,33 +83,54 @@ Public Module TimeTrends
                 Next
 
                 rangePoly = (New List(Of PointF), New List(Of PointF))
-                x = xScaler(dates(Scan0).date)
-                rangePoly.min.Add(New PointF(x, yScaler(dates(Scan0).range.Min)))
-                rangePoly.max.Add(New PointF(x, yScaler(dates(Scan0).range.Max)))
 
-                Dim trends As New List(Of (a As PointF, b As PointF))
-
-                For Each win In dates.SlideWindows(winSize:=2)
-                    Dim x1 = xScaler(win(0).date)
-                    Dim x2 = xScaler(win(1).date)
-
-                    p1 = New PointF(x1, yScaler(win(0).average))
-                    p2 = New PointF(x2, yScaler(win(1).average))
-
-                    Call rangePoly.min.Add(New PointF(x2, yScaler(win(0).range.Min)))
-                    Call rangePoly.max.Add(New PointF(x2, yScaler(win(0).range.Max)))
-                    Call trends.Add((p1, p2))
+                For Each time As TimePoint In dates
+                    x = xScaler(time.date)
+                    ty = {
+                        yScaler(time.range.Min),
+                        yScaler(time.average),
+                        yScaler(time.range.Max)
+                    }
+                    trends.Add(New PointF(x, ty(1)))
+                    rangePoly.min.Add(New PointF(x, ty(0)))
+                    rangePoly.max.Add(New PointF(x, ty(2)))
                 Next
 
                 With rangePoly
-                    Dim polygon As GraphicsPath = (.max + .min.ReverseIterator).GraphicsPath
+                    Dim a = .max.First +
+                            .max.CubicSpline(cubicSplineExpected).AsList +
+                            .max.Last
+                    Dim b = .min.Last +
+                            .min.ReverseIterator.CubicSpline(cubicSplineExpected).AsList +
+                            .min.First
+                    Dim polygon As GraphicsPath = (a.AsList + b).GraphicsPath
                     Dim br As New SolidBrush(rgColor)
 
                     Call g.FillPath(br, polygon)
+
+                    If Not rgPen Is Nothing Then
+                        For Each line In a.SlideWindows(winSize:=2)
+                            Call g.DrawLine(rgPen, line(0), line(1))
+                        Next
+                        For Each line In b.SlideWindows(winSize:=2)
+                            Call g.DrawLine(rgPen, line(0), line(1))
+                        Next
+                    End If
                 End With
 
-                For Each line In trends
-                    Call g.DrawLine(lineStyle, line.a, line.b)
+                trends = trends.First +
+                         trends.CubicSpline(cubicSplineExpected).AsList +
+                         trends.Last
+
+                For Each line As SlideWindow(Of PointF) In trends.SlideWindows(winSize:=2)
+                    Call g.DrawLine(lineStyle, line(0), line(1))
+                Next
+
+                For Each time As TimePoint In dates
+                    x = xScaler(time.date)
+                    y = yScaler(time.average)
+
+                    Call g.DrawCircle(New PointF(x, y), pointSize, pointBrush)
                 Next
             End Sub
 
