@@ -580,6 +580,12 @@ Namespace Language
             Throw New NotImplementedException
         End Operator
 
+        Public Iterator Function ReverseIterator() As IEnumerable(Of T)
+            For i As Integer = Count - 1 To 0 Step -1
+                Yield MyBase.Item(i)
+            Next
+        End Function
+
         ''' <summary>
         ''' Enums all of the elements in this collection list object by return a value reference type
         ''' </summary>

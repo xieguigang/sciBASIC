@@ -1,48 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::ee761031e1d6cb8d322ed1360f1a6408, Data\DataFrame\IO\Generic\EntityObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class EntityObject
-    ' 
-    '         Properties: ID
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: Copy, GetIDList, (+3 Overloads) LoadDataSet, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class EntityObject
+' 
+'         Properties: ID
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: Copy, GetIDList, (+3 Overloads) LoadDataSet, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
@@ -79,6 +81,7 @@ Namespace IO
             Me.Properties = props
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(x As EntityObject)
             Call Me.New(x.ID, New Dictionary(Of String, String)(x.Properties))
         End Sub
@@ -87,6 +90,8 @@ Namespace IO
         ''' Copy prop[erty value
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function Copy() As EntityObject
             Return New EntityObject With {
                 .ID = ID,
@@ -98,8 +103,12 @@ Namespace IO
             Return $"{ID} => ({Properties.Count}) {Properties.Keys.ToArray.GetJson}"
         End Function
 
-        Public Shared Function LoadDataSet(path$, Optional ByRef uidMap$ = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of EntityObject)
-            Return LoadDataSet(Of EntityObject)(path, uidMap, tsv)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadDataSet(path$,
+                                           Optional ByRef uidMap$ = Nothing,
+                                           Optional tsv As Boolean = False,
+                                           Optional encoding As Encoding = Nothing) As IEnumerable(Of EntityObject)
+            Return LoadDataSet(Of EntityObject)(path, uidMap, tsv, encoding:=encoding)
         End Function
 
         Public Shared Function GetIDList(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False, Optional ignoreMapErrors As Boolean = False) As String()
@@ -129,10 +138,14 @@ Namespace IO
             End If
         End Function
 
-        Public Shared Function LoadDataSet(Of T As EntityObject)(path$, Optional ByRef uidMap$ = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of T)
+        Public Shared Function LoadDataSet(Of T As EntityObject)(path$,
+                                                                 Optional ByRef uidMap$ = Nothing,
+                                                                 Optional tsv As Boolean = False,
+                                                                 Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
             If Not path.FileExists Then
                 Return {}
             End If
+
             If uidMap.StringEmpty Then
                 If Not tsv Then
                     Dim first As New RowObject(path.ReadFirstLine)
@@ -141,14 +154,20 @@ Namespace IO
                     uidMap = path.ReadFirstLine.Split(ASCII.TAB).First
                 End If
             End If
+
             If tsv Then
-                Return path.LoadTsv(Of T)(nameMaps:={{uidMap, NameOf(EntityObject.ID)}})
+                Return path.LoadTsv(Of T)(
+                    nameMaps:={{uidMap, NameOf(EntityObject.ID)}},
+                    encoding:=encoding
+                )
             Else
                 Return path.LoadCsv(Of T)(
                     explicit:=False,
                     maps:={
                         {uidMap, NameOf(EntityObject.ID)}
-                    })
+                    },
+                    encoding:=encoding
+                )
             End If
         End Function
 

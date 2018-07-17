@@ -51,6 +51,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -276,6 +277,8 @@ Public Module DocumentExtensions
     ''' <param name="encoding"></param>
     ''' <param name="nameMaps"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function LoadTsv(Of T As Class)(path$,
                                            Optional encoding As Encodings = Encodings.Default,
@@ -283,6 +286,26 @@ Public Module DocumentExtensions
         Return [Imports](Of T)(path,
                                delimiter:=ASCII.TAB,
                                encoding:=encoding.CodePage,
+                               nameMaps:=nameMaps)
+    End Function
+
+    ''' <summary>
+    ''' Load a .NET collection from a tsv file which is specific by <paramref name="path"/> value.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="nameMaps"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function LoadTsv(Of T As Class)(path$,
+                                           Optional encoding As Encoding = Nothing,
+                                           Optional nameMaps As NameMapping = Nothing) As T()
+        Return [Imports](Of T)(path,
+                               delimiter:=ASCII.TAB,
+                               encoding:=encoding,
                                nameMaps:=nameMaps)
     End Function
 
@@ -333,6 +356,7 @@ Public Module DocumentExtensions
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function LoadCsv(path$, Optional encoding As Encodings = Encodings.ASCII) As IO.File
         Return IO.File.Load(path, encoding.CodePage)

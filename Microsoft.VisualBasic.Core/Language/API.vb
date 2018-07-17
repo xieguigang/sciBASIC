@@ -162,6 +162,11 @@ Namespace Language
 
 #Region "Helper for ``With``"
 
+        ''' <summary>
+        ''' My self: <see cref="LanguageAPI.ByRef(Of T)(T)"/>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Self(Of T)() As Func(Of T, T)
             Return AddressOf [ByRef]

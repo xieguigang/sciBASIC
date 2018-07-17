@@ -1916,53 +1916,25 @@ Namespace Imaging
         ''' <param name="pt1">System.Drawing.Point structure that represents the first point to connect.</param>
         ''' <param name="pt2">System.Drawing.Point structure that represents the second point to connect.</param>
         Public MustOverride Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
-        '
-        ' Summary:
-        '     Draws a line connecting the two points specified by the coordinate pairs.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the line.
-        '
-        '   x1:
-        '     The x-coordinate of the first point.
-        '
-        '   y1:
-        '     The y-coordinate of the first point.
-        '
-        '   x2:
-        '     The x-coordinate of the second point.
-        '
-        '   y2:
-        '     The y-coordinate of the second point.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a line connecting the two points specified by the coordinate pairs.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
+        ''' <param name="x1">The x-coordinate of the first point.</param>
+        ''' <param name="y1">The y-coordinate of the first point.</param>
+        ''' <param name="x2">The x-coordinate of the second point.</param>
+        ''' <param name="y2">The y-coordinate of the second point.</param>
         Public MustOverride Sub DrawLine(pen As Pen, x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
-        '
-        ' Summary:
-        '     Draws a line connecting the two points specified by the coordinate pairs.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the line.
-        '
-        '   x1:
-        '     The x-coordinate of the first point.
-        '
-        '   y1:
-        '     The y-coordinate of the first point.
-        '
-        '   x2:
-        '     The x-coordinate of the second point.
-        '
-        '   y2:
-        '     The y-coordinate of the second point.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a line connecting the two points specified by the coordinate pairs.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
+        ''' <param name="x1">The x-coordinate of the first point.</param>
+        ''' <param name="y1">The y-coordinate of the first point.</param>
+        ''' <param name="x2">The x-coordinate of the second point.</param>
+        ''' <param name="y2">The y-coordinate of the second point.</param>
         Public MustOverride Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
         '
         ' Summary:
@@ -2363,30 +2335,16 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, point As PointF, format As StringFormat)
-        '
-        ' Summary:
-        '     Draws the specified text string at the specified location with the specified
-        '     System.Drawing.Brush and System.Drawing.Font objects.
-        '
-        ' Parameters:
-        '   s:
-        '     String to draw.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   brush:
-        '     System.Drawing.Brush that determines the color and texture of the drawn text.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the drawn text.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the drawn text.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-s is null.
+
+        ''' <summary>
+        ''' Draws the specified text string at the specified location with the specified
+        ''' System.Drawing.Brush and System.Drawing.Font objects.
+        ''' </summary>
+        ''' <param name="s">String to draw.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the drawn text.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the drawn text.</param>
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
         '
         ' Summary:

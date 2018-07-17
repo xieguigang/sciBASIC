@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::6f65e59bd088ff1c0cb6209bfb88874a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure GraphicsRegion
-    ' 
-    '         Properties: Bottom, EntireArea, Height, PlotRegion, Width
-    '                     XRange, YRange
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: TopCentra, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure GraphicsRegion
+' 
+'         Properties: Bottom, EntireArea, Height, PlotRegion, Width
+'                     XRange, YRange
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: TopCentra, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -113,6 +114,10 @@ Namespace Drawing2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' ``[left, right]`` as <see cref="DoubleRange"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property XRange As String
             Get
                 With Padding
@@ -121,6 +126,10 @@ Namespace Drawing2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' ``[top, bottom]`` as <see cref="DoubleRange"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property YRange As String
             Get
                 With Padding
@@ -143,6 +152,26 @@ Namespace Drawing2D
             Dim left = (Me.Size.Width - size.Width) / 2
             Dim top = (Padding.Top - size.Height) / 2
             Return New Point(left, top)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function XScaler(xrange As DoubleRange) As Func(Of Double, Double)
+            Return scaler(xrange, Me.XRange)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function YScaler(yrange As DoubleRange) As Func(Of Double, Double)
+            Dim scaler = GraphicsRegion.scaler(yrange, {0, PlotRegion.Height})
+            Dim bottom = PlotRegion.Bottom
+
+            Return Function(y) bottom - scaler(y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function scaler(range As DoubleRange, plotRange As DoubleRange) As Func(Of Double, Double)
+            Return Function(x)
+                       Return range.ScaleMapping(x, plotRange)
+                   End Function
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
