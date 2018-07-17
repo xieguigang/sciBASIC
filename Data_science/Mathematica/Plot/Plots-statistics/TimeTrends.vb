@@ -8,11 +8,14 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 
 Public Module TimeTrends
 
@@ -33,7 +36,7 @@ Public Module TimeTrends
     <Extension>
     Public Function Plot(data As IEnumerable(Of TimePoint),
                          Optional size$ = "3600,2400",
-                         Optional padding$ = g.DefaultPadding,
+                         Optional padding$ = Canvas.Resolution2K.PaddingWithRightLegend,
                          Optional bg$ = "white",
                          Optional lineWidth! = 20,
                          Optional lineColor$ = "darkblue",
@@ -47,7 +50,10 @@ Public Module TimeTrends
                          Optional cubicSplineExpected% = 25,
                          Optional valueLabelFormat$ = "G2",
                          Optional valueLabelFontCSS$ = CSSFont.Win7VeryVeryLarge,
-                         Optional tickLabelFontCSS$ = CSSFont.Win7VeryLarge) As GraphicsData
+                         Optional tickLabelFontCSS$ = CSSFont.Win7VeryLarge,
+                         Optional dateFormat As Func(Of Date, String) = Nothing) As GraphicsData
+
+        Static shortDateString As New DefaultValue(Of Func(Of Date, String))(Function(d) d.ToShortDateString)
 
         Dim dates = data.OrderBy(Function(d) d.date).ToArray
         Dim timer As TimeRange = dates _
@@ -85,6 +91,7 @@ Public Module TimeTrends
                 Dim labelSize As SizeF
                 Dim labelText$
 
+                ' 绘制Y坐标轴
                 For Each yVal As Double In yTicks
                     y = yScaler(yVal)
                     labelText = yVal
@@ -96,6 +103,31 @@ Public Module TimeTrends
                          y:=y - labelSize.Height / 2
                     )
                 Next
+
+                ' 绘制X坐标轴
+                Call g.DrawLine(axisPen, rect.Left, rect.Bottom, rect.Right, rect.Bottom)
+
+                With New GraphicsText(DirectCast(g, GDICanvas).Graphics)
+
+                    dateFormat = dateFormat Or shortDateString
+
+                    ' 绘制X坐标轴日期标签
+                    For Each tickDate As Date In timer.Ticks
+                        labelText = dateFormat(tickDate)
+                        labelSize = g.MeasureString(labelText, tickLabelFont)
+                        x = xScaler(tickDate)
+                        x = x - labelSize.Width / 2
+                        y = rect.Bottom + labelSize.Width
+
+                        .DrawString(s:=labelText,
+                                    font:=tickLabelFont,
+                                    brush:=Brushes.Black,
+                                    point:=New PointF(x, y),
+                                    angle:=-45.0!
+                         )
+                        g.DrawLine(axisPen, CInt(x), CInt(y), CInt(x), rect.Bottom)
+                    Next
+                End With
 
                 rangePoly = (New List(Of PointF), New List(Of PointF))
 

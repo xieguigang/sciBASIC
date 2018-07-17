@@ -19,6 +19,6 @@ Module timeRangesTest
                     End Function) _
             .ToArray
 
-        Call data.Plot().Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\history.range.jpg")
+        Call data.Plot(dateFormat:=Function(d) $"{d.Year}/{d.Month.FormatZero("00")}").Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\history.range.jpg")
     End Sub
 End Module
