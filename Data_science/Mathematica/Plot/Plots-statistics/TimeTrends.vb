@@ -82,8 +82,8 @@ Public Module TimeTrends
 
     <Extension>
     Public Function Plot(data As IEnumerable(Of TimePoint),
-                         Optional size$ = "3800,2400",
-                         Optional padding$ = Canvas.Resolution2K.PaddingWithTopTitleAndRightLegend,
+                         Optional size$ = "3600,2700",
+                         Optional padding$ = Canvas.Resolution2K.PaddingWithTopTitleAndBottomLegend,
                          Optional bg$ = "white",
                          Optional title$ = "Time trends",
                          Optional subTitle$ = "Time trends chart",
@@ -151,6 +151,7 @@ Public Module TimeTrends
                 Dim trends As New List(Of PointF)
                 Dim labelSize As SizeF
                 Dim labelText$
+                Dim maxLabelXWidth!
 
                 ' 绘制Y坐标轴
                 For Each yVal As Double In yTicks
@@ -179,6 +180,11 @@ Public Module TimeTrends
                         x = xScaler(tickDate)
                         x = x - labelSize.Width / 2
                         y = rect.Bottom + labelSize.Width * (3 / 4)
+
+                        maxLabelXWidth = Math.Max(
+                            labelSize.Width,
+                            maxLabelXWidth
+                        )
 
                         .DrawString(s:=labelText,
                                     font:=tickLabelFont,
@@ -266,7 +272,7 @@ Public Module TimeTrends
                     .Size(rect.Size) _
                     .Labels(labels) _
                     .Anchors(anchors) _
-                    .Start(500)
+                    .Start(500, showProgress:=False)
 
                 For Each label As Label In labels
                     Call g.DrawString(label.text, valueLabelFont, Brushes.Black, label.X, label.Y)
@@ -299,8 +305,20 @@ Public Module TimeTrends
                     }
                 }
 
-                x = rect.Right + 5
-                y = rect.Top + rect.Height / 3
+                Dim canvas = g
+
+                With legends _
+                    .Select(Function(l) l.MeasureTitle(canvas)) _
+                    .ToArray
+
+                    labelSize = New SizeF(
+                        width:= .Max(Function(s) s.Width),
+                        height:= .Max(Function(s) s.Height)
+                    )
+                End With
+
+                x = rect.Left + (rect.Width - labelSize.Width) / 2
+                y = rect.Bottom + maxLabelXWidth + 20
 
                 Call g.DrawLegends(
                     topLeft:=New Point(x, y),

@@ -52,6 +52,7 @@ Namespace Graphic.Canvas
 
         Public Const PaddingWithRightLegend$ = "padding:300px 600px 300px 200px;"
         Public Const PaddingWithTopTitleAndRightLegend$ = "padding:400px 600px 300px 200px;"
+        Public Const PaddingWithTopTitleAndBottomLegend$ = "padding:400px 150px 600px 200px;"
 
     End Module
 
