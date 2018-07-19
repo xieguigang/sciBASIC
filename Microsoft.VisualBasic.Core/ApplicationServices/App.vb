@@ -228,16 +228,15 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     Private Function __CLI() As CommandLine.CommandLine
-        Dim tokens$() = ' 第一个参数为应用程序的文件路径，不需要
+        ' 第一个参数为应用程序的文件路径，不需要
+        Dim tokens$() =
             Environment.GetCommandLineArgs _
             .Skip(1) _
+            .Select(Function(t) t.Replace(gitBash, "")) _
             .ToArray
-        Dim CLI$ = tokens _
-            .Select(Function(s) s.CLIToken) _
-            .JoinBy(" ") _
-            .Replace(gitBash, "")
-
-        Return CLITools.TryParse(CLI)
+        Dim cliString$ = tokens.JoinBy(" ")
+        Dim cli = CLITools.TryParse(tokens, False, cliString)
+        Return cli
     End Function
 
     Public ReadOnly Property Github As String = LICENSE.githubURL
