@@ -192,7 +192,7 @@ Public Module App
     ''' Gets the command-line arguments for this <see cref="Process"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
-    Public ReadOnly Property CommandLine As CommandLine.CommandLine = __CLI()
+    Public ReadOnly Property CommandLine As CommandLine.CommandLine = __cli()
 
     ''' <summary>
     ''' Get argument value from <see cref="CommandLine"/>.
@@ -221,14 +221,18 @@ Public Module App
         Return CommandLine(name)
     End Function
 
-    Const gitBash As String = "C:/Program Files/Git"
+    ''' <summary>
+    ''' Enable .NET application running from git bash terminal
+    ''' </summary>
+    Const gitBash$ = "C:/Program Files/Git"
 
     ''' <summary>
     ''' Makes compatibility with git bash: <see cref="gitBash"/> = ``C:/Program Files/Git``
     ''' </summary>
     ''' <returns></returns>
     Private Function __cli() As CommandLine.CommandLine
-        Dim tokens$() = ' 第一个参数为应用程序的文件路径，不需要
+        ' 第一个参数为应用程序的文件路径，不需要
+        Dim tokens$() =
             Environment.GetCommandLineArgs _
             .Skip(1) _
             .Select(Function(t) t.Replace(gitBash, "")) _
@@ -476,8 +480,8 @@ Public Module App
     Public Sub JoinVariable(name$, value$)
         __joinedVariables(name) =
             New NamedValue(Of String) With {
-                .name = name,
-                .value = value
+                .Name = name,
+                .Value = value
         }
     End Sub
 
@@ -549,7 +553,7 @@ Public Module App
             value = Scripting.ToString(o)
             out += New NamedValue(Of String) With {
                 .Name = prop.Name,
-                .value = value
+                .Value = value
             }
         Next
 
