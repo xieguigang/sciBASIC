@@ -192,7 +192,7 @@ Public Module App
     ''' Gets the command-line arguments for this <see cref="Process"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
-    Public ReadOnly Property CommandLine As CommandLine.CommandLine = __CLI()
+    Public ReadOnly Property CommandLine As CommandLine.CommandLine = __cli()
 
     ''' <summary>
     ''' Get argument value from <see cref="CommandLine"/>.
@@ -227,7 +227,7 @@ Public Module App
     ''' Makes compatibility with git bash: <see cref="gitBash"/> = ``C:/Program Files/Git``
     ''' </summary>
     ''' <returns></returns>
-    Private Function __CLI() As CommandLine.CommandLine
+    Private Function __cli() As CommandLine.CommandLine
         Dim tokens$() = ' 第一个参数为应用程序的文件路径，不需要
             Environment.GetCommandLineArgs _
             .Skip(1) _

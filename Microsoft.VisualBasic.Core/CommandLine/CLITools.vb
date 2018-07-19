@@ -425,7 +425,7 @@ Namespace CommandLine
 
                 ' 消除单词单元中的双引号
                 If s.First = ASCII.Quot AndAlso s.Last = ASCII.Quot Then
-                    tokens(i) = Mid(s, 2, Len(s) - 2)
+                    s = Mid(s, 2, Len(s) - 2)
                 End If
 
                 ' argv='dddddd'
