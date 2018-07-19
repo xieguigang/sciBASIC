@@ -313,8 +313,8 @@ Public Module XmlExtensions
     ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function LoadFromXml(Of T)(Xml As String, Optional throwEx As Boolean = True) As T
-        Using Stream As New StringReader(s:=Xml)
+    <Extension> Public Function LoadFromXml(Of T)(xml$, Optional throwEx As Boolean = True) As T
+        Using Stream As New StringReader(s:=xml)
             Try
                 Dim type As Type = GetType(T)
                 Dim o As Object = New XmlSerializer(type).Deserialize(Stream)
@@ -322,8 +322,8 @@ Public Module XmlExtensions
             Catch ex As Exception
                 Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
 
-                If Len(Xml) <= 4096 * 100 Then
-                    ex = New Exception(Xml, ex)
+                If Len(xml) <= 4096 * 100 Then
+                    ex = New Exception(xml, ex)
                 End If
 
                 App.LogException(ex, curMethod)
