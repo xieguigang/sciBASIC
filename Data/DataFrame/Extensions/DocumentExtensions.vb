@@ -300,9 +300,7 @@ Public Module DocumentExtensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function LoadTsv(Of T As Class)(path$,
-                                           Optional encoding As Encoding = Nothing,
-                                           Optional nameMaps As NameMapping = Nothing) As T()
+    Public Function LoadTsv(Of T As Class)(path$, encoding As Encoding, Optional nameMaps As NameMapping = Nothing) As T()
         Return [Imports](Of T)(path,
                                delimiter:=ASCII.TAB,
                                encoding:=encoding,
