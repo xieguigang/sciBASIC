@@ -6,7 +6,7 @@ Namespace DATA
 
     Public NotInheritable Class CbindProvider(Of T)
 
-        Shared ReadOnly schema As Dictionary(Of String, PropertyInfo) = DataFramework.Schema(Of T)(PublicProperty, True, True)
+        Shared ReadOnly schema As Dictionary(Of String, PropertyInfo) = DataFramework.Schema(Of T)(PropertyAccess.Readable, True, True)
 
         Private Sub New()
         End Sub
@@ -17,9 +17,14 @@ Namespace DATA
                 .Properties = New Dictionary(Of String, Double)(dataset.Properties)
             }
 
-            For Each field In schema.Where(Function(f)
-                                               Return f.Value.PropertyType.IsNumericType
-                                           End Function)
+            Static numericFields = CbindProvider(Of T) _
+                .schema _
+                .Where(Function(f)
+                           Return f.Value.PropertyType.IsNumericType
+                       End Function) _
+                .ToArray
+
+            For Each field In numericFields
                 d(field.Key) = CDbl(field.Value.GetValue(obj))
             Next
 
@@ -32,7 +37,7 @@ Namespace DATA
                 .Properties = New Dictionary(Of String, String)(entity.Properties)
             }
 
-            For Each field In schema
+            For Each field In CbindProvider(Of T).schema
                 e(field.Key) = CStr(field.Value.GetValue(obj))
             Next
 

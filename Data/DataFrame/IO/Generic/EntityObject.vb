@@ -134,7 +134,7 @@ Namespace IO
                 Dim dir$ = path.Trim("*"c)
 
                 For Each file As String In ls - l - r - ("*.csv" Or "*.tsv".When(tsv)) <= dir
-                    data += LoadDataSet(Of EntityObject)(path, uidMap, tsv, encoding:=encoding)
+                    data += LoadDataSet(Of EntityObject)(file, uidMap, tsv, encoding:=encoding)
                 Next
 
                 Return data
