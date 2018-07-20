@@ -93,7 +93,7 @@ Module ZScorePlotTest
             !Tryptophan = {"HMDB0000929"}
 
             Dim csv$ = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\duke\4.union\analysis\sampleUnion_matrix.csv"
-            Dim data = ZScores.Load(csv, .ByRef, ColorBrewer.QualitativeSchemes.Set2_4)
+            Dim data = ZScores.Load(csv, .ByRef, ColorBrewer.QualitativeSchemes.Paired12)
 
             Call ZScoresPlot.Plot(data).Save(csv.ParentPath & "/duck_sampling.png")
         End With
