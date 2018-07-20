@@ -507,6 +507,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DATA\Union.vb" />
     <Compile Include="DATA\DataFrame.vb" />
     <Compile Include="DATA\MySQL.vb" />
     <Compile Include="IO\BackendWriter.vb" />

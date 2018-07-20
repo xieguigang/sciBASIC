@@ -283,6 +283,16 @@ Namespace ComponentModel.DataSourceModel
             Return StringBuilders.ContainsKey(type)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function IsNumericType(type As Type) As Boolean
+            Static numerics As Type() = {
+                GetType(Integer), GetType(Long), GetType(Short), GetType(Double), GetType(Byte),
+                GetType(UInteger), GetType(ULong), GetType(UShort), GetType(Single), GetType(SByte), GetType(Decimal)
+            }
+            Return numerics.Any(Function(num) num Is type)
+        End Function
+
         ''' <summary>
         ''' 如果目标类型的属性之中值包含有基础类型，则是一个非复杂类型，反之包含任意一个非基础类型，则是一个复杂类型
         ''' </summary>
