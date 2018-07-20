@@ -225,6 +225,7 @@ End Module
 Public Structure ZScores
 
     Dim serials As DataSet()
+
     Dim groups As Dictionary(Of String, String())
     ''' <summary>
     ''' Colors for the <see cref="groups"/>
@@ -248,6 +249,7 @@ Public Structure ZScores
     ''' <param name="groups"></param>
     ''' <param name="colors"></param>
     ''' <param name="transpose">是否需要将<paramref name="path"/>所加载上来的矩阵进行转置处理</param>
+    ''' <param name="labelTranslate"></param>
     ''' <returns></returns>
     Public Shared Function Load(path$,
                                 groups As Dictionary(Of String, String()),
@@ -255,7 +257,6 @@ Public Structure ZScores
                                 Optional transpose As Boolean = False,
                                 Optional labelTranslate As Dictionary(Of String, String) = Nothing) As ZScores
 
-        Dim colorlist As LoopArray(Of Color) = colors
         Dim datalist As DataSet() = DataSet _
             .LoadDataSet(path) _
             .ToArray
@@ -263,6 +264,23 @@ Public Structure ZScores
         If transpose Then
             datalist = datalist.Transpose
         End If
+
+        Return ZScores.Load(datalist, groups, colors, labelTranslate)
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="groups"></param>
+    ''' <param name="colors"></param>
+    ''' <returns></returns>
+    Public Shared Function Load(datalist As DataSet(),
+                                groups As Dictionary(Of String, String()),
+                                colors As Color(),
+                                Optional labelTranslate As Dictionary(Of String, String) = Nothing) As ZScores
+
+        Dim colorlist As LoopArray(Of Color) = colors
+
         If labelTranslate Is Nothing Then
             labelTranslate = New Dictionary(Of String, String)
         End If
