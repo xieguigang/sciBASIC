@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::7d5daefcb77bfee30240219f260d68ab, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module App
-    ' 
-    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, ExceptionLogFile
-    '                 ExecutablePath, Github, HOME, Info, InputFile
-    '                 IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp, LogErrDIR
-    '                 NanoTime, NextTempName, OutFile, PID, Platform
-    '                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
-    '                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
-    '                 StartupDirectory, StdErr, StdOut, SysTemp, UserHOME
-    '                 Version
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __CLI, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
-    '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
-    '               ElapsedMilliseconds, Exit, formatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
-    '               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
-    '               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
-    '               RunCLIInternal, SelfFolk, SelfFolks, Shell, TraceBugs
-    ' 
-    '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
-    '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
-    '          SetBufferSize, StartGC, StopGC
-    ' 
-    ' /********************************************************************************/
+' Module App
+' 
+'     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+'                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, ExceptionLogFile
+'                 ExecutablePath, Github, HOME, Info, InputFile
+'                 IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp, LogErrDIR
+'                 NanoTime, NextTempName, OutFile, PID, Platform
+'                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
+'                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
+'                 StartupDirectory, StdErr, StdOut, SysTemp, UserHOME
+'                 Version
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __CLI, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
+'               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
+'               ElapsedMilliseconds, Exit, formatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
+'               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
+'               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
+'               RunCLIInternal, SelfFolk, SelfFolks, Shell, TraceBugs
+' 
+'     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
+'          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
+'          SetBufferSize, StartGC, StopGC
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -221,23 +221,25 @@ Public Module App
         Return CommandLine(name)
     End Function
 
-    Const gitBash As String = "C:/Program Files/Git"
+    ''' <summary>
+    ''' Enable .NET application running from git bash terminal
+    ''' </summary>
+    Const gitBash$ = "C:/Program Files/Git"
 
     ''' <summary>
     ''' Makes compatibility with git bash: <see cref="gitBash"/> = ``C:/Program Files/Git``
     ''' </summary>
     ''' <returns></returns>
     Private Function __cli() As CommandLine.CommandLine
-        Dim tokens$() = ' 第一个参数为应用程序的文件路径，不需要
+        ' 第一个参数为应用程序的文件路径，不需要
+        Dim tokens$() =
             Environment.GetCommandLineArgs _
             .Skip(1) _
+            .Select(Function(t) t.Replace(gitBash, "")) _
             .ToArray
-        Dim CLI$ = tokens _
-            .Select(Function(s) s.CLIToken) _
-            .JoinBy(" ") _
-            .Replace(gitBash, "")
-
-        Return CLITools.TryParse(CLI)
+        Dim cliString$ = tokens.JoinBy(" ")
+        Dim cli = CLITools.TryParse(tokens, False, cliString)
+        Return cli
     End Function
 
     Public ReadOnly Property Github As String = LICENSE.githubURL
