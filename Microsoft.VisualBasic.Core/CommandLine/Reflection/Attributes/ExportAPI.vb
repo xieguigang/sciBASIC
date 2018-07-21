@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11444e88ed441849e6a97dc74d8a2e3c, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
+﻿#Region "Microsoft.VisualBasic::bcddda213dbd177fcd8ec8f45baa77da, Microsoft.VisualBasic.Core\CommandLine\Reflection\Attributes\ExportAPI.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,11 @@
 
     ' Summaries:
 
+    '     Class LastUpdatedAttribute
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
     '     Class ExportAPIAttribute
     ' 
     '         Properties: Example, Info, Name, Type, Usage

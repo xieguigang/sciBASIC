@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51f4d747d6bc3d248305033693ef645b, Microsoft.VisualBasic.Core\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::19842fdd5a44e9039f6d2d3a0fadd245, Microsoft.VisualBasic.Core\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 
@@ -272,12 +272,15 @@ Public Module ListExtensions
     End Function
 
     ''' <summary>
-    ''' Initializes a new instance of the <see cref="List"/>`1 class that
+    ''' Initializes a new instance of the <see cref="List(Of T)"/> class that
     ''' contains elements copied from the specified collection and has sufficient capacity
     ''' to accommodate the number of elements copied.
     ''' </summary>
-    ''' <param name="source">The collection whose elements are copied to the new list.</param>
+    ''' <param name="source">
+    ''' The collection whose elements are copied to the new list.
+    ''' </param>
     <Extension> Public Function AsList(Of T)(source As IEnumerable(Of T)) As List(Of T)
+        ' 如果source集合是空值的话，不会抛错
         Return New List(Of T)(source)
     End Function
 

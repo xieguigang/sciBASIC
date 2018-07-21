@@ -17,6 +17,8 @@
 
 ## Scientific Computing runtime for VisualBasic.NET
 
+sciBASIC#: A Microsoft VisualBasic feature runtime for data science application on Windows/Linux/macOS And China Tianhe Super Computing Platform. It was mainly consists with a data frame system, a data science analysis system, a data graphics system and a general application core runtime.
+
 ``sciBASIC#``(read as ``scientific visualbasic`` or just ``sciBASIC sharp``) is a Microsoft VisualBasic language feature runtime for your data science application which is running in the CLI environment on Windows/Linux/macOS **Desktop/Server** platform or **supercomputer** platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences application which is programming in VisualBasic language, and it also extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
 
 > Abount VisualBasic code style guidelines:

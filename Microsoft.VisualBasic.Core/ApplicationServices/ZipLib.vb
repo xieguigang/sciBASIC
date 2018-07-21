@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3367932a0f97dccebcec7503dadbaf7c, Microsoft.VisualBasic.Core\ApplicationServices\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::d1059edf8091d229eea055260c61080e, Microsoft.VisualBasic.Core\ApplicationServices\ZipLib.vb"
 
     ' Author:
     ' 
@@ -50,9 +50,10 @@
     ' 
     '  
     ' 
-    '     Function: ExtractToSelfDirectory, IsADirectoryEntry
+    '     Function: ExtractToSelfDirectory, IsADirectoryEntry, IsSourceFolderZip
     ' 
-    '     Sub: AddToArchive, DirectoryArchive, FileArchive, ImprovedExtractToDirectory, ImprovedExtractToFile
+    '     Sub: AddToArchive, DirectoryArchive, ExtractToFileInternal, FileArchive, ImprovedExtractToDirectory
+    '          ImprovedExtractToFile
     ' 
     ' 
     ' /********************************************************************************/

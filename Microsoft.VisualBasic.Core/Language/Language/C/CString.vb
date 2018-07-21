@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0f9ebce27978db239c045ecba1fc41a, Microsoft.VisualBasic.Core\Language\Language\C\CString.vb"
+﻿#Region "Microsoft.VisualBasic::8c4126108cd7df654e82d4655d86ef8f, Microsoft.VisualBasic.Core\Language\Language\C\CString.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module CString
     ' 
-    '         Function: ChangeCharacter, IsXDigit, StrChr, StrRChr, StrStr
-    '                   StrTok
+    '         Function: ChangeCharacter, Decode, IsXDigit, StrChr, StrRChr
+    '                   StrStr, StrTok
     '         Structure __tokensHelper
     ' 
     '             Function: StrTok

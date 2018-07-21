@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18ce99495d4d72e04628b639362c2840, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::968dcd4779c3b92dae03373bde134c1a, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Properties: MonthList
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: DateSeq, FillDateZero, GetMonthInteger, UnixTimeStamp, YYMMDD
+    '         Function: DateSeq, FillDateZero, FromUnixTimeStamp, GetMonthInteger, UnixTimeStamp
+    '                   YYMMDD
     ' 
     ' 
     ' /********************************************************************************/
@@ -158,7 +159,17 @@ Namespace ValueTypes
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function UnixTimeStamp(time As DateTime) As Long
-            Return (time.ToUniversalTime - New DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds
+            Static ZERO As New DateTime(1970, 1, 1, 0, 0, 0)
+            Return (time.ToUniversalTime - ZERO).TotalSeconds
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function FromUnixTimeStamp(unixDateTime As Long) As Date
+            Return DateTimeOffset _
+                .FromUnixTimeSeconds(unixDateTime) _
+                .DateTime _
+                .ToLocalTime()
         End Function
     End Module
 End Namespace

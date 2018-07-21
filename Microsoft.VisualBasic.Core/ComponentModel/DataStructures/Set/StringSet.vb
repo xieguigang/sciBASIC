@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a54e6a4f7d02c6c1a8ac62395aaf1a5, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Set\StringSet.vb"
+﻿#Region "Microsoft.VisualBasic::40222131056ab52cedace7de0903de1a, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Set\StringSet.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Class StringSet
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Operators: (+2 Overloads) Or
+    '         Operators: -, (+2 Overloads) Or
     ' 
     ' 
     ' /********************************************************************************/

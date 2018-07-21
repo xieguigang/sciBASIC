@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f65e59bd088ff1c0cb6209bfb88874a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
+﻿#Region "Microsoft.VisualBasic::bf71a180b967ac72a35a44aa7a27be47, gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '                     XRange, YRange
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: TopCentra, ToString
+    '         Function: scaler, TopCentra, ToString, XScaler, YScaler
     ' 
     ' 
     ' /********************************************************************************/
@@ -46,6 +46,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -113,6 +114,10 @@ Namespace Drawing2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' ``[left, right]`` as <see cref="DoubleRange"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property XRange As String
             Get
                 With Padding
@@ -121,6 +126,10 @@ Namespace Drawing2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' ``[top, bottom]`` as <see cref="DoubleRange"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property YRange As String
             Get
                 With Padding
@@ -143,6 +152,26 @@ Namespace Drawing2D
             Dim left = (Me.Size.Width - size.Width) / 2
             Dim top = (Padding.Top - size.Height) / 2
             Return New Point(left, top)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function XScaler(xrange As DoubleRange) As Func(Of Double, Double)
+            Return scaler(xrange, Me.XRange)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function YScaler(yrange As DoubleRange) As Func(Of Double, Double)
+            Dim scaler = GraphicsRegion.scaler(yrange, {0, PlotRegion.Height})
+            Dim bottom = PlotRegion.Bottom
+
+            Return Function(y) bottom - scaler(y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function scaler(range As DoubleRange, plotRange As DoubleRange) As Func(Of Double, Double)
+            Return Function(x)
+                       Return range.ScaleMapping(x, plotRange)
+                   End Function
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9edde09923b165c5f275c597d284087a, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree.vb"
+﻿#Region "Microsoft.VisualBasic::64873586b69731589d44a4462499c4df, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree.vb"
 
     ' Author:
     ' 
@@ -154,7 +154,8 @@ Namespace ComponentModel.Algorithm.BinaryTree
                 Case > 0 : Call removeRight(tree, key)
                 Case = 0 : Call removeCurrent(tree)
                 Case Else
-                    Throw New Exception
+                    ' This will never happed!
+                    Throw New Exception("This will never happed!")
             End Select
 
             If Not tree Is Nothing Then

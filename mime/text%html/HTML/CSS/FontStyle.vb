@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9e7e81daf468c9c3b1415bd26f51c53, mime\text%html\HTML\CSS\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::58d878f851fd750b3d8d1be7a225f234, mime\text%html\HTML\CSS\FontStyle.vb"
 
     ' Author:
     ' 
@@ -80,7 +80,7 @@ Namespace HTML.CSS
         Public Const Win7Bold$ = "font-style: strong; font-size: 12; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7LargerBold$ = "font-style: strong; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7LargerNormal$ = "font-style: normal; font-size: 16; font-family: " & FontFace.MicrosoftYaHei & ";"
-        Public Const Win7LargeBold$ = "font-style: strong; font-size: 20; font-family: " & FontFace.MicrosoftYaHei & ";"
+        Public Const Win7LargeBold$ = "font-style: strong; font-size: 24; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7LittleLarge$ = "font-style: normal; font-size: 20; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7Large$ = "font-style: normal; font-size: 24; font-family: " & FontFace.MicrosoftYaHei & ";"
         Public Const Win7VeryLarge$ = "font-style: normal; font-size: 36; font-family: " & FontFace.MicrosoftYaHei & ";"
