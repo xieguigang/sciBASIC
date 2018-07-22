@@ -566,7 +566,7 @@ Public Class BinaryDataReader
         Return New SeekTask(BaseStream, offset, origin)
     End Function
 
-    ' ---- METHODS (PRIVATE) --------------------------------------------------------------------------------------
+#Region "METHODS (PRIVATE)"
 
     Private Function ReadMultiple(Of T)(count As Integer, readFunc As Func(Of T)) As T()
         Dim values As T() = New T(count - 1) {}
@@ -644,6 +644,7 @@ Public Class BinaryDataReader
         End While
         Return New Decimal(intValues)
     End Function
+#End Region
 
     Public Overrides Function ToString() As String
         Return $"[{Position}/{Length}] {Encoding.ToString}"
