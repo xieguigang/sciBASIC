@@ -28,33 +28,28 @@ Namespace PCA
                              Optional title$ = "PCA ScreePlot",
                              Optional titleFontCSS$ = CSSFont.Win7VeryVeryLarge,
                              Optional tickFontStyle$ = CSSFont.Win7Large,
-                             Optional labelFontStyle$ = CSSFont.Win7VeryLarge) As GraphicsData
+                             Optional labelFontStyle$ = CSSFont.Win7VeryLarge,
+                             Optional axisStrokeCSS$ = Stroke.AxisStroke) As GraphicsData
 
             Dim cv As Vector = pca.CumulativeVariance
-            Dim X As Vector = (cv.Dim + 1) _
-                .Sequence _
-                .AsVector _
-                .CreateAxisTicks
+            Dim X$() = cv.Dim _
+                .SeqIterator(offset:=1) _
+                .Select(Function(i) $"Comp.{i}") _
+                .ToArray
             Dim Y As Vector = cv.CreateAxisTicks
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim rect As Rectangle = region.PlotRegion
-                    Dim Xscaler = d3js.scale.linear.domain(X).range(integers:={rect.Left, rect.Right})
+                    Dim Xscaler = d3js.scale.ordinal.domain(X).range(integers:={rect.Left, rect.Right})
                     Dim Yscaler = d3js.scale.linear.domain(Y).range(integers:={rect.Top, rect.Bottom})
-                    Dim scaler As New DataScaler With {
+                    Dim scaler As New TermScaler With {
                         .AxisTicks = (X, Y),
                         .X = Xscaler,
                         .Y = Yscaler,
-                        .Region = rect
+                        .region = rect
                     }
 
-                    Call g.DrawAxis(
-                        region, scaler, True,
-                        xlabel:="Components", ylabel:="Variances",
-                        htmlLabel:=False,
-                        tickFontStyle:=tickFontStyle,
-                        labelFont:=labelFontStyle
-                    )
+                    Call g.DrawY(Stroke.TryParse(axisStrokeCSS), "Variances", region, scaler, YAxisLayoutStyles.Left, Nothing, labelFontStyle, CSSFont.TryParse(tickFontStyle), htmlLabel:=False, tickFormat:="F2")
                 End Sub
 
             Return g.GraphicsPlots(
