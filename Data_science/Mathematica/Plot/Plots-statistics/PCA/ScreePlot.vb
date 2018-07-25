@@ -1,4 +1,6 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -23,17 +25,42 @@ Namespace PCA
                              Optional bg$ = "white",
                              Optional lineStroke$ = Stroke.HighlightStroke,
                              Optional pointSize! = 10,
-                             Optional title$ = "PCA ScreePlot") As GraphicsData
+                             Optional title$ = "PCA ScreePlot",
+                             Optional titleFontCSS$ = CSSFont.Win7VeryVeryLarge,
+                             Optional tickFontStyle$ = CSSFont.Win7Large,
+                             Optional labelFontStyle$ = CSSFont.Win7VeryLarge) As GraphicsData
 
             Dim cv As Vector = pca.CumulativeVariance
-            Dim X = (cv.Dim + 1).Sequence.AsVector.CreateAxisTicks
-            Dim Y = cv.CreateAxisTicks
+            Dim X As Vector = (cv.Dim + 1) _
+                .Sequence _
+                .AsVector _
+                .CreateAxisTicks
+            Dim Y As Vector = cv.CreateAxisTicks
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                    Dim rect As Rectangle = region.PlotRegion
+                    Dim Xscaler = d3js.scale.linear.domain(X).range(integers:={rect.Left, rect.Right})
+                    Dim Yscaler = d3js.scale.linear.domain(Y).range(integers:={rect.Top, rect.Bottom})
+                    Dim scaler As New DataScaler With {
+                        .AxisTicks = (X, Y),
+                        .X = Xscaler,
+                        .Y = Yscaler,
+                        .Region = rect
+                    }
 
+                    Call g.DrawAxis(
+                        region, scaler, True,
+                        xlabel:="Components", ylabel:="Variances",
+                        htmlLabel:=False,
+                        tickFontStyle:=tickFontStyle,
+                        labelFont:=labelFontStyle
+                    )
                 End Sub
 
-            Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
+            Return g.GraphicsPlots(
+                size.SizeParser, margin, bg,
+                plotInternal
+            )
         End Function
     End Module
 End Namespace

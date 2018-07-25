@@ -80,6 +80,9 @@ Namespace Graphic
         End Function
     End Module
 
+    ''' <summary>
+    ''' 将用户数据转换为作图的时候所需要的空间数据
+    ''' </summary>
     Public Structure DataScaler
 
         Dim X As LinearScale
