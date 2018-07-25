@@ -98,9 +98,9 @@ Namespace LinearAlgebra
             ' Cumulative Proportion  0.8852745 0.96362029 0.98347253 1.00000000
 
             table += {""}.JoinIterates(pca.CumulativeVariance.Sequence(1).Select(Function(i) $"Comp.{i}")).ToArray
-            table += {"Standard deviation"}.JoinIterates(pca.StandardDeviations.AsCharacter).ToArray
-            table += {"Proportion of Variance"}.JoinIterates(pca.ExplainedVariance.AsCharacter).ToArray
-            table += {"Cumulative Proportion"}.JoinIterates(pca.CumulativeVariance.AsCharacter).ToArray
+            table += {"Standard deviation"}.JoinIterates(pca.StandardDeviations.AsCharacter(True)).ToArray
+            table += {"Proportion of Variance"}.JoinIterates(pca.ExplainedVariance.AsCharacter(True)).ToArray
+            table += {"Cumulative Proportion"}.JoinIterates(pca.CumulativeVariance.AsCharacter(True)).ToArray
 
             Dim sb$ = "Importance of components:" & vbCrLf & table.Print(addBorder:=False)
 
@@ -113,11 +113,11 @@ Namespace LinearAlgebra
 
             For Each factor In pca.Loadings.Array.SeqIterator(offset:=1)
                 table += {"X" & factor.i} _
-                    .JoinIterates(factor.value.AsCharacter) _
+                    .JoinIterates(factor.value.AsCharacter(True)) _
                     .ToArray
             Next
 
-            sb = sb & vbCrLf & vbCrLf
+            sb = sb & vbCrLf
             sb = sb & "Loading: " & vbCrLf & table.Print(addBorder:=False)
 
             Return sb
