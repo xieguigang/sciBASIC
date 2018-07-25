@@ -57,6 +57,7 @@ Module Module1
 
         ' Call pca.ExplainedVariance.ToString.__DEBUG_ECHO
         Call Console.WriteLine(pca.Summary)
+        Call pca.Project(data.Matrix.Select(Function(v) v.AsVector).ToArray, nPC:=2)
 
         Pause()
     End Sub
@@ -73,7 +74,7 @@ Module Module1
 
         Dim newPoints = {{4.9, 3.2, 1.2, 0.4}.AsVector, {5.4, 3.3, 1.4, 0.9}.AsVector}
 
-        For Each x In pca.Project(newPoints)
+        For Each x In pca.Project(newPoints, 2)
             Call x.ToString.__DEBUG_ECHO
         Next
 
