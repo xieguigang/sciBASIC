@@ -32,6 +32,7 @@ Namespace PCA
                                         Optional size$ = "2000,1800",
                                         Optional colorSchema$ = "Set1:c8") As GraphicsData
 
+            Throw New NotImplementedException
         End Function
     End Module
 End Namespace
