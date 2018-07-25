@@ -103,6 +103,23 @@ Namespace LinearAlgebra
             table += {"Cumulative Proportion"}.JoinIterates(pca.CumulativeVariance.AsCharacter).ToArray
 
             Dim sb$ = "Importance of components:" & vbCrLf & table.Print(addBorder:=False)
+
+            table *= 0
+            table += {""}.JoinIterates(pca _
+                              .CumulativeVariance _
+                              .Sequence(offSet:=1) _
+                              .Select(Function(i) $"Comp.{i}")) _
+                         .ToArray
+
+            For Each factor In pca.Loadings.Array.SeqIterator(offset:=1)
+                table += {"X" & factor.i} _
+                    .JoinIterates(factor.value.AsCharacter) _
+                    .ToArray
+            Next
+
+            sb = sb & vbCrLf & vbCrLf
+            sb = sb & "Loading: " & vbCrLf & table.Print(addBorder:=False)
+
             Return sb
         End Function
     End Module
