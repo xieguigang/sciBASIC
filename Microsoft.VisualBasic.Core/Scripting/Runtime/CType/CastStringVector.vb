@@ -62,6 +62,12 @@ Namespace Scripting.Runtime
                 Function(x) CStr(x.Value))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsCharacter(Of T)(values As IEnumerable(Of T), Optional null$ = "") As IEnumerable(Of String)
+            Return values.SafeQuery.Select(Function(o) Scripting.ToString(o, null))
+        End Function
+
         ''' <summary>
         ''' Convert the <see cref="String"/> value as <see cref="Double"/> numeric type.
         ''' </summary>

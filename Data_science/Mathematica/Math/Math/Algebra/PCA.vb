@@ -83,7 +83,7 @@ Namespace LinearAlgebra
         Dim center, scale As Boolean
 
         ''' <summary>
-        ''' Returns the standard deviations of the principal components
+        ''' (Standard deviation) Returns the standard deviations of the principal components
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property StandardDeviations As Vector
@@ -105,7 +105,7 @@ Namespace LinearAlgebra
         End Property
 
         ''' <summary>
-        ''' Returns the proportion of variance for each component
+        ''' (Proportion of Variance) Returns the proportion of variance for each component
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ExplainedVariance As Vector
@@ -116,7 +116,7 @@ Namespace LinearAlgebra
         End Property
 
         ''' <summary>
-        ''' Returns the cumulative proportion of variance
+        ''' (Cumulative Proportion) Returns the cumulative proportion of variance
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property CumulativeVariance As Vector

@@ -53,9 +53,10 @@ Module Module1
 
     Sub test2()
         Dim data = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\data.csv")
-        Dim pca As New PCA(data.Matrix)
+        Dim pca As New PCA(data.Matrix, scale:=True)
 
-        Call pca.ExplainedVariance.ToString.__DEBUG_ECHO
+        ' Call pca.ExplainedVariance.ToString.__DEBUG_ECHO
+        Call Console.WriteLine(pca.Summary)
 
         Pause()
     End Sub
