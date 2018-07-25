@@ -45,7 +45,17 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Module Module1
 
     Sub Main()
+        Call test2()
         Call methodTest()
+
+        Pause()
+    End Sub
+
+    Sub test2()
+        Dim data = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\data.csv")
+        Dim pca As New PCA(data.Matrix)
+
+        Call pca.ExplainedVariance.ToString.__DEBUG_ECHO
 
         Pause()
     End Sub
