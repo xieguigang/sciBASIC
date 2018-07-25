@@ -240,6 +240,10 @@ Namespace Graphic.Axis
         ''' <param name="g"></param>
         ''' <param name="pen"></param>
         ''' <param name="label$"></param>
+        ''' <param name="X0">
+        ''' 当X等于零的时候的横坐标轴的值，这个参数只有在<paramref name="layout"/>的值为
+        ''' <see cref="YAxisLayoutStyles.ZERO"/>的时候才会需要.
+        ''' </param>
         ''' <param name="scaler"></param>
         ''' <param name="layout"></param>
         ''' <param name="offset"></param>
