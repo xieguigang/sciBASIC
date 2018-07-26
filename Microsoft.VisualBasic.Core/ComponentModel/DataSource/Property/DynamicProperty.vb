@@ -51,7 +51,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Web.Script.Serialization
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -59,20 +58,8 @@ Imports Microsoft.VisualBasic.Linq
 Namespace ComponentModel.DataSourceModel
 
     ''' <summary>
-    ''' Abstracts for the dynamics property.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    Public Interface IDynamicMeta(Of T)
-
-        ''' <summary>
-        ''' Properties
-        ''' </summary>
-        ''' <returns></returns>
-        Property Properties As Dictionary(Of String, T)
-    End Interface
-
-    ''' <summary>
-    ''' This abstract object has a <see cref="propertyTable"/> dictionary keeps as a dynamics property source.
+    ''' This abstract object has a <see cref="propertyTable"/> dictionary keeps as 
+    ''' a dynamics property source.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public MustInherit Class DynamicPropertyBase(Of T)
@@ -194,43 +181,10 @@ Namespace ComponentModel.DataSourceModel
                 Return GetHashCode()
             End Get
         End Property
-    End Class
 
-    ''' <summary>
-    ''' Dictionary for [<see cref="String"/>, <typeparamref name="T"/>]
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    Public Class [Property](Of T) : Inherits DynamicPropertyBase(Of T)
-
-        Sub New()
-        End Sub
-
-        ''' <summary>
-        ''' New with a init property value
-        ''' </summary>
-        ''' <param name="initKey"></param>
-        ''' <param name="initValue"></param>
-        Sub New(initKey$, initValue As T)
-            Call Properties.Add(initKey, initValue)
-        End Sub
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <returns></returns>
-        <ScriptIgnore> Public Iterator Property src As IEnumerable(Of NamedValue(Of T))
-            Get
-                For Each x In Properties
-                    Yield New NamedValue(Of T) With {
-                        .Name = x.Key,
-                        .Value = x.Value
-                    }
-                Next
-            End Get
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Set(value As IEnumerable(Of NamedValue(Of T)))
-                Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)
-            End Set
-        End Property
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(dynamic As DynamicPropertyBase(Of T)) As Func(Of String, T)
+            Return Function(pName$) dynamic(pName)
+        End Operator
     End Class
 End Namespace
