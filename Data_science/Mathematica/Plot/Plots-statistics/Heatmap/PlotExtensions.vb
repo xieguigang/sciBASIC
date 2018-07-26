@@ -75,12 +75,16 @@ Namespace Heatmap
 
             For Each x As DataSet In dataset
                 Dim out As New Dictionary(Of String, Double)
-                Dim array#() = keys.Select(Function(o$) x(o)).ToArray
+                Dim array#() = keys _
+                    .Select(Of Double)(x) _
+                    .ToArray
 
                 For Each y As DataSet In dataset
                     out(y.ID) = correlation(
                         X:=array,
-                        Y:=keys.Select(Function(o) y(o)).ToArray)
+                        Y:=keys _
+                            .Select(Of Double)(y) _
+                            .ToArray)
                 Next
 
                 Yield New NamedValue(Of Dictionary(Of String, Double)) With {
