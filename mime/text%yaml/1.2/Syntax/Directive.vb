@@ -44,9 +44,12 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Syntax
 
-    Public Class Directive
+    Public MustInherit Class Directive
     End Class
 
+    ''' <summary>
+    ''' YAML version
+    ''' </summary>
     Public Class YamlDirective
         Inherits Directive
 

@@ -279,10 +279,7 @@
     <Compile Include="1.2\Syntax\BlockScalarModifier.vb" />
     <Compile Include="1.2\Syntax\Directive.vb" />
     <Compile Include="1.2\Syntax\MappingEntry.vb" />
-    <Compile Include="1.2\Syntax\NamedTagHandle.vb" />
     <Compile Include="1.2\Syntax\NodeProperty.vb" />
-    <Compile Include="1.2\Syntax\PrimaryTagHandle.vb" />
-    <Compile Include="1.2\Syntax\SecondaryTagHandle.vb" />
     <Compile Include="1.2\Syntax\Tag.vb" />
     <Compile Include="1.2\Syntax\TagHandle.vb" />
     <Compile Include="1.2\Syntax\TagPrefix.vb" />
