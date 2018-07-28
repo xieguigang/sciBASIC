@@ -15,7 +15,7 @@ Namespace Grammar11
         ''' <summary>
         ''' YAML文档使用``---``作为文档间的分隔符
         ''' </summary>
-        Const multipleYamlDelimiter$ = "^[-]{3}(\s|\n|.+$)"
+        Const multipleYamlDelimiter$ = "^[-]{3}.*?$"
 
         Public Iterator Function PopulateDocuments(yaml As String) As IEnumerable(Of YamlDocument)
             Dim yamlDoc$() = r.Split(yaml.SolveStream, multipleYamlDelimiter, RegexICMul) _
@@ -44,6 +44,10 @@ Namespace Grammar11
 
             Do While Not (directive = yaml.parseDirective) Is Nothing
                 root.Directives.Add(directive)
+            Loop
+
+            Do While Not yaml.EndRead
+
             Loop
 
             Return root
@@ -91,7 +95,16 @@ Namespace Grammar11
                 Return New YamlDirective With {.Version = yamlVersion}
             ElseIf name = "TAG" Then
                 Dim tagValue = value.CharString.GetTagValue
+                Dim prefix As New TagPrefix With {
+                    .Prefix = tagValue.Name.AsList
+                }
+                Dim handle As New NamedTagHandle With {
+                    .Name = tagValue.Value.AsList
+                }
 
+                Return New TagDirective With {.Prefix = prefix, .Handle = handle}
+            Else
+                Throw New NotImplementedException($"%{name.CharString} {value.CharString}")
             End If
         End Function
     End Module
