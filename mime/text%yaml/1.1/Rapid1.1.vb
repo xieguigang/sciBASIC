@@ -46,11 +46,96 @@ Namespace Grammar11
                 root.Directives.Add(directive)
             Loop
 
-            Do While Not yaml.EndRead
+            root.Root = yaml.parseRoot("")
 
+            'Do While Not yaml.EndRead
+
+            'Loop
+
+            Return root
+        End Function
+
+        <Extension>
+        Private Function parseRoot(yaml As Pointer(Of Char), indent$) As DataItem
+            Dim root As New Mapping With {.Enties = New List(Of MappingEntry)}
+            Dim c As Char
+            Dim name As New List(Of Char)
+            Dim entry As MappingEntry
+            Dim curIndent$ = yaml.getIndent
+
+            ' 如果当前的indent小于传递进来的indent参数
+            ' 说明节点已经结束了
+            If Len(curIndent) < Len(indent) Then
+                Return Nothing
+            End If
+
+            Do While Not yaml.EndRead
+                c = ++yaml
+
+                If c = ":"c Then
+
+                    ' 递归解析成员
+                    Do While yaml.Current = " "c
+                        c = ++yaml
+                    Loop
+
+                    entry = New MappingEntry With {
+                        .Key = New Scalar With {.Text = name.CharString},
+                        .Value = yaml.parseRoot(curIndent)
+                    }
+                    If entry.Value Is Nothing Then
+                        ' 可能是单独一行的数据
+                        entry.Value = yaml.parseLine
+                    Else
+                        root.Enties.Add(entry)
+                    End If
+                Else
+                    name += c
+                End If
             Loop
 
             Return root
+        End Function
+
+        ''' <summary>
+        ''' 解析数据直到遇见换行符
+        ''' </summary>
+        ''' <param name="yaml"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function parseLine(yaml As Pointer(Of Char)) As DataItem
+            Dim c As Char = ++yaml
+            Dim buffer As New List(Of Char)
+
+            If c = "{"c Then
+            ElseIf c = "["c Then
+            Else
+                buffer += c
+            End If
+
+            Do While Not yaml.EndRead AndAlso yaml.Current <> ASCII.CR AndAlso yaml.Current <> ASCII.LF
+
+            Loop
+        End Function
+
+        <Extension>
+        Private Function getIndent(yaml As Pointer(Of Char)) As String
+            Dim b%
+            Dim c As Char
+
+            Do While Not yaml.EndRead
+                c = ++yaml
+
+                If c = " "c Then
+                    b += 1
+                ElseIf c = ASCII.CR OrElse c = ASCII.LF AndAlso b = 0 Then
+                    ' do nothing
+                Else
+                    Exit Do
+                End If
+            Loop
+
+            Return New String(" "c, b)
         End Function
 
         <Extension>
