@@ -70,10 +70,10 @@ YAML Stream:
 	YAML streams use document boundary markers to allow more than one document to be contained in the same stream. 
 	Such markers are a presentation detail and are used exclusively to convey structure. 
 	
-	A line beginning with ¡°---¡± may be used to explicitly denote the beginning of a new YAML document. 
+	A line beginning with ï¿½ï¿½---ï¿½ï¿½ may be used to explicitly denote the beginning of a new YAML document. 
 	When YAML is used as the format of a communication channel, it is useful to be able to indicate the end of a document 
 	without closing the stream, independent of starting the next document. 
-	To support this scenario, a YAML document may be terminated by an explicit end line denoted by ¡°...¡±, followed by optional comments.
+	To support this scenario, a YAML document may be terminated by an explicit end line denoted by ï¿½ï¿½...ï¿½ï¿½, followed by optional comments.
 
 	The first document may be implicit (omit the document start marker). 
 	In such a case it must not specify any directives and will be parsed using the default settings. 
@@ -90,7 +90,7 @@ YAML Document:
 
 	An explicit document begins with a document start marker followed by the presentation of the root node. 
 	The node may begin in the same line as the document start marker. 
-	If the explicit document¡¯s node is completely empty, it is assumed to be an empty plain scalar with no specified properties. 
+	If the explicit documentï¿½ï¿½s node is completely empty, it is assumed to be an empty plain scalar with no specified properties. 
 	Optional document end marker(s) may follow the document. 
 
 	An implicit document does not begin with a document start marker. 
@@ -100,27 +100,27 @@ YAML Document:
 Directives:
 	Directives are instructions to the YAML processor. 
 	Like comments, directives are presentation details and are not reflected in the serialization tree (and hence the representation graph).
-	This specification defines two directives, ¡°YAML¡± and ¡°TAG¡±, and reserves all other directives for future use. 
+	This specification defines two directives, ï¿½ï¿½YAMLï¿½ï¿½ and ï¿½ï¿½TAGï¿½ï¿½, and reserves all other directives for future use. 
 	A YAML processor should ignore unknown directives with an appropriate warning. 
 
-	It is an error to specify more than one ¡°YAML¡± directive for the same document, even if both occurrences give the same version number.
-	A version 1.1 YAML processor should accept documents with an explicit ¡°%YAML 1.1¡± directive, as well as documents lacking a ¡°YAML¡± directive. 
-	Documents with a ¡°YAML¡± directive specifying a higher minor version (e.g. ¡°%YAML 1.2¡±) should be processed with an appropriate warning. 
-	Documents with a ¡°YAML¡± directive specifying a higher major version (e.g. ¡°%YAML 2.0¡±) should be rejected with an appropriate error message. 
+	It is an error to specify more than one ï¿½ï¿½YAMLï¿½ï¿½ directive for the same document, even if both occurrences give the same version number.
+	A version 1.1 YAML processor should accept documents with an explicit ï¿½ï¿½%YAML 1.1ï¿½ï¿½ directive, as well as documents lacking a ï¿½ï¿½YAMLï¿½ï¿½ directive. 
+	Documents with a ï¿½ï¿½YAMLï¿½ï¿½ directive specifying a higher minor version (e.g. ï¿½ï¿½%YAML 1.2ï¿½ï¿½) should be processed with an appropriate warning. 
+	Documents with a ï¿½ï¿½YAMLï¿½ï¿½ directive specifying a higher major version (e.g. ï¿½ï¿½%YAML 2.0ï¿½ï¿½) should be rejected with an appropriate error message. 
 
-	The ¡°TAG¡± directive establishes a shorthand notation for specifying node tags. 
-	Each ¡°TAG¡± directive associates a handle with a prefix, allowing for compact and readable tag notation.
-	It is an error to specify more than one ¡°TAG¡± directive for the same handle in the same document, even if both occurrences give the same prefix. 
+	The ï¿½ï¿½TAGï¿½ï¿½ directive establishes a shorthand notation for specifying node tags. 
+	Each ï¿½ï¿½TAGï¿½ï¿½ directive associates a handle with a prefix, allowing for compact and readable tag notation.
+	It is an error to specify more than one ï¿½ï¿½TAGï¿½ï¿½ directive for the same handle in the same document, even if both occurrences give the same prefix. 
 
 Scalar:
-	The double-quoted scalar capable of expressing arbitrary strings, by using ¡°\¡± escape sequences.
-	Therefore, the ¡°\¡± and ¡°"¡± characters must also be escaped when present in double-quoted content. 
+	The double-quoted scalar capable of expressing arbitrary strings, by using ï¿½ï¿½\ï¿½ï¿½ escape sequences.
+	Therefore, the ï¿½ï¿½\ï¿½ï¿½ and ï¿½ï¿½"ï¿½ï¿½ characters must also be escaped when present in double-quoted content. 
 
 	A single line double-quoted scalar is a sequence of (possibly escaped) non-break Unicode characters. 
 	All characters are considered content, including any leading or trailing white space characters.
 
 	In a multi-line double-quoted scalar, line breaks are subject to line folding, and any trailing white space is excluded from the content. 
-	However, an escaped line break (using a ¡°\¡±) is excluded from the content, while white space preceding it is preserved. 
+	However, an escaped line break (using a ï¿½ï¿½\ï¿½ï¿½) is excluded from the content, while white space preceding it is preserved. 
 	This allows double-quoted content to be broken at arbitrary positions.
 
 	Line folding allows long lines to be broken for readability. Folding only applies to line breaks that end non-empty lines.

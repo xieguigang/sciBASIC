@@ -5068,17 +5068,17 @@ Namespace Grammar
             While True
                 c = MatchTerminal(" "c, success)
 
-                If Not success AndAlso c = ASCII.LF OrElse c = ASCII.CR Then
-                    MatchTerminal(ASCII.LF, True)
-                    MatchTerminal(ASCII.CR, True)
+                'If Not success AndAlso c = ASCII.LF OrElse c = ASCII.CR Then
+                '    MatchTerminal(ASCII.LF, True)
+                '    MatchTerminal(ASCII.CR, True)
 
-                    ' 2018-7-28
-                    ' 因为MatchTerminal返回来的就是当前的位置的字符
-                    ' 所以假若if条件通过的话，上面的对lf或者cr的匹配肯定成功
-                    ' 所以在这里可以直接将success设置为真
-                    ' 在这里先后匹配crlf，是为了兼容windows上面的crlf换行
-                    success = True
-                End If
+                '    ' 2018-7-28
+                '    ' 因为MatchTerminal返回来的就是当前的位置的字符
+                '    ' 所以假若if条件通过的话，上面的对lf或者cr的匹配肯定成功
+                '    ' 所以在这里可以直接将success设置为真
+                '    ' 在这里先后匹配crlf，是为了兼容windows上面的crlf换行
+                '    success = True
+                'End If
 
                 If success Then
                     currentIndent += 1
