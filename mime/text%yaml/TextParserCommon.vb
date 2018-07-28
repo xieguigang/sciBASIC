@@ -85,6 +85,13 @@ Namespace Grammar
             Return False
         End Function
 
+        ''' <summary>
+        ''' 如果当前位置的字符匹配<paramref name="terminal"/>那么位置会前进一个字符
+        ''' 否则位置不会发生变化
+        ''' </summary>
+        ''' <param name="terminal"></param>
+        ''' <param name="success"></param>
+        ''' <returns></returns>
         Private Function MatchTerminal(terminal As Char, ByRef success As Boolean) As Char
             success = False
             If Input.HasInput(_Position) Then
