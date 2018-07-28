@@ -108,14 +108,48 @@ Namespace Grammar11
             Dim buffer As New List(Of Char)
 
             If c = "{"c Then
+                Dim maps As New Mapping With {.Enties = New List(Of MappingEntry)}
+                Dim tuple As MappingEntry
+
+                Do While Not yaml.endLine
+                    ' 迭代直到出现：
+                    Do While yaml.Current <> ":"c
+                        buffer += ++yaml
+                    Loop
+
+                    tuple = New MappingEntry With {
+                        .Key = New Scalar With {.Text = buffer.CharString},
+                        .Value = yaml.parseLine
+                    }
+                    maps.Enties.Add(tuple)
+                Loop
+
+                Return maps
             ElseIf c = "["c Then
+                Dim list As New Sequence With {
+                    .Enties = New List(Of DataItem)
+                }
+
+                Do While Not yaml.endLine
+                    list.Enties.Add(yaml.parseLine)
+                Loop
+
+                Return list
             Else
                 buffer += c
+
+                Do While Not yaml.endLine
+                    buffer += ++yaml
+                Loop
+
+                Return New Scalar With {.Text = buffer.CharString}
             End If
+        End Function
 
-            Do While Not yaml.EndRead AndAlso yaml.Current <> ASCII.CR AndAlso yaml.Current <> ASCII.LF
-
-            Loop
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Function endLine(yaml As Pointer(Of Char)) As Boolean
+            Return yaml.EndRead OrElse yaml.Current = ASCII.CR OrElse yaml.Current = ASCII.LF
         End Function
 
         <Extension>

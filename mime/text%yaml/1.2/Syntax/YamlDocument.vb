@@ -59,6 +59,9 @@ Namespace Syntax
 
     End Class
 
+    ''' <summary>
+    ''' 值是一个字典
+    ''' </summary>
     Public Class Mapping : Inherits DataItem
 
         Public Enties As New List(Of MappingEntry)()
@@ -68,6 +71,9 @@ Namespace Syntax
         End Function
     End Class
 
+    ''' <summary>
+    ''' 值是一个字符串
+    ''' </summary>
     Public Class Scalar : Inherits DataItem
 
         Public Text As String
@@ -81,6 +87,9 @@ Namespace Syntax
         End Function
     End Class
 
+    ''' <summary>
+    ''' 值是一个数据序列
+    ''' </summary>
     Public Class Sequence
         Inherits DataItem
 
