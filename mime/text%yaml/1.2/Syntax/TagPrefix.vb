@@ -47,8 +47,15 @@ Namespace Syntax
         Public Prefix As New List(Of Char)()
 
         Public Overrides Function ToString() As String
-            Return Prefix.CharString
+            Return $"<{Me.GetType.Name}> {Prefix.CharString}"
         End Function
     End Class
 
+    Public Class GlobalTagPrefix
+        Inherits TagPrefix
+    End Class
+
+    Public Class LocalTagPrefix
+        Inherits TagPrefix
+    End Class
 End Namespace

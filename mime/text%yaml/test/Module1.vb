@@ -10,7 +10,10 @@ Module Module1
     End Sub
 
     Sub v11()
-        Dim docs = Grammar11.YamlParser.PopulateDocuments("E:\VB_GamePads\runtime\sciBASIC#\mime\text%yaml\1.1\idle_anim.yaml")
+        Dim docs = Grammar11 _
+            .YamlParser _
+            .PopulateDocuments("E:\VB_GamePads\runtime\sciBASIC#\mime\text%yaml\1.1\idle_anim.yaml") _
+            .ToArray
 
         Pause()
     End Sub

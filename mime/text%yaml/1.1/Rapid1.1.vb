@@ -16,7 +16,12 @@ Namespace Grammar11
         Const multipleYamlDelimiter$ = "^[-]{3}(\s|\n)"
 
         Public Iterator Function PopulateDocuments(yaml As String) As IEnumerable(Of YamlDocument)
-            Dim yamlDoc$() = r.Split(yaml.SolveStream, multipleYamlDelimiter, RegexICMul)
+            Dim yamlDoc$() = r.Split(yaml.SolveStream, multipleYamlDelimiter, RegexICMul) _
+                              .Where(Function(part)
+                                         ' 空白的行就是yaml文档的分隔符所处的行
+                                         Return Not part.Trim.StringEmpty
+                                     End Function) _
+                              .ToArray
 
             For Each document As String In yamlDoc
                 Yield New Pointer(Of Char)(document).ParseDocument
@@ -30,7 +35,9 @@ Namespace Grammar11
         ''' <returns></returns>
         <Extension>
         Private Function ParseDocument(yaml As Pointer(Of Char)) As YamlDocument
+            Dim root As New YamlDocument
 
+            Return root
         End Function
     End Module
 End Namespace
