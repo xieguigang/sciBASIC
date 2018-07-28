@@ -57,10 +57,7 @@ Namespace Grammar11
 
         <Extension>
         Private Function parseRoot(yaml As Pointer(Of Char), indent$) As DataItem
-            Dim root As New Mapping With {.Enties = New List(Of MappingEntry)}
             Dim c As Char
-            Dim name As New List(Of Char)
-            Dim entry As MappingEntry
             Dim curIndent$ = yaml.getIndent
 
             ' 如果当前的indent小于传递进来的indent参数
@@ -69,32 +66,57 @@ Namespace Grammar11
                 Return Nothing
             End If
 
-            Do While Not yaml.EndRead
-                c = ++yaml
+            Dim name As New List(Of Char)
 
-                If c = ":"c Then
+            If ++yaml = "-"c Then
+                ' sequence
+                Dim root As New Sequence With {.Enties = New List(Of DataItem)}
 
-                    ' 递归解析成员
-                    Do While yaml.Current = " "c
-                        c = ++yaml
-                    Loop
 
-                    entry = New MappingEntry With {
-                        .Key = New Scalar With {.Text = name.CharString},
-                        .Value = yaml.parseRoot(curIndent)
-                    }
-                    If entry.Value Is Nothing Then
-                        ' 可能是单独一行的数据
-                        entry.Value = yaml.parseLine
-                    Else
+
+            Else
+                ' mapping
+                Dim root As New Mapping With {.Enties = New List(Of MappingEntry)}
+                Dim entry As MappingEntry
+
+                Do While Not yaml.EndRead
+                    c = ++yaml
+
+                    If c = ":"c Then
+
+                        ' 递归解析成员
+                        Do While yaml.Current = " "c
+                            c = ++yaml
+                        Loop
+
+                        Dim nodeValue = yaml.parseRoot(curIndent)
+
+                        entry = New MappingEntry With {
+                            .Key = New Scalar With {.Text = name.CharString},
+                            .Value = nodeValue
+                        }
+                        If entry.Value Is Nothing Then
+                            ' 可能是单独一行的数据
+                            entry.Value = yaml.parseLine
+                        End If
+
                         root.Enties.Add(entry)
-                    End If
-                Else
-                    name += c
-                End If
-            Loop
 
-            Return root
+                        ' 接着解析当前等级下的下一个元素
+                        Do While yaml.endLine
+                            yaml += 1
+                        Loop
+                        Do While ++yaml = " "c
+                        Loop
+
+                        name *= 0
+                    Else
+                        name += c
+                    End If
+                Loop
+
+                Return root
+            End If
         End Function
 
         ''' <summary>
@@ -165,6 +187,7 @@ Namespace Grammar11
                 ElseIf c = ASCII.CR OrElse c = ASCII.LF AndAlso b = 0 Then
                     ' do nothing
                 Else
+                    yaml -= 1
                     Exit Do
                 End If
             Loop
