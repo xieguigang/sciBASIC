@@ -59,15 +59,21 @@ Public Module PipeStream
 
     End Function
 
+    ''' <summary>
+    ''' 将目标字典集合转换为数据集集合
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function AsDataSet(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As DataSet()
+    Public Function AsDataSet(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of DataSet)
         Return source.Select(
             Function(x)
                 Return New DataSet With {
                     .ID = x.Name,
                     .Properties = x.Value
                 }
-            End Function).ToArray
+            End Function)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

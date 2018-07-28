@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::5d1b71de51de356c0c6b5811021ec57b, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Casting
-    ' 
-    '         Function: (+3 Overloads) [As], AsBaseType, CastChar, CastCharArray, CastCommandLine
-    '                   CastDate, CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage
-    '                   CastInteger, CastIPEndPoint, CastLogFile, CastLong, CastProcess
-    '                   CastRegexOptions, CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser
-    '                   FloatSizeParser, NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble
-    '                   ScriptValue, SizeParser
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Casting
+' 
+'         Function: (+3 Overloads) [As], AsBaseType, CastChar, CastCharArray, CastCommandLine
+'                   CastDate, CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage
+'                   CastInteger, CastIPEndPoint, CastLogFile, CastLong, CastProcess
+'                   CastRegexOptions, CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser
+'                   FloatSizeParser, NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble
+'                   ScriptValue, SizeParser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,6 +64,11 @@ Namespace Scripting.Runtime
     ''' </summary>
     Public Module Casting
 
+        ''' <summary>
+        ''' <see cref="Size"/> object to string expression
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ScriptValue(size As Size) As String
@@ -132,23 +137,43 @@ Namespace Scripting.Runtime
             End With
         End Function
 
+        ''' <summary>
+        ''' Parse <see cref="Point"/> from a given string expression
+        ''' </summary>
+        ''' <param name="pt$"></param>
+        ''' <returns></returns>
         Public Function PointParser(pt$) As Point
             Dim x, y As Double
             Call Ranges.Parser(pt, x, y)
             Return New Point(x, y)
         End Function
 
+        ''' <summary>
+        ''' Parse <see cref="PointF"/> from a given string expression
+        ''' </summary>
+        ''' <param name="pt$"></param>
+        ''' <returns></returns>
         Public Function FloatPointParser(pt$) As PointF
             Dim x, y As Double
             Call Ranges.Parser(pt, x, y)
             Return New PointF(x, y)
         End Function
 
+        ''' <summary>
+        ''' Parse <see cref="Size"/> from a given string expression
+        ''' </summary>
+        ''' <param name="pt$"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function SizeParser(pt$) As Size
             Return pt.FloatSizeParser.ToSize
         End Function
 
+        ''' <summary>
+        ''' Parse <see cref="SizeF"/> from a given string expression
+        ''' </summary>
+        ''' <param name="pt$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function FloatSizeParser(pt$) As SizeF
             If pt.StringEmpty Then
@@ -200,7 +225,7 @@ Namespace Scripting.Runtime
         ''' <summary>
         ''' 用于解析出任意实数的正则表达式
         ''' </summary>
-        Public Const RegexpDouble As String = "-?\d+(\.\d+)?"
+        Public Const RegexpDouble$ = "-?\d+(\.\d+)?"
         Public Const ScientificNotation$ = RegexpDouble & "[Ee][+-]\d+"
         Public Const RegexpFloat$ = RegexpDouble & "([Ee][+-]\d+)?"
         Public Const RegexInteger$ = "[-]?\d+"
