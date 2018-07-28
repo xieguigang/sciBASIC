@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::833714bfe0f96c2b7791b772b5c6581c, Data\DataFrame\IO\Generic\EntityObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class EntityObject
-    ' 
-    '         Properties: ID
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: Copy, GetIDList, (+3 Overloads) LoadDataSet, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class EntityObject
+' 
+'         Properties: ID
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: Copy, GetIDList, (+3 Overloads) LoadDataSet, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -103,23 +105,52 @@ Namespace IO
             Return $"{ID} => ({Properties.Count}) {Properties.Keys.ToArray.GetJson}"
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path$">
+        ''' MetaScripting:
+        ''' 
+        ''' path: file path or directory scripting
+        ''' 
+        ''' filepath: file.csv or file.tsv
+        ''' scripting: dir/* means all *.csv or *.tsv
+        '''            dir/M* means all file match pattern M*.csv or M*.tsv
+        ''' </param>
+        ''' <param name="uidMap$"></param>
+        ''' <param name="tsv"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadDataSet(path$,
                                            Optional ByRef uidMap$ = Nothing,
                                            Optional tsv As Boolean = False,
                                            Optional encoding As Encoding = Nothing) As IEnumerable(Of EntityObject)
-            Return LoadDataSet(Of EntityObject)(path, uidMap, tsv, encoding:=encoding)
+            If path.Last = "*"c Then
+                Dim data As New List(Of EntityObject)
+                Dim dir$ = path.Trim("*"c)
+
+                For Each file As String In ls - l - r - ("*.csv" Or "*.tsv".When(tsv)) <= dir
+                    data += LoadDataSet(Of EntityObject)(file, uidMap, tsv, encoding:=encoding)
+                Next
+
+                Return data
+            Else
+                Return LoadDataSet(Of EntityObject)(path, uidMap, tsv, encoding:=encoding)
+            End If
         End Function
 
         Public Shared Function GetIDList(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False, Optional ignoreMapErrors As Boolean = False) As String()
             Dim table As File = If(tsv, File.LoadTsv(path), File.Load(path))
-            Dim getIDsDefault =
-                Function()
-                    Return table.Columns _
-                        .First _
-                        .Skip(1) _
-                        .ToArray
-                End Function
+            Dim getIDsDefault = Function()
+                                    Return table.Columns _
+                                        .First _
+                                        .Skip(1) _
+                                        .ToArray
+                                End Function
 
             If uidMap.StringEmpty Then
                 ' 第一列的数据就是所需要的编号数据

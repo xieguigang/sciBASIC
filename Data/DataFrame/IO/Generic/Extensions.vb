@@ -58,7 +58,11 @@ Namespace IO
     Public Module Extensions
 
         <Extension>
-        Public Function EuclideanDistance(a As DataSet, b As DataSet, names$()) As Double
+        Public Function EuclideanDistance(a As DataSet, b As DataSet, Optional names$() = Nothing) As Double
+            If names.IsNullOrEmpty Then
+                names = (a.Properties.Keys.AsList + b.Properties.Keys).Distinct.ToArray
+            End If
+
             Dim d# = Aggregate key As String
                      In names
                      Let x = a(key)
