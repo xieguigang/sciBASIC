@@ -71,7 +71,6 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.MIME.text.yaml.Syntax
-Imports Microsoft.VisualBasic.Text
 
 Namespace Grammar
 
