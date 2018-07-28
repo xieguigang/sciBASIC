@@ -286,17 +286,14 @@
     <Compile Include="Syntax\NodeProperty.vb" />
     <Compile Include="Syntax\NonSpecificTag.vb" />
     <Compile Include="Syntax\PrimaryTagHandle.vb" />
-    <Compile Include="Syntax\ReservedDirective.vb" />
     <Compile Include="Syntax\Scalar.vb" />
     <Compile Include="Syntax\SecondaryTagHandle.vb" />
     <Compile Include="Syntax\Sequence.vb" />
     <Compile Include="Syntax\ShorthandTag.vb" />
     <Compile Include="Syntax\Tag.vb" />
-    <Compile Include="Syntax\TagDirective.vb" />
     <Compile Include="Syntax\TagHandle.vb" />
     <Compile Include="Syntax\TagPrefix.vb" />
     <Compile Include="Syntax\VerbatimTag.vb" />
-    <Compile Include="Syntax\YamlDirective.vb" />
     <Compile Include="Syntax\YamlDocument.vb" />
     <Compile Include="Syntax\YamlStream.vb" />
     <Compile Include="Syntax\YamlVersion.vb" />
