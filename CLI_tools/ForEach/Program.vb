@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9633deafce2ec9fc714b7fc6e7efff33, Data_science\Mathematica\Plot\test\PCAPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::74f8093a9d4e15d82034734e94cab12c, CLI_tools\ls\Program.vb"
 
 ' Author:
 ' 
@@ -31,25 +31,43 @@
 
 ' Summaries:
 
-' Module PCAPlotTest
+' Module Program
 ' 
-'     Sub: Main
+'     Function: Main
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics.PCA
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Math.Matrix
-Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports Microsoft.VisualBasic.CommandLine
 
-Module PCAPlotTest
+Module Program
 
-    Sub Main()
-        Dim data As GeneralMatrix = csv.Load("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\flower.csv").AsMatrix
+    ' foreach [*.txt] do cli_tool command_argvs
+    ' 使用 $file 作为文件路径的占位符
 
-        Call PCAPlot.PC2(data, 8).AsGDIImage.SaveAs("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\flower.PCA2.png")
-    End Sub
+    Public Function Main() As Integer
+        Dim filter$ = ""
+        Dim argv$() = App.CommandLine.Tokens
+        Dim appName$
+        Dim cli$
+
+        If argv(1).TextEquals("do") Then
+            filter = argv(0)
+            appName = argv(2)
+            cli = CLITools.Join(argv.Skip(3))
+        ElseIf argv(0).TextEquals("do") Then
+            filter = "*.*"
+            appName = argv(1)
+            cli = CLITools.Join(argv.Skip(2))
+        Else
+            Throw New NotImplementedException()
+        End If
+
+        For Each file As String In App.CurrentDirectory.EnumerateFiles(filter)
+            Call App.Shell(appName, cli.Replace("$file", file)).Run()
+        Next
+
+        Return 0
+    End Function
 End Module

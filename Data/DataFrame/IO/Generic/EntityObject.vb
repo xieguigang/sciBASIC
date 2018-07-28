@@ -174,6 +174,9 @@ Namespace IO
                                                                  Optional tsv As Boolean = False,
                                                                  Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
             If Not path.FileExists Then
+#If DEBUG Then
+                Call $"{path} is missing on your file system!".Warning
+#End If
                 Return {}
             End If
 

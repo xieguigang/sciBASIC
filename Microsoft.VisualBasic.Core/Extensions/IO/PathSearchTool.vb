@@ -136,7 +136,11 @@ Public Module ProgramPathSearchTool
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ExtensionSuffix(path$) As String
-        Return path.Split("."c).Last
+        If path.StringEmpty Then
+            Return ""
+        Else
+            Return path.Split("."c).Last
+        End If
     End Function
 
     ''' <summary>
