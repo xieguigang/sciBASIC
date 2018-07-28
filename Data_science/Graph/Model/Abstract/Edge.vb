@@ -62,6 +62,9 @@ End Class
 ''' Direction: ``<see cref="U"/> -> <see cref="V"/>``.
 ''' (节点之间的边)
 ''' </summary>
+''' <remarks>
+''' 如果边对象是一个有向边的话，那么<see cref="U"/>就是父节点，<see cref="V"/>就是<see cref="U"/>的子节点
+''' </remarks>
 Public Class Edge(Of Vertex As V) : Implements INamedValue
 
     ''' <summary>
