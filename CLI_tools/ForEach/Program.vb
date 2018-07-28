@@ -48,7 +48,7 @@ Module Program
 
     Public Function Main() As Integer
         Dim filter$ = ""
-        Dim argv$() = App.CommandLine.Parameters
+        Dim argv$() = App.CommandLine.Tokens
         Dim appName$
         Dim cli$
 
