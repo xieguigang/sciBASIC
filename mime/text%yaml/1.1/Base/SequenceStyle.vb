@@ -1,38 +1,40 @@
+Imports System.Runtime.CompilerServices
+
 Namespace Exporter.YAML
-	''' <summary>
-	''' Specifies the style of a sequence.
-	''' </summary>
-	Public Enum SequenceStyle
-		''' <summary>
-		''' The block sequence style.
-		''' </summary>
-		Block
 
-		''' <summary>
-		''' The flow sequence style.
-		''' </summary>
-		Flow
+    ''' <summary>
+    ''' Specifies the style of a sequence.
+    ''' </summary>
+    Public Enum SequenceStyle
+        ''' <summary>
+        ''' The block sequence style.
+        ''' </summary>
+        Block
 
-		''' <summary>
-		''' SIngle line with hex data
-		''' </summary>
-		Raw
-	End Enum
+        ''' <summary>
+        ''' The flow sequence style.
+        ''' </summary>
+        Flow
 
-	Public NotInheritable Class SequenceStyleExtensions
-		Private Sub New()
-		End Sub
-		''' <summary>
-		''' Get scalar style corresponding to current sequence style
-		''' </summary>
-		''' <param name="_this">Sequence style</param>
-		''' <returns>Corresponding scalar style</returns>
-		<System.Runtime.CompilerServices.Extension> _
-		Public Shared Function ToScalarStyle(_this As SequenceStyle) As ScalarStyle
-			If _this = SequenceStyle.Raw Then
-				Return ScalarStyle.Hex
-			End If
-			Return ScalarStyle.Plain
-		End Function
-	End Class
+        ''' <summary>
+        ''' SIngle line with hex data
+        ''' </summary>
+        Raw
+    End Enum
+
+    Public Module SequenceStyleExtensions
+
+        ''' <summary>
+        ''' Get scalar style corresponding to current sequence style
+        ''' </summary>
+        ''' <param name="this">Sequence style</param>
+        ''' <returns>Corresponding scalar style</returns>
+        <Extension>
+        Public Function ToScalarStyle(this As SequenceStyle) As ScalarStyle
+            If this = SequenceStyle.Raw Then
+                Return ScalarStyle.Hex
+            End If
+            Return ScalarStyle.Plain
+        End Function
+    End Module
 End Namespace
