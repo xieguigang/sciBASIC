@@ -193,6 +193,27 @@ Namespace Language
         <Extension> Public Function NextInteger(rnd As Random, max As Integer) As int
             Return New int(rnd.Next(max))
         End Function
+
+        Public Function ToUInt32(value As Single) As UInteger
+            Dim bytes As Byte() = BitConverter.GetBytes(value)
+            Return BitConverter.ToUInt32(bytes, 0)
+        End Function
+
+        Public Function ToUInt64(value As Double) As ULong
+            Dim bytes As Byte() = BitConverter.GetBytes(value)
+            Return BitConverter.ToUInt64(bytes, 0)
+        End Function
+
+        Public Function Reverse(value As UInteger) As UInteger
+            Dim reversed As UInteger = (value And &HFF) << 24 Or (value And &HFF00) << 8 Or (value And &HFF0000) >> 8 Or (value And &HFF000000UI) >> 24
+            Return reversed
+        End Function
+
+        Public Function Reverse(value As Integer) As Integer
+            Dim uvalue As UInteger = CUInt(value)
+            Dim reversed As UInteger = Reverse(uvalue)
+            Return CInt(reversed)
+        End Function
     End Module
 
     Public Class Precise : Inherits Value(Of Decimal)

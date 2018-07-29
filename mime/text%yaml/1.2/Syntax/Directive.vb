@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9add571c7a2504023e62adcb4befa499, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
+﻿#Region "Microsoft.VisualBasic::e4bc04903046fd7df414565e748f7257, mime\text%yaml\Syntax\Directive.vb"
 
 ' Author:
 ' 
@@ -31,36 +31,54 @@
 
 ' Summaries:
 
-'     Structure LineValue
+'     Class Directive
 ' 
-'         Properties: Line, value
 ' 
-'         Sub: Assign
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
-Namespace ComponentModel.TagData
+Namespace Syntax
 
-    Public Structure LineValue(Of T)
-        Implements IAddress(Of Integer)
-        Implements Value(Of T).IValueOf
+    Public MustInherit Class Directive
+    End Class
 
-        <XmlAttribute>
-        Public Property line As Integer Implements IAddress(Of Integer).Address
-        Public Property value As T Implements Value(Of T).IValueOf.Value
+    ''' <summary>
+    ''' YAML version
+    ''' </summary>
+    Public Class YamlDirective
+        Inherits Directive
 
-        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
-            line = address
-        End Sub
+        Public Version As YamlVersion
 
         Public Overrides Function ToString() As String
-            Return $"[{line}] {Scripting.ToString(value)}"
+            Return $"<{Me.GetType().Name}> {Version.ToString}"
         End Function
-    End Structure
+    End Class
+
+    Public Class TagDirective
+        Inherits Directive
+
+        Public Prefix As TagPrefix
+        Public Handle As TagHandle
+
+        Public Overrides Function ToString() As String
+            Return $"<{Me.GetType.Name}> {Prefix.ToString} {Handle.ToString}"
+        End Function
+    End Class
+
+    Public Class ReservedDirective
+        Inherits Directive
+
+        Public Name As String
+        Public Parameters As New List(Of String)()
+
+        Public Overrides Function ToString() As String
+            Return $"{Me.GetType.Name} {Name}({Parameters.SafeQuery.JoinBy(", ")})"
+        End Function
+    End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9add571c7a2504023e62adcb4befa499, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
+﻿#Region "Microsoft.VisualBasic::834a22757359769a04ed21de44fb309e, mime\text%yaml\Syntax\TagPrefix.vb"
 
 ' Author:
 ' 
@@ -31,36 +31,31 @@
 
 ' Summaries:
 
-'     Structure LineValue
+'     Class TagPrefix
 ' 
-'         Properties: Line, value
 ' 
-'         Sub: Assign
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Language
+Namespace Syntax
 
-Namespace ComponentModel.TagData
+    Public Class TagPrefix
 
-    Public Structure LineValue(Of T)
-        Implements IAddress(Of Integer)
-        Implements Value(Of T).IValueOf
-
-        <XmlAttribute>
-        Public Property line As Integer Implements IAddress(Of Integer).Address
-        Public Property value As T Implements Value(Of T).IValueOf.Value
-
-        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
-            line = address
-        End Sub
+        Public Prefix As New List(Of Char)()
 
         Public Overrides Function ToString() As String
-            Return $"[{line}] {Scripting.ToString(value)}"
+            Return $"<{Me.GetType.Name}> {Prefix.CharString}"
         End Function
-    End Structure
+    End Class
+
+    Public Class GlobalTagPrefix
+        Inherits TagPrefix
+    End Class
+
+    Public Class LocalTagPrefix
+        Inherits TagPrefix
+    End Class
 End Namespace
