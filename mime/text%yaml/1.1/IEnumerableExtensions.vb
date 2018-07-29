@@ -8,17 +8,21 @@ Namespace Grammar11
 
         <Extension>
         Public Function ExportYAML(this As IEnumerable(Of Boolean)) As YAMLNode
+            Static sb As New StringBuilder()
+
             For Each value As Boolean In this
                 Dim bvalue As Byte = CByte(If(value, 1, 0))
-                s_sb.Append(bvalue.ToHexString())
+                sb.Append(bvalue.ToHexString())
             Next
-            Dim node As New YAMLScalarNode(s_sb.ToString())
-            s_sb.Length = 0
+            Dim node As New YAMLScalarNode(sb.ToString())
+            sb.Length = 0
             Return node
         End Function
 
         <Extension>
         Public Function ExportYAML(this As IEnumerable(Of Byte)) As YAMLNode
+            Static s_sb As New StringBuilder
+
             For Each value As Byte In this
                 s_sb.Append(value.ToHexString())
             Next
@@ -29,6 +33,8 @@ Namespace Grammar11
 
         <Extension>
         Public Function ExportYAML(this As IEnumerable(Of UShort), isRaw As Boolean) As YAMLNode
+            Static s_sb As New StringBuilder
+
             If isRaw Then
                 For Each value As UShort In this
                     s_sb.Append(value.ToHexString())
@@ -47,6 +53,8 @@ Namespace Grammar11
 
         <Extension>
         Public Function ExportYAML(this As IEnumerable(Of Short), isRaw As Boolean) As YAMLNode
+            Static s_sb As New StringBuilder
+
             If isRaw Then
                 For Each value As Short In this
                     s_sb.Append(value.ToHexString())
@@ -65,6 +73,8 @@ Namespace Grammar11
 
         <Extension>
         Public Function ExportYAML(this As IEnumerable(Of UInteger), isRaw As Boolean) As YAMLNode
+            Static s_sb As New StringBuilder
+
             If isRaw Then
                 For Each value As UInteger In this
                     s_sb.Append(value.ToHexString())
@@ -83,6 +93,8 @@ Namespace Grammar11
 
         <Extension>
         Public Function ExportYAML(this As IEnumerable(Of Integer), isRaw As Boolean) As YAMLNode
+            Static s_sb As New StringBuilder
+
             If isRaw Then
                 For Each value As Integer In this
                     s_sb.Append(value.ToHexString())
@@ -101,6 +113,8 @@ Namespace Grammar11
 
         <Extension>
         Public Function ExportYAML(this As IEnumerable(Of ULong), isRaw As Boolean) As YAMLNode
+            Static s_sb As New StringBuilder
+
             If isRaw Then
                 For Each value As ULong In this
                     s_sb.Append(value.ToHexString())
@@ -119,6 +133,8 @@ Namespace Grammar11
 
         <Extension>
         Public Function ExportYAML(this As IEnumerable(Of Long), isRaw As Boolean) As YAMLNode
+            Static s_sb As New StringBuilder
+
             If isRaw Then
                 For Each value As Long In this
                     s_sb.Append(value.ToHexString())
@@ -160,7 +176,5 @@ Namespace Grammar11
             Next
             Return node
         End Function
-
-        ReadOnly s_sb As New StringBuilder()
     End Module
 End Namespace
