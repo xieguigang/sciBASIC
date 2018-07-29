@@ -28,6 +28,7 @@ Namespace Grammar11
             Dim emitter As New Emitter(output)
 
             Dim isWriteSeparator As Boolean = False
+
             If IsWriteVersion Then
                 emitter.WriteMeta(MetaType.YAML, Version.ToString())
                 isWriteSeparator = True
@@ -46,6 +47,7 @@ Namespace Grammar11
                 doc.Emit(emitter, isWriteSeparator)
                 isWriteSeparator = True
             Next
+
             output.Write(ControlChars.Lf)
         End Sub
 

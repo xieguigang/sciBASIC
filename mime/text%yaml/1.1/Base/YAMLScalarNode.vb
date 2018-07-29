@@ -168,12 +168,12 @@ Namespace Grammar11
         End Sub
 
         Private Sub UpdateStyle()
-            Dim value__1 As String = Value
-            If s_illegal.IsMatch(value__1) Then
-                If value__1.Contains("'") Then
-                    If value__1.Contains("""") Then
-                        value__1 = value__1.Replace("'", "''")
-                        SetValue(value__1)
+            Dim value As String = Me.Value
+            If s_illegal.IsMatch(value) Then
+                If value.Contains("'") Then
+                    If value.Contains("""") Then
+                        value = value.Replace("'", "''")
+                        SetValue(value)
                         Style = ScalarStyle.SingleQuoted
                     Else
                         Style = ScalarStyle.DoubleQuoted

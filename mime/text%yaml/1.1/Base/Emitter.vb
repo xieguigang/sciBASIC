@@ -3,6 +3,14 @@ Imports System.IO
 Namespace Grammar11
 
     Friend Class Emitter
+
+        ReadOnly m_stream As TextWriter
+
+        Private m_indent As Integer = 0
+        Private m_isNeedWhitespace As Boolean = False
+        Private m_isNeedSeparator As Boolean = False
+        Private m_isNeedLineBreak As Boolean = False
+
         Public Sub New(writer As TextWriter)
             If writer Is Nothing Then
                 Throw New ArgumentNullException(NameOf(writer))
@@ -95,14 +103,5 @@ Namespace Grammar11
                 m_stream.Write(" "c)
             Next
         End Sub
-
-        Private ReadOnly m_stream As TextWriter
-
-        'public bool IsMultyline { get; set; } = true;
-
-        Private m_indent As Integer = 0
-        Private m_isNeedWhitespace As Boolean = False
-        Private m_isNeedSeparator As Boolean = False
-        Private m_isNeedLineBreak As Boolean = False
     End Class
 End Namespace

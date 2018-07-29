@@ -3,6 +3,7 @@ Imports System.Diagnostics.Contracts
 Namespace Grammar11
 
     Public Structure YAMLTag
+
         Public Sub New(handle As String, content As String)
             Me.Handle = handle
             Me.Content = content
