@@ -9,9 +9,8 @@
     "\\Microsoft.VisualBasic.Core\\ComponentModel\\Algorithm\\BinaryTree",
     "\\mime",
     "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\\Excel",
-    "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\\Excel\\Model"
+    "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\\Excel"
   ],
-  "SelectedNode": "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\\Excel\\Model\\Worksheet.vb",
+  "SelectedNode": "\\Microsoft.VisualBasic.Core\\CommandLine",
   "PreviewInSolutionExplorer": false
 }
