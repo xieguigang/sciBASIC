@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -256,7 +256,22 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="1.1\Rapid1.1.vb" />
+    <Compile Include="1.1\Base\Emitter.vb" />
+    <Compile Include="1.1\Base\MappingStyle.vb" />
+    <Compile Include="1.1\Base\MetaType.vb" />
+    <Compile Include="1.1\Base\ScalarStyle.vb" />
+    <Compile Include="1.1\Base\ScalarType.vb" />
+    <Compile Include="1.1\Base\SequenceStyle.vb" />
+    <Compile Include="1.1\Base\YAMLDocument.vb" />
+    <Compile Include="1.1\Base\YAMLMappingNode.vb" />
+    <Compile Include="1.1\Base\YAMLNode.vb" />
+    <Compile Include="1.1\Base\YAMLNodeType.vb" />
+    <Compile Include="1.1\Base\YAMLScalarNode.vb" />
+    <Compile Include="1.1\Base\YAMLSequenceNode.vb" />
+    <Compile Include="1.1\Base\YAMLTag.vb" />
+    <Compile Include="1.1\Base\YAMLWriter.vb" />
+    <Compile Include="1.1\IDictionaryExtensions.vb" />
+    <Compile Include="1.1\IEnumerableExtensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -299,6 +314,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="1.1\idle_anim.yaml" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -321,6 +337,8 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="1.1\Base" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
