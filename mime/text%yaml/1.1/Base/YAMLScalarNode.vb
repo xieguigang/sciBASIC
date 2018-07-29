@@ -3,8 +3,9 @@
 Imports System.Globalization
 Imports System.Text.RegularExpressions
 
-Namespace Exporter.YAML
-	Public NotInheritable Class YAMLScalarNode
+Namespace Grammar11
+
+    Public NotInheritable Class YAMLScalarNode
         Inherits YAMLNode
 
         Shared ReadOnly s_illegal As New Regex("[\:\[\]'""]")

@@ -1,43 +1,37 @@
+Namespace Grammar11
 
-Namespace Exporter.YAML
-	Public NotInheritable Class YAMLDocument
-		Friend Sub New()
-		End Sub
+    Public NotInheritable Class YAMLDocument
 
-		Public Function CreateScalarRoot() As YAMLScalarNode
-			Dim root__1 As New YAMLScalarNode()
-			Root = root__1
-			Return root__1
-		End Function
+        Friend Sub New()
+        End Sub
 
-		Public Function CreateSequenceRoot() As YAMLSequenceNode
-			Dim root__1 As New YAMLSequenceNode()
-			Root = root__1
-			Return root__1
-		End Function
+        Public Function CreateScalarRoot() As YAMLScalarNode
+            Dim root As New YAMLScalarNode()
+            Me.Root = root
+            Return root
+        End Function
 
-		Public Function CreateMappingRoot() As YAMLMappingNode
-			Dim root__1 As New YAMLMappingNode()
-			Root = root__1
-			Return root__1
-		End Function
+        Public Function CreateSequenceRoot() As YAMLSequenceNode
+            Dim root As New YAMLSequenceNode()
+            Me.Root = root
+            Return root
+        End Function
 
-		Friend Sub Emit(emitter As Emitter, isSeparator As Boolean)
-			If isSeparator Then
-				emitter.Write("---").WriteWhitespace()
-			End If
+        Public Function CreateMappingRoot() As YAMLMappingNode
+            Dim root As New YAMLMappingNode()
+            Me.Root = root
+            Return root
+        End Function
 
-			Root.Emit(emitter)
-		End Sub
+        Friend Sub Emit(emitter As Emitter, isSeparator As Boolean)
+            If isSeparator Then
+                emitter.Write("---").WriteWhitespace()
+            End If
 
-		Public Property Root() As YAMLNode
-			Get
-				Return m_Root
-			End Get
-			Private Set
-				m_Root = Value
-			End Set
-		End Property
-		Private m_Root As YAMLNode
-	End Class
+            Root.Emit(emitter)
+        End Sub
+
+        Public Property Root() As YAMLNode
+
+    End Class
 End Namespace

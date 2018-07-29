@@ -2,7 +2,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CompilerServices
 
-Namespace Exporter.YAML
+Namespace Grammar11
 
     <StandardModule> <Extension> Public Module IEnumerableExtensions
 

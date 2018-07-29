@@ -1,6 +1,6 @@
 Imports System.Runtime.CompilerServices
 
-Namespace Exporter.YAML
+Namespace Grammar11
 
     ''' <summary>
     ''' Specifies the style of a sequence.

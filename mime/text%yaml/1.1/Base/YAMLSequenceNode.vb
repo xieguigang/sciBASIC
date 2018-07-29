@@ -1,6 +1,6 @@
 Imports System.Collections.Generic
 
-Namespace Exporter.YAML
+Namespace Grammar11
 
     Public NotInheritable Class YAMLSequenceNode
         Inherits YAMLNode

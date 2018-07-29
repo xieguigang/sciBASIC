@@ -1,4 +1,4 @@
-Namespace Exporter.YAML
+Namespace Grammar11
 
     Public MustInherit Class YAMLNode
 

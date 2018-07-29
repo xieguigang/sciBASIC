@@ -1,6 +1,7 @@
 Imports System.Runtime.CompilerServices
 
-Namespace Exporter.YAML
+Namespace Grammar11
+
     Public Module IDictionaryExtensions
 
         <Extension>
