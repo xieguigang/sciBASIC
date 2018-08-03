@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9add571c7a2504023e62adcb4befa499, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
+﻿#Region "Microsoft.VisualBasic::2cbb6da94efde45ed6d90e9bba999678, mime\text%yaml\Syntax\YamlVersion.vb"
 
 ' Author:
 ' 
@@ -31,36 +31,24 @@
 
 ' Summaries:
 
-'     Structure LineValue
+'     Class YamlVersion
 ' 
-'         Properties: Line, value
 ' 
-'         Sub: Assign
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Language
+Namespace Syntax
 
-Namespace ComponentModel.TagData
+    Public Class YamlVersion
 
-    Public Structure LineValue(Of T)
-        Implements IAddress(Of Integer)
-        Implements Value(Of T).IValueOf
-
-        <XmlAttribute>
-        Public Property line As Integer Implements IAddress(Of Integer).Address
-        Public Property value As T Implements Value(Of T).IValueOf.Value
-
-        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
-            line = address
-        End Sub
+        Public Major As String
+        Public Minor As String
 
         Public Overrides Function ToString() As String
-            Return $"[{line}] {Scripting.ToString(value)}"
+            Return $"{Major}.{Minor}"
         End Function
-    End Structure
+    End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9add571c7a2504023e62adcb4befa499, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
+﻿#Region "Microsoft.VisualBasic::593db87795bffd7fe72a1c6b208d9e4b, mime\text%yaml\Syntax\Tag.vb"
 
 ' Author:
 ' 
@@ -31,36 +31,45 @@
 
 ' Summaries:
 
-'     Structure LineValue
+'     Class Tag
 ' 
-'         Properties: Line, value
 ' 
-'         Sub: Assign
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Language
+Namespace Syntax
 
-Namespace ComponentModel.TagData
+    Public Class Tag
+    End Class
 
-    Public Structure LineValue(Of T)
-        Implements IAddress(Of Integer)
-        Implements Value(Of T).IValueOf
+    Public Class ShorthandTag
+        Inherits Tag
 
-        <XmlAttribute>
-        Public Property line As Integer Implements IAddress(Of Integer).Address
-        Public Property value As T Implements Value(Of T).IValueOf.Value
-
-        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
-            line = address
-        End Sub
+        Public Chars As New List(Of Char)()
 
         Public Overrides Function ToString() As String
-            Return $"[{line}] {Scripting.ToString(value)}"
+            Return $"<{Me.GetType.Name}> {Chars.CharString}"
         End Function
-    End Structure
+    End Class
+
+    Public Class VerbatimTag
+        Inherits Tag
+
+        Public Chars As New List(Of Char)()
+
+        Public Overrides Function ToString() As String
+            Return $"<{Me.GetType.Name}> {Chars.CharString}"
+        End Function
+    End Class
+
+    Public Class NonSpecificTag
+        Inherits Tag
+
+        Public Overrides Function ToString() As String
+            Return $"<{Me.GetType.Name}>"
+        End Function
+    End Class
 End Namespace

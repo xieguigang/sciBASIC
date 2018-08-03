@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9add571c7a2504023e62adcb4befa499, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
+﻿#Region "Microsoft.VisualBasic::353a19d1b9fbcebca730dc48e022e13b, mime\text%yaml\Syntax\TagHandle.vb"
 
 ' Author:
 ' 
@@ -31,36 +31,35 @@
 
 ' Summaries:
 
-'     Structure LineValue
+'     Class TagHandle
 ' 
-'         Properties: Line, value
 ' 
-'         Sub: Assign
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Language
+Namespace Syntax
 
-Namespace ComponentModel.TagData
+    Public Class TagHandle
+    End Class
 
-    Public Structure LineValue(Of T)
-        Implements IAddress(Of Integer)
-        Implements Value(Of T).IValueOf
+    Public Class PrimaryTagHandle
+        Inherits TagHandle
+    End Class
 
-        <XmlAttribute>
-        Public Property line As Integer Implements IAddress(Of Integer).Address
-        Public Property value As T Implements Value(Of T).IValueOf.Value
+    Public Class SecondaryTagHandle
+        Inherits TagHandle
+    End Class
 
-        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
-            line = address
-        End Sub
+    Public Class NamedTagHandle
+        Inherits TagHandle
+
+        Public Name As New List(Of Char)()
 
         Public Overrides Function ToString() As String
-            Return $"[{line}] {Scripting.ToString(value)}"
+            Return Name.CharString
         End Function
-    End Structure
+    End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9add571c7a2504023e62adcb4befa499, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
+﻿#Region "Microsoft.VisualBasic::43712e9fa76de6c12eb5ebd7f29c50d5, mime\text%yaml\Syntax\NodeProperty.vb"
 
 ' Author:
 ' 
@@ -31,36 +31,24 @@
 
 ' Summaries:
 
-'     Structure LineValue
+'     Class NodeProperty
 ' 
-'         Properties: Line, value
 ' 
-'         Sub: Assign
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Language
+Namespace Syntax
 
-Namespace ComponentModel.TagData
+    Public Class NodeProperty
 
-    Public Structure LineValue(Of T)
-        Implements IAddress(Of Integer)
-        Implements Value(Of T).IValueOf
-
-        <XmlAttribute>
-        Public Property line As Integer Implements IAddress(Of Integer).Address
-        Public Property value As T Implements Value(Of T).IValueOf.Value
-
-        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
-            line = address
-        End Sub
+        Public Tag As Tag
+        Public Anchor As String
 
         Public Overrides Function ToString() As String
-            Return $"[{line}] {Scripting.ToString(value)}"
+            Return $"({Anchor}) {Tag.ToString}"
         End Function
-    End Structure
+    End Class
 End Namespace

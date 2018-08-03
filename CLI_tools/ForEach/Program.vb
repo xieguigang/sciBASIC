@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9add571c7a2504023e62adcb4befa499, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
+﻿#Region "Microsoft.VisualBasic::74f8093a9d4e15d82034734e94cab12c, CLI_tools\ls\Program.vb"
 
 ' Author:
 ' 
@@ -31,36 +31,43 @@
 
 ' Summaries:
 
-'     Structure LineValue
+' Module Program
 ' 
-'         Properties: Line, value
-' 
-'         Sub: Assign
-' 
+'     Function: Main
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.CommandLine
 
-Namespace ComponentModel.TagData
+Module Program
 
-    Public Structure LineValue(Of T)
-        Implements IAddress(Of Integer)
-        Implements Value(Of T).IValueOf
+    ' foreach [*.txt] do cli_tool command_argvs
+    ' 使用 $file 作为文件路径的占位符
 
-        <XmlAttribute>
-        Public Property line As Integer Implements IAddress(Of Integer).Address
-        Public Property value As T Implements Value(Of T).IValueOf.Value
+    Public Function Main() As Integer
+        Dim filter$ = ""
+        Dim argv$() = App.CommandLine.Tokens
+        Dim appName$
+        Dim cli$
 
-        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
-            line = address
-        End Sub
+        If argv(1).TextEquals("do") Then
+            filter = argv(0)
+            appName = argv(2)
+            cli = CLITools.Join(argv.Skip(3))
+        ElseIf argv(0).TextEquals("do") Then
+            filter = "*.*"
+            appName = argv(1)
+            cli = CLITools.Join(argv.Skip(2))
+        Else
+            Throw New NotImplementedException()
+        End If
 
-        Public Overrides Function ToString() As String
-            Return $"[{line}] {Scripting.ToString(value)}"
-        End Function
-    End Structure
-End Namespace
+        For Each file As String In App.CurrentDirectory.EnumerateFiles(filter)
+            Call App.Shell(appName, cli.Replace("$file", file)).Run()
+        Next
+
+        Return 0
+    End Function
+End Module

@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::d1059edf8091d229eea055260c61080e, Microsoft.VisualBasic.Core\ApplicationServices\ZipLib.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GZip
-    ' 
-    ' 
-    '         Enum Overwrite
-    ' 
-    '             Always, IfNewer, Never
-    ' 
-    ' 
-    ' 
-    '         Enum ArchiveAction
-    ' 
-    '             [Error], Ignore, Merge, Replace
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Function: ExtractToSelfDirectory, IsADirectoryEntry, IsSourceFolderZip
-    ' 
-    '     Sub: AddToArchive, DirectoryArchive, ExtractToFileInternal, FileArchive, ImprovedExtractToDirectory
-    '          ImprovedExtractToFile
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GZip
+' 
+' 
+'         Enum Overwrite
+' 
+'             Always, IfNewer, Never
+' 
+' 
+' 
+'         Enum ArchiveAction
+' 
+'             [Error], Ignore, Merge, Replace
+' 
+'  
+' 
+' 
+' 
+'  
+' 
+'     Function: ExtractToSelfDirectory, IsADirectoryEntry, IsSourceFolderZip
+' 
+'     Sub: AddToArchive, DirectoryArchive, ExtractToFileInternal, FileArchive, ImprovedExtractToDirectory
+'          ImprovedExtractToFile
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -300,10 +300,16 @@ Namespace ApplicationServices
                                     Optional compression As CompressionLevel = CompressionLevel.Optimal,
                                     Optional flatDirectory As Boolean = False)
 
-            Dim rel$ = DIR Or "".AsDefault(Function() flatDirectory)
+            ' 2018-7-28 如果rel是空字符串
+            ' 那么再压缩函数之中只会将文件名作为entry，即实现无文件树的效果
+            ' 反之会使用相对路径生成文件树，即树状的非flat结构
+            Dim rel$ = DIR Or "".When(flatDirectory)
+
+            If Not rel.StringEmpty Then
+                rel = rel.GetDirectoryFullPath
+            End If
 
             Call saveZip.ParentPath.MkDIR
-            Call rel.SetValue(AddressOf GetDirectoryFullPath)
             Call (ls - l - r - "*.*" <= DIR) _
                 .AddToArchive(
                     archiveFullName:=saveZip,
