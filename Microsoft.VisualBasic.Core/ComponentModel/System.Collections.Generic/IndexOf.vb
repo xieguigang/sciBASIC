@@ -245,6 +245,10 @@ Namespace ComponentModel.Collection
                 .GetJson
         End Function
 
+        ''' <summary>
+        ''' Returns the ``obj => index`` mapping table.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Map As Dictionary(Of T, Integer)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

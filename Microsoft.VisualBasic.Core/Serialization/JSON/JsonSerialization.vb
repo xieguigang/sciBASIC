@@ -237,9 +237,11 @@ Namespace Serialization.JSON
             Return json.Value.LoadObject(Of T)(simpleDict:=simpleDict)
         End Function
 
-        Public Function LoadJsonFile(Of T)(file As String, Optional encoding As Encoding = Nothing, Optional simpleDict As Boolean = True) As T
-            Dim json As String = IO.File.ReadAllText(file, If(encoding Is Nothing, Encoding.Default, encoding))
-            Return json.LoadObject(Of T)(simpleDict)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function LoadJsonFile(Of T)(file$, Optional encoding As Encoding = Nothing, Optional simpleDict As Boolean = True) As T
+            Return (file.ReadAllText(encoding Or UTF8, throwEx:=False, suppress:=True) Or "null".AsDefault) _
+                .LoadObject(Of T)(simpleDict)
         End Function
 
         Const JsonLongTime$ = "\d+-\d+-\d+T\d+:\d+:\d+\.\d+"
