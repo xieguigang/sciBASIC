@@ -467,6 +467,7 @@ Public Module App
 
         Call App.JoinVariables(
             envir _
+            .SafeQuery _
             .Select(Function(x)
                         Return New NamedValue(Of String) With {
                             .Name = x.Key,
