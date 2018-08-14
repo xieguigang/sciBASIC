@@ -163,6 +163,11 @@ Namespace ValueTypes
             Return (time.ToUniversalTime - ZERO).TotalSeconds
         End Function
 
+        ''' <summary>
+        ''' 将Unix时间戳转换为可读的日期
+        ''' </summary>
+        ''' <param name="unixDateTime"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function FromUnixTimeStamp(unixDateTime As Long) As Date
