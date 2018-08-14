@@ -456,6 +456,24 @@ Public Module App
 
         End Try
 #End Region
+
+        ' 2018-08-14 因为经过测试发现text encoding模块会优先于命令行参数设置模块的初始化的加载
+        ' 所以会导致环境变量为空
+        ' 故而text encoding可能总是系统的默认值，无法从命令行设置
+        ' 在这里提前进行初始化，可以消除此bug的出现
+        Dim envir As Dictionary(Of String, String) = App _
+            .CommandLine _
+            .EnvironmentVariables
+
+        Call App.JoinVariables(
+            envir _
+            .Select(Function(x)
+                        Return New NamedValue(Of String) With {
+                            .Name = x.Key,
+                            .Value = x.Value
+                        }
+                    End Function) _
+            .ToArray)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
