@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Text
 Public Module Extensions
 
     ''' <summary>
-    ''' 
+    ''' Open <see cref="BinaryDataReader"/>
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="encoding"></param>
