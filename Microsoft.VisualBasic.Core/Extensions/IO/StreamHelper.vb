@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b22512d298306a8f55edfe28f56f0cf4, Microsoft.VisualBasic.Core\Extensions\IO\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a601e76aef37afbfcceef80194b0269d, Microsoft.VisualBasic.Core\Extensions\IO\StreamHelper.vb"
 
     ' Author:
     ' 

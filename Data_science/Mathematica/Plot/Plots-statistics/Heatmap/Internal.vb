@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7f545a79cc1fa1d1f0e082ddd53421d, Data_science\Mathematica\Plot\Plots-statistics\Heatmap\Internal.vb"
+﻿#Region "Microsoft.VisualBasic::664673f920a5dbc254fa55d45255b1bb, Data_science\Mathematica\Plot\Plots-statistics\Heatmap\Internal.vb"
 
     ' Author:
     ' 
@@ -516,9 +516,8 @@ Namespace Heatmap
 
                         scaleData = array _
                             .Select(Function(x)
-                                        Dim vector As Vector = names _
-                                            .AsVector(x.Properties) _
-                                            .Log(logScale)
+                                        Dim vector As Vector = names.AsVector(x.Properties)
+                                        vector = Vector.Log(vector, logScale)
 
                                         Return New DataSet With {
                                             .ID = x.ID,

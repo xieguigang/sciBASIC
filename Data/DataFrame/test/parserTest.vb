@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39340e94ac53623782bf8ab0f13b421c, Data\DataFrame\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::b8b53631825032b8d61fba1f87c3cd3b, Data\DataFrame\test\parserTest.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    ' Module Module1
+    ' Module parserTest
     ' 
     '     Sub: Main
     ' 

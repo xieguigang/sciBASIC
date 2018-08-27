@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57d2eabef8da6fedfecc9dca7d02e0ef, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::79e1e46330ff926edba373d6b8bbb991, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: First, Last
     ' 
     '         Constructor: (+5 Overloads) Sub New
-    '         Function: [Default], Pop, PopAll, ValuesEnumerator
+    '         Function: [Default], Pop, PopAll, ReverseIterator, ValuesEnumerator
     '         Operators: (+5 Overloads) -, *, ^, (+6 Overloads) +, (+2 Overloads) <
     '                    (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) >, >>
     ' 
@@ -579,6 +579,12 @@ Namespace Language
         Public Shared Operator <(source As List(Of T), path As String) As Boolean
             Throw New NotImplementedException
         End Operator
+
+        Public Iterator Function ReverseIterator() As IEnumerable(Of T)
+            For i As Integer = Count - 1 To 0 Step -1
+                Yield MyBase.Item(i)
+            Next
+        End Function
 
         ''' <summary>
         ''' Enums all of the elements in this collection list object by return a value reference type

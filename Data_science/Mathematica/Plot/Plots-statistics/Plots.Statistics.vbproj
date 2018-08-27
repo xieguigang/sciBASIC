@@ -47,7 +47,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x86\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Data.ChartPlots.Statistics.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <DebugType>full</DebugType>
@@ -230,6 +230,9 @@
   <ItemGroup>
     <Compile Include="BoxPlot.vb" />
     <Compile Include="BoxData.vb" />
+    <Compile Include="PCA\ScreePlot.vb" />
+    <Compile Include="PCA\PC3.vb" />
+    <Compile Include="TimeTrends.vb" />
     <Compile Include="VariableWidthBarPlot.vb" />
     <Compile Include="JointPlot.vb" />
     <Compile Include="RegressionPlot.vb" />
@@ -245,7 +248,7 @@
     <Compile Include="ScatterExtensions.vb" />
     <Compile Include="QQPlot.vb" />
     <Compile Include="ZScores.vb" />
-    <Compile Include="PCAPlot.vb" />
+    <Compile Include="PCA\PC2.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -294,9 +297,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\mime\text%25html\mime-htmls.vbproj">
+    <ProjectReference Include="..\..\..\..\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
-      <Name>mime-htmls</Name>
+      <Name>MIME-htmls</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\DataMining\hierarchical-clustering\hierarchical-clustering\hierarchical-clustering.vbproj">
       <Project>{6ca54af6-cadc-457e-94b9-384f2990f07e}</Project>

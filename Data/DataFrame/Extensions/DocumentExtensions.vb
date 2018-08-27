@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59549495a0c2c4ac6a67d3960d37dea6, Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d1ad40a6f873537d652f71cd867ecd0f, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: Apply, CreateTable, DirectAppends, GetColumnObjects, GetColumnValues
     '               InvalidsAsRLangNA, JoinColumns, LoadCsv, LoadData, LoadDictionary
-    '               LoadMappings, LoadTable, LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
+    '               LoadMappings, LoadTable, (+2 Overloads) LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
     '               SaveTsv, StripNaN, TsvLine
     '     Class GenericTable
     ' 
@@ -51,6 +51,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -187,15 +188,25 @@ Public Module DocumentExtensions
     ''' <param name="EXPORT$"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function DirectAppends(files As IEnumerable(Of String), EXPORT$) As Boolean
+    Public Function DirectAppends(files As IEnumerable(Of String),
+                                  EXPORT$,
+                                  Optional encoding As Encodings = Encodings.UTF8WithoutBOM,
+                                  Optional orderBy As Func(Of Dictionary(Of String, String), Double) = Nothing) As Boolean
+
         Dim data As New List(Of GenericTable)
+        Dim table As IEnumerable(Of GenericTable)
 
         For Each path$ In files
             ' List(Of T) 对象的 + 语法有冲突，所以在这里需要先进行转换
-            data += DirectCast(path.LoadCsv(Of GenericTable), IEnumerable(Of GenericTable))
+            table = path.LoadCsv(Of GenericTable)
+            data += table
         Next
 
-        Return data.SaveTo(EXPORT)
+        If Not orderBy Is Nothing Then
+            data = data.OrderBy(Function(r) orderBy(r.Data)).AsList
+        End If
+
+        Return data.SaveTo(EXPORT, encoding:=encoding.CodePage)
     End Function
 
     <Extension>
@@ -266,13 +277,33 @@ Public Module DocumentExtensions
     ''' <param name="encoding"></param>
     ''' <param name="nameMaps"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function LoadTsv(Of T As Class)(path$,
                                            Optional encoding As Encodings = Encodings.Default,
-                                           Optional nameMaps As Dictionary(Of String, String) = Nothing) As T()
+                                           Optional nameMaps As NameMapping = Nothing) As T()
         Return [Imports](Of T)(path,
                                delimiter:=ASCII.TAB,
                                encoding:=encoding.CodePage,
+                               nameMaps:=nameMaps)
+    End Function
+
+    ''' <summary>
+    ''' Load a .NET collection from a tsv file which is specific by <paramref name="path"/> value.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="nameMaps"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function LoadTsv(Of T As Class)(path$, encoding As Encoding, Optional nameMaps As NameMapping = Nothing) As T()
+        Return [Imports](Of T)(path,
+                               delimiter:=ASCII.TAB,
+                               encoding:=encoding,
                                nameMaps:=nameMaps)
     End Function
 
@@ -323,6 +354,7 @@ Public Module DocumentExtensions
         Next
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function LoadCsv(path$, Optional encoding As Encodings = Encodings.ASCII) As IO.File
         Return IO.File.Load(path, encoding.CodePage)

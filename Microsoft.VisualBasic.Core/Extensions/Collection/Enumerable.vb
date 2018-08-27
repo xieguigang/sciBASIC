@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d5e3f7a12b6550ed937cbffa33a2f42, Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::77936248d6e6ccc5dc1e42b7e94768ee, Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
 
     ' Author:
     ' 
@@ -137,7 +137,7 @@ Public Module IEnumerations
     ''' <param name="strict">是否大小写敏感，默认大小写敏感</param>
     ''' <returns></returns>
     <Extension> Public Function Takes(Of T As INamedValue)(source As IEnumerable(Of T), uniqueId As String, Optional strict As Boolean = True) As T()
-        If source.IsNullOrEmpty Then
+        If source Is Nothing Then
             Return New T() {}
         End If
 

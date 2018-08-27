@@ -1,53 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::e82a4369065b9f19cc4601aae46834d1, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::1f4280c7815032d115487633aa4e258f, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DataFramework.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module DataFramework
-    ' 
-    '         Properties: Flags, StringBuilders, StringParsers
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: DictionaryTable, (+2 Overloads) Schema
-    '         Delegate Function
-    ' 
-    '             Function: __initSchema, CreateObject, GetValue, IsComplexType, IsPrimitive
-    '                       valueToString
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module DataFramework
+' 
+'         Properties: Flags, StringBuilders, StringParsers
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: DictionaryTable, getOrCache, (+2 Overloads) Schema, ValueTable
+'         Delegate Function
+' 
+'             Function: __initSchema, CreateObject, GetValue, IsComplexType, IsPrimitive
+'                       valueToString
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Data
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
@@ -155,12 +156,23 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="where">用来判断属性值是否应该被添加进入字典之中</param>
         ''' <returns></returns>
         <Extension>
-        Public Function DictionaryTable(Of T)(x As T, Optional where As Assert(Of Object) = Nothing) As Dictionary(Of String, String)
+        Public Function DictionaryTable(Of T)(x As T,
+                                              Optional primitiveType As Boolean = False,
+                                              Optional where As Assert(Of Object) = Nothing) As Dictionary(Of String, String)
+
             Dim schema As Dictionary(Of String, PropertyInfo) = GetType(T).getOrCache
             Dim table As New Dictionary(Of String, String)
             Dim obj
 
             where = where Or alwaysTrue
+
+            If primitiveType Then
+                For Each key As String In schema.Keys.ToArray
+                    If Not schema(key).PropertyType.IsPrimitive Then
+                        Call schema.Remove(key)
+                    End If
+                Next
+            End If
 
             For Each key As String In schema.Keys
                 obj = schema(key).GetValue(x)
@@ -184,7 +196,7 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         ''' <summary>
-        ''' Helper for <see cref="DictionaryTable(Of T)(T, Assert(Of Object))"/>
+        ''' Helper for <see cref="DictionaryTable(Of T)"/>
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
@@ -203,7 +215,7 @@ Namespace ComponentModel.DataSourceModel
                 )
             End If
 
-            Return schemaCache(type)
+            Return New Dictionary(Of String, PropertyInfo)(schemaCache(type))
         End Function
 
 #If NET_40 = 0 Then
@@ -270,6 +282,16 @@ Namespace ComponentModel.DataSourceModel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsPrimitive(type As Type) As Boolean
             Return StringBuilders.ContainsKey(type)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function IsNumericType(type As Type) As Boolean
+            Static numerics As Type() = {
+                GetType(Integer), GetType(Long), GetType(Short), GetType(Double), GetType(Byte),
+                GetType(UInteger), GetType(ULong), GetType(UShort), GetType(Single), GetType(SByte), GetType(Decimal)
+            }
+            Return numerics.Any(Function(num) num Is type)
         End Function
 
         ''' <summary>

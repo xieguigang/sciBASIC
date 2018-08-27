@@ -1,52 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::1c42bd61c25b24e15da0d0b8a9122cae, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::3964f1c17d42d04c3ed04a276d3497fe, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ProgramPathSearchTool
-    ' 
-    '     Function: BaseName, BatchMd5Renamed, BranchRule, ChangeSuffix, Delete
-    '               DIR, DirectoryExists, DirectoryName, EnumerateFiles, ExtensionSuffix
-    '               FileCopy, (+2 Overloads) FileExists, FileLength, FileMove, FileName
-    '               FileOpened, GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath
-    '               GetMostAppreancePath, ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList
-    '               Long2Short, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine
-    '               PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory
-    '               SearchDrive, SearchProgram, SearchScriptFile, SourceCopy, SplitPath
-    '               TheFile, ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix
-    '               UnixPath
-    ' 
-    '     Sub: MkDIR
-    ' 
-    ' /********************************************************************************/
+' Module ProgramPathSearchTool
+' 
+'     Function: BaseName, BatchMd5Renamed, BranchRule, ChangeSuffix, Delete
+'               DIR, DirectoryExists, DirectoryName, EnumerateFiles, ExtensionSuffix
+'               FileCopy, (+2 Overloads) FileExists, FileLength, FileMove, FileName
+'               FileOpened, GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath
+'               GetMostAppreancePath, ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList
+'               Long2Short, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine
+'               PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory
+'               SearchDrive, SearchProgram, SearchScriptFile, SourceCopy, SplitPath
+'               TheFile, ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix
+'               UnixPath
+' 
+'     Sub: MkDIR
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -135,7 +136,11 @@ Public Module ProgramPathSearchTool
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ExtensionSuffix(path$) As String
-        Return path.Split("."c).Last
+        If path.StringEmpty Then
+            Return ""
+        Else
+            Return path.Split("."c).Last
+        End If
     End Function
 
     ''' <summary>
@@ -201,18 +206,22 @@ Public Module ProgramPathSearchTool
         End If
     End Function
 
+    ReadOnly allKinds As New DefaultValue(Of String())({"*.*"}, Function(o) TryCast(o, String()).IsNullOrEmpty)
+
     ''' <summary>
     ''' 使用<see cref="FileIO.FileSystem.GetFiles"/>函数枚举
     ''' **当前的**(不是递归的搜索所有的子文件夹)文件夹之中的
     ''' 所有的符合条件的文件路径
     ''' </summary>
     ''' <param name="DIR">文件夹路径</param>
-    ''' <param name="keyword">文件名进行匹配的关键词</param>
+    ''' <param name="keyword">
+    ''' Default is ``*.*`` for match any kind of files.
+    ''' (文件名进行匹配的关键词)
+    ''' </param>
     ''' <returns></returns>
     <Extension>
     Public Function EnumerateFiles(DIR$, ParamArray keyword$()) As IEnumerable(Of String)
-        Dim files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword)
-        Return files
+        Return FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, keyword Or allKinds)
     End Function
 
     ''' <summary>
@@ -292,12 +301,12 @@ Public Module ProgramPathSearchTool
     ''' <remarks></remarks>
     '''
     <ExportAPI("Path2Url", Info:="Gets the URL type file path.")>
-    <Extension> Public Function ToFileURL(Path As String) As String
-        If String.IsNullOrEmpty(Path) Then
+    <Extension> Public Function ToFileURL(path As String) As String
+        If String.IsNullOrEmpty(path) Then
             Return ""
         Else
-            Path = FileIO.FileSystem.GetFileInfo(Path).FullName
-            Return String.Format("file:///{0}", Path.Replace("\", "/"))
+            path = FileIO.FileSystem.GetFileInfo(path).FullName
+            Return String.Format("file:///{0}", path.Replace("\", "/"))
         End If
     End Function
 
@@ -445,10 +454,22 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' Safe file copy operation.(请注意，<paramref name="copyTo"/>参数的字符串最末尾必须是``/``或者``\``才会被认作为目录路径)
+    ''' Safe file copy operation.
+    ''' (请注意，<paramref name="copyTo"/>参数的字符串最末尾必须是``/``或者``\``才会被认作为目录路径)
     ''' </summary>
     ''' <param name="source$"></param>
-    ''' <param name="copyTo$">Can be file name or directory name</param>
+    ''' <param name="copyTo$">
+    ''' Can be file name or directory name.
+    ''' 
+    ''' + If this paramter is a file path, then you can copy the 
+    '''   source file to another location with renamed.
+    ''' + If this parameter is a directory location, then you can 
+    '''   copy the source file to another location with the 
+    '''   identical file name.
+    ''' 
+    ''' Please notice that, the directory path should end with 
+    ''' path seperator symbol: ``\`` or ``/``.
+    ''' </param>
     ''' <returns></returns>
     <Extension> Public Function FileCopy(source$, copyTo$) As Boolean
         Try
@@ -567,6 +588,7 @@ Public Module ProgramPathSearchTool
             )
                 ' Just detects this file is occupied, no more things needs to do....
             End Using
+
             Return True
         Catch ex As Exception
             Return False
@@ -574,18 +596,20 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' Gets the name of the target file or directory, if the target is a file, then the name without the extension name.
+    ''' Gets the name of the target file or directory, if the target is a file, then the name without 
+    ''' the extension suffix name.
     ''' (获取目标文件夹的名称或者文件的不包含拓展名的名称)
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>
     ''' ###### 2017-2-14 
+    ''' 
     ''' 原先的函数是依靠系统的API来工作的，故而只能够工作于已经存在的文件之上，
     ''' 所以在这里为了更加方便的兼容文件夹或者文件路径，在这使用字符串的方法来
     ''' 进行截取
     ''' </remarks>
     <ExportAPI(NameOf(BaseName), Info:="Gets the name of the target directory/file object.")>
-    <Extension> Public Function BaseName(fsObj As String, Optional allowEmpty As Boolean = False) As String
+    <Extension> Public Function BaseName(fsObj$, Optional allowEmpty As Boolean = False) As String
         If fsObj.StringEmpty Then
             If allowEmpty Then
                 Return ""
@@ -595,12 +619,17 @@ Public Module ProgramPathSearchTool
         End If
 
         ' 前面的代码已经处理好了空字符串的情况了，在这里不会出现空字符串的错误
-        Dim t$() = fsObj.Trim("\"c, "/"c).Replace("\", "/").Split("/"c)
-        t = t.Last.Split("."c)
+        Dim t$() = fsObj.Trim("\"c, "/"c) _
+                        .Replace("\", "/") _
+                        .Split("/"c) _
+                        .Last _
+                        .Split("."c)
+
         If t.Length > 1 Then
             ' 文件名之中并没有包含有拓展名后缀，则数组长度为1，则不跳过了
             ' 有后缀拓展名，则split之后肯定会长度大于1的
-            t = t.Take(t.Length - 1).ToArray
+            t = t.Take(t.Length - 1) _
+                 .ToArray
         End If
 
         Dim name = String.Join(".", t)
@@ -875,7 +904,7 @@ Public Module ProgramPathSearchTool
     <ExportAPI("Get.FrequentPath",
                Info:="Gets a directory path which is most frequent appeared in the file list.")>
     Public Function GetMostAppreancePath(files As IEnumerable(Of String)) As String
-        If files.IsNullOrEmpty Then
+        If files Is Nothing Then
             Return ""
         End If
 
@@ -885,7 +914,7 @@ Public Module ProgramPathSearchTool
         Return LQuery _
             .TokenCount(ignoreCase:=True) _
             .OrderByDescending(Function(x) x.Value) _
-            .First _
+            .FirstOrDefault _
             .Key
     End Function
 

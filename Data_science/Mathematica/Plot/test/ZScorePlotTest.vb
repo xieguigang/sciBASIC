@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::8156ed0a112937fa916dd803d30ac263, Data_science\Mathematica\Plot\test\ZScorePlotTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ZScorePlotTest
-    ' 
-    '     Sub: analysis, Main, plotBox, plotHeatmap
-    ' 
-    ' /********************************************************************************/
+' Module ZScorePlotTest
+' 
+'     Sub: analysis, Main, plotBox, plotHeatmap
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,6 +52,8 @@ Imports Microsoft.VisualBasic.Text
 Module ZScorePlotTest
 
     Sub Main()
+
+        Call duke_test()
 
         Call analysis()
         Call Pause()
@@ -73,6 +75,30 @@ Module ZScorePlotTest
             Call ZScoresPlot.Plot(data).Save(csv.ParentPath & "/16S-KO-level3-Z-scores.png")
         End With
 
+    End Sub
+
+    Sub duke_test()
+        With New Dictionary(Of String, String())
+            !Betaine = {"HMDB0000043"}
+            !Choline = {"HMDB0000097"}
+            !TMAO = {"HMDB0000925"}
+            !Creatinine = {"HMDB0000562"}
+            !Carnitine = {"HMDB0000062"}
+            !Homocysteine = {"HMDB0000742"}
+            !Isoleucine = {"HMDB0000172"}
+            !Valine = {"HMDB0000883"}
+            !Leucine = {"HMDB0000687"}
+            !Phenylalanine = {"HMDB0000159"}
+            !Tyrosine = {"HMDB0000158"}
+            !Tryptophan = {"HMDB0000929"}
+
+            Dim csv$ = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\duke\4.union\analysis\sampleUnion_matrix.csv"
+            Dim data = ZScores.Load(csv, .ByRef, ColorBrewer.QualitativeSchemes.Paired12)
+
+            Call ZScoresPlot.Plot(data).Save(csv.ParentPath & "/duck_sampling.png")
+        End With
+
+        Pause()
     End Sub
 
     Sub analysis()

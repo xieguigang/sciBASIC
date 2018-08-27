@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59a57381d6316f68c065a519faa697bd, vs_solutions\tutorials\core.test\reflectionTest.vb"
+﻿#Region "Microsoft.VisualBasic::8ca4432abb56f696770dff685f902005, vs_solutions\tutorials\core.test\reflectionTest.vb"
 
     ' Author:
     ' 
@@ -135,9 +135,6 @@ Public Structure AAAA
 
 End Structure
 
-''' <summary>
-''' The <see cref="ConsoleColor"/> theme for the <see cref="ProgressBar"/>
-''' </summary>
 Public Structure ColorTheme
 
     ' [ERROR 2017/11/5 下午 0704:37] <Print>:System.Exception: Print 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad2b4d859b45690e5b25f3e4e30da2c6, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::7b79cbd9e5cb040a9371b142c979013c, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -204,6 +204,18 @@ Namespace ComponentModel.Ranges.Model
             With data
                 Return New DoubleRange(min:= .Min, max:= .Max)
             End With
+        End Operator
+
+        Public Shared Widening Operator CType(tuple As (min#, max#)) As DoubleRange
+            Return New DoubleRange(tuple.min, tuple.max)
+        End Operator
+
+        Public Shared Widening Operator CType(tuple As (min!, max!)) As DoubleRange
+            Return New DoubleRange(tuple.min, tuple.max)
+        End Operator
+
+        Public Shared Widening Operator CType(tuple As (min&, max&)) As DoubleRange
+            Return New DoubleRange(tuple.min, tuple.max)
         End Operator
 
         Public Shared Widening Operator CType(data As VectorShadows(Of Single)) As DoubleRange

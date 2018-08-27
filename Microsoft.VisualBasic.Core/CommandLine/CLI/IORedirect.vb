@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c27480142aa2c1fe1e6a99cbce1d2a10, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::d082aedd7c045ae5a26d30b664903b85, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
 
     ' Author:
     ' 
@@ -343,7 +343,7 @@ Namespace CommandLine
             pInfo.WindowStyle = ProcessWindowStyle.Hidden
             pInfo.CreateNoWindow = True
 
-            If Not envir.IsNullOrEmpty Then
+            If Not envir Is Nothing Then
                 For Each para As KeyValuePair(Of String, String) In envir
                     Call pInfo.EnvironmentVariables.Add(para.Key, para.Value)
                 Next

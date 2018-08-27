@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee195b74a28dcb160af735f26a4debfe, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::1f7623b4d26b2e0c4ed2c8ae55f2d2df, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '     Properties: BooleanValues
     ' 
-    '     Function: IsNumeric, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger
-    '               ParseLong, ParseSingle
+    '     Function: Eval, IsNumeric, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble
+    '               ParseInteger, ParseLong, ParseSingle
     ' 
     ' /********************************************************************************/
 

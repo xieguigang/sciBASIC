@@ -313,15 +313,26 @@ Namespace Imaging
         ''' <param name="path"></param>
         ''' <returns></returns>
         <ExportAPI("LoadImage"), Extension>
-        Public Function LoadImage(path As String, Optional base64 As Boolean = False) As Image
+        Public Function LoadImage(path$,
+                                  Optional base64 As Boolean = False,
+                                  Optional throwEx As Boolean = True) As Image
             If base64 Then
                 Dim base64String = path.ReadAllText
                 Dim img As Image = base64String.GetImage
                 Return img
             Else
-                Return FileIO.FileSystem _
-                    .ReadAllBytes(path) _
-                    .LoadImage
+                Try
+                    Return FileIO.FileSystem _
+                        .ReadAllBytes(path) _
+                        .LoadImage
+                Catch ex As Exception
+                    If throwEx Then
+                        Throw New Exception(path, ex)
+                    Else
+                        Call App.LogException(New Exception(path, ex))
+                        Return Nothing
+                    End If
+                End Try
             End If
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d6977e6cc48f640143bc3cece698813, vs_solutions\tutorials\core.test\toStringTest.vb"
+﻿#Region "Microsoft.VisualBasic::f77cfba2f205b0f6ca5674da03cba129, vs_solutions\tutorials\core.test\toStringTest.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: populatestrings
     ' 
-    '     Sub: Main, reflectionTest
+    '     Sub: greekTokens, Main, reflectionTest
     '     Class NoCStr
     ' 
     '         Function: ToString
@@ -53,11 +53,27 @@
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Text
 
 Module toStringTest
 
+    Sub greekTokens()
+
+        ' GreekAlphabets.[New]()
+
+        Dim test$ = "&alpha;--------&beta;---------------&yyyyyy;gdfgdasderrewrwerw&gamma;."
+        Dim unescaped = test.AlphabetUnescape(("&", ";"))
+
+        Call test.__DEBUG_ECHO
+        Call unescaped.__DEBUG_ECHO
+
+        Pause()
+    End Sub
+
+
     Sub Main()
 
+        Call greekTokens()
         ' Call reflectionTest()
 
         Dim list1 = populatestrings(True)

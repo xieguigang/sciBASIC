@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f6635d3bf953ad677ce4d4453ece78d, gr\3DEngineTest\3DEngineTest\Landscape_model\LandscapeModel.vb"
+﻿#Region "Microsoft.VisualBasic::d7b2432fe1447982f3b810eb330716f7, gr\3DEngineTest\3DEngineTest\Landscape_model\LandscapeModel.vb"
 
     ' Author:
     ' 
@@ -53,11 +53,16 @@ Module LandscapeModel
 
         Return New Landscape.Data.Graphics With {
             .bg = "lightblue",
-            .Surfaces = faces.ToArray(
-            Function(f, i) New Landscape.Data.Surface With {
-                .paint = colors(i),
-                .vertices = f.vertices.ToArray(Function(pt) New Landscape.Data.Vector(pt))
-            })
+            .Surfaces = faces _
+                .Select(Function(f, i)
+                            Return New Landscape.Data.Surface With {
+                                .paint = colors(i),
+                                .vertices = f.vertices _
+                                    .Select(Function(pt) New Landscape.Data.Vector(pt)) _
+                                    .ToArray
+                            }
+                        End Function) _
+                .ToArray
         }
     End Function
 

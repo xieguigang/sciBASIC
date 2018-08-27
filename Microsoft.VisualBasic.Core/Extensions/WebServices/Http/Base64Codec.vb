@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3e29c4c9a353ba410134637bb269f37, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::d0707d00d8702b95f89a654b32b25d8e, Microsoft.VisualBasic.Core\Extensions\WebServices\Http\Base64Codec.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Module Base64Codec
     ' 
-    '         Function: __getImageFromBase64, __toBase64String, GetImage, (+3 Overloads) ToBase64String, (+2 Overloads) ToStream
+    '         Function: __getImageFromBase64, __toBase64String, Base64String, DecodeBase64, GetImage
+    '                   (+3 Overloads) ToBase64String, (+2 Overloads) ToStream
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,8 +45,10 @@ Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 Namespace Net.Http
 
@@ -54,11 +57,28 @@ Namespace Net.Http
     ''' </summary>
     Public Module Base64Codec
 
+#Region "text"
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Base64String(text$, Optional encoding As Encoding = Nothing) As String
+            Return (encoding Or UTF8).GetBytes(text).ToBase64String
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function DecodeBase64(base64$, Optional encoding As Encoding = Nothing) As String
+            Return (encoding Or UTF8).GetString(Convert.FromBase64String(base64))
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToBase64String(byts As IEnumerable(Of Byte)) As String
             Return Convert.ToBase64String(byts.ToArray)
         End Function
+#End Region
+
+#Region "image/png"
 
         ''' <summary>
         ''' Function to Get Image from Base64 Encoded String
@@ -147,5 +167,6 @@ Namespace Net.Http
         Private Function __toBase64String(image As Image, format As ImageFormat) As String
             Return Convert.ToBase64String(image.ToStream(format).ToArray)
         End Function
+#End Region
     End Module
 End Namespace

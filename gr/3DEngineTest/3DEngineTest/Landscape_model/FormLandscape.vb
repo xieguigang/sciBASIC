@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::413d331f9ce38b02e45bddcaca9f4d08, gr\3DEngineTest\3DEngineTest\Landscape_model\FormLandscape.vb"
+﻿#Region "Microsoft.VisualBasic::b0ab01b3a212741c9509763cc62c67cb, gr\3DEngineTest\3DEngineTest\Landscape_model\FormLandscape.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 Imports Microsoft.VisualBasic.Language
@@ -67,6 +68,7 @@ Public Class FormLandscape
         }
         Controls.Add(canvas)
         canvas.Run()
+        canvas.RefreshInterval = 1
     End Sub
 
     Private Sub AutoRotateToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutoRotateToolStripMenuItem.Click
@@ -112,7 +114,11 @@ Public Class FormLandscape
         Dim model As Surface() = canvas.Model()()
         Dim color As SolidBrush = Brushes.Blue
 
-        model = model.ToArray(Function(s) New Surface With {.brush = color, .vertices = s.vertices})
+        model = model _
+            .Select(Function(s)
+                        Return New Surface With {.brush = color, .vertices = s.vertices}
+                    End Function) _
+            .ToArray
         canvas.Model = Function() model
     End Sub
 

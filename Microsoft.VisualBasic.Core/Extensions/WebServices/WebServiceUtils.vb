@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ba0871779282725d13c43e9a4cc68e0, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::62c8b390d9897f0541b04b1e47d35c4d, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -39,9 +39,9 @@
     ' 
     '     Function: __getMyIPAddress, BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult
     '               (+2 Overloads) DownloadFile, GenerateDictionary, GetDownload, GetMyIPAddress, GetProxy
-    '               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, (+2 Overloads) POST
-    '               POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters, UrlDecode
-    '               UrlEncode, UrlPathEncode
+    '               (+2 Overloads) GetRequest, GetRequestRaw, IsSocketPortOccupied, isURL, IsURLPattern
+    '               (+2 Overloads) POST, POSTFile, (+2 Overloads) PostRequest, PostUrlDataParser, QueryStringParameters
+    '               UrlDecode, UrlEncode, UrlPathEncode
     ' 
     '     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
     ' 
@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' The extension module for web services works.
@@ -82,14 +83,23 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     Public ReadOnly Property Protocols As String() = {"http://", "https://", "ftp://", "sftp://"}
 
+    Public Const URLPattern$ = "http(s)?://([\w+?\.\w+])+([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?"
+
     ''' <summary>
     ''' Determine that is this uri string is a network location?
     ''' (判断这个uri字符串是否是一个网络位置)
     ''' </summary>
     ''' <param name="url"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function isURL(url As String) As Boolean
         Return url.InStrAny(Protocols) > -1
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function IsURLPattern(str As String) As Boolean
+        Return str.isURL OrElse str.IsPattern(URLPattern)
     End Function
 
     ''' <summary>
@@ -99,11 +109,13 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     <ExportAPI("Build.Reqparm",
                Info:="Build the request parameters for the HTTP POST")>
-    <Extension> Public Function BuildReqparm(dict As Dictionary(Of String, String)) As Specialized.NameValueCollection
-        Dim reqparm As New Specialized.NameValueCollection
+    <Extension> Public Function BuildReqparm(dict As Dictionary(Of String, String)) As NameValueCollection
+        Dim reqparm As New NameValueCollection
+
         For Each Value As KeyValuePair(Of String, String) In dict
             Call reqparm.Add(Value.Key, Value.Value)
         Next
+
         Return reqparm
     End Function
 
@@ -202,7 +214,7 @@ Public Module WebServiceUtils
     End Function
 
     ReadOnly urlEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
-    ReadOnly noEscaping As New Func(Of String, String)(Function(s) s)
+    Friend ReadOnly noEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(Function(s) s)
 
     ''' <summary>
     ''' 生成URL请求的参数
@@ -445,7 +457,8 @@ Public Module WebServiceUtils
                                      Optional params As NameValueCollection = Nothing,
                                      Optional headers As Dictionary(Of String, String) = Nothing,
                                      Optional Referer$ = "",
-                                     Optional proxy$ = Nothing) As String
+                                     Optional proxy$ = Nothing,
+                                     Optional contentEncoding As Encodings = Encodings.UTF8) As String
 
         Static emptyBody As New DefaultValue(Of NameValueCollection) With {
             .Value = New NameValueCollection,
@@ -475,11 +488,11 @@ Public Module WebServiceUtils
             Call $"[POST] {url}....".__DEBUG_ECHO
 
             Dim response As Byte() = request.UploadValues(url, "POST", params Or emptyBody)
-            Dim strData As String = Encoding.UTF8.GetString(response)
+            Dim str$ = contentEncoding.CodePage.GetString(response)
 
             Call $"[GET] {response.Length} bytes...".__DEBUG_ECHO
 
-            Return strData
+            Return str
         End Using
     End Function
 

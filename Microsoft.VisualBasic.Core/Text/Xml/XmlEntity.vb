@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa87a5e3ed09cefef7301cf14f37ed58, Microsoft.VisualBasic.Core\Text\Xml\XmlEntity.vb"
+﻿#Region "Microsoft.VisualBasic::31459f33f6f9c714320f72c0603fd935, Microsoft.VisualBasic.Core\Text\Xml\XmlEntity.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,17 @@
 
     '     Module XmlEntity
     ' 
-    '         Function: EscapingXmlEntity, UnescapingXmlEntity
+    '         Function: EscapingXmlEntity, UnescapeHTML, UnescapingXmlEntity
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Web
 
 Namespace Text.Xml
 
@@ -67,6 +70,15 @@ Namespace Text.Xml
                 .Replace("&gt;", ">") _
                 .Replace("&amp;", "&") _
                 .ToString
+        End Function
+
+        <Extension>
+        Public Function UnescapeHTML(html As String) As String
+            Using writer As New StringWriter()
+                ' Decode the encoded string.
+                HttpUtility.HtmlDecode(html, writer)
+                Return writer.ToString()
+            End Using
         End Function
     End Module
 End Namespace

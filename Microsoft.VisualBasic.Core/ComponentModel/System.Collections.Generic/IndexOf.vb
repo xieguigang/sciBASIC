@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ced01ef1b9c96a858cbd3d0a6c87f4bd, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::2444860271a06b546c4a095e1127e2a5, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -35,11 +35,14 @@
     ' 
     '         Properties: Count, Map, Objects
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator, (+2 Overloads) Intersect, NotExists, ToString
+    '         Function: Add, GetEnumerator, IEnumerable_GetEnumerator, (+2 Overloads) Intersect, NotExists
+    '                   ToString
     ' 
-    '         Sub: Add, Clear
+    '         Sub: Clear
+    ' 
+    '         Operators: +
     ' 
     ' 
     ' /********************************************************************************/
@@ -65,6 +68,7 @@ Namespace ComponentModel.Collection
 
         Dim maps As New Dictionary(Of T, Integer)
         Dim index As HashList(Of SeqValue(Of T))
+        Dim base%
 
         ''' <summary>
         ''' 获取包含在<see cref="System.Collections.Generic.Dictionary"/>中的键/值对的数目。
@@ -92,27 +96,39 @@ Namespace ComponentModel.Collection
         ''' 请注意，这里的数据源请尽量使用Distinct的，否则对于重复的数据，只会记录下第一个位置
         ''' </summary>
         ''' <param name="source"></param>
-        Sub New(source As IEnumerable(Of T))
+        Sub New(source As IEnumerable(Of T), Optional base% = 0)
             If source Is Nothing Then
                 source = {}
             End If
 
             For Each x As SeqValue(Of T) In source.SeqIterator
                 If Not maps.ContainsKey(x) Then
-                    Call maps.Add(+x, x.i)
+                    Call maps.Add(+x, x.i + base)
                 End If
             Next
 
-            index = maps.Select(
-                Function(s) New SeqValue(Of T) With {
-                    .i = s.Value,
-                    .value = s.Key
-                }).AsHashList
+            Me.base = base
+            Me.index = maps _
+                .Select(Function(s)
+                            Return New SeqValue(Of T) With {
+                                .i = s.Value,
+                                .value = s.Key
+                            }
+                        End Function) _
+                .AsHashList
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(ParamArray vector As T())
             Call Me.New(source:=DirectCast(vector, IEnumerable(Of T)))
+        End Sub
+
+        ''' <summary>
+        ''' 默认是从0开始的
+        ''' </summary>
+        ''' <param name="base"></param>
+        Sub New(base As Integer)
+            Call Me.New({}, base:=base)
         End Sub
 
         ''' <summary>
@@ -174,16 +190,21 @@ Namespace ComponentModel.Collection
         ''' 这个函数是线程不安全的
         ''' </summary>
         ''' <param name="x"></param>
-        Public Sub Add(x As T)
+        ''' <returns>
+        ''' 这个函数所返回来的值是所添加的<paramref name="x"/>的index值
+        ''' </returns>
+        Public Function Add(x As T) As Integer
             If Not maps.ContainsKey(x) Then
-                Call maps.Add(x, maps.Count)
+                Call maps.Add(x, maps.Count + base)
                 Call index.Add(
-                    New SeqValue(Of T) With {
-                        .i = maps.Count,
+                    x:=New SeqValue(Of T) With {
+                        .i = maps(x),
                         .value = x
                     })
             End If
-        End Sub
+
+            Return maps(x)
+        End Function
 
         Public Sub Clear()
             Call maps.Clear()

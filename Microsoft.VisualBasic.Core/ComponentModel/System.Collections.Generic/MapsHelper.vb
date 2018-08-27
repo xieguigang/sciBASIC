@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66f0b60ec1f735a22f5f3204e303ba2f, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::3ad747902d7a001d492b7b8daa8b6b89, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\MapsHelper.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,17 @@
 
     ' Summaries:
 
-    '     Structure MapsHelper
+    '     Class MapsHelper
+    ' 
+    '         Properties: [Default]
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetValue, ToString
+    '         Function: GetEnumerator, GetValue, IEnumerable_GetEnumerator, ToString
+    ' 
+    '     Class NameMapping
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Add
     ' 
     '     Structure Map
     ' 
@@ -71,15 +78,21 @@ Namespace ComponentModel
     ''' 其实这个对象就是字典查询的一个简化操作而已
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure MapsHelper(Of T)
+    Public Class MapsHelper(Of T) : Implements IEnumerable(Of Map(Of String, T))
 
-        ReadOnly __default As T
-        ReadOnly __maps As IReadOnlyDictionary(Of String, T)
+        Protected ReadOnly __default As T
+        Protected ReadOnly __maps As IDictionary(Of String, T)
 
         Default Public ReadOnly Property Value(key$) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetValue(key)
+            End Get
+        End Property
+
+        Public ReadOnly Property [Default] As T
+            Get
+                Return __default
             End Get
         End Property
 
@@ -98,9 +111,53 @@ Namespace ComponentModel
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return __maps.DictionaryData.GetJson
+            Return __maps.ToDictionary.GetJson
         End Function
-    End Structure
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Map(Of String, T)) Implements IEnumerable(Of Map(Of String, T)).GetEnumerator
+            For Each tuple As KeyValuePair(Of String, T) In __maps
+                Yield New Map(Of String, T)(tuple.Key, tuple.Value)
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
+    End Class
+
+    Public Class NameMapping : Inherits MapsHelper(Of String)
+
+        Sub New(Optional dictionary As Dictionary(Of String, String) = Nothing,
+                Optional default$ = Nothing)
+            Call MyBase.New(
+                dictionary Or New Dictionary(Of String, String)().AsDefault,
+                [default]
+            )
+        End Sub
+
+        Public Sub Add(key$, map$)
+            Call __maps.Add(key, map)
+        End Sub
+
+        Public Shared Widening Operator CType(table$(,)) As NameMapping
+            Dim dictionary As New Dictionary(Of String, String)
+
+            For Each map In table.RowIterator
+                Call dictionary.Add(map(0), map(1))
+            Next
+
+            Return New NameMapping(dictionary, "")
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(maps As NameMapping) As Dictionary(Of String, String)
+            If maps Is Nothing Then
+                Return Nothing
+            Else
+                Return New Dictionary(Of String, String)(dictionary:=maps.__maps)
+            End If
+        End Operator
+    End Class
 
     Public Structure Map(Of T1, V)
         Implements IMap

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20a0b8828a9d1c6402f9d6a0ec40c5e2, Data\BinaryData\BinaryData\Stream\BinaryDataFormats.vb"
+﻿#Region "Microsoft.VisualBasic::cf58dd3388de68c0ec9d29d61d9f8bea, Data\BinaryData\BinaryData\Stream\BinaryDataFormats.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,8 @@
     ' 
     ' Enum BinaryStringFormat
     ' 
-    '     	ByteLengthPrefix, 	DwordLengthPrefix, 	NoPrefixOrTermination, 	WordLengthPrefix, 	ZeroTerminated
+    '     	ByteLengthPrefix, 	NoPrefixOrTermination, 	WordLengthPrefix, DwordLengthPrefix, UInt32LengthPrefix
+    '     ZeroTerminated
     ' 
     '  
     ' 

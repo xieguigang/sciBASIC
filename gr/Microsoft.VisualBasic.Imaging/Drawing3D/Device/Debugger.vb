@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b99d33f1409fcacd399ad965db3f63b, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::c32911fa6a8b7982bc4b94d7fc1ebec8, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\Debugger.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace Drawing3D.Device
 
-    Public Class Debugger : Inherits IDevice
+    Public Class Debugger : Inherits IDevice(Of GDIDevice)
         Implements IDisposable
 
         Public BufferWorker As Long

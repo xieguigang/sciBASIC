@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bda072065a3e8a22929c52376cc861c, gr\3DEngineTest\3DEngineTest\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a0c5cdad9cc896d0d686e6dd8cfc03df, gr\3DEngineTest\3DEngineTest\Program.vb"
 
     ' Author:
     ' 
@@ -38,11 +38,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Net.Protocols
-Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes.Type
-Imports Microsoft.VisualBasic.Language.UnixBash
 
 Module Program
 

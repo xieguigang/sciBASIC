@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b172cd6558c1606c629c38a5983dd77d, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Tsv.vb"
+﻿#Region "Microsoft.VisualBasic::487b931cb55478bfb5e4e2ae15685c54, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Tsv.vb"
 
     ' Author:
     ' 

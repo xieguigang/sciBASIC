@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91aa2f00c4507832c498edc591109700, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::00513f78df2cebc70b728fc54d650f3a, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirectFile.vb"
 
     ' Author:
     ' 
@@ -120,10 +120,18 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Using this class object rather than <see cref="IORedirect"/> is more encouraged if there is no console interactive with your folked process.
+        ''' Using this class object rather than <see cref="IORedirect"/> is more 
+        ''' encouraged if there is no console interactive with your folked 
+        ''' process.
         ''' </summary>
-        ''' <param name="file">The program file.(请注意检查路径参数，假若路径之中包含有%这个符号的话，在调用cmd的时候会失败)</param>
-        ''' <param name="argv">The program commandline arguments.(请注意检查路径参数，假若路径之中包含有%这个符号的话，在调用cmd的时候会失败)</param>
+        ''' <param name="file">
+        ''' The program file.
+        ''' (请注意检查路径参数，假若路径之中包含有%这个符号的话，在调用cmd的时候会失败)
+        ''' </param>
+        ''' <param name="argv">
+        ''' The program commandline arguments.
+        ''' (请注意检查路径参数，假若路径之中包含有%这个符号的话，在调用cmd的时候会失败)
+        ''' </param>
         ''' <param name="environment">Temporary environment variable</param>
         ''' <param name="FolkNew">Folk the process on a new console window if this parameter value is TRUE</param>
         ''' <param name="stdRedirect">If not want to redirect the std out to your file, just leave this value blank.</param>

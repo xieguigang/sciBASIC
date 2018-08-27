@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84431b233b60861ae62ca4ecf9db6cb7, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::e4800c9e54290af40fbc21deef9cecd8, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Module Extensions
     ' 
-    '         Function: __innerTry, CopyVector, DATA, DefaultFirst, FirstOrDefault
-    '                   IteratesALL, (+2 Overloads) JoinIterates, MaxInd, Populate, (+2 Overloads) Read
-    '                   RemoveLeft, (+2 Overloads) Removes, Repeats, SafeQuery, (+2 Overloads) SeqIterator
-    '                   (+4 Overloads) Sequence, (+4 Overloads) ToArray, ToVector
+    '         Function: CopyVector, DATA, DefaultFirst, FirstOrDefault, IteratesALL
+    '                   (+2 Overloads) JoinIterates, MaxInd, Populate, (+2 Overloads) Read, RemoveLeft
+    '                   (+2 Overloads) Removes, Repeats, SafeQuery, (+2 Overloads) SeqIterator, (+4 Overloads) Sequence
+    '                   (+4 Overloads) ToArray, ToVector, TryCatch
     ' 
     ' 
     ' /********************************************************************************/
@@ -85,17 +85,18 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' A query proxy function makes your linq not so easily crashed due to the unexpected null reference collection as linq source.
+        ''' A query proxy function makes your linq not so easily crashed due to the 
+        ''' unexpected null reference collection as linq source.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function SafeQuery(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
+        Public Function SafeQuery(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
             If Not source Is Nothing Then
-                For Each x As T In source
-                    Yield x
-                Next
+                Return source
+            Else
+                Return {}
             End If
         End Function
 
@@ -184,10 +185,12 @@ Namespace Linq
         ''' <returns></returns>
         <Extension> Public Iterator Function IteratesALL(Of T)(source As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
             For Each line As IEnumerable(Of T) In source
-                If Not line.IsNullOrEmpty Then
-                    For Each x As T In line
-                        Yield x
-                    Next
+                If Not line Is Nothing Then
+                    Using iterator = line.GetEnumerator
+                        Do While iterator.MoveNext
+                            Yield iterator.Current
+                        Loop
+                    End Using
                 End If
             Next
         End Function
@@ -292,7 +295,7 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' 产生指定数目的一个递增序列(所生成序列的数值就是生成的数组的元素的个数)
+        ''' 产生指定数目的一个递增序列(用于生成序列的输入参数<paramref name="n"/>数值就是生成的数组的元素的个数)
         ''' </summary>
         ''' <param name="n">大于或者等于0的一个数，当小于0的时候会出错</param>
         ''' <returns></returns>

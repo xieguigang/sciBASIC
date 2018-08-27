@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30d8ecee757f177cabcb218d0be052d8, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::dbd20cf658b0a6f0d7af0f57abd85033, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     ' Module HttpGet
+    ' 
+    '     Properties: HttpRequestTimeOut
     ' 
     '     Function: [GET], __get, __httpRequest, Get_PageContent, LogException
     ' 
@@ -147,12 +149,22 @@ RETRY:      Return __get(url, headers, proxy, UA)
 
     Const doctorcomError$ = "Please login your Campus Broadband Network Client at first!"
 
+    ''' <summary>
+    ''' Request timeout unit in seconds.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property HttpRequestTimeOut As Double
+
     Private Function __get(url$, headers As Dictionary(Of String, String), proxy$, UA$) As String
         Dim timer As Stopwatch = Stopwatch.StartNew
         Dim webRequest As HttpWebRequest = HttpWebRequest.Create(url)
 
         webRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
         webRequest.UserAgent = If(UA = UserAgent.GoogleChrome, DefaultUA, UA)
+
+        If HttpRequestTimeOut > 0 Then
+            webRequest.Timeout = 1000 * HttpRequestTimeOut
+        End If
 
         If Not headers.IsNullOrEmpty Then
             For Each x In headers

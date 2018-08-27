@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba05ae9141673356a1f0903b7dbfb302, Data_science\Mathematica\Math\Math\Algebra\RSyntax\PrimitiveAPI\PrimitiveAPI.vb"
+﻿#Region "Microsoft.VisualBasic::de91c1b44bdfa71d622d43d0d7b591dc, Data_science\Mathematica\Math\Math\Algebra\RSyntax\PrimitiveAPI\PrimitiveAPI.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module PrimitiveAPI
     ' 
     '         Function: [stop], [Try], All, Any, (+3 Overloads) C
-    '                   getOption, IfElse, (+3 Overloads) Length, (+2 Overloads) Missing, (+2 Overloads) Paste
+    '                   getOption, IfElse, (+3 Overloads) Length, Missing, (+2 Overloads) Paste
     '                   (+2 Overloads) Rep, (+2 Overloads) warning, ZeroVector
     ' 
     '         Sub: [Try]
@@ -60,23 +60,6 @@ Namespace SyntaxAPI
     '''
     <Package("RBase.PrimitiveAPI")>
     Public Module PrimitiveAPI
-
-        ''' <summary>
-        ''' Does a Formal Argument have a Value?
-        ''' missing can be used to test whether a value was specified as an argument to a function.
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="x">a formal argument.</param>
-        ''' <returns></returns>
-        ''' <remarks>
-        ''' Missing(x) is only reliable if x has not been altered since entering the function: in particular it will always be false after x &lt;- match.arg(x).
-        ''' The example shows how a plotting function can be written to work with either a pair of vectors giving x and y coordinates of points to be plotted or a single vector giving y values to be plotted against their indices.
-        ''' Currently missing can only be used in the immediate body of the function that defines the argument, not in the body of a nested function or a local call. This may change in the future.
-        ''' This is a ‘special’ primitive function: it must not evaluate its argument.
-        ''' </remarks>
-        Public Function Missing(Of T)(x As IEnumerable(Of T)) As Boolean
-            Return x.IsNullOrEmpty
-        End Function
 
         ''' <summary>
         ''' Does a Formal Argument have a Value?
@@ -299,7 +282,7 @@ Namespace SyntaxAPI
         ''' <remarks></remarks>
         '''
         <ExportAPI("Paste")>
-        Public Function Paste(args As Generic.IEnumerable(Of String), Optional sep As String = " ") As String
+        Public Function Paste(args As IEnumerable(Of String), Optional sep As String = " ") As String
             Return String.Join(sep, args)
         End Function
 
@@ -308,8 +291,8 @@ Namespace SyntaxAPI
             Return String.Join("", (From obj In args Select str = obj.ToString).ToArray)
         End Function
 
-        Public Function Length(Of T)(obj As Generic.IEnumerable(Of T)) As Integer
-            If obj.IsNullOrEmpty Then
+        Public Function Length(Of T)(obj As IEnumerable(Of T)) As Integer
+            If obj Is Nothing Then
                 Return 0
             Else
                 Return obj.Count
