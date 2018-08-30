@@ -819,22 +819,27 @@ Public Module App
     '''
     <ExportAPI("TraceBugs")>
     Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
-        Dim entry$ = $"{Now.formatTime}_{App.__getTEMPhash}"
+        Dim entry$ = $"{Now.FormatTime("-")}_{App.__getTEMPhash}"
         Dim log$ = $"{App.LogErrDIR}/{entry}.log"
         Call App.LogException(ex, trace:=trace, fileName:=log)
         Return log
     End Function
 
+    ''' <summary>
+    ''' MySql时间格式： ``yy-mm-dd, 00:00:00``
+    ''' </summary>
+    ''' <param name="time"></param>
+    ''' <returns></returns>
     <Extension>
-    Private Function formatTime(time As DateTime) As String
-        Dim yy = time.Year
-        Dim mm = time.Month
-        Dim dd = time.Day
-        Dim hh = time.Hour
-        Dim mi = time.Minute
-        Dim ss = time.Second
+    Public Function FormatTime(time As DateTime, Optional sep$ = ":") As String
+        Dim yy = Format(time.Year, "0000")
+        Dim mm = Format(time.Month, "00")
+        Dim dd = Format(time.Day, "00")
+        Dim hh = Format(time.Hour, "00")
+        Dim mi = Format(time.Minute, "00")
+        Dim ss = Format(time.Second, "00")
 
-        Return $"{yy}-{mm}-{dd}, {Format(hh, "00")}-{Format(mi, "00")}-{Format(ss, "00")}"
+        Return $"{yy}-{mm}-{dd}, {hh}{sep}{mi}{sep}{ss}"
     End Function
 
     ''' <summary>
