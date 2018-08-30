@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::5bb2ac444add8e90fd59a98852a81e2e, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::8c5cf4d15fda732edbc995f422c05a5e, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module StringHelpers
-' 
-'     Properties: NonStrictCompares, StrictCompares
-' 
-'     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
-'               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
-'               FormatZero, GetBetween, GetEMails, GetStackValue, GetString
-'               (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny, (+2 Overloads) Intersection
-'               IsEmptyStringVector, IsNullOrEmpty, JoinBy, LineTokens, Located
-'               Lookup, (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString
-'               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
-'               SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty, StringHashCode
-'               StringReplace, StringSplit, StripBlank, Strips, TextEquals
-'               TextLast, TokenCount, TokenCountIgnoreCase, ToTruncateInt32, ToTruncateInt64
-'               TrimA, TrimNewLine, WildcardsLocated
-' 
-'     Sub: Parts, RemoveLast
-' 
-' /********************************************************************************/
+    ' Module StringHelpers
+    ' 
+    '     Properties: NonStrictCompares, StrictCompares
+    ' 
+    '     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
+    '               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
+    '               FormatZero, GetBetween, GetEMails, GetStackValue, GetString
+    '               (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny, (+2 Overloads) Intersection
+    '               IsEmptyStringVector, JoinBy, LineTokens, Located, Lookup
+    '               (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString, NotEmpty
+    '               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
+    '               SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty, StringHashCode
+    '               StringReplace, StringSplit, StripBlank, Strips, TextEquals
+    '               TextLast, TokenCount, TokenCountIgnoreCase, TrimA, TrimNewLine
+    '               WildcardsLocated
+    ' 
+    '     Sub: Parts, RemoveLast
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -415,6 +415,18 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
+    ''' Not <see cref="StringEmpty(String, Boolean)"/>
+    ''' </summary>
+    ''' <param name="s$"></param>
+    ''' <param name="whitespaceAsEmpty"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function NotEmpty(s$, Optional whitespaceAsEmpty As Boolean = True) As Boolean
+        Return Not s.StringEmpty(whitespaceAsEmpty)
+    End Function
+
+    ''' <summary>
     ''' Call <see cref="StringBuilder.Remove"/>(<see cref="StringBuilder.Length"/> - 1, 1) for removes the last character in the string sequence.
     ''' </summary>
     ''' <param name="s"></param>
@@ -646,12 +658,12 @@ Public Module StringHelpers
     ''' <summary>
     ''' 在字符串前面填充指定长度的00序列，假若输入的字符串长度大于fill的长度，则不再进行填充
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
+    ''' <typeparam name="T">限定类型为字符串或者数值基础类型</typeparam>
     ''' <param name="n"></param>
     ''' <param name="fill"></param>
     ''' <returns></returns>
     <ExportAPI("FormatZero")>
-    <Extension> Public Function FormatZero(Of T)(n As T, Optional fill$ = "00") As String
+    <Extension> Public Function FormatZero(Of T As {IComparable(Of T)})(n As T, Optional fill$ = "00") As String
         Dim s As String = n.ToString
         Dim d As Integer = Len(fill) - Len(s)
 
@@ -729,7 +741,11 @@ Public Module StringHelpers
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Matched?")>
     <Extension> Public Function MatchPattern(str$, regex$, Optional opt As RegexOptions = RegexICSng) As Boolean
-        Return r.Match(str, regex, opt).Success
+        If str.StringEmpty Then
+            Return False
+        Else
+            Return r.Match(str, regex, opt).Success
+        End If
     End Function
 
     ''' <summary>

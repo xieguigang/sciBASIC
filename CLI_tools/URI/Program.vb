@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11b081b8fe0fa02ee61ebe56b6c1e65a, CLI_tools\URI\Program.vb"
+﻿#Region "Microsoft.VisualBasic::3d7ee7493d66c4c1fbd0a0e358efb6b1, CLI_tools\URI\Program.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Module Program
         Call Console.Write(uri.ToString)
     End Sub
 End Module
-

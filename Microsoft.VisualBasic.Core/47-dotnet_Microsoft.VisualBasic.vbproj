@@ -150,7 +150,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -182,7 +182,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x86\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -230,7 +230,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x86\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -286,7 +286,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x64\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -301,7 +301,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DEMO|x86'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x86\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -567,7 +567,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x64'">
     <DebugSymbols>true</DebugSymbols>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>bin\x64\GCModeller%28UNIX-Release_X64%29\</OutputPath>
+    <OutputPath>bin\x64\</OutputPath>
     <DefineConstants>FRAMEWORD_CORE=1,UNIX=1</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
@@ -740,6 +740,84 @@
     <WarningsAsErrors>
     </WarningsAsErrors>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack-Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Biostack-Debug\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack-Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Biostack-Debug\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack-Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Biostack-Debug\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Biostack\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x64\Biostack\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biostack|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\x86\Biostack\</OutputPath>
+    <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>Microsoft.VisualBasic.Framework_v47_dotnet_8da45dcd8060cc9a.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualC" />
     <Reference Include="Microsoft.VisualC.STLCLR" />
@@ -801,6 +879,7 @@
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLSupports.vb" />
     <Compile Include="ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb" />
     <Compile Include="ComponentModel\DataSource\DefaultAttribute.vb" />
+    <Compile Include="ComponentModel\DataSource\Property\GenericProperty.vb" />
     <Compile Include="ComponentModel\File\XmlDataModel.vb" />
     <Compile Include="ComponentModel\Ranges\Unit.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
@@ -823,8 +902,10 @@
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
     <Compile Include="Extensions\WebServices\Multipart.vb" />
     <Compile Include="Extensions\WebServices\Http\DataURI.vb" />
+    <Compile Include="Language\Linq\Vectorization\Strings.vb" />
     <Compile Include="Language\Value\ByRefValueExtensions.vb" />
     <Compile Include="Language\Value\DefaultValue\BooleanAssert.vb" />
+    <Compile Include="My\Log4VB.vb" />
     <Compile Include="NamespaceDoc.vb" />
     <Compile Include="CommandLine\CLI\Scripting.vb" />
     <Compile Include="CommandLine\InteropService\Abstract.vb" />

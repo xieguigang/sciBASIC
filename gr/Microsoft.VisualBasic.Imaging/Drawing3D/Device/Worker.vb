@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1801170f7d3c020285065b2e25ab6af5, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\Worker.vb"
+﻿#Region "Microsoft.VisualBasic::b1e4d1dcf511092ad98cea101c1b4cda, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\Worker.vb"
 
     ' Author:
     ' 
@@ -68,7 +68,7 @@ Namespace Drawing3D.Device
     ''' <summary>
     ''' 三维图形设备的工作线程管理器
     ''' </summary>
-    Public Class Worker : Inherits IDevice
+    Public Class Worker : Inherits IDevice(Of GDIDevice)
         Implements IDisposable
         Implements ITaskDriver
 

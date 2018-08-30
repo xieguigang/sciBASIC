@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::697951de81dee1bb6a77b53f04fe31b3, Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
+﻿#Region "Microsoft.VisualBasic::7515326ec5bfdcdfc846c8cfb61b20e7, Data_science\DataMining\DynamicProgramming\SmithWaterman\GSW.vb"
 
     ' Author:
     ' 
@@ -135,7 +135,7 @@ Namespace SmithWaterman
 #End Region
 
         ''' <summary>
-        ''' 
+        ''' <paramref name="similarity"/>这个函数返回来的分数越高说明二者越相似
         ''' </summary>
         ''' <param name="query"></param>
         ''' <param name="subject"></param>

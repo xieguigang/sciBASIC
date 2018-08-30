@@ -382,7 +382,11 @@ Namespace Math.Correlations
             End Function
         End Structure
 
-        Public ReadOnly Property PearsonDefault As DefaultValue(Of ICorrelation) = New ICorrelation(AddressOf GetPearson).AsDefault
+        ''' <summary>
+        ''' 默认使用Pearson相似度
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property PearsonDefault As DefaultValue(Of ICorrelation) = New ICorrelation(AddressOf GetPearson)
 
         ''' <summary>
         ''' Pearson correlations

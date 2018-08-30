@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c42bd61c25b24e15da0d0b8a9122cae, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::3964f1c17d42d04c3ed04a276d3497fe, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
 
 ' Author:
 ' 
@@ -136,7 +136,11 @@ Public Module ProgramPathSearchTool
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ExtensionSuffix(path$) As String
-        Return path.Split("."c).Last
+        If path.StringEmpty Then
+            Return ""
+        Else
+            Return path.Split("."c).Last
+        End If
     End Function
 
     ''' <summary>
@@ -297,12 +301,12 @@ Public Module ProgramPathSearchTool
     ''' <remarks></remarks>
     '''
     <ExportAPI("Path2Url", Info:="Gets the URL type file path.")>
-    <Extension> Public Function ToFileURL(Path As String) As String
-        If String.IsNullOrEmpty(Path) Then
+    <Extension> Public Function ToFileURL(path As String) As String
+        If String.IsNullOrEmpty(path) Then
             Return ""
         Else
-            Path = FileIO.FileSystem.GetFileInfo(Path).FullName
-            Return String.Format("file:///{0}", Path.Replace("\", "/"))
+            path = FileIO.FileSystem.GetFileInfo(path).FullName
+            Return String.Format("file:///{0}", path.Replace("\", "/"))
         End If
     End Function
 
@@ -584,6 +588,7 @@ Public Module ProgramPathSearchTool
             )
                 ' Just detects this file is occupied, no more things needs to do....
             End Using
+
             Return True
         Catch ex As Exception
             Return False
@@ -591,18 +596,20 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' Gets the name of the target file or directory, if the target is a file, then the name without the extension name.
+    ''' Gets the name of the target file or directory, if the target is a file, then the name without 
+    ''' the extension suffix name.
     ''' (获取目标文件夹的名称或者文件的不包含拓展名的名称)
     ''' </summary>
     ''' <returns></returns>
     ''' <remarks>
     ''' ###### 2017-2-14 
+    ''' 
     ''' 原先的函数是依靠系统的API来工作的，故而只能够工作于已经存在的文件之上，
     ''' 所以在这里为了更加方便的兼容文件夹或者文件路径，在这使用字符串的方法来
     ''' 进行截取
     ''' </remarks>
     <ExportAPI(NameOf(BaseName), Info:="Gets the name of the target directory/file object.")>
-    <Extension> Public Function BaseName(fsObj As String, Optional allowEmpty As Boolean = False) As String
+    <Extension> Public Function BaseName(fsObj$, Optional allowEmpty As Boolean = False) As String
         If fsObj.StringEmpty Then
             If allowEmpty Then
                 Return ""
@@ -612,12 +619,17 @@ Public Module ProgramPathSearchTool
         End If
 
         ' 前面的代码已经处理好了空字符串的情况了，在这里不会出现空字符串的错误
-        Dim t$() = fsObj.Trim("\"c, "/"c).Replace("\", "/").Split("/"c)
-        t = t.Last.Split("."c)
+        Dim t$() = fsObj.Trim("\"c, "/"c) _
+                        .Replace("\", "/") _
+                        .Split("/"c) _
+                        .Last _
+                        .Split("."c)
+
         If t.Length > 1 Then
             ' 文件名之中并没有包含有拓展名后缀，则数组长度为1，则不跳过了
             ' 有后缀拓展名，则split之后肯定会长度大于1的
-            t = t.Take(t.Length - 1).ToArray
+            t = t.Take(t.Length - 1) _
+                 .ToArray
         End If
 
         Dim name = String.Join(".", t)

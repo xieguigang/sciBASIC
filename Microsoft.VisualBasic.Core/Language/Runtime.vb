@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d9d9af82ad13243dfeea72500e90966, Microsoft.VisualBasic.Core\Language\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::178f142548581c8ce312c5e623367823, Microsoft.VisualBasic.Core\Language\Runtime.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ArgumentReference
     ' 
-    '         Properties: Key
+    '         Properties: Expression, Key
     ' 
     '         Function: ToString
     '         Operators: <>, =
@@ -59,6 +59,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Language
 
@@ -73,6 +74,32 @@ Namespace Language
             Set(value As String)
                 name = value
             End Set
+        End Property
+
+        Public ReadOnly Property Expression(Optional null$ = "Nothing",
+                                            Optional stringEscaping As Func(Of String, String) = Nothing,
+                                            Optional isVar As Assert(Of String) = Nothing) As String
+            Get
+                Dim val$
+
+                Static [isNot] As New DefaultValue(Of Assert(Of String))(Function(var) False)
+
+                If value Is Nothing Then
+                    val = null
+                ElseIf value.GetType Is GetType(String) Then
+                    If (isVar Or [isNot])(value) Then
+                        val = value
+                    Else
+                        val = $"""{(stringEscaping Or noEscaping)(value)}"""
+                    End If
+                ElseIf value.GetType Is GetType(Char) Then
+                    val = $"""{value}"""
+                Else
+                    val = value
+                End If
+
+                Return $"{name} = {val}"
+            End Get
         End Property
 
         Public Overrides Function ToString() As String

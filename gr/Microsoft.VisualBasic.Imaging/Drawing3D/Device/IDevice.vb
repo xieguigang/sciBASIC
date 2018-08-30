@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac1d4f453fe24c574eca92d7e584624f, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\IDevice.vb"
+﻿#Region "Microsoft.VisualBasic::8f57fa2c96544f95b99df7b9c61cd0a9, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\IDevice.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@
     '     Class IDevice
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
     ' 
     '     Delegate Sub
     ' 
@@ -44,16 +45,23 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports System.Windows.Forms
 
 Namespace Drawing3D.Device
 
-    Public MustInherit Class IDevice
+    Public MustInherit Class IDevice(Of T As UserControl)
 
-        Protected WithEvents device As GDIDevice
+        Protected WithEvents device As T
 
-        Sub New(dev As GDIDevice)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(dev As T)
             device = dev
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return device.ToString
+        End Function
     End Class
 
     ''' <summary>

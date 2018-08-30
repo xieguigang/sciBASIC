@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::9bbae9bc289d351610b6f9a3f51ff3a4, Data_science\Mathematica\Plot\Plots-statistics\ZScores.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ZScoresPlot
-    ' 
-    '     Function: Plot
-    ' 
-    ' Structure ZScores
-    ' 
-    '     Function: (+2 Overloads) Load, Range
-    ' 
-    ' /********************************************************************************/
+' Module ZScoresPlot
+' 
+'     Function: Plot
+' 
+' Structure ZScores
+' 
+'     Function: (+2 Overloads) Load, Range
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.csv.IO
@@ -68,15 +69,15 @@ Public Module ZScoresPlot
 
     <Extension>
     Public Function Plot(data As ZScores,
-                         Optional size$ = "2200,2400",
-                         Optional margin$ = g.DefaultPadding,
+                         Optional size$ = "3300,3400",
+                         Optional margin$ = Canvas.Resolution2K.PaddingWithRightLegendAndBottomTitle,
                          Optional bg$ = "white",
                          Optional title$ = "Z-scores",
-                         Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
-                         Optional serialLabelFontCSS$ = CSSFont.Win7LargerNormal,
-                         Optional legendLabelFontCSS$ = CSSFont.Win7LittleLarge,
-                         Optional tickFontCSS$ = CSSFont.Win7Normal,
-                         Optional pointWidth! = 20,
+                         Optional titleFontCSS$ = CSSFont.Win7VeryVeryLarge,
+                         Optional serialLabelFontCSS$ = CSSFont.Win7VeryLarge,
+                         Optional legendLabelFontCSS$ = CSSFont.Win7VeryLarge,
+                         Optional tickFontCSS$ = CSSFont.Win7LargeBold,
+                         Optional pointWidth! = 50,
                          Optional axisStrokeCSS$ = Stroke.AxisStroke,
                          Optional legendBoxStroke$ = Stroke.AxisStroke,
                          Optional displayZERO As Boolean = True,
@@ -186,8 +187,9 @@ Public Module ZScoresPlot
 
                 ' 绘制legend
                 Dim legendHeight! = (legendLabelFont.Height + 5) * groups.Count
+                Dim maxWidth = maxLegendLabelSize.Width + legendLabelFont.Height * 3
                 Dim legendLocation As New Point With {
-                    .X = X(range.Max),
+                    .X = X(range.Max) + (rect.Padding.Right - maxWidth) / 2,
                     .Y = yTop + (plotHeight - legendHeight) / 2
                 }
                 Dim shapes = data.shapes
@@ -207,20 +209,23 @@ Public Module ZScoresPlot
                 Call g.DrawLegends(
                     topLeft:=legendLocation,
                     legends:=legends,
-                    gSize:=$"{maxLegendLabelSize.Width},{legendLabelFont.Height}",
-                    regionBorder:=legendBoxBorder)
+                    gSize:=$"{legendLabelFont.Height * 2},{legendLabelFont.Height}",
+                    regionBorder:=legendBoxBorder
+                )
             End Sub
 
         Return g.GraphicsPlots(
             size.SizeParser, margin,
             bg,
-            plotInternal)
+            plotInternal
+        )
     End Function
 End Module
 
 Public Structure ZScores
 
     Dim serials As DataSet()
+
     Dim groups As Dictionary(Of String, String())
     ''' <summary>
     ''' Colors for the <see cref="groups"/>
@@ -228,6 +233,7 @@ Public Structure ZScores
     Dim colors As Dictionary(Of String, Color)
     Dim shapes As Dictionary(Of String, LegendStyles)
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Range() As DoubleRange
         Return serials _
             .Select(Function(d) d.Properties.Values) _
@@ -236,33 +242,102 @@ Public Structure ZScores
             .Range
     End Function
 
-    Public Shared Function Load(path$, groups As Dictionary(Of String, String()), colors As Color()) As ZScores
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <param name="groups"></param>
+    ''' <param name="colors"></param>
+    ''' <param name="transpose">是否需要将<paramref name="path"/>所加载上来的矩阵进行转置处理</param>
+    ''' <param name="labelTranslate"></param>
+    ''' <returns></returns>
+    Public Shared Function Load(path$,
+                                groups As Dictionary(Of String, String()),
+                                colors As Color(),
+                                Optional transpose As Boolean = False,
+                                Optional labelTranslate As Dictionary(Of String, String) = Nothing) As ZScores
+
+        Dim datalist As DataSet() = DataSet _
+            .LoadDataSet(path) _
+            .ToArray
+
+        If transpose Then
+            datalist = datalist.Transpose
+        End If
+
+        Return ZScores.Load(datalist, groups, colors, labelTranslate)
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="groups"></param>
+    ''' <param name="colors"></param>
+    ''' <returns></returns>
+    Public Shared Function Load(datalist As DataSet(),
+                                groups As Dictionary(Of String, String()),
+                                colors As Color(),
+                                Optional labelTranslate As Dictionary(Of String, String) = Nothing) As ZScores
+
         Dim colorlist As LoopArray(Of Color) = colors
-        Dim datalist As DataSet() = DataSet.LoadDataSet(path).ToArray
+
+        If labelTranslate Is Nothing Then
+            labelTranslate = New Dictionary(Of String, String)
+        End If
+
         Dim names As New NamedVectorFactory(datalist.PropertyNames)
         Dim zscores = datalist _
             .Select(Function(serial)
                         Dim z As Vector = names _
                             .AsVector(serial.Properties) _
                             .Z()
+                        Dim label$ = labelTranslate.TryGetValue(
+                            index:=serial.ID,
+                            [default]:=serial.ID
+                        )
+
                         Return New DataSet With {
-                            .ID = serial.ID,
+                            .ID = label,
                             .Properties = names.Translate(z)
                         }
                     End Function) _
             .ToArray
+        Dim colorProfile = groups _
+            .ToDictionary(Function(x) x.Key,
+                          Function(x) colorlist.Next)
+        Dim shapeProfile = groups _
+            .ToDictionary(Function(x) x.Key,
+                          Function(x) LegendStyles.Circle)
+
         Return New ZScores With {
             .serials = zscores,
             .groups = groups,
-            .colors = groups.ToDictionary(Function(x) x.Key,
-                                          Function(x) colorlist.Next),
-            .shapes = groups.ToDictionary(Function(x) x.Key,
-                                          Function(x) LegendStyles.Circle)
+            .colors = colorProfile,
+            .shapes = shapeProfile
         }
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <param name="groups"></param>
+    ''' <param name="colors$"></param>
+    ''' <param name="transpose">是否需要将<paramref name="path"/>所加载上来的矩阵进行转置处理</param>
+    ''' <param name="labelTranslate">
+    ''' 对<paramref name="path"/>所加载的矩阵之中的rownames进行显示标题的转换
+    ''' </param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function Load(path$, groups As Dictionary(Of String, String()), Optional colors$ = ColorBrewer.QualitativeSchemes.Set2_8) As ZScores
-        Return ZScores.Load(path, groups, Designer.GetColors(colors))
+    Public Shared Function Load(path$, groups As Dictionary(Of String, String()),
+                                Optional colors$ = ColorBrewer.QualitativeSchemes.Set2_8,
+                                Optional transpose As Boolean = False,
+                                Optional labelTranslate As Dictionary(Of String, String) = Nothing) As ZScores
+        Return ZScores.Load(
+            path, groups,
+            Designer.GetColors(colors),
+            transpose:=transpose,
+            labelTranslate:=labelTranslate
+        )
     End Function
 End Structure

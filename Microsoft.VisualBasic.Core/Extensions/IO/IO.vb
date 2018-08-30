@@ -1,44 +1,44 @@
-﻿#Region "Microsoft.VisualBasic::3ee38d51e387c9942938288849098074, Microsoft.VisualBasic.Core\Extensions\IO\IO.vb"
+﻿#Region "Microsoft.VisualBasic::0b6714930826e413b5320efe5892ef2d, Microsoft.VisualBasic.Core\Extensions\IO\IO.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module IOExtensions
-' 
-'     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
-'               OpenTextWriter, ReadBinary, ReadVector
-' 
-'     Sub: ClearFileBytes, FlushTo
-' 
-' /********************************************************************************/
+    ' Module IOExtensions
+    ' 
+    '     Function: FixPath, FlushAllLines, (+3 Overloads) FlushStream, Open, OpenReader
+    '               OpenTextWriter, ReadBinary, ReadVector
+    ' 
+    '     Sub: ClearFileBytes, FlushTo
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

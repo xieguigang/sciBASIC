@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e56f8614b8a1ef389bfcba9da7b5bfb6, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1cf593bcd0b9c19784ce4be926897c39, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -92,8 +93,8 @@ Public Module Extensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function LoadTsv(Of T As Class)(path As DefaultString) As T()
-        Return path.DefaultValue.LoadTsv(Of T)
+    Public Function LoadTsv(Of T As Class)(path As DefaultString, Optional encoding As Encoding = Nothing) As T()
+        Return path.DefaultValue.LoadTsv(Of T)(encoding)
     End Function
 
     ''' <summary>
@@ -430,7 +431,7 @@ Public Module Extensions
                                                        Optional explicit As Boolean = False,
                                                        Optional encoding As Encoding = Nothing,
                                                        Optional fast As Boolean = False,
-                                                       Optional maps As Dictionary(Of String, String) = Nothing) As List(Of T)
+                                                       Optional maps As NameMapping = Nothing) As List(Of T)
         Call "Start to load csv data....".__DEBUG_ECHO
         Dim st = Stopwatch.StartNew
         Dim bufs = Reflector.Load(Of T)(path, explicit, encoding, fast, maps)

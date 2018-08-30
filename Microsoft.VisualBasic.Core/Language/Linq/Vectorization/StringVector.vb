@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3a6a3b66fc156c868468c8499cea068, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\StringVector.vb"
+﻿#Region "Microsoft.VisualBasic::eafd4e14e04b9bed9fcbb767806f7d0d, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\StringVector.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,8 @@
 
     '     Class StringVector
     ' 
+    '         Properties: Len
+    ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: InStr, IsPattern, ToString
     '         Operators: <>, =
@@ -46,10 +48,21 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports base = Microsoft.VisualBasic.Strings
 
 Namespace Language.Vectorization
 
     Public Class StringVector : Inherits Vector(Of String)
+
+        ''' <summary>
+        ''' Returns the length of each strings
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overloads ReadOnly Property Len As IEnumerable(Of Integer)
+            Get
+                Return Strings.Len(Me)
+            End Get
+        End Property
 
         Sub New()
         End Sub
@@ -88,12 +101,23 @@ Namespace Language.Vectorization
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function InStr(string1 As StringVector, string2$, Optional method As CompareMethod = CompareMethod.Binary) As Vector(Of Integer)
-            Return string1.Select(Function(str) Strings.InStr(str, string2, method)).AsVector
+            Return string1.Select(Function(str) base.InStr(str, string2, method)).AsVector
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsPattern(strings As StringVector, pattern$, Optional opt As RegexOptions = RegexICSng) As BooleanVector
             Return strings.Select(Function(s) s.IsPattern(pattern, opt)).AsVector
         End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="expression">a,b,c,d,e</param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(expression As String) As StringVector
+            Return New StringVector(base.Split(expression, ","))
+        End Operator
     End Class
 End Namespace

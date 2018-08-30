@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c52857d123c7511ea60e7080d9558f2c, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::24be9ad43ca31d31210e271793af1870, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
 ' Author:
 ' 
@@ -36,20 +36,21 @@
 ' 
 ' Module Extensions
 ' 
-'     Function: [Get], [Set], Add, (+3 Overloads) AddRange, (+2 Overloads) Average
-'               CheckDuplicated, Constrain, DataCounts, DateToString, DriverRun
-'               ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching, GetHexInteger
-'               (+2 Overloads) GetItem, (+2 Overloads) GetLength, IndexOf, InsertOrUpdate, Invoke
-'               InvokeSet, Is_NA_UHandle, IsNaNImaginary, (+6 Overloads) IsNullOrEmpty, (+4 Overloads) Join
-'               (+2 Overloads) JoinBy, Keys, KeysJson, Log2, (+2 Overloads) LongSeq
-'               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
-'               NormalizeXMLString, NotNull, (+2 Overloads) Offset, ParseDateTime, Range
-'               Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver
-'               SaveAsTabularMapping, Second, SelectFile, SeqRandom, (+2 Overloads) Sequence
-'               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Split
-'               SplitIterator, (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes
-'               ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray, ToVector
-'               (+3 Overloads) TrimNull, (+2 Overloads) TryGetValue, Unlist, WriteAddress
+'     Function: [Get], [Set], Add, (+3 Overloads) AddRange, AsRange
+'               (+2 Overloads) Average, CheckDuplicated, Constrain, DataCounts, DateToString
+'               DriverRun, ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching
+'               GetHexInteger, (+2 Overloads) GetItem, (+2 Overloads) GetLength, IndexOf, InsertOrUpdate
+'               Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, IsNullorEmpty
+'               (+14 Overloads) IsNullOrEmpty, (+4 Overloads) Join, (+2 Overloads) JoinBy, Keys, KeysJson
+'               Log2, (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement
+'               MD5, ModifyValue, NormalizeXMLString, NotNull, (+2 Overloads) Offset
+'               ParseDateTime, Range, Remove, RemoveDuplicates, RemoveFirst
+'               (+2 Overloads) RemoveLast, RunDriver, SaveAsTabularMapping, Second, SelectFile
+'               SeqRandom, (+2 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell
+'               Shuffles, Split, SplitIterator, (+2 Overloads) SplitMV, StdError
+'               TakeRandomly, Takes, ToBoolean, ToDictionary, ToNormalizedPathString
+'               ToStringArray, ToVector, (+3 Overloads) TrimNull, (+2 Overloads) TryGetValue, Unlist
+'               WriteAddress
 ' 
 '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
 '          SwapItem, SwapWith
@@ -70,6 +71,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -87,7 +89,6 @@ Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports Microsoft.VisualBasic.Text.Similarity
 Imports sys = System.Math
-Imports v = System.Array
 
 #Const FRAMEWORD_CORE = 1
 #Const Yes = 1
@@ -104,6 +105,7 @@ Imports v = System.Array
                     Publisher:="xie.guigang@gmail.com",
                     Revision:=8655,
                     Url:="http://github.com/xieguigang/sciBASIC#")>
+<HideModuleName>
 <Extension> Public Module Extensions
 #Else
 
@@ -129,6 +131,19 @@ Public Module Extensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Range(data As IEnumerable(Of Double), Optional scale# = 1) As DoubleRange
         Return New DoubleRange(data) * scale
+    End Function
+
+    <Extension>
+    Public Function Slice(range As DoubleRange, n%) As IEnumerable(Of DoubleRange)
+        Dim l = range.Length
+        Dim d = l / n
+        Dim parts = Math.seq(range.Min, range.Max, by:=d) _
+                        .SlideWindows(winSize:=2) _
+                        .Select(Function(w)
+                                    Return New DoubleRange(w)
+                                End Function) _
+                        .ToArray
+        Return parts
     End Function
 
     ''' <summary>
@@ -1498,7 +1513,7 @@ Public Module Extensions
  _
             () <= From item As T
                   In source
-                  Let strItem As String = item.ToString
+                  Let strItem As String = item?.ToString
                   Select strItem
 
         Return LQuery
@@ -1601,6 +1616,32 @@ Public Module Extensions
                 i += 1
             Next
         End If
+    End Function
+
+    ''' <summary>
+    ''' Alias of the linq function <see cref="Enumerable.Range"/>
+    ''' </summary>
+    ''' <param name="range"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Iterator Public Function Sequence(range As IntRange, Optional stepOffset% = 1) As IEnumerable(Of Integer)
+        If stepOffset = 0 Then
+            stepOffset = 1
+#If DEBUG Then
+            Call $"step_offset is ZERO! This will caused a infinity loop, using default step `1`!".Warning
+#End If
+        End If
+
+        For i As Integer = range.Min To range.Max Step stepOffset
+            Yield i
+        Next
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsRange(ints As IEnumerable(Of Integer)) As IntRange
+        Return New IntRange(ints)
     End Function
 
     <Extension> Public Iterator Function LongSeq(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of Long)

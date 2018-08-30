@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11695a99131cf64355313cf7205864b2, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\GDIDevice.vb"
+﻿#Region "Microsoft.VisualBasic::66df755b0b158954dffb854a366095c4, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\GDIDevice.vb"
 
     ' Author:
     ' 
@@ -78,7 +78,7 @@ Namespace Drawing3D.Device
 
         Dim rotationWorker As New AutoRotation(Me)
         Dim worker As New Worker(Me)
-        Dim mouse As New Mouse(Me)
+        Dim mouse As New Mouse(Me, _camera)
 
         ''' <summary>
         ''' 是否绘制出模型的边界线

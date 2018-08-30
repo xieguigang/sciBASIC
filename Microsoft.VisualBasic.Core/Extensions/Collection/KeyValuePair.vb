@@ -1,49 +1,50 @@
-﻿#Region "Microsoft.VisualBasic::cf2a2d27c2045d7e705b0446b4cabfe0, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::ba82aa0e37f2f9fefe744d64d198bd24, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module KeyValuePairExtensions
-' 
-'     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsGroups, AsNamedValueTuples, AsNamedVector
-'               AsTable, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples, EnumParser
-'               FlatTable, (+2 Overloads) GetByKey, GroupByKey, HaveData, IGrouping
-'               IsOneOfA, IterateNameCollections, IterateNameValues, IteratesAll, Join
-'               KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+2 Overloads) NameValueCollection, ParserDictionary
-'               RemoveAndGet, ReverseMaps, Selects, (+2 Overloads) Subset, Takes
-'               (+3 Overloads) ToDictionary, Tsv, Tuple, (+2 Overloads) Values, XMLModel
-' 
-'     Sub: SortByKey, SortByValue
-' 
-' /********************************************************************************/
+    ' Module KeyValuePairExtensions
+    ' 
+    '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsGroups, AsNamedValueTuples
+    '               AsNamedVector, AsTable, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples
+    '               EnumParser, FlatTable, (+2 Overloads) GetByKey, GroupByKey, HaveData
+    '               IGrouping, IsOneOfA, IterateNameCollections, IterateNameValues, IteratesAll
+    '               Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection
+    '               ParserDictionary, RemoveAndGet, ReverseMaps, Selects, (+2 Overloads) Subset
+    '               Takes, (+3 Overloads) ToDictionary, Tsv, Tuple, (+2 Overloads) Values
+    '               XMLModel
+    ' 
+    '     Sub: SortByKey, SortByValue
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -65,6 +66,15 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' KeyValue pair data related extensions API.
 ''' </summary>
 Public Module KeyValuePairExtensions
+
+    <Extension>
+    Public Iterator Function AsEnumerable(keys As NameObjectCollectionBase.KeysCollection) As IEnumerable(Of String)
+        If Not keys Is Nothing AndAlso keys.Count > 0 Then
+            For i As Integer = 0 To keys.Count - 1
+                Yield keys.Item(i)
+            Next
+        End If
+    End Function
 
     ''' <summary>
     ''' Create a tuple for two elements
@@ -519,6 +529,17 @@ Public Module KeyValuePairExtensions
         Return nc
     End Function
 
+    <Extension>
+    Public Function NameValueCollection(maps As IEnumerable(Of KeyValuePair(Of String, String))) As NameValueCollection
+        Dim nv As New NameValueCollection
+
+        For Each tuple As KeyValuePair(Of String, String) In maps
+            Call nv.Add(tuple.Key, tuple.Value)
+        Next
+
+        Return nv
+    End Function
+
     ''' <summary>
     ''' 获取得到的集合对象是一个安全的集合对象，不存在的键名会直接返回空值
     ''' </summary>
@@ -722,7 +743,7 @@ Public Module KeyValuePairExtensions
     End Function
 
     ''' <summary>
-    ''' 使用这个函数应该要确保value是没有重复的
+    ''' 使用这个函数应该要确保value是没有重复的，假若<paramref name="removeDuplicated"/>是默认值的话.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <typeparam name="V"></typeparam>

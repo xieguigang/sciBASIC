@@ -63,8 +63,7 @@ Namespace Heatmap
         <Extension>
         Public Iterator Function CorrelatesNormalized(
                                     data As IEnumerable(Of DataSet),
-                    Optional correlation As Correlations.ICorrelation = Nothing) _
-                                         As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
+                    Optional correlation As ICorrelation = Nothing) As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))
 
             Dim dataset As DataSet() = data.ToArray
             Dim keys$() = dataset(Scan0) _
@@ -72,18 +71,20 @@ Namespace Heatmap
                 .Keys _
                 .ToArray
 
-            If correlation Is Nothing Then
-                correlation = AddressOf Correlations.GetPearson
-            End If
+            correlation = correlation Or PearsonDefault
 
             For Each x As DataSet In dataset
                 Dim out As New Dictionary(Of String, Double)
-                Dim array As Double() = keys.Select(Function(o$) x(o))
+                Dim array#() = keys _
+                    .Select(Of Double)(x) _
+                    .ToArray
 
                 For Each y As DataSet In dataset
                     out(y.ID) = correlation(
-                    array,
-                    keys.Select(Function(o) y(o)))
+                        X:=array,
+                        Y:=keys _
+                            .Select(Of Double)(y) _
+                            .ToArray)
                 Next
 
                 Yield New NamedValue(Of Dictionary(Of String, Double)) With {

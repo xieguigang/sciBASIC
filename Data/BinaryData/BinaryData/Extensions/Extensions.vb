@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d239ff151aa31f006e121ccbb8fbbe31, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d15bed2b31d96387b43c6ba9b6fcbeed, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Text
 Public Module Extensions
 
     ''' <summary>
-    ''' 
+    ''' Open <see cref="BinaryDataReader"/>
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="encoding"></param>

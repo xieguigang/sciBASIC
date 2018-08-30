@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab85b592a41ab742e71fde500af1494e, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
+﻿#Region "Microsoft.VisualBasic::6dcbbf2b725595b2e5d0df0c011a0504, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,9 @@
 
     '     Structure Vector3D
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: PointXY, Project, RotateX, RotateY, RotateZ
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator, PointXY, Project, RotateX
+    '                   RotateY, RotateZ
     '         Operators: -
     ' 
     ' 
@@ -50,7 +51,7 @@ Imports sys = System.Math
 
 Namespace Drawing3D.Math3D
 
-    Public Structure Vector3D
+    Public Structure Vector3D : Implements IEnumerable(Of Point3D)
 
         Public X As Vector
         Public Y As Vector
@@ -110,6 +111,14 @@ Namespace Drawing3D.Math3D
                 .X = x
                 .Y = y
                 .Z = z
+            End With
+        End Sub
+
+        Sub New(points As IEnumerable(Of Point3D))
+            With points.ToArray
+                Me.X = .Select(Function(p) CDbl(p.X)).ToArray
+                Me.Y = .Select(Function(p) CDbl(p.Y)).ToArray
+                Me.Z = .Select(Function(p) CDbl(p.Z)).ToArray
             End With
         End Sub
 
@@ -180,5 +189,15 @@ Namespace Drawing3D.Math3D
                 .Z = p3D.Z - offset.Z
             }
         End Operator
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Point3D) Implements IEnumerable(Of Point3D).GetEnumerator
+            For i As Integer = 0 To X.Length - 1
+                Yield New Point3D(X(i), Y(i), Z(i))
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
     End Structure
 End Namespace

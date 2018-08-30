@@ -88,11 +88,11 @@ Namespace Imaging.Math2D
             Dim tangent As Boolean = False
             For index As Integer = 0 To polygon.Length - 1
                 Dim index2 As Integer = (index + 1) Mod polygon.Length
-                Dim intersection__1 As Intersection = IntersectionOf(line, New Line(polygon(index), polygon(index2)))
-                If intersection__1 = Intersection.Intersection Then
-                    Return intersection__1
+                Dim intersection As Intersection = IntersectionOf(line, New Line(polygon(index), polygon(index2)))
+                If intersection = Intersection.Intersection Then
+                    Return intersection
                 End If
-                If intersection__1 = Intersection.Tangent Then
+                If intersection = Intersection.Tangent Then
                     tangent = True
                 End If
             Next

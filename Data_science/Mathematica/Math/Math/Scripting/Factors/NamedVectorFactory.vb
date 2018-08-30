@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::275eb1d81f830aead45a05dd570a828a, Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVectorFactory.vb"
+﻿#Region "Microsoft.VisualBasic::663448477e335b82a8ba508c3452e1f7, Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVectorFactory.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Keys
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: AsVector, EmptyVector, ToString, Translate
+    '         Function: (+2 Overloads) AsVector, EmptyVector, ToString, Translate
     ' 
     ' 
     ' /********************************************************************************/
@@ -68,11 +68,16 @@ Namespace Scripting
             Return New Vector(factors.Length - 1)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function AsVector(data As Dictionary(Of String, Integer)) As Vector
+            Return AsVector(data.ToDictionary(Function(k) k.Key, Function(t) CDbl(t.Value)))
+        End Function
+
         Public Function AsVector(data As Dictionary(Of String, Double)) As Vector
             Dim vector#() = New Double(factors.Length - 1) {}
 
             For Each factor As Factor(Of String) In factors
-                vector(factor.Value) = data(factor)
+                vector(CInt(factor.Value)) = data.TryGetValue(factor)
             Next
 
             Return vector.AsVector

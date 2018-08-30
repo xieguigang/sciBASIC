@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a69d465612a4a7a05ecc4d56df0b725e, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::375f12ace15a4a36532cef99efa3ed34, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 
@@ -108,6 +108,7 @@ Namespace Matrix
     ''' The MathWorks, Inc. and the National Institute of Standards and Technology.
     ''' 
     ''' http://www.codeproject.com/Articles/5835/DotNetMatrix-Simple-Matrix-Library-for-NET
+    ''' https://github.com/fiji/Jama/blob/master/src/main/java/Jama/Matrix.java
     ''' </author>
     ''' <version>  5 August 1998
     ''' </version>
@@ -372,7 +373,7 @@ Namespace Matrix
         ''' <exception cref="System.IndexOutOfRangeException">  
         ''' </exception>
 
-        Default Public Shadows Property value(i As Integer, j As Integer) As Double
+        Default Public Shadows Property Value(i%, j%) As Double
             Get
                 Return buffer(i)(j)
             End Get
@@ -381,11 +382,14 @@ Namespace Matrix
             End Set
         End Property
 
-        Default Public Shadows ReadOnly Property value(indices As IEnumerable(Of Integer)) As GeneralMatrix
+        Default Public Shadows ReadOnly Property Value(indices As IEnumerable(Of Integer)) As GeneralMatrix
             Get
-                Dim index = indices.ToArray
-                Dim subMatrix = buffer.Select(Function(x) index.Select(Function(i) x(i)).ToArray).ToArray
-                Return New GeneralMatrix(subMatrix)
+                Dim index%() = indices.ToArray
+                Dim subMAT = buffer _
+                    .Select(Function(x) x.Takes(index)) _
+                    .ToArray
+
+                Return New GeneralMatrix(subMAT)
             End Get
         End Property
 
@@ -878,14 +882,15 @@ Namespace Matrix
             Return Me
         End Function
 
-        ''' <summary>Linear algebraic matrix multiplication, A * B</summary>
-        ''' <param name="B">   another matrix
-        ''' </param>
-        ''' <returns>     Matrix product, A * B
-        ''' </returns>
-        ''' <exception cref="System.ArgumentException">  Matrix inner dimensions must agree.
+        ''' <summary>
+        ''' Linear algebraic matrix multiplication, ``A * B``
+        ''' 
+        ''' ``Jama.Matrix.times``
+        ''' </summary>
+        ''' <param name="B">another matrix</param>
+        ''' <returns>Matrix product, A * B</returns>
+        ''' <exception cref="System.ArgumentException">Matrix inner dimensions must agree.
         ''' </exception>
-
         Public Overridable Function Multiply(B As GeneralMatrix) As GeneralMatrix
             If B.m <> n Then
                 Throw New System.ArgumentException("GeneralMatrix inner dimensions must agree.")

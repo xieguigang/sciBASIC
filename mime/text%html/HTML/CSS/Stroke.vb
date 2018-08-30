@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::632811d854ac708272332e99cf6eb9d1, mime\text%html\HTML\CSS\Stroke.vb"
+﻿#Region "Microsoft.VisualBasic::403f50e94680fd72606985844d165193, mime\text%html\HTML\CSS\Stroke.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@ Namespace HTML.CSS
     ''' </summary>
     Public Class Stroke : Inherits ICSSValue
 
-        Public Const AxisStroke$ = "stroke: black; stroke-width: 4px; stroke-dash: solid;"
+        Public Const AxisStroke$ = "stroke: black; stroke-width: 5px; stroke-dash: solid;"
         Public Const AxisGridStroke$ = "stroke: lightgray; stroke-width: 2px; stroke-dash: dash;"
         Public Const HighlightStroke$ = "stroke: gray; stroke-width: 5px; stroke-dash: dash;"
         Public Const StrongHighlightStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: dash;"

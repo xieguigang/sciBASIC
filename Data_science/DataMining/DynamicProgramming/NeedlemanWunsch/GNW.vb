@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3ad3fbfdeab3b9fee0c6502f53be720, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
+﻿#Region "Microsoft.VisualBasic::0dee35150c4d9712b77546db26ed0980, Data_science\DataMining\DynamicProgramming\NeedlemanWunsch\GNW.vb"
 
     ' Author:
     ' 
