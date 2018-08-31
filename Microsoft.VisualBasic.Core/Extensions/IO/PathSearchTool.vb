@@ -1245,7 +1245,11 @@ Public Module ProgramPathSearchTool
     <ExportAPI("File.Name")>
     <Extension>
     Public Function FileName(path As String) As String
-        Return FileIO.FileSystem.GetFileInfo(path).Name
+        Try
+            Return FileIO.FileSystem.GetFileInfo(path).Name
+        Catch ex As Exception
+            Throw New InvalidOperationException(path, ex)
+        End Try
     End Function
 
     ''' <summary>

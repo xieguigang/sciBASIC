@@ -1,45 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::0d898980449d57303d7415a954794fb6, Microsoft.VisualBasic.Core\Extensions\StringHelpers\NumericFormatHelper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module NumericFormatHelper
-    ' 
-    '     Function: [Decimal], Float, SafeToString, SafeToStrings
-    ' 
-    ' /********************************************************************************/
+' Module NumericFormatHelper
+' 
+'     Function: [Decimal], Float, SafeToString, SafeToStrings
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' ###### ``C``货币
@@ -132,4 +133,60 @@ Public Module NumericFormatHelper
             .Select(Function(x) x.SafeToString(NaN_imaginary)) _
             .ToArray
     End Function
+
+#Region "PrimitiveExtensions"
+
+    <Extension>
+    Public Function ToHexString(this As Byte) As String
+        Return this.ToString("x2")
+    End Function
+
+    <Extension>
+    Public Function ToHexString(this As Short) As String
+        Dim value As UShort = CUShort(this)
+        Return ToHexString(value)
+    End Function
+
+    <Extension>
+    Public Function ToHexString(this As UShort) As String
+        Dim reverse As UShort = CUShort(((&HFF00 And this) >> 8) Or ((&HFF And this) << 8))
+        Return reverse.ToString("x4")
+    End Function
+
+    <Extension>
+    Public Function ToHexString(this As Integer) As String
+        Dim value As UInteger = CUInt(this)
+        Return ToHexString(value)
+    End Function
+
+    <Extension>
+    Public Function ToHexString(this As UInteger) As String
+        Dim reverse As UInteger = ((&HFF000000UI And this) >> 24) Or ((&HFF0000 And this) >> 8) Or ((&HFF00 And this) << 8) Or ((&HFF And this) << 24)
+        Return reverse.ToString("x8")
+    End Function
+
+    <Extension>
+    Public Function ToHexString(this As Long) As String
+        Dim value As ULong = CULng(this)
+        Return ToHexString(value)
+    End Function
+
+    <Extension>
+    Public Function ToHexString(this As ULong) As String
+        Dim reverse As ULong = (this And &HFFUL) << 56 Or (this And &HFF00UL) << 40 Or (this And &HFF0000UL) << 24 Or (this And &HFF000000UL) << 8 Or (this And &HFF00000000UL) >> 8 Or (this And &HFF0000000000UL) >> 24 Or (this And &HFF000000000000UL) >> 40 Or (this And &HFF00000000000000UL) >> 56
+        Return reverse.ToString("x16")
+    End Function
+
+    <Extension>
+    Public Function ToHexString(this As Single) As String
+        Dim value As UInteger = Numeric.ToUInt32(this)
+        Return ToHexString(value)
+    End Function
+
+    <Extension>
+    Public Function ToHexString(this As Double) As String
+        Dim value As ULong = Numeric.ToUInt64(this)
+        Return ToHexString(value)
+    End Function
+#End Region
 End Module

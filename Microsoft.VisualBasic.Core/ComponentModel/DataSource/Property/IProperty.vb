@@ -62,4 +62,17 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="value"></param>
         Sub SetValue(target As Object, value As Object)
     End Interface
+
+    ''' <summary>
+    ''' Abstracts for the dynamics property.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    Public Interface IDynamicMeta(Of T)
+
+        ''' <summary>
+        ''' Properties
+        ''' </summary>
+        ''' <returns></returns>
+        Property Properties As Dictionary(Of String, T)
+    End Interface
 End Namespace

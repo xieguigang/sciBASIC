@@ -254,12 +254,6 @@ Namespace IO
                 .ToArray
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function AsDataSet(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of DataSet)
-            Return data.Select(Function(obj) New DataSet With {.ID = obj.Name, .Properties = obj.Value})
-        End Function
-
         <Extension>
         Public Function AsDataSet(data As IEnumerable(Of EntityObject), Optional blank# = 0) As IEnumerable(Of DataSet)
             Dim array = data.ToArray

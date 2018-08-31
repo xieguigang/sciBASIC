@@ -62,6 +62,26 @@ Namespace Scripting.Runtime
                 Function(x) CStr(x.Value))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsCharacter(values As IEnumerable(Of Double), Optional negPrefix As Boolean = False, Optional format$ = "G4") As IEnumerable(Of String)
+            Return values _
+                .SafeQuery _
+                .Select(Function(d)
+                            If d > 0 AndAlso negPrefix Then
+                                Return " " & d.ToString(format)
+                            Else
+                                Return d.ToString(format)
+                            End If
+                        End Function)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function AsCharacter(Of T)(values As IEnumerable(Of T), Optional null$ = "") As IEnumerable(Of String)
+            Return values.SafeQuery.Select(Function(o) Scripting.ToString(o, null))
+        End Function
+
         ''' <summary>
         ''' Convert the <see cref="String"/> value as <see cref="Double"/> numeric type.
         ''' </summary>

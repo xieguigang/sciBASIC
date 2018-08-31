@@ -83,7 +83,7 @@ Namespace LinearAlgebra
         Dim center, scale As Boolean
 
         ''' <summary>
-        ''' Returns the standard deviations of the principal components
+        ''' (Standard deviation) Returns the standard deviations of the principal components
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property StandardDeviations As Vector
@@ -105,7 +105,7 @@ Namespace LinearAlgebra
         End Property
 
         ''' <summary>
-        ''' Returns the proportion of variance for each component
+        ''' (Proportion of Variance) Returns the proportion of variance for each component
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property ExplainedVariance As Vector
@@ -116,7 +116,7 @@ Namespace LinearAlgebra
         End Property
 
         ''' <summary>
-        ''' Returns the cumulative proportion of variance
+        ''' (Cumulative Proportion) Returns the cumulative proportion of variance
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property CumulativeVariance As Vector
@@ -167,37 +167,31 @@ Namespace LinearAlgebra
         End Sub
 
         ''' <summary>
-        ''' Project the dataset into the PCA space
+        ''' Project the dataset into the PCA space.
+        ''' (使用<see cref="Loadings"/>矩阵对所输入的原始数据进行线性变换，降低数据维度)
         ''' </summary>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Function Project(data As Vector(), Optional nPC% = -1, Optional ByRef ordinal%() = Nothing) As Vector()
-            If center Then
-                data = data.Select(Function(r) r - means).ToArray
+        Public Function Project(data As Vector(), nPC%) As Vector()
+            'If center Then
+            '    data = data _
+            '        .Select(Function(r) r - means) _
+            '        .ToArray
 
-                If scale Then
-                    data = data.Select(Function(r) r / stdevs).ToArray
-                End If
-            End If
+            '    If scale Then
+            '        data = data _
+            '            .Select(Function(r) r / stdevs) _
+            '            .ToArray
+            '    End If
+            'End If
 
-            With New GeneralMatrix(data) * U
-                If nPC <= 0 OrElse nPC >= means.Length Then
-                    ' ALL
-                    Return .RowVectors.ToArray
-                Else
-                    ' top n
-                    Dim rows As Vector() = .RowVectors.ToArray
-                    Dim out As New List(Of Vector)
+            Dim U As GeneralMatrix = Me.Loadings(nPC.Sequence)
+            Dim X As New GeneralMatrix(data)
+            Dim P As Vector() = (X * U) _
+                .RowVectors _
+                .ToArray
 
-                    ordinal = Which.Top(ExplainedVariance, n:=nPC)
-
-                    For Each i As Integer In ordinal
-                        out.Add(rows.Select(Function(r) r(i)).AsVector)
-                    Next
-
-                    Return out.ToArray
-                End If
-            End With
+            Return P
         End Function
 
         Private Function adjust(dataset As Vector(), center As Boolean, scale As Boolean) As Vector()

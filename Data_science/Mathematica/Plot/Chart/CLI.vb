@@ -62,6 +62,7 @@ Module CLI
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}_[{fx.NormalizePathString},{fy.NormalizePathString}].png"
         Dim csv = DataSet.LoadDataSet([in]).ToArray
 
+        Throw New NotImplementedException
     End Function
 
     <ExportAPI("/kmeans")>

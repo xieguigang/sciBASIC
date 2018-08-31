@@ -73,6 +73,20 @@ Namespace ApplicationServices.Terminal
             Return out.ToString
         End Function
 
+        <Extension>
+        Public Function Print(source As IEnumerable(Of String()), Optional addBorder As Boolean = True) As String
+            Dim out As New StringBuilder
+            Dim dev As New StringWriter(out)
+
+            If addBorder Then
+                Call source.PrintTable(dev, sep:=" "c)
+            Else
+                Call source.Print(dev, sep:=" "c)
+            End If
+
+            Return out.ToString
+        End Function
+
         ''' <summary>
         ''' Print the object collection as table on the console 
         ''' </summary>

@@ -80,39 +80,50 @@ Namespace Graphic
         End Function
     End Module
 
-    Public Structure DataScaler
+    Public Class TermScaler : Inherits YScaler
 
-        Dim X As LinearScale
-        Dim Y As LinearScale
-        Dim AxisTicks As (X As Vector, Y As Vector)
+        Public Property X As OrdinalScale
+        Public Property AxisTicks As (X As String(), Y As Vector)
 
         ''' <summary>
-        ''' The charting region in <see cref="Rectangle"/> data structure.
+        ''' 
         ''' </summary>
-        Dim Region As Rectangle
-        Dim Reversed As Boolean
-
-        Sub New(rev As Boolean)
-            Reversed = rev
+        ''' <param name="rev">是否需要将Y坐标轴上下翻转颠倒</param>
+        Sub New(Optional rev As Boolean = False)
+            Call MyBase.New(reversed:=rev)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Translate(x#, y#) As PointF
+        Public Function Translate(x$, y#) As PointF
             Return New PointF With {
-                .x = TranslateX(x),
-                .y = TranslateY(y)
+                .X = TranslateX(x),
+                .Y = TranslateY(y)
             }
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Translate(point As PointF) As PointF
-            Return Translate(point.X, point.Y)
+        Public Function TranslateX(x As String) As Double
+            Return Me.X.Value(x)
         End Function
+    End Class
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function TranslateX(x#) As Double
-            Return Me.X(x)
-        End Function
+    Public Class YScaler
+
+        Public Property Y As LinearScale
+
+        ''' <summary>
+        ''' The charting region in <see cref="Rectangle"/> data structure.
+        ''' </summary>
+        Public Property region As Rectangle
+
+        ''' <summary>
+        ''' 是否需要将Y坐标轴上下翻转颠倒
+        ''' </summary>
+        Dim reversed As Boolean
+
+        Sub New(reversed As Boolean)
+            Me.reversed = reversed
+        End Sub
 
         ''' <summary>
         ''' 
@@ -127,15 +138,50 @@ Namespace Graphic
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TranslateY(y#) As Double
-            If Reversed Then
+            If reversed Then
                 Return Me.Y(y)
             Else
-                Return Region.Bottom - Me.Y(y) + Region.Top
+                Return region.Bottom - Me.Y(y) + region.Top
             End If
         End Function
 
         Public Function TranslateHeight(y As Double) As Double
-            Return Region.Bottom - Me.Y(y)
+            Return region.Bottom - Me.Y(y)
         End Function
-    End Structure
+    End Class
+
+    ''' <summary>
+    ''' 将用户数据转换为作图的时候所需要的空间数据
+    ''' </summary>
+    Public Class DataScaler : Inherits YScaler
+
+        Public Property X As LinearScale
+        Public Property AxisTicks As (X As Vector, Y As Vector)
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="rev">是否需要将Y坐标轴上下翻转颠倒</param>
+        Sub New(Optional rev As Boolean = False)
+            Call MyBase.New(reversed:=rev)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Translate(x#, y#) As PointF
+            Return New PointF With {
+                .X = TranslateX(x),
+                .Y = TranslateY(y)
+            }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Translate(point As PointF) As PointF
+            Return Translate(point.X, point.Y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function TranslateX(x#) As Double
+            Return Me.X(x)
+        End Function
+    End Class
 End Namespace
