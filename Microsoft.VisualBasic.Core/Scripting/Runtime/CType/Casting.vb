@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace Scripting.Runtime
 
@@ -314,9 +315,21 @@ Namespace Scripting.Runtime
             Return obj.ToArray
         End Function
 
+        ''' <summary>
+        ''' 支持日期字符串和unix timstamp对<see cref="Date"/>的转换
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastDate(obj As String) As DateTime
-            Return DateTime.Parse(obj)
+            If obj.StringEmpty OrElse obj = "0000-00-00 00:00:00" OrElse obj.ToUpper = "NULL" OrElse obj.ToUpper = "NA" Then
+                Return New Date
+            ElseIf obj.IsPattern("\d+") Then
+                ' unix timestamp
+                Return CLng(Val(obj)).FromUnixTimeStamp
+            Else
+                Return DateTime.Parse(obj)
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

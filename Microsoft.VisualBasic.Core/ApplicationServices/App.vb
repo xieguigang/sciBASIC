@@ -456,6 +456,25 @@ Public Module App
 
         End Try
 #End Region
+
+        ' 2018-08-14 因为经过测试发现text encoding模块会优先于命令行参数设置模块的初始化的加载
+        ' 所以会导致环境变量为空
+        ' 故而text encoding可能总是系统的默认值，无法从命令行设置
+        ' 在这里提前进行初始化，可以消除此bug的出现
+        Dim envir As Dictionary(Of String, String) = App _
+            .CommandLine _
+            .EnvironmentVariables
+
+        Call App.JoinVariables(
+            envir _
+            .SafeQuery _
+            .Select(Function(x)
+                        Return New NamedValue(Of String) With {
+                            .Name = x.Key,
+                            .Value = x.Value
+                        }
+                    End Function) _
+            .ToArray)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -800,22 +819,27 @@ Public Module App
     '''
     <ExportAPI("TraceBugs")>
     Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
-        Dim entry$ = $"{Now.formatTime}_{App.__getTEMPhash}"
+        Dim entry$ = $"{Now.FormatTime("-")}_{App.__getTEMPhash}"
         Dim log$ = $"{App.LogErrDIR}/{entry}.log"
         Call App.LogException(ex, trace:=trace, fileName:=log)
         Return log
     End Function
 
+    ''' <summary>
+    ''' MySql时间格式： ``yy-mm-dd, 00:00:00``
+    ''' </summary>
+    ''' <param name="time"></param>
+    ''' <returns></returns>
     <Extension>
-    Private Function formatTime(time As DateTime) As String
-        Dim yy = time.Year
-        Dim mm = time.Month
-        Dim dd = time.Day
-        Dim hh = time.Hour
-        Dim mi = time.Minute
-        Dim ss = time.Second
+    Public Function FormatTime(time As DateTime, Optional sep$ = ":") As String
+        Dim yy = Format(time.Year, "0000")
+        Dim mm = Format(time.Month, "00")
+        Dim dd = Format(time.Day, "00")
+        Dim hh = Format(time.Hour, "00")
+        Dim mi = Format(time.Minute, "00")
+        Dim ss = Format(time.Second, "00")
 
-        Return $"{yy}-{mm}-{dd}, {Format(hh, "00")}-{Format(mi, "00")}-{Format(ss, "00")}"
+        Return $"{yy}-{mm}-{dd}, {hh}{sep}{mi}{sep}{ss}"
     End Function
 
     ''' <summary>

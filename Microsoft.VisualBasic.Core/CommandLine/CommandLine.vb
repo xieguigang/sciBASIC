@@ -496,11 +496,17 @@ Namespace CommandLine
         ''' <summary>
         ''' Read all of the text input from the file or ``std_in``
         ''' </summary>
+        ''' <remarks>
+        ''' 这个函数会首先尝试使用<see cref="OpenStreamInput"/>打开本地文件和标准输出流
+        ''' 如果失败的话<see cref="OpenStreamInput"/>函数会返回空值，这个时候参数字符串将会直接被
+        ''' 返回作为结果，如果打开成功的话，会将得到的输入流之中的所有字符串读出来返回
+        ''' </remarks>
         ''' <param name="param"></param>
         ''' <returns></returns>
         Public Function ReadInput(param As String) As String
             Dim s As String = Nothing
             Dim read As StreamReader = OpenStreamInput(param, s)
+
             If read Is Nothing Then
                 Return s
             Else
