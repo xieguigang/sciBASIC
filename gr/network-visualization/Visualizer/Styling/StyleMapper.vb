@@ -71,7 +71,7 @@ Namespace Styling
                 json = json.ReadAllText
             End If
 
-            Dim styleJSON As StyleJSON = json.LoadObject(Of StyleJSON)
+            Dim styleJSON As StyleJSON = json.LoadJSON(Of StyleJSON)
             Return FromJSON(styleJSON)
         End Function
 

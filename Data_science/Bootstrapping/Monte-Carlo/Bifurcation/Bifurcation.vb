@@ -165,7 +165,7 @@ Namespace MonteCarlo
                 Dim datas As Dictionary(Of String, Double()) =
                     (+cluster) _
                     .Select(Function(x) x.uid) _
-                    .Select(Function(s) s.LoadObject(Of Dictionary(Of String, Double))) _
+                    .Select(Function(s) s.LoadJSON(Of Dictionary(Of String, Double))) _
                     .IteratesALL _
                     .GroupBy(Function(x) x.Key) _
                     .ToDictionary(Function(k) k.Key,

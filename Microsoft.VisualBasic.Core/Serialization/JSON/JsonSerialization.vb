@@ -241,7 +241,7 @@ Namespace Serialization.JSON
         <Extension>
         Public Function LoadJsonFile(Of T)(file$, Optional encoding As Encoding = Nothing, Optional simpleDict As Boolean = True) As T
             Return (file.ReadAllText(encoding Or UTF8, throwEx:=False, suppress:=True) Or "null".AsDefault) _
-                .LoadObject(Of T)(simpleDict)
+                .LoadJSON(Of T)(simpleDict)
         End Function
 
         Const JsonLongTime$ = "\d+-\d+-\d+T\d+:\d+:\d+\.\d+"

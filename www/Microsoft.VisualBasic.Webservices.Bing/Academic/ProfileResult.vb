@@ -84,7 +84,7 @@ Namespace Academic
             Dim count As cites() = html _
                 .GetBetween("""BarData""", "BarChart.render") _
                 .GetStackValue(":", "}") _
-                .LoadObject(Of cites())
+                .LoadJSON(Of cites())
 
             html = html.RemovesJavaScript
 

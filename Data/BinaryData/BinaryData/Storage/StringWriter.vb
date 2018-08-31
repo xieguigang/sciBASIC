@@ -186,7 +186,7 @@ Public Class StringReader : Implements IDisposable
     End Function
 
     Public Function ReadStringArray() As String()
-        Return ReadString.LoadObject(Of String())
+        Return ReadString.LoadJSON(Of String())
     End Function
 
 #Region "IDisposable Support"
