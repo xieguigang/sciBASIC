@@ -218,7 +218,7 @@ Namespace Net.Protocols
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         Public Function LoadObject(Of T)() As T
-            Return GetUTF8String.LoadObject(Of T)
+            Return GetUTF8String.LoadJSON(Of T)
         End Function
 
         ''' <summary>

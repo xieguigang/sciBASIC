@@ -66,6 +66,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
+''' <summary>
+''' Visual Studio project XML file
+''' </summary>
 <XmlRoot("Project", [Namespace]:=Project.xmlns)>
 Public Class Project : Implements ISaveHandle
 

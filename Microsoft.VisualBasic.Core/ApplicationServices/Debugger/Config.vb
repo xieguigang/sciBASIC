@@ -57,7 +57,7 @@ Namespace ApplicationServices.Debugging
         Public Shared Function Load() As Config
             Try
                 Dim cfg As Config =
-                    IO.File.ReadAllText(DefaultFile).LoadObject(Of Config)
+                    IO.File.ReadAllText(DefaultFile).LoadJSON(Of Config)
 
                 If cfg Is Nothing Then
                     Return New Config().Save()

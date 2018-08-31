@@ -54,7 +54,7 @@ Public Module SerializationIO
             Case "", "txt"
                 Return path.IterateAllLines
             Case "json"
-                Return path.LoadObject(Of String())
+                Return path.LoadJSON(Of String())
             Case "xml"
                 Return path.LoadXml(Of String())
             Case Else

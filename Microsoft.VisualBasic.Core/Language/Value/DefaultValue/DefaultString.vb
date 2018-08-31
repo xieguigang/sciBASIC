@@ -90,11 +90,11 @@ Namespace Language.Default
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadJson(Of T)() As T
             If DefaultValue.FileExists Then
-                Return DefaultValue.ReadAllText.LoadObject(Of T)
+                Return DefaultValue.ReadAllText.LoadJSON(Of T)
             ElseIf DefaultValue.StringEmpty Then
                 Return Nothing
             Else
-                Return DefaultValue.LoadObject(Of T)
+                Return DefaultValue.LoadJSON(Of T)
             End If
         End Function
 

@@ -88,7 +88,7 @@ Namespace ComponentModel.TagData
                 Return Tag.GetJson
             End Get
             Set(value As String)
-                Tag = value.LoadObject(Of T)
+                Tag = value.LoadJSON(Of T)
             End Set
         End Property
 

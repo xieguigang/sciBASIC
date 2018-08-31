@@ -83,6 +83,8 @@ Public Class ItemGroup
     Public Property [Imports] As IncludeItem()
     <XmlElement("Compile")>
     Public Property Compiles As Compile()
+    <XmlElement("TypeScriptCompile")>
+    Public Property TypeScriptCompiles As Compile()
     <XmlElement("None")>
     Public Property Nones As None()
     <XmlElement("BootstrapperPackage")>
