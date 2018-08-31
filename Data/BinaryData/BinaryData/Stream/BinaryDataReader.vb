@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::657b4b8b01381177facdf7e309c0362a, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::026d81b30776414e1c808425e252f6aa, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 

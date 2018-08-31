@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2393261f44b9e50a4aa1f1d61823d171, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::34cc56eeb610fc545c5ffcb8f41d1fd9, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: asCharacter, AsCharacter, (+2 Overloads) AsDataSet, CreateObject, DataFrame
+    '         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
     '                   EuclideanDistance, GroupBy, NamedMatrix, Project, (+2 Overloads) PropertyNames
     '                   Transpose, Values, (+2 Overloads) Vector
     ' 

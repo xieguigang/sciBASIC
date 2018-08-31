@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::faf8d8d87803f5da3911f172d5fc2a64, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\IProperty.vb"
+﻿#Region "Microsoft.VisualBasic::9323d6cc7d0a0aa572c751ef79fd2eab, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\IProperty.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,10 @@
     '         Function: GetValue
     ' 
     '         Sub: SetValue
+    ' 
+    '     Interface IDynamicMeta
+    ' 
+    '         Properties: Properties
     ' 
     ' 
     ' /********************************************************************************/

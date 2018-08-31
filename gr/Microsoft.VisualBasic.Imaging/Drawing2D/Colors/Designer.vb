@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87ccaab28fe9783d02e8934e78c39135, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::e8130c6d29384d5983d125b572cc7ac8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 

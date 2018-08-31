@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0ca771700880fb67c3ae89a309e4876, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::33a80eda96197622635e522ce21cd886, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -31,19 +31,11 @@
 
     ' Summaries:
 
-    '     Interface IDynamicMeta
-    ' 
-    '         Properties: Properties
-    ' 
     '     Class DynamicPropertyBase
     ' 
     '         Properties: MyHashCode, Properties
     ' 
     '         Function: EnumerateKeys, HasProperty, ToString
-    ' 
-    '     Class [Property]
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f55d7cdb7989564ab3adbe57c32cf364, Data\OCR\OCR.vb"
+﻿#Region "Microsoft.VisualBasic::bedb57243843e70d9a9c426704b21f4a, Data\OCR\OCR.vb"
 
     ' Author:
     ' 

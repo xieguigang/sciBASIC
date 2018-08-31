@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35557a1ccbb689afa60c7bd68907efad, vs_solutions\dev\VisualStudio\vbproj\ItemGroup.vb"
+﻿#Region "Microsoft.VisualBasic::1ee7345e300fbed36fc0d79a5ff88e94, vs_solutions\dev\VisualStudio\vbproj\ItemGroup.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     ' Class ItemGroup
     ' 
     '     Properties: [Imports], BootstrapperPackages, Compiles, Contents, EmbeddedResources
-    '                 Nones, ProjectReferences, References
+    '                 Nones, ProjectReferences, References, TypeScriptCompiles
     ' 
     '     Function: ToString
     ' 

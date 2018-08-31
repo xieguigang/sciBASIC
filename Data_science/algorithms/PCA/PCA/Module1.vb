@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::231cb62b0ac6553d3669a815f2aa6ad1, Data_science\algorithms\PCA\PCA\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::56d056d2ab346e48034388638d38b322, Data_science\algorithms\PCA\PCA\Module1.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Module1
     ' 
-    '     Sub: Main, methodTest
+    '     Sub: Main, methodTest, test2
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6539514bdd20d050ebc9b07e3d816552, Data_science\Graph\Model\Abstract\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::7b393f69f7f67f4a5befb25444745221, Data_science\Graph\Model\Abstract\Edge.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99ea9311acbf1bbb7dff15484418053a, mime\text%yaml\TextParserCommon.vb"
+﻿#Region "Microsoft.VisualBasic::ab2cbe52d16bbe81bd3fc924abc28a90, mime\text%yaml\1.2\TextParserCommon.vb"
 
     ' Author:
     ' 

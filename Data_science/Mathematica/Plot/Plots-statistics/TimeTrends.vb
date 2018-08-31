@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e213d5379e13e80c01cffc6da7ee1fc5, Data_science\Mathematica\Plot\Plots-statistics\TimeTrends.vb"
+﻿#Region "Microsoft.VisualBasic::34754f255b1263d2bffc8afae5226da3, Data_science\Mathematica\Plot\Plots-statistics\TimeTrends.vb"
 
     ' Author:
     ' 
@@ -337,4 +337,3 @@ Public Module TimeTrends
         )
     End Function
 End Module
-

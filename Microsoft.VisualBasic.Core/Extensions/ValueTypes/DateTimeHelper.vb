@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::968dcd4779c3b92dae03373bde134c1a, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::0c0e8e4a5f6196e1ad28ca06aa154083, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: MonthList
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: DateSeq, FillDateZero, FromUnixTimeStamp, GetMonthInteger, UnixTimeStamp
-    '                   YYMMDD
+    '         Function: DateSeq, FillDateZero, FromUnixTimeStamp, GetMonthInteger, IsEmpty
+    '                   UnixTimeStamp, YYMMDD
     ' 
     ' 
     ' /********************************************************************************/

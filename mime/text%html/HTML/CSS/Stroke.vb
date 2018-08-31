@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::403f50e94680fd72606985844d165193, mime\text%html\HTML\CSS\Stroke.vb"
+﻿#Region "Microsoft.VisualBasic::73bc64bcf999cce1f768d2171a79f60b, mime\text%html\HTML\CSS\Stroke.vb"
 
     ' Author:
     ' 

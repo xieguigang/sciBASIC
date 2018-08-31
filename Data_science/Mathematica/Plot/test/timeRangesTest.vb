@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::654fc608ec0958e734726e2741104ac8, Data_science\Mathematica\Plot\test\timeRangesTest.vb"
+﻿#Region "Microsoft.VisualBasic::94b7b8c44f02d405ff53e1cab693bcdf, Data_science\Mathematica\Plot\test\timeRangesTest.vb"
 
     ' Author:
     ' 
@@ -63,4 +63,3 @@ Module timeRangesTest
         Call data.Plot(dateFormat:=Function(d) $"{d.Year}/{d.Month.FormatZero("00")}").Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\history.range.jpg")
     End Sub
 End Module
-
