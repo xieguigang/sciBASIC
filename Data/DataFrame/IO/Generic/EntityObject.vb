@@ -129,7 +129,10 @@ Namespace IO
                                            Optional ByRef uidMap$ = Nothing,
                                            Optional tsv As Boolean = False,
                                            Optional encoding As Encoding = Nothing) As IEnumerable(Of EntityObject)
-            If path.Last = "*"c Then
+
+            ' 2018-09-04 在原来的代码这里，空的path字符串是返回空集合的
+            ' 为了保持和原来的代码的兼容性，在这里使用LastOrDefault来防止抛出错误
+            If path.LastOrDefault = "*"c Then
                 Dim data As New List(Of EntityObject)
                 Dim dir$ = path.Trim("*"c)
 
