@@ -83,7 +83,7 @@ Public Module Kmeans
     Public Function Scatter2D(clusterData As IEnumerable(Of EntityClusterModel),
                               catagory As (X As NamedCollection(Of String), Y As NamedCollection(Of String)),
                               Optional size$ = "1600,1600",
-                              Optional padding$ = g.DefaultPadding,
+                              Optional padding$ = g.DefaultUltraLargePadding,
                               Optional bg$ = "white",
                               Optional schema$ = Designer.Clusters,
                               Optional pointSize! = 10) As GraphicsData
