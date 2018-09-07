@@ -15,7 +15,3 @@ db.lock
 *.ide
 *.ide-shm
 *.ide-wal
-/.vs/installer
-*.sqlite
-/vs_solutions/installer/utils
-/www/data/github/App
