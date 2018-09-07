@@ -10,8 +10,3 @@ Release/
 obj/
 *.dtbcache
 /.vs/Microsoft.VisualBasic.NET47/v15/Server/sqlite3
-
-db.lock
-*.ide
-*.ide-shm
-*.ide-wal

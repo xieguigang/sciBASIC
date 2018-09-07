@@ -1,0 +1,1 @@
+NOT ('#\t\s+(B|de)*BBB[^"564]BBB' AND VB.NET OR OR__this_is_not_an_operator) OR ("A\tB Test op: 'AND' OR NOT\"" AND start:>5) AND NOT C# AND lang:'#vb.+  OK?' AND lang:"java.net" OR NOT SQL

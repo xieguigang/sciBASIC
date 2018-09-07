@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Pages.FolderSymbolic"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+             mc:Ignorable="d"
+             d:DesignHeight="288.559" d:DesignWidth="399.153" Initialized="UserControl_Initialized">
+    <UserControl.Resources>
+        <StackPanel Orientation="Horizontal" x:Key="admin">
+            <Image Source="../Assets/admin.png" />
+            <TextBlock Text="    restart as administrator" />
+        </StackPanel>
+    </UserControl.Resources>
+    <Grid Style="{StaticResource ContentRoot}">
+        <ScrollViewer>
+            <StackPanel MinWidth="200">
+                <StackPanel Name="Admin">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Original folder:" Width="auto" HorizontalAlignment="Left" Click="Original_Folder" />
+                        <TextBlock Text="    " />
+                        <TextBlock Text="You haven't selected a source yet." Name="BrowsedFolder" Foreground="{DynamicResource WindowTextReadOnly}" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <TextBlock />
+                    <Button Content="Apply License info to source files" Click="Symlink_Create" FontWeight="Bold" FontSize="16" />
+
+                </StackPanel>
+                <StackPanel Name="NoAdmin" Visibility="Collapsed">
+                    <mui:BBCodeBlock BBCode="You aren't running this program as admin. If you want to create an symbolic link, please " VerticalAlignment="Center" />
+                    <StackPanel Orientation="Horizontal">
+                        <Button Click="Admin_Rights" HorizontalAlignment="Left" Content="{StaticResource admin}" />
+                        <mui:BBCodeBlock BBCode=". Or you can [url=/Pages/FolderJunction.xaml]create an junction point[/url] if you aren't admin." VerticalAlignment="Center" />
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

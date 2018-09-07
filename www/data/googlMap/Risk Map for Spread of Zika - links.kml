@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+	<Document>
+		<name>Risk Map for Spread of Zika </name>
+		<description><![CDATA[The pointers depict the top 100 cities to which Zika may be imported from current infected regions of Latin America and which have suitable habitat for Ae. aegypti or Ae albopictus in the surrounding region. The risk values are the estimated relative risk (ranging between 0-1) posed to the destination. The relative risk if the spread driven by Ae. aegypti presence alone is denoted as "Ae. Aegypti risk", while relative risk if the spread driven by both species is denoted as "composite risk". Darker shading is indicative of higher risk. <br><br>This map was created by Lauren Gardner at UNSW Australia in collaboration with Sahotra Sarkar at the University of Texas Austin.]]></description>
+		<NetworkLink>
+			<name>Risk Map for Spread of Zika </name>
+			<Link>
+				<href>http://www.google.com/maps/d/kml?forcekml=1&amp;mid=1bA7XuFxwlyNWv_wudd4P3VGQr9A</href>
+			</Link>
+		</NetworkLink>
+	</Document>
+</kml>
