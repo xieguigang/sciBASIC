@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2781de828c734c51f3dd1dfa05847e94, mime\text%yaml\1.1\Base\YAMLNode.vb"
+﻿#Region "Microsoft.VisualBasic::b2e86a47f32fbd3469d4b80d5db851d3, mime\text%yaml\1.1\Base\YAMLNode.vb"
 
     ' Author:
     ' 
@@ -82,4 +82,3 @@ Namespace Grammar11
 
     End Class
 End Namespace
-

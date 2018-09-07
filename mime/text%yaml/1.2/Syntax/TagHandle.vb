@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3be8c22ae75013087ba1f8baa2338ab4, mime\text%yaml\1.2\Syntax\TagHandle.vb"
+﻿#Region "Microsoft.VisualBasic::f196b8c292728ea910ca5505dbd880a1, mime\text%yaml\1.2\Syntax\TagHandle.vb"
 
     ' Author:
     ' 

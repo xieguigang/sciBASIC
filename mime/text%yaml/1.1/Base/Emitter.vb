@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16f7bd6e3af831266f899f45a2f9129e, mime\text%yaml\1.1\Base\Emitter.vb"
+﻿#Region "Microsoft.VisualBasic::b2545b69d2d9bb6a168fe506faccb9b8, mime\text%yaml\1.1\Base\Emitter.vb"
 
     ' Author:
     ' 
@@ -152,4 +152,3 @@ Namespace Grammar11
         End Sub
     End Class
 End Namespace
-

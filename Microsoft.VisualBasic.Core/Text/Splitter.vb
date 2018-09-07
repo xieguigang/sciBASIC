@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f663f882ee374e66c69193b6809e73ac, Microsoft.VisualBasic.Core\Text\Splitter.vb"
+﻿#Region "Microsoft.VisualBasic::c4f03ae11715a5239267a23aed2474c4, Microsoft.VisualBasic.Core\Text\Splitter.vb"
 
     ' Author:
     ' 

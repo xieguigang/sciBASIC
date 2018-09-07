@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb34d805a44eabeb65b2e5741bdc2c91, www\Microsoft.VisualBasic.NETProtocol\Tests\Server\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::5522cc38b6b90c63f20a6db758e4599f, www\Microsoft.VisualBasic.NETProtocol\Tests\Server\Module1.vb"
 
     ' Author:
     ' 

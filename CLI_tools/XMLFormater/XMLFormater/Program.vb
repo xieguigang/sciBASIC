@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d774765ac27b20ca9c2d047b76e43364, CLI_tools\XMLFormater\XMLFormater\Program.vb"
+﻿#Region "Microsoft.VisualBasic::3ec6fb2f8149c50bd73df1bc29f35f63, CLI_tools\XMLFormater\XMLFormater\Program.vb"
 
     ' Author:
     ' 

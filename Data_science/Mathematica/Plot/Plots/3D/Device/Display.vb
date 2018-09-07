@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::229c33c5df169db52b18da74283506be, Data_science\Mathematica\Plot\Plots\3D\Device\Display.vb"
+﻿#Region "Microsoft.VisualBasic::6ec11105dd915194753221af412905c3, Data_science\Mathematica\Plot\Plots\3D\Device\Display.vb"
 
     ' Author:
     ' 

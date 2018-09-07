@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4994e2ada56d42611125929c0c5f1e6, mime\text%yaml\1.1\IEnumerableExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::39957d67b52300dc4c7ac41f5ad84273, mime\text%yaml\1.1\IEnumerableExtensions.vb"
 
     ' Author:
     ' 
@@ -220,4 +220,3 @@ Namespace Grammar11
         End Function
     End Module
 End Namespace
-

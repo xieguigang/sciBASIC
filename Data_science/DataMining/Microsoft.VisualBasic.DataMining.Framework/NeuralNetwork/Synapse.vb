@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab6508f36050f870b4ce02d7d0407b32, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Synapse.vb"
+﻿#Region "Microsoft.VisualBasic::d708c6fd79131e128e610ce4f693bf33, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Synapse.vb"
 
     ' Author:
     ' 

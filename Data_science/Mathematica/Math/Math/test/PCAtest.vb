@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68184935117d3f183629cec20501d11b, Data_science\Mathematica\Math\Math\test\PCAtest.vb"
+﻿#Region "Microsoft.VisualBasic::e83b77adf02707351478f8f2e4b9e413, Data_science\Mathematica\Math\Math\test\PCAtest.vb"
 
     ' Author:
     ' 
@@ -47,4 +47,3 @@ Module PCAtest
         Pause()
     End Sub
 End Module
-

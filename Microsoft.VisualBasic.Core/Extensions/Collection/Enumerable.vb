@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77936248d6e6ccc5dc1e42b7e94768ee, Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::d9068ae5739d353aaeeb30f013667730, Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
 
     ' Author:
     ' 

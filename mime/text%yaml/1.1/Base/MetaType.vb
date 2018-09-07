@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd22842aabbb660108ebc6117c792616, mime\text%yaml\1.1\Base\MetaType.vb"
+﻿#Region "Microsoft.VisualBasic::891878740678de0f41569344de249094, mime\text%yaml\1.1\Base\MetaType.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Namespace Grammar11
         TAG
     End Enum
 End Namespace
-

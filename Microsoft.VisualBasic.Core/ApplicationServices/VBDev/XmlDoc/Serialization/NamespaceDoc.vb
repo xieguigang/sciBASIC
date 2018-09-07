@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6802670383a63a7340e302d8136296b, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::a1f3521e25056208defb95628b4b9281, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\NamespaceDoc.vb"
 
     ' Author:
     ' 

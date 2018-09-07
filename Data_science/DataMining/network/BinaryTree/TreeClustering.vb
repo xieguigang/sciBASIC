@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56d7147103739d996a06d23c6ce615cd, Data_science\DataMining\network\BinaryTree\TreeClustering.vb"
+﻿#Region "Microsoft.VisualBasic::3425431125f4b13467a42952f9842e0f, Data_science\DataMining\network\BinaryTree\TreeClustering.vb"
 
     ' Author:
     ' 

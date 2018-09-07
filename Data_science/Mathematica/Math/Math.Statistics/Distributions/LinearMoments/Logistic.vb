@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecaac0ae51b4d67b7d5275c3069e3729, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Logistic.vb"
+﻿#Region "Microsoft.VisualBasic::50e596b4077e1dcbc21cb3d78fc0e4e2, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\Logistic.vb"
 
     ' Author:
     ' 

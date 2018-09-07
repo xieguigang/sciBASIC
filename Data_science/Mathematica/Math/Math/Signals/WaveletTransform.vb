@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12ec3b52882d81af9cd4e279c2ce88c7, Data_science\Mathematica\Math\Math\Signals\WaveletTransform.vb"
+﻿#Region "Microsoft.VisualBasic::ba0eb89500a055d2f1b966125a40bdb9, Data_science\Mathematica\Math\Math\Signals\WaveletTransform.vb"
 
     ' Author:
     ' 

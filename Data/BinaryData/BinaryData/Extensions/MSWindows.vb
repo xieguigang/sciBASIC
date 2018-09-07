@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::925d1a791a5af67a532d78c2c5552c64, Data\BinaryData\BinaryData\Extensions\MSWindows.vb"
+﻿#Region "Microsoft.VisualBasic::1586fdccebbfc028a466495c55879f21, Data\BinaryData\BinaryData\Extensions\MSWindows.vb"
 
     ' Author:
     ' 
@@ -57,4 +57,3 @@
 Public Module MSWindows
 
 End Module
-

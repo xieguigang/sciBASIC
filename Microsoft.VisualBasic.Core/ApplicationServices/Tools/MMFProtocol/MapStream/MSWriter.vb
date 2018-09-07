@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::491ce3a6c44c7e0df2d48eb84a7da931, Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\MapStream\MSWriter.vb"
+﻿#Region "Microsoft.VisualBasic::208b288b960d70cd645b4c96545b5992, Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\MapStream\MSWriter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::210c603894c2d6286800acfae1fed3d3, Data_science\Mathematica\data\Lorenz_system\Lorenz_system\Program.vb"
+﻿#Region "Microsoft.VisualBasic::8cc68633f49e061c8018f832e8ad0f67, Data_science\Mathematica\data\Lorenz_system\Lorenz_system\Program.vb"
 
     ' Author:
     ' 

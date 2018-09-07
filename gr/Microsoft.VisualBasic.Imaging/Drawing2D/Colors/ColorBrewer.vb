@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b47f1a485c8e0461ee540c149317ddd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
+﻿#Region "Microsoft.VisualBasic::d08c5d51af6da99940c57baef064a19d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorBrewer.vb"
 
     ' Author:
     ' 

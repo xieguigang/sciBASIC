@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfe506aeea8f90deb6d6d941d2dba7f5, mime\text%yaml\1.1\Base\ScalarStyle.vb"
+﻿#Region "Microsoft.VisualBasic::38f4823865b692f8ff225ecde842d0d7, mime\text%yaml\1.1\Base\ScalarStyle.vb"
 
     ' Author:
     ' 
@@ -71,4 +71,3 @@ Namespace Grammar11
         DoubleQuoted
     End Enum
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5a1978ae8c3416b151020efab6b413d, Data_science\Bootstrapping\Sampling.vb"
+﻿#Region "Microsoft.VisualBasic::b5aaa339ee9d661880547da028a2a1f5, Data_science\Bootstrapping\Sampling.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89407d89ea42a6aefb723ce5db078f8e, Microsoft.VisualBasic.Core\Extensions\StringHelpers\NumericFormatHelper.vb"
+﻿#Region "Microsoft.VisualBasic::1df4e3735eeeb7d27c92829b1bbef491, Microsoft.VisualBasic.Core\Extensions\StringHelpers\NumericFormatHelper.vb"
 
     ' Author:
     ' 

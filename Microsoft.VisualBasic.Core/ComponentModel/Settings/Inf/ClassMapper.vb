@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86fe30c36400e01d25b5bb972357fe60, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\ClassMapper.vb"
+﻿#Region "Microsoft.VisualBasic::21232f049b5d1c511122368246f07f25, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\ClassMapper.vb"
 
     ' Author:
     ' 

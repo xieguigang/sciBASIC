@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f730ad523b3b9feb1ec08a06e1c1ea9a, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::5e5ec9271267433b5f87b899429a0761, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
