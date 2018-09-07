@@ -423,10 +423,6 @@ Public Module App
 
     Sub New()
         ' On Error Resume Next ' 在Linux服务器上面不起作用？？？
-
-        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
-        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
-
         PreviousDirectory = App.StartupDirectory
 
 #Region "公共模块内的所有的文件路径初始化"
@@ -456,6 +452,13 @@ Public Module App
 
         End Try
 #End Region
+
+        If App.HOME.StringEmpty Then
+            App.HOME = System.IO.Directory.GetCurrentDirectory
+        End If
+
+        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
+        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
 
         ' 2018-08-14 因为经过测试发现text encoding模块会优先于命令行参数设置模块的初始化的加载
         ' 所以会导致环境变量为空
