@@ -1107,7 +1107,7 @@
     <Compile Include="Scripting\ScriptBuilder.vb" />
     <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\Shell.vb" />
     <Compile Include="ApplicationServices\Terminal\PipelineCLI.vb" />
-    <Compile Include="ApplicationServices\Terminal\InnerQueue.vb" />
+    <Compile Include="My\InnerQueue.vb" />
     <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb" />
     <Compile Include="ApplicationServices\Terminal\PrintAsTable.vb" />
     <Compile Include="ApplicationServices\Terminal\ProgressBar\AbstractBar.vb" />

@@ -149,7 +149,7 @@ Public Module VBDebugger
             Dim head$ = $"Benchmark `{ms.FormatTicks}` {start} - {[end]}"
             Dim str$ = " " & $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
 
-            Call Terminal.AddToQueue(
+            Call My.InnerQueue.AddToQueue(
                 Sub()
                     Call __print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
                 End Sub)
@@ -170,7 +170,7 @@ Public Module VBDebugger
             Dim head As String = $"DEBUG {Now.ToString}"
             Dim str As String = $"{_Indent(indent)} {msg}"
 
-            Call Terminal.AddToQueue(
+            Call My.InnerQueue.AddToQueue(
                 Sub()
                     Call __print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
                 End Sub)
@@ -187,7 +187,7 @@ Public Module VBDebugger
             Dim head As String = $"INFOM {Now.ToString}"
             Dim str As String = " " & msg
 
-            Call Terminal.AddToQueue(
+            Call My.InnerQueue.AddToQueue(
                 Sub()
                     Call __print(head, str, ConsoleColor.White, MSG_TYPES.INF)
                 End Sub)
@@ -262,7 +262,7 @@ Public Module VBDebugger
     <Extension>
     Public Function PrintException(msg As String, <CallerMemberName> Optional memberName As String = "") As Boolean
         Dim exMsg As String = $"[ERROR {Now.ToString}] <{memberName}>::{msg}"
-        Call Terminal.AddToQueue(Sub() Call VBDebugger.WriteLine(exMsg, ConsoleColor.Red))
+        Call My.InnerQueue.AddToQueue(Sub() Call VBDebugger.WriteLine(exMsg, ConsoleColor.Red))
         Return False
     End Function
 
@@ -270,7 +270,7 @@ Public Module VBDebugger
     ''' 等待调试器输出工作线程将内部的消息队列输出完毕
     ''' </summary>
     Public Sub WaitOutput()
-        Call Terminal.WaitQueue()
+        Call My.InnerQueue.WaitQueue()
     End Sub
 
     ''' <summary>
@@ -333,7 +333,7 @@ Public Module VBDebugger
         If Not Mute Then
             Dim head As String = $"WARNG <{calls}> {Now.ToString}"
 
-            Call Terminal.AddToQueue(
+            Call My.InnerQueue.AddToQueue(
                 Sub()
                     Call __print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
                 End Sub)
@@ -465,7 +465,7 @@ Public Module VBDebugger
     ''' <param name="s$"></param>
     <Extension> Public Sub EchoLine(s$)
         If Not Mute Then
-            Call Terminal.AddToQueue(
+            Call My.InnerQueue.AddToQueue(
                 Sub()
                     Call Console.WriteLine(s)
                 End Sub)
@@ -488,7 +488,7 @@ Public Module VBDebugger
     ''' <param name="s$"></param>
     Public Sub cat(s$)
         If Not Mute Then
-            Call Terminal.AddToQueue(
+            Call My.InnerQueue.AddToQueue(
                 Sub()
                     Call Console.Write(s.ReplaceMetaChars)
                 End Sub)

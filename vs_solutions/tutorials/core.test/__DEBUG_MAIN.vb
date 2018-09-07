@@ -309,7 +309,7 @@ Public Module __DEBUG_MAIN
 
         x = Nothing
 
-        x = JSON.LoadObject(Of TestJSON())
+        x = JSON.LoadJSON(Of TestJSON())
 
 
 
@@ -361,7 +361,7 @@ Public Module __DEBUG_MAIN
 
         Dim jsons = jsSchema.ToString
 
-        Dim schemasss = jsons.LoadObject(Of Schema)()
+        Dim schemasss = jsons.LoadJSON(Of Schema)()
 
         Try
             Throw New NotSupportedException

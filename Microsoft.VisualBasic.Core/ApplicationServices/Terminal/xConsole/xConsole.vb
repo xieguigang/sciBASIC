@@ -159,12 +159,12 @@ Namespace Terminal
         ''' <param name="format">The input string</param>
         ''' <param name="args"></param>
         Public Sub CoolWrite(format As String, ParamArray args As Object())
-            AddToQueue(Sub()
-                           Dim old As Boolean = CoolWriteSettings.CoolWriting
-                           CoolWriteSettings.CoolWriting = True
-                           Call Print(String.Format(format, args))
-                           CoolWriteSettings.CoolWriting = old
-                       End Sub)
+            My.AddToQueue(Sub()
+                              Dim old As Boolean = CoolWriteSettings.CoolWriting
+                              CoolWriteSettings.CoolWriting = True
+                              Call Print(String.Format(format, args))
+                              CoolWriteSettings.CoolWriting = old
+                          End Sub)
         End Sub
 
         ''' <summary>
@@ -213,7 +213,7 @@ Namespace Terminal
         ''' <param name="format">The input string</param>
         ''' <param name="args">Arguments</param>
         Public Sub Write(format As String, ParamArray args As Object())
-            AddToQueue(Sub() Print(String.Format(format, args)))
+            My.InnerQueue.AddToQueue(Sub() Print(String.Format(format, args)))
         End Sub
 
         '////////////////////////////////////////////////////////////////////////////////////////////////
@@ -253,7 +253,7 @@ Namespace Terminal
         ''' </summary>
         ''' <param name="time"></param>
         Public Sub Wait(time As Integer)
-            AddToQueue(Sub() Thread.Sleep(time))
+            My.InnerQueue.AddToQueue(Sub() Thread.Sleep(time))
         End Sub
 
         ''' <summary>
@@ -289,7 +289,7 @@ Namespace Terminal
         ''' <param name="ClearInput">Clear the buffer input</param>
         ''' <returns>Return a List of strings</returns>
         Public Function ReadLine(Optional Clearinput As Boolean = True) As List(Of String)
-            InnerQueue.WaitQueue()
+            My.InnerQueue.WaitQueue()
 
             If Clearinput Then
                 xConsole.ClearInput()
@@ -354,7 +354,7 @@ Namespace Terminal
         ''' <param name="ClearInput">Clear the buffer input</param>
         ''' <returns>string with all chars</returns>
         Public Function ReadKeys(Optional Clearinput As Boolean = True) As String
-            InnerQueue.WaitQueue()
+            My.InnerQueue.WaitQueue()
 
             If Clearinput Then
                 xConsole.ClearInput()
@@ -688,22 +688,22 @@ Namespace Terminal
                 If [loop] Then
                     counter += 1
                     Dim wr As String = String.Format(SpinText, c(counter Mod c.Length), "wtf?")
-                    AddToQueue(Sub()
-                                   StringSize = Print(wr)
-                                   Dim left As Integer = Console.CursorLeft - StringSize
-                                   If left < 0 Then
-                                       left = 0
-                                   End If
-                                   Console.SetCursorPosition(left, Console.CursorTop)
-                               End Sub)
+                    My.InnerQueue.AddToQueue(Sub()
+                                                 StringSize = Print(wr)
+                                                 Dim left As Integer = Console.CursorLeft - StringSize
+                                                 If left < 0 Then
+                                                     left = 0
+                                                 End If
+                                                 Console.SetCursorPosition(left, Console.CursorTop)
+                                             End Sub)
 
                     Thread.Sleep(time)
                 Else
-                    AddToQueue(Sub()
-                                   Dim pos As New Point(Console.CursorLeft, Console.CursorTop)
-                                   Console.Write(New String(" "c, StringSize))
-                                   Console.SetCursorPosition(pos.X, pos.Y)
-                               End Sub)
+                    My.InnerQueue.AddToQueue(Sub()
+                                                 Dim pos As New Point(Console.CursorLeft, Console.CursorTop)
+                                                 Console.Write(New String(" "c, StringSize))
+                                                 Console.SetCursorPosition(pos.X, pos.Y)
+                                             End Sub)
                 End If
 
                 Console.CursorVisible = Not [loop]
