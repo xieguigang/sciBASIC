@@ -42,6 +42,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Parallel
 
 Namespace My
@@ -57,6 +58,8 @@ Namespace My
         ''' 添加终端输出的任务到任务队列之中
         ''' </summary>
         ''' <param name="task"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub AddToQueue(task As Action)
             Call InnerThread.AddToQueue(task)
         End Sub
@@ -64,6 +67,8 @@ Namespace My
         ''' <summary>
         ''' Wait for all thread queue job done.(Needed if you are using multiThreaded queue)
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WaitQueue()
             Call InnerThread.WaitQueue()
         End Sub

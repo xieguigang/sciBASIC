@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::051219c7858b016ac1936b62bc6eb520, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module VBDebugger
-    ' 
-    '     Function: die, LinqProc
-    '     Delegate Sub
-    ' 
-    '         Properties: ForceSTDError, Mute, UsingxConsole
-    ' 
-    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, getColor, (+2 Overloads) PrintException
-    '                   this, Warning
-    ' 
-    '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, __print, (+3 Overloads) Assertion, AttachLoggingDriver
-    '              cat, (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module VBDebugger
+' 
+'     Function: die, LinqProc
+'     Delegate Sub
+' 
+'         Properties: ForceSTDError, Mute, UsingxConsole
+' 
+'         Function: __DEBUG_ECHO, Assert, BENCHMARK, getColor, (+2 Overloads) PrintException
+'                   this, Warning
+' 
+'         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, __print, (+3 Overloads) Assertion, AttachLoggingDriver
+'              cat, (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -95,7 +95,6 @@ Public Module VBDebugger
     End Function
 
     Dim __mute As Boolean = False
-    Dim logs As New List(Of LoggingDriver)
 
     Friend __level As DebuggerLevels = DebuggerLevels.On  ' 默认是输出所有的信息
 
@@ -126,13 +125,6 @@ Public Module VBDebugger
     ''' <returns></returns>
     Public Property ForceSTDError As Boolean = False
 
-    ReadOnly _Indent As String() = {
-        "",
-        New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
-        New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
-        New String(" ", 9), New String(" ", 10)
-    }
-
     ''' <summary>
     ''' Test how long this <paramref name="test"/> will takes.
     ''' </summary>
@@ -149,10 +141,7 @@ Public Module VBDebugger
             Dim head$ = $"Benchmark `{ms.FormatTicks}` {start} - {[end]}"
             Dim str$ = " " & $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
 
-            Call My.InnerQueue.AddToQueue(
-                Sub()
-                    Call __print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
-                End Sub)
+            Call My.Log4VB.Print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
         End If
 
         Return ms
@@ -166,14 +155,18 @@ Public Module VBDebugger
     ''' <param name="indent"></param>
     ''' <returns>其实这个函数是不会返回任何东西的，只是因为为了Linq调试输出的需要，所以在这里是返回Nothing的</returns>
     <Extension> Public Function __DEBUG_ECHO(msg$, Optional indent% = 0) As String
+        Static indents$() = {"",
+            New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
+            New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
+            New String(" ", 9), New String(" ", 10)
+        }
+
         If Not Mute AndAlso __level < DebuggerLevels.Warning Then
             Dim head As String = $"DEBUG {Now.ToString}"
-            Dim str As String = $"{_Indent(indent)} {msg}"
+            Dim str As String = $"{indents(indent)} {msg}"
 
-            Call My.InnerQueue.AddToQueue(
-                Sub()
-                    Call __print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
-                End Sub)
+            Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
+
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
@@ -187,60 +180,18 @@ Public Module VBDebugger
             Dim head As String = $"INFOM {Now.ToString}"
             Dim str As String = " " & msg
 
-            Call My.InnerQueue.AddToQueue(
-                Sub()
-                    Call __print(head, str, ConsoleColor.White, MSG_TYPES.INF)
-                End Sub)
+            Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
+
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
         End If
     End Sub
 
-    ''' <summary>
-    ''' 头部和消息字符串都是放在一个task之中进行输出的，<see cref="xConsole"/>的输出也是和内部的debugger输出使用的同一个消息线程
-    ''' </summary>
-    ''' <param name="head"></param>
-    ''' <param name="str"></param>
-    ''' <param name="msgColor"></param>
-    ''' <param name="level"><see cref="ConsoleColor"/> or <see cref="MSG_TYPES"/></param>
-    Private Sub __print(head As String, str As String, msgColor As ConsoleColor, level As Integer)
-        If ForceSTDError Then
-            Call Console.Error.WriteLine($"[{head}]{str}")
-        Else
-            Dim cl As ConsoleColor = Console.ForegroundColor
-            Dim headColor As ConsoleColor = getColor(level)
-
-            If msgColor = headColor Then
-                Console.ForegroundColor = headColor
-                Console.WriteLine($"[{head}]{str}")
-                Console.ForegroundColor = cl
-            Else
-                Call Console.Write("[")
-                Console.ForegroundColor = headColor
-                Call Console.Write(head)
-                Console.ForegroundColor = cl
-                Call Console.Write("]")
-
-                Call WriteLine(str, msgColor)
-            End If
-        End If
-
-        For Each driver As LoggingDriver In VBDebugger.logs
-            Call driver(head, str, level)
-        Next
-    End Sub
-
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AttachLoggingDriver(driver As LoggingDriver)
-        logs += driver
+        My.Log4VB.logs.Add(driver)
     End Sub
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Private Function getColor(level As Integer) As ConsoleColor
-        Return If(DebuggerTagColors.ContainsKey(level), DebuggerTagColors(level), CType(level, ConsoleColor))
-    End Function
 
     ''' <summary>
     ''' The function will print the exception details information on the standard <see cref="console"/>, <see cref="debug"/> console, and system <see cref="trace"/> console.
@@ -248,9 +199,10 @@ Public Module VBDebugger
     ''' </summary>
     ''' <typeparam name="ex"></typeparam>
     ''' <param name="exception"></param>
-    <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName As String = "") As Boolean
-        Dim exMsg As String = New Exception(memberName, exception).ToString
-        Return PrintException(exMsg, memberName)
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
+        Return New Exception(memberName, exception).ToString.PrintException(memberName)
     End Function
 
     ''' <summary>
@@ -259,11 +211,11 @@ Public Module VBDebugger
     ''' <param name="msg"></param>
     ''' <param name="memberName"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function PrintException(msg As String, <CallerMemberName> Optional memberName As String = "") As Boolean
-        Dim exMsg As String = $"[ERROR {Now.ToString}] <{memberName}>::{msg}"
-        Call My.InnerQueue.AddToQueue(Sub() Call VBDebugger.WriteLine(exMsg, ConsoleColor.Red))
-        Return False
+    Public Function PrintException(msg$, <CallerMemberName> Optional memberName$ = "") As Boolean
+        Return My.Log4VB.Print($"[ERROR {Now.ToString}]", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
     End Function
 
     ''' <summary>
@@ -286,41 +238,12 @@ Public Module VBDebugger
     ''' </summary>
     ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
     ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Sub WriteLine(msg As String, color As ConsoleColor)
-        If Mute Then
-            Return
-        End If
-
-        If ForceSTDError Then
-            Console.Error.WriteLine(msg)
-        Else
-            If UsingxConsole AndAlso App.IsMicrosoftPlatform Then
-                Call xConsole.CoolWrite(msg)
-            Else
-                ' 使用传统的输出输出方法
-                Dim cl As ConsoleColor = Console.ForegroundColor
-
-                Console.ForegroundColor = color
-                Console.WriteLine(msg)
-                Console.ForegroundColor = cl
-            End If
-        End If
-
-#If DEBUG Then
-        Call Debug.WriteLine(msg)
-#End If
+    Public Sub WriteLine(msg$, color As ConsoleColor)
+        My.Log4VB.WriteLine(msg, color)
     End Sub
-
-    ''' <summary>
-    ''' ``<see cref="MSG_TYPES"/> -> <see cref="ConsoleColor"/>``
-    ''' </summary>
-    ReadOnly DebuggerTagColors As New Dictionary(Of Integer, ConsoleColor) From {
-        {MSG_TYPES.DEBUG, ConsoleColor.DarkGreen},
-        {MSG_TYPES.ERR, ConsoleColor.Red},
-        {MSG_TYPES.INF, ConsoleColor.Blue},
-        {MSG_TYPES.WRN, ConsoleColor.Yellow}
-    }
 
     ''' <summary>
     ''' Display the wraning level(YELLOW color) message on the console.
@@ -333,10 +256,7 @@ Public Module VBDebugger
         If Not Mute Then
             Dim head As String = $"WARNG <{calls}> {Now.ToString}"
 
-            Call My.InnerQueue.AddToQueue(
-                Sub()
-                    Call __print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
-                End Sub)
+            Call My.Log4VB.Print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{msg}")
 #End If
