@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c52acd218f4ee1a5a48771e975ada4a, vs_solutions\installer\Installer\FormWelcome.vb"
+﻿#Region "Microsoft.VisualBasic::f5b2d57ad089ffda35cd1128a7c5a737, vs_solutions\installer\Installer\FormWelcome.vb"
 
     ' Author:
     ' 

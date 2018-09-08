@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec2fbdf09074e4d6bc770b607c399456, Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\WorkFlow.vb"
+﻿#Region "Microsoft.VisualBasic::daa39c1345392d51dd1b2c69363d6d46, Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\WorkFlow.vb"
 
     ' Author:
     ' 

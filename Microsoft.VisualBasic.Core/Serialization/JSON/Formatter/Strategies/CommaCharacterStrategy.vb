@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91955d8af7d7a78153ae52ffcd39cc65, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CommaCharacterStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::e4f69356b8fec846e1ca204128c26d3a, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\CommaCharacterStrategy.vb"
 
     ' Author:
     ' 

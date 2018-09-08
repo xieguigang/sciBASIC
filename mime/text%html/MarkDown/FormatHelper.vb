@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::730586a5793de5d855938bc547231bb5, mime\text%html\MarkDown\FormatHelper.vb"
+﻿#Region "Microsoft.VisualBasic::aba081693f23d1a88fb9ee8ccc9c6992, mime\text%html\MarkDown\FormatHelper.vb"
 
     ' Author:
     ' 

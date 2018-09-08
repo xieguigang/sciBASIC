@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ad747902d7a001d492b7b8daa8b6b89, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::5b6f63c84f05a1517436f476a4735f98, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\MapsHelper.vb"
 
     ' Author:
     ' 
@@ -69,6 +69,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -127,12 +128,11 @@ Namespace ComponentModel
 
     Public Class NameMapping : Inherits MapsHelper(Of String)
 
+        Shared ReadOnly emptyMaps As DefaultValue(Of Dictionary(Of String, String)) = New Dictionary(Of String, String)()
+
         Sub New(Optional dictionary As Dictionary(Of String, String) = Nothing,
                 Optional default$ = Nothing)
-            Call MyBase.New(
-                dictionary Or New Dictionary(Of String, String)().AsDefault,
-                [default]
-            )
+            Call MyBase.New(dictionary Or emptyMaps, [default])
         End Sub
 
         Public Sub Add(key$, map$)

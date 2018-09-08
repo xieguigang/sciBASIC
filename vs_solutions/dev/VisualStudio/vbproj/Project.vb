@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f3e7f9d3f5454c490f8cba867262a92, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
+﻿#Region "Microsoft.VisualBasic::6d42c46fea649bf22eff2916722e15ff, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
 
     ' Author:
     ' 
@@ -66,6 +66,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
+''' <summary>
+''' Visual Studio project XML file
+''' </summary>
 <XmlRoot("Project", [Namespace]:=Project.xmlns)>
 Public Class Project : Implements ISaveHandle
 

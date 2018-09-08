@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -27,7 +27,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
@@ -66,7 +66,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -86,7 +86,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -106,7 +106,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -126,7 +126,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.MIME.text.yaml.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
@@ -256,6 +256,22 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="1.1\Base\Emitter.vb" />
+    <Compile Include="1.1\Base\MappingStyle.vb" />
+    <Compile Include="1.1\Base\MetaType.vb" />
+    <Compile Include="1.1\Base\ScalarStyle.vb" />
+    <Compile Include="1.1\Base\ScalarType.vb" />
+    <Compile Include="1.1\Base\SequenceStyle.vb" />
+    <Compile Include="1.1\Base\YAMLDocument.vb" />
+    <Compile Include="1.1\Base\YAMLMappingNode.vb" />
+    <Compile Include="1.1\Base\YAMLNode.vb" />
+    <Compile Include="1.1\Base\YAMLNodeType.vb" />
+    <Compile Include="1.1\Base\YAMLScalarNode.vb" />
+    <Compile Include="1.1\Base\YAMLSequenceNode.vb" />
+    <Compile Include="1.1\Base\YAMLTag.vb" />
+    <Compile Include="1.1\Base\YAMLWriter.vb" />
+    <Compile Include="1.1\IDictionaryExtensions.vb" />
+    <Compile Include="1.1\IEnumerableExtensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -271,38 +287,23 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ChompingMethod.vb" />
-    <Compile Include="ParserCustom.vb" />
-    <Compile Include="ParserInput.vb" />
-    <Compile Include="Serialization\Serialization.vb" />
-    <Compile Include="Syntax\BlockScalarModifier.vb" />
-    <Compile Include="Syntax\DataItem.vb" />
-    <Compile Include="Syntax\Directive.vb" />
-    <Compile Include="Syntax\GlobalTagPrefix.vb" />
-    <Compile Include="Syntax\LocalTagPrefix.vb" />
-    <Compile Include="Syntax\Mapping.vb" />
-    <Compile Include="Syntax\MappingEntry.vb" />
-    <Compile Include="Syntax\NamedTagHandle.vb" />
-    <Compile Include="Syntax\NodeProperty.vb" />
-    <Compile Include="Syntax\NonSpecificTag.vb" />
-    <Compile Include="Syntax\PrimaryTagHandle.vb" />
-    <Compile Include="Syntax\ReservedDirective.vb" />
-    <Compile Include="Syntax\Scalar.vb" />
-    <Compile Include="Syntax\SecondaryTagHandle.vb" />
-    <Compile Include="Syntax\Sequence.vb" />
-    <Compile Include="Syntax\ShorthandTag.vb" />
-    <Compile Include="Syntax\Tag.vb" />
-    <Compile Include="Syntax\TagDirective.vb" />
-    <Compile Include="Syntax\TagHandle.vb" />
-    <Compile Include="Syntax\TagPrefix.vb" />
-    <Compile Include="Syntax\VerbatimTag.vb" />
-    <Compile Include="Syntax\YamlDirective.vb" />
-    <Compile Include="Syntax\YamlDocument.vb" />
-    <Compile Include="Syntax\YamlStream.vb" />
-    <Compile Include="Syntax\YamlVersion.vb" />
-    <Compile Include="TextInput.vb" />
-    <Compile Include="TextParserCommon.vb" />
-    <Compile Include="YamlParser.vb" />
+    <Compile Include="1.2\ChompingMethod.vb" />
+    <Compile Include="1.2\ParserCustom.vb" />
+    <Compile Include="1.2\ParserInput.vb" />
+    <Compile Include="1.2\Serialization\Serialization.vb" />
+    <Compile Include="1.2\Syntax\BlockScalarModifier.vb" />
+    <Compile Include="1.2\Syntax\Directive.vb" />
+    <Compile Include="1.2\Syntax\MappingEntry.vb" />
+    <Compile Include="1.2\Syntax\NodeProperty.vb" />
+    <Compile Include="1.2\Syntax\Tag.vb" />
+    <Compile Include="1.2\Syntax\TagHandle.vb" />
+    <Compile Include="1.2\Syntax\TagPrefix.vb" />
+    <Compile Include="1.2\Syntax\YamlDocument.vb" />
+    <Compile Include="1.2\Syntax\YamlStream.vb" />
+    <Compile Include="1.2\Syntax\YamlVersion.vb" />
+    <Compile Include="1.2\TextInput.vb" />
+    <Compile Include="1.2\TextParserCommon.vb" />
+    <Compile Include="1.2\YamlParser.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -313,6 +314,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="1.1\idle_anim.yaml" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -324,19 +326,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="YAML.PEG.txt" />
+    <None Include="1.2\YAML.PEG.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="YAML.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="YAML_Sample.txt" />
+    <None Include="1.2\YAML.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="1.1\Base" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

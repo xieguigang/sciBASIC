@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2f20568e51bc93a216cdb1f5ac4f6fe, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
+﻿#Region "Microsoft.VisualBasic::b62a1d7f9d66f639a3303e7c9cfec66d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Text.vb"
 
     ' Author:
     ' 

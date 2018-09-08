@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61a35e15f2c5e13aa936a277aaf19618, Data_science\DataMining\network\NeuralNetwork\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2b5fa84921f0a3ffeb3e50e838427e54, Data_science\DataMining\network\NeuralNetwork\Extensions.vb"
 
     ' Author:
     ' 

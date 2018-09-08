@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdfde9b18be1e3c55acd8cec1eae55e4, Data_science\SVM\SVM\Optimizers.vb"
+﻿#Region "Microsoft.VisualBasic::33f37347b5a83b2d5d506a52887ab8e5, Data_science\SVM\SVM\Optimizers.vb"
 
     ' Author:
     ' 

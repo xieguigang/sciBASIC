@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ae8384346206efd7a4d07b4958c8487, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\OpenSquareBracketStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::294e2a71a49b975168d34ddd1340d4c8, Microsoft.VisualBasic.Core\Serialization\JSON\Formatter\Strategies\OpenSquareBracketStrategy.vb"
 
     ' Author:
     ' 

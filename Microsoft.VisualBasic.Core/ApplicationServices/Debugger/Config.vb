@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e0660589767c4bb3975362847c54a81, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Config.vb"
+﻿#Region "Microsoft.VisualBasic::c369f5afcfff60a489e3386afa259933, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Config.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@ Namespace ApplicationServices.Debugging
         Public Shared Function Load() As Config
             Try
                 Dim cfg As Config =
-                    IO.File.ReadAllText(DefaultFile).LoadObject(Of Config)
+                    IO.File.ReadAllText(DefaultFile).LoadJSON(Of Config)
 
                 If cfg Is Nothing Then
                     Return New Config().Save()

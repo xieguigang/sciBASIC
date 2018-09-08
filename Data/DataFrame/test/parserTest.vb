@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8b53631825032b8d61fba1f87c3cd3b, Data\DataFrame\test\parserTest.vb"
+﻿#Region "Microsoft.VisualBasic::278a207ab75be1aee37f649f17776250, Data\DataFrame\test\parserTest.vb"
 
     ' Author:
     ' 

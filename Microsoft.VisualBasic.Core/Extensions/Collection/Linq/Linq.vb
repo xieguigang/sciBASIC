@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4800c9e54290af40fbc21deef9cecd8, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::3054ede40eca59d445bac49240cc5366, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -295,7 +295,7 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' 产生指定数目的一个递增序列(所生成序列的数值就是生成的数组的元素的个数)
+        ''' 产生指定数目的一个递增序列(用于生成序列的输入参数<paramref name="n"/>数值就是生成的数组的元素的个数)
         ''' </summary>
         ''' <param name="n">大于或者等于0的一个数，当小于0的时候会出错</param>
         ''' <returns></returns>

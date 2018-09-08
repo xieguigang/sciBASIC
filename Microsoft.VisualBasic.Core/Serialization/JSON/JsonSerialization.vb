@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25431f4764ee19e3b48884fe81142ae9, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::1a5413796fa1c8596ec65254139d1748, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module JsonContract
     ' 
-    '         Function: EnsureDate, GetJson, GetObjectJson, LoadJsonFile, LoadJSONObject
-    '                   (+3 Overloads) LoadObject, MatrixJson, RemoveJsonNullItems, WriteLargeJson
+    '         Function: EnsureDate, GetJson, GetObjectJson, LoadJSON, LoadJsonFile
+    '                   LoadJSONObject, (+2 Overloads) LoadObject, MatrixJson, RemoveJsonNullItems, WriteLargeJson
     ' 
     '         Sub: writeJsonInternal
     ' 
@@ -108,7 +108,7 @@ Namespace Serialization.JSON
                 Dim settings As New DataContractJsonSerializerSettings With {
                     .UseSimpleDictionaryFormat = True,
                     .SerializeReadOnlyTypes = True,
-                    .KnownTypes = knownTypes _
+                    .knownTypes = knownTypes _
                         .SafeQuery _
                         .ToArray
                 }
@@ -213,10 +213,10 @@ Namespace Serialization.JSON
         ''' 从文本文件或者文本内容之中进行JSON反序列化
         ''' </summary>
         ''' <param name="json">This string value can be json text or json file path.</param>
-        <Extension> Public Function LoadObject(Of T)(json$,
-                                                     Optional simpleDict As Boolean = True,
-                                                     Optional throwEx As Boolean = True,
-                                                     Optional ByRef exception As Exception = Nothing) As T
+        <Extension> Public Function LoadJSON(Of T)(json$,
+                                                   Optional simpleDict As Boolean = True,
+                                                   Optional throwEx As Boolean = True,
+                                                   Optional ByRef exception As Exception = Nothing) As T
             Dim text$ = json.SolveStream(Encodings.UTF8)
             Dim value As Object = text.LoadObject(GetType(T), simpleDict, throwEx, exception)
             Dim obj As T = DirectCast(value, T)
@@ -234,12 +234,14 @@ Namespace Serialization.JSON
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function LoadObject(Of T As New)(json As XElement, Optional simpleDict As Boolean = True) As T
-            Return json.Value.LoadObject(Of T)(simpleDict:=simpleDict)
+            Return json.Value.LoadJSON(Of T)(simpleDict:=simpleDict)
         End Function
 
-        Public Function LoadJsonFile(Of T)(file As String, Optional encoding As Encoding = Nothing, Optional simpleDict As Boolean = True) As T
-            Dim json As String = IO.File.ReadAllText(file, If(encoding Is Nothing, Encoding.Default, encoding))
-            Return json.LoadObject(Of T)(simpleDict)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function LoadJsonFile(Of T)(file$, Optional encoding As Encoding = Nothing, Optional simpleDict As Boolean = True) As T
+            Return (file.ReadAllText(encoding Or UTF8, throwEx:=False, suppress:=True) Or "null".AsDefault) _
+                .LoadJSON(Of T)(simpleDict)
         End Function
 
         Const JsonLongTime$ = "\d+-\d+-\d+T\d+:\d+:\d+\.\d+"

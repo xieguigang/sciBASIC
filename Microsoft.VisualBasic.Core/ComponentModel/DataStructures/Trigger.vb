@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae5886bdee1b150a22ab337c8978e358, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Trigger.vb"
+﻿#Region "Microsoft.VisualBasic::5055b1b77033779776ecce1a878dc53f, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Trigger.vb"
 
     ' Author:
     ' 

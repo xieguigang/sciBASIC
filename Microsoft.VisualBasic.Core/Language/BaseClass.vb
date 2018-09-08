@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72a6dcacf718ed181ca3abb4dae1c5e3, Microsoft.VisualBasic.Core\Language\BaseClass.vb"
+﻿#Region "Microsoft.VisualBasic::decd1d16f8bd8664b6efe4343e8c06ea, Microsoft.VisualBasic.Core\Language\BaseClass.vb"
 
     ' Author:
     ' 

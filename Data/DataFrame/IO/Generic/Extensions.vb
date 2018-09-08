@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2393261f44b9e50a4aa1f1d61823d171, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1539f4d8a854daa344ffd4d4aeacea1c, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: asCharacter, AsCharacter, (+2 Overloads) AsDataSet, CreateObject, DataFrame
+    '         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
     '                   EuclideanDistance, GroupBy, NamedMatrix, Project, (+2 Overloads) PropertyNames
     '                   Transpose, Values, (+2 Overloads) Vector
     ' 
@@ -252,12 +252,6 @@ Namespace IO
             Return data _
                 .Select(Function(r) r(key$)) _
                 .ToArray
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function AsDataSet(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of DataSet)
-            Return data.Select(Function(obj) New DataSet With {.ID = obj.Name, .Properties = obj.Value})
         End Function
 
         <Extension>

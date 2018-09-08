@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2190ef8926a14894b9f6ae375fe06ad, Microsoft.VisualBasic.Core\Language\Language\UnixBash\ShellSyntax.vb"
+﻿#Region "Microsoft.VisualBasic::f10a0251981bece9e687588eec59423b, Microsoft.VisualBasic.Core\Language\Language\UnixBash\ShellSyntax.vb"
 
     ' Author:
     ' 

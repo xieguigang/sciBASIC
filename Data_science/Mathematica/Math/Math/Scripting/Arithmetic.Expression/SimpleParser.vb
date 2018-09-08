@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9563c58807900351b0fd757c2f37468, Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\SimpleParser.vb"
+﻿#Region "Microsoft.VisualBasic::de12170cf1d593a4f1efb63d8198ec9d, Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\SimpleParser.vb"
 
     ' Author:
     ' 

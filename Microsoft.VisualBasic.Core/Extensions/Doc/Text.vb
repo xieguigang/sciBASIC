@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fa29532a1db26a2134f1673477f1b3d, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::4278b5386f70eda368205bde0429048d, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,8 @@
     ' Module TextDoc
     ' 
     '     Function: ForEachChar, IsTextFile, IterateAllLines, LineIterators, LoadTextDoc
-    '               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, (+4 Overloads) SaveTo
-    '               SaveTSV, SaveWithHTMLEncoding, SolveStream, TsvHeaders
+    '               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, SaveJson
+    '               (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream, TsvHeaders
     ' 
     ' /********************************************************************************/
 
@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports fs = Microsoft.VisualBasic.FileIO.FileSystem
 
@@ -134,6 +135,12 @@ Public Module TextDoc
     Public Function SaveTSV(tsv As IEnumerable(Of IDMap), path$, Optional encoding As Encodings = Encodings.ASCII) As Boolean
         Dim lines = tsv.Select(Function(x) x.TSV)
         Return lines.SaveTo(path, encoding.CodePage)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function SaveJson(Of T)(obj As T, path$, Optional encoding As Encoding = Nothing) As Boolean
+        Return obj.GetJson.SaveTo(path, encoding)
     End Function
 
     ''' <summary>

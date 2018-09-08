@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::728bedf956478cec52ff97f4412d4b76, Data_science\Mathematica\Math\Math\Algebra\Framework\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::24cadb0b44b896fbe41a14d3cfe53df2, Data_science\Mathematica\Math\Math\Algebra\Framework\Iterator.vb"
 
     ' Author:
     ' 

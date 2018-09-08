@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3480b2bf9fea1ee16f0a331ee359ee08, Data_science\Mathematica\Math\Math\Signals\DFT.vb"
+﻿#Region "Microsoft.VisualBasic::a0c45268759e083b15e53ddd2badb47e, Data_science\Mathematica\Math\Math\Signals\DFT.vb"
 
     ' Author:
     ' 

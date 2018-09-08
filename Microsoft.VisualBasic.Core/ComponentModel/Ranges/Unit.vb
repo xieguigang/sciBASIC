@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e2bb4b6c20175c4bc506113448aa214, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
+﻿#Region "Microsoft.VisualBasic::1e44dd0a1a4494c296b0afc8b1bb11b0, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
 
     ' Author:
     ' 

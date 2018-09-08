@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e63a81a3afa4e9bf3bebf99b34617b98, CLI_tools\Regex\frmRegexTest.vb"
+﻿#Region "Microsoft.VisualBasic::79a0050283dfd7203e3a74f6fce4f8ed, CLI_tools\Regex\frmRegexTest.vb"
 
     ' Author:
     ' 

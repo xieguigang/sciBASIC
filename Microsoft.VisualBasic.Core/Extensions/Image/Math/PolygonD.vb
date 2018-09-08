@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89d976b1cd73243662419329334372d9, Microsoft.VisualBasic.Core\Extensions\Image\Math\PolygonD.vb"
+﻿#Region "Microsoft.VisualBasic::5c8c9564d88fe05f8900cc9fa85b646e, Microsoft.VisualBasic.Core\Extensions\Image\Math\PolygonD.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5da2667554f7cb39d33e0deadbaf50fc, Data_science\Graph\Model\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::e81fcfa9dcbd52e109a5f4ee1bf4f76c, Data_science\Graph\Model\Tree.vb"
 
     ' Author:
     ' 

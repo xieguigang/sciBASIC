@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0e3e176186fc47c4b834cd01ed4e050, gr\3DEngineTest\Wpf3DTest\My Project\MyExtensions\MyWpfExtension.vb"
+﻿#Region "Microsoft.VisualBasic::524f347767ac3d0f019dbac3572ac991, gr\3DEngineTest\Wpf3DTest\My Project\MyExtensions\MyWpfExtension.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e22ea5477cf881c006c8e08ef068f25b, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::dd4c390cb92327b80c1d869ebc77f51d, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
 
     ' Author:
     ' 

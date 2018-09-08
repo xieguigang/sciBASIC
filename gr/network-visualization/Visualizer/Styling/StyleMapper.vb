@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::319e2865bcbd970b700c1c6b9bbca295, gr\network-visualization\Visualizer\Styling\StyleMapper.vb"
+﻿#Region "Microsoft.VisualBasic::93a97efd1147e3888c8464ee97d34a2b, gr\network-visualization\Visualizer\Styling\StyleMapper.vb"
 
     ' Author:
     ' 
@@ -71,7 +71,7 @@ Namespace Styling
                 json = json.ReadAllText
             End If
 
-            Dim styleJSON As StyleJSON = json.LoadObject(Of StyleJSON)
+            Dim styleJSON As StyleJSON = json.LoadJSON(Of StyleJSON)
             Return FromJSON(styleJSON)
         End Function
 

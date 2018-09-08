@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8be9815d4f7dbd9b9c50f5739a3511f6, Data_science\Mathematica\Plot\Plots\g\Axis\Styles.vb"
+﻿#Region "Microsoft.VisualBasic::fdf7deb433dd7c94f3377d62e826ae9c, Data_science\Mathematica\Plot\Plots\g\Axis\Styles.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Enum XAxisLayoutStyles
     ' 
-    '         Bottom, Centra, None, Top, ZERO
+    '         Centra, None, Top, ZERO
     ' 
     '  
     ' 
@@ -41,7 +41,7 @@
     ' 
     '     Enum YAxisLayoutStyles
     ' 
-    '         Centra, Left, None, Right, ZERO
+    '         Centra, None, Right, ZERO
     ' 
     '  
     ' 
@@ -62,7 +62,13 @@
 
 Namespace Graphic.Axis
 
-    Public Enum XAxisLayoutStyles
+    Public Enum XAxisLayoutStyles As Byte
+
+        ''' <summary>
+        ''' (默认样式) x轴位于图表的底部
+        ''' </summary>
+        Bottom = 0
+
         ''' <summary>
         ''' X轴位于图表的顶端
         ''' </summary>
@@ -72,18 +78,18 @@ Namespace Graphic.Axis
         ''' </summary>
         Centra
         ''' <summary>
-        ''' x轴位于图表的底部
+        ''' X轴位于Y轴纵坐标值为零的位置
         ''' </summary>
-        Bottom
         ZERO
         None
     End Enum
 
-    Public Enum YAxisLayoutStyles
+    Public Enum YAxisLayoutStyles As Byte
+
         ''' <summary>
-        ''' y轴位于图表的左侧
+        ''' (默认样式) y轴位于图表的左侧
         ''' </summary>
-        Left
+        Left = 0
         ''' <summary>
         ''' y轴位于图表的中部
         ''' </summary>
@@ -92,8 +98,15 @@ Namespace Graphic.Axis
         ''' y轴位于图表的右侧
         ''' </summary>
         Right
+        ''' <summary>
+        ''' y轴位于X轴横坐标值等于零的位置
+        ''' </summary>
         ZERO
+        ''' <summary>
+        ''' 不进行Y轴的绘制
+        ''' </summary>
         None
+
     End Enum
 
     Public Enum YlabelPosition

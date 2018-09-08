@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d1b71de51de356c0c6b5811021ec57b, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::35b47356b7aad6fe4639597e137b7e05, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
 
     ' Author:
     ' 
@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace Scripting.Runtime
 
@@ -64,6 +65,11 @@ Namespace Scripting.Runtime
     ''' </summary>
     Public Module Casting
 
+        ''' <summary>
+        ''' <see cref="Size"/> object to string expression
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ScriptValue(size As Size) As String
@@ -132,23 +138,43 @@ Namespace Scripting.Runtime
             End With
         End Function
 
+        ''' <summary>
+        ''' Parse <see cref="Point"/> from a given string expression
+        ''' </summary>
+        ''' <param name="pt$"></param>
+        ''' <returns></returns>
         Public Function PointParser(pt$) As Point
             Dim x, y As Double
             Call Ranges.Parser(pt, x, y)
             Return New Point(x, y)
         End Function
 
+        ''' <summary>
+        ''' Parse <see cref="PointF"/> from a given string expression
+        ''' </summary>
+        ''' <param name="pt$"></param>
+        ''' <returns></returns>
         Public Function FloatPointParser(pt$) As PointF
             Dim x, y As Double
             Call Ranges.Parser(pt, x, y)
             Return New PointF(x, y)
         End Function
 
+        ''' <summary>
+        ''' Parse <see cref="Size"/> from a given string expression
+        ''' </summary>
+        ''' <param name="pt$"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function SizeParser(pt$) As Size
             Return pt.FloatSizeParser.ToSize
         End Function
 
+        ''' <summary>
+        ''' Parse <see cref="SizeF"/> from a given string expression
+        ''' </summary>
+        ''' <param name="pt$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function FloatSizeParser(pt$) As SizeF
             If pt.StringEmpty Then
@@ -200,7 +226,7 @@ Namespace Scripting.Runtime
         ''' <summary>
         ''' 用于解析出任意实数的正则表达式
         ''' </summary>
-        Public Const RegexpDouble As String = "-?\d+(\.\d+)?"
+        Public Const RegexpDouble$ = "-?\d+(\.\d+)?"
         Public Const ScientificNotation$ = RegexpDouble & "[Ee][+-]\d+"
         Public Const RegexpFloat$ = RegexpDouble & "([Ee][+-]\d+)?"
         Public Const RegexInteger$ = "[-]?\d+"
@@ -289,9 +315,21 @@ Namespace Scripting.Runtime
             Return obj.ToArray
         End Function
 
+        ''' <summary>
+        ''' 支持日期字符串和unix timstamp对<see cref="Date"/>的转换
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastDate(obj As String) As DateTime
-            Return DateTime.Parse(obj)
+            If obj.StringEmpty OrElse obj = "0000-00-00 00:00:00" OrElse obj.ToUpper = "NULL" OrElse obj.ToUpper = "NA" Then
+                Return New Date
+            ElseIf obj.IsPattern("\d+") Then
+                ' unix timestamp
+                Return CLng(Val(obj)).FromUnixTimeStamp
+            Else
+                Return DateTime.Parse(obj)
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca441c0f62de937f1ba7b9de97a7f2ee, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Paths\Star.vb"
+﻿#Region "Microsoft.VisualBasic::77dfe5612040623f76b1baba0105cfdf, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Paths\Star.vb"
 
     ' Author:
     ' 

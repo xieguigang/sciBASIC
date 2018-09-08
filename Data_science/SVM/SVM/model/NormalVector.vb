@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bca64521003c4200447118718f15177, Data_science\SVM\SVM\model\NormalVector.vb"
+﻿#Region "Microsoft.VisualBasic::aa0c428a7f20a6eb7a2f0dac54cdcec8, Data_science\SVM\SVM\model\NormalVector.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a7e2c84b9241f3354ffdc67efcb78bb, Data_science\DataMining\network\CorrelationNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::660d002ad0babef9c9f5e9ed2fa7da30, Data_science\DataMining\network\CorrelationNetwork.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Math.Correlations.Correlations
