@@ -53,6 +53,9 @@ Imports VBCodePatterns = Microsoft.VisualBasic.Scripting.SymbolBuilder.VBLanguag
 
 Namespace ApplicationServices.Development
 
+    ''' <summary>
+    ''' 在这个模块之中对VB的代码文件进行大纲摘要的提取操作
+    ''' </summary>
     Public Module VBCodeSignature
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
