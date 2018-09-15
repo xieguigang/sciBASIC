@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf207431c3b5e09a290a4d58b648dbbf, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\TagData.vb"
+﻿#Region "Microsoft.VisualBasic::bfb726bb54ed85073c5bbae34ad02abd, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\TagData.vb"
 
     ' Author:
     ' 
@@ -88,7 +88,7 @@ Namespace ComponentModel.TagData
                 Return Tag.GetJson
             End Get
             Set(value As String)
-                Tag = value.LoadObject(Of T)
+                Tag = value.LoadJSON(Of T)
             End Set
         End Property
 

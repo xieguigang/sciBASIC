@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cc762d6b158f4952d945fa5dd68b834, gr\network-visualization\Datavisualization.Network\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::8ea9044c20a23137885a01f0e0a8bfa5, gr\network-visualization\Datavisualization.Network\NamespaceDoc.vb"
 
     ' Author:
     ' 

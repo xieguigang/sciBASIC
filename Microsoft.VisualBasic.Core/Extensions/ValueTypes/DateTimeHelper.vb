@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::968dcd4779c3b92dae03373bde134c1a, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::d63cd54a853a12b7706f778f74ce678c, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: MonthList
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: DateSeq, FillDateZero, FromUnixTimeStamp, GetMonthInteger, UnixTimeStamp
-    '                   YYMMDD
+    '         Function: DateSeq, FillDateZero, FromUnixTimeStamp, GetMonthInteger, IsEmpty
+    '                   UnixTimeStamp, YYMMDD
     ' 
     ' 
     ' /********************************************************************************/
@@ -163,6 +163,11 @@ Namespace ValueTypes
             Return (time.ToUniversalTime - ZERO).TotalSeconds
         End Function
 
+        ''' <summary>
+        ''' 将Unix时间戳转换为可读的日期
+        ''' </summary>
+        ''' <param name="unixDateTime"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function FromUnixTimeStamp(unixDateTime As Long) As Date
@@ -170,6 +175,26 @@ Namespace ValueTypes
                 .FromUnixTimeSeconds(unixDateTime) _
                 .DateTime _
                 .ToLocalTime()
+        End Function
+
+        Const ZeroDate1$ = "0001-01-01, 00:00:00"
+        Const ZeroDate2$ = "0000-00-00, 00:00:00"
+        ''' <summary>
+        ''' 对于unix timestamp而言，这个日期是零
+        ''' </summary>
+        Const ZeroDate3$ = "1970-01-01, 08:00:00"
+
+        <Extension>
+        Public Function IsEmpty(time As Date, Optional unixTimestamp As Boolean = False) As Boolean
+            Dim ts = time.FormatTime()
+
+            If ts = ZeroDate1 OrElse ts = ZeroDate2 Then
+                Return True
+            ElseIf unixTimestamp AndAlso ts = ZeroDate3 Then
+                Return True
+            Else
+                Return False
+            End If
         End Function
     End Module
 End Namespace

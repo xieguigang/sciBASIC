@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::505f7c423821c884100b34b33a2c0092, mime\application%rtf\Rtf.vb"
+﻿#Region "Microsoft.VisualBasic::b7634b1f58800c3d3c5e86d39d141e7a, mime\application%rtf\Rtf.vb"
 
     ' Author:
     ' 

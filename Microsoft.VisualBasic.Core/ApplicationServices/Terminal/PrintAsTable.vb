@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2476a3f0b6d1aa41c34fcfda30c2b17, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PrintAsTable.vb"
+﻿#Region "Microsoft.VisualBasic::85142a2f0041cc8218b7114fa9ad9b2f, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PrintAsTable.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module PrintAsTable
     ' 
-    '         Function: Print
+    '         Function: (+2 Overloads) Print
     ' 
     '         Sub: Print, PrintTable
     '         Delegate Sub

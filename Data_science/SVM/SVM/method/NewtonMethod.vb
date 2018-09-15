@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68ad69acfa79c086ff29c706cbf520d3, Data_science\SVM\SVM\method\NewtonMethod.vb"
+﻿#Region "Microsoft.VisualBasic::82f93449456eade90e35320275838983, Data_science\SVM\SVM\method\NewtonMethod.vb"
 
     ' Author:
     ' 

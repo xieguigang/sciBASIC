@@ -1,62 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::7d5daefcb77bfee30240219f260d68ab, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::b14a89069c0c2e1f25a3d93771706930, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module App
-' 
-'     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-'                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, ExceptionLogFile
-'                 ExecutablePath, Github, HOME, Info, InputFile
-'                 IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp, LogErrDIR
-'                 NanoTime, NextTempName, OutFile, PID, Platform
-'                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
-'                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
-'                 StartupDirectory, StdErr, StdOut, SysTemp, UserHOME
-'                 Version
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: __CLI, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
-'               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
-'               ElapsedMilliseconds, Exit, formatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
-'               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
-'               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
-'               RunCLIInternal, SelfFolk, SelfFolks, Shell, TraceBugs
-' 
-'     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
-'          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
-'          SetBufferSize, StartGC, StopGC
-' 
-' /********************************************************************************/
+    ' Module App
+    ' 
+    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, ExceptionLogFile
+    '                 ExecutablePath, Github, HOME, Info, InputFile
+    '                 IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp, LogErrDIR
+    '                 NanoTime, NextTempName, OutFile, PID, Platform
+    '                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
+    '                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
+    '                 StartupDirectory, StdErr, StdOut, SysTemp, UserHOME
+    '                 Version
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: __cli, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
+    '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
+    '               ElapsedMilliseconds, Exit, FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
+    '               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
+    '               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
+    '               RunCLIInternal, SelfFolk, SelfFolks, Shell, TraceBugs
+    ' 
+    '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
+    '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
+    '          SetBufferSize, StartGC, StopGC
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -423,10 +423,6 @@ Public Module App
 
     Sub New()
         ' On Error Resume Next ' 在Linux服务器上面不起作用？？？
-
-        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
-        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
-
         PreviousDirectory = App.StartupDirectory
 
 #Region "公共模块内的所有的文件路径初始化"
@@ -456,6 +452,32 @@ Public Module App
 
         End Try
 #End Region
+
+        If App.HOME.StringEmpty Then
+            App.HOME = System.IO.Directory.GetCurrentDirectory
+        End If
+
+        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
+        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
+
+        ' 2018-08-14 因为经过测试发现text encoding模块会优先于命令行参数设置模块的初始化的加载
+        ' 所以会导致环境变量为空
+        ' 故而text encoding可能总是系统的默认值，无法从命令行设置
+        ' 在这里提前进行初始化，可以消除此bug的出现
+        Dim envir As Dictionary(Of String, String) = App _
+            .CommandLine _
+            .EnvironmentVariables
+
+        Call App.JoinVariables(
+            envir _
+            .SafeQuery _
+            .Select(Function(x)
+                        Return New NamedValue(Of String) With {
+                            .Name = x.Key,
+                            .Value = x.Value
+                        }
+                    End Function) _
+            .ToArray)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -598,7 +620,7 @@ Public Module App
             s = CLangStringFormatProvider.ReplaceMetaChars(s)
         End If
 
-        Call InnerQueue.AddToQueue(
+        Call My.InnerQueue.AddToQueue(
             Sub()
                 Call Console.WriteLine(s)
             End Sub)
@@ -606,7 +628,7 @@ Public Module App
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub println()
-        Call InnerQueue.AddToQueue(AddressOf Console.WriteLine)
+        Call My.InnerQueue.AddToQueue(AddressOf Console.WriteLine)
     End Sub
 
     Public Declare Function SetProcessWorkingSetSize Lib "kernel32.dll" (process As IntPtr, minimumWorkingSetSize As Integer, maximumWorkingSetSize As Integer) As Integer
@@ -660,7 +682,7 @@ Public Module App
     '''
     <ExportAPI("Pause", Info:="Pause the console program.")>
     Public Sub Pause(Optional prompted$ = "Press any key to continute...")
-        Call InnerQueue.WaitQueue()
+        Call My.InnerQueue.WaitQueue()
         Call Console.WriteLine(prompted)
 
         ' 2018-6-26 如果不是命令行程序的话，可能会因为没有地方进行输入而导致程序在这里停止运行
@@ -800,22 +822,27 @@ Public Module App
     '''
     <ExportAPI("TraceBugs")>
     Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
-        Dim entry$ = $"{Now.formatTime}_{App.__getTEMPhash}"
+        Dim entry$ = $"{Now.FormatTime("-")}_{App.__getTEMPhash}"
         Dim log$ = $"{App.LogErrDIR}/{entry}.log"
         Call App.LogException(ex, trace:=trace, fileName:=log)
         Return log
     End Function
 
+    ''' <summary>
+    ''' MySql时间格式： ``yy-mm-dd, 00:00:00``
+    ''' </summary>
+    ''' <param name="time"></param>
+    ''' <returns></returns>
     <Extension>
-    Private Function formatTime(time As DateTime) As String
-        Dim yy = time.Year
-        Dim mm = time.Month
-        Dim dd = time.Day
-        Dim hh = time.Hour
-        Dim mi = time.Minute
-        Dim ss = time.Second
+    Public Function FormatTime(time As DateTime, Optional sep$ = ":") As String
+        Dim yy = Format(time.Year, "0000")
+        Dim mm = Format(time.Month, "00")
+        Dim dd = Format(time.Day, "00")
+        Dim hh = Format(time.Hour, "00")
+        Dim mi = Format(time.Minute, "00")
+        Dim ss = Format(time.Second, "00")
 
-        Return $"{yy}-{mm}-{dd}, {Format(hh, "00")}-{Format(mi, "00")}-{Format(ss, "00")}"
+        Return $"{yy}-{mm}-{dd}, {hh}{sep}{mi}{sep}{ss}"
     End Function
 
     ''' <summary>
@@ -993,7 +1020,7 @@ Public Module App
     <SecuritySafeCritical> Public Function Exit%(Optional state% = 0)
         App._Running = False
 
-        Call InnerQueue.WaitQueue()
+        Call My.InnerQueue.WaitQueue()
         Call App.StopGC()
         Call __GCThread.Dispose()
         Call Environment.Exit(state)
@@ -1378,14 +1405,14 @@ Public Module App
 
         ' 在这里等待终端的内部线程输出工作完毕，防止信息的输出错位
 
-        Call Terminal.WaitQueue()
+        Call My.InnerQueue.WaitQueue()
         Call Console.WriteLine()
 
         For Each hook As Action In __exitHooks
             Call hook()
         Next
 
-        Call Terminal.WaitQueue()
+        Call My.InnerQueue.WaitQueue()
         Call Console.WriteLine()
 
 #If DEBUG Then

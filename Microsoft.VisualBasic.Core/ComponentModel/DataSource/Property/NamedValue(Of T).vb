@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc7689a6d31d2b4e63dd57db514c71f8, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedValue(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::04f1c568f523034097893e43b84b73af, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\NamedValue(Of T).vb"
 
     ' Author:
     ' 

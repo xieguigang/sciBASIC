@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2444860271a06b546c4a095e1127e2a5, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::34acc5693ee1c124b9cafe5c27ace27f, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,10 @@
     ' 
     '         Properties: Count, Map, Objects
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: Add, GetEnumerator, IEnumerable_GetEnumerator, (+2 Overloads) Intersect, NotExists
-    '                   ToString
+    '         Function: Add, GetEnumerator, IEnumerable_GetEnumerator, indexing, (+2 Overloads) Intersect
+    '                   NotExists, ToString
     ' 
     '         Sub: Clear
     ' 
@@ -50,6 +50,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -108,7 +109,12 @@ Namespace ComponentModel.Collection
             Next
 
             Me.base = base
-            Me.index = maps _
+            Me.index = indexing()
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function indexing() As HashList(Of SeqValue(Of T))
+            Return maps _
                 .Select(Function(s)
                             Return New SeqValue(Of T) With {
                                 .i = s.Value,
@@ -116,7 +122,7 @@ Namespace ComponentModel.Collection
                             }
                         End Function) _
                 .AsHashList
-        End Sub
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(ParamArray vector As T())
@@ -127,8 +133,24 @@ Namespace ComponentModel.Collection
         ''' 默认是从0开始的
         ''' </summary>
         ''' <param name="base"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(base As Integer)
             Call Me.New({}, base:=base)
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="maps">如果是json加载，可能会出现空值的字典</param>
+        ''' <param name="base%"></param>
+        Sub New(maps As IDictionary(Of T, Integer), Optional base% = 0)
+            Static emptyIndex As DefaultValue(Of IDictionary(Of String, Integer)) =
+                New Dictionary(Of String, Integer)
+
+            Me.base = base
+            Me.maps = New Dictionary(Of T, Integer)(dictionary:=maps Or emptyIndex)
+            Me.index = indexing()
         End Sub
 
         ''' <summary>
@@ -223,6 +245,10 @@ Namespace ComponentModel.Collection
                 .GetJson
         End Function
 
+        ''' <summary>
+        ''' Returns the ``obj => index`` mapping table.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Map As Dictionary(Of T, Integer)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

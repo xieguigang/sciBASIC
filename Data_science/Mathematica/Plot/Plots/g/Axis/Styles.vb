@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8be9815d4f7dbd9b9c50f5739a3511f6, Data_science\Mathematica\Plot\Plots\g\Axis\Styles.vb"
+﻿#Region "Microsoft.VisualBasic::fdf7deb433dd7c94f3377d62e826ae9c, Data_science\Mathematica\Plot\Plots\g\Axis\Styles.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Enum XAxisLayoutStyles
     ' 
-    '         Bottom, Centra, None, Top, ZERO
+    '         Centra, None, Top, ZERO
     ' 
     '  
     ' 
@@ -41,7 +41,7 @@
     ' 
     '     Enum YAxisLayoutStyles
     ' 
-    '         Centra, Left, None, Right, ZERO
+    '         Centra, None, Right, ZERO
     ' 
     '  
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::800e31560b0c188e953893216e2f677e, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\DomainParser.vb"
+﻿#Region "Microsoft.VisualBasic::acd52a4700c2bedeb47904664bf7bcab, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\DomainParser.vb"
 
     ' Author:
     ' 

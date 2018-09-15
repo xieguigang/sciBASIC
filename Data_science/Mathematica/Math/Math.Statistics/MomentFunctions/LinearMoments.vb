@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::baff6fb24adce1abed049be422a66720, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\LinearMoments.vb"
+﻿#Region "Microsoft.VisualBasic::e6158f643749c0aa2cc5fe69c8827e7d, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\LinearMoments.vb"
 
     ' Author:
     ' 

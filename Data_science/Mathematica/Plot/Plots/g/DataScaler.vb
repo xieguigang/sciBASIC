@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdfe940d197d8348b515640de21fcce7, Data_science\Mathematica\Plot\Plots\g\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::1af64a7299fc5a1301810033607cf646, Data_science\Mathematica\Plot\Plots\g\DataScaler.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,26 @@
     ' 
     '         Function: TupleScaler
     ' 
-    '     Structure DataScaler
+    '     Class TermScaler
+    ' 
+    '         Properties: AxisTicks, X
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) Translate, TranslateHeight, TranslateX, TranslateY
+    '         Function: Translate, TranslateX
+    ' 
+    '     Class YScaler
+    ' 
+    '         Properties: region, Y
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: TranslateHeight, TranslateY
+    ' 
+    '     Class DataScaler
+    ' 
+    '         Properties: AxisTicks, X
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+2 Overloads) Translate, TranslateX
     ' 
     ' 
     ' /********************************************************************************/

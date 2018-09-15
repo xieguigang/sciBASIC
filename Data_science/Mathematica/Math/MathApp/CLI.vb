@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75d33877a42e5a7dd0874cad46098feb, Data_science\Mathematica\Math\MathApp\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::c601e7355cf52db39bee4ba45d34a785, Data_science\Mathematica\Math\MathApp\CLI.vb"
 
     ' Author:
     ' 

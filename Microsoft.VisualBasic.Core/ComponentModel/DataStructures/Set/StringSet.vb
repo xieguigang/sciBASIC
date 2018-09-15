@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40222131056ab52cedace7de0903de1a, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Set\StringSet.vb"
+﻿#Region "Microsoft.VisualBasic::f93b38a23bf677301f69723d2d1a27f1, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Set\StringSet.vb"
 
     ' Author:
     ' 

@@ -1,47 +1,47 @@
-﻿#Region "Microsoft.VisualBasic::5d1b71de51de356c0c6b5811021ec57b, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::35b47356b7aad6fe4639597e137b7e05, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module Casting
-' 
-'         Function: (+3 Overloads) [As], AsBaseType, CastChar, CastCharArray, CastCommandLine
-'                   CastDate, CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage
-'                   CastInteger, CastIPEndPoint, CastLogFile, CastLong, CastProcess
-'                   CastRegexOptions, CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser
-'                   FloatSizeParser, NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble
-'                   ScriptValue, SizeParser
-' 
-' 
-' /********************************************************************************/
+    '     Module Casting
+    ' 
+    '         Function: (+3 Overloads) [As], AsBaseType, CastChar, CastCharArray, CastCommandLine
+    '                   CastDate, CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage
+    '                   CastInteger, CastIPEndPoint, CastLogFile, CastLong, CastProcess
+    '                   CastRegexOptions, CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser
+    '                   FloatSizeParser, NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble
+    '                   ScriptValue, SizeParser
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 
 Namespace Scripting.Runtime
 
@@ -314,9 +315,21 @@ Namespace Scripting.Runtime
             Return obj.ToArray
         End Function
 
+        ''' <summary>
+        ''' 支持日期字符串和unix timstamp对<see cref="Date"/>的转换
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastDate(obj As String) As DateTime
-            Return DateTime.Parse(obj)
+            If obj.StringEmpty OrElse obj = "0000-00-00 00:00:00" OrElse obj.ToUpper = "NULL" OrElse obj.ToUpper = "NA" Then
+                Return New Date
+            ElseIf obj.IsPattern("\d+") Then
+                ' unix timestamp
+                Return CLng(Val(obj)).FromUnixTimeStamp
+            Else
+                Return DateTime.Parse(obj)
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

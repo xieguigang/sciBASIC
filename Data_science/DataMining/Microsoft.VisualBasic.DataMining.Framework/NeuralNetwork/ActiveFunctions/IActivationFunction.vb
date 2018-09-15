@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46b733603ebbb96fe4795d69442d6458, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
+﻿#Region "Microsoft.VisualBasic::04503538d4e39a5ab96e75b7fb4ddc3f, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
 
     ' Author:
     ' 

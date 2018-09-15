@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::942bb8d88391cf07f45ae91051f76032, Microsoft.VisualBasic.Core\Scripting\Expressions\StringInterpolation.vb"
+﻿#Region "Microsoft.VisualBasic::36d2f21ad3143036bf854682bb7becf0, Microsoft.VisualBasic.Core\Scripting\Expressions\StringInterpolation.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
+Imports VBCodePatterns = Microsoft.VisualBasic.Scripting.SymbolBuilder.VBLanguage.Patterns
 
 Namespace Scripting.Expressions
 
@@ -67,7 +67,7 @@ Namespace Scripting.Expressions
         ''' $obj.property.value.method.etc
         ''' ```
         ''' </summary>
-        Const VariablePattern$ = "[$]" & VBLanguage.IdentiferPattern & "(\." & VBLanguage.IdentiferPattern & ")*"
+        Const VariablePattern$ = "[$]" & VBCodePatterns.Identifer & "(\." & VBCodePatterns.Identifer & ")*"
 
         ''' <summary>
         ''' 不存在的键名会自动返回空字符串

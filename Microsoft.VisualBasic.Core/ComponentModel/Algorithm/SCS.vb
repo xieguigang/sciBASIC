@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2bb189ec23f58f669e1bf17338d3f854, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\SCS.vb"
+﻿#Region "Microsoft.VisualBasic::e2b7be939df9c777bafc51825a4cc984, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\SCS.vb"
 
     ' Author:
     ' 

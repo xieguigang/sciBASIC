@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58c139604571df4a130daf3b382801ea, Microsoft.VisualBasic.Core\Language\Value\Numeric\Numeric.vb"
+﻿#Region "Microsoft.VisualBasic::e7acb2cc6f8ebc2d0e8963795c6463b0, Microsoft.VisualBasic.Core\Language\Value\Numeric\Numeric.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,8 @@
     '     Module Numeric
     ' 
     '         Function: Equals, GreaterThan, GreaterThanOrEquals, LessThan, LessThanOrEquals
-    '                   MaxIndex, MinIndex, NextInteger
+    '                   MaxIndex, MinIndex, NextInteger, (+2 Overloads) Reverse, ToUInt32
+    '                   ToUInt64
     ' 
     '     Class Precise
     ' 

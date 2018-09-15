@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35557a1ccbb689afa60c7bd68907efad, vs_solutions\dev\VisualStudio\vbproj\ItemGroup.vb"
+﻿#Region "Microsoft.VisualBasic::1ab3a81bbc6479b11f7714e069e7fa5c, vs_solutions\dev\VisualStudio\vbproj\ItemGroup.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     ' Class ItemGroup
     ' 
     '     Properties: [Imports], BootstrapperPackages, Compiles, Contents, EmbeddedResources
-    '                 Nones, ProjectReferences, References
+    '                 Nones, ProjectReferences, References, TypeScriptCompiles
     ' 
     '     Function: ToString
     ' 
@@ -83,6 +83,8 @@ Public Class ItemGroup
     Public Property [Imports] As IncludeItem()
     <XmlElement("Compile")>
     Public Property Compiles As Compile()
+    <XmlElement("TypeScriptCompile")>
+    Public Property TypeScriptCompiles As Compile()
     <XmlElement("None")>
     Public Property Nones As None()
     <XmlElement("BootstrapperPackage")>

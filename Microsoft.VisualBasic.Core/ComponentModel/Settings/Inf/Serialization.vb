@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd0cb0e1dad0a20c80c0102e380f752f, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::80558a737fc0f3b2b14508618eb8ae19, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Serialization.vb"
 
     ' Author:
     ' 

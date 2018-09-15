@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac5dbf6c5a6b5e59a15f9e97c1f171fb, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::e5059b152be1ca568fa19373babcb314, Microsoft.VisualBasic.Core\Text\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -184,6 +184,8 @@ Namespace Text
                 DefaultEncoding = Text _
                     .ParseEncodingsName(codepage, Encodings.Default) _
                     .CodePage
+
+                Call $"*default_encoding* have been changed to {DefaultEncoding.DefaultValue.ToString}".__INFO_ECHO
             End If
 
             ' 如果检测到了gb2312编码被映射为了utf8编码，则提示用户为服务器安装gb2312编码

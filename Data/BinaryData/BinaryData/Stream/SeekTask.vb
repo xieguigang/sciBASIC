@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8e3e0b0588161caa6ec7f26db80a1b2, Data\BinaryData\BinaryData\Stream\SeekTask.vb"
+﻿#Region "Microsoft.VisualBasic::9f5f09b283c4c9a7c9e210ed1bb2d227, Data\BinaryData\BinaryData\Stream\SeekTask.vb"
 
     ' Author:
     ' 

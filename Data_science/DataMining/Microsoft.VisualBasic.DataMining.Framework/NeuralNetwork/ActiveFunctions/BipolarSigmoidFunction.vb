@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f67c591313220d5d647ab274dba4873d, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\BipolarSigmoidFunction.vb"
+﻿#Region "Microsoft.VisualBasic::9ec32de73017f65bfe6dc54fcef53d01, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\ActiveFunctions\BipolarSigmoidFunction.vb"
 
     ' Author:
     ' 

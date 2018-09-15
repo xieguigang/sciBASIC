@@ -1,49 +1,49 @@
-﻿#Region "Microsoft.VisualBasic::653e0433987e989ce48bac0f2a3d83b6, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\Controls.vb"
+﻿#Region "Microsoft.VisualBasic::a7c4b491a00c4c994d27672e7b0d7b05, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\Controls.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module ControlsExtension
-' 
-'         Function: GetMoreProps, SetMoreProps
-' 
-'     Class ExtendedProps
-' 
-'         Properties: DynamicHashTable
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: GetDynamicMemberNames, TryGetMember, TrySetMember
-' 
-' 
-' /********************************************************************************/
+    '     Module ControlsExtension
+    ' 
+    '         Function: GetMoreProps, SetMoreProps
+    ' 
+    '     Class ExtendedProps
+    ' 
+    '         Properties: DynamicHashTable
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: GetDynamicMemberNames, TryGetMember, TrySetMember
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

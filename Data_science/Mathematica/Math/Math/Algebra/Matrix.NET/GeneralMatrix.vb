@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::375f12ace15a4a36532cef99efa3ed34, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::dd8affb7f2982f5d963bba805f29400d, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 

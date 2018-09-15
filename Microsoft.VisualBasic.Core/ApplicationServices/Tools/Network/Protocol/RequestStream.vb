@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1b128ba81ddbfb72092ac075138a59e, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::13e71ca080a9db858e6f18fb14707e82, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Protocol\RequestStream.vb"
 
     ' Author:
     ' 
@@ -218,7 +218,7 @@ Namespace Net.Protocols
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         Public Function LoadObject(Of T)() As T
-            Return GetUTF8String.LoadObject(Of T)
+            Return GetUTF8String.LoadJSON(Of T)
         End Function
 
         ''' <summary>

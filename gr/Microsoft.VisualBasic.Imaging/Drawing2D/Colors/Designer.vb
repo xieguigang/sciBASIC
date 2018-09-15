@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87ccaab28fe9783d02e8934e78c39135, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::61f30121e1d6a20ab25cb648c7810a6e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -221,7 +221,7 @@ Namespace Drawing2D.Colors
                 Dim colors As Dictionary(Of String, String()) = My.Resources _
                     .designer_colors _
                     .GetString(Encodings.UTF8) _
-                    .LoadObject(Of Dictionary(Of String, String()))
+                    .LoadJSON(Of Dictionary(Of String, String()))
                 Dim valids As New Dictionary(Of Color, Color())
 
                 For Each x In colors
@@ -240,8 +240,7 @@ Namespace Drawing2D.Colors
                     Call sb.Replace($"""{n}""", $"""c{n}""")
                 Next
 
-                ColorBrewer = sb.ToString _
-                    .LoadObject(Of Dictionary(Of String, ColorBrewer))
+                ColorBrewer = sb.ToString.LoadJSON(Of Dictionary(Of String, ColorBrewer))
 
             Catch ex As Exception
                 Call App.LogException(ex)

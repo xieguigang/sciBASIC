@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9780943c2ed3ba50bf31d0c4b39e7cf0, Data_science\Mathematica\Math\Math\Spline\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::587fdf07024bf97819d41ad9a0dfdc80, Data_science\Mathematica\Math\Math\Spline\Extensions.vb"
 
     ' Author:
     ' 

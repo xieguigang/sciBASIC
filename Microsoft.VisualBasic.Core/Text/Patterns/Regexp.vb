@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5797b66d3a24dd047b09d5c1418b8bb9, Microsoft.VisualBasic.Core\Text\Patterns\Regexp.vb"
+﻿#Region "Microsoft.VisualBasic::872b05a19ade60385eb119b14954af63, Microsoft.VisualBasic.Core\Text\Patterns\Regexp.vb"
 
     ' Author:
     ' 

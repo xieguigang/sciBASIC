@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b97c0c24c82bb75cea4baf0ca36af81, Microsoft.VisualBasic.Core\Serialization\JSON\SchemaProvider\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ffd29faa956f3334659ba027daf8af5b, Microsoft.VisualBasic.Core\Serialization\JSON\SchemaProvider\Extensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a44361e3d2f8eb98a8b15b27e563935, Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\SimpleExpression.vb"
+﻿#Region "Microsoft.VisualBasic::13b1bde62f33e14199b60fd350d6ff50, Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\SimpleExpression.vb"
 
     ' Author:
     ' 

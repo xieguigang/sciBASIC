@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dfd770b560081ca36c2730f085adcc5, Data\BinaryData\BinaryData\Storage\StringWriter.vb"
+﻿#Region "Microsoft.VisualBasic::2c10d2bc2466b4716673df29d1848f5a, Data\BinaryData\BinaryData\Storage\StringWriter.vb"
 
     ' Author:
     ' 
@@ -186,7 +186,7 @@ Public Class StringReader : Implements IDisposable
     End Function
 
     Public Function ReadStringArray() As String()
-        Return ReadString.LoadObject(Of String())
+        Return ReadString.LoadJSON(Of String())
     End Function
 
 #Region "IDisposable Support"

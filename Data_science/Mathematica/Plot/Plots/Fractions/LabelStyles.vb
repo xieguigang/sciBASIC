@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26351168e2be3aacca53da138d7ea5ef, Data_science\Mathematica\Plot\Plots\Fractions\LabelStyles.vb"
+﻿#Region "Microsoft.VisualBasic::b57a79adfd24b86356acdc48e76154b1, Data_science\Mathematica\Plot\Plots\Fractions\LabelStyles.vb"
 
     ' Author:
     ' 

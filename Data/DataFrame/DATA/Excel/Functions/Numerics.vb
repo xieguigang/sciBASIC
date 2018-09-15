@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::450b3e6ad19d5d069b2311b2521082f0, Data\DataFrame\DATA\Excel\Functions\Numerics.vb"
+﻿#Region "Microsoft.VisualBasic::374f3935b9a8ca5512d0acddd6ed742b, Data\DataFrame\DATA\Excel\Functions\Numerics.vb"
 
     ' Author:
     ' 

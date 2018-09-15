@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb497ff03dedbdde88190d1619339ad6, Microsoft.VisualBasic.Core\Text\IO\GB2312.vb"
+﻿#Region "Microsoft.VisualBasic::0ff1963cc1b540571a6fdce484fb47be, Microsoft.VisualBasic.Core\Text\IO\GB2312.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::424e5cf886349a89b9f8bde2001678f2, Data_science\DataMining\Visualize\Kmeans.vb"
+﻿#Region "Microsoft.VisualBasic::77dd110cc82f598314d6afe724c51924, Data_science\DataMining\Visualize\Kmeans.vb"
 
     ' Author:
     ' 
@@ -83,7 +83,7 @@ Public Module Kmeans
     Public Function Scatter2D(clusterData As IEnumerable(Of EntityClusterModel),
                               catagory As (X As NamedCollection(Of String), Y As NamedCollection(Of String)),
                               Optional size$ = "1600,1600",
-                              Optional padding$ = g.DefaultPadding,
+                              Optional padding$ = g.DefaultUltraLargePadding,
                               Optional bg$ = "white",
                               Optional schema$ = Designer.Clusters,
                               Optional pointSize! = 10) As GraphicsData

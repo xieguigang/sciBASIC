@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ea108cf947d574f856a1bdda1177ead, Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicEval.vb"
+﻿#Region "Microsoft.VisualBasic::44be867e917859c4347582d3b40b73c6, Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicEval.vb"
 
     ' Author:
     ' 
