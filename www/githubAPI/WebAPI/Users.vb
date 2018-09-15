@@ -64,7 +64,9 @@ Namespace WebAPI
         End Function
 
         Public Shared Function Parse(page As String) As Counter
-            Dim links$() = page.Matches("<a .+\sclass[=]""\s*UnderlineNav[-]item\s*"".*</a>").ToArray
+            Dim links$() = page.Match("UnderlineNav[-]body.*</div>") _
+                               .Matches("<a .+\sclass[=]""\s*UnderlineNav[-]item\s*"".*</a>") _
+                               .ToArray
             Dim counters = links _
                 .Select(Function(a)
                             Dim title$ = a.Match("title[=]"".*""").GetTagValue("=").Value.Trim("""").Trim

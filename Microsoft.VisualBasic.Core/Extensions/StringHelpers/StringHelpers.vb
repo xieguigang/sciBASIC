@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::1ddd5423ca7a71b700282bda0314a07d, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module StringHelpers
-    ' 
-    '     Properties: NonStrictCompares, StrictCompares
-    ' 
-    '     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
-    '               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
-    '               FormatZero, GetBetween, GetEMails, GetStackValue, GetString
-    '               (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny, (+2 Overloads) Intersection
-    '               IsEmptyStringVector, JoinBy, LineTokens, Located, Lookup
-    '               (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString, NotEmpty
-    '               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
-    '               SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty, StringHashCode
-    '               StringReplace, StringSplit, StripBlank, Strips, TextEquals
-    '               TextLast, TokenCount, TokenCountIgnoreCase, TrimA, TrimNewLine
-    '               WildcardsLocated
-    ' 
-    '     Sub: Parts, RemoveLast
-    ' 
-    ' /********************************************************************************/
+' Module StringHelpers
+' 
+'     Properties: NonStrictCompares, StrictCompares
+' 
+'     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
+'               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
+'               FormatZero, GetBetween, GetEMails, GetStackValue, GetString
+'               (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny, (+2 Overloads) Intersection
+'               IsEmptyStringVector, JoinBy, LineTokens, Located, Lookup
+'               (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString, NotEmpty
+'               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
+'               SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty, StringHashCode
+'               StringReplace, StringSplit, StripBlank, Strips, TextEquals
+'               TextLast, TokenCount, TokenCountIgnoreCase, TrimA, TrimNewLine
+'               WildcardsLocated
+' 
+'     Sub: Parts, RemoveLast
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -780,7 +780,7 @@ Public Module StringHelpers
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Matches(input As String, pattern$, Optional options As RegexOptions = RegexICSng) As IEnumerable(Of String)
+    Public Function Matches(input$, pattern$, Optional options As RegexOptions = RegexICSng) As IEnumerable(Of String)
         If input Is Nothing OrElse input.Length = 0 Then
             Return {}
         Else
@@ -810,6 +810,7 @@ Public Module StringHelpers
         Return json.SaveTo(path, TextEncodings.UTF8WithoutBOM)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __json(x As KeyValuePair(Of String, String)) As String
         Return x.Key.GetJson & ": " & x.Value.GetJson
     End Function
