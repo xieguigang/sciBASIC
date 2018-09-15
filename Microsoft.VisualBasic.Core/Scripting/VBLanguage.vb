@@ -45,12 +45,34 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Scripting.SymbolBuilder
+Namespace Scripting.SymbolBuilder.VBLanguage
+
+    Public NotInheritable Class Patterns
+
+        Private Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' 匹配一个合法的标识符，在正则匹配的时候应该不区分大小写
+        ''' </summary>
+        Public Const Identifer$ = "\[?[_a-z][_a-z0-9]*\]?"
+
+        Public Const Access$ = "((Partial )|(Public )|(Private )|(Friend )|(Protected )|(Shadows )|(Shared )|(Overrides )|(Overloads )|(Overridable )|(MustOverrides )|(NotInheritable )|(MustInherit ))*"
+        Public Const Type$ = "^\s*" & Access & "((Class)|(Module)|(Structure)|(Enum)|(Delegate)|(Interface))\s+" & VBLanguage.Patterns.Identifer
+        Public Const Property$ = "^\s+" & Access & "\s*((ReadOnly )|(WriteOnly )|(Default ))*\s*Property\s+" & VBLanguage.Patterns.Identifer
+        Public Const Method$ = "^\s+" & Access & "\s*((Sub )|(Function )|(Iterator )|(Operator ))+\s*" & VBLanguage.Patterns.Identifer
+        Public Const Operator$ = "^\s+" & Access & "\s*Operator\s+(([<]|[>]|\=|\+|\-|\*|/|\^|\\)+|(" & VBLanguage.Patterns.Identifer & "))"
+        Public Const Close$ = "^\s+End\s((Sub)|(Function)|(Class)|(Structure)|(Enum)|(Interface)|(Operator)|(Module))"
+        Public Const CloseType$ = "^\s*End\s((Class)|(Structure)|(Enum)|(Interface)|(Module))"
+        Public Const Indents$ = "^\s+"
+        Public Const Attribute$ = "<.+?>\s*"
+
+    End Class
 
     ''' <summary>
     ''' Keyword processor of the VB.NET language
     ''' </summary>
-    Public NotInheritable Class VBLanguage
+    Public NotInheritable Class KeywordProcessor
 
         ''' <summary>
         ''' List of VB.NET language keywords
@@ -79,11 +101,6 @@ Namespace Scripting.SymbolBuilder
             "|When|While|Widening|With|WithEvents|WriteOnly|" &
             "|Xor|" &
             "|Yield|"
-
-        ''' <summary>
-        ''' 匹配一个合法的标识符，在正则匹配的时候应该不区分大小写
-        ''' </summary>
-        Public Const IdentiferPattern$ = "\[?[_a-z][_a-z0-9]*\]?"
 
         ''' <summary>
         ''' Tokenize of <see cref="VBKeywords"/>

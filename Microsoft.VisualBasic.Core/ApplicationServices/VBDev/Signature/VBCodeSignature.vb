@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::7a2bf42b1d2cf69cf1e27abd497e7998, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\VBCodeSignature.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module VBCodeSignature
-    ' 
-    '         Function: memberList, RemoveAttributes, SummaryInternal, SummaryModules, typeSummary
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module VBCodeSignature
+' 
+'         Function: memberList, RemoveAttributes, SummaryInternal, SummaryModules, typeSummary
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,25 +49,19 @@ Imports Microsoft.VisualBasic.Language.Values
 Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
 Imports Microsoft.VisualBasic.Text
 Imports r = System.Text.RegularExpressions.Regex
+Imports VBCodePatterns = Microsoft.VisualBasic.Scripting.SymbolBuilder.VBLanguage.Patterns
 
 Namespace ApplicationServices.Development
 
+    ''' <summary>
+    ''' 在这个模块之中对VB的代码文件进行大纲摘要的提取操作
+    ''' </summary>
     Public Module VBCodeSignature
-
-        Const AccessPattern$ = "((Partial )|(Public )|(Private )|(Friend )|(Protected )|(Shadows )|(Shared )|(Overrides )|(Overloads )|(Overridable )|(MustOverrides )|(NotInheritable )|(MustInherit ))*"
-        Const TypePatterns$ = "^\s*" & AccessPattern & "((Class)|(Module)|(Structure)|(Enum)|(Delegate)|(Interface))\s+" & VBLanguage.IdentiferPattern
-        Const PropertyPatterns$ = "^\s+" & AccessPattern & "\s*((ReadOnly )|(WriteOnly )|(Default ))*\s*Property\s+" & VBLanguage.IdentiferPattern
-        Const MethodPatterns$ = "^\s+" & AccessPattern & "\s*((Sub )|(Function )|(Iterator )|(Operator ))+\s*" & VBLanguage.IdentiferPattern
-        Const OperatorPatterns$ = "^\s+" & AccessPattern & "\s*Operator\s+(([<]|[>]|\=|\+|\-|\*|/|\^|\\)+|(" & VBLanguage.IdentiferPattern & "))"
-        Const ClosePatterns$ = "^\s+End\s((Sub)|(Function)|(Class)|(Structure)|(Enum)|(Interface)|(Operator)|(Module))"
-        Const CloseTypePatterns$ = "^\s*End\s((Class)|(Structure)|(Enum)|(Interface)|(Module))"
-        Const IndentsPattern$ = "^\s+"
-        Const AttributePattern$ = "<.+?>\s*"
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function RemoveAttributes(line As String) As String
-            Return r.Replace(line, AttributePattern, "", RegexICSng)
+            Return r.Replace(line, VBCodePatterns.Attribute, "", RegexICSng)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -103,17 +97,17 @@ Namespace ApplicationServices.Development
             Do While Not vblines.EndRead
                 line = ++vblines
 
-                If Not (tokens = line.Match(TypePatterns, RegexICMul)).StringEmpty Then
+                If Not (tokens = line.Match(VBCodePatterns.Type, RegexICMul)).StringEmpty Then
                     list = tokens.Split(" "c).AsList
                     type = list(-2)
                     name = list(-1)
-                    indents = line.Match(IndentsPattern, RegexICMul)
+                    indents = line.Match(VBCodePatterns.Indents, RegexICMul)
 
                     If type = "Enum" Then
                         Dim members = vb _
                             .Match("Enum\s+" & name & ".+?End Enum", RegexICSng) _
                             .LineTokens _
-                            .Where(Function(s) s.IsPattern("\s+" & VBLanguage.IdentiferPattern & "\s*([=].+?)?\s*")) _
+                            .Where(Function(s) s.IsPattern("\s+" & VBCodePatterns.Identifer & "\s*([=].+?)?\s*")) _
                             .Select(AddressOf Trim) _
                             .Where(Function(s) Not s.StringEmpty) _
                             .ToArray
@@ -142,19 +136,19 @@ Namespace ApplicationServices.Development
                         End If
                     End If
                 End If
-                If Not (tokens = line.Match(PropertyPatterns, RegexICMul)).StringEmpty Then
+                If Not (tokens = line.Match(VBCodePatterns.Property, RegexICMul)).StringEmpty Then
                     list = tokens.Split(" "c).AsList
                     type = list(-2)
                     name = list(-1)
-                    indents = line.Match(IndentsPattern, RegexICMul)
+                    indents = line.Match(VBCodePatterns.Indents, RegexICMul)
 
                     properties += New NamedValue(Of String)(name, type, indents)
                 End If
-                If Not (tokens = line.Match(MethodPatterns, RegexICMul)).StringEmpty Then
+                If Not (tokens = line.Match(VBCodePatterns.Method, RegexICMul)).StringEmpty Then
                     list = tokens.Split(" "c).AsList
                     type = list(-2)
                     name = list(-1)
-                    indents = line.Match(IndentsPattern, RegexICMul)
+                    indents = line.Match(VBCodePatterns.Indents, RegexICMul)
 
                     If type = "Operator" Then
                         operators += New NamedValue(Of String)(name, type, indents)
@@ -162,11 +156,11 @@ Namespace ApplicationServices.Development
                         methods += New NamedValue(Of String)(name, type, indents)
                     End If
                 End If
-                If Not (tokens = line.Match(OperatorPatterns, RegexICMul)).StringEmpty Then
+                If Not (tokens = line.Match(VBCodePatterns.Operator, RegexICMul)).StringEmpty Then
                     list = tokens.Split(" "c).AsList
                     type = list(-2)
                     name = list(-1)
-                    indents = line.Match(IndentsPattern, RegexICMul)
+                    indents = line.Match(VBCodePatterns.Indents, RegexICMul)
 
                     If type = "Operator" Then
                         operators += New NamedValue(Of String)(name, type, indents)
@@ -174,7 +168,7 @@ Namespace ApplicationServices.Development
                         methods += New NamedValue(Of String)(name, type, indents)
                     End If
                 End If
-                If Not (tokens = line.Match(CloseTypePatterns, RegexICMul)).StringEmpty Then
+                If Not (tokens = line.Match(VBLanguage.Patterns.CloseType, RegexICMul)).StringEmpty Then
                     Return container.typeSummary(properties, methods, operators, innerModules)
                 End If
             Loop

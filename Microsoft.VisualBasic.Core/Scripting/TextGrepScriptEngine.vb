@@ -116,17 +116,17 @@ Namespace Scripting
         ''' <remarks></remarks>
         <ExportAPI("compile", Info:="", Usage:="script_tokens1;script_tokens2;....", Example:="")>
         Public Shared Function Compile(scriptText As String) As TextGrepScriptEngine
-            Dim Script As String() = TryParse(scriptText, TokenDelimited:=";", InnerDelimited:="'"c)
+            Dim script$() = TryParse(scriptText, TokenDelimited:=";", InnerDelimited:="'"c)
             Dim builder = LinqAPI.Exec(Of Token) <=
  _
                 From sToken As String
-                In Script
+                In script
                 Let tokens As String() = TryParse(sToken, TokenDelimited:=" ", InnerDelimited:="'"c)
-                Let EntryPoint As String = sToken.Split.First.ToLower
-                Where MethodPointers.ContainsKey(EntryPoint)
-                Select New Token(tokens, _MethodPointers(EntryPoint))
+                Let entryPoint As String = sToken.Split.First.ToLower
+                Where MethodPointers.ContainsKey(entryPoint)
+                Select New Token(tokens, _MethodPointers(entryPoint))
 
-            If Script.Length > builder.Length Then
+            If script.Length > builder.Length Then
                 ' 有非法的命令短语，则为了保护数据的一致性，这个
                 ' 含有错误的语法的脚本是不能够用于操作的， 
                 ' 则函数返回空指针
@@ -200,8 +200,9 @@ Namespace Scripting
         ''' <returns></returns>
         ''' <remarks></remarks>
         <ExportAPI("Tokens", Info:="", Usage:="tokens p_str pointer", Example:="")>
-        <Argument("pointer", False,
-                  Description:="pointer must be a zero base integer number which is smaller than the tokens array's length; pointer can also be assign of a specific string ""last"" to get the last element and ""first"" to get the first element in the tokens array.")>
+        <Argument("pointer", False, Description:="pointer must be a zero base integer number which is smaller than 
+            the tokens array's length; pointer can also be assign of a specific string ""last"" to get the last 
+            element and ""first"" to get the first element in the tokens array.")>
         Private Shared Function Tokens(source As String, script As String()) As String
             Dim Delimiter As String = script(1)
             Dim Tstr As String() = Strings.Split(source, Delimiter)
@@ -209,7 +210,8 @@ Namespace Scripting
             If String.Equals(script(2), "last", StringComparison.OrdinalIgnoreCase) Then
                 Return If(Tstr.IsNullOrEmpty, "", Tstr.Last)
             Else
-                Dim p As Integer = CInt(Val(script(2))) ' first指示符被计算为0，所以在这里不需要为first进行额外的处理
+                ' first指示符被计算为0，所以在这里不需要为first进行额外的处理
+                Dim p As Integer = CInt(Val(script(2)))
 
                 If Tstr.Length - 1 < p OrElse p < 0 Then
                     Return ""
@@ -229,7 +231,9 @@ Namespace Scripting
         ''' 
         ''' </summary>
         ''' <param name="source"></param>
-        ''' <param name="ScriptTokens">向量之中的第一个元素为命令的名字，第二个元素为Mid函数的Start参数，第三个元素为Mid函数的Length参数，可以被忽略掉</param>
+        ''' <param name="ScriptTokens">
+        ''' 向量之中的第一个元素为命令的名字，第二个元素为Mid函数的Start参数，第三个元素为Mid函数的Length参数，可以被忽略掉
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <ExportAPI("mid", Info:="Substring a token from the input text source.")>
