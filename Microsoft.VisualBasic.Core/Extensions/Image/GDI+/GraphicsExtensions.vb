@@ -347,13 +347,17 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="image"></param>
         ''' <returns></returns>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Get.RawStream")>
-        <Extension> Public Function GetRawStream(image As Image) As Byte()
-            Using stream As New MemoryStream
-                Call image.Save(stream, ImageFormat.Png)
-                Return stream.ToArray
-            End Using
+        <Extension> Public Function GetStreamBuffer(image As Image) As Byte()
+            Return image.ToStream.ToArray
+        End Function
+
+        Public Function ToStream(image As Image) As MemoryStream
+            With New MemoryStream
+                Call image.Save(.ByRef, ImageFormat.Png)
+                Return .ByRef
+            End With
         End Function
 
         <ExportAPI("GrayBitmap", Info:="Create the gray color of the target image.")>
