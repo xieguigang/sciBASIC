@@ -119,7 +119,9 @@ Namespace WebAPI
                 End If
             Loop
 
-            Return out
+            Return out.GroupBy(Function(u) u.login) _
+                      .Select(Function(u) u.First) _
+                      .ToArray
         End Function
 
         Public Function GetUserData(usrName$) As User
