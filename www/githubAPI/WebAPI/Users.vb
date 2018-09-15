@@ -64,14 +64,14 @@ Namespace WebAPI
         End Function
 
         Public Shared Function Parse(page As String) As Counter
-            Dim links$() = page.Match("UnderlineNav[-]body.*</div>") _
-                               .Matches("<a .+\sclass[=]""\s*UnderlineNav[-]item\s*"".*</a>") _
+            Dim links$() = page.Match("UnderlineNav.+?</div>", RegexICSng) _
+                               .Matches("title[=].+?</a>") _
                                .ToArray
             Dim counters = links _
                 .Select(Function(a)
                             Dim title$ = a.Match("title[=]"".*""").GetTagValue("=").Value.Trim("""").Trim
-                            Dim count$ = a.Match("<span.+</span>").Match("\d+")
-                            Return New NamedValue(Of Integer)(title, CInt(count))
+                            Dim count$ = a.Match("<span.+</span>", RegexICSng).Match("\d+")
+                            Return New NamedValue(Of Integer)(title, CInt(Val(count)))
                         End Function) _
                 .ToDictionary _
                 .FlatTable
@@ -111,10 +111,11 @@ Namespace WebAPI
             Do While Not ([get] = ParserInternal(username, ++i, url)).IsNullOrEmpty
                 out += (+[get])
 
-                If out.Count > maxLimits Then
+                If out.Count > maxLimits OrElse out.Count >= count Then
                     Exit Do
                 Else
-                    Call Thread.Sleep(300)  ' Decrease the server load 
+                    ' Decrease the server load 
+                    Call Thread.Sleep(300)
                 End If
             Loop
 
