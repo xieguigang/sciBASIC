@@ -1,49 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::8b5d55696c4ff58e5502f6f06feb742d, www\githubAPI\WebAPI\Users.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Users
-    ' 
-    '         Function: Followers, Following, GetUserData, ParserInternal, ParserIterator
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Users
+' 
+'         Function: Followers, Following, GetUserData, ParserInternal, ParserIterator
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.HtmlParser
 Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports r = System.Text.RegularExpressions.Regex
@@ -57,8 +59,27 @@ Namespace WebAPI
         Public Property Followers As Integer
         Public Property Following As Integer
 
-        Public Shared Function Parse(page As String) As Counter
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
 
+        Public Shared Function Parse(page As String) As Counter
+            Dim links$() = page.Matches("<a .+\sclass[=]""\s*UnderlineNav[-]item\s*"".*</a>").ToArray
+            Dim counters = links _
+                .Select(Function(a)
+                            Dim title$ = a.Match("title[=]"".*""").GetTagValue("=").Value.Trim("""").Trim
+                            Dim count$ = a.Match("<span.+</span>").Match("\d+")
+                            Return New NamedValue(Of Integer)(title, CInt(count))
+                        End Function) _
+                .ToDictionary _
+                .FlatTable
+
+            Return New Counter With {
+                .Followers = counters(NameOf(.Followers)),
+                .Following = counters(NameOf(.Following)),
+                .Repositories = counters(NameOf(.Repositories)),
+                .Stars = counters(NameOf(.Stars))
+            }
         End Function
     End Class
 
