@@ -50,6 +50,18 @@ Imports r = System.Text.RegularExpressions.Regex
 
 Namespace WebAPI
 
+    Public Class Counter
+
+        Public Property Repositories As Integer
+        Public Property Stars As Integer
+        Public Property Followers As Integer
+        Public Property Following As Integer
+
+        Public Shared Function Parse(page As String) As Counter
+
+        End Function
+    End Class
+
     Public Module Users
 
         Public Const Github$ = "https://github.com"
@@ -58,13 +70,17 @@ Namespace WebAPI
         ''' Get user's github followers
         ''' </summary>
         ''' <param name="username"></param>
+        ''' <param name="maxFollowers">
+        ''' 限制性参数，如果超过了这个数量，将会停止解析
+        ''' </param>
         ''' <returns></returns>
-        <Extension> Public Function Followers(username As String, Optional maxFollowers% = Integer.MaxValue) As User()
+        <Extension> Public Function Followers(username$, Optional maxFollowers% = Integer.MaxValue) As User()
             Dim url As String = Github & "/{0}?page={1}&tab=followers"
-            Return ParserIterator(url, username, maxFollowers)
+            Dim counter As Counter = Counter.Parse($"https://github.com/{username}".GET)
+            Return ParserIterator(url, username, maxFollowers, counter.Followers)
         End Function
 
-        Private Function ParserIterator(url$, username$, maxLimits%) As User()
+        Private Function ParserIterator(url$, username$, maxLimits%, count%) As User()
             Dim out As New List(Of User)
             Dim i As int = 1
             Dim [get] As New Value(Of User())
@@ -159,7 +175,8 @@ Namespace WebAPI
         ''' <returns></returns>
         <Extension> Public Function Following(username As String, Optional maxFollowing% = Integer.MaxValue) As User()
             Dim url As String = Github & "/{0}?page={1}&tab=following"
-            Return ParserIterator(url, username, maxFollowing)
+            Dim counter As Counter = Counter.Parse($"https://github.com/{username}".GET)
+            Return ParserIterator(url, username, maxFollowing, counter.Following)
         End Function
     End Module
 End Namespace
