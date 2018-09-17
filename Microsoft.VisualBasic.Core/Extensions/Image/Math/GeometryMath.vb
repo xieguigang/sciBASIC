@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::076eca91396ac01acbb19fd87b577007, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
+﻿#Region "Microsoft.VisualBasic::d686d36337a9031e2e78af7daadb163a, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
 
     ' Author:
     ' 

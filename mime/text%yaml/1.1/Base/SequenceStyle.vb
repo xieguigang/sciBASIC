@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0656f8a80898718c7910c8f7bcb70505, mime\text%yaml\1.1\Base\SequenceStyle.vb"
+﻿#Region "Microsoft.VisualBasic::6ae29356743e0f24df8a842156bed716, mime\text%yaml\1.1\Base\SequenceStyle.vb"
 
     ' Author:
     ' 
@@ -88,4 +88,3 @@ Namespace Grammar11
         End Function
     End Module
 End Namespace
-

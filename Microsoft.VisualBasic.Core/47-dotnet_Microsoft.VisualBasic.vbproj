@@ -865,6 +865,7 @@
     <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
     <Compile Include="ApplicationServices\VBDev\AssemblyInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
+    <Compile Include="ApplicationServices\VBDev\Signature\CodeSign.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\VBCodeSignature.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\LicenseInfo.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Extensions\APIExtensions2.vb" />
@@ -1107,7 +1108,7 @@
     <Compile Include="Scripting\ScriptBuilder.vb" />
     <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\Shell.vb" />
     <Compile Include="ApplicationServices\Terminal\PipelineCLI.vb" />
-    <Compile Include="ApplicationServices\Terminal\InnerQueue.vb" />
+    <Compile Include="My\InnerQueue.vb" />
     <Compile Include="ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb" />
     <Compile Include="ApplicationServices\Terminal\PrintAsTable.vb" />
     <Compile Include="ApplicationServices\Terminal\ProgressBar\AbstractBar.vb" />

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10259cc341a4fd3ffa159bc470125bfe, mime\text%yaml\1.1\IDictionaryExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a830816ec3717d8d287b35f232366d07, mime\text%yaml\1.1\IDictionaryExtensions.vb"
 
     ' Author:
     ' 
@@ -76,4 +76,3 @@ Namespace Grammar11
         End Function
     End Module
 End Namespace
-

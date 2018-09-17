@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0382de4950859fd40fdf6b71731898a, Data_science\Mathematica\Math\Math\Signals\FourierTransform.vb"
+﻿#Region "Microsoft.VisualBasic::6ef0e260971490b4543d561b9a65f293, Data_science\Mathematica\Math\Math\Signals\FourierTransform.vb"
 
     ' Author:
     ' 

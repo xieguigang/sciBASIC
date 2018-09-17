@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a8e7230a9b67230f4bad77248426c31, Data_science\Mathematica\Plot\Plots-statistics\PCA\ScreePlot.vb"
+﻿#Region "Microsoft.VisualBasic::a1ee1db65aac2525e5d7f0f5fb88d4c0, Data_science\Mathematica\Plot\Plots-statistics\PCA\ScreePlot.vb"
 
     ' Author:
     ' 

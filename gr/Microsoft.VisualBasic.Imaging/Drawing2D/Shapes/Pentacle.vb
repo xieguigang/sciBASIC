@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd3423602f49b87c7ddacac3a9b385f4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Pentacle.vb"
+﻿#Region "Microsoft.VisualBasic::0efdd60f6287f80b72db1335dfc66b8c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Pentacle.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52424e3194b490adddd7e82cf13d3359, vs_solutions\tutorials\core.test\VectorTest.vb"
+﻿#Region "Microsoft.VisualBasic::c3ef3b9ec0b5928590cc842bba2264c3, vs_solutions\tutorials\core.test\VectorTest.vb"
 
     ' Author:
     ' 

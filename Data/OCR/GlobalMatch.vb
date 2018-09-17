@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fea48b0200e4934c1ed5e96010a98c43, Data\OCR\GlobalMatch.vb"
+﻿#Region "Microsoft.VisualBasic::f139c4118043920c1960e31357ae365c, Data\OCR\GlobalMatch.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f28a74732c7f6d4571048c1a013cdb91, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Sequence.vb"
+﻿#Region "Microsoft.VisualBasic::585af9b6e34291ded89ba898745a1541, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Sequence.vb"
 
     ' Author:
     ' 

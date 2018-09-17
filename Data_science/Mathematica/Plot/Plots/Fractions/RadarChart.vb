@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdd824e887ba5c0ffd1c50a044ae9b54, Data_science\Mathematica\Plot\Plots\Fractions\RadarChart.vb"
+﻿#Region "Microsoft.VisualBasic::72ac3819be2560731c2006d4b77080fb, Data_science\Mathematica\Plot\Plots\Fractions\RadarChart.vb"
 
     ' Author:
     ' 

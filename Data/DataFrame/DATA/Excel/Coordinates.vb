@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdca02441610c315bcd242daa7f51611, Data\DataFrame\DATA\Excel\Coordinates.vb"
+﻿#Region "Microsoft.VisualBasic::a51e968383a5e9a257629892fdbbc90d, Data\DataFrame\DATA\Excel\Coordinates.vb"
 
     ' Author:
     ' 

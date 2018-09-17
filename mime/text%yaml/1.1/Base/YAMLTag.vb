@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f7c092c07bf960e979b8ee4fbeeba3c, mime\text%yaml\1.1\Base\YAMLTag.vb"
+﻿#Region "Microsoft.VisualBasic::1ed61ae79b5cb7c00d4e39c63d5a6ddb, mime\text%yaml\1.1\Base\YAMLTag.vb"
 
     ' Author:
     ' 
@@ -73,4 +73,3 @@ Namespace Grammar11
         Public ReadOnly Property Content() As String
     End Structure
 End Namespace
-

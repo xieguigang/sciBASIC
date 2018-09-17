@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b028dda780d08ac268c2cbf6d8636cf, Data_science\Mathematica\Math\ODEsViewer\config.vb"
+﻿#Region "Microsoft.VisualBasic::415af62464f60db2bcc8bf9c9b337203, Data_science\Mathematica\Math\ODEsViewer\config.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24b279c51eaa0ba051197529d1650c0b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
+﻿#Region "Microsoft.VisualBasic::a0f369acb8e18a98902465280d936e5f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
 
     ' Author:
     ' 

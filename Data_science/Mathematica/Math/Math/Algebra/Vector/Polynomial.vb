@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6e1fc354deb67a1ee57e3c547145b37, Data_science\Mathematica\Math\Math\Algebra\Vector\Polynomial.vb"
+﻿#Region "Microsoft.VisualBasic::ba45700f98e2582724b0beb668e475dc, Data_science\Mathematica\Math\Math\Algebra\Vector\Polynomial.vb"
 
     ' Author:
     ' 

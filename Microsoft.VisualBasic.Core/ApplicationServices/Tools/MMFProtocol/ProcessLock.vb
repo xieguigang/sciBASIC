@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a14747f40e78a09ce9901f39f752df5, Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\ProcessLock.vb"
+﻿#Region "Microsoft.VisualBasic::453c961f4ea07660dfd677cf3a49b5b0, Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\ProcessLock.vb"
 
     ' Author:
     ' 

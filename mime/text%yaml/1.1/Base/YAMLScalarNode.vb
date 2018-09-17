@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6425860ebdaa8bf2525143ccd6801b59, mime\text%yaml\1.1\Base\YAMLScalarNode.vb"
+﻿#Region "Microsoft.VisualBasic::984824e9c2c4452c219eafc67fab5b13, mime\text%yaml\1.1\Base\YAMLScalarNode.vb"
 
     ' Author:
     ' 
@@ -305,4 +305,3 @@ Namespace Grammar11
         Public Property Style() As ScalarStyle
     End Class
 End Namespace
-

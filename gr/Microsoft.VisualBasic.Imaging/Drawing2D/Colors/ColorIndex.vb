@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5587c2c373946c5cc6e0e478d49713b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
+﻿#Region "Microsoft.VisualBasic::34870a28674800fb771ccfef2c679622, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\ColorIndex.vb"
 
     ' Author:
     ' 

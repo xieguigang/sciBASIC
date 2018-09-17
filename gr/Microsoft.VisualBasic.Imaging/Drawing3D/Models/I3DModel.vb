@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af5d3871d19674398339c3dc10c7167e, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\I3DModel.vb"
+﻿#Region "Microsoft.VisualBasic::f2f25d51193cc84952614781aa3d27f3, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\I3DModel.vb"
 
     ' Author:
     ' 

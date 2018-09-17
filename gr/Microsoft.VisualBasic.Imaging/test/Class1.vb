@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33ac9a6601ba675a58f12ecb2ae285e6, gr\Microsoft.VisualBasic.Imaging\test\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::b63bef10a428a8cdf6ffa7b3c89c74bd, gr\Microsoft.VisualBasic.Imaging\test\Class1.vb"
 
     ' Author:
     ' 

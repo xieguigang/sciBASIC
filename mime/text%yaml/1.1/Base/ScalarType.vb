@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35825f3a7ebd1f1bb154e5baa65b10a7, mime\text%yaml\1.1\Base\ScalarType.vb"
+﻿#Region "Microsoft.VisualBasic::9e465fb1bf9cc5136a815306f8397c38, mime\text%yaml\1.1\Base\ScalarType.vb"
 
     ' Author:
     ' 
@@ -62,4 +62,3 @@ Namespace Grammar11
         [String]
     End Enum
 End Namespace
-

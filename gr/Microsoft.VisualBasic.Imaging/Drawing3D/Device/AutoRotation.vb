@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f0de6203bc1c5185c3342353d98db44, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\AutoRotation.vb"
+﻿#Region "Microsoft.VisualBasic::f5e285adf77ff937691117e61b003bc6, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\AutoRotation.vb"
 
     ' Author:
     ' 

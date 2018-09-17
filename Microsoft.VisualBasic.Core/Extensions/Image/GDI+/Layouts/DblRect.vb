@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c91a34f87a4b39b7f5618ef47eb3f0be, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\DblRect.vb"
+﻿#Region "Microsoft.VisualBasic::8224ad6096222bf853908fc5fd9a4577, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\DblRect.vb"
 
     ' Author:
     ' 

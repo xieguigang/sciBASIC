@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5264a426f6a9dc152e1dc782fc207fd4, mime\text%yaml\1.1\Base\YAMLWriter.vb"
+﻿#Region "Microsoft.VisualBasic::6f73dc5c8484ff833b626d72448aceba, mime\text%yaml\1.1\Base\YAMLWriter.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports Version = System.Version
@@ -107,4 +106,3 @@ Namespace Grammar11
         Private ReadOnly m_tags As New List(Of YAMLTag)()
     End Class
 End Namespace
-

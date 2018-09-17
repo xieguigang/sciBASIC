@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::596014c27216b500b6f6c1bfd0034ffd, vs_solutions\tutorials\core.test\DefaultValueTest.vb"
+﻿#Region "Microsoft.VisualBasic::e45cf1eef5376b0342e4d3852ed67800, vs_solutions\tutorials\core.test\DefaultValueTest.vb"
 
     ' Author:
     ' 

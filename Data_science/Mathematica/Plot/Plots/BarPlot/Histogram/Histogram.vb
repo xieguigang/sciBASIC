@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5167e9dc74d313dcf7897007450258fe, Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\Histogram.vb"
+﻿#Region "Microsoft.VisualBasic::d1eee5b4dc39d06b49a514ca0236c5f3, Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\Histogram.vb"
 
     ' Author:
     ' 

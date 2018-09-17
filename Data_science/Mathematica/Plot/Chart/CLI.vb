@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::657ba2bae4e7f1b9288c188671296462, Data_science\Mathematica\Plot\Chart\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::7a35680506fac912bbcc8745a79311d6, Data_science\Mathematica\Plot\Chart\CLI.vb"
 
     ' Author:
     ' 

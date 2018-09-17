@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::856498bc0cc0fcbfc1b5a11145814605, mime\text%yaml\1.1\Base\MappingStyle.vb"
+﻿#Region "Microsoft.VisualBasic::0b0798c5ba9d9de12299e5ac8630625d, mime\text%yaml\1.1\Base\MappingStyle.vb"
 
     ' Author:
     ' 
@@ -61,4 +61,3 @@ Namespace Grammar11
         Flow
     End Enum
 End Namespace
-

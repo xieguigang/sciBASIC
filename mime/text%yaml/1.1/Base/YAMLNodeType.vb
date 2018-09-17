@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::429938d6adbaaaa92c709a3a7d362f25, mime\text%yaml\1.1\Base\YAMLNodeType.vb"
+﻿#Region "Microsoft.VisualBasic::6fe83de4776e93e92457ebf05ec97725, mime\text%yaml\1.1\Base\YAMLNodeType.vb"
 
     ' Author:
     ' 
@@ -63,4 +63,3 @@ Namespace Grammar11
         Sequence
     End Enum
 End Namespace
-

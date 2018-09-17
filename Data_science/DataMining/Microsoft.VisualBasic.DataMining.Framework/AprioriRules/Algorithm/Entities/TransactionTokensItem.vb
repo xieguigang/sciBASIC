@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7341cd314f5984cc56d6cde262f924ef, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\AprioriRules\Algorithm\Entities\TransactionTokensItem.vb"
+﻿#Region "Microsoft.VisualBasic::f919e8905c7376ad94f96934bdf19129, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\AprioriRules\Algorithm\Entities\TransactionTokensItem.vb"
 
     ' Author:
     ' 

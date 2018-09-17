@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::506101de89ba25f38d44424d436321af, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Math\Poisson.vb"
+﻿#Region "Microsoft.VisualBasic::98ed7fe3287b7ccb6f74a13392fd70f2, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Math\Poisson.vb"
 
     ' Author:
     ' 

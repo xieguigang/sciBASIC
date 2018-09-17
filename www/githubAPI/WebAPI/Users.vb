@@ -1,54 +1,89 @@
-﻿#Region "Microsoft.VisualBasic::c5fb6bbb7d993af22d75f9d13de7b772, www\githubAPI\WebAPI\Users.vb"
+﻿#Region "Microsoft.VisualBasic::8b5d55696c4ff58e5502f6f06feb742d, www\githubAPI\WebAPI\Users.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Users
-    ' 
-    '         Function: Followers, Following, GetUserData, ParserInternal, ParserIterator
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Users
+' 
+'         Function: Followers, Following, GetUserData, ParserInternal, ParserIterator
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.HtmlParser
 Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace WebAPI
+
+    Public Class Counter
+
+        Public Property Repositories As Integer
+        Public Property Stars As Integer
+        Public Property Followers As Integer
+        Public Property Following As Integer
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
+        Public Shared Function Parse(page As String) As Counter
+            Dim links$() = page.Match("UnderlineNav.+?</div>", RegexICSng) _
+                               .Matches("title[=].+?</a>") _
+                               .ToArray
+            Dim counters = links _
+                .Select(Function(a)
+                            Dim title$ = a.Match("title[=]"".*""").GetTagValue("=").Value.Trim("""").Trim
+                            Dim count$ = a.Match("<span.+</span>", RegexICSng).Match("\d+")
+                            Return New NamedValue(Of Integer)(title, CInt(Val(count)))
+                        End Function) _
+                .ToDictionary _
+                .FlatTable
+
+            Return New Counter With {
+                .Followers = counters(NameOf(.Followers)),
+                .Following = counters(NameOf(.Following)),
+                .Repositories = counters(NameOf(.Repositories)),
+                .Stars = counters(NameOf(.Stars))
+            }
+        End Function
+    End Class
 
     Public Module Users
 
@@ -58,13 +93,17 @@ Namespace WebAPI
         ''' Get user's github followers
         ''' </summary>
         ''' <param name="username"></param>
+        ''' <param name="maxFollowers">
+        ''' 限制性参数，如果超过了这个数量，将会停止解析
+        ''' </param>
         ''' <returns></returns>
-        <Extension> Public Function Followers(username As String, Optional maxFollowers% = Integer.MaxValue) As User()
+        <Extension> Public Function Followers(username$, Optional maxFollowers% = Integer.MaxValue) As User()
             Dim url As String = Github & "/{0}?page={1}&tab=followers"
-            Return ParserIterator(url, username, maxFollowers)
+            Dim counter As Counter = Counter.Parse($"https://github.com/{username}".GET)
+            Return ParserIterator(url, username, maxFollowers, counter.Followers)
         End Function
 
-        Private Function ParserIterator(url$, username$, maxLimits%) As User()
+        Private Function ParserIterator(url$, username$, maxLimits%, count%) As User()
             Dim out As New List(Of User)
             Dim i As int = 1
             Dim [get] As New Value(Of User())
@@ -72,14 +111,17 @@ Namespace WebAPI
             Do While Not ([get] = ParserInternal(username, ++i, url)).IsNullOrEmpty
                 out += (+[get])
 
-                If out.Count > maxLimits Then
+                If out.Count > maxLimits OrElse out.Count >= count Then
                     Exit Do
                 Else
-                    Call Thread.Sleep(300)  ' Decrease the server load 
+                    ' Decrease the server load 
+                    Call Thread.Sleep(300)
                 End If
             Loop
 
-            Return out
+            Return out.GroupBy(Function(u) u.login) _
+                      .Select(Function(u) u.First) _
+                      .ToArray
         End Function
 
         Public Function GetUserData(usrName$) As User
@@ -159,7 +201,8 @@ Namespace WebAPI
         ''' <returns></returns>
         <Extension> Public Function Following(username As String, Optional maxFollowing% = Integer.MaxValue) As User()
             Dim url As String = Github & "/{0}?page={1}&tab=following"
-            Return ParserIterator(url, username, maxFollowing)
+            Dim counter As Counter = Counter.Parse($"https://github.com/{username}".GET)
+            Return ParserIterator(url, username, maxFollowing, counter.Following)
         End Function
     End Module
 End Namespace

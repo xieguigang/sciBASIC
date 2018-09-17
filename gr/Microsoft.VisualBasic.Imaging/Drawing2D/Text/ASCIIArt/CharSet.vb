@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e89b04948c8480e243fef1373b71909, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\CharSet.vb"
+﻿#Region "Microsoft.VisualBasic::d17df8083fe33966acbf9829d667f755, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\CharSet.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f0905419f37dcd1897b26974af1d85e, mime\text%yaml\1.1\Base\YAMLMappingNode.vb"
+﻿#Region "Microsoft.VisualBasic::7913962a32caeeb461e8ef1152943599, mime\text%yaml\1.1\Base\YAMLMappingNode.vb"
 
     ' Author:
     ' 
@@ -288,4 +288,3 @@ Namespace Grammar11
         Public Property Style() As MappingStyle
     End Class
 End Namespace
-

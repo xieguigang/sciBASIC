@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5849bcc671a83afef68906e254d1a0a, Data_science\Mathematica\Math\Math\Scripting\ParameterCompute.vb"
+﻿#Region "Microsoft.VisualBasic::f6b8f0f804669851a8bc50b1c2ed6298, Data_science\Mathematica\Math\Math\Scripting\ParameterCompute.vb"
 
     ' Author:
     ' 

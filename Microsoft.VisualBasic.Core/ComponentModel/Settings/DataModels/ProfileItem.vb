@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfc066dc0ba5e93e074aaa5eb3bd2d2a, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ProfileItem.vb"
+﻿#Region "Microsoft.VisualBasic::5ce6071ad6eb45c613d25d1015405516, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ProfileItem.vb"
 
     ' Author:
     ' 

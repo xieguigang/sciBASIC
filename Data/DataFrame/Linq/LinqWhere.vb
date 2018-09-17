@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::697c8587b63f00cb7d910d7b27e9cbf0, Data\DataFrame\Linq\LinqWhere.vb"
+﻿#Region "Microsoft.VisualBasic::f85807958e688dc8ec71964ce7b4d38e, Data\DataFrame\Linq\LinqWhere.vb"
 
     ' Author:
     ' 
