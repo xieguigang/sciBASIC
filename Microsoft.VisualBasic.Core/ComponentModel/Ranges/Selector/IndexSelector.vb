@@ -80,10 +80,10 @@ Namespace ComponentModel.Ranges
         ''' </param>
         Sub New(source As IEnumerable(Of T), Optional asc As Boolean = True)
             If asc Then
-                source = source.OrderBy(compare).ToArray
+                Me.source = source.OrderBy(compare).ToArray
                 direct = " -> "
             Else
-                source = source _
+                Me.source = source _
                     .OrderByDescending(compare) _
                     .ToArray
                 direct = " <- "
