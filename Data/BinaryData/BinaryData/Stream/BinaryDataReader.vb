@@ -583,7 +583,7 @@ Public Class BinaryDataReader
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function ReadDwordLengthPrefixString() As String
+    Public Function ReadDwordLenString() As String
         Return ReadString(BinaryStringFormat.DwordLengthPrefix)
     End Function
 
