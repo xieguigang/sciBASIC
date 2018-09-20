@@ -1,4 +1,6 @@
-﻿Namespace ComponentModel.Ranges
+﻿Imports Microsoft.VisualBasic.Serialization.JSON
+
+Namespace ComponentModel.Ranges
 
     Public Structure IntTag(Of T)
         Implements IComparable
