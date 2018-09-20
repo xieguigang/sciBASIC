@@ -55,8 +55,8 @@ Namespace ComponentModel.Ranges
 
     Public Class OrderSelector(Of T As IComparable)
 
-        ReadOnly _source As T()
-        ReadOnly _direct As String
+        ReadOnly source As T()
+        ReadOnly direct$
 
         ''' <summary>
         ''' 是否为降序排序?
@@ -66,7 +66,7 @@ Namespace ComponentModel.Ranges
 
         Default Public ReadOnly Property value(index%) As T
             Get
-                Return _source(index)
+                Return source(index)
             End Get
         End Property
 
@@ -81,20 +81,20 @@ Namespace ComponentModel.Ranges
         ''' </param>
         Sub New(source As IEnumerable(Of T), Optional asc As Boolean = True)
             If asc Then
-                _source = source.OrderBy(compare).ToArray
-                _direct = " -> "
+                source = source.OrderBy(compare).ToArray
+                direct = " -> "
             Else
-                _source = source _
+                source = source _
                     .OrderByDescending(compare) _
                     .ToArray
-                _direct = " <- "
+                direct = " <- "
             End If
 
             Desc = Not asc
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"[{_direct}] {GetType(T).ToString}"
+            Return $"[{direct}] {GetType(T).ToString}"
         End Function
 
         ''' <summary>
@@ -103,11 +103,12 @@ Namespace ComponentModel.Ranges
         ''' <param name="n"></param>
         ''' <returns></returns>
         Public Iterator Function SelectUntilGreaterThan(n As T) As IEnumerable(Of T)
-            For Each x In _source
+            For Each x In source
                 If Numeric.LessThanOrEquals(x, n) Then
                     Yield x
                 Else
-                    Exit For   ' 由于是经过排序了的，所以在这里不再小于的话，则后面的元素都不会再比他小了
+                    ' 由于是经过排序了的，所以在这里不再小于的话，则后面的元素都不会再比他小了
+                    Exit For
                 End If
             Next
         End Function
@@ -118,7 +119,7 @@ Namespace ComponentModel.Ranges
         ''' <param name="n"></param>
         ''' <returns></returns>
         Public Iterator Function SelectUntilLessThan(n As T) As IEnumerable(Of T)
-            For Each x In _source
+            For Each x In source
                 If Numeric.GreaterThanOrEquals(x, n) Then
                     Yield x
                 Else
@@ -135,13 +136,18 @@ Namespace ComponentModel.Ranges
         ''' 返回-1表示这个列表之中没有任何元素是大于输入的参数<paramref name="o"/>的
         ''' </returns>
         Public Function FirstGreaterThan(o As T) As Integer
-            For i As Integer = 0 To _source.Length - 1
-                If Not Numeric.GreaterThan(o, _source(i)) Then
+            For i As Integer = 0 To source.Length - 1
+                If Not Numeric.GreaterThan(o, source(i)) Then
                     Return i
                 End If
             Next
 
             Return -1
+        End Function
+
+        Public Function SelectByRange(min As T, max As T) As IEnumerable(Of T)
+            Return source.SkipWhile(Function(o) Numeric.LessThan(o, min)) _
+                         .TakeWhile(Function(o) Numeric.LessThanOrEquals(o, max))
         End Function
     End Class
 
