@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Ranges
@@ -9,9 +10,12 @@ Namespace ComponentModel.Ranges
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     Public Structure NumericTagged(Of T) : Implements IComparable(Of Double), IComparable, IComparable(Of NumericTagged(Of T))
+        Implements Value(Of T).IValueOf
 
         Dim tag#
         Dim value As T
+
+        Private Property IValueOf_Value As T Implements Value(Of T).IValueOf.Value
 
         Public Overrides Function ToString() As String
             Return $"#{tag} {value.GetJson}"
