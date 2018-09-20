@@ -163,7 +163,16 @@ Namespace Terminal.ProgressBar
         Dim y%
         Dim theme As ColorTheme
 
-        Shared ReadOnly disabled As Boolean
+        Shared disabled As Boolean
+
+        Public Shared Property Enable As Boolean
+            Get
+                Return Not disabled
+            End Get
+            Set(value As Boolean)
+                disabled = Not value
+            End Set
+        End Property
 
         Shared Sub New()
             disabled = App.GetVariable("progress_bar").TextEquals(NameOf(disabled))
