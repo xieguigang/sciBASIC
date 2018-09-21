@@ -43,6 +43,7 @@ Namespace ApplicationServices.Development
             ' 使用自己的密匙加密md5，得到了待验证的数据
             Dim sign = key.EncryptData(md5)
 
+            Throw New NotImplementedException
         End Function
 
         Public Function ParseHeaderRegion(code$, lang As Languages) As String
