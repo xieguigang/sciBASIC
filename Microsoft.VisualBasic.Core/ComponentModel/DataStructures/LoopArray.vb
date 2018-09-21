@@ -92,17 +92,20 @@ Namespace ComponentModel.DataStructures
         End Sub
 
         ''' <summary>
-        ''' Gets the next elements in the array, is move to end, then the index will moves to the array begining position.
+        ''' Gets the next elements in the array, is move to end, then the index will 
+        ''' moves to the array begining position.
         ''' </summary>
         ''' <returns></returns>
         Public Function [Next]() As T
+            Dim i As Integer = p
+
             If p < array.Length - 1 Then
                 p += 1
             Else
                 p = 0
             End If
 
-            Return array(p)
+            Return array(i)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
