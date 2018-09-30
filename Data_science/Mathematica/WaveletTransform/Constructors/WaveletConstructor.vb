@@ -9,11 +9,13 @@ Public MustInherit Class WaveletConstructor : Implements IEnumerable(Of Wavelet)
         Me.wavelets = wavelets.ToArray
     End Sub
 
-    Public Function GetEnumerator() As IEnumerator(Of Wavelet) Implements IEnumerable(Of Wavelet).GetEnumerator
-        Throw New NotImplementedException()
+    Public Iterator Function GetEnumerator() As IEnumerator(Of Wavelet) Implements IEnumerable(Of Wavelet).GetEnumerator
+        For Each wl In wavelets
+            Yield wl
+        Next
     End Function
 
-    Private Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-        Throw New NotImplementedException()
+    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        Yield GetEnumerator()
     End Function
 End Class
