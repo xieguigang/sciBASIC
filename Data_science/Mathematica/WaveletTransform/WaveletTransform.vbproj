@@ -90,7 +90,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="WaveletConstructor.vb" />
+    <Compile Include="Constructors\Coiflets.vb" />
+    <Compile Include="Constructors\Symlets.vb" />
+    <Compile Include="Constructors\Daubechies.vb" />
+    <Compile Include="Constructors\WaveletConstructor.vb" />
     <Compile Include="Properties\AssemblyInfo.vb" />
     <Compile Include="Transform.vb" />
     <Compile Include="Wavelet.vb" />
