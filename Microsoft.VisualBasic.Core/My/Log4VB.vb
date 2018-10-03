@@ -118,7 +118,7 @@ Namespace My
         ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
         ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
         <Extension>
-        Public Sub WriteLine(msg As String, color As ConsoleColor)
+        Public Sub WriteLine(msg$, color As ConsoleColor)
             If Mute Then
                 Return
             End If

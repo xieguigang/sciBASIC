@@ -458,6 +458,8 @@ Public Class BinaryDataReader
     ''' <param name="count">The number of <see cref="UInt16"/> values to read.</param>
     ''' <returns>The <see cref="UInt16"/> array containing data read from the current stream. This might be less
     ''' than the number of bytes requested if the end of the stream is reached.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ReadUInt16s(count As Integer) As UInt16()
         Return ReadMultiple(count, AddressOf ReadUInt16)
     End Function
@@ -485,6 +487,8 @@ Public Class BinaryDataReader
     ''' <param name="count">The number of <see cref="UInt32"/> values to read.</param>
     ''' <returns>The <see cref="UInt32"/> array containing data read from the current stream. This might be less
     ''' than the number of bytes requested if the end of the stream is reached.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ReadUInt32s(count As Integer) As UInt32()
         Return ReadMultiple(count, AddressOf ReadUInt32)
     End Function
@@ -512,6 +516,8 @@ Public Class BinaryDataReader
     ''' <param name="count">The number of <see cref="UInt64"/> values to read.</param>
     ''' <returns>The <see cref="UInt64"/> array containing data read from the current stream. This might be less
     ''' than the number of bytes requested if the end of the stream is reached.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ReadUInt64s(count As Integer) As UInt64()
         Return ReadMultiple(count, AddressOf ReadUInt64)
     End Function
@@ -521,6 +527,8 @@ Public Class BinaryDataReader
     ''' </summary>
     ''' <param name="offset">A byte offset relative to the current position in the stream.</param>
     ''' <returns>The new position within the current stream.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Seek(offset As Long) As Long
         Return Seek(offset, SeekOrigin.Current)
     End Function
@@ -532,6 +540,8 @@ Public Class BinaryDataReader
     ''' <param name="origin">A value of type <see cref="SeekOrigin"/> indicating the reference point used to obtain
     ''' the new position.</param>
     ''' <returns>The new position within the current stream.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Seek(offset As Long, origin As SeekOrigin) As Long
         Return BaseStream.Seek(offset, origin)
     End Function
@@ -540,6 +550,8 @@ Public Class BinaryDataReader
     ''' Creates a <see cref="SeekTask"/> to restore the current position after it has been disposed.
     ''' </summary>
     ''' <returns>The <see cref="SeekTask"/> to be disposed to restore to the current position.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function TemporarySeek() As SeekTask
         Return TemporarySeek(0, SeekOrigin.Current)
     End Function
@@ -550,6 +562,8 @@ Public Class BinaryDataReader
     ''' </summary>
     ''' <param name="offset">A byte offset relative to the current position in the stream.</param>
     ''' <returns>The <see cref="SeekTask"/> to be disposed to undo the seek.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function TemporarySeek(offset As Long) As SeekTask
         Return TemporarySeek(offset, SeekOrigin.Current)
     End Function
@@ -562,8 +576,15 @@ Public Class BinaryDataReader
     ''' <param name="origin">A value of type <see cref="SeekOrigin"/> indicating the reference point used to obtain
     ''' the new position.</param>
     ''' <returns>The <see cref="SeekTask"/> to be disposed to undo the seek.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function TemporarySeek(offset As Long, origin As SeekOrigin) As SeekTask
         Return New SeekTask(BaseStream, offset, origin)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function ReadDwordLenString() As String
+        Return ReadString(BinaryStringFormat.DwordLengthPrefix)
     End Function
 
 #Region "METHODS (PRIVATE)"

@@ -301,5 +301,17 @@ Namespace ComponentModel.Ranges.Model
         Public Shared Operator <>(range As DoubleRange, value#) As Boolean
             Return Not range = value
         End Operator
+
+        Public Shared Function TryParse(expression As String) As DoubleRange
+            If expression.StringEmpty Then
+                Return Nothing
+            End If
+
+            Try
+                Return expression
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
     End Class
 End Namespace

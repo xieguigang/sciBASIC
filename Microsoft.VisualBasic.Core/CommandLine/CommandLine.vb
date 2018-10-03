@@ -195,7 +195,14 @@ Namespace CommandLine
         ''' The parameter name is not case sensitive.
         ''' (开关的名称是不区分大小写的，进行字符串插值脚本化处理的时候，是使用的<see cref="App.GetVariable"/>函数来获取环境变量值)
         ''' </summary>
-        ''' <param name="paramName">The argument name in the commandline.</param>
+        ''' <param name="paramName">
+        ''' The argument name in the commandline.
+        ''' 
+        ''' ##### 2018-09-10 
+        ''' 为了兼容VB的!字典取值语法，这个属性是会自动处理开关参数的前缀的
+        ''' 即会自动的将开关参数的/\--等前缀删除尝试进行取值
+        ''' 这个自动转换不会应用于逻辑开关参数上面
+        ''' </param>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
@@ -204,11 +211,12 @@ Namespace CommandLine
                 Dim LQuery As NamedValue(Of String) =
                     __arguments _
                         .Where(Function(x)
-                                   Return String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase)
+                                   Return String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase) OrElse
+                                          String.Equals(x.Name.Trim("\", "/", "-"), paramName, StringComparison.OrdinalIgnoreCase)
                                End Function) _
                         .FirstOrDefault
-
-                Dim value As String = LQuery.Value ' 是值类型，不会出现空引用的情况
+                ' 是值类型，不会出现空引用的情况
+                Dim value As String = LQuery.Value
 
                 If value.StringEmpty Then
                     ' 2018-1-22

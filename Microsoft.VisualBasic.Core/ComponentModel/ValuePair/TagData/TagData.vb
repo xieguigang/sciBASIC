@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::bfb726bb54ed85073c5bbae34ad02abd, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\TagData.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TagData
-    ' 
-    '         Properties: Key, Tag, TagStr
-    ' 
-    '     Structure NumericTagged
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class IntegerTagged
-    ' 
-    ' 
-    ' 
-    '     Class DoubleTagged
-    ' 
-    ' 
-    ' 
-    '     Class LongTagged
-    ' 
-    ' 
-    ' 
-    '     Class DateTagged
-    ' 
-    ' 
-    ' 
-    '     Class VectorTagged
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TagData
+' 
+'         Properties: Key, Tag, TagStr
+' 
+'     Structure NumericTagged
+' 
+'         Function: ToString
+' 
+'     Class IntegerTagged
+' 
+' 
+' 
+'     Class DoubleTagged
+' 
+' 
+' 
+'     Class LongTagged
+' 
+' 
+' 
+'     Class DateTagged
+' 
+' 
+' 
+'     Class VectorTagged
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -105,7 +105,7 @@ Namespace ComponentModel.TagData
         Public Property TagStr As String
 
         Public Overloads Shared Narrowing Operator CType(t As TagData(Of T, V)) As KeyValuePair(Of T, V)
-            Return New KeyValuePair(Of T, V)(t.Tag, t.value)
+            Return New KeyValuePair(Of T, V)(t.Tag, t.Value)
         End Operator
 
         ''' <summary>
@@ -114,24 +114,9 @@ Namespace ComponentModel.TagData
         ''' <param name="r"></param>
         ''' <returns></returns>
         Public Overloads Shared Narrowing Operator CType(r As TagData(Of T, V)) As Tuple(Of T, V)
-            Return New Tuple(Of T, V)(r.Tag, r.value)
+            Return New Tuple(Of T, V)(r.Tag, r.Value)
         End Operator
     End Class
-
-    ''' <summary>
-    ''' Almost equals to <see cref="DoubleTagged(Of T)"/>, but this object is a structure type. 
-    ''' (作用几乎等同于<see cref="DoubleTagged(Of T)"/>，只不过这个是Structure类型，开销会小一些)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    Public Structure NumericTagged(Of T)
-
-        Dim Tag#
-        Dim value As T
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
-    End Structure
 
     ''' <summary>
     ''' 使用一个整形数作为目标对象值的标签信息

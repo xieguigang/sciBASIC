@@ -319,6 +319,11 @@ Namespace Emit.Marshal
         Public Overloads Shared Operator >=(a As Pointer(Of T), b As Integer) As SwapHelper(Of T)
             Throw New NotSupportedException
         End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function stackalloc(len As Integer) As Pointer(Of T)
+            Return New Pointer(Of T)(New T(len - 1) {})
+        End Function
     End Class
 
     Public Structure SwapHelper(Of T)

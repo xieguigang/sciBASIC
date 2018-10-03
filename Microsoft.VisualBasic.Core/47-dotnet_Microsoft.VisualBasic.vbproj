@@ -882,6 +882,9 @@
     <Compile Include="ComponentModel\DataSource\DefaultAttribute.vb" />
     <Compile Include="ComponentModel\DataSource\Property\GenericProperty.vb" />
     <Compile Include="ComponentModel\File\XmlDataModel.vb" />
+    <Compile Include="ComponentModel\Ranges\Selector\IntTag.vb" />
+    <Compile Include="ComponentModel\Ranges\Selector\SelectorExtensions.vb" />
+    <Compile Include="ComponentModel\Ranges\Selector\NumericTagged.vb" />
     <Compile Include="ComponentModel\Ranges\Unit.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
@@ -980,7 +983,7 @@
     <Compile Include="Extensions\IO\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
     <Compile Include="ComponentModel\Ranges\Sequence.vb" />
-    <Compile Include="ComponentModel\Ranges\IndexSelector.vb" />
+    <Compile Include="ComponentModel\Ranges\Selector\IndexSelector.vb" />
     <Compile Include="ComponentModel\Ranges\Extensions.vb" />
     <Compile Include="ComponentModel\Ranges\RangeList.vb" />
     <Compile Include="ComponentModel\Ranges\RangeModel\IRanges.vb" />

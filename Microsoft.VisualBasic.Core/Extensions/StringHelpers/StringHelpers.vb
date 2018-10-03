@@ -1163,10 +1163,15 @@ Public Module StringHelpers
     ''' <param name="trim">
     ''' Set <see cref="Boolean.FalseString"/> to avoid a reader bug in the csv data reader <see cref="BufferedStream"/>
     ''' </param>
+    ''' <param name="escape">
+    ''' 是否需要将字符串之中的``\n``转义为换行之后再进行分割？默认不进行转义
+    ''' </param>
     <ExportAPI("LineTokens")>
-    <Extension> Public Function LineTokens(s$, Optional trim As Boolean = True) As String()
+    <Extension> Public Function LineTokens(s$, Optional trim As Boolean = True, Optional escape As Boolean = False) As String()
         If String.IsNullOrEmpty(s) Then
             Return {}
+        ElseIf escape Then
+            s = s.Replace("\n", ASCII.LF)
         End If
 
         Dim lf As Boolean = InStr(s, vbLf) > 0

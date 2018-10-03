@@ -139,8 +139,11 @@ Public Module TextDoc
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function SaveJson(Of T)(obj As T, path$, Optional encoding As Encoding = Nothing) As Boolean
-        Return obj.GetJson.SaveTo(path, encoding)
+    Public Function SaveJson(Of T)(obj As T, path$,
+                                   Optional encoding As Encoding = Nothing,
+                                   Optional indent As Boolean = False) As Boolean
+
+        Return obj.GetJson(indent:=indent).SaveTo(path, encoding)
     End Function
 
     ''' <summary>

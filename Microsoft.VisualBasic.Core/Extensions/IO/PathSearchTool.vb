@@ -1101,8 +1101,8 @@ Public Module ProgramPathSearchTool
                Info:="Gets the relative path value of pcTo file system object relative to a reference directory pcFrom")>
     Public Function RelativePath(pcFrom$, pcTo$, Optional appendParent As Boolean = True) As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
         Dim lcRelativePath As String = Nothing
-        Dim lcFrom As String = (If(pcFrom Is Nothing, "", pcFrom.Trim()))
-        Dim lcTo As String = (If(pcTo Is Nothing, "", pcTo.Trim()))
+        Dim lcFrom As String = (If(pcFrom Is Nothing, "", pcFrom.Trim().Replace("\", "/")))
+        Dim lcTo As String = (If(pcTo Is Nothing, "", pcTo.Trim().Replace("\", "/")))
 
         If lcFrom.Length = 0 OrElse lcTo.Length = 0 Then
             Throw New InvalidDataException("One of the path string value is null!")
