@@ -175,7 +175,7 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <param name="index%"></param>
         ''' <returns></returns>
-        Default Public ReadOnly Property IndexOf(index%) As T
+        Default Public ReadOnly Property IndexOf(index As Integer) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me.index(index).value
