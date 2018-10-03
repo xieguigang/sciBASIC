@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::9f5eadf8e49e1982caafc3cf2a6ef356, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Field
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class DataFrameColumnAttribute
-    ' 
-    '         Properties: Description, Index, Name
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: __attrs, __attrsAll, __source, GetIndex, (+2 Overloads) LoadMapping
-    '                   SetNameValue, ToString
-    ' 
-    '     Class DataFrameIO
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Field
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class DataFrameColumnAttribute
+' 
+'         Properties: Description, Index, Name
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: __attrs, __attrsAll, __source, GetIndex, (+2 Overloads) LoadMapping
+'                   SetNameValue, ToString
+' 
+'     Class DataFrameIO
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -201,16 +201,25 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
  _
                 () <= From pInfo As FieldTuple
                       In source
-                      Let Mapping As DataFrameColumnAttribute =
-                          If(String.IsNullOrEmpty(pInfo.Key.Name),  ' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
-                            pInfo.Key.SetNameValue(pInfo.Value.Name),
-                            pInfo.Key)
-                      Select New BindProperty(Of DataFrameColumnAttribute)(
-                          Mapping,
-                          pInfo.Value) ' 补全名称属性
+                      Let Mapping As DataFrameColumnAttribute = GetMapping(pInfo)
+                      Select New BindProperty(Of DataFrameColumnAttribute)(Mapping, pInfo.Value) ' 补全名称属性
 
             Dim out As New Dictionary(Of BindProperty(Of DataFrameColumnAttribute))(LQuery)
             Return out
+        End Function
+
+        ''' <summary>
+        ''' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
+        ''' </summary>
+        ''' <param name="pinfo"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function GetMapping(pinfo As FieldTuple) As DataFrameColumnAttribute
+            If String.IsNullOrEmpty(pinfo.Key.Name) Then
+                Return pinfo.Key.SetNameValue(pinfo.Value.Name)
+            Else
+                Return pinfo.Key
+            End If
         End Function
 
         ''' <summary>
