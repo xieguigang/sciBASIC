@@ -48,11 +48,13 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Numeric = Microsoft.VisualBasic.Language.Numeric
 
 Namespace ComponentModel.Ranges
 
-    Public Class OrderSelector(Of T As IComparable)
+    Public Class OrderSelector(Of T As IComparable) : Implements IReadOnlyCollection(Of T)
 
         ReadOnly source As T()
         ReadOnly direct$
@@ -63,9 +65,17 @@ Namespace ComponentModel.Ranges
         ''' <returns></returns>
         Public ReadOnly Property Desc As Boolean
 
-        Default Public ReadOnly Property value(index%) As T
+        Default Public ReadOnly Property Item(index%) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return source(index)
+            End Get
+        End Property
+
+        Public ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of T).Count
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return source.Length
             End Get
         End Property
 
@@ -92,6 +102,19 @@ Namespace ComponentModel.Ranges
             Desc = Not asc
         End Sub
 
+        ''' <summary>
+        ''' Find value by key via binary search
+        ''' </summary>
+        ''' <typeparam name="K"></typeparam>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Find(Of K As IComparable(Of K))(key As K, getKey As Func(Of T, K), Optional [default] As T = Nothing) As T
+            Return source.BinarySearch(key, getKey, [default])
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"[{direct}] {GetType(T).ToString}"
         End Function
@@ -144,9 +167,20 @@ Namespace ComponentModel.Ranges
             Return -1
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SelectByRange(min As T, max As T) As IEnumerable(Of T)
             Return source.SkipWhile(Function(o) Numeric.LessThan(o, min)) _
                          .TakeWhile(Function(o) Numeric.LessThanOrEquals(o, max))
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            For Each x As T In source
+                Yield x
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace
