@@ -1046,6 +1046,7 @@
     <Compile Include="Scripting\Runtime\CType\Abstract.vb" />
     <Compile Include="Scripting\Runtime\CType\Narrowing.vb" />
     <Compile Include="Serialization\Abstract.vb" />
+    <Compile Include="Serialization\JSON\AnonymousJSON.vb" />
     <Compile Include="Text\Patterns\Regexp.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
