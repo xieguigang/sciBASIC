@@ -255,7 +255,10 @@ Public Module __DEBUG_MAIN
 
     Function Main() As Integer
 
-        MsgBox(New With {.name = "223333"}.GetJson)
+        MsgBox({
+               {"name", "2233"},
+               {"title", "yes"}
+               }.GetJson)
 
 
 
