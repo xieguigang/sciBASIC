@@ -385,7 +385,7 @@ Namespace Net.Persistent.Socket
             If ServicesProtocol.Protocols.ServerHash = request.Protocol Then
                 Me._OnServerHashCode = Scripting.CTypeDynamic(Of Integer)(request.GetUTF8String)
             Else
-                Call RunTask(Sub() Me.Responsehandler()(request.uid, request, Nothing))
+                Call RunTask(Sub() Me.Responsehandler()(request, Nothing))
             End If
         End Sub
 

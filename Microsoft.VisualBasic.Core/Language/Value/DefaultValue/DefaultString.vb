@@ -153,7 +153,8 @@ Namespace Language.Default
         End Operator
 
         ''' <summary>
-        ''' If <paramref name="value"/> is empty then returns <paramref name="default"/>, else returns <paramref name="value"/> itself.
+        ''' If <paramref name="value"/> is empty then returns <paramref name="default"/>, 
+        ''' else returns <paramref name="value"/> itself.
         ''' </summary>
         ''' <param name="value"></param>
         ''' <param name="default$"></param>
@@ -166,6 +167,12 @@ Namespace Language.Default
             End If
         End Operator
 
+        ''' <summary>
+        ''' Get a <see cref="Integer"/> value or using default <see cref="Integer"/> value.
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <param name="x%"></param>
+        ''' <returns></returns>
         Public Shared Operator Or(value As DefaultString, x%) As Integer
             Return CInt(value Or CDbl(x))
         End Operator

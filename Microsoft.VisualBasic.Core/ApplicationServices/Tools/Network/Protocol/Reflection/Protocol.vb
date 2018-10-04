@@ -46,7 +46,8 @@
 Namespace Net.Protocols.Reflection
 
     ''' <summary>
-    ''' This attribute indicates the entry point of the protocol processor definition location and the details of the protocol processor. 
+    ''' This attribute indicates the entry point of the protocol processor definition location 
+    ''' and the details of the protocol processor. 
     ''' </summary>
     <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Method, AllowMultiple:=True, Inherited:=True)>
     Public Class Protocol : Inherits Attribute
@@ -66,18 +67,20 @@ Namespace Net.Protocols.Reflection
         ''' <summary>
         ''' Generates the protocol method entrypoint.(应用于服务器上面的协议处理方法)
         ''' </summary>
-        ''' <param name="EntryPoint"></param>
-        Sub New(EntryPoint As Long)
-            Me.EntryPoint = EntryPoint
+        ''' <param name="entryPoint"></param>
+        Sub New(entryPoint As Long)
+            Me.EntryPoint = entryPoint
         End Sub
 
         ''' <summary>
-        ''' Generates the <see cref="ProtocolHandler"/> on the server side, this is using for initialize a protocol API entry point.(客户端上面的类型)
+        ''' Generates the <see cref="ProtocolHandler"/> on the server side, 
+        ''' this is using for initialize a protocol API entry point.
+        ''' (客户端上面的类型)
         ''' </summary>
-        ''' <param name="Type">客户端上面的类型</param>
-        Sub New(Type As Type)
-            EntryPoint = SecurityString.MD5Hash.ToLong(Type.GUID.ToByteArray)
-            DeclaringType = Type
+        ''' <param name="type">客户端上面的类型</param>
+        Sub New(type As Type)
+            EntryPoint = SecurityString.MD5Hash.ToLong(type.GUID.ToByteArray)
+            DeclaringType = type
         End Sub
 
         Public Overrides Function ToString() As String
@@ -105,7 +108,8 @@ Namespace Net.Protocols.Reflection
         End Function
 
         ''' <summary>
-        ''' This method is usually using for generates a details protocol processor, example is calling the method interface: <see cref="Net.Abstract.DataRequestHandler"/>
+        ''' This method is usually using for generates a details protocol processor, example 
+        ''' is calling the method interface: <see cref="Net.Abstract.DataRequestHandler"/>
         ''' Correspondent to the protocol entry property <see cref="RequestStream.Protocol"/>
         ''' </summary>
         ''' <param name="Method"></param>

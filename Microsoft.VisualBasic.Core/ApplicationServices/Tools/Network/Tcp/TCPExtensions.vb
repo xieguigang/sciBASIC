@@ -44,12 +44,10 @@
 Imports System.Net
 Imports System.Net.NetworkInformation
 Imports System.Net.Sockets
-Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Net
 
@@ -182,33 +180,5 @@ Namespace Net
 
             Return True
         End Function
-
-#Region "OAuth Arguments"
-
-        Const hash As String = "hash"
-        Const uid As String = "uid"
-
-        <Extension> Public Function BuildOAuth(ca As Net.SSL.Certificate) As String
-            Dim array As KeyValuePair(Of String, String)() = {
-                New KeyValuePair(Of String, String)(hash, ca.PrivateKey),
-                New KeyValuePair(Of String, String)(uid, ca.uid)
-            }
-            Dim oauth As String = WebServiceUtils.BuildUrlData(array)
-            Return oauth
-        End Function
-
-        <Extension> Public Function GetCA(args As String) As Net.SSL.Certificate
-#If DEBUG Then
-            Call $"{MethodBase.GetCurrentMethod.GetFullName} ==> {args}".__DEBUG_ECHO
-#End If
-            Dim data = WebServiceUtils.QueryStringParameters(args, False)
-#If DEBUG Then
-            Call data.AllKeys.Select(Function(k) data(k)).ToArray.GetJson.__DEBUG_ECHO
-#End If
-            Dim privateKey As String = data(hash)
-            Dim uid As Long = Scripting.CTypeDynamic(Of Long)(data(TCPExtensions.uid))
-            Return Net.SSL.Certificate.Install(privateKey, uid)
-        End Function
-#End Region
     End Module
 End Namespace

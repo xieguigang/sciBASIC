@@ -1,62 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::43478869161388f889b5f12a85a8f75e, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\AsynInvoke.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class AsynInvoke
-    ' 
-    '         Properties: LocalIPAddress
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: LocalConnection, OperationTimeOut, SafelySendMessage, (+2 Overloads) SendMessage, ToString
-    '         Delegate Function
-    ' 
-    '             Function: __decryptMessageCommon, (+6 Overloads) SendMessage
-    ' 
-    '             Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
-    '                  SendCallback
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class AsynInvoke
+' 
+'         Properties: LocalIPAddress
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: LocalConnection, OperationTimeOut, SafelySendMessage, (+2 Overloads) SendMessage, ToString
+'         Delegate Function
+' 
+'             Function: __decryptMessageCommon, (+6 Overloads) SendMessage
+' 
+'             Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
+'                  SendCallback
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
 Imports System.Net
 Imports System.Net.Sockets
-Imports System.Reflection
-Imports System.Text
 Imports System.Threading
-Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 
@@ -233,27 +229,6 @@ Namespace Net
             End If
         End Function
 
-        Public Function SafelySendMessage(Message As RequestStream,
-                                          CA As SSL.Certificate,
-                                          Optional OperationTimeOut As Integer = 30 * 1000,
-                                          Optional OperationTimeoutHandler As Action = Nothing) As RequestStream
-
-            Message = CA.Encrypt(Message)
-            Message = SendMessage(Message, OperationTimeOut, OperationTimeoutHandler)
-
-            If Message.IsSSLProtocol OrElse Message.IsSSL_PublicToken Then
-                Message = CA.Decrypt(Message)
-            Else
-                Try
-                    Message.ChunkBuffer = CA.Decrypt(Message.ChunkBuffer)
-                Catch ex As Exception
-                    Return Message
-                End Try
-            End If
-
-            Return Message
-        End Function
-
         Public Delegate Function SendMessageInvoke(Message As String) As String
 
         Public Function SendMessage(Message As String, Callback As Action(Of String)) As IAsyncResult
@@ -274,13 +249,6 @@ Namespace Net
             Return response
         End Function 'Main
 
-        Public Function SendMessage(Message As String, CA As SSL.Certificate) As String
-            Dim request = New RequestStream(0, 0, Message)
-            Dim byteData = CA.Encrypt(request).Serialize
-            byteData = SendMessage(byteData)
-            Return __decryptMessageCommon(byteData, CA).GetUTF8String
-        End Function
-
         ''' <summary>
         ''' Send a request message to the remote server.
         ''' </summary>
@@ -294,37 +262,6 @@ Namespace Net
             Else
                 Return New RequestStream(0, 0, byteData)
             End If
-        End Function
-
-        Private Function __decryptMessageCommon(retData As Byte(), CA As SSL.Certificate) As RequestStream
-            If Not RequestStream.IsAvaliableStream(retData) Then Return New RequestStream(0, 0, retData)
-
-            Dim Message = New RequestStream(retData)
-
-            If Message.IsSSLProtocol OrElse Message.IsSSL_PublicToken Then
-                Message = CA.Decrypt(Message)
-            Else
-                Try
-                    Message.ChunkBuffer = CA.Decrypt(Message.ChunkBuffer)
-                Catch ex As Exception
-                    Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
-                End Try
-            End If
-
-            Return Message
-        End Function
-
-        ''' <summary>
-        ''' 发送一段使用证书对象<paramref name="CA"/>进行数据加密操作的消息请求<paramref name="Message"/>
-        ''' </summary>
-        ''' <param name="Message"></param>
-        ''' <param name="CA"></param>
-        ''' <param name="isPublicToken"></param>
-        ''' <returns></returns>
-        Public Function SendMessage(Message As RequestStream, CA As SSL.Certificate, Optional isPublicToken As Boolean = False) As RequestStream
-            Dim byteData = If(isPublicToken, CA.PublicEncrypt(Message), CA.Encrypt(Message)).Serialize
-            byteData = SendMessage(byteData)
-            Return __decryptMessageCommon(byteData, CA)
         End Function
 
         ''' <summary>

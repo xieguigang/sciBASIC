@@ -116,17 +116,16 @@ Namespace Net.Protocols.Reflection
         End Function
 
         Public Function HandlePush(uid As Long, request As RequestStream) As RequestStream
-            Return HandleRequest(uid, request, Nothing)
+            Return HandleRequest(request, Nothing)
         End Function
 
         ''' <summary>
-        ''' Handle the data request from the client for socket events: <see cref="Net.TcpSynchronizationServicesSocket.Responsehandler"/> or <see cref="Net.SSL.SSLSynchronizationServicesSocket.Responsehandler"/>
+        ''' Handle the data request from the client for socket events: <see cref="Net.TcpSynchronizationServicesSocket.Responsehandler"/>.
         ''' </summary>
-        ''' <param name="CA"></param>
         ''' <param name="request">The request stream object which contains the commands from the client</param>
         ''' <param name="remoteDevcie">The IPAddress of the target incoming client data request.</param>
         ''' <returns></returns>
-        Public Overrides Function HandleRequest(CA As Long, request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As RequestStream
+        Public Overrides Function HandleRequest(request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As RequestStream
             If request.ProtocolCategory <> Me.ProtocolEntry Then
 #If DEBUG Then
                 Call $"Protocol_entry:={request.ProtocolCategory} was not found!".__DEBUG_ECHO
@@ -142,7 +141,7 @@ Namespace Net.Protocols.Reflection
             End If
 
             Dim EntryPoint As DataRequestHandler = Me.Protocols(request.Protocol)
-            Dim value As RequestStream = EntryPoint(CA, request, remoteDevcie)
+            Dim value As RequestStream = EntryPoint(request, remoteDevcie)
             Return value
         End Function
 
@@ -190,5 +189,9 @@ Namespace Net.Protocols.Reflection
 
             Return Nothing
         End Function
+
+        Public Shared Narrowing Operator CType(handler As ProtocolHandler) As DataRequestHandler
+            Return AddressOf handler.HandleRequest
+        End Operator
     End Class
 End Namespace

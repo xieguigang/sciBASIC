@@ -56,20 +56,20 @@ Namespace Net.Protocols.Reflection
             Me.Method = Method
         End Sub
 
-        Public Function InvokeProtocol0(CA As Long, request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
+        Public Function InvokeProtocol0(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
             Dim value = Method.Invoke(obj, Nothing)
             Dim data = DirectCast(value, RequestStream)
             Return data
         End Function
 
-        Public Function InvokeProtocol1(CA As Long, request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
-            Dim value = Method.Invoke(obj, {CA})
+        Public Function InvokeProtocol1(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
+            Dim value = Method.Invoke(obj, {})
             Dim data = DirectCast(value, RequestStream)
             Return data
         End Function
 
-        Public Function InvokeProtocol2(CA As Long, request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
-            Dim value = Method.Invoke(obj, {CA, request})
+        Public Function InvokeProtocol2(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
+            Dim value = Method.Invoke(obj, {request})
             Dim data = DirectCast(value, RequestStream)
             Return data
         End Function
@@ -77,13 +77,12 @@ Namespace Net.Protocols.Reflection
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="CA"><see cref="SSL.Certificate.uid"/></param>
         ''' <param name="request"></param>
         ''' <param name="remoteDevice"></param>
         ''' <returns></returns>
-        Public Function InvokeProtocol3(CA As Long, request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
+        Public Function InvokeProtocol3(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
             Try
-                Dim value = Method.Invoke(obj, {CA, request, remoteDevice})
+                Dim value = Method.Invoke(obj, {request, remoteDevice})
                 Dim data = DirectCast(value, RequestStream)
                 Return data
             Catch ex As Exception

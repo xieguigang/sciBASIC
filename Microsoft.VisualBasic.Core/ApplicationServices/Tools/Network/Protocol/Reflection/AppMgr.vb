@@ -97,13 +97,13 @@ Namespace Net.Protocols.Reflection
             Return Register(DirectCast(App, Object), [overrides])
         End Function
 
-        Public Overrides Function HandleRequest(CA As Long, request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As RequestStream
+        Public Overrides Function HandleRequest(request As RequestStream, remoteDevcie As System.Net.IPEndPoint) As RequestStream
             If Not ProtocolApps.ContainsKey(request.ProtocolCategory) Then
                 Return NetResponse.RFC_NOT_FOUND
             End If
 
             Dim Protocol As ProtocolHandler = ProtocolApps(request.ProtocolCategory)
-            Return Protocol.HandleRequest(CA, request, remoteDevcie)
+            Return Protocol.HandleRequest(request, remoteDevcie)
         End Function
     End Class
 End Namespace
