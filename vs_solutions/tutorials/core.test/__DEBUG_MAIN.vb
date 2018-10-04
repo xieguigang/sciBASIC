@@ -446,7 +446,7 @@ Public Module __DEBUG_MAIN
         Dim val = shell.Shell("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Scripting\test.pl")
 
 
-        Dim list = Microsoft.VisualBasic.Parallel.ParallelLoading.Load(Of ParallelLoadingTest)({"a"})
+        '   Dim list = Microsoft.VisualBasic.Parallel.ParallelLoading.Load(Of ParallelLoadingTest)({"a"})
 
 
 
