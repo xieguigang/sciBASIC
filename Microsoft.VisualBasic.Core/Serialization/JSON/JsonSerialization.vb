@@ -155,6 +155,7 @@ Namespace Serialization.JSON
         ''' <returns></returns>
         ''' <remarks>
         ''' 2016-11-9 对字典进行序列化的时候，假若对象类型是从字典类型继承而来的，则新的附加属性并不会被序列化，只会序列化字典本身
+        ''' 2018-10-5 不可以序列化匿名类型
         ''' </remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
