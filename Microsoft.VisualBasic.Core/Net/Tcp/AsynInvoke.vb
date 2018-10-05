@@ -52,9 +52,13 @@
 
 Imports System.Net
 Imports System.Net.Sockets
+Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports TcpEndPoint = System.Net.IPEndPoint
 
 Namespace Net
 
@@ -64,7 +68,7 @@ Namespace Net
     ''' "></see>函数位置一直处于等待的状态)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class AsynInvoke : Implements System.IDisposable
+    Public Class AsynInvoke : Implements IDisposable
 
 #Region "Internal Fields"
 
@@ -118,13 +122,15 @@ Namespace Net
             Return $"Remote_connection={remoteHost}:{port},  local_host={LocalIPAddress}"
         End Function
 
-        Sub New(remoteDevice As System.Net.IPEndPoint, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
-            Call Me.New(remoteDevice.Address.ToString, remoteDevice.Port, ExceptionHandler)
+        Sub New(remoteDevice As TcpEndPoint, Optional exceptionHandler As ExceptionHandler = Nothing)
+            Call Me.New(remoteDevice.Address.ToString, remoteDevice.Port, exceptionHandler)
         End Sub
 
-        Sub New(remoteDevice As IPEndPoint, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
-            Call Me.New(remoteDevice.IPAddress, remoteDevice.Port, ExceptionHandler)
+        Sub New(remoteDevice As IPEndPoint, Optional exceptionHandler As ExceptionHandler = Nothing)
+            Call Me.New(remoteDevice.IPAddress, remoteDevice.Port, exceptionHandler)
         End Sub
+
+        Shared ReadOnly defaultHandler As New DefaultValue(Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
 
         ''' <summary>
         '''
@@ -133,22 +139,24 @@ Namespace Net
         ''' Copy the TCP client connection profile data from this object.
         ''' (从本客户端对象之中复制出连接配置参数以进行初始化操作)
         ''' </param>
-        ''' <param name="ExceptionHandler"></param>
+        ''' <param name="exceptionHandler"></param>
         ''' <remarks></remarks>
-        Sub New(client As AsynInvoke, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(client As AsynInvoke, Optional exceptionHandler As ExceptionHandler = Nothing)
             remoteHost = client.remoteHost
             port = client.port
-            __exceptionHandler = If(ExceptionHandler Is Nothing, Sub(ex As Exception) Call ex.PrintException, ExceptionHandler)
-            remoteEP = New System.Net.IPEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
+            __exceptionHandler = exceptionHandler Or defaultHandler
+            remoteEP = New TcpEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
         End Sub
 
         ''' <summary>
         '''
         ''' </summary>
         ''' <param name="remotePort"></param>
-        ''' <param name="ExceptionHandler">Public Delegate Sub ExceptionHandler(ex As Exception)</param>
+        ''' <param name="exceptionHandler">
+        ''' Public <see cref="System.Delegate"/> Sub ExceptionHandler(ex As <see cref="Exception"/>)
+        ''' </param>
         ''' <remarks></remarks>
-        Sub New(hostName As String, remotePort As Integer, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
+        Sub New(hostName$, remotePort%, Optional exceptionHandler As ExceptionHandler = Nothing)
             remoteHost = hostName
 
             If String.Equals(remoteHost, "localhost", StringComparison.OrdinalIgnoreCase) Then
@@ -156,19 +164,21 @@ Namespace Net
             End If
 
             port = remotePort
-            __exceptionHandler = If(ExceptionHandler Is Nothing, Sub(ex As Exception) Call ex.PrintException, ExceptionHandler)
-            remoteEP = New System.Net.IPEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
+            __exceptionHandler = exceptionHandler Or defaultHandler
+            remoteEP = New TcpEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
         End Sub
 
         ''' <summary>
         ''' 初始化一个在本机进行进程间通信的Socket对象
         ''' </summary>
-        ''' <param name="LocalPort"></param>
-        ''' <param name="ExceptionHandler"></param>
+        ''' <param name="localPort"></param>
+        ''' <param name="exceptionHandler"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function LocalConnection(LocalPort As Integer, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing) As AsynInvoke
-            Return New AsynInvoke(LocalIPAddress, LocalPort, ExceptionHandler)
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LocalConnection(localPort%, Optional exceptionHandler As ExceptionHandler = Nothing) As AsynInvoke
+            Return New AsynInvoke(LocalIPAddress, localPort, exceptionHandler)
         End Function
 
         ''' <summary>
@@ -207,7 +217,7 @@ Namespace Net
         ''' <remarks></remarks>
         Public Function SendMessage(Message As RequestStream,
                                     Optional timeout% = 30 * 1000,
-                                    Optional timeout_handler As Action = Nothing) As RequestStream
+                                    Optional timeoutHandler As Action = Nothing) As RequestStream
 
             Dim response As RequestStream = Nothing
             Dim bResult As Boolean = Parallel.OperationTimeOut(
@@ -217,7 +227,7 @@ Namespace Net
                 TimeOut:=timeout / 1000)
 
             If bResult Then
-                If Not timeout_handler Is Nothing Then Call timeout_handler() '操作超时了
+                If Not timeoutHandler Is Nothing Then Call timeoutHandler() '操作超时了
 
                 If Not connectDone Is Nothing Then Call connectDone.Set()  ' ManualResetEvent instances signal completion.
                 If Not sendDone Is Nothing Then Call sendDone.Set()
@@ -235,7 +245,7 @@ Namespace Net
         Public Delegate Function SendMessageInvoke(Message As String) As String
 
         Public Function SendMessage(Message As String, Callback As Action(Of String)) As IAsyncResult
-            Dim SendMessageClient As New AsynInvoke(Me, ExceptionHandler:=Me.__exceptionHandler)
+            Dim SendMessageClient As New AsynInvoke(Me, exceptionHandler:=Me.__exceptionHandler)
             Return (Sub() Call Callback(SendMessageClient.SendMessage(Message))).BeginInvoke(Nothing, Nothing)
         End Function
 
@@ -258,8 +268,8 @@ Namespace Net
         ''' <param name="Message"></param>
         ''' <returns></returns>
         Public Function SendMessage(Message As RequestStream) As RequestStream
-            Dim byteData As Byte() = Message.Serialize
-            byteData = SendMessage(byteData)
+            Dim byteData As Byte() = SendMessage(Message.Serialize)
+
             If RequestStream.IsAvaliableStream(byteData) Then
                 Return New RequestStream(byteData)
             Else
@@ -324,16 +334,17 @@ Namespace Net
         End Sub 'ConnectCallback
 
         ''' <summary>
-        ''' An exception of type '<see cref="System.Net.Sockets.SocketException"/>' occurred in System.dll but was not handled in user code
+        ''' An exception of type '<see cref="SocketException"/>' occurred in System.dll but was not handled in user code
         ''' Additional information: A request to send or receive data was disallowed because the socket is not connected and
         ''' (when sending on a datagram socket using a sendto call) no address was supplied
         ''' </summary>
         ''' <param name="client"></param>
         Private Sub Receive(client As Socket)
-
             ' Create the state object.
-            Dim state As New StateObject
-            state.workSocket = client
+            Dim state As New StateObject With {
+                .workSocket = client
+            }
+
             ' Begin receiving the data from the remote device.
             Try
                 Call client.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf ReceiveCallback), state)
@@ -342,17 +353,17 @@ Namespace Net
             End Try
         End Sub 'Receive
 
+        ''' <summary>
+        ''' Retrieve the state object and the client socket from the asynchronous state object.
+        ''' </summary>
+        ''' <param name="ar"></param>
         Private Sub ReceiveCallback(ar As IAsyncResult)
-
-            ' Retrieve the state object and the client socket
-            ' from the asynchronous state object.
             Dim state As StateObject = DirectCast(ar.AsyncState, StateObject)
             Dim client As Socket = state.workSocket
-            ' Read data from the remote device.
-
             Dim bytesRead As Integer
 
             Try
+                ' Read data from the remote device.
                 bytesRead = client.EndReceive(ar)
             Catch ex As Exception
                 Call __exceptionHandler(ex)
@@ -360,7 +371,6 @@ Namespace Net
             End Try
 
             If bytesRead > 0 Then
-
                 ' There might be more data, so store the data received so far.
                 state.ChunkBuffer.AddRange(state.readBuffer.Takes(bytesRead))
                 ' Get the rest of the data.
@@ -368,7 +378,6 @@ Namespace Net
             Else
                 ' All the data has arrived; put it in response.
                 If state.ChunkBuffer.Count > 1 Then
-
                     response = state.ChunkBuffer.ToArray
                 Else
 EX_EXIT:            response = Nothing
@@ -376,7 +385,7 @@ EX_EXIT:            response = Nothing
                 ' Signal that all bytes have been received.
                 Call receiveDone.Set()
             End If
-        End Sub 'ReceiveCallback
+        End Sub
 
         ''' <summary>
         ''' ????
