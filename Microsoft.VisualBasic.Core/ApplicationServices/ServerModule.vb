@@ -1,5 +1,10 @@
-﻿Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace ApplicationServices
 
@@ -55,5 +60,33 @@ Namespace ApplicationServices
             ' GC.SuppressFinalize(Me)
         End Sub
 #End Region
+    End Class
+
+    Public Class ProtocolInvoker(Of T As {IComparable, IFormattable, IConvertible})
+
+        Public ReadOnly Property Protocol As New Protocol(GetType(T))
+        Public ReadOnly Property TcpRequest As TcpRequest
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(hostName$, remotePort%)
+            TcpRequest = New TcpRequest(hostName, remotePort)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function SendMessage(protocol As T, message$, Optional encoding As Encoding = Nothing) As RequestStream
+            Return SendMessage(protocol, (encoding Or DefaultEncoding).GetBytes(message))
+        End Function
+
+        Public Function SendMessage(protocol As T, data As Byte()) As RequestStream
+            Dim category& = Me.Protocol.EntryPoint
+            Dim protocolL& = CLng(CObj(protocol))
+            Dim message As New RequestStream(category, protocolL, data)
+
+            Return TcpRequest.SendMessage(message)
+        End Function
+
+        Public Function SendMessage(Of V As {New, Class})(protocol As T, data As V) As RequestStream
+            Return SendMessage(protocol, data.GetJson)
+        End Function
     End Class
 End Namespace

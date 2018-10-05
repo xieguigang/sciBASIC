@@ -47,6 +47,9 @@ Imports Microsoft.VisualBasic.Win32
 
 Namespace Net.Protocols.Reflection
 
+    ''' <summary>
+    ''' Working in server side
+    ''' </summary>
     Friend Class ProtocolInvoker
 
         ReadOnly obj As Object
