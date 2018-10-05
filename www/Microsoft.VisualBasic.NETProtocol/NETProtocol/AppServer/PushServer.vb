@@ -1,52 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::6ca073b31f6c0fa039c55df47d3a587e, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushServer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class PushServer
-    ' 
-    '         Properties: UserSocket
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetMsg, SendMessage
-    ' 
-    '         Sub: (+2 Overloads) Dispose, PushUpdate, Run
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class PushServer
+' 
+'         Properties: UserSocket
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetMsg, SendMessage
+' 
+'         Sub: (+2 Overloads) Dispose, PushUpdate, Run
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 
 Namespace NETProtocol
@@ -60,16 +61,16 @@ Namespace NETProtocol
         ''' Push update notification to user client
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property UserSocket As Persistent.Application.MessagePushServer
+        Public ReadOnly Property UserSocket As Tcp.Persistent.Application.MessagePushServer
 
         ''' <summary>
         ''' 其他的服务器模块对消息推送模块进行操作更新的通道
         ''' </summary>
-        ReadOnly __invokeAPI As TcpSynchronizationServicesSocket
+        ReadOnly __invokeAPI As TcpServicesSocket
         ''' <summary>
         ''' 客户端进行数据读取的通道
         ''' </summary>
-        ReadOnly __userAPI As TcpSynchronizationServicesSocket
+        ReadOnly __userAPI As TcpServicesSocket
         ''' <summary>
         ''' 用户数据缓存池
         ''' </summary>
@@ -83,10 +84,10 @@ Namespace NETProtocol
         ''' <param name="userAPI">用户端口</param>
         Sub New(services As Integer, invoke As Integer, userAPI As Integer)
             UserSocket = New Persistent.Application.MessagePushServer(services)
-            __invokeAPI = New TcpSynchronizationServicesSocket(invoke) With {
+            __invokeAPI = New TcpServicesSocket(invoke) With {
             .Responsehandler = AddressOf New PushAPI.InvokeAPI(Me).Handler
         }
-            __userAPI = New TcpSynchronizationServicesSocket(userAPI) With {
+            __userAPI = New TcpServicesSocket(userAPI) With {
             .Responsehandler = AddressOf New PushAPI.UserAPI(Me).Handler
         }
         End Sub

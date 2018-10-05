@@ -73,8 +73,8 @@ Namespace NETProtocol.PushAPI
             __protocols = New ProtocolHandler(Me)
         End Sub
 
-        Public Overrides Function Handler(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Return __protocols.HandleRequest(CA, request, remote)
+        Public Overrides Function Handler(request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Return __protocols.HandleRequest(request, remote)
         End Function
 
         ''' <summary>

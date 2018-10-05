@@ -62,7 +62,7 @@ Namespace NETProtocol.PushAPI
         ''' <see cref="DataRequestHandler"/>
         ''' </summary>
         ''' <returns></returns>
-        Public MustOverride Function Handler(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+        Public MustOverride Function Handler(request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
 
     End Class
 End Namespace
