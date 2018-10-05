@@ -1333,7 +1333,7 @@
     <Compile Include="Language\BaseClass.vb" />
     <Compile Include="Language\Value\Numeric\Numeric.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\Text\Grep.vb" />
-    <Compile Include="ApplicationServices\Tools\MMFProtocol\WorkFlow.vb" />
+    <Compile Include="ApplicationServices\Parallel\MMFProtocol\WorkFlow.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\CallbackTask.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\TaskQueue.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\Groups\DataGroup.vb" />
@@ -1361,10 +1361,10 @@
     <Compile Include="Extensions\Security\Md5.vb" />
     <Compile Include="Extensions\StringHelpers\StringHelpers.vb" />
     <Compile Include="ComponentModel\Algorithm\Levenshtein\LevenshteinDistance.vb" />
-    <Compile Include="ApplicationServices\Tools\MMFProtocol\Pipeline\API.vb" />
-    <Compile Include="ApplicationServices\Tools\MMFProtocol\Pipeline\PipeBuffer.vb" />
-    <Compile Include="ApplicationServices\Tools\MMFProtocol\Pipeline\PipeStream.vb" />
-    <Compile Include="ApplicationServices\Tools\MMFProtocol\Pipeline\Pipeline.vb" />
+    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\API.vb" />
+    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\PipeBuffer.vb" />
+    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\PipeStream.vb" />
+    <Compile Include="ApplicationServices\Parallel\MMFProtocol\Pipeline\Pipeline.vb" />
     <Compile Include="Scripting\MetaData\MetaAPI.vb" />
     <Compile Include="Scripting\MetaData\Type.vb" />
     <Compile Include="Scripting\TokenIcer\ParserCommon.vb" />
@@ -1376,8 +1376,8 @@
     <Compile Include="Scripting\TokenIcer\TokenParser.vb" />
     <Compile Include="Serialization\BinaryDumping\BinaryReader.vb" />
     <Compile Include="Serialization\JSON\JsonSerialization.vb" />
-    <Compile Include="ApplicationServices\Tools\MMFProtocol\MapStream\MSWriter.vb" />
-    <Compile Include="ApplicationServices\Tools\MMFProtocol\MapStream\MSReader.vb" />
+    <Compile Include="ApplicationServices\Parallel\MMFProtocol\MapStream\MSWriter.vb" />
+    <Compile Include="ApplicationServices\Parallel\MMFProtocol\MapStream\MSReader.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\AsyncHandle.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\UpdateThread.vb" />
     <Compile Include="ApplicationServices\Parallel\Threads\ParallelExtension.vb" />
@@ -1495,8 +1495,8 @@
     <Compile Include="ApplicationServices\LanguageHelper\LanguageHelper.vb" />
     <Compile Include="ApplicationServices\Debugger\Logging\LogFile\LogFile.vb" />
     <Compile Include="Extensions\Extensions.vb" />
-    <Compile Include="ApplicationServices\Tools\MMFProtocol\MMFSocket.vb" />
-    <Compile Include="ApplicationServices\Tools\MMFProtocol\ProcessLock.vb" />
+    <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFSocket.vb" />
+    <Compile Include="ApplicationServices\Parallel\MMFProtocol\ProcessLock.vb" />
     <Compile Include="ApplicationServices\Terminal\STDIO__\Shell.vb" />
     <Compile Include="ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb" />
     <Compile Include="Language\Language\C\CFormatProvider.vb" />
