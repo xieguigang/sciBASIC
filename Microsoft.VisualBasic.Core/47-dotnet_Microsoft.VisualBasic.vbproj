@@ -1078,6 +1078,7 @@
     <Compile Include="Language\Linq\Vectorization\StringVector.vb" />
     <Compile Include="Language\Value\DefaultValue\DefaultString.vb" />
     <Compile Include="Language\Value\DefaultValue\DefaultExtensions.vb" />
+    <Compile Include="Net\DomainName.vb" />
     <Compile Include="Scripting\Expressions\Aggregate.vb" />
     <Compile Include="Scripting\Runtime\CType\Abstract.vb" />
     <Compile Include="Scripting\Runtime\CType\Narrowing.vb" />

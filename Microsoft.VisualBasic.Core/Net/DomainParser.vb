@@ -1,83 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::acd52a4700c2bedeb47904664bf7bcab, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\DomainParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure DomainName
-    ' 
-    '         Properties: Domain, Invalid, TLD
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    '     Module DomainParser
-    ' 
-    '         Function: Trim, TrimPathAndQuery, (+2 Overloads) TryParse
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure DomainName
+' 
+'         Properties: Domain, Invalid, TLD
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToString
+' 
+'     Module DomainParser
+' 
+'         Function: Trim, TrimPathAndQuery, (+2 Overloads) TryParse
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 
 Namespace Net
-
-    Public Structure DomainName : Implements IKeyValuePairObject(Of String, String)
-
-        Public Property Domain As String Implements IKeyValuePairObject(Of String, String).Key
-        ''' <summary>
-        ''' 顶级域名
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property TLD As String Implements IKeyValuePairObject(Of String, String).Value
-
-        Sub New(url As String)
-            url = TryParse(url)
-            Dim Tokens As String() = url.Split(CChar("."))
-            Domain = Tokens(0)
-            TLD = Tokens.Skip(1).JoinBy(".")
-        End Sub
-
-        Public ReadOnly Property Invalid As Boolean
-            Get
-                Return (String.IsNullOrEmpty(Domain) OrElse String.IsNullOrEmpty(TLD))
-            End Get
-        End Property
-
-        Public Overrides Function ToString() As String
-            Return $"{Domain}.{TLD}"
-        End Function
-    End Structure
 
     ''' <summary>
     ''' http://sub.domain.com/somefolder/index.html -> domain.com
