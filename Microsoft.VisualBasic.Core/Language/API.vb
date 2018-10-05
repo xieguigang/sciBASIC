@@ -59,7 +59,7 @@ Namespace Language
         ''' The default value assertor. If target object assert result is nothing or empty, then this function will returns True.
         ''' </summary>
         Friend ReadOnly defaultAssert As New DefaultValue(Of Assert(Of Object)) With {
-            .Value = AddressOf ExceptionHandler.Default,
+            .Value = AddressOf ExceptionHandle.Default,
             .assert = Function(assert)
                           Return assert Is Nothing
                       End Function

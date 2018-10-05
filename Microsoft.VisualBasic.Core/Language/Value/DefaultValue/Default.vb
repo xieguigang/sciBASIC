@@ -187,7 +187,7 @@ Namespace Language.Default
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or(obj As T, [default] As DefaultValue(Of T)) As T
-            Return getDefault(obj, [default].DefaultValue, If([default].assert, ExceptionHandler.defaultHandler))
+            Return getDefault(obj, [default].DefaultValue, If([default].assert, ExceptionHandle.defaultHandler))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -197,7 +197,7 @@ Namespace Language.Default
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or([default] As DefaultValue(Of T), obj As T) As T
-            Return getDefault([default].DefaultValue, obj, If([default].assert, ExceptionHandler.defaultHandler))
+            Return getDefault([default].DefaultValue, obj, If([default].assert, ExceptionHandle.defaultHandler))
         End Operator
 
         ''' <summary>
@@ -217,7 +217,7 @@ Namespace Language.Default
         Public Shared Widening Operator CType(obj As T) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .Value = obj,
-                .assert = AddressOf ExceptionHandler.Default
+                .assert = AddressOf ExceptionHandle.Default
             }
         End Operator
 
@@ -230,7 +230,7 @@ Namespace Language.Default
         Public Shared Widening Operator CType(lazy As Func(Of T)) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .LazyValue = lazy.AsLazy,
-                .assert = AddressOf ExceptionHandler.Default
+                .assert = AddressOf ExceptionHandle.Default
             }
         End Operator
     End Structure

@@ -129,12 +129,15 @@ Namespace Net
         ''' <summary>
         '''
         ''' </summary>
-        ''' <param name="Client">Copy the TCP client connection profile data from this object.(从本客户端对象之中复制出连接配置参数以进行初始化操作)</param>
+        ''' <param name="client">
+        ''' Copy the TCP client connection profile data from this object.
+        ''' (从本客户端对象之中复制出连接配置参数以进行初始化操作)
+        ''' </param>
         ''' <param name="ExceptionHandler"></param>
         ''' <remarks></remarks>
-        Sub New(Client As AsynInvoke, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
-            remoteHost = Client.remoteHost
-            port = Client.port
+        Sub New(client As AsynInvoke, Optional ExceptionHandler As ExceptionHandler = Nothing)
+            remoteHost = client.remoteHost
+            port = client.port
             __exceptionHandler = If(ExceptionHandler Is Nothing, Sub(ex As Exception) Call ex.PrintException, ExceptionHandler)
             remoteEP = New System.Net.IPEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
         End Sub

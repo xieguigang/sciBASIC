@@ -76,8 +76,8 @@ Public Module VBDebugger
     ''' <param name="message$">The exception message</param>
     ''' <param name="failure">If this expression test is True, then die expression will raise an exception</param>
     ''' <returns></returns>
-    Public Function die(message$, Optional failure As Assert(Of Object) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandler
-        Return New ExceptionHandler With {
+    Public Function die(message$, Optional failure As Assert(Of Object) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandle
+        Return New ExceptionHandle With {
             .Message = message,
             .failure = failure Or defaultAssert
         }
