@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
-Namespace MMFProtocol.Pipeline
+Namespace Parallel.MMFProtocol.Pipeline
 
     Public Module API
 

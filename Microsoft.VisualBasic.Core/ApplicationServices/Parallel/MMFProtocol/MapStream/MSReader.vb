@@ -1,63 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::3aab7875f3bae520365cb84d84b3f622, Microsoft.VisualBasic.Core\ApplicationServices\Tools\MMFProtocol\MapStream\MSReader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class IMapBase
-    ' 
-    '         Properties: URI
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Read, ToString
-    ' 
-    '         Sub: (+2 Overloads) Dispose
-    ' 
-    '     Class MSIOReader
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ReadBadge, ToString
-    ' 
-    '         Sub: __clientThreadElapsed, __threadElapsed, Update
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class IMapBase
+' 
+'         Properties: URI
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Read, ToString
+' 
+'         Sub: (+2 Overloads) Dispose
+' 
+'     Class MSIOReader
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ReadBadge, ToString
+' 
+'         Sub: __clientThreadElapsed, __threadElapsed, Update
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO.MemoryMappedFiles
-Imports Microsoft.VisualBasic.Parallel
 
-Namespace MMFProtocol.MapStream
+Namespace Parallel.MMFProtocol.MapStream
 
     Public MustInherit Class IMapBase : Implements IDisposable
 

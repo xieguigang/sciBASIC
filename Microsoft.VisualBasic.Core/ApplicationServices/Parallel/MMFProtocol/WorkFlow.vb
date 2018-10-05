@@ -45,7 +45,7 @@ Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.MMFProtocol.MapStream
 Imports Microsoft.VisualBasic.SecurityString
 
-Namespace MMFProtocol
+Namespace Parallel.MMFProtocol
 
     Public Module WorkFlow
 

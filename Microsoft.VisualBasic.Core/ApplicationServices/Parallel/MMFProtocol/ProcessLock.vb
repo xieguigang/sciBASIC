@@ -45,7 +45,7 @@
 
 Imports System.Text.Encoding
 
-Namespace MMFProtocol
+Namespace Parallel.MMFProtocol
 
     ''' <summary>
     ''' 进程排斥锁
