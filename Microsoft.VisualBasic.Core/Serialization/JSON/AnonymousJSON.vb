@@ -1,4 +1,6 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.Reflection
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Serialization.JSON
 
@@ -12,6 +14,19 @@ Namespace Serialization.JSON
             With New Dictionary(Of String, String)
                 For Each prop As String() In obj.RowIterator
                     Call .Add(prop(0), prop(1))
+                Next
+
+                Return .GetJson
+            End With
+        End Function
+
+        <Extension>
+        Public Function AnonymousJSON(Of T As Class)(obj As T) As String
+            Dim keys = obj.GetType.GetProperties(PublicProperty)
+
+            With New Dictionary(Of String, String)
+                For Each key As PropertyInfo In keys
+                    Call .Add(key.Name, key.GetValue(obj).ToString)
                 Next
 
                 Return .GetJson

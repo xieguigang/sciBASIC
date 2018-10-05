@@ -51,10 +51,12 @@ Namespace Net.Persistent.Socket
     ''' 长连接之中只是进行消息的发送处理，并不保证数据能够被接收到
     ''' </summary>
     Public Class WorkSocket : Inherits StateObject
-        Public ExceptionHandle As Abstract.ExceptionHandler
+
+        Public ExceptionHandle As ExceptionHandler
         Public ForceCloseHandle As ForceCloseHandle
-        Public ReadOnly ConnectTime As Date = Now
         Public TotalBytes As Double
+
+        Public ReadOnly ConnectTime As Date = Now
 
         Sub New(Socket As StateObject)
             Me.ChunkBuffer = Socket.ChunkBuffer
@@ -70,7 +72,11 @@ Namespace Net.Persistent.Socket
             ' DO_NOTHING
         End Sub 'ReadCallback
 
-        Public Sub SendMessage(request As RequestStream)
+        ''' <summary>
+        ''' Server send message to user client.
+        ''' </summary>
+        ''' <param name="request"></param>
+        Public Sub PushMessage(request As RequestStream)
             Dim byteData As Byte() = request.Serialize
             Try
                 Call Me.workSocket.Send(byteData, byteData.Length, SocketFlags.None)

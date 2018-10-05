@@ -1,63 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::fb49037657d709dd2161672df0f71814, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\Protocols\Protocol.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module ServicesProtocol
-    ' 
-    ' 
-    '         Enum Protocols
-    ' 
-    '             Broadcast, ConfigConnection, GetMyIPAddress, IsUserOnline, SendMessage
-    '             ServerHash
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: ProtocolEntry
-    ' 
-    '     Function: BroadcastMessage, GetLogOnUSER, GetSendMessage, GetServicesConnection, IsUserOnlineRequest
-    '               LogOnRequest, SendMessageRequest, SendServerHash
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ServicesProtocol
+' 
+' 
+'         Enum Protocols
+' 
+'             Broadcast, ConfigConnection, GetMyIPAddress, IsUserOnline, SendMessage
+'             ServerHash
+' 
+' 
+' 
+'  
+' 
+'     Properties: ProtocolEntry
+' 
+'     Function: BroadcastMessage, GetLogOnUSER, GetSendMessage, GetServicesConnection, IsUserOnlineRequest
+'               LogOnRequest, SendMessageRequest, SendServerHash
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Net.Sockets
-Imports System.Threading
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
 Namespace Net.Persistent.Application.Protocols
 
@@ -73,11 +71,11 @@ Namespace Net.Persistent.Application.Protocols
             Broadcast
         End Enum
 
-        Public ReadOnly Property ProtocolEntry As Long =
-            New Protocol(GetType(Protocols)).EntryPoint
+        Public ReadOnly Property EntryPoint As Long = New Protocol(GetType(Protocols)).EntryPoint
 
-        Public Function SendServerHash(hash As Integer) As RequestStream
-            Return New RequestStream(ProtocolEntry, Protocols.ServerHash, CStr(hash))
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function SendChannelHashCode(hash As Integer) As RequestStream
+            Return New RequestStream(EntryPoint, Protocols.ServerHash, CStr(hash))
         End Function
 
         Public Const WorkSocketPortal As Integer = 66982
@@ -87,7 +85,7 @@ Namespace Net.Persistent.Application.Protocols
                 .Socket = Socket,
                 .USER_ID = USER_ID
             }.GetXml
-            Return New RequestStream(ProtocolEntry, Protocols.Logon, post)
+            Return New RequestStream(EntryPoint, Protocols.Logon, post)
         End Function
 
         Public Function GetLogOnUSER(request As String, ByRef USER_ID As Long, ByRef Socket As String) As Boolean
@@ -109,7 +107,7 @@ Namespace Net.Persistent.Application.Protocols
                 .Message = Message,
                 .USER_ID = USER_ID
             }
-            Return New RequestStream(ProtocolEntry, Protocols.SendMessage, post.Serialize)
+            Return New RequestStream(EntryPoint, Protocols.SendMessage, post.Serialize)
         End Function
 
         Public Function GetSendMessage(request As RequestStream, ByRef [FROM] As Long, ByRef USER_ID As Long) As Boolean
@@ -122,11 +120,11 @@ Namespace Net.Persistent.Application.Protocols
         End Function
 
         Public Function GetServicesConnection() As RequestStream
-            Return New RequestStream(ProtocolEntry, Protocols.ConfigConnection, "GET")
+            Return New RequestStream(EntryPoint, Protocols.ConfigConnection, "GET")
         End Function
 
         Public Function IsUserOnlineRequest(USER_ID As Long) As RequestStream
-            Return New RequestStream(ProtocolEntry, Protocols.IsUserOnline, CStr(USER_ID))
+            Return New RequestStream(EntryPoint, Protocols.IsUserOnline, CStr(USER_ID))
         End Function
 
         Public Function BroadcastMessage(USER_ID As Long, Message As RequestStream) As RequestStream
@@ -134,7 +132,7 @@ Namespace Net.Persistent.Application.Protocols
                 .Message = Message,
                 .USER_ID = USER_ID
             }
-            Return New RequestStream(ProtocolEntry, Protocols.Broadcast, post.Serialize) With {
+            Return New RequestStream(EntryPoint, Protocols.Broadcast, post.Serialize) With {
                 .uid = USER_ID
             }
         End Function

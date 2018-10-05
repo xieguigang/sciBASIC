@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::41cebfeb7eeda56b58e9c563d951777a, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\Socket\ServicesSocket.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ServicesSocket
-    ' 
-    '         Properties: Connections, IsShutdown, LocalPort, Running
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: Run
-    ' 
-    '         Sub: __acceptSocket, __initSocket, __initSocketThread, __runHost, AcceptCallback
-    '              Run, WaitForRunning
-    '         Delegate Sub
-    ' 
-    '             Properties: AcceptCallbackHandleInvoke
-    ' 
-    '             Sub: __socketCleanup, (+2 Overloads) Dispose, ForceCloseHandle
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ServicesSocket
+' 
+'         Properties: Connections, IsShutdown, LocalPort, Running
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: Run
+' 
+'         Sub: __acceptSocket, __initSocket, __initSocketThread, __runHost, AcceptCallback
+'              Run, WaitForRunning
+'         Delegate Sub
+' 
+'             Properties: AcceptCallbackHandleInvoke
+' 
+'             Sub: __socketCleanup, (+2 Overloads) Dispose, ForceCloseHandle
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports System.Net
 Imports System.Net.Sockets
-Imports System.Text
+Imports System.Runtime.CompilerServices
 Imports System.Threading
-Imports Microsoft.VisualBasic.Net.Abstract
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Net.Persistent.Application.Protocols
+Imports TcpEndPoint = System.Net.IPEndPoint
+Imports TcpSocket = System.Net.Sockets.Socket
 
 Namespace Net.Persistent.Socket
 
@@ -84,19 +84,19 @@ Namespace Net.Persistent.Socket
     ''' 
     ''' 导致TCP连接异常中断的因素有： 物理连接被中断、操作系统down机、程序崩溃等等。
     ''' </remarks>
-    Public Class ServicesSocket : Implements System.IDisposable
+    Public Class ServicesSocket : Implements IDisposable
 
 #Region "INTERNAL FIELDS"
 
-        Dim _ThreadEndAccept As Boolean = True
+        Dim _threadEndAccept As Boolean = True
+        Dim _socketListener As TcpSocket
 
         ''' <summary>
         ''' Socket对象监听的端口号
         ''' </summary>
         ''' <remarks></remarks>
         Protected _LocalPort As Integer
-        Protected __exceptionHandle As Abstract.ExceptionHandler
-        Dim _socketListener As System.Net.Sockets.Socket
+        Protected _exceptionHandle As Abstract.ExceptionHandler
 
 #End Region
 
@@ -118,6 +118,8 @@ Namespace Net.Persistent.Socket
             End Get
         End Property
 
+        Shared ReadOnly DefaultHandler As New DefaultValue(Of Abstract.ExceptionHandler)(AddressOf VBDebugger.PrintException)
+
         ''' <summary>
         ''' 消息处理的方法接口： Public Delegate Function DataResponseHandler(str As String, RemotePort As Integer) As String
         ''' </summary>
@@ -125,11 +127,12 @@ Namespace Net.Persistent.Socket
         ''' <remarks></remarks>
         Sub New(Optional LocalPort As Integer = 11000, Optional exHandler As Abstract.ExceptionHandler = Nothing)
             Me._LocalPort = LocalPort
-            Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
+            Me._exceptionHandle = exHandler Or DefaultHandler
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(Optional exHandler As Abstract.ExceptionHandler = Nothing)
-            Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
+            Me._exceptionHandle = exHandler Or DefaultHandler
         End Sub
 
         ''' <summary>
@@ -140,12 +143,10 @@ Namespace Net.Persistent.Socket
         ''' </summary>
         ''' <remarks></remarks>
         Public Overridable Function Run() As Integer
-
             ' Establish the local endpoint for the socket.
-            Dim localEndPoint As System.Net.IPEndPoint = New System.Net.IPEndPoint(System.Net.IPAddress.Any, _LocalPort)
-            Call Run(localEndPoint)
+            Call Run(New TcpEndPoint(System.Net.IPAddress.Any, _LocalPort))
             Return 0
-        End Function 'Main
+        End Function
 
         ''' <summary>
         ''' This server waits for a connection and then uses  asychronous operations to
@@ -154,14 +155,15 @@ Namespace Net.Persistent.Socket
         ''' It then disconnects from the client and waits for another client.(请注意，当服务器的代码运行到这里之后，代码将被阻塞在这里)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Overridable Sub Run(localEndPoint As System.Net.IPEndPoint)
+        Public Overridable Sub Run(localEndPoint As TcpEndPoint)
             _LocalPort = localEndPoint.Port
 
             Try
                 Call __initSocket(localEndPoint)
             Catch ex As Exception
-                ex = New Exception("Exception on try initialize the socket connection local_EndPoint=" & localEndPoint.ToString, ex)
-                Call Me.__exceptionHandle(ex)
+                Dim msg$ = "Error on initialize socket connection: local_EndPoint=" & localEndPoint.ToString
+                ex = New Exception(msg, ex)
+                Call _exceptionHandle(ex)
                 Throw ex
             End Try
 
@@ -169,19 +171,22 @@ Namespace Net.Persistent.Socket
         End Sub
 
         Private Sub __runHost()
-            _ThreadEndAccept = True
+            _threadEndAccept = True
             _Running = True
 
             While Not Me.disposedValue
                 Call Thread.Sleep(1)
-                If _ThreadEndAccept Then Call __acceptSocket()
+
+                If _threadEndAccept Then
+                    Call __acceptSocket()
+                End If
             End While
         End Sub
 
         Private Sub __acceptSocket()
-            _ThreadEndAccept = False
+            _threadEndAccept = False
 
-            Dim Callback As AsyncCallback = New AsyncCallback(AddressOf AcceptCallback)
+            Dim Callback As New AsyncCallback(AddressOf AcceptCallback)
             Call _socketListener.BeginAccept(Callback, _socketListener)
         End Sub
 
@@ -189,9 +194,9 @@ Namespace Net.Persistent.Socket
         ''' Bind the socket to the local endpoint and listen for incoming connections.
         ''' </summary>
         ''' <param name="localEndPoint"></param>
-        Private Sub __initSocket(localEndPoint As System.Net.IPEndPoint)
+        Private Sub __initSocket(localEndPoint As TcpEndPoint)
             ' Create a TCP/IP socket.
-            _socketListener = New Sockets.Socket(
+            _socketListener = New TcpSocket(
                 AddressFamily.InterNetwork,
                 SocketType.Stream,
                 ProtocolType.Tcp
@@ -216,20 +221,18 @@ Namespace Net.Persistent.Socket
         ''' </summary>
         ''' <param name="ar"></param>
         Public Sub AcceptCallback(ar As IAsyncResult)
-            Dim listener As Sockets.Socket =
-                DirectCast(ar.AsyncState, Sockets.Socket)
-
+            Dim listener As TcpSocket = DirectCast(ar.AsyncState, TcpSocket)
             ' End the operation.
-            Dim handler As Sockets.Socket
+            Dim handler As TcpSocket
 
             Try
                 handler = listener.EndAccept(ar)
                 Call __initSocketThread(handler)
             Catch ex As Exception
-                _ThreadEndAccept = True
+                _threadEndAccept = True
                 Return
             Finally
-                _ThreadEndAccept = True
+                _threadEndAccept = True
             End Try
         End Sub 'AcceptCallback
 
@@ -237,33 +240,37 @@ Namespace Net.Persistent.Socket
         ''' Create the state object for the async receive.
         ''' </summary>
         ''' <param name="handler"></param>
-        Private Sub __initSocketThread(handler As Sockets.Socket)
-            Dim state As StateObject = New StateObject With {
+        Private Sub __initSocketThread(handler As TcpSocket)
+            Dim state As New StateObject With {
                 .workSocket = handler
             }
             Dim socket As New WorkSocket(state) With {
-                .ExceptionHandle = __exceptionHandle,
+                .ExceptionHandle = _exceptionHandle,
                 .ForceCloseHandle = AddressOf Me.ForceCloseHandle
             }
 
             Try
                 Call handler.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf socket.ReadCallback), state)
                 Call AcceptCallbackHandleInvoke()(socket)
-                Call _Connections.Add(socket.GetHashCode, socket)
+                Call _connections.Add(socket.GetHashCode, socket)
                 Call Thread.Sleep(500)
-                Call socket.SendMessage(ServicesProtocol.SendServerHash(socket.GetHashCode))
-
-            Catch ex As Exception   ' 远程强制关闭主机连接，则放弃这一条数据请求的线程
+                Call socket.PushMessage(ServicesProtocol.SendChannelHashCode(socket.GetHashCode))
+            Catch ex As Exception
+                ' 远程强制关闭主机连接，则放弃这一条数据请求的线程
                 Call ForceCloseHandle(socket)
             End Try
         End Sub
 
-        Protected _Connections As New Dictionary(Of Integer, WorkSocket)
+        Protected _connections As New Dictionary(Of Integer, WorkSocket)
 
+        ''' <summary>
+        ''' 查找socket是通过<see cref="WorkSocket.GetHashCode()"/>函数来完成的
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Connections As WorkSocket()
             Get
                 Try
-                    Return Me._Connections.Values.ToArray
+                    Return _connections.Values.ToArray
                 Catch ex As Exception
                     Call ex.PrintException
                     Return New WorkSocket() {}
@@ -273,14 +280,25 @@ Namespace Net.Persistent.Socket
 
         Public Delegate Sub AcceptCallbackHandle(socket As WorkSocket)
 
+        ''' <summary>
+        ''' 在这个方法之中添加新增加的socket长连接建立之后的处理代码
+        ''' 
+        ''' ```
+        ''' <see cref="System.Delegate"/> Sub(socket As <see cref="WorkSocket"/>)
+        ''' ```
+        ''' </summary>
+        ''' <returns></returns>
         Public Property AcceptCallbackHandleInvoke As AcceptCallbackHandle
 
         Protected Sub ForceCloseHandle(socket As WorkSocket)
             Dim hash As Integer = socket.GetHashCode
+            Dim remoteName$ = socket.workSocket.RemoteEndPoint.ToString
+            Dim msg$ = $"Connection was force closed by [{remoteName}]!"
 
             On Error Resume Next
-            Call $"Connection was force closed by {socket.workSocket.RemoteEndPoint.ToString}, services thread abort!".__DEBUG_ECHO
-            Call Me._Connections.Remove(hash)
+
+            Call msg.__INFO_ECHO
+            Call _connections.Remove(hash)
             Call socket.Dispose()
             Call __socketCleanup(hash)
         End Sub
