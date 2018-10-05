@@ -67,27 +67,16 @@ Namespace Net.Protocols.Reflection
         End Function
 
         Public Function InvokeProtocol1(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
-            Dim value = method.Invoke(obj, {})
-            Dim data = DirectCast(value, RequestStream)
-            Return data
-        End Function
-
-        Public Function InvokeProtocol2(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
             Dim value = method.Invoke(obj, {request})
             Dim data = DirectCast(value, RequestStream)
             Return data
         End Function
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="request"></param>
-        ''' <param name="remoteDevice"></param>
-        ''' <returns></returns>
-        Public Function InvokeProtocol3(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
+        Public Function InvokeProtocol2(request As RequestStream, remoteDevice As System.Net.IPEndPoint) As RequestStream
             Try
                 Dim value = method.Invoke(obj, {request, remoteDevice})
                 Dim data = DirectCast(value, RequestStream)
+
                 Return data
             Catch ex As Exception
                 ex = New Exception(method.FullName, ex)

@@ -1,63 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::020b55af3342fb21b8ade7d7985f5c8a, Microsoft.VisualBasic.Core\Net\Protocol\RequestStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class RequestStream
-    ' 
-    '         Properties: BufferLength, ChunkBuffer, FullRead, Protocol, ProtocolCategory
-    '                     TotalBytes, uid
-    ' 
-    '         Constructor: (+7 Overloads) Sub New
-    '         Function: (+2 Overloads) CreatePackage, CreateProtocol, GetRawStream, GetUTF8String, IsAvaliableStream
-    '                   (+2 Overloads) LoadObject, Serialize, ToString
-    '         Enum Protocols
-    ' 
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: IsPing, IsPlantText, IsSSL_PublicToken, IsSSLHandshaking, IsSSLProtocol
-    '                 TypeGetSystemProtocol
-    ' 
-    '     Function: SystemProtocol
-    '     Operators: (+3 Overloads) <>, (+3 Overloads) =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class RequestStream
+' 
+'         Properties: BufferLength, ChunkBuffer, FullRead, Protocol, ProtocolCategory
+'                     TotalBytes, uid
+' 
+'         Constructor: (+7 Overloads) Sub New
+'         Function: (+2 Overloads) CreatePackage, CreateProtocol, GetRawStream, GetUTF8String, IsAvaliableStream
+'                   (+2 Overloads) LoadObject, Serialize, ToString
+'         Enum Protocols
+' 
+' 
+' 
+' 
+'  
+' 
+'     Properties: IsPing, IsPlantText, IsSSL_PublicToken, IsSSLHandshaking, IsSSLProtocol
+'                 TypeGetSystemProtocol
+' 
+'     Function: SystemProtocol
+'     Operators: (+3 Overloads) <>, (+3 Overloads) =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
@@ -100,12 +101,6 @@ Namespace Net.Protocols
         ''' <returns></returns>
         <XmlAttribute("rawBuf")>
         Public Property ChunkBuffer As Byte()
-        ''' <summary>
-        ''' 使用用户的账号信息唯一标识出来的对象，在服务器端用来查找用户证书的
-        ''' 由于在服务器上面这个哈希值是和解密的密匙唯一对应的，所以服务器上面大多数情况下是直接通过这个哈希值来决定授权的
-        ''' </summary>
-        ''' <returns></returns>
-        <XmlAttribute> Public Property uid As Long
 
         ''' <summary>
         ''' <see cref="ChunkBuffer"/>部分的数据是否完整？
@@ -139,17 +134,17 @@ Namespace Net.Protocols
         ''' </summary>
         ''' <param name="ProtocolCategory"></param>
         ''' <param name="Protocol"></param>
-        ''' <param name="s_Data">Protocol request argument parameters</param>
-        Sub New(ProtocolCategory As Long, Protocol As Long, s_Data As String)
-            Call Me.New(ProtocolCategory, Protocol, System.Text.Encoding.UTF8.GetBytes(s_Data))
+        ''' <param name="str">Protocol request argument parameters</param>
+        Sub New(ProtocolCategory As Long, Protocol As Long, str As String)
+            Call Me.New(ProtocolCategory, Protocol, Encoding.UTF8.GetBytes(str))
         End Sub
 
-        Sub New(ProtocolCategory As Long, Protocol As Long, s_Data As String, encoding As System.Text.Encoding)
-            Call Me.New(ProtocolCategory, Protocol, encoding.GetBytes(s_Data))
+        Sub New(ProtocolCategory As Long, Protocol As Long, str As String, encoding As Encoding)
+            Call Me.New(ProtocolCategory, Protocol, encoding.GetBytes(str))
         End Sub
 
-        Sub New(ProtocolCategory As Long, Protocol As Long, ChunkBuffer As ISerializable)
-            Call Me.New(ProtocolCategory, Protocol, ChunkBuffer.Serialize)
+        Sub New(ProtocolCategory As Long, Protocol As Long, buffer As ISerializable)
+            Call Me.New(ProtocolCategory, Protocol, buffer.Serialize)
         End Sub
 
         ''' <summary>
@@ -170,17 +165,17 @@ Namespace Net.Protocols
             Dim bitChunk As Byte() = New Byte(INT64 - 1) {}
             Dim p As int = Scan0
 
-            Call Array.ConstrainedCopy(rawStream, ++(p + INT64), bitChunk, Scan0, INT64)
+            Call Array.ConstrainedCopy(rawStream, ++p, bitChunk, Scan0, INT64)
             Me.ProtocolCategory = BitConverter.ToInt64(bitChunk, Scan0)
 
             Call Array.ConstrainedCopy(rawStream, ++(p + INT64), bitChunk, Scan0, INT64)
             Me.Protocol = BitConverter.ToInt64(bitChunk, Scan0)
 
             bitChunk = New Byte(INT64 - 1) {}
-            Call Array.ConstrainedCopy(rawStream, p = (p + INT64), bitChunk, Scan0, INT64)
+            Call Array.ConstrainedCopy(rawStream, p + INT64, bitChunk, Scan0, INT64)
             Me.BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 
-            bitChunk = New Byte(Me.BufferLength - 1) {}
+            Me.ChunkBuffer = New Byte(Me.BufferLength - 1) {}
             Dim nxt As Long = p + BufferLength
             If nxt > rawStream.Length - INT64 Then
                 ' 越界了，则数据没有读完
@@ -188,12 +183,7 @@ Namespace Net.Protocols
                 Return
             End If
 
-            Call Array.ConstrainedCopy(rawStream, p = (p + BufferLength), bitChunk, Scan0, Me.BufferLength)
-            Me.ChunkBuffer = bitChunk
-
-            bitChunk = New Byte(INT64 - 1) {}
-            Call Array.ConstrainedCopy(rawStream, p + INT64, bitChunk, Scan0, INT64)
-            Me.uid = BitConverter.ToInt64(bitChunk, Scan0)
+            Call Array.ConstrainedCopy(rawStream, p, Me.ChunkBuffer, Scan0, Me.BufferLength)
         End Sub
 
         ''' <summary>
@@ -201,7 +191,7 @@ Namespace Net.Protocols
         ''' </summary>
         ''' <returns></returns>
         Public Function GetUTF8String() As String
-            Return System.Text.Encoding.UTF8.GetString(ChunkBuffer)
+            Return Encoding.UTF8.GetString(ChunkBuffer)
         End Function
 
         ''' <summary>
@@ -233,26 +223,21 @@ Namespace Net.Protocols
         End Function
 
         Public Overrides Function ToString() As String
-            Dim stringData As String = $"(string) {NameOf(ChunkBuffer)}:={GetUTF8String()};  {TotalBytes()} bytes"
-
-            If IsSSLProtocol OrElse IsSSLHandshaking Then
-                Return $"{NameOf(uid)}:={uid} // {stringData}"
-            Else
-                Return $"{NameOf(ProtocolCategory)}:={ProtocolCategory}; {NameOf(Protocol)}:={Protocol}; {NameOf(BufferLength)}:={BufferLength};  // {stringData}"
-            End If
+            Dim str As String = $"(string) {NameOf(ChunkBuffer)}:={GetUTF8String()};  {TotalBytes()} bytes"
+            Return $"{NameOf(ProtocolCategory)}:={ProtocolCategory}; {NameOf(Protocol)}:={Protocol}; {NameOf(BufferLength)}:={BufferLength};  // {str}"
         End Function
 
         ''' <summary>
         ''' 这个函数是使用json序列化参数信息的
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="cat"></param>
+        ''' <param name="category"></param>
         ''' <param name="protocol"></param>
         ''' <param name="params"></param>
         ''' <returns></returns>
-        Public Shared Function CreateProtocol(Of T)(cat As Long, protocol As Long, params As T) As RequestStream
+        Public Shared Function CreateProtocol(Of T)(category As Long, protocol As Long, params As T) As RequestStream
             Dim json As String = params.GetJson
-            Return New RequestStream(cat, protocol, json)
+            Return New RequestStream(category, protocol, json)
         End Function
 
         ''' <summary>
@@ -291,13 +276,16 @@ Namespace Net.Protocols
             End If
         End Function
 
+        ''' <summary>
+        ''' 注意：在协议头部之间还存在着一个字节的offset，这个字节的值为255
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property TotalBytes() As Long
             Get
                 Return INT64 + 1 + ' ProtocolCategory
                     INT64 + 1 +    ' Protocol
                     INT64 +        ' BufferLength
-                    BufferLength + ' ChunkBuffer
-                    INT64          ' uid
+                    BufferLength   ' ChunkBuffer
             End Get
         End Property
 
@@ -309,8 +297,6 @@ Namespace Net.Protocols
             Dim ProtocolCategory As Byte() = BitConverter.GetBytes(Me.ProtocolCategory)
             Dim Protocol As Byte() = BitConverter.GetBytes(Me.Protocol)
             Dim BufferLength As Byte() = BitConverter.GetBytes(Me.BufferLength)
-            Dim uid As Byte() = BitConverter.GetBytes(Me.uid)
-
             Dim bufs As Byte() = New Byte(TotalBytes - 1) {}
             Dim p As int = Scan0
             Dim l As New int
@@ -321,7 +307,6 @@ Namespace Net.Protocols
             Call Array.ConstrainedCopy(___offset, Scan0, bufs, ++p, 1)
             Call Array.ConstrainedCopy(BufferLength, Scan0, bufs, p << (l = BufferLength.Length), l)
             Call Array.ConstrainedCopy(Me.ChunkBuffer, Scan0, bufs, p << (l = Me.BufferLength), l)
-            Call Array.ConstrainedCopy(uid, Scan0, bufs, p << (l = uid.Length), l)
 
             Return bufs
         End Function

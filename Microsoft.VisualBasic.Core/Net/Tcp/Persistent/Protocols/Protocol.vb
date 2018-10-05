@@ -132,9 +132,7 @@ Namespace Net.Tcp.Persistent.Application.Protocols
                 .Message = Message,
                 .USER_ID = USER_ID
             }
-            Return New RequestStream(EntryPoint, Protocols.Broadcast, post.Serialize) With {
-                .uid = USER_ID
-            }
+            Return New RequestStream(EntryPoint, Protocols.Broadcast, post.Serialize)
         End Function
     End Module
 End Namespace

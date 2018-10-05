@@ -165,7 +165,7 @@ Namespace Net.Protocols.Reflection
 
             If Not entryPoint.ReturnType.Equals(GetType(RequestStream)) Then
                 Return Nothing
-            ElseIf parameters.Length > 3 Then
+            ElseIf parameters.Length > 2 Then
                 Return Nothing
             End If
 
@@ -175,26 +175,14 @@ Namespace Net.Protocols.Reflection
                 Return method1(obj, entryPoint, parameters)
             ElseIf parameters.Length = 2 Then
                 Return method2(obj, entryPoint, parameters)
-            ElseIf parameters.Length = 3 Then
-                Return method3(obj, entryPoint, parameters)
             End If
 
             Return Nothing
         End Function
 
-        Private Shared Function method3(obj As Object, entryPoint As MethodInfo, parameters As ParameterInfo()) As DataRequestHandler
-            If (Not parameters.First.ParameterType.Equals(GetType(Long)) OrElse
-                Not parameters(1).ParameterType.Equals(GetType(RequestStream)) OrElse
-                Not parameters.Last.ParameterType.Equals(GetType(TcpEndPoint))) Then
-                Return Nothing
-            Else
-                Return AddressOf New ProtocolInvoker(obj, entryPoint).InvokeProtocol3
-            End If
-        End Function
-
         Private Shared Function method2(obj As Object, entryPoint As MethodInfo, parameters As ParameterInfo()) As DataRequestHandler
-            If (Not parameters.First.ParameterType.Equals(GetType(Long)) OrElse
-                Not parameters.Last.ParameterType.Equals(GetType(RequestStream))) Then
+            If (Not parameters.First.ParameterType.Equals(GetType(RequestStream)) OrElse
+                Not parameters.Last.ParameterType.Equals(GetType(TcpEndPoint))) Then
                 Return Nothing
             Else
                 Return AddressOf New ProtocolInvoker(obj, entryPoint).InvokeProtocol2
@@ -202,7 +190,7 @@ Namespace Net.Protocols.Reflection
         End Function
 
         Private Shared Function method1(obj As Object, entryPoint As MethodInfo, parameters As ParameterInfo()) As DataRequestHandler
-            If Not parameters.First.ParameterType.Equals(GetType(Long)) Then
+            If Not parameters.First.ParameterType.Equals(GetType(RequestStream)) Then
                 Return Nothing
             Else
                 Return AddressOf New ProtocolInvoker(obj, entryPoint).InvokeProtocol1

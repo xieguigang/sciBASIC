@@ -51,7 +51,7 @@ Module Program
         Dim testPort% = 2233
 
         Call New ThreadStart(AddressOf New server(testPort).Run).RunTask
-        Call Thread.Sleep(1000 * 3)
+        Call Thread.Sleep(1000)
 
         Dim invoke As New ProtocolInvoker(Of Protocols.Test)("localhost", testPort)
 
