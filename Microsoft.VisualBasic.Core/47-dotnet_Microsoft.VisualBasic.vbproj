@@ -900,6 +900,7 @@
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
     <Compile Include="ApplicationServices\VBDev\AssemblyInfo.vb" />
+    <Compile Include="ApplicationServices\VBDev\NamespaceDoc.vb" />
     <Compile Include="ApplicationServices\VBDev\Ngen\Registry.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\CodeSign.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\VBCodeSignature.vb" />
