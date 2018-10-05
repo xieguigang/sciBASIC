@@ -1267,7 +1267,7 @@
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\IPTools\AddressEnumerator.vb" />
+    <Compile Include="Net\Tcp\IPTools\AddressEnumerator.vb" />
     <Compile Include="ApplicationServices\VBDev\Signature\LicenseMgr.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\Project.vb" />
     <Compile Include="ApplicationServices\VBDev\XmlDoc\ProjectMember.vb" />
@@ -1343,8 +1343,8 @@
     <Compile Include="Serialization\Controls\Contrls.vb" />
     <Compile Include="Text\Splitter.vb" />
     <Compile Include="Text\IO\EncodingHelper.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\ArrayAbstract.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\VarArray.vb" />
+    <Compile Include="Net\Protocol\Streams\ArrayAbstract.vb" />
+    <Compile Include="Net\Protocol\Streams\VarArray.vb" />
     <Compile Include="ApplicationServices\VBDev\ApplicationInfoUtils.vb" />
     <Compile Include="Extensions\Reflection\Marshal\IntPtr%28Of T%29.vb" />
     <Compile Include="Extensions\Reflection\Marshal\Pointers.vb" />
@@ -1399,31 +1399,31 @@
     <Compile Include="ComponentModel\TimeSpan.vb" />
     <Compile Include="ApplicationServices\Debugger\Logging\EventLog.vb" />
     <Compile Include="ApplicationServices\Debugger\NETDebugger.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Abstract.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\MIME\MIME.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\MIME\ContentType.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\Abstract.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\Array.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\ArrayBase.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\Streams\String.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\IVerifySession.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\Reflection\AppMgr.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\Reflection\ProtocolInvoker.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\Reflection\Protocol.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\Reflection\ProtocolHandler.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Protocol\RequestStream.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\Protocols\POST.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\wGetTools.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\StateObject.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\IPTools\IPEndPoint.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\IPTools\LAN.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\DomainParser.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\Socket\WorkSocket.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\Protocols\Protocol.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\Socket\TcpClient.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\Persistent\Socket\ServicesSocket.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\PingUtility.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb" />
+    <Compile Include="Net\Abstract.vb" />
+    <Compile Include="Net\MIME\MIME.vb" />
+    <Compile Include="Net\MIME\ContentType.vb" />
+    <Compile Include="Net\Protocol\Abstract.vb" />
+    <Compile Include="Net\Protocol\Streams\Array.vb" />
+    <Compile Include="Net\Protocol\Streams\ArrayBase.vb" />
+    <Compile Include="Net\Protocol\Streams\String.vb" />
+    <Compile Include="Net\Protocol\IVerifySession.vb" />
+    <Compile Include="Net\Protocol\Reflection\AppMgr.vb" />
+    <Compile Include="Net\Protocol\Reflection\ProtocolInvoker.vb" />
+    <Compile Include="Net\Protocol\Reflection\Protocol.vb" />
+    <Compile Include="Net\Protocol\Reflection\ProtocolHandler.vb" />
+    <Compile Include="Net\Protocol\RequestStream.vb" />
+    <Compile Include="Net\Tcp\Persistent\Protocols\POST.vb" />
+    <Compile Include="Net\wGetTools.vb" />
+    <Compile Include="Net\Tcp\StateObject.vb" />
+    <Compile Include="Net\Tcp\IPTools\IPEndPoint.vb" />
+    <Compile Include="Net\Tcp\IPTools\LAN.vb" />
+    <Compile Include="Net\DomainParser.vb" />
+    <Compile Include="Net\Tcp\Persistent\Socket\WorkSocket.vb" />
+    <Compile Include="Net\Tcp\Persistent\Protocols\Protocol.vb" />
+    <Compile Include="Net\Tcp\Persistent\Socket\TcpClient.vb" />
+    <Compile Include="Net\Tcp\Persistent\Socket\ServicesSocket.vb" />
+    <Compile Include="Net\Tcp\PingUtility.vb" />
+    <Compile Include="Net\Tcp\TcpSynchronizationServicesSocket.vb" />
     <Compile Include="ApplicationServices\Tools\OSVersionInfo.vb" />
     <Compile Include="ApplicationServices\Tools\WinForm\MockForm.vb" />
     <Compile Include="ApplicationServices\Tools\WinForm\SingleInstanceFormEntry.vb" />
@@ -1435,8 +1435,8 @@
     <Compile Include="Extensions\Security\RSACrypto.vb" />
     <Compile Include="Extensions\Security\SecurityString.vb" />
     <Compile Include="ApplicationServices\Parallel\OperationTimeOut.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\TCPExtensions.vb" />
-    <Compile Include="ApplicationServices\Tools\Network\Tcp\AsynInvoke.vb" />
+    <Compile Include="Net\Tcp\TCPExtensions.vb" />
+    <Compile Include="Net\Tcp\AsynInvoke.vb" />
     <Compile Include="ApplicationServices\Parallel\Threading.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
@@ -1561,7 +1561,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Serialization\JSON\Formatter\readme.md" />
-    <None Include="ApplicationServices\Tools\Network\MIME\List of MIME types  %28Internet Media Types%29.txt" />
+    <None Include="Net\MIME\List of MIME types  %28Internet Media Types%29.txt" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ComponentModel\Ranges\RangeModel\Copyright.txt" />
