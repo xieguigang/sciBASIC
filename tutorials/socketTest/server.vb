@@ -63,7 +63,7 @@ Public Class server : Inherits ServerModule
     End Function
 
     Private Function handleA(request As RequestStream, RemoteAddress As System.Net.IPEndPoint) As RequestStream
-        Return RequestStream.CreatePackage("Hello world")
+        Return RequestStream.CreatePackage(request.GetUTF8String & "  Hello world")
     End Function
 
     Private Function handleB(request As RequestStream, RemoteAddress As System.Net.IPEndPoint) As RequestStream
