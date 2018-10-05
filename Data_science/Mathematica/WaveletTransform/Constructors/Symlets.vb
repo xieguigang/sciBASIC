@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27971cc2f1a7ff78f4a35bd335ad2cbc, Data_science\Mathematica\WaveletTransform\Constructors\Symlets.vb"
+﻿#Region "Microsoft.VisualBasic::001985cb2c41d2d6dc0ae089f0aa2a8f, Data_science\Mathematica\WaveletTransform\Constructors\Symlets.vb"
 
     ' Author:
     ' 
@@ -77,4 +77,3 @@ Public Class Symlets : Inherits WaveletConstructor
             0.0000570360836184943, -0.000459329421004659})
     End Function
 End Class
-

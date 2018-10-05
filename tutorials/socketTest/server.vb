@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78f4893152b489fd342008d8e9026ae6, tutorials\socketTest\server.vb"
+﻿#Region "Microsoft.VisualBasic::799186be5f21064553623693bb57a8de, tutorials\socketTest\server.vb"
 
     ' Author:
     ' 
@@ -42,4 +42,3 @@
 Public Class server
 
 End Class
-

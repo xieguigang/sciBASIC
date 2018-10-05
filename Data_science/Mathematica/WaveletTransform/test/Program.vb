@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::191065fdf22d2aaa1862816719a57450, Data_science\Mathematica\WaveletTransform\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::cb0f568ab4f718c551a3415b6f474758, Data_science\Mathematica\WaveletTransform\test\Program.vb"
 
     ' Author:
     ' 
@@ -45,4 +45,3 @@ Module Program
 
     End Sub
 End Module
-

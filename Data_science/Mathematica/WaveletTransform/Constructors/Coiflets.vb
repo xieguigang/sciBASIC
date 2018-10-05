@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a49432398ef59823d7ae978102086a1, Data_science\Mathematica\WaveletTransform\Constructors\Coiflets.vb"
+﻿#Region "Microsoft.VisualBasic::08d65d00cad5897bacba1c97e6a12549, Data_science\Mathematica\WaveletTransform\Constructors\Coiflets.vb"
 
     ' Author:
     ' 
@@ -76,4 +76,3 @@ Public Class Coiflets : Inherits WaveletConstructor
         })
     End Function
 End Class
-

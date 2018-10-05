@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::410546c30f463e4d839936d487e953f3, vs_solutions\tutorials\core.test\ParallelTemplate.vb"
+﻿#Region "Microsoft.VisualBasic::5385add417dafd50030cea3ee7590cd5, vs_solutions\tutorials\core.test\ParallelTemplate.vb"
 
     ' Author:
     ' 
@@ -135,4 +135,3 @@
 '        '   Call Socket.SendMessage(LoadResult.GetSerializeBuffer) '返回内存数据
 '    End Sub
 'End Module
-

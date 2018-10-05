@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87d57d8b2f000e2176f0a2e93e563603, Data_science\Mathematica\WaveletTransform\Constructors\WaveletConstructor.vb"
+﻿#Region "Microsoft.VisualBasic::321ea78fc25e90bf69c627fd1727d7dd, Data_science\Mathematica\WaveletTransform\Constructors\WaveletConstructor.vb"
 
     ' Author:
     ' 
@@ -61,4 +61,3 @@ Public MustInherit Class WaveletConstructor : Implements IEnumerable(Of Wavelet)
         Yield GetEnumerator()
     End Function
 End Class
-

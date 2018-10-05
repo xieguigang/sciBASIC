@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7440c4d7eb61cc704c83beca7fde7f5, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\VisualBasicAppException.vb"
+﻿#Region "Microsoft.VisualBasic::94ae4e0b491c5d095a6e2a53002a395b, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\VisualBasicAppException.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,11 @@
     ' 
     '     Module ExceptionExtensions
     ' 
-    '         Function: Fail
+    ' 
+    '         Delegate Sub
+    ' 
+    '             Function: Fail
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

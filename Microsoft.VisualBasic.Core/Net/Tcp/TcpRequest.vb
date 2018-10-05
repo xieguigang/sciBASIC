@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aefc73b5a7fc26da7a6b82f43f1b9258, Microsoft.VisualBasic.Core\Net\Tcp\AsynInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::a3473a28b510eade8ad556ad3a6366ba, Microsoft.VisualBasic.Core\Net\Tcp\TcpRequest.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class AsynInvoke
+    '     Class TcpRequest
     ' 
     '         Properties: LocalIPAddress
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24e42e92d750a81ac83ff34d923b9847, tutorials\socketTest\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::da0fe537e502eaa234a58447f83a8cce, tutorials\socketTest\Protocols.vb"
 
     ' Author:
     ' 
@@ -60,4 +60,3 @@ Module Protocols
 
     Public ReadOnly Property EntryPoint As Long = New Protocol(GetType(Test)).EntryPoint
 End Module
-

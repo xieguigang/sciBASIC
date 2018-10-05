@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bd0fb255879931eda0d59eec2c4996d, Data_science\Mathematica\WaveletTransform\Transform.vb"
+﻿#Region "Microsoft.VisualBasic::7d2c333ab8b32c02dc117b790ef8cc2f, Data_science\Mathematica\WaveletTransform\Transform.vb"
 
     ' Author:
     ' 
@@ -560,4 +560,3 @@ Public Module Transform
         Array.Copy(inpDetails, 0, input, inpDetails.Length, inpDetails.Length)
     End Sub
 End Module
-

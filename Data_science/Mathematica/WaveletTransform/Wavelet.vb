@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f32d1f13e2d0f016574bce03b7c1611, Data_science\Mathematica\WaveletTransform\Wavelet.vb"
+﻿#Region "Microsoft.VisualBasic::62fd8abae91c4f7ed62f84d350429c70, Data_science\Mathematica\WaveletTransform\Wavelet.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Public Class Wavelet
         Next
     End Sub
 End Class
-
