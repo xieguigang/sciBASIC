@@ -20,6 +20,12 @@ Namespace Serialization.JSON
             End With
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetJson(array As IEnumerable(Of String), Optional indent As Boolean = False) As String
+            Return array.ToArray.GetJson(indent:=indent)
+        End Function
+
         <Extension>
         Public Function AnonymousJSON(Of T As Class)(obj As T) As String
             Dim keys = obj.GetType.GetProperties(PublicProperty)
