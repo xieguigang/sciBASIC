@@ -190,8 +190,15 @@ Namespace Net.Protocols
         ''' 默认是使用UTF8编码来编码字符串的
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUTF8String() As String
             Return Encoding.UTF8.GetString(ChunkBuffer)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetString(encoding As Encoding) As String
+            Return encoding.GetString(ChunkBuffer)
         End Function
 
         ''' <summary>

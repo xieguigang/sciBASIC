@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 Imports Microsoft.VisualBasic.Net.Tcp
@@ -66,15 +67,17 @@ Namespace ApplicationServices
 
         Public ReadOnly Property Protocol As New Protocol(GetType(T))
         Public ReadOnly Property TcpRequest As TcpRequest
+        Public ReadOnly Property TextEncoding As DefaultValue(Of Encoding)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(hostName$, remotePort%)
+        Sub New(hostName$, remotePort%, Optional encoding As Encodings = Encodings.UTF8WithoutBOM)
             TcpRequest = New TcpRequest(hostName, remotePort)
+            TextEncoding = encoding.CodePage
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function SendMessage(protocol As T, message$, Optional encoding As Encoding = Nothing) As RequestStream
-            Return SendMessage(protocol, (encoding Or DefaultEncoding).GetBytes(message))
+        Public Function SendMessage(protocol As T, message$, Optional textEncoding As Encoding = Nothing) As RequestStream
+            Return SendMessage(protocol, (textEncoding Or Me.TextEncoding).GetBytes(message))
         End Function
 
         Public Function SendMessage(protocol As T, data As Byte()) As RequestStream
@@ -85,6 +88,7 @@ Namespace ApplicationServices
             Return TcpRequest.SendMessage(message)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SendMessage(Of V As {New, Class})(protocol As T, data As V) As RequestStream
             Return SendMessage(protocol, data.GetJson)
         End Function
