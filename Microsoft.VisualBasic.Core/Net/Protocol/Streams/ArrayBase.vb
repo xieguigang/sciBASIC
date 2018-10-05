@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::d86f5adaeb8004cb91dd6d9cf0e18317, Microsoft.VisualBasic.Core\Net\Protocol\Streams\ArrayBase.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ValueArray
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ValueArray
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq.Extensions
-Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Buffer = System.Array
 
 Namespace Net.Protocols.Streams.Array
 
@@ -57,8 +58,8 @@ Namespace Net.Protocols.Streams.Array
 
         Protected ReadOnly _bufWidth As Integer
 
-        Protected Sub New(serialization As Func(Of T, Byte()),
-                          deserialization As Func(Of Byte(), T),
+        Protected Sub New(serialization As IGetBuffer(Of T),
+                          deserialization As IGetObject(Of T),
                           bufWidth As Integer,
                           rawStream As Byte())
 
@@ -72,8 +73,8 @@ Namespace Net.Protocols.Streams.Array
                 Dim byts As Byte() = New Byte(_bufWidth - 1) {}
 
                 Do While p < rawStream.Length - 1
-                    Call System.Array.ConstrainedCopy(rawStream, p + bufWidth, byts, Scan0, bufWidth)
-                    Call valueList.Add(__deserialization(byts))
+                    Call Buffer.ConstrainedCopy(rawStream, p + bufWidth, byts, Scan0, bufWidth)
+                    Call valueList.Add(MyBase.deserialization(byts))
                 Loop
 
                 Values = valueList.ToArray
@@ -81,22 +82,25 @@ Namespace Net.Protocols.Streams.Array
         End Sub
 
         Public NotOverridable Overrides Function Serialize() As Byte()
-            Dim buffer As Byte() = New Byte(Values.Length * _bufWidth - 1) {}
+            Dim bufferArray As Byte() = New Byte(Values.Length * _bufWidth - 1) {}
             Dim p As int = 0
 
             For Each value As T In Values
-                Dim byts As Byte() = __serialization(value)
-                Call System.Array.ConstrainedCopy(byts, Scan0, buffer, p + _bufWidth, _bufWidth)
+                Dim byts As Byte() = serialization(value)
+                Call Buffer.ConstrainedCopy(byts, Scan0, bufferArray, p + _bufWidth, _bufWidth)
             Next
 
-            Return buffer
+            Return bufferArray
         End Function
 
         Public Overrides Function ToString() As String
             If Values.IsNullOrEmpty Then
                 Return GetType(T).FullName
             Else
-                Return $"{GetType(T).FullName}  {"{"}{String.Join("," & vbTab, Values.Select(Function(val) Scripting.ToString(val)).ToArray)}{"}"}"
+                Dim valJson$ = Values _
+                    .Select(Function(val) Scripting.ToString(val)) _
+                    .GetJson
+                Return $"{GetType(T).FullName} {valJson}"
             End If
         End Function
     End Class

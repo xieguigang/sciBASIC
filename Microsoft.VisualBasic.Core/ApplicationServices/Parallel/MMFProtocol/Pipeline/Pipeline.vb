@@ -44,6 +44,7 @@
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Tcp
 
 Namespace Parallel.MMFProtocol.Pipeline
 
@@ -56,12 +57,12 @@ Namespace Parallel.MMFProtocol.Pipeline
 
         ReadOnly _sockets As SortedDictionary(Of String, MapStream.MSWriter) =
             New SortedDictionary(Of String, MapStream.MSWriter)
-        ReadOnly _netSocket As Net.TcpServicesSocket
+        ReadOnly _netSocket As TcpServicesSocket
         ReadOnly _protocols As Net.Abstract.IProtocolHandler
 
         Sub New(Optional port As Integer = API.PeplinePort)
             _protocols = New ProtocolHandler(Me)
-            _netSocket = New Net.TcpServicesSocket(port)
+            _netSocket = New TcpServicesSocket(port)
             _netSocket.Responsehandler = AddressOf _protocols.HandleRequest
 
             Call Parallel.RunTask(AddressOf _netSocket.Run)

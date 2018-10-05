@@ -89,6 +89,13 @@ Namespace ApplicationServices.Debugging
     Public Module ExceptionExtensions
 
         ''' <summary>
+        ''' 处理错误的工作逻辑的抽象接口
+        ''' </summary>
+        ''' <param name="ex">Socket的内部错误信息</param>
+        ''' <remarks></remarks>
+        Public Delegate Sub ExceptionHandler(ex As Exception)
+
+        ''' <summary>
         ''' Just throw exception, but the exception contains more details information for the debugging
         ''' </summary>
         ''' <param name="msg$"></param>

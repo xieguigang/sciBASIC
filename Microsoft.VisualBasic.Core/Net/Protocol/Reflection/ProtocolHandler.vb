@@ -45,11 +45,12 @@
 
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Net.Tcp
 
 Namespace Net.Protocols.Reflection
 
     ''' <summary>
-    ''' 这个模块只处理<see cref="Net.Abstract.DataRequestHandler"/>类型的接口
+    ''' 这个模块只处理<see cref="DataRequestHandler"/>类型的接口
     ''' </summary>
     Public Class ProtocolHandler : Inherits IProtocolHandler
 
@@ -58,7 +59,7 @@ Namespace Net.Protocols.Reflection
         ''' 这个类型建议一般为某种枚举类型
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property DeclaringType As System.Type
+        Public ReadOnly Property DeclaringType As Type
         Public Overrides ReadOnly Property ProtocolEntry As Long
 
         Public Overrides Function ToString() As String
@@ -76,8 +77,8 @@ Namespace Net.Protocols.Reflection
 
             Me.DeclaringType = entry?.DeclaringType
             Me.ProtocolEntry = entry?.EntryPoint
-            ' 解析出所有符合 WrapperClassTools.Net.DataRequestHandler 接口类型的函数方法
 
+            ' 解析出所有符合 WrapperClassTools.Net.DataRequestHandler 接口类型的函数方法
             Dim Methods = type.GetMethods(System.Reflection.BindingFlags.Public Or
                                           System.Reflection.BindingFlags.NonPublic Or
                                           System.Reflection.BindingFlags.Instance)
@@ -119,7 +120,7 @@ Namespace Net.Protocols.Reflection
         End Function
 
         ''' <summary>
-        ''' Handle the data request from the client for socket events: <see cref="Net.TcpServicesSocket.Responsehandler"/>.
+        ''' Handle the data request from the client for socket events: <see cref="TcpServicesSocket.Responsehandler"/>.
         ''' </summary>
         ''' <param name="request">The request stream object which contains the commands from the client</param>
         ''' <param name="remoteDevcie">The IPAddress of the target incoming client data request.</param>

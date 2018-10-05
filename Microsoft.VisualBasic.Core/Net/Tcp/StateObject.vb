@@ -45,13 +45,13 @@
 Imports System.Net.Sockets
 Imports Microsoft.VisualBasic.Net.Protocols
 
-Namespace Net
+Namespace Net.Tcp
 
     ''' <summary>
     ''' State object for reading client data asynchronously
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class StateObject : Implements System.IDisposable
+    Public Class StateObject : Implements IDisposable
 
         ''' <summary>
         ''' Client  socket.

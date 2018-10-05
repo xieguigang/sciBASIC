@@ -58,7 +58,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Protocols
 
-Namespace Net.Persistent.Application.Protocols
+Namespace Net.Tcp.Persistent.Application.Protocols
 
     Public Class LogonPOST
         <XmlAttribute> Public Property USER_ID As Long

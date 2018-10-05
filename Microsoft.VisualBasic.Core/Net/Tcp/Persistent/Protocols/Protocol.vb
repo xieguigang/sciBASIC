@@ -57,7 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
-Namespace Net.Persistent.Application.Protocols
+Namespace Net.Tcp.Persistent.Application.Protocols
 
     Public Module ServicesProtocol
 

@@ -1,79 +1,75 @@
 ﻿#Region "Microsoft.VisualBasic::559e4229ec8a422692d65bc275858ad5, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Socket\TcpClient.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class PersistentClient
-    ' 
-    '         Properties: MyLocalPort, OnServerHashCode, RemoteServerShutdown, Responsehandler
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: BeginConnect, readDataBuffer, ToString
-    ' 
-    '         Sub: __receive, __send, ConnectCallback, (+2 Overloads) Dispose, Receive
-    '              ReceiveCallback, requestHandle, WaitForConnected, WaitForHash, waitReceive
-    '         Class StateObject
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class PersistentClient
+' 
+'         Properties: MyLocalPort, OnServerHashCode, RemoteServerShutdown, Responsehandler
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: BeginConnect, readDataBuffer, ToString
+' 
+'         Sub: __receive, __send, ConnectCallback, (+2 Overloads) Dispose, Receive
+'              ReceiveCallback, requestHandle, WaitForConnected, WaitForHash, waitReceive
+'         Class StateObject
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports System.Net
 Imports System.Net.Sockets
-Imports System.Threading
+Imports System.Reflection
 Imports System.Text
-Imports System.Text.RegularExpressions
+Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Protocols
-Imports Microsoft.VisualBasic.Net.Persistent.Application
-Imports Microsoft.VisualBasic.Net.Protocols.Reflection
-Imports System.Reflection
+Imports Microsoft.VisualBasic.Net.Tcp.Persistent.Application.Protocols
 Imports Microsoft.VisualBasic.Parallel
-Imports Microsoft.VisualBasic.Net.Persistent.Application.Protocols
 
-Namespace Net.Persistent.Socket
+Namespace Net.Tcp.Persistent.Socket
 
     ''' <summary>
     ''' 请注意，这个对象是应用于客户端与服务器保持长连接所使用，并不会主动发送消息给服务器，而是被动的接受服务器的数据请求
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class PersistentClient : Implements System.IDisposable
-        Implements Net.Abstract.IDataRequestHandler
+    Public Class PersistentClient : Implements IDisposable
+        Implements IDataRequestHandler
 
         Protected _EndReceive As Boolean
 
@@ -99,11 +95,11 @@ Namespace Net.Persistent.Socket
 
         Const LocalIPAddress As String = "127.0.0.1"
 
-        Dim _ExceptionHandler As Abstract.ExceptionHandler
+        Dim _ExceptionHandler As ExceptionHandler
 
         Dim _MyLocalPort As Integer
 
-        Sub New(remoteDevice As System.Net.IPEndPoint, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
+        Sub New(remoteDevice As System.Net.IPEndPoint, Optional ExceptionHandler As ExceptionHandler = Nothing)
             Call Me.New(remoteDevice.Address.ToString, remoteDevice.Port, ExceptionHandler)
         End Sub
 
@@ -113,7 +109,7 @@ Namespace Net.Persistent.Socket
         ''' <param name="Client">Copy the TCP client connection profile data from this object.(从本客户端对象之中复制出连接配置参数以进行初始化操作)</param>
         ''' <param name="ExceptionHandler"></param>
         ''' <remarks></remarks>
-        Sub New(Client As PersistentClient, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
+        Sub New(Client As PersistentClient, Optional ExceptionHandler As ExceptionHandler = Nothing)
             remoteHost = Client.remoteHost
             port = Client.port
             _ExceptionHandler = If(ExceptionHandler Is Nothing, Sub(ex As Exception) Call ex.PrintException, ExceptionHandler)
@@ -126,7 +122,7 @@ Namespace Net.Persistent.Socket
         ''' <param name="RemotePort"></param>
         ''' <param name="ExceptionHandler">Public Delegate Sub ExceptionHandler(ex As Exception)</param>
         ''' <remarks></remarks>
-        Sub New(HostName As String, RemotePort As Integer, Optional ExceptionHandler As Abstract.ExceptionHandler = Nothing)
+        Sub New(HostName As String, RemotePort As Integer, Optional ExceptionHandler As ExceptionHandler = Nothing)
             remoteHost = HostName
 
             If String.Equals(remoteHost, "localhost", StringComparison.OrdinalIgnoreCase) Then
@@ -395,7 +391,7 @@ Namespace Net.Persistent.Socket
             Loop
         End Sub
 
-        Public Class StateObject : Inherits Net.StateObject
+        Public Class StateObject : Inherits Tcp.StateObject
             Public Stack As Integer
         End Class
 #End Region

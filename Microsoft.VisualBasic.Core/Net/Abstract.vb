@@ -1,72 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::d064cb74b5a3ba3cd25bf9e438a32795, Microsoft.VisualBasic.Core\Net\Abstract.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class IProtocolHandler
-    ' 
-    ' 
-    ' 
-    '     Delegate Sub
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Delegate Sub
-    ' 
-    ' 
-    '     Interface IServicesSocket
-    ' 
-    '         Properties: IsRunning, IsShutdown, LocalPort
-    ' 
-    '         Function: (+2 Overloads) Run
-    ' 
-    '     Interface IDataRequestHandler
-    ' 
-    '         Properties: Responsehandler
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class IProtocolHandler
+' 
+' 
+' 
+'     Delegate Sub
+' 
+' 
+'     Delegate Function
+' 
+' 
+'     Delegate Sub
+' 
+' 
+'     Interface IServicesSocket
+' 
+'         Properties: IsRunning, IsShutdown, LocalPort
+' 
+'         Function: (+2 Overloads) Run
+' 
+'     Interface IDataRequestHandler
+' 
+'         Properties: Responsehandler
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Tcp
 
 Namespace Net.Abstract
 
@@ -90,13 +91,6 @@ Namespace Net.Abstract
     ''' <param name="RemoteAddress"></param>
     ''' <returns></returns>
     Public Delegate Function DataRequestHandler(request As RequestStream, RemoteAddress As System.Net.IPEndPoint) As RequestStream
-
-    ''' <summary>
-    ''' 处理错误的工作逻辑的抽象接口
-    ''' </summary>
-    ''' <param name="ex">Socket的内部错误信息</param>
-    ''' <remarks></remarks>
-    Public Delegate Sub ExceptionHandler(ex As Exception)
 #End Region
 
     ''' <summary>
@@ -142,6 +136,6 @@ Namespace Net.Abstract
         ''' (这个函数指针用于处理来自于客户端的请求)
         ''' </summary>
         ''' <remarks></remarks>
-        Property Responsehandler As Net.Abstract.DataRequestHandler
+        Property Responsehandler As DataRequestHandler
     End Interface
 End Namespace

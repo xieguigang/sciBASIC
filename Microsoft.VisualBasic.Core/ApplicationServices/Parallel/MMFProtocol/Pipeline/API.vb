@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::425602775d495e8ec5dd00e9b590b6a5, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\MMFProtocol\Pipeline\API.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module API
-    ' 
-    ' 
-    '         Enum Protocols
-    ' 
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: Protocol
-    ' 
-    '     Function: Delete, IsRef, (+2 Overloads) TryGetValue, WriteData
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module API
+' 
+' 
+'         Enum Protocols
+' 
+' 
+' 
+' 
+'  
+' 
+'     Properties: Protocol
+' 
+'     Function: Delete, IsRef, (+2 Overloads) TryGetValue, WriteData
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Tcp
 
 Namespace Parallel.MMFProtocol.Pipeline
 
@@ -70,7 +71,7 @@ Namespace Parallel.MMFProtocol.Pipeline
             New Protocol(GetType(API.Protocols)).EntryPoint
 
         Public Function Delete(var As String, Optional port As Integer = API.PeplinePort) As Boolean
-            Dim invoke As New Net.AsynInvoke("127.0.0.1", port)
+            Dim invoke As New TcpRequest("127.0.0.1", port)
             Dim action As New RequestStream(API.Protocol, Protocols.Destroy, var)
             Dim resp As RequestStream = invoke.SendMessage(action)
             Return resp.Protocol = HTTP_RFC.RFC_OK
@@ -86,7 +87,7 @@ Namespace Parallel.MMFProtocol.Pipeline
             Dim buf As Byte() = value.Serialize
             Dim chunkSize As Long = buf.Length
             Dim ref As String = $"{var}:{chunkSize}"
-            Dim invoke As New Net.AsynInvoke("127.0.0.1", port)
+            Dim invoke As New TcpRequest("127.0.0.1", port)
             Dim action As New RequestStream(API.Protocol, Protocols.Allocation, ref)
             Dim resp As RequestStream = invoke.SendMessage(action)
             Dim writer As New MapStream.MSWriter(var, chunkSize)

@@ -1,48 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::ade484641c419093f3a268a5bfc01292, Microsoft.VisualBasic.Core\Net\Protocol\Streams\ArrayAbstract.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ArrayAbstract
-    ' 
-    '         Properties: Values
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ArrayAbstract
+' 
+'         Properties: Values
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 
 Namespace Net.Protocols.Streams.Array
 
@@ -51,8 +53,8 @@ Namespace Net.Protocols.Streams.Array
         <XmlAttribute("T")>
         Public Overridable Property Values As T()
 
-        Protected ReadOnly __serialization As Func(Of T, Byte())
-        Protected ReadOnly __deserialization As Func(Of Byte(), T)
+        Protected ReadOnly serialization As IGetBuffer(Of T)
+        Protected ReadOnly deserialization As IGetObject(Of T)
 
         ''' <summary>
         ''' 由于这个模块是专门应用于服务器端的数据交换的模块，所以稳定性优先，
@@ -61,17 +63,19 @@ Namespace Net.Protocols.Streams.Array
         ''' <param name="index"></param>
         ''' <returns></returns>
         Default Public Property value(index As Integer) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Values.ElementAtOrDefault(index)
             End Get
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As T)
                 Call Values.Set(index, value)
             End Set
         End Property
 
-        Sub New(serialize As Func(Of T, Byte()), load As Func(Of Byte(), T))
-            __serialization = serialize
-            __deserialization = load
+        Sub New(serialize As IGetBuffer(Of T), load As IGetObject(Of T))
+            serialization = serialize
+            deserialization = load
         End Sub
     End Class
 End Namespace

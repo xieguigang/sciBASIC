@@ -54,13 +54,13 @@ Imports System.Net
 Imports System.Net.Sockets
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports TcpEndPoint = System.Net.IPEndPoint
 
-Namespace Net
+Namespace Net.Tcp
 
     ''' <summary>
     ''' The server socket should returns some data string to this client or this client will stuck at the <see cref="SendMessage"></see> function.
@@ -68,7 +68,7 @@ Namespace Net
     ''' "></see>函数位置一直处于等待的状态)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class AsynInvoke : Implements IDisposable
+    Public Class TcpRequest : Implements IDisposable
 
 #Region "Internal Fields"
 
@@ -91,14 +91,14 @@ Namespace Net
         Dim connectDone As ManualResetEvent
         Dim sendDone As ManualResetEvent
         Dim receiveDone As ManualResetEvent
-        Dim __exceptionHandler As Abstract.ExceptionHandler
+        Dim __exceptionHandler As ExceptionHandler
         Dim remoteHost As String
 
         ''' <summary>
         ''' Remote End Point
         ''' </summary>
         ''' <remarks></remarks>
-        Protected ReadOnly remoteEP As System.Net.IPEndPoint
+        Protected ReadOnly remoteEP As TcpEndPoint
 #End Region
 
         ''' <summary>
@@ -141,7 +141,7 @@ Namespace Net
         ''' </param>
         ''' <param name="exceptionHandler"></param>
         ''' <remarks></remarks>
-        Sub New(client As AsynInvoke, Optional exceptionHandler As ExceptionHandler = Nothing)
+        Sub New(client As TcpRequest, Optional exceptionHandler As ExceptionHandler = Nothing)
             remoteHost = client.remoteHost
             port = client.port
             __exceptionHandler = exceptionHandler Or defaultHandler
@@ -177,8 +177,8 @@ Namespace Net
         ''' <remarks></remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function LocalConnection(localPort%, Optional exceptionHandler As ExceptionHandler = Nothing) As AsynInvoke
-            Return New AsynInvoke(LocalIPAddress, localPort, exceptionHandler)
+        Public Shared Function LocalConnection(localPort%, Optional exceptionHandler As ExceptionHandler = Nothing) As TcpRequest
+            Return New TcpRequest(LocalIPAddress, localPort, exceptionHandler)
         End Function
 
         ''' <summary>
@@ -245,7 +245,7 @@ Namespace Net
         Public Delegate Function SendMessageInvoke(Message As String) As String
 
         Public Function SendMessage(Message As String, Callback As Action(Of String)) As IAsyncResult
-            Dim SendMessageClient As New AsynInvoke(Me, exceptionHandler:=Me.__exceptionHandler)
+            Dim SendMessageClient As New TcpRequest(Me, exceptionHandler:=Me.__exceptionHandler)
             Return (Sub() Call Callback(SendMessageClient.SendMessage(Message))).BeginInvoke(Nothing, Nothing)
         End Function
 
