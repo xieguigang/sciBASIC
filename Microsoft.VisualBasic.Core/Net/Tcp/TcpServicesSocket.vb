@@ -1,61 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::8918a4e2102138f20052f42e5e78495f, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\TcpSynchronizationServicesSocket.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TcpSynchronizationServicesSocket
-    ' 
-    '         Properties: IsShutdown, LocalPort, Responsehandler, Running
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: BeginListen, IsServerInternalException, LoopbackEndPoint, (+2 Overloads) Run, ToString
-    ' 
-    '         Sub: AcceptCallback, (+2 Overloads) Dispose, ForceCloseHandle, HandleRequest, ReadCallback
-    '              (+2 Overloads) Send, SendCallback, WaitForStart
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TcpSynchronizationServicesSocket
+' 
+'         Properties: IsShutdown, LocalPort, Responsehandler, Running
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: BeginListen, IsServerInternalException, LoopbackEndPoint, (+2 Overloads) Run, ToString
+' 
+'         Sub: AcceptCallback, (+2 Overloads) Dispose, ForceCloseHandle, HandleRequest, ReadCallback
+'              (+2 Overloads) Send, SendCallback, WaitForStart
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Net
 Imports System.Net.Sockets
 Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports TcpEndPoint = System.Net.IPEndPoint
 
 Namespace Net
 
@@ -64,7 +67,7 @@ Namespace Net
     ''' (运行于服务器端上面的Socket监听对象，多线程模型)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Class TcpSynchronizationServicesSocket
+    Public Class TcpServicesSocket
         Implements IDisposable
         Implements ITaskDriver
         Implements IServicesSocket
@@ -72,7 +75,7 @@ Namespace Net
 #Region "INTERNAL FIELDS"
 
         Dim _threadEndAccept As Boolean = True
-        Dim __exceptionHandle As Abstract.ExceptionHandler
+        Dim _exceptionHandle As Abstract.ExceptionHandler
         Dim _servicesSocket As Socket
 
 #End Region
@@ -87,7 +90,7 @@ Namespace Net
 
         ''' <summary>
         ''' This function pointer using for the data request handling of the data request from the client socket.   
-        ''' [Public Delegate Function DataResponseHandler(str As <see cref="System.String"/>, RemoteAddress As <see cref="System.Net.IPEndPoint"/>) As <see cref="System.String"/>]
+        ''' [Public Delegate Function DataResponseHandler(str As <see cref="String"/>, RemoteAddress As <see cref="TcpEndPoint"/>) As <see cref="String"/>]
         ''' (这个函数指针用于处理来自于客户端的请求)
         ''' </summary>
         ''' <remarks></remarks>
@@ -99,6 +102,8 @@ Namespace Net
             End Get
         End Property
 
+        Shared ReadOnly defaultHandler As New DefaultValue(Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
+
         ''' <summary>
         ''' 消息处理的方法接口： Public Delegate Function DataResponseHandler(str As String, RemotePort As Integer) As String
         ''' </summary>
@@ -108,19 +113,19 @@ Namespace Net
                 Optional exHandler As ExceptionHandler = Nothing)
 
             Me._LocalPort = LocalPort
-            Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
+            Me._exceptionHandle = exHandler Or defaultHandler
         End Sub
 
         ''' <summary>
         ''' 短连接socket服务端
         ''' </summary>
         ''' <param name="DataArrivalEventHandler"></param>
-        ''' <param name="LocalPort"></param>
+        ''' <param name="localPort"></param>
         ''' <param name="exHandler"></param>
-        Sub New(DataArrivalEventHandler As DataRequestHandler, LocalPort As Integer, Optional exHandler As Abstract.ExceptionHandler = Nothing)
+        Sub New(DataArrivalEventHandler As DataRequestHandler, localPort%, Optional exHandler As ExceptionHandler = Nothing)
             Me.Responsehandler = DataArrivalEventHandler
-            Me.__exceptionHandle = If(exHandler Is Nothing, AddressOf PrintException, exHandler)
-            Me._LocalPort = LocalPort
+            Me._exceptionHandle = exHandler Or defaultHandler
+            Me._LocalPort = localPort
         End Sub
 
         ''' <summary>
@@ -133,14 +138,17 @@ Namespace Net
         ''' <remarks></remarks>
         Public Shared Function BeginListen(DataArrivalEventHandler As DataRequestHandler,
                                            Optional LocalPort As Integer = 11000,
-                                           Optional exHandler As Abstract.ExceptionHandler = Nothing) As Action
-            Dim Socket As New TcpSynchronizationServicesSocket(DataArrivalEventHandler, LocalPort, exHandler)
-            Call (Sub() Call Socket.Run()).BeginInvoke(Nothing, Nothing)
-            Return AddressOf Socket.Dispose
+                                           Optional exHandler As ExceptionHandler = Nothing) As Action
+
+            With New TcpServicesSocket(DataArrivalEventHandler, LocalPort, exHandler)
+                Call New Action(AddressOf .Run).BeginInvoke(Nothing, Nothing)
+                Return AddressOf .Dispose
+            End With
         End Function
 
-        Public Function LoopbackEndPoint(Port As Integer) As System.Net.IPEndPoint
-            Return New System.Net.IPEndPoint(System.Net.IPAddress.Loopback, Port)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function LoopbackEndPoint(Port As Integer) As TcpEndPoint
+            Return New TcpEndPoint(System.Net.IPAddress.Loopback, Port)
         End Function
 
         Public Overrides Function ToString() As String
@@ -155,12 +163,10 @@ Namespace Net
         ''' </summary>
         ''' <remarks></remarks>
         Public Function Run() As Integer Implements ITaskDriver.Run, IServicesSocket.Run
-
             ' Establish the local endpoint for the socket.
-            Dim localEndPoint As System.Net.IPEndPoint =
-                New System.Net.IPEndPoint(System.Net.IPAddress.Any, _LocalPort)
+            Dim localEndPoint As TcpEndPoint = New TcpEndPoint(System.Net.IPAddress.Any, _LocalPort)
             Return Run(localEndPoint)
-        End Function 'Main
+        End Function
 
         ''' <summary>
         ''' This server waits for a connection and then uses  asychronous operations to
@@ -169,13 +175,10 @@ Namespace Net
         ''' It then disconnects from the client and waits for another client.(请注意，当服务器的代码运行到这里之后，代码将被阻塞在这里)
         ''' </summary>
         ''' <remarks></remarks>
-        Public Function Run(localEndPoint As System.Net.IPEndPoint) As Integer Implements IServicesSocket.Run
-
+        Public Function Run(localEndPoint As TcpEndPoint) As Integer Implements IServicesSocket.Run
             _LocalPort = localEndPoint.Port
-
             ' Create a TCP/IP socket.
             _servicesSocket = New Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
-            '_InternalSocketListener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, True)
             ' Bind the socket to the local endpoint and listen for incoming connections.
 
             Try
@@ -189,7 +192,7 @@ Namespace Net
                     vbCrLf &
                     vbCrLf &
                     ex.ToString
-                Call Me.__exceptionHandle(New Exception(exMessage, ex))
+                Call _exceptionHandle(New Exception(exMessage, ex))
                 Throw
             Finally
 #If DEBUG Then
@@ -244,7 +247,6 @@ Namespace Net
         End Sub
 
         Public Sub AcceptCallback(ar As IAsyncResult)
-
             ' Get the socket that handles the client request.
             Dim listener As Socket = DirectCast(ar.AsyncState, Socket)
 
@@ -259,7 +261,9 @@ Namespace Net
             End Try
 
             ' Create the state object for the async receive.
-            Dim state As StateObject = New StateObject With {.workSocket = handler}
+            Dim state As StateObject = New StateObject With {
+                .workSocket = handler
+            }
 
             Try
                 Call handler.BeginReceive(state.readBuffer, 0, StateObject.BufferSize, 0, New AsyncCallback(AddressOf ReadCallback), state)
@@ -285,13 +289,16 @@ Namespace Net
             Dim bytesRead As Integer
 
             Try
-                bytesRead = handler.EndReceive(ar)  '在这里可能发生远程客户端主机强制断开连接，由于已经被断开了，客户端已经放弃了这一次数据请求，所有在这里讲这个请求线程放弃
+                ' 在这里可能发生远程客户端主机强制断开连接，由于已经被断开了，
+                ' 客户端已经放弃了这一次数据请求，所有在这里将这个请求线程放弃
+                bytesRead = handler.EndReceive(ar)
             Catch ex As Exception
                 Call ForceCloseHandle(handler.RemoteEndPoint)
                 Return
             End Try
 
-            If bytesRead > 0 Then  '有新的数据
+            ' 有新的数据
+            If bytesRead > 0 Then
 
                 ' There  might be more data, so store the data received so far.
                 state.ChunkBuffer.AddRange(state.readBuffer.Takes(bytesRead))
@@ -299,7 +306,8 @@ Namespace Net
                 ' more data.
                 state.readBuffer = state.ChunkBuffer.ToArray
 
-                Dim requestData As RequestStream = New RequestStream(state.readBuffer) '得到的是原始的请求数据
+                ' 得到的是原始的请求数据
+                Dim requestData As New RequestStream(state.readBuffer)
 
                 If requestData.FullRead Then
                     Call HandleRequest(handler, requestData)
@@ -325,8 +333,7 @@ Namespace Net
             ' All the data has been read from the
             ' client. Display it on the console.
             ' Echo the data back to the client.
-
-            Dim remoteEP = DirectCast(handler.RemoteEndPoint, System.Net.IPEndPoint)
+            Dim remoteEP = DirectCast(handler.RemoteEndPoint, TcpEndPoint)
 
             Try
                 If requestData.IsPing Then
@@ -336,12 +343,13 @@ Namespace Net
                 End If
                 Call Send(handler, requestData)
             Catch ex As Exception
-                Call __exceptionHandle(ex)
-                '错误可能是内部处理请求的时候出错了，则将SERVER_INTERNAL_EXCEPTION结果返回给客户端
+                Call _exceptionHandle(ex)
+                ' 错误可能是内部处理请求的时候出错了，则将SERVER_INTERNAL_EXCEPTION结果返回给客户端
                 Try
                     Call Send(handler, NetResponse.RFC_INTERNAL_SERVER_ERROR)
-                Catch ex2 As Exception '这里处理的是可能是强制断开连接的错误
-                    Call __exceptionHandle(ex2)
+                Catch ex2 As Exception
+                    ' 这里处理的是可能是强制断开连接的错误
+                    Call _exceptionHandle(ex2)
                 End Try
             End Try
         End Sub
@@ -353,7 +361,6 @@ Namespace Net
         ''' <param name="data"></param>
         ''' <remarks></remarks>
         Private Sub Send(handler As Socket, data As String)
-
             ' Convert the string data to byte data using ASCII encoding.
             Dim byteData As Byte() = Encoding.UTF8.GetBytes(data)
             byteData = New RequestStream(0, 0, byteData).Serialize
@@ -369,12 +376,11 @@ Namespace Net
         End Sub
 
         Private Sub SendCallback(ar As IAsyncResult)
-
             ' Retrieve the socket from the state object.
             Dim handler As Socket = DirectCast(ar.AsyncState, Socket)
             ' Complete sending the data to the remote device.
             Dim bytesSent As Integer = handler.EndSend(ar)
-            'Console.WriteLine("Sent {0} bytes to client.", bytesSent)
+
             Call handler.Shutdown(SocketShutdown.Both)
             Call handler.Close()
         End Sub 'SendCallback
@@ -387,6 +393,8 @@ Namespace Net
         ''' <param name="replyData"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function IsServerInternalException(replyData As String) As Boolean
             Return String.Equals(replyData, NetResponse.RFC_INTERNAL_SERVER_ERROR.GetUTF8String)
         End Function

@@ -64,7 +64,7 @@ Namespace Net
 
     ''' <summary>
     ''' The server socket should returns some data string to this client or this client will stuck at the <see cref="SendMessage"></see> function.
-    ''' (服务器端<see cref="TcpSynchronizationServicesSocket"></see>必须要返回数据，否则本客户端会在<see cref="SendMessage
+    ''' (服务器端<see cref="TcpServicesSocket"></see>必须要返回数据，否则本客户端会在<see cref="SendMessage
     ''' "></see>函数位置一直处于等待的状态)
     ''' </summary>
     ''' <remarks></remarks>

@@ -119,7 +119,7 @@ Namespace Net.Protocols.Reflection
         End Function
 
         ''' <summary>
-        ''' Handle the data request from the client for socket events: <see cref="Net.TcpSynchronizationServicesSocket.Responsehandler"/>.
+        ''' Handle the data request from the client for socket events: <see cref="Net.TcpServicesSocket.Responsehandler"/>.
         ''' </summary>
         ''' <param name="request">The request stream object which contains the commands from the client</param>
         ''' <param name="remoteDevcie">The IPAddress of the target incoming client data request.</param>
