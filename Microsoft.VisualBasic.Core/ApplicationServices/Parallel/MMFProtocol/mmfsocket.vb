@@ -57,8 +57,8 @@
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.MMFProtocol.MapStream
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Parallel.MMFProtocol.MapStream
 Imports Microsoft.VisualBasic.Text
 
 Namespace Parallel.MMFProtocol
