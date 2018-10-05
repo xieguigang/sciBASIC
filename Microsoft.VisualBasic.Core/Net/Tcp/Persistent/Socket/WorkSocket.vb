@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6255d0b6e20d368b323e6d85eac43266, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\Socket\WorkSocket.vb"
+﻿#Region "Microsoft.VisualBasic::5771f069fbbe23677c5f6ba25bd494cd, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Socket\WorkSocket.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Class WorkSocket
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Sub: ReadCallback, SendMessage
+    '         Sub: PushMessage, ReadCallback
     ' 
     ' 
     ' /********************************************************************************/

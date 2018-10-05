@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5563efed1330331714869c1e9bfaad66, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::d064cb74b5a3ba3cd25bf9e438a32795, Microsoft.VisualBasic.Core\Net\Abstract.vb"
 
     ' Author:
     ' 

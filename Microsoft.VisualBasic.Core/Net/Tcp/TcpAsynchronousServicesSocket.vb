@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3733e0d046def22732cca75e97803aad, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\TcpAsynchronousServicesSocket.vb"
+﻿#Region "Microsoft.VisualBasic::3733e0d046def22732cca75e97803aad, Microsoft.VisualBasic.Core\Net\Tcp\TcpAsynchronousServicesSocket.vb"
 
     ' Author:
     ' 

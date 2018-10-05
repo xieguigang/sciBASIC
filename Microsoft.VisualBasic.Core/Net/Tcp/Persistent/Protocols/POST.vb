@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8687013e2c7274304023ee22d27ff6c1, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\Persistent\Protocols\POST.vb"
+﻿#Region "Microsoft.VisualBasic::8687013e2c7274304023ee22d27ff6c1, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Protocols\POST.vb"
 
     ' Author:
     ' 

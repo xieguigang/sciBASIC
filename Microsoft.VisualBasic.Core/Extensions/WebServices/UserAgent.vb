@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d39332dd7aa110056ed2ee81e5b4a85, Microsoft.VisualBasic.Core\Extensions\WebServices\UserAgent.vb"
+﻿#Region "Microsoft.VisualBasic::2e61fd329464eb148a27a0a3b3b9d82c, Microsoft.VisualBasic.Core\Extensions\WebServices\UserAgent.vb"
 
     ' Author:
     ' 

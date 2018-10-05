@@ -1,52 +1,52 @@
-﻿#Region "Microsoft.VisualBasic::43478869161388f889b5f12a85a8f75e, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\Tcp\AsynInvoke.vb"
+﻿#Region "Microsoft.VisualBasic::aefc73b5a7fc26da7a6b82f43f1b9258, Microsoft.VisualBasic.Core\Net\Tcp\AsynInvoke.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class AsynInvoke
-' 
-'         Properties: LocalIPAddress
-' 
-'         Constructor: (+4 Overloads) Sub New
-'         Function: LocalConnection, OperationTimeOut, SafelySendMessage, (+2 Overloads) SendMessage, ToString
-'         Delegate Function
-' 
-'             Function: __decryptMessageCommon, (+6 Overloads) SendMessage
-' 
-'             Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
-'                  SendCallback
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Class AsynInvoke
+    ' 
+    '         Properties: LocalIPAddress
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: LocalConnection, OperationTimeOut, (+2 Overloads) SendMessage, ToString
+    '         Delegate Function
+    ' 
+    '             Function: (+4 Overloads) SendMessage
+    ' 
+    '             Sub: __send, ConnectCallback, (+2 Overloads) Dispose, Receive, ReceiveCallback
+    '                  SendCallback
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

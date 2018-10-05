@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::4e184e464b02aaa665ca60f8d626866e, Microsoft.VisualBasic.Core\Scripting\MetaData\EntryPointMetaData.vb"
+﻿#Region "Microsoft.VisualBasic::776b8416ea8cd286200447e3e5c93cf2, Microsoft.VisualBasic.Core\Scripting\MetaData\EntryPointMetaData.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class FunctionReturns
-' 
-'         Properties: Description, TypeRef
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetDescription, ToString
-' 
-'     Class OverloadsSignatureHandle
-' 
-'         Properties: FullName, TypeIDBrief
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ToString
-' 
-'     Class ImportsConstant
-' 
-'         Properties: Name, TypeInfo
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    '     Class FunctionReturns
+    ' 
+    '         Properties: Description, TypeRef
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetDescription, ToString
+    ' 
+    '     Class OverloadsSignatureHandle
+    ' 
+    '         Properties: FullName, TypeIDBrief
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class ImportsConstant
+    ' 
+    '         Properties: Name, TypeInfo
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

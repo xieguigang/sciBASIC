@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1c0caa000c8f3e4892a1b1054f701c9, Microsoft.VisualBasic.Core\ApplicationServices\Tools\Network\TcpClient.vb"
+﻿#Region "Microsoft.VisualBasic::f1c0caa000c8f3e4892a1b1054f701c9, Microsoft.VisualBasic.Core\Net\TcpClient.vb"
 
     ' Author:
     ' 

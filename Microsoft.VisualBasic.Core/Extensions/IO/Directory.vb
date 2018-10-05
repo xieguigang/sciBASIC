@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55d02ab35a9721b5ecc2d529b86d4ec0, Microsoft.VisualBasic.Core\Extensions\IO\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::28f3989136bb8c041e42be836be48749, Microsoft.VisualBasic.Core\Extensions\IO\Directory.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,11 @@
 
     ' Summaries:
 
+    '     Class TemporaryEnvironment
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: (+2 Overloads) Dispose
+    ' 
     '     Class Directory
     ' 
     '         Properties: DIR
