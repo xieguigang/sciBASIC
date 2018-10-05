@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "socketTest", "socketTest\socketTest.vbproj", "{DC9331E4-B2DC-42BA-ACCC-093195B13825}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,30 @@ Global
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release|x64.Build.0 = Release|x64
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release|x86.ActiveCfg = Release|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Release|x86.Build.0 = Release|x86
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Debug|x64.Build.0 = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Debug|x86.Build.0 = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.docs|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.docs|Any CPU.Build.0 = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.docs|x64.ActiveCfg = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.docs|x64.Build.0 = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.docs|x86.ActiveCfg = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.docs|x86.Build.0 = Debug|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Publish|Any CPU.ActiveCfg = Release|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Publish|Any CPU.Build.0 = Release|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Publish|x64.ActiveCfg = Release|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Publish|x64.Build.0 = Release|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Publish|x86.ActiveCfg = Release|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Publish|x86.Build.0 = Release|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Release|x64.ActiveCfg = Release|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Release|x64.Build.0 = Release|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Release|x86.ActiveCfg = Release|Any CPU
+		{DC9331E4-B2DC-42BA-ACCC-093195B13825}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
