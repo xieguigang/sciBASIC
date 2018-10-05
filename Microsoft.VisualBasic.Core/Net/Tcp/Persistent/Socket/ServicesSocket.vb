@@ -123,10 +123,10 @@ Namespace Net.Persistent.Socket
         ''' <summary>
         ''' 消息处理的方法接口： Public Delegate Function DataResponseHandler(str As String, RemotePort As Integer) As String
         ''' </summary>
-        ''' <param name="LocalPort">监听的本地端口号，假若需要进行端口映射的话，则可以在<see cref="Run"></see>方法之中设置映射的端口号</param>
+        ''' <param name="localPort">监听的本地端口号，假若需要进行端口映射的话，则可以在<see cref="Run"></see>方法之中设置映射的端口号</param>
         ''' <remarks></remarks>
-        Sub New(Optional LocalPort As Integer = 11000, Optional exHandler As Abstract.ExceptionHandler = Nothing)
-            Me._LocalPort = LocalPort
+        Sub New(Optional localPort% = 11000, Optional exHandler As Abstract.ExceptionHandler = Nothing)
+            Me._LocalPort = localPort
             Me._exceptionHandle = exHandler Or DefaultHandler
         End Sub
 
@@ -186,8 +186,8 @@ Namespace Net.Persistent.Socket
         Private Sub __acceptSocket()
             _threadEndAccept = False
 
-            Dim Callback As New AsyncCallback(AddressOf AcceptCallback)
-            Call _socketListener.BeginAccept(Callback, _socketListener)
+            Dim callback As New AsyncCallback(AddressOf AcceptCallback)
+            Call _socketListener.BeginAccept(callback, _socketListener)
         End Sub
 
         ''' <summary>
