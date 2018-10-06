@@ -14,15 +14,26 @@ Namespace ApplicationServices
     ''' </summary>
     Public MustInherit Class ServerModule : Implements IDisposable
 
+        ''' <summary>
+        ''' Tcp socket
+        ''' </summary>
         Protected socket As TcpServicesSocket
 
-        Sub New(port%)
+        ''' <summary>
+        ''' Create a new server module based on a tcp server socket.
+        ''' </summary>
+        ''' <param name="port">The listen port of the tcp socket.</param>
+        Sub New(port As Integer)
             socket = New TcpServicesSocket(port, AddressOf LogException) With {
                 .Responsehandler = ProtocolHandler()
             }
         End Sub
 
         Protected MustOverride Sub LogException(ex As Exception)
+        ''' <summary>
+        ''' Generally, using a <see cref="Protocol"/> attribute using reflection way is recommended.
+        ''' </summary>
+        ''' <returns></returns>
         Protected MustOverride Function ProtocolHandler() As ProtocolHandler
 
         Public Overridable Function Run() As Integer

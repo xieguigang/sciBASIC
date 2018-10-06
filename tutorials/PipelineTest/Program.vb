@@ -68,7 +68,7 @@ Module Program
     <ExportAPI("/std", Usage:="/std <input> <output>")>
     Public Function JustStdDevice() As Integer
         Using input = Console.OpenStandardInput, output = New StreamWriter(Console.OpenStandardOutput)
-            Call output.Write(New StreamReader(input).ReadToEnd.lTokens.GetJson)
+            Call output.Write(New StreamReader(input).ReadToEnd.LineTokens.GetJson)
         End Using
 
         Return 0
@@ -77,7 +77,7 @@ Module Program
     <ExportAPI("/pipe.Test", Usage:="/pipe.Test /in <file.txt/std_in> [/out <out.txt/std_out>]")>
     Public Function SupportsBothFileAndPipeline(args As CommandLine) As Integer
         Using out = args.OpenStreamOutput("/out")
-            Dim inData As String() = args.OpenStreamInput("/in").ReadToEnd.lTokens
+            Dim inData As String() = args.OpenStreamInput("/in").ReadToEnd.LineTokens
             Call out.Write(inData.GetJson)
         End Using
 
