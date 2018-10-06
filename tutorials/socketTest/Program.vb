@@ -42,6 +42,7 @@
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Tcp.Persistent.Socket
 Imports Microsoft.VisualBasic.Parallel
 
 Module Program
@@ -65,6 +66,19 @@ Module Program
         response = invoke.SendMessage(Test.C, "54555")
 
         Pause()
+    End Sub
+
+    Sub pushTest()
+        Dim server As New ServicesSocket(12345) With {
+            .AcceptCallbackHandleInvoke = Sub()
+
+                                          End Sub
+        }
+
+        Call New ThreadStart(AddressOf server.Run).RunTask
+
+
+
     End Sub
 
     Sub streamEncodingTest()

@@ -1,45 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::1ea2633955eb0a351c1762944f7e1846, Microsoft.VisualBasic.Core\Extensions\Reflection\Methods.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MethodsExtension
-    ' 
-    '     Function: (+2 Overloads) AsLazy, (+2 Overloads) TryInvoke
-    ' 
-    ' /********************************************************************************/
+' Module MethodsExtension
+' 
+'     Function: (+2 Overloads) AsLazy, (+2 Overloads) TryInvoke
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Linq.Expressions
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 
 Public Module MethodsExtension
@@ -77,5 +78,28 @@ Public Module MethodsExtension
     <Extension>
     Public Function AsLazy(Of T)(lambda As LambdaExpression) As Lazy(Of T)
         Return DirectCast(lambda.Compile, Func(Of T)).AsLazy
+    End Function
+
+    ''' <summary>
+    ''' Invoke a static method without parameters
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="method"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Invoke(Of T)(method As MethodInfo) As T
+        Return method.Invoke(Nothing, Nothing)
+    End Function
+
+    ''' <summary>
+    ''' Invoke a static method without parameters
+    ''' </summary>
+    ''' <param name="method"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Invoke(method As MethodInfo) As Object
+        Return method.Invoke(Nothing, Nothing)
     End Function
 End Module

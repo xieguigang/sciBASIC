@@ -108,12 +108,14 @@ Namespace Net.Tcp.Persistent.Socket
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Overridable ReadOnly Property LocalPort As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _LocalPort
             End Get
         End Property
 
         Public ReadOnly Property IsShutdown As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return disposedValue
             End Get
