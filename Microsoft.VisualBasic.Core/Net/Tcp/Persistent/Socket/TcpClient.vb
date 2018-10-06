@@ -154,13 +154,17 @@ Namespace Net.Tcp.Persistent.Socket
         ''' <returns></returns>
         Public Property MessageHandler As ProcessMessagePush
 
+        Public Sub BeginConnect()
+            Call Parallel.RunTask(AddressOf Run)
+        End Sub
+
         ''' <summary>
-        ''' 函数会想服务器上面的socket对象一样在这里发生阻塞
+        ''' 函数会像服务器上面的socket对象一样在这里发生阻塞
         ''' </summary>
         ''' <remarks></remarks>
-        Public Overridable Function BeginConnect() As Integer
-
-            connectDone = New ManualResetEvent(False) ' ManualResetEvent instances signal completion.
+        Public Function Run() As Integer
+            ' ManualResetEvent instances signal completion.
+            connectDone = New ManualResetEvent(False)
 
             ' Establish the remote endpoint for the socket.
             ' For this example use local machine.
@@ -191,14 +195,7 @@ Namespace Net.Tcp.Persistent.Socket
             Loop
 
             Return 0
-        End Function 'Main
-
-        ' TODO: override Finalize() only if Dispose(      disposing As Boolean) above has code to free unmanaged resources.
-        'Protected Overrides Sub Finalize()
-        '    ' Do not change this code.  Put cleanup code in Dispose(      disposing As Boolean) above.
-        '    Dispose(False)
-        '    MyBase.Finalize()
-        'End Sub
+        End Function
 
         ' This code added by Visual Basic to correctly implement the disposable pattern.
         Public Sub Dispose() Implements IDisposable.Dispose

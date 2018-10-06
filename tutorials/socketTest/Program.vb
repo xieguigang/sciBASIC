@@ -54,6 +54,8 @@ Module Program
         Call streamEncodingTest()
         Call pushTest()
 
+        Pause()
+
         Call New ThreadStart(AddressOf New server(testPort).Run).RunTask
         Call Thread.Sleep(1000)
 
@@ -85,6 +87,8 @@ Module Program
                               End Sub
         }
 
+        Call client.BeginConnect()
+        Call Thread.Sleep(1000)
 
         For i As Integer = 0 To 10
             Dim iii = i
@@ -92,7 +96,8 @@ Module Program
             Call server.Connections.ForEach(Sub(c, j)
                                                 Call c.PushMessage($"{iii}-{j}, hello.")
                                             End Sub)
-            Call Thread.Sleep(3000)
+            Call Thread.Sleep(1000)
+            Call Console.WriteLine("-")
         Next
 
         Call server.Dispose()
