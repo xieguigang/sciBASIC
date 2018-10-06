@@ -52,6 +52,7 @@ Module Program
         Dim testPort% = 2233
 
         Call streamEncodingTest()
+        Call pushTest()
 
         Call New ThreadStart(AddressOf New server(testPort).Run).RunTask
         Call Thread.Sleep(1000)
@@ -76,9 +77,25 @@ Module Program
         }
 
         Call New ThreadStart(AddressOf server.Run).RunTask
+        Call Thread.Sleep(1000)
+
+        Dim client As New PersistentClient("127.0.0.1", 12345) With {
+            .MessageHandler = Sub(request As RequestStream)
+                                  Call request.ToString.__DEBUG_ECHO
+                              End Sub
+        }
 
 
+        For i As Integer = 0 To 10
+            Dim iii = i
 
+            Call server.Connections.ForEach(Sub(c, j)
+                                                Call c.PushMessage($"{iii}-{j}, hello.")
+                                            End Sub)
+            Call Thread.Sleep(3000)
+        Next
+
+        Call server.Dispose()
     End Sub
 
     Sub streamEncodingTest()

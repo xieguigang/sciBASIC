@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::ef09f62ec418b5df614420455df76cd5, Microsoft.VisualBasic.Core\Net\Tcp\Persistent\Socket\TcpClient.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class PersistentClient
-    ' 
-    '         Properties: MyLocalPort, OnServerHashCode, RemoteServerShutdown, Responsehandler
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: BeginConnect, readDataBuffer, ToString
-    ' 
-    '         Sub: __receive, __send, ConnectCallback, (+2 Overloads) Dispose, Receive
-    '              ReceiveCallback, requestHandle, WaitForConnected, WaitForHash, waitReceive
-    '         Class StateObject
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class PersistentClient
+' 
+'         Properties: MyLocalPort, OnServerHashCode, RemoteServerShutdown, Responsehandler
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: BeginConnect, readDataBuffer, ToString
+' 
+'         Sub: __receive, __send, ConnectCallback, (+2 Overloads) Dispose, Receive
+'              ReceiveCallback, requestHandle, WaitForConnected, WaitForHash, waitReceive
+'         Class StateObject
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,10 +57,13 @@ Imports System.Reflection
 Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.ExceptionExtensions
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Net.Abstract
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Tcp.Persistent.Application.Protocols
 Imports Microsoft.VisualBasic.Parallel
+Imports TcpEndPoint = System.Net.IPEndPoint
+Imports TcpSocket = System.Net.Sockets.Socket
 
 Namespace Net.Tcp.Persistent.Socket
 
@@ -69,10 +72,8 @@ Namespace Net.Tcp.Persistent.Socket
     ''' </summary>
     ''' <remarks></remarks>
     Public Class PersistentClient : Implements IDisposable
-        Implements IDataRequestHandler
 
         Protected _EndReceive As Boolean
-
         Protected connectDone As ManualResetEvent
 
 #Region "IDisposable Support"
@@ -90,30 +91,30 @@ Namespace Net.Tcp.Persistent.Socket
         ''' Remote End Point
         ''' </summary>
         ''' <remarks></remarks>
-        Protected ReadOnly remoteEP As System.Net.IPEndPoint
+        Protected ReadOnly remoteEP As TcpEndPoint
         Protected remoteHost As String
 
         Const LocalIPAddress As String = "127.0.0.1"
 
         Dim _ExceptionHandler As ExceptionHandler
 
-        Dim _MyLocalPort As Integer
+        Shared ReadOnly defaultHandler As New DefaultValue(Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
 
-        Sub New(remoteDevice As System.Net.IPEndPoint, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(remoteDevice As TcpEndPoint, Optional ExceptionHandler As ExceptionHandler = Nothing)
             Call Me.New(remoteDevice.Address.ToString, remoteDevice.Port, ExceptionHandler)
         End Sub
 
         ''' <summary>
         '''
         ''' </summary>
-        ''' <param name="Client">Copy the TCP client connection profile data from this object.(从本客户端对象之中复制出连接配置参数以进行初始化操作)</param>
+        ''' <param name="client">Copy the TCP client connection profile data from this object.(从本客户端对象之中复制出连接配置参数以进行初始化操作)</param>
         ''' <param name="ExceptionHandler"></param>
         ''' <remarks></remarks>
-        Sub New(Client As PersistentClient, Optional ExceptionHandler As ExceptionHandler = Nothing)
-            remoteHost = Client.remoteHost
-            port = Client.port
-            _ExceptionHandler = If(ExceptionHandler Is Nothing, Sub(ex As Exception) Call ex.PrintException, ExceptionHandler)
-            remoteEP = New System.Net.IPEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
+        Sub New(client As PersistentClient, Optional ExceptionHandler As ExceptionHandler = Nothing)
+            remoteHost = client.remoteHost
+            port = client.port
+            _ExceptionHandler = ExceptionHandler Or defaultHandler
+            remoteEP = New TcpEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
         End Sub
 
         ''' <summary>
@@ -122,7 +123,7 @@ Namespace Net.Tcp.Persistent.Socket
         ''' <param name="RemotePort"></param>
         ''' <param name="ExceptionHandler">Public Delegate Sub ExceptionHandler(ex As Exception)</param>
         ''' <remarks></remarks>
-        Sub New(HostName As String, RemotePort As Integer, Optional ExceptionHandler As ExceptionHandler = Nothing)
+        Sub New(HostName$, RemotePort As Integer, Optional ExceptionHandler As ExceptionHandler = Nothing)
             remoteHost = HostName
 
             If String.Equals(remoteHost, "localhost", StringComparison.OrdinalIgnoreCase) Then
@@ -130,28 +131,28 @@ Namespace Net.Tcp.Persistent.Socket
             End If
 
             port = RemotePort
-            _ExceptionHandler = If(ExceptionHandler Is Nothing, Sub(ex As Exception) Call ex.PrintException, ExceptionHandler)
-            remoteEP = New System.Net.IPEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
+            _ExceptionHandler = ExceptionHandler Or defaultHandler
+            remoteEP = New TcpEndPoint(System.Net.IPAddress.Parse(remoteHost), port)
         End Sub
 
         Public ReadOnly Property MyLocalPort As Integer
-            Get
-                Return _MyLocalPort
-            End Get
-        End Property
 
         ''' <summary>
         ''' 本客户端socket在服务器上面的哈希句柄值
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property OnServerHashCode As Integer = 0
+        Public ReadOnly Property MyServerHashCode As Integer = 0
 
         ''' <summary>
         ''' 远程主机强制关闭连接之后触发这个动作
         ''' </summary>
         ''' <returns></returns>
         Public Property RemoteServerShutdown As MethodInvoker
-        Public Property Responsehandler As DataRequestHandler Implements IDataRequestHandler.Responsehandler
+        ''' <summary>
+        ''' 将从服务器来的推送消息的处理过程赋值在这个属性之中
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property MessageHandler As ProcessMessagePush
 
         ''' <summary>
         ''' 函数会想服务器上面的socket对象一样在这里发生阻塞
@@ -164,18 +165,20 @@ Namespace Net.Tcp.Persistent.Socket
             ' Establish the remote endpoint for the socket.
             ' For this example use local machine.
             ' Create a TCP/IP socket.
-            Dim client As New System.Net.Sockets.Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
-            Call client.Bind(New System.Net.IPEndPoint(System.Net.IPAddress.Any, 0))
+            Dim client As New TcpSocket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp)
+            Call client.Bind(New TcpEndPoint(System.Net.IPAddress.Any, 0))
             ' Connect to the remote endpoint.
             Call client.BeginConnect(remoteEP, New AsyncCallback(AddressOf ConnectCallback), client)
             ' Wait for connect.
             Call connectDone.WaitOne()
             Call Console.WriteLine(client.LocalEndPoint.ToString)
 
-            _MyLocalPort = DirectCast(client.LocalEndPoint, System.Net.IPEndPoint).Port
+            _MyLocalPort = DirectCast(client.LocalEndPoint, TcpEndPoint).Port
             _EndReceive = True
 
-            Dim state As New StateObject With {.workSocket = client}
+            Dim state As New StateObject With {
+                .workSocket = client
+            }
 
             Do While Not Me.disposedValue
                 Call Thread.Sleep(1)
@@ -211,12 +214,12 @@ Namespace Net.Tcp.Persistent.Socket
 
         Public Sub WaitForConnected()
             Do While Me._MyLocalPort = 0
-                Call Threading.Thread.Sleep(1)
+                Call Thread.Sleep(1)
             Loop
         End Sub
 
         Public Sub WaitForHash()
-            Do While OnServerHashCode = 0
+            Do While MyServerHashCode = 0
                 Call Thread.Sleep(1)
             Loop
         End Sub
@@ -226,7 +229,7 @@ Namespace Net.Tcp.Persistent.Socket
         ''' </summary>
         ''' <param name="ar"></param>
         Protected Sub ConnectCallback(ar As IAsyncResult)
-            Dim client As System.Net.Sockets.Socket = CType(ar.AsyncState, System.Net.Sockets.Socket)
+            Dim client As TcpSocket = CType(ar.AsyncState, TcpSocket)
 
             ' Complete the connection.
             Try
@@ -254,7 +257,7 @@ Namespace Net.Tcp.Persistent.Socket
         End Sub
 
         ''' <summary>
-        ''' An exception of type '<see cref="System.Net.Sockets.SocketException"/>' occurred in System.dll but was not handled in user code
+        ''' An exception of type '<see cref="SocketException"/>' occurred in System.dll but was not handled in user code
         ''' Additional information: A request to send or receive data was disallowed because the socket is not connected and
         ''' (when sending on a datagram socket using a sendto call) no address was supplied
         ''' </summary>
@@ -309,7 +312,7 @@ Namespace Net.Tcp.Persistent.Socket
         ''' <param name="client"></param>
         ''' <param name="data"></param>
         ''' <remarks></remarks>
-        Private Sub __send(client As System.Net.Sockets.Socket, data As String)
+        Private Sub __send(client As TcpSocket, data As String)
             ' Convert the string data to byte data using ASCII encoding.
             Dim byteData As Byte() = Encoding.ASCII.GetBytes(data)
             ' Begin sending the data to the remote device.
@@ -328,7 +331,7 @@ Namespace Net.Tcp.Persistent.Socket
         ''' <param name="ar"></param>
         ''' <returns></returns>
         Private Function readDataBuffer(state As StateObject, ar As IAsyncResult) As Byte()
-            Dim client As System.Net.Sockets.Socket = state.workSocket
+            Dim client As TcpSocket = state.workSocket
             Dim bytesRead As Integer
 
             Try
@@ -366,12 +369,14 @@ Namespace Net.Tcp.Persistent.Socket
 
             If TempBuffer.Length > request.TotalBytes Then
                 TempBuffer = TempBuffer.Skip(request.TotalBytes).ToArray
-                Call state.ChunkBuffer.AddRange(TempBuffer) '含有剩余的剪裁后的数据
+                ' 含有剩余的剪裁后的数据
+                Call state.ChunkBuffer.AddRange(TempBuffer)
             End If
 
             Try
                 Call requestHandle(request)
-            Catch ex As Exception  '客户端处理数据的时候发生了内部错误
+            Catch ex As Exception
+                ' 客户端处理数据的时候发生了内部错误
                 Call ex.PrintException
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
             End Try
@@ -379,9 +384,9 @@ Namespace Net.Tcp.Persistent.Socket
 
         Private Sub requestHandle(request As RequestStream)
             If ServicesProtocol.Protocols.ServerHash = request.Protocol Then
-                Me._OnServerHashCode = Scripting.CTypeDynamic(Of Integer)(request.GetUTF8String)
+                _MyServerHashCode = Scripting.CTypeDynamic(Of Integer)(request.GetUTF8String)
             Else
-                Call RunTask(Sub() Me.Responsehandler()(request, Nothing))
+                Call RunTask(Sub() Call _MessageHandler(request))
             End If
         End Sub
 
