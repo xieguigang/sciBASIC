@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.Abstract
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace Net.Protocols
 
@@ -136,7 +137,7 @@ Namespace Net.Protocols
         ''' <param name="Protocol"></param>
         ''' <param name="str">Protocol request argument parameters</param>
         Sub New(ProtocolCategory As Long, Protocol As Long, str As String)
-            Call Me.New(ProtocolCategory, Protocol, Encoding.UTF8.GetBytes(str))
+            Call Me.New(ProtocolCategory, Protocol, UTF8WithoutBOM.GetBytes(str))
         End Sub
 
         Sub New(ProtocolCategory As Long, Protocol As Long, str As String, encoding As Encoding)
@@ -173,17 +174,19 @@ Namespace Net.Protocols
 
             bitChunk = New Byte(INT64 - 1) {}
             Call Array.ConstrainedCopy(rawStream, p + INT64, bitChunk, Scan0, INT64)
-            Me.BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 
+            Me.BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
             Me.ChunkBuffer = New Byte(Me.BufferLength - 1) {}
-            Dim nxt As Long = p + BufferLength
-            If nxt > rawStream.Length - INT64 Then
+
+            If CLng(p + BufferLength) > (rawStream.Length - INT64) Then
                 ' 越界了，则数据没有读完
                 ChunkBuffer = New Byte() {}
-                Return
+            Else
+                Call Array.ConstrainedCopy(
+                    rawStream, p,
+                    ChunkBuffer, Scan0, BufferLength
+                )
             End If
-
-            Call Array.ConstrainedCopy(rawStream, p, Me.ChunkBuffer, Scan0, Me.BufferLength)
         End Sub
 
         ''' <summary>
@@ -193,7 +196,7 @@ Namespace Net.Protocols
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUTF8String() As String
-            Return Encoding.UTF8.GetString(ChunkBuffer)
+            Return UTF8WithoutBOM.GetString(ChunkBuffer)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -207,6 +210,8 @@ Namespace Net.Protocols
         ''' <typeparam name="T"></typeparam>
         ''' <param name="handler"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadObject(Of T)(handler As LoadObject(Of T)) As T
             Return handler(GetUTF8String)
         End Function
@@ -216,6 +221,8 @@ Namespace Net.Protocols
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadObject(Of T)() As T
             Return GetUTF8String.LoadJSON(Of T)
         End Function
@@ -351,7 +358,7 @@ Namespace Net.Protocols
             Return New RequestStream(SYS_PROTOCOL, Protocol, Message)
         End Function
 
-        Public ReadOnly Property TypeGetSystemProtocol As Protocols
+        Public ReadOnly Property TryGetSystemProtocol As Protocols
             Get
                 Try
                     Return CType(Protocol, Protocols)
