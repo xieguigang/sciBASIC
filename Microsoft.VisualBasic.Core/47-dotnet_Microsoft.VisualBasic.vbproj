@@ -1475,7 +1475,7 @@
     <Compile Include="Text\IO\TextFileEncodingDetector.vb" />
     <Compile Include="ComponentModel\Settings\SimpleConfig.vb" />
     <Compile Include="Extensions\IO\PathSearchTool.vb" />
-    <Compile Include="ComponentModel\Href.vb" />
+    <Compile Include="Text\Xml\Models\Href.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\DataSource.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\IEnumerable.vb" />
     <Compile Include="Text\Xml\Models\ValueTuples\ValuePair.vb" />

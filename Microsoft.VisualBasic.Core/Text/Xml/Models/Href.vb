@@ -1,51 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::16e153ac0cf6ea6fd742c0a1a5a1c993, Microsoft.VisualBasic.Core\ComponentModel\Href.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Href
-    ' 
-    '         Properties: Annotations, ResourceId, Value
-    ' 
-    '         Function: GetFullPath, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Href
+' 
+'         Properties: Annotations, ResourceId, Value
+' 
+'         Function: GetFullPath, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.FileIO
 
-Namespace ComponentModel
+Namespace Text.Xml.Models
 
     ''' <summary>
     ''' Resource link data.
@@ -70,11 +72,12 @@ Namespace ComponentModel
         ''' <remarks></remarks>
         <XmlElement("href-text", Namespace:="Microsoft.VisualBasic/Href_Annotation-Text-Data")>
         Public Property Value As String
+
         ''' <summary>
         ''' 注释数据
         ''' </summary>
         ''' <returns></returns>
-        <XmlText> Public Property Annotations As String
+        <XmlText> Public Property Comment As String
 #End Region
 
         ''' <summary>
@@ -84,12 +87,10 @@ Namespace ComponentModel
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function GetFullPath(DIR As String) As String
-            Dim previous As String = FileIO.FileSystem.CurrentDirectory
-
-            FileIO.FileSystem.CurrentDirectory = DIR
-            Dim url As String = System.IO.Path.GetFullPath(Me.Value)
-            FileIO.FileSystem.CurrentDirectory = previous
-            Return url
+            Using directory As New TemporaryEnvironment(DIR)
+                Dim url As String = Path.GetFullPath(Me.Value)
+                Return url
+            End Using
         End Function
 
         Public Overrides Function ToString() As String
