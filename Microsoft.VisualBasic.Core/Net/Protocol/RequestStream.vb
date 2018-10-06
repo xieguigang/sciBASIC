@@ -178,7 +178,7 @@ Namespace Net.Protocols
             Me.BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
             Me.ChunkBuffer = New Byte(Me.BufferLength - 1) {}
 
-            If CLng(p + BufferLength) > (rawStream.Length - INT64) Then
+            If CLng(p + INT64) + BufferLength > rawStream.Length Then
                 ' 越界了，则数据没有读完
                 ChunkBuffer = New Byte() {}
             Else
