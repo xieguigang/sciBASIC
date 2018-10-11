@@ -57,8 +57,8 @@ Public Module Extensions
     ''' <param name="path">Collection of <see cref="Tree(Of T,k).Label"/></param>
     ''' <returns></returns>
     <Extension>
-    Public Function VisitTree(Of T, K)(tree As Tree(Of T, K), path As IEnumerable(Of String)) As Tree(Of T, K)
-        Dim node As Tree(Of T, K) = tree
+    Public Function VisitTree(Of T)(tree As Tree(Of T, String), path As IEnumerable(Of String)) As Tree(Of T, String)
+        Dim node As Tree(Of T, String) = tree
 
         With path.ToArray
             For Each name As String In .ByRef
