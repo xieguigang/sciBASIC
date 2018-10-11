@@ -326,6 +326,7 @@
     <Compile Include="API\PQDijkstra\Example.vb" />
     <Compile Include="API\PQDijkstra\HeapNode.vb" />
     <Compile Include="API\PQDijkstra\PQDijkstraProvider.vb" />
+    <Compile Include="Trie.vb" />
     <Compile Include="Model\Abstract\Edge.vb" />
     <Compile Include="Model\Grid.vb" />
     <Compile Include="Model\TimeSerialsGraph.vb" />
