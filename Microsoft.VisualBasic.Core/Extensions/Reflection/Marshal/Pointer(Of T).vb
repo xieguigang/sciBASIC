@@ -108,7 +108,7 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <param name="p">相对于当前的位置的offset偏移量</param>
         ''' <returns></returns>
-        Default Public Property Value(p%) As T
+        Default Public Property Value(p As Integer) As T
             Get
                 p += __index
 
