@@ -65,6 +65,11 @@ Public Class Trie
         Return (child, True)
     End Function
 
+    ''' <summary>
+    ''' populate words by a given prefix string.
+    ''' </summary>
+    ''' <param name="prefix">The prefix string</param>
+    ''' <returns></returns>
     Public Iterator Function PopulateWordsByPrefix(prefix As String) As IEnumerable(Of String)
         Dim chars As New Pointer(Of Char)(prefix.SafeQuery)
 
