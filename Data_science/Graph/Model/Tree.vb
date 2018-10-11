@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Linq
 ''' Tree node with data..(可以直接被使用的树对象类型)
 ''' </summary>
 ''' <typeparam name="T"></typeparam>
-Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T))
+Public Class Tree(Of T, K) : Inherits AbstractTree(Of Tree(Of T, K), K)
 
     Public Property Data As T
 
@@ -65,7 +65,7 @@ Public Class Tree(Of T) : Inherits AbstractTree(Of Tree(Of T))
     End Sub
 End Class
 
-Public Class AbstractTree(Of T As AbstractTree(Of T)) : Inherits Vertex
+Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
 
     ''' <summary>
     ''' Childs table, key is the property <see cref="Vertex.Label"/>

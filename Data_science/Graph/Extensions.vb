@@ -54,11 +54,11 @@ Public Module Extensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="tree"></param>
-    ''' <param name="path">Collection of <see cref="Tree(Of T).Label"/></param>
+    ''' <param name="path">Collection of <see cref="Tree(Of T,k).Label"/></param>
     ''' <returns></returns>
     <Extension>
-    Public Function VisitTree(Of T)(tree As Tree(Of T), path As IEnumerable(Of String)) As Tree(Of T)
-        Dim node As Tree(Of T) = tree
+    Public Function VisitTree(Of T, K)(tree As Tree(Of T, K), path As IEnumerable(Of String)) As Tree(Of T, K)
+        Dim node As Tree(Of T, K) = tree
 
         With path.ToArray
             For Each name As String In .ByRef
@@ -75,7 +75,7 @@ Public Module Extensions
     End Function
 
     <Extension>
-    Public Function BacktrackingRoot(Of T)(tree As Tree(Of T)) As Tree(Of T)
+    Public Function BacktrackingRoot(Of T, K)(tree As Tree(Of T, K)) As Tree(Of T, K)
         Do While Not tree.IsRoot
             tree = tree.Parent
         Loop
@@ -84,12 +84,12 @@ Public Module Extensions
     End Function
 
     <Extension>
-    Public Function CreateGraph(Of T)(tree As Tree(Of T)) As Graph
+    Public Function CreateGraph(Of T, K)(tree As Tree(Of T, K)) As Graph
         Return New Graph().Add(tree)
     End Function
 
     <Extension>
-    Private Function Add(Of T)(g As Graph, tree As Tree(Of T)) As Graph
+    Private Function Add(Of T, K)(g As Graph, tree As Tree(Of T, K)) As Graph
         Dim childs = tree _
             .EnumerateChilds _
             .SafeQuery _
@@ -97,7 +97,7 @@ Public Module Extensions
 
         Call g.AddVertex(tree)
 
-        For Each child As Tree(Of T) In childs
+        For Each child As Tree(Of T, K) In childs
             Call g.Add(child)
             Call g.AddEdge(tree, child)
         Next
