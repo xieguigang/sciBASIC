@@ -7,10 +7,16 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
     ''' Childs table, key is the property <see cref="Vertex.Label"/>
     ''' </summary>
     ''' <returns></returns>
-    Public Property Childs As Dictionary(Of String, T)
+    Public Property Childs As Dictionary(Of K, T)
     Public Property Parent As T
 
     Dim qualDeli$ = "."
+
+    Default Public ReadOnly Property Child(key As K) As T
+        Get
+            Return Childs(key)
+        End Get
+    End Property
 
     ''' <summary>
     ''' Not null child count in this tree node.
