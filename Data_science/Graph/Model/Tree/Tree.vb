@@ -61,3 +61,10 @@ Public Class Tree(Of T, K) : Inherits AbstractTree(Of Tree(Of T, K), K)
         MyBase.New(qualDeli)
     End Sub
 End Class
+
+''' <summary>
+''' 使用字符串<see cref="String"/>作为键名的树节点
+''' </summary>
+''' <typeparam name="T"></typeparam>
+Public Class Tree(Of T) : Inherits Tree(Of T, String)
+End Class
