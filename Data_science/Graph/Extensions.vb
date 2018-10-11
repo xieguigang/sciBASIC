@@ -57,8 +57,8 @@ Public Module Extensions
     ''' <param name="path">Collection of <see cref="Tree(Of T,k).Label"/></param>
     ''' <returns></returns>
     <Extension>
-    Public Function VisitTree(Of T)(tree As Tree(Of T, String), path As IEnumerable(Of String)) As Tree(Of T, String)
-        Dim node As Tree(Of T, String) = tree
+    Public Function VisitTree(Of T)(tree As Tree(Of T), path As IEnumerable(Of String)) As Tree(Of T)
+        Dim node As Tree(Of T) = tree
 
         With path.ToArray
             For Each name As String In .ByRef
@@ -75,7 +75,7 @@ Public Module Extensions
     End Function
 
     <Extension>
-    Public Function BacktrackingRoot(Of T, K)(tree As Tree(Of T, K)) As Tree(Of T, K)
+    Public Function BacktrackingRoot(Of T)(tree As Tree(Of T)) As Tree(Of T)
         Do While Not tree.IsRoot
             tree = tree.Parent
         Loop
@@ -83,6 +83,7 @@ Public Module Extensions
         Return tree
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function CreateGraph(Of T, K)(tree As Tree(Of T, K)) As Graph
         Return New Graph().Add(tree)
@@ -110,6 +111,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="edge"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Reverse(edge As VertexEdge) As VertexEdge
         Return New VertexEdge With {
@@ -136,6 +139,7 @@ Public Module Extensions
         End With
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DefaultSteps(size As SizeF, Optional n% = 50) As DefaultValue(Of SizeF)
         Return New SizeF With {
