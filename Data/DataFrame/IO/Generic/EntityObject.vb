@@ -49,7 +49,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -213,6 +212,11 @@ Namespace IO
                 {uidMap Or stream(0, 0).AsDefault, NameOf(EntityObject.ID)}
             }
             Return stream.AsDataSource(Of T)(explicit:=False, maps:=map)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadDataSet(stream As File, Optional ByRef uidMap$ = Nothing) As IEnumerable(Of EntityObject)
+            Return LoadDataSet(Of EntityObject)(stream, uidMap)
         End Function
     End Class
 End Namespace
