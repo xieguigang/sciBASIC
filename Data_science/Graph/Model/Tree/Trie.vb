@@ -15,4 +15,7 @@ Public Class CharacterNode : Inherits Tree(Of Char, Char)
     ''' <returns></returns>
     Public Property Ends As Integer
 
+    Sub New()
+        Call MyBase.New(qualDeli:="")
+    End Sub
 End Class
