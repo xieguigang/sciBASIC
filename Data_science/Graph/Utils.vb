@@ -53,7 +53,7 @@ Public Module Utils
     ''' <typeparam name="T"></typeparam>
     ''' <param name="tree"></param>
     ''' <returns></returns>
-    <Extension> Public Function Build(Of T)(tree As Tree(Of T)) As String
+    <Extension> Public Function Build(Of T, K)(tree As Tree(Of T, K)) As String
         If tree Is Nothing Then
             Return "()"
         End If
@@ -78,7 +78,7 @@ Public Module Utils
     ''' <param name="schema"></param>
     ''' <returns></returns>
     <Extension>
-    Public Iterator Function Summary(Of T)(tree As Tree(Of T), Optional schema As PropertyInfo() = Nothing) As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))
+    Public Iterator Function Summary(Of T, K)(tree As Tree(Of T, K), Optional schema As PropertyInfo() = Nothing) As IEnumerable(Of NamedValue(Of Dictionary(Of String, String)))
         If schema.IsNullOrEmpty Then
             schema = DataFramework _
                 .Schema(Of T)(PropertyAccess.Readable, nonIndex:=True, primitive:=True) _
@@ -88,7 +88,7 @@ Public Module Utils
 
         Yield tree.SummaryMe(schema)
 
-        For Each c As Tree(Of T) In tree.EnumerateChilds.SafeQuery
+        For Each c As Tree(Of T, K) In tree.EnumerateChilds.SafeQuery
             For Each value In c.Summary(schema)
                 Yield value
             Next
@@ -96,14 +96,14 @@ Public Module Utils
     End Function
 
     ''' <summary>
-    ''' 这个函数不会对<see cref="Tree(Of T).Childs"/>进行递归
+    ''' 这个函数不会对<see cref="Tree(Of T, K).Childs"/>进行递归
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="this"></param>
     ''' <param name="schema"></param>
     ''' <returns></returns>
     <Extension>
-    Private Function SummaryMe(Of T)(this As Tree(Of T), schema As PropertyInfo()) As NamedValue(Of Dictionary(Of String, String))
+    Private Function SummaryMe(Of T, K)(this As Tree(Of T, K), schema As PropertyInfo()) As NamedValue(Of Dictionary(Of String, String))
         Dim name$ = this.Label
         Dim values = schema.ToDictionary(
             Function(key) key.Name,

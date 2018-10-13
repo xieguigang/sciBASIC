@@ -61,6 +61,11 @@ Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Public Module Kmeans
 
+    ''' <summary>
+    ''' Group by <see cref="EntityClusterModel.Cluster"/> property value.
+    ''' </summary>
+    ''' <param name="clusters"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ClusterGroups(clusters As IEnumerable(Of EntityClusterModel)) As Dictionary(Of String, EntityClusterModel())
@@ -204,7 +209,7 @@ Public Module Kmeans
                               Optional axisStroke$ = Stroke.AxisStroke,
                               Optional arrowFactor$ = "2,2") As GraphicsData
 
-        Dim clusters = clusterData.ClusterGroups
+        Dim clusters As Dictionary(Of String, EntityClusterModel()) = clusterData.ClusterGroups
 
         ' 相同的cluster的对象都会被染上同一种颜色
         ' 不同的分组之中的数据点则会被绘制为不同的形状

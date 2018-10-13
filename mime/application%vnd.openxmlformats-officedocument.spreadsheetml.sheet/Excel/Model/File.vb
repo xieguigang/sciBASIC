@@ -98,6 +98,14 @@ Public Class File : Implements IFileReference
         End Set
     End Property
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function SheetNames() As IEnumerable(Of String)
+        Return xl _
+            .workbook _
+            .sheets _
+            .Select(Function(s) s.name)
+    End Function
+
     Public Overrides Function ToString() As String
         Return FilePath
     End Function

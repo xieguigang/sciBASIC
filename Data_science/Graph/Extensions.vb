@@ -54,7 +54,7 @@ Public Module Extensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="tree"></param>
-    ''' <param name="path">Collection of <see cref="Tree(Of T).Label"/></param>
+    ''' <param name="path">Collection of <see cref="Tree(Of T,k).Label"/></param>
     ''' <returns></returns>
     <Extension>
     Public Function VisitTree(Of T)(tree As Tree(Of T), path As IEnumerable(Of String)) As Tree(Of T)
@@ -83,13 +83,14 @@ Public Module Extensions
         Return tree
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function CreateGraph(Of T)(tree As Tree(Of T)) As Graph
+    Public Function CreateGraph(Of T, K)(tree As Tree(Of T, K)) As Graph
         Return New Graph().Add(tree)
     End Function
 
     <Extension>
-    Private Function Add(Of T)(g As Graph, tree As Tree(Of T)) As Graph
+    Private Function Add(Of T, K)(g As Graph, tree As Tree(Of T, K)) As Graph
         Dim childs = tree _
             .EnumerateChilds _
             .SafeQuery _
@@ -97,7 +98,7 @@ Public Module Extensions
 
         Call g.AddVertex(tree)
 
-        For Each child As Tree(Of T) In childs
+        For Each child As Tree(Of T, K) In childs
             Call g.Add(child)
             Call g.AddEdge(tree, child)
         Next
@@ -110,6 +111,8 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="edge"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Reverse(edge As VertexEdge) As VertexEdge
         Return New VertexEdge With {
@@ -136,6 +139,7 @@ Public Module Extensions
         End With
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function DefaultSteps(size As SizeF, Optional n% = 50) As DefaultValue(Of SizeF)
         Return New SizeF With {
