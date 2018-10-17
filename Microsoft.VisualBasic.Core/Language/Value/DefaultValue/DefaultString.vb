@@ -186,6 +186,11 @@ Namespace Language.Default
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Or(arg As DefaultString, [default] As DefaultValue(Of String)) As String
+            Return arg.DefaultValue Or [default]
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(value As DefaultString) As String
             Return value.DefaultValue
         End Operator
