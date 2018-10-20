@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::2a52f15fedd263b9febdc6721f8f2647, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Legends
-    ' 
-    '         Function: ColorLegendHorizontal, (+2 Overloads) ColorMapLegend
-    ' 
-    '         Sub: ColorLegendHorizontal, ColorMapLegend
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Legends
+' 
+'         Function: ColorLegendHorizontal, (+2 Overloads) ColorMapLegend
+' 
+'         Sub: ColorLegendHorizontal, ColorMapLegend
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,6 +46,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -54,7 +55,8 @@ Namespace Drawing2D.Colors
     Public Module Legends
 
         ''' <summary>
-        ''' Draw color legend for the color sequnece
+        ''' Draw color legend for the color sequnece.
+        ''' (通过这个函数只是生成了legend的图片，还需要自己将图片放置到图表上的合适的位置)
         ''' </summary>
         ''' <param name="designer"></param>
         ''' <param name="title$">The legend title</param>
@@ -89,8 +91,10 @@ Namespace Drawing2D.Colors
 
         Public Const DefaultPadding$ = "padding:50px 50px 50px 50px;"
 
+        ReadOnly defaultLegendSize As DefaultValue(Of Size) = New Size(800, 1024)
+
         ''' <summary>
-        ''' 竖直的颜色图例，输出的图例的大小默认为：``{800, 1000}``
+        ''' 竖直的颜色图例，输出的图例的大小默认为：``{800, 1024}``
         ''' </summary>
         ''' <param name="designer"></param>
         ''' <param name="title$"></param>
@@ -115,9 +119,6 @@ Namespace Drawing2D.Colors
 
             Dim margin As Padding = padding
 
-            If lsize.IsEmpty Then
-                lsize = New Size(800, 1000)
-            End If
             If titleFont Is Nothing Then
                 titleFont = New Font(FontFace.MicrosoftYaHei, 36)
             End If
@@ -130,7 +131,7 @@ Namespace Drawing2D.Colors
 
                 End Sub
 
-            Return GraphicsPlots(lsize, margin, bg, plotInternal)
+            Return GraphicsPlots(lsize Or defaultLegendSize, margin, bg, plotInternal)
         End Function
 
         ''' <summary>

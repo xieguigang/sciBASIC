@@ -201,5 +201,11 @@ Namespace ComponentModel.Ranges.Model
         '        Return New IntRange(.Min, .Max)
         '    End With
         'End Operator
+
+        Public Shared Widening Operator CType(list As List(Of Integer)) As IntRange
+            With list
+                Return New IntRange(.Min, .Max)
+            End With
+        End Operator
     End Class
 End Namespace

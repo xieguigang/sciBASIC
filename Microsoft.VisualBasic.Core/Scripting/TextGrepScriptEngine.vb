@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::2c2fe4cbad6a9c10ae837fd102038bbb, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class TextGrepScriptEngine
-    ' 
-    '         Properties: MethodPointers, PipelinePointer
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Compile, EnsureNotEmpty, Grep, Match, MidString
-    '                   NoOperation, Replace, Reverse, Tokens, ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Delegate Function
+' 
+' 
+'     Class TextGrepScriptEngine
+' 
+'         Properties: MethodPointers, PipelinePointer
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Compile, EnsureNotEmpty, Grep, Match, MidString
+'                   NoOperation, Replace, Reverse, Tokens, ToString
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Token = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Scripting.TextGrepMethodToken)
 
 Namespace Scripting
@@ -112,10 +113,21 @@ Namespace Scripting
         ''' <summary>
         ''' 对用户所输入的脚本进行编译，对于内部的空格，请使用单引号``'``进行分割
         ''' </summary>
+        ''' <param name="scriptText">
+        ''' 如果这个参数传递的是一个空字符串，那么这个函数将会直接返回<see cref="DoNothing"/>脚本
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <ExportAPI("compile", Info:="", Usage:="script_tokens1;script_tokens2;....", Example:="")>
         Public Shared Function Compile(scriptText As String) As TextGrepScriptEngine
+            If scriptText.StringEmpty Then
+                Return DoNothing
+            Else
+                Return CompileInternal(scriptText)
+            End If
+        End Function
+
+        Private Shared Function CompileInternal(scriptText As String) As TextGrepScriptEngine
             Dim script$() = TryParse(scriptText, TokenDelimited:=";", InnerDelimited:="'"c)
             Dim builder = LinqAPI.Exec(Of Token) <=
  _
@@ -140,6 +152,20 @@ Namespace Scripting
         End Function
 
         ''' <summary>
+        ''' Source in and then source out, no changes
+        ''' </summary>
+        ''' <returns></returns>
+        Public Shared ReadOnly Property DoNothing As DefaultValue(Of TextGrepScriptEngine)
+            Get
+                Static opNothing As New TextGrepScriptEngine With {
+                    ._operations = {},
+                    ._script = "-"
+                }
+                Return opNothing
+            End Get
+        End Property
+
+        ''' <summary>
         ''' <see cref="Grep"/>
         ''' 字符串剪裁操作的函数指针
         ''' </summary>
@@ -147,7 +173,7 @@ Namespace Scripting
         Public ReadOnly Property PipelinePointer As TextGrepMethod
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return AddressOf Me.Grep
+                Return AddressOf Grep
             End Get
         End Property
 
@@ -158,7 +184,7 @@ Namespace Scripting
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function Grep(source As String) As String
-            Dim __parser As Func(Of String, Token, Integer) =
+            Dim doGrep As Func(Of String, Token, Integer) =
                 Function(sourceText As String, method As Token) As Integer
                     source = method.Value()(sourceText, method.Key) '迭代解析
                     Return Len(source)
@@ -166,7 +192,7 @@ Namespace Scripting
 
             ' 这里是迭代计算，所以请不要使用并行拓展
             For Each operation As Token In _operations
-                Call __parser(source, operation)
+                Call doGrep(source, operation)
             Next
 
             Return source
