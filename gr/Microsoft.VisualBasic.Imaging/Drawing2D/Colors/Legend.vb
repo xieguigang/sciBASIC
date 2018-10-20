@@ -89,7 +89,7 @@ Namespace Drawing2D.Colors
                 legendWidth)
         End Function
 
-        Public Const DefaultPadding$ = "padding:50px 50px 50px 50px;"
+        Public Const DefaultPadding$ = "padding:50px 50px 100px 50px;"
 
         ReadOnly defaultLegendSize As DefaultValue(Of Size) = New Size(800, 1024)
 
@@ -128,7 +128,21 @@ Namespace Drawing2D.Colors
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                    Dim layout As New Rectangle With {
+                        .X = 0,
+                        .Y = 0,
+                        .Width = region.Width,
+                        .Height = region.Height - titleFont.Height - 5
+                    }
 
+                    Call g.ColorMapLegend(
+                        layout:=layout, designer:=designer,
+                        ticks:={Val(min), Val(max)},
+                        titleFont:=titleFont,
+                        title:=title,
+                        tickFont:=labelFont,
+                        tickAxisStroke:=Pens.Black
+                    )
                 End Sub
 
             Return GraphicsPlots(lsize Or defaultLegendSize, margin, bg, plotInternal)
