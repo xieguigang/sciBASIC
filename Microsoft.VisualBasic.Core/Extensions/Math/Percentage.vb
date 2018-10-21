@@ -49,9 +49,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Math
 
@@ -117,9 +117,11 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function TryParse(Text As String) As Percentage
-            If String.IsNullOrEmpty(Text) Then Return ZERO
+            If String.IsNullOrEmpty(Text) Then
+                Return ZERO
+            End If
 
-            Dim matchs$() = Regex.Matches(Text, "\d+").ToArray
+            Dim matchs$() = r.Matches(Text, "\d+").ToArray
             Dim n As Double = matchs(0).RegexParseDouble
             Dim d As Double = matchs(1).RegexParseDouble
 
