@@ -67,6 +67,8 @@ Namespace Algebra.LinearProgramming
         Const PIVOT_ITERATION_LIMIT As Integer = 1000
         Const USE_SUBSCRIPT_UNICODE As Boolean = False
 
+        Public Shared Property DecimalFormat As String = "G5"
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -77,7 +79,14 @@ Namespace Algebra.LinearProgramming
         ''' <param name="constraintTypes">方程组之中的函数类型：大于，小于，等于</param>
         ''' <param name="constraintRightHandSides">方程组的右边：方程组之中每一个方程的结果值</param>
         ''' <param name="objectiveFunctionValue">目标方程的目标结果值</param>
-        Sub New(opt As OptimizationType, variableNames$(), objectiveFunctionCoefficients#(), constraintCoefficients#(,), constraintTypes$(), constraintRightHandSides#(), Optional objectiveFunctionValue# = 0)
+        Sub New(opt As OptimizationType,
+                variableNames$(),
+                objectiveFunctionCoefficients#(),
+                constraintCoefficients#(,),
+                constraintTypes$(),
+                constraintRightHandSides#(),
+                Optional objectiveFunctionValue# = 0)
+
             Call Me.New(opt.Description, variableNames, objectiveFunctionCoefficients, constraintCoefficients.ToVectorList, constraintTypes, constraintRightHandSides, objectiveFunctionValue)
         End Sub
 
@@ -116,7 +125,7 @@ Namespace Algebra.LinearProgramming
             End If
             For i As Integer = 0 To constraintCoefficients.Length - 1
                 If constraintCoefficients(i).Length <> variableNames.Length Then
-                    Throw New Exception("LPP constraint " & i & " is not of the same size length as the objective function.")
+                    Throw New Exception($"LPP constraint {i} is not of the same size length as the objective function.")
                 End If
             Next
 
@@ -140,7 +149,7 @@ Namespace Algebra.LinearProgramming
                 Dim constraint() As Double = constraintCoefficients(j)
                 output += displayEqLine(constraint, variableNames)
                 output &= " " & constraintTypes(j)
-                output &= " " & formatDecimals(constraintRightHandSides(j))
+                output &= " " & constraintRightHandSides(j).ToString(DecimalFormat)
                 output += ControlChars.Lf
             Next
 
@@ -153,7 +162,7 @@ Namespace Algebra.LinearProgramming
             Dim startIndex As Integer = 1
             For i As Integer = 0 To variableNames.Length - 1
                 If coefficients(i) <> 0 Then
-                    output = output + formatDecimals(coefficients(i)) + variableNames(i)
+                    output = output + coefficients(i).ToString(DecimalFormat) + variableNames(i)
                     Exit For
                 Else
                     startIndex += 1
@@ -169,7 +178,7 @@ Namespace Algebra.LinearProgramming
                     sign = -1
                 End If
                 If coefficients(i) <> 0 Then
-                    output = output + signString + formatDecimals(sign * coefficients(i)) + variableNames(i)
+                    output = output + signString + (sign * coefficients(i)).ToString(DecimalFormat) + variableNames(i)
                 End If
             Next
 
@@ -623,7 +632,15 @@ Namespace Algebra.LinearProgramming
             ' TODO: Create new LPPSolution objects during 
 
             ' Return the compiled solution.
-            Return New LPPSolution(optimalSolution, objectiveFunctionValue, variableNames, constraintTypes, slack, shadowPrice, reducedCost, App.ElapsedMilliseconds - startTime, feasibleSolutionTime, solutionLog)
+            Return New LPPSolution(
+                optimalSolution, objectiveFunctionValue, variableNames, constraintTypes,
+                slack,
+                shadowPrice,
+                reducedCost,
+                App.ElapsedMilliseconds - startTime,
+                feasibleSolutionTime,
+                solutionLog, DecimalFormat
+            )
         End Function
     End Class
 End Namespace

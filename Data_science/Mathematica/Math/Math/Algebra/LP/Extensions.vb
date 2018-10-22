@@ -52,17 +52,6 @@ Namespace Algebra.LinearProgramming
             Return copy
         End Function
 
-        ''' <summary>
-        ''' String formatting helper function.
-        ''' </summary>
-        ''' <param name="d"></param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Function formatDecimals(d As Double) As String
-            Return d.ToString("#,###.###")
-        End Function
-
         <Extension>
         Friend Function ParseType(type As String) As OptimizationType
             Select Case LCase(type)
