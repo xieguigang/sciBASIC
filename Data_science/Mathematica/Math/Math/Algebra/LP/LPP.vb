@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::bc3b5ac3c869e3fcb2d71991142c850e, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LPP
-    ' 
-    '         Properties: ArtificialVariableAssignments
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: choosePivotConstraint, choosePivotVar, displayEqLine, findInitialBasicVariables, increaseArtificialVariableIndices
-    '                   intToBinary, isFeasible, solve, subscriptN, ToString
-    ' 
-    '         Sub: addArtificialVariables, addVariableAt, (+2 Overloads) makeStandardForm, pivot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LPP
+' 
+'         Properties: ArtificialVariableAssignments
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: choosePivotConstraint, choosePivotVar, displayEqLine, findInitialBasicVariables, increaseArtificialVariableIndices
+'                   intToBinary, isFeasible, solve, subscriptN, ToString
+' 
+'         Sub: addArtificialVariables, addVariableAt, (+2 Overloads) makeStandardForm, pivot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,18 +56,29 @@ Namespace Algebra.LinearProgramming
     ''' </summary>
     Public Class LPP
 
-        Private objectiveFunctionType As OptimizationType
-        Private variableNames() As String
-        Private objectiveFunctionCoefficients() As Double
-        Private constraintCoefficients()() As Double
-        Private constraintTypes() As String
-        Private constraintRightHandSides() As Double
-        Private objectiveFunctionValue As Double
+        Dim objectiveFunctionType As OptimizationType
+        ''' <summary>
+        ''' 这个变量名称列表之中会添加拓展的新的变量名称
+        ''' 
+        ''' 可以使用objectfunction的系数长度来取出原来的输入的变量名称的列表
+        ''' </summary>
+        Dim variableNames() As String
+        Dim objectiveFunctionCoefficients() As Double
+        Dim constraintCoefficients()() As Double
+        Dim constraintTypes() As String
+        Dim constraintRightHandSides() As Double
+        Dim objectiveFunctionValue As Double
 
         Const PIVOT_ITERATION_LIMIT As Integer = 1000
         Const USE_SUBSCRIPT_UNICODE As Boolean = False
 
         Public Shared Property DecimalFormat As String = "G5"
+
+        Public ReadOnly Property ObjectFunctionVariables As String()
+            Get
+                Return variableNames.Take(objectiveFunctionCoefficients.Length).ToArray
+            End Get
+        End Property
 
         ''' <summary>
         ''' 
@@ -111,6 +122,7 @@ Namespace Algebra.LinearProgramming
             ' Create default variable name array
             If variableNames Is Nothing OrElse variableNames.Length = 0 Then
                 variableNames = New String(objectiveFunctionCoefficients.Length - 1) {}
+
                 For i As Integer = 0 To variableNames.Length - 1
                     variableNames(i) = "x" & subscriptN(i)
                 Next

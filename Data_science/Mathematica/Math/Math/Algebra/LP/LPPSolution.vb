@@ -73,27 +73,27 @@ Namespace Algebra.LinearProgramming
 
         Public Sub New(optimalSolution() As Double,
                        objectiveFunctionValue As Double,
-                       variableNames() As String,
-                       constraintTypes() As String,
+                       variableNames As String(),
+                       ConstraintTypes() As String,
                        slack() As Double,
                        shadowPrice() As Double,
                        reducedCost() As Double,
-                       solveTime As Long,
-                       feasibleSolutionTime&,
-                       solutionLog$,
-                       decimalFormat$)
+                       SolveTime As Long,
+                       FeasibleSolutionTime As Long,
+                       SolutionLog As String,
+                       DecimalFormat As String)
 
             Me.solution = optimalSolution
             Me.ObjectiveFunctionValue = objectiveFunctionValue
             Me.variableNames = variableNames
-            Me.ConstraintTypes = constraintTypes
+            Me.ConstraintTypes = ConstraintTypes
             Me.slack = slack
             Me.shadowPrice = shadowPrice
             Me.reducedCost = reducedCost
-            Me.SolveTime = solveTime
-            Me.FeasibleSolutionTime = feasibleSolutionTime
-            Me.SolutionLog = solutionLog
-            Me.DecimalFormat = decimalFormat
+            Me.SolveTime = SolveTime
+            Me.FeasibleSolutionTime = FeasibleSolutionTime
+            Me.SolutionLog = SolutionLog
+            Me.DecimalFormat = DecimalFormat
         End Sub
 
         Public Overrides Function ToString() As String
