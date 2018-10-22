@@ -81,6 +81,11 @@ Namespace Language
         '    End If
         'End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Empty(Of T)() As DefaultValue(Of T())
+            Return {}
+        End Function
+
         ''' <summary>
         ''' simulate the ``%||%`` operator in R language.
         ''' 

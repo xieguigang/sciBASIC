@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64f1c05b52704ebdfa85daf21b4bf5a5, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
+﻿#Region "Microsoft.VisualBasic::5f927ad35b856dacedf2abf97f5324f2, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '     Properties: _rels, ContentTypes, docProps, FilePath, xl
     ' 
     '     Function: AddSheetTable, CreatePackage, (+2 Overloads) GetTable, GetWorksheet, LoadDataSet
-    '               Open, ToString, (+2 Overloads) WriteSheetTable, WriteXlsx
+    '               Open, SheetNames, ToString, (+2 Overloads) WriteSheetTable, WriteXlsx
     ' 
     '     Sub: addInternal
     ' 
