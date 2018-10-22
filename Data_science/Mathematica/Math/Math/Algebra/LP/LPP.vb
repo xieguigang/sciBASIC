@@ -67,11 +67,37 @@ Namespace Algebra.LinearProgramming
         Const PIVOT_ITERATION_LIMIT As Integer = 1000
         Const USE_SUBSCRIPT_UNICODE As Boolean = False
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="opt">目标函数的类型，是求取极大值还是极小值</param>
+        ''' <param name="variableNames">方程之中的未知变量的名称，可以省略这个函数，程序会默认会自动使用x1, x2, x3...等来自动命名</param>
+        ''' <param name="objectiveFunctionCoefficients">目标函数之中每一个未知变量所对应的系数</param>
+        ''' <param name="constraintCoefficients">方程组的左边：系数矩阵</param>
+        ''' <param name="constraintTypes">方程组之中的函数类型：大于，小于，等于</param>
+        ''' <param name="constraintRightHandSides">方程组的右边：方程组之中每一个方程的结果值</param>
+        ''' <param name="objectiveFunctionValue">目标方程的目标结果值</param>
         Sub New(opt As OptimizationType, variableNames$(), objectiveFunctionCoefficients#(), constraintCoefficients#(,), constraintTypes$(), constraintRightHandSides#(), Optional objectiveFunctionValue# = 0)
             Call Me.New(opt.Description, variableNames, objectiveFunctionCoefficients, constraintCoefficients.ToVectorList, constraintTypes, constraintRightHandSides, objectiveFunctionValue)
         End Sub
 
-        Public Sub New(objectiveFunctionType As String, variableNames() As String, objectiveFunctionCoefficients() As Double, constraintCoefficients()() As Double, constraintTypes() As String, constraintRightHandSides() As Double, objectiveFunctionValue As Double)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="objectiveFunctionType$">目标函数的类型，是求取极大值还是极小值</param>
+        ''' <param name="variableNames">方程之中的未知变量的名称，可以省略这个函数，程序会默认会自动使用x1, x2, x3...等来自动命名</param>
+        ''' <param name="objectiveFunctionCoefficients">目标函数之中每一个未知变量所对应的系数</param>
+        ''' <param name="constraintCoefficients">方程组的左边：系数矩阵</param>
+        ''' <param name="constraintTypes">方程组之中的函数类型：大于，小于，等于</param>
+        ''' <param name="constraintRightHandSides">方程组的右边：方程组之中每一个方程的结果值</param>
+        ''' <param name="objectiveFunctionValue">目标方程的目标结果值</param>
+        Public Sub New(objectiveFunctionType$,
+                       variableNames() As String,
+                       objectiveFunctionCoefficients() As Double,
+                       constraintCoefficients()() As Double,
+                       constraintTypes() As String,
+                       constraintRightHandSides() As Double,
+                       objectiveFunctionValue As Double)
 
             ' Create default variable name array
             If variableNames Is Nothing OrElse variableNames.Length = 0 Then

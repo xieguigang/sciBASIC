@@ -55,6 +55,7 @@ Namespace Algebra.LinearProgramming
         Dim reducedCost() As Double
 
         Public ReadOnly Property failureMessage As String
+
         Public Property SolutionLog As String
         Public Property SolveTime As Long
         Public Property FeasibleSolutionTime As Long

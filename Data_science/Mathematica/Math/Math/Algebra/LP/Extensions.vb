@@ -44,7 +44,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace Algebra.LinearProgramming
 
-    Public Module Extensions
+    Module Extensions
 
         Friend Function copyOf(Of T)(original As T(), newLength%) As T()
             Dim copy As T() = New T(newLength - 1) {}
@@ -59,7 +59,7 @@ Namespace Algebra.LinearProgramming
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function formatDecimals(d As Double) As String
+        Friend Function formatDecimals(d As Double) As String
             Return d.ToString("#,###.###")
         End Function
 

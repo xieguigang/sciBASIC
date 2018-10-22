@@ -53,7 +53,15 @@ Public Class LPPExamples
     End Function
 
     Public Shared Function maximizeExample() As LPP
-        Return New LPP("Max", New String() {}, New Double() {2, 3, 3}, New Double()() {New Double() {3, 2, 0}, New Double() {-1, 1, 4}, New Double() {2, -2, 5}}, New String() {"�", "�", "�"}, New Double() {60, 10, 50}, 0)
+        Return New LPP(
+            objectiveFunctionType:="Max",
+            variableNames:=New String() {},
+            objectiveFunctionCoefficients:=New Double() {2, 3, 3},
+            constraintCoefficients:=New Double()() {New Double() {3, 2, 0}, New Double() {-1, 1, 4}, New Double() {2, -2, 5}},
+            constraintTypes:=New String() {"=", "=", "="},
+            constraintRightHandSides:=New Double() {60, 10, 50},
+            objectiveFunctionValue:=0
+        )
     End Function
 
     Public Shared Function transshipment() As LPP
