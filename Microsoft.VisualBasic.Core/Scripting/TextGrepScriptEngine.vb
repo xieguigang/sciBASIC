@@ -1,55 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::2c2fe4cbad6a9c10ae837fd102038bbb, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::ff49805f1a640750a3c5ec149d134e2d, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Delegate Function
-' 
-' 
-'     Delegate Function
-' 
-' 
-'     Class TextGrepScriptEngine
-' 
-'         Properties: MethodPointers, PipelinePointer
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: Compile, EnsureNotEmpty, Grep, Match, MidString
-'                   NoOperation, Replace, Reverse, Tokens, ToString
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Delegate Function
+    ' 
+    ' 
+    '     Delegate Function
+    ' 
+    ' 
+    '     Class TextGrepScriptEngine
+    ' 
+    '         Properties: DoNothing, MethodPointers, PipelinePointer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Compile, CompileInternal, EnsureNotEmpty, Grep, Match
+    '                   MidString, NoOperation, Replace, Reverse, Tokens
+    '                   ToString
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
