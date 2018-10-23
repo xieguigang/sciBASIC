@@ -137,8 +137,16 @@ Namespace FileIO.Path
             Return searchImpl(dir, {scriptFileNameRule}).Where(Function(file) extNameAssert(file))
         End Function
 
+        Private Shared Function safeGetFiles(dir$, rules$()) As IEnumerable(Of String)
+            If dir.DirectoryExists Then
+                Return FileSystem.GetFiles(dir, TopDirectory, rules)
+            Else
+                Return {}
+            End If
+        End Function
+
         Private Shared Iterator Function searchImpl(dir$, rules$()) As IEnumerable(Of String)
-            Dim files = FileSystem.GetFiles(dir, TopDirectory, rules)
+            Dim files As IEnumerable(Of String) = safeGetFiles(dir, rules)
             Dim binDIR As String = $"{dir}/bin/"
             Dim programDIR As String = $"{dir}/Program"
             Dim scriptsDIR As String = $"{dir}/scripts"
