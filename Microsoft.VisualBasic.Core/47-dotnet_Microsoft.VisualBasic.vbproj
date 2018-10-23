@@ -936,6 +936,8 @@
     <Compile Include="Extensions\Image\Math\Models\Line.vb" />
     <Compile Include="Extensions\IO\Extensions\StreamHelper.vb" />
     <Compile Include="Extensions\IO\Extensions\SerializationIO.vb" />
+    <Compile Include="Extensions\IO\Path\TemporaryEnvironment.vb" />
+    <Compile Include="Extensions\IO\Path\Extensions.vb" />
     <Compile Include="Extensions\Math\NumberEqualityComparer.vb" />
     <Compile Include="Extensions\Math\Information\Entropy.vb" />
     <Compile Include="Extensions\Math\Information\UncheckHelpers.vb" />
@@ -1022,7 +1024,7 @@
     <Compile Include="ComponentModel\Ranges\Relations.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BucketIndexOf.vb" />
     <Compile Include="ComponentModel\ValuePair\NamedTuple.vb" />
-    <Compile Include="Extensions\IO\CopyDirectory.vb" />
+    <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
     <Compile Include="ComponentModel\Ranges\Sequence.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\IndexSelector.vb" />
@@ -1270,7 +1272,7 @@
     <Compile Include="Scripting\MetaData\Author.vb" />
     <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />
     <Compile Include="Serialization\BinaryDumping\StructSerializer.vb" />
-    <Compile Include="Extensions\IO\Directory.vb" />
+    <Compile Include="Extensions\IO\Path\Directory.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
