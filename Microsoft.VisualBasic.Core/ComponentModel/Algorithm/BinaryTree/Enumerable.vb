@@ -57,13 +57,23 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' <typeparam name="V"></typeparam>
         ''' <param name="tree"></param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' 这个函数是直接将键名和对应的值取出来，如果是需要取出聚类的簇成员，
+        ''' 应该使用<see cref="PopulateNodes(Of K, V)"/>方法
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function PopulateSequence(Of K, V)(tree As BinaryTree(Of K, V)) As IEnumerable(Of Map(Of K, V))
             Return tree.PopulateNodes.Select(Function(n) New Map(Of K, V)(n.Key, n.Value))
         End Function
 
+        ''' <summary>
+        ''' 将一个给定的二叉树对象转换为一个数组序列
+        ''' </summary>
+        ''' <typeparam name="K"></typeparam>
+        ''' <typeparam name="V"></typeparam>
+        ''' <param name="tree"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function PopulateNodes(Of K, V)(tree As BinaryTree(Of K, V)) As IEnumerable(Of BinaryTree(Of K, V))
             If Not tree.Left Is Nothing Then
