@@ -1,21 +1,65 @@
 ﻿Imports System.Collections.ObjectModel
 Imports System.ComponentModel
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports Microsoft.VisualBasic.Linq
+Imports ENV = System.Environment
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace FileIO.Path
 
     Public Class ProgramPathSearchTool
 
-        Public Property Environments As New List(Of String) From {"", ""}
+        ReadOnly Environments As New List(Of String) From {"ProgramFiles(x86)", "ProgramFiles"}
 
         Const VERSION As String = "[-_`~.]\d+(\.\d+)*"
         Const TopDirectory As SearchOption = SearchOption.SearchTopLevelOnly
+
+        Public ReadOnly Property Directories As IReadOnlyCollection(Of String)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Environments _
+                    .Select(Function(var) ENV.GetEnvironmentVariable(var)) _
+                    .Join(CustomDirectories.SafeQuery) _
+                    .Where(Function(dir) dir.DirectoryExists) _
+                    .ToArray
+            End Get
+        End Property
+
+        Public Property CustomDirectories As String()
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="ENV$">
+        ''' 环境变量名称列表，如果不赋值这个参数，则会默认使用Program Files和Program Files(x86)这两个文件夹
+        ''' </param>
+        Sub New(ParamArray ENV$())
+            Environments += ENV
+        End Sub
+
+        Public Iterator Function FindScript(keyword$, Optional withExtension$ = Nothing) As IEnumerable(Of String)
+            For Each dir As String In Directories
+                For Each file As String In SearchScriptFile(dir, keyword, withExtension)
+                    Yield file
+                Next
+            Next
+        End Function
+
+        Public Iterator Function FindProgram(keyword$, Optional includeDll As Boolean = True) As IEnumerable(Of String)
+            For Each dir As String In Directories
+                For Each file As String In SearchProgram(dir, keyword, includeDll)
+                    Yield file
+                Next
+            Next
+        End Function
+
+#Region "Search Implementation Internal"
 
         ''' <summary>
         ''' 商标搜索规则
@@ -24,7 +68,7 @@ Namespace FileIO.Path
         ''' <param name="Keyword"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Function BranchRule(programFiles$, keyword$) As IEnumerable(Of String)
+        Private Shared Function BranchRule(programFiles$, keyword$) As IEnumerable(Of String)
             Dim programFilesDirectories = FileSystem.GetDirectories(programFiles, TopDirectory, keyword)
             Dim fsObjs As New List(Of String)
 
@@ -63,7 +107,7 @@ Namespace FileIO.Path
         ''' <remarks></remarks>
         '''
         <ExportAPI("Search.Scripts", Info:="Search for the path of a script file with a specific extension name.")>
-        Public Function SearchScriptFile(dir$, keyword$, Optional withExtension$ = Nothing) As IEnumerable(Of String)
+        Public Shared Function SearchScriptFile(dir$, keyword$, Optional withExtension$ = Nothing) As IEnumerable(Of String)
             Dim scriptFileNameRule$ = $"*{keyword}*{withExtension}"
             Dim extNameAssert As Assert(Of String)
 
@@ -104,7 +148,7 @@ Namespace FileIO.Path
         '''
         <ExportAPI("DIR.Search.Program_Directory")>
         <Description("Search for the directories which its name was matched the keyword pattern.")>
-        Public Iterator Function SearchDirectory(keyword$, Optional specificDrive$ = Nothing) As IEnumerable(Of String)
+        Public Shared Iterator Function SearchDirectory(keyword$, Optional specificDrive$ = Nothing) As IEnumerable(Of String)
             Dim drives As ReadOnlyCollection(Of DriveInfo)
 
             If String.IsNullOrEmpty(specificDrive) Then
@@ -120,7 +164,7 @@ Namespace FileIO.Path
             Next
         End Function
 
-        Private Function SearchDrive(drive As DriveInfo, keyword As String) As String()
+        Private Shared Function SearchDrive(drive As DriveInfo, keyword As String) As String()
             If Not drive.IsReady Then
                 Return New String() {}
             End If
@@ -156,11 +200,20 @@ Namespace FileIO.Path
         ''' <remarks></remarks>
         <ExportAPI("File.Search.Program")>
         <Description("Invoke the search session for the program file using a specific keyword string value.")>
-        Public Function SearchProgram(Dir$, keyword$) As String()
+        Public Shared Function SearchProgram(dir$, keyword$, Optional includeDll As Boolean = True) As IEnumerable(Of String)
             Dim exeNameRule As String = $"*{keyword}*.exe"
             Dim dllNameRule As String = $"*{keyword}*.dll"
+            Dim rules$()
 
-            Return searchImpl(Dir, {exeNameRule, dllNameRule})
+            If includeDll Then
+                rules = {exeNameRule, dllNameRule}
+            Else
+                rules = {exeNameRule}
+            End If
+
+            Return searchImpl(dir, rules)
         End Function
+#End Region
+
     End Class
 End Namespace
