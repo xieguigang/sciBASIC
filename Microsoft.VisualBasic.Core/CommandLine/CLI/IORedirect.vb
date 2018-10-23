@@ -138,6 +138,12 @@ Namespace CommandLine
             End Get
         End Property
 
+        Public ReadOnly Property PID As Integer
+            Get
+                Return processInfo.Id
+            End Get
+        End Property
+
         Dim input As StreamWriter
         Dim output As New StringBuilder(1024)
         Dim [error] As New StringBuilder()

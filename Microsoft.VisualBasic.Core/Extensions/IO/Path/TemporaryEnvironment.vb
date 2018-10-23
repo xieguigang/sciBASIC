@@ -8,12 +8,24 @@
 
         ReadOnly previous$
 
+        ''' <summary>
+        ''' 如果不存在会创建目标文件夹
+        ''' </summary>
+        ''' <param name="newLocation"></param>
         Sub New(newLocation As String)
-            Call MyBase.New(DIR:=newLocation)
+            Call MyBase.New(DIR:=makeDirectoryExists(newLocation))
 
             previous = App.CurrentDirectory
             App.CurrentDirectory = newLocation
         End Sub
+
+        Private Shared Function makeDirectoryExists(dir As String) As String
+            If Not dir.DirectoryExists Then
+                Call dir.MkDIR
+            End If
+
+            Return dir
+        End Function
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls
