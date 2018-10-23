@@ -1459,7 +1459,7 @@ Namespace MarkDown
             Return sb.ToString()
         End Function
 
-        Private Shared _codeEncoder As New Regex("&|<|>|\\|\*|_|\{|\}|\[|\]", RegexOptions.Compiled)
+        Shared ReadOnly _codeEncoder As New Regex("&|<|>|\\|\*|_|\{|\}|\[|\]|[#]", RegexOptions.Compiled)
 
         ''' <summary>
         ''' Encode/escape certain Markdown characters inside code blocks and spans where they are literals
@@ -1467,6 +1467,7 @@ Namespace MarkDown
         Private Function EncodeCode(code As String) As String
             Return _codeEncoder.Replace(code, AddressOf EncodeCodeEvaluator)
         End Function
+
         Private Function EncodeCodeEvaluator(match As Match) As String
             Select Case match.Value
             ' Encode all ampersands; HTML entities are not
@@ -1478,6 +1479,9 @@ Namespace MarkDown
                     Return "&lt;"
                 Case ">"
                     Return "&gt;"
+                Case "#"
+                    Return "&#35;"
+
                 Case Else
                     ' escape characters that are magic in Markdown
                     Return _escapeTable(match.Value)
