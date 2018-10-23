@@ -936,6 +936,7 @@
     <Compile Include="Extensions\Image\Math\Models\Line.vb" />
     <Compile Include="Extensions\IO\Extensions\StreamHelper.vb" />
     <Compile Include="Extensions\IO\Extensions\SerializationIO.vb" />
+    <Compile Include="Extensions\IO\Path\ProgramPathSearchTool.vb" />
     <Compile Include="Extensions\IO\Path\TemporaryEnvironment.vb" />
     <Compile Include="Extensions\IO\Path\Extensions.vb" />
     <Compile Include="Extensions\Math\NumberEqualityComparer.vb" />
