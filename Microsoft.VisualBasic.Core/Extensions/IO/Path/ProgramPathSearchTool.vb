@@ -13,6 +13,12 @@ Imports r = System.Text.RegularExpressions.Regex
 
 Namespace FileIO.Path
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' Works on windows, have not test on Linux/Mac yet.
+    ''' </remarks>
     Public Class ProgramPathSearchTool
 
         ReadOnly Environments As New List(Of String) From {"ProgramFiles(x86)", "ProgramFiles"}
@@ -26,7 +32,9 @@ Namespace FileIO.Path
                 Return Environments _
                     .Select(Function(var) ENV.GetEnvironmentVariable(var)) _
                     .Join(CustomDirectories.SafeQuery) _
-                    .Where(Function(dir) dir.DirectoryExists) _
+                    .Where(Function(dir)
+                               Return (Not dir.StringEmpty) AndAlso dir.DirectoryExists
+                           End Function) _
                     .ToArray
             End Get
         End Property
@@ -51,9 +59,18 @@ Namespace FileIO.Path
             Next
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="keyword$">常规的文件名称之类的，不可以包含有通配符</param>
+        ''' <param name="includeDll"></param>
+        ''' <returns></returns>
         Public Iterator Function FindProgram(keyword$, Optional includeDll As Boolean = True) As IEnumerable(Of String)
             For Each dir As String In Directories
                 For Each file As String In SearchProgram(dir, keyword, includeDll)
+                    Yield file
+                Next
+                For Each file As String In SearchProgram($"{dir}/{keyword}", keyword, includeDll)
                     Yield file
                 Next
             Next
