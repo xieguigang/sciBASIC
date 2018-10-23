@@ -96,6 +96,10 @@ Namespace Scripting.SymbolBuilder
             Call Me.New(New StringBuilder(script))
         End Sub
 
+        Sub New(html As XElement)
+            Call Me.New(html.ToString)
+        End Sub
+
         ''' <summary>
         ''' <see cref="StringBuilder.Replace(String, String)"/>
         ''' </summary>
