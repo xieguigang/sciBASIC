@@ -372,8 +372,10 @@ Public Module PathExtensions
     <Extension> Public Function Long2Short(path As String, <CallerMemberName> Optional caller As String = "") As String
         Dim parent As String = path.ParentPath
         Dim DIRTokens As String() = parent.Replace("\", "/").Split("/"c)
-        Dim DIRname As String = DIRTokens.Last  ' 请注意，由于path参数可能是相对路径，所以在这里DIRname和name要分开讨论
-        Dim name As String = path.Replace("\", "/").Split("/"c).Last  ' 因为相对路径最终会出现文件夹名称，但在path里面可能是使用小数点来表示的
+        ' 请注意，由于path参数可能是相对路径，所以在这里DIRname和name要分开讨论
+        Dim DIRname As String = DIRTokens.Last
+        ' 因为相对路径最终会出现文件夹名称，但在path里面可能是使用小数点来表示的
+        Dim name As String = path.Replace("\", "/").Split("/"c).Last
 
         If parent.Length + name.Length >= 259 Then
             DIRname = Mid(DIRname, 1, 20) & "~"

@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.ObjectModel
+Imports System.ComponentModel
 Imports System.IO
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -101,9 +102,9 @@ Namespace FileIO.Path
         ''' <returns></returns>
         ''' <remarks></remarks>
         '''
-        <ExportAPI("DIR.Search.Program_Directory",
-                   Info:="Search for the directories which its name was matched the keyword pattern.")>
-        Iterator Public Function SearchDirectory(keyword$, Optional specificDrive$ = Nothing) As IEnumerable(Of String)
+        <ExportAPI("DIR.Search.Program_Directory")>
+        <Description("Search for the directories which its name was matched the keyword pattern.")>
+        Public Iterator Function SearchDirectory(keyword$, Optional specificDrive$ = Nothing) As IEnumerable(Of String)
             Dim drives As ReadOnlyCollection(Of DriveInfo)
 
             If String.IsNullOrEmpty(specificDrive) Then
@@ -153,8 +154,8 @@ Namespace FileIO.Path
         ''' <param name="Keyword"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <ExportAPI("File.Search.Program",
-                   Info:="Invoke the search session for the program file using a specific keyword string value.")>
+        <ExportAPI("File.Search.Program")>
+        <Description("Invoke the search session for the program file using a specific keyword string value.")>
         Public Function SearchProgram(Dir$, keyword$) As String()
             Dim exeNameRule As String = $"*{keyword}*.exe"
             Dim dllNameRule As String = $"*{keyword}*.dll"

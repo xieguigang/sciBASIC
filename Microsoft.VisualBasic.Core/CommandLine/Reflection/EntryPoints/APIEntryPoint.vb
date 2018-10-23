@@ -106,7 +106,7 @@ Namespace CommandLine.Reflection.EntryPoints
             Dim path$ = EntryPoint.DeclaringType.Assembly.Location
 
             If relativePath Then
-                path = ProgramPathSearchTool.RelativePath(path)
+                path = PathExtensions.RelativePath(path)
             Else
                 path = path.ToFileURL
             End If
