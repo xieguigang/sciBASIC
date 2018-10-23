@@ -1,4 +1,11 @@
-﻿Imports Microsoft.VisualBasic.Language
+﻿Imports System.Collections.ObjectModel
+Imports System.IO
+Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Language.UnixBash
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace FileIO.Path
 
@@ -7,14 +14,7 @@ Namespace FileIO.Path
         Public Property Environments As New List(Of String) From {"", ""}
 
         Const VERSION As String = "[-_`~.]\d+(\.\d+)*"
-
-        Public Function FindProgram() As String
-
-        End Function
-
-        Public Function FindScript() As String
-
-        End Function
+        Const TopDirectory As SearchOption = SearchOption.SearchTopLevelOnly
 
         ''' <summary>
         ''' 商标搜索规则
@@ -23,37 +23,37 @@ Namespace FileIO.Path
         ''' <param name="Keyword"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Function BranchRule(ProgramFiles As String, Keyword As String) As String()
-            Dim ProgramFiles_Directories = FileIO.FileSystem.GetDirectories(
-                ProgramFiles,
-                FileIO.SearchOption.SearchTopLevelOnly,
-                Keyword)
+        Private Function BranchRule(programFiles$, keyword$) As IEnumerable(Of String)
+            Dim programFilesDirectories = FileSystem.GetDirectories(programFiles, TopDirectory, keyword)
             Dim fsObjs As New List(Of String)
 
-            For Each Dir As String In ProgramFiles_Directories
-                fsObjs += FileIO.FileSystem.GetDirectories(
-                    Dir, FileIO.SearchOption.SearchTopLevelOnly)
+            For Each dir As String In programFilesDirectories
+                fsObjs += FileSystem.GetDirectories(dir, TopDirectory)
             Next
-            Call fsObjs.Add(ProgramFiles_Directories.ToArray)
 
-            If fsObjs.Count = 0 Then
+            Call fsObjs.Add(programFilesDirectories.ToArray)
+
+            If fsObjs = 0 Then
                 ' 这个应用程序的安装文件夹可能是带有版本号标记的
-                Dim Dirs = FileIO.FileSystem.GetDirectories(ProgramFiles, FileIO.SearchOption.SearchTopLevelOnly)
-                Dim version As String = Keyword & ProgramPathSearchTool.VERSION
-                Dim Patterns As String() =
-                    LinqAPI.Exec(Of String) <= From DIR As String
-                                               In Dirs
-                                               Let name As String = FileIO.FileSystem.GetDirectoryInfo(DIR).Name
-                                               Where Regex.Match(name, version, RegexOptions.IgnoreCase).Success
-                                               Select DIR
-                Call fsObjs.Add(Patterns)
+                Dim dirs = FileSystem.GetDirectories(programFiles, TopDirectory)
+                Dim version As String = keyword & ProgramPathSearchTool.VERSION
+                Dim patterns$() = LinqAPI.Exec(Of String) _
+ _
+                    () <= From DIR As String
+                          In dirs
+                          Let name As String = FileSystem.GetDirectoryInfo(DIR).Name
+                          Let match = r.Match(name, version, RegexOptions.IgnoreCase)
+                          Where match.Success
+                          Select DIR
+
+                Call fsObjs.Add(patterns)
             End If
 
-            Return fsObjs.ToArray
+            Return fsObjs
         End Function
 
         ''' <summary>
-        '''
+        ''' Search for the path of a script file with a specific extension name.
         ''' </summary>
         ''' <param name="DIR"></param>
         ''' <param name="Keyword"></param>
@@ -62,31 +62,35 @@ Namespace FileIO.Path
         ''' <remarks></remarks>
         '''
         <ExportAPI("Search.Scripts", Info:="Search for the path of a script file with a specific extension name.")>
-        Public Function SearchScriptFile(DIR As String, Keyword As String, Optional withExtension As String = "") As String()
-            Dim ScriptFileNameRule As String = String.Format("*{0}*{1}", Keyword, withExtension)
-            Dim Files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule)
-            Dim binDIR As String = String.Format("{0}/bin/", DIR)
-            Dim ProgramDIR As String = String.Format("{0}/Program", DIR)
-            Dim ScriptsDIR As String = String.Format("{0}/scripts", DIR)
-            Dim fileList As New List(Of String)
+        Public Iterator Function SearchScriptFile(dir$, keyword$, Optional withExtension$ = "") As IEnumerable(Of String)
+            Dim scriptFileNameRule$ = $"*{keyword}*{withExtension}"
+            Dim files = FileSystem.GetFiles(dir, TopDirectory, scriptFileNameRule)
+            Dim binDIR As String = $"{dir}/bin/"
+            Dim programDIR As String = $"{dir}/Program"
+            Dim scriptsDIR As String = $"{dir}/scripts"
+            Dim testExtensionName As Assert(Of String)
 
-            If FileIO.FileSystem.DirectoryExists(binDIR) Then fileList += (ls - l - wildcards(ScriptFileNameRule) <= binDIR)
-            If FileIO.FileSystem.DirectoryExists(ProgramDIR) Then fileList += (ls - l - wildcards(ScriptFileNameRule) <= ProgramDIR)
-            If FileIO.FileSystem.DirectoryExists(ScriptsDIR) Then fileList += (ls - l - wildcards(ScriptFileNameRule) <= ScriptsDIR)
-
-            Call fileList.AddRange(Files)
-
-            If String.IsNullOrEmpty(withExtension) Then
-                Return LinqAPI.Exec(Of String) _
- _
-                    () <= From strPath As String
-                          In fileList
-                          Let ext As String = FileIO.FileSystem.GetFileInfo(strPath).Extension
-                          Where String.IsNullOrEmpty(ext)
-                          Select strPath
+            If withExtension.StringEmpty Then
+                testExtensionName = Function(path) path.ExtensionSuffix.StringEmpty
             Else
-                Return fileList.ToArray
+                testExtensionName = Function(path) True
             End If
+
+            For Each folder As String In {binDIR, programDIR, scriptsDIR}
+                If FileSystem.DirectoryExists(folder) Then
+                    For Each file As String In ls - l - scriptFileNameRule <= folder
+                        If testExtensionName(file) Then
+                            Yield file
+                        End If
+                    Next
+                End If
+            Next
+
+            For Each file As String In files
+                If testExtensionName(file) Then
+                    Yield file
+                End If
+            Next
         End Function
 
         ''' <summary>
@@ -113,15 +117,14 @@ Namespace FileIO.Path
             Return DIRs.ToArray
         End Function
 
-        <Extension>
         Private Function SearchDrive(Drive As DriveInfo, keyword As String) As String()
             If Not Drive.IsReady Then
                 Return New String() {}
             End If
 
-            Dim DriveRoot = FileIO.FileSystem.GetDirectories(Drive.RootDirectory.FullName, FileIO.SearchOption.SearchTopLevelOnly, keyword)
+            Dim driveName$ = Drive.RootDirectory.FullName
+            Dim DriveRoot = FileSystem.GetDirectories(driveName, SearchOption.SearchTopLevelOnly, keyword)
             Dim files As New List(Of String)
-
             Dim ProgramFiles As String = String.Format("{0}/Program Files", Drive.RootDirectory.FullName)
             If FileIO.FileSystem.DirectoryExists(ProgramFiles) Then
                 Call files.AddRange(BranchRule(ProgramFiles, keyword))
