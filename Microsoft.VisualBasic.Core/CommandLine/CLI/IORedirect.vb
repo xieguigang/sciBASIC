@@ -126,6 +126,18 @@ Namespace CommandLine
             End Get
         End Property
 
+        Public ReadOnly Property ExitCode As Integer
+            Get
+                Return processInfo.ExitCode
+            End Get
+        End Property
+
+        Public ReadOnly Property HasExited As Boolean
+            Get
+                Return processInfo.HasExited
+            End Get
+        End Property
+
         Dim input As StreamWriter
         Dim output As New StringBuilder(1024)
         Dim [error] As New StringBuilder()
@@ -155,6 +167,7 @@ Namespace CommandLine
             If IOredirect Then  '只是重定向输出设备流
                 pInfo.RedirectStandardOutput = True
                 pInfo.RedirectStandardError = True
+                pInfo.RedirectStandardInput = True
             End If
 
             pInfo.RedirectStandardInput = True
@@ -206,6 +219,10 @@ Namespace CommandLine
             Else
                 Call [error].AppendLine(e.Data)
             End If
+        End Sub
+
+        Public Sub Kill()
+            Call processInfo.Kill()
         End Sub
 
         ''' <summary>
@@ -291,6 +308,27 @@ Namespace CommandLine
             Return processInfo.ExitCode
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function WaitOutput(timeout As Integer) As Boolean
+            Return outputWaitHandle.WaitOne(timeout)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function WaitError(timeout As Integer) As Boolean
+            Return errorWaitHandle.WaitOne(timeout)
+        End Function
+
+        ''' <summary>
+        ''' With a given timeout in milliseconds unit
+        ''' </summary>
+        ''' <param name="timeout"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function WaitForExit(timeout As Integer) As Boolean
+            Return processInfo.WaitForExit(timeout)
+        End Function
+
         ''' <summary>
         ''' Start the target process.(启动目标进程)
         ''' </summary>
@@ -329,9 +367,19 @@ Namespace CommandLine
             Return Start(waitForExit:=True)
         End Function
 
-        Public Sub WriteLine(s As String) Implements I_ConsoleDeviceHandle.WriteLine
-            Call input.WriteLine(s)
+        Public Sub WriteLine(Optional s As String = "") Implements I_ConsoleDeviceHandle.WriteLine
+            If s.StringEmpty Then
+                Call input.WriteLine()
+            Else
+                Call input.WriteLine(s)
+            End If
+
             Call input.Flush()
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Write(buffer As Byte())
+            Call input.BaseStream.Write(buffer, Scan0, buffer.Length)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
