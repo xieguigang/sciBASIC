@@ -1053,7 +1053,7 @@ Namespace MarkDown
         End Function
 
         Private Function DoCheckbox(text As String) As String
-            Static checkbox As New Regex("^\-\s\[(([+-])|\s)\]", RegexICMul)
+            Static checkbox As New Regex("^\-\s\[(x|\s)\]", RegexICMul)
             Return checkbox.Replace(text, New MatchEvaluator(AddressOf CheckboxEvaluator))
         End Function
 
