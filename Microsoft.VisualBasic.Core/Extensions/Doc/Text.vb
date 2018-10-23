@@ -327,7 +327,7 @@ Public Module TextDoc
         DIR = System.IO.Directory.GetParent(path).FullName
 #Else
         Try
-            path = ProgramPathSearchTool.Long2Short(path)
+            path = PathExtensions.Long2Short(path)
             DIR = fs.GetParentPath(path)
         Catch ex As Exception
             Dim msg As String = $" **** Directory string is illegal or string is too long:  [{NameOf(path)}:={path}] > 260"

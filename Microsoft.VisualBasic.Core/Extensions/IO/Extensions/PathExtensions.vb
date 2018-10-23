@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::90ad6d224336853fb4f3a3ba4ff5bbb0, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module ProgramPathSearchTool
-    ' 
-    '     Function: BaseName, BatchMd5Renamed, BranchRule, ChangeSuffix, Delete
-    '               DIR, DirectoryExists, DirectoryName, EnumerateFiles, ExtensionSuffix
-    '               FileCopy, (+2 Overloads) FileExists, FileLength, FileMove, FileName
-    '               FileOpened, GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath
-    '               GetMostAppreancePath, ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList
-    '               Long2Short, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine
-    '               PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory
-    '               SearchDrive, SearchProgram, SearchScriptFile, SourceCopy, SplitPath
-    '               TheFile, ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix
-    '               UnixPath
-    ' 
-    '     Sub: MkDIR
-    ' 
-    ' /********************************************************************************/
+' Module ProgramPathSearchTool
+' 
+'     Function: BaseName, BatchMd5Renamed, BranchRule, ChangeSuffix, Delete
+'               DIR, DirectoryExists, DirectoryName, EnumerateFiles, ExtensionSuffix
+'               FileCopy, (+2 Overloads) FileExists, FileLength, FileMove, FileName
+'               FileOpened, GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath
+'               GetMostAppreancePath, ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList
+'               Long2Short, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine
+'               PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory
+'               SearchDrive, SearchProgram, SearchScriptFile, SourceCopy, SplitPath
+'               TheFile, ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix
+'               UnixPath
+' 
+'     Sub: MkDIR
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,6 +60,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.FileIO
+Imports Microsoft.VisualBasic.FileIO.Path
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
@@ -73,7 +74,7 @@ Imports Microsoft.VisualBasic.Text
 ''' </summary>
 ''' <remarks></remarks>
 <Package("Program.Path.Search", Description:="A utility tools for searching a specific file of its path on the file system more easily.")>
-Public Module ProgramPathSearchTool
+Public Module PathExtensions
 
     ''' <summary>
     ''' 修改路径字符串之中的文件名后缀拓展名为<paramref name="newSuffix"/>指定的值。<paramref name="newSuffix"/>不需要添加小数点
@@ -371,8 +372,10 @@ Public Module ProgramPathSearchTool
     <Extension> Public Function Long2Short(path As String, <CallerMemberName> Optional caller As String = "") As String
         Dim parent As String = path.ParentPath
         Dim DIRTokens As String() = parent.Replace("\", "/").Split("/"c)
-        Dim DIRname As String = DIRTokens.Last  ' 请注意，由于path参数可能是相对路径，所以在这里DIRname和name要分开讨论
-        Dim name As String = path.Replace("\", "/").Split("/"c).Last  ' 因为相对路径最终会出现文件夹名称，但在path里面可能是使用小数点来表示的
+        ' 请注意，由于path参数可能是相对路径，所以在这里DIRname和name要分开讨论
+        Dim DIRname As String = DIRTokens.Last
+        ' 因为相对路径最终会出现文件夹名称，但在path里面可能是使用小数点来表示的
+        Dim name As String = path.Replace("\", "/").Split("/"c).Last
 
         If parent.Length + name.Length >= 259 Then
             DIRname = Mid(DIRname, 1, 20) & "~"
@@ -738,28 +741,6 @@ Public Module ProgramPathSearchTool
     End Function
 
     ''' <summary>
-    ''' 这个方法没得卵用
-    ''' </summary>
-    ''' <param name="DIR"></param>
-    ''' <returns></returns>
-    <ExportAPI("Md5.Renamed")>
-    Public Function BatchMd5Renamed(DIR As String) As Boolean
-        DIR = FileIO.FileSystem.GetDirectoryInfo(DIR).FullName
-
-        For Each path As String In FileIO.FileSystem.GetFiles(DIR)
-            On Error Resume Next
-
-            Dim Md5 As String = SecurityString.GetMd5Hash(path)
-            Dim ext As String = IO.Path.GetExtension(path)
-            Dim FileName As String = DIR & "/" & Md5 & ext
-
-            Call IO.File.Move(path, FileName)
-        Next
-
-        Return True
-    End Function
-
-    ''' <summary>
     ''' [<see cref="FileIO.SearchOption.SearchAllSubDirectories"/>，这个函数会扫描目标文件夹下面的所有文件。]
     ''' 请注意，本方法是不能够产生具有相同的主文件名的数据的。假若目标GBK是使用本模块之中的方法保存或者导出来的，
     ''' 则可以使用本方法生成Entry列表；（在返回的结果之中，KEY为文件名，没有拓展名，VALUE为文件的路径）
@@ -917,165 +898,6 @@ Public Module ProgramPathSearchTool
             .FirstOrDefault _
             .Key
     End Function
-
-    ''' <summary>
-    ''' Invoke the search session for the program file using a specific keyword string value.(使用某个关键词来搜索目标应用程序)
-    ''' </summary>
-    ''' <param name="DIR"></param>
-    ''' <param name="Keyword"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    <ExportAPI("File.Search.Program",
-               Info:="Invoke the search session for the program file using a specific keyword string value.")>
-    Public Function SearchProgram(DIR As String, Keyword As String) As String()
-        Dim ExeNameRule As String = String.Format("*{0}*.exe", Keyword)
-        Dim DllNameRule As String = String.Format("*{0}*.dll", Keyword)
-
-        Dim Files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, ExeNameRule, DllNameRule)
-        Dim binDIR As String = String.Format("{0}/bin/", DIR)
-        Dim ProgramDIR As String = String.Format("{0}/Program", DIR)
-        Dim buffer As New List(Of String)
-
-        If FileIO.FileSystem.DirectoryExists(binDIR) Then
-            buffer += FileIO.FileSystem.GetFiles(
-                binDIR,
-                FileIO.SearchOption.SearchTopLevelOnly,
-                ExeNameRule, DllNameRule)
-        End If
-        If FileIO.FileSystem.DirectoryExists(ProgramDIR) Then
-            buffer += FileIO.FileSystem.GetFiles(
-                ProgramDIR,
-                FileIO.SearchOption.SearchTopLevelOnly,
-                ExeNameRule, DllNameRule)
-        End If
-
-        buffer += Files
-
-        Return buffer.ToArray
-    End Function
-
-    ''' <summary>
-    '''
-    ''' </summary>
-    ''' <param name="DIR"></param>
-    ''' <param name="Keyword"></param>
-    ''' <param name="withExtension">脚本文件的文件拓展名</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("Search.Scripts", Info:="Search for the path of a script file with a specific extension name.")>
-    Public Function SearchScriptFile(DIR As String, Keyword As String, Optional withExtension As String = "") As String()
-        Dim ScriptFileNameRule As String = String.Format("*{0}*{1}", Keyword, withExtension)
-        Dim Files = FileIO.FileSystem.GetFiles(DIR, FileIO.SearchOption.SearchTopLevelOnly, ScriptFileNameRule)
-        Dim binDIR As String = String.Format("{0}/bin/", DIR)
-        Dim ProgramDIR As String = String.Format("{0}/Program", DIR)
-        Dim ScriptsDIR As String = String.Format("{0}/scripts", DIR)
-        Dim fileList As New List(Of String)
-
-        If FileIO.FileSystem.DirectoryExists(binDIR) Then fileList += (ls - l - wildcards(ScriptFileNameRule) <= binDIR)
-        If FileIO.FileSystem.DirectoryExists(ProgramDIR) Then fileList += (ls - l - wildcards(ScriptFileNameRule) <= ProgramDIR)
-        If FileIO.FileSystem.DirectoryExists(ScriptsDIR) Then fileList += (ls - l - wildcards(ScriptFileNameRule) <= ScriptsDIR)
-
-        Call fileList.AddRange(Files)
-
-        If String.IsNullOrEmpty(withExtension) Then
-            Return LinqAPI.Exec(Of String) _
- _
-                () <= From strPath As String
-                      In fileList
-                      Let ext As String = FileIO.FileSystem.GetFileInfo(strPath).Extension
-                      Where String.IsNullOrEmpty(ext)
-                      Select strPath
-        Else
-            Return fileList.ToArray
-        End If
-    End Function
-
-    ''' <summary>
-    '''
-    ''' </summary>
-    ''' <param name="SpecificDrive">所制定进行搜索的驱动器，假若希望搜索整个硬盘，请留空字符串</param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    '''
-    <ExportAPI("DIR.Search.Program_Directory",
-               Info:="Search for the directories which its name was matched the keyword pattern.")>
-    Public Function SearchDirectory(Keyword As String, SpecificDrive As String) As String()
-        Dim Drives As ReadOnlyCollection(Of DriveInfo) =
-            If(String.IsNullOrEmpty(SpecificDrive),
-               FileIO.FileSystem.Drives,
-               New ReadOnlyCollection(Of IO.DriveInfo)(
-                   {FileIO.FileSystem.GetDriveInfo(SpecificDrive)}))
-        Dim DIRs As New List(Of String)
-
-        For Each Drive As DriveInfo In Drives
-            DIRs += SearchDrive(Drive, Keyword)
-        Next
-
-        Return DIRs.ToArray
-    End Function
-
-    <Extension>
-    Private Function SearchDrive(Drive As DriveInfo, keyword As String) As String()
-        If Not Drive.IsReady Then
-            Return New String() {}
-        End If
-
-        Dim DriveRoot = FileIO.FileSystem.GetDirectories(Drive.RootDirectory.FullName, FileIO.SearchOption.SearchTopLevelOnly, keyword)
-        Dim files As New List(Of String)
-
-        Dim ProgramFiles As String = String.Format("{0}/Program Files", Drive.RootDirectory.FullName)
-        If FileIO.FileSystem.DirectoryExists(ProgramFiles) Then
-            Call files.AddRange(BranchRule(ProgramFiles, keyword))
-        End If
-
-        Dim ProgramFilesX86 = String.Format("{0}/Program Files(x86)", Drive.RootDirectory.FullName)
-        If FileIO.FileSystem.DirectoryExists(ProgramFilesX86) Then
-            Call files.AddRange(BranchRule(ProgramFilesX86, keyword))
-        End If
-        Call files.AddRange(DriveRoot)
-        Call files.AddRange(DriveRoot.Select(Function(rootDir) BranchRule(rootDir, keyword)).Unlist)
-
-        Return files.ToArray
-    End Function
-
-    ''' <summary>
-    ''' 商标搜索规则
-    ''' </summary>
-    ''' <param name="ProgramFiles"></param>
-    ''' <param name="Keyword"></param>
-    ''' <returns></returns>
-    ''' <remarks></remarks>
-    Private Function BranchRule(ProgramFiles As String, Keyword As String) As String()
-        Dim ProgramFiles_Directories = FileIO.FileSystem.GetDirectories(
-            ProgramFiles,
-            FileIO.SearchOption.SearchTopLevelOnly,
-            Keyword)
-        Dim fsObjs As New List(Of String)
-
-        For Each Dir As String In ProgramFiles_Directories
-            fsObjs += FileIO.FileSystem.GetDirectories(
-                Dir, FileIO.SearchOption.SearchTopLevelOnly)
-        Next
-        Call fsObjs.Add(ProgramFiles_Directories.ToArray)
-
-        If fsObjs.Count = 0 Then
-            ' 这个应用程序的安装文件夹可能是带有版本号标记的
-            Dim Dirs = FileIO.FileSystem.GetDirectories(ProgramFiles, FileIO.SearchOption.SearchTopLevelOnly)
-            Dim version As String = Keyword & ProgramPathSearchTool.VERSION
-            Dim Patterns As String() =
-                LinqAPI.Exec(Of String) <= From DIR As String
-                                           In Dirs
-                                           Let name As String = FileIO.FileSystem.GetDirectoryInfo(DIR).Name
-                                           Where Regex.Match(name, version, RegexOptions.IgnoreCase).Success
-                                           Select DIR
-            Call fsObjs.Add(Patterns)
-        End If
-
-        Return fsObjs.ToArray
-    End Function
-
-    Const VERSION As String = "[-_`~.]\d+(\.\d+)*"
 
     ''' <summary>
     ''' 获取相对于本应用程序的目标文件的相对路径(请注意，所生成的相对路径之中的字符串最后是没有文件夹的分隔符\或者/的)

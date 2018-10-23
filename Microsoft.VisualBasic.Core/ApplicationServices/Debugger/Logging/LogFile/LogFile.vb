@@ -157,7 +157,7 @@ Namespace ApplicationServices.Debugging.Logging
             Return ""
         End Function
 
-        Public Sub WriteLine(s As String) Implements I_ConsoleDeviceHandle.WriteLine
+        Public Sub WriteLine(Optional s As String = "") Implements I_ConsoleDeviceHandle.WriteLine
             Call WriteLine(s, Type:=MSG_TYPES.INF, [Object]:="")
         End Sub
 

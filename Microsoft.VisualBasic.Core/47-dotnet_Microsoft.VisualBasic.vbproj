@@ -934,8 +934,11 @@
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
     <Compile Include="Extensions\Image\Math\Models\Polygon.vb" />
     <Compile Include="Extensions\Image\Math\Models\Line.vb" />
-    <Compile Include="Extensions\IO\StreamHelper.vb" />
-    <Compile Include="Extensions\IO\SerializationIO.vb" />
+    <Compile Include="Extensions\IO\Extensions\StreamHelper.vb" />
+    <Compile Include="Extensions\IO\Extensions\SerializationIO.vb" />
+    <Compile Include="Extensions\IO\Path\ProgramPathSearchTool.vb" />
+    <Compile Include="Extensions\IO\Path\TemporaryEnvironment.vb" />
+    <Compile Include="Extensions\IO\Path\Extensions.vb" />
     <Compile Include="Extensions\Math\NumberEqualityComparer.vb" />
     <Compile Include="Extensions\Math\Information\Entropy.vb" />
     <Compile Include="Extensions\Math\Information\UncheckHelpers.vb" />
@@ -1022,7 +1025,7 @@
     <Compile Include="ComponentModel\Ranges\Relations.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\BucketIndexOf.vb" />
     <Compile Include="ComponentModel\ValuePair\NamedTuple.vb" />
-    <Compile Include="Extensions\IO\CopyDirectory.vb" />
+    <Compile Include="Extensions\IO\Path\CopyDirectory.vb" />
     <Compile Include="Extensions\Math\StatisticsMathExtensions\DataSample.vb" />
     <Compile Include="ComponentModel\Ranges\Sequence.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\IndexSelector.vb" />
@@ -1170,8 +1173,8 @@
     <Compile Include="Extensions\Collection\Linq\SetValue.vb" />
     <Compile Include="ApplicationServices\Debugger\Config.vb" />
     <Compile Include="Extensions\Image\Colors\HexColor.vb" />
-    <Compile Include="Extensions\IO\Includes.vb" />
-    <Compile Include="Extensions\IO\Extensions.vb" />
+    <Compile Include="Extensions\IO\Path\Includes.vb" />
+    <Compile Include="Extensions\IO\Extensions\Extensions.vb" />
     <Compile Include="Extensions\IO\SymLinker\HardLink.vb" />
     <Compile Include="Extensions\IO\SymLinker\JunctionPoint.vb" />
     <Compile Include="Extensions\IO\SymLinker\SymbolicLink.vb" />
@@ -1260,7 +1263,7 @@
     <Compile Include="Extensions\Image\Bitmap\BitmapScale.vb" />
     <Compile Include="Extensions\Image\GDI+\Interface.vb" />
     <Compile Include="Extensions\Image\Colors\GDIColors.vb" />
-    <Compile Include="Extensions\IO\PathMatch.vb" />
+    <Compile Include="Extensions\IO\Path\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
     <Compile Include="Language\NET40_Compatible.vb" />
@@ -1270,7 +1273,7 @@
     <Compile Include="Scripting\MetaData\Author.vb" />
     <Compile Include="Serialization\BinaryDumping\StructFormatter.vb" />
     <Compile Include="Serialization\BinaryDumping\StructSerializer.vb" />
-    <Compile Include="Extensions\IO\Directory.vb" />
+    <Compile Include="Extensions\IO\Path\Directory.vb" />
     <Compile Include="Scripting\ExternalCall.vb" />
     <Compile Include="Extensions\WebServices\WebResult.vb" />
     <Compile Include="Text\Parser\FormattedParser.vb" />
@@ -1310,7 +1313,7 @@
     <Compile Include="ApplicationServices\Debugger.vb" />
     <Compile Include="ApplicationServices\Debugger\DebuggerArgs.vb" />
     <Compile Include="Extensions\Image\GDI+\FontFace.vb" />
-    <Compile Include="Extensions\IO\IO.vb" />
+    <Compile Include="Extensions\IO\Extensions\IO.vb" />
     <Compile Include="Extensions\Doc\PartitionedStream.vb" />
     <Compile Include="Extensions\Doc\Text.vb" />
     <Compile Include="Extensions\Doc\XmlExtensions.vb" />
@@ -1321,7 +1324,7 @@
     <Compile Include="Extensions\Image\Wmf.vb" />
     <Compile Include="Extensions\Image\TiffWriter.vb" />
     <Compile Include="Extensions\Image\ImageFormat.vb" />
-    <Compile Include="Extensions\IO\NetFile.vb" />
+    <Compile Include="Extensions\IO\Extensions\NetFile.vb" />
     <Compile Include="Extensions\Math\Correlations\Correlations.vb" />
     <Compile Include="Extensions\Math\Correlations\Ranks.vb" />
     <Compile Include="Extensions\Math\Random\RandomExtensions.vb" />
@@ -1478,7 +1481,7 @@
     <Compile Include="Extensions\Doc\LargeTextFile.vb" />
     <Compile Include="Text\IO\TextFileEncodingDetector.vb" />
     <Compile Include="ComponentModel\Settings\SimpleConfig.vb" />
-    <Compile Include="Extensions\IO\PathSearchTool.vb" />
+    <Compile Include="Extensions\IO\Extensions\PathExtensions.vb" />
     <Compile Include="Text\Xml\Models\Href.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\DataSource.vb" />
     <Compile Include="ComponentModel\DataStructures\Enumerable\IEnumerable.vb" />

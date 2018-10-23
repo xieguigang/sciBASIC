@@ -1,67 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::8d7b55853631a6bfc9779aeb572fd332, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class IORedirect
-    ' 
-    '         Properties: Bin, CLIArguments, ProcessInfo, StandardOutput
-    '         Delegate Function
-    ' 
-    ' 
-    '         Delegate Sub
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    '             Function: __tryGetSTDOUT, GetError, Read, ReadLine, Run
-    '                       Shell, (+3 Overloads) Start, ToString
-    ' 
-    '             Sub: __detectProcessExit, __listenSTDOUT, (+2 Overloads) Dispose, (+2 Overloads) WriteLine
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class IORedirect
+' 
+'         Properties: Bin, CLIArguments, ProcessInfo, StandardOutput
+'         Delegate Function
+' 
+' 
+'         Delegate Sub
+' 
+'             Constructor: (+1 Overloads) Sub New
+' 
+'             Function: __tryGetSTDOUT, GetError, Read, ReadLine, Run
+'                       Shell, (+3 Overloads) Start, ToString
+' 
+'             Sub: __detectProcessExit, __listenSTDOUT, (+2 Overloads) Dispose, (+2 Overloads) WriteLine
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Text.RegularExpressions
-Imports System.Text
+Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Reflection
+Imports System.Text
+Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Terminal.STDIO
 Imports Microsoft.VisualBasic.Terminal.STDIO__
-Imports Microsoft.VisualBasic.Parallel
 
 Namespace CommandLine
 
@@ -78,11 +79,9 @@ Namespace CommandLine
         ''' 当前的这个进程实例是否处于运行的状态
         ''' </summary>
         ''' <remarks></remarks>
-        Dim _processStateRunning As Boolean
-        Dim _consoleDevice As IO.StreamReader
-        Dim _inputDevice As IO.StreamWriter
-        Dim _errorLogsDevice As IO.StreamReader
-        Dim _DispInvokedSTDOUT As Boolean
+        Dim processIsRunning As Boolean = False
+        Dim outputWaitHandle As New AutoResetEvent(False)
+        Dim errorWaitHandle As New AutoResetEvent(False)
 
         ''' <summary>
         ''' The target invoked process event has been exit with a specific return code.
@@ -92,15 +91,13 @@ Namespace CommandLine
         ''' <param name="exitTime"></param>
         ''' <remarks></remarks>
         Public Event ProcessExit(exitCode As Integer, exitTime As String) Implements IIORedirectAbstract.ProcessExit
-        Public Event DataArrival(s As String)
+        Public Event PrintOutput(output As String)
 
         ''' <summary>
-        ''' The process invoke interface of current IO redirect operation.
+        ''' The process invoke interface of current I/O redirect operation.
         ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property ProcessInfo As Process
+        Dim WithEvents processInfo As Process
 
         ''' <summary>
         ''' Gets the standard output for the target invoke process.
@@ -109,23 +106,99 @@ Namespace CommandLine
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public ReadOnly Property StandardOutput As String Implements IIORedirectAbstract.StandardOutput
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __STDOUT_BUFFER.ToString
+                Return output.ToString
             End Get
         End Property
 
         Public ReadOnly Property Bin As String Implements IIORedirectAbstract.Bin
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return ProcessInfo.StartInfo.FileName
-            End Get
-        End Property
-        Public ReadOnly Property CLIArguments As String Implements IIORedirectAbstract.CLIArguments
-            Get
-                Return ProcessInfo.StartInfo.Arguments
+                Return processInfo.StartInfo.FileName
             End Get
         End Property
 
-        Dim __STDOUT_BUFFER As StringBuilder = New StringBuilder(1024)
+        Public ReadOnly Property CLIArguments As String Implements IIORedirectAbstract.CLIArguments
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return processInfo.StartInfo.Arguments
+            End Get
+        End Property
+
+        Public ReadOnly Property ExitCode As Integer
+            Get
+                Return processInfo.ExitCode
+            End Get
+        End Property
+
+        Public ReadOnly Property HasExited As Boolean
+            Get
+                Return processInfo.HasExited
+            End Get
+        End Property
+
+        Public ReadOnly Property PID As Integer
+            Get
+                Return processInfo.Id
+            End Get
+        End Property
+
+        Dim input As StreamWriter
+        Dim output As New StringBuilder(1024)
+        Dim [error] As New StringBuilder()
+        Dim IOredirect As Boolean
+        Dim displayOutput As Boolean = False
+
+        ''' <summary>
+        ''' Creates a <see cref="System.Diagnostics.Process"/> wrapper for the CLI program operations.
+        ''' (在服务器上面可能会有一些线程方面的兼容性BUG的问题，不太清楚为什么会导致这样)
+        ''' </summary>
+        ''' <param name="Exe">The file path of the executable file.</param>
+        ''' <param name="args">The CLI arguments for the folked program.</param>
+        ''' <param name="ENV">Set up the environment variable for the target invoked child process.</param>
+        ''' <param name="displayDebug"></param>
+        ''' <param name="displayStdOut">是否显示目标被调用的外部程序的标准输出</param>
+        ''' <remarks></remarks>
+        Public Sub New(exe$, Optional args$ = "",
+                       Optional ENV As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing,
+                       Optional IOredirect As Boolean = True,
+                       Optional displayStdOut As Boolean = True,
+                       Optional displayDebug As Boolean = False)
+
+            Dim pInfo As New ProcessStartInfo(exe.GetString(""""c), args) With {
+                .UseShellExecute = False
+            }
+
+            If IOredirect Then  '只是重定向输出设备流
+                pInfo.RedirectStandardOutput = True
+                pInfo.RedirectStandardError = True
+                pInfo.RedirectStandardInput = True
+            End If
+
+            pInfo.RedirectStandardInput = True
+            pInfo.ErrorDialog = False
+            pInfo.WindowStyle = ProcessWindowStyle.Hidden
+            pInfo.CreateNoWindow = True
+
+            If Not ENV Is Nothing Then
+                For Each para As KeyValuePair(Of String, String) In ENV
+                    Call pInfo.EnvironmentVariables.Add(para.Key, para.Value)
+                Next
+            End If
+
+            Me.IOredirect = IOredirect
+            Me.displayOutput = displayStdOut
+            Me.processInfo = New Process With {
+                .EnableRaisingEvents = True,
+                .StartInfo = pInfo
+            }
+
+            If displayDebug Then
+                Call $"""{exe}"" {args}".__DEBUG_ECHO
+                Call $"disp_STDOUT -> ${  "Yes!" Or "NO!".When(Not Me.displayOutput) }".__DEBUG_ECHO
+            End If
+        End Sub
 
         Public Delegate Function ProcessAyHandle(WaitForExit As Boolean, PushingData As String(), _DISP_DEBUG_INFO As Boolean) As Integer
 
@@ -136,15 +209,37 @@ Namespace CommandLine
         ''' <param name="exitCode">The exit code for the target sub invoke process.进程的退出代码</param>
         ''' <param name="exitTime">The exit time for the target sub invoke process.(进程的退出时间)</param>
         ''' <remarks></remarks>
-        Public Delegate Sub ProcessExitCallBack(exitCode As Integer, exitTime As String)
+        Public Delegate Sub ProcessExitCallback(exitCode As Integer, exitTime As String)
+
+        Private Sub outputHandler(sender As Object, e As DataReceivedEventArgs) Handles processInfo.OutputDataReceived
+            If e.Data Is Nothing Then
+                Call outputWaitHandle.[Set]()
+            Else
+                Call output.AppendLine(e.Data)
+            End If
+        End Sub
+
+        Private Sub errorHandler(sender As Object, e As DataReceivedEventArgs) Handles processInfo.ErrorDataReceived
+            If e.Data Is Nothing Then
+                Call errorWaitHandle.[Set]()
+            Else
+                Call [error].AppendLine(e.Data)
+            End If
+        End Sub
+
+        Public Sub Kill()
+            Call processInfo.Kill()
+        End Sub
 
         ''' <summary>
         ''' Gets a <see cref="String"/> used to read the error output of the application.
         ''' </summary>
-        ''' <returns>A <see cref="String"/> text value that read from the std_error of <see cref="System.IO.StreamReader"/> 
+        ''' <returns>A <see cref="String"/> text value that read from the std_error of <see cref="StreamReader"/> 
         ''' that can be used to read the standard error stream of the application.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetError() As String
-            Return _errorLogsDevice.ReadToEnd
+            Return [error].ToString
         End Function
 
         ''' <summary>
@@ -160,69 +255,84 @@ Namespace CommandLine
         ''' 当发生错误的时候会返回错误代码，当当前的进程任然处于运行的状态的时候，程序会返回-100错误代码并在终端之上打印出警告信息
         ''' </returns>
         ''' <remarks></remarks>
-        Public Function Start(Optional WaitForExit As Boolean = False,
-                              Optional PushingData As String() = Nothing,
-                              Optional _DISP_DEBUG_INFO As Boolean = False) As Integer
+        Public Function Start(Optional waitForExit As Boolean = False,
+                              Optional pushingData As String() = Nothing,
+                              Optional displaDebug As Boolean = False) As Integer
 
-            If _processStateRunning Then
-                Dim msg As String = $"Target process ""{ProcessInfo.StartInfo.FileName.ToFileURL}"" is currently in the running state, Operation abort!"
+            If processIsRunning Then
+                Dim msg As String = $"Target process ""{processInfo.StartInfo.FileName.ToFileURL}"" is currently in the running state, Operation abort!"
                 Call VBDebugger.Warning(msg)
                 Return -100
             End If
 
-            If _DISP_DEBUG_INFO Then
-                Dim Exe As String = FileIO.FileSystem.GetFileInfo(ProcessInfo.StartInfo.FileName).FullName.Replace("\", "/")
-                Dim argvs As String = If(String.IsNullOrEmpty(ProcessInfo.StartInfo.Arguments), "", " " & ProcessInfo.StartInfo.Arguments)
+            If displaDebug Then
+                Dim Exe As String = FileIO.FileSystem.GetFileInfo(processInfo.StartInfo.FileName).FullName.Replace("\", "/")
+                Dim argvs As String = If(String.IsNullOrEmpty(processInfo.StartInfo.Arguments), "", " " & processInfo.StartInfo.Arguments)
                 Call Console.WriteLine("      ---> system(""file:''{0}""{1})", Exe, argvs)
             End If
 
             Try
-                Call ProcessInfo.Start()
+                Call processInfo.Start()
+
+                If IOredirect Then
+                    Call processInfo.BeginOutputReadLine()
+                    Call processInfo.BeginErrorReadLine()
+                End If
             Catch ex As Exception
-                Call Printf("FATAL_ERROR::%s", ex.ToString)
-                Call Console.WriteLine("  Exe ==> " & ProcessInfo.StartInfo.FileName)
-                Call Console.WriteLine("argvs ==> " & ProcessInfo.StartInfo.Arguments)
+                Call printf("FATAL_ERROR::%s", ex.ToString)
+                Call Console.WriteLine("  Exe ==> " & processInfo.StartInfo.FileName)
+                Call Console.WriteLine("argvs ==> " & processInfo.StartInfo.Arguments)
 
                 ' Return ex.HResul '4.5
                 Return -1
             End Try
 
-            _processStateRunning = True
-            If _IORedirect Then
-                _consoleDevice = ProcessInfo.StandardOutput
-                _errorLogsDevice = ProcessInfo.StandardError
-            End If
+            processIsRunning = True
+            input = processInfo.StandardInput
 
-            _inputDevice = ProcessInfo.StandardInput
+            If Not pushingData.IsNullOrEmpty Then
+                For Each line As String In pushingData
+                    Call input.WriteLine(line)
+                    Call input.Flush()
 
-            Dim ListeningThreadA As System.Action = AddressOf Me.__listenSTDOUT
-            Dim DetectExitThread As System.Action = AddressOf Me.__detectProcessExit
-
-            If _IORedirect Then
-                Call ListeningThreadA.BeginInvoke(Nothing, Nothing)
-            End If
-            Call DetectExitThread.BeginInvoke(Nothing, Nothing)
-
-            If Not PushingData.IsNullOrEmpty Then
-
-                For Each Line As String In PushingData
-                    Call _inputDevice.WriteLine(Line)
-                    Call _inputDevice.Flush()
-                    Call Console.WriteLine("  >>>   " & Line)
+                    Call Console.WriteLine("  >>>   " & line)
                 Next
-
             End If
 
-            If WaitForExit Then
-                Call ProcessInfo.WaitForExit()
-                Call Thread.Sleep(100)
-                Call OperationTimeOut(AddressOf __tryGetSTDOUT, 2)  '将剩余的标准输出之中的数据完全的打印出来
-
-                Return ProcessInfo.ExitCode
+            If waitForExit Then
+                Return waitForExit
             Else
-                Call Parallel.RunTask(AddressOf ProcessInfo.WaitForExit)
+                Call RunTask(AddressOf Me.waitForExit)
                 Return 0
             End If
+        End Function
+
+        Private Function waitForExit() As Integer
+            Call processInfo.WaitForExit()
+            ' process exit and raise events
+            RaiseEvent ProcessExit(processInfo.ExitCode, Process.ExitTime)
+            Return processInfo.ExitCode
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function WaitOutput(timeout As Integer) As Boolean
+            Return outputWaitHandle.WaitOne(timeout)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function WaitError(timeout As Integer) As Boolean
+            Return errorWaitHandle.WaitOne(timeout)
+        End Function
+
+        ''' <summary>
+        ''' With a given timeout in milliseconds unit
+        ''' </summary>
+        ''' <param name="timeout"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function WaitForExit(timeout As Integer) As Boolean
+            Return processInfo.WaitForExit(timeout)
         End Function
 
         ''' <summary>
@@ -230,69 +340,57 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns>当发生错误的时候会返回错误代码</returns>
         ''' <remarks></remarks>
-        Public Function Start(ProcessExitCallBack As ProcessExitCallBack,
-                              Optional PushingData As String() = Nothing,
-                              Optional _DISP_DEBUG_INFO As Boolean = False) As Integer
-            AddHandler Me.ProcessExit, Sub(exitCode As Integer, exitTime As String) Call ProcessExitCallBack(exitCode, exitTime)
-            Return Start(WaitForExit:=False,
-                         PushingData:=PushingData,
-                         _DISP_DEBUG_INFO:=_DISP_DEBUG_INFO)
+        Public Function Start(processExitCallback As ProcessExitCallback,
+                              Optional pushData As String() = Nothing,
+                              Optional displayDebug As Boolean = False) As Integer
+
+            AddHandler ProcessExit, Sub(exitCode As Integer, exitTime As String)
+                                        Call processExitCallback(exitCode, exitTime)
+                                    End Sub
+            Return Start(
+                waitForExit:=False,
+                pushingData:=pushData,
+                displaDebug:=displayDebug
+            )
         End Function
 
-        Public Sub WriteLine(s As String) Implements I_ConsoleDeviceHandle.WriteLine
-            Call _inputDevice.WriteLine(s)
-            Call _inputDevice.Flush()
-        End Sub
+        ''' <summary>
+        ''' Gets the value that the associated process specified when it terminated.
+        ''' </summary>
+        ''' <param name="WaitForExit"></param>
+        ''' <returns>The code that the associated process specified when it terminated.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Start(Optional waitForExit As Boolean = False) As Integer Implements IIORedirectAbstract.Start
+            Return Start(waitForExit, Nothing, True)
+        End Function
 
         ''' <summary>
-        ''' 输出目标子进程的标准输出设备的内容
+        ''' 线程会被阻塞在这里，直到外部应用程序执行完毕
         ''' </summary>
-        ''' <remarks></remarks>
-        Private Sub __listenSTDOUT()
-            Call $"{MethodBase.GetCurrentMethod.ToString} threading start!  ProcessStateExit = {_processStateRunning.ToString}".__DEBUG_ECHO
+        ''' <returns></returns>
+        Public Function Run() As Integer Implements IIORedirectAbstract.Run
+            Return Start(waitForExit:=True)
+        End Function
 
-            Do While _processStateRunning = True
-                Call __tryGetSTDOUT()
-                Call Thread.Sleep(10)
-            Loop
-
-            Call $"{MethodBase.GetCurrentMethod.ToString}(""{Me.ProcessInfo.StartInfo.FileName.ToFileURL}"") threading exit!".__DEBUG_ECHO
-        End Sub
-
-        Private Function __tryGetSTDOUT() As String
-            Dim readBuffer As String = _consoleDevice.ReadToEnd   '进程退出去了之后会卡在这里？？？
-
-            If Len(readBuffer) = 0 Then
-                Call Thread.Sleep(10)
-                Return ""
+        Public Sub WriteLine(Optional s As String = "") Implements I_ConsoleDeviceHandle.WriteLine
+            If s.StringEmpty Then
+                Call input.WriteLine()
+            Else
+                Call input.WriteLine(s)
             End If
 
-            Call __STDOUT_BUFFER.Append(readBuffer)
-            If _DispInvokedSTDOUT Then Call Console.WriteLine(readBuffer)
-
-            RaiseEvent DataArrival(readBuffer)
-
-            Return readBuffer
-        End Function
-
-        ''' <summary>
-        ''' 检测目标子进程是否已经结束
-        ''' </summary>
-        ''' <remarks></remarks>
-        Private Sub __detectProcessExit()
-            Call $"{MethodBase.GetCurrentMethod.ToString} threading start!".__DEBUG_ECHO
-
-            Do While Not ProcessInfo.HasExited
-                Call Thread.Sleep(10)
-            Loop
-
-            Call "Invoked process has been exit...".__DEBUG_ECHO
-            _processStateRunning = False
-            RaiseEvent ProcessExit(ProcessInfo.ExitCode, ProcessInfo.ExitTime.ToString)
+            Call input.Flush()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Write(buffer As Byte())
+            Call input.BaseStream.Write(buffer, Scan0, buffer.Length)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return String.Format("{0} {1}", ProcessInfo.StartInfo.FileName, ProcessInfo.StartInfo.Arguments)
+            Return $"{Bin} {CLIArguments}"
         End Function
 
         ''' <summary>
@@ -301,79 +399,28 @@ Namespace CommandLine
         ''' <param name="CLI"></param>
         ''' <returns></returns>
         Public Shared Widening Operator CType(CLI As String) As IORedirect
-#If DEBUG Then
-            Call CLI.__DEBUG_ECHO
-#End If
-            Dim Tokens As String() = Regex.Split(CLI, SPLIT_REGX_EXPRESSION)
-            Dim EXE As String = Tokens.First
+            Dim tokens As String() = Regex.Split(CLI, SPLIT_REGX_EXPRESSION)
+            Dim EXE As String = tokens.First
             Dim args As String = Mid$(CLI, Len(EXE) + 1)
 
             Return New IORedirect(EXE, args)
         End Operator
 
-        ReadOnly _IORedirect As Boolean
-
-        ''' <summary>
-        ''' Creates a <see cref="System.Diagnostics.Process"/> wrapper for the CLI program operations.
-        ''' (在服务器上面可能会有一些线程方面的兼容性BUG的问题，不太清楚为什么会导致这样)
-        ''' </summary>
-        ''' <param name="Exe">The file path of the executable file.</param>
-        ''' <param name="args">The CLI arguments for the folked program.</param>
-        ''' <param name="envir">Set up the environment variable for the target invoked child process.</param>
-        ''' <param name="_disp_debug"></param>
-        ''' <param name="disp_STDOUT">是否显示目标被调用的外部程序的标准输出</param>
-        ''' <remarks></remarks>
-        Public Sub New(Exe As String,
-                       Optional args As String = "",
-                       Optional envir As IEnumerable(Of KeyValuePair(Of String, String)) = Nothing,
-                       Optional IORedirect As Boolean = True,
-                       Optional disp_STDOUT As Boolean = True,
-                       Optional _disp_debug As Boolean = False)
-
-            Dim pInfo As New ProcessStartInfo(Exe.GetString(""""c), args)
-
-            _IORedirect = IORedirect
-            pInfo.UseShellExecute = False
-            If IORedirect Then  '只是重定向输出设备流
-                pInfo.RedirectStandardOutput = True
-                pInfo.RedirectStandardError = True
-            End If
-            pInfo.RedirectStandardInput = True
-            pInfo.ErrorDialog = False
-            pInfo.WindowStyle = ProcessWindowStyle.Hidden
-            pInfo.CreateNoWindow = True
-
-            If Not envir Is Nothing Then
-                For Each para As KeyValuePair(Of String, String) In envir
-                    Call pInfo.EnvironmentVariables.Add(para.Key, para.Value)
-                Next
-            End If
-
-            _DispInvokedSTDOUT = disp_STDOUT
-            _ProcessInfo = New Process
-            _ProcessInfo.EnableRaisingEvents = True
-            _ProcessInfo.StartInfo = pInfo
-            _processStateRunning = False
-
-            If _disp_debug Then Call $"""{Exe}"" {args}".__DEBUG_ECHO
-            If _disp_debug Then Call Console.WriteLine(If(disp_STDOUT, "disp_STDOUT  -> Yes!", "disp_STDOUT   -> NO!"))
-        End Sub
-
-        Public Shared Function Shell(CommandLine As String) As IORedirect
-            Return CType(CommandLine, IORedirect)
+        Public Shared Function Shell(commandLine As String) As IORedirect
+            Return CType(commandLine, IORedirect)
         End Function
 
-        Public Function Read() As Integer Implements I_ConsoleDeviceHandle.Read
-            Return _consoleDevice.Read
+        Private Function Read() As Integer Implements I_ConsoleDeviceHandle.Read
+            Return output.Length
         End Function
 
-        Public Function ReadLine() As String Implements I_ConsoleDeviceHandle.ReadLine
-            Return _consoleDevice.ReadLine
+        Private Function ReadLine() As String Implements I_ConsoleDeviceHandle.ReadLine
+            Return ""
         End Function
 
-        Public Sub WriteLine(s As String, ParamArray args() As String) Implements I_ConsoleDeviceHandle.WriteLine
-            Call Me._inputDevice.WriteLine(String.Format(s, args))
-            Call Me._inputDevice.Flush()
+        Public Sub WriteLine(s$, ParamArray args() As String) Implements I_ConsoleDeviceHandle.WriteLine
+            Call input.WriteLine(String.Format(s, args))
+            Call input.Flush()
         End Sub
 
 #Region "IDisposable Support"
@@ -384,8 +431,10 @@ Namespace CommandLine
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    Call ProcessInfo.Close()
-                    Call ProcessInfo.Dispose()
+                    Call processInfo.Close()
+                    Call processInfo.Dispose()
+                    Call outputWaitHandle.Dispose()
+                    Call errorWaitHandle.Dispose()
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
@@ -408,22 +457,5 @@ Namespace CommandLine
             GC.SuppressFinalize(Me)
         End Sub
 #End Region
-
-        ''' <summary>
-        ''' Gets the value that the associated process specified when it terminated.
-        ''' </summary>
-        ''' <param name="WaitForExit"></param>
-        ''' <returns>The code that the associated process specified when it terminated.</returns>
-        Public Function Start(Optional WaitForExit As Boolean = False) As Integer Implements IIORedirectAbstract.Start
-            Return Start(WaitForExit, Nothing, True)
-        End Function
-
-        ''' <summary>
-        ''' 线程会被阻塞在这里，直到外部应用程序执行完毕
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function Run() As Integer Implements IIORedirectAbstract.Run
-            Return Start(WaitForExit:=True)
-        End Function
     End Class
 End Namespace
