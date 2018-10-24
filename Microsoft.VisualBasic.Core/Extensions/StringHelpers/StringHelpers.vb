@@ -112,27 +112,22 @@ Public Module StringHelpers
     ''' <summary>
     ''' Using <see cref="[String].Empty"/> as default value
     ''' </summary>
-    Public ReadOnly EmptyString As DefaultValue(Of String) = String.Empty
+    Public ReadOnly Property EmptyString As DefaultValue(Of String) = String.Empty
 
     ''' <summary>
     ''' Replace the <see cref="vbCrLf"/> with the specific string.
     ''' </summary>
     ''' <param name="src"></param>
-    ''' <param name="VbCRLF_Replace"></param>
+    ''' <param name="replacement"></param>
     ''' <returns></returns>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Trim")>
-    <Extension> Public Function TrimNewLine(src$, <Parameter("vbCrLf.Replaced")> Optional VbCRLF_Replace$ = " ") As String
-#Else
-    <Extension> Public Function TrimA(strText As String, Optional VbCRLF_Replace As String = " ") As String
-#End If
+    <Extension> Public Function TrimNewLine(src$, <Parameter("vbCrLf.Replaced")> Optional replacement$ = " ") As String
         If src Is Nothing Then
             Return ""
         End If
 
-        src = src.Replace(vbCrLf, VbCRLF_Replace) _
-                 .Replace(vbCr, VbCRLF_Replace) _
-                 .Replace(vbLf, VbCRLF_Replace) _
+        src = src.Replace(vbCrLf, replacement) _
+                 .Replace(vbCr, replacement) _
+                 .Replace(vbLf, replacement) _
                  .Replace("  ", " ")
 
         Return Strings.Trim(src)
