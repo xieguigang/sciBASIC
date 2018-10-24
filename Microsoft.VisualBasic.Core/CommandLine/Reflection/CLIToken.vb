@@ -93,13 +93,24 @@ Namespace CommandLine.Reflection
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Type As CLITypes
+        ''' <summary>
+        ''' Optional commandline arguments.(本属性标记一个命令行字符串之中的可选参数)
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsOptional As Boolean
 
         ''' <summary>
         ''' 默认为参数字符串通用类型
         ''' </summary>
         ''' <param name="name$"></param>
         ''' <param name="type"></param>
-        Sub New(name$, Optional type As CLITypes = CLITypes.String)
+        ''' <param name="optional">
+        ''' Optional commandline arguments.(本属性标记一个命令行字符串之中的可选参数)
+        ''' </param>
+        Sub New(name$,
+                Optional type As CLITypes = CLITypes.String,
+                Optional [optional] As Boolean = False)
+
             Call MyBase.New(name)
         End Sub
     End Class
