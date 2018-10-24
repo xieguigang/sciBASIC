@@ -53,7 +53,9 @@ Namespace CommandLine
 
         ''' <summary>
         ''' Assign the argument value in the commandline into the target argument container object.
-        ''' The properties in the container class type needs decorating with attribute 
+        ''' The properties in the container class type needs decorating with attribute
+        ''' 
+        ''' (这个拓展函数是将命令行对象反序列化为参数对象)
         ''' <see cref="Argv"/>
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
