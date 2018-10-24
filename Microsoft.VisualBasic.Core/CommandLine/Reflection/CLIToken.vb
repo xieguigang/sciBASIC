@@ -53,6 +53,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine.Reflection
 
@@ -112,7 +113,20 @@ Namespace CommandLine.Reflection
                 Optional [optional] As Boolean = False)
 
             Call MyBase.New(name)
+
+            Me.Type = type
+            Me.IsOptional = [optional]
         End Sub
+
+        Public Overrides Function ToString() As String
+            With $"Dim [{Name}] As {Type.ToString}"
+                If IsOptional Then
+                    Return $"[{ .ByRef}]"
+                Else
+                    Return .ByRef
+                End If
+            End With
+        End Function
     End Class
 
     ''' <summary>
