@@ -78,30 +78,49 @@ Namespace CommandLine.InteropService
         ''' <see cref="CLITypes.File"/>, 假若字符串为空则不添加，有空格自动添加双引号，相对路径会自动转换为全路径。
         ''' </remarks>
         <Extension>
-        Public Function GetCLI(Of TInteropService As Class)(app As TInteropService) As String
-            Dim args As BindProperty(Of Argv)() =
-                LinqAPI.Exec(Of BindProperty(Of Argv)) <=
+        Public Function GetCLI(Of TInteropService As Class)(app As TInteropService, Optional prefix$ = "") As String
+            Dim prop As PropertyInfo = Nothing
+            Dim argv As Argv
+            Dim args As BindProperty(Of Argv)() = LinqAPI.Exec(Of BindProperty(Of Argv)) _
  _
-                From [property] As PropertyInfo
-                In GetType(TInteropService).GetProperties
-                Let attrs As Object() =
-                    [property].GetCustomAttributes(attributeType:=Argument, inherit:=True)
-                Where Not attrs.IsNullOrEmpty
-                Let attr As Argv = DirectCast(attrs.First, Argv)
-                Select New BindProperty(Of Argv) With {
-                    .field = attr,
-                    .member = [property]
-                }
-            Dim sb As New StringBuilder(1024)
+                () <= From [property] As PropertyInfo
+                      In GetType(TInteropService).GetProperties()
+                      Let attrs As Object() = [property].GetCustomAttributes(attributeType:=Argument, inherit:=True)
+                      Where Not attrs.IsNullOrEmpty
+                      Let attr As Argv = DirectCast(attrs.First, Argv)
+                      Select New BindProperty(Of Argv)(
+                          attr:=attr,
+                          prop:=[property],
+                          getName:=Function(a) a.Name
+                      )
+
+            Dim sb As New StringBuilder()
 
             For Each argum As BindProperty(Of Argv) In args
-                Dim getCLIToken As __getCLIToken = __getMethods(argum.field.Type)
+                Dim getCLIToken As getValue = convertMethods(argum.field.Type)
                 Dim value As Object = argum.GetValue(app)
-                Dim cliToken As String = getCLIToken(value, argum.field, DirectCast(argum.member, PropertyInfo))
 
-                If Not String.IsNullOrEmpty(cliToken) Then
-                    Call sb.Append(cliToken & " ")
+                ' integer, double这些类型都用nullable类型
+                ' 所以如果value是nothing，就说明该属性肯定没有赋值
+                If value Is Nothing Then
+                    ' 如果是nothing则表示没有赋值
+                    ' 跳过
+                    Continue For
+                Else
+                    prop = DirectCast(argum.member, PropertyInfo)
+                    argv = argum.field
                 End If
+
+                With getCLIToken(value, argv, prop)
+                    ' 有些类型是会返回空字符串结果的
+                    ' 例如boolean类型的数据，false的时候是返回空字符串
+                    ' 所以会需要在这里判断一下
+
+                    If Not .StringEmpty Then
+                        ' 如果prefix参数不为空，则会添加统一的前缀
+                        sb.AppendLine(prefix & .ByRef)
+                    End If
+                End With
             Next
 
             Return sb.ToString.TrimEnd
@@ -134,17 +153,23 @@ Namespace CommandLine.InteropService
         ''' <summary>
         ''' Converts the property value to a CLI token
         ''' </summary>
-        Private ReadOnly __getMethods As IReadOnlyDictionary(Of CLITypes, __getCLIToken) =
-            New Dictionary(Of CLITypes, __getCLIToken) From {
+        ReadOnly convertMethods As New Dictionary(Of CLITypes, getValue) From {
  _
-            {CLITypes.Boolean, AddressOf CLIBuildMethod.__booleanRule},
-            {CLITypes.Double, AddressOf CLIBuildMethod.__stringRule},
-            {CLITypes.File, AddressOf CLIBuildMethod.__pathRule},
-            {CLITypes.Integer, AddressOf CLIBuildMethod.__stringRule},
-            {CLITypes.String, AddressOf CLIBuildMethod.__stringRule}
+            {CLITypes.Boolean, AddressOf CLIBuildMethod.booleanRule},
+            {CLITypes.Double, AddressOf CLIBuildMethod.stringRule},
+            {CLITypes.File, AddressOf CLIBuildMethod.pathRule},
+            {CLITypes.Integer, AddressOf CLIBuildMethod.stringRule},
+            {CLITypes.String, AddressOf CLIBuildMethod.stringRule}
         }
 
-        Private Delegate Function __getCLIToken(value As Object, attr As Argv, prop As PropertyInfo) As String
+        ''' <summary>
+        ''' Convert property to cli parameter value string
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <param name="attr"></param>
+        ''' <param name="prop"></param>
+        ''' <returns></returns>
+        Private Delegate Function getValue(value As Object, attr As Argv, prop As PropertyInfo) As String
 
         ''' <summary>
         ''' The different between the String and Path is that applying <see cref="CLIToken"/> or <see cref="CLIPath"/>.
@@ -153,7 +178,7 @@ Namespace CommandLine.InteropService
         ''' <param name="attr"></param>
         ''' <param name="prop"></param>
         ''' <returns></returns>
-        Private Function __pathRule(value As Object, attr As Argv, prop As PropertyInfo) As String
+        Private Function pathRule(value As Object, attr As Argv, prop As PropertyInfo) As String
             Dim path As String = DirectCast(value, String)
 
             If Not String.IsNullOrEmpty(path) Then
@@ -170,7 +195,7 @@ Namespace CommandLine.InteropService
         ''' <param name="attr"></param>
         ''' <param name="prop"></param>
         ''' <returns></returns>
-        Private Function __stringRule(value As Object, attr As Argv, prop As PropertyInfo) As String
+        Private Function stringRule(value As Object, attr As Argv, prop As PropertyInfo) As String
             If prop.PropertyType.Equals(GetType(String)) Then
                 Dim str As String = Scripting.ToString(value)
 
@@ -180,7 +205,7 @@ Namespace CommandLine.InteropService
                     Return $"{attr.Name} {str.CLIToken}"
                 End If
             ElseIf prop.PropertyType.IsInheritsFrom(GetType([Enum])) Then
-                Return __stringEnumRule(value, attr, prop)
+                Return stringEnumRule(value, attr, prop)
             Else
                 Dim str As String = Scripting.ToString(value)
 
@@ -199,7 +224,7 @@ Namespace CommandLine.InteropService
         ''' <param name="attr"></param>
         ''' <param name="prop"></param>
         ''' <returns></returns>
-        Private Function __stringEnumRule(value As Object, attr As Argv, prop As PropertyInfo) As String
+        Private Function stringEnumRule(value As Object, attr As Argv, prop As PropertyInfo) As String
             Dim enumValue As [Enum] = DirectCast(value, [Enum])
 
             If attr.Type = CLITypes.String Then
@@ -218,15 +243,14 @@ Namespace CommandLine.InteropService
         ''' <param name="attr"></param>
         ''' <param name="prop"></param>
         ''' <returns></returns>
-        Private Function __booleanRule(value As Object, attr As Argv, prop As PropertyInfo) As String
+        Private Function booleanRule(value As Object, attr As Argv, prop As PropertyInfo) As String
             Dim name As String = attr.Name
             Dim b As Boolean
 
             If prop.PropertyType.Equals(GetType(Boolean)) Then
                 b = DirectCast(value, Boolean)
             Else
-                Dim str As String = Scripting.ToString(value)
-                b = str.ParseBoolean
+                b = Scripting.ToString(value).ParseBoolean
             End If
 
             If b Then
