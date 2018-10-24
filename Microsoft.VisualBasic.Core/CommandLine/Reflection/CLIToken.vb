@@ -148,9 +148,14 @@ Namespace CommandLine.Reflection
         ''' 程序会有不同的处理操作，虽然二者的值都是字符串输入
         ''' </summary>
         ''' <returns></returns>
-        Public Property Type As CLITypes
+        Public ReadOnly Property Type As CLITypes
 
-        Sub New(name As String)
+        ''' <summary>
+        ''' 默认为参数字符串通用类型
+        ''' </summary>
+        ''' <param name="name$"></param>
+        ''' <param name="type"></param>
+        Sub New(name$, Optional type As CLITypes = CLITypes.String)
             Call MyBase.New(name)
         End Sub
     End Class
