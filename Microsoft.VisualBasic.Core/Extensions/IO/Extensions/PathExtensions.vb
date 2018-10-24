@@ -1,52 +1,50 @@
-﻿#Region "Microsoft.VisualBasic::90ad6d224336853fb4f3a3ba4ff5bbb0, Microsoft.VisualBasic.Core\Extensions\IO\PathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::ae649e8f0085d7faa6239f84f1f83827, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module ProgramPathSearchTool
-' 
-'     Function: BaseName, BatchMd5Renamed, BranchRule, ChangeSuffix, Delete
-'               DIR, DirectoryExists, DirectoryName, EnumerateFiles, ExtensionSuffix
-'               FileCopy, (+2 Overloads) FileExists, FileLength, FileMove, FileName
-'               FileOpened, GetBaseName, GetDirectoryFullPath, GetFile, GetFullPath
-'               GetMostAppreancePath, ListDirectory, ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList
-'               Long2Short, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine
-'               PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SearchDirectory
-'               SearchDrive, SearchProgram, SearchScriptFile, SourceCopy, SplitPath
-'               TheFile, ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix
-'               UnixPath
-' 
-'     Sub: MkDIR
-' 
-' /********************************************************************************/
+    ' Module PathExtensions
+    ' 
+    '     Function: BaseName, ChangeSuffix, Delete, DIR, DirectoryExists
+    '               DirectoryName, EnumerateFiles, ExtensionSuffix, FileCopy, (+2 Overloads) FileExists
+    '               FileLength, FileMove, FileName, FileOpened, GetBaseName
+    '               GetDirectoryFullPath, GetFile, GetFullPath, GetMostAppreancePath, ListDirectory
+    '               ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList, Long2Short, (+2 Overloads) NormalizePathString
+    '               ParentDirName, ParentPath, PathCombine, PathIllegal, ReadDirectory
+    '               (+2 Overloads) RelativePath, SafeCopyTo, SourceCopy, SplitPath, TheFile
+    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    ' 
+    '     Sub: MkDIR
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

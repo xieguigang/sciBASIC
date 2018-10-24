@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68e6067ff81fe2ca8a3d99f6ef7a5788, Microsoft.VisualBasic.Core\Language\API.vb"
+﻿#Region "Microsoft.VisualBasic::71ee759ed63d841ed4e808bcd1d165c7, Microsoft.VisualBasic.Core\Language\API.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,8 @@
     '     Module LanguageAPI
     ' 
     '         Function: [ByRef], [Default], (+2 Overloads) [When], AsDefault, AsNumeric
-    '                   AsString, AsVector, DefaultValue, IsNothing, Let
-    '                   list, Self, TypeDef, TypeInfo
+    '                   AsString, AsVector, DefaultValue, Empty, IsNothing
+    '                   Let, list, Self, TypeDef, TypeInfo
     ' 
     ' 
     ' /********************************************************************************/

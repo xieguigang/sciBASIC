@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d983deee56a0db347363aa044cfde121, mime\text%html\MarkDown\Markdown.vb"
+﻿#Region "Microsoft.VisualBasic::c8ec2642dc27c8f5120cfcd200c24f54, mime\text%html\MarkDown\Markdown.vb"
 
     ' Author:
     ' 
@@ -39,17 +39,17 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: __MarkdownTable, AnchorInlineEvaluator, AnchorRefEvaluator, AnchorRefShortcutEvaluator, AtxHeaderEvaluator
-    '                   BlockQuoteEvaluator, BlockQuoteEvaluator2, CodeBlockEvaluator, CodeSpanEvaluator, DoAnchors
-    '                   DoAutoLinks, DoBlockQuotes, DoCodeBlocks, DoCodeSpans, DoHardBreaks
-    '                   DoHeaders, DoHorizontalRules, DoImages, DoItalicsAndBold, DoLists
-    '                   EmailEvaluator, EncodeAmpsAndAngles, EncodeCode, EncodeCodeEvaluator, EncodeEmailAddress
-    '                   EscapeBackslashes, EscapeBackslashesEvaluator, EscapeBoldItalic, EscapeImageAltText, EscapeSpecialCharsWithinTagAttributes
-    '                   FormParagraphs, GetBlockPattern, GetNestedBracketsPattern, GetNestedParensPattern, HashHTMLBlocks
-    '                   HtmlEvaluator, HyperlinkEvaluator, ImageInlineEvaluator, ImageReferenceEvaluator, ImageTag
-    '                   LinkEvaluator, ListEvaluator, ProcessListItems, RunBlockGamut, RunSpanGamut
-    '                   SaveFromAutoLinking, SetextHeaderEvaluator, StripLinkDefinitions, SyntaxedCodeBlockEvaluator, Transform
-    '                   Unescape, UnescapeEvaluator
+    '         Function: AnchorInlineEvaluator, AnchorRefEvaluator, AnchorRefShortcutEvaluator, AtxHeaderEvaluator, BlockQuoteEvaluator
+    '                   BlockQuoteEvaluator2, CheckboxEvaluator, CodeBlockEvaluator, CodeSpanEvaluator, DoAnchors
+    '                   DoAutoLinks, DoBlockQuotes, DoCheckbox, DoCodeBlocks, DoCodeSpans
+    '                   DoHardBreaks, DoHeaders, DoHorizontalRules, DoImages, DoItalicsAndBold
+    '                   DoLists, EmailEvaluator, EncodeAmpsAndAngles, EncodeCode, EncodeCodeEvaluator
+    '                   EncodeEmailAddress, EscapeBackslashes, EscapeBackslashesEvaluator, EscapeBoldItalic, EscapeImageAltText
+    '                   EscapeSpecialCharsWithinTagAttributes, FormParagraphs, GetBlockPattern, GetNestedBracketsPattern, GetNestedParensPattern
+    '                   HashHTMLBlocks, HtmlEvaluator, HyperlinkEvaluator, ImageInlineEvaluator, ImageReferenceEvaluator
+    '                   ImageTag, LinkEvaluator, ListEvaluator, markdownTable, ProcessListItems
+    '                   RunBlockGamut, RunSpanGamut, SaveFromAutoLinking, SetextHeaderEvaluator, StripLinkDefinitions
+    '                   SyntaxedCodeBlockEvaluator, Transform, Unescape, UnescapeEvaluator
     ' 
     '         Sub: AddExtension, Cleanup, Setup
     ' 
