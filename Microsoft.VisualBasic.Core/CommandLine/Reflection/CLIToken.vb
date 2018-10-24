@@ -159,4 +159,21 @@ Namespace CommandLine.Reflection
             Call MyBase.New(name)
         End Sub
     End Class
+
+    ''' <summary>
+    ''' 这个自定义属性添加在Class申明上表示该class类的命令行参数的名称都会添加这个prefix
+    ''' </summary>
+    <AttributeUsage(AttributeTargets.Class Or AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
+    Public Class Prefix : Inherits Attribute
+
+        Public ReadOnly Property Value As String
+
+        Sub New(prefix As String)
+            Value = prefix
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return Value
+        End Function
+    End Class
 End Namespace
