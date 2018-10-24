@@ -137,8 +137,18 @@ Namespace CommandLine.Reflection
         End Function
     End Class
 
+    ''' <summary>
+    ''' 可以将这个自定义属性添加到类型的属性上面，添加额外的命名以及类型之类的标记
+    ''' </summary>
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
-    Public Class CLIParameter : Inherits CLIToken
+    Public Class Argv : Inherits CLIToken
+
+        ''' <summary>
+        ''' 对于<see cref="CLITypes.String"/>和<see cref="CLITypes.File"/>
+        ''' 程序会有不同的处理操作，虽然二者的值都是字符串输入
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Type As CLITypes
 
         Sub New(name As String)
             Call MyBase.New(name)

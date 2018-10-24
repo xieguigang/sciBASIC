@@ -57,7 +57,7 @@ Namespace CommandLine.InteropService
 
     Public Module CLIBuildMethod
 
-        ReadOnly _typeInfo As Type = GetType([Optional])
+        ReadOnly optionalArgument As Type = GetType([Optional])
 
         ''' <summary>
         ''' Generates the command line string value for the invoked target cli program using this interop services object instance.
@@ -85,7 +85,7 @@ Namespace CommandLine.InteropService
                 From [property] As PropertyInfo
                 In GetType(TInteropService).GetProperties
                 Let attrs As Object() =
-                    [property].GetCustomAttributes(attributeType:=_typeInfo, inherit:=True)
+                    [property].GetCustomAttributes(attributeType:=optionalArgument, inherit:=True)
                 Where Not attrs.IsNullOrEmpty
                 Let attr As [Optional] = DirectCast(attrs.First, [Optional])
                 Select New BindProperty(Of [Optional]) With {
@@ -248,7 +248,7 @@ rtvl:           Dim strValue As String = enumValue.Description
 
             Try
                 For Each [Property] As PropertyInfo In lstProperty
-                    Dim attrs As Object() = [Property].GetCustomAttributes(_typeInfo, inherit:=False)
+                    Dim attrs As Object() = [Property].GetCustomAttributes(optionalArgument, inherit:=False)
                     If Not (attrs Is Nothing OrElse attrs.Length = 0) Then
                         Call [Property].SetValue(inst, "", Nothing)
                         n += 1

@@ -47,6 +47,8 @@ Namespace CommandLine
 
     ''' <summary>
     ''' CLI resources manager
+    ''' 
+    ''' 将程序内部自身的资源数据释放到文件的帮助对象
     ''' </summary>
     Public Class CliResCommon
 
