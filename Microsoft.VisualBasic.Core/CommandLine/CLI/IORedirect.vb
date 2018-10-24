@@ -158,7 +158,11 @@ Namespace CommandLine
         ''' (在服务器上面可能会有一些线程方面的兼容性BUG的问题，不太清楚为什么会导致这样)
         ''' </summary>
         ''' <param name="Exe">The file path of the executable file.</param>
-        ''' <param name="args">The CLI arguments for the folked program.</param>
+        ''' <param name="args">
+        ''' The CLI arguments for the folked program.
+        ''' 
+        ''' (程序会自动将这个参数之中的换行符替换为空格.)
+        ''' </param>
         ''' <param name="ENV">Set up the environment variable for the target invoked child process.</param>
         ''' <param name="displayDebug"></param>
         ''' <param name="displayStdOut">是否显示目标被调用的外部程序的标准输出</param>
@@ -169,7 +173,8 @@ Namespace CommandLine
                        Optional displayStdOut As Boolean = True,
                        Optional displayDebug As Boolean = False)
 
-            Dim pInfo As New ProcessStartInfo(exe.GetString(""""c), args) With {
+            Dim program$ = exe.GetString(""""c)
+            Dim pInfo As New ProcessStartInfo(program, args.TrimNewLine.Trim) With {
                 .UseShellExecute = False
             }
 
