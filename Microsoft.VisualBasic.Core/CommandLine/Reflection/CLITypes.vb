@@ -55,6 +55,8 @@ Namespace CommandLine.Reflection
 
         ''' <summary>
         ''' 其他未知的未定义类型
+        ''' (如果是未定义的类型，则在自动生成命令行参数值的时候会被忽略掉，这个时候会需要你自己进行
+        ''' 手动处理这些未定义类型的参数值)
         ''' </summary>
         Undefined = 0
 
@@ -82,8 +84,8 @@ Namespace CommandLine.Reflection
         ''' <remarks></remarks>
         [Double] = 4
         ''' <summary>
-        ''' This is a flag value, if this flag presents in the CLI, then this named Boolean value is 
-        ''' TRUE, otherwise is FALSE.
+        ''' This is a flag value, if this flag presents in the CLI, then this named Boolean 
+        ''' value is ``TRUE``, otherwise is ``FALSE``.
         ''' </summary>
         [Boolean] = 5
 

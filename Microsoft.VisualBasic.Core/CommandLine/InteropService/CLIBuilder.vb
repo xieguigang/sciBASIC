@@ -59,6 +59,28 @@ Namespace CommandLine.InteropService
 
         ReadOnly Argument As Type = GetType(Argv)
 
+        <Extension>
+        Public Function GetPrefix([property] As PropertyInfo) As String
+            With [property].GetCustomAttribute(Of Prefix)
+                If .IsNothing Then
+                    Return Nothing
+                Else
+                    Return .Value
+                End If
+            End With
+        End Function
+
+        <Extension>
+        Public Function GetPrefix(Of T As Class)(obj As T) As String
+            With obj.GetType.GetCustomAttribute(Of Prefix)
+                If .IsNothing Then
+                    Return Nothing
+                Else
+                    Return .Value
+                End If
+            End With
+        End Function
+
         ''' <summary>
         ''' Generates the command line string value for the invoked target cli program using this interop services object instance.
         ''' (生成命令行参数)
@@ -96,7 +118,8 @@ Namespace CommandLine.InteropService
 
             Dim sb As New StringBuilder()
 
-            For Each argum As BindProperty(Of Argv) In args
+            ' undefined类型需要用户自己进行处理
+            For Each argum As BindProperty(Of Argv) In args.Where(Function(a) a.field.Type <> CLITypes.Undefined)
                 Dim getCLIToken As getValue = convertMethods(argum.field.Type)
                 Dim value As Object = argum.GetValue(app)
 
