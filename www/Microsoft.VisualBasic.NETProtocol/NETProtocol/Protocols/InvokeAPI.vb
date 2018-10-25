@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c973b600b9846cf421e36687912bb23c, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\InvokeAPI.vb"
+﻿#Region "Microsoft.VisualBasic::dadcbc1cdd99389e4ca8665db9b0dae9, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\InvokeAPI.vb"
 
     ' Author:
     ' 
@@ -56,6 +56,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Tcp
 
 Namespace NETProtocol.Protocols
 
@@ -71,8 +72,7 @@ Namespace NETProtocol.Protocols
             PushToUser
         End Enum
 
-        Public ReadOnly Property ProtocolEntry As Long =
-            New Protocol(GetType(Protocols)).EntryPoint
+        Public ReadOnly Property ProtocolEntry As Long = New Protocol(GetType(Protocols)).EntryPoint
 
         <Extension> Public Function PushData(data As Byte()) As RequestStream
             Return New RequestStream(ProtocolEntry, Protocols.PushToUser, data)
@@ -80,7 +80,7 @@ Namespace NETProtocol.Protocols
 
         <Extension> Public Sub PushData(API As IPEndPoint, data As Byte())
             Dim req As RequestStream = data.PushData   ' 创建协议
-            Dim invoke As AsynInvoke = New AsynInvoke(API)  ' 创建socket
+            Dim invoke As New TcpRequest(API)  ' 创建socket
             Dim rep As RequestStream = invoke.SendMessage(req) ' 发送消息
         End Sub
     End Module

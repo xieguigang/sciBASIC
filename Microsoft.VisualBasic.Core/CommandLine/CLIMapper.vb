@@ -53,8 +53,10 @@ Namespace CommandLine
 
         ''' <summary>
         ''' Assign the argument value in the commandline into the target argument container object.
-        ''' The properties in the container class type needs decorating with attribute 
-        ''' <see cref="CLIParameter"/>
+        ''' The properties in the container class type needs decorating with attribute
+        ''' 
+        ''' (这个拓展函数是将命令行对象反序列化为参数对象)
+        ''' <see cref="Argv"/>
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="args"></param>
@@ -94,14 +96,14 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' If the property <paramref name="prop"/> have the custom attribute <see cref="CLIParameter"/>
-        ''' then the name value in <see cref="CLIParameter"/> will be used, otherwise, 
+        ''' If the property <paramref name="prop"/> have the custom attribute <see cref="Argv"/>
+        ''' then the name value in <see cref="Argv"/> will be used, otherwise, 
         ''' <see cref="PropertyInfo.Name"/> will be used. 
         ''' </summary>
         ''' <param name="prop"></param>
         ''' <returns></returns>
         <Extension> Public Function GetName(prop As PropertyInfo) As String
-            Dim attr As CLIParameter = prop.GetAttribute(Of CLIParameter)
+            Dim attr As Argv = prop.GetAttribute(Of Argv)
 
             If attr Is Nothing OrElse attr.Name.StringEmpty Then
                 Return prop.Name

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ca073b31f6c0fa039c55df47d3a587e, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushServer.vb"
+﻿#Region "Microsoft.VisualBasic::a9b97b0eefbca5be73b6d36c89c66a97, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushServer.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 
 Namespace NETProtocol
@@ -60,16 +61,16 @@ Namespace NETProtocol
         ''' Push update notification to user client
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property UserSocket As Persistent.Application.MessagePushServer
+        Public ReadOnly Property UserSocket As Tcp.Persistent.Application.MessagePushServer
 
         ''' <summary>
         ''' 其他的服务器模块对消息推送模块进行操作更新的通道
         ''' </summary>
-        ReadOnly __invokeAPI As TcpSynchronizationServicesSocket
+        ReadOnly __invokeAPI As TcpServicesSocket
         ''' <summary>
         ''' 客户端进行数据读取的通道
         ''' </summary>
-        ReadOnly __userAPI As TcpSynchronizationServicesSocket
+        ReadOnly __userAPI As TcpServicesSocket
         ''' <summary>
         ''' 用户数据缓存池
         ''' </summary>
@@ -83,10 +84,10 @@ Namespace NETProtocol
         ''' <param name="userAPI">用户端口</param>
         Sub New(services As Integer, invoke As Integer, userAPI As Integer)
             UserSocket = New Persistent.Application.MessagePushServer(services)
-            __invokeAPI = New TcpSynchronizationServicesSocket(invoke) With {
+            __invokeAPI = New TcpServicesSocket(invoke) With {
             .Responsehandler = AddressOf New PushAPI.InvokeAPI(Me).Handler
         }
-            __userAPI = New TcpSynchronizationServicesSocket(userAPI) With {
+            __userAPI = New TcpServicesSocket(userAPI) With {
             .Responsehandler = AddressOf New PushAPI.UserAPI(Me).Handler
         }
         End Sub

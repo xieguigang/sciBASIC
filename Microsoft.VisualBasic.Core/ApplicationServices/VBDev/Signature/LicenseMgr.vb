@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9e4375088a52f59d70d7827d7c3f65b, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\LicenseMgr.vb"
+﻿#Region "Microsoft.VisualBasic::a1c14c20f2acf914567e924bd797f5b1, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\LicenseMgr.vb"
 
     ' Author:
     ' 
@@ -117,7 +117,7 @@ THE SOFTWARE.",
         ''' <returns></returns>
         <Extension>
         Public Function Insert(src As String, info As LicenseInfo, rootDir$) As Boolean
-            Dim file As String = ProgramPathSearchTool.RelativePath(rootDir, src, appendParent:=False)
+            Dim file As String = PathExtensions.RelativePath(rootDir, src, appendParent:=False)
             Dim [in] As String = src.ReadAllText
             Dim path As String = src
 

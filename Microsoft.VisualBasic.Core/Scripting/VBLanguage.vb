@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce82b7b5e64fe0b255f31ab17b6025c0, Microsoft.VisualBasic.Core\Scripting\VBLanguage.vb"
+﻿#Region "Microsoft.VisualBasic::e52326c9f906543d245f7cac8deccee0, Microsoft.VisualBasic.Core\Scripting\VBLanguage.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,11 @@
 
     ' Summaries:
 
-    '     Class VBLanguage
+    '     Class Patterns
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class KeywordProcessor
     ' 
     '         Properties: Words
     ' 

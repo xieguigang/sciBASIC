@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cff0fb24329a114d0af50ad72f67cb24, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
+﻿#Region "Microsoft.VisualBasic::c08c74a1b5e60c7ce11f1c1dfbde7b00, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
 
     ' Author:
     ' 
@@ -552,7 +552,7 @@ Namespace Terminal
         ''' <param name="value">The value to write.</param>
         ''' <remarks></remarks>
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Overridable Sub WriteLine(value As String) Implements STDIO__.I_ConsoleDeviceHandle.WriteLine
+        Public Overridable Sub WriteLine(Optional value As String = "") Implements STDIO__.I_ConsoleDeviceHandle.WriteLine
             Call Console.WriteLine(value)
         End Sub
 

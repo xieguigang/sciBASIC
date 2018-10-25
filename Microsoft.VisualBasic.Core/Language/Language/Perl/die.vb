@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::330698868788143c9239a2bf00cc617a, Microsoft.VisualBasic.Core\Language\Language\Perl\die.vb"
+﻿#Region "Microsoft.VisualBasic::4adfc7297c815c5a00fbe65dd22b7df5, Microsoft.VisualBasic.Core\Language\Language\Perl\die.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Structure ExceptionHandler
+    '     Structure ExceptionHandle
     ' 
     '         Function: [Default]
     '         Operators: (+2 Overloads) Or
@@ -44,13 +44,19 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language.Default
-Imports Microsoft.VisualBasic.Linq
 
 Namespace Language.Perl
 
-    Public Structure ExceptionHandler
+    ''' <summary>
+    ''' Syntax supports for perl language like exception handler
+    ''' 
+    ''' ```vbnet
+    ''' Dim value = func() or die("message")
+    ''' ```
+    ''' </summary>
+    Public Structure ExceptionHandle
 
-        Dim Message$
+        Dim message$
         Dim failure As Assert(Of Object)
 
         Shared ReadOnly defaultHandler As New Assert(Of Object)(AddressOf [Default])
@@ -107,7 +113,8 @@ Namespace Language.Perl
                             Return DirectCast(obj, IsEmpty).IsEmpty
 
                         Else
-                            Return False ' False表示没有错误
+                            ' False表示没有错误
+                            Return False
                         End If
                     End With
             End Select
@@ -119,9 +126,9 @@ Namespace Language.Perl
         ''' <param name="result"></param>
         ''' <param name="h"></param>
         ''' <returns></returns>
-        Public Shared Operator Or(result As Object, h As ExceptionHandler) As Object
+        Public Shared Operator Or(result As Object, h As ExceptionHandle) As Object
             If h.failure(result) Then
-                Throw New Exception(h.Message)
+                Throw New Exception(h.message)
             Else
                 Return result
             End If

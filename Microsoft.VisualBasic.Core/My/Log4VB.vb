@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f583c124aa0d492b28a0f42550b2cc9, Microsoft.VisualBasic.Core\My\Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::1b88d4e02beaef15dae0c6e195d18d8e, Microsoft.VisualBasic.Core\My\Log4VB.vb"
 
     ' Author:
     ' 
@@ -118,7 +118,7 @@ Namespace My
         ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
         ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
         <Extension>
-        Public Sub WriteLine(msg As String, color As ConsoleColor)
+        Public Sub WriteLine(msg$, color As ConsoleColor)
             If Mute Then
                 Return
             End If

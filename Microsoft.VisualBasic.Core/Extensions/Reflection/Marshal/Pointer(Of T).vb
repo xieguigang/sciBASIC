@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4370ee585f54edda589fb60d1d64dba2, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointer(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::e2f456ef312825c7817d8c1c28016d8c, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointer(Of T).vb"
 
     ' Author:
     ' 
@@ -37,9 +37,9 @@
     '                     RawBuffer, UBound
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: MoveNext, ToString
-    '         Operators: (+2 Overloads) -, (+2 Overloads) +, <<, (+2 Overloads) <=, (+2 Overloads) >=
-    '                    >>
+    '         Function: MoveNext, stackalloc, ToString
+    '         Operators: (+2 Overloads) -, (+2 Overloads) +, <<, (+2 Overloads) <=, <>
+    '                    =, (+2 Overloads) >=, >>
     ' 
     '     Structure SwapHelper
     ' 
@@ -108,7 +108,7 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <param name="p">相对于当前的位置的offset偏移量</param>
         ''' <returns></returns>
-        Default Public Property Value(p%) As T
+        Default Public Property Value(p As Integer) As T
             Get
                 p += __index
 
@@ -318,6 +318,21 @@ Namespace Emit.Marshal
 
         Public Overloads Shared Operator >=(a As Pointer(Of T), b As Integer) As SwapHelper(Of T)
             Throw New NotSupportedException
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function stackalloc(len As Integer) As Pointer(Of T)
+            Return New Pointer(Of T)(New T(len - 1) {})
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator =(p As Pointer(Of T), count%) As Boolean
+            Return p.Length = count
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator <>(p As Pointer(Of T), count%) As Boolean
+            Return Not p = count
         End Operator
     End Class
 

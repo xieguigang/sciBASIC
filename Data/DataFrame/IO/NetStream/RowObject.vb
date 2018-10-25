@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::176956b92e5b7b1ec73f5ae0905cb48a, Data\DataFrame\IO\NetStream\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::6d3a8865472b2682f2dd1f3c35f0b62b, Data\DataFrame\IO\NetStream\RowObject.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,8 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Streams.Array
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports Microsoft.VisualBasic.Text
 
 Namespace IO.NetStream
@@ -60,7 +60,7 @@ Namespace IO.NetStream
             MyBase.Values = source.ToArray
         End Sub
 
-        Sub New(source As IEnumerable(Of String), getbyts As Func(Of String, Byte()), toString As Func(Of Byte(), String))
+        Sub New(source As IEnumerable(Of String), getbyts As IGetBuffer(Of String), toString As IGetObject(Of String))
             Call MyBase.New(getbyts, toString)
             MyBase.Values = source.ToArray
         End Sub

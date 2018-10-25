@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ea2633955eb0a351c1762944f7e1846, Microsoft.VisualBasic.Core\Extensions\Reflection\Methods.vb"
+﻿#Region "Microsoft.VisualBasic::3b37d844a99d6529dd03c3d1f459dfe2, Microsoft.VisualBasic.Core\Extensions\Reflection\Methods.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,14 @@
 
     ' Module MethodsExtension
     ' 
-    '     Function: (+2 Overloads) AsLazy, (+2 Overloads) TryInvoke
+    '     Function: (+2 Overloads) AsLazy, (+2 Overloads) Invoke, (+2 Overloads) TryInvoke
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Linq.Expressions
+Imports System.Reflection
 Imports System.Runtime.CompilerServices
 
 Public Module MethodsExtension
@@ -77,5 +78,28 @@ Public Module MethodsExtension
     <Extension>
     Public Function AsLazy(Of T)(lambda As LambdaExpression) As Lazy(Of T)
         Return DirectCast(lambda.Compile, Func(Of T)).AsLazy
+    End Function
+
+    ''' <summary>
+    ''' Invoke a static method without parameters
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="method"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Invoke(Of T)(method As MethodInfo) As T
+        Return method.Invoke(Nothing, Nothing)
+    End Function
+
+    ''' <summary>
+    ''' Invoke a static method without parameters
+    ''' </summary>
+    ''' <param name="method"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Invoke(method As MethodInfo) As Object
+        Return method.Invoke(Nothing, Nothing)
     End Function
 End Module

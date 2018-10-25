@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ddd5423ca7a71b700282bda0314a07d, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::a29f55fa34505350996f123140798d33, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -112,27 +112,22 @@ Public Module StringHelpers
     ''' <summary>
     ''' Using <see cref="[String].Empty"/> as default value
     ''' </summary>
-    Public ReadOnly EmptyString As DefaultValue(Of String) = String.Empty
+    Public ReadOnly Property EmptyString As DefaultValue(Of String) = String.Empty
 
     ''' <summary>
     ''' Replace the <see cref="vbCrLf"/> with the specific string.
     ''' </summary>
     ''' <param name="src"></param>
-    ''' <param name="VbCRLF_Replace"></param>
+    ''' <param name="replacement"></param>
     ''' <returns></returns>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Trim")>
-    <Extension> Public Function TrimNewLine(src$, <Parameter("vbCrLf.Replaced")> Optional VbCRLF_Replace$ = " ") As String
-#Else
-    <Extension> Public Function TrimA(strText As String, Optional VbCRLF_Replace As String = " ") As String
-#End If
+    <Extension> Public Function TrimNewLine(src$, <Parameter("vbCrLf.Replaced")> Optional replacement$ = " ") As String
         If src Is Nothing Then
             Return ""
         End If
 
-        src = src.Replace(vbCrLf, VbCRLF_Replace) _
-                 .Replace(vbCr, VbCRLF_Replace) _
-                 .Replace(vbLf, VbCRLF_Replace) _
+        src = src.Replace(vbCrLf, replacement) _
+                 .Replace(vbCr, replacement) _
+                 .Replace(vbLf, replacement) _
                  .Replace("  ", " ")
 
         Return Strings.Trim(src)
@@ -780,7 +775,7 @@ Public Module StringHelpers
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Matches(input As String, pattern$, Optional options As RegexOptions = RegexICSng) As IEnumerable(Of String)
+    Public Function Matches(input$, pattern$, Optional options As RegexOptions = RegexICSng) As IEnumerable(Of String)
         If input Is Nothing OrElse input.Length = 0 Then
             Return {}
         Else
@@ -810,6 +805,7 @@ Public Module StringHelpers
         Return json.SaveTo(path, TextEncodings.UTF8WithoutBOM)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __json(x As KeyValuePair(Of String, String)) As String
         Return x.Key.GetJson & ": " & x.Value.GetJson
     End Function
@@ -1162,10 +1158,15 @@ Public Module StringHelpers
     ''' <param name="trim">
     ''' Set <see cref="Boolean.FalseString"/> to avoid a reader bug in the csv data reader <see cref="BufferedStream"/>
     ''' </param>
+    ''' <param name="escape">
+    ''' 是否需要将字符串之中的``\n``转义为换行之后再进行分割？默认不进行转义
+    ''' </param>
     <ExportAPI("LineTokens")>
-    <Extension> Public Function LineTokens(s$, Optional trim As Boolean = True) As String()
+    <Extension> Public Function LineTokens(s$, Optional trim As Boolean = True, Optional escape As Boolean = False) As String()
         If String.IsNullOrEmpty(s) Then
             Return {}
+        ElseIf escape Then
+            s = s.Replace("\n", ASCII.LF)
         End If
 
         Dim lf As Boolean = InStr(s, vbLf) > 0

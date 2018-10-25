@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfb726bb54ed85073c5bbae34ad02abd, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\TagData.vb"
+﻿#Region "Microsoft.VisualBasic::68b027c2426ee954592b66c111ef89b7, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\TagData.vb"
 
     ' Author:
     ' 
@@ -34,10 +34,6 @@
     '     Class TagData
     ' 
     '         Properties: Key, Tag, TagStr
-    ' 
-    '     Structure NumericTagged
-    ' 
-    '         Function: ToString
     ' 
     '     Class IntegerTagged
     ' 
@@ -105,7 +101,7 @@ Namespace ComponentModel.TagData
         Public Property TagStr As String
 
         Public Overloads Shared Narrowing Operator CType(t As TagData(Of T, V)) As KeyValuePair(Of T, V)
-            Return New KeyValuePair(Of T, V)(t.Tag, t.value)
+            Return New KeyValuePair(Of T, V)(t.Tag, t.Value)
         End Operator
 
         ''' <summary>
@@ -114,24 +110,9 @@ Namespace ComponentModel.TagData
         ''' <param name="r"></param>
         ''' <returns></returns>
         Public Overloads Shared Narrowing Operator CType(r As TagData(Of T, V)) As Tuple(Of T, V)
-            Return New Tuple(Of T, V)(r.Tag, r.value)
+            Return New Tuple(Of T, V)(r.Tag, r.Value)
         End Operator
     End Class
-
-    ''' <summary>
-    ''' Almost equals to <see cref="DoubleTagged(Of T)"/>, but this object is a structure type. 
-    ''' (作用几乎等同于<see cref="DoubleTagged(Of T)"/>，只不过这个是Structure类型，开销会小一些)
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    Public Structure NumericTagged(Of T)
-
-        Dim Tag#
-        Dim value As T
-
-        Public Overrides Function ToString() As String
-            Return Me.GetJson
-        End Function
-    End Structure
 
     ''' <summary>
     ''' 使用一个整形数作为目标对象值的标签信息

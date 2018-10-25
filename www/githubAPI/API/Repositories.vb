@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07e881e8dfcae8e88e71b1cc21889893, www\githubAPI\API\Repositories.vb"
+﻿#Region "Microsoft.VisualBasic::b0210c02ab2cb097f3b13323cabc124b, www\githubAPI\API\Repositories.vb"
 
     ' Author:
     ' 
@@ -40,18 +40,16 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Webservices.Github.Class
 
 Namespace API
 
     Public Class Repositories
 
-        Public Function UserRepositories(username As String) As Repository()
+        Public Function UserRepositories(username As String) As repository()
             Dim url As String = GithubAPI & $"/users/{username}/repos"
             Dim json As String = url.GetRequest(https:=True)
-            Dim repos As Repository() = json.LoadObject(Of Repository())
+            Dim repos As repository() = json.LoadJSON(Of repository())
             Return repos
         End Function
     End Class

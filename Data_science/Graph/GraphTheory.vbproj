@@ -326,6 +326,8 @@
     <Compile Include="API\PQDijkstra\Example.vb" />
     <Compile Include="API\PQDijkstra\HeapNode.vb" />
     <Compile Include="API\PQDijkstra\PQDijkstraProvider.vb" />
+    <Compile Include="Model\Tree\AbstractTree.vb" />
+    <Compile Include="Model\Tree\Trie.vb" />
     <Compile Include="Model\Abstract\Edge.vb" />
     <Compile Include="Model\Grid.vb" />
     <Compile Include="Model\TimeSerialsGraph.vb" />
@@ -341,7 +343,7 @@
     <Compile Include="API\Dijkstra\Route.vb" />
     <Compile Include="Model\Abstract\Graph.vb" />
     <Compile Include="Model\Abstract\Vertex.vb" />
-    <Compile Include="Model\Tree.vb" />
+    <Compile Include="Model\Tree\Tree.vb" />
     <Compile Include="Extensions.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

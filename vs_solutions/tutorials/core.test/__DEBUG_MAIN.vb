@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73dd47941f5094e92844caa278df5985, vs_solutions\tutorials\core.test\__DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::4af5ff61c4b47c4c01deef54ea7009c0, vs_solutions\tutorials\core.test\__DEBUG_MAIN.vb"
 
     ' Author:
     ' 
@@ -73,64 +73,64 @@
 
 #Region "Microsoft.VisualBasic::6c3aed97d4188e0cde64b5f39037c8b7, core.test"
 
-    ' Author:
-    ' 
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
+' Author:
+' 
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
 
 
-    ' Source file summaries:
+' Source file summaries:
 
-    ' Module __DEBUG_MAIN
-    ' 
-    '     Function: Main
-    ' 
-    '     Sub: fffff, ListTest, testVariables
-    ' 
-    '     Class TestJSON
-    ' 
-    '         Properties: Data, Extensions, Name
-    ' 
-    ' 
-    ' 
-    ' 
+' Module __DEBUG_MAIN
+' 
+'     Function: Main
+' 
+'     Sub: fffff, ListTest, testVariables
+' 
+'     Class TestJSON
+' 
+'         Properties: Data, Extensions, Name
+' 
+' 
+' 
+' 
 
 #End Region
 
 #Region "Microsoft.VisualBasic::17c41d15ad1a1aac28f5433024a03881, core.test"
 
-    ' Author:
-    ' 
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
+' Author:
+' 
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
 
 
-    ' Source file summaries:
+' Source file summaries:
 
-    ' Module __DEBUG_MAIN
-    ' 
-    '     Function: Main
-    ' 
-    ' 
-    '     Sub: fffff, ListTest, testVariables
-    ' 
-    ' 
-    '     Class TestJSON
-    ' 
-    '         Properties: Data, Extensions, Name
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
+' Module __DEBUG_MAIN
+' 
+'     Function: Main
+' 
+' 
+'     Sub: fffff, ListTest, testVariables
+' 
+' 
+'     Class TestJSON
+' 
+'         Properties: Data, Extensions, Name
+' 
+' 
+' 
+' 
+' 
 
 #End Region
 
@@ -254,6 +254,13 @@ Public Module __DEBUG_MAIN
     End Sub
 
     Function Main() As Integer
+
+        MsgBox({
+               {"name", "2233"},
+               {"title", "yes"}
+               }.GetJson)
+
+
 
         Dim ddddsss = "1234567"
 
@@ -442,7 +449,7 @@ Public Module __DEBUG_MAIN
         Dim val = shell.Shell("F:\VisualBasic_AppFramework\Microsoft.VisualBasic.Architecture.Framework\Scripting\test.pl")
 
 
-        Dim list = Microsoft.VisualBasic.Parallel.ParallelLoading.Load(Of ParallelLoadingTest)({"a"})
+        '   Dim list = Microsoft.VisualBasic.Parallel.ParallelLoading.Load(Of ParallelLoadingTest)({"a"})
 
 
 

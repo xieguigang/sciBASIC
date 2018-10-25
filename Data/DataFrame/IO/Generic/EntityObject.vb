@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53da728290dd1b149c4ba6b62a9394f2, Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::bdc955ebe386bca6a2002917c555c90b, Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: ID
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: Copy, GetIDList, (+3 Overloads) LoadDataSet, ToString
+    '         Function: Copy, GetIDList, (+4 Overloads) LoadDataSet, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -49,7 +49,6 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -213,6 +212,11 @@ Namespace IO
                 {uidMap Or stream(0, 0).AsDefault, NameOf(EntityObject.ID)}
             }
             Return stream.AsDataSource(Of T)(explicit:=False, maps:=map)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadDataSet(stream As File, Optional ByRef uidMap$ = Nothing) As IEnumerable(Of EntityObject)
+            Return LoadDataSet(Of EntityObject)(stream, uidMap)
         End Function
     End Class
 End Namespace

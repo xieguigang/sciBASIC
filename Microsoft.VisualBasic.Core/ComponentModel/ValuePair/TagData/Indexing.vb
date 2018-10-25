@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbe66575a5535ca2718cdb5d57cfc343, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\Indexing.vb"
+﻿#Region "Microsoft.VisualBasic::351e47d23190a0be7c7eb2517701809c, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\Indexing.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module IndexingExtensions
     ' 
-    '         Function: BinarySearch
+    '         Function: (+2 Overloads) BinarySearch
     ' 
     ' 
     ' /********************************************************************************/
@@ -46,9 +46,24 @@ Namespace ComponentModel.TagData
 
     Public Module IndexingExtensions
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function BinarySearch(Of K As IComparable(Of K), T)(source As IEnumerable(Of T), key As K, getKey As Func(Of T, K), Optional [default] As T = Nothing) As T
-            Dim inputArray = source.OrderBy(getKey).ToArray
+            Return source.OrderBy(getKey).ToArray.BinarySearch(key, getKey, [default])
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="K"></typeparam>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="inputArray">传入的数组必须是经过升序排序的</param>
+        ''' <param name="key"></param>
+        ''' <param name="getKey"></param>
+        ''' <param name="[default]"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function BinarySearch(Of K As IComparable(Of K), T)(inputArray As T(), key As K, getKey As Func(Of T, K), Optional [default] As T = Nothing) As T
             Dim min = 0
             Dim max = inputArray.Length - 1
             Dim mid%

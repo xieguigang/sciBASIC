@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ff6b6c2ebf001f36c39cf95b24d8c33, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::be2f23b0b31ee972a22c2d91cf803a24, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '     Class ProgressBar
     ' 
-    '         Properties: ElapsedMilliseconds
+    '         Properties: ElapsedMilliseconds, Enable
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Sub: [Step], __resize, __tick, (+2 Overloads) Dispose, SetProgress
@@ -163,7 +163,16 @@ Namespace Terminal.ProgressBar
         Dim y%
         Dim theme As ColorTheme
 
-        Shared ReadOnly disabled As Boolean
+        Shared disabled As Boolean
+
+        Public Shared Property Enable As Boolean
+            Get
+                Return Not disabled
+            End Get
+            Set(value As Boolean)
+                disabled = Not value
+            End Set
+        End Property
 
         Shared Sub New()
             disabled = App.GetVariable("progress_bar").TextEquals(NameOf(disabled))

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b14a89069c0c2e1f25a3d93771706930, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::246adce5b79084346341df224737d798, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,8 @@
     '               ElapsedMilliseconds, Exit, FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
     '               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
     '               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
-    '               RunCLIInternal, SelfFolk, SelfFolks, Shell, TraceBugs
+    '               RunCLIInternal, SelfFolk, SelfFolks, Shell, TemporaryEnvironment
+    '               TraceBugs
     ' 
     '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
     '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
@@ -814,6 +815,11 @@ Public Module App
         Return Nothing
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function TemporaryEnvironment(newLocation As String) As FileIO.TemporaryEnvironment
+        Return New FileIO.TemporaryEnvironment(newLocation)
+    End Function
+
     ''' <summary>
     ''' Function returns the file path of the application log file.
     ''' (函数返回的是日志文件的文件路径)
@@ -1090,9 +1096,17 @@ Public Module App
     ''' Running the string as a cli command line.(请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
     ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
     ''' </summary>
-    ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
+    ''' <param name="args">
+    ''' The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.
+    ''' </param>
+    ''' <param name="executeNotFound">
+    ''' ```vbnet
+    ''' Public Delegate Function ExecuteNotFound(args As CommandLine) As Integer
+    ''' ```
+    ''' </param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As ExecuteEmptyCLI, executeNotFound As ExecuteNotFound,
                                        <CallerMemberName>
@@ -1104,9 +1118,17 @@ Public Module App
     ''' Running the string as a cli command line.(请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
     ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
     ''' </summary>
-    ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
+    ''' <param name="args">
+    ''' The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.
+    ''' </param>
+    ''' <param name="executeNotFound">
+    ''' ```vbnet
+    ''' Public Delegate Function ExecuteNotFound(args As <see cref="CLI"/>) As <see cref="Integer"/>
+    ''' ```
+    ''' </param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As ExecuteEmptyCLI, executeNotFound As ExecuteNotFound,
                                        <CallerMemberName>

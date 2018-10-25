@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8af531d0f87f1d98609ceec968e422ef, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
+﻿#Region "Microsoft.VisualBasic::05bb33847252690ed3d803df761b8650, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ParallelExtension.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.MethodsExtension
 
 Namespace Parallel
 
@@ -60,6 +61,13 @@ Namespace Parallel
             Call thread.Start()
             Return thread
         End Function
+
+        ' 2018-10-6
+        ' 下面的这个函数会导致函数调用的时候重载失败
+        '<MethodImpl(MethodImplOptions.AggressiveInlining)>
+        '<Extension> Public Function RunTask(method As Action) As Thread
+        '    Return New ThreadStart(AddressOf method.Method.Invoke).RunTask
+        'End Function
 
         ''' <summary>
         ''' 运行一个后台任务

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6a43c41ffea382b6f1bdc202b3a327b, Data_science\Mathematica\Math\DataFittings\LMA.vb"
+﻿#Region "Microsoft.VisualBasic::c9911782e1be95ca40544e717be6f26a, Data_science\Mathematica\Math\DataFittings\LMA.vb"
 
     ' Author:
     ' 
@@ -77,5 +77,6 @@ Public Module LMA
     <Extension>
     Public Function NonLinearFit(matrix As IEnumerable(Of FitInput), Optional iterations% = 2000)
 
+        Throw New NotImplementedException
     End Function
 End Module

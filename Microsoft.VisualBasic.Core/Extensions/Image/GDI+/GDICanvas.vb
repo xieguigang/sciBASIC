@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8d576b10e8d1238bbc2fe0c024896a0, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::12c98f9ebddf9232b3dd934386ce9b53, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -2075,24 +2075,18 @@ Namespace Imaging
         Public Overrides Sub DrawImageUnscaled(image As Image, point As Point)
             Call Graphics.DrawImageUnscaled(image, point)
         End Sub
-        '
-        ' Summary:
-        '     Draws the specified image using its original physical size at the location specified
-        '     by a coordinate pair.
-        '
-        ' Parameters:
-        '   image:
-        '     System.Drawing.Image to draw.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the drawn image.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the drawn image.
-        '
+
         ' Exceptions:
         '   T:System.ArgumentNullException:
         '     image is null.
+        ''' <summary>
+        ''' Draws the specified image using its original physical size at the location specified
+        ''' by a coordinate pair.
+        ''' </summary>
+        ''' <param name="image">System.Drawing.Image to draw.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the drawn image.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the drawn image.</param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer)
             Call Graphics.DrawImageUnscaled(image, x, y)
         End Sub

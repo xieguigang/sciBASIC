@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34acc5693ee1c124b9cafe5c27ace27f, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::67a5413f92b51e02f167317bd56011e2, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -175,7 +175,7 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <param name="index%"></param>
         ''' <returns></returns>
-        Default Public ReadOnly Property IndexOf(index%) As T
+        Default Public ReadOnly Property IndexOf(index As Integer) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me.index(index).value

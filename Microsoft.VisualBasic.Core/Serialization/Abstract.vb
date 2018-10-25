@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10642992faf285c08f1721eea453cebf, Microsoft.VisualBasic.Core\Serialization\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::f1f5a58375713d7edc4e8127b2cee8fd, Microsoft.VisualBasic.Core\Serialization\Abstract.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,11 @@
     '     Delegate Function
     ' 
     ' 
+    '     Delegate Function
+    ' 
+    ' 
+    ' 
+    ' 
     ' 
     ' 
     ' 
@@ -66,4 +71,7 @@ Namespace Serialization
     ''' <param name="data"></param>
     ''' <returns></returns>
     Public Delegate Function IStringBuilder(data As Object) As String
+
+    Public Delegate Function IToString(Of T)(obj As T) As String
+
 End Namespace

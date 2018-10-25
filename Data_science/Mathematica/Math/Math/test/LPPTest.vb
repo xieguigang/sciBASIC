@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5288d437a2bb204d0e5a09819ee5571a, Data_science\Mathematica\Math\Math\test\LPPTest.vb"
+﻿#Region "Microsoft.VisualBasic::d0d18ab2bc167c101b3f489add86fba7, Data_science\Mathematica\Math\Math\test\LPPTest.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     ' Module LPPTest
     ' 
-    '     Sub: assertEquals, main, Main2, testSolveMaximizeExample, testSolveMinimizeExample
-    '          testSolveSmallMinimizeExample, testSolveStrictEqualityExample, testSolveTransshipmentExample
+    '     Sub: assertEquals, main, Main2, testR, testSolveMaximizeExample
+    '          testSolveMinimizeExample, testSolveSmallMinimizeExample, testSolveStrictEqualityExample, testSolveTransshipmentExample
     ' 
     ' /********************************************************************************/
 
@@ -49,6 +49,9 @@ Public Module LPPTest
     ' TODO: Fill in meta information beyond ObjectiveFunctionValue (constraint sensitivity, etc.)
 
     Sub main()
+
+        Call testR()
+
         Call testSolveMaximizeExample()
         Call testSolveMinimizeExample()
         Call testSolveSmallMinimizeExample()
@@ -58,6 +61,34 @@ Public Module LPPTest
         Call Main2(Nothing)
 
         Console.ReadLine()
+    End Sub
+
+    Public Sub testR()
+
+        '# Set up problem: maximize
+        '# x1 + 9 x2 + x3 subject To
+        '# x1 + 2 x2 + 3 x3 = 9
+        '# 3 x1 + 2 x2 + 2 x3 = 15
+
+        '> f.obj <- c(1, 9, 1)
+        '> f.con <- matrix (c(1, 2, 3, 3, 2, 2), nrow=2, byrow=TRUE)
+        '> f.dir <- c("=", "=")
+        '> f.rhs <- c(9, 15)
+        '> require(lpSolve)
+        'Loading required package: lpSolve
+        '> lp ("max", f.obj, f.con, f.dir, f.rhs)
+        'Success: the objective function Is 30
+        '> lp ("max", f.obj, f.con, f.dir, f.rhs)$solution
+        '[1] 3 3 0
+        '> 3+3*9+0
+        '[1] 30
+        '>
+        Dim lp As New LPP(OptimizationType.MAX, {"A", "B", "C"}, {1, 9, 1}, {{1, 2, 3}, {3, 2, 2}}, {"=", "="}, {0, 0})
+        Dim result As LPPSolution = lp.solve
+
+        Call result.ToString.__DEBUG_ECHO
+
+        Pause()
     End Sub
 
     Public Sub Main2(args() As String)

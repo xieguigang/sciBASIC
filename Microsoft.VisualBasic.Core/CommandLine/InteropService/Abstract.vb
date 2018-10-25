@@ -159,23 +159,6 @@ Namespace CommandLine.InteropService
         End Function
     End Class
 
-    ''' <summary>
-    ''' Default value
-    ''' </summary>
-    <AttributeUsage(AttributeTargets.Field, AllowMultiple:=False, Inherited:=True)>
-    Public Class NullOrDefault : Inherits Attribute
-
-        Public ReadOnly Property value As String
-
-        Sub New(Optional default$ = "")
-            value = [default]
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return value
-        End Function
-    End Class
-
     Public MustInherit Class CLIBuilder
 
         Public Overrides Function ToString() As String
