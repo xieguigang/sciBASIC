@@ -371,6 +371,12 @@ Public Module TextDoc
         Return value.Value.SaveTo(path, encoding)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function SaveHTML(html As XElement, path$, Optional encoding As Encodings = Encodings.UTF8WithoutBOM) As Boolean
+        Return html.ToString.SaveTo(path, encoding.CodePage)
+    End Function
+
     ''' <summary>
     ''' Determined that the target file is a text file or binary file?
     ''' (判断是否是文本文件)

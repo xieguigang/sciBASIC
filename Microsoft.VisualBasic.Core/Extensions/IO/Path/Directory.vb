@@ -55,6 +55,10 @@ Namespace FileIO
     ''' </summary>
     Public Class Directory
 
+        ''' <summary>
+        ''' 当前的这个文件夹对象的文件路径
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property DIR As String
 
         ''' <summary>
@@ -91,7 +95,7 @@ Namespace FileIO
                 Return True
             ElseIf file.First = "/" AndAlso
                 (Environment.OSVersion.Platform = PlatformID.Unix OrElse
-                Environment.OSVersion.Platform = PlatformID.MacOSX) Then
+                 Environment.OSVersion.Platform = PlatformID.MacOSX) Then
                 Return True
             Else
                 Return False
@@ -125,6 +129,11 @@ Namespace FileIO
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Exists(DIR As String) As Boolean
             Return IO.Directory.Exists(DIR)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetRelativePath(file As String) As String
+            Return PathExtensions.RelativePath(DIR, file, appendParent:=False)
         End Function
 
         ''' <summary>

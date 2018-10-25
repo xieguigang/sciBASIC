@@ -919,7 +919,10 @@ Public Module PathExtensions
     ''' <returns></returns>
     <ExportAPI(NameOf(RelativePath),
                Info:="Gets the relative path value of pcTo file system object relative to a reference directory pcFrom")>
-    Public Function RelativePath(pcFrom$, pcTo$, Optional appendParent As Boolean = True) As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
+    Public Function RelativePath(pcFrom$, pcTo$,
+                                 Optional appendParent As Boolean = True,
+                                 Optional fixZipPath As Boolean = False) As <FunctionReturns("The relative path string of pcTo file object reference to directory pcFrom")> String
+
         Dim lcRelativePath As String = Nothing
         Dim lcFrom As String = (If(pcFrom Is Nothing, "", pcFrom.Trim().Replace("\", "/")))
         Dim lcTo As String = (If(pcTo Is Nothing, "", pcTo.Trim().Replace("\", "/")))
@@ -980,9 +983,16 @@ Public Module PathExtensions
         If appendParent Then
             Return "..\" & lcRelativePath
         Else
-            ' 2017-8-26
-            ' 为Xlsx打包模块进行的修复
-            Return lcRelativePath.Split("\"c).Skip(1).JoinBy("\")
+            If fixZipPath Then
+                ' 2017-8-26
+                ' 为Xlsx打包模块进行的修复
+                Return lcRelativePath _
+                    .Split("\"c) _
+                    .Skip(1) _
+                    .JoinBy("\")
+            Else
+                Return lcRelativePath
+            End If
         End If
     End Function
 
