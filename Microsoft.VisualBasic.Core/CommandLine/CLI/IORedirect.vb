@@ -316,10 +316,19 @@ Namespace CommandLine
         End Function
 
         Private Function waitForExit() As Integer
+            Dim exitCode%
+
             Call processInfo.WaitForExit()
-            ' process exit and raise events
-            RaiseEvent ProcessExit(processInfo.ExitCode, Process.ExitTime)
-            Return processInfo.ExitCode
+
+            Try
+                ' process exit and raise events
+                exitCode = processInfo.ExitCode
+                RaiseEvent ProcessExit(exitCode, Process.ExitTime)
+            Catch ex As Exception
+
+            End Try
+
+            Return exitCode
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
