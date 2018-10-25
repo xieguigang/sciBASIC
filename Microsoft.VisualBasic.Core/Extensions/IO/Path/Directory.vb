@@ -55,6 +55,10 @@ Namespace FileIO
     ''' </summary>
     Public Class Directory
 
+        ''' <summary>
+        ''' 当前的这个文件夹对象的文件路径
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property DIR As String
 
         ''' <summary>
