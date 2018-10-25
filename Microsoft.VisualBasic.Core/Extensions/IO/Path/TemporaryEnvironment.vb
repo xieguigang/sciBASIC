@@ -44,11 +44,11 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-
 Namespace FileIO
 
     ''' <summary>
+    ''' Workspace model
+    ''' 
     ''' 在<see cref="TemporaryEnvironment.Dispose()"/>的时候，文件夹会切换回来
     ''' </summary>
     Public Class TemporaryEnvironment : Inherits Directory
@@ -73,11 +73,6 @@ Namespace FileIO
             End If
 
             Return dir
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetRelativePath(file As String) As String
-            Return PathExtensions.RelativePath(DIR, file, appendParent:=False)
         End Function
 
 #Region "IDisposable Support"
