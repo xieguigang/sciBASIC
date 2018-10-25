@@ -77,7 +77,7 @@ Namespace FileIO
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRelativePath(file As String) As String
-            Return PathExtensions.RelativePath(DIR, file)
+            Return PathExtensions.RelativePath(DIR, file, appendParent:=False)
         End Function
 
 #Region "IDisposable Support"
