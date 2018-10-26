@@ -50,6 +50,9 @@ Imports System.Xml.Serialization
 
 Namespace ComponentModel
 
+    ''' <summary>
+    ''' 这个基类型对象主要是用来生成类型全称注释方便编写XML文件加载代码功能的
+    ''' </summary>
     Public MustInherit Class XmlDataModel
 
         ''' <summary>
