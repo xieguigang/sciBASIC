@@ -128,25 +128,29 @@ Namespace Windows.Forms
         Dim parent As Control
 
         Sub New(parent As Control)
-            Call MyBase.New(__cmd)
-            Me.parent = parent
-            __init()
+            Call MyBase.New(getCmd)
+            Call init(parent)
         End Sub
 
         ''' <summary>
         ''' Init by win32 API
         ''' </summary>
-        Private Sub __init()
-            SetParent(hwnd, parent.Handle)   ' 直接嵌套到TabPage1内  
-            SetWindowLong(hwnd, (-16), GetWindowLong(hwnd, (-16)) And (Not WS_CAPTION) And (Not WS_VSCROLL) And (Not WS_HSCROLL)) ' 设置窗体样式
-            SetWindowPos(parent.Handle, -1, 100, 100, 100, 100, SWP_SHOWWINDOW) ' 改变子窗体位置
+        Private Sub init(parent As Control)
+            ' 直接嵌套到TabPage1内  
+            SetParent(hwnd, parent.Handle)
+            ' 设置窗体样式
+            SetWindowLong(hwnd, (-16), GetWindowLong(hwnd, (-16)) And (Not WS_CAPTION) And (Not WS_VSCROLL) And (Not WS_HSCROLL))
+            ' 改变子窗体位置
+            SetWindowPos(parent.Handle, -1, 100, 100, 100, 100, SWP_SHOWWINDOW)
+
+            Me.parent = parent
         End Sub
 
         ''' <summary>
         ''' Start a new cmd.exe instance for the terminal mock
         ''' </summary>
         ''' <returns></returns>
-        Private Shared Function __cmd() As String
+        Private Shared Function getCmd() As String
             Call Process.Start("cmd.exe")
             Call Thread.Sleep(18)   ' 过快下面的FindWindow有可能找不到窗体   
             Return "c:\windows\system32\cmd.exe"
