@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfafb2cc1fc47e08126c15698dcdf55c, Microsoft.VisualBasic.Core\ApplicationServices\Tools\WinForm\MockForm.vb"
+﻿#Region "Microsoft.VisualBasic::4bb180cca46a978033e3eabfbdcbe73e, Microsoft.VisualBasic.Core\ApplicationServices\Tools\WinForm\MockForm.vb"
 
     ' Author:
     ' 
@@ -40,9 +40,9 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __cmd
+    '         Function: getCmd
     ' 
-    '         Sub: __init
+    '         Sub: init
     ' 
     ' 
     ' /********************************************************************************/

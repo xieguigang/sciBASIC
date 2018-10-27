@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a29f55fa34505350996f123140798d33, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::f5c58e9e697cb4661838a17ada631dfa, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module StringHelpers
     ' 
-    '     Properties: NonStrictCompares, StrictCompares
+    '     Properties: EmptyString, NonStrictCompares, StrictCompares
     ' 
     '     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
     '               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
@@ -44,8 +44,7 @@
     '               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
     '               SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty, StringHashCode
     '               StringReplace, StringSplit, StripBlank, Strips, TextEquals
-    '               TextLast, TokenCount, TokenCountIgnoreCase, TrimA, TrimNewLine
-    '               WildcardsLocated
+    '               TextLast, TokenCount, TokenCountIgnoreCase, TrimNewLine, WildcardsLocated
     ' 
     '     Sub: Parts, RemoveLast
     ' 

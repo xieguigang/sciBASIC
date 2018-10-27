@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be2f23b0b31ee972a22c2d91cf803a24, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::0c4037dc8f33ba759713e63fddc0e238, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -42,8 +42,8 @@
     '         Properties: ElapsedMilliseconds, Enable
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Sub: [Step], __resize, __tick, (+2 Overloads) Dispose, SetProgress
-    '              SetToEchoLine
+    '         Sub: [Step], consoleWindowResize, (+2 Overloads) Dispose, SetProgress, SetToEchoLine
+    '              tick
     ' 
     '     Class ProgressProvider
     ' 
