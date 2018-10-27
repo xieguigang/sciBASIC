@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91cd95f5210cc578e5d5b10432ebc3ff, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::69c3ff008e4372ab24a1292134f68ad7, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,8 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports TableSchema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.SchemaProvider
 
 Namespace StorageProvider.Reflection
 
@@ -77,7 +78,7 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         <Extension> Public Function GetDataFrameworkTypeSchema(type As Type, Optional Explicit As Boolean = True) As Dictionary(Of String, Type)
-            Dim Schema As SchemaProvider = SchemaProvider.CreateObject(type, Explicit).CopyReadDataFromObject
+            Dim Schema As TableSchema = TableSchema.CreateObject(type, Explicit).CopyReadDataFromObject
             Dim cols = LinqAPI.Exec(Of NamedValue(Of Type)) _
  _
                 () <= From columAttr As Column
@@ -115,7 +116,7 @@ Namespace StorageProvider.Reflection
         ''' 
         <Extension>
         Public Function LoadDataToObject(csv As DataFrame, type As Type, Optional explicit As Boolean = False) As IEnumerable(Of Object)
-            Dim schema As SchemaProvider = SchemaProvider.CreateObject(type, explicit).CopyWriteDataToObject
+            Dim schema As TableSchema = TableSchema.CreateObject(type, explicit).CopyWriteDataToObject
             Dim rowBuilder As New RowBuilder(schema)
             Dim parallel As Boolean = True
 
@@ -235,14 +236,14 @@ Namespace StorageProvider.Reflection
                                Optional layout As Dictionary(Of String, Integer) = Nothing) As IEnumerable(Of RowObject)
 
             Dim source As Object() = ___source.ToVector  ' 结束迭代器，防止Linq表达式重新计算
-            Dim Schema As SchemaProvider =
-                SchemaProvider.CreateObject(typeDef, strict).CopyReadDataFromObject
-            Dim rowWriter As RowWriter = New RowWriter(Schema, metaBlank, layout) _
+            Dim schema As TableSchema = TableSchema.CreateObject(typeDef, strict).CopyReadDataFromObject
+            Dim rowWriter As RowWriter = New RowWriter(schema, metaBlank, layout) _
                 .CacheIndex(source, reorderKeys)
 
-            schemaOut = rowWriter.Columns _
-                                 .ToDictionary(Function(x) x.Name,
-                                               Function(x) x.BindProperty.PropertyType)
+            schemaOut = rowWriter _
+                .Columns _
+                .ToDictionary(Function(x) x.Name,
+                              Function(x) x.BindProperty.PropertyType)
 
             Dim title As RowObject = rowWriter.GetRowNames(maps).Join(rowWriter.GetMetaTitles)
 
@@ -260,7 +261,7 @@ Namespace StorageProvider.Reflection
                         Call schemaOut.Add(key, valueType)
                     Next
                 Catch ex As Exception
-                    Dim msg = $"key:='{key}', keys:={JSON.GetJson(schemaOut.Keys.ToArray)}, metaKeys:={JSON.GetJson(rowWriter.GetMetaTitles)}"
+                    Dim msg = $"key:='{key}', keys:={schemaOut.Keys.GetJson}, metaKeys:={rowWriter.GetMetaTitles.GetJson}"
                     ex = New Exception(msg, ex)
                     Throw ex
                 End Try

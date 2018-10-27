@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68d81a1a912447c007370effa1825857, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::9a65085ca38d42d5735c4341a94066e0, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+6 Overloads) Sub New
     '         Function: Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping
-    '                   ScaleMapping, ToString
+    '                   ScaleMapping, ToString, TryParse
     '         Operators: *, <>, =
     ' 
     ' 
@@ -301,5 +301,17 @@ Namespace ComponentModel.Ranges.Model
         Public Shared Operator <>(range As DoubleRange, value#) As Boolean
             Return Not range = value
         End Operator
+
+        Public Shared Function TryParse(expression As String) As DoubleRange
+            If expression.StringEmpty Then
+                Return Nothing
+            End If
+
+            Try
+                Return expression
+            Catch ex As Exception
+                Return Nothing
+            End Try
+        End Function
     End Class
 End Namespace

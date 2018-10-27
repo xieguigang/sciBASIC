@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d983deee56a0db347363aa044cfde121, mime\text%html\MarkDown\Markdown.vb"
+﻿#Region "Microsoft.VisualBasic::c8ec2642dc27c8f5120cfcd200c24f54, mime\text%html\MarkDown\Markdown.vb"
 
     ' Author:
     ' 
@@ -39,17 +39,17 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: __MarkdownTable, AnchorInlineEvaluator, AnchorRefEvaluator, AnchorRefShortcutEvaluator, AtxHeaderEvaluator
-    '                   BlockQuoteEvaluator, BlockQuoteEvaluator2, CodeBlockEvaluator, CodeSpanEvaluator, DoAnchors
-    '                   DoAutoLinks, DoBlockQuotes, DoCodeBlocks, DoCodeSpans, DoHardBreaks
-    '                   DoHeaders, DoHorizontalRules, DoImages, DoItalicsAndBold, DoLists
-    '                   EmailEvaluator, EncodeAmpsAndAngles, EncodeCode, EncodeCodeEvaluator, EncodeEmailAddress
-    '                   EscapeBackslashes, EscapeBackslashesEvaluator, EscapeBoldItalic, EscapeImageAltText, EscapeSpecialCharsWithinTagAttributes
-    '                   FormParagraphs, GetBlockPattern, GetNestedBracketsPattern, GetNestedParensPattern, HashHTMLBlocks
-    '                   HtmlEvaluator, HyperlinkEvaluator, ImageInlineEvaluator, ImageReferenceEvaluator, ImageTag
-    '                   LinkEvaluator, ListEvaluator, ProcessListItems, RunBlockGamut, RunSpanGamut
-    '                   SaveFromAutoLinking, SetextHeaderEvaluator, StripLinkDefinitions, SyntaxedCodeBlockEvaluator, Transform
-    '                   Unescape, UnescapeEvaluator
+    '         Function: AnchorInlineEvaluator, AnchorRefEvaluator, AnchorRefShortcutEvaluator, AtxHeaderEvaluator, BlockQuoteEvaluator
+    '                   BlockQuoteEvaluator2, CheckboxEvaluator, CodeBlockEvaluator, CodeSpanEvaluator, DoAnchors
+    '                   DoAutoLinks, DoBlockQuotes, DoCheckbox, DoCodeBlocks, DoCodeSpans
+    '                   DoHardBreaks, DoHeaders, DoHorizontalRules, DoImages, DoItalicsAndBold
+    '                   DoLists, EmailEvaluator, EncodeAmpsAndAngles, EncodeCode, EncodeCodeEvaluator
+    '                   EncodeEmailAddress, EscapeBackslashes, EscapeBackslashesEvaluator, EscapeBoldItalic, EscapeImageAltText
+    '                   EscapeSpecialCharsWithinTagAttributes, FormParagraphs, GetBlockPattern, GetNestedBracketsPattern, GetNestedParensPattern
+    '                   HashHTMLBlocks, HtmlEvaluator, HyperlinkEvaluator, ImageInlineEvaluator, ImageReferenceEvaluator
+    '                   ImageTag, LinkEvaluator, ListEvaluator, markdownTable, ProcessListItems
+    '                   RunBlockGamut, RunSpanGamut, SaveFromAutoLinking, SetextHeaderEvaluator, StripLinkDefinitions
+    '                   SyntaxedCodeBlockEvaluator, Transform, Unescape, UnescapeEvaluator
     ' 
     '         Sub: AddExtension, Cleanup, Setup
     ' 
@@ -220,6 +220,8 @@ Namespace MarkDown
                 text = DoHorizontalRules(text)
             End If
 
+            ' 因为checkbox这个和list有相似的前缀，所以需要优先于listbox进行处理
+            text = DoCheckbox(text)
             text = DoLists(text)
             text = DoBlockQuotes(text)
 
@@ -248,6 +250,9 @@ Namespace MarkDown
         ''' Perform transformations that occur *within* block-level tags like paragraphs, headers, and list items.
         ''' </summary>
         Private Function RunSpanGamut(text As String) As String
+            ' 2018-10-23
+            ' 因为有些代码之中经常出现的符号可能会在markdown之中存在含义
+            ' 所以会需要首先将代码段进行处理，避免这些符号产生影响
             text = DoCodeSpans(text)
             text = EscapeSpecialCharsWithinTagAttributes(text)
             text = EscapeBackslashes(text)
@@ -270,7 +275,7 @@ Namespace MarkDown
             text = DoHardBreaks(text)
 
             ' 怎样处理table??
-            text = __MarkdownTable(text)
+            text = markdownTable(text)
 
             Return text
         End Function
@@ -282,7 +287,7 @@ Namespace MarkDown
         ''' </summary>
         ''' <param name="text$"></param>
         ''' <returns></returns>
-        Private Shared Function __MarkdownTable(text$) As String
+        Private Shared Function markdownTable(text$) As String
             Dim lines$() = text.LineTokens
 
             If text.StringEmpty OrElse lines.Length < 2 Then
@@ -1047,6 +1052,19 @@ Namespace MarkDown
             Return text
         End Function
 
+        Private Function DoCheckbox(text As String) As String
+            Static checkbox As New Regex("^\-\s\[(x|\s)\]", RegexICMul)
+            Return checkbox.Replace(text, New MatchEvaluator(AddressOf CheckboxEvaluator))
+        End Function
+
+        Private Function CheckboxEvaluator(match As Match) As String
+            If (InStr(match.Value, "[ ]") > 0) Then
+                Return "<input type=""checkbox"" disabled="""" class=""task-list-item-checkbox"" />"
+            Else
+                Return "<input type=""checkbox"" disabled="""" class=""task-list-item-checkbox"" checked=""checked"" />"
+            End If
+        End Function
+
         Private Function ListEvaluator(match As Match) As String
             Dim list As String = match.Groups(1).Value
             Dim marker As String = match.Groups(3).Value
@@ -1378,7 +1396,6 @@ Namespace MarkDown
         ''' &lt;http://www.example.com&gt;
         ''' </remarks>
         Private Function DoAutoLinks(text As String) As String
-
             If _AutoHyperlink Then
                 ' fixup arbitrary URLs by adding Markdown < > so they get linked as well
                 ' note that at this point, all other URL in the text are already hyperlinked as <a href=""></a>
@@ -1390,7 +1407,6 @@ Namespace MarkDown
             text = Regex.Replace(text, "<((https?|ftp):[^'"">\s]+)>", New MatchEvaluator(AddressOf HyperlinkEvaluator))
 
             If _LinkEmails Then
-
                 text = Regex.Replace(text, EMailAddress, New MatchEvaluator(AddressOf EmailEvaluator), RegexOptions.IgnoreCase Or RegexOptions.IgnorePatternWhitespace)
             End If
 
@@ -1400,7 +1416,8 @@ Namespace MarkDown
         Private Function HyperlinkEvaluator(match As Match) As String
             Dim link As String = match.Groups(1).Value
             Dim url As String = AttributeSafeUrl(link)
-            Return String.Format("<a href=""{0}"">{1}</a>", url, link)
+
+            Return $"<a href=""{url}"">{link}</a>"
         End Function
 
         Private Function EmailEvaluator(match As Match) As String
@@ -1429,10 +1446,13 @@ Namespace MarkDown
 
             ' strip the mailto: from the visible part
             email = Regex.Replace(email, """>.+?:", """>")
+
             Return email
         End Function
 
 #Region "Encoding and Normalization"
+
+        Shared ReadOnly rand As New Random()
 
         ''' <summary>
         ''' encodes email address randomly  
@@ -1441,8 +1461,8 @@ Namespace MarkDown
         ''' </summary>
         Private Function EncodeEmailAddress(addr As String) As String
             Dim sb = New StringBuilder(addr.Length * 5)
-            Dim rand = New Random()
             Dim r As Integer
+
             For Each c As Char In addr
                 r = rand.[Next](1, 100)
                 If (r > 90 OrElse c = ":"c) AndAlso c <> "@"c Then
@@ -1456,10 +1476,11 @@ Namespace MarkDown
                     ' &#109
                 End If
             Next
+
             Return sb.ToString()
         End Function
 
-        Private Shared _codeEncoder As New Regex("&|<|>|\\|\*|_|\{|\}|\[|\]", RegexOptions.Compiled)
+        Shared ReadOnly _codeEncoder As New Regex("&|<|>|\\|\*|_|\{|\}|\[|\]|[#]", RegexOptions.Compiled)
 
         ''' <summary>
         ''' Encode/escape certain Markdown characters inside code blocks and spans where they are literals
@@ -1467,6 +1488,7 @@ Namespace MarkDown
         Private Function EncodeCode(code As String) As String
             Return _codeEncoder.Replace(code, AddressOf EncodeCodeEvaluator)
         End Function
+
         Private Function EncodeCodeEvaluator(match As Match) As String
             Select Case match.Value
             ' Encode all ampersands; HTML entities are not
@@ -1478,12 +1500,14 @@ Namespace MarkDown
                     Return "&lt;"
                 Case ">"
                     Return "&gt;"
+                Case "#"
+                    Return "&#35;"
+
                 Case Else
                     ' escape characters that are magic in Markdown
                     Return _escapeTable(match.Value)
             End Select
         End Function
-
 
         Private Shared _amps As New Regex("&(?!((#[0-9]+)|(#[xX][a-fA-F0-9]+)|([a-zA-Z][a-zA-Z0-9]*));)", RegexOptions.ExplicitCapture Or RegexOptions.Compiled)
         Private Shared _angles As New Regex("<(?![A-Za-z/?\$!])", RegexOptions.ExplicitCapture Or RegexOptions.Compiled)
@@ -1503,6 +1527,7 @@ Namespace MarkDown
         Private Function EscapeBackslashes(s As String) As String
             Return _backslashEscapes.Replace(s, New MatchEvaluator(AddressOf EscapeBackslashesEvaluator))
         End Function
+
         Private Function EscapeBackslashesEvaluator(match As Match) As String
             Return _backslashEscapeTable(match.Value)
         End Function
@@ -1513,10 +1538,10 @@ Namespace MarkDown
         Private Function Unescape(s As String) As String
             Return _unescapes.Replace(s, New MatchEvaluator(AddressOf UnescapeEvaluator))
         End Function
+
         Private Function UnescapeEvaluator(match As Match) As String
             Return _invertedEscapeTable(match.Value)
         End Function
-
 
         ''' <summary>
         ''' escapes Bold [ * ] and Italic [ _ ] characters
@@ -1536,7 +1561,6 @@ Namespace MarkDown
         ''' </summary>
         Private Function EscapeSpecialCharsWithinTagAttributes(text As String) As String
             Dim tokens As List(Of Token(Of TokenType)) = TokenizeHTML(text)
-
             ' now, rebuild text from the tokens
             Dim sb = New StringBuilder(text.Length)
 
@@ -1547,7 +1571,8 @@ Namespace MarkDown
                     value = value.Replace("\", _escapeTable("\"))
 
                     If _AutoHyperlink AndAlso value.StartsWith("<!") Then
-                        ' escape slashes in comments to prevent autolinking there -- http://meta.stackexchange.com/questions/95987/html-comment-containing-url-breaks-if-followed-by-another-html-comment
+                        ' escape slashes in comments to prevent autolinking there 
+                        ' -- http://meta.stackexchange.com/questions/95987/html-comment-containing-url-breaks-if-followed-by-another-html-comment
                         value = value.Replace("/", _escapeTable("/"))
                     End If
 

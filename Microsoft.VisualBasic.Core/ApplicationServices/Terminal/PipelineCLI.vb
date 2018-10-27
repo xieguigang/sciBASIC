@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b748df6c60adc10ddb9a5981b9ab679, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PipelineCLI.vb"
+﻿#Region "Microsoft.VisualBasic::2c82045a56ccf9a6611a6f19d9df9155, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PipelineCLI.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MMFProtocol.Pipeline
 
 Namespace Terminal
 

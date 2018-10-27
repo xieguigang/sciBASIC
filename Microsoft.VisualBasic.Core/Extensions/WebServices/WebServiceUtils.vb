@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afa6ab627658807d15149eff146e7a0a, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::6aaf1d9179ff4914bcc54dd8f938d6d9, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -53,7 +53,6 @@ Imports System.Collections.Specialized
 Imports System.IO
 Imports System.Net
 Imports System.Net.Security
-Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Security.Cryptography.X509Certificates
 Imports System.Text
@@ -63,7 +62,9 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 
@@ -731,15 +732,17 @@ RE0:
         Dim hasInternet As Boolean
 
         Try
-            hasInternet = Not Net.PingUtility.Ping(System.Net.IPAddress.Parse(MicrosoftDNS)) > Integer.MaxValue
+            hasInternet = Not PingUtility.Ping(System.Net.IPAddress.Parse(MicrosoftDNS)) > Integer.MaxValue
         Catch ex As Exception
             hasInternet = False
         End Try
 
         If hasInternet Then
-            Return __getMyIPAddress()   'IPAddress on Internet
+            ' IPAddress on Internet
+            Return __getMyIPAddress()
         Else
-            Return Net.AsynInvoke.LocalIPAddress  'IPAddress in LAN
+            ' IPAddress in LAN
+            Return TcpRequest.LocalIPAddress
         End If
     End Function
 

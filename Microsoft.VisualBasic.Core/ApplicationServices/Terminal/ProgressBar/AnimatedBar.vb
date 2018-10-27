@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8190ce827f0233bcc808cebc9009143, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\AnimatedBar.vb"
+﻿#Region "Microsoft.VisualBasic::64e4d2437f73150b7bdc12d88ba8bdd8, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\AnimatedBar.vb"
 
     ' Author:
     ' 
@@ -51,8 +51,9 @@ Namespace Terminal.ProgressBar
 
         Public Sub New()
             MyBase.New()
-            Me.animation = New List(Of String)() From {"/", "-", "\", "|"}
-            Me.counter = 0
+
+            animation = New List(Of String)() From {"/", "-", "\", "|"}
+            counter = 0
         End Sub
 
         ''' <summary>
@@ -60,10 +61,12 @@ Namespace Terminal.ProgressBar
         ''' </summary>
         Public Overrides Sub [Step]()
             Console.Write(vbCr)
-            Console.Write(Me.animation(Me.counter) & vbBack)
-            Me.counter += 1
-            If Me.counter = Me.animation.Count Then
-                Me.counter = 0
+            Console.Write(animation(counter) & vbBack)
+
+            counter += 1
+
+            If counter = animation.Count Then
+                counter = 0
             End If
         End Sub
     End Class

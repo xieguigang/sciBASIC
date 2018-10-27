@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a52f15fedd263b9febdc6721f8f2647, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::e7765c4c890b4db07f11093ed1fd113b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
@@ -54,7 +55,8 @@ Namespace Drawing2D.Colors
     Public Module Legends
 
         ''' <summary>
-        ''' Draw color legend for the color sequnece
+        ''' Draw color legend for the color sequnece.
+        ''' (通过这个函数只是生成了legend的图片，还需要自己将图片放置到图表上的合适的位置)
         ''' </summary>
         ''' <param name="designer"></param>
         ''' <param name="title$">The legend title</param>
@@ -87,10 +89,12 @@ Namespace Drawing2D.Colors
                 legendWidth)
         End Function
 
-        Public Const DefaultPadding$ = "padding:50px 50px 50px 50px;"
+        Public Const DefaultPadding$ = "padding:50px 50px 100px 50px;"
+
+        ReadOnly defaultLegendSize As DefaultValue(Of Size) = New Size(800, 1024)
 
         ''' <summary>
-        ''' 竖直的颜色图例，输出的图例的大小默认为：``{800, 1000}``
+        ''' 竖直的颜色图例，输出的图例的大小默认为：``{800, 1024}``
         ''' </summary>
         ''' <param name="designer"></param>
         ''' <param name="title$"></param>
@@ -115,9 +119,6 @@ Namespace Drawing2D.Colors
 
             Dim margin As Padding = padding
 
-            If lsize.IsEmpty Then
-                lsize = New Size(800, 1000)
-            End If
             If titleFont Is Nothing Then
                 titleFont = New Font(FontFace.MicrosoftYaHei, 36)
             End If
@@ -127,10 +128,24 @@ Namespace Drawing2D.Colors
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                    Dim layout As New Rectangle With {
+                        .X = 0,
+                        .Y = 0,
+                        .Width = region.Width,
+                        .Height = region.Height - titleFont.Height - 5
+                    }
 
+                    Call g.ColorMapLegend(
+                        layout:=layout, designer:=designer,
+                        ticks:={Val(min), Val(max)},
+                        titleFont:=titleFont,
+                        title:=title,
+                        tickFont:=labelFont,
+                        tickAxisStroke:=Pens.Black
+                    )
                 End Sub
 
-            Return GraphicsPlots(lsize, margin, bg, plotInternal)
+            Return GraphicsPlots(lsize Or defaultLegendSize, margin, bg, plotInternal)
         End Function
 
         ''' <summary>

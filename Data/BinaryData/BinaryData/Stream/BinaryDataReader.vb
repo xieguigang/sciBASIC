@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab1e6769707b0d5c59d5bc51cc13186c, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::c2bb9b370296a36a4ee5cdb465f65dfa, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -38,11 +38,12 @@
     '     Constructor: (+5 Overloads) Sub New
     ' 
     '     Function: DecimalFromBytes, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal, ReadDecimals
-    '               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadInt16, ReadInt16s
-    '               ReadInt32, ReadInt32s, ReadInt64, ReadInt64s, ReadMultiple
-    '               ReadSBytes, ReadSingle, ReadSingles, (+5 Overloads) ReadString, ReadUInt16
-    '               ReadUInt16s, ReadUInt32, ReadUInt32s, ReadUInt64, ReadUInt64s
-    '               ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek, ToString
+    '               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadDwordLenString, ReadInt16
+    '               ReadInt16s, ReadInt32, ReadInt32s, ReadInt64, ReadInt64s
+    '               ReadMultiple, ReadSBytes, ReadSingle, ReadSingles, (+5 Overloads) ReadString
+    '               ReadUInt16, ReadUInt16s, ReadUInt32, ReadUInt32s, ReadUInt64
+    '               ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
+    '               ToString
     ' 
     '     Sub: Align
     ' 

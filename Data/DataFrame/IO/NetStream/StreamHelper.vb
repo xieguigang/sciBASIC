@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::332adebc6122efdd058c441350cafeb9, Data\DataFrame\IO\NetStream\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::e48ae612a2946eaf48458d1b1d51f156, Data\DataFrame\IO\NetStream\StreamHelper.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports Microsoft.VisualBasic.Text
 
 Namespace IO.NetStream
@@ -56,7 +57,7 @@ Namespace IO.NetStream
             Return x.Serialize
         End Function
 
-        Public Function LoadHelper(encoding As Encodings) As Func(Of Byte(), RowObject)
+        Public Function LoadHelper(encoding As Encodings) As IGetObject(Of RowObject)
             Dim helper As New EncodingHelper(encoding)
             Return AddressOf New __load(helper).Load
         End Function

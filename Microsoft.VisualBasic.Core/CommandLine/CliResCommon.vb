@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a35ac6ec5094a662c893198d6059382d, Microsoft.VisualBasic.Core\CommandLine\CliResCommon.vb"
+﻿#Region "Microsoft.VisualBasic::4997b427ff7828d26117155c6bab2511, Microsoft.VisualBasic.Core\CommandLine\CliResCommon.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,8 @@ Namespace CommandLine
 
     ''' <summary>
     ''' CLI resources manager
+    ''' 
+    ''' (将程序内部自身的资源数据释放到文件的帮助对象)
     ''' </summary>
     Public Class CliResCommon
 
@@ -56,7 +58,7 @@ Namespace CommandLine
         ReadOnly EXPORT As String
 
         ''' <summary>
-        ''' 
+        ''' 内部资源为一个可执行文件，其将会被释放到<paramref name="EXPORT"/>文件夹之中
         ''' </summary>
         ''' <param name="EXPORT">资源文件的数据缓存文件夹</param>
         Sub New(EXPORT As String, ResourceManager As Type)

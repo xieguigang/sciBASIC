@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f5eadf8e49e1982caafc3cf2a6ef356, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::633a486a87f1e57733543dbb7304615f, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
     ' Author:
     ' 
@@ -40,8 +40,8 @@
     '         Properties: Description, Index, Name
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: __attrs, __attrsAll, __source, GetIndex, (+2 Overloads) LoadMapping
-    '                   SetNameValue, ToString
+    '         Function: __attrs, __attrsAll, __source, GetIndex, GetMapping
+    '                   (+2 Overloads) LoadMapping, SetNameValue, ToString
     ' 
     '     Class DataFrameIO
     ' 
@@ -201,16 +201,25 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
  _
                 () <= From pInfo As FieldTuple
                       In source
-                      Let Mapping As DataFrameColumnAttribute =
-                          If(String.IsNullOrEmpty(pInfo.Key.Name),  ' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
-                            pInfo.Key.SetNameValue(pInfo.Value.Name),
-                            pInfo.Key)
-                      Select New BindProperty(Of DataFrameColumnAttribute)(
-                          Mapping,
-                          pInfo.Value) ' 补全名称属性
+                      Let Mapping As DataFrameColumnAttribute = GetMapping(pInfo)
+                      Select New BindProperty(Of DataFrameColumnAttribute)(Mapping, pInfo.Value) ' 补全名称属性
 
             Dim out As New Dictionary(Of BindProperty(Of DataFrameColumnAttribute))(LQuery)
             Return out
+        End Function
+
+        ''' <summary>
+        ''' 假若名称是空的，则会在这里自动的使用属性名称进行赋值
+        ''' </summary>
+        ''' <param name="pinfo"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function GetMapping(pinfo As FieldTuple) As DataFrameColumnAttribute
+            If String.IsNullOrEmpty(pinfo.Key.Name) Then
+                Return pinfo.Key.SetNameValue(pinfo.Value.Name)
+            Else
+                Return pinfo.Key
+            End If
         End Function
 
         ''' <summary>

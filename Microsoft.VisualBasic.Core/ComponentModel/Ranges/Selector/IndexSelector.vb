@@ -1,58 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::10a8b366dc2c8e18e8299e0babb78a67, Microsoft.VisualBasic.Core\ComponentModel\Ranges\IndexSelector.vb"
+﻿#Region "Microsoft.VisualBasic::c7c0f33dfa0a4fe3541155fc5ea013d0, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\IndexSelector.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class OrderSelector
-' 
-'         Properties: Desc
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: FirstGreaterThan, SelectUntilGreaterThan, SelectUntilLessThan, ToString
-' 
-'     Structure IntTag
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: CompareTo, OrderSelector, ToString
-' 
-' 
-' /********************************************************************************/
+    '     Class OrderSelector
+    ' 
+    '         Properties: Count, Desc
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Find, FirstGreaterThan, GetEnumerator, IEnumerable_GetEnumerator, SelectByRange
+    '                   SelectUntilGreaterThan, SelectUntilLessThan, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Numeric = Microsoft.VisualBasic.Language.Numeric
 
 Namespace ComponentModel.Ranges
 
-    Public Class OrderSelector(Of T As IComparable)
+    Public Class OrderSelector(Of T As IComparable) : Implements IReadOnlyCollection(Of T)
 
         ReadOnly source As T()
         ReadOnly direct$
@@ -63,9 +61,17 @@ Namespace ComponentModel.Ranges
         ''' <returns></returns>
         Public ReadOnly Property Desc As Boolean
 
-        Default Public ReadOnly Property value(index%) As T
+        Default Public ReadOnly Property Item(index%) As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return source(index)
+            End Get
+        End Property
+
+        Public ReadOnly Property Count As Integer Implements IReadOnlyCollection(Of T).Count
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return source.Length
             End Get
         End Property
 
@@ -92,6 +98,19 @@ Namespace ComponentModel.Ranges
             Desc = Not asc
         End Sub
 
+        ''' <summary>
+        ''' Find value by key via binary search
+        ''' </summary>
+        ''' <typeparam name="K"></typeparam>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Find(Of K As IComparable(Of K))(key As K, getKey As Func(Of T, K), Optional [default] As T = Nothing) As T
+            Return source.BinarySearch(key, getKey, [default])
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"[{direct}] {GetType(T).ToString}"
         End Function
@@ -144,9 +163,20 @@ Namespace ComponentModel.Ranges
             Return -1
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SelectByRange(min As T, max As T) As IEnumerable(Of T)
             Return source.SkipWhile(Function(o) Numeric.LessThan(o, min)) _
                          .TakeWhile(Function(o) Numeric.LessThanOrEquals(o, max))
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
+            For Each x As T In source
+                Yield x
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace

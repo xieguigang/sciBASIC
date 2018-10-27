@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::effc8ca679187e6cf3ac2fc823a31cf0, Microsoft.VisualBasic.Core\Extensions\Math\Percentage.vb"
+﻿#Region "Microsoft.VisualBasic::33ec11383a0c1f0680f65f1a9fd7d9d0, Microsoft.VisualBasic.Core\Extensions\Math\Percentage.vb"
 
     ' Author:
     ' 
@@ -49,9 +49,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Math
 
@@ -117,9 +117,11 @@ Namespace Math
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function TryParse(Text As String) As Percentage
-            If String.IsNullOrEmpty(Text) Then Return ZERO
+            If String.IsNullOrEmpty(Text) Then
+                Return ZERO
+            End If
 
-            Dim matchs$() = Regex.Matches(Text, "\d+").ToArray
+            Dim matchs$() = r.Matches(Text, "\d+").ToArray
             Dim n As Double = matchs(0).RegexParseDouble
             Dim d As Double = matchs(1).RegexParseDouble
 

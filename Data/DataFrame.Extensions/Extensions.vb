@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00e594422b9386b1b0a66f4d1ecdbfb0, Data\DataFrame.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b6533dd5904d528eb7e931b2c83e2541, Data\DataFrame.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Public Module SchemasAPI
@@ -59,7 +59,7 @@ Public Module SchemasAPI
     ''' <param name="encoding"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function SaveData(Of T As Class)(source As IEnumerable(Of T), DIR As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean
+    Public Function SaveData(Of T As Class)(source As IEnumerable(Of T), DIR$, Optional encoding As Encodings = Encodings.UTF8) As Boolean
         Dim schema As Schema = Schema.GetSchema(Of T)
         Dim type As Type = GetType(T)
         Dim IO As [Class] = [Class].GetSchema(type)
@@ -71,7 +71,9 @@ Public Module SchemasAPI
             Next
         End Using
 
-        Return JSON.GetJson(schema, True).SaveTo(DIR & "/" & Schema.DefaultName)
+        Return schema _
+            .GetJson(indent:=True) _
+            .SaveTo(DIR & "/" & Schema.DefaultName)
     End Function
 
     ''' <summary>

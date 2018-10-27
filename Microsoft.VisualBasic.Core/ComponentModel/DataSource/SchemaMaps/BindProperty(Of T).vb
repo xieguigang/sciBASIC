@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76db83fbafb2feb5698c13ae6c42cfd5, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::fceb661b4855cbad2b423e08335264b3, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
 
     ' Author:
     ' 
@@ -50,6 +50,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Emit.Delegates
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
@@ -128,10 +129,14 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         End Property
 #End Region
 
-        Sub New(attr As T, prop As PropertyInfo)
+        Sub New(attr As T, prop As PropertyInfo, Optional getName As IToString(Of T) = Nothing)
             field = attr
             member = prop
             Type = prop.PropertyType
+
+            If Not getName Is Nothing Then
+                name = getName(attr)
+            End If
 
             ' Compile the property get/set as the delegate
             With prop
@@ -150,10 +155,14 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Call Me.New(Nothing, field)
         End Sub
 
-        Sub New(attr As T, field As FieldInfo)
+        Sub New(attr As T, field As FieldInfo, Optional getName As IToString(Of T) = Nothing)
             Me.field = attr
             Me.member = field
             Type = field.FieldType
+
+            If Not getName Is Nothing Then
+                name = getName(attr)
+            End If
 
             With field
                 __setValue = AddressOf field.SetValue  ' .DeclaringType.FieldSet(.Name)

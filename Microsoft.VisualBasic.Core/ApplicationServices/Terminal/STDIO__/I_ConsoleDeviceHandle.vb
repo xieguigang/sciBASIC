@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d83ad9bdcff7d5c42646f19c3608ace8, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb"
+﻿#Region "Microsoft.VisualBasic::2aa3a0e8fd3451b671d76bef6a1c3bbc, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,7 @@ Namespace Terminal.STDIO__
         ''' </summary>
         ''' <param name="s"></param>
         ''' <remarks></remarks>
-        Sub WriteLine(s As String)
+        Sub WriteLine(Optional s As String = "")
         ''' <summary>
         ''' Writes the text representation of the specified array of objects, followed by the current line terminator, to the standard output stream using the specified format information.
         ''' (将指定的字符串值（后跟当前行终止符）写入输出流。)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c2c7c22edb9404751281f7ba552bcbc, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\User\User.vb"
+﻿#Region "Microsoft.VisualBasic::387c12e448680bccec655bfa066ba298, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\User\User.vb"
 
     ' Author:
     ' 
@@ -46,10 +46,11 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Net.HTTP
 Imports Microsoft.VisualBasic.Net.NETProtocol.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 
 Namespace NETProtocol
@@ -107,13 +108,14 @@ Namespace NETProtocol
         ''' 可能会存在多条数据
         ''' </summary>
         Private Sub __downloadMsg()
-            Dim req As RequestStream = RequestStream.CreateProtocol(
-            UserAPI.ProtocolEntry,
-            UserAPI.Protocols.GetData,
-            New UserId With {
-                .sId = Id,
-                .uid = __updateThread.USER_ID})
-            Dim invoke As New AsynInvoke(UserInvoke)
+            Dim category = UserAPI.ProtocolEntry
+            Dim protocol = UserAPI.Protocols.GetData
+            Dim req As RequestStream = RequestStream.CreateProtocol(Of UserId)(
+                category, protocol, New UserId With {
+                    .sId = Id,
+                    .uid = __updateThread.USER_ID
+                })
+            Dim invoke As New TcpRequest(UserInvoke)
             Dim rep As RequestStream = invoke.SendMessage(req)
 
             Do While Not rep.IsNull ' 读取服务器上面的数据缓存，直到没有数据为止

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e184e464b02aaa665ca60f8d626866e, Microsoft.VisualBasic.Core\Scripting\MetaData\EntryPointMetaData.vb"
+﻿#Region "Microsoft.VisualBasic::776b8416ea8cd286200447e3e5c93cf2, Microsoft.VisualBasic.Core\Scripting\MetaData\EntryPointMetaData.vb"
 
     ' Author:
     ' 
@@ -109,12 +109,12 @@ Namespace Scripting.MetaData
         ''' <param name="FullName">Target signature type for function overloads.</param>
         ''' <remarks></remarks>
         Sub New(TypeIdBrief As String, FullName As Type)
-            _TypeIdBrief = TypeIdBrief.ToLower
+            _TypeIDBrief = TypeIdBrief.ToLower
             _FullName = FullName
         End Sub
 
         Public Overrides Function ToString() As String
-            Return String.Format("({0}) {1}", _TypeIdBrief, _FullName.FullName)
+            Return String.Format("({0}) {1}", _TypeIDBrief, _FullName.FullName)
         End Function
     End Class
 

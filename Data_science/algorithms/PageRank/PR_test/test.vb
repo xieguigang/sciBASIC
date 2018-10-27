@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0014aa89565d07e55d9bd84661e82a21, Data_science\algorithms\PageRank\PR_test\test.vb"
+﻿#Region "Microsoft.VisualBasic::efab0a3b492516d6b494387cb3a1e2f1, Data_science\algorithms\PageRank\PR_test\test.vb"
 
     ' Author:
     ' 
@@ -39,8 +39,8 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.Graph
-Imports Microsoft.VisualBasic.Data.Graph.Analysis.PageRank
+Imports Microsoft.VisualBasic.Data.GraphTheory
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.PageRank
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module test

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e086de0a3903883ec6f3c8b7fb8b61fc, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b3abda6087c8bc9017ddc7dc5c463e71, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -80,6 +80,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
@@ -429,7 +430,7 @@ Public Module Extensions
 
     <ExportAPI("SendMessage")>
     <Extension> Public Sub SendMessage(host As System.Net.IPEndPoint, request As String, Callback As Action(Of String))
-        Dim client As New Net.AsynInvoke(host)
+        Dim client As New TcpRequest(host)
         Call New Threading.Thread(Sub() Callback(client.SendMessage(request))).Start()
     End Sub
 

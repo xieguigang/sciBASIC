@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b60d645cf289d4443db9120801868af3, Data_science\Mathematica\Math\Math\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a4a756dc97540f7fdb9c3919b380c233, Data_science\Mathematica\Math\Math\test\Program.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: Hash
     ' 
-    '     Sub: Main, RankingTest, Test
+    '     Sub: Main, RankingTest, Test, uncheckedTest
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4184b99670e1161328d3f671d3b9f7f5, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::47ba5af8f77b29a450220523e141ab3e, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -106,7 +106,7 @@ Namespace CommandLine.Reflection.EntryPoints
             Dim path$ = EntryPoint.DeclaringType.Assembly.Location
 
             If relativePath Then
-                path = ProgramPathSearchTool.RelativePath(path)
+                path = PathExtensions.RelativePath(path)
             Else
                 path = path.ToFileURL
             End If

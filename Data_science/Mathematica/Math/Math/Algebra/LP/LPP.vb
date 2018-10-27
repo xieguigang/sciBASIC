@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc3b5ac3c869e3fcb2d71991142c850e, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
+﻿#Region "Microsoft.VisualBasic::9b9623df8a8ff64491cfe4fb685b5dca, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class LPP
     ' 
-    '         Properties: ArtificialVariableAssignments
+    '         Properties: ArtificialVariableAssignments, DecimalFormat, ObjectFunctionVariables
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
@@ -56,26 +56,73 @@ Namespace Algebra.LinearProgramming
     ''' </summary>
     Public Class LPP
 
-        Private objectiveFunctionType As OptimizationType
-        Private variableNames() As String
-        Private objectiveFunctionCoefficients() As Double
-        Private constraintCoefficients()() As Double
-        Private constraintTypes() As String
-        Private constraintRightHandSides() As Double
-        Private objectiveFunctionValue As Double
+        Dim objectiveFunctionType As OptimizationType
+        ''' <summary>
+        ''' 这个变量名称列表之中会添加拓展的新的变量名称
+        ''' 
+        ''' 可以使用objectfunction的系数长度来取出原来的输入的变量名称的列表
+        ''' </summary>
+        Dim variableNames() As String
+        Dim objectiveFunctionCoefficients() As Double
+        Dim constraintCoefficients()() As Double
+        Dim constraintTypes() As String
+        Dim constraintRightHandSides() As Double
+        Dim objectiveFunctionValue As Double
 
         Const PIVOT_ITERATION_LIMIT As Integer = 1000
         Const USE_SUBSCRIPT_UNICODE As Boolean = False
 
-        Sub New(opt As OptimizationType, variableNames$(), objectiveFunctionCoefficients#(), constraintCoefficients#(,), constraintTypes$(), constraintRightHandSides#(), Optional objectiveFunctionValue# = 0)
+        Public Shared Property DecimalFormat As String = "G5"
+
+        Public ReadOnly Property ObjectFunctionVariables As String()
+            Get
+                Return variableNames.Take(objectiveFunctionCoefficients.Length).ToArray
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="opt">目标函数的类型，是求取极大值还是极小值</param>
+        ''' <param name="variableNames">方程之中的未知变量的名称，可以省略这个函数，程序会默认会自动使用x1, x2, x3...等来自动命名</param>
+        ''' <param name="objectiveFunctionCoefficients">目标函数之中每一个未知变量所对应的系数</param>
+        ''' <param name="constraintCoefficients">方程组的左边：系数矩阵</param>
+        ''' <param name="constraintTypes">方程组之中的函数类型：大于，小于，等于</param>
+        ''' <param name="constraintRightHandSides">方程组的右边：方程组之中每一个方程的结果值</param>
+        ''' <param name="objectiveFunctionValue">目标方程的目标结果值</param>
+        Sub New(opt As OptimizationType,
+                variableNames$(),
+                objectiveFunctionCoefficients#(),
+                constraintCoefficients#(,),
+                constraintTypes$(),
+                constraintRightHandSides#(),
+                Optional objectiveFunctionValue# = 0)
+
             Call Me.New(opt.Description, variableNames, objectiveFunctionCoefficients, constraintCoefficients.ToVectorList, constraintTypes, constraintRightHandSides, objectiveFunctionValue)
         End Sub
 
-        Public Sub New(objectiveFunctionType As String, variableNames() As String, objectiveFunctionCoefficients() As Double, constraintCoefficients()() As Double, constraintTypes() As String, constraintRightHandSides() As Double, objectiveFunctionValue As Double)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="objectiveFunctionType$">目标函数的类型，是求取极大值还是极小值</param>
+        ''' <param name="variableNames">方程之中的未知变量的名称，可以省略这个函数，程序会默认会自动使用x1, x2, x3...等来自动命名</param>
+        ''' <param name="objectiveFunctionCoefficients">目标函数之中每一个未知变量所对应的系数</param>
+        ''' <param name="constraintCoefficients">方程组的左边：系数矩阵</param>
+        ''' <param name="constraintTypes">方程组之中的函数类型：大于，小于，等于</param>
+        ''' <param name="constraintRightHandSides">方程组的右边：方程组之中每一个方程的结果值</param>
+        ''' <param name="objectiveFunctionValue">目标方程的目标结果值</param>
+        Public Sub New(objectiveFunctionType$,
+                       variableNames() As String,
+                       objectiveFunctionCoefficients() As Double,
+                       constraintCoefficients()() As Double,
+                       constraintTypes() As String,
+                       constraintRightHandSides() As Double,
+                       objectiveFunctionValue As Double)
 
             ' Create default variable name array
             If variableNames Is Nothing OrElse variableNames.Length = 0 Then
                 variableNames = New String(objectiveFunctionCoefficients.Length - 1) {}
+
                 For i As Integer = 0 To variableNames.Length - 1
                     variableNames(i) = "x" & subscriptN(i)
                 Next
@@ -90,7 +137,7 @@ Namespace Algebra.LinearProgramming
             End If
             For i As Integer = 0 To constraintCoefficients.Length - 1
                 If constraintCoefficients(i).Length <> variableNames.Length Then
-                    Throw New Exception("LPP constraint " & i & " is not of the same size length as the objective function.")
+                    Throw New Exception($"LPP constraint {i} is not of the same size length as the objective function.")
                 End If
             Next
 
@@ -114,7 +161,7 @@ Namespace Algebra.LinearProgramming
                 Dim constraint() As Double = constraintCoefficients(j)
                 output += displayEqLine(constraint, variableNames)
                 output &= " " & constraintTypes(j)
-                output &= " " & formatDecimals(constraintRightHandSides(j))
+                output &= " " & constraintRightHandSides(j).ToString(DecimalFormat)
                 output += ControlChars.Lf
             Next
 
@@ -127,7 +174,7 @@ Namespace Algebra.LinearProgramming
             Dim startIndex As Integer = 1
             For i As Integer = 0 To variableNames.Length - 1
                 If coefficients(i) <> 0 Then
-                    output = output + formatDecimals(coefficients(i)) + variableNames(i)
+                    output = output + coefficients(i).ToString(DecimalFormat) + variableNames(i)
                     Exit For
                 Else
                     startIndex += 1
@@ -143,7 +190,7 @@ Namespace Algebra.LinearProgramming
                     sign = -1
                 End If
                 If coefficients(i) <> 0 Then
-                    output = output + signString + formatDecimals(sign * coefficients(i)) + variableNames(i)
+                    output = output + signString + (sign * coefficients(i)).ToString(DecimalFormat) + variableNames(i)
                 End If
             Next
 
@@ -597,7 +644,15 @@ Namespace Algebra.LinearProgramming
             ' TODO: Create new LPPSolution objects during 
 
             ' Return the compiled solution.
-            Return New LPPSolution(optimalSolution, objectiveFunctionValue, variableNames, constraintTypes, slack, shadowPrice, reducedCost, App.ElapsedMilliseconds - startTime, feasibleSolutionTime, solutionLog)
+            Return New LPPSolution(
+                optimalSolution, objectiveFunctionValue, variableNames, constraintTypes,
+                slack,
+                shadowPrice,
+                reducedCost,
+                App.ElapsedMilliseconds - startTime,
+                feasibleSolutionTime,
+                solutionLog, DecimalFormat
+            )
         End Function
     End Class
 End Namespace

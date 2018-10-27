@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e66407c316e0dd7e741601e913d5f71, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::026c1c3ecc6669ac3a318139c538402b, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\IntRange.vb"
 
     ' Author:
     ' 
@@ -201,5 +201,11 @@ Namespace ComponentModel.Ranges.Model
         '        Return New IntRange(.Min, .Max)
         '    End With
         'End Operator
+
+        Public Shared Widening Operator CType(list As List(Of Integer)) As IntRange
+            With list
+                Return New IntRange(.Min, .Max)
+            End With
+        End Operator
     End Class
 End Namespace

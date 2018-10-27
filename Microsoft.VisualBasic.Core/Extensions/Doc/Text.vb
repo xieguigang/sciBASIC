@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4278b5386f70eda368205bde0429048d, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::16c09e6ed8764347ede7cc93905e0cc5, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,9 @@
     ' Module TextDoc
     ' 
     '     Function: ForEachChar, IsTextFile, IterateAllLines, LineIterators, LoadTextDoc
-    '               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, SaveJson
-    '               (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream, TsvHeaders
+    '               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, SaveHTML
+    '               SaveJson, (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream
+    '               TsvHeaders
     ' 
     ' /********************************************************************************/
 
@@ -139,8 +140,11 @@ Public Module TextDoc
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function SaveJson(Of T)(obj As T, path$, Optional encoding As Encoding = Nothing) As Boolean
-        Return obj.GetJson.SaveTo(path, encoding)
+    Public Function SaveJson(Of T)(obj As T, path$,
+                                   Optional encoding As Encoding = Nothing,
+                                   Optional indent As Boolean = False) As Boolean
+
+        Return obj.GetJson(indent:=indent).SaveTo(path, encoding)
     End Function
 
     ''' <summary>
@@ -324,7 +328,7 @@ Public Module TextDoc
         DIR = System.IO.Directory.GetParent(path).FullName
 #Else
         Try
-            path = ProgramPathSearchTool.Long2Short(path)
+            path = PathExtensions.Long2Short(path)
             DIR = fs.GetParentPath(path)
         Catch ex As Exception
             Dim msg As String = $" **** Directory string is illegal or string is too long:  [{NameOf(path)}:={path}] > 260"
@@ -366,6 +370,12 @@ Public Module TextDoc
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function SaveTo(value As XElement, path$, Optional encoding As Encoding = Nothing) As Boolean
         Return value.Value.SaveTo(path, encoding)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function SaveHTML(html As XElement, path$, Optional encoding As Encodings = Encodings.UTF8WithoutBOM) As Boolean
+        Return html.ToString.SaveTo(path, encoding.CodePage)
     End Function
 
     ''' <summary>

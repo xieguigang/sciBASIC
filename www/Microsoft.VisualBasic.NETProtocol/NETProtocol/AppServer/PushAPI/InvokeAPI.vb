@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bc8eaf36cb104ac8e42ceff622c67c5, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\InvokeAPI.vb"
+﻿#Region "Microsoft.VisualBasic::d45d1aa32d36c48db2aa60266a5ca3c8, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\InvokeAPI.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
 #End Region
 
 Imports System.Net
-Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.Net.HTTP
 Imports Microsoft.VisualBasic.Net.Protocols
 Imports Microsoft.VisualBasic.Net.Protocols.Reflection
 
@@ -59,8 +59,8 @@ Namespace NETProtocol.PushAPI
             __protocols = New ProtocolHandler(Me)
         End Sub
 
-        Public Overrides Function Handler(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Return __protocols.HandleRequest(CA, request, remote)
+        Public Overrides Function Handler(request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Return __protocols.HandleRequest(request, remote)
         End Function
 
         <Protocol(Protocols.InvokeAPI.Protocols.PushToUser)>

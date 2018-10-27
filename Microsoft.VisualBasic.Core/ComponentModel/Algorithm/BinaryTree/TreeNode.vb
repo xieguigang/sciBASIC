@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c8cb3a1e4334fd0379ff5af11d89392, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::4ecd5fe99bd8434ff7019c8c69406aae, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
 
     ' Author:
     ' 
@@ -54,6 +54,13 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
     ''' <summary>
     ''' The binary tree node.
+    ''' 
+    ''' (如果执行的是聚类操作的话，可以通过!values字典属性来获取簇的结果)
+    ''' 
+    ''' 在这里只是二叉树的节点实现，具体的二叉树构建可以通过使用下面的算法来完成：
+    ''' 
+    ''' + <see cref="AVLTree(Of K, V)"/> 
+    ''' 
     ''' </summary>
     ''' <typeparam name="K"></typeparam>
     ''' <typeparam name="V"></typeparam>

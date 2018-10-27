@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45051736fedd1b2f5f5f0a4655215f06, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::89f4c4c81416ada93b39548097eb40dd, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: CreateNew, EnumerateTables
+    '     Function: CreateNew, EnumerateTables, ReadTableAuto
     ' 
     ' /********************************************************************************/
 
@@ -65,11 +65,7 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Iterator Function EnumerateTables(xlsx As Xlsx) As IEnumerable(Of NamedValue(Of csv))
-        Dim names$() = xlsx.xl _
-            .workbook _
-            .sheets _
-            .Select(Function(s) s.name) _
-            .ToArray
+        Dim names$() = xlsx.SheetNames.ToArray
 
         For Each name As String In names
             Yield New NamedValue(Of csv) With {
@@ -77,5 +73,33 @@ Public Module Extensions
                 .Value = xlsx.GetTable(sheetName:=name)
             }
         Next
+    End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="path$">*.csv/*.xlsx</param>
+    ''' <param name="sheetName$">如果传入的名称是空值的话，则总是会返回第一张表</param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ReadTableAuto(path$, Optional sheetName$ = "Sheet1") As csv
+        With path.ExtensionSuffix.ToLower
+            If .Equals("csv") Then
+                Return csv.Load(path)
+            ElseIf .Equals("xlsx") Then
+                Dim Xlsx As Xlsx = File.Open(path)
+
+                If sheetName.StringEmpty Then
+                    sheetName = Xlsx.SheetNames.FirstOrDefault
+                End If
+                If sheetName.StringEmpty Then
+                    Throw New NullReferenceException($"[{path}] didn't contains any sheet table!")
+                End If
+
+                Return Xlsx.GetTable(sheetName)
+            Else
+                Throw New NotImplementedException
+            End If
+        End With
     End Function
 End Module
