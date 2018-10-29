@@ -162,15 +162,16 @@ Namespace Imaging.BitmapImage
 
             ' Convert degrees to radians
             Dim theta As Double = CDbl(angle) * sys.PI / 180.0
-            Dim locked_theta As Double = theta
+            Dim lockedTheta As Double = theta
 
             ' Ensure theta is now [0, 2pi)
-            While locked_theta < 0.0
-                locked_theta += 2 * sys.PI
+            While lockedTheta < 0.0
+                lockedTheta += 2 * sys.PI
             End While
 
             Dim newWidth As Double, newHeight As Double
-            Dim nWidth As Integer, nHeight As Integer        ' The newWidth/newHeight expressed as ints
+            ' The newWidth/newHeight expressed as ints
+            Dim nWidth As Integer, nHeight As Integer
 
             Dim adjacentTop As Double, oppositeTop As Double
             Dim adjacentBottom As Double, oppositeBottom As Double
@@ -179,18 +180,18 @@ Namespace Imaging.BitmapImage
             ' on how much rotation is being done to the bitmap.
             '   Refer to the first paragraph in the explaination above for 
             '   reasons why.
-            If (locked_theta >= 0.0 AndAlso locked_theta < pi2) OrElse (locked_theta >= sys.PI AndAlso locked_theta < (Math.PI + pi2)) Then
-                adjacentTop = sys.Abs(Cos(locked_theta)) * oldWidth
-                oppositeTop = sys.Abs(Sin(locked_theta)) * oldWidth
+            If (lockedTheta >= 0.0 AndAlso lockedTheta < pi2) OrElse (lockedTheta >= sys.PI AndAlso lockedTheta < (Math.PI + pi2)) Then
+                adjacentTop = sys.Abs(Cos(lockedTheta)) * oldWidth
+                oppositeTop = sys.Abs(Sin(lockedTheta)) * oldWidth
 
-                adjacentBottom = sys.Abs(Cos(locked_theta)) * oldHeight
-                oppositeBottom = sys.Abs(Sin(locked_theta)) * oldHeight
+                adjacentBottom = sys.Abs(Cos(lockedTheta)) * oldHeight
+                oppositeBottom = sys.Abs(Sin(lockedTheta)) * oldHeight
             Else
-                adjacentTop = sys.Abs(Sin(locked_theta)) * oldHeight
-                oppositeTop = sys.Abs(Cos(locked_theta)) * oldHeight
+                adjacentTop = sys.Abs(Sin(lockedTheta)) * oldHeight
+                oppositeTop = sys.Abs(Cos(lockedTheta)) * oldHeight
 
-                adjacentBottom = sys.Abs(Sin(locked_theta)) * oldWidth
-                oppositeBottom = sys.Abs(Cos(locked_theta)) * oldWidth
+                adjacentBottom = sys.Abs(Sin(lockedTheta)) * oldWidth
+                oppositeBottom = sys.Abs(Cos(lockedTheta)) * oldWidth
             End If
 
             newWidth = adjacentTop + oppositeBottom
@@ -217,7 +218,7 @@ Namespace Imaging.BitmapImage
             ' then the bitmap we are drawing on WOULDN'T be the bounding box
             ' as required.
 
-            If locked_theta >= 0.0 AndAlso locked_theta < pi2 Then
+            If lockedTheta >= 0.0 AndAlso lockedTheta < pi2 Then
 
                 points = {
                     New Point(CInt(Truncate(oppositeBottom)), 0),
@@ -225,7 +226,7 @@ Namespace Imaging.BitmapImage
                     New Point(0, CInt(Truncate(adjacentBottom)))
                 }
 
-            ElseIf locked_theta >= pi2 AndAlso locked_theta < sys.PI Then
+            ElseIf lockedTheta >= pi2 AndAlso lockedTheta < sys.PI Then
 
                 points = {
                     New Point(nWidth, CInt(Truncate(oppositeTop))),
@@ -233,7 +234,7 @@ Namespace Imaging.BitmapImage
                     New Point(CInt(Truncate(oppositeBottom)), 0)
                 }
 
-            ElseIf locked_theta >= sys.PI AndAlso locked_theta < (Math.PI + pi2) Then
+            ElseIf lockedTheta >= sys.PI AndAlso lockedTheta < (Math.PI + pi2) Then
 
                 points = {
                     New Point(CInt(Truncate(adjacentTop)), nHeight),

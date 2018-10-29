@@ -87,7 +87,8 @@ Namespace Imaging
 
         Public Shared ReadOnly Property InstalledFontFamilies As IReadOnlyCollection(Of String)
 
-        Shared ReadOnly __fontFamilies As Dictionary(Of String, String)
+        Shared ReadOnly fontFamilies As Dictionary(Of String, String)
+
         Shared Sub New()
             Dim fontFamilies() As FontFamily
             Dim installedFontCollection As New InstalledFontCollection()
@@ -95,10 +96,10 @@ Namespace Imaging
             ' Get the array of FontFamily objects.
             fontFamilies = installedFontCollection.Families
             InstalledFontFamilies = fontFamilies.Select(Function(f) f.Name).ToArray
-            __fontFamilies = New Dictionary(Of String, String)
+            FontFace.fontFamilies = New Dictionary(Of String, String)
 
             For Each family$ In InstalledFontFamilies
-                __fontFamilies(LCase(family)) = family
+                FontFace.fontFamilies(LCase(family)) = family
             Next
         End Sub
 
@@ -113,13 +114,13 @@ Namespace Imaging
         ''' <param name="default">默认使用Windows10的默认字体</param>
         ''' <returns></returns>
         Public Shared Function GetFontName(name$, Optional default$ = FontFace.SegoeUI) As String
-            If __fontFamilies.ContainsKey(name) Then
-                Return __fontFamilies(name)
+            If fontFamilies.ContainsKey(name) Then
+                Return fontFamilies(name)
             Else
                 name = LCase(name)
 
-                If __fontFamilies.ContainsKey(name) Then
-                    Return __fontFamilies(name)
+                If fontFamilies.ContainsKey(name) Then
+                    Return fontFamilies(name)
                 Else
                     Return [default]
                 End If

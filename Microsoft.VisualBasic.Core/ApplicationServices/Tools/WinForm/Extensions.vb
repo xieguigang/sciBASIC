@@ -33,7 +33,9 @@
 
 '     Module Extensions
 ' 
-'         Function: AddFilesHistory
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: AddFilesHistory, IsPrintableCharacter, ToChar
 ' 
 '         Sub: AddFileHistory, AddRowData, Clear, WriteLine
 ' 
