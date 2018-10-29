@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64e4d2437f73150b7bdc12d88ba8bdd8, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\AnimatedBar.vb"
+﻿#Region "Microsoft.VisualBasic::fce8a9ea7c599c8100764ec6c4800e82, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\FactorValue.vb"
 
     ' Author:
     ' 
@@ -31,43 +31,32 @@
 
     ' Summaries:
 
-    '     Class AnimatedBar
+    '     Class FactorValue
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: [Step]
+    '         Properties: Factor, Value
+    ' 
+    '     Class FactorString
+    ' 
+    '         Properties: Factor, text
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Namespace Terminal.ProgressBar
+Namespace ComponentModel.TagData
 
-    Public Class AnimatedBar
-        Inherits AbstractBar
+    Public Class FactorValue(Of T As {Structure, IComparable(Of T)}, V)
 
-        Dim animation As List(Of String)
-        Dim counter As Integer
+        Public Property Factor As T
+        Public Property Value As V
 
-        Public Sub New()
-            MyBase.New()
+    End Class
 
-            animation = New List(Of String)() From {"/", "-", "\", "|"}
-            counter = 0
-        End Sub
+    Public Class FactorString(Of T As {Structure, IComparable(Of T)})
 
-        ''' <summary>
-        ''' prints the character found in the animation according to the current index
-        ''' </summary>
-        Public Overrides Sub [Step]()
-            Console.Write(vbCr)
-            Console.Write(animation(counter) & vbBack)
+        Public Property Factor As T
+        Public Property text As String
 
-            counter += 1
-
-            If counter = animation.Count Then
-                counter = 0
-            End If
-        End Sub
     End Class
 End Namespace

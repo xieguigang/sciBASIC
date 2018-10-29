@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb50a5279570864449b5e8bd7b1531d8, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\SwayBar.vb"
+﻿#Region "Microsoft.VisualBasic::e93d47961896d9fcaad122fc7e9c01ed, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\SwayBar.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,7 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: BlankPointer
+    '     Function: buildBlankPointer
     ' 
     '     Sub: [Step], ClearBar, PlacePointer
     ' 
@@ -57,6 +57,9 @@ Imports System.Text
 
 Namespace Terminal.ProgressBar
 
+    ''' <summary>
+    ''' 像乒乓球一样左右碰撞的进度条
+    ''' </summary>
     Public Class SwayBar : Inherits AbstractBar
 
         Dim bar As String
@@ -70,10 +73,16 @@ Namespace Terminal.ProgressBar
             left
         End Enum
 
-        Public Sub New()
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="length%">
+        ''' 进度条的碰撞区域的字符数量宽度
+        ''' </param>
+        Public Sub New(Optional length% = 50)
             MyBase.New()
 
-            bar = "|                         |"
+            bar = $"|{New String(" "c, length)}|"
             pointer = "***"
             blankPointer = buildBlankPointer()
             currdir = direction.right

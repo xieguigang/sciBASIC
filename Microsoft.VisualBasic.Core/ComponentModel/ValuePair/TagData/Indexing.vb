@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::351e47d23190a0be7c7eb2517701809c, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\Indexing.vb"
+﻿#Region "Microsoft.VisualBasic::7f9769730745b40a6b433302c768908f, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\Indexing.vb"
 
     ' Author:
     ' 
@@ -48,8 +48,15 @@ Namespace ComponentModel.TagData
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function BinarySearch(Of K As IComparable(Of K), T)(source As IEnumerable(Of T), key As K, getKey As Func(Of T, K), Optional [default] As T = Nothing) As T
-            Return source.OrderBy(getKey).ToArray.BinarySearch(key, getKey, [default])
+        Public Function BinarySearch(Of K As IComparable(Of K), T)(source As IEnumerable(Of T),
+                                                                   key As K,
+                                                                   getKey As Func(Of T, K),
+                                                                   Optional [default] As T = Nothing) As T
+
+            Return source _
+                .OrderBy(getKey) _
+                .ToArray _
+                .BinarySearch(key, getKey, [default])
         End Function
 
         ''' <summary>
