@@ -67,8 +67,20 @@ Namespace CommandLine.InteropService
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Path As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _executableAssembly
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 这个只读属性返回目标可执行文件是否有效
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsAvailable As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _executableAssembly.FileExists
             End Get
         End Property
 

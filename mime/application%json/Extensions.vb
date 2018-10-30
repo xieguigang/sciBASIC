@@ -45,8 +45,13 @@ Imports Microsoft.VisualBasic.MIME.application.json.Parser
 
 Public Module Extensions
 
+    ''' <summary>
+    ''' Parse json string
+    ''' </summary>
+    ''' <param name="JsonStr"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function ParseJsonStr(JsonStr As String) As JsonElement
+    Public Function ParseJson(JsonStr As String) As JsonElement
         Dim value As JsonElement = New JsonParser().OpenJSON(JsonStr)
         Return value
     End Function
