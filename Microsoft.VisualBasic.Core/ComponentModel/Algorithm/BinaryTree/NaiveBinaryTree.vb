@@ -102,6 +102,11 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End Get
         End Property
 
+        Public Sub New(key As K, value As V, compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
+            Call MyBase.New(compares, views)
+            Call Me.insert(key, value)
+        End Sub
+
         Public Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
             MyBase.New(compares, views)
         End Sub
