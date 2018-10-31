@@ -62,24 +62,11 @@ Namespace ComponentModel.Algorithm.BinaryTree
     Public Class AVLTree(Of K, V) : Inherits TreeBase(Of K, V)
 
         ''' <summary>
-        ''' The root node of this binary tree
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property root As BinaryTree(Of K, V)
-
-        ReadOnly compares As Comparison(Of K)
-        ReadOnly views As Func(Of K, String)
-        ReadOnly stack As New List(Of BinaryTree(Of K, V))
-
-        ''' <summary>
         ''' Create an instance of the AVL binary tree.
         ''' </summary>
         ''' <param name="compares">Compare between two keys.</param>
         ''' <param name="views">Display the key as string</param>
         Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
-            Me.compares = compares
-            Me.views = views
-        Public Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
             MyBase.New(compares, views)
         End Sub
 
