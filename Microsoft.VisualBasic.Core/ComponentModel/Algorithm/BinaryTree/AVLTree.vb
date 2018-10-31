@@ -69,6 +69,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         ReadOnly compares As Comparison(Of K)
         ReadOnly views As Func(Of K, String)
+        ReadOnly stack As New List(Of BinaryTree(Of K, V))
 
         ''' <summary>
         ''' Create an instance of the AVL binary tree.
@@ -80,6 +81,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Me.views = views
         End Sub
 
+        Public Function ToArray() As BinaryTree(Of K, V)()
+            Return stack.ToArray
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K, value As V, Optional valueReplace As Boolean = True)
             _root = Add(key, value, _root, valueReplace)
@@ -87,7 +92,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         Public Function Add(key As K, value As V, tree As BinaryTree(Of K, V), valueReplace As Boolean) As BinaryTree(Of K, V)
             If tree Is Nothing Then
+                ' 追加新的叶子节点
                 tree = New BinaryTree(Of K, V)(key, value, Nothing, views)
+                stack.Add(tree)
             End If
 
             Select Case compares(key, tree.Key)
