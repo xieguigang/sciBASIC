@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::e19ef66cf06141306e8e31ae0cfc70de, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\AVLTree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class AVLTree
-    ' 
-    '         Properties: root
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Add, Remove
-    ' 
-    '         Sub: Add, appendLeft, appendRight, Remove, removeCurrent
-    '              removeLeft, removeRight
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class AVLTree
+' 
+'         Properties: root
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Add, Remove
+' 
+'         Sub: Add, appendLeft, appendRight, Remove, removeCurrent
+'              removeLeft, removeRight
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,24 @@ Namespace ComponentModel.Algorithm.BinaryTree
     ''' </remarks>
     Public Class AVLTree(Of K, V) : Inherits TreeBase(Of K, V)
 
+        ''' <summary>
+        ''' The root node of this binary tree
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property root As BinaryTree(Of K, V)
+
+        ReadOnly compares As Comparison(Of K)
+        ReadOnly views As Func(Of K, String)
+        ReadOnly stack As New List(Of BinaryTree(Of K, V))
+
+        ''' <summary>
+        ''' Create an instance of the AVL binary tree.
+        ''' </summary>
+        ''' <param name="compares">Compare between two keys.</param>
+        ''' <param name="views">Display the key as string</param>
+        Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
+            Me.compares = compares
+            Me.views = views
         Public Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
             MyBase.New(compares, views)
         End Sub
@@ -73,7 +91,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         Public Function Add(key As K, value As V, tree As BinaryTree(Of K, V), valueReplace As Boolean) As BinaryTree(Of K, V)
             If tree Is Nothing Then
                 ' 追加新的叶子节点
-                tree = New BinaryTree(Of K, V)(key, value, toString:=views)
+                tree = New BinaryTree(Of K, V)(key, value, Nothing, views)
                 stack.Add(tree)
             End If
 
