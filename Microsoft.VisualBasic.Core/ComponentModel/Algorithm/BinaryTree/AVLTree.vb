@@ -59,25 +59,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
     ''' <remarks>
     ''' http://www.cnblogs.com/huangxincheng/archive/2012/07/22/2603956.html
     ''' </remarks>
-    Public Class AVLTree(Of K, V)
+    Public Class AVLTree(Of K, V) : Inherits TreeBase(Of K, V)
 
-        ''' <summary>
-        ''' The root node of this binary tree
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property root As BinaryTree(Of K, V)
-
-        ReadOnly compares As Comparison(Of K)
-        ReadOnly views As Func(Of K, String)
-
-        ''' <summary>
-        ''' Create an instance of the AVL binary tree.
-        ''' </summary>
-        ''' <param name="compares">Compare between two keys.</param>
-        ''' <param name="views">Display the key as string</param>
-        Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
-            Me.compares = compares
-            Me.views = views
+        Public Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
+            MyBase.New(compares, views)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -87,7 +72,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         Public Function Add(key As K, value As V, tree As BinaryTree(Of K, V), valueReplace As Boolean) As BinaryTree(Of K, V)
             If tree Is Nothing Then
-                tree = New BinaryTree(Of K, V)(key, value, Nothing, views)
+                ' 追加新的叶子节点
+                tree = New BinaryTree(Of K, V)(key, value, toString:=views)
+                stack.Add(tree)
             End If
 
             Select Case compares(key, tree.Key)

@@ -135,6 +135,13 @@ Namespace ComponentModel.Algorithm.BinaryTree
             additionals(key) = value
         End Sub
 
+        Public Sub Copy(source As BinaryTree(Of K, V))
+            _Key = source.Key
+            _Value = source.Value
+            additionals.Clear()
+            additionals.AddRange(source.additionals)
+        End Sub
+
         Private Shared Function viewQualifiedName(node As BinaryTree(Of K, V)) As String
             Dim additionals = node.additionals
             Dim parent = TryCast(additionals!parent, BinaryTree(Of K, V))
