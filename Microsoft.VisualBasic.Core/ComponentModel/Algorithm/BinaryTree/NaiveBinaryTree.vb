@@ -169,38 +169,39 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' </summary>
         ''' <param name="node"></param>
         ''' <param name="tree"></param>
-        ''' <param name="[overrides]">
-        ''' 0不复写，函数自动处理
-        ''' &lt;0  LEFT
-        ''' >0 RIGHT
-        ''' </param>
-        Private Sub add(node As BinaryTree(Of K, V), ByRef tree As BinaryTree(Of K, V), overrides%)
-            If tree Is Nothing Then
-                tree = node
-            Else
+        Private Sub add(node As BinaryTree(Of K, V), ByRef tree As BinaryTree(Of K, V), append As Boolean)
+            Do While True
                 ' If we find a node with the same name then it's 
                 ' a duplicate and we can't continue
-                Dim comparison As Integer
+                Dim comparison As Integer = compares(node.Key, tree.Key)
 
-                If [overrides] = 0 Then
-                    comparison = compares(node.Key, tree.Key)
+                If comparison = 0 Then
+                    ' Duplicated node was found!
+                    If append Then
+                        ' clustering
+                        DirectCast(tree!values, List(Of V)).Add(node.Value)
+                    Else
+                        ' Value replace when not append
+                        tree.Value = node.Value
+                    End If
 
-                    If comparison = 0 Then
-                        Throw New Exception("Duplicated node was found!")
+                    Exit Do
+                ElseIf comparison < 0 Then
+                    If Not tree.Left Is Nothing Then
+                        tree = tree.Left
+                    Else
+                        tree.Left = node
+                        Exit Do
                     End If
                 Else
-                    comparison = [overrides]
+                    If Not tree.Right Is Nothing Then
+                        tree = tree.Right
+                    Else
+                        tree.Right = node
+                        Exit Do
+                    End If
                 End If
-
-                ' 2018-1-11
-                ' overrides 应该一直被传递下去，而不是使用comparison结果，否则会一直被错误的overrides下去的
-                ' 导致构建出来的树不平衡
-                If comparison < 0 Then
-                    add(node, tree.Left, [overrides]:=[overrides])
-                Else
-                    add(node, tree.Right, [overrides]:=[overrides])
-                End If
-            End If
+            Loop
         End Sub
 
         ''' <summary>
@@ -209,14 +210,14 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' </summary>
         ''' <returns> Returns reference to the new node is the node was inserted.
         ''' If a duplicate node (same name was located then returns null</returns>
-        Public Function insert(key As K, obj As V) As BinaryTree(Of K, V)
+        Public Function insert(key As K, obj As V, Optional append As Boolean = True) As BinaryTree(Of K, V)
             Dim node As New BinaryTree(Of K, V)(key, obj, toString:=views)
 
             Try
                 If root Is Nothing Then
                     _root = node
                 Else
-                    add(node, root, 0)
+                    add(node, root, append)
                 End If
 
                 Call stack.Add(node)
