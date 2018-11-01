@@ -169,7 +169,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' </summary>
         ''' <param name="node"></param>
         ''' <param name="tree"></param>
-        Private Sub add(node As BinaryTree(Of K, V), ByRef tree As BinaryTree(Of K, V), append As Boolean)
+        ''' <returns>
+        ''' 当处于append模式下，append值的时候不会返回节点，而是返回nothing
+        ''' </returns>
+        Private Function add(node As BinaryTree(Of K, V), ByRef tree As BinaryTree(Of K, V), append As Boolean) As BinaryTree(Of K, V)
             Do While True
                 ' If we find a node with the same name then it's 
                 ' a duplicate and we can't continue
@@ -180,29 +183,31 @@ Namespace ComponentModel.Algorithm.BinaryTree
                     If append Then
                         ' clustering
                         DirectCast(tree!values, List(Of V)).Add(node.Value)
+                        Return Nothing
                     Else
                         ' Value replace when not append
                         tree.Value = node.Value
+                        Return node
                     End If
-
-                    Exit Do
                 ElseIf comparison < 0 Then
                     If Not tree.Left Is Nothing Then
                         tree = tree.Left
                     Else
                         tree.Left = node
-                        Exit Do
+                        Return node
                     End If
                 Else
                     If Not tree.Right Is Nothing Then
                         tree = tree.Right
                     Else
                         tree.Right = node
-                        Exit Do
+                        Return node
                     End If
                 End If
             Loop
-        End Sub
+
+            Throw New NotImplementedException("This exception will never happends!")
+        End Function
 
         ''' <summary>
         ''' Add a symbol to the tree if it's a new one. Returns reference to the new
@@ -217,10 +222,12 @@ Namespace ComponentModel.Algorithm.BinaryTree
                 If root Is Nothing Then
                     _root = node
                 Else
-                    add(node, root, append)
+                    node = add(node, root, append)
                 End If
 
-                Call stack.Add(node)
+                If Not node Is Nothing Then
+                    Call stack.Add(node)
+                End If
 
                 Return node
             Catch generatedExceptionName As Exception
