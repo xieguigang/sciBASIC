@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::ff49805f1a640750a3c5ec149d134e2d, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class TextGrepScriptEngine
-    ' 
-    '         Properties: DoNothing, MethodPointers, PipelinePointer
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Compile, CompileInternal, EnsureNotEmpty, Grep, Match
-    '                   MidString, NoOperation, Replace, Reverse, Tokens
-    '                   ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Delegate Function
+' 
+' 
+'     Delegate Function
+' 
+' 
+'     Class TextGrepScriptEngine
+' 
+'         Properties: DoNothing, MethodPointers, PipelinePointer
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Compile, CompileInternal, EnsureNotEmpty, Grep, Match
+'                   MidString, NoOperation, Replace, Reverse, Tokens
+'                   ToString
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +62,8 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Token = System.Collections.Generic.KeyValuePair(Of String(), Microsoft.VisualBasic.Scripting.TextGrepMethodToken)
+Imports r = System.Text.RegularExpressions.Regex
+Imports System.ComponentModel
 
 Namespace Scripting
 
@@ -109,7 +111,7 @@ Namespace Scripting
         ''' </summary>
         ''' <remarks></remarks>
         Dim _operations As Token()
-        Dim _script$
+        Dim _script$()
 
         ''' <summary>
         ''' 对用户所输入的脚本进行编译，对于内部的空格，请使用单引号``'``进行分割
@@ -146,7 +148,7 @@ Namespace Scripting
                 Return Nothing
             Else
                 Return New TextGrepScriptEngine With {
-                    ._script = scriptText,
+                    ._script = script,
                     ._operations = builder
                 }
             End If
@@ -160,7 +162,7 @@ Namespace Scripting
             Get
                 Static opNothing As New TextGrepScriptEngine With {
                     ._operations = {},
-                    ._script = "-"
+                    ._script = {"-"}
                 }
                 Return opNothing
             End Get
@@ -177,6 +179,19 @@ Namespace Scripting
                 Return AddressOf Grep
             End Get
         End Property
+
+        Public Iterator Function Explains() As IEnumerable(Of String)
+            For Each op As Token In _operations
+                Dim args$() = op.Key.Skip(1).Join("*".Replicate(5)).ToArray
+                Dim description As DescriptionAttribute = op.Value _
+                    .Method _
+                    .GetCustomAttributes(GetType(DescriptionAttribute), True) _
+                    .First
+                Dim explain$ = String.Format(description.Description, args)
+
+                Yield explain
+            Next
+        End Function
 
         ''' <summary>
         ''' 修整目标字符串，按照脚本之中的方法取出所需要的字符串信息
@@ -201,20 +216,24 @@ Namespace Scripting
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return _script
+            Return _script.JoinBy(" -> ")
         End Function
 
         Protected Friend Sub New()
         End Sub
 
+#Region "API supports"
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("-", Info:="DO_NOTHING")>
+        <Description("Do nothing with the source input")>
         Private Shared Function NoOperation(source As String, script As String()) As String
             Return source
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Reverse")>
+        <Description("Reverse the input source text")>
         Private Shared Function Reverse(source As String, Script As String()) As String
             Return source.Reverse.ToArray
         End Function
@@ -230,9 +249,10 @@ Namespace Scripting
         <Argument("pointer", False, Description:="pointer must be a zero base integer number which is smaller than 
             the tokens array's length; pointer can also be assign of a specific string ""last"" to get the last 
             element and ""first"" to get the first element in the tokens array.")>
+        <Description("Split source text with delimiter [{0}], and get the token at position [{1}]")>
         Private Shared Function Tokens(source As String, script As String()) As String
-            Dim Delimiter As String = script(1)
-            Dim Tstr As String() = Strings.Split(source, Delimiter)
+            Dim delimiter As String = script(1)
+            Dim Tstr As String() = Strings.Split(source, delimiter)
 
             If String.Equals(script(2), "last", StringComparison.OrdinalIgnoreCase) Then
                 Return If(Tstr.IsNullOrEmpty, "", Tstr.Last)
@@ -249,44 +269,48 @@ Namespace Scripting
         End Function
 
         <ExportAPI("match", Info:="", Usage:="match pattern", Example:="")>
+        <Description("Get the text token which match pattern [{0}]")>
         Private Shared Function Match(source As String, script As String()) As String
             Dim pattern As String = script.Last
-            Return Regex.Match(source, pattern).Value
+            Return r.Match(source, pattern, RegexOptions.IgnoreCase).Value
         End Function
 
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="source"></param>
-        ''' <param name="ScriptTokens">
+        ''' <param name="script">
         ''' 向量之中的第一个元素为命令的名字，第二个元素为Mid函数的Start参数，第三个元素为Mid函数的Length参数，可以被忽略掉
         ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <ExportAPI("mid", Info:="Substring a token from the input text source.")>
-        Private Shared Function MidString(Source As String, ScriptTokens As String()) As String
-            Dim Start As Integer = CInt(Val(ScriptTokens(1)))
+        <Description("Substring a region [{0}, {1}] from the input text source.")>
+        Private Shared Function MidString(source As String, script As String()) As String
+            Dim start As Integer = CInt(Val(script(1)))
 
-            If ScriptTokens.Length > 2 Then
-                Dim Length As Integer = CInt(Val(ScriptTokens(2)))
-                Return Mid(Source, Start, Length)
+            If script.Length > 2 Then
+                Dim length As Integer = CInt(Val(script(2)))
+                Return Mid(source, start, length)
             Else
-                Return Mid(Source, Start)
+                Return Mid(source, start)
             End If
         End Function
 
         <ExportAPI("replace", Usage:="replace <regx_text> <replace_value>")>
+        <Description("replace source with [{1}] where match pattern [{0}]")>
         Private Shared Function Replace(source As String, script As String()) As String
-            Dim Regx As New Regex(script(1))
-            Dim Matchs = Regx.Matches(source)
+            Dim regexp As New Regex(script(1))
+            Dim matchs = regexp.Matches(source)
             Dim sBuilder As New StringBuilder(source)
-            Dim NewValue = script(2)
+            Dim newValue = script(2)
 
-            For Each m As Match In Matchs
-                Call sBuilder.Replace(m.Value, NewValue)
+            For Each m As Match In matchs
+                Call sBuilder.Replace(m.Value, newValue)
             Next
 
             Return sBuilder.ToString
         End Function
+#End Region
     End Class
 End Namespace
