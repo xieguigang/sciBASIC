@@ -918,6 +918,8 @@
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\BinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeBase.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\Enumerable.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeNode.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLSupports.vb" />
@@ -1014,7 +1016,6 @@
     <Compile Include="ComponentModel\DataSource\SchemaMaps\SQL.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Mappings.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Schema.vb" />
-    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\ClusterParts.vb" />
     <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
     <Compile Include="ComponentModel\DataStructures\BucketDictionary.vb" />
     <Compile Include="ComponentModel\DataStructures\FuzzyGroup.vb" />
@@ -1450,7 +1451,6 @@
     <Compile Include="Net\Tcp\TCPExtensions.vb" />
     <Compile Include="Net\Tcp\TcpRequest.vb" />
     <Compile Include="ApplicationServices\Parallel\Threading.vb" />
-    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
     <Compile Include="Extensions\Image\GDI+\GraphicsExtensions.vb" />
     <Compile Include="ComponentModel\DataStructures\HashDictionary.vb" />

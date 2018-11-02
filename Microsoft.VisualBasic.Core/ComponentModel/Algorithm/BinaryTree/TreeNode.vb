@@ -73,6 +73,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
         Public ReadOnly Property Key As K
         ''' <summary>
         ''' 与当前的这个键名相对应的键值可以根据需求发生改变，即可以被任意赋值
+        ''' 
+        ''' 如果是进行聚类操作的话，可以通过``!values`` as <see cref="List(Of V)"/>
+        ''' 来添加簇成员
         ''' </summary>
         ''' <returns></returns>
         Public Property Value As V Implements Value(Of V).IValueOf.Value
@@ -133,6 +136,13 @@ Namespace ComponentModel.Algorithm.BinaryTree
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetValue(key$, value As Object)
             additionals(key) = value
+        End Sub
+
+        Public Sub Copy(source As BinaryTree(Of K, V))
+            _Key = source.Key
+            _Value = source.Value
+            additionals.Clear()
+            additionals.AddRange(source.additionals)
         End Sub
 
         Private Shared Function viewQualifiedName(node As BinaryTree(Of K, V)) As String

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "47-dotnet_Microsoft.VisualBasic", "47-dotnet_Microsoft.VisualBasic.vbproj", "{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}"
 EndProject
@@ -13,6 +13,12 @@ Global
 		Biodeep|Any CPU = Biodeep|Any CPU
 		Biodeep|x64 = Biodeep|x64
 		Biodeep|x86 = Biodeep|x86
+		Biostack|Any CPU = Biostack|Any CPU
+		Biostack|x64 = Biostack|x64
+		Biostack|x86 = Biostack|x86
+		Biostack-Debug|Any CPU = Biostack-Debug|Any CPU
+		Biostack-Debug|x64 = Biostack-Debug|x64
+		Biostack-Debug|x86 = Biostack-Debug|x86
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
@@ -28,12 +34,18 @@ Global
 		GCModeller(UNIX-Release_X64)|Any CPU = GCModeller(UNIX-Release_X64)|Any CPU
 		GCModeller(UNIX-Release_X64)|x64 = GCModeller(UNIX-Release_X64)|x64
 		GCModeller(UNIX-Release_X64)|x86 = GCModeller(UNIX-Release_X64)|x86
+		GTA5-game-test|Any CPU = GTA5-game-test|Any CPU
+		GTA5-game-test|x64 = GTA5-game-test|x64
+		GTA5-game-test|x86 = GTA5-game-test|x86
 		installer_x64|Any CPU = installer_x64|Any CPU
 		installer_x64|x64 = installer_x64|x64
 		installer_x64|x86 = installer_x64|x86
 		mysqli_X64_release|Any CPU = mysqli_X64_release|Any CPU
 		mysqli_X64_release|x64 = mysqli_X64_release|x64
 		mysqli_X64_release|x86 = mysqli_X64_release|x86
+		ProteoWizard.d|Any CPU = ProteoWizard.d|Any CPU
+		ProteoWizard.d|x64 = ProteoWizard.d|x64
+		ProteoWizard.d|x86 = ProteoWizard.d|x86
 		Publish|Any CPU = Publish|Any CPU
 		Publish|x64 = Publish|x64
 		Publish|x86 = Publish|x86
@@ -63,6 +75,18 @@ Global
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biodeep|x64.Build.0 = Biodeep|x64
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biodeep|x86.ActiveCfg = Biodeep|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biodeep|x86.Build.0 = Biodeep|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|Any CPU.ActiveCfg = Biostack|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|Any CPU.Build.0 = Biostack|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|x64.ActiveCfg = Biostack|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|x64.Build.0 = Biostack|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|x86.ActiveCfg = Biostack|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack|x86.Build.0 = Biostack|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|Any CPU.ActiveCfg = Biostack-Debug|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|Any CPU.Build.0 = Biostack-Debug|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|x64.ActiveCfg = Biostack-Debug|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|x64.Build.0 = Biostack-Debug|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|x86.ActiveCfg = Biostack-Debug|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Biostack-Debug|x86.Build.0 = Biostack-Debug|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Debug|x64.ActiveCfg = Debug|x64
@@ -93,6 +117,12 @@ Global
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.GCModeller(UNIX-Release_X64)|x64.Build.0 = GCModeller(UNIX-Release_X64)|x64
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.GCModeller(UNIX-Release_X64)|x86.ActiveCfg = GCModeller(UNIX-Release_X64)|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.GCModeller(UNIX-Release_X64)|x86.Build.0 = GCModeller(UNIX-Release_X64)|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.GTA5-game-test|Any CPU.ActiveCfg = GTA5-game-test|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.GTA5-game-test|Any CPU.Build.0 = GTA5-game-test|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.GTA5-game-test|x64.ActiveCfg = GTA5-game-test|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.GTA5-game-test|x64.Build.0 = GTA5-game-test|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.GTA5-game-test|x86.ActiveCfg = GTA5-game-test|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.GTA5-game-test|x86.Build.0 = GTA5-game-test|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.installer_x64|Any CPU.ActiveCfg = installer_x64|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.installer_x64|Any CPU.Build.0 = installer_x64|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.installer_x64|x64.ActiveCfg = installer_x64|x64
@@ -105,6 +135,12 @@ Global
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mysqli_X64_release|x64.Build.0 = mysqli_X64_release|x64
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mysqli_X64_release|x86.ActiveCfg = mysqli_X64_release|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.mysqli_X64_release|x86.Build.0 = mysqli_X64_release|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.ProteoWizard.d|Any CPU.ActiveCfg = ProteoWizard.d|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.ProteoWizard.d|Any CPU.Build.0 = ProteoWizard.d|Any CPU
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.ProteoWizard.d|x64.ActiveCfg = ProteoWizard.d|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.ProteoWizard.d|x64.Build.0 = ProteoWizard.d|x64
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.ProteoWizard.d|x86.ActiveCfg = ProteoWizard.d|x86
+		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.ProteoWizard.d|x86.Build.0 = ProteoWizard.d|x86
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Publish|Any CPU.ActiveCfg = Publish|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Publish|Any CPU.Build.0 = Publish|Any CPU
 		{FECCE1FD-E1D4-49E3-A668-60BB5E7AED99}.Publish|x64.ActiveCfg = Publish|x64
@@ -140,6 +176,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D9345DB1-2D6B-4165-9DE3-A0D4222C7B4A}
+		SolutionGuid = {9199F6C4-1B2A-4326-BE20-3016FB927B3C}
 	EndGlobalSection
 EndGlobal
