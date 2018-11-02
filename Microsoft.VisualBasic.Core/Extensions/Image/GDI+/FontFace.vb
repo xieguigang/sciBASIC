@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::a8ba062b790f0f580a692e7741ce3888, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\FontFace.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class FontFace
-    ' 
-    '         Properties: InstalledFontFamilies
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetFontName
-    ' 
-    '     Module DefaultFontValues
-    ' 
-    ' 
-    '         Class MicrosoftYaHei
-    ' 
-    '             Properties: Bold, Large, Normal
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class FontFace
+' 
+'         Properties: InstalledFontFamilies
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: GetFontName
+' 
+'     Module DefaultFontValues
+' 
+' 
+'         Class MicrosoftYaHei
+' 
+'             Properties: Bold, Large, Normal
+' 
+'             Constructor: (+1 Overloads) Sub New
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Text
+Imports System.Runtime.CompilerServices
 Imports DefaultFont = Microsoft.VisualBasic.Language.Default.DefaultValue(Of System.Drawing.Font)
 
 Namespace Imaging
@@ -105,6 +106,16 @@ Namespace Imaging
 
         Private Sub New()
         End Sub
+
+        ''' <summary>
+        ''' 检查当前的操作系统之中是否安装有指定名称的字体
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsInstalled(name As String) As Boolean
+            Return fontFamilies.ContainsKey(name) OrElse fontFamilies.ContainsKey(LCase(name))
+        End Function
 
         ''' <summary>
         ''' 由于字体名称的大小写敏感，所以假若是html css之类的渲染的话，由于可能会是小写的字体名称会导致无法
