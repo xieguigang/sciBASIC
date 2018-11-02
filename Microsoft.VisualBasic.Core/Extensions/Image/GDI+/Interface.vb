@@ -358,29 +358,17 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null
         Public MustOverride Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
-        '
-        ' Summary:
-        '     Draws an arc representing a portion of an ellipse specified by a System.Drawing.Rectangle
-        '     structure.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the arc.
-        '
-        '   rect:
-        '     System.Drawing.RectangleF structure that defines the boundaries of the ellipse.
-        '
-        '   startAngle:
-        '     Angle in degrees measured clockwise from the x-axis to the starting point of
-        '     the arc.
-        '
-        '   sweepAngle:
-        '     Angle in degrees measured clockwise from the startAngle parameter to ending point
-        '     of the arc.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws an arc representing a portion of an ellipse specified by a System.Drawing.Rectangle
+        ''' structure.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the arc.</param>
+        ''' <param name="rect">System.Drawing.RectangleF structure that defines the boundaries of the ellipse.</param>
+        ''' <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the starting point of
+        ''' the arc.</param>
+        ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to ending point
+        ''' of the arc.</param>
         Public MustOverride Sub DrawArc(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
         '
         ' Summary:
