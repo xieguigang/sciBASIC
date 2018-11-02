@@ -308,7 +308,9 @@ Namespace CommandLine
             End If
 
             If waitForExit Then
-                Return waitForExit
+                ' 请注意这个函数名称是和当前的这个函数参数是一样的
+                ' 会需要me来区别引用
+                Return Me.waitForExit
             Else
                 Call RunTask(AddressOf Me.waitForExit)
                 Return 0

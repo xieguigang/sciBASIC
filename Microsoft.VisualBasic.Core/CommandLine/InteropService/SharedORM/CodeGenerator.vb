@@ -50,6 +50,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.ManView
 Imports Microsoft.VisualBasic.CommandLine.Reflection.EntryPoints
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language
 
 Namespace CommandLine.InteropService.SharedORM
 
@@ -93,7 +94,12 @@ Namespace CommandLine.InteropService.SharedORM
 
                 If apiUsage.StringEmpty Then
                     usageCommand = New CommandLine With {
-                        .Name = api.Name
+                        .Name = api.Name,
+                        .BoolFlags = {},
+                        .cliCommandArgvs = api.Name,
+                        .SingleValue = api.Name,
+                        .Tokens = {api.Name},
+                        .__arguments = New List(Of NamedValue(Of String))
                     }
                     Call $"{api.EntryPointFullName(relativePath:=True)} is nothing!".Warning
                 Else

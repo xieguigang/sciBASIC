@@ -84,6 +84,12 @@ Namespace CommandLine.InteropService
             End Get
         End Property
 
+        ''' <summary>
+        ''' 默认是不做IO重定向的
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property IORedirect As Boolean = False
+
         Sub New()
         End Sub
 
