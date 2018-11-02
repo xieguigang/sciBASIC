@@ -80,6 +80,38 @@ Public Module TimeTrends
         End Function
     End Structure
 
+    ''' <summary>
+    ''' 绘制时间趋势线
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <param name="size$"></param>
+    ''' <param name="padding$"></param>
+    ''' <param name="bg$"></param>
+    ''' <param name="title$"></param>
+    ''' <param name="subTitle$"></param>
+    ''' <param name="lineWidth!"></param>
+    ''' <param name="lineColor$"></param>
+    ''' <param name="pointSize!"></param>
+    ''' <param name="pointColor$"></param>
+    ''' <param name="rangeColor$"></param>
+    ''' <param name="titleColor$"></param>
+    ''' <param name="rangeOpacity!"></param>
+    ''' <param name="rangeStroke$"></param>
+    ''' <param name="axisStrokeCSS$"></param>
+    ''' <param name="yTickStrokeCSS$"></param>
+    ''' <param name="cubicSplineExpected%"></param>
+    ''' <param name="valueLabelFormat$"></param>
+    ''' <param name="valueLabelFontCSS$"></param>
+    ''' <param name="tickLabelFontCSS$"></param>
+    ''' <param name="titleFontCSS$"></param>
+    ''' <param name="subTitleFontCSS$"></param>
+    ''' <param name="legendTitleFont$"></param>
+    ''' <param name="dateFormat"></param>
+    ''' <param name="legendTitle$"></param>
+    ''' <param name="legendRangeTitle$"></param>
+    ''' <param name="legendTitleColor$"></param>
+    ''' <param name="displayLegendBorder">是否显示legend的盒子的边框</param>
+    ''' <returns></returns>
     <Extension>
     Public Function Plot(data As IEnumerable(Of TimePoint),
                          Optional size$ = "3600,2700",
@@ -107,7 +139,8 @@ Public Module TimeTrends
                          Optional dateFormat As Func(Of Date, String) = Nothing,
                          Optional legendTitle$ = "Trends",
                          Optional legendRangeTitle$ = "[min, max]",
-                         Optional legendTitleColor$ = "black") As GraphicsData
+                         Optional legendTitleColor$ = "black",
+                         Optional displayLegendBorder As Boolean = True) As GraphicsData
 
         Static shortDateString As New DefaultValue(Of Func(Of Date, String))(Function(d) d.ToShortDateString)
 
@@ -318,14 +351,20 @@ Public Module TimeTrends
                 End With
 
                 x = rect.Left + (rect.Width - labelSize.Width) / 2
-                y = rect.Bottom + maxLabelXWidth + 20
+                y = rect.Bottom + maxLabelXWidth + 40
+
+                Dim legendBorder As New Stroke With {
+                    .dash = DashStyle.Solid, .fill = "black", .width = 5
+                }
+
+                If Not displayLegendBorder Then
+                    legendBorder = Nothing
+                End If
 
                 Call g.DrawLegends(
                     topLeft:=New Point(x, y),
                     legends:=legends,
-                    regionBorder:=New Stroke With {
-                        .dash = DashStyle.Solid, .fill = "black", .width = 5
-                    },
+                    regionBorder:=legendBorder,
                     titleBrush:=legendTitleColor.GetBrush
                 )
             End Sub

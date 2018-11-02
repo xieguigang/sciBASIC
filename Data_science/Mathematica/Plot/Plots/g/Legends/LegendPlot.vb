@@ -298,7 +298,7 @@ Namespace Graphic.Legend
         ''' 单个legend图形的绘图区域的大小，图例之中的shap的大小都是根据这个参数来进行限制自动调整的
         ''' </param>
         ''' <param name="d%">Interval distance between the legend graphics.</param>
-        ''' <param name="regionBorder">整个图例的绘图区域的边的绘制设置</param>
+        ''' <param name="regionBorder">整个图例的绘图区域的边框的绘制设置，如果这个参数值是空值，则不会做边框的绘制</param>
         ''' <param name="radius">这个是用于圆角矩形的图例图形的绘制参数</param>
         <Extension>
         Public Sub DrawLegends(ByRef g As IGraphics,
