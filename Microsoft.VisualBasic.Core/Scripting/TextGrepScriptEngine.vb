@@ -138,6 +138,8 @@ Namespace Scripting
         Public Shared Function Compile(scriptText As String) As TextGrepScriptEngine
             If scriptText.StringEmpty Then
                 Return DoNothing
+            ElseIf scriptText = "-" Then
+                Return DoNothing
             Else
                 Return CompileInternal(scriptText)
             End If

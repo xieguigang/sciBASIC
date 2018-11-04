@@ -62,8 +62,13 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 <CLI> Module CLI
 
+    ''' <summary>
+    ''' /nothing.as.empty 可以允许将nothing使用空字符串进行替代，这样子就可以不抛出错误了
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     <ExportAPI("/Cbind")>
-    <Usage("/cbind /in <a.csv> /append <b.csv> [/ID.a <default=ID> /ID.b <default=ID> /grep.ID <grep_script, default=""token <SPACE> first""> /out <ALL.csv>]")>
+    <Usage("/cbind /in <a.csv> /append <b.csv> [/ID.a <default=ID> /ID.b <default=ID> /grep.ID <grep_script, default=""token <SPACE> first""> /nothing.as.empty /out <ALL.csv>]")>
     <Description("Join of two table by a unique ID.")>
     <Argument("/in", False, CLITypes.File,
               Description:="The table for append by column, its row ID can be duplicated.")>
@@ -77,18 +82,21 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
         Dim out$ = args("/out") Or ([in].TrimSuffix & "+" & append.BaseName & ".csv")
         Dim IDa$ = args("/ID.a")
         Dim IDb$ = args("/ID.b")
+        Dim nothingAsEmpty As Boolean = args("/nothing.as.empty")
         Dim a = EntityObject.LoadDataSet([in], uidMap:=IDa)
         Dim b As Contract = Contract.Load(append, uidMap:=IDb)
 
-        With TextGrepScriptEngine.Compile(args("/token0.ID") Or "tokens ' ' first")
+        With TextGrepScriptEngine.Compile(args("/grep.ID") Or "tokens ' ' first")
             If Not .IsDoNothing Then
+                Call .Explains.JoinBy(" -> ").__DEBUG_ECHO
+
                 For Each obj As EntityObject In a
                     obj.ID = .Grep(obj.ID)
                 Next
             End If
         End With
 
-        Return Contract.Append(a, b) _
+        Return Contract.Append(a, b, allowNothing:=nothingAsEmpty) _
             .SaveTo(out) _
             .CLICode
     End Function
