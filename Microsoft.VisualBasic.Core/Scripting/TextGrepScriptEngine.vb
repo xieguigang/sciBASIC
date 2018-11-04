@@ -114,6 +114,19 @@ Namespace Scripting
         Dim _script$()
 
         ''' <summary>
+        ''' 当前的这个脚本是否不进行任何操作
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsDoNothing As Boolean
+            Get
+                Dim emptyScript = _script.IsNullOrEmpty
+                Dim emptyOperation = _script.Length = 1 AndAlso (_script.First = "-" OrElse _script.First.StringEmpty)
+
+                Return emptyScript OrElse emptyOperation
+            End Get
+        End Property
+
+        ''' <summary>
         ''' 对用户所输入的脚本进行编译，对于内部的空格，请使用单引号``'``进行分割
         ''' </summary>
         ''' <param name="scriptText">

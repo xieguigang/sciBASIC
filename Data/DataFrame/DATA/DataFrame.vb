@@ -106,8 +106,8 @@ Namespace DATA
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Load(path$, Optional encoding As Encodings = Encodings.Default) As DataFrame
-            Return New DataFrame(EntityObject.LoadDataSet(path))
+        Public Shared Function Load(path$, Optional encoding As Encodings = Encodings.Default, Optional uidMap$ = Nothing) As DataFrame
+            Return New DataFrame(EntityObject.LoadDataSet(path, uidMap:=uidMap))
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of EntityObject) Implements IEnumerable(Of EntityObject).GetEnumerator
