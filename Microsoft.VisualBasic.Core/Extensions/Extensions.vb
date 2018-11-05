@@ -532,14 +532,35 @@ Public Module Extensions
         Return DirectCast(value, TProp)
     End Function
 
-    <Extension> Public Function AddRange(Of TKey, TValue)(ByRef table As Dictionary(Of TKey, TValue), data As IEnumerable(Of KeyValuePair(Of TKey, TValue))) As Dictionary(Of TKey, TValue)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="data"></param>
+    ''' <param name="replaceDuplicated">
+    ''' 这个函数参数决定了在遇到重复的键名称的时候的处理方法：
+    ''' 
+    ''' + 如果为真，则默认会用新的值来替换旧的值
+    ''' + 如果为False，则遇到重复的键名的时候会报错
+    ''' </param>
+    ''' <returns></returns>
+    <Extension> Public Function AddRange(Of TKey, TValue)(ByRef table As Dictionary(Of TKey, TValue),
+                                                          data As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
+                                                          Optional replaceDuplicated As Boolean = False) As Dictionary(Of TKey, TValue)
         If data Is Nothing Then
             Return table
+        ElseIf replaceDuplicated Then
+            For Each obj In data
+                table(obj.Key) = obj.Value
+            Next
+        Else
+            For Each obj In data
+                table.Add(obj.Key, obj.Value)
+            Next
         End If
 
-        For Each obj In data
-            Call table.Add(obj.Key, obj.Value)
-        Next
         Return table
     End Function
 

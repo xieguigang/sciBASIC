@@ -171,6 +171,43 @@ Namespace IO
             End If
         End Function
 
+        ''' <summary>
+        ''' 使用这个函数来判断目标文件之中是否存在ID列
+        ''' （ID列可能不在第一列）
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <param name="tsv"></param>
+        ''' <param name="encoding"></param>
+        ''' <param name="FirstColumn">
+        ''' 函数总是会从这一个参数返回第一列的标题，如果不存在ID列的话可以用这一列来作为ID（可能会出现意想不到的错误）
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function ContainsIDField(path$,
+                                               Optional tsv As Boolean = False,
+                                               Optional encoding As Encoding = Nothing,
+                                               Optional ByRef firstColumn$ = Nothing) As Boolean
+            Dim header$()
+
+            If Not tsv Then
+                header = New RowObject(path.ReadFirstLine(encoding)).ToArray
+            Else
+                header = path.ReadFirstLine(encoding).Split(ASCII.TAB)
+            End If
+
+            firstColumn = header(Scan0)
+
+            Return Not header.FirstOrDefault(Function(s) s = NameOf(EntityObject.ID)) Is Nothing
+        End Function
+
+        ''' <summary>
+        ''' 会自动查找ID列
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="path$"></param>
+        ''' <param name="uidMap$"></param>
+        ''' <param name="tsv"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         Public Shared Function LoadDataSet(Of T As EntityObject)(path$,
                                                                  Optional ByRef uidMap$ = Nothing,
                                                                  Optional tsv As Boolean = False,
@@ -183,12 +220,15 @@ Namespace IO
             End If
 
             If uidMap.StringEmpty Then
-                If Not tsv Then
-                    Dim first As New RowObject(path.ReadFirstLine)
-                    uidMap = first.First
+                If ContainsIDField(path, tsv, encoding, uidMap) Then
+                    uidMap = NameOf(EntityObject.ID)
                 Else
-                    uidMap = path.ReadFirstLine.Split(ASCII.TAB).First
+                    ' 使用第一列作为ID
+                    ' 因为再函数之中已经通过ByRef返回来了，所以do nothing
                 End If
+            Else
+                ' 使用用户自定义的列作为ID
+                ' 在这里do nothing
             End If
 
             If tsv Then
