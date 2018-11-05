@@ -285,10 +285,20 @@ Namespace Drawing2D.Colors
             "#988ED5", "#027093", "#73945A", "#8C564B", "#9467BD", "#D62829", "#2CA02C"
         }.AsColor()
 
+        Const rgbPattern$ = "rgb\(\d+\s*(,\s*\d+\s*)+\)"
+        Const rgbListPattern$ = rgbPattern & "(\s*,\s*" & rgbPattern & ")+"
+
         <Extension>
         Private Function IsColorNameList(exp$) As Boolean
+            ' 因为function和rgb表达式都存在括号
+            ' 所以在这里需要先判断是否为颜色表达式的列表
+            If exp.IsPattern(rgbListPattern) Then
+                ' 颜色列表
+                Return True
+            End If
+
             If Not exp.IsPattern(DesignerExpression.FunctionPattern) AndAlso InStr(exp, ",") > 0 Then
-                If exp.IsPattern("rgb\(\d+\s*(,\s*\d+\s*)+\)") Then
+                If exp.IsPattern(rgbPattern) Then
                     ' 单个rgb表达式的情况，肯定不是颜色列表
                     Return False
                 Else
@@ -296,6 +306,30 @@ Namespace Drawing2D.Colors
                 End If
             Else
                 Return False
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 在这个函数里，需要保证颜色的顺序和表达式之中所输入的顺序一致
+        ''' </summary>
+        ''' <param name="expr"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个函数不支持rgb表达式与颜色名称，html颜色表达式混合
+        ''' </remarks>
+        <Extension>
+        Private Function SplitColorList(expr As String) As String()
+            If expr.IsPattern(rgbListPattern, RegexICSng) Then
+                ' 因为不支持混合，所以只能够出现rgb表达式列表
+                ' 在这里如果符合字符串模式的话，就直接使用正则
+                ' 进行列表元素的匹配操作了
+                Return expr _
+                    .Matches(rgbPattern, RegexICSng) _
+                    .ToArray
+            Else
+                ' 颜色名称和html颜色代码之间可以相互混合
+                ' 但是不允许出现rgb表达式
+                Return expr.StringSplit(",\s*")
             End If
         End Function
 
@@ -309,10 +343,9 @@ Namespace Drawing2D.Colors
         ''' <returns></returns>
         Public Function GetColors(exp$) As Color()
             If exp.IsColorNameList Then
-                ' 设计器的表达式解析器目前不兼容颜色列表的表达式
-                Return exp _
-                    .StringSplit(",\s*") _
-                    .Select(Function(c) c.TranslateColor) _
+                Return Designer _
+                    .SplitColorList(exp) _
+                    .Select(AddressOf TranslateColor) _
                     .ToArray
             Else
                 With New DesignerExpression(exp)
@@ -326,8 +359,7 @@ Namespace Drawing2D.Colors
                 Return New ColorMap(20, 255).ColorSequence(term)
             End If
 
-            Dim key As NamedValue(Of String) =
-                Drawing2D.Colors.ColorBrewer.ParseName(term)
+            Dim key As NamedValue(Of String) = Drawing2D.Colors.ColorBrewer.ParseName(term)
 
             If ColorBrewer.ContainsKey(key.Name) Then
                 Return ColorBrewer(key.Name).GetColors(key.Value)
@@ -415,6 +447,8 @@ Namespace Drawing2D.Colors
         ''' <param name="term$"></param>
         ''' <param name="n%"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FromSchema(term$, n%) As Color()
             Return GetColors(term).internalFills(n)
         End Function
