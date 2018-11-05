@@ -154,7 +154,13 @@ Namespace DATA
                                       Optional allowNothing As Boolean = False) As IEnumerable(Of EntityObject)
             Return multiple _
                 .Select(Function(query)
-                            Dim id$ = query.ID Or "".When(allowNothing)
+                            Dim id As String
+
+                            If allowNothing Then
+                                id = query.ID Or EmptyString
+                            Else
+                                id = query.ID
+                            End If
 
                             If Not unique.entityList.ContainsKey(id) Then
                                 Return query
