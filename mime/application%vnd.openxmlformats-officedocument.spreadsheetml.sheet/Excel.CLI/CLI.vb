@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::e574c905475ca8e792b397b4e27677cd, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: Association, cbind, Extract, newEmpty, Print
-    '               PushTable, rbind, rbindGroup
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: Association, cbind, Extract, newEmpty, Print
+'               PushTable, rbind, rbindGroup
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Office.Excel
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
 Imports Contract = Microsoft.VisualBasic.Data.csv.DATA.DataFrame
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
@@ -61,29 +62,41 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 <CLI> Module CLI
 
+    ''' <summary>
+    ''' /nothing.as.empty 可以允许将nothing使用空字符串进行替代，这样子就可以不抛出错误了
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     <ExportAPI("/Cbind")>
-    <Usage("/cbind /in <a.csv> /append <b.csv> [/token0.ID <deli, default=<SPACE> /out <ALL.csv>]")>
+    <Usage("/cbind /in <a.csv> /append <b.csv> [/ID.a <default=ID> /ID.b <default=ID> /grep.ID <grep_script, default=""token <SPACE> first""> /nothing.as.empty /out <ALL.csv>]")>
     <Description("Join of two table by a unique ID.")>
     <Argument("/in", False, CLITypes.File,
               Description:="The table for append by column, its row ID can be duplicated.")>
     <Argument("/append", False, CLITypes.File,
               Description:="The target table that will be append into the table ``a``, the row ID must be unique!")>
+    <Argument("/grep.ID", True, CLITypes.String, PipelineTypes.undefined, AcceptTypes:={GetType(String)},
+              Description:="This argument parameter describ how to parse the ID in file ``a.csv``")>
     Public Function cbind(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim append$ = args <= "/append"
         Dim out$ = args("/out") Or ([in].TrimSuffix & "+" & append.BaseName & ".csv")
-        Dim a = EntityObject.LoadDataSet([in])
-        Dim b = Contract.Load(append)
+        Dim IDa$ = args("/ID.a")
+        Dim IDb$ = args("/ID.b")
+        Dim nothingAsEmpty As Boolean = args("/nothing.as.empty")
+        Dim a = EntityObject.LoadDataSet([in], uidMap:=IDa)
+        Dim b As Contract = Contract.Load(append, uidMap:=IDb)
 
-        With args <= "/token0.ID"
-            If Not String.IsNullOrEmpty(.ByRef) Then
+        With TextGrepScriptEngine.Compile(args("/grep.ID") Or "tokens ' ' first")
+            If Not .IsDoNothing Then
+                Call .Explains.JoinBy(" -> ").__DEBUG_ECHO
+
                 For Each obj As EntityObject In a
-                    obj.ID = Strings.Split(obj.ID, Delimiter:= .ByRef)(0)
+                    obj.ID = .Grep(obj.ID)
                 Next
             End If
         End With
 
-        Return Contract.Append(a, b) _
+        Return Contract.Append(a, b, allowNothing:=nothingAsEmpty) _
             .SaveTo(out) _
             .CLICode
     End Function

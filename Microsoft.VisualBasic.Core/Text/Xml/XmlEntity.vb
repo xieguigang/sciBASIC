@@ -72,8 +72,7 @@ Namespace Text.Xml
                 .ToString
         End Function
 
-        <Extension>
-        Public Function UnescapeHTML(html As String) As String
+        <Extension> Public Function UnescapeHTML(html As String) As String
             Using writer As New StringWriter()
                 ' Decode the encoded string.
                 HttpUtility.HtmlDecode(html, writer)

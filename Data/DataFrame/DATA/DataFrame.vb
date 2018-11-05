@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::77923cd929d30ffc6f028ef11c30e0a1, Data\DataFrame\DATA\DataFrame.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataFrame
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: [As], Append, GetEnumerator, IEnumerable_GetEnumerator, Load
-    '                   SaveTable, ToString
-    '         Operators: +
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataFrame
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: [As], Append, GetEnumerator, IEnumerable_GetEnumerator, Load
+'                   SaveTable, ToString
+'         Operators: +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -106,8 +107,8 @@ Namespace DATA
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Load(path$, Optional encoding As Encodings = Encodings.Default) As DataFrame
-            Return New DataFrame(EntityObject.LoadDataSet(path))
+        Public Shared Function Load(path$, Optional encoding As Encodings = Encodings.Default, Optional uidMap$ = Nothing) As DataFrame
+            Return New DataFrame(EntityObject.LoadDataSet(path, uidMap:=uidMap))
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of EntityObject) Implements IEnumerable(Of EntityObject).GetEnumerator
@@ -142,13 +143,23 @@ Namespace DATA
             Return data
         End Operator
 
-        Public Shared Function Append(multiple As IEnumerable(Of EntityObject), unique As DataFrame) As IEnumerable(Of EntityObject)
+        ''' <summary>
+        ''' 这是一个可伸缩的Linq方法
+        ''' </summary>
+        ''' <param name="multiple"></param>
+        ''' <param name="unique"></param>
+        ''' <returns></returns>
+        Public Shared Function Append(multiple As IEnumerable(Of EntityObject),
+                                      unique As DataFrame,
+                                      Optional allowNothing As Boolean = False) As IEnumerable(Of EntityObject)
             Return multiple _
                 .Select(Function(query)
-                            If Not unique.entityList.ContainsKey(query.ID) Then
+                            Dim id$ = query.ID Or "".When(allowNothing)
+
+                            If Not unique.entityList.ContainsKey(id) Then
                                 Return query
                             Else
-                                With unique.entityList(query.ID)
+                                With unique.entityList(id)
                                     For Each [property] In .Properties
                                         query.Properties([property].Key) = [property].Value
                                     Next
