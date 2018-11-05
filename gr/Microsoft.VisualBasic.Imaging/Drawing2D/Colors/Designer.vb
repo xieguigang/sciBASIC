@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::61f30121e1d6a20ab25cb648c7810a6e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Designer
-    ' 
-    '         Properties: AvailableInterpolates, Category31, ClusterColour, ColorBrewer, ConsoleColors
-    '                     MaterialPalette, Rainbow, TSF
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: __constraint, __internalFills, Colors, CubicSpline, FromNames
-    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, GetColorsInternal, IsColorNameList
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Designer
+' 
+'         Properties: AvailableInterpolates, Category31, ClusterColour, ColorBrewer, ConsoleColors
+'                     MaterialPalette, Rainbow, TSF
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: __constraint, __internalFills, Colors, CubicSpline, FromNames
+'                   FromSchema, GetBrushes, (+2 Overloads) GetColors, GetColorsInternal, IsColorNameList
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,6 +50,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Interpolation
@@ -399,20 +400,13 @@ Namespace Drawing2D.Colors
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function FromNames(colors$(), n%) As Color()
-            Return colors.Select(AddressOf ToColor).__internalFills(n)
+            Return colors.Select(AddressOf ToColor).internalFills(n)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Private Function __internalFills(colors As IEnumerable(Of Color), n As Integer) As Color()
-            Dim out As New List(Of Color)(colors)
-            Dim i As Integer = Scan0
-
-            Do While out.Count < n
-                out.Add(out(i))
-                i += 1
-            Loop
-
-            Return out.ToArray
+        Private Function internalFills(colors As IEnumerable(Of Color), n%) As Color()
+            Return New LoopArray(Of Color)(colors).Take(n).ToArray
         End Function
 
         ''' <summary>
@@ -422,7 +416,7 @@ Namespace Drawing2D.Colors
         ''' <param name="n%"></param>
         ''' <returns></returns>
         Public Function FromSchema(term$, n%) As Color()
-            Return GetColors(term).__internalFills(n)
+            Return GetColors(term).internalFills(n)
         End Function
 
         ''' <summary>
