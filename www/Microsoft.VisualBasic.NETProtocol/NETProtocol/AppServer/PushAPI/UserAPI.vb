@@ -96,11 +96,14 @@ Namespace NETProtocol.PushAPI
                 Call HashUser.Add(uid, sId)
             End If
 
-            Dim post As New Protocols.InitPOSTBack With {
-                .uid = uid,
-                .Portal = New IPEndPoint("", Me.PushServer.UserSocket.LocalPort) ' 在客户端已处理
-            }
-            Return RequestStream.CreatePackage(post)
+            'Dim post As New Protocols.InitPOSTBack With {
+            '    .uid = uid,
+            '    .Portal = New IPEndPoint("", Me.PushServer.UserSocket.LocalPort) ' 在客户端已处理
+            '}
+
+            'Return RequestStream.CreatePackage(post)
+
+            Throw New NotImplementedException
         End Function
 
         ''' <summary>

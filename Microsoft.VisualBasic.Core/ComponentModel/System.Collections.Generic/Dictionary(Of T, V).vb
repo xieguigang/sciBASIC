@@ -98,14 +98,14 @@ Namespace ComponentModel.Collection
         End Property
 
         ''' <summary>
-        ''' 不存在的键名会返回Nothing
+        ''' 不存在的键名或者空值的键名都会返回``Nothing``
         ''' </summary>
         ''' <param name="key"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(key As String) As V
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                If ContainsKey(key) Then
+                If Not key Is Nothing AndAlso ContainsKey(key) Then
                     Return MyBase.Item(key)
                 Else
                     Return Nothing

@@ -58,7 +58,7 @@ Namespace NETProtocol
     <Protocol(GetType(UserProtocols.Protocols))>
     Public Class User : Implements IDisposable
 
-        ReadOnly __updateThread As Persistent.Application.USER
+        ' ReadOnly __updateThread As Persistent.Application.USER
 
         ''' <summary>
         ''' Public Event PushMessage(msg As <see cref="RequestStream"/>)
@@ -74,23 +74,23 @@ Namespace NETProtocol
         ''' </summary>
         ''' <param name="remote">User API的接口</param>
         Sub New(remote As IPEndPoint, uid As String)
-            __updateThread = __register(UserAPI.InitUser(remote, uid), Me)
+            ' __updateThread = __register(UserAPI.InitUser(remote, uid), Me)
             _Id = uid
             _UserInvoke = remote
         End Sub
 
-        ''' <summary>
-        ''' 在消息推送服务器上面注册自己的句柄
-        ''' </summary>
-        ''' <returns></returns>
-        Private Shared Function __register(args As InitPOSTBack, endpoint As User) As Persistent.Application.USER
-            Dim protocols As New ProtocolHandler(endpoint)
-            Dim user As New Persistent.Application.USER(args.Portal, args.uid, AddressOf protocols.HandlePush)
-            Call RunTask(Sub() user.BeginConnect(AddressOf endpoint.__close))
-            Call Threading.Thread.Sleep(100)
+        '''' <summary>
+        '''' 在消息推送服务器上面注册自己的句柄
+        '''' </summary>
+        '''' <returns></returns>
+        'Private Shared Function __register(args As InitPOSTBack, endpoint As User) As Persistent.Application.USER
+        '    Dim protocols As New ProtocolHandler(endpoint)
+        '    Dim user As New Persistent.Application.USER(args.Portal, args.uid, AddressOf protocols.HandlePush)
+        '    Call RunTask(Sub() user.BeginConnect(AddressOf endpoint.__close))
+        '    Call Threading.Thread.Sleep(100)
 
-            Return user
-        End Function
+        '    Return user
+        'End Function
 
         ''' <summary>
         ''' 得到服务器端发送过来的更新推送的消息头
@@ -108,20 +108,20 @@ Namespace NETProtocol
         ''' 可能会存在多条数据
         ''' </summary>
         Private Sub __downloadMsg()
-            Dim category = UserAPI.ProtocolEntry
-            Dim protocol = UserAPI.Protocols.GetData
-            Dim req As RequestStream = RequestStream.CreateProtocol(Of UserId)(
-                category, protocol, New UserId With {
-                    .sId = Id,
-                    .uid = __updateThread.USER_ID
-                })
-            Dim invoke As New TcpRequest(UserInvoke)
-            Dim rep As RequestStream = invoke.SendMessage(req)
+            'Dim category = UserAPI.ProtocolEntry
+            'Dim protocol = UserAPI.Protocols.GetData
+            'Dim req As RequestStream = RequestStream.CreateProtocol(Of UserId)(
+            '    category, protocol, New UserId With {
+            '        .sId = Id,
+            '        .uid = __updateThread.USER_ID
+            '    })
+            'Dim invoke As New TcpRequest(UserInvoke)
+            'Dim rep As RequestStream = invoke.SendMessage(req)
 
-            Do While Not rep.IsNull ' 读取服务器上面的数据缓存，直到没有数据为止
-                RaiseEvent PushMessage(rep)
-                rep = invoke.SendMessage(req)
-            Loop
+            'Do While Not rep.IsNull ' 读取服务器上面的数据缓存，直到没有数据为止
+            '    RaiseEvent PushMessage(rep)
+            '    rep = invoke.SendMessage(req)
+            'Loop
         End Sub
 
         Private Sub __close()
@@ -136,7 +136,7 @@ Namespace NETProtocol
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    Call __updateThread.Free
+                    '    Call __updateThread.Free
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
