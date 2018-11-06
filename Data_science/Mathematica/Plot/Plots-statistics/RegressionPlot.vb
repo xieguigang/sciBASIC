@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::fb9ceb84d13bf300ffc4b942f7d19a92, Data_science\Mathematica\Plot\Plots-statistics\RegressionPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module RegressionPlot
-    ' 
-    '     Function: Plot
-    ' 
-    ' /********************************************************************************/
+' Module RegressionPlot
+' 
+'     Function: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -80,12 +80,12 @@ Public Module RegressionPlot
                          Optional showLegend As Boolean = True,
                          Optional legendLabelFontCSS$ = CSSFont.Win10NormalLarge,
                          Optional pointLabelFontCSS$ = CSSFont.Win7LittleLarge,
-                         Optional xAxisTickDecimal% = 2,
-                         Optional yAxisTickDecimal% = 2,
+                         Optional xAxisTickFormat$ = "F2",
+                         Optional yAxisTickFormat$ = "F2",
                          Optional showErrorBand As Boolean = True) As GraphicsData
 
-        Dim XTicks#() = fit.X.Range.CreateAxisTicks(decimalDigits:=xAxisTickDecimal)
-        Dim YTicks#() = fit.Y.Range.CreateAxisTicks(decimalDigits:=yAxisTickDecimal)
+        Dim xTicks#() = fit.X.Range.CreateAxisTicks(decimalDigits:=xAxisTickFormat.Match("\d+"))
+        Dim yTicks#() = fit.Y.Range.CreateAxisTicks(decimalDigits:=yAxisTickFormat.Match("\d+"))
         Dim pointBrush As Brush = pointBrushStyle.GetBrush
         Dim regressionPen As Pen = Stroke.TryParse(regressionLineStyle).GDIObject
         Dim predictedPointBorder As Pen = Stroke.TryParse(predictPointStroke).GDIObject
@@ -97,19 +97,21 @@ Public Module RegressionPlot
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim rect = region.PlotRegion
-                Dim X = d3js.scale.linear.domain(XTicks).range(integers:={rect.Left, rect.Right})
-                Dim Y = d3js.scale.linear.domain(YTicks).range(integers:={rect.Top, rect.Bottom})
+                Dim X = d3js.scale.linear.domain(xTicks).range(integers:={rect.Left, rect.Right})
+                Dim Y = d3js.scale.linear.domain(yTicks).range(integers:={rect.Top, rect.Bottom})
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,
-                    .Region = rect,
-                    .AxisTicks = (XTicks, YTicks)
+                    .region = rect,
+                    .AxisTicks = (xTicks, yTicks)
                 }
 
                 Call g.DrawAxis(
                     region, scaler, True,
                     xlabel:=xLabel, ylabel:=yLabel,
-                    htmlLabel:=False
+                    htmlLabel:=False,
+                    XtickFormat:=xAxisTickFormat,
+                    YtickFormat:=yAxisTickFormat
                 )
 
                 ' scatter plot
@@ -125,7 +127,7 @@ Public Module RegressionPlot
                 Next
 
                 If Not fit.Polynomial.IsLinear Then
-                    For Each t In XTicks.SlideWindows(2)
+                    For Each t In xTicks.SlideWindows(2)
                         Dim A As New PointF With {.X = t(0), .Y = fit(.X)}
                         Dim B As New PointF With {.X = t(1), .Y = fit(.X)}
 
@@ -168,7 +170,7 @@ Public Module RegressionPlot
                 Next
 
                 If showErrorBand Then
-                    Dim dx = XTicks(1) - XTicks(0)
+                    Dim dx = xTicks(1) - xTicks(0)
                     Dim plusError As New List(Of PointF)
                     Dim negError As New List(Of PointF)
                     Dim line As Line
