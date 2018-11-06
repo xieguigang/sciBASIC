@@ -164,13 +164,13 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 
 ## sciBASIC# Graphics Artist
 
-[![](./gr/Datavisualization.Network/KEGG-pathway-network-clusters.png)](https://github.com/SMRUCC/GCModeller/blob/master/src/GCModeller/models/Networks/STRING/FunctionalEnrichmentPlot.vb)
+[![](./gr/network-visualization/KEGG-pathway-network-clusters.png)](https://github.com/SMRUCC/GCModeller/blob/master/src/GCModeller/models/Networks/STRING/FunctionalEnrichmentPlot.vb)
 
-+ **[Network Visualization Interface](./gr/Datavisualization.Network/)**
++ **[Network Visualization Interface](./gr/network-visualization/)**
 + **[2D Imaging & 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/)**
 + **[Isometric 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/README.md)**
 
-<img src="./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png" width="450"> <img src="./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400">
+<img src="./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png" width="450"> <img src="./gr/network-visualization/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400">
 ![](./gr/build_3DEngine/images/screenshot.png)
 
 ## Microsoft VisualBasic Data Science & Data Plots System

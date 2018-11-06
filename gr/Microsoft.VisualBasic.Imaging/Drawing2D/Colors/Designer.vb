@@ -292,7 +292,7 @@ Namespace Drawing2D.Colors
         Private Function IsColorNameList(exp$) As Boolean
             ' 因为function和rgb表达式都存在括号
             ' 所以在这里需要先判断是否为颜色表达式的列表
-            If exp.IsPattern(rgbListPattern) Then
+            If exp.IsPattern(rgbListPattern, RegexICSng) Then
                 ' 颜色列表
                 Return True
             End If
