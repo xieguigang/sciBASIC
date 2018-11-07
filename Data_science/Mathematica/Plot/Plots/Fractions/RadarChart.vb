@@ -140,7 +140,6 @@ Namespace Fractions
                     Dim value#
                     Dim color As Color
                     Dim pen As Pen
-                    Dim label$
                     Dim maxAxis As PointF
 
                     ' 绘制出中心点以及坐标轴
@@ -168,73 +167,11 @@ Namespace Fractions
                         g.DrawEllipse(ellipsePen, New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
                     Next
 
-                    Dim labelSize As SizeF
-                    Dim labelColor As New SolidBrush(labelTextColor.TranslateColor)
-
                     ' 绘制极坐标轴
                     For i As Integer = 0 To directions.Length - 1
-                        label = directions(i)
                         maxAxis = (radius.Max, alpha).ToCartesianPoint.OffSet2D(center)
                         g.DrawLine(axisPen, maxAxis, center)
                         alpha += dDegree
-
-                        ' 绘制坐标轴标签
-                        label = directions(i)
-                        labelSize = g.MeasureString(label, labelFont)
-
-                        Select Case center.QuadrantRegion(maxAxis)
-
-                            Case QuadrantRegions.RightTop
-                                ' 右上角
-                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height)
-
-                            Case QuadrantRegions.YTop
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, -labelSize.Height)
-
-                            Case QuadrantRegions.LeftTop
-                                ' 左上角
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height)
-
-                            Case QuadrantRegions.XLeft
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height / 2)
-
-                            Case QuadrantRegions.LeftBottom
-                                ' 左下角
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, 0)
-
-                            Case QuadrantRegions.YBottom
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, 0)
-
-                            Case QuadrantRegions.XRight
-                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height / 2)
-
-                            Case Else
-                                ' 右下角
-                                maxAxis = maxAxis.OffSet2D(0, 0)
-
-                        End Select
-
-                        ' 计算标签是否已经越出绘图的边界线而无法被显示出来了
-                        Dim labelRect As New RectangleF(maxAxis, labelSize)
-
-                        If labelRect.Top < 0 Then
-                            maxAxis = New PointF(maxAxis.X, 1)
-                            labelRect = New RectangleF(maxAxis, labelSize)
-                        End If
-                        If labelRect.Left < 0 Then
-                            maxAxis = New PointF(1, maxAxis.Y)
-                            labelRect = New RectangleF(maxAxis, labelSize)
-                        End If
-                        If labelRect.Right > region.Size.Width Then
-                            maxAxis = New PointF(region.Size.Width - labelSize.Width - 1, maxAxis.Y)
-                            labelRect = New RectangleF(maxAxis, labelSize)
-                        End If
-                        If labelRect.Bottom > region.Size.Height Then
-                            maxAxis = New PointF(maxAxis.X, region.Size.Height - labelSize.Height - 1)
-                            labelRect = New RectangleF(maxAxis, labelSize)
-                        End If
-
-                        g.DrawString(label, labelFont, labelColor, maxAxis)
                     Next
 
                     For i As Integer = 0 To serials.Length - 1
@@ -345,9 +282,90 @@ Namespace Fractions
                             Next
                         End With
                     Next
+
+                    Dim labelSize As SizeF
+                    Dim labelColor As New SolidBrush(labelTextColor.TranslateColor)
+                    Dim label$
+
+                    alpha! = -90
+
+                    ' 绘制极坐标轴标签
+                    ' 标签应该在最后绘制，否则可能会被盖住
+                    For i As Integer = 0 To directions.Length - 1
+                        maxAxis = (radius.Max, alpha).ToCartesianPoint.OffSet2D(center)
+                        alpha += dDegree
+
+                        ' 绘制坐标轴标签
+                        label = directions(i)
+                        labelSize = g.MeasureString(label, labelFont)
+
+                        Select Case center.QuadrantRegion(maxAxis)
+
+                            Case QuadrantRegions.RightTop
+                                ' 右上角
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height)
+
+                            Case QuadrantRegions.YTop
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, -labelSize.Height)
+
+                            Case QuadrantRegions.LeftTop
+                                ' 左上角
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height)
+
+                            Case QuadrantRegions.XLeft
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height / 2)
+
+                            Case QuadrantRegions.LeftBottom
+                                ' 左下角
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, 0)
+
+                            Case QuadrantRegions.YBottom
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, 0)
+
+                            Case QuadrantRegions.XRight
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height / 2)
+
+                            Case Else
+                                ' 右下角
+                                maxAxis = maxAxis.OffSet2D(0, 0)
+
+                        End Select
+
+                        ' 计算标签是否已经越出绘图的边界线而无法被显示出来了
+                        Dim labelRect As New RectangleF(maxAxis, labelSize)
+
+                        If labelRect.Top < 0 Then
+                            maxAxis = New PointF(maxAxis.X, 1)
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+                        If labelRect.Left < 0 Then
+                            maxAxis = New PointF(1, maxAxis.Y)
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+                        If labelRect.Right > region.Size.Width Then
+                            maxAxis = New PointF With {
+                                .X = region.Size.Width - labelSize.Width - 1,
+                                .Y = maxAxis.Y
+                            }
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+                        If labelRect.Bottom > region.Size.Height Then
+                            maxAxis = New PointF With {
+                                .X = maxAxis.X,
+                                .Y = region.Size.Height - labelSize.Height - 1
+                            }
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+
+                        g.DrawString(label, labelFont, labelColor, maxAxis)
+                    Next
                 End Sub
 
-            Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
+            Return g.GraphicsPlots(
+                size.SizeParser, margin,
+                bg,
+                plotInternal
+            )
         End Function
     End Module
 End Namespace
