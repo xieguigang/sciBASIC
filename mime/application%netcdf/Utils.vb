@@ -45,6 +45,6 @@ Module Utils
         ' Apply padding
         Call buffer.padding()
 
-        Return name
+        Return New String(name)
     End Function
 End Module

@@ -12,12 +12,20 @@ Public Structure Dimension
     ''' </summary>
     Dim size As Integer
 
+    Public Overrides Function ToString() As String
+        Return $"{name}(size={size})"
+    End Function
 End Structure
 
 Public Class DimensionList
+
     Public Property dimensions As Dimension()
     Public Property recordId As Integer?
     Public Property recordName As String
+
+    Public Overrides Function ToString() As String
+        Return $"[{recordId}] {recordName}"
+    End Function
 End Class
 
 ''' <summary>
