@@ -16,7 +16,7 @@ Module DataReader
         ' variable type
         Dim type = TypeExtensions.str2num(variable.type)
         ' size of the data
-        Dim size = variable.size / TypeExtensions.num2bytes(type)
+        Dim size = variable.size / sizeof(type)
         ' iterates over the data
         Dim data As Object() = New Object(size - 1) {}
 
@@ -36,8 +36,8 @@ Module DataReader
     ''' <returns>Data of the element</returns>
     Public Function record(buffer As BinaryDataReader, variable As variable, recordDimension As recordDimension) As Object()
         ' variable type
-        Dim type = TypeExtensions.str2num(variable.type)
-        Dim width = If(variable.size, variable.size / TypeExtensions.num2bytes(type), 1)
+        Dim type As CDFDataTypes = TypeExtensions.str2num(variable.type)
+        Dim width% = If(variable.size, variable.size / sizeof(type), 1)
 
         ' size of the data
         ' TODO streaming data

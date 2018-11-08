@@ -3,6 +3,9 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 
+''' <summary>
+''' CDF file summary
+''' </summary>
 Module ToStringHelper
 
     <Extension>

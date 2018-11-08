@@ -1,16 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Data.IO
 
-Public Enum types As Integer
-    undefined = -1
-
-    [BYTE] = 1
-    [CHAR] = 2
-    [SHORT] = 3
-    [INT] = 4
-    [FLOAT] = 5
-    [DOUBLE] = 6
-End Enum
-
 Module TypeExtensions
 
     ''' <summary>
@@ -18,19 +7,19 @@ Module TypeExtensions
     ''' </summary>
     ''' <param name="type">type - integer that represents the type</param>
     ''' <returns>parsed value of the type</returns>
-    Public Function num2str(type As types) As String
+    Public Function num2str(type As CDFDataTypes) As String
         Select Case type
-            Case types.BYTE
+            Case CDFDataTypes.BYTE
                 Return "byte"
-            Case types.CHAR
+            Case CDFDataTypes.CHAR
                 Return "char"
-            Case types.SHORT
+            Case CDFDataTypes.SHORT
                 Return "short"
-            Case types.INT
+            Case CDFDataTypes.INT
                 Return "int"
-            Case types.FLOAT
+            Case CDFDataTypes.FLOAT
                 Return "float"
-            Case types.DOUBLE
+            Case CDFDataTypes.DOUBLE
                 Return "double"
             Case Else
                 ' istanbul ignore next 
@@ -43,19 +32,19 @@ Module TypeExtensions
     ''' </summary>
     ''' <param name="type">type - integer that represents the type</param>
     ''' <returns>size of the type</returns>
-    Public Function num2bytes(type As types) As Integer
+    Public Function sizeof(type As CDFDataTypes) As Integer
         Select Case type
-            Case types.BYTE
+            Case CDFDataTypes.BYTE
                 Return 1
-            Case types.CHAR
+            Case CDFDataTypes.CHAR
                 Return 1
-            Case types.SHORT
+            Case CDFDataTypes.SHORT
                 Return 2
-            Case types.INT
+            Case CDFDataTypes.INT
                 Return 4
-            Case types.FLOAT
+            Case CDFDataTypes.FLOAT
                 Return 4
-            Case types.DOUBLE
+            Case CDFDataTypes.DOUBLE
                 Return 8
             Case Else
                 ' istanbul ignore next 
@@ -68,23 +57,23 @@ Module TypeExtensions
     ''' </summary>
     ''' <param name="type">type - string that represents the type</param>
     ''' <returns>parsed value of the type</returns>
-    Public Function str2num(type As String) As types
+    Public Function str2num(type As String) As CDFDataTypes
         Select Case LCase(type)
             Case "byte"
-                Return types.BYTE
+                Return CDFDataTypes.BYTE
             Case "char"
-                Return types.CHAR
+                Return CDFDataTypes.CHAR
             Case "short"
-                Return types.SHORT
+                Return CDFDataTypes.SHORT
             Case "int"
-                Return types.INT
+                Return CDFDataTypes.INT
             Case "float"
-                Return types.FLOAT
+                Return CDFDataTypes.FLOAT
             Case "double"
-                Return types.DOUBLE
+                Return CDFDataTypes.DOUBLE
             Case Else
                 ' istanbul ignore next
-                Return types.undefined
+                Return CDFDataTypes.undefined
         End Select
     End Function
 
@@ -115,7 +104,7 @@ Module TypeExtensions
     ''' <param name="type">type - Type of the data to read</param>
     ''' <param name="size">size - Size of the element to read</param>
     ''' <returns>``{string|Array&lt;number>|number}``</returns>
-    Public Function readType(buffer As BinaryDataReader, type As types, size As Integer) As Object
+    Public Function readType(buffer As BinaryDataReader, type As CDFDataTypes, size As Integer) As Object
         If buffer.EndOfStream Then
             Call $"Binary reader ""{buffer.ToString}"" offset out of boundary!".Warning
             ' 已经出现越界了
@@ -123,17 +112,17 @@ Module TypeExtensions
         End If
 
         Select Case type
-            Case types.BYTE
+            Case CDFDataTypes.BYTE
                 Return buffer.ReadBytes(size)
-            Case types.CHAR
+            Case CDFDataTypes.CHAR
                 Return New String(buffer.ReadChars(size)).TrimNull
-            Case types.SHORT
+            Case CDFDataTypes.SHORT
                 Return readNumber(size, AddressOf buffer.ReadInt16)
-            Case types.INT
+            Case CDFDataTypes.INT
                 Return readNumber(size, AddressOf buffer.ReadInt32)
-            Case types.FLOAT
+            Case CDFDataTypes.FLOAT
                 Return readNumber(size, AddressOf buffer.ReadSingle)
-            Case types.DOUBLE
+            Case CDFDataTypes.DOUBLE
                 Return readNumber(size, AddressOf buffer.ReadDouble)
 
             Case Else
