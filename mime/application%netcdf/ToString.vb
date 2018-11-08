@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module ToStringHelper
@@ -22,8 +23,8 @@ Module ToStringHelper
         result.AppendLine()
         result.AppendLine("VARIABLES:")
         For Each variable As variable In file.variables
-            Dim value = file.getDataVariable(variable)
-            Dim stringify = value.GetJson
+            Dim value As Object() = file.getDataVariable(variable)
+            Dim stringify = value.valueString(variable.type)
 
             If (stringify.Length > 50) Then
                 stringify = stringify.Substring(0, 50)
@@ -36,5 +37,14 @@ Module ToStringHelper
         Next
 
         Return result.ToString
+    End Function
+
+    <Extension>
+    Private Function valueString(value As Object(), type$) As String
+        If type = "char" Then
+            Return New String(value.As(Of Char))
+        Else
+            Return value.GetJson
+        End If
     End Function
 End Module
