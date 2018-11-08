@@ -7,7 +7,7 @@ End Structure
 
 Public Class DimensionList
     Public Property dimensions As Dimension()
-    Public Property recordId As Integer
+    Public Property recordId As Integer?
     Public Property recordName As String
 End Class
 

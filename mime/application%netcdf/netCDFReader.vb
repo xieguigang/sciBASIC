@@ -45,7 +45,7 @@ Imports Microsoft.VisualBasic.Language
 Public Class netCDFReader
 
     Dim buffer As BinaryDataReader
-    Dim header
+    Dim header As Header
 
     Const Magic$ = "CDF"
 

@@ -38,7 +38,7 @@ Public Class Header
     ''' List of variables
     ''' </summary>
     ''' <returns></returns>
-    Public Property variables
+    Public Property variables As variable()
     Public Property version As Byte
 
     ''' <summary>
@@ -94,7 +94,7 @@ Public Class Header
             Utils.notNetcdf((dimList <> NC_DIMENSION), "wrong tag for list of dimensions")
         End If
 
-        Dim recordId%
+        Dim recordId%? = Nothing
         Dim recordName$ = "NA"
         ' Length of dimensions
         Dim dimensionSize = buffer.ReadUInt32()
@@ -194,13 +194,13 @@ Public Class Header
     '''  + `offset`: Number with the offset where of the variable begins
     '''  + `record`: True if Is a record variable, false otherwise (unlimited size)
     '''  </returns>
-    Function variablesList(buffer As BinaryDataReader, recordId%, version As Byte) As variable()
+    Function variablesList(buffer As BinaryDataReader, recordId As Integer?, version As Byte) As (variables As variable(), recordStep As Integer)
         Dim varList = buffer.ReadUInt32()
         Dim recordStep = 0
 
         If (varList = ZERO) Then
             Utils.notNetcdf((buffer.ReadUInt32() <> ZERO), "wrong empty tag for list of variables")
-            Return {}
+            Return Nothing
         Else
             Utils.notNetcdf((varList <> NC_VARIABLE), "wrong tag for list of variables")
         End If
@@ -218,8 +218,8 @@ Public Class Header
             Dim dimensionsIds = New Integer(dimensionality - 1) {}
 
             For [dim] As Integer = 0 To dimensionality - 1
-                dimensionsIds[dim] = buffer.ReadUInt32()
-      Next
+                dimensionsIds([dim]) = buffer.ReadUInt32()
+            Next
 
             ' Read variables size
             Dim attributes = attributesList(buffer)
@@ -243,10 +243,10 @@ Public Class Header
             Dim record = False
 
             ' Count amount of record variables
-            If ((recordId IsNot Nothing) AndAlso (dimensionsIds[0] = recordId)) 
-        recordStep += varSize
-                record = True;
-      End If
+            If ((recordId IsNot Nothing) AndAlso (dimensionsIds(0) = recordId)) Then
+                recordStep += varSize
+                record = True
+            End If
 
             variables += New variable With {
                 .name = name,
