@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Components
 
@@ -21,7 +22,7 @@ Namespace Components
         Public Property tiny_num As Single()
         Public Property numerics As Double()
 
-        Public ReadOnly Property Type As CDFDataTypes
+        Public ReadOnly Property cdfDataType As CDFDataTypes
             Get
                 If Not byteStream.StringEmpty Then
                     Return CDFDataTypes.BYTE
@@ -41,6 +42,19 @@ Namespace Components
                 End If
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Select Case cdfDataType
+                Case CDFDataTypes.BYTE : Return byteStream
+                Case CDFDataTypes.CHAR : Return chars
+                Case CDFDataTypes.DOUBLE : Return numerics.JoinBy(",")
+                Case CDFDataTypes.FLOAT : Return tiny_num.JoinBy(",")
+                Case CDFDataTypes.INT : Return integers.JoinBy(",")
+                Case CDFDataTypes.SHORT : Return tiny_int.JoinBy(",")
+                Case Else
+                    Return "null"
+            End Select
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(data As Byte()) As CDFData

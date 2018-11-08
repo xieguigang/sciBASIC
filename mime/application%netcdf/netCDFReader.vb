@@ -183,26 +183,28 @@ Public Class netCDFReader
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function getDataVariableAsString(variableName As String) As String
-        Return getDataVariable(variableName) _
-            .JoinBy("") _
-            .Trim()
+        Return getDataVariable(variableName).ToString
     End Function
 
     ''' <summary>
     ''' Retrieves the data for a given variable
     ''' </summary>
     ''' <returns>List with the variable values</returns>
-    Public Function getDataVariable(variable As variable) As Object()
+    Public Function getDataVariable(variable As variable) As CDFData
+        Dim values As Object()
+
         ' go to the offset position
         Call buffer.Seek(variable.offset, SeekOrigin.Begin)
 
         If (variable.record) Then
             ' record variable case
-            Return DataReader.record(buffer, variable, header.recordDimension)
+            values = DataReader.record(buffer, variable, header.recordDimension)
         Else
             ' non-record variable case
-            Return DataReader.nonRecord(buffer, variable)
+            values = DataReader.nonRecord(buffer, variable)
         End If
+
+        Return (values, TypeExtensions.str2num(variable.type))
     End Function
 
     ''' <summary>
@@ -210,7 +212,7 @@ Public Class netCDFReader
     ''' </summary>
     ''' <param name="variableName">Name of the variable to search Or variable object</param>
     ''' <returns>List with the variable values</returns>
-    Public Function getDataVariable(variableName As String) As Object()
+    Public Function getDataVariable(variableName As String) As CDFData
         ' search the variable
         Dim variable As variable = variableTable.TryGetValue(variableName)
         ' throws if variable Not found
@@ -243,14 +245,5 @@ Public Class netCDFReader
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String
         Return netCDF.toString(Me)
-    End Function
-
-    ''' <summary>
-    ''' 这个函数方法只适用于比较小的数据文件
-    ''' </summary>
-    ''' <param name="out"></param>
-    ''' <returns></returns>
-    Public Function SaveAsXml(out As Stream) As Boolean
-
     End Function
 End Class

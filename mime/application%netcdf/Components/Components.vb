@@ -1,4 +1,6 @@
-﻿Namespace Components
+﻿Imports System.Xml.Serialization
+
+Namespace Components
 
     ''' <summary>
     ''' 
@@ -8,10 +10,11 @@
         ''' <summary>
         ''' String with the name of the dimension
         ''' </summary>
-        Dim name As String
+        <XmlAttribute> Dim name As String
         ''' <summary>
         ''' Number with the size of the dimension
         ''' </summary>
+        <XmlText>
         Dim size As Integer
 
         Public Overrides Function ToString() As String
@@ -21,9 +24,10 @@
 
     Public Class DimensionList
 
+        <XmlAttribute> Public Property recordId As Integer?
+        <XmlAttribute> Public Property recordName As String
+
         Public Property dimensions As Dimension()
-        Public Property recordId As Integer?
-        Public Property recordName As String
 
         Public Overrides Function ToString() As String
             Return $"[{recordId}] {recordName}"
@@ -39,22 +43,22 @@
         ''' Number of elements in the record dimension
         ''' </summary>
         ''' <returns></returns>
-        Public Property length As Integer
+        <XmlAttribute> Public Property length As Integer
         ''' <summary>
         ''' Id number In the list Of dimensions For the record dimension
         ''' </summary>
         ''' <returns></returns>
-        Public Property id As Integer
+        <XmlAttribute> Public Property id As Integer
         ''' <summary>
         ''' String with the name of the record dimension
         ''' </summary>
         ''' <returns></returns>
-        Public Property name As String
+        <XmlAttribute> Public Property name As String
         ''' <summary>
         ''' Number with the record variables step size
         ''' </summary>
         ''' <returns></returns>
-        Public Property recordStep As Integer
+        <XmlAttribute> Public Property recordStep As Integer
 
         Public Overrides Function ToString() As String
             Return $"[{id}] {name} ({recordStep}x{length})"
@@ -67,17 +71,17 @@
         ''' String with the name of the attribute
         ''' </summary>
         ''' <returns></returns>
-        Public Property name As String
+        <XmlAttribute> Public Property name As String
         ''' <summary>
         ''' String with the type of the attribute
         ''' </summary>
         ''' <returns></returns>
-        Public Property type As String
+        <XmlAttribute> Public Property type As String
         ''' <summary>
         ''' A number or string with the value of the attribute
         ''' </summary>
         ''' <returns></returns>
-        Public Property value As String
+        <XmlText> Public Property value As String
 
         Public Overrides Function ToString() As String
             Return $"Dim {name} As {type} = {value}"
@@ -90,7 +94,7 @@
         ''' String with the name of the variable
         ''' </summary>
         ''' <returns></returns>
-        Public Property name As String
+        <XmlAttribute> Public Property name As String
         ''' <summary>
         ''' Array with the dimension IDs of the variable
         ''' </summary>
@@ -105,22 +109,22 @@
         ''' String with the type of the variable
         ''' </summary>
         ''' <returns></returns>
-        Public Property type As String
+        <XmlAttribute> Public Property type As String
         ''' <summary>
         ''' Number with the size of the variable
         ''' </summary>
         ''' <returns></returns>
-        Public Property size As Integer?
+        <XmlAttribute> Public Property size As Integer?
         ''' <summary>
         ''' Number with the offset where of the variable begins
         ''' </summary>
         ''' <returns></returns>
-        Public Property offset As Long
+        <XmlAttribute> Public Property offset As Long
         ''' <summary>
         ''' True if Is a record variable, false otherwise
         ''' </summary>
         ''' <returns></returns>
-        Public Property record As Boolean
+        <XmlAttribute> Public Property record As Boolean
 
         Public Property value As CDFData
 
