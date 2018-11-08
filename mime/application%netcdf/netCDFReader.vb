@@ -170,8 +170,8 @@ Public Class netCDFReader
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Sub New(path As String)
-        Call Me.New(path.OpenBinaryReader(Encodings.UTF8))
+    Sub New(path$, Optional encoding As Encodings = Encodings.UTF8)
+        Call Me.New(path.OpenBinaryReader(encoding))
     End Sub
 
     ''' <summary>
