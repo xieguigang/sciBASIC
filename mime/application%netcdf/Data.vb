@@ -50,7 +50,7 @@ Public Module Data
                 data(i) = Nothing
             Else
                 data(i) = TypeExtensions.readType(buffer, type, width)
-                buffer.Seek(currentOffset + [step])
+                buffer.Seek([step])
             End If
         Next
 

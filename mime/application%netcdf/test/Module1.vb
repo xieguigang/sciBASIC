@@ -9,6 +9,8 @@ Module Module1
 
         Call file.ToString.__DEBUG_ECHO
 
+        Dim massvalue = file.getDataVariable("mass_values")
+
         Pause()
     End Sub
 
