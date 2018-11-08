@@ -41,12 +41,15 @@ Public Class Header
     Public Property variables As variable()
     Public Property version As Byte
 
+    Sub New()
+    End Sub
+
     ''' <summary>
     ''' Read the header of the file
     ''' </summary>
     ''' <param name="buffer">Buffer for the file data</param>
     ''' <param name="version">Version of the file</param>
-    Sub New(buffer As BinaryDataReader, version As Byte)
+    Friend Sub New(buffer As BinaryDataReader, version As Byte)
         ' Length of record dimension
         ' sum of the varSize's of all the record variables.
         Me.recordDimension = New recordDimension With {.length = buffer.ReadUInt32}

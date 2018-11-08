@@ -57,6 +57,8 @@ Public Class netCDFReader
         Utils.notNetcdf(buffer.ReadString(3) <> Magic, $"should start with {Magic}")
         Utils.notNetcdf((version = buffer.ReadByte) > 2, "unknown version")
 
+        Me.header = New Header(buffer, version)
+        Me.buffer = buffer
     End Sub
 
 End Class
