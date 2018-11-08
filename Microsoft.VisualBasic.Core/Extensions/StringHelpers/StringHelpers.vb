@@ -86,7 +86,11 @@ Public Module StringHelpers
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function TrimNull(str As String) As String
-        Return Strings.Trim(str)
+        If str Is Nothing Then
+            Return Nothing
+        Else
+            Return str.Trim(ASCII.NUL)
+        End If
     End Function
 
     <Extension>

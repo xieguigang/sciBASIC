@@ -73,6 +73,10 @@ Public Class attribute
     ''' </summary>
     ''' <returns></returns>
     Public Property value As String
+
+    Public Overrides Function ToString() As String
+        Return $"Dim {name} As {type} = {value}"
+    End Function
 End Class
 
 Public Class variable
@@ -114,4 +118,7 @@ Public Class variable
     Public Property record As Boolean
     Public Property value As Object()
 
+    Public Overrides Function ToString() As String
+        Return $"Dim {name}[offset={offset}] As {type}"
+    End Function
 End Class
