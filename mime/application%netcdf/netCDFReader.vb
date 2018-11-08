@@ -46,8 +46,101 @@ Public Class netCDFReader
 
     Dim buffer As BinaryDataReader
     Dim header As Header
+    Dim globalAttributeTable As Dictionary(Of String, attribute)
+    Dim variableTable As Dictionary(Of String, variable)
 
     Const Magic$ = "CDF"
+
+    ''' <summary>
+    ''' Version for the NetCDF format
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property version As String
+        Get
+            If (header.version = 1) Then
+                Return "classic format"
+            Else
+                Return "64-bit offset format"
+            End If
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Metadata for the record dimension
+    ''' 
+    '''  + `length`: Number of elements in the record dimension
+    '''  + `id`: Id number In the list Of dimensions For the record dimension
+    '''  + `name`: String with the name of the record dimension
+    '''  + `recordStep`: Number with the record variables step size
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property recordDimension As recordDimension
+        Get
+            Return header.recordDimension
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' List of dimensions with:
+    ''' 
+    '''  + `name`: String with the name of the dimension
+    '''  + `size`: Number with the size of the dimension
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property dimensions As Dimension()
+        Get
+            Return header.dimensions
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' List of global attributes with:
+    ''' 
+    '''  + `name`: String with the name of the attribute
+    '''  + `type`: String with the type of the attribute
+    '''  + `value`: A number Or String With the value Of the attribute
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property globalAttributes As attribute()
+        Get
+            Return header.globalAttributes
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Returns the value of an attribute
+    ''' </summary>
+    ''' <param name="attributeName">attributeName</param>
+    ''' <returns>Value of the attributeName Or undefined</returns>
+    Default Public ReadOnly Property getAttribute(attributeName As String) As Object
+        Get
+            With globalAttributeTable.TryGetValue(attributeName)
+                If .IsNothing Then
+                    Return Nothing
+                Else
+                    Return .value
+                End If
+            End With
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' List of variables with:
+    ''' 
+    '''  + `name`: String with the name of the variable
+    '''  + `dimensions`: Array with the dimension IDs of the variable
+    '''  + `attributes`: Array with the attributes of the variable
+    '''  + `type`: String with the type of the variable
+    '''  + `size`: Number with the size of the variable
+    '''  + `offset`: Number with the offset where of the variable begins
+    '''  + `record`: True if Is a record variable, false otherwise
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property variables As variable()
+        Get
+            Return header.variables
+        End Get
+    End Property
 
     Sub New(buffer As BinaryDataReader)
         Dim version As Value(Of Byte) = Scan0
@@ -59,6 +152,53 @@ Public Class netCDFReader
 
         Me.header = New Header(buffer, version)
         Me.buffer = buffer
+        Me.globalAttributeTable = header _
+            .globalAttributes _
+            .ToDictionary(Function(att) att.name)
+        Me.variableTable = header _
+            .variables _
+            .ToDictionary(Function(var) var.name)
     End Sub
 
+    ''' <summary>
+    ''' Returns the value of a variable as a string
+    ''' </summary>
+    ''' <param name="variableName">variableName</param>
+    ''' <returns>Value of the variable as a string Or undefined</returns>
+    Public Function getDataVariableAsString(variableName As String) As String
+        Try
+            Return getDataVariable(variableName)
+            .joinby("")
+            .trim()
+        Catch e As Exception
+            Call e.PrintException
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Retrieves the data for a given variable
+    ''' </summary>
+    ''' <param name="variableName">Name of the variable to search Or variable object</param>
+    ''' <returns>List with the variable values</returns>
+    Public Function getDataVariable(variableName As String)
+        ' search the variable
+        Dim variable As variable = header _
+            .variables _
+            .Where(Function(val) val.name = variableName) _
+            .FirstOrDefault
+
+        ' throws if variable Not found
+        Utils.notNetcdf(variable Is Nothing, $"variable Not found: {variableName}")
+        ' go to the offset position
+        buffer.Seek(variable.offset)
+
+        If (variable.record) Then
+            ' record variable case
+            Return Data.record(buffer, variable, header.recordDimension)
+        Else
+            ' non-record variable case
+            Return Data.nonRecord(buffer, variable)
+        End If
+    End Function
 End Class
