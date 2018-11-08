@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.IO
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO
 
 Public Module Data
 
@@ -45,12 +46,13 @@ Public Module Data
 
         For i As Integer = 0 To size - 1
             Dim currentOffset& = buffer.Position
+            Dim nextOffset = currentOffset + [step]
 
             If buffer.EndOfStream Then
                 data(i) = Nothing
             Else
                 data(i) = TypeExtensions.readType(buffer, type, width)
-                buffer.Seek([step])
+                buffer.Seek(nextOffset, SeekOrigin.Begin)
             End If
         Next
 
