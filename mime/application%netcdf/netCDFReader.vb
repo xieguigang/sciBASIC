@@ -180,14 +180,9 @@ Public Class netCDFReader
     ''' <param name="variableName">variableName</param>
     ''' <returns>Value of the variable as a string Or undefined</returns>
     Public Function getDataVariableAsString(variableName As String) As String
-        Try
-            Return getDataVariable(variableName) _
-                .JoinBy("") _
-                .Trim()
-        Catch e As Exception
-            Call e.PrintException
-            Return Nothing
-        End Try
+        Return getDataVariable(variableName) _
+            .JoinBy("") _
+            .Trim()
     End Function
 
     ''' <summary>
@@ -198,17 +193,13 @@ Public Class netCDFReader
         ' go to the offset position
         Call buffer.Seek(variable.offset, SeekOrigin.Begin)
 
-        Try
-            If (variable.record) Then
-                ' record variable case
-                Return Data.record(buffer, variable, header.recordDimension)
-            Else
-                ' non-record variable case
-                Return Data.nonRecord(buffer, variable)
-            End If
-        Catch ex As Exception
-            Return Nothing
-        End Try
+        If (variable.record) Then
+            ' record variable case
+            Return Data.record(buffer, variable, header.recordDimension)
+        Else
+            ' non-record variable case
+            Return Data.nonRecord(buffer, variable)
+        End If
     End Function
 
     ''' <summary>

@@ -37,7 +37,7 @@ Public Class recordDimension
     ''' Number of elements in the record dimension
     ''' </summary>
     ''' <returns></returns>
-    Public Property length As UInt32
+    Public Property length As Integer
     ''' <summary>
     ''' Id number In the list Of dimensions For the record dimension
     ''' </summary>
@@ -116,7 +116,6 @@ Public Class variable
     ''' </summary>
     ''' <returns></returns>
     Public Property record As Boolean
-    Public Property value As Object()
 
     Public Overrides Function ToString() As String
         Return $"Dim {name}[offset={offset}] As {type}"

@@ -45,8 +45,13 @@ Public Module Data
 
         For i As Integer = 0 To size - 1
             Dim currentOffset& = buffer.Position
-            data(i) = TypeExtensions.readType(buffer, type, width)
-            buffer.Seek(currentOffset + [step])
+
+            If buffer.EndOfStream Then
+                data(i) = Nothing
+            Else
+                data(i) = TypeExtensions.readType(buffer, type, width)
+                buffer.Seek(currentOffset + [step])
+            End If
         Next
 
         Return data

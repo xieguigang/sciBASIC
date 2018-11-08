@@ -116,6 +116,12 @@ Module TypeExtensions
     ''' <param name="size">size - Size of the element to read</param>
     ''' <returns>``{string|Array&lt;number>|number}``</returns>
     Public Function readType(buffer As BinaryDataReader, type As types, size As Integer) As Object
+        If buffer.EndOfStream Then
+            Call $"Binary reader ""{buffer.ToString}"" offset out of boundary!".Warning
+            ' 已经出现越界了
+            Return Nothing
+        End If
+
         Select Case type
             Case types.BYTE
                 Return buffer.ReadBytes(size)
