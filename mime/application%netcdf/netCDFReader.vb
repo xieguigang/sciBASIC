@@ -39,6 +39,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 
@@ -183,10 +184,7 @@ Public Class netCDFReader
     ''' <returns>List with the variable values</returns>
     Public Function getDataVariable(variableName As String)
         ' search the variable
-        Dim variable As variable = header _
-            .variables _
-            .Where(Function(val) val.name = variableName) _
-            .FirstOrDefault
+        Dim variable As variable = variableTable.TryGetValue(variableName)
 
         ' throws if variable Not found
         Utils.notNetcdf(variable Is Nothing, $"variable Not found: {variableName}")
@@ -200,5 +198,26 @@ Public Class netCDFReader
             ' non-record variable case
             Return Data.nonRecord(buffer, variable)
         End If
+    End Function
+
+    ''' <summary>
+    ''' Check if a dataVariable exists
+    ''' </summary>
+    ''' <param name="variableName">Name of the variable to find</param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function dataVariableExists(variableName As String) As Boolean
+        Return variableTable.ContainsKey(variableName)
+    End Function
+
+    ''' <summary>
+    ''' Check if an attribute exists
+    ''' </summary>
+    ''' <param name="attributeName">Name of the attribute to find</param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function attributeExists(attributeName As String) As Boolean
+        Return globalAttributeTable.ContainsKey(attributeName)
     End Function
 End Class
