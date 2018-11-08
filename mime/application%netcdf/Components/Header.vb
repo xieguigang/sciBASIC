@@ -140,34 +140,34 @@ Public Class Header
     '''  + `value`: A number Or String With the value Of the attribute
     '''  
     ''' </returns>
-    Private Shared Function attributesList(buffer) As attribute()
-        Dim gAttList = buffer.readUint32()
+    Private Shared Function attributesList(buffer As BinaryDataReader) As attribute()
+        Dim gAttList = buffer.ReadUInt32()
 
         If (gAttList = ZERO) Then
-            Utils.notNetcdf((buffer.readUint32() <> ZERO), "wrong empty tag for list of attributes")
+            Utils.notNetcdf((buffer.ReadUInt32() <> ZERO), "wrong empty tag for list of attributes")
             Return {}
         Else
             Utils.notNetcdf((gAttList <> NC_ATTRIBUTE), "wrong tag for list of attributes")
         End If
 
         ' Length of attributes
-        Dim attributeSize = buffer.readUint32()
+        Dim attributeSize = buffer.ReadUInt32()
         Dim attributes As New List(Of attribute)
 
         For gAtt As Integer = 0 To attributeSize - 1
             ' Read name
             Dim name = Utils.readName(buffer)
             ' Read type
-            Dim type = buffer.readUint32()
+            Dim type = buffer.ReadUInt32()
 
             Utils.notNetcdf(((type < 1) Or (type > 6)), $"non valid type {type}")
 
             ' Read attribute
-            Dim size = buffer.readUint32()
+            Dim size = buffer.ReadUInt32()
             Dim Value = TypeExtensions.readType(buffer, type, size)
 
             ' Apply padding
-            Utils.padding(buffer)
+            Call Utils.padding(buffer)
 
             attributes += New attribute With {
                 .name = name,
@@ -197,7 +197,7 @@ Public Class Header
     '''  + `offset`: Number with the offset where of the variable begins
     '''  + `record`: True if Is a record variable, false otherwise (unlimited size)
     '''  </returns>
-    Private Shared Function variablesList(buffer As BinaryDataReader, recordId As Integer?, version As Byte) As (variables As variable(), recordStep As Integer)
+    Private Shared Function variablesList(buffer As BinaryDataReader, recordId%?, version As Byte) As (variables As variable(), recordStep%)
         Dim varList = buffer.ReadUInt32()
         Dim recordStep = 0
 

@@ -39,7 +39,7 @@ Module Utils
     <Extension> Public Function readName(buffer As BinaryDataReader) As String
         ' Read name
         Dim nameLength = buffer.ReadUInt32()
-        Dim name = buffer.ReadChars(nameLength)
+        Dim name() = buffer.ReadChars(nameLength)
 
         ' validate name
         ' TODO
