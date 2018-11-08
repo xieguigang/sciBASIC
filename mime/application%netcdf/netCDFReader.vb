@@ -43,6 +43,12 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 
+''' <summary>
+''' 
+''' </summary>
+''' <remarks>
+''' https://github.com/cheminfo-js/netcdfjs
+''' </remarks>
 Public Class netCDFReader
 
     Dim buffer As BinaryDataReader
