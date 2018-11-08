@@ -15,6 +15,7 @@ Public Class recordDimension
     Public Property length As UInt32
     Public Property id As Integer
     Public Property name As String
+    Public Property recordStep As Integer
 End Class
 
 Public Class attribute

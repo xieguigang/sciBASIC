@@ -84,7 +84,7 @@ Public Class Header
     '''  + `recordName`: name of the dimension that has unlimited size
     '''  
     ''' </returns>
-    Public Function dimensionsList(buffer As BinaryDataReader) As DimensionList
+    Private Shared Function dimensionsList(buffer As BinaryDataReader) As DimensionList
         Dim dimList = buffer.ReadUInt32()
 
         If (dimList = ZERO) Then
@@ -137,7 +137,7 @@ Public Class Header
     '''  + `value`: A number Or String With the value Of the attribute
     '''  
     ''' </returns>
-    Public Function attributesList(buffer) As attribute()
+    Private Shared Function attributesList(buffer) As attribute()
         Dim gAttList = buffer.readUint32()
 
         If (gAttList = ZERO) Then
@@ -194,7 +194,7 @@ Public Class Header
     '''  + `offset`: Number with the offset where of the variable begins
     '''  + `record`: True if Is a record variable, false otherwise (unlimited size)
     '''  </returns>
-    Function variablesList(buffer As BinaryDataReader, recordId As Integer?, version As Byte) As (variables As variable(), recordStep As Integer)
+    Private Shared Function variablesList(buffer As BinaryDataReader, recordId As Integer?, version As Byte) As (variables As variable(), recordStep As Integer)
         Dim varList = buffer.ReadUInt32()
         Dim recordStep = 0
 
@@ -261,5 +261,4 @@ Public Class Header
 
         Return (variables:=variables, recordStep:=recordStep)
     End Function
-
 End Class
