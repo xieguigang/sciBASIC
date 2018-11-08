@@ -136,6 +136,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Types.vb" />
     <Compile Include="Utils.vb" />
     <Compile Include="netCDF.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
