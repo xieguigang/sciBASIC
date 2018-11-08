@@ -1,4 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
 
 Module Utils
@@ -21,8 +22,8 @@ Module Utils
     ''' buffer - Buffer for the file data
     ''' </param>
     <Extension> Public Sub padding(buffer As BinaryDataReader)
-        If ((buffer.offset Mod 4) <> 0) Then
-            Call buffer.skip(4 - (buffer.offset Mod 4))
+        If ((buffer.Position Mod 4) <> 0) Then
+            Call buffer.Seek(4 - (buffer.Position Mod 4), SeekOrigin.Current)
         End If
     End Sub
 

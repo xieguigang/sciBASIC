@@ -93,7 +93,7 @@ Public Class variable
     ''' Number with the size of the variable
     ''' </summary>
     ''' <returns></returns>
-    Public Property size As Integer
+    Public Property size As Integer?
     ''' <summary>
     ''' Number with the offset where of the variable begins
     ''' </summary>
