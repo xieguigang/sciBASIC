@@ -168,9 +168,9 @@ Public Class netCDFReader
     ''' <returns>Value of the variable as a string Or undefined</returns>
     Public Function getDataVariableAsString(variableName As String) As String
         Try
-            Return getDataVariable(variableName)
-            .joinby("")
-            .trim()
+            Return getDataVariable(variableName) _
+                .JoinBy("") _
+                .Trim()
         Catch e As Exception
             Call e.PrintException
             Return Nothing
@@ -182,7 +182,7 @@ Public Class netCDFReader
     ''' </summary>
     ''' <param name="variableName">Name of the variable to search Or variable object</param>
     ''' <returns>List with the variable values</returns>
-    Public Function getDataVariable(variableName As String)
+    Public Function getDataVariable(variableName As String) As Object()
         ' search the variable
         Dim variable As variable = variableTable.TryGetValue(variableName)
 
