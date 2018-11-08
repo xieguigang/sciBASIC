@@ -46,7 +46,8 @@ Public Class Xml : Inherits XmlDataModel
             .version = cdf.version,
             .variables = cdf.variables _
                 .Select(Function(var)
-                            var.value = cdf.getDataVariable
+                            var.value = cdf.getDataVariable(var)
+                            Return var
                         End Function) _
                 .ToArray
         }

@@ -22,6 +22,27 @@ Namespace Components
         Public Property tiny_num As Single()
         Public Property numerics As Double()
 
+        Public ReadOnly Property Length As Integer
+            Get
+                Select Case cdfDataType
+                    Case CDFDataTypes.BYTE
+                        Return Convert.FromBase64String(byteStream).Length
+                    Case CDFDataTypes.CHAR
+                        Return chars.Length
+                    Case CDFDataTypes.DOUBLE
+                        Return numerics.Length
+                    Case CDFDataTypes.FLOAT
+                        Return tiny_num.Length
+                    Case CDFDataTypes.INT
+                        Return integers.Length
+                    Case CDFDataTypes.SHORT
+                        Return tiny_int.Length
+                    Case Else
+                        Return 0
+                End Select
+            End Get
+        End Property
+
         Public ReadOnly Property cdfDataType As CDFDataTypes
             Get
                 If Not byteStream.StringEmpty Then

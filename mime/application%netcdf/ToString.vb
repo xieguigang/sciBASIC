@@ -27,8 +27,8 @@ Module ToStringHelper
         result.AppendLine()
         result.AppendLine("VARIABLES:")
         For Each variable As variable In file.variables
-            Dim value As Object() = file.getDataVariable(variable)
-            Dim stringify = value.valueString(variable.type)
+            Dim value As CDFData = file.getDataVariable(variable)
+            Dim stringify = value.ToString
 
             If (stringify.Length > 50) Then
                 stringify = stringify.Substring(0, 50)
@@ -41,14 +41,5 @@ Module ToStringHelper
         Next
 
         Return result.ToString
-    End Function
-
-    <Extension>
-    Private Function valueString(value As Object(), type$) As String
-        If type = "char" Then
-            Return New String(value.As(Of Char))
-        Else
-            Return value.GetJson
-        End If
     End Function
 End Module
