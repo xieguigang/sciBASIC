@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
@@ -57,5 +58,10 @@ Public Class Xml : Inherits XmlDataModel
         End Using
 
         Return True
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function SaveAsXml(cdf As netCDFReader, path$) As Boolean
+        Return SaveAsXml(cdf, path.Open)
     End Function
 End Class
