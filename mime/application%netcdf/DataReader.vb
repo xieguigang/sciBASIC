@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
 
 ''' <summary>
 ''' Data reader methods for a given variable data value.

@@ -43,6 +43,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
 Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
