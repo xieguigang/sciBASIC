@@ -42,6 +42,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' 
@@ -167,8 +168,9 @@ Public Class netCDFReader
             .ToDictionary(Function(var) var.name)
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(path As String)
-        Call Me.New(path.OpenBinaryReader(Text.Encodings.UTF8WithoutBOM))
+        Call Me.New(path.OpenBinaryReader(Encodings.UTF8))
     End Sub
 
     ''' <summary>
