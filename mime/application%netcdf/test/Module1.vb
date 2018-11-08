@@ -11,6 +11,9 @@ Module Module1
 
         Dim massvalue = file.getDataVariable("mass_values")
 
+        Call Xml.SaveAsXml(file, "./output_dump.Xml")
+
+
         Pause()
     End Sub
 

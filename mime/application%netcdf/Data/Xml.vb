@@ -7,11 +7,12 @@ Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
 ''' <summary>
 ''' 将netCDF转储为XML文件
 ''' </summary>
-<XmlType("netCDF", [Namespace]:="https://www.unidata.ucar.edu/software/netcdf/docs/file_format_specifications.html")>
-Public Class Xml : Inherits XmlDataModel
+<XmlType("netCDF", [Namespace]:=Xml.netCDF)> Public Class Xml : Inherits XmlDataModel
+
+    Public Const netCDF$ = "https://www.unidata.ucar.edu/software/netcdf/docs/file_format_specifications.html"
 
     <XmlAttribute>
-    Public Property version As Byte
+    Public Property version As String
 
     ''' <summary>
     ''' Number with the length of record dimension

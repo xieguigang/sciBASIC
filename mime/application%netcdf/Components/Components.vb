@@ -5,6 +5,8 @@ Namespace Components
     ''' <summary>
     ''' 
     ''' </summary>
+    ''' 
+    <XmlType("dim", [Namespace]:=Xml.netCDF)>
     Public Structure Dimension
 
         ''' <summary>
@@ -24,7 +26,7 @@ Namespace Components
 
     Public Class DimensionList
 
-        <XmlAttribute> Public Property recordId As Integer?
+        <XmlAttribute> Public Property recordId As Integer
         <XmlAttribute> Public Property recordName As String
 
         Public Property dimensions As Dimension()
@@ -99,7 +101,7 @@ Namespace Components
         ''' Array with the dimension IDs of the variable
         ''' </summary>
         ''' <returns></returns>
-        Public Property dimensions As Integer()
+        <XmlAttribute> Public Property dimensions As Integer()
         ''' <summary>
         ''' Array with the attributes of the variable
         ''' </summary>
@@ -114,7 +116,7 @@ Namespace Components
         ''' Number with the size of the variable
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property size As Integer?
+        <XmlAttribute> Public Property size As Integer
         ''' <summary>
         ''' Number with the offset where of the variable begins
         ''' </summary>
