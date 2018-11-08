@@ -122,6 +122,8 @@
         ''' <returns></returns>
         Public Property record As Boolean
 
+        Public Property value As CDFData
+
         Public Overrides Function ToString() As String
             Return $"Dim {name}[offset={offset}] As {type}"
         End Function

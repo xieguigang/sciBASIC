@@ -244,4 +244,13 @@ Public Class netCDFReader
     Public Overrides Function ToString() As String
         Return netCDF.toString(Me)
     End Function
+
+    ''' <summary>
+    ''' 这个函数方法只适用于比较小的数据文件
+    ''' </summary>
+    ''' <param name="out"></param>
+    ''' <returns></returns>
+    Public Function SaveAsXml(out As Stream) As Boolean
+
+    End Function
 End Class
