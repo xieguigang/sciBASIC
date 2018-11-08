@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80aa9dd8d90f5e1d55b9dcfa718c94d4, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::d890aaf82056deea111b80052697499c, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,9 @@
 
     ' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
     '     Class TreeMap
     ' 
     '         Properties: Key, value
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

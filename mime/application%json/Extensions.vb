@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a89a70e7e27e2d5f59c685975e2909e6, mime\application%json\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e2cc3d345c35e1f3f9fa414b22418158, mime\application%json\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: AsString, AsStringVector, ParseJsonFile, ParseJsonStr
+    '     Function: AsString, AsStringVector, ParseJson, ParseJsonFile
     ' 
     ' /********************************************************************************/
 

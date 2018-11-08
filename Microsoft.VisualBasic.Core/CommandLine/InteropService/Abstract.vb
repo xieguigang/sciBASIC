@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a413eb31d1afbe46ef62459ffef36b0, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::ddae0b72912f83cfa8aec30722a11992, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class InteropService
     ' 
-    '         Properties: Path
+    '         Properties: IORedirect, IsAvailable, Path
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetLastCLRException, GetLastError, RunDotNetApp, RunProgram, ToString

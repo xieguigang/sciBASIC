@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9b97b0eefbca5be73b6d36c89c66a97, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushServer.vb"
+﻿#Region "Microsoft.VisualBasic::dee57dd6e1a7b66d81ff85d257a787c9, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushServer.vb"
 
     ' Author:
     ' 
@@ -32,8 +32,6 @@
     ' Summaries:
 
     '     Class PushServer
-    ' 
-    '         Properties: UserSocket
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
