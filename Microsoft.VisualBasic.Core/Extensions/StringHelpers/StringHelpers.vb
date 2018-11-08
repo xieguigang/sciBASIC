@@ -83,6 +83,12 @@ Public Module StringHelpers
         Return str.PadRight(padLen, padString)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function TrimNull(str As String) As String
+        Return Strings.Trim(str)
+    End Function
+
     <Extension>
     Public Function CharAtOrDefault(s$, index%, Optional [default] As Char = ASCII.NUL) As Char
         If s.Length <= index Then

@@ -9,11 +9,13 @@ Module Utils
     ''' </summary>
     ''' <param name="statement">statement - Throws if true</param>
     ''' <param name="reason$">reason - Reason to throw</param>
-    Public Sub notNetcdf(statement As Boolean, reason$)
+    Public Function notNetcdf(statement As Boolean, reason$) As Object
         If (statement) Then
             Throw New FormatException($"Not a valid NetCDF v3.x file: {reason}")
         End If
-    End Sub
+
+        Return Nothing
+    End Function
 
     ''' <summary>
     ''' Moves 1, 2, Or 3 bytes to next 4-byte boundary

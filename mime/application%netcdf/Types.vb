@@ -94,12 +94,14 @@ Module TypeExtensions
     ''' <param name="size%">size - Size of the element to read</param>
     ''' <param name="bufferReader">bufferReader - Function to read next value</param>
     ''' <returns>{Array&lt;number>|number}</returns>
-    Public Function readNumber(size%, bufferReader As Func(Of Object))
+    Public Function readNumber(size%, bufferReader As Func(Of Object)) As Object
         If (size <> 1) Then
             Dim numbers As New List(Of Object)
+
             For i As Integer = 0 To size - 1
                 numbers.Add(bufferReader())
             Next
+
             Return numbers
         Else
             Return bufferReader()
@@ -118,7 +120,7 @@ Module TypeExtensions
             Case types.BYTE
                 Return buffer.ReadBytes(size)
             Case types.CHAR
-                Return TrimNull(buffer.ReadChars(size))
+                Return New String(buffer.ReadChars(size)).TrimNull
             Case types.SHORT
                 Return readNumber(size, AddressOf buffer.ReadInt16)
             Case types.INT
@@ -130,8 +132,7 @@ Module TypeExtensions
 
             Case Else
                 ' istanbul ignore next
-                notNetcdf(True, $"non valid type {type}")
-                Return Nothing
+                Return Utils.notNetcdf(True, $"non valid type {type}")
         End Select
     End Function
 End Module
