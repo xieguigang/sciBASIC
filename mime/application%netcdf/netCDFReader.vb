@@ -161,6 +161,10 @@ Public Class netCDFReader
             .ToDictionary(Function(var) var.name)
     End Sub
 
+    Sub New(path As String)
+        Call Me.New(path.OpenBinaryReader(Text.Encodings.UTF8WithoutBOM))
+    End Sub
+
     ''' <summary>
     ''' Returns the value of a variable as a string
     ''' </summary>
