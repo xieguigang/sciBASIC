@@ -179,6 +179,8 @@ Public Class netCDFReader
     ''' </summary>
     ''' <param name="variableName">variableName</param>
     ''' <returns>Value of the variable as a string Or undefined</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function getDataVariableAsString(variableName As String) As String
         Return getDataVariable(variableName) _
             .JoinBy("") _
@@ -195,10 +197,10 @@ Public Class netCDFReader
 
         If (variable.record) Then
             ' record variable case
-            Return Data.record(buffer, variable, header.recordDimension)
+            Return DataReader.record(buffer, variable, header.recordDimension)
         Else
             ' non-record variable case
-            Return Data.nonRecord(buffer, variable)
+            Return DataReader.nonRecord(buffer, variable)
         End If
     End Function
 

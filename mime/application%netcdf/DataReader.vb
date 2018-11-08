@@ -1,7 +1,10 @@
 ﻿Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
 
-Public Module Data
+''' <summary>
+''' Data reader methods for a given variable data value.
+''' </summary>
+Module DataReader
 
     ''' <summary>
     ''' Read data for the given non-record variable
