@@ -180,16 +180,10 @@ Public Class netCDFReader
     ''' <summary>
     ''' Retrieves the data for a given variable
     ''' </summary>
-    ''' <param name="variableName">Name of the variable to search Or variable object</param>
     ''' <returns>List with the variable values</returns>
-    Public Function getDataVariable(variableName As String) As Object()
-        ' search the variable
-        Dim variable As variable = variableTable.TryGetValue(variableName)
-
-        ' throws if variable Not found
-        Utils.notNetcdf(variable Is Nothing, $"variable Not found: {variableName}")
+    Public Function getDataVariable(variable As variable) As Object()
         ' go to the offset position
-        buffer.Seek(variable.offset)
+        Call buffer.Seek(variable.offset)
 
         If (variable.record) Then
             ' record variable case
@@ -198,6 +192,20 @@ Public Class netCDFReader
             ' non-record variable case
             Return Data.nonRecord(buffer, variable)
         End If
+    End Function
+
+    ''' <summary>
+    ''' Retrieves the data for a given variable
+    ''' </summary>
+    ''' <param name="variableName">Name of the variable to search Or variable object</param>
+    ''' <returns>List with the variable values</returns>
+    Public Function getDataVariable(variableName As String) As Object()
+        ' search the variable
+        Dim variable As variable = variableTable.TryGetValue(variableName)
+        ' throws if variable Not found
+        Utils.notNetcdf(variable Is Nothing, $"variable Not found: {variableName}")
+
+        Return getDataVariable(variable)
     End Function
 
     ''' <summary>
@@ -219,5 +227,10 @@ Public Class netCDFReader
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function attributeExists(attributeName As String) As Boolean
         Return globalAttributeTable.ContainsKey(attributeName)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function ToString() As String
+        Return netCDF.toString(Me)
     End Function
 End Class

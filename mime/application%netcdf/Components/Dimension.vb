@@ -104,5 +104,6 @@ Public Class variable
     ''' </summary>
     ''' <returns></returns>
     Public Property record As Boolean
+    Public Property value As Object()
 
 End Class
