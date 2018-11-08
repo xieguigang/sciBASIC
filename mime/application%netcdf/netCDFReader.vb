@@ -39,6 +39,7 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
@@ -195,15 +196,19 @@ Public Class netCDFReader
     ''' <returns>List with the variable values</returns>
     Public Function getDataVariable(variable As variable) As Object()
         ' go to the offset position
-        Call buffer.Seek(variable.offset)
+        Call buffer.Seek(variable.offset, SeekOrigin.Begin)
 
-        If (variable.record) Then
-            ' record variable case
-            Return Data.record(buffer, variable, header.recordDimension)
-        Else
-            ' non-record variable case
-            Return Data.nonRecord(buffer, variable)
-        End If
+        Try
+            If (variable.record) Then
+                ' record variable case
+                Return Data.record(buffer, variable, header.recordDimension)
+            Else
+                ' non-record variable case
+                Return Data.nonRecord(buffer, variable)
+            End If
+        Catch ex As Exception
+            Return Nothing
+        End Try
     End Function
 
     ''' <summary>

@@ -28,7 +28,7 @@ Module ToStringHelper
             If (stringify.Length > 50) Then
                 stringify = stringify.Substring(0, 50)
             End If
-            If (Not value.Length) Then
+            If (Not value Is Nothing) Then
                 stringify &= $" (length: ${value.Length})"
             End If
 
