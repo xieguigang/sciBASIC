@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::755cc0cb49078fb9101ee2ba9c3b7029, gr\network-visualization\Datavisualization.Network\IO\ModelExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GraphAPI
-    ' 
-    '         Function: (+2 Overloads) CreateGraph, (+2 Overloads) CytoscapeExportAsGraph, CytoscapeNetworkFromEdgeTable, OrderByDegrees, RemovesByDegree
-    '                   RemovesByDegreeQuantile, ScaleRadius, Tabular, UsingDegreeAsRadius
-    ' 
-    '         Sub: AddEdges
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GraphAPI
+' 
+'         Function: (+2 Overloads) CreateGraph, (+2 Overloads) CytoscapeExportAsGraph, CytoscapeNetworkFromEdgeTable, OrderByDegrees, RemovesByDegree
+'                   RemovesByDegreeQuantile, ScaleRadius, Tabular, UsingDegreeAsRadius
+' 
+'         Sub: AddEdges
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv
@@ -375,29 +376,47 @@ Namespace FileStream
         Public Const NoConnections% = 0
 
         ''' <summary>
+        ''' (请确保在调用这个函数之前网络模型对应已经通过<see cref="AnalysisDegrees"/>函数计算了degree，否则会移除所有的网络节点而返回一个空网络)
         ''' 直接按照节点的``Degree``来筛选，节点被移除的同时，相应的边连接也会被删除
         ''' </summary>
         ''' <param name="net"></param>
         ''' <param name="degree%">``<see cref="Node"/> -> "Degree"``.（当这个参数为零的时候，表示默认是将无连接的孤立节点删除掉）</param>
         ''' <param name="removeIDs$">可以通过这个参数来获取得到被删除的节点ID列表</param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function RemovesByDegree(net As NetworkTables,
                                         Optional degree% = NoConnections,
                                         Optional ByRef removeIDs$() = Nothing) As NetworkTables
+            Return net.RemovesByKeyValue(New NamedValue(Of Double)(names.REFLECTION_ID_MAPPING_DEGREE, degree), removeIDs)
+        End Function
 
+        <Extension>
+        Public Function RemovesByKeyValue(net As NetworkTables, cutoff As NamedValue(Of Double), Optional ByRef removeIDs$() = Nothing) As NetworkTables
             Dim nodes As New List(Of Node)
             Dim removes As New List(Of String)
+            Dim allZero As Boolean = True
+            Dim key$ = cutoff.Name
+            Dim threshold# = cutoff.Value
 
             For Each node As Node In net.Nodes
-                Dim ndg As Integer = CInt(Val(node(names.REFLECTION_ID_MAPPING_DEGREE)))
+                Dim ndg# = Val(node(key))
 
-                If ndg > degree Then
+                If ndg > threshold Then
                     nodes += node
                 Else
                     removes += node.ID
+
+                    If ndg <> 0 Then
+                        allZero = False
+                    End If
                 End If
             Next
+
+            If allZero Then
+                Call $"All of the nodes' {key} equals ZERO, an empty network will be return!".Warning
+            End If
 
             removeIDs = removes
 
