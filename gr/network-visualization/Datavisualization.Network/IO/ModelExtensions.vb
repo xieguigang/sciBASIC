@@ -144,10 +144,18 @@ Namespace FileStream
         ''' </summary>
         ''' <param name="net"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension> Public Function CreateGraph(net As NetworkTables, Optional nodeColor As Func(Of Node, Brush) = Nothing) As NetworkGraph
             Return CreateGraph(Of Node, NetworkEdge)(net, nodeColor)
         End Function
 
+        ''' <summary>
+        ''' 将网络之中的半径值重新映射到另外一个范围区间内
+        ''' </summary>
+        ''' <param name="graph"></param>
+        ''' <param name="range"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function ScaleRadius(ByRef graph As NetworkGraph, range As DoubleRange) As NetworkGraph
             Dim nodes = graph.nodes.ToArray
@@ -322,6 +330,12 @@ Namespace FileStream
             }
         End Function
 
+        ''' <summary>
+        ''' 将节点的degree作为节点的绘图半径数据
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="computeDegree"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function UsingDegreeAsRadius(g As NetworkGraph, Optional computeDegree As Boolean = False) As NetworkGraph
             If computeDegree Then
@@ -361,11 +375,11 @@ Namespace FileStream
         Public Const NoConnections% = 0
 
         ''' <summary>
-        ''' 直接按照节点的``Degree``来筛选
+        ''' 直接按照节点的``Degree``来筛选，节点被移除的同时，相应的边连接也会被删除
         ''' </summary>
         ''' <param name="net"></param>
         ''' <param name="degree%">``<see cref="Node"/> -> "Degree"``.（当这个参数为零的时候，表示默认是将无连接的孤立节点删除掉）</param>
-        ''' <param name="removeIDs$"></param>
+        ''' <param name="removeIDs$">可以通过这个参数来获取得到被删除的节点ID列表</param>
         ''' <returns></returns>
         <Extension>
         Public Function RemovesByDegree(net As NetworkTables,
@@ -392,7 +406,8 @@ Namespace FileStream
 
             For Each edge As NetworkEdge In net.Edges
 
-                ' 如果边之中的任意一个节点被包含在index里面，即有小于cutoff值的节点，则不会被添加
+                ' 如果边之中的任意一个节点被包含在index里面，
+                ' 即有小于cutoff值的节点， 则不会被添加
                 If index(edge.FromNode) > -1 OrElse index(edge.ToNode) > -1 Then
                 Else
                     edges += edge

@@ -98,6 +98,23 @@ Public Module Extensions
     End Function
 
     ''' <summary>
+    ''' 判断这个表格文件是否是空的？
+    ''' 
+    ''' > 只包含有标题行，文件不存在，文件为空等都会被判断为空
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
+    <Extension> Public Function IsEmptyTable(path As String) As Boolean
+        If path.FileLength <= 0 Then
+            Return True
+        Else
+            ' This table file only contains header line
+            ' is also an empty table file.
+            Return path.IterateAllLines.Take(2).Count <= 1
+        End If
+    End Function
+
+    ''' <summary>
     ''' Anonymous type data reader helper.(System.MissingMethodException occurred
     '''  HResult=0x80131513
     '''  Message=No parameterless constructor defined for this object.

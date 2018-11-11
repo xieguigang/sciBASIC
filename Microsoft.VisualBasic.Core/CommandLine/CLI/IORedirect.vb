@@ -275,8 +275,9 @@ Namespace CommandLine
 
             If displaDebug Then
                 Dim Exe As String = FileIO.FileSystem.GetFileInfo(processInfo.StartInfo.FileName).FullName.Replace("\", "/")
-                Dim argvs As String = If(String.IsNullOrEmpty(processInfo.StartInfo.Arguments), "", " " & processInfo.StartInfo.Arguments)
-                Call Console.WriteLine("      ---> system(""file:''{0}""{1})", Exe, argvs)
+                Dim argvs As String = (" " & processInfo.StartInfo.Arguments).Trim
+
+                Call Console.WriteLine("      ---> system(""file:""{0}""{1})", Exe, argvs)
             End If
 
             Try
