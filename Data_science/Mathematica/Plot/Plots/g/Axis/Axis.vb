@@ -112,13 +112,13 @@ Namespace Graphic.Axis
                             Optional ylabel$ = "",
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
-                            Optional labelFont$ = CSSFont.Win10NormalLarger,
+                            Optional labelFont$ = CSSFont.Win7Large,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional gridFill$ = "rgb(245,245,245)",
                             Optional htmlLabel As Boolean = True,
                             Optional XtickFormat$ = "F2",
                             Optional YtickFormat$ = "F2",
-                            Optional tickFontStyle$ = CSSFont.Win7LargeBold)
+                            Optional tickFontStyle$ = CSSFont.Win10NormalLarger)
             With region
                 Call g.DrawAxis(
                     scaler,
