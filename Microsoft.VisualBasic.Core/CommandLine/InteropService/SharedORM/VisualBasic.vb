@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::763a9a657522617c62c1b65c67c17907, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\VisualBasic.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class VisualBasic
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: __CLI, __defaultValue, __normalizedAsIdentifier, __vbParameters, __xmlComments
-    '                   GetSourceCode
-    ' 
-    '         Sub: __calls
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class VisualBasic
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: __CLI, __defaultValue, __normalizedAsIdentifier, __vbParameters, __xmlComments
+'                   GetSourceCode
+' 
+'         Sub: __calls
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -58,14 +59,14 @@ Namespace CommandLine.InteropService.SharedORM
 
         Dim namespace$
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(CLI As Type, namespace$)
-            MyBase.New(CLI)
-            Me.namespace = [namespace]
+            Me.New(New Interpreter(type:=CLI), [namespace])
         End Sub
 
-        Sub New(App As Interpreter)
+        Sub New(App As Interpreter, Optional namespace$ = Nothing)
             Call MyBase.New(App)
-            Me.namespace = App.Type.Name
+            Me.namespace = [namespace] Or App.Type.Name.AsDefault
         End Sub
 
         Public Overrides Function GetSourceCode() As String
@@ -75,7 +76,9 @@ Namespace CommandLine.InteropService.SharedORM
                 .Replace(" ", "_")
             Dim rel$ = PathExtensions.RelativePath(App.Type.Assembly.Location.GetFullPath)
             Dim info$ = App.Type.NamespaceEntry.Description
+            Dim appName$ = KeywordProcessor.AutoEscapeVBKeyword(className)
 
+            Call vb.AppendLine("Imports System.Runtime.CompilerServices")
             Call vb.AppendLine("Imports " & GetType(StringBuilder).Namespace)
             Call vb.AppendLine("Imports " & GetType(IIORedirectAbstract).Namespace)
             Call vb.AppendLine("Imports " & GetType(InteropService).Namespace)
@@ -89,13 +92,18 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine("Namespace " & [namespace])
             Call vb.AppendLine()
             Call vb.AppendLine(__xmlComments(XmlEntity.EscapingXmlEntity(info)))
-            Call vb.AppendLine($"Public Class {KeywordProcessor.AutoEscapeVBKeyword(className)} : Inherits {GetType(InteropService).Name}")
+            Call vb.AppendLine($"Public Class {appName} : Inherits {GetType(InteropService).Name}")
             Call vb.AppendLine()
             Call vb.AppendLine($"    Public Const App$ = ""{exe}.exe""")
             Call vb.AppendLine()
             Call vb.AppendLine("    Sub New(App$)")
             Call vb.AppendLine($"        MyBase.{NameOf(InteropService._executableAssembly)} = App$")
             Call vb.AppendLine("    End Sub")
+            Call vb.AppendLine()
+            Call vb.AppendLine("     <MethodImpl(MethodImplOptions.AggressiveInlining)>")
+            Call vb.AppendLine($"    Public Shared Function FromEnvironment(directory As String) As {appName}")
+            Call vb.AppendLine($"          Return New {appName}(App:=directory & ""/"" & {appName}.App)")
+            Call vb.AppendLine("     End Function")
 
             For Each API In Me.EnumeratesAPI
                 Call __calls(vb, API.CLI, incompatible:=Not InCompatibleAttribute.CLRProcessCompatible(API.API))

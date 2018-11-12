@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ecd5fe99bd8434ff7019c8c69406aae, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::1bc33bc63a33826b475605df12c3e2ec, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: ToString, viewQualifiedName
     ' 
-    '         Sub: SetValue
+    '         Sub: Copy, SetValue
     ' 
     ' 
     ' /********************************************************************************/

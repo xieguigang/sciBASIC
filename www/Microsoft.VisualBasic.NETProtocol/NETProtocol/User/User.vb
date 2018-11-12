@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::387c12e448680bccec655bfa066ba298, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\User\User.vb"
+﻿#Region "Microsoft.VisualBasic::13e811ea2d7c1f12c52e63f72a0ead1a, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\User\User.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __pushUpdate, __register
+    '         Function: __pushUpdate
     ' 
     '         Sub: __close, __downloadMsg, (+2 Overloads) Dispose
     ' 
