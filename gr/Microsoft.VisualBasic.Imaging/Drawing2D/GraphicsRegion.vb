@@ -66,6 +66,10 @@ Namespace Drawing2D
         ''' </summary>
         Public Padding As Padding
 
+        ''' <summary>
+        ''' 绘图区域的底部Y坐标值
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Bottom As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

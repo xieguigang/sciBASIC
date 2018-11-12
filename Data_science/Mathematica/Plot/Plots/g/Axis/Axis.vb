@@ -84,6 +84,25 @@ Namespace Graphic.Axis
             End With
         End Sub
 
+        ''' <summary>
+        ''' 一般而言，``X``坐标轴是绘制在<paramref name="region"/>的底部的
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="region"></param>
+        ''' <param name="scaler"></param>
+        ''' <param name="showGrid"></param>
+        ''' <param name="offset"></param>
+        ''' <param name="xlabel$"></param>
+        ''' <param name="ylabel$"></param>
+        ''' <param name="xlayout"></param>
+        ''' <param name="ylayout"></param>
+        ''' <param name="labelFont$"></param>
+        ''' <param name="axisStroke$"></param>
+        ''' <param name="gridFill$"></param>
+        ''' <param name="htmlLabel"></param>
+        ''' <param name="XtickFormat$"></param>
+        ''' <param name="YtickFormat$"></param>
+        ''' <param name="tickFontStyle$"></param>
         <Extension>
         Public Sub DrawAxis(ByRef g As IGraphics, region As GraphicsRegion,
                             scaler As DataScaler,
