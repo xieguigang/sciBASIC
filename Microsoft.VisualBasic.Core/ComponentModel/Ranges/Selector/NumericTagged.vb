@@ -61,10 +61,20 @@ Namespace ComponentModel.Ranges
 
         Private Property IValueOf_Value As T Implements Value(Of T).IValueOf.Value
 
+        Sub New(tag#, value As T)
+            Me.tag = tag
+            Me.value = value
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"#{tag} {value.GetJson}"
         End Function
 
+        ''' <summary>
+        ''' 比较的是<see cref="Tag"/>属性
+        ''' </summary>
+        ''' <param name="other"></param>
+        ''' <returns></returns>
         Public Function CompareTo(other As Double) As Integer Implements IComparable(Of Double).CompareTo
             Dim d = tag - other
 
