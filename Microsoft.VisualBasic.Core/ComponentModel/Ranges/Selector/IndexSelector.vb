@@ -60,6 +60,11 @@ Namespace ComponentModel.Ranges
             MyBase.New(source.Select(Function(d, i) New NumericTagged(Of Integer)(d, i)), asc)
         End Sub
 
+        Private Sub New(sorts As IEnumerable(Of NumericTagged(Of Integer)), asc As Boolean)
+            Call MyBase.New({}, asc)
+            source = sorts.ToArray
+        End Sub
+
         ''' <summary>
         ''' Get index by a given numeric range
         ''' </summary>
@@ -76,6 +81,16 @@ Namespace ComponentModel.Ranges
                                      Return tag.value
                                  End Function)
         End Function
+
+        ''' <summary>
+        ''' 所使用的序列参数必须是经过了排序操作的
+        ''' </summary>
+        ''' <param name="seq"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function FromSortSequence(seq As Double()) As IndexSelector
+            Return New IndexSelector(seq.Select(Function(d, i) New NumericTagged(Of Integer)(d, i)), True)
+        End Function
     End Class
 
     Public Class OrderSelector(Of T As IComparable) : Implements IReadOnlyCollection(Of T)
@@ -83,11 +98,12 @@ Namespace ComponentModel.Ranges
         ''' <summary>
         ''' <see cref="source"/>序列的排序的方向字符串显示
         ''' </summary>
-        ReadOnly direct$
+        ReadOnly direct As String
+
         ''' <summary>
         ''' 目标序列
         ''' </summary>
-        Protected ReadOnly source As T()
+        Protected source As T()
 
         ''' <summary>
         ''' 是否为降序排序?
