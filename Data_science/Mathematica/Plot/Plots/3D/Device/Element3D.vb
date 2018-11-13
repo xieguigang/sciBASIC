@@ -1,71 +1,71 @@
 ﻿#Region "Microsoft.VisualBasic::3de3a494d9a246d44965f79f3c5855d0, Data_science\Mathematica\Plot\Plots\3D\Device\Element3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Element3D
-    ' 
-    '         Properties: Location
-    ' 
-    '         Function: GetPosition, ToString
-    ' 
-    '         Sub: Transform
-    ' 
-    '     Class Polygon
-    ' 
-    '         Properties: Path
-    ' 
-    '         Sub: Draw
-    ' 
-    '     Class Label
-    ' 
-    '         Properties: Color, Font, Text
-    ' 
-    '         Sub: Draw
-    ' 
-    '     Class Line
-    ' 
-    '         Properties: A, B, Stroke
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: __init, Draw, Transform
-    ' 
-    '     Class ShapePoint
-    ' 
-    '         Properties: Fill, Size, Style
-    ' 
-    '         Sub: Draw
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Element3D
+' 
+'         Properties: Location
+' 
+'         Function: GetPosition, ToString
+' 
+'         Sub: Transform
+' 
+'     Class Polygon
+' 
+'         Properties: Path
+' 
+'         Sub: Draw
+' 
+'     Class Label
+' 
+'         Properties: Color, Font, Text
+' 
+'         Sub: Draw
+' 
+'     Class Line
+' 
+'         Properties: A, B, Stroke
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: __init, Draw, Transform
+' 
+'     Class ShapePoint
+' 
+'         Properties: Fill, Size, Style
+' 
+'         Sub: Draw
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -104,12 +104,28 @@ Namespace Plot3D.Device
         End Function
     End Class
 
+    ''' <summary>
+    ''' 一个三维空间之中的面
+    ''' </summary>
     Public Class Polygon : Inherits Element3D
 
-        Public Property Path As PointF()
+        Public Property Path As Point3D()
+        Public Property brush As Brush
+
+        Public Overrides Sub Transform(camera As Camera)
+            Path = Path.Select(Function(p) camera.Project(camera.Rotate(p))).ToArray
+            Location = Path.Center
+        End Sub
 
         Public Overrides Sub Draw(g As IGraphics, offset As PointF)
+            Dim screen As Size = g.Size
+            Dim shape As Point() = Path _
+                .Select(Function(p)
+                            Return p.PointXY(screen).OffSet2D(offset)
+                        End Function) _
+                .ToArray
 
+            Call g.FillPolygon(brush, shape)
         End Sub
     End Class
 
@@ -130,6 +146,12 @@ Namespace Plot3D.Device
         Public ReadOnly Property B As Point3D
         Public Property Stroke As Pen
 
+        ''' <summary>
+        ''' 线段的<see cref="Location"/>位置数据会自动从<paramref name="a"/>和
+        ''' <paramref name="b"/>计算出来
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
         Sub New(a As Point3D, b As Point3D)
             Me.A = a
             Me.B = b

@@ -111,6 +111,13 @@ Namespace Scripting
             End Select
         End Function
 
+        ''' <summary>
+        ''' 按照索引编号来取出元素
+        ''' </summary>
+        ''' <param name="index">
+        ''' 目标在序列之中的位置索引编号，即数组的下标
+        ''' </param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(index As Integer) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

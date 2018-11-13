@@ -42,8 +42,6 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
-Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' CDF file summary

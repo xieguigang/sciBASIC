@@ -110,16 +110,27 @@ Namespace Components
         End Property
 
         Public Overrides Function ToString() As String
+            Dim stringify$
+
             Select Case cdfDataType
-                Case CDFDataTypes.BYTE : Return byteStream
-                Case CDFDataTypes.CHAR : Return chars
-                Case CDFDataTypes.DOUBLE : Return numerics.JoinBy(",")
-                Case CDFDataTypes.FLOAT : Return tiny_num.JoinBy(",")
-                Case CDFDataTypes.INT : Return integers.JoinBy(",")
-                Case CDFDataTypes.SHORT : Return tiny_int.JoinBy(",")
+                Case CDFDataTypes.BYTE : stringify = byteStream
+                Case CDFDataTypes.CHAR : stringify = chars
+                Case CDFDataTypes.DOUBLE : stringify = numerics.JoinBy(",")
+                Case CDFDataTypes.FLOAT : stringify = tiny_num.JoinBy(",")
+                Case CDFDataTypes.INT : stringify = integers.JoinBy(",")
+                Case CDFDataTypes.SHORT : stringify = tiny_int.JoinBy(",")
                 Case Else
                     Return "null"
             End Select
+
+            If (stringify.Length > 50) Then
+                stringify = stringify.Substring(0, 50)
+            End If
+            If (cdfDataType <> CDFDataTypes.undefined) Then
+                stringify &= $" (length: ${Me.Length})"
+            End If
+
+            Return $"[{cdfDataType}] {stringify}"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

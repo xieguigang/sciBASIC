@@ -84,6 +84,25 @@ Namespace Graphic.Axis
             End With
         End Sub
 
+        ''' <summary>
+        ''' 一般而言，``X``坐标轴是绘制在<paramref name="region"/>的底部的
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="region"></param>
+        ''' <param name="scaler"></param>
+        ''' <param name="showGrid"></param>
+        ''' <param name="offset"></param>
+        ''' <param name="xlabel$"></param>
+        ''' <param name="ylabel$"></param>
+        ''' <param name="xlayout"></param>
+        ''' <param name="ylayout"></param>
+        ''' <param name="labelFont$"></param>
+        ''' <param name="axisStroke$"></param>
+        ''' <param name="gridFill$"></param>
+        ''' <param name="htmlLabel"></param>
+        ''' <param name="XtickFormat$"></param>
+        ''' <param name="YtickFormat$"></param>
+        ''' <param name="tickFontStyle$"></param>
         <Extension>
         Public Sub DrawAxis(ByRef g As IGraphics, region As GraphicsRegion,
                             scaler As DataScaler,
@@ -93,13 +112,13 @@ Namespace Graphic.Axis
                             Optional ylabel$ = "",
                             Optional xlayout As XAxisLayoutStyles = XAxisLayoutStyles.Bottom,
                             Optional ylayout As YAxisLayoutStyles = YAxisLayoutStyles.Left,
-                            Optional labelFont$ = CSSFont.Win10NormalLarger,
+                            Optional labelFont$ = CSSFont.Win7Large,
                             Optional axisStroke$ = Stroke.AxisStroke,
                             Optional gridFill$ = "rgb(245,245,245)",
                             Optional htmlLabel As Boolean = True,
                             Optional XtickFormat$ = "F2",
                             Optional YtickFormat$ = "F2",
-                            Optional tickFontStyle$ = CSSFont.Win7LargeBold)
+                            Optional tickFontStyle$ = CSSFont.Win10NormalLarger)
             With region
                 Call g.DrawAxis(
                     scaler,
