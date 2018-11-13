@@ -146,6 +146,12 @@ Namespace Plot3D.Device
         Public ReadOnly Property B As Point3D
         Public Property Stroke As Pen
 
+        ''' <summary>
+        ''' 线段的<see cref="Location"/>位置数据会自动从<paramref name="a"/>和
+        ''' <paramref name="b"/>计算出来
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
         Sub New(a As Point3D, b As Point3D)
             Me.A = a
             Me.B = b
