@@ -77,6 +77,10 @@ Namespace Drawing2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' Get the width of the entire canvas <see cref="Size"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Width As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -84,6 +88,10 @@ Namespace Drawing2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' Get the height of the entire canvas <see cref="Size"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Height As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
