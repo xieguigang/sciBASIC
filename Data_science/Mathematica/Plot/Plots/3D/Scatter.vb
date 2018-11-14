@@ -90,10 +90,10 @@ Namespace Plot3D
                              Optional labX$ = "X",
                              Optional labY$ = "Y",
                              Optional labZ$ = "Z",
-                             Optional legendSize! = 20,
+                             Optional legendWidth! = 20,
                              Optional arrowFactor$ = "2,2") As GraphicsData
 
-            Dim list = serials.ToArray
+            Dim list As Serial3D() = serials.ToArray
             Dim points = list _
                 .Select(Function(s) s.Points) _
                 .IteratesALL _
@@ -154,20 +154,29 @@ Namespace Plot3D
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
-                    ' 要先绘制三维图形，要不然会将图例遮住的
-                    Call model.RenderAs3DChart(g, camera, region)
-
                     ' 绘制图例？？
                     Dim legendHeight! = (legends.Length * (font.Height + 5))
                     Dim legendTop! = (region.PlotRegion.Height - legendHeight) / 2
-                    Dim maxL = g.MeasureString(legends.Select(Function(s) s.title).MaxLengthString, font).Width
-                    Dim legendLeft! = region.PlotRegion.Right - maxL - legendSize
+                    Dim maxL! = legends.Select(Function(s) s.title) _
+                        .MaxLengthString _
+                        .MeasureSize(g, font) _
+                        .Width
+                    Dim legendLeft! = region.PlotRegion.Right - maxL - legendWidth
                     Dim topLeft As New Point With {
                         .X = legendLeft,
                         .Y = legendTop
                     }
+                    Dim legendSize$ = $"{legendWidth},{legendWidth}"
 
-                    Call g.DrawLegends(topLeft, legends, $"{legendSize},{legendSize}", d:=5, regionBorder:=Stroke.AxisStroke)
+                    ' 要先绘制三维图形，要不然会将图例遮住的
+                    Call model.RenderAs3DChart(g, camera, region)
+                    Call g.DrawLegends(
+                        topLeft:=topLeft,
+                        legends:=legends,
+                        gSize:=legendSize,
+                        d:=5,
+                        regionBorder:=Stroke.AxisStroke
+                    )
 
                 End Sub
             Dim plotRegion As New GraphicsRegion With {
