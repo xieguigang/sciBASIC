@@ -953,8 +953,8 @@
     <Compile Include="Extensions\Trinity\Word.vb" />
     <Compile Include="Extensions\Trinity\WordClass.vb" />
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
-    <Compile Include="Extensions\WebServices\Multipart.vb" />
-    <Compile Include="Extensions\WebServices\Http\DataURI.vb" />
+    <Compile Include="Net\HTTP\Multipart.vb" />
+    <Compile Include="Net\HTTP\DataURI.vb" />
     <Compile Include="Language\Linq\Vectorization\Strings.vb" />
     <Compile Include="Language\Value\ByRefValueExtensions.vb" />
     <Compile Include="Language\Value\DefaultValue\BooleanAssert.vb" />
@@ -1099,8 +1099,8 @@
     <Compile Include="Text\Patterns\Regexp.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
-    <Compile Include="Extensions\WebServices\Http\GZStream.vb" />
-    <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
+    <Compile Include="Net\HTTP\GZStream.vb" />
+    <Compile Include="Net\HTTP\sitemap.xml.vb" />
     <Compile Include="Language\Runtime.vb" />
     <Compile Include="Language\Language\C\Vector.vb" />
     <Compile Include="Language\Language\Java\Line2D.vb" />
@@ -1191,7 +1191,7 @@
     <Compile Include="Extensions\Reflection\Delegate\TypeExtensions.vb" />
     <Compile Include="Extensions\ValueTypes\DateTimeHelper.vb" />
     <Compile Include="Text\Patterns\Wildcards.vb" />
-    <Compile Include="Extensions\WebServices\UserAgent.vb" />
+    <Compile Include="Net\HTTP\UserAgent.vb" />
     <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
     <Compile Include="Language\Language\C\RandomNumbers.vb" />
     <Compile Include="Language\Language\Java\Arrays.vb" />
@@ -1368,7 +1368,7 @@
     <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
     <Compile Include="Text\TextEncodings.vb" />
     <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
-    <Compile Include="Extensions\WebServices\Http\Base64Codec.vb" />
+    <Compile Include="Net\HTTP\Base64Codec.vb" />
     <Compile Include="Extensions\WebServices\NetResponse.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\WindowsServices.vb" />
     <Compile Include="Extensions\Security\Md5.vb" />
