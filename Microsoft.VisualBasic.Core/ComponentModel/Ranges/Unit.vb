@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::1e44dd0a1a4494c296b0afc8b1bb11b0, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Convertor
-    ' 
-    '         Properties: UnitType
-    '         Delegate Function
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Module UnitConvertorExtensions
-    ' 
-    '         Function: Base, GetUnitConvertor, IndexOf, TagUnit
-    ' 
-    '     Enum ByteSize
-    ' 
-    ' 
-    ' 
-    ' 
-    '     Class UnitValue
-    ' 
-    '         Properties: Unit
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Scale, ToString
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Convertor
+' 
+'         Properties: UnitType
+'         Delegate Function
+' 
+'             Constructor: (+1 Overloads) Sub New
+' 
+'     Module UnitConvertorExtensions
+' 
+'         Function: Base, GetUnitConvertor, IndexOf, TagUnit
+' 
+'     Enum ByteSize
+' 
+' 
+' 
+' 
+'     Class UnitValue
+' 
+'         Properties: Unit
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Scale, ToString
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -113,9 +113,10 @@ Namespace ComponentModel.Ranges
             Return -1
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function TagUnit(Of T As Structure)(value#, unit As T) As UnitValue(Of T)
-            Return New UnitValue(Of T)(value, unit)
+        Public Function Unit(Of T As Structure)(value#, unitVal As T) As UnitValue(Of T)
+            Return New UnitValue(Of T)(value, unitVal)
         End Function
     End Module
 
@@ -178,7 +179,7 @@ Namespace ComponentModel.Ranges
         ''' </summary>
         ''' <param name="convert"></param>
         ''' <returns></returns>
-        Public Function Scale(convert As TUnit) As UnitValue(Of TUnit)
+        Public Function ScaleTo(convert As TUnit) As UnitValue(Of TUnit)
             Return Me = convert
         End Function
 

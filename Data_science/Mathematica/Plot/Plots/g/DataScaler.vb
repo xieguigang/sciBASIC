@@ -161,6 +161,11 @@ Namespace Graphic
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function TranslateY(y As IEnumerable(Of Double)) As IEnumerable(Of Double)
+            Return y.Select(AddressOf TranslateY)
+        End Function
+
         Public Function TranslateHeight(y As Double) As Double
             Return region.Bottom - Me.Y(y)
         End Function
