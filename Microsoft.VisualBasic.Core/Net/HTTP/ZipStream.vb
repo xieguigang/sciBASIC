@@ -14,6 +14,9 @@ Namespace Net.Http
         ''' </summary>
         ''' <param name="stream"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' ###### 2018-11-15 经过测试，没有bug，与zlibnet的测试结果一致
+        ''' </remarks>
         <Extension>
         Public Function UnZipStream(stream As IEnumerable(Of Byte)) As MemoryStream
             Dim pBytes = stream.SafeQuery.ToArray
@@ -23,19 +26,19 @@ Namespace Net.Http
                 Return New MemoryStream(pBytes)
             End If
 
-            Using cs As New MemoryStream(pBytes)
-                Dim dms As New MemoryStream()
+            Using compress As New MemoryStream(pBytes)
+                Dim deflatMs As New MemoryStream()
 
                 ' 先读取前两个deflate压缩算法标识字节，然后才能用deflateStream解压
                 ' 这个行为与 zlib库、sharpZiplib库等不同（这些库都是直接传入解压）
-                cs.ReadByte()
-                cs.ReadByte()
+                compress.ReadByte()
+                compress.ReadByte()
 
-                Using ds As New DeflateStream(cs, CompressionMode.Decompress, False)
-                    ds.CopyTo(dms, 8192)
+                Using deflatestream As New DeflateStream(compress, CompressionMode.Decompress, False)
+                    deflatestream.CopyTo(deflatMs, 8192)
                 End Using
 
-                Return dms
+                Return deflatMs
             End Using
         End Function
     End Module
