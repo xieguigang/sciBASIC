@@ -277,6 +277,11 @@ Namespace Language.Vectorization
             End Set
         End Property
 
+        ''' <summary>
+        ''' 从当前的向量序列之中进行向量子集的截取
+        ''' </summary>
+        ''' <param name="booleans"></param>
+        ''' <returns></returns>
         Public Iterator Function Subset(booleans As IEnumerable(Of Boolean)) As IEnumerable(Of T)
             For Each index In booleans.SeqIterator
                 If index.value = True Then

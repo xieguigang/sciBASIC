@@ -129,6 +129,11 @@ Namespace Scripting
             End Set
         End Property
 
+        ''' <summary>
+        ''' 这个属性返回来一个新的向量子集
+        ''' </summary>
+        ''' <param name="booleans"></param>
+        ''' <returns></returns>
         Default Public Overloads ReadOnly Property Item(booleans As IEnumerable(Of Boolean)) As IVector(Of T)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
