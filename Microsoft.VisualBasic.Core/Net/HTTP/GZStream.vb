@@ -43,13 +43,12 @@
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
 
 Namespace Net.Http
 
     ''' <summary>
     ''' 请注意，这个模块是处理http请求或者响应之中的gzip压缩的数据，
-    ''' 对于zip压缩的数据需要使用<see cref="ZipLib"/>模块之中的帮助函数来完成
+    ''' 对于zip压缩的数据需要使用<see cref="ZipStreamExtensions"/>模块之中的帮助函数来完成
     ''' </summary>
     Public Module GZStream
 
