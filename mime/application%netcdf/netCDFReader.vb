@@ -178,6 +178,11 @@ Public Class netCDFReader
         Call Me.New(path.OpenBinaryReader(encoding))
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function Open(filePath$, Optional encoding As Encodings = Encodings.UTF8) As netCDFReader
+        Return New netCDFReader(filePath, encoding)
+    End Function
+
     ''' <summary>
     ''' Returns the value of a variable as a string
     ''' </summary>
