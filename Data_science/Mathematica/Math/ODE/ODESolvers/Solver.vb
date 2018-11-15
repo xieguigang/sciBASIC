@@ -129,7 +129,9 @@ Public Module ODESolver
     ''' 参考http://blog.sina.com.cn/s/blog_698c6a6f0100lp4x.html 和维基百科
     ''' </summary>
     ''' <param name="df"></param>
-    ''' <param name="n"></param>
+    ''' <param name="n">
+    ''' 分辨率，越大越好，分辨率过低会出现误差过大的问题，分辨率越高，所需要的计算时间也越长
+    ''' </param>
     ''' <param name="a"></param>
     ''' <param name="b"></param>
     ''' 
