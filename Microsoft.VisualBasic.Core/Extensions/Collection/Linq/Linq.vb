@@ -434,6 +434,17 @@ Namespace Linq
             End If
         End Function
 
+        <Extension>
+        Public Function LastOrDefault(Of T)(source As IEnumerable(Of T), [default] As T) As T
+            Dim value As T = source.LastOrDefault
+
+            If value Is Nothing Then
+                Return [default]
+            Else
+                Return value
+            End If
+        End Function
+
         ''' <summary>
         ''' Returns the first element of a sequence, or a default value if the sequence contains no elements.
         ''' </summary>
