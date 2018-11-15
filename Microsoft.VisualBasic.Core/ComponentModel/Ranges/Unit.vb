@@ -174,6 +174,9 @@ Namespace ComponentModel.Ranges
             Me.Unit = unit
         End Sub
 
+        Sub New()
+        End Sub
+
         ''' <summary>
         ''' Unit convert
         ''' </summary>

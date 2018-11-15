@@ -61,9 +61,27 @@ Imports Microsoft.VisualBasic.ValueTypes
 Namespace Scripting.Runtime
 
     ''' <summary>
-    ''' Methods for convert the <see cref="System.String"/> to some .NET data types.
+    ''' Methods for convert the <see cref="String"/> to some .NET data types.
     ''' </summary>
     Public Module Casting
+
+        ''' <summary>
+        ''' Try parse of the enum value.
+        ''' </summary>
+        ''' <typeparam name="T">This generic type should be an <see cref="System.Enum"/> type!</typeparam>
+        ''' <param name="expression"></param>
+        ''' <param name="[default]"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function TryParse(Of T As Structure)(expression As Match, Optional [default] As T = Nothing) As T
+            Dim result As T = Nothing
+
+            If [Enum].TryParse(Of T)(expression.Value, result) Then
+                Return result
+            Else
+                Return [default]
+            End If
+        End Function
 
         ''' <summary>
         ''' <see cref="Size"/> object to string expression
