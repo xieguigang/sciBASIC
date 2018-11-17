@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2155037614418c1d001a820e64c094c, Microsoft.VisualBasic.Core\ApplicationServices\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::a1219dfb1fe27895d21349f462a9e2c5, Microsoft.VisualBasic.Core\ApplicationServices\ZipLib.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Module GZip
+    '     Module ZipLib
     ' 
     ' 
     '         Enum Overwrite

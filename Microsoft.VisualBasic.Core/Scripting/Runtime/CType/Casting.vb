@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35b47356b7aad6fe4639597e137b7e05, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::1a8f493da035e6f8296073c66bf307f4, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\Casting.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '                   CastInteger, CastIPEndPoint, CastLogFile, CastLong, CastProcess
     '                   CastRegexOptions, CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser
     '                   FloatSizeParser, NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble
-    '                   ScriptValue, SizeParser
+    '                   ScriptValue, SizeParser, TryParse
     ' 
     ' 
     ' /********************************************************************************/

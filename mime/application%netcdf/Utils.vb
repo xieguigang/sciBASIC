@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c3570d835931001cccb8cb3349a6b10, mime\application%netcdf\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::9dab233955c3b56aa5d39ffd710697ec, mime\application%netcdf\Utils.vb"
 
     ' Author:
     ' 
@@ -93,4 +93,3 @@ Module Utils
         Return New String(name)
     End Function
 End Module
-

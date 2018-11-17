@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::358887e3ea9dfe080fe710655c3ec045, mime\application%netcdf\DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::aff62437cfdf76073823ca2399e70e63, mime\application%netcdf\DataReader.vb"
 
     ' Author:
     ' 
@@ -104,4 +104,3 @@ Module DataReader
         Return data
     End Function
 End Module
-

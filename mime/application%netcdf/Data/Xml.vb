@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8027f62132b09d045bbad98f0285fe7, mime\application%netcdf\Data\Xml.vb"
+﻿#Region "Microsoft.VisualBasic::336cb0e03149220a8396d97cec70095e, mime\application%netcdf\Data\Xml.vb"
 
     ' Author:
     ' 
@@ -109,4 +109,3 @@ Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
         Return SaveAsXml(cdf, path.Open)
     End Function
 End Class
-
