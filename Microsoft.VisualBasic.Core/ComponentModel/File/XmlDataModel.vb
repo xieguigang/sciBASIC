@@ -88,7 +88,7 @@ Namespace ComponentModel
                 "     model:     " & fullName & vbCrLf &
                 "     assembly:  " & assembly & vbCrLf &
                 "     md5:       " & md5 & vbCrLf &
-                "     timestamp: " & update.ToLongTimeString & vbCrLf &
+                "     timestamp: " & update.ToLongDateString & vbCrLf &
                 "  "
 
             Return New XmlDocument().CreateComment(trace)
