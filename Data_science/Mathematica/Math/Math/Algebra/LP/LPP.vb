@@ -523,19 +523,21 @@ Namespace Algebra.LinearProgramming
 
         Public Function solve() As LPPSolution
             ' Initialize Variables
-            Dim varNum As Integer = variableNames.Length ' Point badness if we are going to be incrementing this later?
-            Me.makeStandardForm()
+            ' Point badness if we are going to be incrementing this later?
+            Dim varNum As Integer = variableNames.Length
+            Call makeStandardForm()
+
             Dim artificialVariables As List(Of Integer) = ArtificialVariableAssignments
 
             ' ArrayList<String> varNames = Input.VariableNames;
             ' String LaTeXString = latex.LPPtoLaTeX.displayLPP(Input)+'\n';
-
             Dim solutionLog As String = "Make Standard Form" & vbLf
             makeStandardForm(artificialVariables)
+
             Dim startTime As Long = App.ElapsedMilliseconds
 
             ' Add artificial variables to the LPP
-            addArtificialVariables(artificialVariables)
+            Call addArtificialVariables(artificialVariables)
 
             ' Search for Basic Feasible Solution
             Dim basicVariables As List(Of Integer) = findInitialBasicVariables(artificialVariables)
@@ -547,7 +549,6 @@ Namespace Algebra.LinearProgramming
             End If
 
             solutionLog &= "Basic Variables: " & String.Join(", ", basicVariables.ToArray) & ControlChars.Lf
-
 
             ' Pivot until optimal solution
             Dim go As Boolean = True

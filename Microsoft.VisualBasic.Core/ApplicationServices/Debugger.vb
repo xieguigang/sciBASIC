@@ -215,7 +215,7 @@ Public Module VBDebugger
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function PrintException(msg$, <CallerMemberName> Optional memberName$ = "") As Boolean
-        Return My.Log4VB.Print($"[ERROR {Now.ToString}]", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
+        Return My.Log4VB.Print($"ERROR {Now.ToString}", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
     End Function
 
     ''' <summary>
