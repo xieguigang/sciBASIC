@@ -1,51 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::9b9623df8a8ff64491cfe4fb685b5dca, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class LPP
-    ' 
-    '         Properties: ArtificialVariableAssignments, DecimalFormat, ObjectFunctionVariables
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: choosePivotConstraint, choosePivotVar, displayEqLine, findInitialBasicVariables, increaseArtificialVariableIndices
-    '                   intToBinary, isFeasible, solve, subscriptN, ToString
-    ' 
-    '         Sub: addArtificialVariables, addVariableAt, (+2 Overloads) makeStandardForm, pivot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class LPP
+' 
+'         Properties: ArtificialVariableAssignments, DecimalFormat, ObjectFunctionVariables
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: choosePivotConstraint, choosePivotVar, displayEqLine, findInitialBasicVariables, increaseArtificialVariableIndices
+'                   intToBinary, isFeasible, solve, subscriptN, ToString
+' 
+'         Sub: addArtificialVariables, addVariableAt, (+2 Overloads) makeStandardForm, pivot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Text
+Imports Microsoft.VisualBasic.Terminal.ProgressBar
 
 Namespace Algebra.LinearProgramming
 
@@ -521,18 +524,93 @@ Namespace Algebra.LinearProgramming
             Return choice
         End Function
 
-        Public Function solve() As LPPSolution
+        Private Function runIteration(basicVariables As List(Of Integer),
+                                      artificialVariables As List(Of Integer),
+                                      solutionLog As StringBuilder,
+                                      feasibleSolutionTime&,
+                                      showProgress As Boolean) As LPPSolution
+
+            ' Pivot until optimal solution
+            Dim go As Boolean = True
+            Dim limiter As Integer = 1
+            Dim tick As Action
+            Dim progress As ProgressBar = Nothing
+
+            If showProgress Then
+                progress = New ProgressBar("Run LPP Solution Iterations...")
+
+                With New ProgressProvider(PIVOT_ITERATION_LIMIT)
+                    Dim ETA$, msg$
+
+                    tick = Sub()
+                               limiter += 1
+                               ETA = .ETA(progress.ElapsedMilliseconds).FormatTime
+                               msg = $"Iteration {limiter}/{PIVOT_ITERATION_LIMIT}, ETA={ETA}"
+                               progress.SetProgress(.StepProgress, msg)
+                           End Sub
+                End With
+            Else
+                tick = Sub() limiter += 1
+
+            End If
+
+            'LaTeXString += latex.LPPtoLaTeX.beginTableaus(Input);
+
+            Do While go
+
+                ' Get next variable to pivot on
+                Dim n As Integer = choosePivotVar(artificialVariables)
+                Dim [next] As Integer = choosePivotConstraint(n)
+
+                ' If optimal solution reached, end 'while' statement
+                'LaTeXString += latex.LPPtoLaTeX.makeTableau(Input, BasicVars, limiter);
+
+                If n = -1 Then
+                    ' Found a solution.  Stop pivoting.
+                    go = False
+
+                ElseIf limiter = PIVOT_ITERATION_LIMIT Then
+                    Call progress?.SetProgress(100, "Max iteration reached...")
+                    Call progress?.Dispose()
+                    ' Check iteration limit not exceeded.
+                    Return New LPPSolution("The pivot max iteration cap was exceeded.", solutionLog.ToString, feasibleSolutionTime)
+
+                ElseIf [next] = -1 Then
+                    Call progress?.SetProgress(100, "LPP is unbounded!")
+                    Call progress?.Dispose()
+                    ' Check for unboundedness.
+                    Return New LPPSolution("The given LPP is unbounded.", solutionLog.ToString, feasibleSolutionTime)
+
+                Else
+                    ' Get pivot constraint, continue.
+                    pivot(n, [next])
+                    basicVariables([next]) = n
+                    solutionLog.AppendLine("Pivot at " & n & ", " & [next])
+                End If
+
+                Call tick()
+            Loop
+
+            Call progress?.SetProgress(100, "Complete!")
+            Call progress?.Dispose()
+
+            Return Nothing
+        End Function
+
+        Public Function solve(Optional showProgress As Boolean = True) As LPPSolution
             ' Initialize Variables
             ' Point badness if we are going to be incrementing this later?
+            Dim solutionLog As New StringBuilder
             Dim varNum As Integer = variableNames.Length
+
             Call makeStandardForm()
 
             Dim artificialVariables As List(Of Integer) = ArtificialVariableAssignments
 
             ' ArrayList<String> varNames = Input.VariableNames;
             ' String LaTeXString = latex.LPPtoLaTeX.displayLPP(Input)+'\n';
-            Dim solutionLog As String = "Make Standard Form" & vbLf
-            makeStandardForm(artificialVariables)
+            Call solutionLog.AppendLine("Make Standard Form")
+            Call makeStandardForm(artificialVariables)
 
             Dim startTime As Long = App.ElapsedMilliseconds
 
@@ -545,46 +623,21 @@ Namespace Algebra.LinearProgramming
 
             ' Return fail message if no feasible solution is found
             If basicVariables(0) = -1 Then
-                Return New LPPSolution("Could not find a Basic Feasible Solution.", solutionLog, feasibleSolutionTime)
+                Return New LPPSolution("Could not find a Basic Feasible Solution.", solutionLog.ToString, feasibleSolutionTime)
             End If
 
-            solutionLog &= "Basic Variables: " & String.Join(", ", basicVariables.ToArray) & ControlChars.Lf
+            solutionLog.AppendLine("Basic Variables: " & String.Join(", ", basicVariables.ToArray))
 
-            ' Pivot until optimal solution
-            Dim go As Boolean = True
-            Dim limiter As Integer = 1
-            'LaTeXString += latex.LPPtoLaTeX.beginTableaus(Input);
+            Dim [error] As LPPSolution = runIteration(
+                basicVariables, artificialVariables,
+                solutionLog,
+                feasibleSolutionTime,
+                showProgress
+            )
 
-            Do While go
-
-                ' Get next variable to pivot on
-                Dim n As Integer = choosePivotVar(artificialVariables)
-                Dim [next] As Integer = choosePivotConstraint(n)
-
-                ' If optimal solution reached, end 'while' statement
-                'LaTeXString += latex.LPPtoLaTeX.makeTableau(Input, BasicVars, limiter);
-
-                ' Found a solution.  Stop pivoting.
-                If n = -1 Then
-                    go = False
-
-                    ' Check iteration limit not exceeded.
-                ElseIf limiter = PIVOT_ITERATION_LIMIT Then
-                    Return New LPPSolution("The pivot max iteration cap was exceeded.", solutionLog, feasibleSolutionTime)
-
-                    ' Check for unboundedness.
-                ElseIf [next] = -1 Then
-                    Return New LPPSolution("The given LPP is unbounded.", solutionLog, feasibleSolutionTime)
-
-                    ' Get pivot constraint, continue.
-                Else
-                    pivot(n, [next])
-                    basicVariables([next]) = n
-                    solutionLog &= "Pivot at " & n & ", " & [next] & vbLf
-                End If
-
-                limiter += 1
-            Loop
+            If Not [error] Is Nothing Then
+                Return [error]
+            End If
 
             ' Close LaTeX and initialize sensitivity variables
             ' LaTeXString += latex.LPPtoLaTeX.endTableaus();
@@ -652,7 +705,7 @@ Namespace Algebra.LinearProgramming
                 reducedCost,
                 App.ElapsedMilliseconds - startTime,
                 feasibleSolutionTime,
-                solutionLog, DecimalFormat
+                solutionLog.ToString, DecimalFormat
             )
         End Function
     End Class
