@@ -56,7 +56,7 @@ Namespace Vendor_3mf
         ''' <returns></returns>
         Public Function Open(zip$) As Project
             Dim tmp$ = App.GetAppSysTempFile("--" & zip.FileName, sessionID:=App.PID)
-            Call GZip.ImprovedExtractToDirectory(zip, tmp, Overwrite.Always)
+            Call ZipLib.ImprovedExtractToDirectory(zip, tmp, Overwrite.Always)
             Return Project.FromZipDirectory(tmp)
         End Function
 

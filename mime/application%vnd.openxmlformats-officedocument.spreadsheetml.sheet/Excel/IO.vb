@@ -59,7 +59,7 @@ Public Module IO
     Public Function CreateReader(xlsx$) As File
         Dim ROOT$ = App.GetAppSysTempFile("-" & RandomASCIIString(6, skipSymbols:=True), App.PID)
 
-        Call GZip.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
+        Call ZipLib.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
 
         Dim contentType As ContentTypes = (ROOT & "/[Content_Types].xml").LoadXml(Of ContentTypes)
         Dim rels As New _rels(ROOT)
@@ -110,7 +110,7 @@ Public Module IO
         End If
 
         ' 重新进行zip打包
-        Call GZip.DirectoryArchive(xlsx.ROOT, path, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
+        Call ZipLib.DirectoryArchive(xlsx.ROOT, path, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
 
         Return True
     End Function

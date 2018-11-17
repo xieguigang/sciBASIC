@@ -98,6 +98,11 @@ Namespace Language.Default
             End If
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ReadAllLines() As String()
+            Return DefaultValue.ReadAllLines
+        End Function
+
         Public Overrides Function ToString() As String
             Return DefaultValue
         End Function

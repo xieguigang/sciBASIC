@@ -227,7 +227,7 @@ Public Class File : Implements IFileReference
 
     Public Shared Function CreatePackage(tmp$, xlsx$, Optional throwEx As Boolean = True) As Boolean
         Try
-            Call GZip.DirectoryArchive(tmp, xlsx, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
+            Call ZipLib.DirectoryArchive(tmp, xlsx, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
             Return True
         Catch ex As Exception
             Dim debug$ = New Dictionary(Of String, String) From {
