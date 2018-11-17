@@ -609,13 +609,25 @@ Namespace Algebra.LinearProgramming
 
             ' ArrayList<String> varNames = Input.VariableNames;
             ' String LaTeXString = latex.LPPtoLaTeX.displayLPP(Input)+'\n';
+            If showProgress Then
+                Call Console.WriteLine("Make Standard Form...")
+            End If
+
             Call solutionLog.AppendLine("Make Standard Form")
             Call makeStandardForm(artificialVariables)
 
             Dim startTime As Long = App.ElapsedMilliseconds
 
+            If showProgress Then
+                Call Console.WriteLine("Add artificial variables to the LPP...")
+            End If
+
             ' Add artificial variables to the LPP
             Call addArtificialVariables(artificialVariables)
+
+            If showProgress Then
+                Call Console.WriteLine("Search for Basic Feasible Solution...")
+            End If
 
             ' Search for Basic Feasible Solution
             Dim basicVariables As List(Of Integer) = findInitialBasicVariables(artificialVariables)
