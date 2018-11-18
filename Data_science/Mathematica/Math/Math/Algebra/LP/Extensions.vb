@@ -46,6 +46,20 @@ Namespace Algebra.LinearProgramming
 
     Module Extensions
 
+        Public Function intToBinary(binary As Integer, digits As Integer) As List(Of Char)
+            Dim temp As String = Convert.ToString(binary, 2)
+            Dim foundDigits As Integer = temp.Length
+            Dim returner As New List(Of Char)
+
+            For i As Integer = foundDigits To digits - 1
+                returner.Add("0"c)
+            Next
+
+            returner.AddRange(temp)
+
+            Return returner
+        End Function
+
         ''' <summary>
         ''' Convert an integer into a multi-character subscript.
         ''' </summary>

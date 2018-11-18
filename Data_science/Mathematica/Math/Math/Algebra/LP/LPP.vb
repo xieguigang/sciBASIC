@@ -381,19 +381,19 @@ Namespace Algebra.LinearProgramming
 
             ' Set up parameters for finding subsets
             Dim n As Integer = variableNames.Count - q
-            Dim powersetsize As Integer = CInt(Fix(Math.Pow(2, n)))
+            Dim powerSetSize As Integer = CInt(Fix(Math.Pow(2, n)))
 
-            For i As Integer = 0 To powersetsize - 1
+            For i As Integer = 0 To powerSetSize - 1
 
                 ' Reinitialize potential basic feasible solution
                 alpha = New List(Of Integer)()
 
                 '  Convert the binary number to a string containing n digits
-                Dim binary As String = intToBinary(i, n)
+                Dim binary As List(Of Char) = intToBinary(i, n)
 
                 '  Create the corresponding subset
-                For j As Integer = 0 To binary.Length - 1
-                    If binary.Chars(j) = "1"c Then
+                For j As Integer = 0 To binary.Count - 1
+                    If binary(j) = "1"c Then
                         alpha.Add(j)
                     End If
                 Next
@@ -414,19 +414,6 @@ Namespace Algebra.LinearProgramming
             End If
 
             Return alpha
-        End Function
-
-        Private Shared Function intToBinary(binary As Integer, digits As Integer) As String
-
-            Dim temp As String = Convert.ToString(binary, 2)
-            Dim foundDigits As Integer = temp.Length
-            Dim returner As String = temp
-
-            For i As Integer = foundDigits To digits - 1
-                returner = "0" & returner
-            Next
-
-            Return returner
         End Function
 
         Private Function choosePivotVar(artificialVariables As List(Of Integer)) As Integer
