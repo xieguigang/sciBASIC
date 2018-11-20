@@ -489,6 +489,7 @@ Public Module Extensions
     <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
                                                              index As TKey,
                                                              Optional [default] As TValue = Nothing,
+                                                             Optional mute As Boolean = False,
                                                              <CallerMemberName> Optional trace$ = Nothing) As TValue
         ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
         ' 直接返回默认值
@@ -504,7 +505,9 @@ Public Module Extensions
             Return [default]
         ElseIf Not table.ContainsKey(index) Then
 #If DEBUG Then
-            Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
+            If Not mute Then
+                Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
+            End If
 #End If
             Return [default]
         End If
