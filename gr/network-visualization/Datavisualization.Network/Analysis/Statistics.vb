@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::833e97f1043240f8d73e62ab2be08080, gr\network-visualization\Datavisualization.Network\Analysis\Statistics.vb"
+﻿#Region "Microsoft.VisualBasic::456f31d6869bb173568e927a5b6c66c8, gr\network-visualization\Datavisualization.Network\Analysis\Statistics.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Module Statistics
     ' 
-    '         Function: ComputeDegreeData, (+2 Overloads) ComputeNodeDegrees, GetDegrees, NodesGroupCount, Sum
+    '         Function: AnalysisDegrees, ComputeDegreeData, (+2 Overloads) ComputeNodeDegrees, GetDegrees, NodesGroupCount
+    '                   Sum
     ' 
     ' 
     ' /********************************************************************************/

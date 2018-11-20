@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7c76ec5ae56abea637fe5bbad1b8dea, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\NumericTagged.vb"
+﻿#Region "Microsoft.VisualBasic::5fe28d8fe19788ad638c9172a49963b1, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\NumericTagged.vb"
 
     ' Author:
     ' 
@@ -35,6 +35,7 @@
     ' 
     '         Properties: IValueOf_Value
     ' 
+    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) CompareTo, ToString
     ' 
     ' 

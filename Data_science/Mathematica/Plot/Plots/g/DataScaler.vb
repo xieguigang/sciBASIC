@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1af64a7299fc5a1301810033607cf646, Data_science\Mathematica\Plot\Plots\g\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::4f94211002e12eb417d2fb7e10b97dc2, Data_science\Mathematica\Plot\Plots\g\DataScaler.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@
     '         Properties: region, Y
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: TranslateHeight, TranslateY
+    '         Function: TranslateHeight, (+2 Overloads) TranslateY
     ' 
     '     Class DataScaler
     ' 

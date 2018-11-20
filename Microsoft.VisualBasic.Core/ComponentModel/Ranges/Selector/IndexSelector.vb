@@ -1,46 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::c7c0f33dfa0a4fe3541155fc5ea013d0, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\IndexSelector.vb"
+﻿#Region "Microsoft.VisualBasic::b7b6985a0997ef3768ef740897ce76e6, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Selector\IndexSelector.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class OrderSelector
-' 
-'         Properties: Count, Desc
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: Find, FirstGreaterThan, GetEnumerator, IEnumerable_GetEnumerator, SelectByRange
-'                   SelectUntilGreaterThan, SelectUntilLessThan, ToString
-' 
-' 
-' /********************************************************************************/
+    '     Class IndexSelector
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: FromSortSequence, SelectByRange
+    ' 
+    '     Class OrderSelector
+    ' 
+    '         Properties: Count, Desc
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Find, FirstGreaterThan, GetEnumerator, IEnumerable_GetEnumerator, SelectByRange
+    '                   SelectUntilGreaterThan, SelectUntilLessThan, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

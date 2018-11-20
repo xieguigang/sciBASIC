@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e722aaf6f2941b3744766b4f269cb345, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::3ff74f570d3c8aa4518b85bab2eb97ef, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     ' Module NetworkAPI
     ' 
     '     Function: EndPoints, FromCorrelations, GetConnections, GetNetworkNodes, GetNextConnects
-    '               GetNHetworkEdges, ReadnetWork, SaveNetwork, WriteNetwork
+    '               GetNHetworkEdges, ReadnetWork, SaveNetwork, Trim, WriteNetwork
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c73b355f3e97c73e1f72be05e8d894e7, mime\application%netcdf\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::8c8c031a7eeaf7fb7d23a7938113249a, mime\application%netcdf\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '     Properties: dimensions, globalAttributes, recordDimension, variables, version
     ' 
     '     Constructor: (+2 Overloads) Sub New
-    '     Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, ToString
+    '     Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, Open
+    '               ToString
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cced966521a84ce7d65b9878c95ac223, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::50b9b3f31d7ef4c822fe1304e7f5b032, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -215,7 +215,7 @@ Public Module VBDebugger
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function PrintException(msg$, <CallerMemberName> Optional memberName$ = "") As Boolean
-        Return My.Log4VB.Print($"[ERROR {Now.ToString}]", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
+        Return My.Log4VB.Print($"ERROR {Now.ToString}", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
     End Function
 
     ''' <summary>
