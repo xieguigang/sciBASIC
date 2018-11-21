@@ -162,33 +162,42 @@ Namespace StorageProvider.Reflection
         ''' <summary>
         ''' Method for load a csv data file into a specific type of object collection.
         ''' </summary>
-        ''' <typeparam name="ItemType"></typeparam>
-        ''' <param name="Explicit">当本参数值为False的时候，所有的简单属性值都将被解析出来，而忽略掉其是否带有<see cref="Csv.StorageProvider.Reflection.ColumnAttribute"></see>自定义属性</param>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="Explicit">
+        ''' 当本参数值为False的时候，所有的简单属性值都将被解析出来，而忽略掉其是否带有
+        ''' <see cref="Csv.StorageProvider.Reflection.ColumnAttribute"></see>自定义属性
+        ''' </param>
         ''' <param name="path"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Load(Of ItemType As Class)(path As String,
-                                                   Optional Explicit As Boolean = True,
-                                                   Optional encoding As Encoding = Nothing,
-                                                   Optional fast As Boolean = False,
-                                                   Optional maps As Dictionary(Of String, String) = Nothing) As List(Of ItemType)
-            If Not path.FileExists Then '空文件
-                Call $"Csv file ""{path.ToFileURL}"" is empty!".__DEBUG_ECHO
-                Return New List(Of ItemType)
+        Public Function Load(Of T As Class)(path$,
+                                            Optional Explicit As Boolean = True,
+                                            Optional encoding As Encoding = Nothing,
+                                            Optional fast As Boolean = False,
+                                            Optional maps As Dictionary(Of String, String) = Nothing,
+                                            Optional mute As Boolean = False) As List(Of T)
+            If Not path.FileExists Then
+                ' 空文件
+                Call $"Csv file ""{path.ToFileURL}"" is empty!".Warning
+                Return New List(Of T)
             Else
-                Call "Load data from filestream....".__DEBUG_ECHO
+                Call "Load data from filestream....".__DEBUG_ECHO(mute:=mute)
             End If
 
-            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast)  ' read csv data
+            ' read csv data
+            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast)
+            Dim buffer As List(Of T)
 
             If Not maps Is Nothing Then
-                Call reader.ChangeMapping(maps)  ' 改变列的名称映射以方便进行反序列化数据加载
+                ' 改变列的名称映射以方便进行反序列化数据加载
+                Call reader.ChangeMapping(maps)
             End If
 
-            Call $"Reflector load data into type {GetType(ItemType).FullName}".__DEBUG_ECHO
-            Dim bufs As List(Of ItemType) = Reflector.Convert(Of ItemType)(reader, Explicit)
-            Call "[Job Done!]".__DEBUG_ECHO
-            Return bufs
+            Call $"Reflector load data into type {GetType(T).FullName}".__DEBUG_ECHO(mute:=mute)
+            buffer = Reflector.Convert(Of T)(reader, Explicit)
+            Call "[Job Done!]".__DEBUG_ECHO(mute:=mute)
+
+            Return buffer
         End Function
 
         ''' <summary>

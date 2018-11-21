@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::ebd99919c4821c55c5ee7f393989dd2d, Data\DataFrame\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Extensions
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: (+4 Overloads) AsDataSource, AsLinq, (+3 Overloads) DataFrame, GetLocusMapName, IsEmptyTable
-    '               (+3 Overloads) LoadCsv, LoadDblVector, LoadStream, LoadTsv, SaveDataSet
-    '               (+2 Overloads) SaveTable, (+7 Overloads) SaveTo, TabExport, ToCsvDoc
-    ' 
-    '     Sub: Cable, ForEach
-    '     Structure __loadHelper
-    ' 
-    '         Function: LoadObject
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module Extensions
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: (+4 Overloads) AsDataSource, AsLinq, (+3 Overloads) DataFrame, GetLocusMapName, IsEmptyTable
+'               (+3 Overloads) LoadCsv, LoadDblVector, LoadStream, LoadTsv, SaveDataSet
+'               (+2 Overloads) SaveTable, (+7 Overloads) SaveTo, TabExport, ToCsvDoc
+' 
+'     Sub: Cable, ForEach
+'     Structure __loadHelper
+' 
+'         Function: LoadObject
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -339,6 +339,7 @@ Public Module Extensions
         End With
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("Write.Csv")>
     <Extension> Public Function SaveTo(dat As IEnumerable(Of RowObject), path$, Optional encoding As Encoding = Nothing) As Boolean
         Return CType(dat, IO.File).Save(path, Encoding:=encoding)
@@ -352,6 +353,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <ExportAPI(NameOf(DataFrame), Info:="Create a dynamics data frame object from a csv document object.")>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function DataFrame(data As File) As DataFrame
         Return DataFrame.CreateObject(data)
     End Function
@@ -423,19 +425,23 @@ Public Module Extensions
     ''' (将字符串数组转换为数据源对象，注意：请确保第一行为标题行)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="strDataLines"></param>
+    ''' <param name="lines"></param>
     ''' <param name="Delimiter"></param>
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(strDataLines As IEnumerable(Of String), Optional delimiter$ = ",", Optional explicit As Boolean = True) As T()
-        Dim Expression As String = String.Format(DataImports.SplitRegxExpression, delimiter)
-        Dim LQuery = (From line As String In strDataLines Select RowParsing(line, Expression)).ToArray
-        Return CType(LQuery, csv.IO.File).AsDataSource(Of T)(explicit)
+    <Extension> Public Function AsDataSource(Of T As Class)(lines As IEnumerable(Of String), Optional delimiter$ = ",", Optional explicit As Boolean = True) As T()
+        Dim splitter As String = String.Format(DataImports.SplitRegxExpression, delimiter)
+        Dim rows As IEnumerable(Of RowObject) = From line As String
+                                                In lines
+                                                Select RowParsing(line, splitter)
+        ' 解析完文本数据之后进行对象的反射加载操作
+        Return New File_csv(rows).AsDataSource(Of T)(explicit)
     End Function
 
     ''' <summary>
-    ''' Load a csv data file document using a specific object type.(将某一个Csv数据文件加载仅一个特定类型的对象集合中，空文件的话会返回一个空集合，这是一个安全的函数，不会返回空值)
+    ''' Load a csv data file document using a specific object type.
+    ''' (将某一个Csv数据文件加载仅一个特定类型的对象集合中，空文件的话会返回一个空集合，这是一个安全的函数，不会返回空值)
     ''' </summary>
     ''' <typeparam name="T">The type parameter of the element in the returns collection data.</typeparam>
     ''' <param name="path">The csv document file path.(目标Csv数据文件的文件路径)</param>
@@ -448,15 +454,30 @@ Public Module Extensions
                                                        Optional explicit As Boolean = False,
                                                        Optional encoding As Encoding = Nothing,
                                                        Optional fast As Boolean = False,
-                                                       Optional maps As NameMapping = Nothing) As List(Of T)
-        Call "Start to load csv data....".__DEBUG_ECHO
-        Dim st = Stopwatch.StartNew
-        Dim bufs = Reflector.Load(Of T)(path, explicit, encoding, fast, maps)
-        Dim ms As Long = st.ElapsedMilliseconds
-        Dim fs As String = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")
-        Call $"[CSV.Reflector::{GetType(T).FullName}]
-Load {bufs.Count} lines of data from ""{path.ToFileURL}""! ...................{fs}".__DEBUG_ECHO
-        Return bufs
+                                                       Optional maps As NameMapping = Nothing,
+                                                       Optional mute As Boolean = False) As List(Of T)
+        Dim buffer As List(Of T)
+        Dim fs$, ms&
+
+        Call "Start to load csv data....".__DEBUG_ECHO(mute:=mute)
+
+        With Stopwatch.StartNew
+            buffer = Reflector.Load(Of T)(
+                path, explicit, encoding,
+                fast:=fast,
+                maps:=maps,
+                mute:=mute
+            )
+            ms = .ElapsedMilliseconds
+            fs = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")
+        End With
+
+        Dim type$ = GetType(T).FullName
+        Dim n% = buffer.Count
+
+        Call $"[CSV.Reflector::{type}]{vbLf}Load {n} lines of data from ""{path.ToFileURL}""! ...................{fs}".__DEBUG_ECHO(mute:=mute)
+
+        Return buffer
     End Function
 
     ''' <summary>

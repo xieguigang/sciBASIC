@@ -76,6 +76,8 @@ Public Module VBDebugger
     ''' <param name="message$">The exception message</param>
     ''' <param name="failure">If this expression test is True, then die expression will raise an exception</param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function die(message$, Optional failure As Assert(Of Object) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandle
         Return New ExceptionHandle With {
             .Message = message,
@@ -88,33 +90,48 @@ Public Module VBDebugger
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="TAG"></param>
+    ''' <param name="tag"></param>
     ''' <returns></returns>
-    <Extension> Public Function LinqProc(Of T)(source As IEnumerable(Of T), <CallerMemberName> Optional TAG As String = "") As EventProc
-        Return New EventProc(source.Count, TAG)
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function LinqProc(Of T)(source As IEnumerable(Of T), <CallerMemberName> Optional tag$ = Nothing) As EventProc
+        Return New EventProc(source.Count, tag)
     End Function
 
-    Dim __mute As Boolean = False
+    ''' <summary>
+    ''' 当前的调试器的信息输出登记，默认是输出所有的信息
+    ''' </summary>
+    Friend m_level As DebuggerLevels = DebuggerLevels.On
+    ''' <summary>
+    ''' 是否静默掉所有的调试器输出信息？默认不是
+    ''' </summary>
+    Friend m_mute As Boolean = False
 
-    Friend __level As DebuggerLevels = DebuggerLevels.On  ' 默认是输出所有的信息
-
+    ''' <summary>
+    ''' 对外部开放的调试日志的获取接口类型的申明
+    ''' </summary>
+    ''' <param name="header">消息的类型的头部标签</param>
+    ''' <param name="message">消息文本内容，一般为一行文本</param>
+    ''' <param name="level">日志消息的错误等级</param>
     Public Delegate Sub LoggingDriver(header$, message$, level As MSG_TYPES)
 
     ''' <summary>
-    ''' Disable the debugger information outputs on the console if this <see cref="Mute"/> property is set to True, 
-    ''' and enable the output if this property is set to False. 
-    ''' NOTE: this debugger option property can be overrides by the debugger parameter from the CLI parameter named '--echo'
+    ''' Disable the debugger information outputs on the console if this <see cref="Mute"/> property is set to 
+    ''' <see cref="Boolean.True"/>, and enable the output if this property is set to <see cref="Boolean.False"/>. 
+    ''' NOTE: this debugger option property can be overrides by the debugger parameter from the CLI parameter 
+    ''' named ``--echo``
     ''' </summary>
     ''' <returns></returns>
     Public Property Mute As Boolean
         Get
-            Return __mute
+            Return m_mute
         End Get
         Set(value As Boolean)
-            If __level = DebuggerLevels.Off Then  ' off的时候，不会输出任何信息
-                __mute = True
+            ' off的时候，不会输出任何信息
+            If m_level = DebuggerLevels.Off Then
+                m_mute = True
             Else
-                __mute = value
+                m_mute = value
             End If
         End Set
     End Property
@@ -137,7 +154,7 @@ Public Module VBDebugger
         Dim ms& = Utils.Time(test)
         Dim end$ = Now.ToLongTimeString
 
-        If Not Mute AndAlso __level < DebuggerLevels.Warning Then
+        If Not Mute AndAlso m_level < DebuggerLevels.Warning Then
             Dim head$ = $"Benchmark `{ms.FormatTicks}` {start} - {[end]}"
             Dim str$ = " " & $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
 
@@ -154,14 +171,14 @@ Public Module VBDebugger
     ''' <param name="msg">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
     ''' <param name="indent"></param>
     ''' <returns>其实这个函数是不会返回任何东西的，只是因为为了Linq调试输出的需要，所以在这里是返回Nothing的</returns>
-    <Extension> Public Function __DEBUG_ECHO(msg$, Optional indent% = 0) As String
+    <Extension> Public Function __DEBUG_ECHO(msg$, Optional indent% = 0, Optional mute As Boolean = False) As String
         Static indents$() = {"",
             New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
             New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
             New String(" ", 9), New String(" ", 10)
         }
 
-        If Not Mute AndAlso __level < DebuggerLevels.Warning Then
+        If Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
             Dim head As String = $"DEBUG {Now.ToString}"
             Dim str As String = $"{indents(indent)} {msg}"
 
@@ -176,7 +193,7 @@ Public Module VBDebugger
     End Function
 
     <Extension> Public Sub __INFO_ECHO(msg$)
-        If Not Mute AndAlso __level < DebuggerLevels.Warning Then
+        If Not Mute AndAlso m_level < DebuggerLevels.Warning Then
             Dim head As String = $"INFOM {Now.ToString}"
             Dim str As String = " " & msg
 
@@ -276,19 +293,19 @@ Public Module VBDebugger
     Public Sub Assertion(test As Boolean, fails As String, level As MSG_TYPES, <CallerMemberName> Optional calls As String = "")
         If Not test = True Then
             If level = MSG_TYPES.DEBUG Then
-                If __level < DebuggerLevels.Warning Then
+                If m_level < DebuggerLevels.Warning Then
                     Call fails.__DEBUG_ECHO(memberName:=calls)
                 End If
             ElseIf level = MSG_TYPES.ERR Then
-                If __level <> DebuggerLevels.Off Then
+                If m_level <> DebuggerLevels.Off Then
                     Call WriteLine(fails, ConsoleColor.Red)
                 End If
             ElseIf level = MSG_TYPES.WRN Then
-                If __level <> DebuggerLevels.Error Then
+                If m_level <> DebuggerLevels.Error Then
                     Call Warning(fails, calls)
                 End If
             Else
-                If __level < DebuggerLevels.Warning Then
+                If m_level < DebuggerLevels.Warning Then
                     Call Console.WriteLine($"@{calls}::" & fails)
                 End If
             End If
