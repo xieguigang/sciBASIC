@@ -54,6 +54,12 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 Public Module PrimitiveParser
 
+    ''' <summary>
+    ''' Evaluate the given string expression as numeric value 
+    ''' </summary>
+    ''' <param name="expression$"></param>
+    ''' <param name="default#"></param>
+    ''' <returns></returns>
     Public Function Eval(expression$, default#) As Double
         If expression Is Nothing Then
             Return [default]
