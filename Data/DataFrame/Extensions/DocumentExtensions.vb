@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::20769120369c7c930a3941800e59f168, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module DocumentExtensions
-    ' 
-    '     Function: Apply, CreateTable, DirectAppends, GetColumnObjects, GetColumnValues
-    '               InvalidsAsRLangNA, JoinColumns, LoadCsv, LoadData, LoadDictionary
-    '               LoadMappings, LoadTable, (+2 Overloads) LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
-    '               SaveTsv, StripNaN, TsvLine
-    '     Class GenericTable
-    ' 
-    '         Properties: Data
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module DocumentExtensions
+' 
+'     Function: Apply, CreateTable, DirectAppends, GetColumnObjects, GetColumnValues
+'               InvalidsAsRLangNA, JoinColumns, LoadCsv, LoadData, LoadDictionary
+'               LoadMappings, LoadTable, (+2 Overloads) LoadTsv, ParseDoc, (+2 Overloads) SaveAsDataFrame
+'               SaveTsv, StripNaN, TsvLine
+'     Class GenericTable
+' 
+'         Properties: Data
+' 
+'         Function: ToString
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
@@ -173,10 +174,10 @@ Public Module DocumentExtensions
     <Extension>
     Public Function SaveAsDataFrame(d As IEnumerable(Of Dictionary(Of String, Double)), path$) As Boolean
         Return d _
-            .Select(
-            Function(x) x.ToDictionary(
-            Function(k) k.Key,
-            Function(v) v.Value.ToString)) _
+            .Select(Function(x)
+                        Return x.ToDictionary(Function(k) k.Key,
+                                              Function(v) v.Value.ToString)
+                    End Function) _
             .SaveAsDataFrame(path)
     End Function
 
@@ -313,9 +314,10 @@ Public Module DocumentExtensions
         Dim keyIndex% = header.IndexOf(key)
         Dim mapIndex% = header.IndexOf(mapTo)
 
+        Const Missing$ = "Mapping: '{0} => {1}' is missing in the target csv file! ({2})"
+
         If keyIndex = -1 OrElse mapIndex = -1 Then
-            Dim msg$ =
-                $"Mapping: {key} --> {mapTo} is missing in the target csv file! ({header.ToArray.GetJson})"
+            Dim msg$ = String.Format(Missing, key, mapTo, header.ToArray.GetJson)
             Throw New KeyNotFoundException(msg)
         End If
 
@@ -451,5 +453,22 @@ Public Module DocumentExtensions
     <Extension>
     Public Function ParseDoc(csv$, Optional removesBlank As Boolean = False) As IO.File
         Return IO.File.Load(csv.LineTokens, trimBlanks:=removesBlank)
+    End Function
+
+    ''' <summary>
+    ''' 获取最后一行数据
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function GetLastRow(Of T As Class)(path$, Optional encoding As Encodings = Encodings.UTF8, Optional strict As Boolean = False) As T
+        Dim textEncoding As Encoding = encoding.CodePage
+        Dim header As RowObject = RowObject.TryParse(path.ReadFirstLine(textEncoding))
+        Dim data As RowObject = RowObject.TryParse(path.GetLastLine(textEncoding))
+        Dim subFrame As DataFrame = IO.DataFrame.CreateObject({header, data})
+        Dim buffer = Reflector.Convert(Of T)(subFrame, strict)
+        Return buffer.First
     End Function
 End Module
