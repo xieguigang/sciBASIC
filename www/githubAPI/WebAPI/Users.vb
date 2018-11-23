@@ -70,15 +70,19 @@ Namespace WebAPI
         End Function
 
         Public Shared Function Parse(page As String) As Counter
-            Dim links$() = page.Match("UnderlineNav.+?</div>", RegexICSng) _
-                               .Matches("title[=].+?</a>") _
+            Dim links$() = page.Matches("UnderlineNav.+?</a>", RegexICSng) _
+                               .Select(Function(c)
+                                           Return c.Match(">.+?</span>", RegexICSng).TrimNewLine.StringReplace("\s+", "")
+                                       End Function) _
+                               .Where(Function(s) Not s.StringEmpty) _
                                .ToArray
             Dim counters = links _
                 .Select(Function(a)
-                            Dim title$ = a.Match("title[=]"".*""").GetTagValue("=").Value.Trim("""").Trim
+                            Dim title$ = a.GetValue.Split("<"c).FirstOrDefault
                             Dim count$ = a.Match("<span.+</span>", RegexICSng).Match("\d+")
                             Return New NamedValue(Of Integer)(title, CInt(Val(count)))
                         End Function) _
+                .Where(Function(n) Not n.Name.StringEmpty) _
                 .ToDictionary _
                 .FlatTable
 
