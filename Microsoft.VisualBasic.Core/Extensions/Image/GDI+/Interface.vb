@@ -2129,109 +2129,51 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public MustOverride Sub DrawPolygon(pen As Pen, points() As Point)
-        '
-        ' Summary:
-        '     Draws a rectangle specified by a System.Drawing.Rectangle structure.
-        '
-        ' Parameters:
-        '   pen:
-        '     A System.Drawing.Pen that determines the color, width, and style of the rectangle.
-        '
-        '   rect:
-        '     A System.Drawing.Rectangle structure that represents the rectangle to draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a rectangle specified by a System.Drawing.Rectangle structure.
+        ''' </summary>
+        ''' <param name="pen">A System.Drawing.Pen that determines the color, width, and style of the rectangle.</param>
+        ''' <param name="rect">A System.Drawing.Rectangle structure that represents the rectangle to draw.</param>
         Public MustOverride Sub DrawRectangle(pen As Pen, rect As Rectangle)
         Public MustOverride Sub DrawRectangle(pen As Pen, rect As RectangleF)
-        '
-        ' Summary:
-        '     Draws a rectangle specified by a coordinate pair, a width, and a height.
-        '
-        ' Parameters:
-        '   pen:
-        '     A System.Drawing.Pen that determines the color, width, and style of the rectangle.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the rectangle to draw.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the rectangle to draw.
-        '
-        '   width:
-        '     The width of the rectangle to draw.
-        '
-        '   height:
-        '     The height of the rectangle to draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a rectangle specified by a coordinate pair, a width, and a height.
+        ''' </summary>
+        ''' <param name="pen">A System.Drawing.Pen that determines the color, width, and style of the rectangle.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the rectangle to draw.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the rectangle to draw.</param>
+        ''' <param name="width">The width of the rectangle to draw.</param>
+        ''' <param name="height">The height of the rectangle to draw.</param>
         Public MustOverride Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
-        '
-        ' Summary:
-        '     Draws a rectangle specified by a coordinate pair, a width, and a height.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the rectangle.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the rectangle to draw.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the rectangle to draw.
-        '
-        '   width:
-        '     Width of the rectangle to draw.
-        '
-        '   height:
-        '     Height of the rectangle to draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a rectangle specified by a coordinate pair, a width, and a height.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the rectangle.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the rectangle to draw.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the rectangle to draw.</param>
+        ''' <param name="width">Width of the rectangle to draw.</param>
+        ''' <param name="height">Height of the rectangle to draw.</param>
         Public MustOverride Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
-        '
-        ' Summary:
-        '     Draws a series of rectangles specified by System.Drawing.RectangleF structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the outlines
-        '     of the rectangles.
-        '
-        '   rects:
-        '     Array of System.Drawing.RectangleF structures that represent the rectangles to
-        '     draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.-or-rects is null.
-        '
-        '   T:System.ArgumentException:
-        '     rects is a zero-length array.
+
+        ''' <summary>
+        ''' Draws a series of rectangles specified by System.Drawing.RectangleF structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the outlines
+        ''' of the rectangles.</param>
+        ''' <param name="rects">Array of System.Drawing.RectangleF structures that represent the rectangles to
+        ''' draw.</param>
         Public MustOverride Sub DrawRectangles(pen As Pen, rects() As RectangleF)
-        '
-        ' Summary:
-        '     Draws a series of rectangles specified by System.Drawing.Rectangle structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the outlines
-        '     of the rectangles.
-        '
-        '   rects:
-        '     Array of System.Drawing.Rectangle structures that represent the rectangles to
-        '     draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.-or-rects is null.
-        '
-        '   T:System.ArgumentException:
-        '     rects is a zero-length array.
+
+        ''' <summary>
+        ''' Draws a series of rectangles specified by System.Drawing.Rectangle structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the outlines
+        ''' of the rectangles.</param>
+        ''' <param name="rects">Array of System.Drawing.Rectangle structures that represent the rectangles to
+        ''' draw.</param>
         Public MustOverride Sub DrawRectangles(pen As Pen, rects() As Rectangle)
 
         ''' <summary>
