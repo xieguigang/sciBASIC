@@ -47,7 +47,6 @@
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.ApplicationServices.GZip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
