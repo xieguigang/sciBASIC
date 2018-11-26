@@ -384,7 +384,7 @@ Namespace Scripting.Runtime
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastGDIPlusDeviceHandle(path As String) As Graphics2D
-            Return GDIPlusDeviceHandleFromImageFile(path)
+            Return CanvasCreateFromImageFile(path)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

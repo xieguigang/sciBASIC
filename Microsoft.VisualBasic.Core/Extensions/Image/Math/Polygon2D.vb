@@ -48,7 +48,7 @@ Imports sys = System.Math
 
 Namespace Imaging.Math2D
 
-    Public Class PolygonD
+    Public Class Polygon2D
 
         Public npoints As Integer = 0
         Public xpoints As Double() = New Double(3) {}
@@ -60,34 +60,38 @@ Namespace Imaging.Math2D
         Public Sub New()
         End Sub
 
-        Public Sub New(paramArrayOfDouble1 As Double(), paramArrayOfDouble2 As Double(), paramInt As Integer)
-            Me.npoints = paramInt
-            Me.xpoints = New Double(paramInt - 1) {}
-            Me.ypoints = New Double(paramInt - 1) {}
-            Array.Copy(paramArrayOfDouble1, 0, Me.xpoints, 0, paramInt)
-            Array.Copy(paramArrayOfDouble2, 0, Me.ypoints, 0, paramInt)
-            calculateBounds(paramArrayOfDouble1, paramArrayOfDouble2, paramInt)
+        Public Sub New(x As Double(), y As Double(), points As Integer)
+            Me.npoints = points
+            Me.xpoints = New Double(points - 1) {}
+            Me.ypoints = New Double(points - 1) {}
+
+            Array.Copy(x, 0, Me.xpoints, 0, points)
+            Array.Copy(y, 0, Me.ypoints, 0, points)
+
+            Call calculateBounds(x, y, points)
         End Sub
 
-        Friend Overridable Sub calculateBounds(paramArrayOfDouble1 As Double(), paramArrayOfDouble2 As Double(), paramInt As Integer)
+        Friend Overridable Sub calculateBounds(x As Double(), y As Double(), n As Integer)
             Dim d1 As Double = Double.MaxValue
             Dim d2 As Double = Double.MaxValue
             Dim d3 As Double = Double.MinValue
             Dim d4 As Double = Double.MinValue
-            For i As Integer = 0 To paramInt - 1
-                Dim d5 As Double = paramArrayOfDouble1(i)
+
+            For i As Integer = 0 To n - 1
+                Dim d5 As Double = x(i)
                 d1 = sys.Min(d1, d5)
                 d3 = Math.Max(d3, d5)
-                Dim d6 As Double = paramArrayOfDouble2(i)
+                Dim d6 As Double = y(i)
                 d2 = sys.Min(d2, d6)
                 d4 = Math.Max(d4, d6)
             Next
+
             Me.bounds1 = New Vector2D(d1, d2)
             Me.bounds2 = New Vector2D(d3, d4)
         End Sub
 
-        Friend Overridable Function boundingInside(paramDouble1 As Double, paramDouble2 As Double) As Boolean
-            Return (paramDouble1 >= Me.bounds1.x) AndAlso (paramDouble1 <= Me.bounds2.x) AndAlso (paramDouble2 >= Me.bounds1.y) AndAlso (paramDouble2 <= Me.bounds2.y)
+        Friend Overridable Function boundingInside(x As Double, y As Double) As Boolean
+            Return (x >= Me.bounds1.x) AndAlso (x <= Me.bounds2.x) AndAlso (y >= Me.bounds1.y) AndAlso (y <= Me.bounds2.y)
         End Function
 
         Public Overridable Function inside(paramVector2D As Vector2D) As Boolean
@@ -97,12 +101,12 @@ Namespace Imaging.Math2D
         ''' <summary>
         ''' @deprecated
         ''' </summary>
-        Public Overridable Function inside(paramDouble1 As Double, paramDouble2 As Double) As Boolean
-            If boundingInside(paramDouble1, paramDouble2) Then
+        Public Overridable Function inside(x As Double, y As Double) As Boolean
+            If boundingInside(x, y) Then
                 Dim i As Integer = 0
                 Dim d1 As Double = 0.0
                 Dim j As Integer = 0
-                While (j < Me.npoints) AndAlso (Me.ypoints(j) = paramDouble2)
+                While (j < Me.npoints) AndAlso (Me.ypoints(j) = y)
                     j += 1
                 End While
                 For k As Integer = 0 To Me.npoints - 1
@@ -110,13 +114,13 @@ Namespace Imaging.Math2D
                     Dim d2 As Double = Me.xpoints(m) - Me.xpoints(j)
                     Dim d3 As Double = Me.ypoints(m) - Me.ypoints(j)
                     If d3 <> 0.0 Then
-                        Dim d4 As Double = paramDouble1 - Me.xpoints(j)
-                        Dim d5 As Double = paramDouble2 - Me.ypoints(j)
-                        If (Me.ypoints(m) = paramDouble2) AndAlso (Me.xpoints(m) >= paramDouble1) Then
+                        Dim d4 As Double = x - Me.xpoints(j)
+                        Dim d5 As Double = y - Me.ypoints(j)
+                        If (Me.ypoints(m) = y) AndAlso (Me.xpoints(m) >= x) Then
                             d1 = Me.ypoints(j)
                         End If
-                        If (Me.ypoints(j) = paramDouble2) AndAlso (Me.xpoints(j) >= paramDouble1) Then
-                            If (If(d1 > paramDouble2, 1, 0)) <> (If(Me.ypoints(m) > paramDouble2, 1, 0)) Then
+                        If (Me.ypoints(j) = y) AndAlso (Me.xpoints(j) >= x) Then
+                            If (If(d1 > y, 1, 0)) <> (If(Me.ypoints(m) > y, 1, 0)) Then
                                 i -= 1
                             End If
                         End If

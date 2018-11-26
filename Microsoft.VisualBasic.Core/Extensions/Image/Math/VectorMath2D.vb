@@ -105,7 +105,7 @@ Namespace Imaging.Math2D
         End Function
 
         Public Shared Function angleDeg(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Double
-            Return angle(paramVector2D1, paramVector2D2) * 180.0 / 3.14159265358979
+            Return angle(paramVector2D1, paramVector2D2) * 180.0 / sys.PI
         End Function
 
         Public Shared Function innerProduct(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Double
@@ -133,25 +133,27 @@ Namespace Imaging.Math2D
             Return d4 < paramDouble7 * paramDouble7
         End Function
 
-        Public Shared Function createPointAuto(paramDimension1 As DblRect, paramDimension2 As DblRect, paramInt As Integer) As DblRect
-            Dim localDimension As New DblRect()
-            Dim i As Integer = paramDimension2.Width - paramDimension1.Width
-            Dim j As Integer = paramDimension2.Height - paramDimension1.Height
+        Public Shared Function createPointAuto(dimension1 As Rectangle2D, dimension2 As Rectangle2D, paramInt As Integer) As Rectangle2D
+            Dim localDimension As New Rectangle2D()
+            Dim i As Integer = dimension2.Width - dimension1.Width
+            Dim j As Integer = dimension2.Height - dimension1.Height
             Dim d3 As Double = Math.Sqrt(i * i + j * j)
             Dim d1 As Double = 0.8660254 * i - 0.5 * j
             Dim d2 As Double = -0.8660254 * i - 0.5 * j
+
             If Math.Abs(d1) < Math.Abs(d2) Then
-                paramDimension1.Width += CInt(Math.Truncate((-0.5 * i - 0.8660254 * j) * paramInt / d3))
-                paramDimension1.Height += CInt(Math.Truncate(d1 * paramInt / d3))
+                dimension1.Width += CInt(Math.Truncate((-0.5 * i - 0.8660254 * j) * paramInt / d3))
+                dimension1.Height += CInt(Math.Truncate(d1 * paramInt / d3))
             Else
-                paramDimension1.Width += CInt(Math.Truncate((-0.5 * i + 0.8660254 * j) * paramInt / d3))
-                paramDimension1.Height += CInt(Math.Truncate(d2 * paramInt / d3))
+                dimension1.Width += CInt(Math.Truncate((-0.5 * i + 0.8660254 * j) * paramInt / d3))
+                dimension1.Height += CInt(Math.Truncate(d2 * paramInt / d3))
             End If
+
             Return localDimension
         End Function
 
-        Public Shared Function createPointAuto(paramDimension1 As DblRect, paramDimension2 As DblRect, paramDimension3 As DblRect, paramInt As Integer) As DblRect
-            Dim localDimension As New DblRect()
+        Public Shared Function createPointAuto(paramDimension1 As Rectangle2D, paramDimension2 As Rectangle2D, paramDimension3 As Rectangle2D, paramInt As Integer) As Rectangle2D
+            Dim localDimension As New Rectangle2D()
             Dim localVector2D2 As New Vector2D(paramDimension2.Width - paramDimension1.Width, paramDimension2.Height - paramDimension1.Height)
             Dim localVector2D3 As New Vector2D(paramDimension3.Width - paramDimension1.Width, paramDimension3.Height - paramDimension1.Height)
             localVector2D2 = localVector2D2 * (1.0 / localVector2D2.Length())
@@ -163,8 +165,8 @@ Namespace Imaging.Math2D
             Return localDimension
         End Function
 
-        Public Shared Function createPointAuto(paramDimension As DblRect, paramVector As ArrayList, paramInt As Integer) As DblRect
-            Dim localDimension As New DblRect()
+        Public Shared Function createPointAuto(paramDimension As Rectangle2D, paramVector As ArrayList, paramInt As Integer) As Rectangle2D
+            Dim localDimension As New Rectangle2D()
             Dim d1 As Double = 360.0
             Dim d2 As Double = 360.0
             Dim d3 As Double = 0.0
@@ -183,12 +185,12 @@ Namespace Imaging.Math2D
             Dim localVector2D3 As Vector2D
 
             While i > 0
-                localVector2D2 = New Vector2D(DirectCast(paramVector(j), DblRect).Width - paramDimension.Width, DirectCast(paramVector(j), DblRect).Height - paramDimension.Height)
+                localVector2D2 = New Vector2D(DirectCast(paramVector(j), Rectangle2D).Width - paramDimension.Width, DirectCast(paramVector(j), Rectangle2D).Height - paramDimension.Height)
                 d2 = 360.0
                 m = -1
                 For k = 0 To paramVector.Count - 1
                     If (arrayOfBoolean(k) = 0) AndAlso (j <> k) Then
-                        localVector2D3 = New Vector2D(DirectCast(paramVector(k), DblRect).Width - paramDimension.Width, DirectCast(paramVector(k), DblRect).Height - paramDimension.Height)
+                        localVector2D3 = New Vector2D(DirectCast(paramVector(k), Rectangle2D).Width - paramDimension.Width, DirectCast(paramVector(k), Rectangle2D).Height - paramDimension.Height)
                         d1 = angleDeg(localVector2D2, localVector2D3)
                         If d1 < 0.0 Then
                             d1 += 360.0
@@ -208,8 +210,8 @@ Namespace Imaging.Math2D
                 arrayOfBoolean(m) = True
                 i -= 1
             End While
-            localVector2D2 = New Vector2D(DirectCast(paramVector(n), DblRect).Width - paramDimension.Width, DirectCast(paramVector(n), DblRect).Height - paramDimension.Height)
-            localVector2D3 = New Vector2D(DirectCast(paramVector(i1), DblRect).Width - paramDimension.Width, DirectCast(paramVector(i1), DblRect).Height - paramDimension.Height)
+            localVector2D2 = New Vector2D(DirectCast(paramVector(n), Rectangle2D).Width - paramDimension.Width, DirectCast(paramVector(n), Rectangle2D).Height - paramDimension.Height)
+            localVector2D3 = New Vector2D(DirectCast(paramVector(i1), Rectangle2D).Width - paramDimension.Width, DirectCast(paramVector(i1), Rectangle2D).Height - paramDimension.Height)
             localVector2D2 = localVector2D2 * (1.0 / localVector2D2.Length())
             localVector2D3 = localVector2D3 * (1.0 / localVector2D3.Length())
             Dim localVector2D1 As Vector2D = add(localVector2D2, localVector2D3)

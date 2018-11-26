@@ -137,6 +137,13 @@ Namespace Imaging
                 End If
             End If
         End Function
+
+        Public Shared Function MeasureString(text As String, font As Font) As SizeF
+            Static dummy_img As Image = New Bitmap(1, 1)
+            Static dummy_drawing As Graphics = Graphics.FromImage(dummy_img)
+
+            Return dummy_drawing.MeasureString(text, font)
+        End Function
     End Class
 
     ''' <summary>

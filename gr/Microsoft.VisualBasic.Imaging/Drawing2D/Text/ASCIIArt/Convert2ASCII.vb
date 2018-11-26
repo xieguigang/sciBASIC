@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::c5093c2f1ef9297f628fe118d2c049b1, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module HelperMethods
-    ' 
-    '         Function: ASCIIImage, Convert2ASCII, DrawText
-    ' 
-    '         Sub: WriteASCIIStream
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module HelperMethods
+' 
+'         Function: ASCIIImage, Convert2ASCII, DrawText
+' 
+'         Sub: WriteASCIIStream
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports sys = System.Math
 
@@ -131,17 +132,16 @@ Namespace Drawing2D.Text.ASCIIArt
             End Using
         End Sub
 
-        <Extension> Public Function DrawText(text$, textColor As Color, backColor As Color, Optional WidthAndHeight As SizeF = Nothing, Optional font As Font = Nothing) As Image
-            Dim textSize As SizeF
+        ReadOnly defaultFont As DefaultValue(Of Font) = SystemFonts.DefaultFont
 
-            If font Is Nothing Then
-                font = SystemFonts.DefaultFont
-            End If
+        <Extension> Public Function DrawText(text$,
+                                             textColor As Color,
+                                             backColor As Color,
+                                             Optional WidthAndHeight As SizeF = Nothing,
+                                             Optional font As Font = Nothing) As Image
 
             ' Get char width for insertion point calculation purposes
-            Using dummy_img As Image = New Bitmap(1, 1), dummy_drawing As Graphics = Graphics.FromImage(dummy_img)
-                textSize = dummy_drawing.MeasureString(text, font)
-            End Using
+            Dim textSize As SizeF = FontFace.MeasureString(text, font Or defaultFont)
 
             If WidthAndHeight.IsEmpty Then
                 WidthAndHeight = textSize
@@ -150,14 +150,14 @@ Namespace Drawing2D.Text.ASCIIArt
             ' Create a new image of the right size
             Dim img As New Bitmap(CInt(sys.Truncate(WidthAndHeight.Width)), CInt(sys.Truncate(WidthAndHeight.Height)))
 
-            Using Drawing = Graphics.FromImage(img) ' Get a graphics object
+            Using drawing = Graphics.FromImage(img) ' Get a graphics object
 
                 ' Create a brush for the text
-                Dim textBrush As Brush = New SolidBrush(textColor)
+                Dim textBrush As New SolidBrush(textColor)
 
                 ' Paint the background
-                Call Drawing.Clear(backColor)
-                Call Drawing.DrawString(text, font, textBrush, (WidthAndHeight.Width - textSize.Width) / 2, 0)
+                Call drawing.Clear(backColor)
+                Call drawing.DrawString(text, font Or defaultFont, textBrush, (WidthAndHeight.Width - textSize.Width) / 2, 0)
 
                 Return img
             End Using

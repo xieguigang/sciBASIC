@@ -935,6 +935,7 @@
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Collection\IsNullOrEmptyExtensions.vb" />
+    <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
     <Compile Include="Extensions\Image\Math\Models\Polygon.vb" />
     <Compile Include="Extensions\Image\Math\Models\Line.vb" />
@@ -1065,10 +1066,10 @@
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
     <Compile Include="Extensions\Image\GDI+\GDICanvas.vb" />
-    <Compile Include="Extensions\Image\GDI+\Layouts\LayoutedObject.vb" />
-    <Compile Include="Extensions\Image\GDI+\Layouts\DblRect.vb" />
+    <Compile Include="Extensions\Image\GDI+\Layouts\Abstract.vb" />
+    <Compile Include="Extensions\Image\GDI+\Layouts\Rectangle2D.vb" />
     <Compile Include="Extensions\Image\Math\GeometryMath.vb" />
-    <Compile Include="Extensions\Image\Math\PolygonD.vb" />
+    <Compile Include="Extensions\Image\Math\Polygon2D.vb" />
     <Compile Include="Extensions\Image\Math\VectorMath2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\Vector2D.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
