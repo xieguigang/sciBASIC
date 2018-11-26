@@ -91,11 +91,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewFolder1\NewFolder1\ArithmeticSignal.vb" />
-    <Compile Include="NewFolder1\NewFolder1\DifferenceSignal.vb" />
-    <Compile Include="NewFolder1\NewFolder1\DivisionSignal.vb" />
-    <Compile Include="NewFolder1\NewFolder1\MultiplySignal.vb" />
-    <Compile Include="NewFolder1\NewFolder1\SumSignal.vb" />
+    <Compile Include="NewFolder1\ArithmeticSignal.vb" />
     <Compile Include="NewFolder1\Providers.vb" />
     <Compile Include="NewFolder1\Signal.vb" />
     <Compile Include="Signals\DFT.vb" />
