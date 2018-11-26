@@ -39,13 +39,17 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 
 Module Program
 
     Sub Main()
 
-        Dim signal As TimeSignal() = TimeSignal.SignalSequence(TestProvider.bumps(1000, 5)).ToArray
+        Dim signal As TimeSignal() = TimeSignal.SignalSequence(TestProvider.bumps(1000, 5).AsVector.Log(base:=10) * 100).ToArray
+
+        Call signal.SaveTo("./signals.csv")
 
         Pause()
     End Sub
