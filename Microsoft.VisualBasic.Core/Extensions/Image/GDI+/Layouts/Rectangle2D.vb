@@ -48,6 +48,8 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports sys = System.Math
 
 ' $Id: mxRectangle.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
@@ -55,11 +57,42 @@ Imports sys = System.Math
 
 Namespace Imaging.LayoutModel
 
-
     ''' <summary>
     ''' Implements a 2-dimensional rectangle with double precision coordinates.
     ''' </summary>
-    Public Class DblRect : Inherits mxPoint
+    Public Class Rectangle2D : Inherits Point2D
+
+        ''' <summary>
+        ''' Returns the width of the rectangle.
+        ''' </summary>
+        ''' <returns> Returns the width. </returns>
+        Public Overridable Property Width As Double
+
+        ''' <summary>
+        ''' Returns the height of the rectangle.
+        ''' </summary>
+        ''' <returns> Returns the height. </returns>
+        Public Overridable Property Height As Double
+
+        ''' <summary>
+        ''' Returns the x-coordinate of the center.
+        ''' </summary>
+        ''' <returns> Returns the x-coordinate of the center. </returns>
+        Public Overridable ReadOnly Property CenterX As Double
+            Get
+                Return X + Width / 2
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Returns the y-coordinate of the center.
+        ''' </summary>
+        ''' <returns> Returns the y-coordinate of the center. </returns>
+        Public Overridable ReadOnly Property CenterY As Double
+            Get
+                Return Y + Height / 2
+            End Get
+        End Property
 
         ''' <summary>
         ''' Constructs a new rectangle at (0, 0) with the width and height set to 0.
@@ -88,7 +121,7 @@ Namespace Imaging.LayoutModel
         ''' Constructs a copy of the given rectangle.
         ''' </summary>
         ''' <param name="rect"> Rectangle to construct a copy of. </param>
-        Public Sub New(rect As DblRect)
+        Public Sub New(rect As Rectangle2D)
             Me.New(rect.X, rect.Y, rect.Width, rect.Height)
         End Sub
 
@@ -111,18 +144,6 @@ Namespace Imaging.LayoutModel
         End Sub
 
         ''' <summary>
-        ''' Returns the width of the rectangle.
-        ''' </summary>
-        ''' <returns> Returns the width. </returns>
-        Public Overridable Property Width As Double
-
-        ''' <summary>
-        ''' Returns the height of the rectangle.
-        ''' </summary>
-        ''' <returns> Returns the height. </returns>
-        Public Overridable Property Height As Double
-
-        ''' <summary>
         ''' Sets this rectangle to the specified values
         ''' </summary>
         ''' <param name="x"> the new x-axis position </param>
@@ -139,7 +160,7 @@ Namespace Imaging.LayoutModel
         ''' <summary>
         ''' Adds the given rectangle to this rectangle.
         ''' </summary>
-        Public Overridable Sub add(rect As DblRect)
+        Public Overridable Sub add(rect As Rectangle2D)
             If rect IsNot Nothing Then
                 Dim minX As Double = sys.Min(X, rect.X)
                 Dim minY As Double = sys.Min(Y, rect.Y)
@@ -152,26 +173,6 @@ Namespace Imaging.LayoutModel
                 Height = maxY - minY
             End If
         End Sub
-
-        ''' <summary>
-        ''' Returns the x-coordinate of the center.
-        ''' </summary>
-        ''' <returns> Returns the x-coordinate of the center. </returns>
-        Public Overridable ReadOnly Property CenterX As Double
-            Get
-                Return X + Width / 2
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Returns the y-coordinate of the center.
-        ''' </summary>
-        ''' <returns> Returns the y-coordinate of the center. </returns>
-        Public Overridable ReadOnly Property CenterY As Double
-            Get
-                Return Y + Height / 2
-            End Get
-        End Property
 
         ''' <summary>
         ''' Grows the rectangle by the given amount, that is, this method subtracts
@@ -191,7 +192,9 @@ Namespace Imaging.LayoutModel
         ''' </summary>
         ''' <param name="x"> X-coordinate of the point. </param>
         ''' <param name="y"> Y-coordinate of the point. </param>
-        ''' <returns> Returns true if the point is contained in the rectangle. </returns>
+        ''' <returns> Returns true if the point is contained in the rectangle.</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function contains(x As Double, y As Double) As Boolean
             Return (Me.X <= x AndAlso Me.X + Width >= x AndAlso Me.Y <= y AndAlso Me.Y + Height >= y)
         End Function
@@ -204,17 +207,14 @@ Namespace Imaging.LayoutModel
         ''' <param name="y0"> the y co-ordinate of the first point of the line </param>
         ''' <param name="x1"> the x co-ordinate of the second point of the line </param>
         ''' <param name="y1"> the y co-ordinate of the second point of the line </param>
-        ''' <returns> the point at which the line intersects this rectangle, or null
-        ''' 			if there is no intersection </returns>
-        Public Overridable Function intersectLine(x0 As Double, y0 As Double, x1 As Double, y1 As Double) As mxPoint
-            Dim result As mxPoint = Nothing
-
-            result = intersection(X, Y, X + Width, Y, x0, y0, x1, y1)
+        ''' <returns>
+        ''' The point at which the line intersects this rectangle, or null if there is no intersection 
+        ''' </returns>
+        Public Overridable Function intersectLine(x0 As Double, y0 As Double, x1 As Double, y1 As Double) As Point2D
+            Dim result As Point2D = intersection(X, Y, X + Width, Y, x0, y0, x1, y1)
 
             If result Is Nothing Then result = intersection(X + Width, Y, X + Width, Y + Height, x0, y0, x1, y1)
-
             If result Is Nothing Then result = intersection(X + Width, Y + Height, X, Y + Height, x0, y0, x1, y1)
-
             If result Is Nothing Then result = intersection(X, Y, X, Y + Height, x0, y0, x1, y1)
 
             Return result
@@ -223,41 +223,32 @@ Namespace Imaging.LayoutModel
         ''' <summary>
         ''' Returns the intersection of two lines as an mxPoint.
         ''' </summary>
-        ''' <param name="x0">
-        '''            X-coordinate of the first line's startpoint. </param>
-        ''' <param name="y0">
-        '''            Y-coordinate of the first line's startpoint. </param>
-        ''' <param name="x1">
-        '''            X-coordinate of the first line's endpoint. </param>
-        ''' <param name="y1">
-        '''            Y-coordinate of the first line's endpoint. </param>
-        ''' <param name="x2">
-        '''            X-coordinate of the second line's startpoint. </param>
-        ''' <param name="y2">
-        '''            Y-coordinate of the second line's startpoint. </param>
-        ''' <param name="x3">
-        '''            X-coordinate of the second line's endpoint. </param>
-        ''' <param name="y3">
-        '''            Y-coordinate of the second line's endpoint. </param>
-        ''' <returns> Returns the intersection between the two lines. </returns>
-        Public Shared Function intersection(x0 As Double, y0 As Double, x1 As Double, y1 As Double, x2 As Double, y2 As Double, x3 As Double, y3 As Double) As mxPoint
+        ''' <param name="x0">X-coordinate of the first line's startpoint.</param>
+        ''' <param name="y0">Y-coordinate of the first line's startpoint.</param>
+        ''' <param name="x1">X-coordinate of the first line's endpoint.</param>
+        ''' <param name="y1">Y-coordinate of the first line's endpoint.</param>
+        ''' <param name="x2">X-coordinate of the second line's startpoint.</param>
+        ''' <param name="y2">Y-coordinate of the second line's startpoint.</param>
+        ''' <param name="x3">X-coordinate of the second line's endpoint.</param>
+        ''' <param name="y3">Y-coordinate of the second line's endpoint.</param>
+        ''' <returns> Returns the intersection between the two lines.</returns>
+        Public Shared Function intersection(x0 As Double, y0 As Double, x1 As Double, y1 As Double, x2 As Double, y2 As Double, x3 As Double, y3 As Double) As Point2D
             Dim denom As Double = ((y3 - y2) * (x1 - x0)) - ((x3 - x2) * (y1 - y0))
             Dim nume_a As Double = ((x3 - x2) * (y0 - y2)) - ((y3 - y2) * (x0 - x2))
             Dim nume_b As Double = ((x1 - x0) * (y0 - y2)) - ((y1 - y0) * (x0 - x2))
-
             Dim ua As Double = nume_a / denom
             Dim ub As Double = nume_b / denom
 
             If ua >= 0.0 AndAlso ua <= 1.0 AndAlso ub >= 0.0 AndAlso ub <= 1.0 Then
                 ' Get the intersection point
-                Dim intersectionX As Double = x0 + ua * (x1 - x0)
-                Dim intersectionY As Double = y0 + ua * (y1 - y0)
+                Dim iX As Double = x0 + ua * (x1 - x0)
+                Dim iY As Double = y0 + ua * (y1 - y0)
 
-                Return New mxPoint(intersectionX, intersectionY)
+                Return New Point2D(iX, iY)
+            Else
+                ' No intersection
+                Return Nothing
             End If
-
-            ' No intersection
-            Return Nothing
         End Function
 
         ''' <summary>
@@ -275,15 +266,17 @@ Namespace Imaging.LayoutModel
             End Get
         End Property
 
-        ''' 
         ''' <summary>
-        ''' Returns true if the given object equals this rectangle.
+        ''' Returns true if the given object value equals this rectangle.
         ''' </summary>
         Public Overrides Function Equals(obj As Object) As Boolean
-            If TypeOf obj Is DblRect Then
-                Dim ___rect As DblRect = CType(obj, DblRect)
-
-                Return ___rect.X = X AndAlso ___rect.Y = Y AndAlso ___rect.Width = Width AndAlso ___rect.Height = Height
+            If TypeOf obj Is Rectangle2D Then
+                With TryCast(obj, Rectangle2D)
+                    Return .X = X AndAlso
+                        .Y = Y AndAlso
+                        .Width = Width AndAlso
+                        .Height = Height
+                End With
             End If
 
             Return False
@@ -293,12 +286,12 @@ Namespace Imaging.LayoutModel
         ''' Returns a new instance of the same rectangle.
         ''' </summary>
         Public Overrides Function Clone() As Object
-            Dim ___clone As DblRect = CType(MyBase.Clone(), DblRect)
+            With CType(MyBase.Clone(), Rectangle2D)
+                .Width = Width
+                .Height = Height
 
-            ___clone.Width = Width
-            ___clone.Height = Height
-
-            Return ___clone
+                Return .ByRef
+            End With
         End Function
 
         ''' <summary>
@@ -307,7 +300,7 @@ Namespace Imaging.LayoutModel
         ''' <returns> a <code>String</code> representing this
         ''' <code>mxRectangle</code>. </returns>
         Public Overrides Function ToString() As String
-            Return Me.GetType().Name & "[x=" & X & ",y=" & Y & ",w=" & Width & ",h=" & Height & "]"
+            Return $"{Me.GetType.Name} [x={X}, y={Y}, w={Width}, h={Height}]"
         End Function
     End Class
 End Namespace

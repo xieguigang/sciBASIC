@@ -1,11 +1,12 @@
 ﻿Imports System.Drawing
+Imports sys = System.Math
 
 Namespace Imaging.LayoutModel
 
     ''' <summary>
     ''' Implements a 2-dimensional point with <see cref="Double"/> precision coordinates.
     ''' </summary>
-    <Serializable> Public Class mxPoint : Implements ICloneable
+    <Serializable> Public Class Point2D : Implements ICloneable
 
         ''' <summary>
         ''' Constructs a new point at (0, 0).
@@ -26,7 +27,7 @@ Namespace Imaging.LayoutModel
         ''' Constructs a new point at the location of the given point.
         ''' </summary>
         ''' <param name="point"> Point that specifies the location. </param>
-        Public Sub New(point As mxPoint)
+        Public Sub New(point As Point2D)
             Me.New(point.X, point.Y)
         End Sub
 
@@ -67,8 +68,8 @@ Namespace Imaging.LayoutModel
         ''' Returns true if the given object equals this rectangle.
         ''' </summary>
         Public Overrides Function Equals(obj As Object) As Boolean
-            If TypeOf obj Is mxPoint Then
-                Dim pt As mxPoint = CType(obj, mxPoint)
+            If TypeOf obj Is Point2D Then
+                Dim pt As Point2D = CType(obj, Point2D)
 
                 Return pt.X = X AndAlso pt.Y = Y
             End If
@@ -80,7 +81,7 @@ Namespace Imaging.LayoutModel
         ''' Returns a new instance of the same point.
         ''' </summary>
         Public Overridable Function Clone() As Object Implements ICloneable.Clone
-            Return New mxPoint(X, Y)
+            Return New Point2D(X, Y)
         End Function
 
         ''' <summary>
