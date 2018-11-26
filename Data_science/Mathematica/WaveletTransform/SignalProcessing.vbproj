@@ -86,10 +86,15 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Signals\DFT.vb" />
+    <Compile Include="Signals\FourierTransform.vb" />
+    <Compile Include="Signals\TestProvider.vb" />
+    <Compile Include="Signals\WaveletTransform.vb" />
     <Compile Include="TimeSignals.vb" />
     <Compile Include="WaveletTransform\Constructors\Coiflets.vb" />
     <Compile Include="WaveletTransform\Constructors\Symlets.vb" />
@@ -103,6 +108,10 @@
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Math\Math\math-core.vbproj">
+      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
+      <Name>math-core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

@@ -445,10 +445,6 @@
     <Compile Include="Quantile\Selector.vb" />
     <Compile Include="Quantile\Quartile.vb" />
     <Compile Include="Scripting\Factors\Extensions.vb" />
-    <Compile Include="Signals\TestProvider.vb" />
-    <Compile Include="Signals\DFT.vb" />
-    <Compile Include="Signals\FourierTransform.vb" />
-    <Compile Include="Signals\WaveletTransform.vb" />
     <Compile Include="Spline\BezierExtensions.vb" />
     <Compile Include="Spline\PolynomialNewton.vb" />
     <Compile Include="Spline\Extensions.vb" />
