@@ -47,7 +47,7 @@ Module Program
 
     Sub Main()
 
-        Dim signal As TimeSignal() = TimeSignal.SignalSequence(TestProvider.bumps(1000, 5).AsVector.Log(base:=10) * 100).ToArray
+        Dim signal As TimeSignal() = TimeSignal.SignalSequence(TestProvider.bumps(10000, 5).AsVector.Log(base:=10) * 100).ToArray
 
         Call signal.SaveTo("./signals.csv")
 
