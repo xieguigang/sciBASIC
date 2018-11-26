@@ -105,7 +105,7 @@ Namespace Imaging.Math2D
         End Function
 
         Public Shared Function angleDeg(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Double
-            Return angle(paramVector2D1, paramVector2D2) * 180.0 / 3.14159265358979
+            Return angle(paramVector2D1, paramVector2D2) * 180.0 / sys.PI
         End Function
 
         Public Shared Function innerProduct(paramVector2D1 As Vector2D, paramVector2D2 As Vector2D) As Double
@@ -133,20 +133,22 @@ Namespace Imaging.Math2D
             Return d4 < paramDouble7 * paramDouble7
         End Function
 
-        Public Shared Function createPointAuto(paramDimension1 As Rectangle2D, paramDimension2 As Rectangle2D, paramInt As Integer) As Rectangle2D
+        Public Shared Function createPointAuto(dimension1 As Rectangle2D, dimension2 As Rectangle2D, paramInt As Integer) As Rectangle2D
             Dim localDimension As New Rectangle2D()
-            Dim i As Integer = paramDimension2.Width - paramDimension1.Width
-            Dim j As Integer = paramDimension2.Height - paramDimension1.Height
+            Dim i As Integer = dimension2.Width - dimension1.Width
+            Dim j As Integer = dimension2.Height - dimension1.Height
             Dim d3 As Double = Math.Sqrt(i * i + j * j)
             Dim d1 As Double = 0.8660254 * i - 0.5 * j
             Dim d2 As Double = -0.8660254 * i - 0.5 * j
+
             If Math.Abs(d1) < Math.Abs(d2) Then
-                paramDimension1.Width += CInt(Math.Truncate((-0.5 * i - 0.8660254 * j) * paramInt / d3))
-                paramDimension1.Height += CInt(Math.Truncate(d1 * paramInt / d3))
+                dimension1.Width += CInt(Math.Truncate((-0.5 * i - 0.8660254 * j) * paramInt / d3))
+                dimension1.Height += CInt(Math.Truncate(d1 * paramInt / d3))
             Else
-                paramDimension1.Width += CInt(Math.Truncate((-0.5 * i + 0.8660254 * j) * paramInt / d3))
-                paramDimension1.Height += CInt(Math.Truncate(d2 * paramInt / d3))
+                dimension1.Width += CInt(Math.Truncate((-0.5 * i + 0.8660254 * j) * paramInt / d3))
+                dimension1.Height += CInt(Math.Truncate(d2 * paramInt / d3))
             End If
+
             Return localDimension
         End Function
 

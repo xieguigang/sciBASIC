@@ -1069,7 +1069,7 @@
     <Compile Include="Extensions\Image\GDI+\Layouts\Abstract.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\Rectangle2D.vb" />
     <Compile Include="Extensions\Image\Math\GeometryMath.vb" />
-    <Compile Include="Extensions\Image\Math\PolygonD.vb" />
+    <Compile Include="Extensions\Image\Math\Polygon2D.vb" />
     <Compile Include="Extensions\Image\Math\VectorMath2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\Vector2D.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
