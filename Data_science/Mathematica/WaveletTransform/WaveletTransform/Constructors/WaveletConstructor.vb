@@ -43,21 +43,24 @@
 Imports System.Collections
 Imports System.Linq
 
-Public MustInherit Class WaveletConstructor : Implements IEnumerable(Of Wavelet)
+Namespace WaveletTransform
 
-    ReadOnly wavelets As Wavelet()
+    Public MustInherit Class WaveletConstructor : Implements IEnumerable(Of Wavelet)
 
-    Sub New(wavelets As IEnumerable(Of Wavelet))
-        Me.wavelets = wavelets.ToArray
-    End Sub
+        ReadOnly wavelets As Wavelet()
 
-    Public Iterator Function GetEnumerator() As IEnumerator(Of Wavelet) Implements IEnumerable(Of Wavelet).GetEnumerator
-        For Each wl In wavelets
-            Yield wl
-        Next
-    End Function
+        Sub New(wavelets As IEnumerable(Of Wavelet))
+            Me.wavelets = wavelets.ToArray
+        End Sub
 
-    Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-        Yield GetEnumerator()
-    End Function
-End Class
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Wavelet) Implements IEnumerable(Of Wavelet).GetEnumerator
+            For Each wl In wavelets
+                Yield wl
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
+    End Class
+End Namespace

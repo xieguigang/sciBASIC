@@ -112,9 +112,9 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WaveletTransform.vbproj">
+    <ProjectReference Include="..\SignalProcessing.vbproj">
       <Project>{83975074-cbe1-4abc-ba91-91d63da156c8}</Project>
-      <Name>WaveletTransform</Name>
+      <Name>SignalProcessing</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
