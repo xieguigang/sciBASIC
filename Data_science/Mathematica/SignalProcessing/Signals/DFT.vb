@@ -124,7 +124,8 @@ Namespace Signals
         End Sub
 
         Sub New(WaveFormData As Double())
-            Call Me.New(WaveFormData.Count)
+            Call Me.New(WaveFormData.Length)
+
             Me.y = DirectCast(WaveFormData.Clone, Double())
         End Sub
 
