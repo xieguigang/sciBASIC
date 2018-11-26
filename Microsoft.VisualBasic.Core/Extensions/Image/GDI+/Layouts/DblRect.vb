@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::8224ad6096222bf853908fc5fd9a4577, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\DblRect.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DblRect
-    ' 
-    '         Properties: CenterX, CenterY, Height, Rectangle, Width
-    ' 
-    '         Constructor: (+6 Overloads) Sub New
-    ' 
-    '         Function: Clone, contains, Equals, intersection, intersectLine
-    '                   ToString
-    ' 
-    '         Sub: add, grow, setRect
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DblRect
+' 
+'         Properties: CenterX, CenterY, Height, Rectangle, Width
+' 
+'         Constructor: (+6 Overloads) Sub New
+' 
+'         Function: Clone, contains, Equals, intersection, intersectLine
+'                   ToString
+' 
+'         Sub: add, grow, setRect
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -72,7 +72,7 @@ Namespace Imaging.LayoutModel
         ''' Constructs a copy of the given rectangle.
         ''' </summary>
         ''' <param name="rect"> Rectangle to construct a copy of. </param>
-        Public Sub New(ByVal rect As Rectangle)
+        Public Sub New(rect As Rectangle)
             Me.New(rect.X, rect.Y, rect.Width, rect.Height)
         End Sub
 
@@ -80,7 +80,7 @@ Namespace Imaging.LayoutModel
         ''' Constructs a copy of the given rectangle.
         ''' </summary>
         ''' <param name="rect"> Rectangle to construct a copy of. </param>
-        Public Sub New(ByVal rect As RectangleF)
+        Public Sub New(rect As RectangleF)
             Me.New(rect.X, rect.Y, rect.Width, rect.Height)
         End Sub
 
@@ -88,7 +88,7 @@ Namespace Imaging.LayoutModel
         ''' Constructs a copy of the given rectangle.
         ''' </summary>
         ''' <param name="rect"> Rectangle to construct a copy of. </param>
-        Public Sub New(ByVal rect As DblRect)
+        Public Sub New(rect As DblRect)
             Me.New(rect.X, rect.Y, rect.Width, rect.Height)
         End Sub
 
@@ -99,7 +99,7 @@ Namespace Imaging.LayoutModel
         ''' <param name="y"> Y-coordinate of the new rectangle. </param>
         ''' <param name="width"> Width of the new rectangle. </param>
         ''' <param name="height"> Height of the new rectangle. </param>
-        Public Sub New(ByVal x As Double, ByVal y As Double, ByVal width As Double, ByVal height As Double)
+        Public Sub New(x As Double, y As Double, width As Double, height As Double)
             MyBase.New(x, y)
 
             width = width
@@ -129,7 +129,7 @@ Namespace Imaging.LayoutModel
         ''' <param name="y"> the new y-axis position </param>
         ''' <param name="w"> the new width of the rectangle </param>
         ''' <param name="h"> the new height of the rectangle </param>
-        Public Overridable Sub setRect(ByVal x As Double, ByVal y As Double, ByVal w As Double, ByVal h As Double)
+        Public Overridable Sub setRect(x As Double, y As Double, w As Double, h As Double)
             Me.X = x
             Me.Y = y
             Me.Width = w
@@ -139,7 +139,7 @@ Namespace Imaging.LayoutModel
         ''' <summary>
         ''' Adds the given rectangle to this rectangle.
         ''' </summary>
-        Public Overridable Sub add(ByVal rect As DblRect)
+        Public Overridable Sub add(rect As DblRect)
             If rect IsNot Nothing Then
                 Dim minX As Double = sys.Min(X, rect.X)
                 Dim minY As Double = sys.Min(Y, rect.Y)
@@ -179,7 +179,7 @@ Namespace Imaging.LayoutModel
         ''' to the width and height.
         ''' </summary>
         ''' <param name="amount"> Amount by which the rectangle should be grown. </param>
-        Public Overridable Sub grow(ByVal amount As Double)
+        Public Overridable Sub grow(amount As Double)
             X -= amount
             Y -= amount
             Width += 2 * amount
@@ -192,7 +192,7 @@ Namespace Imaging.LayoutModel
         ''' <param name="x"> X-coordinate of the point. </param>
         ''' <param name="y"> Y-coordinate of the point. </param>
         ''' <returns> Returns true if the point is contained in the rectangle. </returns>
-        Public Overridable Function contains(ByVal x As Double, ByVal y As Double) As Boolean
+        Public Overridable Function contains(x As Double, y As Double) As Boolean
             Return (Me.X <= x AndAlso Me.X + Width >= x AndAlso Me.Y <= y AndAlso Me.Y + Height >= y)
         End Function
 
@@ -206,7 +206,7 @@ Namespace Imaging.LayoutModel
         ''' <param name="y1"> the y co-ordinate of the second point of the line </param>
         ''' <returns> the point at which the line intersects this rectangle, or null
         ''' 			if there is no intersection </returns>
-        Public Overridable Function intersectLine(ByVal x0 As Double, ByVal y0 As Double, ByVal x1 As Double, ByVal y1 As Double) As mxPoint
+        Public Overridable Function intersectLine(x0 As Double, y0 As Double, x1 As Double, y1 As Double) As mxPoint
             Dim result As mxPoint = Nothing
 
             result = intersection(X, Y, X + Width, Y, x0, y0, x1, y1)
@@ -240,7 +240,7 @@ Namespace Imaging.LayoutModel
         ''' <param name="y3">
         '''            Y-coordinate of the second line's endpoint. </param>
         ''' <returns> Returns the intersection between the two lines. </returns>
-        Public Shared Function intersection(ByVal x0 As Double, ByVal y0 As Double, ByVal x1 As Double, ByVal y1 As Double, ByVal x2 As Double, ByVal y2 As Double, ByVal x3 As Double, ByVal y3 As Double) As mxPoint
+        Public Shared Function intersection(x0 As Double, y0 As Double, x1 As Double, y1 As Double, x2 As Double, y2 As Double, x3 As Double, y3 As Double) As mxPoint
             Dim denom As Double = ((y3 - y2) * (x1 - x0)) - ((x3 - x2) * (y1 - y0))
             Dim nume_a As Double = ((x3 - x2) * (y0 - y2)) - ((y3 - y2) * (x0 - x2))
             Dim nume_b As Double = ((x1 - x0) * (y0 - y2)) - ((y1 - y0) * (x0 - x2))
@@ -279,7 +279,7 @@ Namespace Imaging.LayoutModel
         ''' <summary>
         ''' Returns true if the given object equals this rectangle.
         ''' </summary>
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             If TypeOf obj Is DblRect Then
                 Dim ___rect As DblRect = CType(obj, DblRect)
 
@@ -307,7 +307,7 @@ Namespace Imaging.LayoutModel
         ''' <returns> a <code>String</code> representing this
         ''' <code>mxRectangle</code>. </returns>
         Public Overrides Function ToString() As String
-            Return Me.GetType().Name & "[x=" & X & ",y=" & Y & ",w=" & width & ",h=" & height & "]"
+            Return Me.GetType().Name & "[x=" & X & ",y=" & Y & ",w=" & Width & ",h=" & Height & "]"
         End Function
     End Class
 End Namespace

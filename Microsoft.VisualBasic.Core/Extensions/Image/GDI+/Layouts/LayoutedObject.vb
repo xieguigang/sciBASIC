@@ -90,7 +90,7 @@ Namespace Imaging.LayoutModel
         ''' Constructs a new point at the location of the given point.
         ''' </summary>
         ''' <param name="point"> Point that specifies the location. </param>
-        Public Sub New(ByVal point As Point)
+        Public Sub New(point As Point)
             Me.New(point.X, point.Y)
         End Sub
 
@@ -98,7 +98,7 @@ Namespace Imaging.LayoutModel
         ''' Constructs a new point at the location of the given point.
         ''' </summary>
         ''' <param name="point"> Point that specifies the location. </param>
-        Public Sub New(ByVal point As mxPoint)
+        Public Sub New(point As mxPoint)
             Me.New(point.X, point.Y)
         End Sub
 
@@ -107,7 +107,7 @@ Namespace Imaging.LayoutModel
         ''' </summary>
         ''' <param name="x"> X-coordinate of the point to be created. </param>
         ''' <param name="y"> Y-coordinate of the point to be created. </param>
-        Public Sub New(ByVal x As Double, ByVal y As Double)
+        Public Sub New(x As Double, y As Double)
             x = x
             y = y
         End Sub
@@ -138,7 +138,7 @@ Namespace Imaging.LayoutModel
         ''' <summary>
         ''' Returns true if the given object equals this rectangle.
         ''' </summary>
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             If TypeOf obj Is mxPoint Then
                 Dim pt As mxPoint = CType(obj, mxPoint)
 
