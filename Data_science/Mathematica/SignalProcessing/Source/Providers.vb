@@ -1,13 +1,13 @@
-Namespace de.rub.dks.signal.generator.sound
+Namespace Source
 
-	Public Class OneSignal
-		Inherits Signal
+    Public Class OneSignal
+        Inherits Signal
 
-		Public Overrides Function calculate(ByVal freq As Double, ByVal phase As Double) As Double
-			Return 1
-		End Function
+        Public Overrides Function calculate(ByVal freq As Double, ByVal phase As Double) As Double
+            Return 1
+        End Function
 
-	End Class
+    End Class
 
     Public Class RectangularSignal
         Inherits Signal

@@ -1,6 +1,4 @@
-Namespace de.rub.dks.signal.generator.sound.arithmetic
-
-
+Namespace Source
 
     '
     '* Advanced Signal class for operations on two Signals.
@@ -10,10 +8,10 @@ Namespace de.rub.dks.signal.generator.sound.arithmetic
 
         Protected Friend audioPosA, audioPosB As Double
 
-        Public Overridable Property SignalA As de.rub.dks.signal.generator.sound.Signal
-        Public Overridable Property SignalB As de.rub.dks.signal.generator.sound.Signal
+        Public Overridable Property SignalA As Signal
+        Public Overridable Property SignalB As Signal
 
-        Public Sub New(ByVal aa As de.rub.dks.signal.generator.sound.Signal, ByVal bb As de.rub.dks.signal.generator.sound.Signal)
+        Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
             SignalA = aa
             SignalB = bb
         End Sub
@@ -34,16 +32,18 @@ Namespace de.rub.dks.signal.generator.sound.arithmetic
             Get
                 Dim data(Signal.GRAPH_SAMPLES - 1) As TimeSignal
                 Dim x As Double = 0, y As Double = 0
-                Dim stepX = CLng(SignalA.Freq * 3) \ de.rub.dks.signal.generator.sound.Signal.GRAPH_SAMPLES
-                Dim stepY = CLng(SignalB.Freq * 3) \ de.rub.dks.signal.generator.sound.Signal.GRAPH_SAMPLES
-                For i As Integer = 0 To de.rub.dks.signal.generator.sound.Signal.GRAPH_SAMPLES - 1
+                Dim stepX = CLng(SignalA.Freq * 3) \ Signal.GRAPH_SAMPLES
+                Dim stepY = CLng(SignalB.Freq * 3) \ Signal.GRAPH_SAMPLES
+
+                For i As Integer = 0 To Signal.GRAPH_SAMPLES - 1
                     data(i) = New TimeSignal With {
                         .time = i,
                         .intensity = calculate(x, SignalA.Phase, y, SignalB.Phase)
                     }
                     x += stepX
                     y += stepY
-                Next i
+                Next
+
                 Return data
             End Get
         End Property
@@ -54,13 +54,15 @@ Namespace de.rub.dks.signal.generator.sound.arithmetic
         ''' <returns>    	the samples </returns>
         Public Overridable ReadOnly Property AudioBytes As SByte()
             Get
-                Dim samples(de.rub.dks.signal.generator.sound.Signal.BUFFER_SIZE - 1) As SByte
-                For i As Integer = 0 To de.rub.dks.signal.generator.sound.Signal.BUFFER_SIZE - 1
-                    samples(i) = CSByte(de.rub.dks.signal.generator.sound.Signal.AMPLITUDE * calculate(audioPosA, SignalA.Phase, audioPosB, SignalB.Phase))
+                Dim samples(Signal.BUFFER_SIZE - 1) As SByte
+
+                For i As Integer = 0 To Signal.BUFFER_SIZE - 1
+                    samples(i) = CSByte(Signal.AMPLITUDE * calculate(audioPosA, SignalA.Phase, audioPosB, SignalB.Phase))
                     ' 2 * Math.PI * freq / SAMPLE_RATE;
-                    audioPosA += 100 * SignalA.Freq / de.rub.dks.signal.generator.sound.Signal.SAMPLE_RATE
-                    audioPosB += 100 * SignalB.Freq / de.rub.dks.signal.generator.sound.Signal.SAMPLE_RATE
-                Next i
+                    audioPosA += 100 * SignalA.Freq / Signal.SAMPLE_RATE
+                    audioPosB += 100 * SignalB.Freq / Signal.SAMPLE_RATE
+                Next
+
                 Return samples
             End Get
         End Property
@@ -71,7 +73,7 @@ Namespace de.rub.dks.signal.generator.sound.arithmetic
     Public Class SumSignal
         Inherits ArithmeticSignal
 
-        Public Sub New(ByVal aa As de.rub.dks.signal.generator.sound.Signal, ByVal bb As de.rub.dks.signal.generator.sound.Signal)
+        Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 
@@ -85,7 +87,7 @@ Namespace de.rub.dks.signal.generator.sound.arithmetic
     Public Class MultiplySignal
         Inherits ArithmeticSignal
 
-        Public Sub New(ByVal aa As de.rub.dks.signal.generator.sound.Signal, ByVal bb As de.rub.dks.signal.generator.sound.Signal)
+        Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 
@@ -98,7 +100,7 @@ Namespace de.rub.dks.signal.generator.sound.arithmetic
     Public Class DivisionSignal
         Inherits ArithmeticSignal
 
-        Public Sub New(ByVal aa As de.rub.dks.signal.generator.sound.Signal, ByVal bb As de.rub.dks.signal.generator.sound.Signal)
+        Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 
@@ -111,7 +113,7 @@ Namespace de.rub.dks.signal.generator.sound.arithmetic
     Public Class DifferenceSignal
         Inherits ArithmeticSignal
 
-        Public Sub New(ByVal aa As de.rub.dks.signal.generator.sound.Signal, ByVal bb As de.rub.dks.signal.generator.sound.Signal)
+        Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 

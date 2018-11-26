@@ -1,4 +1,4 @@
-Namespace de.rub.dks.signal.generator.sound
+Namespace Source
 
     '
     ' * Basic Signal class for providing all kinds of signal-data to the GUI.
