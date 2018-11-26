@@ -94,10 +94,10 @@
     <Compile Include="Source\ArithmeticSignal.vb" />
     <Compile Include="Source\Providers.vb" />
     <Compile Include="Source\Signal.vb" />
-    <Compile Include="Signals\DFT.vb" />
-    <Compile Include="Signals\FourierTransform.vb" />
+    <Compile Include="DFT.vb" />
+    <Compile Include="FourierTransform.vb" />
     <Compile Include="TestProvider.vb" />
-    <Compile Include="Signals\WaveletTransform.vb" />
+    <Compile Include="WaveletTransform.vb" />
     <Compile Include="TimeSignals.vb" />
     <Compile Include="WaveletTransform\Constructors\Coiflets.vb" />
     <Compile Include="WaveletTransform\Constructors\Symlets.vb" />
