@@ -96,7 +96,7 @@
     <Compile Include="Source\Signal.vb" />
     <Compile Include="DFT.vb" />
     <Compile Include="FourierTransform.vb" />
-    <Compile Include="TestProvider.vb" />
+    <Compile Include="Source\DumpsSignal.vb" />
     <Compile Include="WaveletTransform.vb" />
     <Compile Include="TimeSignals.vb" />
     <Compile Include="WaveletTransform\Constructors\Coiflets.vb" />
