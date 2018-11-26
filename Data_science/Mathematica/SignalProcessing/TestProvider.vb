@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb0f568ab4f718c551a3415b6f474758, Data_science\Mathematica\WaveletTransform\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::7c18fe1eeefc13ae6629a20c9868cb49, Data_science\Mathematica\Math\Math\Signals\TestProvider.vb"
 
 ' Author:
 ' 
@@ -31,22 +31,50 @@
 
 ' Summaries:
 
-' Module Program
+'     Module TestProvider
 ' 
-'     Sub: Main
+'         Function: bumps
+' 
+'         Sub: bump
+' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Math.SignalProcessing
+''' <summary>
+''' 
+''' </summary>
+''' <remarks>
+''' Inspired by Lee Byron's test data generator.
+''' </remarks>
+Public Module TestProvider
 
-Module Program
+    ''' <summary>
+    ''' Generate signal data for test
+    ''' </summary>
+    ''' <param name="n"></param>
+    ''' <param name="m"></param>
+    ''' <returns></returns>
+    Public Function bumps(n%, m%) As Double()
+        Dim a#() = New Double(n - 1) {}
+        Dim seed As New Random
 
-    Sub Main()
+        For i As Integer = 0 To m - 1
+            Call bump(a, n, seed)
+        Next
 
-        Dim signal As TimeSignal() = TimeSignal.SignalSequence(TestProvider.bumps(5, 5))
+        Return a
+    End Function
 
-        Pause()
+    Public Sub bump(a#(), n%, seed As Random)
+        Dim x = 1 / (0.1 + seed.NextDouble),
+        y = 2 * seed.NextDouble - 0.5,
+        Z = 10 / (0.1 + seed.NextDouble)
+
+        For i As Integer = 0 To n - 1
+            Dim w = (i / n - y) * Z
+            a(i) += x * Math.Exp(-w * w)
+        Next
     End Sub
 End Module

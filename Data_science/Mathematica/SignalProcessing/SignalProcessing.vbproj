@@ -93,7 +93,7 @@
   <ItemGroup>
     <Compile Include="Signals\DFT.vb" />
     <Compile Include="Signals\FourierTransform.vb" />
-    <Compile Include="Signals\TestProvider.vb" />
+    <Compile Include="TestProvider.vb" />
     <Compile Include="Signals\WaveletTransform.vb" />
     <Compile Include="TimeSignals.vb" />
     <Compile Include="WaveletTransform\Constructors\Coiflets.vb" />
