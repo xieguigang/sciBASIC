@@ -1,3 +1,5 @@
+Imports System.Runtime.CompilerServices
+
 Namespace Source
 
     '
@@ -66,61 +68,53 @@ Namespace Source
                 Return samples
             End Get
         End Property
-
     End Class
 
-
-    Public Class SumSignal
-        Inherits ArithmeticSignal
+    Public Class SumSignal : Inherits ArithmeticSignal
 
         Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function calculate(ByVal freq1 As Double, ByVal phase1 As Double, ByVal freq2 As Double, ByVal phase2 As Double) As Double
             Return SignalA.calculate(freq1, phase1) + SignalB.calculate(freq2, phase2)
         End Function
-
-
     End Class
 
-    Public Class MultiplySignal
-        Inherits ArithmeticSignal
+    Public Class MultiplySignal : Inherits ArithmeticSignal
 
         Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function calculate(ByVal freq1 As Double, ByVal phase1 As Double, ByVal freq2 As Double, ByVal phase2 As Double) As Double
             Return SignalA.calculate(freq1, phase1) * SignalB.calculate(freq2, phase2)
         End Function
-
     End Class
 
-    Public Class DivisionSignal
-        Inherits ArithmeticSignal
+    Public Class DivisionSignal : Inherits ArithmeticSignal
 
         Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function calculate(ByVal freq1 As Double, ByVal phase1 As Double, ByVal freq2 As Double, ByVal phase2 As Double) As Double
             Return SignalA.calculate(freq1, phase1) / SignalB.calculate(freq2, phase2)
         End Function
-
     End Class
 
-    Public Class DifferenceSignal
-        Inherits ArithmeticSignal
+    Public Class DifferenceSignal : Inherits ArithmeticSignal
 
         Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function calculate(ByVal freq1 As Double, ByVal phase1 As Double, ByVal freq2 As Double, ByVal phase2 As Double) As Double
             Return SignalA.calculate(freq1, phase1) - SignalB.calculate(freq2, phase2)
         End Function
-
     End Class
 End Namespace

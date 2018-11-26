@@ -78,7 +78,8 @@ Namespace Source
                 samples(i) = CSByte(AMPLITUDE * calculate(audioPos, phase))
                 ' audioPos += 2 * Math.PI * freq / SAMPLE_RATE;
                 audioPos += 440 * freq / SAMPLE_RATE
-            Next i
+            Next
+
             Return samples
         End Function
     End Class
