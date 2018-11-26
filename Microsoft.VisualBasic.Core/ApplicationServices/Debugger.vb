@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50b9b3f31d7ef4c822fe1304e7f5b032, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::04369fce4edad7572df6e2634f9e59eb, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 

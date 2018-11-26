@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62fd8abae91c4f7ed62f84d350429c70, Data_science\Mathematica\WaveletTransform\Wavelet.vb"
+﻿#Region "Microsoft.VisualBasic::a39d54db36a4ea62618cd72a76de6603, Data_science\Mathematica\SignalProcessing\WaveletTransform\Wavelet.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    ' Class Wavelet
+    '     Class Wavelet
     ' 
-    '     Properties: FilterLength
+    '         Properties: FilterLength
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     ' 
     ' /********************************************************************************/
 

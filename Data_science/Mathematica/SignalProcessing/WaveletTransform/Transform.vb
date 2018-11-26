@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d2c333ab8b32c02dc117b790ef8cc2f, Data_science\Mathematica\WaveletTransform\Transform.vb"
+﻿#Region "Microsoft.VisualBasic::794fcb7210443c636a6139e0b3d779df, Data_science\Mathematica\SignalProcessing\WaveletTransform\Transform.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,14 @@
 
     ' Summaries:
 
-    ' Module Transform
+    '     Module Transform
     ' 
-    '     Function: (+2 Overloads) GetAllDetail, (+2 Overloads) GetDetailOfLevel, GetScaling, StepForward, StepInverse
+    '         Function: (+2 Overloads) GetAllDetail, (+2 Overloads) GetDetailOfLevel, GetScaling, StepForward, StepInverse
     ' 
-    '     Sub: FastForward1d, FastForward2d, FastInverse1d, FastInverse2d, FastStepForward
-    '          FastStepInverse, Forward1D, Inverse1D, SetAllDetail, SetDetailofLevel
-    '          SetDetailOfLevel
+    '         Sub: FastForward1d, FastForward2d, FastInverse1d, FastInverse2d, FastStepForward
+    '              FastStepInverse, Forward1D, Inverse1D, SetAllDetail, SetDetailofLevel
+    '              SetDetailOfLevel
+    ' 
     ' 
     ' /********************************************************************************/
 

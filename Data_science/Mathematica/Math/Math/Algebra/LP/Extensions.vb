@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::603fa81c0ca5e3a3260112a0fb27f6a7, Data_science\Mathematica\Math\Math\Algebra\LP\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::030a3835f23b16b579243ade9b3e271c, Data_science\Mathematica\Math\Math\Algebra\LP\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: copyOf, ParseType
+    '         Function: intToBinary, ParseType, subscriptN, unicodeSubscript
     ' 
     ' 
     ' /********************************************************************************/

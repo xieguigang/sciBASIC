@@ -1,46 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::5b877448a31bef0fb4123d1351d79169, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEsOut.vb"
+﻿#Region "Microsoft.VisualBasic::130a10e1308e31262f8321f55b73347c, Data_science\Mathematica\Math\ODE\ODEsSolver\ODEsOut.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class ODEsOut
-' 
-'     Properties: dx, HaveNaN, params, x, y
-'                 y0
-' 
-'     Function: GetEnumerator, GetY0, IEnumerable_GetEnumerator, LoadFromDataFrame, ToString
-' 
-'     Sub: Join
-' 
-' /********************************************************************************/
+    ' Class ODEsOut
+    ' 
+    '     Properties: dx, HaveNaN, params, Resolution, x
+    '                 y, y0
+    ' 
+    '     Function: GetEnumerator, GetY0, IEnumerable_GetEnumerator, Join, LoadFromDataFrame
+    '               ToString
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

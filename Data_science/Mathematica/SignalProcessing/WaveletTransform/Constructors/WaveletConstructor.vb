@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::321ea78fc25e90bf69c627fd1727d7dd, Data_science\Mathematica\WaveletTransform\Constructors\WaveletConstructor.vb"
+﻿#Region "Microsoft.VisualBasic::1d19fe63b279eb9a79c08775376e129b, Data_science\Mathematica\SignalProcessing\WaveletTransform\Constructors\WaveletConstructor.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,11 @@
 
     ' Summaries:
 
-    ' Class WaveletConstructor
+    '     Class WaveletConstructor
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: GetEnumerator, IEnumerable_GetEnumerator
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator
+    ' 
     ' 
     ' /********************************************************************************/
 

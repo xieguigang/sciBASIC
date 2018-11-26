@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e12dd6dfdc4a70a1a6f6586f6fceba79, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::5339d805de5b6c894834cd6d8d99b07b, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: InstalledFontFamilies
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetFontName, IsInstalled
+    '         Function: GetFontName, IsInstalled, MeasureString
     ' 
     '     Module DefaultFontValues
     ' 

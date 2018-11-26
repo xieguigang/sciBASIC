@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c8c9564d88fe05f8900cc9fa85b646e, Microsoft.VisualBasic.Core\Extensions\Image\Math\PolygonD.vb"
+﻿#Region "Microsoft.VisualBasic::3de1704040fc26424f9297c075be7162, Microsoft.VisualBasic.Core\Extensions\Image\Math\Polygon2D.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class PolygonD
+    '     Class Polygon2D
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

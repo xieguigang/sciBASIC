@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82c5e8bc9c159399e4e0ff01e8f03a53, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
+﻿#Region "Microsoft.VisualBasic::f32d5c3495dc5724145fce4200d4b8b3, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
 
     ' Author:
     ' 
@@ -33,13 +33,12 @@
 
     '     Class LPP
     ' 
-    '         Properties: ArtificialVariableAssignments, DecimalFormat, ObjectFunctionVariables
+    '         Properties: ArtificialVariableAssignments, DecimalFormat, ObjectFunctionVariables, PIVOT_ITERATION_LIMIT, USE_SUBSCRIPT_UNICODE
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: choosePivotConstraint, choosePivotVar, displayEqLine, findInitialBasicVariables, increaseArtificialVariableIndices
-    '                   intToBinary, isFeasible, runIteration, solve, subscriptN
-    '                   ToString
+    '                   isFeasible, runIteration, solve, ToString
     ' 
     '         Sub: addArtificialVariables, addVariableAt, (+2 Overloads) makeStandardForm, pivot
     ' 
