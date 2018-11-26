@@ -37,8 +37,8 @@ Namespace Imaging.LayoutModel
         ''' <param name="x"> X-coordinate of the point to be created. </param>
         ''' <param name="y"> Y-coordinate of the point to be created. </param>
         Public Sub New(x As Double, y As Double)
-            x = x
-            y = y
+            Me.X = x
+            Me.Y = y
         End Sub
 
         ''' <summary>

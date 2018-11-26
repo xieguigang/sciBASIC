@@ -72,10 +72,11 @@ Namespace Imaging
         ''' <remarks></remarks>
         Public Property ImageResource As Image
             Get
-                Return __innerImage
+                Return innerImage
             End Get
             Protected Friend Set(value As Image)
-                __innerImage = value
+                innerImage = value
+
                 If Not value Is Nothing Then
                     _Size = value.Size
                     _Center = New Point(Size.Width / 2, Size.Height / 2)
@@ -86,7 +87,7 @@ Namespace Imaging
             End Set
         End Property
 
-        Dim __innerImage As Image
+        Dim innerImage As Image
 
         Protected Sub New()
         End Sub

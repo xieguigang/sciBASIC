@@ -433,7 +433,7 @@ Namespace Imaging
         ''' <returns></returns>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function GDIPlusDeviceHandleFromImageFile(path As String) As Graphics2D
+        <Extension> Public Function CanvasCreateFromImageFile(path As String) As Graphics2D
             Dim image As Image = LoadImage(path)
             Dim g As Graphics = Graphics.FromImage(image)
 
@@ -495,7 +495,11 @@ Namespace Imaging
         ''' <remarks></remarks>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function CreateGDIDevice(r As Size, Optional filled As Color = Nothing, <CallerMemberName> Optional trace$ = "", Optional dpi$ = "100,100") As Graphics2D
+        <Extension> Public Function CreateGDIDevice(r As Size,
+                                                    Optional filled As Color = Nothing,
+                                                    <CallerMemberName>
+                                                    Optional trace$ = "",
+                                                    Optional dpi$ = "100,100") As Graphics2D
             Dim bitmap As Bitmap
 
             If r.Width = 0 OrElse r.Height = 0 Then

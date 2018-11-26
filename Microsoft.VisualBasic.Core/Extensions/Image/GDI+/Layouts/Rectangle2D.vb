@@ -135,8 +135,8 @@ Namespace Imaging.LayoutModel
         Public Sub New(x As Double, y As Double, width As Double, height As Double)
             MyBase.New(x, y)
 
-            width = width
-            height = height
+            Me.Width = width
+            Me.Height = height
         End Sub
 
         Sub New(width%, height%)

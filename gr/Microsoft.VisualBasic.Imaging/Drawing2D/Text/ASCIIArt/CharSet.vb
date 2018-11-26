@@ -120,11 +120,12 @@ Namespace Drawing2D.Text.ASCIIArt
             For i As Integer = 32 To 126
                 ' Iterate through contemplated characters calculating necessary width
                 Dim c As Char = Convert.ToChar(i)
+
                 ' Create a dummy bitmap just to get a graphics object
                 Using img As Image = New Bitmap(1, 1), drawing As Graphics = Graphics.FromImage(img)
-
                     ' Measure the string to see its dimensions using the graphics object
                     Dim textSize As SizeF = drawing.MeasureString(c.ToString(), SystemFonts.DefaultFont)
+
                     ' Update, if necessary, the max width and height
                     If textSize.Width > generalsize.Width Then
                         generalsize.Width = textSize.Width
@@ -151,9 +152,8 @@ Namespace Drawing2D.Text.ASCIIArt
         End Function
 
         <Extension> Private Function GetWeight(c As Char, size As SizeF) As Double
-            Dim CharImage = HelperMethods.DrawText(c.ToString(), Color.Black, Color.White, size)
-
-            Dim btm As New Bitmap(CharImage)
+            Dim charImage = HelperMethods.DrawText(c.ToString(), Color.Black, Color.White, size)
+            Dim btm As New Bitmap(charImage)
             Dim totalsum As Double = 0
 
             For i As Integer = 0 To btm.Width - 1
@@ -162,6 +162,7 @@ Namespace Drawing2D.Text.ASCIIArt
                     totalsum = totalsum + (CInt(pixel.R) + CInt(pixel.G) + CInt(pixel.B)) \ 3
                 Next
             Next
+
             ' Weight = (sum of (R+G+B)/3 for all pixels in image) / Area. (Where Area = Width*Height )
             Return totalsum / (size.Height * size.Width)
         End Function
@@ -173,9 +174,11 @@ Namespace Drawing2D.Text.ASCIIArt
             ' y = mx + n (where y c (0-255))
             Dim slope As Double = range / (max - min)
             Dim n As Double = -min * slope
+
             For Each charactertomap As WeightedChar In characters
                 charactertomap.Weight = slope * charactertomap.Weight + n
             Next
+
             Return characters
         End Function
 #End Region
