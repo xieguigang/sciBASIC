@@ -45,7 +45,7 @@ Module Program
 
     Sub Main()
 
-        Dim signal As TimeSignal() = TimeSignal.SignalSequence(TestProvider.bumps(5, 5))
+        Dim signal As TimeSignal() = TimeSignal.SignalSequence(TestProvider.bumps(1000, 5)).ToArray
 
         Pause()
     End Sub
