@@ -77,7 +77,7 @@ Namespace Source
         Public Overridable Property SignalA As Signal
         Public Overridable Property SignalB As Signal
 
-        Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
+        Public Sub New(aa As Signal, bb As Signal)
             SignalA = aa
             SignalB = bb
         End Sub
@@ -88,7 +88,7 @@ Namespace Source
         ''' <param name="phase1">	the first signal's phase </param>
         ''' <param name="freq2">  the seconds signal's frequency </param>
         ''' <param name="phase2">	the seconds signal's phase </param>
-        Public MustOverride Function calculate(ByVal freq1 As Double, ByVal phase1 As Double, ByVal freq2 As Double, ByVal phase2 As Double) As Double
+        Public MustOverride Function calculate(freq1 As Double, phase1 As Double, freq2 As Double, phase2 As Double) As Double
 
         ''' <summary>
         ''' Generates a GraphViewData array with Signal.GRAPH_SAMPLES entries.
@@ -136,48 +136,48 @@ Namespace Source
 
     Public Class SumSignal : Inherits ArithmeticSignal
 
-        Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
+        Public Sub New(aa As Signal, bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function calculate(ByVal freq1 As Double, ByVal phase1 As Double, ByVal freq2 As Double, ByVal phase2 As Double) As Double
+        Public Overrides Function calculate(freq1 As Double, phase1 As Double, freq2 As Double, phase2 As Double) As Double
             Return SignalA.calculate(freq1, phase1) + SignalB.calculate(freq2, phase2)
         End Function
     End Class
 
     Public Class MultiplySignal : Inherits ArithmeticSignal
 
-        Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
+        Public Sub New(aa As Signal, bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function calculate(ByVal freq1 As Double, ByVal phase1 As Double, ByVal freq2 As Double, ByVal phase2 As Double) As Double
+        Public Overrides Function calculate(freq1 As Double, phase1 As Double, freq2 As Double, phase2 As Double) As Double
             Return SignalA.calculate(freq1, phase1) * SignalB.calculate(freq2, phase2)
         End Function
     End Class
 
     Public Class DivisionSignal : Inherits ArithmeticSignal
 
-        Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
+        Public Sub New(aa As Signal, bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function calculate(ByVal freq1 As Double, ByVal phase1 As Double, ByVal freq2 As Double, ByVal phase2 As Double) As Double
+        Public Overrides Function calculate(freq1 As Double, phase1 As Double, freq2 As Double, phase2 As Double) As Double
             Return SignalA.calculate(freq1, phase1) / SignalB.calculate(freq2, phase2)
         End Function
     End Class
 
     Public Class DifferenceSignal : Inherits ArithmeticSignal
 
-        Public Sub New(ByVal aa As Signal, ByVal bb As Signal)
+        Public Sub New(aa As Signal, bb As Signal)
             MyBase.New(aa, bb)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Function calculate(ByVal freq1 As Double, ByVal phase1 As Double, ByVal freq2 As Double, ByVal phase2 As Double) As Double
+        Public Overrides Function calculate(freq1 As Double, phase1 As Double, freq2 As Double, phase2 As Double) As Double
             Return SignalA.calculate(freq1, phase1) - SignalB.calculate(freq2, phase2)
         End Function
     End Class
