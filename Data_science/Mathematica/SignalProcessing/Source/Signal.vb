@@ -93,7 +93,7 @@ Namespace Source
             Me.Freq = freq
             Me.Phase = phase
 
-            Dim [step] As Integer = CInt(freq) * 3 \ GRAPH_SAMPLES
+            Dim [step] As Double = freq * 3 / GRAPH_SAMPLES
 
             For i As Integer = 0 To GRAPH_SAMPLES - 1
                 data(i) = New TimeSignal With {
