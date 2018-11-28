@@ -86,7 +86,7 @@ Namespace Source
         ''' <param name="freq">   the signal's frequency </param>
         ''' <param name="phase">	the signal's phase </param>
         ''' <returns>    	the samples </returns>
-        Public Overridable Function getGraphData(freq As Double, phase As Double) As TimeSignal()
+        Public Overridable Function GetGraphData(freq As Double, phase As Double) As TimeSignal()
             Dim data(GRAPH_SAMPLES - 1) As TimeSignal
             Dim x As Double = 0
 
@@ -112,7 +112,7 @@ Namespace Source
         ''' <param name="freq">   the signal's frequency </param>
         ''' <param name="phase">	the signal's phase </param>
         ''' <returns>    	the samples </returns>
-        Public Overridable Function getAudioBytes(freq As Double, phase As Double) As SByte()
+        Public Overridable Function CalcAudioBytes(freq As Double, phase As Double) As SByte()
             Dim samples(BUFFER_SIZE - 1) As SByte
 
             Me.Freq = freq
