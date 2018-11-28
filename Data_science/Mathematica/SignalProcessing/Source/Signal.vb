@@ -42,6 +42,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 Namespace Source
 
     '
@@ -76,6 +78,8 @@ Namespace Source
         ''' <summary>
         ''' Calculates the signals value with the last used frequency and phase
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function calculate() As Double
             Return calculate(Freq, Phase)
         End Function

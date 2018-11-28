@@ -1,70 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::214d61b7c257601426e90d884c09c093, Data_science\Mathematica\SignalProcessing\Source\ArithmeticSignal.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ArithmeticSignal
-    ' 
-    '         Properties: AudioBytes, GraphData, SignalA, SignalB
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class SumSignal
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: calculate
-    ' 
-    '     Class MultiplySignal
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: calculate
-    ' 
-    '     Class DivisionSignal
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: calculate
-    ' 
-    '     Class DifferenceSignal
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: calculate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ArithmeticSignal
+' 
+'         Properties: AudioBytes, GraphData, SignalA, SignalB
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class SumSignal
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: calculate
+' 
+'     Class MultiplySignal
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: calculate
+' 
+'     Class DivisionSignal
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: calculate
+' 
+'     Class DifferenceSignal
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: calculate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 
-Namespace Source
+Namespace Source.Arithmetic
 
     '
     '* Advanced Signal class for operations on two Signals.
@@ -97,9 +97,10 @@ Namespace Source
         Public Overridable ReadOnly Property GraphData As TimeSignal()
             Get
                 Dim data(Signal.GRAPH_SAMPLES - 1) As TimeSignal
-                Dim x As Double = 0, y As Double = 0
-                Dim stepX = CLng(SignalA.Freq * 3) \ Signal.GRAPH_SAMPLES
-                Dim stepY = CLng(SignalB.Freq * 3) \ Signal.GRAPH_SAMPLES
+                Dim x As Double = 0
+                Dim y As Double = 0
+                Dim stepX = (SignalA.Freq * 3) / Signal.GRAPH_SAMPLES
+                Dim stepY = (SignalB.Freq * 3) / Signal.GRAPH_SAMPLES
 
                 For i As Integer = 0 To Signal.GRAPH_SAMPLES - 1
                     data(i) = New TimeSignal With {
