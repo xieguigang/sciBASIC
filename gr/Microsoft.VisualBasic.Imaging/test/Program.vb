@@ -76,7 +76,12 @@ Module Program
 
         Call Console.WriteLine(logo)
 
-        Call logo.SaveTo("x:\sciBASIC.txt")
+        Call logo.SaveTo("D:\sciBASIC.txt")
+
+        logo = "php.NET".ASCIIImage("font-style: normal; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";")
+
+        Call Console.WriteLine()
+        Call Console.WriteLine(logo)
 
         Pause()
 

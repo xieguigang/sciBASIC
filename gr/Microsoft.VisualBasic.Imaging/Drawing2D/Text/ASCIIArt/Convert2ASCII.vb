@@ -63,7 +63,7 @@ Namespace Drawing2D.Text.ASCIIArt
         <Extension>
         Public Function ASCIIImage(text$, Optional font$ = CSSFont.Win7Normal, Optional characters As WeightedChar() = Nothing) As String
             Dim image As Image = text.DrawText(Color.Black, Color.White, , CSSFont.TryParse(font).GDIObject)
-            Return image.Convert2ASCII
+            Return image.Convert2ASCII(characters)
         End Function
 
         ''' <summary>
