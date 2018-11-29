@@ -73,9 +73,9 @@ Namespace Drawing2D.Text.ASCIIArt
         '         * 
         '         * All the classes resulting from the calculations are stored in a List so we can access the results.
         '         
-        Public Function GenerateFontWeights() As List(Of WeightedChar)
+        Public Function GenerateFontWeights() As WeightedChar()
             ' Collect chars, their Images and weights in a list of WeightedChar
-            Dim WeightedChars As New List(Of WeightedChar)()
+            Dim weightedChars As New List(Of WeightedChar)()
             Dim commonsize As SizeF = GetGeneralSize()
 
             ' Get standard size (nxn square), which will be common to all CharImages
@@ -84,6 +84,7 @@ Namespace Drawing2D.Text.ASCIIArt
                 Dim forweighting = New WeightedChar()
                 ' New object to hold Image, Weight and Char of new character
                 Dim c As Char = Convert.ToChar(i)
+
                 If Not Char.IsControl(c) Then
                     forweighting.Weight = c.GetWeight(commonsize)
                     ' Get character weight
@@ -92,13 +93,15 @@ Namespace Drawing2D.Text.ASCIIArt
                     ' Get character Image
                     forweighting.CharacterImage = DirectCast(HelperMethods.DrawText(c.ToString(), Color.Black, Color.White, commonsize), Bitmap)
                 End If
-                WeightedChars.Add(forweighting)
+
+                weightedChars.Add(forweighting)
             Next
 
-            WeightedChars = WeightedChars.LinearMap()
-            ' Linearly map character weights to be in the range 0-255 -> mapping linearly from: MinCalcWeight - MaxCalcWeight to 0-255; 
+            weightedChars = weightedChars.LinearMap()
+            ' Linearly map character weights to be in the range 0-255 
+            ' -> mapping linearly from: MinCalcWeight - MaxCalcWeight to 0-255; 
             ' This is done to be able to directly map pixels to characters
-            Return WeightedChars
+            Return weightedChars.ToArray
         End Function
 
 #Region "[GenerateFontWeights Helper methods]"

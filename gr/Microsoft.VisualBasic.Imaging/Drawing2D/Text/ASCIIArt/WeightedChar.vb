@@ -15,8 +15,8 @@ Namespace Drawing2D.Text.ASCIIArt
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function getDefaultChartSet() As DefaultValue(Of List(Of WeightedChar))
-            Return GenerateFontWeights()
+        Friend Shared Function getDefaultCharSet() As DefaultValue(Of WeightedChar())
+            Return CharSet.GenerateFontWeights()
         End Function
     End Class
 End Namespace
