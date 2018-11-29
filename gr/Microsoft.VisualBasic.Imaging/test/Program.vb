@@ -78,6 +78,10 @@ Module Program
 
         Call logo.SaveTo("D:\sciBASIC.txt")
 
+        Dim charset = {
+        
+        }
+
         logo = "php.NET".ASCIIImage("font-style: normal; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";")
 
         Call Console.WriteLine()

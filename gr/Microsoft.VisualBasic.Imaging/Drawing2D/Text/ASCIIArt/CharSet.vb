@@ -73,17 +73,24 @@ Namespace Drawing2D.Text.ASCIIArt
         '         * 
         '         * All the classes resulting from the calculations are stored in a List so we can access the results.
         '         
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GenerateFontWeights() As WeightedChar()
+            ' New object to hold Image, Weight and Char of new character
+            ' For i As Integer = 32 To 126
+            Return Enumerable.Range(32, 126 - 32).Select(Function(i) Convert.ToChar(i)).GenerateFontWeights
+        End Function
+
+        <Extension>
+        Public Function GenerateFontWeights(chars As IEnumerable(Of Char)) As WeightedChar()
             ' Collect chars, their Images and weights in a list of WeightedChar
             Dim weightedChars As New List(Of WeightedChar)()
             Dim commonsize As SizeF = GetGeneralSize()
 
             ' Get standard size (nxn square), which will be common to all CharImages
-            For i As Integer = 32 To 126
+            For Each c As Char In chars
                 ' Iterate through Chars
                 Dim forweighting = New WeightedChar()
-                ' New object to hold Image, Weight and Char of new character
-                Dim c As Char = Convert.ToChar(i)
 
                 If Not Char.IsControl(c) Then
                     forweighting.Weight = c.GetWeight(commonsize)
