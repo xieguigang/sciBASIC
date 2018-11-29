@@ -48,29 +48,12 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Runtime.CompilerServices
 Imports System.Math
-Imports Microsoft.VisualBasic.Language.Default
+Imports System.Runtime.CompilerServices
 
 Namespace Drawing2D.Text.ASCIIArt
 
     Public Module CharSet
-
-        Public Class WeightedChar
-
-            Public Property Character As String
-            Public Property CharacterImage As Bitmap
-            Public Property Weight As Double
-
-            Public Overrides Function ToString() As String
-                Return $"{Character} ({Weight})"
-            End Function
-
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Private Shared Function getDefaultChartSet() As DefaultValue(Of List(Of WeightedChar))
-                Return GenerateFontWeights()
-            End Function
-        End Class
 
         '
         '         * The methods contained in this class are executed at the inizialization
