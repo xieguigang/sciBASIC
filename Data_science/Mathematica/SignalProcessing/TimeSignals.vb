@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e6a85756b8c22b42bc9fa0cfce08b6b, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::55fea020473ebb7b64dca7cec8deb246, Data_science\Mathematica\SignalProcessing\TimeSignals.vb"
 
     ' Author:
     ' 
@@ -31,38 +31,34 @@
 
     ' Summaries:
 
-    '     Interface ILayoutedObject
+    ' Class TimeSignal
     ' 
-    '         Properties: Location
+    '     Properties: intensity, time
     ' 
-    '     Interface ILayoutCoordinate
-    ' 
-    '         Properties: ID, X, Y
-    ' 
+    '     Function: SignalSequence, ToString
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
-Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
-Namespace Imaging.LayoutModel
+Public Class TimeSignal
 
-    ''' <summary>
-    ''' Any typed object with a location layout value
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    Public Interface ILayoutedObject(Of T)
-        Inherits Value(Of T).IValueOf
+    Public Property time As Double
+    Public Property intensity As Double
 
-        Property Location As PointF
-    End Interface
+    Public Overrides Function ToString() As String
+        Return $"[{time}, {intensity}]"
+    End Function
 
-    Public Interface ILayoutCoordinate
-        Property ID As String
-        Property X As Double
-        Property Y As Double
-    End Interface
+    Public Shared Iterator Function SignalSequence(data As IEnumerable(Of Double)) As IEnumerable(Of TimeSignal)
+        For Each p As SeqValue(Of Double) In data.SeqIterator(offset:=1)
+            Yield New TimeSignal With {
+                .time = p.i,
+                .intensity = p.value
+            }
+        Next
+    End Function
+End Class
 
-End Namespace
