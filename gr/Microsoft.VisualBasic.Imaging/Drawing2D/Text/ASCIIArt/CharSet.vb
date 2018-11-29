@@ -50,6 +50,7 @@
 Imports System.Drawing
 Imports System.Math
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing2D.Text.ASCIIArt
 
@@ -88,7 +89,7 @@ Namespace Drawing2D.Text.ASCIIArt
             Dim commonsize As SizeF = GetGeneralSize()
 
             ' Get standard size (nxn square), which will be common to all CharImages
-            For Each c As Char In chars
+            For Each c As Char In chars.SafeQuery.Distinct
                 ' Iterate through Chars
                 Dim forweighting = New WeightedChar()
 
