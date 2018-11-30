@@ -89,10 +89,12 @@ Namespace Math
         ''' <returns></returns>
         Public Function Seed() As Integer
             Dim seeds& = CLng(Integer.MaxValue) * 2
-            VisualBasic.Randomize()
+            Randomize()
             seeds = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / seeds
             Return CInt(seeds)
         End Function
+
+        Const RandfMultiply# = 10000
 
         ''' <summary>
         ''' 返回<paramref name="min"/>到<paramref name="max"/>区间之内的一个和实数
@@ -101,25 +103,26 @@ Namespace Math
         ''' <param name="max"></param>
         ''' <returns></returns>
         Public Function randf(min As Double, max As Double) As Double
-            Dim minInteger& = CLng(sys.Truncate(min * 10000))
-            Dim maxInteger& = CLng(sys.Truncate(max * 10000))
+            Dim minInteger& = CLng(sys.Truncate(min * RandfMultiply))
+            Dim maxInteger& = CLng(sys.Truncate(max * RandfMultiply))
             Dim randInteger& = CLng(RandomNumbers.rand()) * CLng(RandomNumbers.rand())
             Dim diffInteger& = maxInteger - minInteger
             Dim resultInteger& = randInteger Mod diffInteger + minInteger
-            Return resultInteger / 10000.0
+
+            Return resultInteger / RandfMultiply
         End Function
 
-        ReadOnly __randomSeeds As New Random(Rnd() * 10000)
+        ReadOnly seeds As New Random(Rnd() * 10000)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RandomSingle() As Single
-            Dim result = __randomSeeds.NextDouble()
-            Return CSng(result)
+            Return seeds.NextDouble()
         End Function
 
         <Extension>
         Public Function GetRandomValue(rng As DoubleRange) As Double
-            SyncLock __randomSeeds
-                Return __randomSeeds.NextDouble(range:=rng)
+            SyncLock seeds
+                Return seeds.NextDouble(range:=rng)
             End SyncLock
         End Function
 
@@ -142,7 +145,7 @@ Namespace Math
 
         <Extension>
         Public Function GetRandomValue(rng As IntRange) As Integer
-            Return rng.Length * __randomSeeds.NextDouble + rng.Min
+            Return rng.Length * seeds.NextDouble + rng.Min
         End Function
 
         ''' <summary>

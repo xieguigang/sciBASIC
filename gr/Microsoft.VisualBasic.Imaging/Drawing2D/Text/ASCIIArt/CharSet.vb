@@ -1,70 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::dae2d7fca07f4cdcfa065437fd6f7a42, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\CharSet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module CharSet
-    ' 
-    '         Function: GenerateFontWeights, GetGeneralSize, GetWeight, LinearMap
-    '         Class WeightedChar
-    ' 
-    '             Properties: Character, CharacterImage, Weight
-    ' 
-    '             Function: ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module CharSet
+' 
+'         Function: GenerateFontWeights, GetGeneralSize, GetWeight, LinearMap
+'         Class WeightedChar
+' 
+'             Properties: Character, CharacterImage, Weight
+' 
+'             Function: ToString
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-Imports System.Runtime.CompilerServices
 Imports System.Math
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing2D.Text.ASCIIArt
 
     Public Module CharSet
-
-        Public Class WeightedChar
-
-            Public Property Character As String
-            Public Property CharacterImage As Bitmap
-            Public Property Weight As Double
-
-            Public Overrides Function ToString() As String
-                Return $"{Character} ({Weight})"
-            End Function
-        End Class
 
         '
         '         * The methods contained in this class are executed at the inizialization
@@ -84,32 +75,47 @@ Namespace Drawing2D.Text.ASCIIArt
         '         * 
         '         * All the classes resulting from the calculations are stored in a List so we can access the results.
         '         
-        Public Function GenerateFontWeights() As List(Of WeightedChar)
-            ' Collect chars, their Images and weights in a list of WeightedChar
-            Dim WeightedChars As New List(Of WeightedChar)()
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GenerateFontWeights() As WeightedChar()
+            ' New object to hold Image, Weight and Char of new character
+            ' For i As Integer = 32 To 126
+            Return Enumerable.Range(32, 126 - 32).Select(Function(i) Convert.ToChar(i)).GenerateFontWeights
+        End Function
+
+        <Extension>
+        Public Function GenerateFontWeights(chars As IEnumerable(Of Char)) As WeightedChar()
+            ' Collect chars, their Images and weights in a list of WeightedChar
+            Dim weightedChars As New List(Of WeightedChar)()
             Dim commonsize As SizeF = GetGeneralSize()
+
             ' Get standard size (nxn square), which will be common to all CharImages
-            For i As Integer = 32 To 126
+            For Each c As Char In chars.SafeQuery.Distinct
                 ' Iterate through Chars
                 Dim forweighting = New WeightedChar()
-                ' New object to hold Image, Weight and Char of new character
-                Dim c As Char = Convert.ToChar(i)
+
                 If Not Char.IsControl(c) Then
                     forweighting.Weight = c.GetWeight(commonsize)
                     ' Get character weight
                     forweighting.Character = c.ToString()
                     ' Get character representation (the actual char)
                     ' Get character Image
-                    forweighting.CharacterImage = DirectCast(HelperMethods.DrawText(c.ToString(), Color.Black, Color.White, commonsize), Bitmap)
+                    forweighting.CharacterImage = DirectCast(HelperMethods.DrawText(
+                        text:=c.ToString(),
+                        textColor:=Color.Black,
+                        backColor:=Color.White,
+                        WidthAndHeight:=commonsize
+                    ), Bitmap)
                 End If
-                WeightedChars.Add(forweighting)
+
+                weightedChars.Add(forweighting)
             Next
 
-            WeightedChars = WeightedChars.LinearMap()
-            ' Linearly map character weights to be in the range 0-255 -> mapping linearly from: MinCalcWeight - MaxCalcWeight to 0-255; 
+            weightedChars = weightedChars.LinearMap()
+            ' Linearly map character weights to be in the range 0-255 
+            ' -> mapping linearly from: MinCalcWeight - MaxCalcWeight to 0-255; 
             ' This is done to be able to directly map pixels to characters
-            Return WeightedChars
+            Return weightedChars.ToArray
         End Function
 
 #Region "[GenerateFontWeights Helper methods]"
@@ -117,14 +123,13 @@ Namespace Drawing2D.Text.ASCIIArt
         Private Function GetGeneralSize() As SizeF
             Dim generalsize As New SizeF(0, 0)
 
-            For i As Integer = 32 To 126
-                ' Iterate through contemplated characters calculating necessary width
-                Dim c As Char = Convert.ToChar(i)
-
-                ' Create a dummy bitmap just to get a graphics object
-                Using img As Image = New Bitmap(1, 1), drawing As Graphics = Graphics.FromImage(img)
+            Using g As Graphics = New Size(1, 1).CreateGDIDevice.Graphics
+                For i As Integer = 32 To 126
+                    ' Iterate through contemplated characters calculating necessary width
+                    Dim c As Char = Convert.ToChar(i)
+                    ' Create a dummy bitmap just to get a graphics object
                     ' Measure the string to see its dimensions using the graphics object
-                    Dim textSize As SizeF = drawing.MeasureString(c.ToString(), SystemFonts.DefaultFont)
+                    Dim textSize As SizeF = g.MeasureString(c.ToString(), SystemFonts.DefaultFont)
 
                     ' Update, if necessary, the max width and height
                     If textSize.Width > generalsize.Width Then
@@ -133,8 +138,8 @@ Namespace Drawing2D.Text.ASCIIArt
                     If textSize.Height > generalsize.Height Then
                         generalsize.Height = textSize.Height
                     End If
-                End Using
-            Next
+                Next
+            End Using
 
             ' Make sure generalsize is made of integers 
             generalsize.Width = CInt(Truncate(generalsize.Width))
@@ -153,15 +158,16 @@ Namespace Drawing2D.Text.ASCIIArt
 
         <Extension> Private Function GetWeight(c As Char, size As SizeF) As Double
             Dim charImage = HelperMethods.DrawText(c.ToString(), Color.Black, Color.White, size)
-            Dim btm As New Bitmap(charImage)
             Dim totalsum As Double = 0
 
-            For i As Integer = 0 To btm.Width - 1
-                For j As Integer = 0 To btm.Height - 1
-                    Dim pixel As Color = btm.GetPixel(i, j)
-                    totalsum = totalsum + (CInt(pixel.R) + CInt(pixel.G) + CInt(pixel.B)) \ 3
+            Using btm As BitmapBuffer = BitmapBuffer.FromImage(charImage)
+                For i As Integer = 0 To btm.Width - 1
+                    For j As Integer = 0 To btm.Height - 1
+                        Dim pixel As Color = btm.GetPixel(i, j)
+                        totalsum += (CInt(pixel.R) + CInt(pixel.G) + CInt(pixel.B)) \ 3
+                    Next
                 Next
-            Next
+            End Using
 
             ' Weight = (sum of (R+G+B)/3 for all pixels in image) / Area. (Where Area = Width*Height )
             Return totalsum / (size.Height * size.Width)
