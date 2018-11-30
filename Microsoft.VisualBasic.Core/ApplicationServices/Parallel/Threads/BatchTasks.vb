@@ -1,60 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::e07030f977dacfb677f02e6b732c4317, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\BatchTasks.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module BatchTasks
-    ' 
-    '         Function: (+2 Overloads) BatchTask
-    ' 
-    '         Sub: BatchTask
-    '         Structure __threadHelper
-    ' 
-    '             Function: __task
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module BatchTasks
+' 
+'         Function: (+2 Overloads) BatchTask
+' 
+'         Sub: BatchTask
+'         Structure __threadHelper
+' 
+'             Function: __task
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Parallel.Tasks
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.ComponentModel.DataStructures
-Imports Microsoft.VisualBasic.CommandLine
 
 Namespace Parallel.Threads
 
@@ -94,7 +93,9 @@ Namespace Parallel.Threads
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <param name="getTask"></param>
-        ''' <param name="numThreads">可以在这里手动的控制任务的并发数，这个数值小于或者等于零则表示自动配置线程的数量，如果想要单线程，请将这个参数设置为1</param>
+        ''' <param name="numThreads">
+        ''' 可以在这里手动的控制任务的并发数，这个数值小于或者等于零则表示自动配置线程的数量，如果想要单线程，请将这个参数设置为1
+        ''' </param>
         ''' <param name="TimeInterval"></param>
         ''' <returns></returns>
         <Extension>
@@ -105,7 +106,8 @@ Namespace Parallel.Threads
             Dim taskHelper As New __threadHelper(Of TIn, T) With {
                 .__invoke = getTask
             }
-            Return source.Select(AddressOf taskHelper.__task) _
+            Return source _
+                .Select(AddressOf taskHelper.__task) _
                 .ToArray _
                 .BatchTask(numThreads, TimeInterval)
         End Function
@@ -148,7 +150,7 @@ Namespace Parallel.Threads
         ''' 小于等于零的数将不会开启，默认值为零，不开启)
         ''' </param>
         <Extension>
-        Public Function BatchTask(Of T)(actions As Func(Of T)(), Optional numThreads% = -1%, Optional TimeInterval% = 1000%, Optional smart# = 0#) As T()
+        Public Function BatchTask(Of T)(actions As Func(Of T)(), Optional numThreads% = -1%, Optional timeInterval% = 1000%, Optional smart# = 0#) As T()
             Dim taskPool As New List(Of AsyncHandle(Of T))
             Dim p As New Pointer
             Dim resultList As New List(Of T)
@@ -159,10 +161,14 @@ Namespace Parallel.Threads
             End If
 
             Do While p <= (actions.Length - 1)
-                If taskPool.Count < numThreads Then  ' 向任务池里面添加新的并行任务
-                    taskPool += New AsyncHandle(Of T)(actions(++p)).Run ' 任务数量小于指定值的情况下，会直接添加计算任务直到满足数量条件
-                Else   ' 这里是smart模式
-                    If smart > 0# Then  ' CPU的负载在指定值之内，则smart模式开启的情况下会添加新的额外的计算任务
+                If taskPool.Count < numThreads Then
+                    ' 向任务池里面添加新的并行任务
+                    ' 任务数量小于指定值的情况下，会直接添加计算任务直到满足数量条件
+                    taskPool += New AsyncHandle(Of T)(actions(++p)).Run
+                Else
+                    If smart > 0# Then
+                        ' 这里是smart模式
+                        ' CPU的负载在指定值之内，则smart模式开启的情况下会添加新的额外的计算任务
                         CPU = Win32.TaskManager.ProcessUsage
 
                         If CPU <= smart Then
@@ -172,28 +178,33 @@ Namespace Parallel.Threads
                     End If
                 End If
 
+                ' 在这里获得完成的任务
                 Dim LQuery As AsyncHandle(Of T)() =
-                    LinqAPI.Exec(Of AsyncHandle(Of T)) <= From task As AsyncHandle(Of T)
-                                                          In taskPool
-                                                          Where task.IsCompleted ' 在这里获得完成的任务
-                                                          Select task
+                    LinqAPI.Exec(Of AsyncHandle(Of T)) _
+ _
+                    () <= From task As AsyncHandle(Of T)
+                          In taskPool
+                          Where task.IsCompleted
+                          Select task
 
                 For Each completeTask As AsyncHandle(Of T) In LQuery
+                    ' 将完成的任务从任务池之中移除然后获取返回值
                     Call taskPool.Remove(completeTask)
-                    Call resultList.Add(completeTask.GetValue)  '  将完成的任务从任务池之中移除然后获取返回值
+                    Call resultList.Add(completeTask.GetValue)
                 Next
 
-                If TimeInterval > 0 Then
-                    Call Thread.Sleep(TimeInterval)
+                If timeInterval > 0 Then
+                    Call Thread.Sleep(timeInterval)
                 End If
             Loop
 
-            Dim WaitForExit As T() =
+            ' 等待剩余的计算任务完成计算过程
+            Dim waitForExit As T() =
                 LinqAPI.Exec(Of T) <= From task As AsyncHandle(Of T)
-                                      In taskPool.AsParallel  ' 等待剩余的计算任务完成计算过程
+                                      In taskPool.AsParallel
                                       Let cli As T = task.GetValue
                                       Select cli
-            resultList += WaitForExit
+            resultList += waitForExit
 
             Return resultList.ToArray
         End Function
