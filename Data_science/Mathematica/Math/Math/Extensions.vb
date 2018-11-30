@@ -57,6 +57,16 @@ Imports sys = System.Math
 ''' </summary>
 Public Module Extensions
 
+    Public Function FlipCoin(Optional headsCutoff% = 50, Optional ntimes% = 100) As Double
+        Dim rand As Integer = randf(0, ntimes)
+
+        If rand >= headsCutoff Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
     ''' <summary>
     ''' 计算两个离散信号之间的相似度
     ''' </summary>
