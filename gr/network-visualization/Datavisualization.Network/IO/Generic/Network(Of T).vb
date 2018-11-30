@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::433bdffc86f1fd6a2597c5414d637b49, gr\network-visualization\Datavisualization.Network\IO\Generic\Network(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::38c9b2861ec7e0a9c5f26359278726f0, gr\network-visualization\Datavisualization.Network\IO\Generic\Network(Of T).vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Network
     ' 
-    '         Properties: Edges, Nodes
+    '         Properties: Edges, IsEmpty, Nodes
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
@@ -83,6 +83,7 @@ Namespace FileStream.Generic
                 End If
             End Set
         End Property
+
         Public Property Edges As T_Edge() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Value
             Get
                 If __edges Is Nothing Then
@@ -97,6 +98,16 @@ Namespace FileStream.Generic
                     __edges = value.AsList
                 End If
             End Set
+        End Property
+
+        ''' <summary>
+        ''' 判断这个网络模型之中是否是没有任何数据
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsEmpty As Boolean
+            Get
+                Return __nodes.IsNullOrEmpty AndAlso __edges.IsNullOrEmpty
+            End Get
         End Property
 
         Sub New()

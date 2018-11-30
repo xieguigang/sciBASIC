@@ -918,6 +918,8 @@
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\BinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeBase.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\Enumerable.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeNode.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLSupports.vb" />
@@ -929,9 +931,11 @@
     <Compile Include="ComponentModel\Ranges\Selector\SelectorExtensions.vb" />
     <Compile Include="ComponentModel\Ranges\Selector\NumericTagged.vb" />
     <Compile Include="ComponentModel\Ranges\Unit.vb" />
+    <Compile Include="ComponentModel\ValuePair\TagData\FactorValue.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Collection\IsNullOrEmptyExtensions.vb" />
+    <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
     <Compile Include="Extensions\Image\Math\Models\Polygon.vb" />
     <Compile Include="Extensions\Image\Math\Models\Line.vb" />
@@ -950,8 +954,9 @@
     <Compile Include="Extensions\Trinity\Word.vb" />
     <Compile Include="Extensions\Trinity\WordClass.vb" />
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
-    <Compile Include="Extensions\WebServices\Multipart.vb" />
-    <Compile Include="Extensions\WebServices\Http\DataURI.vb" />
+    <Compile Include="Net\HTTP\ZipStream.vb" />
+    <Compile Include="Net\HTTP\Multipart.vb" />
+    <Compile Include="Net\HTTP\DataURI.vb" />
     <Compile Include="Language\Linq\Vectorization\Strings.vb" />
     <Compile Include="Language\Value\ByRefValueExtensions.vb" />
     <Compile Include="Language\Value\DefaultValue\BooleanAssert.vb" />
@@ -1013,14 +1018,13 @@
     <Compile Include="ComponentModel\DataSource\SchemaMaps\SQL.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Mappings.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Schema.vb" />
-    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\ClusterParts.vb" />
     <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
     <Compile Include="ComponentModel\DataStructures\BucketDictionary.vb" />
     <Compile Include="ComponentModel\DataStructures\FuzzyGroup.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\ITreeNode.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\TreeNodeBase.vb" />
     <Compile Include="ComponentModel\DataStructures\Trigger.vb" />
-    <Compile Include="ComponentModel\DataStructures\HashList\HashHandle.vb" />
+    <Compile Include="ComponentModel\DataStructures\BitMap\HashHandle.vb" />
     <Compile Include="ComponentModel\DataStructures\Set\SetAPI.vb" />
     <Compile Include="ComponentModel\File\BufferedStream.vb" />
     <Compile Include="ComponentModel\Ranges\Relations.vb" />
@@ -1062,10 +1066,10 @@
     <Compile Include="Extensions\Image\Colors\CytoscapeColor.vb" />
     <Compile Include="Extensions\Image\Colors\HSLColor.vb" />
     <Compile Include="Extensions\Image\GDI+\GDICanvas.vb" />
-    <Compile Include="Extensions\Image\GDI+\Layouts\LayoutedObject.vb" />
-    <Compile Include="Extensions\Image\GDI+\Layouts\DblRect.vb" />
+    <Compile Include="Extensions\Image\GDI+\Layouts\Abstract.vb" />
+    <Compile Include="Extensions\Image\GDI+\Layouts\Rectangle2D.vb" />
     <Compile Include="Extensions\Image\Math\GeometryMath.vb" />
-    <Compile Include="Extensions\Image\Math\PolygonD.vb" />
+    <Compile Include="Extensions\Image\Math\Polygon2D.vb" />
     <Compile Include="Extensions\Image\Math\VectorMath2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\Vector2D.vb" />
     <Compile Include="Extensions\Image\PointF3D.vb" />
@@ -1097,8 +1101,8 @@
     <Compile Include="Text\Patterns\Regexp.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
-    <Compile Include="Extensions\WebServices\Http\GZStream.vb" />
-    <Compile Include="Extensions\WebServices\sitemap.xml.vb" />
+    <Compile Include="Net\HTTP\GZStream.vb" />
+    <Compile Include="Net\HTTP\sitemap.xml.vb" />
     <Compile Include="Language\Runtime.vb" />
     <Compile Include="Language\Language\C\Vector.vb" />
     <Compile Include="Language\Language\Java\Line2D.vb" />
@@ -1189,7 +1193,7 @@
     <Compile Include="Extensions\Reflection\Delegate\TypeExtensions.vb" />
     <Compile Include="Extensions\ValueTypes\DateTimeHelper.vb" />
     <Compile Include="Text\Patterns\Wildcards.vb" />
-    <Compile Include="Extensions\WebServices\UserAgent.vb" />
+    <Compile Include="Net\HTTP\UserAgent.vb" />
     <Compile Include="Extensions\WebServices\RequestBuilder.vb" />
     <Compile Include="Language\Language\C\RandomNumbers.vb" />
     <Compile Include="Language\Language\Java\Arrays.vb" />
@@ -1366,7 +1370,7 @@
     <Compile Include="Extensions\StringHelpers\StrUtils.vb" />
     <Compile Include="Text\TextEncodings.vb" />
     <Compile Include="Extensions\WebServices\HTTP_RFC.vb" />
-    <Compile Include="Extensions\WebServices\Http\Base64Codec.vb" />
+    <Compile Include="Net\HTTP\Base64Codec.vb" />
     <Compile Include="Extensions\WebServices\NetResponse.vb" />
     <Compile Include="ApplicationServices\Tools\Win32\WindowsServices.vb" />
     <Compile Include="Extensions\Security\Md5.vb" />
@@ -1449,7 +1453,6 @@
     <Compile Include="Net\Tcp\TCPExtensions.vb" />
     <Compile Include="Net\Tcp\TcpRequest.vb" />
     <Compile Include="ApplicationServices\Parallel\Threading.vb" />
-    <Compile Include="ComponentModel\DataStructures\Tree\BinaryTree\BinaryTree.vb" />
     <Compile Include="CommandLine\Reflection\EntryPoints\Delegate.vb" />
     <Compile Include="Extensions\Image\GDI+\GraphicsExtensions.vb" />
     <Compile Include="ComponentModel\DataStructures\HashDictionary.vb" />
@@ -1511,8 +1514,8 @@
     <Compile Include="ApplicationServices\Terminal\STDIO__\I_ConsoleDeviceHandle.vb" />
     <Compile Include="Language\Language\C\CFormatProvider.vb" />
     <Compile Include="ApplicationServices\Terminal\STDIO__\STDIO.vb" />
-    <Compile Include="ComponentModel\DataStructures\HashList\HashModel.vb" />
-    <Compile Include="ComponentModel\DataStructures\HashList\HashList.vb" />
+    <Compile Include="ComponentModel\DataStructures\BitMap\HashModel.vb" />
+    <Compile Include="ComponentModel\DataStructures\BitMap\HashList.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

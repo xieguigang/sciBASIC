@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a65085ca38d42d5735c4341a94066e0, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::4e3de488c27d37d9d84f4fc815ad6396, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+6 Overloads) Sub New
     '         Function: Enumerate, GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping
-    '                   ScaleMapping, ToString, TryParse
+    '                   ScaleMapping, (+2 Overloads) ToString, TryParse
     '         Operators: *, <>, =
     ' 
     ' 
@@ -142,8 +142,14 @@ Namespace ComponentModel.Ranges.Model
         ''' 因为进行json序列化的话，因为这个实现了<see cref="IEnumerable(Of T)"/>接口，但是并没有实现Add方法，
         ''' 所以会出错，这里取消使用json来生成<see cref="ToString"/>函数的结果
         ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return $"[min={Min}, max={Max}]"
+            Return ToString("G2")
+        End Function
+
+        Public Overloads Function ToString(format As String) As String
+            Return $"[min={Min.ToString(format)}, max={Max.ToString(format)}]"
         End Function
 
         ''' <summary>

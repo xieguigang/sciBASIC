@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e96a7b23fea6f15d33fced25f15281a, mime\application%json\Parser\JsonElement.vb"
+﻿#Region "Microsoft.VisualBasic::2dabd3c35bc1895af5987f9fb9edce89, mime\application%json\Parser\JsonElement.vb"
 
     ' Author:
     ' 
@@ -37,12 +37,14 @@
     ' 
     '     Class JsonElement
     ' 
-    '         Function: ToString
+    '         Function: [As], ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace Parser
 
@@ -76,6 +78,11 @@ Namespace Parser
 
         Public Overrides Function ToString() As String
             Return "base::json"
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function [As](Of T As JsonElement)() As T
+            Return DirectCast(Me, T)
         End Function
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3abda6087c8bc9017ddc7dc5c463e71, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4839b20ed2ec527efe1fcd22bfe599aa, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -489,6 +489,7 @@ Public Module Extensions
     <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
                                                              index As TKey,
                                                              Optional [default] As TValue = Nothing,
+                                                             Optional mute As Boolean = False,
                                                              <CallerMemberName> Optional trace$ = Nothing) As TValue
         ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
         ' 直接返回默认值
@@ -504,7 +505,9 @@ Public Module Extensions
             Return [default]
         ElseIf Not table.ContainsKey(index) Then
 #If DEBUG Then
-            Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
+            If Not mute Then
+                Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
+            End If
 #End If
             Return [default]
         End If
@@ -532,14 +535,35 @@ Public Module Extensions
         Return DirectCast(value, TProp)
     End Function
 
-    <Extension> Public Function AddRange(Of TKey, TValue)(ByRef table As Dictionary(Of TKey, TValue), data As IEnumerable(Of KeyValuePair(Of TKey, TValue))) As Dictionary(Of TKey, TValue)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="data"></param>
+    ''' <param name="replaceDuplicated">
+    ''' 这个函数参数决定了在遇到重复的键名称的时候的处理方法：
+    ''' 
+    ''' + 如果为真，则默认会用新的值来替换旧的值
+    ''' + 如果为False，则遇到重复的键名的时候会报错
+    ''' </param>
+    ''' <returns></returns>
+    <Extension> Public Function AddRange(Of TKey, TValue)(ByRef table As Dictionary(Of TKey, TValue),
+                                                          data As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
+                                                          Optional replaceDuplicated As Boolean = False) As Dictionary(Of TKey, TValue)
         If data Is Nothing Then
             Return table
+        ElseIf replaceDuplicated Then
+            For Each obj In data
+                table(obj.Key) = obj.Value
+            Next
+        Else
+            For Each obj In data
+                table.Add(obj.Key, obj.Value)
+            Next
         End If
 
-        For Each obj In data
-            Call table.Add(obj.Key, obj.Value)
-        Next
         Return table
     End Function
 

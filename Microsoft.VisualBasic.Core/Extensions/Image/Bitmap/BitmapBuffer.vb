@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::408b29b733af7e34d44ceed8b1aebeb9, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::a602a04f75dbd94efea24a00eb104c59, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\BitmapBuffer.vb"
 
     ' Author:
     ' 
@@ -63,8 +63,8 @@ Namespace Imaging.BitmapImage
         Implements IDisposable
         Implements IEnumerable(Of Color)
 
-        ReadOnly __source As Bitmap
-        ReadOnly __handle As BitmapData
+        ReadOnly raw As Bitmap
+        ReadOnly handle As BitmapData
 
         Protected Sub New(ptr As IntPtr,
                           byts%,
@@ -73,8 +73,8 @@ Namespace Imaging.BitmapImage
 
             Call MyBase.New(ptr, byts)
 
-            __source = raw
-            __handle = handle
+            Me.raw = raw
+            Me.handle = handle
 
             Stride = handle.Stride
             Width = raw.Width
@@ -94,7 +94,7 @@ Namespace Imaging.BitmapImage
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetImage() As Bitmap
-            Return DirectCast(__source.Clone, Bitmap)
+            Return DirectCast(raw.Clone, Bitmap)
         End Function
 
         ' pixel:  (1,1)(2,1)(3,1)(4,1)(1,2)(2,2)(3,2)(4,2)
@@ -198,7 +198,7 @@ Namespace Imaging.BitmapImage
 
         Protected Overrides Sub Dispose(disposing As Boolean)
             Call Write()
-            Call __source.UnlockBits(__handle)
+            Call raw.UnlockBits(handle)
         End Sub
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Color) Implements IEnumerable(Of Color).GetEnumerator

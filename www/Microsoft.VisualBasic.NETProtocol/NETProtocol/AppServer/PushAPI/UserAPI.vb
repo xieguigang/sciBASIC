@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29469f14531bdd11ba44ef8f5a23d933, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\UserAPI.vb"
+﻿#Region "Microsoft.VisualBasic::b60b9457f404f63257927612bcde0afc, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\UserAPI.vb"
 
     ' Author:
     ' 
@@ -96,11 +96,14 @@ Namespace NETProtocol.PushAPI
                 Call HashUser.Add(uid, sId)
             End If
 
-            Dim post As New Protocols.InitPOSTBack With {
-                .uid = uid,
-                .Portal = New IPEndPoint("", Me.PushServer.UserSocket.LocalPort) ' 在客户端已处理
-            }
-            Return RequestStream.CreatePackage(post)
+            'Dim post As New Protocols.InitPOSTBack With {
+            '    .uid = uid,
+            '    .Portal = New IPEndPoint("", Me.PushServer.UserSocket.LocalPort) ' 在客户端已处理
+            '}
+
+            'Return RequestStream.CreatePackage(post)
+
+            Throw New NotImplementedException
         End Function
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d1872326657db884e1c66c855690da3, Data_science\Mathematica\Math\ODE\ODESolvers\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::c472f092501c127a5eaf4e4bf164c41c, Data_science\Mathematica\Math\ODE\ODESolvers\Solver.vb"
 
     ' Author:
     ' 
@@ -129,7 +129,9 @@ Public Module ODESolver
     ''' 参考http://blog.sina.com.cn/s/blog_698c6a6f0100lp4x.html 和维基百科
     ''' </summary>
     ''' <param name="df"></param>
-    ''' <param name="n"></param>
+    ''' <param name="n">
+    ''' 分辨率，越大越好，分辨率过低会出现误差过大的问题，分辨率越高，所需要的计算时间也越长
+    ''' </param>
     ''' <param name="a"></param>
     ''' <param name="b"></param>
     ''' 

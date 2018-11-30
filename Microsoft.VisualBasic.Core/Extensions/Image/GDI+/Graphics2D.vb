@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd87a63807710308f952584516d440aa, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Graphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::2859828fb18f77637487d9fdec0ee388, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Graphics2D.vb"
 
     ' Author:
     ' 
@@ -72,10 +72,11 @@ Namespace Imaging
         ''' <remarks></remarks>
         Public Property ImageResource As Image
             Get
-                Return __innerImage
+                Return innerImage
             End Get
             Protected Friend Set(value As Image)
-                __innerImage = value
+                innerImage = value
+
                 If Not value Is Nothing Then
                     _Size = value.Size
                     _Center = New Point(Size.Width / 2, Size.Height / 2)
@@ -86,7 +87,7 @@ Namespace Imaging
             End Set
         End Property
 
-        Dim __innerImage As Image
+        Dim innerImage As Image
 
         Protected Sub New()
         End Sub

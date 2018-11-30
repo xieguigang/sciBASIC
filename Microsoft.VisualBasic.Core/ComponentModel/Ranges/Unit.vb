@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e44dd0a1a4494c296b0afc8b1bb11b0, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
+﻿#Region "Microsoft.VisualBasic::b5a894d43b06e70fd5b9d602bddc7221, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '     Module UnitConvertorExtensions
     ' 
-    '         Function: Base, GetUnitConvertor, IndexOf, TagUnit
+    '         Function: Base, GetUnitConvertor, IndexOf, Unit
     ' 
     '     Enum ByteSize
     ' 
@@ -51,8 +51,8 @@
     ' 
     '         Properties: Unit
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Scale, ToString
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ScaleTo, ToString
     '         Operators: <>, =
     ' 
     ' 
@@ -113,9 +113,10 @@ Namespace ComponentModel.Ranges
             Return -1
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function TagUnit(Of T As Structure)(value#, unit As T) As UnitValue(Of T)
-            Return New UnitValue(Of T)(value, unit)
+        Public Function Unit(Of T As Structure)(value#, unitVal As T) As UnitValue(Of T)
+            Return New UnitValue(Of T)(value, unitVal)
         End Function
     End Module
 
@@ -173,12 +174,15 @@ Namespace ComponentModel.Ranges
             Me.Unit = unit
         End Sub
 
+        Sub New()
+        End Sub
+
         ''' <summary>
         ''' Unit convert
         ''' </summary>
         ''' <param name="convert"></param>
         ''' <returns></returns>
-        Public Function Scale(convert As TUnit) As UnitValue(Of TUnit)
+        Public Function ScaleTo(convert As TUnit) As UnitValue(Of TUnit)
             Return Me = convert
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::246adce5b79084346341df224737d798, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::a641998267443b3ac9441d9bc4346209, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -1325,7 +1325,8 @@ Public Module App
     ''' <remarks><see cref="IORedirectFile"/>这个建议在进行外部调用的时候才使用</remarks>
     Public Function Shell(app$, CLI$,
                           Optional CLR As Boolean = False,
-                          Optional stdin$ = Nothing) As IIORedirectAbstract
+                          Optional stdin$ = Nothing,
+                          Optional ioRedirect As Boolean = False) As IIORedirectAbstract
 
         If Not IsMicrosoftPlatform Then
             If CLR Then
@@ -1340,7 +1341,8 @@ Public Module App
             End If
         Else
             If CLR Then
-                Return New IORedirect(app, CLI) ' 由于是重新调用自己，所以这个重定向是没有多大问题的
+                ' 由于是重新调用自己，所以这个重定向是没有多大问题的
+                Return New IORedirect(app, CLI, IOredirect:=ioRedirect)
             Else
                 Dim process As New IORedirectFile(app, CLI, stdin:=stdin)
                 Return process

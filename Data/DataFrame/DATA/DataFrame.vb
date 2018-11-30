@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77923cd929d30ffc6f028ef11c30e0a1, Data\DataFrame\DATA\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::f25e76b2a76f3c1d7388eb909a635d4b, Data\DataFrame\DATA\DataFrame.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -106,8 +107,8 @@ Namespace DATA
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Load(path$, Optional encoding As Encodings = Encodings.Default) As DataFrame
-            Return New DataFrame(EntityObject.LoadDataSet(path))
+        Public Shared Function Load(path$, Optional encoding As Encodings = Encodings.Default, Optional uidMap$ = Nothing) As DataFrame
+            Return New DataFrame(EntityObject.LoadDataSet(path, uidMap:=uidMap))
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of EntityObject) Implements IEnumerable(Of EntityObject).GetEnumerator
@@ -142,13 +143,29 @@ Namespace DATA
             Return data
         End Operator
 
-        Public Shared Function Append(multiple As IEnumerable(Of EntityObject), unique As DataFrame) As IEnumerable(Of EntityObject)
+        ''' <summary>
+        ''' 这是一个可伸缩的Linq方法
+        ''' </summary>
+        ''' <param name="multiple"></param>
+        ''' <param name="unique"></param>
+        ''' <returns></returns>
+        Public Shared Function Append(multiple As IEnumerable(Of EntityObject),
+                                      unique As DataFrame,
+                                      Optional allowNothing As Boolean = False) As IEnumerable(Of EntityObject)
             Return multiple _
                 .Select(Function(query)
-                            If Not unique.entityList.ContainsKey(query.ID) Then
+                            Dim id As String
+
+                            If allowNothing Then
+                                id = query.ID Or EmptyString
+                            Else
+                                id = query.ID
+                            End If
+
+                            If Not unique.entityList.ContainsKey(id) Then
                                 Return query
                             Else
-                                With unique.entityList(query.ID)
+                                With unique.entityList(id)
                                     For Each [property] In .Properties
                                         query.Properties([property].Key) = [property].Value
                                     Next

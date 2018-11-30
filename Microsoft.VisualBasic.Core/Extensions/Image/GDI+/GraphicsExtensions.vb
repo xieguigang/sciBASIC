@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d050a3a11779bfc4ee56b3e6646ca52f, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::1091230fe4e542469633b34c379e0391, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Module GraphicsExtensions
     ' 
-    '         Function: BackgroundGraphics, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D, (+2 Overloads) CreateGDIDevice
-    '                   CreateGrayBitmap, EntireImage, GDIPlusDeviceHandleFromImageFile, GetBrush, GetBrushes
+    '         Function: BackgroundGraphics, CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D
+    '                   (+2 Overloads) CreateGDIDevice, CreateGrayBitmap, EntireImage, GetBrush, GetBrushes
     '                   (+2 Overloads) GetIcon, GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame
     '                   IsValidGDIParameter, (+2 Overloads) LoadImage, OpenDevice, (+2 Overloads) PointF, SaveIcon
     '                   SizeF, ToFloat, ToPoint, ToPoints, ToStream
@@ -433,7 +433,7 @@ Namespace Imaging
         ''' <returns></returns>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function GDIPlusDeviceHandleFromImageFile(path As String) As Graphics2D
+        <Extension> Public Function CanvasCreateFromImageFile(path As String) As Graphics2D
             Dim image As Image = LoadImage(path)
             Dim g As Graphics = Graphics.FromImage(image)
 
@@ -495,7 +495,11 @@ Namespace Imaging
         ''' <remarks></remarks>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function CreateGDIDevice(r As Size, Optional filled As Color = Nothing, <CallerMemberName> Optional trace$ = "", Optional dpi$ = "100,100") As Graphics2D
+        <Extension> Public Function CreateGDIDevice(r As Size,
+                                                    Optional filled As Color = Nothing,
+                                                    <CallerMemberName>
+                                                    Optional trace$ = "",
+                                                    Optional dpi$ = "100,100") As Graphics2D
             Dim bitmap As Bitmap
 
             If r.Width = 0 OrElse r.Height = 0 Then

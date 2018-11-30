@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9fc8eb74c8424aeff84b280dd826da0, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\GraphicsText.vb"
+﻿#Region "Microsoft.VisualBasic::71f0c7da75da7357f9320bfae023350a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\GraphicsText.vb"
 
     ' Author:
     ' 
@@ -55,10 +55,10 @@ Namespace Drawing2D.Text
     ''' <remarks>http://www.xuebuyuan.com/1613072.html</remarks>
     Public Class GraphicsText
 
-        Dim _graphics As Graphics
+        Dim g As Graphics
 
         Public Sub New(g As Graphics)
-            _graphics = g
+            Me.g = g
         End Sub
 
         ''' <summary>
@@ -71,13 +71,17 @@ Namespace Drawing2D.Text
         ''' <param name="format">布局方式</param>
         ''' <param name="angle">角度</param>
         Public Sub DrawString(s$, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat, angle!)
-            Dim size As SizeF = _graphics.MeasureString(s, font) ' 求取字符串大小                     
-            Dim sizeRotate As SizeF = ConvertSize(size, angle)   ' 根据旋转角度，求取旋转后字符串大小          
-            Dim rotatePt As PointF = GetRotatePoint(sizeRotate, layoutRectangle, format)   ' 根据旋转后尺寸、布局矩形、布局方式计算文本旋转点          
+            ' 求取字符串大小        
+            Dim size As SizeF = g.MeasureString(s, font)
+            ' 根据旋转角度，求取旋转后字符串大小       
+            Dim sizeRotate As SizeF = ConvertSize(size, angle)
+            ' 根据旋转后尺寸、布局矩形、布局方式计算文本旋转点          
+            Dim rotatePt As PointF = GetRotatePoint(sizeRotate, layoutRectangle, format)
+            ' 重设布局方式都为Center
             Dim newFormat As New StringFormat(format) With {
                 .Alignment = StringAlignment.Center,
                 .LineAlignment = StringAlignment.Center
-            }  ' 重设布局方式都为Center
+            }
 
             ' 绘制旋转后文本
             Call DrawString(s, font, brush, rotatePt, angle, newFormat)
@@ -97,21 +101,23 @@ Namespace Drawing2D.Text
                 format = New StringFormat
             End If
 
-            SyncLock _graphics
+            SyncLock g
                 Call DrawStringInternal(s, font, brush, point, format, angle)
             End SyncLock
         End Sub
 
         Private Sub DrawStringInternal(s$, font As Font, brush As Brush, point As PointF, format As StringFormat, angle!)
-            Dim mtxSave As Matrix = _graphics.Transform  ' Save the matrix
-            Dim mtxRotate As Matrix = _graphics.Transform
+            ' Save the matrix
+            Dim mtxSave As Matrix = g.Transform
+            Dim mtxRotate As Matrix = g.Transform
 
             Call mtxRotate.RotateAt(angle, point)
 
-            With _graphics
+            With g
                 .Transform = mtxRotate
                 .DrawString(s, font, brush, point, format)
-                .Transform = mtxSave   ' Reset the matrix
+                ' Reset the matrix
+                .Transform = mtxSave
             End With
         End Sub
 
@@ -122,6 +128,7 @@ Namespace Drawing2D.Text
 
             ' 旋转矩形四个顶点
             Dim pts As PointF() = New PointF(3) {}
+
             pts(0).X = -size.Width / 2.0F
             pts(0).Y = -size.Height / 2.0F
             pts(1).X = -size.Width / 2.0F
@@ -130,7 +137,8 @@ Namespace Drawing2D.Text
             pts(2).Y = size.Height / 2.0F
             pts(3).X = size.Width / 2.0F
             pts(3).Y = -size.Height / 2.0F
-            matrix.TransformPoints(pts)
+
+            Call matrix.TransformPoints(pts)
 
             ' 求取四个顶点的包围盒
             Dim left As Single = Single.MaxValue

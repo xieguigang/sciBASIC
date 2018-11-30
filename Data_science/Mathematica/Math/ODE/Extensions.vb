@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9eaa42ac779331aea50ae75414faf9b7, Data_science\Mathematica\Math\ODE\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::daadb75d3ebfdafd8d130606a00f4a38, Data_science\Mathematica\Math\ODE\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: Let, Pcc, Solve, SPcc
+    '     Function: correlationImpl, Let, Pcc, Solve, SPcc
     ' 
     ' /********************************************************************************/
 
@@ -44,7 +44,6 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -55,8 +54,14 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="df"></param>
     ''' <returns></returns>
-    <Extension> Public Function Pcc(df As ODEsOut) As DataSet()
-        Dim out As New List(Of DataSet)
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function Pcc(df As ODEsOut) As IEnumerable(Of DataSet)
+        Return df.correlationImpl(AddressOf Correlations.GetPearson)
+    End Function
+
+    <Extension>
+    Private Iterator Function correlationImpl(df As ODEsOut, correlation As Correlations.ICorrelation) As IEnumerable(Of DataSet)
         Dim vars$() = df.y.Keys.ToArray
 
         For Each var As NamedCollection(Of Double) In df
@@ -66,15 +71,11 @@ Public Module Extensions
             }
 
             For Each name$ In vars
-                Dim __pcc# = Correlations _
-                    .GetPearson(var.Value, df.y(name).Value)
-                x.Properties(name$) = __pcc
+                x.Properties(name$) = correlation(var.Value, df.y(name).Value)
             Next
 
-            out += x
+            Yield x
         Next
-
-        Return out
     End Function
 
     ''' <summary>
@@ -82,26 +83,10 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="df"></param>
     ''' <returns></returns>
-    <Extension> Public Function SPcc(df As ODEsOut) As DataSet()
-        Dim out As New List(Of DataSet)
-        Dim vars$() = df.y.Keys.ToArray
-
-        For Each var As NamedCollection(Of Double) In df
-            Dim x As New DataSet With {
-                .ID = var.Name,
-                .Properties = New Dictionary(Of String, Double)
-            }
-
-            For Each name$ In vars
-                Dim __spcc# = Correlations _
-                    .Spearman(var.Value, df.y(name).Value)
-                x.Properties(name$) = __spcc
-            Next
-
-            out += x
-        Next
-
-        Return out
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function SPcc(df As ODEsOut) As IEnumerable(Of DataSet)
+        Return df.correlationImpl(AddressOf Correlations.Spearman)
     End Function
 
     ''' <summary>

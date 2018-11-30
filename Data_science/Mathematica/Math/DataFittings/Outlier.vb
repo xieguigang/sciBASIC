@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e00a4afb3ea35adfcb1d95be2962187, Data_science\Mathematica\Math\DataFittings\Outlier.vb"
+﻿#Region "Microsoft.VisualBasic::7750c4d7d9c91c65254cf0017cf26532, Data_science\Mathematica\Math\DataFittings\Outlier.vb"
 
     ' Author:
     ' 
@@ -67,6 +67,13 @@ Public Module Outlier
         Next
     End Function
 
+    ''' <summary>
+    ''' 尝试自动删除标准曲线之中的异常点
+    ''' </summary>
+    ''' <param name="index"></param>
+    ''' <param name="x"></param>
+    ''' <param name="y"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function RemovesOutlier(index As IEnumerable(Of Integer), x As Vector, y As Vector) As (X As Vector, Y As Vector)
         With index.OrderBy(Self(Of Integer)).ToArray

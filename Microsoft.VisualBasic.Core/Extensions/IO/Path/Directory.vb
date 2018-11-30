@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c023cda9fde8ba0a2aec73a2031ada88, Microsoft.VisualBasic.Core\Extensions\IO\Path\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::bd8e9fe7167d5ba0c8fb9128f807d2f8, Microsoft.VisualBasic.Core\Extensions\IO\Path\Directory.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,8 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: CopyTo, Exists, GetFullPath, IsAbsolutePath, ToString
+    '         Function: CopyTo, Exists, GetFullPath, GetRelativePath, IsAbsolutePath
+    '                   ToString
     ' 
     '         Sub: CreateDirectory, Delete
     ' 

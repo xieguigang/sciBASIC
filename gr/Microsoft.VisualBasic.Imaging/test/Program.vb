@@ -76,7 +76,13 @@ Module Program
 
         Call Console.WriteLine(logo)
 
-        Call logo.SaveTo("x:\sciBASIC.txt")
+        Call logo.SaveTo("D:\sciBASIC.txt")
+
+        Dim charset = "php.NETPHP".GenerateFontWeights
+        logo = "php.NET".ASCIIImage("font-style: italic; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";", charset)
+
+        Call Console.WriteLine()
+        Call Console.WriteLine(logo)
 
         Pause()
 

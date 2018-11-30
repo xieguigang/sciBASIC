@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f42ac14f0a01f236e945e0d8e2fb1c9, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
+﻿#Region "Microsoft.VisualBasic::c0d68d9648108e57832a0f0b8898f177, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\IO.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@ Public Module IO
     Public Function CreateReader(xlsx$) As File
         Dim ROOT$ = App.GetAppSysTempFile("-" & RandomASCIIString(6, skipSymbols:=True), App.PID)
 
-        Call GZip.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
+        Call ZipLib.ImprovedExtractToDirectory(xlsx, ROOT, Overwrite.Always)
 
         Dim contentType As ContentTypes = (ROOT & "/[Content_Types].xml").LoadXml(Of ContentTypes)
         Dim rels As New _rels(ROOT)
@@ -110,7 +110,7 @@ Public Module IO
         End If
 
         ' 重新进行zip打包
-        Call GZip.DirectoryArchive(xlsx.ROOT, path, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
+        Call ZipLib.DirectoryArchive(xlsx.ROOT, path, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
 
         Return True
     End Function

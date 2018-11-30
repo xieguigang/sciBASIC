@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd6aedcd31ecc1c6e54f642a387e4f3c, Microsoft.VisualBasic.Core\Text\Xml\Models\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::0aeddb6512f8b21f214812e00ed8e9f1, Microsoft.VisualBasic.Core\Text\Xml\Models\Vector.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class NumericVector
     ' 
-    '         Properties: Length, Vector
+    '         Properties: Length, name, vector
     ' 
     '         Function: ToString
     ' 
@@ -59,7 +59,8 @@ Namespace Text.Xml.Models
     ''' </summary>
     Public Class NumericVector
 
-        <XmlAttribute> Public Property Vector As Double()
+        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property vector As Double()
 
         ''' <summary>
         ''' Get/Set Element ``Xi``
@@ -69,10 +70,10 @@ Namespace Text.Xml.Models
         Default Public Property Xi(i As Integer) As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Vector(i)
+                Return vector(i)
             End Get
             Set(value As Double)
-                Vector(i) = value
+                vector(i) = value
             End Set
         End Property
 
@@ -83,12 +84,16 @@ Namespace Text.Xml.Models
         Public ReadOnly Property Length As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return CInt(Vector?.Length)
+                Return CInt(vector?.Length)
             End Get
         End Property
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            If name.StringEmpty Then
+                Return vector.GetJson
+            Else
+                Return $"Dim {name} As Vector = {vector.GetJson}"
+            End If
         End Function
     End Class
 

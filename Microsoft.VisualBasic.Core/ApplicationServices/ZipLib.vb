@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2155037614418c1d001a820e64c094c, Microsoft.VisualBasic.Core\ApplicationServices\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::a1219dfb1fe27895d21349f462a9e2c5, Microsoft.VisualBasic.Core\ApplicationServices\ZipLib.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Module GZip
+    '     Module ZipLib
     ' 
     ' 
     '         Enum Overwrite
@@ -84,7 +84,7 @@ Namespace ApplicationServices
     <Package("IO.ZIP", Description:="Creating Zip Files Easily in .NET 4.6",
          Publisher:="Tim Corey",
          Url:="http://www.codeproject.com/Articles/381661/Creating-Zip-Files-Easily-in-NET")>
-    Public Module GZip
+    Public Module ZipLib
 
         ''' <summary>
         ''' Used to specify what our overwrite policy

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c462ea2cf92c2167bf076256969acfe, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::5b6f4bd1fb367932cc365a51c38f15fc, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -54,6 +54,12 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 Public Module PrimitiveParser
 
+    ''' <summary>
+    ''' Evaluate the given string expression as numeric value 
+    ''' </summary>
+    ''' <param name="expression$"></param>
+    ''' <param name="default#"></param>
+    ''' <returns></returns>
     Public Function Eval(expression$, default#) As Double
         If expression Is Nothing Then
             Return [default]

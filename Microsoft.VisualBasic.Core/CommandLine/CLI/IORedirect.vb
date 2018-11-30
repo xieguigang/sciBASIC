@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::15dd775e1e275acdea0d511b382e35eb, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
+﻿#Region "Microsoft.VisualBasic::23a1759f7dfc8b81d8ce474a05cbcce8, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class IORedirect
-' 
-'         Properties: Bin, CLIArguments, ExitCode, HasExited, PID
-'                     StandardOutput
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Delegate Function
-' 
-' 
-'         Delegate Sub
-' 
-'             Function: GetError, Read, ReadLine, Run, Shell
-'                       (+3 Overloads) Start, ToString, WaitError, waitForExit, WaitForExit
-'                       WaitOutput
-' 
-'             Sub: (+2 Overloads) Dispose, errorHandler, Kill, outputHandler, Write
-'                  (+2 Overloads) WriteLine
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Class IORedirect
+    ' 
+    '         Properties: Bin, CLIArguments, ExitCode, HasExited, PID
+    '                     StandardOutput
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Delegate Function
+    ' 
+    ' 
+    '         Delegate Sub
+    ' 
+    '             Function: GetError, Read, ReadLine, Run, Shell
+    '                       (+3 Overloads) Start, ToString, WaitError, waitForExit, WaitForExit
+    '                       WaitOutput
+    ' 
+    '             Sub: (+2 Overloads) Dispose, errorHandler, Kill, outputHandler, Write
+    '                  (+2 Overloads) WriteLine
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -275,8 +275,9 @@ Namespace CommandLine
 
             If displaDebug Then
                 Dim Exe As String = FileIO.FileSystem.GetFileInfo(processInfo.StartInfo.FileName).FullName.Replace("\", "/")
-                Dim argvs As String = If(String.IsNullOrEmpty(processInfo.StartInfo.Arguments), "", " " & processInfo.StartInfo.Arguments)
-                Call Console.WriteLine("      ---> system(""file:''{0}""{1})", Exe, argvs)
+                Dim argvs As String = (" " & processInfo.StartInfo.Arguments).Trim
+
+                Call Console.WriteLine("      ---> system(""file:""{0}""{1})", Exe, argvs)
             End If
 
             Try
@@ -308,6 +309,8 @@ Namespace CommandLine
             End If
 
             If waitForExit Then
+                ' 请注意这个函数名称是和当前的这个函数参数是一样的
+                ' 会需要me来区别引用
                 Return Me.waitForExit
             Else
                 Call RunTask(AddressOf Me.waitForExit)

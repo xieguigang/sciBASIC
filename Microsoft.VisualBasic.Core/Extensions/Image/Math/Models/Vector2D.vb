@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83b1a0ac8afc529b5d6833f451b8632c, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Vector2D.vb"
+﻿#Region "Microsoft.VisualBasic::69ceea95906ed80e045120aa58ab0bf6, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Vector2D.vb"
 
     ' Author:
     ' 
@@ -53,7 +53,7 @@ Namespace Imaging.Math2D
         Public x As Double
         Public y As Double
 
-        Public ReadOnly Property Length() As Double
+        Public ReadOnly Property Length As Double
             Get
                 Return Math.Sqrt(x ^ 2 + y ^ 2)
             End Get
@@ -63,14 +63,14 @@ Namespace Imaging.Math2D
             Me.New(0.0, 0.0)
         End Sub
 
-        Public Sub New(paramDouble1 As Double, paramDouble2 As Double)
-            Me.x = paramDouble1
-            Me.y = paramDouble2
+        Public Sub New(x As Double, y As Double)
+            Me.x = x
+            Me.y = y
         End Sub
 
-        Public Sub New(paramInt1 As Integer, paramInt2 As Integer)
-            Me.x = paramInt1
-            Me.y = paramInt2
+        Public Sub New(x As Integer, y As Integer)
+            Me.x = x
+            Me.y = y
         End Sub
 
         ''' <summary>

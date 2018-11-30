@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2b0996a399f97bb5d328026d4485e13, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::26763c32f19a9a24a68412f4189007d4, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
     ' Author:
     ' 
@@ -52,6 +52,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sys = System.Math
 
@@ -210,6 +211,12 @@ Namespace Drawing3D
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(pt As Point) As Point3D
             Return New Point3D(pt)
+        End Operator
+
+        Public Shared Widening Operator CType(expr As String) As Point3D
+            With CType(expr, Vector)
+                Return New Point3D(.Item(0), .Item(1), .ElementAtOrDefault(2))
+            End With
         End Operator
     End Structure
 End Namespace

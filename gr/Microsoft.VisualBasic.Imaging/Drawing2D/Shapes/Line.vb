@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b44a91f57b7d0bc66ac10d412cb65ef0, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
+﻿#Region "Microsoft.VisualBasic::5af9f6299c35cd27556143bcdeb2f30d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '                     Size, Stroke
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: Draw, ParallelShift, QuadraticBelzier, ToString
+    '         Function: Draw, GetIntersectLocation, ParallelShift, QuadraticBelzier, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -47,6 +47,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math
 
@@ -54,31 +55,17 @@ Namespace Drawing2D.Shapes
 
     Public Class Line : Inherits Shape
 
-        ''' <summary>
-        ''' 线段的起点和终点
-        ''' </summary>
-        Dim pt1 As PointF, pt2 As PointF
-
         Public Property Stroke As Pen
 
         Public ReadOnly Property A As PointF
-            Get
-                Return pt1
-            End Get
-        End Property
-
         Public ReadOnly Property B As PointF
-            Get
-                Return pt2
-            End Get
-        End Property
 
         Public Overrides ReadOnly Property Size As Size
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Size With {
-                    .Width = pt2.X - pt1.X,
-                    .Height = pt2.Y - pt1.Y
+                    .Width = A.X - B.X,
+                    .Height = A.Y - B.Y
                 }
             End Get
         End Property
@@ -90,7 +77,7 @@ Namespace Drawing2D.Shapes
         Public ReadOnly Property Length As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Math.Sqrt((pt1.X - pt2.X) ^ 2 + (pt1.Y - pt2.Y) ^ 2)
+                Return Math.Sqrt((A.X - B.X) ^ 2 + (A.Y - B.Y) ^ 2)
             End Get
         End Property
 
@@ -100,8 +87,8 @@ Namespace Drawing2D.Shapes
         ''' <returns></returns>
         Public ReadOnly Property Alpha As Double
             Get
-                Dim dx! = pt2.X - pt1.X
-                Dim dy! = pt2.Y - pt1.Y
+                Dim dx! = B.X - Me.A.X
+                Dim dy! = B.Y - Me.A.Y
                 Dim cos = dx / Math.Sqrt(dx ^ 2 + dy ^ 2)
                 Dim a = Arccos(cos)
 
@@ -120,8 +107,8 @@ Namespace Drawing2D.Shapes
 
         Public ReadOnly Property Center As PointF
             Get
-                Dim x! = (pt1.X + pt2.X) / 2
-                Dim y! = (pt1.Y + pt2.Y) / 2
+                Dim x! = (A.X + B.X) / 2
+                Dim y! = (A.Y + B.Y) / 2
                 Return New PointF(x, y)
             End Get
         End Property
@@ -134,20 +121,18 @@ Namespace Drawing2D.Shapes
         ''' <param name="c"></param>
         ''' <param name="width"></param>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(a As PointF, b As PointF, c As Color, width%)
-            Call MyBase.New(a.ToPoint)
-
-            Me.pt1 = a
-            Me.pt2 = b
-            Me.Stroke = New Pen(New SolidBrush(c), width)
+            Call Me.New(a, b, pen:=New Pen(New SolidBrush(c), width))
         End Sub
 
         Sub New(a As PointF, b As PointF, pen As Pen)
             Call MyBase.New(a.ToPoint)
 
-            pt1 = a
-            pt2 = b
-            Stroke = pen
+            Me.A = a
+            Me.B = b
+            Me.Stroke = pen
         End Sub
 
         Sub New(x1#, y1#, x2#, y2#)
@@ -158,13 +143,18 @@ Namespace Drawing2D.Shapes
             Call Me.New(a, b, Color.Black, 1)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetIntersectLocation(rect As Rectangle2D) As Point2D
+            Return rect.intersectLine(A.X, A.Y, B.X, B.Y)
+        End Function
+
         Public Overrides Function ToString() As String
-            Return $"[{pt1.X}, {pt1.Y}] --> [{pt2.X}, {pt2.Y}] alpha:{Alpha.ToDegrees} degree"
+            Return $"[{A.X}, {A.Y}] --> [{B.X}, {B.Y}] alpha:{Alpha.ToDegrees} degree"
         End Function
 
         Public Overrides Function Draw(ByRef g As IGraphics, Optional overridesLoci As Point = Nothing) As RectangleF
             Dim rect As RectangleF = MyBase.Draw(g, overridesLoci)
-            Call g.DrawLine(Stroke, pt1, pt2)
+            Call g.DrawLine(Stroke, A, B)
             Return rect
         End Function
 
@@ -181,8 +171,8 @@ Namespace Drawing2D.Shapes
                 Dim offset As New Point(dx, -dy)
 
                 Return New Line(
-                    pt1.OffSet2D(offset),
-                    pt2.OffSet2D(offset),
+                    A.OffSet2D(offset),
+                    B.OffSet2D(offset),
                     color, .Width
                 )
             End With

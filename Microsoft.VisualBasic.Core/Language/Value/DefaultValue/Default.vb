@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cd96dcb989696418443be90f7ba9905, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::d46bd0117a924034935616586fd3bdf9, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
     ' Author:
     ' 
@@ -50,7 +50,7 @@
     '         Properties: DefaultValue, IsEmpty
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: (+2 Overloads) [When], getDefault, ToString
+    '         Function: (+2 Overloads) [When], getDefault, GetNumericAssert, ToString
     '         Operators: (+2 Overloads) +, (+6 Overloads) Or
     ' 
     ' 
@@ -129,6 +129,34 @@ Namespace Language.Default
         ''' asset that if target value is null?
         ''' </summary>
         Dim assert As Assert(Of Object)
+
+        ''' <summary>
+        ''' 这个判断函数优化了对数字类型的判断
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 在VB之中，数值类型在未赋值的状态下默认值为零，意味着此时该数值的值为空
+        ''' 但是不清楚这样子判断是否会出现bug？
+        ''' </remarks>
+        Public Shared Function GetNumericAssert(n As Object) As Boolean
+            If n Is Nothing Then
+                ' 可空类型的数值类型
+                Return True
+            End If
+
+            Select Case n.GetType
+                Case GetType(Integer), GetType(Long), GetType(ULong), GetType(UInteger), GetType(Short), GetType(UShort)
+                    Return CInt(n) = 0 OrElse CDbl(n).IsNaNImaginary
+                Case GetType(Double), GetType(Single), GetType(Decimal)
+                    Return CDbl(n) = 0.0 OrElse CDbl(n).IsNaNImaginary
+                Case Else
+#If DEBUG Then
+                    Call n.GetType.FullName.Warning
+#End If
+                    Return ExceptionHandle.Default(obj:=n)
+            End Select
+        End Function
 
         Sub New(value As T, Optional assert As Assert(Of Object) = Nothing)
             Me.Value = value

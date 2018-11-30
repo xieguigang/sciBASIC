@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3054ede40eca59d445bac49240cc5366, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::62f3cb3f47ab7f039f7f466914719d0a, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,9 @@
     '     Module Extensions
     ' 
     '         Function: CopyVector, DATA, DefaultFirst, FirstOrDefault, IteratesALL
-    '                   (+2 Overloads) JoinIterates, MaxInd, Populate, (+2 Overloads) Read, RemoveLeft
-    '                   (+2 Overloads) Removes, Repeats, SafeQuery, (+2 Overloads) SeqIterator, (+4 Overloads) Sequence
-    '                   (+4 Overloads) ToArray, ToVector, TryCatch
+    '                   (+2 Overloads) JoinIterates, LastOrDefault, MaxInd, Populate, (+2 Overloads) Read
+    '                   RemoveLeft, (+2 Overloads) Removes, Repeats, SafeQuery, (+2 Overloads) SeqIterator
+    '                   (+4 Overloads) Sequence, (+4 Overloads) ToArray, ToVector, TryCatch
     ' 
     ' 
     ' /********************************************************************************/
@@ -426,6 +426,17 @@ Namespace Linq
         ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
         <Extension> Public Function FirstOrDefault(Of TSource)(source As IEnumerable(Of TSource), [default] As TSource) As TSource
             Dim value As TSource = source.FirstOrDefault
+
+            If value Is Nothing Then
+                Return [default]
+            Else
+                Return value
+            End If
+        End Function
+
+        <Extension>
+        Public Function LastOrDefault(Of T)(source As IEnumerable(Of T), [default] As T) As T
+            Dim value As T = source.LastOrDefault
 
             If value Is Nothing Then
                 Return [default]

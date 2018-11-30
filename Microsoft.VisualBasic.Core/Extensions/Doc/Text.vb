@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3593770a321296858d9d676dc1618aaa, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::16c09e6ed8764347ede7cc93905e0cc5, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,9 @@
     ' Module TextDoc
     ' 
     '     Function: ForEachChar, IsTextFile, IterateAllLines, LineIterators, LoadTextDoc
-    '               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, SaveJson
-    '               (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream, TsvHeaders
+    '               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, SaveHTML
+    '               SaveJson, (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream
+    '               TsvHeaders
     ' 
     ' /********************************************************************************/
 
