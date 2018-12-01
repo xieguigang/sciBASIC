@@ -226,12 +226,12 @@ Namespace IO.Linq
         ''' 这个是配合<see cref="DataStream.ForEachBlock(Of T)(Action(Of T()), Integer)"/>方法使用的
         ''' </summary>
         ''' <typeparam name="Tsrc"></typeparam>
-        ''' <param name="_ctype"></param>
+        ''' <param name="[ctype]"></param>
         ''' <returns></returns>
-        Public Function ToArray(Of Tsrc)(_ctype As Func(Of Tsrc, T())) As Action(Of Tsrc)
+        Public Function ToArray(Of Tsrc)([ctype] As Func(Of Tsrc, T())) As Action(Of Tsrc)
             Return AddressOf New __ctypeTransform(Of Tsrc) With {
                 .__IO = Me,
-                .__ctypeArray = _ctype
+                .__ctypeArray = [ctype]
             }.WriteArray
         End Function
 

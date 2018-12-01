@@ -109,8 +109,21 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     Public Function rbind(args As CommandLine) As Integer
         Dim [in] As String = args("/in")
         Dim out$ = args("/out") Or ([in].TrimSuffix & ".rbind.csv")
+        Dim source$()
 
-        Return (ls - l - r - "*.csv" <= [in]) _
+        If InStr([in], "*") > 0 Then
+            Dim t$() = [in].Split("*"c)
+            Dim dir$ = t(Scan0)
+            Dim file$ = t(1)
+
+            source = dir.ListDirectory() _
+                .Select(Function(folder) $"{folder}/{file}") _
+                .ToArray
+        Else
+            source = (ls - l - r - "*.csv" <= [in]).ToArray
+        End If
+
+        Return source _
             .DirectAppends(EXPORT:=out) _
             .CLICode
     End Function
@@ -138,7 +151,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     <Usage("/push /write <*.xlsx> /table <*.csv> [/sheetName <name_string> /saveAs <*.xlsx>]")>
     <Description("Write target csv table its content data as a worksheet into the target Excel package.")>
     <Argument("/sheetName", True, CLITypes.String, PipelineTypes.std_in,
-              Description:="The new sheet table name, if this argument is not presented, then the program will using the file basename as the sheet table name. If the sheet table name is exists in current xlsx file, then the exists table value will be updated, otherwise will add new table.")>
+              Description:="The New sheet table name, if this argument Is Not presented, then the program will using the file basename as the sheet table name. If the sheet table name Is exists in current xlsx file, then the exists table value will be updated, otherwise will add New table.")>
     Public Function PushTable(args As CommandLine) As Integer
         With args <= "/write"
 
@@ -157,7 +170,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     <Usage("/Create /target <xlsx>")>
     <Description("Create an empty Excel xlsx package file on a specific file path")>
     <Argument("/Create", False, CLITypes.File,
-              Description:="The file path for save this new created Excel xlsx package.")>
+              Description:="The file path for save this New created Excel xlsx package.")>
     Public Function newEmpty(args As CommandLine) As Integer
         Return "" _
             .SaveTo(args <= "/target", Encodings.ASCII) _
@@ -166,11 +179,11 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
     <ExportAPI("/Extract")>
     <Usage("/Extract /open <xlsx> [/sheetName <name_string, default=*> /out <out.csv/directory>]")>
-    <Description("Open target excel file and get target table and save into a csv file.")>
+    <Description("Open target excel file And get target table And save into a csv file.")>
     <Argument("/open", False, CLITypes.File,
-              Description:="File path of the Excel ``*.xlsx`` file for open and read.")>
+              Description:="File path of the Excel ``*.xlsx`` file for open And read.")>
     <Argument("/sheetName", True, CLITypes.String,
-              Description:="The worksheet table name for read data and save as csv file. 
+              Description:="The worksheet table name for read data And save as csv file. 
               If this argument value is equals to ``*``, then all of the tables in the target xlsx excel file will be extract.")>
     <Argument("/out", True, CLITypes.File,
               Description:="The csv output file path or a directory path value when the ``/sheetName`` parameter is value ``*``.")>
