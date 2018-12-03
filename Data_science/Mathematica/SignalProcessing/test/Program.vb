@@ -51,6 +51,10 @@ Module Program
 
         Call signal.SaveTo("./signals.csv")
 
+        Dim signal2 = New Source.SinusSignal().GetGraphData(10, 10)
+
+        Call signal2.SaveTo("./signals2.csv")
+
         Pause()
     End Sub
 End Module

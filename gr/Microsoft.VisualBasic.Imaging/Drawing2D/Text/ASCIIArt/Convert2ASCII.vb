@@ -63,7 +63,9 @@ Namespace Drawing2D.Text.ASCIIArt
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ASCIIImage(text$, Optional font$ = CSSFont.Win7Normal, Optional characters As WeightedChar() = Nothing) As String
-            Return text.DrawText(Color.Black, Color.White, , CSSFont.TryParse(font).GDIObject).Convert2ASCII(characters)
+            Return text _
+                .DrawText(Color.Black, Color.White, , CSSFont.TryParse(font).GDIObject) _
+                .Convert2ASCII(characters)
         End Function
 
         ''' <summary>
@@ -135,31 +137,44 @@ Namespace Drawing2D.Text.ASCIIArt
 
         ReadOnly defaultFont As DefaultValue(Of Font) = SystemFonts.DefaultFont
 
+        ''' <summary>
+        ''' 将字符转换为图像
+        ''' </summary>
+        ''' <param name="text$"></param>
+        ''' <param name="textColor"></param>
+        ''' <param name="backColor"></param>
+        ''' <param name="WidthAndHeight"></param>
+        ''' <param name="fontStyle"></param>
+        ''' <returns></returns>
         <Extension> Public Function DrawText(text$,
                                              textColor As Color,
                                              backColor As Color,
                                              Optional WidthAndHeight As SizeF = Nothing,
-                                             Optional font As Font = Nothing) As Image
+                                             Optional fontStyle As Font = Nothing) As Image
 
             ' Get char width for insertion point calculation purposes
-            Dim textSize As SizeF = FontFace.MeasureString(text, font Or defaultFont)
+            Dim font As Font = fontStyle Or defaultFont
+            Dim textSize As SizeF = FontFace.MeasureString(text, font)
 
             If WidthAndHeight.IsEmpty Then
                 WidthAndHeight = textSize
             End If
 
             ' Create a new image of the right size
-            Dim img As New Bitmap(CInt(sys.Truncate(WidthAndHeight.Width)), CInt(sys.Truncate(WidthAndHeight.Height)))
+            Dim w% = CInt(sys.Truncate(WidthAndHeight.Width))
+            Dim h% = CInt(sys.Truncate(WidthAndHeight.Height))
+            Dim img As New Bitmap(w, h)
 
             ' Get a graphics object
             Using drawing = Graphics.FromImage(img)
 
                 ' Create a brush for the text
                 Dim textBrush As New SolidBrush(textColor)
+                Dim x = (WidthAndHeight.Width - textSize.Width) / 2
 
                 ' Paint the background
                 Call drawing.Clear(backColor)
-                Call drawing.DrawString(text, font Or defaultFont, textBrush, (WidthAndHeight.Width - textSize.Width) / 2, 0)
+                Call drawing.DrawString(text, font, textBrush, x, 0)
 
                 Return img
             End Using

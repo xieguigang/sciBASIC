@@ -50,6 +50,7 @@
 Imports System.Drawing
 Imports System.Math
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing2D.Text.ASCIIArt
@@ -99,7 +100,12 @@ Namespace Drawing2D.Text.ASCIIArt
                     forweighting.Character = c.ToString()
                     ' Get character representation (the actual char)
                     ' Get character Image
-                    forweighting.CharacterImage = DirectCast(HelperMethods.DrawText(c.ToString(), Color.Black, Color.White, commonsize), Bitmap)
+                    forweighting.CharacterImage = DirectCast(HelperMethods.DrawText(
+                        text:=c.ToString(),
+                        textColor:=Color.Black,
+                        backColor:=Color.White,
+                        WidthAndHeight:=commonsize
+                    ), Bitmap)
                 End If
 
                 weightedChars.Add(forweighting)
@@ -117,14 +123,13 @@ Namespace Drawing2D.Text.ASCIIArt
         Private Function GetGeneralSize() As SizeF
             Dim generalsize As New SizeF(0, 0)
 
-            For i As Integer = 32 To 126
-                ' Iterate through contemplated characters calculating necessary width
-                Dim c As Char = Convert.ToChar(i)
-
-                ' Create a dummy bitmap just to get a graphics object
-                Using img As Image = New Bitmap(1, 1), drawing As Graphics = Graphics.FromImage(img)
+            Using g As Graphics = New Size(1, 1).CreateGDIDevice.Graphics
+                For i As Integer = 32 To 126
+                    ' Iterate through contemplated characters calculating necessary width
+                    Dim c As Char = Convert.ToChar(i)
+                    ' Create a dummy bitmap just to get a graphics object
                     ' Measure the string to see its dimensions using the graphics object
-                    Dim textSize As SizeF = drawing.MeasureString(c.ToString(), SystemFonts.DefaultFont)
+                    Dim textSize As SizeF = g.MeasureString(c.ToString(), SystemFonts.DefaultFont)
 
                     ' Update, if necessary, the max width and height
                     If textSize.Width > generalsize.Width Then
@@ -133,8 +138,8 @@ Namespace Drawing2D.Text.ASCIIArt
                     If textSize.Height > generalsize.Height Then
                         generalsize.Height = textSize.Height
                     End If
-                End Using
-            Next
+                Next
+            End Using
 
             ' Make sure generalsize is made of integers 
             generalsize.Width = CInt(Truncate(generalsize.Width))
@@ -153,15 +158,16 @@ Namespace Drawing2D.Text.ASCIIArt
 
         <Extension> Private Function GetWeight(c As Char, size As SizeF) As Double
             Dim charImage = HelperMethods.DrawText(c.ToString(), Color.Black, Color.White, size)
-            Dim btm As New Bitmap(charImage)
             Dim totalsum As Double = 0
 
-            For i As Integer = 0 To btm.Width - 1
-                For j As Integer = 0 To btm.Height - 1
-                    Dim pixel As Color = btm.GetPixel(i, j)
-                    totalsum = totalsum + (CInt(pixel.R) + CInt(pixel.G) + CInt(pixel.B)) \ 3
+            Using btm As BitmapBuffer = BitmapBuffer.FromImage(charImage)
+                For i As Integer = 0 To btm.Width - 1
+                    For j As Integer = 0 To btm.Height - 1
+                        Dim pixel As Color = btm.GetPixel(i, j)
+                        totalsum += (CInt(pixel.R) + CInt(pixel.G) + CInt(pixel.B)) \ 3
+                    Next
                 Next
-            Next
+            End Using
 
             ' Weight = (sum of (R+G+B)/3 for all pixels in image) / Area. (Where Area = Width*Height )
             Return totalsum / (size.Height * size.Width)

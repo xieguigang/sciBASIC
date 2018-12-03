@@ -262,6 +262,12 @@ Public Module PathExtensions
         End If
     End Function
 
+    ''' <summary>
+    ''' Yield subfolders' FullName
+    ''' </summary>
+    ''' <param name="DIR$"></param>
+    ''' <param name="[option]"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function ListDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
         Dim current As New DirectoryInfo(DIR)

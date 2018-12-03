@@ -1,46 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::7e4d43fc73f9494bcb612fa898c01103, Data_science\Mathematica\SignalProcessing\Source\Signal.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Signal
-    ' 
-    '         Properties: Freq, Phase
-    ' 
-    '         Function: calculate, getAudioBytes, getGraphData
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Signal
+' 
+'         Properties: Freq, Phase
+' 
+'         Function: calculate, getAudioBytes, getGraphData
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace Source
 
@@ -71,11 +73,13 @@ Namespace Source
         ''' Calculates the signals value at given frequency and phase </summary>
         ''' <param name="freq">   the signal's frequency </param>
         ''' <param name="phase">	the signal's phase </param>
-        Public MustOverride Function calculate(ByVal freq As Double, ByVal phase As Double) As Double
+        Public MustOverride Function calculate(freq As Double, phase As Double) As Double
 
         ''' <summary>
         ''' Calculates the signals value with the last used frequency and phase
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Function calculate() As Double
             Return calculate(Freq, Phase)
         End Function
@@ -86,14 +90,14 @@ Namespace Source
         ''' <param name="freq">   the signal's frequency </param>
         ''' <param name="phase">	the signal's phase </param>
         ''' <returns>    	the samples </returns>
-        Public Overridable Function getGraphData(ByVal freq As Double, ByVal phase As Double) As TimeSignal()
+        Public Overridable Function GetGraphData(freq As Double, phase As Double) As TimeSignal()
             Dim data(GRAPH_SAMPLES - 1) As TimeSignal
             Dim x As Double = 0
 
             Me.Freq = freq
             Me.Phase = phase
 
-            Dim [step] As Integer = CInt(freq) * 3 \ GRAPH_SAMPLES
+            Dim [step] As Double = freq * 3 / GRAPH_SAMPLES
 
             For i As Integer = 0 To GRAPH_SAMPLES - 1
                 data(i) = New TimeSignal With {
@@ -112,7 +116,7 @@ Namespace Source
         ''' <param name="freq">   the signal's frequency </param>
         ''' <param name="phase">	the signal's phase </param>
         ''' <returns>    	the samples </returns>
-        Public Overridable Function getAudioBytes(ByVal freq As Double, ByVal phase As Double) As SByte()
+        Public Overridable Function CalcAudioBytes(freq As Double, phase As Double) As SByte()
             Dim samples(BUFFER_SIZE - 1) As SByte
 
             Me.Freq = freq
