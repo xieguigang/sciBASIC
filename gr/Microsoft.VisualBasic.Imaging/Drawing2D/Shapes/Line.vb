@@ -81,6 +81,24 @@ Namespace Drawing2D.Shapes
             End Get
         End Property
 
+        Public ReadOnly Property Cos As Double
+            Get
+                Dim dx = B.X - A.X
+                Dim c = Length
+
+                Return dx / c
+            End Get
+        End Property
+
+        Public ReadOnly Property Sin As Double
+            Get
+                Dim dy = B.Y - A.Y
+                Dim c = Length
+
+                Return dy / c
+            End Get
+        End Property
+
         ''' <summary>
         ''' 返回线段和X轴的夹角，夹角值为弧度值
         ''' </summary>
@@ -152,6 +170,41 @@ Namespace Drawing2D.Shapes
             Return $"[{A.X}, {A.Y}] --> [{B.X}, {B.Y}] alpha:{Alpha.ToDegrees} degree"
         End Function
 
+        ''' <summary>
+        ''' 在A短点处发生长度变化, B点的位置不变
+        ''' </summary>
+        ''' <param name="d">大于零为长度延伸,小于零为线段的长度缩短</param>
+        ''' <returns></returns>
+        Public Function LengthVariationFromPointA(d As Double) As Line
+            Dim dx = d * Cos
+            Dim dy = d * Sin
+            Dim newA As New PointF With {
+                .X = A.X - dx,
+                .Y = A.Y - dy
+            }
+
+            Return CopyStyle(newA, B)
+        End Function
+
+        Private Function CopyStyle(a As PointF, b As PointF) As Line
+            Return New Line(a, b) With {
+                .EnableAutoLayout = EnableAutoLayout,
+                .Stroke = Stroke,
+                .TooltipTag = TooltipTag
+            }
+        End Function
+
+        Public Function LengthVariationFromPointB(d As Double) As Line
+            Dim dx = d * Cos
+            Dim dy = d * Sin
+            Dim newB As New PointF With {
+                .X = B.X + dx,
+                .Y = B.Y + dy
+            }
+
+            Return CopyStyle(A, newB)
+        End Function
+
         Public Overrides Function Draw(ByRef g As IGraphics, Optional overridesLoci As Point = Nothing) As RectangleF
             Dim rect As RectangleF = MyBase.Draw(g, overridesLoci)
             Call g.DrawLine(Stroke, A, B)
@@ -166,8 +219,8 @@ Namespace Drawing2D.Shapes
         Public Function ParallelShift(d#) As Line
             With Stroke
                 Dim color As Color = DirectCast(.Brush, SolidBrush).Color
-                Dim dx = d * Sin(Alpha)
-                Dim dy = d * Cos(Alpha)
+                Dim dx = d * Sin
+                Dim dy = d * Cos
                 Dim offset As New Point(dx, -dy)
 
                 Return New Line(

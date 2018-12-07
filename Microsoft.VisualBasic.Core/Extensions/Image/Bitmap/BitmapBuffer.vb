@@ -220,7 +220,7 @@ Namespace Imaging.BitmapImage
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator +(bmp As BitmapBuffer, offset%) As BitmapBuffer
-            bmp.__index += offset
+            bmp.index += offset
             Return bmp
         End Operator
     End Class

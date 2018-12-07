@@ -72,6 +72,11 @@ Namespace Text.Xml
                 .ToString
         End Function
 
+        ''' <summary>
+        ''' 处理HTML之中的特殊符号的转义
+        ''' </summary>
+        ''' <param name="html"></param>
+        ''' <returns></returns>
         <Extension> Public Function UnescapeHTML(html As String) As String
             Using writer As New StringWriter()
                 ' Decode the encoded string.

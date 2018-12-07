@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::0e0d8b3134d48b469d8226b0ae8446a3, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Interpreter
-    ' 
-    '         Properties: APIList, APINameList, Count, ExecuteEmptyCli, ExecuteFile
-    '                     ExecuteNotFound, Info, IsReadOnly, ListCommandInfo, Stack
-    '                     Type
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __executeEmpty, __getsAllCommands, apiInvoke, Contains, CreateEmptyCLIObject
-    '                   (+3 Overloads) CreateInstance, (+3 Overloads) Execute, ExistsCommand, GetAllCommands, getAPI
-    '                   GetEnumerator, GetEnumerator1, GetPossibleCommand, Help, ListingRelated
-    '                   (+2 Overloads) Remove, SDKdocs, ToDictionary, ToString, TryGetValue
-    ' 
-    '         Sub: (+2 Overloads) Add, AddCommand, Clear, CopyTo, (+2 Overloads) Dispose
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Interpreter
+' 
+'         Properties: APIList, APINameList, Count, ExecuteEmptyCli, ExecuteFile
+'                     ExecuteNotFound, Info, IsReadOnly, ListCommandInfo, Stack
+'                     Type
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __executeEmpty, __getsAllCommands, apiInvoke, Contains, CreateEmptyCLIObject
+'                   (+3 Overloads) CreateInstance, (+3 Overloads) Execute, ExistsCommand, GetAllCommands, getAPI
+'                   GetEnumerator, GetEnumerator1, GetPossibleCommand, Help, ListingRelated
+'                   (+2 Overloads) Remove, SDKdocs, ToDictionary, ToString, TryGetValue
+' 
+'         Sub: (+2 Overloads) Add, AddCommand, Clear, CopyTo, (+2 Overloads) Dispose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports VB = Microsoft.VisualBasic.CommandLine.InteropService.SharedORM.VisualBasic
 
@@ -266,14 +267,16 @@ Namespace CommandLine
                 Return BashShell()
 
             ElseIf String.Equals(commandName, "/CLI.dev", StringComparison.OrdinalIgnoreCase) Then
+                Dim namespace$ = CLI("/namespace") Or "CLI"
+                Dim vb$ = New VB(App:=Me, [namespace]:=[namespace]).GetSourceCode
+
                 If CLI.IsTrue("---echo") Then
-                    Console.WriteLine(New VB(App:=Me).GetSourceCode)
+                    Console.WriteLine(vb)
                     Return 0
                 Else
-                    Dim vb$ = App.HOME & "/" & Type.Assembly.CodeBase.BaseName & ".vb"
-                    Return New VB(App:=Me) _
-                        .GetSourceCode _
-                        .SaveTo(vb) _
+                    Dim sourcefile$ = $"{App.HOME}/{Type.Assembly.CodeBase.BaseName}.vb"
+                    Return vb _
+                        .SaveTo(sourcefile, Encodings.UTF8WithoutBOM.CodePage) _
                         .CLICode
                 End If
 

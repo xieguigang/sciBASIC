@@ -52,7 +52,7 @@ Namespace DBSCAN
         Public Sub New(x As T)
             ClusterPoint = x
             IsVisited = False
-            ClusterId = CInt(ClusterIds.Unclassified)
+            ClusterId = ClusterIDs.Unclassified
         End Sub
 
         Public Overrides Function ToString() As String

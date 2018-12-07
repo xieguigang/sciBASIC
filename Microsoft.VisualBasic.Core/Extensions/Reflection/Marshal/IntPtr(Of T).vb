@@ -159,7 +159,7 @@ Namespace Emit.Marshal
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"* {GetType(T).Name} + {__index} --> {Current}  // {Scan0.ToString}"
+            Return $"* {GetType(T).Name} + {index} --> {Current}  // {Scan0.ToString}"
         End Function
 
         ''' <summary>
@@ -169,7 +169,7 @@ Namespace Emit.Marshal
         ''' <param name="d"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator +(ptr As IntPtr(Of T), d As Integer) As IntPtr(Of T)
-            ptr.__index += d
+            ptr.index += d
             Return ptr
         End Operator
 
@@ -180,7 +180,7 @@ Namespace Emit.Marshal
         ''' <param name="d"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator -(ptr As IntPtr(Of T), d As Integer) As IntPtr(Of T)
-            ptr.__index -= d
+            ptr.index -= d
             Return ptr
         End Operator
 
