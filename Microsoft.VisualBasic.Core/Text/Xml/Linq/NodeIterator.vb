@@ -48,6 +48,16 @@ Namespace Text.Xml.Linq
 
     Public Module NodeIterator
 
+        Const ArrayOfTemplate$ = "<?xml version=""1.0"" encoding=""utf-16""?>
+<ArrayOf{0} xmlns:xsd=""http//www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
+%s
+</ArrayOf{0}>"
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetArrayTemplate(Of T As Class)() As String
+            Return ArrayOfTemplate.Replace("{0}", GetType(T).GetNodeNameDefine)
+        End Function
+
         ''' <summary>
         ''' 使用<see cref="XmlDocument.Load"/>方法加载XML文档依旧是一次性的全部加载所有的文本到内存之中，第一次加载效率会比较低
         ''' 则可以使用这个方法来加载非常大的XML文档
