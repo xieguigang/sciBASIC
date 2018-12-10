@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports System.Xml.Serialization
 
 Namespace Text.Xml.Linq
@@ -46,6 +47,11 @@ Namespace Text.Xml.Linq
         End Sub
 
         ReadOnly sb As New StringBuilder
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function RemoveXmlns(xml As String) As String
+            Return xml.Replace($"xmlns=""{ReplaceXmlns}""", "")
+        End Function
 
         Public Function LoadXml(xml As String) As T
             Call sb.Clear()
