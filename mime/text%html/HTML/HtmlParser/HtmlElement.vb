@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::5306f6be5f5297da9959cc5623177a46, mime\text%html\HTML\HtmlParser\HtmlElement.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure ValueAttribute
-    ' 
-    '         Properties: Name, Value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    '     Class HtmlElement
-    ' 
-    '         Properties: Attributes, HtmlElements, IsEmpty, IsPlantText, Name
-    '                     OnlyInnerText
-    ' 
-    '         Function: GetPlantText, SingleNodeParser, ToString
-    ' 
-    '         Sub: (+2 Overloads) Add
-    ' 
-    '     Class InnerPlantText
-    ' 
-    '         Properties: InnerText, IsEmpty, IsPlantText
-    ' 
-    '         Function: GetPlantText, ToString
-    ' 
-    '     Module SpecialHtmlElements
-    ' 
-    '         Properties: Br, DocumentType, Head, Html, Title
-    ' 
-    '         Function: IsBrChangeLine
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure ValueAttribute
+' 
+'         Properties: Name, Value
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: ToString
+' 
+'     Class HtmlElement
+' 
+'         Properties: Attributes, HtmlElements, IsEmpty, IsPlantText, Name
+'                     OnlyInnerText
+' 
+'         Function: GetPlantText, SingleNodeParser, ToString
+' 
+'         Sub: (+2 Overloads) Add
+' 
+'     Class InnerPlantText
+' 
+'         Properties: InnerText, IsEmpty, IsPlantText
+' 
+'         Function: GetPlantText, ToString
+' 
+'     Module SpecialHtmlElements
+' 
+'         Properties: Br, DocumentType, Head, Html, Title
+' 
+'         Function: IsBrChangeLine
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,14 +68,21 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace HTML
 
-    Public Structure ValueAttribute : Implements INamedValue
+    Public Structure ValueAttribute : Implements INamedValue, IsEmpty
 
         Public Property Name As String Implements INamedValue.Key
         Public Property Value As String
+
+        Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            Get
+                Return Name.StringEmpty AndAlso Value.StringEmpty
+            End Get
+        End Property
 
         Sub New(strText As String)
             Dim ep As Integer = InStr(strText, "=")
@@ -108,45 +115,46 @@ Namespace HTML
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Property Name As String
+
         ''' <summary>
         ''' 标签的属性列表
         ''' </summary>
         ''' <returns></returns>
         Public Property Attributes As ValueAttribute()
             Get
-                Return __attrs.Values.ToArray
+                Return attrs.Values.ToArray
             End Get
             Set(value As ValueAttribute())
                 If value.IsNullOrEmpty Then
-                    __attrs = New Dictionary(Of ValueAttribute)
+                    attrs = New Dictionary(Of ValueAttribute)
                 Else
-                    __attrs = value.ToDictionary
+                    attrs = value.ToDictionary
                 End If
             End Set
         End Property
 
         Public Property HtmlElements As InnerPlantText()
             Get
-                Return __elementNodes.ToArray
+                Return elementNodes.ToArray
             End Get
             Set(value As InnerPlantText())
                 If value.IsNullOrEmpty Then
-                    __elementNodes = New List(Of InnerPlantText)
+                    elementNodes = New List(Of InnerPlantText)
                 Else
-                    __elementNodes = value.AsList
+                    elementNodes = value.AsList
                 End If
             End Set
         End Property
 
         Default Public Property Attribute(name As String) As ValueAttribute
             Get
-                Return __attrs.TryGetValue(name)
+                Return attrs.TryGetValue(name)
             End Get
             Set(value As ValueAttribute)
-                If __attrs.ContainsKey(name) Then
-                    __attrs(name) = value
+                If attrs.ContainsKey(name) Then
+                    attrs(name) = value
                 Else
-                    Call __attrs.Add(name, value)
+                    Call attrs.Add(name, value)
                 End If
             End Set
         End Property
@@ -157,11 +165,14 @@ Namespace HTML
             End Get
         End Property
 
-        Dim __attrs As Dictionary(Of ValueAttribute)
-        Dim __elementNodes As New List(Of InnerPlantText)
+        Dim attrs As New Dictionary(Of ValueAttribute)
+        ''' <summary>
+        ''' 当前的这个节点下面所拥有的子节点
+        ''' </summary>
+        Dim elementNodes As New List(Of InnerPlantText)
 
         Public Overrides Function GetPlantText() As String
-            Dim sbr As StringBuilder = New StringBuilder(Me.InnerText)
+            Dim sbr As New StringBuilder(Me.InnerText)
 
             If Not Me.HtmlElements Is Nothing Then
                 For Each node In HtmlElements
@@ -173,29 +184,26 @@ Namespace HTML
         End Function
 
         Public Sub Add(attr As ValueAttribute)
-            If __attrs Is Nothing Then
-                __attrs = New Dictionary(Of ValueAttribute)
-            End If
-            Call __attrs.Add(attr.Name, attr)
+            Call attrs.Add(attr.Name, attr)
         End Sub
 
         Public Sub Add(Node As InnerPlantText)
-            Call __elementNodes.Add(Node)
+            Call elementNodes.Add(Node)
         End Sub
 
         Public ReadOnly Property OnlyInnerText As Boolean
             Get
-                Return __elementNodes.Count = 1 AndAlso
-                __elementNodes(Scan0).IsPlantText
+                Return elementNodes.Count = 1 AndAlso
+                elementNodes(Scan0).IsPlantText
             End Get
         End Property
 
         Public Overrides ReadOnly Property IsEmpty As Boolean
             Get
                 Return MyBase.IsEmpty AndAlso
-                String.IsNullOrEmpty(Name) AndAlso
-                Attributes.IsNullOrEmpty AndAlso
-                HtmlElements.IsNullOrEmpty
+                    String.IsNullOrEmpty(Name) AndAlso
+                    Attributes.IsNullOrEmpty AndAlso
+                    HtmlElements.IsNullOrEmpty
             End Get
         End Property
 

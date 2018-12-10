@@ -108,9 +108,12 @@ Namespace Emit.Marshal
         ''' </summary>
         ''' <param name="p">相对于当前的位置的offset偏移量</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个属性并不会移动当前的指针的位置
+        ''' </remarks>
         Default Public Property Value(p As Integer) As T
             Get
-                p += __index
+                p += index
 
                 If p < 0 OrElse p >= buffer.Length Then
                     Return Nothing
@@ -119,7 +122,7 @@ Namespace Emit.Marshal
                 End If
             End Get
             Set(value As T)
-                p += __index
+                p += index
 
                 If p < 0 OrElse p >= buffer.Length Then
                     Throw New MemberAccessException(p & " reference to invalid memory region!")
@@ -143,7 +146,7 @@ Namespace Emit.Marshal
         Public ReadOnly Property NullEnd(Optional offset As Integer = 0) As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __index >= (buffer.Length - 1 - offset)
+                Return index >= (buffer.Length - 1 - offset)
             End Get
         End Property
 
@@ -154,7 +157,7 @@ Namespace Emit.Marshal
         Public ReadOnly Property EndRead As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __index >= buffer.Length
+                Return index >= buffer.Length
             End Get
         End Property
 
@@ -165,7 +168,7 @@ Namespace Emit.Marshal
         Public ReadOnly Property Position As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __index
+                Return index
             End Get
         End Property
 
@@ -190,8 +193,27 @@ Namespace Emit.Marshal
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Pointer move to next and then returns is <see cref="EndRead"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function MoveNext() As Boolean
+            index += 1
+            Return Not EndRead
+        End Function
+
+        ''' <summary>
+        ''' 获取得到下一个对象而不移动当前的内部指针
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function PeekNext() As T
+            Return Me(index + 1)
+        End Function
+
         Public Overrides Function ToString() As String
-            Return $"* {GetType(T).Name} + {__index} --> {Current}  // {Scan0.ToString}"
+            Return $"*{GetType(T).Name}: ({index}) {Current}"
         End Function
 
         '''' <summary>
@@ -214,6 +236,11 @@ Namespace Emit.Marshal
         '    Return p(offset)
         'End Operator
 
+        ''' <summary>
+        ''' 获取得到当前的元素
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(p As Pointer(Of T)) As T
             Return p.Current
@@ -251,23 +278,14 @@ Namespace Emit.Marshal
         ''' <param name="d"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator +(ptr As Pointer(Of T), d As Integer) As Pointer(Of T)
-            ptr.__index += d
+            ptr.index += d
             Return ptr
         End Operator
 
         Public Overloads Shared Operator -(ptr As Pointer(Of T), d As Integer) As Pointer(Of T)
-            ptr.__index -= d
+            ptr.index -= d
             Return ptr
         End Operator
-
-        ''' <summary>
-        ''' Pointer move to next and then returns is <see cref="EndRead"/>
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function MoveNext() As Boolean
-            __index += 1
-            Return Not EndRead
-        End Function
 
         ''' <summary>
         ''' Pointer move to next and then returns the previous value
@@ -277,8 +295,8 @@ Namespace Emit.Marshal
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator +(ptr As Pointer(Of T)) As SeqValue(Of T)
-            Dim i% = ptr.__index
-            ptr.__index += 1
+            Dim i% = ptr.index
+            ptr.index += 1
 
             Return New SeqValue(Of T) With {
                 .i = i,
@@ -293,8 +311,8 @@ Namespace Emit.Marshal
         ''' <param name="ptr"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator -(ptr As Pointer(Of T)) As SeqValue(Of T)
-            Dim i% = ptr.__index
-            ptr.__index -= 1
+            Dim i% = ptr.index
+            ptr.index -= 1
 
             Return New SeqValue(Of T) With {
                 .i = i,

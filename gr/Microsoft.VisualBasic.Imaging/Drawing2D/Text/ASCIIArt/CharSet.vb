@@ -121,29 +121,39 @@ Namespace Drawing2D.Text.ASCIIArt
 #Region "[GenerateFontWeights Helper methods]"
 
         Private Function GetGeneralSize() As SizeF
+            Dim allPrintables = Enumerable _
+                .Range(32, 126) _
+                .Select(AddressOf Convert.ToChar) _
+                .ToArray
+
+            ' Create a dummy bitmap just to get a graphics object
+            Using g As IGraphics = New Size(1, 1).CreateGDIDevice
+                Return g.GetGeneralSize(allPrintables, SystemFonts.DefaultFont)
+            End Using
+        End Function
+
+        <Extension>
+        Public Function GetGeneralSize(g As IGraphics, chars As IEnumerable(Of Char), font As Font) As SizeF
             Dim generalsize As New SizeF(0, 0)
 
-            Using g As Graphics = New Size(1, 1).CreateGDIDevice.Graphics
-                For i As Integer = 32 To 126
-                    ' Iterate through contemplated characters calculating necessary width
-                    Dim c As Char = Convert.ToChar(i)
-                    ' Create a dummy bitmap just to get a graphics object
-                    ' Measure the string to see its dimensions using the graphics object
-                    Dim textSize As SizeF = g.MeasureString(c.ToString(), SystemFonts.DefaultFont)
+            ' Iterate through contemplated characters calculating necessary width
+            For Each c As Char In chars
+                ' Measure the string to see its dimensions using the graphics object
+                Dim textSize As SizeF = g.MeasureString(c.ToString(), font)
 
-                    ' Update, if necessary, the max width and height
-                    If textSize.Width > generalsize.Width Then
-                        generalsize.Width = textSize.Width
-                    End If
-                    If textSize.Height > generalsize.Height Then
-                        generalsize.Height = textSize.Height
-                    End If
-                Next
-            End Using
+                ' Update, if necessary, the max width and height
+                If textSize.Width > generalsize.Width Then
+                    generalsize.Width = textSize.Width
+                End If
+                If textSize.Height > generalsize.Height Then
+                    generalsize.Height = textSize.Height
+                End If
+            Next
 
             ' Make sure generalsize is made of integers 
             generalsize.Width = CInt(Truncate(generalsize.Width))
             generalsize.Height = CInt(Truncate(generalsize.Height))
+
             ' and size defines a square to maintain image proportions
             ' as the ASCII transformation will be 1 pixel = 1 character Image
             ' thus substituting one pixel by one character image

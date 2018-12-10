@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::d686d36337a9031e2e78af7daadb163a, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GeometryMath
-    ' 
-    '         Function: GetLineIntersection, (+4 Overloads) IntersectionOf, (+2 Overloads) QuadrantRegion
-    ' 
-    '     Enum QuadrantRegions
-    ' 
-    '         LeftBottom, LeftTop, RightBottom, RightTop, XLeft
-    '         XRight, YBottom, YTop
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum Intersection
-    ' 
-    '         Containment, Intersection, None, Tangent
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GeometryMath
+' 
+'         Function: GetLineIntersection, (+4 Overloads) IntersectionOf, (+2 Overloads) QuadrantRegion
+' 
+'     Enum QuadrantRegions
+' 
+'         LeftBottom, LeftTop, RightBottom, RightTop, XLeft
+'         XRight, YBottom, YTop
+' 
+'  
+' 
+' 
+' 
+'     Enum Intersection
+' 
+'         Containment, Intersection, None, Tangent
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sys = System.Math
 
 Namespace Imaging.Math2D
@@ -317,25 +318,34 @@ Namespace Imaging.Math2D
         ''' <param name="p"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function QuadrantRegion(origin As PointF, p As PointF) As QuadrantRegions
+        Public Function QuadrantRegion(origin As PointF, p As PointF, Optional d! = 5) As QuadrantRegions
+            If Math.Abs(p.X - origin.X) <= d AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+                Return QuadrantRegions.Origin
+            End If
+
+            If Math.Abs(p.X - origin.X) <= d AndAlso p.Y < origin.Y Then
+                Return QuadrantRegions.YTop
+            End If
+            If Math.Abs(p.X - origin.X) <= d AndAlso p.Y > origin.Y Then
+                Return QuadrantRegions.YBottom
+            End If
+            If p.X > origin.X AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+                Return QuadrantRegions.XRight
+            End If
+            If p.X < origin.X AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+                Return QuadrantRegions.XLeft
+            End If
+
             If p.X > origin.X AndAlso p.Y < origin.Y Then
                 Return QuadrantRegions.RightTop
-            ElseIf p.X = origin.X AndAlso p.Y < origin.Y Then
-                Return QuadrantRegions.YTop
             ElseIf p.X < origin.X AndAlso p.Y < origin.Y Then
                 Return QuadrantRegions.LeftTop
-            ElseIf p.X < origin.X AndAlso p.Y = origin.Y Then
-                Return QuadrantRegions.XLeft
             ElseIf p.X < origin.X AndAlso p.Y > origin.Y Then
                 Return QuadrantRegions.LeftBottom
-            ElseIf p.X = origin.X AndAlso p.Y > origin.Y Then
-                Return QuadrantRegions.YBottom
             ElseIf p.X > origin.X AndAlso p.Y > origin.Y Then
                 Return QuadrantRegions.RightBottom
-            ElseIf p.X > origin.X AndAlso p.Y = origin.Y Then
-                Return QuadrantRegions.XRight
             Else
-                Return QuadrantRegions.Origin
+                Throw New EvaluateException({origin, p}.GetJson)
             End If
         End Function
     End Module

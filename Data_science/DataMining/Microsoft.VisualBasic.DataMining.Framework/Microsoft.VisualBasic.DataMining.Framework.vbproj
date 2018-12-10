@@ -393,7 +393,6 @@
     <Compile Include="AprioriRules\Helper\Encoding.vb" />
     <Compile Include="ComponentModel\Class.vb" />
     <Compile Include="ComponentModel\Extensions.vb" />
-    <Compile Include="DBSCAN\ClusterIds.vb" />
     <Compile Include="DBSCAN\DatasetItemBase.vb" />
     <Compile Include="DBSCAN\DbscanAlgorithm.vb" />
     <Compile Include="DBSCAN\DbscanPoint.vb" />

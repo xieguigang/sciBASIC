@@ -121,7 +121,7 @@ Namespace Scripting
         ''' <param name="s"></param>
         ''' <returns></returns>
         Public Function TryParse(s As String) As List(Of Token(Of ExpressionTokens))
-            Dim str As CharEnumerator = s.GetEnumerator
+            Dim str As System.CharEnumerator = s.GetEnumerator
             Dim tokens As New List(Of Token(Of ExpressionTokens))
             Dim ch As Char
             Dim token As New List(Of Char)
@@ -141,7 +141,7 @@ Namespace Scripting
 
                     Select Case type
                         Case ExpressionTokens.Number
-                            exitb = str.__parseDouble(token)
+                            exitb = str.parseDouble(token)
                             tokens += New Token(Of ExpressionTokens)(type, New String(token))
                         Case ExpressionTokens.WhiteSpace ' Ignore white space
                             exitb = str.MoveNext
@@ -150,7 +150,7 @@ Namespace Scripting
                             exitb = str.MoveNext()
                     End Select
                 Else
-                    exitb = str.__parseUNDEFINE(token)
+                    exitb = str.parseUNDEFINE(token)
                     type = ExpressionTokens.UNDEFINE
                     tokens += New Token(Of ExpressionTokens)(type, New String(token))
                 End If
@@ -171,7 +171,7 @@ Namespace Scripting
         ''' <param name="str"></param>
         ''' <param name="token"></param>
         ''' <returns></returns>
-        <Extension> Private Function __parseDouble(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
+        <Extension> Private Function parseDouble(str As System.CharEnumerator, ByRef token As List(Of Char)) As Boolean
             Do While str.MoveNext
                 If Not Tokens.ContainsKey(str.Current) Then
                     Return True
@@ -185,7 +185,7 @@ Namespace Scripting
             Return False
         End Function
 
-        <Extension> Private Function __parseUNDEFINE(str As CharEnumerator, ByRef token As List(Of Char)) As Boolean
+        <Extension> Private Function parseUNDEFINE(str As System.CharEnumerator, ByRef token As List(Of Char)) As Boolean
             Do While str.MoveNext
                 If Not Tokens.ContainsKey(str.Current) Then
                     Call token.Add(str.Current)

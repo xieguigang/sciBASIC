@@ -160,8 +160,13 @@ Namespace HTML.CSS.Parser
             Return b
         End Function
 
+        ''' <summary>
+        ''' 将CSS字符串解析为键值对集合
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns></returns>
         <Extension>
-        Private Iterator Function GetProperty(input As String) As IEnumerable(Of (key$, value$))
+        Public Iterator Function GetProperty(input As String) As IEnumerable(Of (key$, value$))
             Dim s As String() = r.Split(input, "[;]")
 
             For Each b As String In s

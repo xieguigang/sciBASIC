@@ -493,10 +493,26 @@ Namespace Imaging
         ''' <param name="filled">默认的背景填充颜色为白色</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GDI+.Create")>
         <Extension> Public Function CreateGDIDevice(r As Size,
-                                                    Optional filled As Color = Nothing,
+                                                    Optional filled$ = NameOf(Color.White),
+                                                    <CallerMemberName>
+                                                    Optional trace$ = "",
+                                                    Optional dpi$ = "100,100") As Graphics2D
+            Return r.CreateGDIDevice(filled.TranslateColor, trace, dpi)
+        End Function
+
+        ''' <summary>
+        ''' 创建一个GDI+的绘图设备，默认的背景填充色为白色
+        ''' </summary>
+        ''' <param name="r"></param>
+        ''' <param name="filled">默认的背景填充颜色为白色</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
+        '''
+        <ExportAPI("GDI+.Create")>
+        <Extension> Public Function CreateGDIDevice(r As Size, filled As Color,
                                                     <CallerMemberName>
                                                     Optional trace$ = "",
                                                     Optional dpi$ = "100,100") As Graphics2D

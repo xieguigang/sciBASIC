@@ -513,7 +513,7 @@
     <Compile Include="HTML\Render\InitialContainer.vb" />
     <Compile Include="HTML\Render\Parser.vb" />
     <Compile Include="HTML\HtmlParser\DocParserAPI.vb" />
-    <Compile Include="HTML\TextString.vb" />
+    <Compile Include="HTML\HtmlParser\TextString.vb" />
     <Compile Include="HTML\Head\Meta.vb" />
     <Compile Include="HTML\Image.vb" />
     <Compile Include="HTML\HTML.vb" />

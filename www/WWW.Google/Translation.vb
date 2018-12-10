@@ -90,7 +90,7 @@ Public Class Translation
     ''' '************************************************************************************************
     ''' </remarks>
     Public Function Translate(MyString As String) As String
-        Call wb.Navigate(String.Format(GOOGLE_TRANSLATION_URL, _src_language, _sbj_language, Replace(MyString, " ", "%20").ToLower))
+        Call wb.Navigate(String.Format(GOOGLE_TRANSLATION_URL, _src_language, _sbj_language, Strings.Replace(MyString, " ", "%20").ToLower))
         Return __translation()
     End Function
 
@@ -110,7 +110,7 @@ Public Class Translation
 
             If InStr(htm.Window.Document.Body.InnerHtml, tag) > 0 Then
                 rawString = Mid(htm.Window.Document.Body.InnerHtml, InStr(htm.Window.Document.Body.InnerHtml, tag))   'extract to find the word starting the translation part
-                st = Replace(rawString, tag, "")  'remove the string "<SPAN id=result_box lang=ar class=short_text" 
+                st = Strings.Replace(rawString, tag, "")  'remove the string "<SPAN id=result_box lang=ar class=short_text" 
                 st = Mid(st, InStr(st, ">") + 1, st.Length)       'find the first ">" to remove it
                 st = Mid(st, 1, InStr(st, "</DIV>") - 1)     'remove the excess html on the variable
 

@@ -548,10 +548,7 @@ Public Module StringHelpers
         If String.IsNullOrEmpty(str) Then
             Return 0
         Else
-            Dim n As Integer = str _
-                .Where(Function(c) c = ch) _
-                .Count
-            Return n%
+            Return str.Count(Function(c) c = ch)
         End If
     End Function
 
