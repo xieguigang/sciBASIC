@@ -53,6 +53,11 @@ Namespace Text.Xml.Linq
 %s
 </ArrayOf{0}>"
 
+        ''' <summary>
+        ''' 可以将模板文本之中的``%s``替换为相应的Xml数组文本
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetArrayTemplate(Of T As Class)() As String
             Return ArrayOfTemplate.Replace("{0}", GetType(T).GetNodeNameDefine)
