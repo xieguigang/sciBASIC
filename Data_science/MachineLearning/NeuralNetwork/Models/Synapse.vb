@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b23470dffe721a987b0be5bc805b3fc5, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Dataset.vb"
+﻿#Region "Microsoft.VisualBasic::d708c6fd79131e128e610ce4f693bf33, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Synapse.vb"
 
     ' Author:
     ' 
@@ -31,60 +31,44 @@
 
     ' Summaries:
 
-    '     Class DataSet
+    '     Class Synapse
     ' 
-    '         Properties: Targets, Values
+    '         Properties: InputNeuron, OutputNeuron, Weight, WeightDelta
     ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Serialization
-Imports Microsoft.VisualBasic.Serialization.JSON
-
 Namespace NeuralNetwork
 
     ''' <summary>
-    ''' The training dataset
+    ''' （神经元的）突触 a connection between two nerve cells
     ''' </summary>
-    Public Class DataSet
+    ''' <remarks>
+    ''' 可以将这个对象看作为网络节点之间的边链接
+    ''' </remarks>
+    Public Class Synapse
 
 #Region "-- Properties --"
-
+        Public Property InputNeuron As Neuron
+        Public Property OutputNeuron As Neuron
         ''' <summary>
-        ''' Neuron network input parameters
+        ''' 两个神经元之间的连接强度
         ''' </summary>
         ''' <returns></returns>
-        Public Property Values() As Double()
-        ''' <summary>
-        ''' The network expected output values
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Targets() As Double()
+        Public Property Weight As Double
+        Public Property WeightDelta As Double
 #End Region
 
-#Region "-- Constructor --"
+        Public Sub New(inputNeuron As Neuron, outputNeuron As Neuron)
+            Me.InputNeuron = inputNeuron
+            Me.OutputNeuron = outputNeuron
 
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="values__1">Neuron network input parameters</param>
-        ''' <param name="targets__2">The network expected output values</param>
-        Public Sub New(values__1 As Double(), targets__2 As Double())
-            Values = values__1
-            Targets = targets__2
+            ' 计算权重
+            Weight = Helpers.GetRandom()
         End Sub
-
-        Sub New()
-        End Sub
-#End Region
-
-        Public Overrides Function ToString() As String
-            Return Values.Join(Targets).GetJson
-        End Function
     End Class
 End Namespace

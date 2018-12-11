@@ -422,17 +422,6 @@
     <Compile Include="AprioriRules\ExportAPI.vb" />
     <Compile Include="MarginalLikelihoodAnalysis.vb" />
     <Compile Include="Abundance.vb" />
-    <Compile Include="NeuralNetwork\TrainingUtils.vb" />
-    <Compile Include="NeuralNetwork\Dataset.vb" />
-    <Compile Include="NeuralNetwork\Helpers.vb" />
-    <Compile Include="NeuralNetwork\Network.vb" />
-    <Compile Include="NeuralNetwork\Neuron.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\BipolarSigmoidFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\IActivationFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\SigmoidFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\ThresholdFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
-    <Compile Include="NeuralNetwork\Synapse.vb" />
     <Compile Include="PeriodAnalysis\Variables.vb" />
     <Compile Include="Statistics.vb" />
     <Compile Include="PeriodAnalysis\PeriodAnalysis.vb" />
@@ -459,7 +448,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="NeuralNetwork\ActiveFunctions\Copyright.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

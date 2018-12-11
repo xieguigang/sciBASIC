@@ -63,6 +63,8 @@ Module AprioriTest
         Dim encoder As New Encoding(transactions.AllItems)
         Dim list = encoder.TransactionEncoding(transactions).ToArray
 
+
+
         Pause()
     End Sub
 

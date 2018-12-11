@@ -43,7 +43,6 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 
@@ -71,7 +70,7 @@ Namespace AprioriRules.Entities
                                        <td><%= rule.Confidence %></td>
                                    </tr>
                         End Function) _
-                .Select(AddressOf InputHandler.ToString) _
+                .Select(Function(r) r.ToString) _
                 .JoinBy(ASCII.LF)
 
             html.AppendLine(

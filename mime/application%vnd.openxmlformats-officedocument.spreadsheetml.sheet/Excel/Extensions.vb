@@ -102,4 +102,10 @@ Public Module Extensions
             End If
         End With
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function FirstSheet(xlsx As Xlsx) As csv
+        Return xlsx.GetTable(sheetName:=xlsx.SheetNames.FirstOrDefault)
+    End Function
 End Module

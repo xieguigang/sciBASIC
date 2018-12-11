@@ -269,6 +269,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -314,6 +315,22 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="NeuralNetwork\ActiveFunctions\BipolarSigmoidFunction.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\IActivationFunction.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\SigmoidFunction.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\ThresholdFunction.vb" />
+    <Compile Include="NeuralNetwork\Models\Layer.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\ActiveFunction.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\Neuron.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\NeuralNetwork.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure\DataSet.vb" />
+    <Compile Include="NeuralNetwork\Helpers.vb" />
+    <Compile Include="NeuralNetwork\Models\Network.vb" />
+    <Compile Include="NeuralNetwork\Models\Neuron.vb" />
+    <Compile Include="NeuralNetwork\Models\Synapse.vb" />
+    <Compile Include="NeuralNetwork\StoreProcedure.vb" />
+    <Compile Include="NeuralNetwork\TrainingUtils.vb" />
     <Compile Include="QLearning\Action.vb" />
     <Compile Include="QLearning\Model.vb" />
     <Compile Include="QLearning\QLearning.vb" />
@@ -356,6 +373,9 @@
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="NeuralNetwork\ActiveFunctions\Copyright.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
