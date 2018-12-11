@@ -157,7 +157,7 @@ Namespace Text.HtmlParser
         End Function
 
         Const HtmlTags$ = "</?.+?(\s+.+?="".+?"")*>"
-        Const hrefPattern$ = "href=[""'].+?[""']"
+        Const hrefPattern$ = "href\s*=\s*[""'].+?[""']"
 
         ''' <summary>
         ''' Gets the link text in the html fragement text.

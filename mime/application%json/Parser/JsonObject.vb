@@ -91,7 +91,7 @@ Namespace Parser
         End Function
 
         Public Overrides Function ToString() As String
-            Return "Class::[" & array.Keys.JoinBy(", ") & "]"
+            Return "JsonObject::[" & array.Keys.JoinBy(", ") & "]"
         End Function
 
         Public Overrides Function BuildJsonString() As String

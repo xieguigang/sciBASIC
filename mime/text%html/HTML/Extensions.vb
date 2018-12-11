@@ -72,7 +72,7 @@ Namespace HTML
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        Public Function StripHTMLSafely(source As String) As String
+        <Extension> Public Function StripHTMLSafely(source As String) As String
             Try
                 If source.StringEmpty Then
                     Return ""

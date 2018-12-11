@@ -83,7 +83,7 @@ Namespace Parser
         End Function
 
         Public Overrides Function ToString() As String
-            Return "JSONarray: {count: " & list.Count & "}"
+            Return "JsonArray: {count: " & list.Count & "}"
         End Function
 
         Public Overrides Function BuildJsonString() As String

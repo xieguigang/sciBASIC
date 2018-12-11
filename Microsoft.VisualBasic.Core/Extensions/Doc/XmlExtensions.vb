@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
+Imports r = System.Text.RegularExpressions.Regex
 
 <Package("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>
 Public Module XmlExtensions
@@ -290,7 +291,7 @@ Public Module XmlExtensions
 
     <ExportAPI("Xml.GetAttribute")>
     <Extension> Public Function GetXmlAttrValue(str As String, Name As String) As String
-        Dim m As Match = Regex.Match(str, Name & "=(("".+?"")|[^ ]*)")
+        Dim m As Match = r.Match(str, Name & "\s*=\s*(("".+?"")|[^ ]*)")
 
         If Not m.Success Then
             Return ""
