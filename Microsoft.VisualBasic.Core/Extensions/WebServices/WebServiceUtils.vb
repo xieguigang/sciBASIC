@@ -669,8 +669,8 @@ RE0:
                 End If
 
                 Call browser.Headers.Add(UserAgent.UAheader, ua)
-                Call save.ParentPath.MkDIR
                 Call $"{strUrl} --> {save}".__DEBUG_ECHO
+                Call save.ParentPath.MkDIR
                 Call browser.DownloadFile(strUrl, save)
             End Using
 
