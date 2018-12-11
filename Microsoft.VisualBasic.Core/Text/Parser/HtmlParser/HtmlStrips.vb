@@ -179,9 +179,7 @@ Namespace Text.HtmlParser
             If String.IsNullOrEmpty(url) Then
                 Return ""
             Else
-                url = Mid(url, 6)
-                url = Mid(url, 2, Len(url) - 2)
-                Return url
+                Return url.GetTagValue("=", trim:=True).Value.GetStackValue("""", """")
             End If
         End Function
 

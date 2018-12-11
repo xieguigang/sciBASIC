@@ -296,7 +296,7 @@ Public Module XmlExtensions
         If Not m.Success Then
             Return ""
         Else
-            str = m.Value.Replace(Name & "=", "")
+            str = m.Value.GetTagValue("=", trim:=True).Value
         End If
 
         If str.First = """"c AndAlso str.Last = """"c Then
