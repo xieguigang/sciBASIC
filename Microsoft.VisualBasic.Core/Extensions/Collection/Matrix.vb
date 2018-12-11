@@ -1,45 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::67050c28b38843b55d4dd1ab43343a35, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module MatrixExtensions
-    ' 
-    '     Function: DATA, MAT, (+2 Overloads) Matrix, RowIterator, ToFloatMatrix
-    '               ToMatrix, ToVectorList
-    ' 
-    ' /********************************************************************************/
+' Module MatrixExtensions
+' 
+'     Function: DATA, MAT, (+2 Overloads) Matrix, RowIterator, ToFloatMatrix
+'               ToMatrix, ToVectorList
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -128,11 +129,12 @@ Public Module MatrixExtensions
     End Function
 
     ''' <summary>
-    ''' 生成一个有m行n列的矩阵，但是是使用数组来表示的
+    ''' Create an empty matrix with m row and n cols.
+    ''' (生成一个有m行n列的矩阵，但是是使用数组来表示的)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="m"></param>
-    ''' <param name="n"></param>
+    ''' <param name="m">m Rows</param>
+    ''' <param name="n">n Cols</param>
     ''' <returns></returns>
     Public Function MAT(Of T)(m%, n%) As T()()
         Dim newMAT As T()() = New T(m - 1)() {}
@@ -181,6 +183,25 @@ Public Module MatrixExtensions
         Return MAT.RowIterator.AsList
     End Function
 
+#Region "Matrix Accessor Helper"
+
+    ''' <summary>
+    ''' Get matrix width and height values.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="m"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function GetSize(Of T)(m As T(,)) As Size
+        Dim w As Integer = m.GetLength(1)
+        Dim h As Integer = m.GetLength(0)
+
+        Return New Size With {
+            .Width = w,
+            .Height = h
+        }
+    End Function
+
     ''' <summary>
     ''' Iterates each row data in a matrix type array.
     ''' </summary>
@@ -189,18 +210,70 @@ Public Module MatrixExtensions
     ''' <returns></returns>
     <Extension>
     Public Iterator Function RowIterator(Of T)(MAT As T(,)) As IEnumerable(Of T())
-        Dim width As Integer = MAT.GetLength(1)
-        Dim height As Integer = MAT.GetLength(0)
-        Dim Temp As T()
+        Dim size As Size = MAT.GetSize
+        Dim temp As T()
 
-        For i As Integer = 0 To height - 1
-            Temp = New T(width - 1) {}
+        For i As Integer = 0 To size.Height - 1
+            temp = New T(size.Width - 1) {}
 
-            For j As Integer = 0 To width - 1
-                Temp(j) = MAT(i, j)
+            For j As Integer = 0 To size.Width - 1
+                temp(j) = MAT(i, j)
             Next
 
-            Yield Temp
+            Yield temp
         Next
     End Function
+
+    <Extension>
+    Public Iterator Function GetRow(Of T)(m As T(,), i%) As IEnumerable(Of T)
+        Dim size As Size = m.GetSize
+
+        For j As Integer = 0 To size.Width - 1
+            Yield m(i, j)
+        Next
+    End Function
+
+    <Extension>
+    Public Function SetRow(Of T)(m As T(,), i%, data As IEnumerable(Of T)) As T(,)
+        Dim size As Size = m.GetSize
+        Dim j% = Scan0
+
+        For Each x As T In data
+            m(i, j) = x
+            j += 1
+
+            If j = size.Width Then
+                Exit For
+            End If
+        Next
+
+        Return m
+    End Function
+
+    <Extension>
+    Public Iterator Function GetCol(Of T)(m As T(,), j%) As IEnumerable(Of T)
+        Dim size As Size = m.GetSize
+
+        For i As Integer = 0 To size.Height - 1
+            Yield m(i, j)
+        Next
+    End Function
+
+    <Extension>
+    Public Function SetCol(Of T)(m As T(,), j%, data As IEnumerable(Of T)) As T(,)
+        Dim size As Size = m.GetSize
+        Dim i% = Scan0
+
+        For Each x As T In data
+            m(i, j) = x
+            i += 1
+
+            If i = size.Height Then
+                Exit For
+            End If
+        Next
+
+        Return m
+    End Function
+#End Region
 End Module
