@@ -69,13 +69,6 @@ Module ToStringHelper
             Dim value As CDFData = file.getDataVariable(variable)
             Dim stringify = value.ToString
 
-            If (stringify.Length > 50) Then
-                stringify = stringify.Substring(0, 50)
-            End If
-            If (Not value Is Nothing) Then
-                stringify &= $" (length: ${value.Length})"
-            End If
-
             result.AppendLine($"  {variable.name.PadEnd(30)} = {stringify}")
         Next
 
