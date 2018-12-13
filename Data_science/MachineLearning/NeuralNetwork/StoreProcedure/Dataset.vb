@@ -65,12 +65,12 @@ Namespace NeuralNetwork.StoreProcedure
         ''' Neuron network input parameters
         ''' </summary>
         ''' <returns></returns>
-        Public Property Status As Double()
+        Public Property status As Double()
         ''' <summary>
         ''' The network expected output values
         ''' </summary>
         ''' <returns></returns>
-        Public Property Target As Double()
+        Public Property target As Double()
 
         ''' <summary>
         ''' Create a new training dataset
@@ -78,8 +78,8 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <param name="values">Neuron network input parameters</param>
         ''' <param name="targets">The network expected output values</param>
         Public Sub New(values#(), targets#())
-            Me.Status = values
-            Me.Target = targets
+            Me.status = values
+            Me.target = targets
         End Sub
 
         ''' <summary>
@@ -89,7 +89,7 @@ Namespace NeuralNetwork.StoreProcedure
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{Status.AsVector.ToString} => {Target.AsVector.ToString}"
+            Return $"{status.AsVector.ToString} => {target.AsVector.ToString}"
         End Function
     End Class
 

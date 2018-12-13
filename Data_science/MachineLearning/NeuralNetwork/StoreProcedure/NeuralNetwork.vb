@@ -1,22 +1,25 @@
-﻿Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text.Xml.Models
+﻿Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace NeuralNetwork.StoreProcedure
 
     ''' <summary>
     ''' Xml文件存储格式
     ''' </summary>
-    Public Class NeuralNetwork
+    <XmlRoot("NeuralNetwork", [Namespace]:="http://machinelearning.scibasic.net/ANN/")>
+    Public Class NeuralNetwork : Inherits XmlDataModel
 
         Public Property ActiveFunction As ActiveFunction
-        Public Property LearnRate As Double
-        Public Property Momentum As Double
+        Public Property learnRate As Double
+        Public Property momentum As Double
 
         Public Property neurons As NeuronNode()
         Public Property connections As Synapse()
-        Public Property inputlayer As TermsVector
-        Public Property outputlayer As TermsVector
-        Public Property hiddenlayers As TermsVector()
+        Public Property inputlayer As NeuronLayer
+        Public Property outputlayer As NeuronLayer
+        Public Property hiddenlayers As NeuronLayer()
 
         Private Shared Iterator Function GetLayerNodes(layer As Layer, hash2Uid As Dictionary(Of Neuron, String), id As Uid) As IEnumerable(Of NeuronNode)
             Dim guid$
@@ -26,11 +29,11 @@ Namespace NeuralNetwork.StoreProcedure
                 hash2Uid(neuron) = guid
 
                 Yield New NeuronNode With {
-                    .Bias = neuron.Bias,
-                    .BiasDelta = neuron.BiasDelta,
-                    .Gradient = neuron.Gradient,
-                    .ID = guid,
-                    .Value = neuron.Value
+                    .bias = neuron.Bias,
+                    .delta = neuron.BiasDelta,
+                    .gradient = neuron.Gradient,
+                    .id = guid,
+                    .value = neuron.Value
                 }
             Next
         End Function
@@ -39,10 +42,10 @@ Namespace NeuralNetwork.StoreProcedure
             For Each neuron As Neuron In layer.Neurons
                 For Each edge In neuron.PopulateAllSynapses
                     Yield New Synapse With {
-                        .InputNeuron = hash2Uid(edge.InputNeuron),
-                        .OutputNeuron = hash2Uid(edge.OutputNeuron),
-                        .Weight = edge.Weight,
-                        .WeightDelta = edge.WeightDelta
+                        .[in] = hash2Uid(edge.InputNeuron),
+                        .out = hash2Uid(edge.OutputNeuron),
+                        .w = edge.Weight,
+                        .delta = edge.WeightDelta
                     }
                 Next
             Next
@@ -60,10 +63,10 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <param name="instance"></param>
         ''' <returns></returns>
         Public Shared Function Snapshot(instance As Network) As NeuralNetwork
-            Dim id As New Uid
+            Dim id As New Uid(1000, False)
             Dim hash2Uid As New Dictionary(Of Neuron, String)
             Dim nodes As New List(Of NeuronNode)
-            Dim hiddenlayers As New List(Of TermsVector)
+            Dim hiddenlayers As New List(Of NeuronLayer)
             Dim inputlayer As String()
             Dim outputlayer As String()
             Dim connections As New List(Of Synapse)
@@ -72,10 +75,11 @@ Namespace NeuralNetwork.StoreProcedure
             nodes += GetLayerNodes(instance.InputLayer, hash2Uid, id)
             inputlayer = GetGuids(instance.InputLayer, hash2Uid)
 
-            For Each layer As Layer In instance.HiddenLayer.Layers
+            For Each layer As SeqValue(Of Layer) In instance.HiddenLayer.SeqIterator
                 nodes += GetLayerNodes(layer, hash2Uid, id)
-                hiddenlayers += New TermsVector With {
-                    .Terms = GetGuids(layer, hash2Uid)
+                hiddenlayers += New NeuronLayer With {
+                    .id = layer.i + 1,
+                    .neurons = GetGuids(layer, hash2Uid)
                 }
             Next
 
@@ -85,7 +89,7 @@ Namespace NeuralNetwork.StoreProcedure
             ' edges
             connections += GetNodeConnections(instance.InputLayer, hash2Uid)
 
-            For Each layer As Layer In instance.HiddenLayer.Layers
+            For Each layer As Layer In instance.HiddenLayer
                 connections += GetNodeConnections(layer, hash2Uid)
             Next
 
@@ -93,12 +97,12 @@ Namespace NeuralNetwork.StoreProcedure
 
             Return New NeuralNetwork With {
                 .ActiveFunction = instance.ActiveFunction,
-                .LearnRate = instance.LearnRate,
-                .Momentum = instance.Momentum,
+                .learnRate = instance.LearnRate,
+                .momentum = instance.Momentum,
                 .neurons = nodes,
                 .hiddenlayers = hiddenlayers,
-                .inputlayer = New TermsVector With {.Terms = inputlayer},
-                .outputlayer = New TermsVector With {.Terms = outputlayer},
+                .inputlayer = New NeuronLayer With {.id = "input", .neurons = inputlayer},
+                .outputlayer = New NeuronLayer With {.id = "output", .neurons = outputlayer},
                 .connections = connections
             }
         End Function

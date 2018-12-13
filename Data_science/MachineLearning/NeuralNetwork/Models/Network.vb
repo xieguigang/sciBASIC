@@ -50,6 +50,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.Terminal.ProgressBar
 
 Namespace NeuralNetwork
 
@@ -106,12 +107,18 @@ Namespace NeuralNetwork
 
 #Region "-- Training --"
         Public Sub Train(dataSets As List(Of Sample), numEpochs As Integer)
-            For i As Integer = 0 To numEpochs - 1
-                For Each dataSet As Sample In dataSets
-                    ForwardPropagate(dataSet.Status)
-                    BackPropagate(dataSet.Target)
+            Using progress As New ProgressBar("Training ANN...")
+                Dim tick As New ProgressProvider(numEpochs)
+
+                For i As Integer = 0 To numEpochs - 1
+                    For Each dataSet As Sample In dataSets
+                        ForwardPropagate(dataSet.status)
+                        BackPropagate(dataSet.target)
+                    Next
+
+                    Call progress.SetProgress(tick.StepProgress, $"Iterations: [{i}/{numEpochs}]")
                 Next
-            Next
+            End Using
         End Sub
 
         Public Sub Train(dataSets As List(Of Sample), minimumError As Double)
@@ -122,13 +129,15 @@ Namespace NeuralNetwork
                 Dim errors As New List(Of Double)()
 
                 For Each dataSet As Sample In dataSets
-                    ForwardPropagate(dataSet.Status)
-                    BackPropagate(dataSet.Target)
-                    errors.Add(CalculateError(dataSet.Target))
+                    ForwardPropagate(dataSet.status)
+                    BackPropagate(dataSet.target)
+                    errors.Add(CalculateError(dataSet.target))
                 Next
 
                 [error] = errors.Average()
                 numEpochs += 1
+
+                Call $"{numEpochs}\t{(minimumError / [error] * 100).ToString("F2")}%".__DEBUG_ECHO
             End While
         End Sub
 

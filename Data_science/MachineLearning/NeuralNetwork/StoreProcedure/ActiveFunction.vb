@@ -13,7 +13,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute>
-        Public Property Name As String
+        Public Property name As String
         ''' <summary>
         ''' 函数对象的构造参数列表
         ''' </summary>
@@ -21,6 +21,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <remarks>
         ''' 因为无法将字典对象进行Xml序列化, 所以在这里使用键值对集合来表示
         ''' </remarks>
+        <XmlElement>
         Public Property Arguments As NamedValue()
 
         Default Public ReadOnly Property Item(name As String) As Double

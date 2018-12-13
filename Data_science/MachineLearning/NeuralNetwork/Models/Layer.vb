@@ -5,6 +5,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace NeuralNetwork
 
+    ''' <summary>
+    ''' 输入层和输出层对象,神经元节点的数量应该和实际的问题保持一致
+    ''' </summary>
     Public Class Layer
 
         Public ReadOnly Property Neurons As Neuron()
@@ -66,7 +69,18 @@ Namespace NeuralNetwork
         End Function
     End Class
 
-    Public Class HiddenLayers
+    ''' <summary>
+    ''' 隐藏层,由多个神经元层所构成的
+    ''' 
+    ''' ##### 20181212
+    ''' 
+    ''' 请注意,这个隐藏层的大小虽然可以是任意规模的,但是并不是越大越好的
+    ''' 当隐藏层越大的话,会导致训练的效率降低,并且预测能力也会下降
+    ''' 如果问题比较简单的话,三层隐藏层已经足够了
+    ''' 
+    ''' 一般来说,隐藏层之中每一层的神经元的数量应该要大于输入和输出的节点数的最大值.
+    ''' </summary>
+    Public Class HiddenLayers : Implements IEnumerable(Of Layer)
 
         Public ReadOnly Property Layers As Layer()
         Public ReadOnly Property Size As Integer
@@ -125,6 +139,16 @@ Namespace NeuralNetwork
 
         Public Overrides Function ToString() As String
             Return $"{Size} hidden layers => {Layers.Select(Function(l) l.Neurons.Length).ToArray.GetJson }"
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Layer) Implements IEnumerable(Of Layer).GetEnumerator
+            For Each layer As Layer In Layers
+                Yield layer
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 End Namespace
