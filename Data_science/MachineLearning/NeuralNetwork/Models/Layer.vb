@@ -8,7 +8,7 @@ Namespace NeuralNetwork
     ''' <summary>
     ''' 输入层和输出层对象,神经元节点的数量应该和实际的问题保持一致
     ''' </summary>
-    Public Class Layer
+    Public Class Layer : Implements IEnumerable(Of Neuron)
 
         Public ReadOnly Property Neurons As Neuron()
 
@@ -66,6 +66,16 @@ Namespace NeuralNetwork
 
         Public Overrides Function ToString() As String
             Return $"{Neurons.Length} neurons => {Output.AsVector.ToString}"
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of Neuron) Implements IEnumerable(Of Neuron).GetEnumerator
+            For Each neuron As Neuron In Neurons
+                Yield neuron
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
         End Function
     End Class
 

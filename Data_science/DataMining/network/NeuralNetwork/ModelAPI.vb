@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::2d46eced2818f54ff0409cd8de0dcb0a, Data_science\DataMining\network\NeuralNetwork\ModelAPI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module NetworkModelAPI
-    ' 
-    '         Function: __edges, __node, __synapse, VisualizeModel
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module NetworkModelAPI
+' 
+'         Function: __edges, __node, __synapse, VisualizeModel
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.DataMining.NeuralNetwork
 Imports Microsoft.VisualBasic.Data.visualize.Network
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
+Imports NeuronNetwork = Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Network
 
 Namespace NeuralNetwork.Models
 
@@ -53,18 +54,18 @@ Namespace NeuralNetwork.Models
     ''' </summary>
     Public Module NetworkModelAPI
 
-        <Extension> Public Function VisualizeModel(net As NeuralNetwork.Network) As FileStream.NetworkTables
+        <Extension> Public Function VisualizeModel(net As NeuronNetwork) As FileStream.NetworkTables
             Dim network As New FileStream.NetworkTables
             Dim hash = (New List(Of Neuron) + net.HiddenLayer + net.InputLayer + net.OutputLayer) _
                 .SeqIterator _
                 .ToDictionary(Function(x) x.value,
                               Function(x) x.i)
 
-            network += net.HiddenLayer.Select(Function(x) x.__node(NameOf(net.HiddenLayer), hash))
+            network += net.HiddenLayer.Select(Function(x) x.Select(Function(n) n.__node(NameOf(net.HiddenLayer), hash))).IteratesALL
             network += net.InputLayer.Select(Function(x) x.__node(NameOf(net.InputLayer), hash))
             network += net.OutputLayer.Select(Function(x) x.__node(NameOf(net.OutputLayer), hash))
 
-            network += net.HiddenLayer.Select(Function(x) x.__edges(NameOf(net.HiddenLayer), hash)).IteratesALL
+            network += net.HiddenLayer.Select(Function(x) x.Select(Function(n) n.__edges(NameOf(net.HiddenLayer), hash))).IteratesALL.IteratesALL
             network += net.InputLayer.Select(Function(x) x.__edges(NameOf(net.InputLayer), hash)).IteratesALL
             network += net.OutputLayer.Select(Function(x) x.__edges(NameOf(net.OutputLayer), hash)).IteratesALL
 
