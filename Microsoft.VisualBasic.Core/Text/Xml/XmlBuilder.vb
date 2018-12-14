@@ -54,6 +54,11 @@ Namespace Text.Xml.Models
             Call MyBase.New(1024)
         End Sub
 
+        Public Function Unescape() As XmlBuilder
+            Call Replace("&lt;", "<").Replace("&gt;", ">")
+            Return Me
+        End Function
+
         Public Overloads Shared Operator +(xb As XmlBuilder, node As XElement) As XmlBuilder
             Call xb.Script.AppendLine(node.ToString)
             Return xb
