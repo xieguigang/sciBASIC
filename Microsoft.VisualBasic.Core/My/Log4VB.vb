@@ -82,7 +82,9 @@ Namespace My
         Public Function Print(header$, msg$, msgColor As ConsoleColor, level As Integer) As Boolean
             My.InnerQueue.AddToQueue(
                 Sub()
-                    msg = msg.ReplaceMetaChars
+                    ' 2018-12-14
+                    ' 替换meta chars可能会导致windows下的路径显示出现bug
+                    ' msg = msg.ReplaceMetaChars
 
                     If ForceSTDError Then
                         Call Console.Error.WriteLine($"[{header}]{msg}")
