@@ -228,7 +228,7 @@ Namespace IO.Linq
         ''' <typeparam name="Tsrc"></typeparam>
         ''' <param name="[ctype]"></param>
         ''' <returns></returns>
-        Public Function ToArray(Of Tsrc)([ctype] As Func(Of Tsrc, T())) As Action(Of Tsrc)
+        Public Function ToArray(Of Tsrc)([ctype] As Func(Of Tsrc, IEnumerable(Of T))) As Action(Of Tsrc)
             Return AddressOf New __ctypeTransform(Of Tsrc) With {
                 .__IO = Me,
                 .__ctypeArray = [ctype]
@@ -250,11 +250,11 @@ Namespace IO.Linq
 
         Private Class __ctypeTransform(Of Tsrc)
             Public __IO As WriteStream(Of T)
-            Public __ctypeArray As Func(Of Tsrc, T())
+            Public __ctypeArray As Func(Of Tsrc, IEnumerable(Of T))
             Public __ctyper As Func(Of Tsrc, T)
 
             Public Sub WriteArray(source As Tsrc)
-                Dim array As T() = __ctypeArray(source)
+                Dim array As T() = __ctypeArray(source).ToArray
                 Call __IO.Flush(array)
             End Sub
 
