@@ -99,11 +99,11 @@ Namespace NeuralNetwork
 
     Public Enum TrainingType
         ''' <summary>
-        ''' <see cref="Helpers.MaxEpochs"/>
+        ''' 以给定的迭代次数的方式进行训练. <see cref="Helpers.MaxEpochs"/>
         ''' </summary>
         Epoch
         ''' <summary>
-        ''' <see cref="Helpers.MinimumError"/>
+        ''' 以小于目标误差的方式进行训练. <see cref="Helpers.MinimumError"/>
         ''' </summary>
         MinimumError
     End Enum

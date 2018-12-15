@@ -76,6 +76,15 @@ Namespace NeuralNetwork
             End Get
         End Property
 
+        ''' <summary>
+        ''' 将训练的成果状态进行快照,转换为可以保存的XML文件对象
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function TakeSnapshot() As StoreProcedure.NeuralNetwork
+            Return StoreProcedure.NeuralNetwork.Snapshot(NeuronNetwork)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Encouraging()
             Call Train()
