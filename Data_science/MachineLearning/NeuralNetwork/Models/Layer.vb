@@ -149,6 +149,11 @@ Namespace NeuralNetwork
             End Get
         End Property
 
+        Friend Sub New(layers As IEnumerable(Of Layer))
+            Me.Layers = layers.ToArray
+            Me.Size = Me.Layers.Length
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>

@@ -29,12 +29,26 @@ Namespace NeuralNetwork
                 .createNeurons(activations.output, neuronDataTable) _
                 .ToDictionary(Function(n) n.Name,
                               Function(n) n.Value)
+            Dim hiddenLayer As Dictionary(Of String, Neuron)() = model.hiddenlayers _
+                .layers _
+                .OrderBy(Function(layer) layer.id) _
+                .Select(Function(layer)
+                            Return layer _
+                                .createNeurons(activations.output, neuronDataTable) _
+                                .ToDictionary(Function(n) n.Name,
+                                              Function(n) n.Value)
+                        End Function) _
+                .ToArray
+
+            ' 构建神经元之间的链接
+            Dim neurons As New 
 
             Return New Network(activations) With {
                 .LearnRate = model.learnRate,
                 .Momentum = model.momentum,
                 .InputLayer = New Layer(inputLayer.Values.ToArray),
-                .OutputLayer = New Layer(outputLayer.Values.ToArray)
+                .OutputLayer = New Layer(outputLayer.Values.ToArray),
+                .HiddenLayer = New HiddenLayers(hiddenLayer.Select(Function(c) New Layer(c.Values.ToArray)))
             }
         End Function
 

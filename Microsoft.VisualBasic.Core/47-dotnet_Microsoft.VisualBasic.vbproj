@@ -1019,7 +1019,7 @@
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Mappings.vb" />
     <Compile Include="ComponentModel\DataSource\SchemaMaps\Schema.vb" />
     <Compile Include="ComponentModel\DataStructures\CapacityQueue.vb" />
-    <Compile Include="ComponentModel\DataStructures\BucketDictionary.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\BucketDictionary.vb" />
     <Compile Include="ComponentModel\DataStructures\FuzzyGroup.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\ITreeNode.vb" />
     <Compile Include="ComponentModel\DataStructures\Tree\TreeNodeBase.vb" />
