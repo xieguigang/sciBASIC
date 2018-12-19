@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ae2ff020be9d99a24af9b6bdd4de126, Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\TokenIcer.vb"
+﻿#Region "Microsoft.VisualBasic::1f2dc27b00650215c17276aa7a4122d0, Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\TokenIcer.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Tokens
     ' 
-    '         Function: __parseDouble, __parseUNDEFINE, IsCloseStack, IsOpenStack, TryParse
+    '         Function: IsCloseStack, IsOpenStack, parseDouble, parseUNDEFINE, TryParse
     ' 
     '     Enum ExpressionTokens
     ' 

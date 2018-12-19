@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89f4c4c81416ada93b39548097eb40dd, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9da57c8924de6a71a0f8d4621ece5274, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: CreateNew, EnumerateTables, ReadTableAuto
+    '     Function: CreateNew, EnumerateTables, FirstSheet, ReadTableAuto
     ' 
     ' /********************************************************************************/
 

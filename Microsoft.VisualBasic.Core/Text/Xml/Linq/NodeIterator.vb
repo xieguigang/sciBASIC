@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60e07f146f75467676f16644dcb899cf, Microsoft.VisualBasic.Core\Text\Xml\Linq\NodeIterator.vb"
+﻿#Region "Microsoft.VisualBasic::661e37630c61ceaf8afbf44ae58d82c9, Microsoft.VisualBasic.Core\Text\Xml\Linq\NodeIterator.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module NodeIterator
     ' 
-    '         Function: IterateArrayNodes
+    '         Function: GetArrayTemplate, IterateArrayNodes
     ' 
     ' 
     ' /********************************************************************************/

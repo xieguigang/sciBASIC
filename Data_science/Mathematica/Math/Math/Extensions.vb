@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2b8afdf3e06ecf2f580c5813c2aef89, Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::69b1f85294e1a352a41b23a60d0afa2a, Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,9 @@
     ' Module Extensions
     ' 
     '     Function: (+4 Overloads) AsVector, DoubleRange, FDR, FirstDecrease, FirstIncrease
-    '               IntRange, IsInside, Iterates, (+2 Overloads) Range, Reach
-    '               seq2, Sim, SSM, Tanimoto, X
-    '               Y
+    '               FlipCoin, IntRange, IsInside, Iterates, (+2 Overloads) Range
+    '               Reach, seq2, Sim, SSM, Tanimoto
+    '               X, Y
     ' 
     ' /********************************************************************************/
 

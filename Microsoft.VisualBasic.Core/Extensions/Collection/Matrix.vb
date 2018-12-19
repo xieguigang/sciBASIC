@@ -1,42 +1,43 @@
-﻿#Region "Microsoft.VisualBasic::67050c28b38843b55d4dd1ab43343a35, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::85535aa28678e76ae6415cfda4084efb, Microsoft.VisualBasic.Core\Extensions\Collection\Matrix.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module MatrixExtensions
-' 
-'     Function: DATA, MAT, (+2 Overloads) Matrix, RowIterator, ToFloatMatrix
-'               ToMatrix, ToVectorList
-' 
-' /********************************************************************************/
+    ' Module MatrixExtensions
+    ' 
+    '     Function: DATA, GetCol, GetRow, GetSize, MAT
+    '               (+2 Overloads) Matrix, RowIterator, SetCol, SetRow, ToFloatMatrix
+    '               ToMatrix, ToVectorList
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

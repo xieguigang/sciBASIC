@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba8799f56c067061d6c0f39de97de060, Data_science\DataMining\Visualize\Kmeans.vb"
+﻿#Region "Microsoft.VisualBasic::cfde6396eb816be2b0679d49e8d529be, Data_science\Visualization\Kmeans\Kmeans.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module Kmeans
+    '     Module KmeansExtensions
     ' 
-    '     Function: ClusterGroups, Scatter2D, (+2 Overloads) Scatter3D
+    '         Function: ClusterGroups, Scatter2D, (+2 Overloads) Scatter3D
+    ' 
     ' 
     ' /********************************************************************************/
 

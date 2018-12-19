@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29b50c52bcdb9a9bd4bb7943e74356ce, mime\application%json\Parser\JsonObject.vb"
+﻿#Region "Microsoft.VisualBasic::bfb30af0c79b6fbe3faaf96f07335885, mime\application%json\Parser\JsonObject.vb"
 
     ' Author:
     ' 
