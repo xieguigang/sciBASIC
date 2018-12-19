@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
@@ -20,24 +21,38 @@ Namespace NeuralNetwork
                     {"hiddens", model.hiddenlayers.activation}
                 })
             Dim neuronDataTable = model.neurons.ToDictionary(Function(n) n.id)
-            Dim inputLayer As Neuron() = model.inputlayer.createNeurons(activations.input, neuronDataTable).ToArray
-            Dim outputLayer As Neuron() = model.outputlayer.createNeurons(activations.output, neuronDataTable).ToArray
+            Dim inputLayer As Dictionary(Of String, Neuron) = model.inputlayer _
+                .createNeurons(activations.input, neuronDataTable) _
+                .ToDictionary(Function(n) n.Name,
+                              Function(n) n.Value)
+            Dim outputLayer As Dictionary(Of String, Neuron) = model.outputlayer _
+                .createNeurons(activations.output, neuronDataTable) _
+                .ToDictionary(Function(n) n.Name,
+                              Function(n) n.Value)
 
             Return New Network(activations) With {
                 .LearnRate = model.learnRate,
                 .Momentum = model.momentum,
-                .InputLayer = New Layer(inputLayer),
-                .OutputLayer = New Layer(outputLayer)
+                .InputLayer = New Layer(inputLayer.Values.ToArray),
+                .OutputLayer = New Layer(outputLayer.Values.ToArray)
             }
         End Function
 
         <Extension>
-        Private Iterator Function createNeurons(layer As NeuronLayer, active As IActivationFunction, neuronDataTable As Dictionary(Of String, NeuronNode)) As IEnumerable(Of Neuron)
+        Private Iterator Function createNeurons(layer As NeuronLayer, active As IActivationFunction, neuronDataTable As Dictionary(Of String, NeuronNode)) As IEnumerable(Of NamedValue(Of Neuron))
             For Each id As String In layer.neurons
                 Dim data As NeuronNode = neuronDataTable(id)
-                Dim neuron As New Neuron(active)
+                Dim neuron As New Neuron(active) With {
+                    .Bias = data.bias,
+                    .BiasDelta = data.delta,
+                    .Gradient = data.gradient,
+                    .Value = data.value
+                }
 
-                Yield neuron
+                Yield New NamedValue(Of Neuron) With {
+                    .Name = id,
+                    .Value = neuron
+                }
             Next
         End Function
     End Module
