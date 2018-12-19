@@ -93,6 +93,10 @@ Namespace NeuralNetwork.StoreProcedure
             Next
 
             connections += GetNodeConnections(instance.OutputLayer, hash2Uid)
+            connections = connections _
+                .GroupBy(Function(n) $"{n.in} = {n.out}") _
+                .Select(Function(g) g.First) _
+                .AsList
 
             Return New NeuralNetwork With {
                 .learnRate = instance.LearnRate,
