@@ -56,8 +56,8 @@ Namespace NeuralNetwork
     Public Class Neuron
 
 #Region "-- Properties --"
-        <ScriptIgnore> Public Property InputSynapses As List(Of Synapse)
-        <ScriptIgnore> Public Property OutputSynapses As List(Of Synapse)
+        <ScriptIgnore> Public Property InputSynapses As Synapse()
+        <ScriptIgnore> Public Property OutputSynapses As Synapse()
         Public Property Bias As Double
         Public Property BiasDelta As Double
         Public Property Gradient As Double
@@ -76,8 +76,8 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
         Public Sub New(Optional active As IActivationFunction = Nothing)
-            InputSynapses = New List(Of Synapse)()
-            OutputSynapses = New List(Of Synapse)()
+            InputSynapses = {}
+            OutputSynapses = {}
             Bias = Helpers.GetRandom()
             Value = Helpers.GetRandom
             BiasDelta = Helpers.GetRandom
