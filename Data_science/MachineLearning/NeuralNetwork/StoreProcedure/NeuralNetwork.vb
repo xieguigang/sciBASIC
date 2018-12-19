@@ -1,4 +1,5 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -19,6 +20,20 @@ Namespace NeuralNetwork.StoreProcedure
         Public Property inputlayer As NeuronLayer
         Public Property outputlayer As NeuronLayer
         Public Property hiddenlayers As HiddenLayer
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="normalize">进行所输入的样本数据的归一化的矩阵</param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetPredictLambda(normalize As NormalizeMatrix) As Func(Of Sample, Double())
+            With Me.LoadModel
+                Return Function(sample)
+                           Return .Compute(normalize.NormalizeInput(sample))
+                       End Function
+            End With
+        End Function
 
         Private Shared Iterator Function GetLayerNodes(layer As Layer, hash2Uid As Dictionary(Of Neuron, String), id As Uid) As IEnumerable(Of NeuronNode)
             Dim guid$

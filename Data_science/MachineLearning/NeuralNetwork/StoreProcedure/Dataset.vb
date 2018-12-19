@@ -44,6 +44,7 @@
 #End Region
 
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -96,9 +97,10 @@ Namespace NeuralNetwork.StoreProcedure
     ''' <summary>
     ''' A training dataset that stored in XML file.
     ''' </summary>
-    Public Class DataSet
+    Public Class DataSet : Inherits XmlDataModel
 
         Public Property DataSamples As Sample()
+        Public Property NormalizeMatrix As NormalizeMatrix
 
     End Class
 End Namespace
