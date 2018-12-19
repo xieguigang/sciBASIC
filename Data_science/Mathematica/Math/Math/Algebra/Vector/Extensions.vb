@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::e4d97dc04a397fa370d9bcd31dc268ca, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: AsVector, Point2D, (+2 Overloads) Points, (+2 Overloads) rand, Take
-    '                   Top
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Extensions
+' 
+'         Function: AsVector, Point2D, (+2 Overloads) Points, (+2 Overloads) rand, Take
+'                   Top
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,6 +46,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Vectorization
 
 Namespace LinearAlgebra
@@ -93,18 +94,30 @@ Namespace LinearAlgebra
             Return New Vector(v.Takes(indices.ToArray))
         End Function
 
+        ReadOnly normalRange As New DefaultValue(Of DoubleRange)({0, 1})
+        ReadOnly random As New Random
+
         ''' <summary>
-        ''' 返回目标长度的[0-1]之间的随机数向量
+        ''' 默认返回目标长度的``[0-1]``之间的随机数向量
         ''' </summary>
         ''' <param name="size%"></param>
         ''' <returns></returns>
-        Public Function rand(size%) As Vector
-            Dim rnd As New Random
-            Dim list As New List(Of Double)
+        Public Function rand(size%, Optional range As DoubleRange = Nothing) As Vector
+            Dim list As Double() = New Double(size - 1) {}
 
-            For i As Integer = 0 To size - 1
-                Call list.Add(rnd.NextDouble)
-            Next
+            SyncLock random
+                If range Is Nothing Then
+                    For i As Integer = 0 To size - 1
+                        list(i) = random.NextDouble
+                    Next
+                Else
+                    Dim d = range.Length
+
+                    For i As Integer = 0 To size - 1
+                        list(i) = random.NextDouble * d + range.Min
+                    Next
+                End If
+            End SyncLock
 
             Return New Vector(list)
         End Function

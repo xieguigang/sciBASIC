@@ -404,6 +404,7 @@
     <Compile Include="FuzzyCMeans\Entity.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
+    <Compile Include="Kernel\Neuron\NeuronEntity.vb" />
     <Compile Include="KMeans\EntityModels\csv.vb" />
     <Compile Include="KMeans\Extensions.vb" />
     <Compile Include="KMeans\CompleteLinkage\Cluster.vb" />
@@ -429,10 +430,9 @@
     <Compile Include="Kernel\BayesianBeliefNetwork\BeliefNetwork.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BNInfer.vb" />
     <None Include="AprioriRules\README.md" />
-    <Compile Include="Kernel\Neuron.vb" />
+    <Compile Include="Kernel\Neuron\Neuron.vb" />
     <Compile Include="Kernel\Bayesian.vb" />
     <Compile Include="ComponentModel\Entity.vb" />
-    <Compile Include="ComponentModel\Vector.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

@@ -47,16 +47,28 @@
 
 #End Region
 
-Imports System.Web.Script.Serialization
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 
 Namespace NeuralNetwork
 
+    ''' <summary>
+    ''' 神经元对象模型
+    ''' </summary>
     Public Class Neuron
 
 #Region "-- Properties --"
-        <ScriptIgnore> Public Property InputSynapses As List(Of Synapse)
-        <ScriptIgnore> Public Property OutputSynapses As List(Of Synapse)
+
+        ''' <summary>
+        ''' 这个神经元对象和上一层神经元之间的突触链接列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property InputSynapses As Synapse()
+        ''' <summary>
+        ''' 这个神经元对象和下一层神经元之间的突触链接列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property OutputSynapses As Synapse()
         Public Property Bias As Double
         Public Property BiasDelta As Double
         Public Property Gradient As Double
@@ -73,14 +85,21 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' 创建的神经链接是空的
         ''' </summary>
-        ''' <param name="active"></param>
+        ''' <param name="active"><see cref="Sigmoid"/> as default</param>
         Public Sub New(Optional active As IActivationFunction = Nothing)
-            InputSynapses = New List(Of Synapse)()
-            OutputSynapses = New List(Of Synapse)()
+            InputSynapses = {}
+            OutputSynapses = {}
             Bias = Helpers.GetRandom()
+            Value = Helpers.GetRandom
+            BiasDelta = Helpers.GetRandom
             activation = active Or defaultActivation
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="inputNeurons"></param>
+        ''' <param name="active"><see cref="Sigmoid"/> as default</param>
         Public Sub New(inputNeurons As IEnumerable(Of Neuron), Optional active As IActivationFunction = Nothing)
             Call Me.New(active)
 
@@ -99,7 +118,7 @@ Namespace NeuralNetwork
 #Region "-- Values & Weights --"
 
         ''' <summary>
-        ''' 
+        ''' 计算分类预测结果
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
@@ -110,6 +129,12 @@ Namespace NeuralNetwork
             Return Value
         End Function
 
+        ''' <summary>
+        ''' 计算当前的结果和测试结果数据之间的误差大小
+        ''' </summary>
+        ''' <param name="target"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalculateError(target As Double) As Double
             Return target - Value
         End Function
@@ -124,7 +149,7 @@ Namespace NeuralNetwork
             End If
         End Function
 
-        Public Sub UpdateWeights(learnRate As Double, momentum As Double)
+        Public Function UpdateWeights(learnRate As Double, momentum As Double) As Integer
             Dim prevDelta = BiasDelta
             BiasDelta = learnRate * Gradient
             Bias += BiasDelta + momentum * prevDelta
@@ -134,7 +159,9 @@ Namespace NeuralNetwork
                 synapse.WeightDelta = learnRate * Gradient * synapse.InputNeuron.Value
                 synapse.Weight += synapse.WeightDelta + momentum * prevDelta
             Next
-        End Sub
+
+            Return 0
+        End Function
 #End Region
     End Class
 End Namespace

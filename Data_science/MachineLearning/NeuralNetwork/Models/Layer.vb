@@ -20,6 +20,13 @@ Namespace NeuralNetwork
             End Get
         End Property
 
+        ''' <summary>
+        ''' 用于XML模型的加载操作
+        ''' </summary>
+        Friend Sub New(neurons As Neuron())
+            Me.Neurons = neurons
+        End Sub
+
         Sub New(size%, active As IActivationFunction, Optional input As Layer = Nothing)
             Neurons = New Neuron(size - 1) {}
 
@@ -29,27 +36,56 @@ Namespace NeuralNetwork
                 Next
             Else
                 For i As Integer = 0 To size - 1
-                    Neurons(i) = New Neuron(input.Neurons)
+                    Neurons(i) = New Neuron(input.Neurons, active)
                 Next
             End If
         End Sub
 
+        ''' <summary>
+        ''' 将外界的测试数据赋值到每一个神经元的<see cref="Neuron.Value"/>之上
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <remarks>
+        ''' 没有并行的必要
+        ''' </remarks>
         Public Sub Input(data As Double())
-            For i As Integer = 0 To Neurons.Length - 1
-                Neurons(i).Value = data(i)
+            For i As Integer = 0 To _Neurons.Length - 1
+                _Neurons(i).Value = data(i)
             Next
         End Sub
 
-        Public Sub UpdateWeights(learnRate#, momentum#)
-            For Each neuron As Neuron In Neurons
-                Call neuron.UpdateWeights(learnRate, momentum)
-            Next
+        Public Sub UpdateWeights(learnRate#, momentum#, Optional parallel As Boolean = False)
+            If Not parallel Then
+                For Each neuron As Neuron In Neurons
+                    Call neuron.UpdateWeights(learnRate, momentum)
+                Next
+            Else
+                With Aggregate neuron As Neuron
+                     In Neurons.AsParallel
+                     Into Sum(neuron.UpdateWeights(learnRate, momentum))
+                End With
+            End If
         End Sub
 
-        Public Sub CalculateValue()
-            For Each neuron As Neuron In Neurons
-                Call neuron.CalculateValue()
-            Next
+        ''' <summary>
+        ''' 计算输出层的结果值,即通过这个函数的调用计算出分类的结果值,结果值为``[0,1]``之间的小数
+        ''' </summary>
+        ''' <remarks>
+        ''' 因为输出层的节点数量比较少,所以这里应该也没有并行的必要?
+        ''' </remarks>
+        Public Sub CalculateValue(Optional parallel As Boolean = False)
+            If Not parallel Then
+                For Each neuron As Neuron In Neurons
+                    Call neuron.CalculateValue()
+                Next
+            Else
+                ' 在这里将结果值赋值到一个临时的匿名变量中
+                ' 来触发这个并行调用表达式
+                With Aggregate neuron As Neuron
+                     In Neurons.AsParallel
+                     Into Sum(neuron.CalculateValue)
+                End With
+            End If
         End Sub
 
         Public Sub CalculateGradient(targets As Double())
@@ -58,10 +94,17 @@ Namespace NeuralNetwork
             Next
         End Sub
 
-        Public Sub CalculateGradient()
-            For Each neuron As Neuron In Neurons
-                Call neuron.CalculateGradient()
-            Next
+        Public Sub CalculateGradient(Optional parallel As Boolean = False)
+            If Not parallel Then
+                For Each neuron As Neuron In Neurons
+                    Call neuron.CalculateGradient()
+                Next
+            Else
+                With Aggregate neuron As Neuron
+                     In Neurons.AsParallel
+                     Into Sum(neuron.CalculateGradient)
+                End With
+            End If
         End Sub
 
         Public Overrides Function ToString() As String
@@ -106,6 +149,11 @@ Namespace NeuralNetwork
             End Get
         End Property
 
+        Friend Sub New(layers As IEnumerable(Of Layer))
+            Me.Layers = layers.ToArray
+            Me.Size = Me.Layers.Length
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -127,23 +175,32 @@ Namespace NeuralNetwork
             Me.Size = size.Length
         End Sub
 
-        Public Sub ForwardPropagate()
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <remarks>
+        ''' 因为隐藏层的层数也不是很多,所以在这个函数也不需要并行?
+        ''' </remarks>
+        Public Sub ForwardPropagate(parallel As Boolean)
             For Each layer As Layer In Layers
-                Call layer.CalculateValue()
+                ' 2018-12-19
+                ' 虽然隐藏层数量比较少,但是每一个隐藏层之中,神经元节点数量可能会很多
+                ' 所以下面的这个函数的调用,内部实现应该是并行的?
+                Call layer.CalculateValue(parallel)
             Next
         End Sub
 
-        Public Sub BackPropagate(learnRate#, momentum#)
+        Public Sub BackPropagate(learnRate#, momentum#, parallel As Boolean)
             Dim reverse = Layers.Reverse.ToArray
 
             ' 因为在调用函数计算之后,值变了
             ' 所以在这里会需要使用两个for each
             ' 不然计算会出bug
             For Each revLayer As Layer In reverse
-                Call revLayer.CalculateGradient()
+                Call revLayer.CalculateGradient(parallel)
             Next
             For Each revLayer As Layer In reverse
-                Call revLayer.UpdateWeights(learnRate, momentum)
+                Call revLayer.UpdateWeights(learnRate, momentum, parallel)
             Next
         End Sub
 

@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.DataMining.Serials.PeriodAnalysis
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports SheetTable = Microsoft.VisualBasic.Data.csv.IO.File
 
 Public Module Extensions
 
@@ -125,8 +125,8 @@ Public Module Extensions
     End Function
 
     <ExportAPI("Data.ConvertToCsv")>
-    Public Function ConvertData(sample As SamplingData) As csv
-        Dim DataFile As New csv
+    Public Function ConvertData(sample As SamplingData) As SheetTable
+        Dim DataFile As New SheetTable
         Dim Row As New RowObject From {"Sampling"}
 
         For i As Integer = 0 To sample.TimePoints

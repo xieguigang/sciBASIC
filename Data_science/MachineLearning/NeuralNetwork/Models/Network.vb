@@ -51,6 +51,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 Imports Microsoft.VisualBasic.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.Text
 
 Namespace NeuralNetwork
 
@@ -70,8 +71,19 @@ Namespace NeuralNetwork
         ''' 激活函数
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ActiveFunction As ActiveFunction
+        ''' <remarks>
+        ''' 这个属性在这里只是起着存储到XML模型之中的作用,并没有实际的计算功能
+        ''' </remarks>
+        Public ReadOnly Property Activations As IReadOnlyDictionary(Of String, ActiveFunction)
 #End Region
+
+        ''' <summary>
+        ''' 这个构造函数是给XML模型加载操作所使用的
+        ''' </summary>
+        ''' <param name="activations"></param>
+        Friend Sub New(activations As LayerActives)
+            Me.Activations = activations.GetXmlModels
+        End Sub
 
         ''' <summary>
         ''' 
@@ -81,18 +93,20 @@ Namespace NeuralNetwork
         ''' <param name="outputSize">``>=1``</param>
         ''' <param name="learnRate"></param>
         ''' <param name="momentum"></param>
-        Public Sub New(inputSize As Integer, hiddenSize As Integer(), outputSize As Integer,
-                       Optional learnRate As Double = 0.1,
-                       Optional momentum As Double = 0.9,
-                       Optional active As IActivationFunction = Nothing)
+        Public Sub New(inputSize%, hiddenSize%(), outputSize%,
+                       Optional learnRate# = 0.1,
+                       Optional momentum# = 0.9,
+                       Optional active As LayerActives = Nothing)
+
+            Dim activations As LayerActives = active Or LayerActives.GetDefaultConfig
 
             Me.LearnRate = learnRate
             Me.Momentum = momentum
-            Me.ActiveFunction = (active Or defaultActivation).Store
+            Me.Activations = activations.GetXmlModels
 
-            InputLayer = New Layer(inputSize, active)
-            HiddenLayer = New HiddenLayers(InputLayer, hiddenSize, active)
-            OutputLayer = New Layer(outputSize, active, input:=HiddenLayer.Output)
+            InputLayer = New Layer(inputSize, activations.input)
+            HiddenLayer = New HiddenLayers(InputLayer, hiddenSize, activations.hiddens)
+            OutputLayer = New Layer(outputSize, activations.output, input:=HiddenLayer.Output)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -106,22 +120,26 @@ Namespace NeuralNetwork
         End Function
 
 #Region "-- Training --"
-        Public Sub Train(dataSets As List(Of Sample), numEpochs As Integer)
+        Public Sub Train(dataSets As Sample(), numEpochs As Integer, Optional parallel As Boolean = False)
             Using progress As New ProgressBar("Training ANN...")
                 Dim tick As New ProgressProvider(numEpochs)
+                Dim msg$
+                Dim errors As New List(Of Double)()
 
                 For i As Integer = 0 To numEpochs - 1
                     For Each dataSet As Sample In dataSets
-                        ForwardPropagate(dataSet.status)
-                        BackPropagate(dataSet.target)
+                        Call ForwardPropagate(dataSet.status, parallel)
+                        Call BackPropagate(dataSet.target, parallel)
+                        Call errors.Add(CalculateError(dataSet.target))
                     Next
 
-                    Call progress.SetProgress(tick.StepProgress, $"Iterations: [{i}/{numEpochs}]")
+                    msg = $"Iterations: [{i}/{numEpochs}], Err={errors.Average}"
+                    progress.SetProgress(tick.StepProgress, msg)
                 Next
             End Using
         End Sub
 
-        Public Sub Train(dataSets As List(Of Sample), minimumError As Double)
+        Public Sub Train(dataSets As Sample(), minimumError As Double, Optional parallel As Boolean = False)
             Dim [error] = 1.0
             Dim numEpochs = 0
 
@@ -129,15 +147,15 @@ Namespace NeuralNetwork
                 Dim errors As New List(Of Double)()
 
                 For Each dataSet As Sample In dataSets
-                    ForwardPropagate(dataSet.status)
-                    BackPropagate(dataSet.target)
-                    errors.Add(CalculateError(dataSet.target))
+                    Call ForwardPropagate(dataSet.status, parallel)
+                    Call BackPropagate(dataSet.target, parallel)
+                    Call errors.Add(CalculateError(dataSet.target))
                 Next
 
                 [error] = errors.Average()
                 numEpochs += 1
 
-                Call $"{numEpochs}\t{(minimumError / [error] * 100).ToString("F2")}%".__DEBUG_ECHO
+                Call $"{numEpochs}{ASCII.TAB}Error:={[error]}{ASCII.TAB}progress:={((minimumError / [error]) * 100).ToString("F2")}%".__DEBUG_ECHO
             End While
         End Sub
 
@@ -159,9 +177,9 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="inputs"></param>
         ''' <returns></returns>
-        Private Function ForwardPropagate(inputs As Double()) As Layer
+        Private Function ForwardPropagate(inputs As Double(), parallel As Boolean) As Layer
             Call InputLayer.Input(data:=inputs)
-            Call HiddenLayer.ForwardPropagate()
+            Call HiddenLayer.ForwardPropagate(parallel)
             Call OutputLayer.CalculateValue()
 
             Return OutputLayer
@@ -171,10 +189,10 @@ Namespace NeuralNetwork
         ''' 反向传播
         ''' </summary>
         ''' <param name="targets"></param>
-        Private Sub BackPropagate(ParamArray targets As Double())
+        Private Sub BackPropagate(targets As Double(), parallel As Boolean)
             Call OutputLayer.CalculateGradient(targets)
-            Call HiddenLayer.BackPropagate(LearnRate, Momentum)
-            Call OutputLayer.UpdateWeights(LearnRate, Momentum)
+            Call HiddenLayer.BackPropagate(LearnRate, Momentum, parallel)
+            Call OutputLayer.UpdateWeights(LearnRate, Momentum, parallel)
         End Sub
 
         ''' <summary>
@@ -186,7 +204,7 @@ Namespace NeuralNetwork
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Compute(ParamArray inputs As Double()) As Double()
-            Return ForwardPropagate(inputs).Output
+            Return ForwardPropagate(inputs, parallel:=False).Output
         End Function
 #End Region
     End Class

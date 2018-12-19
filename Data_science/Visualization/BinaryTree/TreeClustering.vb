@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::3425431125f4b13467a42952f9842e0f, Data_science\DataMining\network\BinaryTree\TreeClustering.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module TreeClustering
-    ' 
-    '         Function: __firstCluster, __rootCluster, __treeCluster, (+3 Overloads) TreeCluster
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module TreeClustering
+' 
+'         Function: __firstCluster, __rootCluster, __treeCluster, (+3 Overloads) TreeCluster
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel.Tasks
@@ -66,11 +67,11 @@ Namespace KMeans
             Dim source As EntityClusterModel() = resultSet.ToArray
             Dim mapNames As String() = source(Scan0).Properties.Keys.ToArray   ' 得到所有属性的名称
             Dim ds As Entity() = source.Select(
-                Function(x) New KMeans.Entity With {
+                Function(x) New Entity With {
                     .uid = x.ID,
                     .Properties = mapNames.Select(Function(s) x.Properties(s))
                 }).ToArray  ' 在这里生成计算模型
-            Dim tree As KMeans.Entity() = TreeCluster(ds, parallel, [stop], parallelDepth)   ' 二叉树聚类操作
+            Dim tree As Entity() = TreeCluster(ds, parallel, [stop], parallelDepth)   ' 二叉树聚类操作
             Dim saveResult As EntityClusterModel() = tree.Select(Function(x) x.ToLDM(mapNames))   ' 重新生成回数据模型
 
             For Each name As String In source.Select(Function(x) x.ID)
@@ -155,7 +156,7 @@ Namespace KMeans
             Return list.ToArray
         End Function
 
-        Private Function __rootCluster(Of T As Entity)(cluster As KMeans.KMeansCluster(Of T), id As String, [stop] As Integer, kmeansStop As Integer, parallelDepth%) As Entity()
+        Private Function __rootCluster(Of T As Entity)(cluster As KMeansCluster(Of T), id As String, [stop] As Integer, kmeansStop As Integer, parallelDepth%) As Entity()
             For Each x In cluster
                 x.uid &= ("." & id)
             Next

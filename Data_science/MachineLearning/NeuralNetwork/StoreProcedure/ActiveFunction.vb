@@ -6,6 +6,9 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace NeuralNetwork.StoreProcedure
 
+    ''' <summary>
+    ''' 激活函数的存储于XML文档之中的数据模型
+    ''' </summary>
     Public Class ActiveFunction
 
         ''' <summary>
@@ -32,6 +35,10 @@ Namespace NeuralNetwork.StoreProcedure
             End Get
         End Property
 
+        ''' <summary>
+        ''' 通过这个只读属性来得到激活函数的对象模型
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property [Function]() As IActivationFunction
             Get
                 With Me

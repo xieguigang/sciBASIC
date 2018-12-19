@@ -11,7 +11,6 @@ Namespace NeuralNetwork.StoreProcedure
     <XmlRoot("NeuralNetwork", [Namespace]:="http://machinelearning.scibasic.net/ANN/")>
     Public Class NeuralNetwork : Inherits XmlDataModel
 
-        Public Property ActiveFunction As ActiveFunction
         Public Property learnRate As Double
         Public Property momentum As Double
 
@@ -19,7 +18,7 @@ Namespace NeuralNetwork.StoreProcedure
         Public Property connections As Synapse()
         Public Property inputlayer As NeuronLayer
         Public Property outputlayer As NeuronLayer
-        Public Property hiddenlayers As NeuronLayer()
+        Public Property hiddenlayers As HiddenLayer
 
         Private Shared Iterator Function GetLayerNodes(layer As Layer, hash2Uid As Dictionary(Of Neuron, String), id As Uid) As IEnumerable(Of NeuronNode)
             Dim guid$
@@ -94,15 +93,29 @@ Namespace NeuralNetwork.StoreProcedure
             Next
 
             connections += GetNodeConnections(instance.OutputLayer, hash2Uid)
+            connections = connections _
+                .GroupBy(Function(n) $"{n.in} = {n.out}") _
+                .Select(Function(g) g.First) _
+                .AsList
 
             Return New NeuralNetwork With {
-                .ActiveFunction = instance.ActiveFunction,
                 .learnRate = instance.LearnRate,
                 .momentum = instance.Momentum,
                 .neurons = nodes,
-                .hiddenlayers = hiddenlayers,
-                .inputlayer = New NeuronLayer With {.id = "input", .neurons = inputlayer},
-                .outputlayer = New NeuronLayer With {.id = "output", .neurons = outputlayer},
+                .hiddenlayers = New HiddenLayer With {
+                    .activation = instance.Activations!hiddens,
+                    .layers = hiddenlayers
+                },
+                .inputlayer = New NeuronLayer With {
+                    .id = "input",
+                    .neurons = inputlayer,
+                    .activation = instance.Activations!input
+                },
+                .outputlayer = New NeuronLayer With {
+                    .id = "output",
+                    .neurons = outputlayer,
+                    .activation = instance.Activations!output
+                },
                 .connections = connections
             }
         End Function
