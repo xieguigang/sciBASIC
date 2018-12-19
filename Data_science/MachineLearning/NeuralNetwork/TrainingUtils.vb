@@ -56,6 +56,7 @@ Namespace NeuralNetwork
     Public Class TrainingUtils
 
         Public Property TrainingType As TrainingType = TrainingType.Epoch
+        Public Property MinError As Double = Helpers.MinimumError
 
         ''' <summary>
         ''' 最终得到的训练结果神经网络
@@ -85,11 +86,6 @@ Namespace NeuralNetwork
             Return StoreProcedure.NeuralNetwork.Snapshot(NeuronNetwork)
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Encouraging()
-            Call Train()
-        End Sub
-
         Sub New(net As Network)
             NeuronNetwork = net
         End Sub
@@ -98,7 +94,7 @@ Namespace NeuralNetwork
         Public Sub New(inputSize As Integer, hiddenSize As Integer(), outputSize As Integer,
                        Optional learnRate As Double = 0.1,
                        Optional momentum As Double = 0.9,
-                       Optional active As IActivationFunction = Nothing)
+                       Optional active As LayerActives = Nothing)
             Call Me.New(New Network(inputSize, hiddenSize, outputSize, learnRate, momentum, active))
         End Sub
 
@@ -110,6 +106,8 @@ Namespace NeuralNetwork
 
         ''' <summary>
         ''' 在这里添加训练使用的数据集
+        ''' (请注意,因为ANN的output结果向量只输出``[0,1]``之间的结果,所以在训练的时候,output应该是被编码为0或者1的;
+        ''' input可以接受任意实数的向量,但是这个要求所有属性都应该在同一个scale区间内,所以最好也归一化编码为0到1之间的小数)
         ''' </summary>
         ''' <param name="input"></param>
         ''' <param name="output"></param>
@@ -124,8 +122,17 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' 开始进行训练
         ''' </summary>
-        Public Sub Train()
-            Call Helpers.Train(NeuronNetwork, _dataSets, TrainingType)
+        ''' <param name="parallel">
+        ''' 小型的人工神经网络的训练,并不建议使用并行化
+        ''' </param>
+        Public Sub Train(Optional parallel As Boolean = False, Optional normalize As Boolean = False)
+            Dim trainingDataSet As Sample() = _dataSets.ToArray
+
+            If normalize Then
+                trainingDataSet = trainingDataSet.NormalizeSamples
+            End If
+
+            Call Helpers.Train(NeuronNetwork, trainingDataSet, TrainingType, minErr:=MinError, parallel:=parallel)
         End Sub
 
         ''' <summary>
@@ -134,24 +141,30 @@ Namespace NeuralNetwork
         ''' <param name="input">The inputs data</param>
         ''' <param name="convertedResults">The error outputs</param>
         ''' <param name="expectedResults">The corrects output</param>
-        Public Sub Corrects(input As Double(), convertedResults As Double(), expectedResults As Double(), Optional train As Boolean = True)
+        Public Sub Corrects(input As Double(), convertedResults As Double(), expectedResults As Double(),
+                            Optional train As Boolean = True,
+                            Optional parallel As Boolean = False,
+                            Optional normalize As Boolean = False)
+
             Dim offendingDataSet As Sample = _dataSets _
                 .FirstOrDefault(Function(x)
-                                    Return x.Status.SequenceEqual(input) AndAlso x.Target.SequenceEqual(convertedResults)
+                                    Return x.status.SequenceEqual(input) AndAlso x.target.SequenceEqual(convertedResults)
                                 End Function)
             _dataSets.Remove(offendingDataSet)
 
-            If Not _dataSets.Exists(Function(x) x.Status.SequenceEqual(input) AndAlso x.Target.SequenceEqual(expectedResults)) Then
+            If Not _dataSets.Exists(Function(x) x.status.SequenceEqual(input) AndAlso x.target.SequenceEqual(expectedResults)) Then
                 Call _dataSets.Add(New Sample(input, expectedResults))
             End If
 
             If train Then
-                Call Me.Train()
+                Call Me.Train(parallel, normalize)
             End If
         End Sub
 
-        Public Sub Corrects(dataset As Sample, expectedResults As Double(), Optional train As Boolean = True)
-            Call Corrects(dataset.Status, dataset.Target, expectedResults, train)
+        Public Sub Corrects(dataset As Sample, expectedResults As Double(),
+                            Optional train As Boolean = True,
+                            Optional parallel As Boolean = False)
+            Call Corrects(dataset.status, dataset.target, expectedResults, train, parallel)
         End Sub
     End Class
 End Namespace

@@ -316,6 +316,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="NeuralNetwork\ActiveFunctions\BipolarSigmoidFunction.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\LayerActives.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\IActivationFunction.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\SigmoidFunction.vb" />

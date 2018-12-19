@@ -67,8 +67,9 @@ Namespace NeuralNetwork
             Me.InputNeuron = inputNeuron
             Me.OutputNeuron = outputNeuron
 
-            ' 计算权重
+            ' 权重初始
             Weight = Helpers.GetRandom()
+            WeightDelta = Helpers.GetRandom
         End Sub
     End Class
 End Namespace

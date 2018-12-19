@@ -47,6 +47,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 
@@ -73,14 +74,21 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' 创建的神经链接是空的
         ''' </summary>
-        ''' <param name="active"></param>
+        ''' <param name="active"><see cref="Sigmoid"/> as default</param>
         Public Sub New(Optional active As IActivationFunction = Nothing)
             InputSynapses = New List(Of Synapse)()
             OutputSynapses = New List(Of Synapse)()
             Bias = Helpers.GetRandom()
+            Value = Helpers.GetRandom
+            BiasDelta = Helpers.GetRandom
             activation = active Or defaultActivation
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="inputNeurons"></param>
+        ''' <param name="active"><see cref="Sigmoid"/> as default</param>
         Public Sub New(inputNeurons As IEnumerable(Of Neuron), Optional active As IActivationFunction = Nothing)
             Call Me.New(active)
 
@@ -99,7 +107,7 @@ Namespace NeuralNetwork
 #Region "-- Values & Weights --"
 
         ''' <summary>
-        ''' 
+        ''' 计算分类预测结果
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
@@ -110,6 +118,7 @@ Namespace NeuralNetwork
             Return Value
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalculateError(target As Double) As Double
             Return target - Value
         End Function
@@ -124,7 +133,7 @@ Namespace NeuralNetwork
             End If
         End Function
 
-        Public Sub UpdateWeights(learnRate As Double, momentum As Double)
+        Public Function UpdateWeights(learnRate As Double, momentum As Double) As Integer
             Dim prevDelta = BiasDelta
             BiasDelta = learnRate * Gradient
             Bias += BiasDelta + momentum * prevDelta
@@ -134,7 +143,9 @@ Namespace NeuralNetwork
                 synapse.WeightDelta = learnRate * Gradient * synapse.InputNeuron.Value
                 synapse.Weight += synapse.WeightDelta + momentum * prevDelta
             Next
-        End Sub
+
+            Return 0
+        End Function
 #End Region
     End Class
 End Namespace

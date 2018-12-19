@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::54f51901522cb99dae5a3ef5dbeda0dc, Data_science\DataMining\Visualize\Testing\Kmeans3DTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Kmeans3DTest
-    ' 
-    '     Sub: CSSdriverTest, Main
-    ' 
-    ' /********************************************************************************/
+' Module Kmeans3DTest
+' 
+'     Sub: CSSdriverTest, Main
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.Visualize.DataMining
+Imports Microsoft.VisualBasic.Data.visualize.KMeans
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
@@ -78,7 +79,7 @@ Module Kmeans3DTest
 
         Call matrix.SaveTo("./matrix.csv")
 
-        Call Kmeans.Scatter3D(matrix, cata, camera, clusterN:=7).AsGDIImage.CorpBlank(30, Color.White).SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\kmeans3D.png")
+        Call KmeansExtensions.Scatter3D(matrix, cata, camera, clusterN:=7).AsGDIImage.CorpBlank(30, Color.White).SaveAs("G:\GCModeller\src\runtime\sciBASIC#\Data_science\kmeans3D.png")
     End Sub
 
     Sub CSSdriverTest()
@@ -86,7 +87,7 @@ Module Kmeans3DTest
 
             Dim CSS As CSSFile = CssParser.GetTagWithCSS("".ReadAllText)
 
-            Call GetType(Kmeans).LoadDriver("kmeans.scatter.3D").RunPlot(Nothing, CSS)
+            Call GetType(KmeansExtensions).LoadDriver("kmeans.scatter.3D").RunPlot(Nothing, CSS)
 
         End With
     End Sub

@@ -42,10 +42,23 @@ Namespace NeuralNetwork.StoreProcedure
 
         <XmlAttribute>
         Public Property id As String Implements IKeyedEntity(Of String).Key
+        Public Property activation As ActiveFunction
+        <XmlElement("neuron")>
         Public Property neurons As String()
 
         Protected Overrides Function getSize() As Integer
             Return neurons?.Length
+        End Function
+    End Class
+
+    Public Class HiddenLayer : Inherits ListOf
+
+        Public Property activation As ActiveFunction
+        <XmlElement("layers")>
+        Public Property layers As NeuronLayer()
+
+        Protected Overrides Function getSize() As Integer
+            Return layers.Length
         End Function
     End Class
 End Namespace
