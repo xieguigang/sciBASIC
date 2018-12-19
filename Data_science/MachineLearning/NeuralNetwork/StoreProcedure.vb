@@ -43,21 +43,24 @@ Namespace NeuralNetwork
 
             ' 构建神经元之间的链接
             Dim neurons As New BucketDictionary(Of String, Neuron)(hiddenLayer + inputLayer + outputLayer)
+            Dim connectedLinks As New Index(Of String)
 
             For Each edge As StoreProcedure.Synapse In model.connections
-                Dim inNeuron As Neuron = neurons(edge.in)
-                Dim outNeuron As Neuron = neurons(edge.out)
-                Dim output As New Synapse(inNeuron, outNeuron) With {
-                    .Weight = edge.w,
-                    .WeightDelta = edge.delta
-                }
-                Dim input As New Synapse(inNeuron, outNeuron) With {
-                    .Weight = edge.w,
-                    .WeightDelta = edge.delta
-                }
+                If connectedLinks.IndexOf($"{edge.in} = {edge.out}") = -1 Then
+                    Dim inNeuron As Neuron = neurons(edge.in)
+                    Dim outNeuron As Neuron = neurons(edge.out)
+                    Dim output As New Synapse(inNeuron, outNeuron) With {
+                        .Weight = edge.w,
+                        .WeightDelta = edge.delta
+                    }
+                    Dim input As New Synapse(inNeuron, outNeuron) With {
+                        .Weight = edge.w,
+                        .WeightDelta = edge.delta
+                    }
 
-                inNeuron.OutputSynapses.Add(output)
-                outNeuron.InputSynapses.Add(input)
+                    inNeuron.OutputSynapses.Add(output)
+                    outNeuron.InputSynapses.Add(input)
+                End If
             Next
 
             Return New Network(activations) With {

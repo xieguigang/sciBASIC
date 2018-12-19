@@ -1,6 +1,7 @@
 ﻿Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace NeuralNetwork.StoreProcedure
@@ -16,6 +17,13 @@ Namespace NeuralNetwork.StoreProcedure
         <XmlAttribute> Public Property w As Double
         <XmlAttribute> Public Property delta As Double
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
     End Class
 
     ''' <summary>
