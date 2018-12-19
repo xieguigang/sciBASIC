@@ -20,6 +20,13 @@ Namespace NeuralNetwork
             End Get
         End Property
 
+        ''' <summary>
+        ''' 用于XML模型的加载操作
+        ''' </summary>
+        Friend Sub New(neurons As Neuron())
+            Me.Neurons = neurons
+        End Sub
+
         Sub New(size%, active As IActivationFunction, Optional input As Layer = Nothing)
             Neurons = New Neuron(size - 1) {}
 

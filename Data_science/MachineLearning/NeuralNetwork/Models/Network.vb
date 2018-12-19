@@ -78,6 +78,14 @@ Namespace NeuralNetwork
 #End Region
 
         ''' <summary>
+        ''' 这个构造函数是给XML模型加载操作所使用的
+        ''' </summary>
+        ''' <param name="activations"></param>
+        Friend Sub New(activations As LayerActives)
+            Me.Activations = activations.GetXmlModels
+        End Sub
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="inputSize">``>=2``</param>
