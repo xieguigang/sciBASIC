@@ -48,16 +48,27 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Web.Script.Serialization
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 
 Namespace NeuralNetwork
 
+    ''' <summary>
+    ''' 神经元对象模型
+    ''' </summary>
     Public Class Neuron
 
 #Region "-- Properties --"
-        <ScriptIgnore> Public Property InputSynapses As Synapse()
-        <ScriptIgnore> Public Property OutputSynapses As Synapse()
+
+        ''' <summary>
+        ''' 这个神经元对象和上一层神经元之间的突触链接列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property InputSynapses As Synapse()
+        ''' <summary>
+        ''' 这个神经元对象和下一层神经元之间的突触链接列表
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property OutputSynapses As Synapse()
         Public Property Bias As Double
         Public Property BiasDelta As Double
         Public Property Gradient As Double
@@ -118,6 +129,11 @@ Namespace NeuralNetwork
             Return Value
         End Function
 
+        ''' <summary>
+        ''' 计算当前的结果和测试结果数据之间的误差大小
+        ''' </summary>
+        ''' <param name="target"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalculateError(target As Double) As Double
             Return target - Value

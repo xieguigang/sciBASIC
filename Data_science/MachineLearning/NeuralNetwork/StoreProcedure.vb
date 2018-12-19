@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
@@ -29,7 +30,7 @@ Namespace NeuralNetwork
                 .createNeurons(activations.output, neuronDataTable) _
                 .ToDictionary(Function(n) n.Name,
                               Function(n) n.Value)
-            Dim hiddenLayer As Dictionary(Of String, Neuron)() = model.hiddenlayers _
+            Dim hiddenLayer = model.hiddenlayers _
                 .layers _
                 .OrderBy(Function(layer) layer.id) _
                 .Select(Function(layer)
@@ -38,10 +39,26 @@ Namespace NeuralNetwork
                                 .ToDictionary(Function(n) n.Name,
                                               Function(n) n.Value)
                         End Function) _
-                .ToArray
+                .AsList
 
             ' 构建神经元之间的链接
-            Dim neurons As New 
+            Dim neurons As New BucketDictionary(Of String, Neuron)(hiddenLayer + inputLayer + outputLayer)
+
+            For Each edge As StoreProcedure.Synapse In model.connections
+                Dim inNeuron As Neuron = neurons(edge.in)
+                Dim outNeuron As Neuron = neurons(edge.out)
+                Dim output As New Synapse(inNeuron, outNeuron) With {
+                    .Weight = edge.w,
+                    .WeightDelta = edge.delta
+                }
+                Dim input As New Synapse(inNeuron, outNeuron) With {
+                    .Weight = edge.w,
+                    .WeightDelta = edge.delta
+                }
+
+                inNeuron.OutputSynapses.Add(output)
+                outNeuron.InputSynapses.Add(input)
+            Next
 
             Return New Network(activations) With {
                 .LearnRate = model.learnRate,
