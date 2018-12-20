@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b23470dffe721a987b0be5bc805b3fc5, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\NeuralNetwork\Dataset.vb"
+﻿#Region "Microsoft.VisualBasic::0f08c40e05a4c9983db5703ac5514fcc, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\Dataset.vb"
 
 ' Author:
 ' 
@@ -31,19 +31,25 @@
 
 ' Summaries:
 
-'     Class DataSet
+'     Class Sample
 ' 
-'         Properties: Targets, Values
+'         Properties: ID, status, target
 ' 
 '         Constructor: (+2 Overloads) Sub New
 '         Function: ToString
+' 
+'     Class DataSet
+' 
+'         Properties: DataSamples, NormalizeMatrix
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -59,18 +65,19 @@ Namespace NeuralNetwork.StoreProcedure
         ''' 可选的数据集唯一标记信息
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property ID As String Implements IKeyedEntity(Of String).Key
+        <XmlAttribute("id")>
+        Public Property ID As String Implements IKeyedEntity(Of String).Key
 
         ''' <summary>
         ''' Neuron network input parameters
         ''' </summary>
         ''' <returns></returns>
-        Public Property status As Double()
+        <XmlAttribute> Public Property status As Double()
         ''' <summary>
         ''' The network expected output values
         ''' </summary>
         ''' <returns></returns>
-        Public Property target As Double()
+        <XmlAttribute> Public Property target As Double()
 
         ''' <summary>
         ''' Create a new training dataset
@@ -96,9 +103,31 @@ Namespace NeuralNetwork.StoreProcedure
     ''' <summary>
     ''' A training dataset that stored in XML file.
     ''' </summary>
-    Public Class DataSet
+    Public Class DataSet : Inherits XmlDataModel
 
+        <XmlElement("sample")>
         Public Property DataSamples As Sample()
+        <XmlElement("normalization")>
+        Public Property NormalizeMatrix As NormalizeMatrix
+
+        Public ReadOnly Property Size As Size
+            Get
+                Return New Size With {
+                    .Width = DataSamples(Scan0).status.Length,
+                    .Height = DataSamples.Length
+                }
+            End Get
+        End Property
+
+        Public ReadOnly Property OutputSize As Integer
+            Get
+                Return DataSamples(Scan0).target.Length
+            End Get
+        End Property
+
+        Public Overrides Function ToString() As String
+            Return $"DataSet with {Size.Height} samples and {Size.Width} properties in each sample."
+        End Function
 
     End Class
 End Namespace

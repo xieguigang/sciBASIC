@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2f456ef312825c7817d8c1c28016d8c, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointer(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::b11d660d704e736afcac6dbdfc461d60, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointer(Of T).vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     '                     RawBuffer, UBound
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: MoveNext, stackalloc, ToString
+    '         Function: MoveNext, PeekNext, stackalloc, ToString
     '         Operators: (+2 Overloads) -, (+2 Overloads) +, <<, (+2 Overloads) <=, <>
     '                    =, (+2 Overloads) >=, >>
     ' 

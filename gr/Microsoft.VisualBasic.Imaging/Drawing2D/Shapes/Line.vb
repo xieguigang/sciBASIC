@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5af9f6299c35cd27556143bcdeb2f30d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
+﻿#Region "Microsoft.VisualBasic::b3a38134f7e52ec39f138d90c33c0a48, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,12 @@
 
     '     Class Line
     ' 
-    '         Properties: A, Alpha, B, Center, Length
-    '                     Size, Stroke
+    '         Properties: A, Alpha, B, Center, Cos
+    '                     Length, Sin, Size, Stroke
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: Draw, GetIntersectLocation, ParallelShift, QuadraticBelzier, ToString
+    '         Function: CopyStyle, Draw, GetIntersectLocation, LengthVariationFromPointA, LengthVariationFromPointB
+    '                   ParallelShift, QuadraticBelzier, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57d2c06c709ee847c4744b83b7553752, Microsoft.VisualBasic.Core\Text\Xml\XmlEntity.vb"
+﻿#Region "Microsoft.VisualBasic::ce075806382293939df3455aa5debe0c, Microsoft.VisualBasic.Core\Text\Xml\XmlEntity.vb"
 
     ' Author:
     ' 

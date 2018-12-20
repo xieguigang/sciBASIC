@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::011cb04c7d4f4e8ed121fca513cefed1, Microsoft.VisualBasic.Core\Text\Xml\XmlBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::3d00cbb3236855ce2e0e755ce8aa9501, Microsoft.VisualBasic.Core\Text\Xml\XmlBuilder.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@
     '     Class XmlBuilder
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: Unescape
     '         Operators: +
     ' 
     ' 

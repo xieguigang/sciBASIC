@@ -1,49 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::09f1a6775f814b7fbf7b71ef46fbc302, mime\text%html\HTML\TextString.vb"
+﻿#Region "Microsoft.VisualBasic::68d73be27d84fcce95818ece3557515d, mime\text%html\HTML\HtmlParser\TextString.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class TextString
-' 
-'         Properties: Font, Text
-' 
-'         Function: ToString
-' 
-'     Module TextAPI
-' 
-'         Function: __getFontStyle, __nextEndTag, __nextTag, __setFont, __setFontStyle
-'                   TryParse
-' 
-' 
-' /********************************************************************************/
+    '     Class TextString
+    ' 
+    '         Properties: color, font, text, weight
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: GetWeightedFont, ToString
+    '         Enum WeightStyles
+    ' 
+    '             [sub], [sup]
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Module TextAPI
+    ' 
+    '         Function: __nextTag, GetCssFont, GetFontColor, getFontStyle, getLocalScopeFontStyle
+    '                   htmlParser, nextEndTag, popAttrName, popAttrValue, popTagName
+    '                   setFont, (+2 Overloads) TryParse
+    ' 
+    '         Sub: SkipWhiteSpace
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
