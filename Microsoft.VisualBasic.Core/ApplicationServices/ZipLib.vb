@@ -416,7 +416,7 @@ Namespace ApplicationServices
                         If relativeDIR.StringEmpty Then
                             entryName = IO.Path.GetFileName(path)
                         Else
-                            entryName = RelativePath(relativeDIR, path, appendParent:=False)
+                            entryName = RelativePath(relativeDIR, path, appendParent:=False, fixZipPath:=True)
                         End If
 
                         Call zipFile.CreateEntryFromFile(path, entryName, compression)
