@@ -69,11 +69,13 @@ Namespace BarPlot
     ''' </summary>
     Public Module AlignmentPlot
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Keys(signals As signals()) As Double()
             Return signals.Select(Function(t) t.Item1).ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Private Function Values(signals As signals()) As Double()
             Return signals.Select(Function(t) t.Item2).ToArray

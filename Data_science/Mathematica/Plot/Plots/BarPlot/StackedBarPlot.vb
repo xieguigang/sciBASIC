@@ -113,7 +113,8 @@ Namespace BarPlot
                     Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelFontCSS)
                     Dim boxWidth% = legendFont.Height * 1.1
                     Dim bottomPart = groupLabelFont.Height + 30 + (boxWidth + boxSeperator * 2) * columnCount
-                    Dim barRegionHeight = height - bottomPart   ' 条形图区域的总高度
+                    ' 条形图区域的总高度
+                    Dim barRegionHeight = height - bottomPart
                     Dim x0! = rect.Padding.Left + leftPart
 
                     Call New GraphicsText(DirectCast(g, Graphics2D).Graphics).DrawString(

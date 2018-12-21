@@ -99,7 +99,8 @@ Namespace BarPlot
                     For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
                         Dim y = top + interval
 
-                        If stacked Then ' 改变Y
+                        If stacked Then
+                            ' 改变Y
                             Dim bottom! = y + dy
                             Dim right = sx(sample.value.StackedSum)
                             Dim canvasWidth = size.Height - (margin.Vertical)
@@ -113,7 +114,8 @@ Namespace BarPlot
                             Next
 
                             top += dy
-                        Else ' 改变X
+                        Else
+                            ' 改变X
                             For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                                 Dim bottom! = y
                                 Dim right = sx(val.value)

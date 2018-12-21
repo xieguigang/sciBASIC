@@ -59,6 +59,7 @@ Namespace Plot3D
 
     Public Module PieChart3D
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Plot3D(data As IEnumerable(Of NamedValue(Of Integer)), camera As Camera, Optional schema$ = "Paired:c12") As GraphicsData
             Return data.Fractions(schema).Plot3D(camera)
@@ -80,7 +81,8 @@ Namespace Plot3D
                 pie = New Pie(centra, r, (start = ((+start) + (sweep = CSng(360 * x.Percentage)))) - sweep.Value, sweep, 20, 1)
                 pieChart += pie.Model3D(x.Color)
                 alpha = (+start) - (+sweep / 2)
-                pt = (r / 1.5, alpha).ToCartesianPoint()  ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                ' 在这里r/1.5是因为这些百分比的值的标签需要显示在pie的内部
+                pt = (r / 1.5, alpha).ToCartesianPoint()
                 pt = New PointF(pt.X + centra.X, pt.Y + centra.Y)
                 label = x.GetValueLabel(valueLabel)
             Next
