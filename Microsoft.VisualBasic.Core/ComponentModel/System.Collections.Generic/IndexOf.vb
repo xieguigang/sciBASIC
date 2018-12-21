@@ -182,6 +182,15 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
+        Public Sub Delete(index As T)
+            Dim i = Me.IndexOf(index)
+
+            If i > -1 Then
+                Me.maps.Remove(index)
+                Me.index(i) = Nothing
+            End If
+        End Sub
+
         Public Iterator Function Intersect(collection As IEnumerable(Of T)) As IEnumerable(Of T)
             For Each x As T In collection
                 If IndexOf(x) > -1 Then
