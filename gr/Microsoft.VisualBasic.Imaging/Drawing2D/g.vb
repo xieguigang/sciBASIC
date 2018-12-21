@@ -322,6 +322,26 @@ Namespace Drawing2D
         End Function
 
         ''' <summary>
+        ''' Draw shadow of a specifc <paramref name="rectangle"/>
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="rectangle"></param>
+        ''' <param name="shadowColor$"></param>
+        ''' <param name="alphaLevels$"></param>
+        ''' <param name="gradientLevels$"></param>
+        <Extension> Public Sub DropdownShadows(g As IGraphics,
+                                               rectangle As RectangleF,
+                                               Optional shadowColor$ = NameOf(Color.Gray),
+                                               Optional alphaLevels$ = "0,120,150,200",
+                                               Optional gradientLevels$ = "[0,0.125,0.5,1]")
+            Dim path As New GraphicsPath
+
+            Call path.AddRectangle(rectangle)
+            Call path.CloseAllFigures()
+            Call g.DropdownShadows(path, shadowColor, alphaLevels, gradientLevels)
+        End Sub
+
+        ''' <summary>
         ''' Draw shadow of a specifc <paramref name="polygon"/>
         ''' </summary>
         ''' <param name="g"></param>

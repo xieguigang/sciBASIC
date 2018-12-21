@@ -52,6 +52,13 @@ Imports Microsoft.VisualBasic.Text.Xml.Models.KeyValuePair
 <Extension>
 Public Module IEnumerations
 
+    ''' <summary>
+    ''' Get a random element
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="random"></param>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function [Next](Of T)(random As Random, data As T()) As T

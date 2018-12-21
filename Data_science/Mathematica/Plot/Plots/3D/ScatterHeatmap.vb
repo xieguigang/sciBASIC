@@ -133,12 +133,14 @@ Namespace Plot3D
                                         Optional axisFont$ = CSSFont.Win10Normal,
                                         Optional legendFont As Font = Nothing,
                                         Optional showLegend As Boolean = True) As DrawGraphics
+
             Dim data As (sf As Surface, C As Double())() =
-             f.Surface(
-             xrange, yrange,
-             xrange.Length / xn,
-             yrange.Length / yn,
-             parallel, matrix).ToArray
+                f.Surface(
+                     xrange, yrange,
+                     xrange.Length / xn,
+                     yrange.Length / yn,
+                     parallel, matrix) _
+                 .ToArray
 
             Return data.GetPlotFunction(
                 legendTitle,

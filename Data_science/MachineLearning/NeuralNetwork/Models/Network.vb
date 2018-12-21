@@ -113,8 +113,25 @@ Namespace NeuralNetwork
         Public Overrides Function ToString() As String
             Dim summary As New StringBuilder
 
+            Call summary.AppendLine($"learnRate:={LearnRate}")
+            Call summary.AppendLine($"momentum:={Momentum}")
+
+            Call summary.AppendLine()
+            Call summary.AppendLine("input layer:")
+            Call summary.AppendLine("active function using: " & Activations!input.ToString)
             Call summary.AppendLine(InputLayer.ToString)
+            Call summary.AppendLine("hiddens layer:")
+            Call summary.AppendLine("active function using: " & Activations!hiddens.ToString)
             Call summary.AppendLine(HiddenLayer.ToString)
+            Call summary.AppendLine()
+
+            For Each layer As Layer In HiddenLayer
+                Call summary.AppendLine($"   {layer.ToString}")
+            Next
+
+            Call summary.AppendLine()
+            Call summary.AppendLine("output layer:")
+            Call summary.AppendLine("active function using: " & Activations!output.ToString)
             Call summary.AppendLine(OutputLayer.ToString)
 
             Return summary.ToString

@@ -293,6 +293,20 @@ Namespace ApplicationServices
             Call {file}.AddToArchive(SaveZip, action, fileOverwrite, compression)
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="DIR$"></param>
+        ''' <param name="saveZip$"></param>
+        ''' <param name="action"></param>
+        ''' <param name="fileOverwrite"></param>
+        ''' <param name="compression"></param>
+        ''' <param name="flatDirectory">
+        ''' 当这个参数为FALSE的时候，zip文件之中会保留有原来的文件夹的树形结构，
+        ''' 反之，则zip文件之中不会存在任何文件夹结构，所有的文件都会被保存在zip文件里面的根目录之中
+        ''' 
+        ''' 这个参数默认为False，即保留有原来的文件夹树形结构
+        ''' </param>
         <ExportAPI("DIR.Zip")>
         Public Sub DirectoryArchive(DIR$, saveZip$,
                                     Optional action As ArchiveAction = ArchiveAction.Replace,
@@ -402,7 +416,7 @@ Namespace ApplicationServices
                         If relativeDIR.StringEmpty Then
                             entryName = IO.Path.GetFileName(path)
                         Else
-                            entryName = RelativePath(relativeDIR, path, appendParent:=False)
+                            entryName = RelativePath(relativeDIR, path, appendParent:=False, fixZipPath:=True)
                         End If
 
                         Call zipFile.CreateEntryFromFile(path, entryName, compression)
@@ -458,132 +472,6 @@ Namespace ApplicationServices
                 End If
             End Using
         End Sub
-
-        '<Example.Code>     
-
-        'Imports System.Collections.Generic
-        'Imports System.IO
-        'Imports System.IO.Compression
-        'Imports Helpers
-
-        '	'Example 1
-        '	Private Shared Sub SimpleZip(dirToZip As String, zipName As String)
-        '		ZipFile.CreateFromDirectory(dirToZip, zipName)
-        '	End Sub
-
-        '	'Example 2
-        '	Private Shared Sub SimpleZip(dirToZip As String, zipName As String, compression As CompressionLevel, includeRoot As Boolean)
-        '		ZipFile.CreateFromDirectory(dirToZip, zipName, compression, includeRoot)
-        '	End Sub
-
-        '	'Example 3
-        '	Private Shared Sub SimpleUnzip(zipName As String, dirToUnzipTo As String)
-        '		ZipFile.ExtractToDirectory(zipName, dirToUnzipTo)
-        '	End Sub
-
-        '	'Example 4
-        '	Private Shared Sub SmarterUnzip(zipName As String, dirToUnzipTo As String)
-        '		'This stores the path where the file should be unzipped to,
-        '		'including any subfolders that the file was originally in.
-        '		Dim fileUnzipFullPath As String
-
-        '		'This is the full name of the destination file including
-        '		'the path
-        '		Dim fileUnzipFullName As String
-
-        '		'Opens the zip file up to be read
-        '		Using archive As ZipArchive = ZipFile.OpenRead(zipName)
-        '			'Loops through each file in the zip file
-        '			For Each file As ZipArchiveEntry In archive.Entries
-        '				'Outputs relevant file information to the console
-        '				Console.WriteLine("File Name: {0}", file.Name)
-        '				Console.WriteLine("File Size: {0} bytes", file.Length)
-        '				Console.WriteLine("Compression Ratio: {0}", (CDbl(file.CompressedLength) / file.Length).ToString("0.0%"))
-
-        '				'Identifies the destination file name and path
-        '				fileUnzipFullName = Path.Combine(dirToUnzipTo, file.FullName)
-
-        '				'Extracts the files to the output folder in a safer manner
-        '				If Not System.IO.File.Exists(fileUnzipFullName) Then
-        '					'Calculates what the new full path for the unzipped file should be
-        '					fileUnzipFullPath = Path.GetDirectoryName(fileUnzipFullName)
-
-        '					'Creates the directory (if it doesn't exist) for the new path
-        '					Directory.CreateDirectory(fileUnzipFullPath)
-
-        '					'Extracts the file to (potentially new) path
-        '					file.ExtractToFile(fileUnzipFullName)
-        '				End If
-        '			Next
-        '		End Using
-        '	End Sub
-
-        '	'Example 5
-        '	Private Shared Sub ManuallyCreateZipFile(zipName As String)
-        '		'Creates a new, blank zip file to work with - the file will be
-        '		'finalized when the using statement completes
-        '		Using newFile As ZipArchive = ZipFile.Open(zipName, ZipArchiveMode.Create)
-        '			'Here are two hard-coded files that we will be adding to the zip
-        '			'file.  If you don't have these files in your system, this will
-        '			'fail.  Either create them or change the file names.
-        '			newFile.CreateEntryFromFile("C:\Temp\File1.txt", "File1.txt")
-        '			newFile.CreateEntryFromFile("C:\Temp\File2.txt", "File2.txt", CompressionLevel.Fastest)
-        '		End Using
-        '	End Sub
-
-        '	'Example 6
-        '	Private Shared Sub ManuallyUpdateZipFile(zipName As String)
-        '		'Opens the existing file like we opened the new file (just changed
-        '		'the ZipArchiveMode to Update
-        '		Using modFile As ZipArchive = ZipFile.Open(zipName, ZipArchiveMode.Update)
-        '			'Here are two hard-coded files that we will be adding to the zip
-        '			'file.  If you don't have these files in your system, this will
-        '			'fail.  Either create them or change the file names.  Also, note
-        '			'that their names are changed when they are put into the zip file.
-        '			modFile.CreateEntryFromFile("C:\Temp\File1.txt", "File10.txt")
-
-        '				'We could also add the code from Example 4 here to read
-        '				'the contents of the open zip file as well.
-        '			modFile.CreateEntryFromFile("C:\Temp\File2.txt", "File20.txt", CompressionLevel.Fastest)
-        '		End Using
-        '	End Sub
-
-        '	'Example 7
-        '	Private Shared Sub CallingImprovedExtractToDirectory(zipName As String, dirToUnzipTo As String)
-        '		'This performs a similar function to Example 3, only now we are doing it
-        '		'safely (we won't crash because of predictable and preventable errors). 
-        '		'The result is something you don't have to think about - it just works.
-        '		Compression.ImprovedExtractToDirectory(zipName, dirToUnzipTo, Compression.Overwrite.IfNewer)
-        '	End Sub
-
-        '	'Example 8
-        '	Private Shared Sub CallingImprovedExtractToFile(zipName As String, dirToUnzipTo As String)
-        '		'Opens the zip file up to be read
-        '		Using archive As ZipArchive = ZipFile.OpenRead(zipName)
-        '			'Loops through each file in the zip file
-        '			For Each file As ZipArchiveEntry In archive.Entries
-        '				'Outputs relevant file information to the console
-        '				Console.WriteLine("File Name: {0}", file.Name)
-        '				Console.WriteLine("File Size: {0} bytes", file.Length)
-        '				Console.WriteLine("Compression Ratio: {0}", (CDbl(file.CompressedLength) / file.Length).ToString("0.0%"))
-
-        '				'This is the new call
-        '				Compression.ImprovedExtractToFile(file, dirToUnzipTo, Compression.Overwrite.Always)
-        '			Next
-        '		End Using
-        '	End Sub
-
-        '	'Example 9
-        '	Private Shared Sub CallingAddToArchive(zipName As String)
-        '		'This creates our list of files to be added
-        '		Dim filesToArchive As New List(Of String)()
-
-        '		'Here we are adding two hard-coded files to our list
-        '		filesToArchive.Add("C:\Temp\File1.txt")
-        '		filesToArchive.Add("C:\Temp\File2.txt")
-
-        '		Compression.AddToArchive(zipName, filesToArchive, Compression.ArchiveAction.Replace, Compression.Overwrite.IfNewer, CompressionLevel.Optimal)
-        '	End Sub
     End Module
 #End If
 End Namespace

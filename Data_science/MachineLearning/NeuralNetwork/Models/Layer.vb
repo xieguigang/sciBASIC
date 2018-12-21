@@ -166,7 +166,17 @@ Namespace NeuralNetwork
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{Neurons.Length} neurons => {Output.AsVector.ToString}"
+            Dim n = Output
+            Dim summary$
+
+            If n.Length > 20 Then
+                summary = n.Split(15).Select(Function(l) "   " & l.Select(Function(x) x.ToString("G3")).JoinBy(vbTab)).JoinBy(vbCrLf)
+                summary = $"[{vbCrLf}{summary}{vbCrLf}]"
+            Else
+                summary = n.AsVector.ToString
+            End If
+
+            Return $"{Neurons.Length} neurons => {summary}"
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Neuron) Implements IEnumerable(Of Neuron).GetEnumerator

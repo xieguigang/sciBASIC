@@ -160,8 +160,9 @@ Namespace BarPlot
             With orders _
                 .Skip(n) _
                 .Select(Function(x) x.FactorValue) _
-                .Indexing  ' 这些都是需要被合并的
+                .Indexing
 
+                ' 这些都是需要被合并的
                 mergeIndex = serials.Indices(Function(x) .IndexOf(x) > -1)
                 keepsIndex = serials.Indices(Function(x) .IndexOf(x) = -1)
             End With

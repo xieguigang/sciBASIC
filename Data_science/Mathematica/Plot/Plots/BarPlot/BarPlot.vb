@@ -147,11 +147,14 @@ Namespace BarPlot
 
                 leftMargins += x
 
-                If stacked Then ' 改变Y
+                If stacked Then
+                    ' 改变Y
                     Dim right = x + dxStep
                     Dim top = sy(sample.value.StackedSum)
-                    Dim canvasHeight = grect.Size.Height - (grect.Padding.Vertical)  ' 畫布的高度
-                    Dim actualHeight = bottom - top ' 底部減去最高的就是實際的高度（縂的）
+                    ' 畫布的高度
+                    Dim canvasHeight = grect.Size.Height - (grect.Padding.Vertical)
+                    ' 底部減去最高的就是實際的高度（縂的）
+                    Dim actualHeight = bottom - top
                     Dim barWidth = dxStep
 
                     Dim stack = If(stackReorder,
@@ -162,7 +165,8 @@ Namespace BarPlot
 
                     For Each val As SeqValue(Of Double) In stack
                         Dim topleft As New Point(x, top)
-                        Dim barHeight! = (+val) / (+sample).StackedSum  ' 百分比
+                        ' 百分比
+                        Dim barHeight! = (+val) / (+sample).StackedSum
                         barHeight = barHeight * actualHeight
                         Dim barSize As New Size(barWidth, barHeight)
                         Dim rect As New Rectangle(topleft, barSize)
@@ -173,7 +177,8 @@ Namespace BarPlot
                     Next
 
                     x += dxStep
-                Else ' 改变X
+                Else
+                    ' 改变X
                     For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                         Dim right = x + dxStep
                         Dim top = sy(val.value)
@@ -204,9 +209,11 @@ Namespace BarPlot
             For Each key As SeqValue(Of String) In keys.SeqIterator
                 left = leftMargins(index:=key) + dd / 2 - If(Not stacked, dxStep / 2, 0)
 
-                Dim sz = g.MeasureString((+key), font) ' 得到斜边的长度
+                ' 得到斜边的长度
+                Dim sz = g.MeasureString((+key), font)
                 Dim dx! = sz.Width * Math.Cos(angle)
                 Dim dy! = sz.Width * Math.Sin(angle)
+
                 Call g.DrawString(+key, font, Brushes.Black, left - dx, bottom, angle)
             Next
 
