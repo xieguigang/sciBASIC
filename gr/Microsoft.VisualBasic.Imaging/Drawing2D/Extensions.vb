@@ -77,12 +77,30 @@ Namespace Drawing2D
 
         Public ReadOnly BlackBrush As DefaultValue(Of Brush) = Brushes.Black
 
+        ''' <summary>
+        ''' 以当前的点为圆心，向<paramref name="angle"/>方向移动给定的距离
+        ''' </summary>
+        ''' <param name="pt"></param>
+        ''' <param name="distance#"></param>
+        ''' <param name="angle#"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Move(pt As Point, distance#, angle#) As Point
             Dim X = pt.X + distance * Math.Sin(angle * Math.PI / 180)
             Dim Y = pt.Y + distance * Math.Cos(angle * Math.PI / 180)
 
             Return New Point(X, Y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Move(rect As RectangleF, distance#, angle#) As RectangleF
+            Return New RectangleF With {
+                .Location = rect.Location _
+                    .ToPoint _
+                    .Move(distance, angle),
+                .Size = rect.Size
+            }
         End Function
 
         ''' <summary>

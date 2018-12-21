@@ -52,7 +52,9 @@ Namespace Language.Python
         ''' <typeparam name="T"></typeparam>
         ''' <param name="[set]"></param>
         ''' <param name="start"></param>
-        ''' <param name="[stop]"></param>
+        ''' <param name="[stop]">
+        ''' 可以接受负数，如果为负数，则表示终止的下标为长度将去这个stop值的结果，即从后往前数
+        ''' </param>
         ''' <param name="[step]"></param>
         ''' <returns></returns>
         <Extension>
@@ -63,6 +65,7 @@ Namespace Language.Python
                 [stop] = array.Length + [stop]
             End If
 
+            [stop] -= start
             [stop] -= 1
 
             For i As Integer = 0 To [stop] Step [step]
