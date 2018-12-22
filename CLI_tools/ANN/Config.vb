@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math.Scripting
 
 Public Class Config
@@ -16,5 +17,13 @@ Public Class Config
     <DataFrameColumn> Public Property input_active As String
     <DataFrameColumn> Public Property hiddens_active As String
     <DataFrameColumn> Public Property output_active As String
+
+    ''' <summary>
+    ''' ``a,b,c``使用逗号分隔的隐藏层每一层网络的节点数量的列表
+    ''' </summary>
+    ''' <returns></returns>
+    <DataFrameColumn> Public Property hidden_size As String
+
+    Public Shared ReadOnly Property [Default] As DefaultValue(Of Config) = New Config
 
 End Class

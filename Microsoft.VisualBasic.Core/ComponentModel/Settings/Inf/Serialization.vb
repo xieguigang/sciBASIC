@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::80558a737fc0f3b2b14508618eb8ae19, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Serialization.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Serialization
-    ' 
-    '         Properties: Sections
-    ' 
-    '         Function: __getDefaultPath, Load, Save
-    ' 
-    '     Class IniMapIO
-    ' 
-    '         Properties: Path
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    '     Module IOProvider
-    ' 
-    '         Function: __getPath, __getSections, EmptySection, (+2 Overloads) LoadProfile, (+2 Overloads) WriteProfile
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Serialization
+' 
+'         Properties: Sections
+' 
+'         Function: __getDefaultPath, Load, Save
+' 
+'     Class IniMapIO
+' 
+'         Properties: Path
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToString
+' 
+'     Module IOProvider
+' 
+'         Function: __getPath, __getSections, EmptySection, (+2 Overloads) LoadProfile, (+2 Overloads) WriteProfile
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,6 +57,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
@@ -120,6 +121,7 @@ Namespace ComponentModel.Settings.Inf
 
         ''' <summary>
         ''' 将目标对象写为``*.ini``文件
+        ''' (目标对象之中的所有的简单属性都会被保存在一个对象名称的section中，)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="x"></param>
@@ -129,6 +131,9 @@ Namespace ComponentModel.Settings.Inf
         Public Function WriteProfile(Of T As Class)(x As T, path$) As Boolean
             Dim ini As New IniFile(path)
             Dim msg$
+
+            ' 首先写入global的配置数据
+            Call ClassMapper.ClassDumper(x:=x, type:=GetType(T), ini:=ini)
 
             For Each section As PropertyInfo In __getSections(Of T)()
                 Dim obj As Object = section.GetValue(x, Nothing)
@@ -169,12 +174,13 @@ Namespace ComponentModel.Settings.Inf
             Return x.WriteProfile(__getPath(Of T))
         End Function
 
+        ''' <summary>
+        ''' 查找出所有<see cref="ClassName"/>标记的属性
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
         Private Function __getSections(Of T As Class)() As PropertyInfo()
-            Dim properties As PropertyInfo() =
-                GetType(T).GetProperties(bindingAttr:=
-                BindingFlags.Instance Or
-                BindingFlags.Public
-            )
+            Dim properties As PropertyInfo() = GetType(T).GetProperties(PublicProperty)
 
             properties = LinqAPI.Exec(Of PropertyInfo) _
  _
@@ -189,15 +195,20 @@ Namespace ComponentModel.Settings.Inf
         End Function
 
         ''' <summary>
-        ''' 从指定的``*.ini``文件之中加载配置数据
+        ''' 从指定的``*.ini``文件之中加载配置数据，如果配置文件不存在，则这个函数会返回空值
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="path"></param>
         ''' <returns></returns>
         <Extension>
         Public Function LoadProfile(Of T As Class)(path As String) As T
-            Dim obj As Object = Activator.CreateInstance(Of T)
             Dim ini As New IniFile(path)
+
+            If Not ini.FileExists Then
+                Return Nothing
+            End If
+
+            Dim obj As Object = ClassMapper.ClassWriter(ini, GetType(T))
 
             For Each prop As PropertyInfo In __getSections(Of T)()
                 Dim x As Object = ClassMapper.ClassWriter(ini, prop.PropertyType)
@@ -221,7 +232,8 @@ Namespace ComponentModel.Settings.Inf
             path = __getPath(Of T)()
             fileExists = path.FileExists
 
-            If Not fileExists Then  ' 文件不存在，则直接写文件了
+            If Not fileExists Then
+                ' 文件不存在，则直接写文件了
                 Dim obj As T = Activator.CreateInstance(Of T)
                 Call obj.WriteProfile
                 Return obj

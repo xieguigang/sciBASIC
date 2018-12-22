@@ -61,6 +61,12 @@ Namespace ComponentModel.Settings.Inf
 
         Public ReadOnly Property path As String
 
+        Public ReadOnly Property FileExists As Boolean
+            Get
+                Return path.FileLength > -1
+            End Get
+        End Property
+
         ''' <summary>
         ''' Write a string value into a specific section in a specifc ini profile.(在初始化文件指定小节内设置一个字串)
         ''' </summary>
