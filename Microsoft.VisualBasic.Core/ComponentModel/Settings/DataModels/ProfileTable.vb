@@ -120,6 +120,8 @@ Namespace ComponentModel.Settings
             For Each config As BindMapping In settings.AllItems
                 Call ini.WriteValue(name, config.Name, config.Value)
             Next
+
+            Call ini.Flush()
         End Sub
 
         ''' <summary>

@@ -54,7 +54,7 @@ Namespace ComponentModel.Settings.Inf
     ''' <summary>
     ''' Ini file I/O handler
     ''' </summary>
-    Public Class IniFile
+    Public Class IniFile : Implements IDisposable
 
         Public ReadOnly Property path As String
 
@@ -65,11 +65,24 @@ Namespace ComponentModel.Settings.Inf
         End Property
 
         ''' <summary>
+        ''' 为了避免频繁的读写文件，会使用这个数组来做缓存
+        ''' </summary>
+        Dim dataLines As String()
+
+        ''' <summary>
         ''' Open a ini file handle.
         ''' </summary>
         ''' <param name="INIPath"></param>
         Public Sub New(INIPath As String)
             path = IO.Path.GetFullPath(PathMapper.GetMapPath(INIPath))
+            dataLines = path.ReadAllLines
+        End Sub
+
+        ''' <summary>
+        ''' 将缓存数据写入文件之中
+        ''' </summary>
+        Public Sub Flush()
+            Call dataLines.SaveTo(path)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -77,13 +90,46 @@ Namespace ComponentModel.Settings.Inf
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub WriteValue(section As String, key As String, value As String)
-            Call WritePrivateProfileString(section, key, value, Me.path)
+        Public Sub WriteValue(section$, key$, value$)
+            dataLines = dataLines.AsList.WritePrivateProfileString(section, key, value)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function ReadValue(section As String, key As String) As String
-            Return GetPrivateProfileString(section, key, Me.path)
+        Public Function ReadValue(section$, key$) As String
+            Return dataLines.GetPrivateProfileString(section, key)
         End Function
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                    Call Flush()
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
+            End If
+            disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 End Namespace

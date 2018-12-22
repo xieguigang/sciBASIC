@@ -90,7 +90,9 @@ Namespace ComponentModel.Settings.Inf
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GetValue", Info:="Get profile data from the ini file which the data is stores in a specific path like: ``section/key``")>
         Public Function GetPrivateProfileString(section$, key$, path$) As String
-            Return path.readDataLines.ToArray.GetPrivateProfileString(section, key)
+            Return path.readDataLines _
+                .ToArray _
+                .GetPrivateProfileString(section, key)
         End Function
 
         ''' <summary>
@@ -193,7 +195,10 @@ Namespace ComponentModel.Settings.Inf
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("SetValue", Info:="Setting profile data from the ini file which the data is stores in a specific path like: ``section/key``. If the path is not exists, the function will create new.")>
         Public Sub WritePrivateProfileString(section$, key$, value$, path$)
-            Call path.ReadAllLines.AsList.WritePrivateProfileString(section, key, value).SaveTo(path)
+            Call path.ReadAllLines _
+                .AsList _
+                .WritePrivateProfileString(section, key, value) _
+                .SaveTo(path)
         End Sub
     End Module
 End Namespace
