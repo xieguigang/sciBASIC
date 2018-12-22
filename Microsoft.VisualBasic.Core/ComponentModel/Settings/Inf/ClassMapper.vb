@@ -57,27 +57,6 @@ Imports Microsoft.VisualBasic.Linq
 Namespace ComponentModel.Settings.Inf
 
     ''' <summary>
-    ''' 定义在Ini配置文件之中的Section的名称
-    ''' </summary>
-    <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=True)>
-    Public Class ClassName : Inherits Attribute
-
-        Public ReadOnly Property Name As String
-
-        ''' <summary>
-        ''' Defines the section name in the ini profile data.(定义在Ini配置文件之中的Section的名称)
-        ''' </summary>
-        ''' <param name="name"></param>
-        Sub New(name As String)
-            Me.Name = name
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return Name
-        End Function
-    End Class
-
-    ''' <summary>
     ''' 使用这个属性来标记需要进行序列化的对象属性: <see cref="DataFrameColumnAttribute"/>
     ''' </summary>
     Public Module ClassMapper
