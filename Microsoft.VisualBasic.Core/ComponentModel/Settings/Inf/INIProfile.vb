@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::292b1f3f0b6cec9885c42234fcc64c4f, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\INIProfile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module INIProfile
-    ' 
-    '         Function: __isCommentsOrBlank, GetValue
-    ' 
-    '         Sub: SetValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module INIProfile
+' 
+'         Function: __isCommentsOrBlank, GetValue
+' 
+'         Sub: SetValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Text.RegularExpressions
+Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Scripting.MetaData
 
 Namespace ComponentModel.Settings.Inf
 
@@ -95,13 +96,14 @@ Namespace ComponentModel.Settings.Inf
             Return ""
         End Function
 
-        Private Function __isCommentsOrBlank(strLine As String) As Boolean
-            Return String.IsNullOrEmpty(strLine) OrElse (strLine.First = ";"c OrElse strLine.First = "#"c)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function __isCommentsOrBlank(str As String) As Boolean
+            Return String.IsNullOrEmpty(str) OrElse (str.First = ";"c OrElse str.First = "#"c)
         End Function
 
         <ExportAPI("SetValue", Info:="Setting profile data from the ini file which the data is stores in a specific path like:  section/key. If the path is not exists, the function will create new.")>
         Public Sub SetValue(path As String, Section As String, key As String, value As String)
-            Dim strLines As String() = IO.File.ReadAllLines(path)
+            Dim strLines As String() = path.ReadAllLines
             Dim sectionFind As String = $"^\s*\[{Section}\]\s*$"
             Dim LQuery = (From line As String In strLines
                           Let strLine As String = line.Trim
@@ -109,13 +111,15 @@ Namespace ComponentModel.Settings.Inf
                           Select line).ToArray
             Dim index As Integer = If(LQuery.IsNullOrEmpty, -1, Array.IndexOf(strLines, LQuery.First))
 
-            If index = -1 Then '没有找到该Section，则进行新建
-                Dim sBuilder As StringBuilder = New StringBuilder(1024)
+            If index = -1 Then
+                ' 没有找到该Section，则进行新建
+                Dim sBuilder As New StringBuilder(1024)
                 Call sBuilder.AppendLine()
                 Call sBuilder.AppendLine($"[{Section}]")
                 Call sBuilder.AppendLine($"{key}={value}")
                 Call FileIO.FileSystem.WriteAllText(path, sBuilder.ToString, append:=True)
-            Else            '当存在该Section的时候，则从该Index位置处开始进行key的搜索
+            Else
+                ' 当存在该Section的时候，则从该Index位置处开始进行key的搜索
                 Dim keyFind As String = $"^\s*{key}\s*=\s*.*$"
 
                 For index = index + 1 To strLines.Length - 1
@@ -124,7 +128,8 @@ Namespace ComponentModel.Settings.Inf
                         strLines(index) = $"{key}={value}"
                         Call IO.File.WriteAllLines(path, strLines)
                     ElseIf Regex.Match(strLine.Trim, REGEX_SECTION_HEAD).Success Then
-                        GoTo NEW_KEY    '没有找到，则进行新建
+                        ' 没有找到，则进行新建
+                        GoTo NEW_KEY
                     End If
                 Next
 

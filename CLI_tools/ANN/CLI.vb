@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
@@ -8,7 +9,7 @@ Module CLI
     <ExportAPI("/config.template")>
     <Usage("/config.template [/save <default=./config.ini>]")>
     Public Function ConfigTemplate(args As CommandLine) As Integer
-
+        Return New Config().WriteProfile(args("/save") Or "./config.ini")
     End Function
 
     ''' <summary>
