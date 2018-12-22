@@ -1050,7 +1050,6 @@
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\BinaryPriorityQueue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\IndexOf.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\MapsHelper.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\HashValue.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\Dictionary%28Of T, V%29.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\Abstract.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\LineValue.vb" />

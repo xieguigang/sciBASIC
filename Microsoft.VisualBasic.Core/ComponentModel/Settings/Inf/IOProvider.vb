@@ -107,10 +107,11 @@ Namespace ComponentModel.Settings.Inf
             End If
 
             Dim obj As Object = ClassMapper.ClassWriter(ini, GetType(T))
+            Dim x As Object
 
             For Each prop As PropertyInfo In __getSections(Of T)()
-                Dim x As Object = ClassMapper.ClassWriter(ini, prop.PropertyType)
-                Call prop.SetValue(obj, x, Nothing)
+                x = ClassMapper.ClassWriter(ini, prop.PropertyType)
+                prop.SetValue(obj, x, Nothing)
             Next
 
             Return DirectCast(obj, T)

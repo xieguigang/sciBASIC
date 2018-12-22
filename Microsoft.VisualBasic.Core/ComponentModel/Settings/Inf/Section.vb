@@ -1,80 +1,87 @@
 ﻿#Region "Microsoft.VisualBasic::1e5551edd7581624cc72a643c231e37e, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Section.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Section
-    ' 
-    '         Properties: Items, Name
-    ' 
-    '         Function: GetValue
-    ' 
-    '         Sub: SetValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Section
+' 
+'         Properties: Items, Name
+' 
+'         Function: GetValue
+' 
+'         Sub: SetValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
+Imports hashValue = Microsoft.VisualBasic.Text.Xml.Models.NamedValue
 
 Namespace ComponentModel.Settings.Inf
 
     Public Class Section
 
         <XmlAttribute> Public Property Name As String
-        <XmlElement> Public Property Items As HashValue()
+
+        <XmlElement>
+        Public Property Items As hashValue()
             Get
                 Return _internalTable.Values.ToArray
             End Get
-            Set(value As HashValue())
+            Set(value As hashValue())
                 If value Is Nothing Then
-                    value = New HashValue() {}
+                    value = New hashValue() {}
                 End If
 
-                _internalTable = value.ToDictionary(Function(x) x.key.ToLower)
+                _internalTable = value.ToDictionary(Function(x) x.name.ToLower)
             End Set
         End Property
 
-        Dim _internalTable As Dictionary(Of HashValue)
+        ''' <summary>
+        ''' 这个字典之中的所有键名称都是小写形式的
+        ''' </summary>
+        Dim _internalTable As Dictionary(Of hashValue)
 
         Public Function GetValue(Key As String) As String
-            Key = Key.ToLower
-
-            If _internalTable.ContainsKey(Key) Then
-                Return _internalTable(Key).value
-            Else
-                Return ""
-            End If
+            With Key.ToLower
+                If _internalTable.ContainsKey(.ByRef) Then
+                    Return _internalTable(.ByRef).text
+                Else
+                    Return ""
+                End If
+            End With
         End Function
 
         ''' <summary>
@@ -89,7 +96,7 @@ Namespace ComponentModel.Settings.Inf
                 Call _internalTable.Remove(KeyFind)
             End If
 
-            Call _internalTable.Add(KeyFind, New HashValue(Name, value))
+            Call _internalTable.Add(KeyFind, New hashValue(Name, value))
         End Sub
     End Class
 End Namespace
