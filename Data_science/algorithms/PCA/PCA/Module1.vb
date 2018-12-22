@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::231cb62b0ac6553d3669a815f2aa6ad1, Data_science\algorithms\PCA\PCA\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::3460bf6568bebb0979dfb6ecfca5a3b6, Data_science\algorithms\PCA\PCA\Module1.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Module1
     ' 
-    '     Sub: Main, methodTest
+    '     Sub: Main, methodTest, test2
     ' 
     ' /********************************************************************************/
 
@@ -45,7 +45,19 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Module Module1
 
     Sub Main()
+        Call test2()
         Call methodTest()
+
+        Pause()
+    End Sub
+
+    Sub test2()
+        Dim data = DataSet.LoadDataSet("D:\GCModeller\src\runtime\sciBASIC#\Data_science\algorithms\PCA\data.csv")
+        Dim pca As New PCA(data.Matrix, scale:=True)
+
+        ' Call pca.ExplainedVariance.ToString.__DEBUG_ECHO
+        Call Console.WriteLine(pca.Summary)
+        Call pca.Project(data.Matrix.Select(Function(v) v.AsVector).ToArray, nPC:=2)
 
         Pause()
     End Sub
@@ -62,7 +74,7 @@ Module Module1
 
         Dim newPoints = {{4.9, 3.2, 1.2, 0.4}.AsVector, {5.4, 3.3, 1.4, 0.9}.AsVector}
 
-        For Each x In pca.Project(newPoints)
+        For Each x In pca.Project(newPoints, 2)
             Call x.ToString.__DEBUG_ECHO
         Next
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa0aa92b8a836f181d5f0bb53d5b1b19, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::3144cbda496e0193f901526dfec42493, Microsoft.VisualBasic.Core\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports VB = Microsoft.VisualBasic.CommandLine.InteropService.SharedORM.VisualBasic
 
@@ -176,6 +177,7 @@ Namespace CommandLine
         ''' <param name="help_argvs"></param>
         ''' <returns></returns>
         Private Function apiInvoke(commandName$, argvs As Object(), help_argvs$()) As Integer
+            Dim CLI As CommandLine = DirectCast(argvs(Scan0), CommandLine)
 
             If __API_table.ContainsKey(commandName) Then _
                 Return __API_table(commandName).Execute(argvs)
@@ -246,7 +248,6 @@ Namespace CommandLine
 
             ElseIf String.Equals(commandName, "man") Then
                 ' 默认是分段打印帮助信息，假若加上了  --print参数的话，则才会一次性的打印所有的信息出来
-                Dim CLI As CommandLine = DirectCast(argvs(Scan0), CommandLine)
                 Dim doc As String = SDKdocs()
                 Dim output$ = CLI("/out") Or "./"
 
@@ -266,10 +267,18 @@ Namespace CommandLine
                 Return BashShell()
 
             ElseIf String.Equals(commandName, "/CLI.dev", StringComparison.OrdinalIgnoreCase) Then
-                Return New VB(App:=Me) _
-                    .GetSourceCode _
-                    .SaveTo(App.HOME & "/" & Type.Assembly.CodeBase.BaseName & ".vb") _
-                    .CLICode
+                Dim namespace$ = CLI("/namespace") Or "CLI"
+                Dim vb$ = New VB(App:=Me, [namespace]:=[namespace]).GetSourceCode
+
+                If CLI.IsTrue("---echo") Then
+                    Console.WriteLine(vb)
+                    Return 0
+                Else
+                    Dim sourcefile$ = $"{App.HOME}/{Type.Assembly.CodeBase.BaseName}.vb"
+                    Return vb _
+                        .SaveTo(sourcefile, Encodings.UTF8WithoutBOM.CodePage) _
+                        .CLICode
+                End If
 
             Else
                 ' 命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄

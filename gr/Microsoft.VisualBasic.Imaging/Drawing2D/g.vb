@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02c2401c505f376e7291a13670e1838e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::34f75bd4086d252e74a65eebd00c54fa, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '         Function: __getDriver, Allocate, CreateGraphics, (+2 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
     '                   MeasureWidthOrHeight
     ' 
-    '         Sub: DropdownShadows, FillBackground
+    '         Sub: (+2 Overloads) DropdownShadows, FillBackground
     '         Class InternalCanvas
     ' 
     '             Properties: bg, padding, size
@@ -320,6 +320,26 @@ Namespace Drawing2D
                 Return Graphics2D.Open(DirectCast(img, ImageData).Image)
             End If
         End Function
+
+        ''' <summary>
+        ''' Draw shadow of a specifc <paramref name="rectangle"/>
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="rectangle"></param>
+        ''' <param name="shadowColor$"></param>
+        ''' <param name="alphaLevels$"></param>
+        ''' <param name="gradientLevels$"></param>
+        <Extension> Public Sub DropdownShadows(g As IGraphics,
+                                               rectangle As RectangleF,
+                                               Optional shadowColor$ = NameOf(Color.Gray),
+                                               Optional alphaLevels$ = "0,120,150,200",
+                                               Optional gradientLevels$ = "[0,0.125,0.5,1]")
+            Dim path As New GraphicsPath
+
+            Call path.AddRectangle(rectangle)
+            Call path.CloseAllFigures()
+            Call g.DropdownShadows(path, shadowColor, alphaLevels, gradientLevels)
+        End Sub
 
         ''' <summary>
         ''' Draw shadow of a specifc <paramref name="polygon"/>

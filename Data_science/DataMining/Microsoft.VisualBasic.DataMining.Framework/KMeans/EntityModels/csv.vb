@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41e8ec82b58a88fb0e743437da4646e5, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\csv.vb"
+﻿#Region "Microsoft.VisualBasic::a1493e16bcb101de52237f20d088f1a9, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\csv.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3989fb837d9326b2e7d743c74b0605d8, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::d890aaf82056deea111b80052697499c, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\Tree\BinaryTree\Abstract.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,9 @@
 
     ' Summaries:
 
-    '     Delegate Function
-    ' 
-    ' 
     '     Class TreeMap
     ' 
     '         Properties: Key, value
-    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -48,19 +44,6 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.DataStructures.BinaryTree
-
-    ''' <summary>
-    ''' The generic object comparer model:
-    ''' 
-    ''' + ``> 0`` means ``a > b``
-    ''' + ``= 0`` means ``a = 0``
-    ''' + ``&lt;0`` means ``a &lt; b``
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="a"></param>
-    ''' <param name="b"></param>
-    ''' <returns></returns>
-    Public Delegate Function CompareOf(Of T)(a As T, b As T) As Integer
 
     Public MustInherit Class TreeMap(Of K, V)
         Implements IKeyedEntity(Of K)

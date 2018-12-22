@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b7043b19b3cd916f9b68841834e80ae, mime\application%json\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e2cc3d345c35e1f3f9fa414b22418158, mime\application%json\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module Extensions
     ' 
-    '     Function: AsString, AsStringVector, ParseJsonFile, ParseJsonStr
+    '     Function: AsString, AsStringVector, ParseJson, ParseJsonFile
     ' 
     ' /********************************************************************************/
 
@@ -45,8 +45,13 @@ Imports Microsoft.VisualBasic.MIME.application.json.Parser
 
 Public Module Extensions
 
+    ''' <summary>
+    ''' Parse json string
+    ''' </summary>
+    ''' <param name="JsonStr"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function ParseJsonStr(JsonStr As String) As JsonElement
+    Public Function ParseJson(JsonStr As String) As JsonElement
         Dim value As JsonElement = New JsonParser().OpenJSON(JsonStr)
         Return value
     End Function

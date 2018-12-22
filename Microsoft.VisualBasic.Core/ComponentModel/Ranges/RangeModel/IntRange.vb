@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e395fbd6d1760768c657d6ec12270df7, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::026c1c3ecc6669ac3a318139c538402b, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\IntRange.vb"
 
     ' Author:
     ' 
@@ -91,6 +91,10 @@ Namespace ComponentModel.Ranges.Model
             Me.Max = max
         End Sub
 
+        ''' <summary>
+        ''' 这个构造函数之中会自动求出最大值和最小值
+        ''' </summary>
+        ''' <param name="source"></param>
         Sub New(source As IEnumerable(Of Integer))
             With source.ToArray
                 Min = .Min
@@ -197,5 +201,11 @@ Namespace ComponentModel.Ranges.Model
         '        Return New IntRange(.Min, .Max)
         '    End With
         'End Operator
+
+        Public Shared Widening Operator CType(list As List(Of Integer)) As IntRange
+            With list
+                Return New IntRange(.Min, .Max)
+            End With
+        End Operator
     End Class
 End Namespace

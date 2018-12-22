@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efd2ed1bd6d24f2a9548b63487fc58fc, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
+﻿#Region "Microsoft.VisualBasic::b3a38134f7e52ec39f138d90c33c0a48, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,12 @@
 
     '     Class Line
     ' 
-    '         Properties: A, Alpha, B, Center, Length
-    '                     Size, Stroke
+    '         Properties: A, Alpha, B, Center, Cos
+    '                     Length, Sin, Size, Stroke
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: Draw, ParallelShift, QuadraticBelzier, ToString
+    '         Function: CopyStyle, Draw, GetIntersectLocation, LengthVariationFromPointA, LengthVariationFromPointB
+    '                   ParallelShift, QuadraticBelzier, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -47,6 +48,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math
 
@@ -54,31 +56,17 @@ Namespace Drawing2D.Shapes
 
     Public Class Line : Inherits Shape
 
-        ''' <summary>
-        ''' 线段的起点和终点
-        ''' </summary>
-        Dim pt1 As PointF, pt2 As PointF
-
         Public Property Stroke As Pen
 
         Public ReadOnly Property A As PointF
-            Get
-                Return pt1
-            End Get
-        End Property
-
         Public ReadOnly Property B As PointF
-            Get
-                Return pt2
-            End Get
-        End Property
 
         Public Overrides ReadOnly Property Size As Size
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Size With {
-                    .Width = pt2.X - pt1.X,
-                    .Height = pt2.Y - pt1.Y
+                    .Width = A.X - B.X,
+                    .Height = A.Y - B.Y
                 }
             End Get
         End Property
@@ -90,7 +78,25 @@ Namespace Drawing2D.Shapes
         Public ReadOnly Property Length As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Math.Sqrt((pt1.X - pt2.X) ^ 2 + (pt1.Y - pt2.Y) ^ 2)
+                Return Math.Sqrt((A.X - B.X) ^ 2 + (A.Y - B.Y) ^ 2)
+            End Get
+        End Property
+
+        Public ReadOnly Property Cos As Double
+            Get
+                Dim dx = B.X - A.X
+                Dim c = Length
+
+                Return dx / c
+            End Get
+        End Property
+
+        Public ReadOnly Property Sin As Double
+            Get
+                Dim dy = B.Y - A.Y
+                Dim c = Length
+
+                Return dy / c
             End Get
         End Property
 
@@ -100,8 +106,8 @@ Namespace Drawing2D.Shapes
         ''' <returns></returns>
         Public ReadOnly Property Alpha As Double
             Get
-                Dim dx! = pt2.X - pt1.X
-                Dim dy! = pt2.Y - pt1.Y
+                Dim dx! = B.X - Me.A.X
+                Dim dy! = B.Y - Me.A.Y
                 Dim cos = dx / Math.Sqrt(dx ^ 2 + dy ^ 2)
                 Dim a = Arccos(cos)
 
@@ -120,8 +126,8 @@ Namespace Drawing2D.Shapes
 
         Public ReadOnly Property Center As PointF
             Get
-                Dim x! = (pt1.X + pt2.X) / 2
-                Dim y! = (pt1.Y + pt2.Y) / 2
+                Dim x! = (A.X + B.X) / 2
+                Dim y! = (A.Y + B.Y) / 2
                 Return New PointF(x, y)
             End Get
         End Property
@@ -134,20 +140,18 @@ Namespace Drawing2D.Shapes
         ''' <param name="c"></param>
         ''' <param name="width"></param>
         ''' <remarks></remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(a As PointF, b As PointF, c As Color, width%)
-            Call MyBase.New(a.ToPoint)
-
-            Me.pt1 = a
-            Me.pt2 = b
-            Me.Stroke = New Pen(New SolidBrush(c), width)
+            Call Me.New(a, b, pen:=New Pen(New SolidBrush(c), width))
         End Sub
 
         Sub New(a As PointF, b As PointF, pen As Pen)
             Call MyBase.New(a.ToPoint)
 
-            pt1 = a
-            pt2 = b
-            Stroke = pen
+            Me.A = a
+            Me.B = b
+            Me.Stroke = pen
         End Sub
 
         Sub New(x1#, y1#, x2#, y2#)
@@ -158,13 +162,53 @@ Namespace Drawing2D.Shapes
             Call Me.New(a, b, Color.Black, 1)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetIntersectLocation(rect As Rectangle2D) As Point2D
+            Return rect.intersectLine(A.X, A.Y, B.X, B.Y)
+        End Function
+
         Public Overrides Function ToString() As String
-            Return $"[{pt1.X}, {pt1.Y}] --> [{pt2.X}, {pt2.Y}] alpha:{Alpha.ToDegrees} degree"
+            Return $"[{A.X}, {A.Y}] --> [{B.X}, {B.Y}] alpha:{Alpha.ToDegrees} degree"
+        End Function
+
+        ''' <summary>
+        ''' 在A短点处发生长度变化, B点的位置不变
+        ''' </summary>
+        ''' <param name="d">大于零为长度延伸,小于零为线段的长度缩短</param>
+        ''' <returns></returns>
+        Public Function LengthVariationFromPointA(d As Double) As Line
+            Dim dx = d * Cos
+            Dim dy = d * Sin
+            Dim newA As New PointF With {
+                .X = A.X - dx,
+                .Y = A.Y - dy
+            }
+
+            Return CopyStyle(newA, B)
+        End Function
+
+        Private Function CopyStyle(a As PointF, b As PointF) As Line
+            Return New Line(a, b) With {
+                .EnableAutoLayout = EnableAutoLayout,
+                .Stroke = Stroke,
+                .TooltipTag = TooltipTag
+            }
+        End Function
+
+        Public Function LengthVariationFromPointB(d As Double) As Line
+            Dim dx = d * Cos
+            Dim dy = d * Sin
+            Dim newB As New PointF With {
+                .X = B.X + dx,
+                .Y = B.Y + dy
+            }
+
+            Return CopyStyle(A, newB)
         End Function
 
         Public Overrides Function Draw(ByRef g As IGraphics, Optional overridesLoci As Point = Nothing) As RectangleF
             Dim rect As RectangleF = MyBase.Draw(g, overridesLoci)
-            Call g.DrawLine(Stroke, pt1, pt2)
+            Call g.DrawLine(Stroke, A, B)
             Return rect
         End Function
 
@@ -176,13 +220,13 @@ Namespace Drawing2D.Shapes
         Public Function ParallelShift(d#) As Line
             With Stroke
                 Dim color As Color = DirectCast(.Brush, SolidBrush).Color
-                Dim dx = d * Sin(Alpha)
-                Dim dy = d * Cos(Alpha)
+                Dim dx = d * Sin
+                Dim dy = d * Cos
                 Dim offset As New Point(dx, -dy)
 
                 Return New Line(
-                    pt1.OffSet2D(offset),
-                    pt2.OffSet2D(offset),
+                    A.OffSet2D(offset),
+                    B.OffSet2D(offset),
                     color, .Width
                 )
             End With

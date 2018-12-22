@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e360fa2d6e27659f0aca88501f1642f2, Data_science\Mathematica\Plot\Plots\BarPlot\StackedBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::deeabc12eeffde06a5b0d2fe1dc4b4a1, Data_science\Mathematica\Plot\Plots\BarPlot\StackedBarPlot.vb"
 
     ' Author:
     ' 
@@ -113,7 +113,8 @@ Namespace BarPlot
                     Dim groupLabelFont As Font = CSSFont.TryParse(groupLabelFontCSS)
                     Dim boxWidth% = legendFont.Height * 1.1
                     Dim bottomPart = groupLabelFont.Height + 30 + (boxWidth + boxSeperator * 2) * columnCount
-                    Dim barRegionHeight = height - bottomPart   ' 条形图区域的总高度
+                    ' 条形图区域的总高度
+                    Dim barRegionHeight = height - bottomPart
                     Dim x0! = rect.Padding.Left + leftPart
 
                     Call New GraphicsText(DirectCast(g, Graphics2D).Graphics).DrawString(

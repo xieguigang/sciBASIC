@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b5c3f3f79d566c609990509a2d239f2, www\Microsoft.VisualBasic.Webservices.Bing\Academic\ProfileResult.vb"
+﻿#Region "Microsoft.VisualBasic::6357609b442f913b44617cb7db529728, www\Microsoft.VisualBasic.Webservices.Bing\Academic\ProfileResult.vb"
 
     ' Author:
     ' 
@@ -84,7 +84,7 @@ Namespace Academic
             Dim count As cites() = html _
                 .GetBetween("""BarData""", "BarChart.render") _
                 .GetStackValue(":", "}") _
-                .LoadObject(Of cites())
+                .LoadJSON(Of cites())
 
             html = html.RemovesJavaScript
 

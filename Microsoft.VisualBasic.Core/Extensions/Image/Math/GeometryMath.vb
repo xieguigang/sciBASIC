@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2094e049a790edb1109bb01ad4be7a90, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
+﻿#Region "Microsoft.VisualBasic::7c60f26b349ba7c703d31fe4cc177889, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
 
     ' Author:
     ' 
@@ -59,6 +59,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sys = System.Math
 
 Namespace Imaging.Math2D
@@ -88,11 +89,11 @@ Namespace Imaging.Math2D
             Dim tangent As Boolean = False
             For index As Integer = 0 To polygon.Length - 1
                 Dim index2 As Integer = (index + 1) Mod polygon.Length
-                Dim intersection__1 As Intersection = IntersectionOf(line, New Line(polygon(index), polygon(index2)))
-                If intersection__1 = Intersection.Intersection Then
-                    Return intersection__1
+                Dim intersection As Intersection = IntersectionOf(line, New Line(polygon(index), polygon(index2)))
+                If intersection = Intersection.Intersection Then
+                    Return intersection
                 End If
-                If intersection__1 = Intersection.Tangent Then
+                If intersection = Intersection.Tangent Then
                     tangent = True
                 End If
             Next
@@ -317,25 +318,34 @@ Namespace Imaging.Math2D
         ''' <param name="p"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function QuadrantRegion(origin As PointF, p As PointF) As QuadrantRegions
+        Public Function QuadrantRegion(origin As PointF, p As PointF, Optional d! = 5) As QuadrantRegions
+            If Math.Abs(p.X - origin.X) <= d AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+                Return QuadrantRegions.Origin
+            End If
+
+            If Math.Abs(p.X - origin.X) <= d AndAlso p.Y < origin.Y Then
+                Return QuadrantRegions.YTop
+            End If
+            If Math.Abs(p.X - origin.X) <= d AndAlso p.Y > origin.Y Then
+                Return QuadrantRegions.YBottom
+            End If
+            If p.X > origin.X AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+                Return QuadrantRegions.XRight
+            End If
+            If p.X < origin.X AndAlso Math.Abs(p.Y - origin.Y) <= d Then
+                Return QuadrantRegions.XLeft
+            End If
+
             If p.X > origin.X AndAlso p.Y < origin.Y Then
                 Return QuadrantRegions.RightTop
-            ElseIf p.X = origin.X AndAlso p.Y < origin.Y Then
-                Return QuadrantRegions.YTop
             ElseIf p.X < origin.X AndAlso p.Y < origin.Y Then
                 Return QuadrantRegions.LeftTop
-            ElseIf p.X < origin.X AndAlso p.Y = origin.Y Then
-                Return QuadrantRegions.XLeft
             ElseIf p.X < origin.X AndAlso p.Y > origin.Y Then
                 Return QuadrantRegions.LeftBottom
-            ElseIf p.X = origin.X AndAlso p.Y > origin.Y Then
-                Return QuadrantRegions.YBottom
             ElseIf p.X > origin.X AndAlso p.Y > origin.Y Then
                 Return QuadrantRegions.RightBottom
-            ElseIf p.X > origin.X AndAlso p.Y = origin.Y Then
-                Return QuadrantRegions.XRight
             Else
-                Return QuadrantRegions.Origin
+                Throw New EvaluateException({origin, p}.GetJson)
             End If
         End Function
     End Module

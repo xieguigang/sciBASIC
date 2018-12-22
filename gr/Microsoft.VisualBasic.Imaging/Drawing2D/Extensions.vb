@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2eec335da07d7c3145ac68b4f7d60a93, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::253b52145970fcc48e49ad15076160c7, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: (+3 Overloads) Enlarge, GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
+    '         Function: (+3 Overloads) Enlarge, GetTextAnchor, (+2 Overloads) Move, (+2 Overloads) MoveTo, Rotate
     ' 
     '         Sub: ShapeGlow
     '         Enum MoveTypes
@@ -77,12 +77,30 @@ Namespace Drawing2D
 
         Public ReadOnly BlackBrush As DefaultValue(Of Brush) = Brushes.Black
 
+        ''' <summary>
+        ''' 以当前的点为圆心，向<paramref name="angle"/>方向移动给定的距离
+        ''' </summary>
+        ''' <param name="pt"></param>
+        ''' <param name="distance#"></param>
+        ''' <param name="angle#"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Move(pt As Point, distance#, angle#) As Point
             Dim X = pt.X + distance * Math.Sin(angle * Math.PI / 180)
             Dim Y = pt.Y + distance * Math.Cos(angle * Math.PI / 180)
 
             Return New Point(X, Y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Move(rect As RectangleF, distance#, angle#) As RectangleF
+            Return New RectangleF With {
+                .Location = rect.Location _
+                    .ToPoint _
+                    .Move(distance, angle),
+                .Size = rect.Size
+            }
         End Function
 
         ''' <summary>

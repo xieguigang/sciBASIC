@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e729f5965ece7d92b1c083d5ae73ca6f, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\POST.vb"
+﻿#Region "Microsoft.VisualBasic::c6339742489d3473a2c7eed51f797fa8, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\Protocols\POST.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace NETProtocol.Protocols

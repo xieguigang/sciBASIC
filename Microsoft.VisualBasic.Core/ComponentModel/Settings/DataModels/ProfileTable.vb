@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a2da6d1a5aceb5c28dcd94f5134c53d, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ProfileTable.vb"
+﻿#Region "Microsoft.VisualBasic::a4e6b13ccb1c44cbe01adce2f1a796e1, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ProfileTable.vb"
 
     ' Author:
     ' 
@@ -120,6 +120,8 @@ Namespace ComponentModel.Settings
             For Each config As BindMapping In settings.AllItems
                 Call ini.WriteValue(name, config.Name, config.Value)
             Next
+
+            Call ini.Flush()
         End Sub
 
         ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::313dd0d4023e708b85ae34792aa9026a, Data_science\Mathematica\Plot\Plots\3D\ScatterHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::34c15663b275d83bb3a5388804e780c7, Data_science\Mathematica\Plot\Plots\3D\ScatterHeatmap.vb"
 
     ' Author:
     ' 
@@ -133,12 +133,14 @@ Namespace Plot3D
                                         Optional axisFont$ = CSSFont.Win10Normal,
                                         Optional legendFont As Font = Nothing,
                                         Optional showLegend As Boolean = True) As DrawGraphics
+
             Dim data As (sf As Surface, C As Double())() =
-             f.Surface(
-             xrange, yrange,
-             xrange.Length / xn,
-             yrange.Length / yn,
-             parallel, matrix).ToArray
+                f.Surface(
+                     xrange, yrange,
+                     xrange.Length / xn,
+                     yrange.Length / yn,
+                     parallel, matrix) _
+                 .ToArray
 
             Return data.GetPlotFunction(
                 legendTitle,

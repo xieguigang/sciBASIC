@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::071828a0557cc4a2990aebda5f270499, Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
+﻿#Region "Microsoft.VisualBasic::f35a1339602b334948a9ae79bca72378, Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
 
     ' Author:
     ' 
@@ -76,7 +76,9 @@ Namespace Quantile
         ''' + <see cref="Boolean"/>.True  for n-1 method
         ''' + <see cref="Boolean"/>.False for n+1 method
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 理论上,正常值范围应该是Q1到Q3范围内的值
+        ''' </returns>
         <Extension>
         Public Function Quartile(data As IEnumerable(Of Double), Optional altPosition As Boolean = False) As (Q1#, Q2#, Q3#, IQR#, range As DoubleRange)
             Dim vector = data.OrderBy(Function(x) x).ToArray

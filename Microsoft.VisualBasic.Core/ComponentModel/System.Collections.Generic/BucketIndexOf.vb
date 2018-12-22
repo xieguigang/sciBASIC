@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9451c710e3635935d7a5eb3a05777668, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\BucketIndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::309f61edb2cb376bda745ee313f4c507, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\BucketIndexOf.vb"
 
     ' Author:
     ' 

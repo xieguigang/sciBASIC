@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9e257045619f80cc39de20da93053ef, gr\network-visualization\Visualizer\Styling\EdgeStyles.vb"
+﻿#Region "Microsoft.VisualBasic::f573d33807b59139de1413b7c349d4a0, gr\network-visualization\Visualizer\Styling\EdgeStyles.vb"
 
     ' Author:
     ' 

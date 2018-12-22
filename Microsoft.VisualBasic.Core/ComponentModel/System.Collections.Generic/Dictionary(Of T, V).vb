@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad7a3c47299b15f41723848f61a8a249, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::3eb16803ff94b94d0fb4295fc5b9b574, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
@@ -98,14 +98,14 @@ Namespace ComponentModel.Collection
         End Property
 
         ''' <summary>
-        ''' 不存在的键名会返回Nothing
+        ''' 不存在的键名或者空值的键名都会返回``Nothing``
         ''' </summary>
         ''' <param name="key"></param>
         ''' <returns></returns>
         Default Public Overloads Property Item(key As String) As V
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                If ContainsKey(key) Then
+                If Not key Is Nothing AndAlso ContainsKey(key) Then
                     Return MyBase.Item(key)
                 Else
                     Return Nothing

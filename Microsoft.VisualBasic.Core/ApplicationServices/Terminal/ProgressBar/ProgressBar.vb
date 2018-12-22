@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba953e8a35ef058e489ed579b7204485, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::0c4037dc8f33ba759713e63fddc0e238, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\ProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -39,11 +39,11 @@
     ' 
     '     Class ProgressBar
     ' 
-    '         Properties: ElapsedMilliseconds
+    '         Properties: ElapsedMilliseconds, Enable
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Sub: [Step], __resize, __tick, (+2 Overloads) Dispose, SetProgress
-    '              SetToEchoLine
+    '         Sub: [Step], consoleWindowResize, (+2 Overloads) Dispose, SetProgress, SetToEchoLine
+    '              tick
     ' 
     '     Class ProgressProvider
     ' 
@@ -163,7 +163,16 @@ Namespace Terminal.ProgressBar
         Dim y%
         Dim theme As ColorTheme
 
-        Shared ReadOnly disabled As Boolean
+        Shared disabled As Boolean
+
+        Public Shared Property Enable As Boolean
+            Get
+                Return Not disabled
+            End Get
+            Set(value As Boolean)
+                disabled = Not value
+            End Set
+        End Property
 
         Shared Sub New()
             disabled = App.GetVariable("progress_bar").TextEquals(NameOf(disabled))
@@ -186,10 +195,10 @@ Namespace Terminal.ProgressBar
             Me.y = Y
 
             If Not disabled Then
-                AddHandler TerminalEvents.Resize, AddressOf __resize
+                AddHandler TerminalEvents.Resize, AddressOf consoleWindowResize
 
                 Try
-                    Call __resize(Nothing, Nothing)
+                    Call consoleWindowResize(Nothing, Nothing)
                 Catch ex As Exception
 
                 End Try
@@ -205,7 +214,7 @@ Namespace Terminal.ProgressBar
             Call Me.New(title, Y:=Console.CursorTop, CLS:=False)
         End Sub
 
-        Private Sub __resize(size As Size, old As Size)
+        Private Sub consoleWindowResize(size As Size, old As Size)
             Console.ResetColor()
             Console.SetCursorPosition(0, y)
             Console.BackgroundColor = ConsoleColor.DarkCyan
@@ -261,7 +270,7 @@ Namespace Terminal.ProgressBar
         ''' </summary>
         ''' <param name="p%"></param>
         ''' <param name="details$"></param>
-        Private Sub __tick(p%, details$)
+        Private Sub tick(p%, details$)
             Console.BackgroundColor = ConsoleColor.Yellow
             ' /运算返回完整的商，包括余数，SetCursorPosition会自动四舍五入
             Dim cx As Integer = p * (Console.WindowWidth - 2) / 100
@@ -269,7 +278,7 @@ Namespace Terminal.ProgressBar
             Console.SetCursorPosition(0, y)
 
             If p < current Then
-                Call __resize(Nothing, Nothing)
+                Call consoleWindowResize(Nothing, Nothing)
             End If
 
             For i As Integer = 0 To cx
@@ -297,7 +306,7 @@ Namespace Terminal.ProgressBar
             current = percent
 
             If Not disabled Then
-                Call __tick(current, details)
+                Call tick(current, details)
             End If
         End Sub
 
@@ -310,7 +319,7 @@ Namespace Terminal.ProgressBar
                 If disposing Then
                     If Not disabled Then
                         ' TODO: dispose managed state (managed objects).
-                        RemoveHandler TerminalEvents.Resize, AddressOf __resize
+                        RemoveHandler TerminalEvents.Resize, AddressOf consoleWindowResize
                     End If
 
                     Call timer.Stop()

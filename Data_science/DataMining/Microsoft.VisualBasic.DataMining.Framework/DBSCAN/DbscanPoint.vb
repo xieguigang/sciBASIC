@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43da1ed32b5598bcddeed4a6452a7e64, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DBSCAN\DbscanPoint.vb"
+﻿#Region "Microsoft.VisualBasic::9a3d95fdb473ab81f1abb1be0519052f, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DBSCAN\DbscanPoint.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Namespace DBSCAN
         Public Sub New(x As T)
             ClusterPoint = x
             IsVisited = False
-            ClusterId = CInt(ClusterIds.Unclassified)
+            ClusterId = ClusterIDs.Unclassified
         End Sub
 
         Public Overrides Function ToString() As String

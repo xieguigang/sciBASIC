@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abee9575c4515a40b3135744eeeb4304, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\UserAPI.vb"
+﻿#Region "Microsoft.VisualBasic::b60b9457f404f63257927612bcde0afc, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\UserAPI.vb"
 
     ' Author:
     ' 
@@ -73,8 +73,8 @@ Namespace NETProtocol.PushAPI
             __protocols = New ProtocolHandler(Me)
         End Sub
 
-        Public Overrides Function Handler(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Return __protocols.HandleRequest(CA, request, remote)
+        Public Overrides Function Handler(request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+            Return __protocols.HandleRequest(request, remote)
         End Function
 
         ''' <summary>
@@ -96,11 +96,14 @@ Namespace NETProtocol.PushAPI
                 Call HashUser.Add(uid, sId)
             End If
 
-            Dim post As New Protocols.InitPOSTBack With {
-                .uid = uid,
-                .Portal = New IPEndPoint("", Me.PushServer.UserSocket.LocalPort) ' 在客户端已处理
-            }
-            Return RequestStream.CreatePackage(post)
+            'Dim post As New Protocols.InitPOSTBack With {
+            '    .uid = uid,
+            '    .Portal = New IPEndPoint("", Me.PushServer.UserSocket.LocalPort) ' 在客户端已处理
+            '}
+
+            'Return RequestStream.CreatePackage(post)
+
+            Throw New NotImplementedException
         End Function
 
         ''' <summary>
@@ -125,7 +128,7 @@ Namespace NETProtocol.PushAPI
         ''' <returns></returns>
         <Protocol(Protocols.UserAPI.Protocols.GetData)>
         Private Function __getData(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
-            Dim id = request.LoadObject(Of Protocols.UserId)(AddressOf JSON.LoadObject)
+            Dim id = request.LoadObject(Of Protocols.UserId)(AddressOf JSON.LoadJSON)
             If Not IsValid(id) Then
                 Return NetResponse.RFC_FORBIDDEN
             End If

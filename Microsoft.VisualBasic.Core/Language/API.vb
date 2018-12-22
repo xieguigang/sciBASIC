@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dff727ac76a2cd9dd6fa1e6c78322672, Microsoft.VisualBasic.Core\Language\API.vb"
+﻿#Region "Microsoft.VisualBasic::71ee759ed63d841ed4e808bcd1d165c7, Microsoft.VisualBasic.Core\Language\API.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,9 @@
 
     '     Module LanguageAPI
     ' 
-    '         Function: [ByRef], [Default], AsDefault, AsVector, DefaultValue
-    '                   IsNothing, Let, TypeDef, TypeInfo
+    '         Function: [ByRef], [Default], (+2 Overloads) [When], AsDefault, AsNumeric
+    '                   AsString, AsVector, DefaultValue, Empty, IsNothing
+    '                   Let, list, Self, TypeDef, TypeInfo
     ' 
     ' 
     ' /********************************************************************************/
@@ -58,7 +59,7 @@ Namespace Language
         ''' The default value assertor. If target object assert result is nothing or empty, then this function will returns True.
         ''' </summary>
         Friend ReadOnly defaultAssert As New DefaultValue(Of Assert(Of Object)) With {
-            .Value = AddressOf ExceptionHandler.Default,
+            .Value = AddressOf ExceptionHandle.Default,
             .assert = Function(assert)
                           Return assert Is Nothing
                       End Function
@@ -79,6 +80,11 @@ Namespace Language
         '    If TypeDef(Of Integer)() Or {GetType(Integer), GetType(Double)} Then
         '    End If
         'End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Empty(Of T)() As DefaultValue(Of T())
+            Return {}
+        End Function
 
         ''' <summary>
         ''' simulate the ``%||%`` operator in R language.
@@ -161,6 +167,11 @@ Namespace Language
 
 #Region "Helper for ``With``"
 
+        ''' <summary>
+        ''' My self: <see cref="LanguageAPI.ByRef(Of T)(T)"/>
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Self(Of T)() As Func(Of T, T)
             Return AddressOf [ByRef]

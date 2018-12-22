@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16fdef792eb596f3ba241920f4ed131c, Data_science\Mathematica\Math\Math\Scripting\Helpers\Logical.vb"
+﻿#Region "Microsoft.VisualBasic::4ad3338dd03599da8d213fec3d8b2c76, Data_science\Mathematica\Math\Math\Scripting\Helpers\Logical.vb"
 
     ' Author:
     ' 

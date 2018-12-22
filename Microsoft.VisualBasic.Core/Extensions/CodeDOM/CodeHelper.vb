@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::045ad39d0ef09011b161ad55043d2b99, Microsoft.VisualBasic.Core\Extensions\CodeDOM\CodeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a932a3b98d366ee02de011c3b4c836eb, Microsoft.VisualBasic.Core\Extensions\CodeDOM\CodeHelper.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
+Imports Microsoft.VisualBasic.Scripting.SymbolBuilder.VBLanguage
 Imports Microsoft.VisualBasic.Text
 
 Namespace Emit.CodeDOM_VBC
@@ -105,7 +105,7 @@ Namespace Emit.CodeDOM_VBC
                 member = "_" & member
             End If
 
-            member = VBLanguage.AutoEscapeVBKeyword(member)
+            member = KeywordProcessor.AutoEscapeVBKeyword(member)
             member = src & If(newLine, vbCrLf, " ") & member
 
             Return member

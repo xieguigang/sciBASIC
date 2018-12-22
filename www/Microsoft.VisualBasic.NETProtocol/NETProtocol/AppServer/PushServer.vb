@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29c6c73746436baf4b258fb4a0659142, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushServer.vb"
+﻿#Region "Microsoft.VisualBasic::dee57dd6e1a7b66d81ff85d257a787c9, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushServer.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,6 @@
 
     '     Class PushServer
     ' 
-    '         Properties: UserSocket
-    ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: GetMsg, SendMessage
@@ -47,6 +45,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Net.Protocols
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 
 Namespace NETProtocol
@@ -56,20 +55,20 @@ Namespace NETProtocol
     ''' </summary>
     Public Class PushServer : Implements IDisposable
 
-        ''' <summary>
-        ''' Push update notification to user client
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property UserSocket As Persistent.Application.MessagePushServer
+        ' ''' <summary>
+        ' ''' Push update notification to user client
+        ' ''' </summary>
+        ' ''' <returns></returns>
+        '   Public ReadOnly Property UserSocket As Tcp.Persistent.Application.MessagePushServer
 
         ''' <summary>
         ''' 其他的服务器模块对消息推送模块进行操作更新的通道
         ''' </summary>
-        ReadOnly __invokeAPI As TcpSynchronizationServicesSocket
+        ReadOnly __invokeAPI As TcpServicesSocket
         ''' <summary>
         ''' 客户端进行数据读取的通道
         ''' </summary>
-        ReadOnly __userAPI As TcpSynchronizationServicesSocket
+        ReadOnly __userAPI As TcpServicesSocket
         ''' <summary>
         ''' 用户数据缓存池
         ''' </summary>
@@ -82,11 +81,11 @@ Namespace NETProtocol
         ''' <param name="invoke">服务器模块工作端口</param>
         ''' <param name="userAPI">用户端口</param>
         Sub New(services As Integer, invoke As Integer, userAPI As Integer)
-            UserSocket = New Persistent.Application.MessagePushServer(services)
-            __invokeAPI = New TcpSynchronizationServicesSocket(invoke) With {
-            .Responsehandler = AddressOf New PushAPI.InvokeAPI(Me).Handler
-        }
-            __userAPI = New TcpSynchronizationServicesSocket(userAPI) With {
+            '    UserSocket = New Persistent.Application.MessagePushServer(services)
+            '    __invokeAPI = New TcpServicesSocket(invoke) With {
+            '    .Responsehandler = AddressOf New PushAPI.InvokeAPI(Me).Handler
+            '}
+            __userAPI = New TcpServicesSocket(userAPI) With {
             .Responsehandler = AddressOf New PushAPI.UserAPI(Me).Handler
         }
         End Sub
@@ -95,7 +94,7 @@ Namespace NETProtocol
         ''' 线程会在这里被阻塞
         ''' </summary>
         Sub Run()
-            Call RunTask(AddressOf UserSocket.Run)
+            '   Call RunTask(AddressOf UserSocket.Run)
             Call RunTask(AddressOf __userAPI.Run)
             Call __invokeAPI.Run() ' 需要使用这一个代码来保持线程的阻塞
         End Sub
@@ -130,7 +129,7 @@ Namespace NETProtocol
         ''' <returns></returns>
         Public Function SendMessage(uid As Long, msg As RequestStream) As Boolean
             Try
-                Call UserSocket.SendMessage(-1L, uid, msg)
+                '    Call UserSocket.SendMessage(-1L, uid, msg)
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return False
@@ -147,7 +146,7 @@ Namespace NETProtocol
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    Call _UserSocket.Free
+                    '   Call _UserSocket.Free
                     Call __invokeAPI.Free
                     Call __userAPI.Free
                 End If

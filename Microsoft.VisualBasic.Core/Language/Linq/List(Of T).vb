@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57d2eabef8da6fedfecc9dca7d02e0ef, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::52ec399d0193b08b140bd319a1c3d6c9, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: First, Last
     ' 
     '         Constructor: (+5 Overloads) Sub New
-    '         Function: [Default], Pop, PopAll, ValuesEnumerator
+    '         Function: [Default], Pop, PopAll, ReverseIterator, ValuesEnumerator
     '         Operators: (+5 Overloads) -, *, ^, (+6 Overloads) +, (+2 Overloads) <
     '                    (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) >, >>
     ' 
@@ -409,6 +409,7 @@ Namespace Language
 
         ''' <summary>
         ''' Adds the elements of the specified collection to the end of the <see cref="List(Of T)"/>.
+        ''' (这个操作符并不会修改所输入的两个原始序列的内容)
         ''' </summary>
         ''' <param name="vals"></param>
         ''' <param name="list"></param>
@@ -579,6 +580,12 @@ Namespace Language
         Public Shared Operator <(source As List(Of T), path As String) As Boolean
             Throw New NotImplementedException
         End Operator
+
+        Public Iterator Function ReverseIterator() As IEnumerable(Of T)
+            For i As Integer = Count - 1 To 0 Step -1
+                Yield MyBase.Item(i)
+            Next
+        End Function
 
         ''' <summary>
         ''' Enums all of the elements in this collection list object by return a value reference type

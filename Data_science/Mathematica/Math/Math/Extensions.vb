@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b1b826ce98f4fbc14a16e61641096dd, Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::69b1f85294e1a352a41b23a60d0afa2a, Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,9 +34,9 @@
     ' Module Extensions
     ' 
     '     Function: (+4 Overloads) AsVector, DoubleRange, FDR, FirstDecrease, FirstIncrease
-    '               IntRange, IsInside, Iterates, (+2 Overloads) Range, Reach
-    '               seq2, Sim, SSM, Tanimoto, X
-    '               Y
+    '               FlipCoin, IntRange, IsInside, Iterates, (+2 Overloads) Range
+    '               Reach, seq2, Sim, SSM, Tanimoto
+    '               X, Y
     ' 
     ' /********************************************************************************/
 
@@ -56,6 +56,16 @@ Imports sys = System.Math
 ''' 向量以及统计函数拓展
 ''' </summary>
 Public Module Extensions
+
+    Public Function FlipCoin(Optional headsCutoff% = 50, Optional ntimes% = 100) As Double
+        Dim rand As Integer = randf(0, ntimes)
+
+        If rand >= headsCutoff Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
 
     ''' <summary>
     ''' 计算两个离散信号之间的相似度

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1f8d9c11e83f2ea2824381d90ec2e60, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a255f72cf04e575d0c02114eada3381f, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
+Imports r = System.Text.RegularExpressions.Regex
 
 <Package("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>
 Public Module XmlExtensions
@@ -64,7 +65,7 @@ Public Module XmlExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
-    Public Function SafeLoadXml(Of T)(xml As String,
+    Public Function SafeLoadXml(Of T)(xml$,
                                       Optional encoding As Encodings = Encodings.Default,
                                       Optional preProcess As Func(Of String, String) = Nothing) As T
         Return xml.LoadXml(Of T)(encoding.CodePage, False, preProcess)
@@ -74,7 +75,7 @@ Public Module XmlExtensions
     ''' Load class object from the exists Xml document.(从文件之中加载XML之中的数据至一个对象类型之中)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="XmlFile">The path of the xml document.(XML文件的文件路径)</param>
+    ''' <param name="xmlFile">The path of the xml document.(XML文件的文件路径)</param>
     ''' <param name="throwEx">
     ''' If the deserialization operation have throw a exception, then this function should process this error automatically or just throw it?
     ''' (当反序列化出错的时候是否抛出错误？假若不抛出错误，则会返回空值)
@@ -85,19 +86,21 @@ Public Module XmlExtensions
     ''' <param name="encoding">Default is <see cref="UTF8"/> text encoding.</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function LoadXml(Of T)(XmlFile As String,
+    <Extension> Public Function LoadXml(Of T)(xmlFile$,
                                               Optional encoding As Encoding = Nothing,
                                               Optional throwEx As Boolean = True,
                                               Optional preprocess As Func(Of String, String) = Nothing,
                                               Optional stripInvalidsCharacter As Boolean = False) As T
         Dim type As Type = GetType(T)
-        Dim obj As Object = XmlFile.LoadXml(
+        Dim obj As Object = xmlFile.LoadXml(
             type, encoding, throwEx,
             preprocess,
-            stripInvalidsCharacter:=stripInvalidsCharacter)
+            stripInvalidsCharacter:=stripInvalidsCharacter
+        )
 
         If obj Is Nothing Then
-            Return Nothing  ' 由于在底层函数之中已经将错误给处理掉了，所以这里直接返回
+            ' 由于在底层函数之中已经将错误给处理掉了，所以这里直接返回
+            Return Nothing
         Else
             Return DirectCast(obj, T)
         End If
@@ -107,21 +110,21 @@ Public Module XmlExtensions
     ''' <summary>
     ''' 从文件之中加载XML之中的数据至一个对象类型之中
     ''' </summary>
-    ''' <param name="XmlFile">XML文件的文件路径</param>
+    ''' <param name="xmlFile">XML文件的文件路径</param>
     ''' <param name="ThrowEx">当反序列化出错的时候是否抛出错误？假若不抛出错误，则会返回空值</param>
     ''' <param name="preprocess">Xml文件的预处理操作</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' <param name="encoding">Default is <see cref="UTF8"/> text encoding.</param>
     <ExportAPI("LoadXml")>
-    <Extension> Public Function LoadXml(XmlFile As String, type As Type,
+    <Extension> Public Function LoadXml(xmlFile$, type As Type,
                                         Optional encoding As Encoding = Nothing,
                                         Optional ThrowEx As Boolean = True,
                                         Optional preprocess As Func(Of String, String) = Nothing,
                                         Optional stripInvalidsCharacter As Boolean = False) As Object
 
-        If Not XmlFile.FileExists(ZERO_Nonexists:=True) Then
-            Dim exMsg$ = $"{XmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
+        If Not xmlFile.FileExists(ZERO_Nonexists:=True) Then
+            Dim exMsg$ = $"{xmlFile.ToFileURL} is not exists on your file system or it is ZERO length content!"
 
             With New Exception(exMsg)
                 Call App.LogException(.ByRef)
@@ -134,22 +137,22 @@ Public Module XmlExtensions
             End With
         End If
 
-        Dim XmlDoc$ = File.ReadAllText(XmlFile, encoding Or UTF8)
+        Dim xmlDoc$ = File.ReadAllText(xmlFile, encoding Or UTF8)
 
         If Not preprocess Is Nothing Then
-            XmlDoc = preprocess(XmlDoc)
+            xmlDoc = preprocess(xmlDoc)
         End If
         If stripInvalidsCharacter Then
-            XmlDoc = XmlDoc.StripInvalidCharacters
+            xmlDoc = xmlDoc.StripInvalidCharacters
         End If
 
-        Using stream As New StringReader(s:=XmlDoc)
+        Using stream As New StringReader(s:=xmlDoc)
             Try
                 Dim obj = New XmlSerializer(type).Deserialize(stream)
                 Return obj
             Catch ex As Exception
                 ex = New Exception(type.FullName, ex)
-                ex = New Exception(XmlFile.ToFileURL, ex)
+                ex = New Exception(xmlFile.ToFileURL, ex)
 
                 Call App.LogException(ex, MethodBase.GetCurrentMethod.GetFullName)
 #If DEBUG Then
@@ -226,8 +229,8 @@ Public Module XmlExtensions
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function CodePage(XmlEncoding As XmlEncodings) As Encoding
-        Select Case XmlEncoding
+    <Extension> Public Function CodePage(xmlEncoding As XmlEncodings) As Encoding
+        Select Case xmlEncoding
             Case XmlEncodings.GB2312
                 Return Encodings.GB2312.CodePage
             Case XmlEncodings.UTF8
@@ -288,12 +291,12 @@ Public Module XmlExtensions
 
     <ExportAPI("Xml.GetAttribute")>
     <Extension> Public Function GetXmlAttrValue(str As String, Name As String) As String
-        Dim m As Match = Regex.Match(str, Name & "=(("".+?"")|[^ ]*)")
+        Dim m As Match = r.Match(str, Name & "\s*=\s*(("".+?"")|[^ ]*)")
 
         If Not m.Success Then
             Return ""
         Else
-            str = m.Value.Replace(Name & "=", "")
+            str = m.Value.GetTagValue("=", trim:=True).Value
         End If
 
         If str.First = """"c AndAlso str.Last = """"c Then
@@ -313,8 +316,8 @@ Public Module XmlExtensions
     ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function LoadFromXml(Of T)(Xml As String, Optional throwEx As Boolean = True) As T
-        Using Stream As New StringReader(s:=Xml)
+    <Extension> Public Function LoadFromXml(Of T)(xml$, Optional throwEx As Boolean = True) As T
+        Using Stream As New StringReader(s:=xml)
             Try
                 Dim type As Type = GetType(T)
                 Dim o As Object = New XmlSerializer(type).Deserialize(Stream)
@@ -322,8 +325,8 @@ Public Module XmlExtensions
             Catch ex As Exception
                 Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
 
-                If Len(Xml) <= 4096 * 100 Then
-                    ex = New Exception(Xml, ex)
+                If Len(xml) <= 4096 * 100 Then
+                    ex = New Exception(xml, ex)
                 End If
 
                 App.LogException(ex, curMethod)
@@ -360,16 +363,16 @@ Public Module XmlExtensions
     ''' 使用一个XML文本内容的一个片段创建一个XML映射对象
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="Xml">是Xml文件的文件内容而非文件路径</param>
+    ''' <param name="xml">是Xml文件的文件内容而非文件路径</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function CreateObjectFromXmlFragment(Of T)(Xml$, Optional preprocess As Func(Of String, String) = Nothing) As T
+    <Extension> Public Function CreateObjectFromXmlFragment(Of T)(xml$, Optional preprocess As Func(Of String, String) = Nothing) As T
         Dim xmlDoc$ =
             "<?xml version=""1.0"" encoding=""UTF-8""?>" &
             ASCII.LF &
-            Xml
+            xml
 
         If Not preprocess Is Nothing Then
             xmlDoc = preprocess(xmlDoc)
@@ -380,7 +383,7 @@ Public Module XmlExtensions
                 Return DirectCast(New XmlSerializer(GetType(T)).Deserialize(s), T)
             End Using
         Catch ex As Exception
-            Dim root$ = Xml.GetBetween("<", ">").Split.First
+            Dim root$ = xml.GetBetween("<", ">").Split.First
             Dim file$ = App.LogErrDIR & "/" & $"{root}-{Path.GetTempFileName.BaseName}.Xml"
 
             Call xmlDoc.SaveTo(file)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a400696d779fb1627c44851b354c3e5, Microsoft.VisualBasic.Core\Text\Xml\XmlBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::3d00cbb3236855ce2e0e755ce8aa9501, Microsoft.VisualBasic.Core\Text\Xml\XmlBuilder.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@
     '     Class XmlBuilder
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: Unescape
     '         Operators: +
     ' 
     ' 
@@ -53,6 +54,11 @@ Namespace Text.Xml.Models
         Sub New()
             Call MyBase.New(1024)
         End Sub
+
+        Public Function Unescape() As XmlBuilder
+            Call Replace("&lt;", "<").Replace("&gt;", ">")
+            Return Me
+        End Function
 
         Public Overloads Shared Operator +(xb As XmlBuilder, node As XElement) As XmlBuilder
             Call xb.Script.AppendLine(node.ToString)

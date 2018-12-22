@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51f4d747d6bc3d248305033693ef645b, Microsoft.VisualBasic.Core\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::36430ceb520384fb21618375b295194d, Microsoft.VisualBasic.Core\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     ' Module ListExtensions
     ' 
-    '     Function: __reversedTake, AsHashList, AsHashSet, AsList, AsLoop
-    '               HasKey, Indexing, rand, Random, ReorderByKeys
-    '               Takes, (+2 Overloads) ToList, TopMostFrequent
+    '     Function: __reversedTake, AppendAfter, AsHashList, AsHashSet, AsList
+    '               AsLoop, HasKey, Indexing, rand, Random
+    '               ReorderByKeys, Takes, (+2 Overloads) ToList, TopMostFrequent
     ' 
     '     Sub: DoEach, ForEach, Swap
     ' 
@@ -57,6 +57,23 @@ Imports Microsoft.VisualBasic.Linq
 ''' to accommodate the number of elements copied.
 ''' </summary>
 Public Module ListExtensions
+
+    ''' <summary>
+    ''' 将<paramref name="join"/>加入到<paramref name="list"/>序列后面
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="join"></param>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function AppendAfter(Of T)(join As IEnumerable(Of T), list As IEnumerable(Of T)) As IEnumerable(Of T)
+        For Each x In list.SafeQuery
+            Yield x
+        Next
+        For Each x In join.SafeQuery
+            Yield x
+        Next
+    End Function
 
     ''' <summary>
     ''' 查找出序列之中最频繁出现的对象(这个函数会自动跳过空值)
@@ -272,12 +289,15 @@ Public Module ListExtensions
     End Function
 
     ''' <summary>
-    ''' Initializes a new instance of the <see cref="List"/>`1 class that
+    ''' Initializes a new instance of the <see cref="List(Of T)"/> class that
     ''' contains elements copied from the specified collection and has sufficient capacity
     ''' to accommodate the number of elements copied.
     ''' </summary>
-    ''' <param name="source">The collection whose elements are copied to the new list.</param>
+    ''' <param name="source">
+    ''' The collection whose elements are copied to the new list.
+    ''' </param>
     <Extension> Public Function AsList(Of T)(source As IEnumerable(Of T)) As List(Of T)
+        ' 如果source集合是空值的话，不会抛错
         Return New List(Of T)(source)
     End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f13ea8556ad8d7833dfbd328e3818857, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointers.vb"
+﻿#Region "Microsoft.VisualBasic::9989e7737202a17a6f05f122b8447845, Microsoft.VisualBasic.Core\Extensions\Reflection\Marshal\Pointers.vb"
 
     ' Author:
     ' 

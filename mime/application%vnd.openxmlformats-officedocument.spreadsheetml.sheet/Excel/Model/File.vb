@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30b1e18c01cd50f7b9d7b625c9382784, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
+﻿#Region "Microsoft.VisualBasic::241ca2aa541158622a9080c35991f5d6, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\File.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '     Properties: _rels, ContentTypes, docProps, FilePath, xl
     ' 
     '     Function: AddSheetTable, CreatePackage, (+2 Overloads) GetTable, GetWorksheet, LoadDataSet
-    '               Open, ToString, (+2 Overloads) WriteSheetTable, WriteXlsx
+    '               Open, SheetNames, ToString, (+2 Overloads) WriteSheetTable, WriteXlsx
     ' 
     '     Sub: addInternal
     ' 
@@ -47,7 +47,6 @@
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.ApplicationServices.GZip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
@@ -97,6 +96,14 @@ Public Class File : Implements IFileReference
             Call WriteSheetTable(Value, sheetName)
         End Set
     End Property
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function SheetNames() As IEnumerable(Of String)
+        Return xl _
+            .workbook _
+            .sheets _
+            .Select(Function(s) s.name)
+    End Function
 
     Public Overrides Function ToString() As String
         Return FilePath
@@ -219,7 +226,7 @@ Public Class File : Implements IFileReference
 
     Public Shared Function CreatePackage(tmp$, xlsx$, Optional throwEx As Boolean = True) As Boolean
         Try
-            Call GZip.DirectoryArchive(tmp, xlsx, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
+            Call ZipLib.DirectoryArchive(tmp, xlsx, ArchiveAction.Replace, Overwrite.Always, CompressionLevel.Fastest)
             Return True
         Catch ex As Exception
             Dim debug$ = New Dictionary(Of String, String) From {

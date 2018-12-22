@@ -11,11 +11,13 @@
 
 <hr>
 
-[![sciBASIC# logo](./logo.png)](./vs_solutions/logo/Program.vb)
+[![sciBASIC# logo](./Microsoft.VisualBasic.Core/Resources/logo.png)](./vs_solutions/logo/Program.vb)
 
 > Read the project documents: [http://sciBASIC.NET/](http://sciBASIC.NET)
 
 ## Scientific Computing runtime for VisualBasic.NET
+
+sciBASIC#: A Microsoft VisualBasic feature runtime for data science application on Windows/Linux/macOS And China Tianhe Super Computing Platform. It was mainly consists with a data frame system, a data science analysis system, a data graphics system and a general application core runtime.
 
 ``sciBASIC#``(read as ``scientific visualbasic`` or just ``sciBASIC sharp``) is a Microsoft VisualBasic language feature runtime for your data science application which is running in the CLI environment on Windows/Linux/macOS **Desktop/Server** platform or **supercomputer** platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences application which is programming in VisualBasic language, and it also extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
 
@@ -162,13 +164,13 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 
 ## sciBASIC# Graphics Artist
 
-[![](./gr/Datavisualization.Network/KEGG-pathway-network-clusters.png)](https://github.com/SMRUCC/GCModeller/blob/master/src/GCModeller/models/Networks/STRING/FunctionalEnrichmentPlot.vb)
+[![](./gr/network-visualization/KEGG-pathway-network-clusters.png)](https://github.com/SMRUCC/GCModeller/blob/master/src/GCModeller/models/Networks/STRING/FunctionalEnrichmentPlot.vb)
 
-+ **[Network Visualization Interface](./gr/Datavisualization.Network/)**
++ **[Network Visualization Interface](./gr/network-visualization/)**
 + **[2D Imaging & 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/)**
 + **[Isometric 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/README.md)**
 
-<img src="./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png" width="450"> <img src="./gr/Datavisualization.Network/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400">
+<img src="./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png" width="450"> <img src="./gr/network-visualization/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400">
 ![](./gr/build_3DEngine/images/screenshot.png)
 
 ## Microsoft VisualBasic Data Science & Data Plots System

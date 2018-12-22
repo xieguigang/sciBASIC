@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::299e836c9cd144529fd9e9ac7db62a17, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\APIBase.vb"
+﻿#Region "Microsoft.VisualBasic::2a5744ea73e049d32ecbf2951c576e6c, www\Microsoft.VisualBasic.NETProtocol\NETProtocol\AppServer\PushAPI\APIBase.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,7 @@ Namespace NETProtocol.PushAPI
         ''' <see cref="DataRequestHandler"/>
         ''' </summary>
         ''' <returns></returns>
-        Public MustOverride Function Handler(CA As Long, request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
+        Public MustOverride Function Handler(request As RequestStream, remote As System.Net.IPEndPoint) As RequestStream
 
     End Class
 End Namespace

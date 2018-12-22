@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8ecd15e172e2199c6fdb38eef5ce3fc, vs_solutions\tutorials\core.test\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::1d7f136654c74b8c02711c49d5eb1536, vs_solutions\tutorials\core.test\CLI.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     ' Module CLI
     ' 
     '     Function: CLIDocumentTest, ExceptionHandlerTest, Main
+    ' 
+    '     Sub: ParserTest
     ' 
     ' /********************************************************************************/
 
@@ -93,8 +95,18 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Module CLI
 
     Function Main() As Integer
+        Call ParserTest()
+
+
         Return GetType(CLI).RunCLI(App.CommandLine)
     End Function
+
+    Sub ParserTest()
+        Dim cli$ = "/POST /url ""http://metauhealth.com/api/index.php?act=user&op=verifyBindingManually"" openId=9IofUCKdgfdddddddd5lEeWiUDseee barcode=123456 name=xieguigang /out D:/test.json"
+        Dim argv = CLITools.TryParse(cli)
+
+        Pause()
+    End Sub
 
     <ExportAPI("/CLI.docs.test")>
     <Description("Test description text")>

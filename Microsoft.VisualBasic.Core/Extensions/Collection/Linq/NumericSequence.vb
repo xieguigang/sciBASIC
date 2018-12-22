@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::098c1f8c9fb227e5113a6592c888e3d7, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\NumericSequence.vb"
+﻿#Region "Microsoft.VisualBasic::b61fb90525a79191455dc08f6f84ebf6, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\NumericSequence.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::863687eb49d48d750ab2825de8ae1878, Data_science\Mathematica\Plot\Plots\BarPlot\BarPlotDataExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::dfca32d4f6d2f97046df75d3df957ee6, Data_science\Mathematica\Plot\Plots\BarPlot\BarPlotDataExtensions.vb"
 
     ' Author:
     ' 
@@ -160,8 +160,9 @@ Namespace BarPlot
             With orders _
                 .Skip(n) _
                 .Select(Function(x) x.FactorValue) _
-                .Indexing  ' 这些都是需要被合并的
+                .Indexing
 
+                ' 这些都是需要被合并的
                 mergeIndex = serials.Indices(Function(x) .IndexOf(x) > -1)
                 keepsIndex = serials.Indices(Function(x) .IndexOf(x) = -1)
             End With

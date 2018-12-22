@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e82a4369065b9f19cc4601aae46834d1, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::ed9a194d8b1d9f3b218a5301062a798e, Microsoft.VisualBasic.Core\ComponentModel\DataSource\DataFramework.vb"
 
     ' Author:
     ' 
@@ -36,11 +36,11 @@
     '         Properties: Flags, StringBuilders, StringParsers
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: DictionaryTable, (+2 Overloads) Schema
+    '         Function: DictionaryTable, getOrCache, (+2 Overloads) Schema, ValueTable
     '         Delegate Function
     ' 
-    '             Function: __initSchema, CreateObject, GetValue, IsComplexType, IsPrimitive
-    '                       valueToString
+    '             Function: __initSchema, CreateObject, GetValue, IsComplexType, IsNumericType
+    '                       IsPrimitive, valueToString
     ' 
     ' 
     ' 
@@ -48,6 +48,7 @@
 
 #End Region
 
+Imports System.Data
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
@@ -281,6 +282,16 @@ Namespace ComponentModel.DataSourceModel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsPrimitive(type As Type) As Boolean
             Return StringBuilders.ContainsKey(type)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function IsNumericType(type As Type) As Boolean
+            Static numerics As Type() = {
+                GetType(Integer), GetType(Long), GetType(Short), GetType(Double), GetType(Byte),
+                GetType(UInteger), GetType(ULong), GetType(UShort), GetType(Single), GetType(SByte), GetType(Decimal)
+            }
+            Return numerics.Any(Function(num) num Is type)
         End Function
 
         ''' <summary>

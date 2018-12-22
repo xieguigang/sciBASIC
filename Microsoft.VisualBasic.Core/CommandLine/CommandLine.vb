@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8131ed9a4734ae73329de534db8a7e7f, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::fbbb4af951ee7f357716c975b2a40855, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class CommandLine
     ' 
-    '         Properties: BoolFlags, CLICommandArgvs, Count, EnvironmentVariables, IsNothing
+    '         Properties: BoolFlags, cli, Count, EnvironmentVariables, IsNothing
     '                     IsNullOrEmpty, IsReadOnly, Keys, Name, ParameterList
     '                     Parameters, SingleValue, Tokens
     ' 
@@ -88,7 +88,7 @@ Namespace CommandLine
         ''' <summary>
         ''' 原始的命令行字符串
         ''' </summary>
-        Friend _CLICommandArgvs As String
+        Friend cliCommandArgvs As String
 
         Dim _name As String
 
@@ -184,10 +184,10 @@ Namespace CommandLine
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public ReadOnly Property CLICommandArgvs As String
+        Public ReadOnly Property cli As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return _CLICommandArgvs
+                Return cliCommandArgvs
             End Get
         End Property
 
@@ -195,7 +195,14 @@ Namespace CommandLine
         ''' The parameter name is not case sensitive.
         ''' (开关的名称是不区分大小写的，进行字符串插值脚本化处理的时候，是使用的<see cref="App.GetVariable"/>函数来获取环境变量值)
         ''' </summary>
-        ''' <param name="paramName">The argument name in the commandline.</param>
+        ''' <param name="paramName">
+        ''' The argument name in the commandline.
+        ''' 
+        ''' ##### 2018-09-10 
+        ''' 为了兼容VB的!字典取值语法，这个属性是会自动处理开关参数的前缀的
+        ''' 即会自动的将开关参数的/\--等前缀删除尝试进行取值
+        ''' 这个自动转换不会应用于逻辑开关参数上面
+        ''' </param>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks></remarks>
@@ -204,11 +211,12 @@ Namespace CommandLine
                 Dim LQuery As NamedValue(Of String) =
                     __arguments _
                         .Where(Function(x)
-                                   Return String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase)
+                                   Return String.Equals(x.Name, paramName, StringComparison.OrdinalIgnoreCase) OrElse
+                                          String.Equals(x.Name.Trim("\", "/", "-"), paramName, StringComparison.OrdinalIgnoreCase)
                                End Function) _
                         .FirstOrDefault
-
-                Dim value As String = LQuery.Value ' 是值类型，不会出现空引用的情况
+                ' 是值类型，不会出现空引用的情况
+                Dim value As String = LQuery.Value
 
                 If value.StringEmpty Then
                     ' 2018-1-22
@@ -484,27 +492,29 @@ Namespace CommandLine
         ''' <param name="param"></param>
         ''' <returns></returns>
         Public Function OpenStreamOutput(param$, Optional encoding As Encodings = Encodings.UTF8) As StreamWriter
-            Dim path As String = Me(param)
-            Dim textEncode As Encoding = encoding.CodePage
+            Dim path$ = Me(param)
 
             If path.StringEmpty Then
-                Return New StreamWriter(Console.OpenStandardOutput, textEncode)
+                Return New StreamWriter(Console.OpenStandardOutput, encoding.CodePage)
             Else
-                Call path.ParentPath.MkDIR
-
-                Dim fs As New FileStream(path, FileMode.OpenOrCreate, access:=FileAccess.ReadWrite)
-                Return New StreamWriter(fs, textEncode)
+                Return path.OpenWriter(encoding)
             End If
         End Function
 
         ''' <summary>
         ''' Read all of the text input from the file or ``std_in``
         ''' </summary>
+        ''' <remarks>
+        ''' 这个函数会首先尝试使用<see cref="OpenStreamInput"/>打开本地文件和标准输出流
+        ''' 如果失败的话<see cref="OpenStreamInput"/>函数会返回空值，这个时候参数字符串将会直接被
+        ''' 返回作为结果，如果打开成功的话，会将得到的输入流之中的所有字符串读出来返回
+        ''' </remarks>
         ''' <param name="param"></param>
         ''' <returns></returns>
         Public Function ReadInput(param As String) As String
             Dim s As String = Nothing
             Dim read As StreamReader = OpenStreamInput(param, s)
+
             If read Is Nothing Then
                 Return s
             Else

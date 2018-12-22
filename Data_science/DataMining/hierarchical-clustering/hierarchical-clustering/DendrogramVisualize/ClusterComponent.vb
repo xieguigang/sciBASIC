@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::393a1920ee20d40a4529c6964a54c245, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\ClusterComponent.vb"
+﻿#Region "Microsoft.VisualBasic::7ee89ad2ea0d15b5910015f19f280ceb, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\DendrogramVisualize\ClusterComponent.vb"
 
     ' Author:
     ' 

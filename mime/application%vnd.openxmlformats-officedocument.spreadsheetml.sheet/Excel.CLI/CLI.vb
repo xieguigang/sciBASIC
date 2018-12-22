@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2526e47de81731e1bc850e7aa3419b9d, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::ba2130569694a72405dd4d00ab9f6676, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
 
     ' Author:
     ' 
@@ -54,6 +54,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Office.Excel
+Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
 Imports Contract = Microsoft.VisualBasic.Data.csv.DATA.DataFrame
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
@@ -61,29 +62,41 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 <CLI> Module CLI
 
+    ''' <summary>
+    ''' /nothing.as.empty 可以允许将nothing使用空字符串进行替代，这样子就可以不抛出错误了
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
     <ExportAPI("/Cbind")>
-    <Usage("/cbind /in <a.csv> /append <b.csv> [/token0.ID <deli, default=<SPACE> /out <ALL.csv>]")>
+    <Usage("/cbind /in <a.csv> /append <b.csv> [/ID.a <default=ID> /ID.b <default=ID> /grep.ID <grep_script, default=""token <SPACE> first""> /nothing.as.empty /out <ALL.csv>]")>
     <Description("Join of two table by a unique ID.")>
     <Argument("/in", False, CLITypes.File,
               Description:="The table for append by column, its row ID can be duplicated.")>
     <Argument("/append", False, CLITypes.File,
               Description:="The target table that will be append into the table ``a``, the row ID must be unique!")>
+    <Argument("/grep.ID", True, CLITypes.String, PipelineTypes.undefined, AcceptTypes:={GetType(String)},
+              Description:="This argument parameter describ how to parse the ID in file ``a.csv``")>
     Public Function cbind(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim append$ = args <= "/append"
         Dim out$ = args("/out") Or ([in].TrimSuffix & "+" & append.BaseName & ".csv")
-        Dim a = EntityObject.LoadDataSet([in])
-        Dim b = Contract.Load(append)
+        Dim IDa$ = args("/ID.a")
+        Dim IDb$ = args("/ID.b")
+        Dim nothingAsEmpty As Boolean = args("/nothing.as.empty")
+        Dim a = EntityObject.LoadDataSet([in], uidMap:=IDa)
+        Dim b As Contract = Contract.Load(append, uidMap:=IDb)
 
-        With args <= "/token0.ID"
-            If Not String.IsNullOrEmpty(.ByRef) Then
+        With TextGrepScriptEngine.Compile(args("/grep.ID") Or "tokens ' ' first")
+            If Not .IsDoNothing Then
+                Call .Explains.JoinBy(" -> ").__DEBUG_ECHO
+
                 For Each obj As EntityObject In a
-                    obj.ID = Strings.Split(obj.ID, Delimiter:= .ByRef)(0)
+                    obj.ID = .Grep(obj.ID)
                 Next
             End If
         End With
 
-        Return Contract.Append(a, b) _
+        Return Contract.Append(a, b, allowNothing:=nothingAsEmpty) _
             .SaveTo(out) _
             .CLICode
     End Function
@@ -95,9 +108,22 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
               Description:="A directory path that contains csv files that will be merge into one file directly.")>
     Public Function rbind(args As CommandLine) As Integer
         Dim [in] As String = args("/in")
-        Dim out$ = args("/out") Or ([in].TrimSuffix & ".rbind.csv")
+        Dim out$ = args("/out") Or ([in].Split("*"c).First.TrimDIR & ".rbind.csv")
+        Dim source$()
 
-        Return (ls - l - r - "*.csv" <= [in]) _
+        If InStr([in], "*") > 0 Then
+            Dim t$() = [in].Split("*"c)
+            Dim dir$ = t(Scan0)
+            Dim file$ = t(1)
+
+            source = dir.ListDirectory() _
+                .Select(Function(folder) $"{folder}/{file}") _
+                .ToArray
+        Else
+            source = (ls - l - r - "*.csv" <= [in]).ToArray
+        End If
+
+        Return source _
             .DirectAppends(EXPORT:=out) _
             .CLICode
     End Function
@@ -125,7 +151,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     <Usage("/push /write <*.xlsx> /table <*.csv> [/sheetName <name_string> /saveAs <*.xlsx>]")>
     <Description("Write target csv table its content data as a worksheet into the target Excel package.")>
     <Argument("/sheetName", True, CLITypes.String, PipelineTypes.std_in,
-              Description:="The new sheet table name, if this argument is not presented, then the program will using the file basename as the sheet table name. If the sheet table name is exists in current xlsx file, then the exists table value will be updated, otherwise will add new table.")>
+              Description:="The New sheet table name, if this argument Is Not presented, then the program will using the file basename as the sheet table name. If the sheet table name Is exists in current xlsx file, then the exists table value will be updated, otherwise will add New table.")>
     Public Function PushTable(args As CommandLine) As Integer
         With args <= "/write"
 
@@ -144,7 +170,7 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
     <Usage("/Create /target <xlsx>")>
     <Description("Create an empty Excel xlsx package file on a specific file path")>
     <Argument("/Create", False, CLITypes.File,
-              Description:="The file path for save this new created Excel xlsx package.")>
+              Description:="The file path for save this New created Excel xlsx package.")>
     Public Function newEmpty(args As CommandLine) As Integer
         Return "" _
             .SaveTo(args <= "/target", Encodings.ASCII) _
@@ -153,11 +179,11 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
     <ExportAPI("/Extract")>
     <Usage("/Extract /open <xlsx> [/sheetName <name_string, default=*> /out <out.csv/directory>]")>
-    <Description("Open target excel file and get target table and save into a csv file.")>
+    <Description("Open target excel file And get target table And save into a csv file.")>
     <Argument("/open", False, CLITypes.File,
-              Description:="File path of the Excel ``*.xlsx`` file for open and read.")>
+              Description:="File path of the Excel ``*.xlsx`` file for open And read.")>
     <Argument("/sheetName", True, CLITypes.String,
-              Description:="The worksheet table name for read data and save as csv file. 
+              Description:="The worksheet table name for read data And save as csv file. 
               If this argument value is equals to ``*``, then all of the tables in the target xlsx excel file will be extract.")>
     <Argument("/out", True, CLITypes.File,
               Description:="The csv output file path or a directory path value when the ``/sheetName`` parameter is value ``*``.")>

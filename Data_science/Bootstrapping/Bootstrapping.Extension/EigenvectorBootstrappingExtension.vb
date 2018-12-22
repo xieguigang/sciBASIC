@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e36dd099f8241c4e9cbe275c84b08275, Data_science\Bootstrapping\Bootstrapping.Extension\EigenvectorBootstrappingExtension.vb"
+﻿#Region "Microsoft.VisualBasic::1b2e23ce298a4b028a4120e92964d6c8, Data_science\Bootstrapping\Bootstrapping.Extension\EigenvectorBootstrappingExtension.vb"
 
     ' Author:
     ' 
@@ -42,8 +42,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Data.visualize.KMeans
+Imports Microsoft.VisualBasic.Data.visualize.KMeans.Tree
 Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.DataMining.KMeans.Tree
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -100,7 +101,7 @@ Public Module EigenvectorBootstrappingExtension
 
             For Each x As EntityClusterModel In cluster.members
                 Dim rawKey As String = x.Properties.Values.ToArray.GetJson
-                Dim rawParams = raw(rawKey).Select(Function(o) o.Value.value)
+                Dim rawParams = raw(rawKey).Select(Function(o) o.Value.Value)
 
                 tmp += rawParams
             Next

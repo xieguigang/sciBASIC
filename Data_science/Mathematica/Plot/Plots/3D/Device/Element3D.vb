@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::248fb84b37195b77d27e94ee68128e41, Data_science\Mathematica\Plot\Plots\3D\Device\Element3D.vb"
+﻿#Region "Microsoft.VisualBasic::18225335031bad50285a94cca1c2516c, Data_science\Mathematica\Plot\Plots\3D\Device\Element3D.vb"
 
     ' Author:
     ' 
@@ -41,9 +41,9 @@
     ' 
     '     Class Polygon
     ' 
-    '         Properties: Path
+    '         Properties: brush, Path
     ' 
-    '         Sub: Draw
+    '         Sub: Draw, Transform
     ' 
     '     Class Label
     ' 
@@ -104,12 +104,28 @@ Namespace Plot3D.Device
         End Function
     End Class
 
+    ''' <summary>
+    ''' 一个三维空间之中的面
+    ''' </summary>
     Public Class Polygon : Inherits Element3D
 
-        Public Property Path As PointF()
+        Public Property Path As Point3D()
+        Public Property brush As Brush
+
+        Public Overrides Sub Transform(camera As Camera)
+            Path = Path.Select(Function(p) camera.Project(camera.Rotate(p))).ToArray
+            Location = Path.Center
+        End Sub
 
         Public Overrides Sub Draw(g As IGraphics, offset As PointF)
+            Dim screen As Size = g.Size
+            Dim shape As Point() = Path _
+                .Select(Function(p)
+                            Return p.PointXY(screen).OffSet2D(offset)
+                        End Function) _
+                .ToArray
 
+            Call g.FillPolygon(brush, shape)
         End Sub
     End Class
 
@@ -130,6 +146,12 @@ Namespace Plot3D.Device
         Public ReadOnly Property B As Point3D
         Public Property Stroke As Pen
 
+        ''' <summary>
+        ''' 线段的<see cref="Location"/>位置数据会自动从<paramref name="a"/>和
+        ''' <paramref name="b"/>计算出来
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
         Sub New(a As Point3D, b As Point3D)
             Me.A = a
             Me.B = b

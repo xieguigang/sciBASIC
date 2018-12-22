@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::047a439a96aca3eceaec2eac71f03df2, Data_science\Mathematica\Math\Math\Test\LPPExamples.vb"
+﻿#Region "Microsoft.VisualBasic::2ca86dce0e999e729f00d78e0baddf1c, Data_science\Mathematica\Math\Math\test\LPPExamples.vb"
 
     ' Author:
     ' 
@@ -53,7 +53,15 @@ Public Class LPPExamples
     End Function
 
     Public Shared Function maximizeExample() As LPP
-        Return New LPP("Max", New String() {}, New Double() {2, 3, 3}, New Double()() {New Double() {3, 2, 0}, New Double() {-1, 1, 4}, New Double() {2, -2, 5}}, New String() {"�", "�", "�"}, New Double() {60, 10, 50}, 0)
+        Return New LPP(
+            objectiveFunctionType:="Max",
+            variableNames:=New String() {},
+            objectiveFunctionCoefficients:=New Double() {2, 3, 3},
+            constraintCoefficients:=New Double()() {New Double() {3, 2, 0}, New Double() {-1, 1, 4}, New Double() {2, -2, 5}},
+            constraintTypes:=New String() {"=", "=", "="},
+            constraintRightHandSides:=New Double() {60, 10, 50},
+            objectiveFunctionValue:=0
+        )
     End Function
 
     Public Shared Function transshipment() As LPP

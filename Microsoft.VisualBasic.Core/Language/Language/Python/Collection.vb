@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e220ce66ccd73ecb967442fcabdca8d, Microsoft.VisualBasic.Core\Language\Language\Python\Collection.vb"
+﻿#Region "Microsoft.VisualBasic::258dc4860a8137aec93da96af2701d48, Microsoft.VisualBasic.Core\Language\Language\Python\Collection.vb"
 
     ' Author:
     ' 
@@ -46,14 +46,26 @@ Namespace Language.Python
 
     Public Module Collection
 
+        ''' <summary>
+        ''' 将序列之中的指定区域的内容取出来
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="[set]"></param>
+        ''' <param name="start"></param>
+        ''' <param name="[stop]">
+        ''' 可以接受负数，如果为负数，则表示终止的下标为长度将去这个stop值的结果，即从后往前数
+        ''' </param>
+        ''' <param name="[step]"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Iterator Function slice(Of T)([set] As IEnumerable(Of T), start As Integer, [stop] As Integer, Optional [step] As Integer = 1) As IEnumerable(Of T)
+        Public Iterator Function slice(Of T)([set] As IEnumerable(Of T), start%, stop%, Optional step% = 1) As IEnumerable(Of T)
             Dim array As T() = [set].Skip(start).ToArray
 
             If [stop] < 0 Then
                 [stop] = array.Length + [stop]
             End If
 
+            [stop] -= start
             [stop] -= 1
 
             For i As Integer = 0 To [stop] Step [step]

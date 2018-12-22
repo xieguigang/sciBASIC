@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59453605d79316e5c2b6c38c9e7f9894, Microsoft.VisualBasic.Core\Scripting\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::c0d9c4a61146200b08cef92b13df1a28, Microsoft.VisualBasic.Core\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Preview, Script
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     '         Function: AppendLine, Replace, (+2 Overloads) Save, ToString
     '         Operators: +
     ' 
@@ -94,6 +94,10 @@ Namespace Scripting.SymbolBuilder
 
         Sub New(script$)
             Call Me.New(New StringBuilder(script))
+        End Sub
+
+        Sub New(html As XElement)
+            Call Me.New(html.ToString)
         End Sub
 
         ''' <summary>

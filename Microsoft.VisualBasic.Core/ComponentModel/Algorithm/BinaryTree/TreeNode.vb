@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b8175766291acd77bf7f61cb5a409cc, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::1bc33bc63a33826b475605df12c3e2ec, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: ToString, viewQualifiedName
     ' 
-    '         Sub: SetValue
+    '         Sub: Copy, SetValue
     ' 
     ' 
     ' /********************************************************************************/
@@ -54,6 +54,13 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
     ''' <summary>
     ''' The binary tree node.
+    ''' 
+    ''' (如果执行的是聚类操作的话，可以通过!values字典属性来获取簇的结果)
+    ''' 
+    ''' 在这里只是二叉树的节点实现，具体的二叉树构建可以通过使用下面的算法来完成：
+    ''' 
+    ''' + <see cref="AVLTree(Of K, V)"/> 
+    ''' 
     ''' </summary>
     ''' <typeparam name="K"></typeparam>
     ''' <typeparam name="V"></typeparam>
@@ -66,6 +73,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
         Public ReadOnly Property Key As K
         ''' <summary>
         ''' 与当前的这个键名相对应的键值可以根据需求发生改变，即可以被任意赋值
+        ''' 
+        ''' 如果是进行聚类操作的话，可以通过``!values`` as <see cref="List(Of V)"/>
+        ''' 来添加簇成员
         ''' </summary>
         ''' <returns></returns>
         Public Property Value As V Implements Value(Of V).IValueOf.Value
@@ -126,6 +136,13 @@ Namespace ComponentModel.Algorithm.BinaryTree
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetValue(key$, value As Object)
             additionals(key) = value
+        End Sub
+
+        Public Sub Copy(source As BinaryTree(Of K, V))
+            _Key = source.Key
+            _Value = source.Value
+            additionals.Clear()
+            additionals.AddRange(source.additionals)
         End Sub
 
         Private Shared Function viewQualifiedName(node As BinaryTree(Of K, V)) As String

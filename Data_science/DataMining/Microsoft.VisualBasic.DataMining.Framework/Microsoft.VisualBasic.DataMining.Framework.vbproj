@@ -47,7 +47,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
@@ -96,7 +96,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x86\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
     <DebugType>full</DebugType>
@@ -119,7 +119,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -133,7 +133,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -145,7 +145,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -157,7 +157,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -169,7 +169,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -181,7 +181,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -192,7 +192,7 @@
     </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
@@ -206,7 +206,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
@@ -250,7 +250,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -274,7 +274,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -286,7 +286,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -310,7 +310,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.DataMining.Framework.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -349,6 +349,9 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -390,7 +393,6 @@
     <Compile Include="AprioriRules\Helper\Encoding.vb" />
     <Compile Include="ComponentModel\Class.vb" />
     <Compile Include="ComponentModel\Extensions.vb" />
-    <Compile Include="DBSCAN\ClusterIds.vb" />
     <Compile Include="DBSCAN\DatasetItemBase.vb" />
     <Compile Include="DBSCAN\DbscanAlgorithm.vb" />
     <Compile Include="DBSCAN\DbscanPoint.vb" />
@@ -402,6 +404,7 @@
     <Compile Include="FuzzyCMeans\Entity.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />
+    <Compile Include="Kernel\Neuron\NeuronEntity.vb" />
     <Compile Include="KMeans\EntityModels\csv.vb" />
     <Compile Include="KMeans\Extensions.vb" />
     <Compile Include="KMeans\CompleteLinkage\Cluster.vb" />
@@ -420,17 +423,6 @@
     <Compile Include="AprioriRules\ExportAPI.vb" />
     <Compile Include="MarginalLikelihoodAnalysis.vb" />
     <Compile Include="Abundance.vb" />
-    <Compile Include="NeuralNetwork\TrainingUtils.vb" />
-    <Compile Include="NeuralNetwork\Dataset.vb" />
-    <Compile Include="NeuralNetwork\Helpers.vb" />
-    <Compile Include="NeuralNetwork\Network.vb" />
-    <Compile Include="NeuralNetwork\Neuron.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\BipolarSigmoidFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\IActivationFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\SigmoidFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\ThresholdFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
-    <Compile Include="NeuralNetwork\Synapse.vb" />
     <Compile Include="PeriodAnalysis\Variables.vb" />
     <Compile Include="Statistics.vb" />
     <Compile Include="PeriodAnalysis\PeriodAnalysis.vb" />
@@ -438,10 +430,9 @@
     <Compile Include="Kernel\BayesianBeliefNetwork\BeliefNetwork.vb" />
     <Compile Include="Kernel\BayesianBeliefNetwork\BNInfer.vb" />
     <None Include="AprioriRules\README.md" />
-    <Compile Include="Kernel\Neuron.vb" />
+    <Compile Include="Kernel\Neuron\Neuron.vb" />
     <Compile Include="Kernel\Bayesian.vb" />
     <Compile Include="ComponentModel\Entity.vb" />
-    <Compile Include="ComponentModel\Vector.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -457,7 +448,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="NeuralNetwork\ActiveFunctions\Copyright.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

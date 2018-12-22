@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a7c129396527eb05381683bfbe146d2, www\githubAPI\WebAPI\Users.vb"
+﻿#Region "Microsoft.VisualBasic::a4700b8ff3c169066ca3a09e55d0d31c, www\githubAPI\WebAPI\Users.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,12 @@
 
     ' Summaries:
 
+    '     Class Counter
+    ' 
+    '         Properties: Followers, Following, Repositories, Stars
+    ' 
+    '         Function: Parse, ToString
+    ' 
     '     Module Users
     ' 
     '         Function: Followers, Following, GetUserData, ParserInternal, ParserIterator
@@ -43,12 +49,51 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports System.Threading
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.HtmlParser
 Imports Microsoft.VisualBasic.Webservices.Github.Class
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace WebAPI
+
+    Public Class Counter
+
+        Public Property Repositories As Integer
+        Public Property Stars As Integer
+        Public Property Followers As Integer
+        Public Property Following As Integer
+
+        Public Overrides Function ToString() As String
+            Return Me.GetJson
+        End Function
+
+        Public Shared Function Parse(page As String) As Counter
+            Dim links$() = page.Matches("UnderlineNav.+?</a>", RegexICSng) _
+                               .Select(Function(c)
+                                           Return c.Match(">.+?</span>", RegexICSng).TrimNewLine.StringReplace("\s+", "")
+                                       End Function) _
+                               .Where(Function(s) Not s.StringEmpty) _
+                               .ToArray
+            Dim counters = links _
+                .Select(Function(a)
+                            Dim title$ = a.GetValue.Split("<"c).FirstOrDefault
+                            Dim count$ = a.Match("<span.+</span>", RegexICSng).Match("\d+")
+                            Return New NamedValue(Of Integer)(title, CInt(Val(count)))
+                        End Function) _
+                .Where(Function(n) Not n.Name.StringEmpty) _
+                .ToDictionary _
+                .FlatTable
+
+            Return New Counter With {
+                .Followers = counters(NameOf(.Followers)),
+                .Following = counters(NameOf(.Following)),
+                .Repositories = counters(NameOf(.Repositories)),
+                .Stars = counters(NameOf(.Stars))
+            }
+        End Function
+    End Class
 
     Public Module Users
 
@@ -58,13 +103,17 @@ Namespace WebAPI
         ''' Get user's github followers
         ''' </summary>
         ''' <param name="username"></param>
+        ''' <param name="maxFollowers">
+        ''' 限制性参数，如果超过了这个数量，将会停止解析
+        ''' </param>
         ''' <returns></returns>
-        <Extension> Public Function Followers(username As String, Optional maxFollowers% = Integer.MaxValue) As User()
+        <Extension> Public Function Followers(username$, Optional maxFollowers% = Integer.MaxValue) As User()
             Dim url As String = Github & "/{0}?page={1}&tab=followers"
-            Return ParserIterator(url, username, maxFollowers)
+            Dim counter As Counter = Counter.Parse($"https://github.com/{username}".GET)
+            Return ParserIterator(url, username, maxFollowers, counter.Followers)
         End Function
 
-        Private Function ParserIterator(url$, username$, maxLimits%) As User()
+        Private Function ParserIterator(url$, username$, maxLimits%, count%) As User()
             Dim out As New List(Of User)
             Dim i As int = 1
             Dim [get] As New Value(Of User())
@@ -72,14 +121,17 @@ Namespace WebAPI
             Do While Not ([get] = ParserInternal(username, ++i, url)).IsNullOrEmpty
                 out += (+[get])
 
-                If out.Count > maxLimits Then
+                If out.Count > maxLimits OrElse out.Count >= count Then
                     Exit Do
                 Else
-                    Call Thread.Sleep(300)  ' Decrease the server load 
+                    ' Decrease the server load 
+                    Call Thread.Sleep(300)
                 End If
             Loop
 
-            Return out
+            Return out.GroupBy(Function(u) u.login) _
+                      .Select(Function(u) u.First) _
+                      .ToArray
         End Function
 
         Public Function GetUserData(usrName$) As User
@@ -159,7 +211,8 @@ Namespace WebAPI
         ''' <returns></returns>
         <Extension> Public Function Following(username As String, Optional maxFollowing% = Integer.MaxValue) As User()
             Dim url As String = Github & "/{0}?page={1}&tab=following"
-            Return ParserIterator(url, username, maxFollowing)
+            Dim counter As Counter = Counter.Parse($"https://github.com/{username}".GET)
+            Return ParserIterator(url, username, maxFollowing, counter.Following)
         End Function
     End Module
 End Namespace

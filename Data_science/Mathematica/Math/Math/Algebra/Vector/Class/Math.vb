@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abc0e9947062f9d80de370b9f10d8b65, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Math.vb"
+﻿#Region "Microsoft.VisualBasic::ea94968d475d4816fc323de2965f7a90, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Math.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Vector
     ' 
-    '         Function: Abs, BesselI, Exp, floor, Log
+    '         Function: Abs, BesselI, Exp, floor, (+2 Overloads) Log
     '                   Log10, (+3 Overloads) Max, (+3 Overloads) Min, Order, pchisq
     '                   round, Sign, Sinh, Sort, Sqrt
     '                   (+2 Overloads) Sum, Trunc
@@ -82,6 +82,11 @@ Namespace LinearAlgebra
         <ExportAPI("Exp")>
         Public Shared Function Exp(x As Vector) As Vector
             Return New Vector(From n As Double In x Select sys.Exp(n))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Log(Optional base# = sys.E) As Vector
+            Return Vector.Log(Me, base)
         End Function
 
         ''' <summary>

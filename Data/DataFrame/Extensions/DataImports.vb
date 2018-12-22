@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f7afc044f26800ae0234fd60c64c4f2, Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::d1c8d244e449d84c3af14612251ff89d, Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -150,7 +151,7 @@ Public Module DataImports
     ''' <param name="maps"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function ImportsTsv(Of T As Class)(lines As IEnumerable(Of String), Optional maps As Dictionary(Of String, String) = Nothing) As T()
+    Public Function ImportsTsv(Of T As Class)(lines As IEnumerable(Of String), Optional maps As NameMapping = Nothing) As T()
         Return ImportsData(lines, ASCII.TAB) _
             .AsDataSource(Of T)(maps:=maps)
     End Function

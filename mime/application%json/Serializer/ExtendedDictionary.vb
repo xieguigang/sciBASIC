@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d72bac475c5cf61bb725ae83ac2fda4, mime\application%json\Serializer\ExtendedDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::d370e759195c898bd5778a82664425ba, mime\application%json\Serializer\ExtendedDictionary.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Public Module ExtendedDictionary
 
     Public Function LoadExtendedJson(Of V, T As Dictionary(Of String, V))(json$) As T
-        Dim model As JsonObject = DirectCast(ParseJsonStr(json$), JsonObject) ' 因为所需要反序列化的对象是一个字典的继承对象，所以这里得到的一定是字典对象
+        Dim model As JsonObject = DirectCast(ParseJson(json$), JsonObject) ' 因为所需要反序列化的对象是一个字典的继承对象，所以这里得到的一定是字典对象
         Dim type As Type = GetType(T)
         Dim obj As Object = Activator.CreateInstance(type)
         Dim defines = type.__getSpecificProperties(PropertyAccess.Writeable)

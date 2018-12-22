@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ad7c039929c177c2c50ec9ffba595b8, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ffb898ff1eee906da37e6cee1d59bab9, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Language.Vectorization
 
 Namespace LinearAlgebra
@@ -93,18 +94,30 @@ Namespace LinearAlgebra
             Return New Vector(v.Takes(indices.ToArray))
         End Function
 
+        ReadOnly normalRange As New DefaultValue(Of DoubleRange)({0, 1})
+        ReadOnly random As New Random
+
         ''' <summary>
-        ''' 返回目标长度的[0-1]之间的随机数向量
+        ''' 默认返回目标长度的``[0-1]``之间的随机数向量
         ''' </summary>
         ''' <param name="size%"></param>
         ''' <returns></returns>
-        Public Function rand(size%) As Vector
-            Dim rnd As New Random
-            Dim list As New List(Of Double)
+        Public Function rand(size%, Optional range As DoubleRange = Nothing) As Vector
+            Dim list As Double() = New Double(size - 1) {}
 
-            For i As Integer = 0 To size - 1
-                Call list.Add(rnd.NextDouble)
-            Next
+            SyncLock random
+                If range Is Nothing Then
+                    For i As Integer = 0 To size - 1
+                        list(i) = random.NextDouble
+                    Next
+                Else
+                    Dim d = range.Length
+
+                    For i As Integer = 0 To size - 1
+                        list(i) = random.NextDouble * d + range.Min
+                    Next
+                End If
+            End SyncLock
 
             Return New Vector(list)
         End Function

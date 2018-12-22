@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3283f0685afd4e3116d16fec1a0667a5, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ceab6e114bde434d5109c60edf574226, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,11 @@
 
     '     Module GraphicsExtensions
     ' 
-    '         Function: BackgroundGraphics, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D, (+2 Overloads) CreateGDIDevice
-    '                   CreateGrayBitmap, EntireImage, GDIPlusDeviceHandleFromImageFile, GetBrush, GetBrushes
-    '                   (+2 Overloads) GetIcon, GetRawStream, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame
+    '         Function: BackgroundGraphics, CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D
+    '                   (+3 Overloads) CreateGDIDevice, CreateGrayBitmap, EntireImage, GetBrush, GetBrushes
+    '                   (+2 Overloads) GetIcon, GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame
     '                   IsValidGDIParameter, (+2 Overloads) LoadImage, OpenDevice, (+2 Overloads) PointF, SaveIcon
-    '                   SizeF, ToFloat, ToPoint, ToPoints
+    '                   SizeF, ToFloat, ToPoint, ToPoints, ToStream
     ' 
     '         Sub: (+5 Overloads) DrawCircle
     ' 
@@ -313,15 +313,26 @@ Namespace Imaging
         ''' <param name="path"></param>
         ''' <returns></returns>
         <ExportAPI("LoadImage"), Extension>
-        Public Function LoadImage(path As String, Optional base64 As Boolean = False) As Image
+        Public Function LoadImage(path$,
+                                  Optional base64 As Boolean = False,
+                                  Optional throwEx As Boolean = True) As Image
             If base64 Then
                 Dim base64String = path.ReadAllText
                 Dim img As Image = base64String.GetImage
                 Return img
             Else
-                Return FileIO.FileSystem _
-                    .ReadAllBytes(path) _
-                    .LoadImage
+                Try
+                    Return FileIO.FileSystem _
+                        .ReadAllBytes(path) _
+                        .LoadImage
+                Catch ex As Exception
+                    If throwEx Then
+                        Throw New Exception(path, ex)
+                    Else
+                        Call App.LogException(New Exception(path, ex))
+                        Return Nothing
+                    End If
+                End Try
             End If
         End Function
 
@@ -336,13 +347,17 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="image"></param>
         ''' <returns></returns>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Get.RawStream")>
-        <Extension> Public Function GetRawStream(image As Image) As Byte()
-            Using stream As New MemoryStream
-                Call image.Save(stream, ImageFormat.Png)
-                Return stream.ToArray
-            End Using
+        <Extension> Public Function GetStreamBuffer(image As Image) As Byte()
+            Return image.ToStream.ToArray
+        End Function
+
+        Public Function ToStream(image As Image) As MemoryStream
+            With New MemoryStream
+                Call image.Save(.ByRef, ImageFormat.Png)
+                Return .ByRef
+            End With
         End Function
 
         <ExportAPI("GrayBitmap", Info:="Create the gray color of the target image.")>
@@ -418,7 +433,7 @@ Namespace Imaging
         ''' <returns></returns>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function GDIPlusDeviceHandleFromImageFile(path As String) As Graphics2D
+        <Extension> Public Function CanvasCreateFromImageFile(path As String) As Graphics2D
             Dim image As Image = LoadImage(path)
             Dim g As Graphics = Graphics.FromImage(image)
 
@@ -478,9 +493,29 @@ Namespace Imaging
         ''' <param name="filled">默认的背景填充颜色为白色</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <ExportAPI("GDI+.Create")>
+        <Extension> Public Function CreateGDIDevice(r As Size,
+                                                    Optional filled$ = NameOf(Color.White),
+                                                    <CallerMemberName>
+                                                    Optional trace$ = "",
+                                                    Optional dpi$ = "100,100") As Graphics2D
+            Return r.CreateGDIDevice(filled.TranslateColor, trace, dpi)
+        End Function
+
+        ''' <summary>
+        ''' 创建一个GDI+的绘图设备，默认的背景填充色为白色
+        ''' </summary>
+        ''' <param name="r"></param>
+        ''' <param name="filled">默认的背景填充颜色为白色</param>
+        ''' <returns></returns>
+        ''' <remarks></remarks>
         '''
         <ExportAPI("GDI+.Create")>
-        <Extension> Public Function CreateGDIDevice(r As Size, Optional filled As Color = Nothing, <CallerMemberName> Optional trace$ = "", Optional dpi$ = "100,100") As Graphics2D
+        <Extension> Public Function CreateGDIDevice(r As Size, filled As Color,
+                                                    <CallerMemberName>
+                                                    Optional trace$ = "",
+                                                    Optional dpi$ = "100,100") As Graphics2D
             Dim bitmap As Bitmap
 
             If r.Width = 0 OrElse r.Height = 0 Then

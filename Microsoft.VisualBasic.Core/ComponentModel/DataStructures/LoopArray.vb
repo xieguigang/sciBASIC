@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::095eadeb4f32a2a5c55846088f4d4722, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\LoopArray.vb"
+﻿#Region "Microsoft.VisualBasic::6cbca453e2ad0186dd0aa5e35dce4f3a, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\LoopArray.vb"
 
     ' Author:
     ' 
@@ -92,17 +92,20 @@ Namespace ComponentModel.DataStructures
         End Sub
 
         ''' <summary>
-        ''' Gets the next elements in the array, is move to end, then the index will moves to the array begining position.
+        ''' Gets the next elements in the array, is move to end, then the index will 
+        ''' moves to the array begining position.
         ''' </summary>
         ''' <returns></returns>
         Public Function [Next]() As T
+            Dim i As Integer = p
+
             If p < array.Length - 1 Then
                 p += 1
             Else
                 p = 0
             End If
 
-            Return array(p)
+            Return array(i)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

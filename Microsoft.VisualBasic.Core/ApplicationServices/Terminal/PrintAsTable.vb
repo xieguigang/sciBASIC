@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2476a3f0b6d1aa41c34fcfda30c2b17, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PrintAsTable.vb"
+﻿#Region "Microsoft.VisualBasic::85142a2f0041cc8218b7114fa9ad9b2f, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PrintAsTable.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module PrintAsTable
     ' 
-    '         Function: Print
+    '         Function: (+2 Overloads) Print
     ' 
     '         Sub: Print, PrintTable
     '         Delegate Sub
@@ -70,6 +70,20 @@ Namespace ApplicationServices.Terminal
             Dim out As New StringBuilder
             Dim dev As New StringWriter(out)
             Call source.Print(dev, addBorder)
+            Return out.ToString
+        End Function
+
+        <Extension>
+        Public Function Print(source As IEnumerable(Of String()), Optional addBorder As Boolean = True) As String
+            Dim out As New StringBuilder
+            Dim dev As New StringWriter(out)
+
+            If addBorder Then
+                Call source.PrintTable(dev, sep:=" "c)
+            Else
+                Call source.Print(dev, sep:=" "c)
+            End If
+
             Return out.ToString
         End Function
 

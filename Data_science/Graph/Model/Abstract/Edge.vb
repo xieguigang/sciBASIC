@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6539514bdd20d050ebc9b07e3d816552, Data_science\Graph\Model\Abstract\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::0053368bb278ac506f24b7a8c76c265b, Data_science\Graph\Model\Abstract\Edge.vb"
 
     ' Author:
     ' 
@@ -62,6 +62,9 @@ End Class
 ''' Direction: ``<see cref="U"/> -> <see cref="V"/>``.
 ''' (节点之间的边)
 ''' </summary>
+''' <remarks>
+''' 如果边对象是一个有向边的话，那么<see cref="U"/>就是父节点，<see cref="V"/>就是<see cref="U"/>的子节点
+''' </remarks>
 Public Class Edge(Of Vertex As V) : Implements INamedValue
 
     ''' <summary>

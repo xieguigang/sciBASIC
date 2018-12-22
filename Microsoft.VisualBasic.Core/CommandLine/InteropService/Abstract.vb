@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2216b94294077ebc4cafff613ec82cb8, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::ddae0b72912f83cfa8aec30722a11992, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -33,17 +33,10 @@
 
     '     Class InteropService
     ' 
-    '         Properties: Path
+    '         Properties: IORedirect, IsAvailable, Path
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetLastCLRException, GetLastError, RunDotNetApp, RunProgram, ToString
-    ' 
-    '     Class NullOrDefault
-    ' 
-    '         Properties: value
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
     ' 
     '     Class CLIBuilder
     ' 
@@ -74,10 +67,28 @@ Namespace CommandLine.InteropService
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Path As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _executableAssembly
             End Get
         End Property
+
+        ''' <summary>
+        ''' 这个只读属性返回目标可执行文件是否有效
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsAvailable As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return _executableAssembly.FileExists
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 默认是不做IO重定向的
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property IORedirect As Boolean = False
 
         Sub New()
         End Sub
@@ -156,23 +167,6 @@ Namespace CommandLine.InteropService
             Else
                 Return _executableAssembly
             End If
-        End Function
-    End Class
-
-    ''' <summary>
-    ''' Default value
-    ''' </summary>
-    <AttributeUsage(AttributeTargets.Field, AllowMultiple:=False, Inherited:=True)>
-    Public Class NullOrDefault : Inherits Attribute
-
-        Public ReadOnly Property value As String
-
-        Sub New(Optional default$ = "")
-            value = [default]
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return value
         End Function
     End Class
 

@@ -1,63 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::46c34e4ed658057f1dfe9b0ce4525a68, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
+﻿#Region "Microsoft.VisualBasic::d46bd0117a924034935616586fd3bdf9, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\Default.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Delegate Function
-' 
-' 
-'     Delegate Function
-' 
-' 
-'     Interface IDefaultValue
-' 
-'         Properties: DefaultValue
-' 
-'     Interface IsEmpty
-' 
-'         Properties: IsEmpty
-' 
-'     Structure DefaultValue
-' 
-'         Properties: DefaultValue, IsEmpty
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: [When], getDefault, ToString
-'         Operators: (+2 Overloads) +, (+4 Overloads) Or
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    '     Delegate Function
+    ' 
+    ' 
+    '     Delegate Function
+    ' 
+    ' 
+    '     Interface IDefaultValue
+    ' 
+    '         Properties: DefaultValue
+    ' 
+    '     Interface IsEmpty
+    ' 
+    '         Properties: IsEmpty
+    ' 
+    '     Structure DefaultValue
+    ' 
+    '         Properties: DefaultValue, IsEmpty
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: (+2 Overloads) [When], getDefault, GetNumericAssert, ToString
+    '         Operators: (+2 Overloads) +, (+6 Overloads) Or
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -130,6 +130,34 @@ Namespace Language.Default
         ''' </summary>
         Dim assert As Assert(Of Object)
 
+        ''' <summary>
+        ''' 这个判断函数优化了对数字类型的判断
+        ''' </summary>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 在VB之中，数值类型在未赋值的状态下默认值为零，意味着此时该数值的值为空
+        ''' 但是不清楚这样子判断是否会出现bug？
+        ''' </remarks>
+        Public Shared Function GetNumericAssert(n As Object) As Boolean
+            If n Is Nothing Then
+                ' 可空类型的数值类型
+                Return True
+            End If
+
+            Select Case n.GetType
+                Case GetType(Integer), GetType(Long), GetType(ULong), GetType(UInteger), GetType(Short), GetType(UShort)
+                    Return CInt(n) = 0 OrElse CDbl(n).IsNaNImaginary
+                Case GetType(Double), GetType(Single), GetType(Decimal)
+                    Return CDbl(n) = 0.0 OrElse CDbl(n).IsNaNImaginary
+                Case Else
+#If DEBUG Then
+                    Call n.GetType.FullName.Warning
+#End If
+                    Return ExceptionHandle.Default(obj:=n)
+            End Select
+        End Function
+
         Sub New(value As T, Optional assert As Assert(Of Object) = Nothing)
             Me.Value = value
             Me.assert = assert Or defaultAssert
@@ -187,7 +215,7 @@ Namespace Language.Default
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or(obj As T, [default] As DefaultValue(Of T)) As T
-            Return getDefault(obj, [default].DefaultValue, If([default].assert, ExceptionHandler.defaultHandler))
+            Return getDefault(obj, [default].DefaultValue, If([default].assert, ExceptionHandle.defaultHandler))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -197,7 +225,7 @@ Namespace Language.Default
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Or([default] As DefaultValue(Of T), obj As T) As T
-            Return getDefault([default].DefaultValue, obj, If([default].assert, ExceptionHandler.defaultHandler))
+            Return getDefault([default].DefaultValue, obj, If([default].assert, ExceptionHandle.defaultHandler))
         End Operator
 
         ''' <summary>
@@ -217,7 +245,7 @@ Namespace Language.Default
         Public Shared Widening Operator CType(obj As T) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .Value = obj,
-                .assert = AddressOf ExceptionHandler.Default
+                .assert = AddressOf ExceptionHandle.Default
             }
         End Operator
 
@@ -230,7 +258,7 @@ Namespace Language.Default
         Public Shared Widening Operator CType(lazy As Func(Of T)) As DefaultValue(Of T)
             Return New DefaultValue(Of T) With {
                 .LazyValue = lazy.AsLazy,
-                .assert = AddressOf ExceptionHandler.Default
+                .assert = AddressOf ExceptionHandle.Default
             }
         End Operator
     End Structure

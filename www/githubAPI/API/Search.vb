@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f409b9e3f6874f40a3c73d2bf52d2cef, www\githubAPI\API\Search.vb"
+﻿#Region "Microsoft.VisualBasic::219ae357375e43a8ba23aedb0f91603c, www\githubAPI\API\Search.vb"
 
     ' Author:
     ' 
@@ -65,7 +65,6 @@
 #End Region
 
 Imports System.Collections.Specialized
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Webservices.Github.Class
 
@@ -110,7 +109,7 @@ Namespace API
             ' url &= $"+{NameOf(order)}:{order.ToString}"
 
             Dim json As String = url.GetRequest(https:=True)
-            Return json.LoadObject(Of SearchResult(Of User))
+            Return json.LoadJSON(Of SearchResult(Of User))
         End Function
 
         Public Function Users(q As UsersQuery,

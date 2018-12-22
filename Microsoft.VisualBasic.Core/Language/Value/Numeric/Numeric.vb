@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58c139604571df4a130daf3b382801ea, Microsoft.VisualBasic.Core\Language\Value\Numeric\Numeric.vb"
+﻿#Region "Microsoft.VisualBasic::e7acb2cc6f8ebc2d0e8963795c6463b0, Microsoft.VisualBasic.Core\Language\Value\Numeric\Numeric.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,8 @@
     '     Module Numeric
     ' 
     '         Function: Equals, GreaterThan, GreaterThanOrEquals, LessThan, LessThanOrEquals
-    '                   MaxIndex, MinIndex, NextInteger
+    '                   MaxIndex, MinIndex, NextInteger, (+2 Overloads) Reverse, ToUInt32
+    '                   ToUInt64
     ' 
     '     Class Precise
     ' 
@@ -192,6 +193,27 @@ Namespace Language
         ''' <returns></returns>
         <Extension> Public Function NextInteger(rnd As Random, max As Integer) As int
             Return New int(rnd.Next(max))
+        End Function
+
+        Public Function ToUInt32(value As Single) As UInteger
+            Dim bytes As Byte() = BitConverter.GetBytes(value)
+            Return BitConverter.ToUInt32(bytes, 0)
+        End Function
+
+        Public Function ToUInt64(value As Double) As ULong
+            Dim bytes As Byte() = BitConverter.GetBytes(value)
+            Return BitConverter.ToUInt64(bytes, 0)
+        End Function
+
+        Public Function Reverse(value As UInteger) As UInteger
+            Dim reversed As UInteger = (value And &HFF) << 24 Or (value And &HFF00) << 8 Or (value And &HFF0000) >> 8 Or (value And &HFF000000UI) >> 24
+            Return reversed
+        End Function
+
+        Public Function Reverse(value As Integer) As Integer
+            Dim uvalue As UInteger = CUInt(value)
+            Dim reversed As UInteger = Reverse(uvalue)
+            Return CInt(reversed)
         End Function
     End Module
 

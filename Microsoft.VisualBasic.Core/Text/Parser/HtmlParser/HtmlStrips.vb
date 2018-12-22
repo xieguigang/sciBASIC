@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d9335dfdc1513a79a8d1526d7c24167, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::a6727972f3ff5b4685a77b883939bae3, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 
@@ -157,7 +157,7 @@ Namespace Text.HtmlParser
         End Function
 
         Const HtmlTags$ = "</?.+?(\s+.+?="".+?"")*>"
-        Const hrefPattern$ = "href=[""'].+?[""']"
+        Const hrefPattern$ = "href\s*=\s*[""'].+?[""']"
 
         ''' <summary>
         ''' Gets the link text in the html fragement text.
@@ -179,9 +179,7 @@ Namespace Text.HtmlParser
             If String.IsNullOrEmpty(url) Then
                 Return ""
             Else
-                url = Mid(url, 6)
-                url = Mid(url, 2, Len(url) - 2)
-                Return url
+                Return url.GetTagValue("=", trim:=True).Value.GetStackValue("""", """")
             End If
         End Function
 
@@ -209,14 +207,13 @@ Namespace Text.HtmlParser
             If String.IsNullOrEmpty(img) Then
                 Return ""
             Else
-                img = Regex.Match(img, "src="".+?""", RegexOptions.IgnoreCase).Value
+                img = r.Match(img, "src\s*[=]\s*"".+?""", RegexOptions.IgnoreCase).Value
             End If
 
             If String.IsNullOrEmpty(img) Then
                 Return ""
             Else
-                img = Mid(img, 5)
-                img = Mid(img, 2, Len(img) - 2)
+                img = img.GetTagValue("=", trim:=True).Value.GetStackValue("""", """")
                 Return img
             End If
         End Function

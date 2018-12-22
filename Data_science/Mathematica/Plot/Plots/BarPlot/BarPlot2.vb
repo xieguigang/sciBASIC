@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20c59d82008ed9de254b15056a074202, Data_science\Mathematica\Plot\Plots\BarPlot\BarPlot2.vb"
+﻿#Region "Microsoft.VisualBasic::cb4445a629d4fc8f17cc50bc44248a3a, Data_science\Mathematica\Plot\Plots\BarPlot\BarPlot2.vb"
 
     ' Author:
     ' 
@@ -99,7 +99,8 @@ Namespace BarPlot
                     For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
                         Dim y = top + interval
 
-                        If stacked Then ' 改变Y
+                        If stacked Then
+                            ' 改变Y
                             Dim bottom! = y + dy
                             Dim right = sx(sample.value.StackedSum)
                             Dim canvasWidth = size.Height - (margin.Vertical)
@@ -113,7 +114,8 @@ Namespace BarPlot
                             Next
 
                             top += dy
-                        Else ' 改变X
+                        Else
+                            ' 改变X
                             For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                                 Dim bottom! = y
                                 Dim right = sx(val.value)

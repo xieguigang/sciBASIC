@@ -1,62 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::c52857d123c7511ea60e7080d9558f2c, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4839b20ed2ec527efe1fcd22bfe599aa, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module Extensions
-' 
-' 
-' Module Extensions
-' 
-'     Function: [Get], [Set], Add, (+3 Overloads) AddRange, (+2 Overloads) Average
-'               CheckDuplicated, Constrain, DataCounts, DateToString, DriverRun
-'               ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching, GetHexInteger
-'               (+2 Overloads) GetItem, (+2 Overloads) GetLength, IndexOf, InsertOrUpdate, Invoke
-'               InvokeSet, Is_NA_UHandle, IsNaNImaginary, (+6 Overloads) IsNullOrEmpty, (+4 Overloads) Join
-'               (+2 Overloads) JoinBy, Keys, KeysJson, Log2, (+2 Overloads) LongSeq
-'               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
-'               NormalizeXMLString, NotNull, (+2 Overloads) Offset, ParseDateTime, Range
-'               Remove, RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver
-'               SaveAsTabularMapping, Second, SelectFile, SeqRandom, (+2 Overloads) Sequence
-'               (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell, Shuffles, Split
-'               SplitIterator, (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes
-'               ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray, ToVector
-'               (+3 Overloads) TrimNull, (+2 Overloads) TryGetValue, Unlist, WriteAddress
-' 
-'     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
-'          SwapItem, SwapWith
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Module Extensions
+    ' 
+    ' 
+    ' Module Extensions
+    ' 
+    '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, AsRange
+    '               (+2 Overloads) Average, CheckDuplicated, Constrain, DataCounts, DateToString
+    '               DriverRun, ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching
+    '               GetHexInteger, (+2 Overloads) GetItem, (+2 Overloads) GetLength, IndexOf, InsertOrUpdate
+    '               Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, IsNullorEmpty
+    '               (+14 Overloads) IsNullOrEmpty, (+4 Overloads) Join, (+2 Overloads) JoinBy, Keys, KeysJson
+    '               Log2, (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement
+    '               MD5, ModifyValue, NormalizeXMLString, NotNull, (+2 Overloads) Offset
+    '               ParseDateTime, Range, Remove, RemoveDuplicates, RemoveFirst
+    '               (+2 Overloads) RemoveLast, RunDriver, SaveAsTabularMapping, Second, SelectFile
+    '               SeqRandom, (+2 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell
+    '               Shuffles, Slice, Split, SplitIterator, (+2 Overloads) SplitMV
+    '               StdError, TakeRandomly, Takes, ToBoolean, ToDictionary
+    '               ToNormalizedPathString, ToStringArray, ToVector, (+3 Overloads) TrimNull, (+2 Overloads) TryGetValue
+    '               Unlist, WriteAddress
+    ' 
+    '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
+    '          SwapItem, SwapWith
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -70,6 +71,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -78,6 +80,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Net.Tcp
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
@@ -87,7 +90,6 @@ Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Levenshtein
 Imports Microsoft.VisualBasic.Text.Similarity
 Imports sys = System.Math
-Imports v = System.Array
 
 #Const FRAMEWORD_CORE = 1
 #Const Yes = 1
@@ -104,6 +106,7 @@ Imports v = System.Array
                     Publisher:="xie.guigang@gmail.com",
                     Revision:=8655,
                     Url:="http://github.com/xieguigang/sciBASIC#")>
+<HideModuleName>
 <Extension> Public Module Extensions
 #Else
 
@@ -129,6 +132,19 @@ Public Module Extensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Range(data As IEnumerable(Of Double), Optional scale# = 1) As DoubleRange
         Return New DoubleRange(data) * scale
+    End Function
+
+    <Extension>
+    Public Function Slice(range As DoubleRange, n%) As IEnumerable(Of DoubleRange)
+        Dim l = range.Length
+        Dim d = l / n
+        Dim parts = Math.seq(range.Min, range.Max, by:=d) _
+                        .SlideWindows(winSize:=2) _
+                        .Select(Function(w)
+                                    Return New DoubleRange(w)
+                                End Function) _
+                        .ToArray
+        Return parts
     End Function
 
     ''' <summary>
@@ -414,7 +430,7 @@ Public Module Extensions
 
     <ExportAPI("SendMessage")>
     <Extension> Public Sub SendMessage(host As System.Net.IPEndPoint, request As String, Callback As Action(Of String))
-        Dim client As New Net.AsynInvoke(host)
+        Dim client As New TcpRequest(host)
         Call New Threading.Thread(Sub() Callback(client.SendMessage(request))).Start()
     End Sub
 
@@ -473,6 +489,7 @@ Public Module Extensions
     <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
                                                              index As TKey,
                                                              Optional [default] As TValue = Nothing,
+                                                             Optional mute As Boolean = False,
                                                              <CallerMemberName> Optional trace$ = Nothing) As TValue
         ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
         ' 直接返回默认值
@@ -488,7 +505,9 @@ Public Module Extensions
             Return [default]
         ElseIf Not table.ContainsKey(index) Then
 #If DEBUG Then
-            Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
+            If Not mute Then
+                Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
+            End If
 #End If
             Return [default]
         End If
@@ -516,14 +535,35 @@ Public Module Extensions
         Return DirectCast(value, TProp)
     End Function
 
-    <Extension> Public Function AddRange(Of TKey, TValue)(ByRef table As Dictionary(Of TKey, TValue), data As IEnumerable(Of KeyValuePair(Of TKey, TValue))) As Dictionary(Of TKey, TValue)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="data"></param>
+    ''' <param name="replaceDuplicated">
+    ''' 这个函数参数决定了在遇到重复的键名称的时候的处理方法：
+    ''' 
+    ''' + 如果为真，则默认会用新的值来替换旧的值
+    ''' + 如果为False，则遇到重复的键名的时候会报错
+    ''' </param>
+    ''' <returns></returns>
+    <Extension> Public Function AddRange(Of TKey, TValue)(ByRef table As Dictionary(Of TKey, TValue),
+                                                          data As IEnumerable(Of KeyValuePair(Of TKey, TValue)),
+                                                          Optional replaceDuplicated As Boolean = False) As Dictionary(Of TKey, TValue)
         If data Is Nothing Then
             Return table
+        ElseIf replaceDuplicated Then
+            For Each obj In data
+                table(obj.Key) = obj.Value
+            Next
+        Else
+            For Each obj In data
+                table.Add(obj.Key, obj.Value)
+            Next
         End If
 
-        For Each obj In data
-            Call table.Add(obj.Key, obj.Value)
-        Next
         Return table
     End Function
 
@@ -1601,6 +1641,32 @@ Public Module Extensions
                 i += 1
             Next
         End If
+    End Function
+
+    ''' <summary>
+    ''' Alias of the linq function <see cref="Enumerable.Range"/>
+    ''' </summary>
+    ''' <param name="range"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Iterator Public Function Sequence(range As IntRange, Optional stepOffset% = 1) As IEnumerable(Of Integer)
+        If stepOffset = 0 Then
+            stepOffset = 1
+#If DEBUG Then
+            Call $"step_offset is ZERO! This will caused a infinity loop, using default step `1`!".Warning
+#End If
+        End If
+
+        For i As Integer = range.Min To range.Max Step stepOffset
+            Yield i
+        Next
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsRange(ints As IEnumerable(Of Integer)) As IntRange
+        Return New IntRange(ints)
     End Function
 
     <Extension> Public Iterator Function LongSeq(Of T)(source As IEnumerable(Of T), Optional offset% = 0) As IEnumerable(Of Long)

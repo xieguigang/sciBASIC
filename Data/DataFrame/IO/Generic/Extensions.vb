@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cca9a0736b831097e1c1a819bfdf4135, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1539f4d8a854daa344ffd4d4aeacea1c, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: asCharacter, AsCharacter, (+2 Overloads) AsDataSet, CreateObject, DataFrame
+    '         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
     '                   EuclideanDistance, GroupBy, NamedMatrix, Project, (+2 Overloads) PropertyNames
     '                   Transpose, Values, (+2 Overloads) Vector
     ' 
@@ -58,7 +58,11 @@ Namespace IO
     Public Module Extensions
 
         <Extension>
-        Public Function EuclideanDistance(a As DataSet, b As DataSet, names$()) As Double
+        Public Function EuclideanDistance(a As DataSet, b As DataSet, Optional names$() = Nothing) As Double
+            If names.IsNullOrEmpty Then
+                names = (a.Properties.Keys.AsList + b.Properties.Keys).Distinct.ToArray
+            End If
+
             Dim d# = Aggregate key As String
                      In names
                      Let x = a(key)
@@ -248,12 +252,6 @@ Namespace IO
             Return data _
                 .Select(Function(r) r(key$)) _
                 .ToArray
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function AsDataSet(data As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of DataSet)
-            Return data.Select(Function(obj) New DataSet With {.ID = obj.Name, .Properties = obj.Value})
         End Function
 
         <Extension>

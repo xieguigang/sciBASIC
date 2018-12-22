@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b28c2b06d0c2a3c2bbf5aadad9e6ba43, Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::e67b2765a3a0bd73cb8b31bcb16d0a3b, Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -36,17 +36,20 @@
     '         Properties: ID
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: Copy, GetIDList, (+3 Overloads) LoadDataSet, ToString
+    '         Function: ContainsIDField, Copy, GetIDList, (+4 Overloads) LoadDataSet, ToString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -79,6 +82,7 @@ Namespace IO
             Me.Properties = props
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(x As EntityObject)
             Call Me.New(x.ID, New Dictionary(Of String, String)(x.Properties))
         End Sub
@@ -87,6 +91,8 @@ Namespace IO
         ''' Copy prop[erty value
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function Copy() As EntityObject
             Return New EntityObject With {
                 .ID = ID,
@@ -98,19 +104,55 @@ Namespace IO
             Return $"{ID} => ({Properties.Count}) {Properties.Keys.ToArray.GetJson}"
         End Function
 
-        Public Shared Function LoadDataSet(path$, Optional ByRef uidMap$ = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of EntityObject)
-            Return LoadDataSet(Of EntityObject)(path, uidMap, tsv)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="path$">
+        ''' MetaScripting:
+        ''' 
+        ''' path: file path or directory scripting
+        ''' 
+        ''' filepath: file.csv or file.tsv
+        ''' scripting: dir/* means all *.csv or *.tsv
+        '''            dir/M* means all file match pattern M*.csv or M*.tsv
+        ''' </param>
+        ''' <param name="uidMap$"></param>
+        ''' <param name="tsv"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadDataSet(path$,
+                                           Optional ByRef uidMap$ = Nothing,
+                                           Optional tsv As Boolean = False,
+                                           Optional encoding As Encoding = Nothing) As IEnumerable(Of EntityObject)
+
+            ' 2018-09-04 在原来的代码这里，空的path字符串是返回空集合的
+            ' 为了保持和原来的代码的兼容性，在这里使用LastOrDefault来防止抛出错误
+            If path.LastOrDefault = "*"c Then
+                Dim data As New List(Of EntityObject)
+                Dim dir$ = path.Trim("*"c)
+
+                For Each file As String In ls - l - r - ("*.csv" Or "*.tsv".When(tsv)) <= dir
+                    data += LoadDataSet(Of EntityObject)(file, uidMap, tsv, encoding:=encoding)
+                Next
+
+                Return data
+            Else
+                Return LoadDataSet(Of EntityObject)(path, uidMap, tsv, encoding:=encoding)
+            End If
         End Function
 
         Public Shared Function GetIDList(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False, Optional ignoreMapErrors As Boolean = False) As String()
             Dim table As File = If(tsv, File.LoadTsv(path), File.Load(path))
-            Dim getIDsDefault =
-                Function()
-                    Return table.Columns _
-                        .First _
-                        .Skip(1) _
-                        .ToArray
-                End Function
+            Dim getIDsDefault = Function()
+                                    Return table.Columns _
+                                        .First _
+                                        .Skip(1) _
+                                        .ToArray
+                                End Function
 
             If uidMap.StringEmpty Then
                 ' 第一列的数据就是所需要的编号数据
@@ -129,25 +171,79 @@ Namespace IO
             End If
         End Function
 
-        Public Shared Function LoadDataSet(Of T As EntityObject)(path$, Optional ByRef uidMap$ = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of T)
+        ''' <summary>
+        ''' 使用这个函数来判断目标文件之中是否存在ID列
+        ''' （ID列可能不在第一列）
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <param name="tsv"></param>
+        ''' <param name="encoding"></param>
+        ''' <param name="FirstColumn">
+        ''' 函数总是会从这一个参数返回第一列的标题，如果不存在ID列的话可以用这一列来作为ID（可能会出现意想不到的错误）
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function ContainsIDField(path$,
+                                               Optional tsv As Boolean = False,
+                                               Optional encoding As Encoding = Nothing,
+                                               Optional ByRef firstColumn$ = Nothing) As Boolean
+            Dim header$()
+
+            If Not tsv Then
+                header = New RowObject(path.ReadFirstLine(encoding)).ToArray
+            Else
+                header = path.ReadFirstLine(encoding).Split(ASCII.TAB)
+            End If
+
+            firstColumn = header(Scan0)
+
+            Return Not header.FirstOrDefault(Function(s) s = NameOf(EntityObject.ID)) Is Nothing
+        End Function
+
+        ''' <summary>
+        ''' 会自动查找ID列
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="path$"></param>
+        ''' <param name="uidMap$"></param>
+        ''' <param name="tsv"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
+        Public Shared Function LoadDataSet(Of T As EntityObject)(path$,
+                                                                 Optional ByRef uidMap$ = Nothing,
+                                                                 Optional tsv As Boolean = False,
+                                                                 Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
             If Not path.FileExists Then
+#If DEBUG Then
+                Call $"{path} is missing on your file system!".Warning
+#End If
                 Return {}
             End If
+
             If uidMap.StringEmpty Then
-                If Not tsv Then
-                    Dim first As New RowObject(path.ReadFirstLine)
-                    uidMap = first.First
+                If ContainsIDField(path, tsv, encoding, uidMap) Then
+                    uidMap = NameOf(EntityObject.ID)
                 Else
-                    uidMap = path.ReadFirstLine.Split(ASCII.TAB).First
+                    ' 使用第一列作为ID
+                    ' 因为再函数之中已经通过ByRef返回来了，所以do nothing
                 End If
-            End If
-            Dim map As New Dictionary(Of String, String) From {
-                {uidMap, NameOf(EntityObject.ID)}
-            }
-            If tsv Then
-                Return path.LoadTsv(Of T)(nameMaps:=map)
             Else
-                Return path.LoadCsv(Of T)(explicit:=False, maps:=map)
+                ' 使用用户自定义的列作为ID
+                ' 在这里do nothing
+            End If
+
+            If tsv Then
+                Return path.LoadTsv(Of T)(
+                    nameMaps:={{uidMap, NameOf(EntityObject.ID)}},
+                    encoding:=encoding
+                )
+            Else
+                Return path.LoadCsv(Of T)(
+                    explicit:=False,
+                    maps:={
+                        {uidMap, NameOf(EntityObject.ID)}
+                    },
+                    encoding:=encoding
+                )
             End If
         End Function
 
@@ -156,6 +252,11 @@ Namespace IO
                 {uidMap Or stream(0, 0).AsDefault, NameOf(EntityObject.ID)}
             }
             Return stream.AsDataSource(Of T)(explicit:=False, maps:=map)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadDataSet(stream As File, Optional ByRef uidMap$ = Nothing) As IEnumerable(Of EntityObject)
+            Return LoadDataSet(Of EntityObject)(stream, uidMap)
         End Function
     End Class
 End Namespace

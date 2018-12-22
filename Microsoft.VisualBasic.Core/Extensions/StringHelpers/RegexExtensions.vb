@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1fad43b941f9fa8b7b39ac9cce1371bc, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::14e6e7d6f16d2a7c7404557abfd5af5a, Microsoft.VisualBasic.Core\Extensions\StringHelpers\RegexExtensions.vb"
 
     ' Author:
     ' 

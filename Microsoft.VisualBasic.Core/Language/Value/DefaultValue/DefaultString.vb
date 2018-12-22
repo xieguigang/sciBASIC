@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f8cdd5dad1e4211deb96927ae8d1543, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::679ab956575a21dcdfd03a3f0259dc34, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: DefaultValue, IsEmpty
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: assertIsNothing, LoadJson, LoadXml, ToString
-    '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+6 Overloads) Or
+    '         Function: assertIsNothing, LoadJson, LoadXml, ReadAllLines, ToString
+    '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue, (+8 Overloads) Or
     ' 
     ' 
     ' /********************************************************************************/
@@ -90,12 +90,17 @@ Namespace Language.Default
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadJson(Of T)() As T
             If DefaultValue.FileExists Then
-                Return DefaultValue.ReadAllText.LoadObject(Of T)
+                Return DefaultValue.ReadAllText.LoadJSON(Of T)
             ElseIf DefaultValue.StringEmpty Then
                 Return Nothing
             Else
-                Return DefaultValue.LoadObject(Of T)
+                Return DefaultValue.LoadJSON(Of T)
             End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ReadAllLines() As String()
+            Return DefaultValue.ReadAllLines
         End Function
 
         Public Overrides Function ToString() As String
@@ -153,7 +158,8 @@ Namespace Language.Default
         End Operator
 
         ''' <summary>
-        ''' If <paramref name="value"/> is empty then returns <paramref name="default"/>, else returns <paramref name="value"/> itself.
+        ''' If <paramref name="value"/> is empty then returns <paramref name="default"/>, 
+        ''' else returns <paramref name="value"/> itself.
         ''' </summary>
         ''' <param name="value"></param>
         ''' <param name="default$"></param>
@@ -166,6 +172,12 @@ Namespace Language.Default
             End If
         End Operator
 
+        ''' <summary>
+        ''' Get a <see cref="Integer"/> value or using default <see cref="Integer"/> value.
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <param name="x%"></param>
+        ''' <returns></returns>
         Public Shared Operator Or(value As DefaultString, x%) As Integer
             Return CInt(value Or CDbl(x))
         End Operator
@@ -176,6 +188,11 @@ Namespace Language.Default
             Else
                 Return Val(value.DefaultValue)
             End If
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Or(arg As DefaultString, [default] As DefaultValue(Of String)) As String
+            Return arg.DefaultValue Or [default]
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

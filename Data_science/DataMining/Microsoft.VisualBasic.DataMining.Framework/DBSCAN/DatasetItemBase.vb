@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b481cb5b1097f09db2cce83999a11777, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DBSCAN\DatasetItemBase.vb"
+﻿#Region "Microsoft.VisualBasic::b65f065faf768bc130e99a95ac50d2b5, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DBSCAN\DatasetItemBase.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,25 @@
     ' 
     ' 
     ' 
+    '     Enum ClusterIDs
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Namespace DBSCAN
+
     Public MustInherit Class DatasetItemBase
     End Class
+
+    Public Enum ClusterIDs As Integer
+        Unclassified = 0
+        Noise = -1
+    End Enum
 End Namespace

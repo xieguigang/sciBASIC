@@ -1,52 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::a1070cd911d93e5b9079541d6c5482a5, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::c2bb9b370296a36a4ee5cdb465f65dfa, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class BinaryDataReader
-' 
-'     Properties: ByteOrder, Encoding, EndOfStream, Length, Position
-' 
-'     Constructor: (+5 Overloads) Sub New
-' 
-'     Function: DecimalFromBytes, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal, ReadDecimals
-'               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadInt16, ReadInt16s
-'               ReadInt32, ReadInt32s, ReadInt64, ReadInt64s, ReadMultiple
-'               ReadSBytes, ReadSingle, ReadSingles, (+4 Overloads) ReadString, ReadUInt16
-'               ReadUInt16s, ReadUInt32, ReadUInt32s, ReadUInt64, ReadUInt64s
-'               ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
-' 
-'     Sub: Align
-' 
-' /********************************************************************************/
+    ' Class BinaryDataReader
+    ' 
+    '     Properties: ByteOrder, Encoding, EndOfStream, Length, Position
+    ' 
+    '     Constructor: (+5 Overloads) Sub New
+    ' 
+    '     Function: DecimalFromBytes, ReadByteLengthPrefixString, ReadDateTime, ReadDecimal, ReadDecimals
+    '               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadDwordLenString, ReadInt16
+    '               ReadInt16s, ReadInt32, ReadInt32s, ReadInt64, ReadInt64s
+    '               ReadMultiple, ReadSBytes, ReadSingle, ReadSingles, (+5 Overloads) ReadString
+    '               ReadUInt16, ReadUInt16s, ReadUInt32, ReadUInt32s, ReadUInt64
+    '               ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
+    '               ToString
+    ' 
+    '     Sub: Align
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -458,6 +459,8 @@ Public Class BinaryDataReader
     ''' <param name="count">The number of <see cref="UInt16"/> values to read.</param>
     ''' <returns>The <see cref="UInt16"/> array containing data read from the current stream. This might be less
     ''' than the number of bytes requested if the end of the stream is reached.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ReadUInt16s(count As Integer) As UInt16()
         Return ReadMultiple(count, AddressOf ReadUInt16)
     End Function
@@ -485,6 +488,8 @@ Public Class BinaryDataReader
     ''' <param name="count">The number of <see cref="UInt32"/> values to read.</param>
     ''' <returns>The <see cref="UInt32"/> array containing data read from the current stream. This might be less
     ''' than the number of bytes requested if the end of the stream is reached.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ReadUInt32s(count As Integer) As UInt32()
         Return ReadMultiple(count, AddressOf ReadUInt32)
     End Function
@@ -512,6 +517,8 @@ Public Class BinaryDataReader
     ''' <param name="count">The number of <see cref="UInt64"/> values to read.</param>
     ''' <returns>The <see cref="UInt64"/> array containing data read from the current stream. This might be less
     ''' than the number of bytes requested if the end of the stream is reached.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ReadUInt64s(count As Integer) As UInt64()
         Return ReadMultiple(count, AddressOf ReadUInt64)
     End Function
@@ -521,6 +528,8 @@ Public Class BinaryDataReader
     ''' </summary>
     ''' <param name="offset">A byte offset relative to the current position in the stream.</param>
     ''' <returns>The new position within the current stream.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Seek(offset As Long) As Long
         Return Seek(offset, SeekOrigin.Current)
     End Function
@@ -532,6 +541,8 @@ Public Class BinaryDataReader
     ''' <param name="origin">A value of type <see cref="SeekOrigin"/> indicating the reference point used to obtain
     ''' the new position.</param>
     ''' <returns>The new position within the current stream.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Seek(offset As Long, origin As SeekOrigin) As Long
         Return BaseStream.Seek(offset, origin)
     End Function
@@ -540,6 +551,8 @@ Public Class BinaryDataReader
     ''' Creates a <see cref="SeekTask"/> to restore the current position after it has been disposed.
     ''' </summary>
     ''' <returns>The <see cref="SeekTask"/> to be disposed to restore to the current position.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function TemporarySeek() As SeekTask
         Return TemporarySeek(0, SeekOrigin.Current)
     End Function
@@ -550,6 +563,8 @@ Public Class BinaryDataReader
     ''' </summary>
     ''' <param name="offset">A byte offset relative to the current position in the stream.</param>
     ''' <returns>The <see cref="SeekTask"/> to be disposed to undo the seek.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function TemporarySeek(offset As Long) As SeekTask
         Return TemporarySeek(offset, SeekOrigin.Current)
     End Function
@@ -562,11 +577,18 @@ Public Class BinaryDataReader
     ''' <param name="origin">A value of type <see cref="SeekOrigin"/> indicating the reference point used to obtain
     ''' the new position.</param>
     ''' <returns>The <see cref="SeekTask"/> to be disposed to undo the seek.</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function TemporarySeek(offset As Long, origin As SeekOrigin) As SeekTask
         Return New SeekTask(BaseStream, offset, origin)
     End Function
 
-    ' ---- METHODS (PRIVATE) --------------------------------------------------------------------------------------
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function ReadDwordLenString() As String
+        Return ReadString(BinaryStringFormat.DwordLengthPrefix)
+    End Function
+
+#Region "METHODS (PRIVATE)"
 
     Private Function ReadMultiple(Of T)(count As Integer, readFunc As Func(Of T)) As T()
         Dim values As T() = New T(count - 1) {}
@@ -644,6 +666,7 @@ Public Class BinaryDataReader
         End While
         Return New Decimal(intValues)
     End Function
+#End Region
 
     Public Overrides Function ToString() As String
         Return $"[{Position}/{Length}] {Encoding.ToString}"

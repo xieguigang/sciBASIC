@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::999787527675817aa205be340df17256, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::123dd081e5d15d6693949cc228004acb, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: (+2 Overloads) AsVector
+    '         Function: Add, (+2 Overloads) AsVector
     ' 
     ' 
     ' /********************************************************************************/

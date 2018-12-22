@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14984a9973aeb13ab395745ee8e7660f, gr\Microsoft.VisualBasic.Imaging\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::0897cfdb0fbe46d52a3d8888c7d82ee8, gr\Microsoft.VisualBasic.Imaging\test\Program.vb"
 
     ' Author:
     ' 
@@ -76,7 +76,13 @@ Module Program
 
         Call Console.WriteLine(logo)
 
-        Call logo.SaveTo("x:\sciBASIC.txt")
+        Call logo.SaveTo("D:\sciBASIC.txt")
+
+        Dim charset = "php.NETPHP".GenerateFontWeights
+        logo = "php.NET".ASCIIImage("font-style: italic; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";", charset)
+
+        Call Console.WriteLine()
+        Call Console.WriteLine(logo)
 
         Pause()
 

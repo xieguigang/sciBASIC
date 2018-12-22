@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6ecafd941261de5ba158bf6693cbe48, Data_science\Mathematica\Plot\Plots\g\Legends\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::e2350f75ba1aee423b205902607184c7, Data_science\Mathematica\Plot\Plots\g\Legends\Legend.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: color, fontstyle, style, title
     ' 
-    '         Function: GetFont, ToString
+    '         Function: GetFont, MeasureTitle, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -43,6 +43,8 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace Graphic.Legend
@@ -79,6 +81,17 @@ Namespace Graphic.Legend
         ''' <returns></returns>
         Public Function GetFont() As Font
             Return CSSFont.TryParse(fontstyle).GDIObject
+        End Function
+
+        ''' <summary>
+        ''' 计算标题文本的绘制大小
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function MeasureTitle(g As IGraphics) As SizeF
+            Return g.MeasureString(title, GetFont)
         End Function
 
         Public Overrides Function ToString() As String

@@ -1,52 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::ced01ef1b9c96a858cbd3d0a6c87f4bd, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::b1ff0268a7d4b6e413afb44c90ca1931, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Index
-' 
-'         Properties: Count, Map, Objects
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: GetEnumerator, IEnumerable_GetEnumerator, (+2 Overloads) Intersect, NotExists, ToString
-' 
-'         Sub: Add, Clear
-' 
-' 
-' /********************************************************************************/
+    '     Class Index
+    ' 
+    '         Properties: Count, Map, Objects
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: Add, GetEnumerator, IEnumerable_GetEnumerator, indexing, (+2 Overloads) Intersect
+    '                   NotExists, ToString
+    ' 
+    '         Sub: Clear, Delete
+    ' 
+    '         Operators: +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -105,7 +109,12 @@ Namespace ComponentModel.Collection
             Next
 
             Me.base = base
-            Me.index = maps _
+            Me.index = indexing()
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function indexing() As HashList(Of SeqValue(Of T))
+            Return maps _
                 .Select(Function(s)
                             Return New SeqValue(Of T) With {
                                 .i = s.Value,
@@ -113,7 +122,7 @@ Namespace ComponentModel.Collection
                             }
                         End Function) _
                 .AsHashList
-        End Sub
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(ParamArray vector As T())
@@ -124,8 +133,24 @@ Namespace ComponentModel.Collection
         ''' 默认是从0开始的
         ''' </summary>
         ''' <param name="base"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(base As Integer)
             Call Me.New({}, base:=base)
+        End Sub
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="maps">如果是json加载，可能会出现空值的字典</param>
+        ''' <param name="base%"></param>
+        Sub New(maps As IDictionary(Of T, Integer), Optional base% = 0)
+            Static emptyIndex As DefaultValue(Of IDictionary(Of String, Integer)) =
+                New Dictionary(Of String, Integer)
+
+            Me.base = base
+            Me.maps = New Dictionary(Of T, Integer)(dictionary:=maps Or emptyIndex)
+            Me.index = indexing()
         End Sub
 
         ''' <summary>
@@ -150,12 +175,21 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <param name="index%"></param>
         ''' <returns></returns>
-        Default Public ReadOnly Property IndexOf(index%) As T
+        Default Public ReadOnly Property IndexOf(index As Integer) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Me.index(index).value
             End Get
         End Property
+
+        Public Sub Delete(index As T)
+            Dim i = Me.IndexOf(index)
+
+            If i > -1 Then
+                Me.maps.Remove(index)
+                Me.index(i) = Nothing
+            End If
+        End Sub
 
         Public Iterator Function Intersect(collection As IEnumerable(Of T)) As IEnumerable(Of T)
             For Each x As T In collection
@@ -220,6 +254,10 @@ Namespace ComponentModel.Collection
                 .GetJson
         End Function
 
+        ''' <summary>
+        ''' Returns the ``obj => index`` mapping table.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Map As Dictionary(Of T, Integer)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

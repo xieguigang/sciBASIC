@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::345a0252b689d3c891f91c1810aca5fb, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\VisualBasic.vb"
+﻿#Region "Microsoft.VisualBasic::125a6d44d8c1671566edd5ee1a66651c, Microsoft.VisualBasic.Core\CommandLine\InteropService\SharedORM\VisualBasic.vb"
 
     ' Author:
     ' 
@@ -45,10 +45,11 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Scripting.SymbolBuilder
+Imports Microsoft.VisualBasic.Scripting.SymbolBuilder.VBLanguage
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 
@@ -58,14 +59,14 @@ Namespace CommandLine.InteropService.SharedORM
 
         Dim namespace$
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(CLI As Type, namespace$)
-            MyBase.New(CLI)
-            Me.namespace = [namespace]
+            Me.New(New Interpreter(type:=CLI), [namespace])
         End Sub
 
-        Sub New(App As Interpreter)
+        Sub New(App As Interpreter, Optional namespace$ = Nothing)
             Call MyBase.New(App)
-            Me.namespace = App.Type.Name
+            Me.namespace = [namespace] Or App.Type.Name.AsDefault
         End Sub
 
         Public Overrides Function GetSourceCode() As String
@@ -73,9 +74,11 @@ Namespace CommandLine.InteropService.SharedORM
             Dim className$ = MyBase.exe _
                 .NormalizePathString(OnlyASCII:=True) _
                 .Replace(" ", "_")
-            Dim rel$ = ProgramPathSearchTool.RelativePath(App.Type.Assembly.Location.GetFullPath)
+            Dim rel$ = PathExtensions.RelativePath(App.Type.Assembly.Location.GetFullPath)
             Dim info$ = App.Type.NamespaceEntry.Description
+            Dim appName$ = KeywordProcessor.AutoEscapeVBKeyword(className)
 
+            Call vb.AppendLine("Imports System.Runtime.CompilerServices")
             Call vb.AppendLine("Imports " & GetType(StringBuilder).Namespace)
             Call vb.AppendLine("Imports " & GetType(IIORedirectAbstract).Namespace)
             Call vb.AppendLine("Imports " & GetType(InteropService).Namespace)
@@ -89,13 +92,18 @@ Namespace CommandLine.InteropService.SharedORM
             Call vb.AppendLine("Namespace " & [namespace])
             Call vb.AppendLine()
             Call vb.AppendLine(__xmlComments(XmlEntity.EscapingXmlEntity(info)))
-            Call vb.AppendLine($"Public Class {VBLanguage.AutoEscapeVBKeyword(className)} : Inherits {GetType(InteropService).Name}")
+            Call vb.AppendLine($"Public Class {appName} : Inherits {GetType(InteropService).Name}")
             Call vb.AppendLine()
             Call vb.AppendLine($"    Public Const App$ = ""{exe}.exe""")
             Call vb.AppendLine()
             Call vb.AppendLine("    Sub New(App$)")
             Call vb.AppendLine($"        MyBase.{NameOf(InteropService._executableAssembly)} = App$")
             Call vb.AppendLine("    End Sub")
+            Call vb.AppendLine()
+            Call vb.AppendLine("     <MethodImpl(MethodImplOptions.AggressiveInlining)>")
+            Call vb.AppendLine($"    Public Shared Function FromEnvironment(directory As String) As {appName}")
+            Call vb.AppendLine($"          Return New {appName}(App:=directory & ""/"" & {appName}.App)")
+            Call vb.AppendLine("     End Function")
 
             For Each API In Me.EnumeratesAPI
                 Call __calls(vb, API.CLI, incompatible:=Not InCompatibleAttribute.CLRProcessCompatible(API.API))
@@ -154,7 +162,7 @@ Namespace CommandLine.InteropService.SharedORM
                     func = "_" & func  ' 有些命令行开关是以数字开头的？
                 Else
                     ' 不是以数字开头的，则尝试解决关键词的问题
-                    func = VBLanguage.AutoEscapeVBKeyword(func)
+                    func = KeywordProcessor.AutoEscapeVBKeyword(func)
                 End If
                 params = __vbParameters(API.Value)
             Catch ex As Exception
@@ -302,7 +310,7 @@ Namespace CommandLine.InteropService.SharedORM
                 Return "_" & New String(s)
             Else
                 ' 可能会存在in, byref, class这类的名字，需要在这里转义一下
-                Return VBLanguage.AutoEscapeVBKeyword(New String(s))
+                Return KeywordProcessor.AutoEscapeVBKeyword(New String(s))
             End If
         End Function
     End Class

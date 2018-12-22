@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84431b233b60861ae62ca4ecf9db6cb7, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::62f3cb3f47ab7f039f7f466914719d0a, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     '     Module Extensions
     ' 
-    '         Function: __innerTry, CopyVector, DATA, DefaultFirst, FirstOrDefault
-    '                   IteratesALL, (+2 Overloads) JoinIterates, MaxInd, Populate, (+2 Overloads) Read
+    '         Function: CopyVector, DATA, DefaultFirst, FirstOrDefault, IteratesALL
+    '                   (+2 Overloads) JoinIterates, LastOrDefault, MaxInd, Populate, (+2 Overloads) Read
     '                   RemoveLeft, (+2 Overloads) Removes, Repeats, SafeQuery, (+2 Overloads) SeqIterator
-    '                   (+4 Overloads) Sequence, (+4 Overloads) ToArray, ToVector
+    '                   (+4 Overloads) Sequence, (+4 Overloads) ToArray, ToVector, TryCatch
     ' 
     ' 
     ' /********************************************************************************/
@@ -295,7 +295,7 @@ Namespace Linq
         End Function
 
         ''' <summary>
-        ''' 产生指定数目的一个递增序列(所生成序列的数值就是生成的数组的元素的个数)
+        ''' 产生指定数目的一个递增序列(用于生成序列的输入参数<paramref name="n"/>数值就是生成的数组的元素的个数)
         ''' </summary>
         ''' <param name="n">大于或者等于0的一个数，当小于0的时候会出错</param>
         ''' <returns></returns>
@@ -426,6 +426,17 @@ Namespace Linq
         ''' <returns>default(TSource) if source is empty; otherwise, the first element in source.</returns>
         <Extension> Public Function FirstOrDefault(Of TSource)(source As IEnumerable(Of TSource), [default] As TSource) As TSource
             Dim value As TSource = source.FirstOrDefault
+
+            If value Is Nothing Then
+                Return [default]
+            Else
+                Return value
+            End If
+        End Function
+
+        <Extension>
+        Public Function LastOrDefault(Of T)(source As IEnumerable(Of T), [default] As T) As T
+            Dim value As T = source.LastOrDefault
 
             If value Is Nothing Then
                 Return [default]

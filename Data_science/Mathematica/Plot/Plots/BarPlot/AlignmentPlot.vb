@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe0fcf9c7fbeae7e2b488d199486dce8, Data_science\Mathematica\Plot\Plots\BarPlot\AlignmentPlot.vb"
+﻿#Region "Microsoft.VisualBasic::be423d52cea786b24e3f57b8cc403a7b, Data_science\Mathematica\Plot\Plots\BarPlot\AlignmentPlot.vb"
 
     ' Author:
     ' 
@@ -69,11 +69,13 @@ Namespace BarPlot
     ''' </summary>
     Public Module AlignmentPlot
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Keys(signals As signals()) As Double()
             Return signals.Select(Function(t) t.Item1).ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Private Function Values(signals As signals()) As Double()
             Return signals.Select(Function(t) t.Item2).ToArray

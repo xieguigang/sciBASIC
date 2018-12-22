@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bb41ed17e7346b5637c9462ddcc24b5, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\AprioriTest.vb"
+﻿#Region "Microsoft.VisualBasic::adb49d9face1a3834d87450e2f5c5e34, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\AprioriTest.vb"
 
     ' Author:
     ' 
@@ -62,6 +62,8 @@ Module AprioriTest
         Dim transactions = datasets.BuildTransactions.ToArray
         Dim encoder As New Encoding(transactions.AllItems)
         Dim list = encoder.TransactionEncoding(transactions).ToArray
+
+
 
         Pause()
     End Sub

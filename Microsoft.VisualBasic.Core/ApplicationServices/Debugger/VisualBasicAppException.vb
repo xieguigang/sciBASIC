@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35abd1a79bec5f6e2a38549042a1cfe5, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\VisualBasicAppException.vb"
+﻿#Region "Microsoft.VisualBasic::94ae4e0b491c5d095a6e2a53002a395b, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\VisualBasicAppException.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,11 @@
     ' 
     '     Module ExceptionExtensions
     ' 
-    '         Function: Fail
+    ' 
+    '         Delegate Sub
+    ' 
+    '             Function: Fail
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -87,6 +91,13 @@ Namespace ApplicationServices.Debugging
     End Class
 
     Public Module ExceptionExtensions
+
+        ''' <summary>
+        ''' 处理错误的工作逻辑的抽象接口
+        ''' </summary>
+        ''' <param name="ex">Socket的内部错误信息</param>
+        ''' <remarks></remarks>
+        Public Delegate Sub ExceptionHandler(ex As Exception)
 
         ''' <summary>
         ''' Just throw exception, but the exception contains more details information for the debugging

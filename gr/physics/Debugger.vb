@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed7b1b14cd96561b6aa5b226087aadb3, gr\physics\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::4ab4596f7902b47816e65fb5310b10ab, gr\physics\Debugger.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Public Module Debugger
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Vector2D(v As Vector) As PointF
         Return New PointF(v(X), v(Y))

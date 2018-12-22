@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88173ab790525417587dd00a731087a4, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::2f63e51e93c6d27b742043386c10d5bd, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -358,29 +358,17 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null
         Public MustOverride Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
-        '
-        ' Summary:
-        '     Draws an arc representing a portion of an ellipse specified by a System.Drawing.Rectangle
-        '     structure.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the arc.
-        '
-        '   rect:
-        '     System.Drawing.RectangleF structure that defines the boundaries of the ellipse.
-        '
-        '   startAngle:
-        '     Angle in degrees measured clockwise from the x-axis to the starting point of
-        '     the arc.
-        '
-        '   sweepAngle:
-        '     Angle in degrees measured clockwise from the startAngle parameter to ending point
-        '     of the arc.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws an arc representing a portion of an ellipse specified by a System.Drawing.Rectangle
+        ''' structure.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the arc.</param>
+        ''' <param name="rect">System.Drawing.RectangleF structure that defines the boundaries of the ellipse.</param>
+        ''' <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the starting point of
+        ''' the arc.</param>
+        ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to ending point
+        ''' of the arc.</param>
         Public MustOverride Sub DrawArc(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
         '
         ' Summary:
@@ -1916,53 +1904,25 @@ Namespace Imaging
         ''' <param name="pt1">System.Drawing.Point structure that represents the first point to connect.</param>
         ''' <param name="pt2">System.Drawing.Point structure that represents the second point to connect.</param>
         Public MustOverride Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
-        '
-        ' Summary:
-        '     Draws a line connecting the two points specified by the coordinate pairs.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the line.
-        '
-        '   x1:
-        '     The x-coordinate of the first point.
-        '
-        '   y1:
-        '     The y-coordinate of the first point.
-        '
-        '   x2:
-        '     The x-coordinate of the second point.
-        '
-        '   y2:
-        '     The y-coordinate of the second point.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a line connecting the two points specified by the coordinate pairs.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
+        ''' <param name="x1">The x-coordinate of the first point.</param>
+        ''' <param name="y1">The y-coordinate of the first point.</param>
+        ''' <param name="x2">The x-coordinate of the second point.</param>
+        ''' <param name="y2">The y-coordinate of the second point.</param>
         Public MustOverride Sub DrawLine(pen As Pen, x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
-        '
-        ' Summary:
-        '     Draws a line connecting the two points specified by the coordinate pairs.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the line.
-        '
-        '   x1:
-        '     The x-coordinate of the first point.
-        '
-        '   y1:
-        '     The y-coordinate of the first point.
-        '
-        '   x2:
-        '     The x-coordinate of the second point.
-        '
-        '   y2:
-        '     The y-coordinate of the second point.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a line connecting the two points specified by the coordinate pairs.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the line.</param>
+        ''' <param name="x1">The x-coordinate of the first point.</param>
+        ''' <param name="y1">The y-coordinate of the first point.</param>
+        ''' <param name="x2">The x-coordinate of the second point.</param>
+        ''' <param name="y2">The y-coordinate of the second point.</param>
         Public MustOverride Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
         '
         ' Summary:
@@ -2169,109 +2129,51 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     pen is null.
         Public MustOverride Sub DrawPolygon(pen As Pen, points() As Point)
-        '
-        ' Summary:
-        '     Draws a rectangle specified by a System.Drawing.Rectangle structure.
-        '
-        ' Parameters:
-        '   pen:
-        '     A System.Drawing.Pen that determines the color, width, and style of the rectangle.
-        '
-        '   rect:
-        '     A System.Drawing.Rectangle structure that represents the rectangle to draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a rectangle specified by a System.Drawing.Rectangle structure.
+        ''' </summary>
+        ''' <param name="pen">A System.Drawing.Pen that determines the color, width, and style of the rectangle.</param>
+        ''' <param name="rect">A System.Drawing.Rectangle structure that represents the rectangle to draw.</param>
         Public MustOverride Sub DrawRectangle(pen As Pen, rect As Rectangle)
         Public MustOverride Sub DrawRectangle(pen As Pen, rect As RectangleF)
-        '
-        ' Summary:
-        '     Draws a rectangle specified by a coordinate pair, a width, and a height.
-        '
-        ' Parameters:
-        '   pen:
-        '     A System.Drawing.Pen that determines the color, width, and style of the rectangle.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the rectangle to draw.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the rectangle to draw.
-        '
-        '   width:
-        '     The width of the rectangle to draw.
-        '
-        '   height:
-        '     The height of the rectangle to draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a rectangle specified by a coordinate pair, a width, and a height.
+        ''' </summary>
+        ''' <param name="pen">A System.Drawing.Pen that determines the color, width, and style of the rectangle.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the rectangle to draw.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the rectangle to draw.</param>
+        ''' <param name="width">The width of the rectangle to draw.</param>
+        ''' <param name="height">The height of the rectangle to draw.</param>
         Public MustOverride Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
-        '
-        ' Summary:
-        '     Draws a rectangle specified by a coordinate pair, a width, and a height.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the rectangle.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the rectangle to draw.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the rectangle to draw.
-        '
-        '   width:
-        '     Width of the rectangle to draw.
-        '
-        '   height:
-        '     Height of the rectangle to draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.
+
+        ''' <summary>
+        ''' Draws a rectangle specified by a coordinate pair, a width, and a height.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the rectangle.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the rectangle to draw.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the rectangle to draw.</param>
+        ''' <param name="width">Width of the rectangle to draw.</param>
+        ''' <param name="height">Height of the rectangle to draw.</param>
         Public MustOverride Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
-        '
-        ' Summary:
-        '     Draws a series of rectangles specified by System.Drawing.RectangleF structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the outlines
-        '     of the rectangles.
-        '
-        '   rects:
-        '     Array of System.Drawing.RectangleF structures that represent the rectangles to
-        '     draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.-or-rects is null.
-        '
-        '   T:System.ArgumentException:
-        '     rects is a zero-length array.
+
+        ''' <summary>
+        ''' Draws a series of rectangles specified by System.Drawing.RectangleF structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the outlines
+        ''' of the rectangles.</param>
+        ''' <param name="rects">Array of System.Drawing.RectangleF structures that represent the rectangles to
+        ''' draw.</param>
         Public MustOverride Sub DrawRectangles(pen As Pen, rects() As RectangleF)
-        '
-        ' Summary:
-        '     Draws a series of rectangles specified by System.Drawing.Rectangle structures.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the outlines
-        '     of the rectangles.
-        '
-        '   rects:
-        '     Array of System.Drawing.Rectangle structures that represent the rectangles to
-        '     draw.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null.-or-rects is null.
-        '
-        '   T:System.ArgumentException:
-        '     rects is a zero-length array.
+
+        ''' <summary>
+        ''' Draws a series of rectangles specified by System.Drawing.Rectangle structures.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the outlines
+        ''' of the rectangles.</param>
+        ''' <param name="rects">Array of System.Drawing.Rectangle structures that represent the rectangles to
+        ''' draw.</param>
         Public MustOverride Sub DrawRectangles(pen As Pen, rects() As Rectangle)
 
         ''' <summary>
@@ -2363,30 +2265,16 @@ Namespace Imaging
         '   T:System.ArgumentNullException:
         '     brush is null.-or-s is null.
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, point As PointF, format As StringFormat)
-        '
-        ' Summary:
-        '     Draws the specified text string at the specified location with the specified
-        '     System.Drawing.Brush and System.Drawing.Font objects.
-        '
-        ' Parameters:
-        '   s:
-        '     String to draw.
-        '
-        '   font:
-        '     System.Drawing.Font that defines the text format of the string.
-        '
-        '   brush:
-        '     System.Drawing.Brush that determines the color and texture of the drawn text.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the drawn text.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the drawn text.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-s is null.
+
+        ''' <summary>
+        ''' Draws the specified text string at the specified location with the specified
+        ''' System.Drawing.Brush and System.Drawing.Font objects.
+        ''' </summary>
+        ''' <param name="s">String to draw.</param>
+        ''' <param name="font">System.Drawing.Font that defines the text format of the string.</param>
+        ''' <param name="brush">System.Drawing.Brush that determines the color and texture of the drawn text.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the drawn text.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the drawn text.</param>
         Public MustOverride Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
         '
         ' Summary:

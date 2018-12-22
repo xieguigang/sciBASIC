@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::051219c7858b016ac1936b62bc6eb520, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::04369fce4edad7572df6e2634f9e59eb, Microsoft.VisualBasic.Core\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -38,11 +38,11 @@
     ' 
     '         Properties: ForceSTDError, Mute, UsingxConsole
     ' 
-    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, getColor, (+2 Overloads) PrintException
-    '                   this, Warning
+    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, this
+    '                   Warning
     ' 
-    '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, __print, (+3 Overloads) Assertion, AttachLoggingDriver
-    '              cat, (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
+    '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
+    '              (+3 Overloads) Echo, EchoLine, WaitOutput, WriteLine
     ' 
     ' 
     ' 
@@ -76,8 +76,10 @@ Public Module VBDebugger
     ''' <param name="message$">The exception message</param>
     ''' <param name="failure">If this expression test is True, then die expression will raise an exception</param>
     ''' <returns></returns>
-    Public Function die(message$, Optional failure As Assert(Of Object) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandler
-        Return New ExceptionHandler With {
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function die(message$, Optional failure As Assert(Of Object) = Nothing, <CallerMemberName> Optional caller$ = Nothing) As ExceptionHandle
+        Return New ExceptionHandle With {
             .Message = message,
             .failure = failure Or defaultAssert
         }
@@ -88,34 +90,48 @@ Public Module VBDebugger
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
-    ''' <param name="TAG"></param>
+    ''' <param name="tag"></param>
     ''' <returns></returns>
-    <Extension> Public Function LinqProc(Of T)(source As IEnumerable(Of T), <CallerMemberName> Optional TAG As String = "") As EventProc
-        Return New EventProc(source.Count, TAG)
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function LinqProc(Of T)(source As IEnumerable(Of T), <CallerMemberName> Optional tag$ = Nothing) As EventProc
+        Return New EventProc(source.Count, tag)
     End Function
 
-    Dim __mute As Boolean = False
-    Dim logs As New List(Of LoggingDriver)
+    ''' <summary>
+    ''' 当前的调试器的信息输出登记，默认是输出所有的信息
+    ''' </summary>
+    Friend m_level As DebuggerLevels = DebuggerLevels.On
+    ''' <summary>
+    ''' 是否静默掉所有的调试器输出信息？默认不是
+    ''' </summary>
+    Friend m_mute As Boolean = False
 
-    Friend __level As DebuggerLevels = DebuggerLevels.On  ' 默认是输出所有的信息
-
+    ''' <summary>
+    ''' 对外部开放的调试日志的获取接口类型的申明
+    ''' </summary>
+    ''' <param name="header">消息的类型的头部标签</param>
+    ''' <param name="message">消息文本内容，一般为一行文本</param>
+    ''' <param name="level">日志消息的错误等级</param>
     Public Delegate Sub LoggingDriver(header$, message$, level As MSG_TYPES)
 
     ''' <summary>
-    ''' Disable the debugger information outputs on the console if this <see cref="Mute"/> property is set to True, 
-    ''' and enable the output if this property is set to False. 
-    ''' NOTE: this debugger option property can be overrides by the debugger parameter from the CLI parameter named '--echo'
+    ''' Disable the debugger information outputs on the console if this <see cref="Mute"/> property is set to 
+    ''' <see cref="Boolean.True"/>, and enable the output if this property is set to <see cref="Boolean.False"/>. 
+    ''' NOTE: this debugger option property can be overrides by the debugger parameter from the CLI parameter 
+    ''' named ``--echo``
     ''' </summary>
     ''' <returns></returns>
     Public Property Mute As Boolean
         Get
-            Return __mute
+            Return m_mute
         End Get
         Set(value As Boolean)
-            If __level = DebuggerLevels.Off Then  ' off的时候，不会输出任何信息
-                __mute = True
+            ' off的时候，不会输出任何信息
+            If m_level = DebuggerLevels.Off Then
+                m_mute = True
             Else
-                __mute = value
+                m_mute = value
             End If
         End Set
     End Property
@@ -125,13 +141,6 @@ Public Module VBDebugger
     ''' </summary>
     ''' <returns></returns>
     Public Property ForceSTDError As Boolean = False
-
-    ReadOnly _Indent As String() = {
-        "",
-        New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
-        New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
-        New String(" ", 9), New String(" ", 10)
-    }
 
     ''' <summary>
     ''' Test how long this <paramref name="test"/> will takes.
@@ -145,14 +154,11 @@ Public Module VBDebugger
         Dim ms& = Utils.Time(test)
         Dim end$ = Now.ToLongTimeString
 
-        If Not Mute AndAlso __level < DebuggerLevels.Warning Then
+        If Not Mute AndAlso m_level < DebuggerLevels.Warning Then
             Dim head$ = $"Benchmark `{ms.FormatTicks}` {start} - {[end]}"
             Dim str$ = " " & $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
 
-            Call Terminal.AddToQueue(
-                Sub()
-                    Call __print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
-                End Sub)
+            Call My.Log4VB.Print(head, str, ConsoleColor.Magenta, ConsoleColor.Magenta)
         End If
 
         Return ms
@@ -165,15 +171,19 @@ Public Module VBDebugger
     ''' <param name="msg">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
     ''' <param name="indent"></param>
     ''' <returns>其实这个函数是不会返回任何东西的，只是因为为了Linq调试输出的需要，所以在这里是返回Nothing的</returns>
-    <Extension> Public Function __DEBUG_ECHO(msg$, Optional indent% = 0) As String
-        If Not Mute AndAlso __level < DebuggerLevels.Warning Then
-            Dim head As String = $"DEBUG {Now.ToString}"
-            Dim str As String = $"{_Indent(indent)} {msg}"
+    <Extension> Public Function __DEBUG_ECHO(msg$, Optional indent% = 0, Optional mute As Boolean = False) As String
+        Static indents$() = {"",
+            New String(" ", 1), New String(" ", 2), New String(" ", 3), New String(" ", 4),
+            New String(" ", 5), New String(" ", 6), New String(" ", 7), New String(" ", 8),
+            New String(" ", 9), New String(" ", 10)
+        }
 
-            Call Terminal.AddToQueue(
-                Sub()
-                    Call __print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
-                End Sub)
+        If Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
+            Dim head As String = $"DEBUG {Now.ToString}"
+            Dim str As String = $"{indents(indent)} {msg}"
+
+            Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.DEBUG)
+
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
@@ -183,64 +193,22 @@ Public Module VBDebugger
     End Function
 
     <Extension> Public Sub __INFO_ECHO(msg$)
-        If Not Mute AndAlso __level < DebuggerLevels.Warning Then
+        If Not Mute AndAlso m_level < DebuggerLevels.Warning Then
             Dim head As String = $"INFOM {Now.ToString}"
             Dim str As String = " " & msg
 
-            Call Terminal.AddToQueue(
-                Sub()
-                    Call __print(head, str, ConsoleColor.White, MSG_TYPES.INF)
-                End Sub)
+            Call My.Log4VB.Print(head, str, ConsoleColor.White, MSG_TYPES.INF)
+
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{str}")
 #End If
         End If
     End Sub
 
-    ''' <summary>
-    ''' 头部和消息字符串都是放在一个task之中进行输出的，<see cref="xConsole"/>的输出也是和内部的debugger输出使用的同一个消息线程
-    ''' </summary>
-    ''' <param name="head"></param>
-    ''' <param name="str"></param>
-    ''' <param name="msgColor"></param>
-    ''' <param name="level"><see cref="ConsoleColor"/> or <see cref="MSG_TYPES"/></param>
-    Private Sub __print(head As String, str As String, msgColor As ConsoleColor, level As Integer)
-        If ForceSTDError Then
-            Call Console.Error.WriteLine($"[{head}]{str}")
-        Else
-            Dim cl As ConsoleColor = Console.ForegroundColor
-            Dim headColor As ConsoleColor = getColor(level)
-
-            If msgColor = headColor Then
-                Console.ForegroundColor = headColor
-                Console.WriteLine($"[{head}]{str}")
-                Console.ForegroundColor = cl
-            Else
-                Call Console.Write("[")
-                Console.ForegroundColor = headColor
-                Call Console.Write(head)
-                Console.ForegroundColor = cl
-                Call Console.Write("]")
-
-                Call WriteLine(str, msgColor)
-            End If
-        End If
-
-        For Each driver As LoggingDriver In VBDebugger.logs
-            Call driver(head, str, level)
-        Next
-    End Sub
-
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AttachLoggingDriver(driver As LoggingDriver)
-        logs += driver
+        My.Log4VB.logs.Add(driver)
     End Sub
-
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Private Function getColor(level As Integer) As ConsoleColor
-        Return If(DebuggerTagColors.ContainsKey(level), DebuggerTagColors(level), CType(level, ConsoleColor))
-    End Function
 
     ''' <summary>
     ''' The function will print the exception details information on the standard <see cref="console"/>, <see cref="debug"/> console, and system <see cref="trace"/> console.
@@ -248,9 +216,10 @@ Public Module VBDebugger
     ''' </summary>
     ''' <typeparam name="ex"></typeparam>
     ''' <param name="exception"></param>
-    <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName As String = "") As Boolean
-        Dim exMsg As String = New Exception(memberName, exception).ToString
-        Return PrintException(exMsg, memberName)
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function PrintException(Of ex As Exception)(exception As ex, <CallerMemberName> Optional memberName$ = "") As Boolean
+        Return New Exception(memberName, exception).ToString.PrintException(memberName)
     End Function
 
     ''' <summary>
@@ -259,18 +228,18 @@ Public Module VBDebugger
     ''' <param name="msg"></param>
     ''' <param name="memberName"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function PrintException(msg As String, <CallerMemberName> Optional memberName As String = "") As Boolean
-        Dim exMsg As String = $"[ERROR {Now.ToString}] <{memberName}>::{msg}"
-        Call Terminal.AddToQueue(Sub() Call VBDebugger.WriteLine(exMsg, ConsoleColor.Red))
-        Return False
+    Public Function PrintException(msg$, <CallerMemberName> Optional memberName$ = "") As Boolean
+        Return My.Log4VB.Print($"ERROR {Now.ToString}", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
     End Function
 
     ''' <summary>
     ''' 等待调试器输出工作线程将内部的消息队列输出完毕
     ''' </summary>
     Public Sub WaitOutput()
-        Call Terminal.WaitQueue()
+        Call My.InnerQueue.WaitQueue()
     End Sub
 
     ''' <summary>
@@ -286,41 +255,12 @@ Public Module VBDebugger
     ''' </summary>
     ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
     ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Sub WriteLine(msg As String, color As ConsoleColor)
-        If Mute Then
-            Return
-        End If
-
-        If ForceSTDError Then
-            Console.Error.WriteLine(msg)
-        Else
-            If UsingxConsole AndAlso App.IsMicrosoftPlatform Then
-                Call xConsole.CoolWrite(msg)
-            Else
-                ' 使用传统的输出输出方法
-                Dim cl As ConsoleColor = Console.ForegroundColor
-
-                Console.ForegroundColor = color
-                Console.WriteLine(msg)
-                Console.ForegroundColor = cl
-            End If
-        End If
-
-#If DEBUG Then
-        Call Debug.WriteLine(msg)
-#End If
+    Public Sub WriteLine(msg$, color As ConsoleColor)
+        My.Log4VB.WriteLine(msg, color)
     End Sub
-
-    ''' <summary>
-    ''' ``<see cref="MSG_TYPES"/> -> <see cref="ConsoleColor"/>``
-    ''' </summary>
-    ReadOnly DebuggerTagColors As New Dictionary(Of Integer, ConsoleColor) From {
-        {MSG_TYPES.DEBUG, ConsoleColor.DarkGreen},
-        {MSG_TYPES.ERR, ConsoleColor.Red},
-        {MSG_TYPES.INF, ConsoleColor.Blue},
-        {MSG_TYPES.WRN, ConsoleColor.Yellow}
-    }
 
     ''' <summary>
     ''' Display the wraning level(YELLOW color) message on the console.
@@ -333,10 +273,7 @@ Public Module VBDebugger
         If Not Mute Then
             Dim head As String = $"WARNG <{calls}> {Now.ToString}"
 
-            Call Terminal.AddToQueue(
-                Sub()
-                    Call __print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
-                End Sub)
+            Call My.Log4VB.Print(head, " " & msg, ConsoleColor.Yellow, MSG_TYPES.DEBUG)
 #If DEBUG Then
             Call Debug.WriteLine($"[{head}]{msg}")
 #End If
@@ -356,19 +293,19 @@ Public Module VBDebugger
     Public Sub Assertion(test As Boolean, fails As String, level As MSG_TYPES, <CallerMemberName> Optional calls As String = "")
         If Not test = True Then
             If level = MSG_TYPES.DEBUG Then
-                If __level < DebuggerLevels.Warning Then
+                If m_level < DebuggerLevels.Warning Then
                     Call fails.__DEBUG_ECHO(memberName:=calls)
                 End If
             ElseIf level = MSG_TYPES.ERR Then
-                If __level <> DebuggerLevels.Off Then
+                If m_level <> DebuggerLevels.Off Then
                     Call WriteLine(fails, ConsoleColor.Red)
                 End If
             ElseIf level = MSG_TYPES.WRN Then
-                If __level <> DebuggerLevels.Error Then
+                If m_level <> DebuggerLevels.Error Then
                     Call Warning(fails, calls)
                 End If
             Else
-                If __level < DebuggerLevels.Warning Then
+                If m_level < DebuggerLevels.Warning Then
                     Call Console.WriteLine($"@{calls}::" & fails)
                 End If
             End If
@@ -465,7 +402,7 @@ Public Module VBDebugger
     ''' <param name="s$"></param>
     <Extension> Public Sub EchoLine(s$)
         If Not Mute Then
-            Call Terminal.AddToQueue(
+            Call My.InnerQueue.AddToQueue(
                 Sub()
                     Call Console.WriteLine(s)
                 End Sub)
@@ -488,7 +425,7 @@ Public Module VBDebugger
     ''' <param name="s$"></param>
     Public Sub cat(s$)
         If Not Mute Then
-            Call Terminal.AddToQueue(
+            Call My.InnerQueue.AddToQueue(
                 Sub()
                     Call Console.Write(s.ReplaceMetaChars)
                 End Sub)

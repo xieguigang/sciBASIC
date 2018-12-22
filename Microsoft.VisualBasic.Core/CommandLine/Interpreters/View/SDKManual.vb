@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0d941800040bee624da8032940ee2786, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\SDKManual.vb"
+﻿#Region "Microsoft.VisualBasic::53c50f4ab87cbef2763d7b567429a14d, Microsoft.VisualBasic.Core\CommandLine\Interpreters\View\SDKManual.vb"
 
     ' Author:
     ' 
@@ -32,8 +32,6 @@
     ' Summaries:
 
     '     Module SDKManual
-    ' 
-    '         Properties: DocPath
     ' 
     '         Function: HelpSummary, LaunchManual, MarkdownDoc
     ' 
@@ -312,7 +310,8 @@ Namespace CommandLine.ManView
             If Not markdown Then
                 Call sb.AppendLine(New String("-"c, 100))
                 Call sb.AppendLine()
-                Call sb.AppendLine("   " & $"You can using ""{AssemblyName} ??<commandName>"" for getting more details command help.")
+                Call sb.AppendLine("   " & $"1. You can using ""{AssemblyName} ??<commandName>"" for getting more details command help.")
+                Call sb.AppendLine("   " & $"2. Using command ""{AssemblyName} /CLI.dev [---echo]"" for CLI pipeline development.")
             End If
 
             Return sb.ToString.TrimEnd(ASCII.CR, ASCII.LF, " "c)

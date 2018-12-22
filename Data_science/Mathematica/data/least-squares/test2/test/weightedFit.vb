@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64103c6b88a2c25c029928323655c5fa, Data_science\Mathematica\data\least-squares\test2\test\weightedFit.vb"
+﻿#Region "Microsoft.VisualBasic::194b2d6d76a2605defcd0cebd8395e9d, Data_science\Mathematica\data\least-squares\test2\test\weightedFit.vb"
 
     ' Author:
     ' 

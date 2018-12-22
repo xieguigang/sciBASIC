@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b92e7bf66f110b2dde15416f87b21a9, Data_science\Mathematica\Math\Math\Algebra\Solvers\GaussianElimination.vb"
+﻿#Region "Microsoft.VisualBasic::468ec08383f7518676c0140c6e853447, Data_science\Mathematica\Math\Math\Algebra\Solvers\GaussianElimination.vb"
 
     ' Author:
     ' 

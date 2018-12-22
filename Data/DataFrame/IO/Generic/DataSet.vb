@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af15033ce23ac8ab2791bdca3932ab0e, Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::86ce0bed2e5f669ade25de3b830e00cb, Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -44,6 +44,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language.Default
@@ -119,18 +120,25 @@ Namespace IO
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function LoadDataSet(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False) As IEnumerable(Of DataSet)
-            Return EntityObject.LoadDataSet(path, uidMap, tsv).AsDataSet
+        Public Shared Function LoadDataSet(path$,
+                                           Optional uidMap$ = Nothing,
+                                           Optional tsv As Boolean = False,
+                                           Optional encoding As Encoding = Nothing) As IEnumerable(Of DataSet)
+            Return EntityObject.LoadDataSet(path, uidMap, tsv, encoding).AsDataSet
         End Function
 
-        Public Shared Function LoadDataSet(Of T As DataSet)(path$, Optional uidMap$ = Nothing) As IEnumerable(Of T)
+        Public Shared Function LoadDataSet(Of T As DataSet)(path$,
+                                                            Optional uidMap$ = Nothing,
+                                                            Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
+
             Dim mapFrom$ = uidMap Or New DefaultValue(Of String) With {
                 .LazyValue = New Func(Of String)(Function() __getID(path)).AsLazy
             }
-            Dim map As New Dictionary(Of String, String) From {
-                {mapFrom, NameOf(DataSet.ID)}
-            }
-            Return path.LoadCsv(Of T)(explicit:=False, maps:=map)
+            Return path.LoadCsv(Of T)(
+                explicit:=False,
+                maps:={{mapFrom, NameOf(DataSet.ID)}},
+                encoding:=encoding
+            )
         End Function
 
         Private Shared Function __getID(path$) As String

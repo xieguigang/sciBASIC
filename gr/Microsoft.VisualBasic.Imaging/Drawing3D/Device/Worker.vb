@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1801170f7d3c020285065b2e25ab6af5, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\Worker.vb"
+﻿#Region "Microsoft.VisualBasic::3b0dae5865fa86a787a798bb3c9d8622, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Device\Worker.vb"
 
     ' Author:
     ' 

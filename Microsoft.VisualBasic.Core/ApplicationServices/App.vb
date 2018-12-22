@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af1e1ba26dabe65b712e256f682c1155, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::a641998267443b3ac9441d9bc4346209, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -45,12 +45,13 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: __CLI, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
+    '     Function: __cli, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
     '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
-    '               ElapsedMilliseconds, Exit, formatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
+    '               ElapsedMilliseconds, Exit, FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
     '               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
     '               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
-    '               RunCLIInternal, SelfFolk, SelfFolks, Shell, TraceBugs
+    '               RunCLIInternal, SelfFolk, SelfFolks, Shell, TemporaryEnvironment
+    '               TraceBugs
     ' 
     '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
     '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
@@ -192,7 +193,7 @@ Public Module App
     ''' Gets the command-line arguments for this <see cref="Process"/>.
     ''' </summary>
     ''' <returns>Gets the command-line arguments for this process.</returns>
-    Public ReadOnly Property CommandLine As CommandLine.CommandLine = __CLI()
+    Public ReadOnly Property CommandLine As CommandLine.CommandLine = __cli()
 
     ''' <summary>
     ''' Get argument value from <see cref="CommandLine"/>.
@@ -221,23 +222,25 @@ Public Module App
         Return CommandLine(name)
     End Function
 
-    Const gitBash As String = "C:/Program Files/Git"
+    ''' <summary>
+    ''' Enable .NET application running from git bash terminal
+    ''' </summary>
+    Const gitBash$ = "C:/Program Files/Git"
 
     ''' <summary>
     ''' Makes compatibility with git bash: <see cref="gitBash"/> = ``C:/Program Files/Git``
     ''' </summary>
     ''' <returns></returns>
-    Private Function __CLI() As CommandLine.CommandLine
-        Dim tokens$() = ' 第一个参数为应用程序的文件路径，不需要
+    Private Function __cli() As CommandLine.CommandLine
+        ' 第一个参数为应用程序的文件路径，不需要
+        Dim tokens$() =
             Environment.GetCommandLineArgs _
             .Skip(1) _
+            .Select(Function(t) t.Replace(gitBash, "")) _
             .ToArray
-        Dim CLI$ = tokens _
-            .Select(Function(s) s.CLIToken) _
-            .JoinBy(" ") _
-            .Replace(gitBash, "")
-
-        Return CLITools.TryParse(CLI)
+        Dim cliString$ = tokens.JoinBy(" ")
+        Dim cli = CLITools.TryParse(tokens, False, cliString)
+        Return cli
     End Function
 
     Public ReadOnly Property Github As String = LICENSE.githubURL
@@ -421,10 +424,6 @@ Public Module App
 
     Sub New()
         ' On Error Resume Next ' 在Linux服务器上面不起作用？？？
-
-        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
-        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
-
         PreviousDirectory = App.StartupDirectory
 
 #Region "公共模块内的所有的文件路径初始化"
@@ -454,6 +453,32 @@ Public Module App
 
         End Try
 #End Region
+
+        If App.HOME.StringEmpty Then
+            App.HOME = System.IO.Directory.GetCurrentDirectory
+        End If
+
+        Call FileIO.FileSystem.CreateDirectory(AppSystemTemp)
+        Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
+
+        ' 2018-08-14 因为经过测试发现text encoding模块会优先于命令行参数设置模块的初始化的加载
+        ' 所以会导致环境变量为空
+        ' 故而text encoding可能总是系统的默认值，无法从命令行设置
+        ' 在这里提前进行初始化，可以消除此bug的出现
+        Dim envir As Dictionary(Of String, String) = App _
+            .CommandLine _
+            .EnvironmentVariables
+
+        Call App.JoinVariables(
+            envir _
+            .SafeQuery _
+            .Select(Function(x)
+                        Return New NamedValue(Of String) With {
+                            .Name = x.Key,
+                            .Value = x.Value
+                        }
+                    End Function) _
+            .ToArray)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -596,7 +621,7 @@ Public Module App
             s = CLangStringFormatProvider.ReplaceMetaChars(s)
         End If
 
-        Call InnerQueue.AddToQueue(
+        Call My.InnerQueue.AddToQueue(
             Sub()
                 Call Console.WriteLine(s)
             End Sub)
@@ -604,7 +629,7 @@ Public Module App
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub println()
-        Call InnerQueue.AddToQueue(AddressOf Console.WriteLine)
+        Call My.InnerQueue.AddToQueue(AddressOf Console.WriteLine)
     End Sub
 
     Public Declare Function SetProcessWorkingSetSize Lib "kernel32.dll" (process As IntPtr, minimumWorkingSetSize As Integer, maximumWorkingSetSize As Integer) As Integer
@@ -658,7 +683,7 @@ Public Module App
     '''
     <ExportAPI("Pause", Info:="Pause the console program.")>
     Public Sub Pause(Optional prompted$ = "Press any key to continute...")
-        Call InnerQueue.WaitQueue()
+        Call My.InnerQueue.WaitQueue()
         Call Console.WriteLine(prompted)
 
         ' 2018-6-26 如果不是命令行程序的话，可能会因为没有地方进行输入而导致程序在这里停止运行
@@ -790,6 +815,11 @@ Public Module App
         Return Nothing
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function TemporaryEnvironment(newLocation As String) As FileIO.TemporaryEnvironment
+        Return New FileIO.TemporaryEnvironment(newLocation)
+    End Function
+
     ''' <summary>
     ''' Function returns the file path of the application log file.
     ''' (函数返回的是日志文件的文件路径)
@@ -798,22 +828,27 @@ Public Module App
     '''
     <ExportAPI("TraceBugs")>
     Public Function TraceBugs(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
-        Dim entry$ = $"{Now.formatTime}_{App.__getTEMPhash}"
+        Dim entry$ = $"{Now.FormatTime("-")}_{App.__getTEMPhash}"
         Dim log$ = $"{App.LogErrDIR}/{entry}.log"
         Call App.LogException(ex, trace:=trace, fileName:=log)
         Return log
     End Function
 
+    ''' <summary>
+    ''' MySql时间格式： ``yy-mm-dd, 00:00:00``
+    ''' </summary>
+    ''' <param name="time"></param>
+    ''' <returns></returns>
     <Extension>
-    Private Function formatTime(time As DateTime) As String
-        Dim yy = time.Year
-        Dim mm = time.Month
-        Dim dd = time.Day
-        Dim hh = time.Hour
-        Dim mi = time.Minute
-        Dim ss = time.Second
+    Public Function FormatTime(time As DateTime, Optional sep$ = ":") As String
+        Dim yy = Format(time.Year, "0000")
+        Dim mm = Format(time.Month, "00")
+        Dim dd = Format(time.Day, "00")
+        Dim hh = Format(time.Hour, "00")
+        Dim mi = Format(time.Minute, "00")
+        Dim ss = Format(time.Second, "00")
 
-        Return $"{yy}-{mm}-{dd}, {Format(hh, "00")}-{Format(mi, "00")}-{Format(ss, "00")}"
+        Return $"{yy}-{mm}-{dd}, {hh}{sep}{mi}{sep}{ss}"
     End Function
 
     ''' <summary>
@@ -991,7 +1026,7 @@ Public Module App
     <SecuritySafeCritical> Public Function Exit%(Optional state% = 0)
         App._Running = False
 
-        Call InnerQueue.WaitQueue()
+        Call My.InnerQueue.WaitQueue()
         Call App.StopGC()
         Call __GCThread.Dispose()
         Call Environment.Exit(state)
@@ -1061,9 +1096,17 @@ Public Module App
     ''' Running the string as a cli command line.(请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
     ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
     ''' </summary>
-    ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
+    ''' <param name="args">
+    ''' The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.
+    ''' </param>
+    ''' <param name="executeNotFound">
+    ''' ```vbnet
+    ''' Public Delegate Function ExecuteNotFound(args As CommandLine) As Integer
+    ''' ```
+    ''' </param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args$, executeEmpty As ExecuteEmptyCLI, executeNotFound As ExecuteNotFound,
                                        <CallerMemberName>
@@ -1075,9 +1118,17 @@ Public Module App
     ''' Running the string as a cli command line.(请注意，在调试模式之下，命令行解释器会在运行完命令之后暂停，而Release模式之下则不会。
     ''' 假若在调试模式之下发现程序有很长一段时间处于cpu占用为零的静止状态，则很有可能已经运行完命令并且等待回车退出)
     ''' </summary>
-    ''' <param name="args">The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.</param>
+    ''' <param name="args">
+    ''' The command line arguments value, which its value can be gets from the <see cref="Command()"/> function.
+    ''' </param>
+    ''' <param name="executeNotFound">
+    ''' ```vbnet
+    ''' Public Delegate Function ExecuteNotFound(args As <see cref="CLI"/>) As <see cref="Integer"/>
+    ''' ```
+    ''' </param>
     ''' <returns>Returns the function execute result to the operating system.</returns>
     '''
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("RunCLI")>
     <Extension> Public Function RunCLI(Interpreter As Type, args As CLI, executeEmpty As ExecuteEmptyCLI, executeNotFound As ExecuteNotFound,
                                        <CallerMemberName>
@@ -1274,7 +1325,8 @@ Public Module App
     ''' <remarks><see cref="IORedirectFile"/>这个建议在进行外部调用的时候才使用</remarks>
     Public Function Shell(app$, CLI$,
                           Optional CLR As Boolean = False,
-                          Optional stdin$ = Nothing) As IIORedirectAbstract
+                          Optional stdin$ = Nothing,
+                          Optional ioRedirect As Boolean = False) As IIORedirectAbstract
 
         If Not IsMicrosoftPlatform Then
             If CLR Then
@@ -1289,7 +1341,8 @@ Public Module App
             End If
         Else
             If CLR Then
-                Return New IORedirect(app, CLI) ' 由于是重新调用自己，所以这个重定向是没有多大问题的
+                ' 由于是重新调用自己，所以这个重定向是没有多大问题的
+                Return New IORedirect(app, CLI, IOredirect:=ioRedirect)
             Else
                 Dim process As New IORedirectFile(app, CLI, stdin:=stdin)
                 Return process
@@ -1376,14 +1429,14 @@ Public Module App
 
         ' 在这里等待终端的内部线程输出工作完毕，防止信息的输出错位
 
-        Call Terminal.WaitQueue()
+        Call My.InnerQueue.WaitQueue()
         Call Console.WriteLine()
 
         For Each hook As Action In __exitHooks
             Call hook()
         Next
 
-        Call Terminal.WaitQueue()
+        Call My.InnerQueue.WaitQueue()
         Call Console.WriteLine()
 
 #If DEBUG Then

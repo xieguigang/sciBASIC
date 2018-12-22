@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ae85307c230647741750bff2121fbbc, Data_science\Mathematica\Math\Math\Scripting\VectorModel.vb"
+﻿#Region "Microsoft.VisualBasic::351853de2326233d3504aeb74e280f20, Data_science\Mathematica\Math\Math\Scripting\VectorModel.vb"
 
     ' Author:
     ' 
@@ -111,6 +111,13 @@ Namespace Scripting
             End Select
         End Function
 
+        ''' <summary>
+        ''' 按照索引编号来取出元素
+        ''' </summary>
+        ''' <param name="index">
+        ''' 目标在序列之中的位置索引编号，即数组的下标
+        ''' </param>
+        ''' <returns></returns>
         Default Public Overloads Property Item(index As Integer) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -122,6 +129,11 @@ Namespace Scripting
             End Set
         End Property
 
+        ''' <summary>
+        ''' 这个属性返回来一个新的向量子集
+        ''' </summary>
+        ''' <param name="booleans"></param>
+        ''' <returns></returns>
         Default Public Overloads ReadOnly Property Item(booleans As IEnumerable(Of Boolean)) As IVector(Of T)
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

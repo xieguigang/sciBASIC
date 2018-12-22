@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc7bae28bcf78e96530f15826c60acef, Microsoft.VisualBasic.Core\ComponentModel\File\XmlDataModel.vb"
+﻿#Region "Microsoft.VisualBasic::34156b971341d9f178c56966b3b3ca89, Microsoft.VisualBasic.Core\ComponentModel\File\XmlDataModel.vb"
 
     ' Author:
     ' 
@@ -42,14 +42,19 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
 Imports System.Web.Script.Serialization
 Imports System.Xml
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.SecurityString
 
 Namespace ComponentModel
 
+    ''' <summary>
+    ''' 这个基类型对象主要是用来生成类型全称注释方便编写XML文件加载代码功能的
+    ''' </summary>
     Public MustInherit Class XmlDataModel
 
         ''' <summary>
@@ -77,9 +82,13 @@ Namespace ComponentModel
             Dim modelType As Type = Me.GetType
             Dim fullName$ = modelType.FullName
             Dim assembly$ = modelType.Assembly.FullName
+            Dim update As Date = File.GetLastWriteTime(modelType.Assembly.Location)
+            Dim md5$ = modelType.Assembly.Location.GetFileHashString
             Dim trace$ = vbCrLf &
-                "     model:    " & fullName & vbCrLf &
-                "     assembly: " & assembly & vbCrLf &
+                "     model:     " & fullName & vbCrLf &
+                "     assembly:  " & assembly & vbCrLf &
+                "     md5:       " & md5 & vbCrLf &
+                "     timestamp: " & update.ToLongDateString & vbCrLf &
                 "  "
 
             Return New XmlDocument().CreateComment(trace)

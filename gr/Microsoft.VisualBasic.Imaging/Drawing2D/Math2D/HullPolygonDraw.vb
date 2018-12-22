@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5610a008c9d66e8beaf13a61c847e6aa, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\HullPolygonDraw.vb"
+﻿#Region "Microsoft.VisualBasic::c30e7acb51538fdec03a50679db9b519, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\HullPolygonDraw.vb"
 
     ' Author:
     ' 

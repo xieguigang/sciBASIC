@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca0434b095fb39048cf95657a1fcef5e, Data_science\Mathematica\Math\Math\Test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a4a756dc97540f7fdb9c3919b380c233, Data_science\Mathematica\Math\Math\test\Program.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: Hash
     ' 
-    '     Sub: Main, RankingTest, Test
+    '     Sub: Main, RankingTest, Test, uncheckedTest
     ' 
     ' /********************************************************************************/
 
@@ -64,7 +64,22 @@ Module Program
         Return key.MD5.ToLong
     End Function
 
+    Sub uncheckedTest()
+        Const ConstantMax% = Integer.MaxValue
+
+        Dim int1 As New UncheckedInteger(2147483647)
+        Dim int2% = 10
+
+        Dim i% = int1 + int2
+
+        Console.WriteLine(i)
+
+        Pause()
+    End Sub
+
     Sub Main()
+
+        Call uncheckedTest()
 
         Call RankingTest()
 
@@ -78,13 +93,7 @@ Module Program
             l.Add(KEGG.MD5)
         Next
 
-        Const ConstantMax% = Integer.MaxValue
 
-        Dim int1%
-        Dim int2%
-        Dim variableMax As Integer = 2147483647
-
-        int1 = (unchecked(variableMax) + 10).uncheckedInteger
 
         '  Pause()
 

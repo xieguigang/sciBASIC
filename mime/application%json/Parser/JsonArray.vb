@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::590a16056d36b86a0fcaadb1f4059a1b, mime\application%json\Parser\JsonArray.vb"
+﻿#Region "Microsoft.VisualBasic::e481a97db01e75b7e404afaceadc9321, mime\application%json\Parser\JsonArray.vb"
 
     ' Author:
     ' 
@@ -83,7 +83,7 @@ Namespace Parser
         End Function
 
         Public Overrides Function ToString() As String
-            Return "JSONarray: {count: " & list.Count & "}"
+            Return "JsonArray: {count: " & list.Count & "}"
         End Function
 
         Public Overrides Function BuildJsonString() As String

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c81e2e8d7a1bcde57d9e7266006eefa4, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::992ffb00fb8ac813b61f7e02a3637e6e, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Module Data
     ' 
     '         Function: GetNodeNameDefine, GetTypeName, InternalIterates, LoadUltraLargeXMLDataSet, LoadXmlDataSet
-    '                   LoadXmlDocument, NodeInstanceBuilder, UltraLargeXmlNodesIterator
+    '                   LoadXmlDocument, NodeInstanceBuilder, PopulateXmlElementText, UltraLargeXmlNodesIterator
     ' 
     ' 
     ' /********************************************************************************/
@@ -61,7 +61,7 @@ Namespace Text.Xml.Linq
         ''' <param name="pathOrDoc"></param>
         ''' <returns></returns>
         ''' <remarks>
-        ''' using internally XDocument.Load to parse whole XML at once
+        ''' using internally <see cref="XDocument.Load"/> to parse whole XML at once
         ''' </remarks>
         <Extension>
         Public Function LoadXmlDocument(pathOrDoc$, Optional preprocess As Func(Of String, String) = Nothing) As XmlDocument
@@ -190,7 +190,7 @@ Namespace Text.Xml.Linq
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 从给定的文本之中利用反序列化从XML字符串构建出.NET对象
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="nodes"></param>
@@ -199,51 +199,12 @@ Namespace Text.Xml.Linq
         ''' <returns></returns>
         <Extension>
         Private Iterator Function NodeInstanceBuilder(Of T As Class)(nodes As IEnumerable(Of String), replaceXmlns$, xmlNode$) As IEnumerable(Of T)
-            Dim o As T
-            Dim sb As New StringBuilder
-            Dim TnodeName$ = GetType(T).GetNodeNameDefine
-            Dim process As Func(Of String, String)
-
-            ' 2017-12-22
-            ' 假若对象是存储在一个数组之中的，那么，可能会出现的一种情况就是
-            ' 在类型的定义之中，使用了xmlelement重新定义了节点的名字
-            ' 例如 <XmlElement("A")>
-            ' 那么在生成的XML文件之中的节点名称就是A
-            ' 但是元素A的类型定义却是 Public Class B ... End Class
-            ' 因为A不等于B，所以将无法正确的加载XML节点数据
-            ' 在这里进行名称的替换来消除这种错误
-            If TnodeName = xmlNode Then
-                ' 不需要进行替换
-                process = Function(s) s
-            Else
-                Dim leftTag% = 1 + xmlNode.Length
-                Dim rightTag% = 3 + xmlNode.Length
-
-                ' 在这里不尝试做直接替换，可能会误杀其他的节点
-                process = Function(block)
-                              block = block.Trim(ASCII.CR, ASCII.LF, " "c, ASCII.TAB)
-                              block = block.Substring(leftTag, block.Length - leftTag)
-                              block = block.Substring(0, block.Length - rightTag)
-                              block = "<" & TnodeName & block & "</" & TnodeName & ">"
-
-                              Return block
-                          End Function
-            End If
+            Dim handle As New DeserializeHandler(Of T)(xmlNode) With {
+                .ReplaceXmlns = replaceXmlns
+            }
 
             For Each xml As String In nodes
-
-                Call sb.Clear()
-                Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
-                Call sb.AppendLine(process(xml))
-
-                If Not replaceXmlns.StringEmpty Then
-                    Call sb.Replace($"xmlns=""{replaceXmlns}""", "")
-                End If
-
-                xml = sb.ToString
-                o = xml.LoadFromXml(Of T)
-
-                Yield o
+                Yield handle.LoadXml(xml)
             Next
         End Function
 
@@ -270,9 +231,10 @@ Namespace Text.Xml.Linq
 
             Using reader As XmlReader = XmlReader.Create(path)
 
-                reader.MoveToContent()
+                Call reader.MoveToContent()
 
-                Do While (reader.Read()) ' Parse the file And return each of the child_node
+                Do While (reader.Read())
+                    ' Parse the file And return each of the child_node
                     If (reader.NodeType = XmlNodeType.Element AndAlso reader.Name = nodeName) Then
                         If (Not (el = XNode.ReadFrom(reader)) Is Nothing) Then
                             XML = el.Value.ToString
@@ -281,6 +243,14 @@ Namespace Text.Xml.Linq
                     End If
                 Loop
             End Using
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function PopulateXmlElementText(Of T As Class)(path$, Optional typeName$ = Nothing) As IEnumerable(Of String)
+            Return GetType(T) _
+                .GetTypeName([default]:=typeName) _
+                .UltraLargeXmlNodesIterator(path)
         End Function
     End Module
 End Namespace

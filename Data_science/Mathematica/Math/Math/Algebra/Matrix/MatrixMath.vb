@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da8140bb0b7d69e1c2feaeb7ee42138e, Data_science\Mathematica\Math\Math\Algebra\Matrix\MatrixMath.vb"
+﻿#Region "Microsoft.VisualBasic::de5f1011e94a1db9a5833b421ee377f2, Data_science\Mathematica\Math\Math\Algebra\Matrix\MatrixMath.vb"
 
     ' Author:
     ' 

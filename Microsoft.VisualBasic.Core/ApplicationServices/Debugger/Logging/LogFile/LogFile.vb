@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef6a2c3584b8c74d670128426ebfa4b4, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::114172961e80001497cd83b56e46bcad, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
 
     ' Author:
     ' 
@@ -157,7 +157,7 @@ Namespace ApplicationServices.Debugging.Logging
             Return ""
         End Function
 
-        Public Sub WriteLine(s As String) Implements I_ConsoleDeviceHandle.WriteLine
+        Public Sub WriteLine(Optional s As String = "") Implements I_ConsoleDeviceHandle.WriteLine
             Call WriteLine(s, Type:=MSG_TYPES.INF, [Object]:="")
         End Sub
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2689e5431452a703893e4cbfb8f343c2, docs\guides\Example\LanguageSyntax\Program.vb"
+﻿#Region "Microsoft.VisualBasic::85bc5a471333e13c23c3feb3b6ea1f76, docs\guides\Example\LanguageSyntax\Program.vb"
 
     ' Author:
     ' 

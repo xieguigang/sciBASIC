@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b0fd131dde8aea0d4f9d6819a9b7dae, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::78a55ef932c0ee62d1220ae126a0a4b9, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,8 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Serialization
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports TableSchema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.SchemaProvider
 
 Namespace StorageProvider.Reflection
 
@@ -77,7 +78,7 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         <Extension> Public Function GetDataFrameworkTypeSchema(type As Type, Optional Explicit As Boolean = True) As Dictionary(Of String, Type)
-            Dim Schema As SchemaProvider = SchemaProvider.CreateObject(type, Explicit).CopyReadDataFromObject
+            Dim Schema As TableSchema = TableSchema.CreateObject(type, Explicit).CopyReadDataFromObject
             Dim cols = LinqAPI.Exec(Of NamedValue(Of Type)) _
  _
                 () <= From columAttr As Column
@@ -115,7 +116,7 @@ Namespace StorageProvider.Reflection
         ''' 
         <Extension>
         Public Function LoadDataToObject(csv As DataFrame, type As Type, Optional explicit As Boolean = False) As IEnumerable(Of Object)
-            Dim schema As SchemaProvider = SchemaProvider.CreateObject(type, explicit).CopyWriteDataToObject
+            Dim schema As TableSchema = TableSchema.CreateObject(type, explicit).CopyWriteDataToObject
             Dim rowBuilder As New RowBuilder(schema)
             Dim parallel As Boolean = True
 
@@ -161,33 +162,42 @@ Namespace StorageProvider.Reflection
         ''' <summary>
         ''' Method for load a csv data file into a specific type of object collection.
         ''' </summary>
-        ''' <typeparam name="ItemType"></typeparam>
-        ''' <param name="Explicit">当本参数值为False的时候，所有的简单属性值都将被解析出来，而忽略掉其是否带有<see cref="Csv.StorageProvider.Reflection.ColumnAttribute"></see>自定义属性</param>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="Explicit">
+        ''' 当本参数值为False的时候，所有的简单属性值都将被解析出来，而忽略掉其是否带有
+        ''' <see cref="Csv.StorageProvider.Reflection.ColumnAttribute"></see>自定义属性
+        ''' </param>
         ''' <param name="path"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Load(Of ItemType As Class)(path As String,
-                                                   Optional Explicit As Boolean = True,
-                                                   Optional encoding As Encoding = Nothing,
-                                                   Optional fast As Boolean = False,
-                                                   Optional maps As Dictionary(Of String, String) = Nothing) As List(Of ItemType)
-            If Not path.FileExists Then '空文件
-                Call $"Csv file ""{path.ToFileURL}"" is empty!".__DEBUG_ECHO
-                Return New List(Of ItemType)
+        Public Function Load(Of T As Class)(path$,
+                                            Optional Explicit As Boolean = True,
+                                            Optional encoding As Encoding = Nothing,
+                                            Optional fast As Boolean = False,
+                                            Optional maps As Dictionary(Of String, String) = Nothing,
+                                            Optional mute As Boolean = False) As List(Of T)
+            If Not path.FileExists Then
+                ' 空文件
+                Call $"Csv file ""{path.ToFileURL}"" is empty!".Warning
+                Return New List(Of T)
             Else
-                Call "Load data from filestream....".__DEBUG_ECHO
+                Call "Load data from filestream....".__DEBUG_ECHO(mute:=mute)
             End If
 
-            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast)  ' read csv data
+            ' read csv data
+            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast)
+            Dim buffer As List(Of T)
 
             If Not maps Is Nothing Then
-                Call reader.ChangeMapping(maps)  ' 改变列的名称映射以方便进行反序列化数据加载
+                ' 改变列的名称映射以方便进行反序列化数据加载
+                Call reader.ChangeMapping(maps)
             End If
 
-            Call $"Reflector load data into type {GetType(ItemType).FullName}".__DEBUG_ECHO
-            Dim bufs As List(Of ItemType) = Reflector.Convert(Of ItemType)(reader, Explicit)
-            Call "[Job Done!]".__DEBUG_ECHO
-            Return bufs
+            Call $"Reflector load data into type {GetType(T).FullName}".__DEBUG_ECHO(mute:=mute)
+            buffer = Reflector.Convert(Of T)(reader, Explicit)
+            Call "[Job Done!]".__DEBUG_ECHO(mute:=mute)
+
+            Return buffer
         End Function
 
         ''' <summary>
@@ -235,14 +245,14 @@ Namespace StorageProvider.Reflection
                                Optional layout As Dictionary(Of String, Integer) = Nothing) As IEnumerable(Of RowObject)
 
             Dim source As Object() = ___source.ToVector  ' 结束迭代器，防止Linq表达式重新计算
-            Dim Schema As SchemaProvider =
-                SchemaProvider.CreateObject(typeDef, strict).CopyReadDataFromObject
-            Dim rowWriter As RowWriter = New RowWriter(Schema, metaBlank, layout) _
+            Dim schema As TableSchema = TableSchema.CreateObject(typeDef, strict).CopyReadDataFromObject
+            Dim rowWriter As RowWriter = New RowWriter(schema, metaBlank, layout) _
                 .CacheIndex(source, reorderKeys)
 
-            schemaOut = rowWriter.Columns _
-                                 .ToDictionary(Function(x) x.Name,
-                                               Function(x) x.BindProperty.PropertyType)
+            schemaOut = rowWriter _
+                .Columns _
+                .ToDictionary(Function(x) x.Name,
+                              Function(x) x.BindProperty.PropertyType)
 
             Dim title As RowObject = rowWriter.GetRowNames(maps).Join(rowWriter.GetMetaTitles)
 
@@ -260,7 +270,7 @@ Namespace StorageProvider.Reflection
                         Call schemaOut.Add(key, valueType)
                     Next
                 Catch ex As Exception
-                    Dim msg = $"key:='{key}', keys:={JSON.GetJson(schemaOut.Keys.ToArray)}, metaKeys:={JSON.GetJson(rowWriter.GetMetaTitles)}"
+                    Dim msg = $"key:='{key}', keys:={schemaOut.Keys.GetJson}, metaKeys:={rowWriter.GetMetaTitles.GetJson}"
                     ex = New Exception(msg, ex)
                     Throw ex
                 End Try

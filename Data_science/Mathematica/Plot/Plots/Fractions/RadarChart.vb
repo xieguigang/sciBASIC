@@ -1,42 +1,42 @@
-﻿#Region "Microsoft.VisualBasic::b346d34a07b26b83e3409f308a17696d, Data_science\Mathematica\Plot\Plots\Fractions\RadarChart.vb"
+﻿#Region "Microsoft.VisualBasic::ee4242eccc8173e8d7c026f6c5409b4a, Data_science\Mathematica\Plot\Plots\Fractions\RadarChart.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module RadarChart
-' 
-'         Function: Plot
-' 
-' 
-' /********************************************************************************/
+    '     Module RadarChart
+    ' 
+    '         Function: Plot
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -140,7 +140,6 @@ Namespace Fractions
                     Dim value#
                     Dim color As Color
                     Dim pen As Pen
-                    Dim label$
                     Dim maxAxis As PointF
 
                     ' 绘制出中心点以及坐标轴
@@ -168,73 +167,11 @@ Namespace Fractions
                         g.DrawEllipse(ellipsePen, New RectangleF(center.OffSet2D(-r, -r), New SizeF(r * 2, r * 2)))
                     Next
 
-                    Dim labelSize As SizeF
-                    Dim labelColor As New SolidBrush(labelTextColor.TranslateColor)
-
                     ' 绘制极坐标轴
                     For i As Integer = 0 To directions.Length - 1
-                        label = directions(i)
                         maxAxis = (radius.Max, alpha).ToCartesianPoint.OffSet2D(center)
                         g.DrawLine(axisPen, maxAxis, center)
                         alpha += dDegree
-
-                        ' 绘制坐标轴标签
-                        label = directions(i)
-                        labelSize = g.MeasureString(label, labelFont)
-
-                        Select Case center.QuadrantRegion(maxAxis)
-
-                            Case QuadrantRegions.RightTop
-                                ' 右上角
-                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height)
-
-                            Case QuadrantRegions.YTop
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, -labelSize.Height)
-
-                            Case QuadrantRegions.LeftTop
-                                ' 左上角
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height)
-
-                            Case QuadrantRegions.XLeft
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height / 2)
-
-                            Case QuadrantRegions.LeftBottom
-                                ' 左下角
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, 0)
-
-                            Case QuadrantRegions.YBottom
-                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, 0)
-
-                            Case QuadrantRegions.XRight
-                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height / 2)
-
-                            Case Else
-                                ' 右下角
-                                maxAxis = maxAxis.OffSet2D(0, 0)
-
-                        End Select
-
-                        ' 计算标签是否已经越出绘图的边界线而无法被显示出来了
-                        Dim labelRect As New RectangleF(maxAxis, labelSize)
-
-                        If labelRect.Top < 0 Then
-                            maxAxis = New PointF(maxAxis.X, 1)
-                            labelRect = New RectangleF(maxAxis, labelSize)
-                        End If
-                        If labelRect.Left < 0 Then
-                            maxAxis = New PointF(1, maxAxis.Y)
-                            labelRect = New RectangleF(maxAxis, labelSize)
-                        End If
-                        If labelRect.Right > region.Size.Width Then
-                            maxAxis = New PointF(region.Size.Width - labelSize.Width - 1, maxAxis.Y)
-                            labelRect = New RectangleF(maxAxis, labelSize)
-                        End If
-                        If labelRect.Bottom > region.Size.Height Then
-                            maxAxis = New PointF(maxAxis.X, region.Size.Height - labelSize.Height - 1)
-                            labelRect = New RectangleF(maxAxis, labelSize)
-                        End If
-
-                        g.DrawString(label, labelFont, labelColor, maxAxis)
                     Next
 
                     For i As Integer = 0 To serials.Length - 1
@@ -345,9 +282,90 @@ Namespace Fractions
                             Next
                         End With
                     Next
+
+                    Dim labelSize As SizeF
+                    Dim labelColor As New SolidBrush(labelTextColor.TranslateColor)
+                    Dim label$
+
+                    alpha! = -90
+
+                    ' 绘制极坐标轴标签
+                    ' 标签应该在最后绘制，否则可能会被盖住
+                    For i As Integer = 0 To directions.Length - 1
+                        maxAxis = (radius.Max, alpha).ToCartesianPoint.OffSet2D(center)
+                        alpha += dDegree
+
+                        ' 绘制坐标轴标签
+                        label = directions(i)
+                        labelSize = g.MeasureString(label, labelFont)
+
+                        Select Case center.QuadrantRegion(maxAxis)
+
+                            Case QuadrantRegions.RightTop
+                                ' 右上角
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height)
+
+                            Case QuadrantRegions.YTop
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, -labelSize.Height)
+
+                            Case QuadrantRegions.LeftTop
+                                ' 左上角
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height)
+
+                            Case QuadrantRegions.XLeft
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, -labelSize.Height / 2)
+
+                            Case QuadrantRegions.LeftBottom
+                                ' 左下角
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width, 0)
+
+                            Case QuadrantRegions.YBottom
+                                maxAxis = maxAxis.OffSet2D(-labelSize.Width / 2, 0)
+
+                            Case QuadrantRegions.XRight
+                                maxAxis = maxAxis.OffSet2D(0, -labelSize.Height / 2)
+
+                            Case Else
+                                ' 右下角
+                                maxAxis = maxAxis.OffSet2D(0, 0)
+
+                        End Select
+
+                        ' 计算标签是否已经越出绘图的边界线而无法被显示出来了
+                        Dim labelRect As New RectangleF(maxAxis, labelSize)
+
+                        If labelRect.Top < 0 Then
+                            maxAxis = New PointF(maxAxis.X, 1)
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+                        If labelRect.Left < 0 Then
+                            maxAxis = New PointF(1, maxAxis.Y)
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+                        If labelRect.Right > region.Size.Width Then
+                            maxAxis = New PointF With {
+                                .X = region.Size.Width - labelSize.Width - 1,
+                                .Y = maxAxis.Y
+                            }
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+                        If labelRect.Bottom > region.Size.Height Then
+                            maxAxis = New PointF With {
+                                .X = maxAxis.X,
+                                .Y = region.Size.Height - labelSize.Height - 1
+                            }
+                            labelRect = New RectangleF(maxAxis, labelSize)
+                        End If
+
+                        g.DrawString(label, labelFont, labelColor, maxAxis)
+                    Next
                 End Sub
 
-            Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
+            Return g.GraphicsPlots(
+                size.SizeParser, margin,
+                bg,
+                plotInternal
+            )
         End Function
     End Module
 End Namespace

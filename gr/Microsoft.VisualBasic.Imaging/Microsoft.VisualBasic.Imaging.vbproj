@@ -127,7 +127,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x86\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -139,7 +139,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -151,7 +151,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -163,7 +163,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -174,14 +174,14 @@
     </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|AnyCPU' ">
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x64' ">
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <PlatformTarget>x64</PlatformTarget>
     <WarningsAsErrors>
@@ -189,7 +189,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x86' ">
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
@@ -197,7 +197,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Biodeep|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -235,7 +235,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -261,7 +261,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -273,7 +273,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -299,7 +299,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -311,7 +311,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -333,7 +333,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Imaging.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -374,6 +374,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -385,6 +386,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml.Serialization" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -439,10 +441,12 @@
     <Compile Include="Drawing2D\Shapes\Pentacle.vb" />
     <Compile Include="Drawing2D\Shapes\Hexagon.vb" />
     <Compile Include="Drawing2D\Shapes\Diamond.vb" />
+    <Compile Include="Drawing2D\Text\ASCIIArt\WeightedChar.vb" />
     <Compile Include="Drawing2D\Text\ASCIIArt\Convert2ASCII.vb" />
     <Compile Include="Drawing2D\Text\ASCIIArt\CharSet.vb" />
     <Compile Include="Drawing2D\Text\GraphicsText.vb" />
     <Compile Include="Drawing2D\Text\FontMetrics.vb" />
+    <Compile Include="Drawing2D\Text\HTMLRender.vb" />
     <Compile Include="Drawing2D\Text\Text.vb" />
     <Compile Include="Drawing2D\Shapes\Circle.vb" />
     <Compile Include="Drawing2D\Shapes\Box.vb" />
@@ -486,6 +490,9 @@
     <Compile Include="Drawing3D\Math3D\Vector3D.vb" />
     <Compile Include="Drivers\CSS\Driver.vb" />
     <Compile Include="Drivers\CSS\RuntimeInvoker.vb" />
+    <Compile Include="Drivers\Exif\JpegMetadata.vb" />
+    <Compile Include="Drivers\Exif\JpegMetadataAdapter.vb" />
+    <Compile Include="Drivers\Exif\JpegMetadataSaveResult.vb" />
     <Compile Include="Drivers\Models\SVGData.vb" />
     <Compile Include="Drivers\Models\ImageData.vb" />
     <Compile Include="Drivers\Models\GraphicsData.vb" />

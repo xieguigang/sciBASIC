@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bda1d4e4666279c570bd86207daea9e5, Microsoft.VisualBasic.Core\CommandLine\CLI\Scripting.vb"
+﻿#Region "Microsoft.VisualBasic::853388d640c5306b7d2e55cc81669b5f, Microsoft.VisualBasic.Core\CommandLine\CLI\Scripting.vb"
 
     ' Author:
     ' 

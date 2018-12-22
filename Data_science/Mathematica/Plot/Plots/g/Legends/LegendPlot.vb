@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8310e5ffc1ad8675e3ac9f8e26f01802, Data_science\Mathematica\Plot\Plots\g\Legends\LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::85de1003a7cc46c0ce5e7c3c4e1f2172, Data_science\Mathematica\Plot\Plots\g\Legends\LegendPlot.vb"
 
     ' Author:
     ' 
@@ -48,6 +48,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports sys = System.Math
@@ -110,7 +111,8 @@ Namespace Graphic.Legend
                                    color As Brush,
                                    Optional border As Stroke = Nothing,
                                    Optional radius% = 5,
-                                   Optional ByRef labelPos As PointF = Nothing)
+                                   Optional ByRef labelPos As PointF = Nothing,
+                                   Optional lineWidth! = 10)
             Select Case style
 
                 Case LegendStyles.Circle
@@ -129,10 +131,10 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.DashLine
 
-                    Dim d As Integer = gSize.Width * 0.2
+                    Dim d As Integer = gSize.Width * 0.1
                     Dim a As New Point(pos.X + d, pos.Y + gSize.Height / 2)
                     Dim b As New Point(pos.X + gSize.Width - d, a.Y)
-                    Dim pen As New Pen(color, 3) With {
+                    Dim pen As New Pen(color, lineWidth) With {
                         .DashStyle = DashStyle.Dash
                     }
 
@@ -160,8 +162,8 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.Rectangle
 
-                    Dim dw As Integer = gSize.Width * 0.4
-                    Dim dh As Integer = gSize.Height * 0.2
+                    Dim dw As Integer = gSize.Width * 0.45
+                    Dim dh As Integer = gSize.Height * 0.1
                     Dim size As New Size With {
                         .Width = dw,
                         .Height = gSize.Height - dh * 2
@@ -170,7 +172,8 @@ Namespace Graphic.Legend
                     Call Box.DrawRectangle(
                         g, New Point(pos.X + dw, pos.Y + dh),
                         size,
-                        color, border)
+                        color, border
+                    )
 
                 Case LegendStyles.RoundRectangle
 
@@ -201,10 +204,10 @@ Namespace Graphic.Legend
 
                 Case LegendStyles.SolidLine
 
-                    Dim d As Integer = gSize.Width * 0.2
+                    Dim d As Integer = gSize.Width * 0.1
                     Dim a As New Point(pos.X + d, pos.Y + gSize.Height / 2)
                     Dim b As New Point(pos.X + gSize.Width - d, a.Y)
-                    Dim pen As New Pen(color, 3) With {
+                    Dim pen As New Pen(color, lineWidth) With {
                         .DashStyle = DashStyle.Solid
                     }
 
@@ -251,18 +254,32 @@ Namespace Graphic.Legend
                                    canvas As SizeF,
                                    l As Legend,
                                    Optional border As Stroke = Nothing,
-                                   Optional radius% = 5) As SizeF
+                                   Optional radius% = 5,
+                                   Optional titleBrush As Brush = Nothing) As SizeF
 
             Dim font As Font = l.GetFont
             Dim fSize As SizeF = g.MeasureString(l.title, font)
             Dim labelPosition As New PointF With {
-                .X = pos.X + canvas.Width / 2,
+                .X = pos.X + canvas.Width + 5,
                 .Y = pos.Y + (canvas.Height - fSize.Height) / 2
             }
             Dim color As Brush = l.color.GetBrush
 
-            Call g.DrawLegendShape(pos, canvas, l.style, color, border, radius, labelPosition)
-            Call g.DrawString(l.title, font, Brushes.Black, labelPosition)
+            Static blackTitle As DefaultValue(Of Brush) = Brushes.Black
+
+            Call g.DrawLegendShape(
+                pos, canvas, l.style, color,
+                border:=border,
+                radius:=radius,
+                labelPos:=labelPosition,
+                lineWidth:=font.Size
+            )
+            Call g.DrawString(
+                l.title,
+                font,
+                brush:=titleBrush Or blackTitle,
+                point:=labelPosition
+            )
 
             If fSize.Height > canvas.Height Then
                 Return fSize
@@ -281,7 +298,7 @@ Namespace Graphic.Legend
         ''' 单个legend图形的绘图区域的大小，图例之中的shap的大小都是根据这个参数来进行限制自动调整的
         ''' </param>
         ''' <param name="d%">Interval distance between the legend graphics.</param>
-        ''' <param name="regionBorder">整个图例的绘图区域的边的绘制设置</param>
+        ''' <param name="regionBorder">整个图例的绘图区域的边框的绘制设置，如果这个参数值是空值，则不会做边框的绘制</param>
         ''' <param name="radius">这个是用于圆角矩形的图例图形的绘制参数</param>
         <Extension>
         Public Sub DrawLegends(ByRef g As IGraphics,
@@ -292,7 +309,8 @@ Namespace Graphic.Legend
                                Optional border As Stroke = Nothing,
                                Optional regionBorder As Stroke = Nothing,
                                Optional roundRectRegion As Boolean = True,
-                               Optional radius% = 5)
+                               Optional radius% = 5,
+                               Optional titleBrush As Brush = Nothing)
 
             Dim ZERO As Point = topLeft
             Dim n As Integer
@@ -302,7 +320,7 @@ Namespace Graphic.Legend
 
             For Each l As Legend In legendList
                 n += 1
-                size = g.DrawLegend(topLeft, graphicSize, l, border, radius)
+                size = g.DrawLegend(topLeft, graphicSize, l, border, radius, titleBrush)
                 topLeft = New Point With {
                     .X = topLeft.X,
                     .Y = size.Height + d + topLeft.Y
@@ -315,7 +333,7 @@ Namespace Graphic.Legend
                 With graphicSize
 
                     Dim width! = .Width + .Height * 1.25 + maxTitleSize.Width
-                    Dim height! = (Math.Max(.Height, maxTitleSize.Height) + d + 1) * (n)
+                    Dim height! = (Math.Max(.Height, maxTitleSize.Height) + d + 1) * n
 
                     size = New SizeF(width, height)
                     ZERO = New Point(ZERO.X - d, ZERO.Y - d * 1.2)

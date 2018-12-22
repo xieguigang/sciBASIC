@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfc066dc0ba5e93e074aaa5eb3bd2d2a, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ProfileItem.vb"
+﻿#Region "Microsoft.VisualBasic::ba36342729a2e4f0c9bedbc46e625971, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ProfileItem.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,6 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace ComponentModel.Settings

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4b0f31b72f51916afeca6f62fb4a2ad, Data\DataFrame\Extensions\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::3e2244b621c48478b253f7442723d6b9, Data\DataFrame\Extensions\PipeStream.vb"
 
     ' Author:
     ' 
@@ -59,15 +59,21 @@ Public Module PipeStream
 
     End Function
 
+    ''' <summary>
+    ''' 将目标字典集合转换为数据集集合
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function AsDataSet(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As DataSet()
+    Public Function AsDataSet(source As IEnumerable(Of NamedValue(Of Dictionary(Of String, Double)))) As IEnumerable(Of DataSet)
         Return source.Select(
             Function(x)
                 Return New DataSet With {
                     .ID = x.Name,
                     .Properties = x.Value
                 }
-            End Function).ToArray
+            End Function)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

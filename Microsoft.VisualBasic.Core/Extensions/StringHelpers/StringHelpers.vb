@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::5bb2ac444add8e90fd59a98852a81e2e, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::5a6d27717c0e477d1e1dbf7faba4b0b5, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module StringHelpers
-' 
-'     Properties: NonStrictCompares, StrictCompares
-' 
-'     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
-'               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
-'               FormatZero, GetBetween, GetEMails, GetStackValue, GetString
-'               (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny, (+2 Overloads) Intersection
-'               IsEmptyStringVector, IsNullOrEmpty, JoinBy, LineTokens, Located
-'               Lookup, (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString
-'               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
-'               SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty, StringHashCode
-'               StringReplace, StringSplit, StripBlank, Strips, TextEquals
-'               TextLast, TokenCount, TokenCountIgnoreCase, ToTruncateInt32, ToTruncateInt64
-'               TrimA, TrimNewLine, WildcardsLocated
-' 
-'     Sub: Parts, RemoveLast
-' 
-' /********************************************************************************/
+    ' Module StringHelpers
+    ' 
+    '     Properties: EmptyString, NonStrictCompares, StrictCompares
+    ' 
+    '     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
+    '               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
+    '               FormatZero, GetBetween, GetEMails, GetStackValue, GetString
+    '               (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny, (+2 Overloads) Intersection
+    '               IsEmptyStringVector, JoinBy, LineTokens, Located, Lookup
+    '               (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString, NotEmpty
+    '               PadEnd, Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse
+    '               RNull, SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty
+    '               StringHashCode, StringReplace, StringSplit, StripBlank, Strips
+    '               TextEquals, TextLast, TokenCount, TokenCountIgnoreCase, TrimNewLine
+    '               TrimNull, WildcardsLocated
+    ' 
+    '     Sub: Parts, RemoveLast
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -77,6 +77,22 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 <Package("StringHelpers", Publisher:="amethyst.asuka@gcmodeller.org", Url:="http://gcmodeller.org")>
 Public Module StringHelpers
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function PadEnd(str$, padLen%, Optional padString As Char = " "c) As String
+        Return str.PadRight(padLen, padString)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function TrimNull(str As String) As String
+        If str Is Nothing Then
+            Return Nothing
+        Else
+            Return str.Trim(ASCII.NUL)
+        End If
+    End Function
 
     <Extension>
     Public Function CharAtOrDefault(s$, index%, Optional [default] As Char = ASCII.NUL) As Char
@@ -112,27 +128,22 @@ Public Module StringHelpers
     ''' <summary>
     ''' Using <see cref="[String].Empty"/> as default value
     ''' </summary>
-    Public ReadOnly EmptyString As DefaultValue(Of String) = String.Empty
+    Public ReadOnly Property EmptyString As DefaultValue(Of String) = String.Empty
 
     ''' <summary>
     ''' Replace the <see cref="vbCrLf"/> with the specific string.
     ''' </summary>
     ''' <param name="src"></param>
-    ''' <param name="VbCRLF_Replace"></param>
+    ''' <param name="replacement"></param>
     ''' <returns></returns>
-#If FRAMEWORD_CORE Then
-    <ExportAPI("Trim")>
-    <Extension> Public Function TrimNewLine(src$, <Parameter("vbCrLf.Replaced")> Optional VbCRLF_Replace$ = " ") As String
-#Else
-    <Extension> Public Function TrimA(strText As String, Optional VbCRLF_Replace As String = " ") As String
-#End If
+    <Extension> Public Function TrimNewLine(src$, <Parameter("vbCrLf.Replaced")> Optional replacement$ = " ") As String
         If src Is Nothing Then
             Return ""
         End If
 
-        src = src.Replace(vbCrLf, VbCRLF_Replace) _
-                 .Replace(vbCr, VbCRLF_Replace) _
-                 .Replace(vbLf, VbCRLF_Replace) _
+        src = src.Replace(vbCrLf, replacement) _
+                 .Replace(vbCr, replacement) _
+                 .Replace(vbLf, replacement) _
                  .Replace("  ", " ")
 
         Return Strings.Trim(src)
@@ -537,10 +548,7 @@ Public Module StringHelpers
         If String.IsNullOrEmpty(str) Then
             Return 0
         Else
-            Dim n As Integer = str _
-                .Where(Function(c) c = ch) _
-                .Count
-            Return n%
+            Return str.Count(Function(c) c = ch)
         End If
     End Function
 
@@ -780,7 +788,7 @@ Public Module StringHelpers
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function Matches(input As String, pattern$, Optional options As RegexOptions = RegexICSng) As IEnumerable(Of String)
+    Public Function Matches(input$, pattern$, Optional options As RegexOptions = RegexICSng) As IEnumerable(Of String)
         If input Is Nothing OrElse input.Length = 0 Then
             Return {}
         Else
@@ -810,6 +818,7 @@ Public Module StringHelpers
         Return json.SaveTo(path, TextEncodings.UTF8WithoutBOM)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __json(x As KeyValuePair(Of String, String)) As String
         Return x.Key.GetJson & ": " & x.Value.GetJson
     End Function
@@ -1162,10 +1171,15 @@ Public Module StringHelpers
     ''' <param name="trim">
     ''' Set <see cref="Boolean.FalseString"/> to avoid a reader bug in the csv data reader <see cref="BufferedStream"/>
     ''' </param>
+    ''' <param name="escape">
+    ''' 是否需要将字符串之中的``\n``转义为换行之后再进行分割？默认不进行转义
+    ''' </param>
     <ExportAPI("LineTokens")>
-    <Extension> Public Function LineTokens(s$, Optional trim As Boolean = True) As String()
+    <Extension> Public Function LineTokens(s$, Optional trim As Boolean = True, Optional escape As Boolean = False) As String()
         If String.IsNullOrEmpty(s) Then
             Return {}
+        ElseIf escape Then
+            s = s.Replace("\n", ASCII.LF)
         End If
 
         Dim lf As Boolean = InStr(s, vbLf) > 0

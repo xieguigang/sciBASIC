@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f015998f7d2e4b786a9ca9b8e8b2f60, Data_science\Mathematica\Math\ODE\var.vb"
+﻿#Region "Microsoft.VisualBasic::5562567832f013fe749ca6a2a3391bf6, Data_science\Mathematica\Math\ODE\var.vb"
 
     ' Author:
     ' 
@@ -51,6 +51,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
@@ -81,6 +82,7 @@ Public Class var : Inherits float
         End With
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(name As String)
         Me.Name = name
     End Sub
@@ -115,6 +117,7 @@ Public Class var : Inherits float
         Throw New NotImplementedException
     End Operator
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Shared Narrowing Operator CType(x As var) As Integer
         Return x.Index
     End Operator
@@ -123,11 +126,13 @@ Public Class var : Inherits float
         Throw New NotSupportedException
     End Operator
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return New var(Me)
     End Function
 
-    Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
         Index = address
     End Sub
 End Class

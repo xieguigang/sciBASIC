@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18ce99495d4d72e04628b639362c2840, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::d63cd54a853a12b7706f778f74ce678c, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Properties: MonthList
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: DateSeq, FillDateZero, GetMonthInteger, UnixTimeStamp, YYMMDD
+    '         Function: DateSeq, FillDateZero, FromUnixTimeStamp, GetMonthInteger, IsEmpty
+    '                   UnixTimeStamp, YYMMDD
     ' 
     ' 
     ' /********************************************************************************/
@@ -158,7 +159,42 @@ Namespace ValueTypes
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function UnixTimeStamp(time As DateTime) As Long
-            Return (time.ToUniversalTime - New DateTime(1970, 1, 1, 0, 0, 0)).TotalSeconds
+            Static ZERO As New DateTime(1970, 1, 1, 0, 0, 0)
+            Return (time.ToUniversalTime - ZERO).TotalSeconds
+        End Function
+
+        ''' <summary>
+        ''' 将Unix时间戳转换为可读的日期
+        ''' </summary>
+        ''' <param name="unixDateTime"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function FromUnixTimeStamp(unixDateTime As Long) As Date
+            Return DateTimeOffset _
+                .FromUnixTimeSeconds(unixDateTime) _
+                .DateTime _
+                .ToLocalTime()
+        End Function
+
+        Const ZeroDate1$ = "0001-01-01, 00:00:00"
+        Const ZeroDate2$ = "0000-00-00, 00:00:00"
+        ''' <summary>
+        ''' 对于unix timestamp而言，这个日期是零
+        ''' </summary>
+        Const ZeroDate3$ = "1970-01-01, 08:00:00"
+
+        <Extension>
+        Public Function IsEmpty(time As Date, Optional unixTimestamp As Boolean = False) As Boolean
+            Dim ts = time.FormatTime()
+
+            If ts = ZeroDate1 OrElse ts = ZeroDate2 Then
+                Return True
+            ElseIf unixTimestamp AndAlso ts = ZeroDate3 Then
+                Return True
+            Else
+                Return False
+            End If
         End Function
     End Module
 End Namespace

@@ -155,7 +155,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Publish|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>bin\x86\</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -167,7 +167,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -179,7 +179,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x64'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -191,7 +191,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'docs|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -202,14 +202,14 @@
     </WarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|AnyCPU' ">
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x64' ">
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <PlatformTarget>x64</PlatformTarget>
     <WarningsAsErrors>
@@ -217,7 +217,7 @@
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Surveillance-of-infectious-diseases|x86' ">
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <WarningsAsErrors>
     </WarningsAsErrors>
@@ -263,7 +263,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -289,7 +289,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -301,7 +301,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -327,7 +327,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'installer_x64|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -339,7 +339,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|AnyCPU'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -361,7 +361,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'GCModeller%28UNIX-Release_X64%29|x86'">
     <DefineTrace>true</DefineTrace>
-    <OutputPath>G:\GCModeller\GCModeller\bin</OutputPath>
+    <OutputPath>./bin</OutputPath>
     <DocumentationFile>Microsoft.VisualBasic.Math.Core.xml</DocumentationFile>
     <Optimize>true</Optimize>
     <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</NoWarn>
@@ -435,6 +435,8 @@
     <Compile Include="Algebra\SVD.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
     <Compile Include="Crc32.vb" />
+    <Compile Include="Distributions\Sample.vb" />
+    <Compile Include="Distributions\Gaussian.vb" />
     <Compile Include="Scripting\Factors\NamedVector.vb" />
     <Compile Include="Scripting\VectorModel.vb" />
     <Compile Include="Scripting\Factors\NamedVectorFactory.vb" />
@@ -444,10 +446,6 @@
     <Compile Include="Quantile\Selector.vb" />
     <Compile Include="Quantile\Quartile.vb" />
     <Compile Include="Scripting\Factors\Extensions.vb" />
-    <Compile Include="Signals\TestProvider.vb" />
-    <Compile Include="Signals\DFT.vb" />
-    <Compile Include="Signals\FourierTransform.vb" />
-    <Compile Include="Signals\WaveletTransform.vb" />
     <Compile Include="Spline\BezierExtensions.vb" />
     <Compile Include="Spline\PolynomialNewton.vb" />
     <Compile Include="Spline\Extensions.vb" />
@@ -591,7 +589,6 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,44 +1,44 @@
-﻿#Region "Microsoft.VisualBasic::59dd318712a705150ac6ad1cc06800f9, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\DebuggerArgs.vb"
+﻿#Region "Microsoft.VisualBasic::34cb0c189ba2b3268e5e0e47962e672c, Microsoft.VisualBasic.Core\ApplicationServices\Debugger\DebuggerArgs.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module DebuggerArgs
-' 
-'         Properties: AutoPaused, ErrLogs
-' 
-'         Sub: __logShell, InitDebuggerEnvir, SaveErrorLog
-' 
-' 
-' /********************************************************************************/
+    '     Module DebuggerArgs
+    ' 
+    '         Properties: AutoPaused, ErrLogs
+    ' 
+    '         Sub: __logShell, InitDebuggerEnvir, SaveErrorLog
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -198,21 +198,21 @@ Namespace ApplicationServices.Debugging
             Dim config As Config = Config.Load
 
             If String.IsNullOrEmpty(opt) Then ' 默认的on参数
-                VBDebugger.__level = config.level
+                VBDebugger.m_level = config.level
             Else
                 Select Case opt.ToLower
                     Case "on"
-                        VBDebugger.__level = DebuggerLevels.On
+                        VBDebugger.m_level = DebuggerLevels.On
                     Case "off"
-                        VBDebugger.__level = DebuggerLevels.Off
+                        VBDebugger.m_level = DebuggerLevels.Off
                     Case "all"
-                        VBDebugger.__level = DebuggerLevels.All
+                        VBDebugger.m_level = DebuggerLevels.All
                     Case "warn", "warning"
-                        VBDebugger.__level = DebuggerLevels.Warning
+                        VBDebugger.m_level = DebuggerLevels.Warning
                     Case "err", "error"
-                        VBDebugger.__level = DebuggerLevels.Error
+                        VBDebugger.m_level = DebuggerLevels.Error
                     Case Else
-                        VBDebugger.__level = DebuggerLevels.On
+                        VBDebugger.m_level = DebuggerLevels.On
                         Call Console.WriteLine($"[INFO] The debugger argument value --echo:={opt} is invalid, using default settings.")
                 End Select
             End If
@@ -225,32 +225,23 @@ Namespace ApplicationServices.Debugging
                 VBDebugger.Mute = config.mute
             End If
 
-            Dim vars As Dictionary(Of String, String) = args.EnvironmentVariables
+            Dim envir As Dictionary(Of String, String) = args.EnvironmentVariables
             Dim disableLoadOptions As Boolean = args.GetBoolean("--load_options.disable")
 
             ' --load_options.disable 开关将会禁止所有的环境项目的设置
             ' 但是环境变量任然会进行加载设置
 
-            If Not disableLoadOptions AndAlso Not vars.IsNullOrEmpty Then
-                Call App.JoinVariables(
-                    vars _
-                    .Select(Function(x)
-                                Return New NamedValue(Of String) With {
-                                    .Name = x.Key,
-                                    .Value = x.Value
-                                }
-                            End Function).ToArray)
-
-                If vars.ContainsKey("Proxy") Then
-                    WebServiceUtils.Proxy = vars("Proxy")
+            If Not disableLoadOptions AndAlso Not envir.IsNullOrEmpty Then
+                If envir.ContainsKey("Proxy") Then
+                    WebServiceUtils.Proxy = envir("Proxy")
                     Call $"[Config] webUtils_proxy={WebServiceUtils.Proxy}".__INFO_ECHO
                 End If
-                If vars.ContainsKey("setwd") Then
-                    App.CurrentDirectory = vars("setwd")
+                If envir.ContainsKey("setwd") Then
+                    App.CurrentDirectory = envir("setwd")
                     Call $"[Config] current_work_directory={App.CurrentDirectory}".__INFO_ECHO
                 End If
-                If vars.ContainsKey("buffer_size") Then
-                    Call App.SetBufferSize(vars!buffer_size)
+                If envir.ContainsKey("buffer_size") Then
+                    Call App.SetBufferSize(envir!buffer_size)
                 End If
             End If
 

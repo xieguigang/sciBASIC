@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b6f176a5e551bb0c4a855c7b7ffc3fa3, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\AprioriRules\Algorithm\Entities\Output.vb"
+﻿#Region "Microsoft.VisualBasic::bfd4ac4e8043e96b93b6f99ddd9a197f, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\AprioriRules\Algorithm\Entities\Output.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 
@@ -71,7 +70,7 @@ Namespace AprioriRules.Entities
                                        <td><%= rule.Confidence %></td>
                                    </tr>
                         End Function) _
-                .Select(AddressOf InputHandler.ToString) _
+                .Select(Function(r) r.ToString) _
                 .JoinBy(ASCII.LF)
 
             html.AppendLine(

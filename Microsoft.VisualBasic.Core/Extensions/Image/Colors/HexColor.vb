@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6641f5239ef62eb6814e59d2f9fe32f0, Microsoft.VisualBasic.Core\Extensions\Image\Colors\HexColor.vb"
+﻿#Region "Microsoft.VisualBasic::deb20948057d077ab9605a5ca6c33ec4, Microsoft.VisualBasic.Core\Extensions\Image\Colors\HexColor.vb"
 
     ' Author:
     ' 

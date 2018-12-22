@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a471bb15f91084c9804327f924ee206, mime\application%json\Parser\JsonObject.vb"
+﻿#Region "Microsoft.VisualBasic::bfb30af0c79b6fbe3faaf96f07335885, mime\application%json\Parser\JsonObject.vb"
 
     ' Author:
     ' 
@@ -91,7 +91,7 @@ Namespace Parser
         End Function
 
         Public Overrides Function ToString() As String
-            Return "Class::[" & array.Keys.JoinBy(", ") & "]"
+            Return "JsonObject::[" & array.Keys.JoinBy(", ") & "]"
         End Function
 
         Public Overrides Function BuildJsonString() As String

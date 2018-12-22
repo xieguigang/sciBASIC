@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70712e72b8e31fce06c0f061b18fe079, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::5339d805de5b6c894834cd6d8d99b07b, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: InstalledFontFamilies
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetFontName
+    '         Function: GetFontName, IsInstalled, MeasureString
     ' 
     '     Module DefaultFontValues
     ' 
@@ -56,6 +56,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Text
+Imports System.Runtime.CompilerServices
 Imports DefaultFont = Microsoft.VisualBasic.Language.Default.DefaultValue(Of System.Drawing.Font)
 
 Namespace Imaging
@@ -87,7 +88,8 @@ Namespace Imaging
 
         Public Shared ReadOnly Property InstalledFontFamilies As IReadOnlyCollection(Of String)
 
-        Shared ReadOnly __fontFamilies As Dictionary(Of String, String)
+        Shared ReadOnly fontFamilies As Dictionary(Of String, String)
+
         Shared Sub New()
             Dim fontFamilies() As FontFamily
             Dim installedFontCollection As New InstalledFontCollection()
@@ -95,15 +97,25 @@ Namespace Imaging
             ' Get the array of FontFamily objects.
             fontFamilies = installedFontCollection.Families
             InstalledFontFamilies = fontFamilies.Select(Function(f) f.Name).ToArray
-            __fontFamilies = New Dictionary(Of String, String)
+            FontFace.fontFamilies = New Dictionary(Of String, String)
 
             For Each family$ In InstalledFontFamilies
-                __fontFamilies(LCase(family)) = family
+                FontFace.fontFamilies(LCase(family)) = family
             Next
         End Sub
 
         Private Sub New()
         End Sub
+
+        ''' <summary>
+        ''' 检查当前的操作系统之中是否安装有指定名称的字体
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function IsInstalled(name As String) As Boolean
+            Return fontFamilies.ContainsKey(name) OrElse fontFamilies.ContainsKey(LCase(name))
+        End Function
 
         ''' <summary>
         ''' 由于字体名称的大小写敏感，所以假若是html css之类的渲染的话，由于可能会是小写的字体名称会导致无法
@@ -113,17 +125,24 @@ Namespace Imaging
         ''' <param name="default">默认使用Windows10的默认字体</param>
         ''' <returns></returns>
         Public Shared Function GetFontName(name$, Optional default$ = FontFace.SegoeUI) As String
-            If __fontFamilies.ContainsKey(name) Then
-                Return __fontFamilies(name)
+            If fontFamilies.ContainsKey(name) Then
+                Return fontFamilies(name)
             Else
                 name = LCase(name)
 
-                If __fontFamilies.ContainsKey(name) Then
-                    Return __fontFamilies(name)
+                If fontFamilies.ContainsKey(name) Then
+                    Return fontFamilies(name)
                 Else
                     Return [default]
                 End If
             End If
+        End Function
+
+        Public Shared Function MeasureString(text As String, font As Font) As SizeF
+            Static dummy_img As Image = New Bitmap(1, 1)
+            Static dummy_drawing As Graphics = Graphics.FromImage(dummy_img)
+
+            Return dummy_drawing.MeasureString(text, font)
         End Function
     End Class
 

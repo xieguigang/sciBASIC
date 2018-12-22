@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee195b74a28dcb160af735f26a4debfe, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::5b6f4bd1fb367932cc365a51c38f15fc, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '     Properties: BooleanValues
     ' 
-    '     Function: IsNumeric, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble, ParseInteger
-    '               ParseLong, ParseSingle
+    '     Function: Eval, IsNumeric, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble
+    '               ParseInteger, ParseLong, ParseSingle
     ' 
     ' /********************************************************************************/
 
@@ -54,6 +54,12 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 Public Module PrimitiveParser
 
+    ''' <summary>
+    ''' Evaluate the given string expression as numeric value 
+    ''' </summary>
+    ''' <param name="expression$"></param>
+    ''' <param name="default#"></param>
+    ''' <returns></returns>
     Public Function Eval(expression$, default#) As Double
         If expression Is Nothing Then
             Return [default]

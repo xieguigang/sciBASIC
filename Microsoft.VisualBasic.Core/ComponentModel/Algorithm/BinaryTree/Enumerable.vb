@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3587265eea5511f063323d0233fa5c6c, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::ad3f839f9168701625cdb64b9795197f, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\Enumerable.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Enumerable
     ' 
-    '         Function: PopulateNodes, PopulateSequence, (+2 Overloads) Values
+    '         Function: ClusterMembers, PopulateNodes, PopulateSequence, (+2 Overloads) Values
     ' 
     ' 
     ' /********************************************************************************/
@@ -57,13 +57,23 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' <typeparam name="V"></typeparam>
         ''' <param name="tree"></param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' 这个函数是直接将键名和对应的值取出来，如果是需要取出聚类的簇成员，
+        ''' 应该使用<see cref="PopulateNodes(Of K, V)"/>方法
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function PopulateSequence(Of K, V)(tree As BinaryTree(Of K, V)) As IEnumerable(Of Map(Of K, V))
             Return tree.PopulateNodes.Select(Function(n) New Map(Of K, V)(n.Key, n.Value))
         End Function
 
+        ''' <summary>
+        ''' 将一个给定的二叉树对象转换为一个数组序列
+        ''' </summary>
+        ''' <typeparam name="K"></typeparam>
+        ''' <typeparam name="V"></typeparam>
+        ''' <param name="tree"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function PopulateNodes(Of K, V)(tree As BinaryTree(Of K, V)) As IEnumerable(Of BinaryTree(Of K, V))
             If Not tree.Left Is Nothing Then
@@ -91,6 +101,16 @@ Namespace ComponentModel.Algorithm.BinaryTree
         <Extension>
         Public Function Values(Of K, V)(nodes As IEnumerable(Of BinaryTree(Of K, V))) As IEnumerable(Of V)
             Return nodes.Select(Function(n) n.Value)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ClusterMembers(Of K, V)(node As BinaryTree(Of K, V)) As V()
+            If node Is Nothing Then
+                Return {}
+            Else
+                Return DirectCast(node!values, List(Of V)).ToArray
+            End If
         End Function
     End Module
 End Namespace
