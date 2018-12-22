@@ -104,8 +104,7 @@ Namespace ComponentModel.Settings.Inf
             End If
 
             Dim source = DataFrameColumnAttribute.LoadMapping(type)
-            Dim binds As BindProperty(Of DataFrameColumnAttribute)() =
-                source.Values.ToArray
+            Dim binds = source.Values.ToArray
 
             Return New NamedValue(Of BindProperty(Of DataFrameColumnAttribute)()) With {
                 .Name = name,

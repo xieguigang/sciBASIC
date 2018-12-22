@@ -68,11 +68,11 @@ Namespace ComponentModel.Settings
         ''' <summary>
         ''' 所映射的数据源
         ''' </summary>
-        Protected _SettingsData As IProfile
+        Protected settingsData As IProfile
         ''' <summary>
         ''' 键名都是小写的
         ''' </summary>
-        Protected ProfileItemCollection As IDictionary(Of String, BindMapping)
+        Protected profileItemCollection As IDictionary(Of String, BindMapping)
 
         ''' <summary>
         ''' List all of the available settings nodes in this profile data session.
@@ -84,7 +84,7 @@ Namespace ComponentModel.Settings
         Public ReadOnly Property AllItems As BindMapping()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return ProfileItemCollection _
+                Return profileItemCollection _
                     .Values _
                     .ToArray
             End Get
@@ -92,20 +92,20 @@ Namespace ComponentModel.Settings
 
         Public Overrides Property FilePath As String
             Get
-                Return _SettingsData.FilePath
+                Return settingsData.FilePath
             End Get
             Set(value As String)
-                _SettingsData.FilePath = value
+                settingsData.FilePath = value
             End Set
         End Property
 
         Sub New(obj As IProfile)
-            _SettingsData = obj
-            ProfileItemCollection =
-                ConfigEngine.Load(Of IProfile)(
-                    obj.GetType,
-                    obj:=_SettingsData).ToDictionary(Function(x) x.Name,
-                                                     Function(x) x.Value)
+            settingsData = obj
+            profileItemCollection = ConfigEngine.Load(Of IProfile)(
+                obj.GetType,
+                obj:=settingsData
+            ).ToDictionary(Function(x) x.Name,
+                           Function(x) x.Value)
         End Sub
 
         Protected Sub New()
@@ -184,7 +184,7 @@ Namespace ComponentModel.Settings
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Node.Exists")>
         Public Overridable Function ExistsNode(Name As String) As Boolean
-            Return ProfileItemCollection.ContainsKey(Name.ToLower)
+            Return profileItemCollection.ContainsKey(Name.ToLower)
         End Function
 
         ''' <summary>
@@ -198,11 +198,12 @@ Namespace ComponentModel.Settings
         Public Overridable Function [Set](Name As String, Value As String) As Boolean
             Dim keyFind As String = Name.ToLower
 
-            If ProfileItemCollection.ContainsKey(keyFind) Then
-                Call ProfileItemCollection(keyFind).Set(Value)
+            If profileItemCollection.ContainsKey(keyFind) Then
+                Call profileItemCollection(keyFind).Set(Value)
             Else
                 Return False
             End If
+
             Return True
         End Function
 
@@ -215,8 +216,8 @@ Namespace ComponentModel.Settings
         Public Overridable Function GetSettings(Name As String) As String
             Dim keyFind As String = Name.ToLower
 
-            If ProfileItemCollection.ContainsKey(keyFind) Then
-                Dim item = ProfileItemCollection(keyFind)
+            If profileItemCollection.ContainsKey(keyFind) Then
+                Dim item = profileItemCollection(keyFind)
                 Dim result = item.Value
                 Return result
             Else
@@ -234,10 +235,9 @@ Namespace ComponentModel.Settings
         <ExportAPI("View")>
         Public Overridable Function View(Optional name As String = "") As String
             If String.IsNullOrEmpty(name) Then
-                Return Prints(Me.ProfileItemCollection.Values)
+                Return Prints(Me.profileItemCollection.Values)
             Else
-                Dim data = GetSettingsNode(name)
-                Return data.AsOutString
+                Return GetSettingsNode(name).AsOutString
             End If
         End Function
 
@@ -289,16 +289,16 @@ Namespace ComponentModel.Settings
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GetNode")>
         Public Function GetSettingsNode(Name As String) As BindMapping
-            Return ProfileItemCollection(Name.ToLower)
+            Return profileItemCollection(Name.ToLower)
         End Function
 
         Public Overrides Function ToString() As String
-            Return _SettingsData.FilePath
+            Return settingsData.FilePath
         End Function
 
         <ExportAPI("Save")>
         Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Dim Xml As String = _SettingsData.GetXml
+            Dim Xml As String = settingsData.GetXml
             Return Xml.SaveTo(getPath(FilePath), Encoding)
         End Function
 
@@ -311,7 +311,7 @@ Namespace ComponentModel.Settings
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO:  释放托管状态(托管对象)。
-                    Call _SettingsData.Save()
+                    Call settingsData.Save()
                 End If
 
                 ' TODO:  释放非托管资源(非托管对象)并重写下面的 Finalize()。
