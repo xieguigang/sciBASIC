@@ -53,6 +53,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
@@ -60,16 +61,27 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Settings.Inf
 
-    Public Class Serialization : Inherits ITextFile
+    ''' <summary>
+    ''' 通用的配置文件模型
+    ''' </summary>
+    Public Class GenericINIProfile : Inherits ITextFile
 
         <XmlElement> Public Property Sections As Section()
 
-        Public Shared Function Load(path As String) As Serialization
-            Throw New NotImplementedException
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Load(path As String) As GenericINIProfile
+            Return New GenericINIProfile With {
+                .FilePath = path,
+                .Sections = INIProfile _
+                    .PopulateSections(path) _
+                    .ToArray
+            }
         End Function
 
         Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Throw New NotImplementedException
+            Return Sections _
+                .Select(Function(sec) sec.CreateDocFragment) _
+                .SaveTo(getPath(FilePath), Encoding)
         End Function
 
         Protected Overrides Function __getDefaultPath() As String

@@ -46,6 +46,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace ComponentModel.Settings.Inf
@@ -93,6 +94,44 @@ Namespace ComponentModel.Settings.Inf
             Return path.readDataLines _
                 .ToArray _
                 .GetPrivateProfileString(section, key)
+        End Function
+
+        ''' <summary>
+        ''' 解析ini配置文件数据为通用数据模型
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        Public Iterator Function PopulateSections(path As String) As IEnumerable(Of Section)
+            Dim sectionName$ = Nothing
+            Dim values As New List(Of NamedValue)
+
+            For Each line As String In path.readDataLines
+                If r.Match(line.Trim, RegexoSectionHeader).Success Then
+                    ' 找到了新的section的起始
+                    ' 则将前面的数据抛出
+                    If Not sectionName.StringEmpty Then
+                        Yield New Section With {
+                            .Name = sectionName,
+                            .Items = values
+                        }
+                    End If
+
+                    values *= 0
+                    sectionName = line.GetStackValue("[", "]")
+                ElseIf r.Match(line, RegexpKeyValueItem, RegexICSng).Success Then
+                    With line.Trim.GetTagValue("=", trim:=True)
+                        values += New NamedValue(.Name, .Value)
+                    End With
+                End If
+            Next
+
+            ' 抛出剩余的数据
+            If Not sectionName.StringEmpty Then
+                Yield New Section With {
+                    .Name = sectionName,
+                    .Items = values
+                }
+            End If
         End Function
 
         ''' <summary>
