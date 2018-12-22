@@ -44,6 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -86,10 +87,21 @@ Namespace ComponentModel.Settings.Inf
         ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GetValue", Info:="Get profile data from the ini file which the data is stores in a specific path like: ``section/key``")>
         Public Function GetPrivateProfileString(section$, key$, path$) As String
-            Dim lines$() = path.readDataLines.ToArray
+            Return path.readDataLines.ToArray.GetPrivateProfileString(section, key)
+        End Function
+
+        ''' <summary>
+        ''' Get profile data from the ini file data lines which stores in a specific path like: ``section/key``
+        ''' </summary>
+        ''' <param name="lines$"></param>
+        ''' <param name="section$"></param>
+        ''' <param name="key$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetPrivateProfileString(lines$(), section$, key$) As String
             Dim sectionFind$ = String.Format("^\s*\[{0}\]\s*$", section)
             Dim keyFind$ = String.Format("^{0}\s*=\s*.*$", key)
 
@@ -114,26 +126,19 @@ Namespace ComponentModel.Settings.Inf
             Return ""
         End Function
 
+        ''' <summary>
+        ''' 判断当前的行是否是空白或者注释行
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Private Function isCommentsOrBlank(str As String) As Boolean
             Return String.IsNullOrEmpty(str) OrElse (str.First = ";"c OrElse str.First = "#"c)
         End Function
 
-        ''' <summary>
-        ''' Setting profile data from the ini file which the data is stores in a specific path like: ``section/key``. 
-        ''' If the path is not exists, the function will create new.
-        ''' </summary>
-        ''' <param name="path"></param>
-        ''' <param name="Section"></param>
-        ''' <param name="key"></param>
-        ''' <param name="value"></param>
-        ''' <remarks>
-        ''' 这个函数会保留下在配置文件之中原来的注释信息
-        ''' </remarks>
-        <ExportAPI("SetValue", Info:="Setting profile data from the ini file which the data is stores in a specific path like: ``section/key``. If the path is not exists, the function will create new.")>
-        Public Sub WritePrivateProfileString(section$, key$, value$, path$)
-            Dim lines = path.ReadAllLines.AsList
+        <Extension>
+        Public Function WritePrivateProfileString(lines As List(Of String), section$, key$, value$) As String()
             Dim sectionFind As String = $"^\s*\[{section}\]\s*$"
             ' 当存在该Section的时候，则从该Index位置处开始进行key的搜索
             Dim keyFind As String = $"^\s*{key}\s*=\s*.*$"
@@ -170,7 +175,25 @@ Namespace ComponentModel.Settings.Inf
                 lines += $"{key}={value}"
             End If
 
-            Call lines.SaveTo(path)
+            Return lines
+        End Function
+
+        ''' <summary>
+        ''' Setting profile data from the ini file which the data is stores in a specific path like: ``section/key``. 
+        ''' If the path is not exists, the function will create new.
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="Section"></param>
+        ''' <param name="key"></param>
+        ''' <param name="value"></param>
+        ''' <remarks>
+        ''' 这个函数会保留下在配置文件之中原来的注释信息
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <ExportAPI("SetValue", Info:="Setting profile data from the ini file which the data is stores in a specific path like: ``section/key``. If the path is not exists, the function will create new.")>
+        Public Sub WritePrivateProfileString(section$, key$, value$, path$)
+            Call path.ReadAllLines.AsList.WritePrivateProfileString(section, key, value).SaveTo(path)
         End Sub
     End Module
 End Namespace
