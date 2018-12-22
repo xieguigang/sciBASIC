@@ -1,55 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::80558a737fc0f3b2b14508618eb8ae19, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::deb0fe73b458011a0eee5f2b51528cd5, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Serialization.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Serialization
-' 
-'         Properties: Sections
-' 
-'         Function: __getDefaultPath, Load, Save
-' 
-'     Class IniMapIO
-' 
-'         Properties: Path
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ToString
-' 
-'     Module IOProvider
-' 
-'         Function: __getPath, __getSections, EmptySection, (+2 Overloads) LoadProfile, (+2 Overloads) WriteProfile
-' 
-' 
-' /********************************************************************************/
+    '     Class GenericINIProfile
+    ' 
+    '         Properties: Sections
+    ' 
+    '         Function: __getDefaultPath, Load, Save
+    ' 
+    '     Class ClassName
+    ' 
+    '         Properties: Name
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class IniMapIO
+    ' 
+    '         Properties: Path
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

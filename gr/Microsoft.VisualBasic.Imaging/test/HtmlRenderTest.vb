@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41380e90d3e7efaa50348de2fdcb367d, gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
+﻿#Region "Microsoft.VisualBasic::6ddcdef950eba93a936a826907724eae, gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Public Module HtmlRenderTest
         Pause()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21232f049b5d1c511122368246f07f25, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\ClassMapper.vb"
+﻿#Region "Microsoft.VisualBasic::d84b39c59c0294a067990e3bc662355f, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\ClassMapper.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,6 @@
 
     ' Summaries:
 
-    '     Class ClassName
-    ' 
-    '         Properties: Name
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
     '     Module ClassMapper
     ' 
     '         Function: (+2 Overloads) ClassWriter, LoadIni, (+2 Overloads) MapParser, WriteClass

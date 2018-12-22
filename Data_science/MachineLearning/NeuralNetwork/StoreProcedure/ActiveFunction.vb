@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68df02fcf0ee2063dc2fe9a6c45ae9a1, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\ActiveFunction.vb"
+﻿#Region "Microsoft.VisualBasic::046dce4ed9ee4cd2dc9cc36753d665ef, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\ActiveFunction.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization

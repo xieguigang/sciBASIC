@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66738995da68f4a188035e22fe190994, mime\text%html\test\HTMLParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::5f4a02196e5d904c443739b01603be6d, mime\text%html\test\HTMLParserTest.vb"
 
     ' Author:
     ' 
@@ -56,4 +56,3 @@ Module HTMLParserTest
         Pause()
     End Sub
 End Module
-
