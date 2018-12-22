@@ -43,8 +43,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports r = System.Text.RegularExpressions.Regex
@@ -90,7 +88,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("GetValue", Info:="Get profile data from the ini file which the data is stores in a specific path like: ``section/key``")>
-        Public Function GetValue(path$, section$, key$) As String
+        Public Function GetPrivateProfileString(path$, section$, key$) As String
             Dim lines$() = path.readDataLines.ToArray
             Dim sectionFind$ = String.Format("^\s*\[{0}\]\s*$", section)
             Dim keyFind$ = String.Format("^{0}\s*=\s*.*$", key)
@@ -134,7 +132,7 @@ Namespace ComponentModel.Settings.Inf
         ''' 这个函数会保留下在配置文件之中原来的注释信息
         ''' </remarks>
         <ExportAPI("SetValue", Info:="Setting profile data from the ini file which the data is stores in a specific path like: ``section/key``. If the path is not exists, the function will create new.")>
-        Public Sub SetValue(path$, section$, key$, value$)
+        Public Sub WritePrivateProfileString(path$, section$, key$, value$)
             Dim lines = path.ReadAllLines.AsList
             Dim sectionFind As String = $"^\s*\[{section}\]\s*$"
             ' 当存在该Section的时候，则从该Index位置处开始进行key的搜索
