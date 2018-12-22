@@ -47,6 +47,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace ComponentModel.Settings.Inf
 
@@ -58,38 +59,56 @@ Namespace ComponentModel.Settings.Inf
     <Package("Settings.Inf", Description:="Wrapper class for *.ini and *.inf configure file.", Url:="http://gcmodeller.org", Publisher:="xie.guigang@live.com")>
     Public Module INIProfile
 
-        Const REGEX_SECTION_HEAD As String = "^\s*\[[^]]+\]\s*$"
-        Const REGEX_KEY_VALUE_ITEM As String = "^\s*[^=]+\s*=\s*.*$"
+        Const RegexoSectionHeader$ = "^\s*\[[^]]+\]\s*$"
+        Const RegexpKeyValueItem$ = "^\s*[^=]+\s*=\s*.*$"
+
+        ''' <summary>
+        ''' 在读取的时候会将注释行以及空白行给删除掉
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Private Function readDataLines(path As String) As IEnumerable(Of String)
+            Return From line As String
+                   In path.ReadAllLines
+                   Let strLine As String = line.Trim
+                   Where Not strLine.isCommentsOrBlank
+                   Select strLine
+        End Function
 
         ''' <summary>
         ''' Get the value from a specific section/key in a file of path 
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="key"></param>
+        ''' <param name="section">
+        ''' 因为这个函数是使用正则表达式进行匹配的，所以section名称不可以有正则表达式之中的特殊符号
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
         ''' 
         <ExportAPI("GetValue", Info:="Get profile data from the ini file which the data is stores in a specific path like:  section/key")>
-        Public Function GetValue(path As String, Section As String, key As String) As String
-            Dim strLines As String() = (From line As String In IO.File.ReadAllLines(path)
-                                        Let strLine As String = line.Trim
-                                        Where Not __isCommentsOrBlank(strLine)
-                                        Select strLine).ToArray
-            Dim LQuery = (From line As String In strLines
-                          Where Regex.Match(line, String.Format("^\s*\[{0}\]\s*$", Section)).Success
-                          Select line).ToArray
-            Dim Index As Integer = If(LQuery.IsNullOrEmpty, -1, Array.IndexOf(strLines, LQuery.First))
+        Public Function GetValue(path$, section$, key$) As String
+            Dim lines$() = path.readDataLines.ToArray
+            Dim sectionName$ = String.Format("^\s*\[{0}\]\s*$", section)
+            Dim keyFind$ = String.Format("^{0}\s*=\s*.*$", key)
 
-            If Index = -1 Then Return ""
+            For index As Integer = 0 To lines.Length - 1
+                If r.Match(lines(index), sectionName, RegexICSng).Success Then
 
-            For Index = Index + 1 To strLines.Length - 1
-                Dim strLine As String = strLines(Index)
-                If Regex.Match(strLine.Trim, String.Format("^\s*{0}\s*=\s*.*$", key)).Success Then
-                    Dim p = InStr(strLine, "=")
-                    strLine = Mid(strLine, p + 1).Trim
-                    Return strLine
-                ElseIf Regex.Match(strLine.Trim, REGEX_SECTION_HEAD).Success Then
-                    Return ""  '没有找到，则返回空值
+                    ' 找到了section的起始，则下面的数据到下一个section出现之前都是需要进行查找的数据
+                    For i As Integer = index + 1 To lines.Length - 1
+                        Dim line As String = lines(i)
+
+                        If r.Match(line.Trim, keyFind, RegexICSng).Success Then
+                            Return line.GetTagValue("=", trim:=True).Value
+                        ElseIf r.Match(line.Trim, RegexoSectionHeader).Success Then
+                            ' 已经匹配到了下一个section的起始了
+                            ' 没有找到，则返回空值
+                            Return ""
+                        End If
+                    Next
                 End If
             Next
 
@@ -97,7 +116,8 @@ Namespace ComponentModel.Settings.Inf
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function __isCommentsOrBlank(str As String) As Boolean
+        <Extension>
+        Private Function isCommentsOrBlank(str As String) As Boolean
             Return String.IsNullOrEmpty(str) OrElse (str.First = ";"c OrElse str.First = "#"c)
         End Function
 
@@ -107,7 +127,7 @@ Namespace ComponentModel.Settings.Inf
             Dim sectionFind As String = $"^\s*\[{Section}\]\s*$"
             Dim LQuery = (From line As String In strLines
                           Let strLine As String = line.Trim
-                          Where Not __isCommentsOrBlank(strLine) AndAlso Regex.Match(line, sectionFind).Success
+                          Where Not isCommentsOrBlank(strLine) AndAlso Regex.Match(line, sectionFind).Success
                           Select line).ToArray
             Dim index As Integer = If(LQuery.IsNullOrEmpty, -1, Array.IndexOf(strLines, LQuery.First))
 
@@ -127,7 +147,7 @@ Namespace ComponentModel.Settings.Inf
                     If Regex.Match(strLine.Trim, keyFind).Success Then
                         strLines(index) = $"{key}={value}"
                         Call IO.File.WriteAllLines(path, strLines)
-                    ElseIf Regex.Match(strLine.Trim, REGEX_SECTION_HEAD).Success Then
+                    ElseIf Regex.Match(strLine.Trim, RegexoSectionHeader).Success Then
                         ' 没有找到，则进行新建
                         GoTo NEW_KEY
                     End If

@@ -56,7 +56,6 @@
 #End Region
 
 Imports System.Xml.Serialization
-Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 Namespace ComponentModel.Settings
