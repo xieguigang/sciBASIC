@@ -50,7 +50,7 @@ Namespace Scripting
 
     Public MustInherit Class MemoryCollection(Of T) : Implements IEnumerable(Of KeyValuePair(Of String, T))
 
-        Protected ReadOnly _objHash As Dictionary(Of String, T) = New Dictionary(Of String, T)
+        Protected ReadOnly objTable As Dictionary(Of String, T) = New Dictionary(Of String, T)
         Protected ReadOnly __engine As Expression
 
         Dim __caches As String()
@@ -67,13 +67,13 @@ Namespace Scripting
 
         Public ReadOnly Property DictData As Dictionary(Of String, T)
             Get
-                Return _objHash
+                Return objTable
             End Get
         End Property
 
         Protected Sub __buildCache()
             __caches = (From strName As String
-                        In _objHash.Keys
+                        In objTable.Keys
                         Select strName
                         Order By Len(strName) Descending).ToArray
         End Sub
@@ -91,11 +91,11 @@ Namespace Scripting
 
             Name = Name.Trim
 
-            If _objHash.ContainsKey(Name) Then
-                Call _objHash.Remove(Name)
+            If objTable.ContainsKey(Name) Then
+                Call objTable.Remove(Name)
             End If
 
-            Call _objHash.Add(Name, value)
+            Call objTable.Add(Name, value)
             If cache Then
                 Call __buildCache()
             End If
@@ -104,7 +104,7 @@ Namespace Scripting
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of KeyValuePair(Of String, T)) Implements IEnumerable(Of KeyValuePair(Of String, T)).GetEnumerator
-            For Each item As KeyValuePair(Of String, T) In _objHash
+            For Each item As KeyValuePair(Of String, T) In objTable
                 Yield item
             Next
         End Function

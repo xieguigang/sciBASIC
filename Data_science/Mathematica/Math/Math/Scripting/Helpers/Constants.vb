@@ -66,9 +66,9 @@ Namespace Scripting.Helpers
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function [GET](x As String, ByRef success As Boolean) As Double
-            If _objHash.ContainsKey(x) Then
+            If objTable.ContainsKey(x) Then
                 success = True
-                Return _objHash(x)
+                Return objTable(x)
             Else
                 success = False
                 Return -1
@@ -85,7 +85,7 @@ Namespace Scripting.Helpers
         ''' const [name] [value]
         ''' </remarks>
         Public Overloads Sub Add(Name As String, value As Double)
-            If _objHash.ContainsKey(Name) Then
+            If objTable.ContainsKey(Name) Then
                 Dim msg As String = $"Constant not set as the const ""{Name}"" is already set in this engine."
                 Throw New Exception(msg)
             Else

@@ -5,6 +5,12 @@ Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
 Module CLI
 
+    <ExportAPI("/config.template")>
+    <Usage("/config.template [/save <default=./config.ini>]")>
+    Public Function ConfigTemplate(args As CommandLine) As Integer
+
+    End Function
+
     ''' <summary>
     ''' 这个函数会输出训练好的模型, 训练集测试结果, 错误率变化曲线图, 训练日志
     ''' </summary>
