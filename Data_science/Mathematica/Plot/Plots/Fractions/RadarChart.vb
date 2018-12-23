@@ -311,23 +311,27 @@ Namespace Fractions
                                                   .AsList
                             End If
 
-                            ' 填充区域
-                            With New GraphicsPath
-                                Call .AddPolygon(shape)
-                                Call .CloseAllFigures()
+                            If shape > 0 Then
+                                ' 填充区域
+                                With New GraphicsPath
+                                    Call .AddPolygon(shape)
+                                    Call .CloseAllFigures()
 
-                                Call g.ShapeGlow(.ByRef, color.Light(0.75), shapeBorderWidth * 3)
-                                Call g.FillPath(New SolidBrush(color), .ByRef)
-                                Call g.DrawPath(pen, .ByRef)
+                                    Call g.ShapeGlow(.ByRef, color.Light(0.75), shapeBorderWidth * 3)
+                                    Call g.FillPath(New SolidBrush(color), .ByRef)
+                                    Call g.DrawPath(pen, .ByRef)
 
 #If DEBUG Then
-                                Dim debugFont As New Font(FontFace.MicrosoftYaHeiUI, 12)
+                                    Dim debugFont As New Font(FontFace.MicrosoftYaHeiUI, 12)
 
-                                For Each point In shape
-                                    Call g.DrawString(point.ToString, debugFont, Brushes.Gray, point)
-                                Next
+                                    For Each point In shape
+                                        Call g.DrawString(point.ToString, debugFont, Brushes.Gray, point)
+                                    Next
 #End If
-                            End With
+                                End With
+                            Else
+                                Call "No shape area could be fill, please check your data as it is empty!".Warning
+                            End If
 
                             color = color.Alpha(255)
 
