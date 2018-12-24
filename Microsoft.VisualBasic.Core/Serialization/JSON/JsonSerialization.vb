@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aac773288bf56818924766ccaf944edd, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::13d066718eb77c8eee2f252c495064d0, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -108,7 +108,7 @@ Namespace Serialization.JSON
                 Dim settings As New DataContractJsonSerializerSettings With {
                     .UseSimpleDictionaryFormat = True,
                     .SerializeReadOnlyTypes = True,
-                    .knownTypes = knownTypes _
+                    .KnownTypes = knownTypes _
                         .SafeQuery _
                         .ToArray
                 }

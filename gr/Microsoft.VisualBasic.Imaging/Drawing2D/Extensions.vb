@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b51446e1bdca69d5c955945e6f62223d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::253b52145970fcc48e49ad15076160c7, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: (+3 Overloads) Enlarge, GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
+    '         Function: (+3 Overloads) Enlarge, GetTextAnchor, (+2 Overloads) Move, (+2 Overloads) MoveTo, Rotate
     ' 
     '         Sub: ShapeGlow
     '         Enum MoveTypes

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::292b1f3f0b6cec9885c42234fcc64c4f, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\INIProfile.vb"
+﻿#Region "Microsoft.VisualBasic::f3c79c0c61f7a108524347607d3a52d3, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\INIProfile.vb"
 
     ' Author:
     ' 
@@ -33,109 +33,211 @@
 
     '     Module INIProfile
     ' 
-    '         Function: __isCommentsOrBlank, GetValue
+    '         Function: (+2 Overloads) GetPrivateProfileString, isCommentsOrBlank, PopulateSections, readDataLines, WritePrivateProfileString
     ' 
-    '         Sub: SetValue
+    '         Sub: WritePrivateProfileString
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Text.RegularExpressions
-Imports System.Text
-Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace ComponentModel.Settings.Inf
 
     ''' <summary>
-    ''' Wrapper class for *.ini and *.inf configure file.(可能文件中的注释行会受到影响，所以请尽量使用本类型中的两个静态函数来操作INI文件)
+    ''' Wrapper class for *.ini and *.inf configure file.
+    ''' (可能文件中的注释行会受到影响，所以请尽量使用本类型中的两个静态函数来操作INI文件)
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
-    <Package("Settings.Inf",
-                      Description:="Wrapper class for *.ini and *.inf configure file.", Url:="http://gcmodeller.org", Publisher:="xie.guigang@live.com")>
+    <Package("Settings.Inf", Description:="Wrapper class for *.ini and *.inf configure file.", Url:="http://gcmodeller.org", Publisher:="xie.guigang@live.com")>
     Public Module INIProfile
 
-        Const REGEX_SECTION_HEAD As String = "^\s*\[[^]]+\]\s*$"
-        Const REGEX_KEY_VALUE_ITEM As String = "^\s*[^=]+\s*=\s*.*$"
+        Const RegexoSectionHeader$ = "^\s*\[[^]]+\]\s*$"
+        Const RegexpKeyValueItem$ = "^\s*[^=]+\s*=\s*.*$"
 
         ''' <summary>
-        ''' Get the value from a specific section/key in a file of path 
+        ''' 在读取的时候会将注释行以及空白行给删除掉
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Private Function readDataLines(path As String) As IEnumerable(Of String)
+            Return From line As String
+                   In path.ReadAllLines
+                   Let strLine As String = line.Trim
+                   Where Not strLine.isCommentsOrBlank
+                   Select strLine
+        End Function
+
+        ''' <summary>
+        ''' Get profile data from the ini file which the data is stores in a specific path like: ``section/key``
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="key"></param>
+        ''' <param name="section">
+        ''' 因为这个函数是使用正则表达式进行匹配的，所以section名称不可以有正则表达式之中的特殊符号
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        ''' 
-        <ExportAPI("GetValue",
-                   Info:="Get profile data from the ini file which the data is stores in a specific path like:  section/key")>
-        Public Function GetValue(path As String, Section As String, key As String) As String
-            Dim strLines As String() = (From line As String In IO.File.ReadAllLines(path)
-                                        Let strLine As String = line.Trim
-                                        Where Not __isCommentsOrBlank(strLine)
-                                        Select strLine).ToArray
-            Dim LQuery = (From line As String In strLines
-                          Where Regex.Match(line, String.Format("^\s*\[{0}\]\s*$", Section)).Success
-                          Select line).ToArray
-            Dim Index As Integer = If(LQuery.IsNullOrEmpty, -1, Array.IndexOf(strLines, LQuery.First))
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <ExportAPI("GetValue", Info:="Get profile data from the ini file which the data is stores in a specific path like: ``section/key``")>
+        Public Function GetPrivateProfileString(section$, key$, path$) As String
+            Return path.readDataLines _
+                .ToArray _
+                .GetPrivateProfileString(section, key)
+        End Function
 
-            If Index = -1 Then Return ""
+        ''' <summary>
+        ''' 解析ini配置文件数据为通用数据模型
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        Public Iterator Function PopulateSections(path As String) As IEnumerable(Of Section)
+            Dim sectionName$ = Nothing
+            Dim values As New List(Of NamedValue)
 
-            For Index = Index + 1 To strLines.Length - 1
-                Dim strLine As String = strLines(Index)
-                If Regex.Match(strLine.Trim, String.Format("^\s*{0}\s*=\s*.*$", key)).Success Then
-                    Dim p = InStr(strLine, "=")
-                    strLine = Mid(strLine, p + 1).Trim
-                    Return strLine
-                ElseIf Regex.Match(strLine.Trim, REGEX_SECTION_HEAD).Success Then
-                    Return ""  '没有找到，则返回空值
+            For Each line As String In path.readDataLines
+                If r.Match(line.Trim, RegexoSectionHeader).Success Then
+                    ' 找到了新的section的起始
+                    ' 则将前面的数据抛出
+                    If Not sectionName.StringEmpty Then
+                        Yield New Section With {
+                            .Name = sectionName,
+                            .Items = values
+                        }
+                    End If
+
+                    values *= 0
+                    sectionName = line.GetStackValue("[", "]")
+                ElseIf r.Match(line, RegexpKeyValueItem, RegexICSng).Success Then
+                    With line.Trim.GetTagValue("=", trim:=True)
+                        values += New NamedValue(.Name, .Value)
+                    End With
+                End If
+            Next
+
+            ' 抛出剩余的数据
+            If Not sectionName.StringEmpty Then
+                Yield New Section With {
+                    .Name = sectionName,
+                    .Items = values
+                }
+            End If
+        End Function
+
+        ''' <summary>
+        ''' Get profile data from the ini file data lines which stores in a specific path like: ``section/key``
+        ''' </summary>
+        ''' <param name="lines$"></param>
+        ''' <param name="section$"></param>
+        ''' <param name="key$"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetPrivateProfileString(lines$(), section$, key$) As String
+            Dim sectionFind$ = String.Format("^\s*\[{0}\]\s*$", section)
+            Dim keyFind$ = String.Format("^{0}\s*=\s*.*$", key)
+
+            For index As Integer = 0 To lines.Length - 1
+                If r.Match(lines(index), sectionFind, RegexICSng).Success Then
+
+                    ' 找到了section的起始，则下面的数据到下一个section出现之前都是需要进行查找的数据
+                    For i As Integer = index + 1 To lines.Length - 1
+                        Dim line As String = lines(i)
+
+                        If r.Match(line.Trim, keyFind, RegexICSng).Success Then
+                            Return line.GetTagValue("=", trim:=True).Value
+                        ElseIf r.Match(line.Trim, RegexoSectionHeader).Success Then
+                            ' 已经匹配到了下一个section的起始了
+                            ' 没有找到，则返回空值
+                            Return ""
+                        End If
+                    Next
                 End If
             Next
 
             Return ""
         End Function
 
-        Private Function __isCommentsOrBlank(strLine As String) As Boolean
-            Return String.IsNullOrEmpty(strLine) OrElse (strLine.First = ";"c OrElse strLine.First = "#"c)
+        ''' <summary>
+        ''' 判断当前的行是否是空白或者注释行
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Function isCommentsOrBlank(str As String) As Boolean
+            Return String.IsNullOrEmpty(str) OrElse (str.First = ";"c OrElse str.First = "#"c)
         End Function
 
-        <ExportAPI("SetValue",
-                   Info:="Setting profile data from the ini file which the data is stores in a specific path like:  section/key. If the path is not exists, the function will create new.")>
-        Public Sub SetValue(path As String, Section As String, key As String, value As String)
-            Dim strLines As String() = IO.File.ReadAllLines(path)
-            Dim sectionFind As String = $"^\s*\[{Section}\]\s*$"
-            Dim LQuery = (From line As String In strLines
-                          Let strLine As String = line.Trim
-                          Where Not __isCommentsOrBlank(strLine) AndAlso Regex.Match(line, sectionFind).Success
-                          Select line).ToArray
-            Dim index As Integer = If(LQuery.IsNullOrEmpty, -1, Array.IndexOf(strLines, LQuery.First))
+        <Extension>
+        Public Function WritePrivateProfileString(lines As List(Of String), section$, key$, value$) As String()
+            Dim sectionFind As String = $"^\s*\[{section}\]\s*$"
+            ' 当存在该Section的时候，则从该Index位置处开始进行key的搜索
+            Dim keyFind As String = $"^\s*{key}\s*=\s*.*$"
+            Dim appendSection As Boolean = True
 
-            If index = -1 Then '没有找到该Section，则进行新建
-                Dim sBuilder As StringBuilder = New StringBuilder(1024)
-                Call sBuilder.AppendLine()
-                Call sBuilder.AppendLine($"[{Section}]")
-                Call sBuilder.AppendLine($"{key}={value}")
-                Call FileIO.FileSystem.WriteAllText(path, sBuilder.ToString, append:=True)
-            Else            '当存在该Section的时候，则从该Index位置处开始进行key的搜索
-                Dim keyFind As String = $"^\s*{key}\s*=\s*.*$"
+            For index As Integer = 0 To lines.Count - 1
+                If r.Match(lines(index), sectionFind, RegexICSng).Success Then
 
-                For index = index + 1 To strLines.Length - 1
-                    Dim strLine As String = strLines(index)
-                    If Regex.Match(strLine.Trim, keyFind).Success Then
-                        strLines(index) = $"{key}={value}"
-                        Call IO.File.WriteAllLines(path, strLines)
-                    ElseIf Regex.Match(strLine.Trim, REGEX_SECTION_HEAD).Success Then
-                        GoTo NEW_KEY    '没有找到，则进行新建
-                    End If
-                Next
+                    ' 找到了section的起始，则下面的数据到下一个section出现之前都是需要进行查找的数据
+                    For i As Integer = index + 1 To lines.Count - 1
+                        Dim line As String = lines(i)
 
-NEW_KEY:        Dim List = strLines.AsList
-                Call List.Insert(index, $"{key}={value}")
-                Call IO.File.WriteAllLines(path, List.ToArray)
+                        If r.Match(line.Trim, keyFind, RegexICSng).Success Then
+                            ' 找到了
+                            ' 在这里进行值替换，然后退出循环
+                            lines(i) = $"{key}={value}"
+                            Exit For
+                        ElseIf r.Match(line.Trim, RegexoSectionHeader).Success Then
+                            ' 已经匹配到了下一个section的起始了
+                            ' 没有找到，则进行新建
+                            ' 然后退出循环
+                            lines.Insert(i - 1, $"{key}={value}")
+                            Exit For
+                        End If
+                    Next
 
+                    appendSection = False
+                End If
+            Next
+
+            If appendSection Then
+                ' 没有找到section，则需要追加新的数据
+                lines += $"[{section}]"
+                lines += $"{key}={value}"
             End If
+
+            Return lines
+        End Function
+
+        ''' <summary>
+        ''' Setting profile data from the ini file which the data is stores in a specific path like: ``section/key``. 
+        ''' If the path is not exists, the function will create new.
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <param name="Section"></param>
+        ''' <param name="key"></param>
+        ''' <param name="value"></param>
+        ''' <remarks>
+        ''' 这个函数会保留下在配置文件之中原来的注释信息
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <ExportAPI("SetValue", Info:="Setting profile data from the ini file which the data is stores in a specific path like: ``section/key``. If the path is not exists, the function will create new.")>
+        Public Sub WritePrivateProfileString(section$, key$, value$, path$)
+            Call path.ReadAllLines _
+                .AsList _
+                .WritePrivateProfileString(section, key, value) _
+                .SaveTo(path)
         End Sub
     End Module
 End Namespace

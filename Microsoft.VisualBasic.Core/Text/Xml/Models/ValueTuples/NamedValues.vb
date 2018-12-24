@@ -98,6 +98,11 @@ Namespace Text.Xml.Models
         Public Overrides Function ToString() As String
             Return $"{name}: {text}"
         End Function
+
+        Public Shared Operator +(table As Dictionary(Of String, String), value As NamedValue) As Dictionary(Of String, String)
+            Call table.Add(value.name, value.text)
+            Return table
+        End Operator
     End Class
 
     ''' <summary>

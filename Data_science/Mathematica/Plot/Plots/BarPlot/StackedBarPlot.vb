@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a46e86bbb90808eca42f4ef9615f7df1, Data_science\Mathematica\Plot\Plots\BarPlot\StackedBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::deeabc12eeffde06a5b0d2fe1dc4b4a1, Data_science\Mathematica\Plot\Plots\BarPlot\StackedBarPlot.vb"
 
     ' Author:
     ' 

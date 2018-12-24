@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b51aea0540275ef75b9ba2c8dea7a8b, Data_science\Mathematica\Math\Math\test\quantileTest.vb"
+﻿#Region "Microsoft.VisualBasic::6d7963a5f71abb25908f89ed02ec2019, Data_science\Mathematica\Math\Math\test\quantileTest.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Module quantileTest
         Next
     End Sub
 End Module
-

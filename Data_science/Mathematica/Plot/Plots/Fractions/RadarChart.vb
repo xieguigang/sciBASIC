@@ -62,12 +62,66 @@ Imports sys = System.Math
 
 Namespace Fractions
 
+    ''' <summary>
+    ''' 雷达图
+    ''' </summary>
     Public Module RadarChart
 
         ''' <summary>
-        ''' 
+        ''' 函数使用的是<see cref="FractionData.Value"/>的数据来进行作图
         ''' </summary>
         ''' <param name="serials"></param>
+        ''' <param name="size$"></param>
+        ''' <param name="margin$"></param>
+        ''' <param name="bg$"></param>
+        ''' <param name="regionFill$"></param>
+        ''' <param name="serialColorSchema$"></param>
+        ''' <param name="labelTextColor$"></param>
+        ''' <param name="colorAlpha%"></param>
+        ''' <param name="axisRange"></param>
+        ''' <param name="shapeBorderWidth!"></param>
+        ''' <param name="pointRadius!"></param>
+        ''' <param name="labelFontCSS$"></param>
+        ''' <param name="axisStrokeStyle$"></param>
+        ''' <param name="spline"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function PlotSingleLayer(serials As IEnumerable(Of FractionData),
+                                        Optional size$ = "3000,2700",
+                                        Optional margin$ = g.DefaultPadding,
+                                        Optional bg$ = "white",
+                                        Optional regionFill$ = "#fafafa",
+                                        Optional serialColorSchema$ = "alpha(Set1:c8, 0.5)",
+                                        Optional labelTextColor$ = "black",
+                                        Optional colorAlpha% = 120,
+                                        Optional axisRange As DoubleRange = Nothing,
+                                        Optional shapeBorderWidth! = 10,
+                                        Optional pointRadius! = 30,
+                                        Optional labelFontCSS$ = CSSFont.Win7VeryVeryLarge,
+                                        Optional axisStrokeStyle$ = Stroke.WhiteLineStroke,
+                                        Optional spline As Boolean = True) As GraphicsData
+            Return {
+                New NamedValue(Of FractionData())("", serials.ToArray)
+            }.Plot(size:=size,
+                   margin:=margin,
+                   bg:=bg,
+                   regionFill:=regionFill,
+                   serialColorSchema:=serialColorSchema,
+                   axisRange:=axisRange,
+                   axisStrokeStyle:=axisStrokeStyle,
+                   colorAlpha:=colorAlpha,
+                   labelFontCSS:=labelFontCSS,
+                   labelTextColor:=labelTextColor,
+                   pointRadius:=pointRadius,
+                   shapeBorderWidth:=shapeBorderWidth,
+                   spline:=spline
+              )
+        End Function
+
+        ''' <summary>
+        ''' 这个函数是用于绘制多层的雷达图
+        ''' </summary>
+        ''' <param name="serials">函数使用的是<see cref="FractionData.Value"/>的数据来进行作图</param>
         ''' <param name="size$"></param>
         ''' <param name="margin$"></param>
         ''' <param name="bg$"></param>
@@ -257,23 +311,27 @@ Namespace Fractions
                                                   .AsList
                             End If
 
-                            ' 填充区域
-                            With New GraphicsPath
-                                Call .AddPolygon(shape)
-                                Call .CloseAllFigures()
+                            If shape > 0 Then
+                                ' 填充区域
+                                With New GraphicsPath
+                                    Call .AddPolygon(shape)
+                                    Call .CloseAllFigures()
 
-                                Call g.ShapeGlow(.ByRef, color.Light(0.75), shapeBorderWidth * 3)
-                                Call g.FillPath(New SolidBrush(color), .ByRef)
-                                Call g.DrawPath(pen, .ByRef)
+                                    Call g.ShapeGlow(.ByRef, color.Light(0.75), shapeBorderWidth * 3)
+                                    Call g.FillPath(New SolidBrush(color), .ByRef)
+                                    Call g.DrawPath(pen, .ByRef)
 
 #If DEBUG Then
-                                Dim debugFont As New Font(FontFace.MicrosoftYaHeiUI, 12)
+                                    Dim debugFont As New Font(FontFace.MicrosoftYaHeiUI, 12)
 
-                                For Each point In shape
-                                    Call g.DrawString(point.ToString, debugFont, Brushes.Gray, point)
-                                Next
+                                    For Each point In shape
+                                        Call g.DrawString(point.ToString, debugFont, Brushes.Gray, point)
+                                    Next
 #End If
-                            End With
+                                End With
+                            Else
+                                Call "No shape area could be fill, please check your data as it is empty!".Warning
+                            End If
 
                             color = color.Alpha(255)
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cece842c60b148af55d7490e4c24ad92, Microsoft.VisualBasic.Core\Serialization\JSON\AnonymousJSON.vb"
+﻿#Region "Microsoft.VisualBasic::78ede7fa8ccb25820af8457aa2804413, Microsoft.VisualBasic.Core\Serialization\JSON\AnonymousJSON.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module AnonymousJSONExtensions
     ' 
-    '         Function: AnonymousJSON, (+2 Overloads) GetJson
+    '         Function: AnonymousJSON, (+4 Overloads) GetJson
     ' 
     ' 
     ' /********************************************************************************/
@@ -66,6 +66,36 @@ Namespace Serialization.JSON
         <Extension>
         Public Function GetJson(array As IEnumerable(Of String), Optional indent As Boolean = False) As String
             Return array.ToArray.GetJson(indent:=indent)
+        End Function
+
+        ''' <summary>
+        ''' 专门针对字符串集合的
+        ''' </summary>
+        ''' <param name="keys"></param>
+        ''' <param name="indent"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 任意类型的字符串集合都会被首先转换为字符串数组然后再转换为json字符串
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetJson(keys As Dictionary(Of String, Object).KeyCollection, Optional indent As Boolean = False) As String
+            Return GetType(String()).GetObjectJson(keys.ToArray, indent)
+        End Function
+
+        ''' <summary>
+        ''' 专门针对字符串集合的
+        ''' </summary>
+        ''' <param name="keys"></param>
+        ''' <param name="indent"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 任意类型的字符串集合都会被首先转换为字符串数组然后再转换为json字符串
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetJson(keys As SortedDictionary(Of String, Object).KeyCollection, Optional indent As Boolean = False) As String
+            Return GetType(String()).GetObjectJson(keys.ToArray, indent)
         End Function
 
         <Extension>

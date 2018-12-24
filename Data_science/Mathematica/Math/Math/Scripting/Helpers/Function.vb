@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5aa356b3c334365a252cfc5149c3903, Data_science\Mathematica\Math\Math\Scripting\Helpers\Function.vb"
+﻿#Region "Microsoft.VisualBasic::2d1252bf4b1d9ada233d4e040baaa145, Data_science\Mathematica\Math\Math\Scripting\Helpers\Function.vb"
 
     ' Author:
     ' 
@@ -108,7 +108,10 @@ Namespace Scripting.Helpers
             For Each item As KeyValuePair(Of String, Func(Of Double(), Double)) In SystemPrefixFunctions
                 Call MyBase.Add(item.Key, item.Value, False, False)
             Next
-            Call __buildCache()   ' A string list of available function name in visualbasic, it was sort by the length of the each function name.
+
+            ' A string list of available function name in visualbasic, 
+            ' it was sort by the length of the each function name.
+            Call __buildCache()
         End Sub
 
         ''' <summary>
@@ -118,7 +121,7 @@ Namespace Scripting.Helpers
         ''' <param name="args"></param>
         ''' <returns></returns>
         Public Function Evaluate(name As String, args As Double()) As Double
-            Return _objHash(name.ToLower)(args)
+            Return objTable(name.ToLower)(args)
         End Function
 
         Public Overloads Sub Add(name As String, handle As Func(Of Double(), Double))
@@ -135,6 +138,7 @@ Namespace Scripting.Helpers
         Public Overloads Sub Add(statement As String)
             Dim model As Func = FuncParser.TryParse(statement)
             Dim handle As Func(Of Double(), Double) = model.GetExpression(__engine)
+
             Call Add(model.Name.ToLower, handle)
         End Sub
 

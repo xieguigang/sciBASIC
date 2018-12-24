@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bdca7aeff8af7f1b6a7247a2f629510, Data_science\Mathematica\SignalProcessing\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3f15346b59071c14aebe6d85f4c5d1c1, Data_science\Mathematica\SignalProcessing\Extensions.vb"
 
     ' Author:
     ' 
@@ -49,4 +49,3 @@ Public Module Extensions
         Return New Signal(signals)
     End Function
 End Module
-

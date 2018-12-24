@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67a5413f92b51e02f167317bd56011e2, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::b1ff0268a7d4b6e413afb44c90ca1931, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '         Function: Add, GetEnumerator, IEnumerable_GetEnumerator, indexing, (+2 Overloads) Intersect
     '                   NotExists, ToString
     ' 
-    '         Sub: Clear
+    '         Sub: Clear, Delete
     ' 
     '         Operators: +
     ' 
@@ -181,6 +181,15 @@ Namespace ComponentModel.Collection
                 Return Me.index(index).value
             End Get
         End Property
+
+        Public Sub Delete(index As T)
+            Dim i = Me.IndexOf(index)
+
+            If i > -1 Then
+                Me.maps.Remove(index)
+                Me.index(i) = Nothing
+            End If
+        End Sub
 
         Public Iterator Function Intersect(collection As IEnumerable(Of T)) As IEnumerable(Of T)
             For Each x As T In collection

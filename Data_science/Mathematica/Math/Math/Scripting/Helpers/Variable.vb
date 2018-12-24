@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c52fa0a5f163e645a1f5c6de8e7212f1, Data_science\Mathematica\Math\Math\Scripting\Helpers\Variable.vb"
+﻿#Region "Microsoft.VisualBasic::79b35790c6e222b7496fbb14c52e6c9d, Data_science\Mathematica\Math\Math\Scripting\Helpers\Variable.vb"
 
     ' Author:
     ' 
@@ -62,12 +62,12 @@ Namespace Scripting.Helpers
             Get
                 Dim key As String = Name.ToLower
 
-                If Not _objHash.ContainsKey(key) Then
+                If Not objTable.ContainsKey(key) Then
                     Call Warning($"Variable '{Name}' is not exists in the memory, returns ZERO by default!")
                     Return 0
                 End If
 
-                Return _objHash(key)
+                Return objTable(key)
             End Get
             Set(value As Double)
                 Call [Set](Name, value)
@@ -80,7 +80,7 @@ Namespace Scripting.Helpers
         End Sub
 
         Public Function ContainsValue(x As String) As Boolean
-            Return _objHash.ContainsKey(x.ToLower)
+            Return objTable.ContainsKey(x.ToLower)
         End Function
 
         ''' <summary>

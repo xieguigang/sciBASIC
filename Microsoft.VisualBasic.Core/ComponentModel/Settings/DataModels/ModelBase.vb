@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab4ee86170442ba8475e7926c2a04009, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ModelBase.vb"
+﻿#Region "Microsoft.VisualBasic::05f6c68a83dc2e1d7c1d25246326be4f, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ModelBase.vb"
 
     ' Author:
     ' 
@@ -42,6 +42,8 @@
 
 #End Region
 
+Imports System.Text
+
 Namespace ComponentModel.Settings
 
     ''' <summary>
@@ -49,7 +51,7 @@ Namespace ComponentModel.Settings
     ''' </summary>
     Public Interface IProfile
 
-        Function Save(Optional FilePath As String = "", Optional Encoding As System.Text.Encoding = Nothing) As Boolean
+        Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
 
         ''' <summary>
         ''' 本属性不能够被设置为只读属性是因为 Settings.Settings(Of IProfile).LoadFile 函数的需要
