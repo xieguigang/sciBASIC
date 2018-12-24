@@ -1,117 +1,117 @@
 ﻿#Region "Microsoft.VisualBasic::30597085f169577662e128cc9d9bf8e7, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\Groups\DataGroup.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TaggedGroupData
-    ' 
-    '         Properties: Tag
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class GroupListNode
-    ' 
-    '         Properties: Count, Group, InitReads
-    ' 
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
-    ' 
-    '     Class GroupResult
-    ' 
-    '         Properties: Count, Group, Tag
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    '         Sub: (+2 Overloads) Add
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TaggedGroupData
+' 
+'         Properties: Tag
+' 
+'         Function: ToString
+' 
+'     Class GroupListNode
+' 
+'         Properties: Count, Group, InitReads
+' 
+'         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
+' 
+'     Class GroupResult
+' 
+'         Properties: Count, Group, Tag
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: GetEnumerator, IEnumerable_GetEnumerator
+' 
+'         Sub: (+2 Overloads) Add
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Parallel.Linq
+Imports Microsoft.VisualBasic.Parallel.Threads
+
 Namespace Parallel
 
-    Public MustInherit Class TaggedGroupData(Of T_TAG)
-        Public Overridable Property Tag As T_TAG
+    Public MustInherit Class TaggedGroupData(Of T)
+        Public Overridable Property Tag As T
 
         Public Overrides Function ToString() As String
             Return Tag.ToString
         End Function
     End Class
 
-    Public Class GroupListNode(Of T, T_TAG) : Inherits TaggedGroupData(Of T_TAG)
-        Implements IEnumerable(Of T)
+    Public Class ParallelGroup(Of TOut)
 
-        Dim _Group As List(Of T)
+        ReadOnly blocks As Func(Of SeqValue(Of TOut()))()
 
-        Public Property Group As List(Of T)
-            Get
-                Return _Group
-            End Get
-            Set(value As List(Of T))
-                _Group = value
-                If value.IsNullOrEmpty Then
-                    _InitReads = 0
-                Else
-                    _InitReads = value.Count
-                End If
-            End Set
-        End Property
+        Sub New(tasks As IEnumerable(Of Func(Of TOut)), Optional parallelism%? = Nothing)
+            Dim taskPool = tasks.ToArray
+            Dim num_threads% = parallelism Or LQuerySchedule.DefaultConfig
+            Dim partionTokens% = TaskPartitions.PartTokens(taskPool.Length, num_threads)
+            Dim blocks = taskPool.SplitIterator(partionTokens).ToArray
 
-        Public ReadOnly Property Count As Integer
-            Get
-                Return Group.Count
-            End Get
-        End Property
+            Me.blocks = blocks _
+                .Select(Function(block, i) As Func(Of SeqValue(Of TOut()))
+                            Return Function() As SeqValue(Of TOut())
+                                       Return New SeqValue(Of TOut()) With {
+                                           .i = i,
+                                           .value = block _
+                                               .Select(Function(task) task()) _
+                                               .ToArray
+                                       }
+                                   End Function
+                        End Function) _
+                .ToArray
+        End Sub
 
-        ''' <summary>
-        ''' 由于<see cref="Group"/>在分组之后的后续的操作的过程之中元素会发生改变，
-        ''' 所以在这个属性之中存储了在初始化<see cref="Group"/>列表的时候的原始的列表之中的元素的个数以满足一些其他的算法操作
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property InitReads As Integer
-
-        Public Overrides Function ToString() As String
-            Return MyBase.ToString & $" // {NameOf(InitReads)}:={InitReads},  current:={Count}"
-        End Function
-
-        Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each obj In Group
-                Yield obj
+        Public Iterator Function SequentialTask() As IEnumerable(Of TOut)
+            For Each block As Func(Of SeqValue(Of TOut())) In blocks
+                For Each x As TOut In block().value
+                    Yield x
+                Next
             Next
         End Function
 
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ParallelTask() As IEnumerable(Of TOut)
+            Return blocks _
+                .BatchTask _
+                .OrderBy(Function(block) block.i) _
+                .Select(Function(block) block.value) _
+                .IteratesALL
         End Function
     End Class
 
