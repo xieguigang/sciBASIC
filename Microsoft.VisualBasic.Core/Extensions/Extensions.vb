@@ -1466,19 +1466,9 @@ Public Module Extensions
     '''
     <ExportAPI("Shuffles")>
     <Extension> Public Function Shuffles(Of T)(source As IEnumerable(Of T)) As T()
-        Dim tmp As New List(Of T)(source)
-        Dim buf As T() = New T(tmp.Count - 1) {}
-        Dim rand As New Random(Seed:=Math.Seed)
-        Dim l As Integer = tmp.Count - 1
-
-        For i As Integer = 0 To buf.Length - 1
-            Dim index As Integer = rand.Next(minValue:=0, maxValue:=l)
-            buf(i) = tmp(index)
-            Call tmp.RemoveAt(index)
-            l -= 1
-        Next
-
-        Return buf
+        Dim list = source.SafeQuery.ToList
+        Call Math.Shuffle(list)
+        Return list.ToArray
     End Function
 
     ''' <summary>
