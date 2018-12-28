@@ -68,7 +68,7 @@ Namespace ComponentModel.Settings
         ''' <summary>
         ''' 所映射的数据源
         ''' </summary>
-        Protected settingsData As IProfile
+        Protected profilesData As IProfile
         ''' <summary>
         ''' 键名都是小写的
         ''' </summary>
@@ -92,18 +92,18 @@ Namespace ComponentModel.Settings
 
         Public Overrides Property FilePath As String
             Get
-                Return settingsData.FilePath
+                Return profilesData.FilePath
             End Get
             Set(value As String)
-                settingsData.FilePath = value
+                profilesData.FilePath = value
             End Set
         End Property
 
         Sub New(obj As IProfile)
-            settingsData = obj
+            profilesData = obj
             profileItemCollection = ConfigEngine.Load(Of IProfile)(
                 obj.GetType,
-                obj:=settingsData
+                obj:=profilesData
             ).ToDictionary(Function(x) x.Name,
                            Function(x) x.Value)
         End Sub
@@ -293,12 +293,12 @@ Namespace ComponentModel.Settings
         End Function
 
         Public Overrides Function ToString() As String
-            Return settingsData.FilePath
+            Return profilesData.FilePath
         End Function
 
         <ExportAPI("Save")>
         Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Dim Xml As String = settingsData.GetXml
+            Dim Xml As String = profilesData.GetXml
             Return Xml.SaveTo(getPath(FilePath), Encoding)
         End Function
 
@@ -311,7 +311,7 @@ Namespace ComponentModel.Settings
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO:  释放托管状态(托管对象)。
-                    Call settingsData.Save()
+                    Call profilesData.Save()
                 End If
 
                 ' TODO:  释放非托管资源(非托管对象)并重写下面的 Finalize()。
