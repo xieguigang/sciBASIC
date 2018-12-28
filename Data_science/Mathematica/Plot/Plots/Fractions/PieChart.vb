@@ -141,7 +141,7 @@ Namespace Fractions
                     centra = layoutRect.Centre
 
                     ' 首先需要进行阴影的绘制
-                    With topLeft.Move(shadowDistance, shadowAngle)
+                    With topLeft.MovePoint(shadowDistance, shadowAngle)
                         Dim circle As New GraphicsPath
 
                         Call circle.AddEllipse(.X, .Y, CSng(r * 2), CSng(r * 2))

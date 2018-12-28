@@ -115,12 +115,18 @@ Namespace Math
             Return 180 - (ToDegrees(sys.Atan2(yDiff, xDiff)) - 90)
         End Function
 
+        ''' <summary>
+        ''' 以当前的点为圆心，向<paramref name="angle"/>方向移动给定的距离
+        ''' </summary>
+        ''' <param name="distance#"></param>
+        ''' <param name="angle#"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function MovePoint(p As PointF, angle As Double, distance As Integer) As PointF
             Return New PointF With {
-                .X = p.X + distance * sys.Sin(angle),
-                .Y = p.Y + distance * sys.Cos(angle)
+                .X = p.X + distance * Math.Sin(angle * Math.PI / 180),
+                .Y = p.Y + distance * Math.Cos(angle * Math.PI / 180)
             }
         End Function
 
