@@ -33,6 +33,8 @@ Namespace Imaging.LayoutModel
         ''' <param name="x2">second x coord of line</param>
         ''' <param name="y2">second y coord of line</param>
         ''' <returns>any intersection points found</returns>
+        ''' 
+        <Extension>
         Public Function rayIntersection(this As Rectangle2D, x2 As number, y2 As number) As Point2D
             Dim ints = this.lineIntersections(this.CenterX, this.CenterY, x2, y2)
 

@@ -138,7 +138,7 @@ Namespace Graph
             Return ID.GetHashCode()
         End Function
 
-        Public Overrides Function Equals(obj As System.Object) As Boolean
+        Public Overrides Function Equals(obj As Object) As Boolean
             ' If parameter is null return false.
             If obj Is Nothing Then
                 Return False
