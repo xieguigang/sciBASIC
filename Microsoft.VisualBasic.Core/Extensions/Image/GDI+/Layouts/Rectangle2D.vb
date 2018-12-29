@@ -271,6 +271,8 @@ Namespace Imaging.LayoutModel
         ''' Grows the rectangle by the given amount, that is, this method subtracts
         ''' the given amount from the x- and y-coordinates and adds twice the amount
         ''' to the width and height.
+        ''' 
+        ''' ``inflate(pad: number): Rectangle``
         ''' </summary>
         ''' <param name="amount"> Amount by which the rectangle should be grown. </param>
         Public Overridable Sub grow(amount As Double)
@@ -279,6 +281,11 @@ Namespace Imaging.LayoutModel
             Width += 2 * amount
             Height += 2 * amount
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function inflate(pad As Double) As Rectangle2D
+            Return New Rectangle2D(X - pad, Y - pad, Width + 2 * pad, Height + 2 * pad)
+        End Function
 
         ''' <summary>
         ''' Returns true if the given point is contained in the rectangle.
@@ -325,7 +332,11 @@ Namespace Imaging.LayoutModel
         ''' <param name="x3">X-coordinate of the second line's endpoint.</param>
         ''' <param name="y3">Y-coordinate of the second line's endpoint.</param>
         ''' <returns> Returns the intersection between the two lines.</returns>
-        Public Shared Function intersection(x0 As Double, y0 As Double, x1 As Double, y1 As Double, x2 As Double, y2 As Double, x3 As Double, y3 As Double) As Point2D
+        Public Shared Function intersection(x0 As Double, y0 As Double,
+                                            x1 As Double, y1 As Double,
+                                            x2 As Double, y2 As Double,
+                                            x3 As Double, y3 As Double) As Point2D
+
             Dim denom As Double = ((y3 - y2) * (x1 - x0)) - ((x3 - x2) * (y1 - y0))
             Dim nume_a As Double = ((x3 - x2) * (y0 - y2)) - ((y3 - y2) * (x0 - x2))
             Dim nume_b As Double = ((x1 - x0) * (y0 - y2)) - ((y1 - y0) * (x0 - x2))
@@ -379,6 +390,13 @@ Namespace Imaging.LayoutModel
         ''' <code>mxRectangle</code>. </returns>
         Public Overrides Function ToString() As String
             Return $"{Me.GetType.Name} [x={X}, y={Y}, w={Width}, h={Height}]"
+        End Function
+
+        Public Iterator Function Vertices() As IEnumerable(Of Point2D)
+            Yield New Point2D(X, Y)
+            Yield New Point2D(Right, Y)
+            Yield New Point2D(Right, Bottom)
+            Yield New Point2D(X, Bottom)
         End Function
     End Class
 End Namespace

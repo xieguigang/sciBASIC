@@ -54,6 +54,28 @@ Namespace Imaging.LayoutModel
     <Serializable> Public Class Point2D : Implements ICloneable
 
         ''' <summary>
+        ''' Returns the x-coordinate of the point.
+        ''' </summary>
+        ''' <returns> Returns the x-coordinate. </returns>
+        Public Property X As Double
+
+        ''' <summary>
+        ''' Returns the x-coordinate of the point.
+        ''' </summary>
+        ''' <returns> Returns the x-coordinate. </returns>
+        Public Property Y As Double
+
+        ''' <summary>
+        ''' Returns the coordinates as a new point.
+        ''' </summary>
+        ''' <returns> Returns a new point for the location. </returns>
+        Public Overridable ReadOnly Property Point As Point
+            Get
+                Return New Point(CInt(Fix(sys.Round(X))), CInt(Fix(sys.Round(Y))))
+            End Get
+        End Property
+
+        ''' <summary>
         ''' Constructs a new point at (0, 0).
         ''' </summary>
         Public Sub New()
@@ -85,28 +107,6 @@ Namespace Imaging.LayoutModel
             Me.X = x
             Me.Y = y
         End Sub
-
-        ''' <summary>
-        ''' Returns the x-coordinate of the point.
-        ''' </summary>
-        ''' <returns> Returns the x-coordinate. </returns>
-        Public Overridable Property X As Double
-
-        ''' <summary>
-        ''' Returns the x-coordinate of the point.
-        ''' </summary>
-        ''' <returns> Returns the x-coordinate. </returns>
-        Public Overridable Property Y As Double
-
-        ''' <summary>
-        ''' Returns the coordinates as a new point.
-        ''' </summary>
-        ''' <returns> Returns a new point for the location. </returns>
-        Public Overridable ReadOnly Property Point As Point
-            Get
-                Return New Point(CInt(Fix(sys.Round(X))), CInt(Fix(sys.Round(Y))))
-            End Get
-        End Property
 
         ''' 
         ''' <summary>
