@@ -66,11 +66,22 @@ Namespace ComponentModel.Algorithm.BinaryTree
     ''' <typeparam name="V"></typeparam>
     Public Class BinaryTree(Of K, V) : Implements Value(Of V).IValueOf
 
+        Dim _key As K
+
         ''' <summary>
         ''' 键名是唯一的，赋值之后就不可以改变了
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Key As K
+        Public Property Key As K
+            Get
+                Return _key
+            End Get
+            Friend Set(value As K)
+                _key = value
+            End Set
+        End Property
+
+
         ''' <summary>
         ''' 与当前的这个键名相对应的键值可以根据需求发生改变，即可以被任意赋值
         ''' 
