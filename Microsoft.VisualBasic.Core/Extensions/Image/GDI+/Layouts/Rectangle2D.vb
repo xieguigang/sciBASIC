@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::e6e08858ebd53e1cf616447fd793dbce, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Rectangle2D
-    ' 
-    '         Properties: CenterX, CenterY, Height, Rectangle, Width
-    ' 
-    '         Constructor: (+6 Overloads) Sub New
-    ' 
-    '         Function: Clone, contains, Equals, intersection, intersectLine
-    '                   ToString
-    ' 
-    '         Sub: add, grow, setRect
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Rectangle2D
+' 
+'         Properties: CenterX, CenterY, Height, Rectangle, Width
+' 
+'         Constructor: (+6 Overloads) Sub New
+' 
+'         Function: Clone, contains, Equals, intersection, intersectLine
+'                   ToString
+' 
+'         Sub: add, grow, setRect
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -79,6 +79,7 @@ Namespace Imaging.LayoutModel
         ''' </summary>
         ''' <returns> Returns the x-coordinate of the center. </returns>
         Public Overridable ReadOnly Property CenterX As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return X + Width / 2
             End Get
@@ -89,14 +90,46 @@ Namespace Imaging.LayoutModel
         ''' </summary>
         ''' <returns> Returns the y-coordinate of the center. </returns>
         Public Overridable ReadOnly Property CenterY As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Y + Height / 2
+            End Get
+        End Property
+
+        Public ReadOnly Property Right As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return X + Width
+            End Get
+        End Property
+
+        Public ReadOnly Property Bottom As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Y + Height
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Returns the bounds as a new rectangle.
+        ''' </summary>
+        ''' <returns> Returns a new rectangle for the bounds. </returns>
+        Public Overridable ReadOnly Property Rectangle As RectangleF
+            Get
+                Dim ix As Integer = CInt(Fix(sys.Round(X)))
+                Dim iy As Integer = CInt(Fix(sys.Round(Y)))
+                Dim iw As Integer = CInt(Fix(sys.Round(Width - ix + X)))
+                Dim ih As Integer = CInt(Fix(sys.Round(Height - iy + Y)))
+
+                Return New RectangleF(ix, iy, iw, ih)
             End Get
         End Property
 
         ''' <summary>
         ''' Constructs a new rectangle at (0, 0) with the width and height set to 0.
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New()
             Me.New(0, 0, 0, 0)
         End Sub
@@ -105,6 +138,8 @@ Namespace Imaging.LayoutModel
         ''' Constructs a copy of the given rectangle.
         ''' </summary>
         ''' <param name="rect"> Rectangle to construct a copy of. </param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(rect As Rectangle)
             Me.New(rect.X, rect.Y, rect.Width, rect.Height)
         End Sub
@@ -113,6 +148,8 @@ Namespace Imaging.LayoutModel
         ''' Constructs a copy of the given rectangle.
         ''' </summary>
         ''' <param name="rect"> Rectangle to construct a copy of. </param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(rect As RectangleF)
             Me.New(rect.X, rect.Y, rect.Width, rect.Height)
         End Sub
@@ -121,6 +158,8 @@ Namespace Imaging.LayoutModel
         ''' Constructs a copy of the given rectangle.
         ''' </summary>
         ''' <param name="rect"> Rectangle to construct a copy of. </param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(rect As Rectangle2D)
             Me.New(rect.X, rect.Y, rect.Width, rect.Height)
         End Sub
@@ -139,9 +178,41 @@ Namespace Imaging.LayoutModel
             Me.Height = height
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub New(layout As (x#, y#, w#, h#))
+            Call Me.New(layout.x, layout.y, layout.w, layout.h)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(width%, height%)
             Call Me.New(0, 0, width, height)
         End Sub
+
+        Public Function OverlapX(r As Rectangle2D) As Double
+            Dim ux = CenterX, vx = r.CenterX
+
+            If (ux <= vx AndAlso r.X < Right) Then
+                Return Right - r.X
+            End If
+            If (vx <= ux AndAlso X < r.Right) Then
+                Return r.Right - X
+            End If
+
+            Return 0
+        End Function
+
+        Public Function OverlapY(r As Rectangle2D) As Double
+            Dim uy = CenterY, vy = r.CenterY
+
+            If (uy <= vy AndAlso r.Y < Bottom) Then
+                Return Bottom - r.Y
+            End If
+            If (vy <= uy AndAlso Y < r.Bottom) Then
+                Return r.Bottom - Y
+            End If
+
+            Return 0
+        End Function
 
         ''' <summary>
         ''' Sets this rectangle to the specified values
@@ -158,21 +229,43 @@ Namespace Imaging.LayoutModel
         End Sub
 
         ''' <summary>
-        ''' Adds the given rectangle to this rectangle.
+        ''' Adds the given rectangle to this rectangle. Union two rectangle.
+        ''' (取两个区域的交集部分，并且这个函数会改变当前的这个矩形对象的值)
         ''' </summary>
         Public Overridable Sub add(rect As Rectangle2D)
             If rect IsNot Nothing Then
-                Dim minX As Double = sys.Min(X, rect.X)
-                Dim minY As Double = sys.Min(Y, rect.Y)
-                Dim maxX As Double = sys.Max(X + Width, rect.X + rect.Width)
-                Dim maxY As Double = sys.Max(Y + Height, rect.Y + rect.Height)
-
-                X = minX
-                Y = minY
-                Width = maxX - minX
-                Height = maxY - minY
+                With union(X, Y, Right, Bottom, rect)
+                    X = .x
+                    Y = .y
+                    Width = .w
+                    Height = .h
+                End With
             End If
         End Sub
+
+        Private Shared Function union(x#, y#, right#, bottom#, r As Rectangle2D) As (x#, y#, w#, h#)
+            Dim minX As Double = sys.Min(x, r.X)
+            Dim minY As Double = sys.Min(y, r.Y)
+            Dim maxX As Double = sys.Max(right, r.Right)
+            Dim maxY As Double = sys.Max(bottom, r.Bottom)
+
+            x = minX
+            y = minY
+
+            Return (x, y, w:=maxX - minX, h:=maxY - minY)
+        End Function
+
+        ''' <summary>
+        ''' 这个函数的功能和<see cref="add"/>函数几乎一致，只不过这个函数返回新的<see cref="Rectangle2D"/>
+        ''' 而非修改自身的值
+        ''' </summary>
+        ''' <param name="rect"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Union(rect As Rectangle2D) As Rectangle2D
+            Return New Rectangle2D(union(X, Y, Right, Bottom, rect))
+        End Function
 
         ''' <summary>
         ''' Grows the rectangle by the given amount, that is, this method subtracts
@@ -250,21 +343,6 @@ Namespace Imaging.LayoutModel
                 Return Nothing
             End If
         End Function
-
-        ''' <summary>
-        ''' Returns the bounds as a new rectangle.
-        ''' </summary>
-        ''' <returns> Returns a new rectangle for the bounds. </returns>
-        Public Overridable ReadOnly Property Rectangle As RectangleF
-            Get
-                Dim ix As Integer = CInt(Fix(sys.Round(X)))
-                Dim iy As Integer = CInt(Fix(sys.Round(Y)))
-                Dim iw As Integer = CInt(Fix(sys.Round(Width - ix + X)))
-                Dim ih As Integer = CInt(Fix(sys.Round(Height - iy + Y)))
-
-                Return New RectangleF(ix, iy, iw, ih)
-            End Get
-        End Property
 
         ''' <summary>
         ''' Returns true if the given object value equals this rectangle.
