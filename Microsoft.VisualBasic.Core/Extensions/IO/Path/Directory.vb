@@ -70,6 +70,11 @@ Namespace FileIO
             Me.DIR = FileSystem.GetDirectoryInfo(DIR).FullName
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetSubDirectories() As IEnumerable(Of String)
+            Return DIR.ListDirectory
+        End Function
+
         ''' <summary>
         ''' Gets the full path of the target file based on the path relative to this directory object.
         ''' </summary>

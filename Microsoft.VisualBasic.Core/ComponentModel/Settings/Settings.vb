@@ -59,7 +59,7 @@ Namespace ComponentModel.Settings
         Public ReadOnly Property SettingsData As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return DirectCast(MyBase.settingsData, T)
+                Return DirectCast(MyBase.profilesData, T)
             End Get
         End Property
 

@@ -111,7 +111,7 @@ Namespace Math
             Return resultInteger / RandfMultiply
         End Function
 
-        ReadOnly seeds As New Random(Rnd() * 10000)
+        ReadOnly seeds As New Random()
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RandomSingle() As Single
