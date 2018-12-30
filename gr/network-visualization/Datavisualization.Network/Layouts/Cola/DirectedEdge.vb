@@ -54,6 +54,12 @@ Namespace Layouts.Cola
             End Get
         End Property
 
+        Sub New(desiredPosition As number, Optional weight As Double = 1, Optional scale As Double = 1)
+            Me.desiredPosition = desiredPosition
+            Me.weight = weight
+            Me.scale = scale
+        End Sub
+
         Public Sub visitNeighbours(prev As Variable, f As Action(Of Constraint, Variable))
             Dim ff = Sub(c As Constraint, [next] As Variable)
                          If c.active AndAlso Not prev Is [next] Then
@@ -64,6 +70,14 @@ Namespace Layouts.Cola
             cOut.ForEach(Sub(c, i) ff(c, c.right))
             cIn.ForEach(Sub(c, i) ff(c, c.left))
         End Sub
+
+        Public Shared Operator IsTrue(v As Variable) As Boolean
+            Return Not v Is Nothing
+        End Operator
+
+        Public Shared Operator IsFalse(v As Variable) As Boolean
+            Return v Is Nothing
+        End Operator
     End Class
 
     Public Class Block
@@ -555,6 +569,13 @@ Namespace Layouts.Cola
         Public right As Variable
         Public gap As number
         Public equality As Boolean = False
+
+        Sub New(left As Variable, right As Variable, gap As number, Optional equality As Boolean = False)
+            Me.left = left
+            Me.right = right
+            Me.gap = gap
+            Me.equality = equality
+        End Sub
 
         Public ReadOnly Property slack As number
             Get

@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Python
 Imports number = System.Double
 
 Namespace Layouts.Cola
@@ -59,5 +60,54 @@ Namespace Layouts.Cola
             }
         End Function
 
+        ''' <summary>
+        ''' Remove overlap between spans while keeping their centers as close as possible to the specified desiredCenters.
+        ''' Lower And upper bounds will be respected if the spans physically fit between them
+        ''' (otherwise they'll be moved and their new position returned).
+        ''' If no upper/lower bound Is specified then the bounds of the moved spans will be returned.
+        ''' returns a New center for each span.
+        ''' </summary>
+        ''' <param name="spans"></param>
+        ''' <param name="lowerBound"></param>
+        ''' <param name="upperBound"></param>
+        ''' <returns></returns>
+        Public Function removeOverlapInOneDimension(spans As (size As number, desiredCenter As number)(), lowerBound As number, upperBound As number) As (newCenters As number(), lowerBound As number, upperBound As number)
+
+            Dim vs As Variable() = spans.Select(Function(s) New Variable(s.desiredCenter)).ToArray
+            Dim cs As New List(Of Constraint)
+            Dim n = spans.Length
+
+            For i As Integer = 0 To n - 2
+                Dim left = spans(i), right = spans(i + 1)
+                cs.Add(New Constraint(vs(i), vs(i + 1), (left.size + right.size) / 2))
+            Next
+
+            Dim leftMost = vs(0),
+            rightMost = vs(n - 1),
+            leftMostSize = spans(0).size / 2,
+            rightMostSize = spans(n - 1).size / 2
+            Dim vLower As Variable = Nothing, vUpper As Variable = Nothing
+
+            If (lowerBound) Then
+                vLower = New Variable(lowerBound, leftMost.weight * 1000)
+                vs.Add(vLower)
+                cs.Add(New Constraint(vLower, leftMost, leftMostSize))
+            End If
+
+            If (upperBound) Then
+                vUpper = New Variable(upperBound, rightMost.weight * 1000)
+                vs.Add(vUpper)
+                cs.Add(New Constraint(rightMost, vUpper, rightMostSize))
+            End If
+
+            Dim Solver = New Solver(vs, cs)
+            Solver.solve()
+
+            Return (
+            newCenters:=vs.slice(0, spans.Length).Select(Function(v) v.position()).ToArray,
+            lowerBound:=If(vLower, vLower.position(), leftMost.position() - leftMostSize),
+            upperBound:=If(vUpper, vUpper.position(), rightMost.position() + rightMostSize)
+        )
+        End Function
     End Module
 End Namespace
