@@ -581,6 +581,10 @@ Namespace Language
             Throw New NotImplementedException
         End Operator
 
+        ''' <summary>
+        ''' 反向的枚举出当前列表之中的所有元素
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function ReverseIterator() As IEnumerable(Of T)
             For i As Integer = Count - 1 To 0 Step -1
                 Yield MyBase.Item(i)

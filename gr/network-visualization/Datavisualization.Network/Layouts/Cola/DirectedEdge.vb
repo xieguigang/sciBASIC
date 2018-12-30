@@ -72,6 +72,20 @@ Namespace Layouts.Cola
         Public vars As New List(Of Variable)
         Public blockId As number
 
+        Public ReadOnly Property cost As number
+            Get
+                Dim sum = 0
+                Dim i As int = vars.Count
+
+                For Each v As Variable In vars.ReverseIterator
+                    Dim d = v.position - v.desiredPosition
+                    sum += d * d * v.weight
+                Next
+
+                Return sum
+            End Get
+        End Property
+
         Sub New(v As Variable)
             v.offset = 0
             ps = New PositionStats(v.scale)
@@ -192,14 +206,59 @@ Namespace Layouts.Cola
         Public Function isActiveDirectedPathBetween(u As Variable, v As Variable) As Boolean
             If (u Is v) Then Return True
             Dim i As int = u.cOut.Length
-            While (--i)
+
+            While --i
                 Dim C = u.cOut(i)
                 If (C.active AndAlso isActiveDirectedPathBetween(C.right, v)) Then
                     Return True
                 End If
             End While
+
             Return False
         End Function
+
+        ''' <summary>
+        ''' split the block into two by deactivating the specified constraint
+        ''' </summary>
+        ''' <param name="C"></param>
+        ''' <returns></returns>
+        Public Shared Function split(C As Constraint) As Block()
+            C.active = False
+            Return {Block.createSplitBlock(C.left), Block.createSplitBlock(C.right)}
+        End Function
+
+        Private Shared Function createSplitBlock(startVar As Variable) As Block
+            Dim b = New Block(startVar)
+            b.populateSplitBlock(startVar, Nothing)
+            Return b
+        End Function
+
+        ''' <summary>
+        ''' find a split point somewhere between the specified variables
+        ''' </summary>
+        ''' <param name="vl"></param>
+        ''' <param name="vr"></param>
+        ''' <returns></returns>
+        Public Function splitBetween(vl As Variable, vr As Variable) As (constraint As Constraint, lb As Block, rb As Block)
+            Dim C = findMinLMBetween(vl, vr)
+            If (Not C Is Nothing) Then
+                Dim bs = Block.split(C)
+                Return (C, bs(0), bs(1))
+            End If
+            ' couldn't find a split point - for example the active path is all equality constraints
+            Return Nothing
+        End Function
+
+        Public Sub mergeAcross(b As Block, c As Constraint, dist As number)
+            c.active = True
+            For i As Integer = 0 To b.vars.Count - 1
+                Dim v = b.vars(i)
+                v.offset += dist
+                addVariable(v)
+            Next
+
+            posn = ps.Posn
+        End Sub
     End Class
 
     Public Class PositionStats

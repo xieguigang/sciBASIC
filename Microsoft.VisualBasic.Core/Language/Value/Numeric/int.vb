@@ -212,6 +212,17 @@ Namespace Language
         End Operator
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(x As int) As Integer
+            Dim i As Integer = x.Value
+            x.Value -= 1
+            Return -i
+        End Operator
+
+        ''' <summary>
         ''' Auto increment value with step 1 and then returns the previous value.
         ''' (自增1然后返回之前的值)
         ''' </summary>
