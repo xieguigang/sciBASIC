@@ -8,6 +8,27 @@ Namespace Layouts.Cola
 
     Public Module Extensions
 
+        Public Function compareEvents(a As [Event], b As [Event]) As number
+            If (a.pos > b.pos) Then
+                Return 1
+            End If
+            If (a.pos < b.pos) Then
+                Return -1
+            End If
+            If (a.isOpen) Then
+                ' open must come before close
+                Return -1
+            End If
+
+            If (b.isOpen) Then
+                ' open must come before close
+                Return 1
+            End If
+
+            Return 0
+        End Function
+
+
         Public Function computeGroupBounds(g As ProjectionGroup) As Rectangle2D
             g.bounds = If(Not g.leaves Is Nothing, g.leaves.reduce(Of Leaf, Rectangle2D)(Function(r As Rectangle2D, C As Leaf)
                                                                                              Return C.bounds.Union(r)

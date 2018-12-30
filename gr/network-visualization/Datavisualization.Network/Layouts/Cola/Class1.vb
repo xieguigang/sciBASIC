@@ -17,4 +17,18 @@ Namespace Layouts.Cola
         Public minVar As Variable
         Public maxVar As Variable
     End Class
+
+    Public Class [Event]
+
+        Public isOpen As Boolean
+        Public v As Node
+        Public pos As number
+
+        Sub New(isOpen As Boolean, v As Node, pos As number)
+            Me.isOpen = isOpen
+            Me.v = v
+            Me.pos = pos
+        End Sub
+
+    End Class
 End Namespace
