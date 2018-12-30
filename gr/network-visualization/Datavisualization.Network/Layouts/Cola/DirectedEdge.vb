@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
+Imports Microsoft.VisualBasic.Language
 Imports number = System.Double
 
 Namespace Layouts.Cola
@@ -24,7 +25,7 @@ Namespace Layouts.Cola
         Public [next] As RBNode(Of Node, Object)
 
         Public r As Rectangle2D
-        Public pos As Number
+        Public pos As number
 
         Public Shared Function makeRBTree() As RBNode(Of Node, Object)
             Return New RBNode(Of Node, Object)(Nothing, Nothing)
@@ -96,6 +97,109 @@ Namespace Layouts.Cola
 
             posn = ps.Posn
         End Sub
+
+        Private Function compute_lm(v As Variable, u As Variable, postAction As Action(Of Constraint)) As number
+            Dim dfdv = v.dfdv
+
+            v.visitNeighbours(u, Sub(c, [next])
+                                     Dim _dfdv = compute_lm([next], v, postAction)
+                                     If ([next] Is c.right) Then
+                                         dfdv += _dfdv * c.left.scale
+                                         c.lm = _dfdv
+                                     Else
+                                         dfdv += _dfdv * c.right.scale
+                                         c.lm = -_dfdv
+                                     End If
+
+                                     postAction(c)
+                                 End Sub)
+            Return dfdv / v.scale
+        End Function
+
+        Private Sub populateSplitBlock(v As Variable, prev As Variable)
+            v.visitNeighbours(prev, Sub(c, [next])
+                                        [next].offset = v.offset + If([next] Is c.right, c.gap, -c.gap)
+                                        addVariable([next])
+                                        populateSplitBlock([next], v)
+                                    End Sub)
+        End Sub
+
+        ''' <summary>
+        ''' traverse the active constraint tree applying visit to each active constraint
+        ''' </summary>
+        ''' <param name="visit"></param>
+        ''' <param name="acc"></param>
+        ''' <param name="v"></param>
+        ''' <param name="prev"></param>
+        Public Sub traverse(visit As Func(Of Constraint, Object), acc As List(Of Object), Optional v As Variable = Nothing, Optional prev As Variable = Nothing)
+            If v Is Nothing Then
+                v = vars(0)
+            End If
+
+            v.visitNeighbours(prev, Sub(c, [next])
+                                        acc.Add(visit(c))
+                                        traverse(visit, acc, [next], v)
+                                    End Sub)
+        End Sub
+
+        ''' <summary>
+        ''' Calculate lagrangian multipliers on constraints And
+        ''' find the active constraint in this block with the smallest lagrangian.
+        ''' if the lagrangian Is negative, then the constraint Is a split candidate.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function findMinLM() As Constraint
+            Dim m As Constraint = Nothing
+            compute_lm(vars(0), Nothing, Sub(c)
+                                             If (Not c.equality AndAlso (m Is Nothing OrElse c.lm < m.lm)) Then
+                                                 m = c
+                                             End If
+                                         End Sub)
+            Return m
+        End Function
+
+        Private Function findMinLMBetween(lv As Variable, rv As Variable) As Constraint
+            compute_lm(lv, Nothing, Sub(c)
+                                        ' do nothing
+                                    End Sub)
+            Dim m = Nothing
+            findPath(lv, Nothing, rv, Sub(c, [next])
+                                          If (Not c.equality AndAlso c.right Is [next] AndAlso (m Is Nothing OrElse c.lm < m.lm)) Then
+                                              m = c
+                                          End If
+                                      End Sub)
+            Return m
+        End Function
+
+        Private Function findPath(v As Variable, prev As Variable, [to] As Variable, visit As Action(Of Constraint, Variable)) As Boolean
+            Dim endFound = False
+            v.visitNeighbours(prev, Sub(c, [next])
+                                        If (Not endFound AndAlso ([next] Is [to] OrElse findPath([next], v, [to], visit))) Then
+                                            endFound = True
+                                            visit(c, [next])
+                                        End If
+                                    End Sub)
+            Return endFound
+        End Function
+
+        ''' <summary>
+        ''' Search active constraint tree from u to see if there Is a directed path to v.
+        ''' Returns true if path Is found.
+        ''' </summary>
+        ''' <param name="u"></param>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        Public Function isActiveDirectedPathBetween(u As Variable, v As Variable) As Boolean
+            If (u Is v) Then Return True
+            Dim i As int = u.cOut.Length
+            While (--i)
+                Dim C = u.cOut(i)
+                If (C.active AndAlso isActiveDirectedPathBetween(C.right, v)) Then
+                    Return True
+                End If
+            End While
+            Return False
+        End Function
     End Class
 
     Public Class PositionStats
