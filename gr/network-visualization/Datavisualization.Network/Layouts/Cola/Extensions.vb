@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Imaging.LayoutModel
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Python
 Imports number = System.Double
@@ -6,6 +7,30 @@ Imports number = System.Double
 Namespace Layouts.Cola
 
     Public Module Extensions
+
+        Public Function computeGroupBounds(g As ProjectionGroup) As Rectangle2D
+            g.bounds = If(Not g.leaves Is Nothing, g.leaves.reduce(Of Leaf, Rectangle2D)(Function(r As Rectangle2D, C As Leaf)
+                                                                                             Return C.bounds.Union(r)
+                                                                                         End Function, New Rectangle2D()), New Rectangle2D())
+
+            If Not g.groups Is Nothing Then
+                g.bounds = g.groups.reduce(Of ProjectionGroup, Rectangle2D)(Function(r As Rectangle2D, C As ProjectionGroup)
+                                                                                Return computeGroupBounds(C).Union(r)
+                                                                            End Function, g.bounds)
+            End If
+
+            g.bounds = g.bounds.inflate(g.padding)
+            Return g.bounds
+        End Function
+
+        <Extension>
+        Private Function reduce(Of T, T2, V)(seq As IEnumerable(Of T), produce As Func(Of V, T, V), init As V) As V
+            For Each x As T In seq
+                init = produce(init, x)
+            Next
+
+            Return init
+        End Function
 
         ''' <summary>
         ''' Returns the endpoints of a line that connects the centre of two rectangles.
