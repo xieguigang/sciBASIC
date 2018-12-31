@@ -398,9 +398,10 @@ Namespace Layouts.Cola
         Sub New(vs As Variable(), cs As Constraint())
             Me.vs = vs
             vs.ForEach(Sub(v, i)
-                           v.cIn = {}, v.cOut = {}
+                           v.cIn = {}
+                           v.cOut = {}
 
-            End Sub)
+                       End Sub)
             Me.cs = cs
             cs.ForEach(Sub(C, i)
                            C.left.cOut.Add(C)
