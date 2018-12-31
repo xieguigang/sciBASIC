@@ -394,6 +394,7 @@
     <Compile Include="IO\FileStream\Json\json.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
     <Compile Include="Layouts\Cola\Extensions.vb" />
+    <Compile Include="Layouts\Cola\GridRouter\Models.vb" />
     <Compile Include="Layouts\Parameters.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
