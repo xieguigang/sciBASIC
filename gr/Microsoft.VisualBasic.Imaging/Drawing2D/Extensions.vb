@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::253b52145970fcc48e49ad15076160c7, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: (+3 Overloads) Enlarge, GetTextAnchor, (+2 Overloads) Move, (+2 Overloads) MoveTo, Rotate
-    ' 
-    '         Sub: ShapeGlow
-    '         Enum MoveTypes
-    ' 
-    '             BoundsBoxTopLeft, PolygonCentre
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Extensions
+' 
+'         Function: (+3 Overloads) Enlarge, GetTextAnchor, (+2 Overloads) Move, (+2 Overloads) MoveTo, Rotate
+' 
+'         Sub: ShapeGlow
+'         Enum MoveTypes
+' 
+'             BoundsBoxTopLeft, PolygonCentre
+' 
+' 
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
 
@@ -77,28 +78,13 @@ Namespace Drawing2D
 
         Public ReadOnly BlackBrush As DefaultValue(Of Brush) = Brushes.Black
 
-        ''' <summary>
-        ''' 以当前的点为圆心，向<paramref name="angle"/>方向移动给定的距离
-        ''' </summary>
-        ''' <param name="pt"></param>
-        ''' <param name="distance#"></param>
-        ''' <param name="angle#"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function Move(pt As Point, distance#, angle#) As Point
-            Dim X = pt.X + distance * Math.Sin(angle * Math.PI / 180)
-            Dim Y = pt.Y + distance * Math.Cos(angle * Math.PI / 180)
-
-            Return New Point(X, Y)
-        End Function
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Move(rect As RectangleF, distance#, angle#) As RectangleF
             Return New RectangleF With {
-                .Location = rect.Location _
-                    .ToPoint _
-                    .Move(distance, angle),
+                .Location = rect _
+                    .Location _
+                    .MovePoint(angle, distance),
                 .Size = rect.Size
             }
         End Function
