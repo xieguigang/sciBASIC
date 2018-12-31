@@ -45,7 +45,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.Language
 
-Namespace DynamicProgramming
+Namespace ComponentModel.Algorithm.DynamicProgramming
 
     ''' <summary>
     ''' Longest Common Subsequence

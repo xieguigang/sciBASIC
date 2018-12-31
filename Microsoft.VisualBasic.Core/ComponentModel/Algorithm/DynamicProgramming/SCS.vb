@@ -46,7 +46,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace ComponentModel.Algorithm
+Namespace ComponentModel.Algorithm.DynamicProgramming
 
     ''' <summary>
     ''' shortest_common_superstring
