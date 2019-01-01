@@ -924,7 +924,7 @@
     <Compile Include="ComponentModel\Algorithm\BinaryTree\Enumerable.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeNode.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLSupports.vb" />
-    <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LCS_Length.vb" />
+    <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LCS.vb" />
     <Compile Include="ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb" />
     <Compile Include="ComponentModel\DataSource\DefaultAttribute.vb" />
     <Compile Include="ComponentModel\DataSource\Property\GenericProperty.vb" />

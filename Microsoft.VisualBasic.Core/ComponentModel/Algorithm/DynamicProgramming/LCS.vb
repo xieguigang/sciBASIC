@@ -42,7 +42,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.Algorithm.DynamicProgramming
@@ -50,7 +50,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
     ''' <summary>
     ''' Longest Common Subsequence
     ''' </summary>
-    Public Module LCS_Length
+    Public Module LongestCommonSubsequence
 
         ''' <summary>
         ''' 比较两个字符串之间的最长的子串
@@ -62,6 +62,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
             Return MaxSet(a.ToArray, b.ToArray, AddressOf __equals)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function __equals(a As Char, b As Char) As Boolean
             Return a = b
         End Function

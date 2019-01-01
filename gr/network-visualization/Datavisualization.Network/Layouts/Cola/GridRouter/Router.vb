@@ -308,6 +308,70 @@ Namespace Layouts.Cola.GridRouter
             Return routes
         End Function
 
+        ''' <summary>
+        ''' does the path a-b-c describe a left turn?
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <param name="C"></param>
+        ''' <returns></returns>
+        Private Shared Function isLeft(a As Point2D, b As Point2D, C As Point2D)
+            Return ((b.X - a.X) * (C.Y - a.Y) - (b.Y - a.Y) * (C.X - a.X)) <= 0
+        End Function
+
+        ''' <summary>
+        ''' returns an ordering (a lookup function) that determines the correct order to nudge the
+        ''' edge paths apart to minimize crossings
+        ''' </summary>
+        ''' <param name="edges"></param>
+        ''' <returns></returns>
+        Public Shared Function orderEdges(edges) As Func(Of Integer, Integer, Boolean)
+            Dim edgeOrder As New List(Of (Integer, Integer))
+            For i As Integer = 0 To edges.length - 2
+                For j As Integer = i + 1 To edges.length - 1
+                    Dim e = edges(i),
+                        f = edges(j),
+                        lcs = New LongestCommonSubsequence(e, f)
+                    Dim u, vi, vj
+                    If (lcs.length = 0) Then
+                        Continue For ' no common subpath
+                        If (lcs.reversed) Then
+                            ' if we found a common subpath but one of the edges runs the wrong way,
+                            ' then reverse f.
+                            f.reverse()
+                            f.reversed = True
+                            lcs = New LongestCommonSubsequence(e, f)
+                        End If
+                        If ((lcs.si <= 0 OrElse lcs.ti <= 0) AndAlso (lcs.si + lcs.length >= e.length OrElse lcs.ti + lcs.length >= f.length)) Then
+                            ' the paths do Not diverge, so make an arbitrary ordering decision
+                            edgeOrder.Add((i, j))
+                            Continue For
+                        End If
+                        If (lcs.si + lcs.length >= e.length OrElse lcs.ti + lcs.length >= f.length) Then
+                            ' if the common subsequence of the
+                            ' two edges being considered goes all the way to the
+                            ' end of one (Or both) of the lines then we have to
+                            ' base our ordering decision on the other end of the
+                            ' common subsequence
+                            u = e(lcs.si + 1)
+                            vj = e(lcs.si - 1)
+                            vi = f(lcs.ti - 1)
+                        Else
+                            u = e(lcs.si + lcs.length - 2)
+                            vi = e(lcs.si + lcs.length)
+                            vj = f(lcs.ti + lcs.length)
+                        End If
+                        If (isLeft(u, vi, vj)) Then
+                            edgeOrder.Add((j, i))
+                        Else
+                            edgeOrder.Add((i, j))
+                        End If
+                Next
+            Next
+            ' edgeOrder.forEach(function (e) { console.log('l:' + e.l + ',r:' + e.r) });
+            Return getOrder(edgeOrder)
+        End Function
+
         Private Shared Function isStraight(a As Point2D, b As Point2D, C As Point2D) As Boolean
             Return Math.Abs((b.X - a.X) * (C.Y - a.Y) - (b.Y - a.Y) * (C.X - a.X)) < 0.001
         End Function
@@ -339,9 +403,9 @@ Namespace Layouts.Cola.GridRouter
         ''' </summary>
         ''' <param name="pairs"></param>
         ''' <returns></returns>
-        Private Shared Function getOrder(pairs As (l As number, r As number)()) As Func(Of number, number, Boolean)
+        Private Shared Function getOrder(pairs As List(Of (l As Integer, r As Integer))) As Func(Of Integer, Integer, Boolean)
             Dim outgoing As Boolean()() = {}
-            For i As Integer = 0 To pairs.Length - 1
+            For i As Integer = 0 To pairs.Count - 1
                 Dim p = pairs(i)
                 If (outgoing(p.l) Is Nothing) Then outgoing(p.l) = {}
                 outgoing(p.l)(p.r) = True
