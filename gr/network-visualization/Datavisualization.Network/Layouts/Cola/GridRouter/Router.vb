@@ -333,7 +333,7 @@ Namespace Layouts.Cola.GridRouter
                 For j As Integer = i + 1 To edges.Length - 1
                     Dim e = edges(i),
                         f = edges(j),
-                        lcs = LongestCommonSubsequence.MaxSet(e, f, AddressOf Point2D.Equals)
+                        lcs = New LongestCommonSubsequence(Of Point2D)(e, f, AddressOf Point2D.Equals)
                     Dim u, vi, vj
                     If (lcs.Length = 0) Then
                         Continue For ' no common subpath
@@ -342,8 +342,8 @@ Namespace Layouts.Cola.GridRouter
                         ' if we found a common subpath but one of the edges runs the wrong way,
                         ' then reverse f.
                         f.Reverse()
-                        f.reversed = True
-                        lcs = LongestCommonSubsequence.MaxSet(e, f, AddressOf Point2D.Equals)
+                        ' f.reversed = True
+                        lcs = New LongestCommonSubsequence(Of Point2D)(e, f, AddressOf Point2D.Equals)
                     End If
                     If ((lcs.si <= 0 OrElse lcs.ti <= 0) AndAlso (lcs.si + lcs.Length >= e.Length OrElse lcs.ti + lcs.Length >= f.Length)) Then
                         ' the paths do Not diverge, so make an arbitrary ordering decision

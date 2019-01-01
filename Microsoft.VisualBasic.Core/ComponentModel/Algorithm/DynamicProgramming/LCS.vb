@@ -50,7 +50,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
     ''' <summary>
     ''' Longest Common Subsequence
     ''' </summary>
-    Public Module LongestCommonSubsequence
+    Public Module LongestCommonSubsequenceExtension
 
         ''' <summary>
         ''' 比较两个字符串之间的最长的子串
