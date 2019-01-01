@@ -42,4 +42,11 @@ Namespace Layouts.Cola.GridRouter
         End Sub
     End Class
 
+    ''' <summary>
+    ''' a horizontal Or vertical line of nodes
+    ''' </summary>
+    Interface GridLine
+        Property nodes As NodeWrapper()
+        Property pos As number
+    End Interface
 End Namespace
