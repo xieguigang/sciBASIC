@@ -79,11 +79,20 @@ Namespace Text.Xml
             "&#x1a;", "&#x1b;", "&#x1c;", "&#x1d;", "&#x1e;", "&#x1f;"
         }
 
+        Sub New()
+            invalidUtf8Escapes = invalidUtf8Escapes.AsList + invalidUtf8Escapes.Select(Function(c) c.ToUpper.Replace("X", "x"))
+        End Sub
+
         ''' <summary>
         ''' Removes all of the invalid utf8 xml code from the given string.
+        ''' (使用这个函数删除xml文本字符串之中的无效的UTF8转义字符，这个函数对转义字符的大小写不敏感)
         ''' </summary>
         ''' <param name="str"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' http://7is7.com/software/chars.html
+        ''' </remarks>
+        <Extension>
         Public Function StripInvalidUTF8Code(str As String) As String
             With New StringBuilder(str)
                 For Each c As String In invalidUtf8Escapes

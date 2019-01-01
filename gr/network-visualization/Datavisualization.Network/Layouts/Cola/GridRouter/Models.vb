@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Imaging.LayoutModel
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports number = System.Double
 
 Namespace Layouts.Cola.GridRouter
@@ -45,8 +46,17 @@ Namespace Layouts.Cola.GridRouter
     ''' <summary>
     ''' a horizontal Or vertical line of nodes
     ''' </summary>
-    Interface GridLine
-        Property nodes As NodeWrapper()
-        Property pos As number
-    End Interface
+    Public Class GridLine
+
+        Public nodes As NodeWrapper()
+        Public pos As number
+
+        Public Structure Comparer : Implements IComparer(Of GridLine)
+
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Public Function Compare(x As GridLine, y As GridLine) As Integer Implements IComparer(Of GridLine).Compare
+                Return x.pos - y.pos
+            End Function
+        End Structure
+    End Class
 End Namespace
