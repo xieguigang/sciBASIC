@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::16fa206d18df6c7dc9a00ac6a6da6113, Data_science\Mathematica\Math\Math\Spline\BezierCurve.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class BezierCurve
-    ' 
-    '         Properties: BezierPoints, InitPointsList, Iterations
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: MidPoint, ReCalculate
-    ' 
-    '         Sub: CreateBezier, PopulateBezierPoints
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class BezierCurve
+' 
+'         Properties: BezierPoints, InitPointsList, Iterations
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: MidPoint, ReCalculate
+' 
+'         Sub: CreateBezier, PopulateBezierPoints
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -171,6 +171,23 @@ Namespace Interpolation
                 .X = (control1.X + control2.X) / 2,
                 .Y = (control1.Y + control2.Y) / 2
             }
+        End Function
+
+        ''' <summary>
+        ''' medial axes between node centres And also boundary lines for the grid
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <returns></returns>
+        Public Shared Iterator Function MidPoints(a As Double()) As IEnumerable(Of Double)
+            Dim gap = a(1) - a(0)
+
+            Yield a(0) - gap / 2
+
+            For i As Integer = 1 To a.Length - 1
+                Yield (a(i) + a(i - 1)) / 2
+            Next
+
+            Yield a(a.Length - 1) + gap / 2
         End Function
     End Class
 End Namespace

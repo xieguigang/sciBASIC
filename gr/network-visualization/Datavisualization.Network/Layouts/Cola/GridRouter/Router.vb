@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports number = System.Double
+Imports Microsoft.VisualBasic.Language
 
 Namespace Layouts.Cola.GridRouter
 
@@ -63,20 +64,18 @@ Namespace Layouts.Cola.GridRouter
         End Function
 
         ''' <summary>
-        ''' medial axes between node centres And also boundary lines for the grid
+        ''' find path from v to root including both v And root
         ''' </summary>
-        ''' <param name="a"></param>
+        ''' <param name="v"></param>
         ''' <returns></returns>
-        Private Function midPoints(a As number()) As List(Of number)
-            Dim gap = a(1) - a(0)
-            Dim mids As New List(Of number) From {a(0) - gap / 2}
-            For i As Integer = 1 To a.Length - 1
-                mids.Add((a(i) + a(i - 1)) / 2)
-            Next
+        Private Function findLineage(v As NodeWrapper) As NodeWrapper()
+            Dim lineage As New List(Of NodeWrapper) From {v}
+            Do
+                v = v.parent
+                lineage.Add(v)
+            Loop While (Not v Is root)
 
-            mids.Add(a(a.Length - 1) + gap / 2)
-
-            Return mids
+            Return lineage.ReverseIterator.ToArray
         End Function
     End Class
 End Namespace
