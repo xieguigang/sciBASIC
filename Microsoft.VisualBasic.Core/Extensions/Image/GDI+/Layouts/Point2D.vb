@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::f88945d5b9a69e8946e33cab3084d3e2, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Point2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Point2D
-    ' 
-    '         Properties: Point, X, Y
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: Clone, Equals, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Point2D
+' 
+'         Properties: Point, X, Y
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: Clone, Equals, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports sys = System.Math
 
 Namespace Imaging.LayoutModel
@@ -120,6 +121,11 @@ Namespace Imaging.LayoutModel
             End If
 
             Return False
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Function Equals(a As Point2D, b As Point2D) As Boolean
+            Return Math.Abs(a.X - b.X) <= 0.001 AndAlso Math.Abs(a.Y - b.Y) <= 0.001
         End Function
 
         ''' <summary>

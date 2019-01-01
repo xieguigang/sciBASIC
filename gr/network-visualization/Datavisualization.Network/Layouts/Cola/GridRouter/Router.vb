@@ -3,6 +3,7 @@ Imports number = System.Double
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 
 Namespace Layouts.Cola.GridRouter
 
@@ -325,47 +326,50 @@ Namespace Layouts.Cola.GridRouter
         ''' </summary>
         ''' <param name="edges"></param>
         ''' <returns></returns>
-        Public Shared Function orderEdges(edges) As Func(Of Integer, Integer, Boolean)
+        Public Shared Function orderEdges(edges As Point2D()()) As Func(Of Integer, Integer, Boolean)
             Dim edgeOrder As New List(Of (Integer, Integer))
-            For i As Integer = 0 To edges.length - 2
-                For j As Integer = i + 1 To edges.length - 1
+
+            For i As Integer = 0 To edges.Length - 2
+                For j As Integer = i + 1 To edges.Length - 1
                     Dim e = edges(i),
                         f = edges(j),
-                        lcs = New LongestCommonSubsequence(e, f)
+                        lcs = LongestCommonSubsequence.MaxSet(e, f, AddressOf Point2D.Equals)
                     Dim u, vi, vj
-                    If (lcs.length = 0) Then
+                    If (lcs.Length = 0) Then
                         Continue For ' no common subpath
-                        If (lcs.reversed) Then
-                            ' if we found a common subpath but one of the edges runs the wrong way,
-                            ' then reverse f.
-                            f.reverse()
-                            f.reversed = True
-                            lcs = New LongestCommonSubsequence(e, f)
-                        End If
-                        If ((lcs.si <= 0 OrElse lcs.ti <= 0) AndAlso (lcs.si + lcs.length >= e.length OrElse lcs.ti + lcs.length >= f.length)) Then
-                            ' the paths do Not diverge, so make an arbitrary ordering decision
-                            edgeOrder.Add((i, j))
-                            Continue For
-                        End If
-                        If (lcs.si + lcs.length >= e.length OrElse lcs.ti + lcs.length >= f.length) Then
-                            ' if the common subsequence of the
-                            ' two edges being considered goes all the way to the
-                            ' end of one (Or both) of the lines then we have to
-                            ' base our ordering decision on the other end of the
-                            ' common subsequence
-                            u = e(lcs.si + 1)
-                            vj = e(lcs.si - 1)
-                            vi = f(lcs.ti - 1)
-                        Else
-                            u = e(lcs.si + lcs.length - 2)
-                            vi = e(lcs.si + lcs.length)
-                            vj = f(lcs.ti + lcs.length)
-                        End If
-                        If (isLeft(u, vi, vj)) Then
-                            edgeOrder.Add((j, i))
-                        Else
-                            edgeOrder.Add((i, j))
-                        End If
+                    End If
+                    If (lcs.reversed) Then
+                        ' if we found a common subpath but one of the edges runs the wrong way,
+                        ' then reverse f.
+                        f.Reverse()
+                        f.reversed = True
+                        lcs = LongestCommonSubsequence.MaxSet(e, f, AddressOf Point2D.Equals)
+                    End If
+                    If ((lcs.si <= 0 OrElse lcs.ti <= 0) AndAlso (lcs.si + lcs.Length >= e.Length OrElse lcs.ti + lcs.Length >= f.Length)) Then
+                        ' the paths do Not diverge, so make an arbitrary ordering decision
+                        edgeOrder.Add((i, j))
+                        Continue For
+                    End If
+                    If (lcs.si + lcs.Length >= e.Length OrElse lcs.ti + lcs.Length >= f.Length) Then
+                        ' if the common subsequence of the
+                        ' two edges being considered goes all the way to the
+                        ' end of one (Or both) of the lines then we have to
+                        ' base our ordering decision on the other end of the
+                        ' common subsequence
+                        u = e(lcs.si + 1)
+                        vj = e(lcs.si - 1)
+                        vi = f(lcs.ti - 1)
+                    Else
+                        u = e(lcs.si + lcs.Length - 2)
+                        vi = e(lcs.si + lcs.Length)
+                        vj = f(lcs.ti + lcs.Length)
+                    End If
+
+                    If (isLeft(u, vi, vj)) Then
+                        edgeOrder.Add((j, i))
+                    Else
+                        edgeOrder.Add((i, j))
+                    End If
                 Next
             Next
             ' edgeOrder.forEach(function (e) { console.log('l:' + e.l + ',r:' + e.r) });
