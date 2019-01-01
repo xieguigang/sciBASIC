@@ -269,6 +269,69 @@ Namespace Layouts.Cola.GridRouter
                                End Sub)
             Next
         End Sub
+
+        ''' <summary>
+        ''' path may have been reversed by the subsequence processing in orderEdges
+        ''' so now we need to restore the original order
+        ''' </summary>
+        ''' <param name="routes"></param>
+        ''' <param name="routePaths"></param>
+        Public Shared Sub unreverseEdges(routes, routePaths)
+            routes.forEach(Sub(segments, i)
+                               Dim path = routePaths(i)
+                               If (path.reversed) Then
+                                   segments.reverse() ' reverse order Of segments
+                                   segments.forEach(Function(segment)
+                                                        segment.reverse()  ' reverse Each segment
+                                                    End Function)
+                               End If
+                           End Sub)
+        End Sub
+
+        ''' <summary>
+        ''' obtain routes for the specified edges, nicely nudged apart
+        ''' warning: edge paths may be reversed such that common paths are ordered consistently within bundles!
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="edges">list of edges</param>
+        ''' <param name="nudgeGap">how much to space parallel edge segements</param>
+        ''' <param name="source">function to retrieve the index of the source node for a given edge</param>
+        ''' <param name="target">function to retrieve the index of the target node for a given edge</param>
+        ''' <returns>an array giving, for each edge, an array of segments, each segment a pair of points in an array</returns>
+        Public Function routeEdges(Of T As Edge)(edges As T(), nudgeGap As number, source As Func(Of T, number), target As Func(Of T, number)) As Point2D()()()
+            Dim routePaths = edges.Select(Function(e) route(source(e), target(e))).toarray
+            Dim order = orderEdges(routePaths)
+            Dim routes As Point2D()()() = routePaths.select(Function(e) makeSegments(e)).toarray
+            nudgeSegments(routes, "x", "y", order, nudgeGap)
+            nudgeSegments(routes, "y", "x", order, nudgeGap)
+            unreverseEdges(routes, routePaths)
+            Return routes
+        End Function
+
+        Private Shared Function isStraight(a As Point2D, b As Point2D, C As Point2D) As Boolean
+            Return Math.Abs((b.X - a.X) * (C.Y - a.Y) - (b.Y - a.Y) * (C.X - a.X)) < 0.001
+        End Function
+
+        ''' <summary>
+        ''' for an orthogonal path described by a sequence of points, create a list of segments
+        ''' if consecutive segments would make a straight line they are merged into a single segment
+        ''' segments are over cloned points, Not the original vertices
+        ''' </summary>
+        ''' <param name="path"></param>
+        ''' <returns></returns>
+        Public Shared Function makeSegments(path As Point2D()) As Point2D()()
+            Dim segments As New List(Of Point2D())
+            Dim a = New Point2D(path(0))
+            For i As Integer = 1 To path.Length - 1
+                Dim b = New Point2D(path(i))
+                Dim C = If(i < path.Length - 1, path(i + 1), Nothing)
+                If (C Is Nothing OrElse Not isStraight(a, b, C)) Then
+                    segments.Add({a, b})
+                    a = b
+                End If
+            Next
+            Return segments.ToArray
+        End Function
     End Class
 
     Public Class segmentset
