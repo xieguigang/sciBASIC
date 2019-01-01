@@ -163,6 +163,112 @@ Namespace Layouts.Cola.GridRouter
 
             Return vsegmentsets
         End Function
+
+        ''' <summary>
+        ''' for all segments in this bundle create a vpsc problem such that
+        ''' each segment's x position is a variable and separation constraints
+        ''' are given by the partial order over the edges to which the segments belong
+        ''' for each pair s1,s2 of segments in the open set:
+        ''' 
+        ''' ```
+        ''' e1 = edge of s1, e2 = edge of s2
+        ''' if leftOf(e1,e2) create constraint s1.x + gap &lt;= s2.x
+        ''' else if leftOf(e2,e1) create cons. s2.x + gap &lt;= s1.x
+        ''' ```
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="routes"></param>
+        ''' <param name="segments"></param>
+        ''' <param name="leftOf"></param>
+        ''' <param name="gap"></param>
+        Public Shared Sub nudgeSegs(x As String, y As String, routes As route()(), segments As route(), leftOf As Func(Of Integer, Integer, Boolean), gap As number)
+            Dim n = segments.Length
+            If (n <= 1) Then Return
+            Dim vs = segments.Select(Function(s) New Variable(s(0)(x))).ToArray
+            Dim cs As New List(Of Constraint)
+            For i As Integer = 0 To n - 1
+                For j As Integer = 0 To n - 1
+                    If (i = j) Then Continue For
+                    Dim s1 = segments(i),
+                        s2 = segments(j),
+                        e1 = s1.edgeid,
+                        e2 = s2.edgeid,
+                        lind = -1,
+                        rind = -1
+                    ' in page coordinates (Not cartesian) the notion of 'leftof' is flipped in the horizontal axis from the vertical axis
+                    ' that Is, when nudging vertical segments, if they increase in the y(conj) direction the segment belonging to the
+                    ' 'left' edge actually needs to be nudged to the right
+                    ' when nudging horizontal segments, if the segments increase in the x direction
+                    ' then the 'left' segment needs to go higher, i.e. to have y pos less than that of the right
+                    If (x = "x") Then
+                        If (leftOf(e1, e2)) Then
+                            ' console.log('s1: ' + s1[0][x] + ',' + s1[0][y] + '-' + s1[1][x] + ',' + s1[1][y]);
+                            If (s1(0)(y) < s1(1)(y)) Then
+                                lind = j
+                                rind = i
+                            Else
+                                lind = i
+                                rind = j
+                            End If
+                        End If
+                    Else
+                        If (leftOf(e1, e2)) Then
+                            If (s1(0)(y) < s1(1)(y)) Then
+                                lind = i
+                                rind = j
+                            Else
+                                lind = j
+                                rind = i
+                            End If
+                        End If
+                    End If
+                    If (lind >= 0) Then
+                        ' console.log(x+' constraint: ' + lind + '<' + rind);
+                        cs.Add(New Constraint(vs(lind), vs(rind), gap))
+                    End If
+                Next
+            Next
+            Dim Solver = New Solver(vs, cs)
+            Solver.solve()
+            vs.ForEach(Sub(v, i)
+                           Dim s = segments(i)
+                           Dim pos = v.position()
+                           s(0)(x) = s(1)(x) = pos
+                           Dim route = routes(s.edgeid)
+                           If (s.i > 0) Then route(s.i - 1)(1)(x) = pos
+                           If (s.i < route.Length - 1) Then route(s.i + 1)(0)(x) = pos
+                       End Sub)
+        End Sub
+
+        Public Shared Sub nudgeSegments(routes As route()(), x As String, y As String, leftOf As Func(Of Integer, Integer, Boolean), gap As number)
+            Dim vsegmentsets = getSegmentSets(routes, x, y)
+            ' scan the grouped (by x) segment sets to find co-linear bundles
+            For i As Integer = 0 To vsegmentsets.Count - 1
+                Dim ss = vsegmentsets(i)
+                Dim events = New List(Of [Event])
+                For j As Integer = 0 To ss.segments.Count - 1
+                    Dim s = ss.segments(j)
+                    events.Add(New [Event] With {.type = 0, .s = s, .pos = System.Math.Min(s(0)(y), s(1)(y))})
+                    events.Add(New [Event] With {.type = 1, .s = s, .pos = System.Math.Max(s(0)(y), s(1)(y))})
+                Next
+                events.Sort(New [Event].Comparer)
+                Dim open As New List(Of route)
+                Dim openCount = 0
+                events.ForEach(Sub(e)
+                                   If (e.type = 0) Then
+                                       open.Add(e.s)
+                                       openCount += 1
+                                   Else
+                                       openCount -= 1
+                                   End If
+                                   If (openCount = 0) Then
+                                       nudgeSegs(x, y, routes, open, leftOf, gap)
+                                       open = New List(Of route)
+                                   End If
+                               End Sub)
+            Next
+        End Sub
     End Class
 
     Public Class segmentset
@@ -175,15 +281,21 @@ Namespace Layouts.Cola.GridRouter
         Public edgeid As Integer
         Public i As Integer
 
-        Public matrix As Double()()
+        Public matrix As Dictionary(Of String, Double)()
 
-        Default Public Property item(i As Integer) As Double()
+        Default Public Property item(i As Integer) As Dictionary(Of String, Double)
             Get
                 Return matrix(i)
             End Get
-            Set(value As Double())
-                matrix(i) = value
+            Set
+                matrix(i) = Value
             End Set
+        End Property
+
+        Public ReadOnly Property length As Integer
+            Get
+                Return matrix.Length
+            End Get
         End Property
 
         Public Structure Comparer : Implements IComparer(Of route)
