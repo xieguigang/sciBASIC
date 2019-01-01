@@ -13,11 +13,11 @@ Namespace Layouts.Cola.GridRouter
         Public leaf As Boolean
         Public parent As NodeWrapper
         Public ports As Vert()
-        Public id As number
+        Public id As Integer
         Public rect As Rectangle2D
-        Public children As number()
+        Public children As Integer()
 
-        Public Sub New(id As number, rect As Rectangle2D, children As number())
+        Public Sub New(id As number, rect As Rectangle2D, children As Integer())
             Me.id = id
             Me.rect = rect
             Me.children = children
