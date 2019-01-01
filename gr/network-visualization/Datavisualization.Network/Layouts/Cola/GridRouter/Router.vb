@@ -332,6 +332,22 @@ Namespace Layouts.Cola.GridRouter
             Next
             Return segments.ToArray
         End Function
+
+        ''' <summary>
+        ''' for the given list of ordered pairs, returns a function that (efficiently) looks-up a specific pair to
+        ''' see if it exists in the list
+        ''' </summary>
+        ''' <param name="pairs"></param>
+        ''' <returns></returns>
+        Private Shared Function getOrder(pairs As (l As number, r As number)()) As Func(Of number, number, Boolean)
+            Dim outgoing As Boolean()() = {}
+            For i As Integer = 0 To pairs.Length - 1
+                Dim p = pairs(i)
+                If (outgoing(p.l) Is Nothing) Then outgoing(p.l) = {}
+                outgoing(p.l)(p.r) = True
+            Next
+            Return Function(l, r) Not outgoing(l) Is Nothing AndAlso outgoing(l)(r)
+        End Function
     End Class
 
     Public Class segmentset
