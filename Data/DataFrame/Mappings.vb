@@ -114,4 +114,14 @@ Public Class MappingsHelper
             {NameOf(NamedValue(Of Object).Description), description}
         }
     End Function
+
+    Public Shared Iterator Function TagFieldName(data As IEnumerable(Of EntityObject), tagName As String, fieldName$) As IEnumerable(Of EntityObject)
+        For Each obj As EntityObject In data
+            Dim val = obj.Properties(fieldName)
+            obj.Properties.Remove(fieldName)
+            obj($"{tagName}.{fieldName}") = val
+
+            Yield obj
+        Next
+    End Function
 End Class
