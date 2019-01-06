@@ -93,9 +93,9 @@ Namespace Styling
         Public Function GetProperty(Of T)() As Dictionary(Of String, Func(Of T, Object))
             Dim type As Type = GetType(T)
             Dim properties As PropertyInfo() = type _
-            .GetProperties(PublicProperty) _
-            .Where(Function(p) p.GetIndexParameters.IsNullOrEmpty) _
-            .ToArray
+                .GetProperties(PublicProperty) _
+                .Where(Function(p) p.GetIndexParameters.IsNullOrEmpty) _
+                .ToArray
             Dim out As New Dictionary(Of String, Func(Of T, Object))
 
             For Each prop As PropertyInfo In properties

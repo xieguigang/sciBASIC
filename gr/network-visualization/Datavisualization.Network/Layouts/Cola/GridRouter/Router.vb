@@ -299,14 +299,14 @@ Namespace Layouts.Cola.GridRouter
         ''' <param name="source">function to retrieve the index of the source node for a given edge</param>
         ''' <param name="target">function to retrieve the index of the target node for a given edge</param>
         ''' <returns>an array giving, for each edge, an array of segments, each segment a pair of points in an array</returns>
-        Public Function routeEdges(Of T As Edge)(edges As T(), nudgeGap As number, source As Func(Of T, number), target As Func(Of T, number)) As Point2D()()()
-            Dim routePaths = edges.Select(Function(e) route(source(e), target(e))).toarray
-            Dim order = orderEdges(routePaths)
-            Dim routes As Point2D()()() = routePaths.select(Function(e) makeSegments(e)).toarray
-            nudgeSegments(routes, "x", "y", order, nudgeGap)
-            nudgeSegments(routes, "y", "x", order, nudgeGap)
-            unreverseEdges(routes, routePaths)
-            Return routes
+        Public Function routeEdges(Of T)(edges As T(), nudgeGap As number, source As Func(Of T, number), target As Func(Of T, number)) As Point2D()()()
+            'Dim routePaths = edges.Select(Function(e) New route(source(e), target(e))).toarray
+            'Dim order = orderEdges(routePaths)
+            'Dim routes As Point2D()()() = routePaths.select(Function(e) makeSegments(e)).toarray
+            'nudgeSegments(routes, "x", "y", order, nudgeGap)
+            'nudgeSegments(routes, "y", "x", order, nudgeGap)
+            'unreverseEdges(routes, routePaths)
+            'Return routes
         End Function
 
         ''' <summary>
@@ -335,7 +335,7 @@ Namespace Layouts.Cola.GridRouter
                         f = edges(j),
                         lcs = New LongestCommonSubsequence(Of Point2D)(e, f, AddressOf Point2D.Equals)
                     Dim u, vi, vj
-                    If (lcs.Length = 0) Then
+                    If (lcs.length = 0) Then
                         Continue For ' no common subpath
                     End If
                     If (lcs.reversed) Then
@@ -345,12 +345,12 @@ Namespace Layouts.Cola.GridRouter
                         ' f.reversed = True
                         lcs = New LongestCommonSubsequence(Of Point2D)(e, f, AddressOf Point2D.Equals)
                     End If
-                    If ((lcs.si <= 0 OrElse lcs.ti <= 0) AndAlso (lcs.si + lcs.Length >= e.Length OrElse lcs.ti + lcs.Length >= f.Length)) Then
+                    If ((lcs.si <= 0 OrElse lcs.ti <= 0) AndAlso (lcs.si + lcs.length >= e.Length OrElse lcs.ti + lcs.length >= f.Length)) Then
                         ' the paths do Not diverge, so make an arbitrary ordering decision
                         edgeOrder.Add((i, j))
                         Continue For
                     End If
-                    If (lcs.si + lcs.Length >= e.Length OrElse lcs.ti + lcs.Length >= f.Length) Then
+                    If (lcs.si + lcs.length >= e.Length OrElse lcs.ti + lcs.length >= f.Length) Then
                         ' if the common subsequence of the
                         ' two edges being considered goes all the way to the
                         ' end of one (Or both) of the lines then we have to
@@ -360,9 +360,9 @@ Namespace Layouts.Cola.GridRouter
                         vj = e(lcs.si - 1)
                         vi = f(lcs.ti - 1)
                     Else
-                        u = e(lcs.si + lcs.Length - 2)
-                        vi = e(lcs.si + lcs.Length)
-                        vj = f(lcs.ti + lcs.Length)
+                        u = e(lcs.si + lcs.length - 2)
+                        vi = e(lcs.si + lcs.length)
+                        vj = f(lcs.ti + lcs.length)
                     End If
 
                     If (isLeft(u, vi, vj)) Then
