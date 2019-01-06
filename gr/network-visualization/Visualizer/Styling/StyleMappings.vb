@@ -156,6 +156,12 @@ Namespace Styling
             Return out
         End Function
 
+        ''' <summary>
+        ''' 离散映射，即一组已知的值映射到另一组已知的值
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="property$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function DiscreteMapping(source As IEnumerable(Of Node), property$) As Map(Of Node, Integer)()
             Dim selector = [property].SelectNodeValue

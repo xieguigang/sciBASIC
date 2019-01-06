@@ -89,7 +89,7 @@ Namespace Styling
                 .selector = selector,
                 .fill = Styling.ColorExpression(style.fill),
                 .stroke = Stroke.TryParse(style.stroke),
-                .size = Styling.SizeExpression(style.size)
+                .size = SizeExpression.Evaluate(style.size)
             }
             Return mapper
         End Function
