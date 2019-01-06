@@ -139,6 +139,18 @@ Namespace Styling
             Return out
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="expression$">
+        ''' + rgb(x,x,x,x)|#xxxxxx|xxxxxxx 所有的节点都使用相同的颜色
+        ''' + 映射类型                
+        '''    1. map(property, Continuous, schemaName, 250)，连续的数值型的映射
+        '''    2. map(property, Continuous, levels, startColor, endColor), 连续数值型的渐变映射
+        '''    3. map(property, Discrete, color1, color2, color3, color4, ...)，分类型的颜色离散映射
+        ''' + val(propertyName) 直接属性映射：即属性的值就是颜色值
+        ''' </param>
+        ''' <returns></returns>
         Public Function ColorExpression(expression$) As Func(Of Node(), Map(Of Node, Color)())
             If expression.IsColorExpression Then
                 Dim color As Color = expression.TranslateColor

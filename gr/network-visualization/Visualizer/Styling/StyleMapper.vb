@@ -103,6 +103,7 @@ Namespace Styling
     ''' <param name="node"></param>
     ''' <returns></returns>
     Public Delegate Function GetSize(node As IEnumerable(Of Node)) As IEnumerable(Of Map(Of Node, Single))
+    Public Delegate Function GetBrush(node As IEnumerable(Of Node)) As IEnumerable(Of Map(Of Node, Brush))
 
     Public Structure StyleCreator
 
