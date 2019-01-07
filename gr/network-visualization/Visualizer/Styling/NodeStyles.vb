@@ -181,9 +181,10 @@ Namespace Styling
                     End With
                 Next
 
-                Dim t = expression.MapExpressionParser ' 解析映射表达式字符串
+                ' 解析映射表达式字符串
+                Dim t = expression.MapExpressionParser
 
-                If t.type.TextEquals("Continuous") Then
+                If t.type = MapperTypes.Continuous Then
                     Dim colors As Color()
 
                     If (Not t.values(0).IsColorExpression) AndAlso t.values(1).MatchPattern(RegexpDouble) Then
@@ -261,15 +262,27 @@ Namespace Styling
         ''' <summary>
         ''' 表达式之中的值不可以有逗号或者括号
         ''' </summary>
-        ''' <param name="expression$"></param>
+        ''' <param name="expression$">
+        ''' + 区间映射 map(word, [min, max])
+        ''' + 离散映射 map(word, val1=map1, val2=map2, ...)
+        ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Function MapExpressionParser(expression$) As (var$, type$, values As String())
+        Public Function MapExpressionParser(expression$) As (var$, type As MapperTypes, values As String())
             Dim t$() = expression _
                 .GetStackValue("(", ")") _
-                .Trim("("c, ")"c) _
-                .Split(","c)
-            Return (t(0), t(1), t.Skip(2).ToArray)
+                .StringSplit("\s*,\s*")
+            Dim values$()
+
+            If t.Length = 3 AndAlso t(1).First = "["c AndAlso t(2).Last = "]"c Then
+                values = New String() {
+                    t(1).Substring(1),
+                    t(2).Substring(0, t(2).Length - 1)
+                }
+                Return (t(0), MapperTypes.Continuous, values)
+            Else
+                Return (t(0), MapperTypes.Discrete, t.Skip(1).ToArray)
+            End If
         End Function
     End Module
 End Namespace
