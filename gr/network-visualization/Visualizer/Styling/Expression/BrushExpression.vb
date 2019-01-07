@@ -1,4 +1,10 @@
 ﻿
+Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
+
 Namespace Styling
 
     Module BrushExpression
@@ -17,7 +23,32 @@ Namespace Styling
         ''' </param>
         ''' <returns></returns>
         Public Function Evaluate(expression As String) As GetBrush
+            If UrlEvaluator.IsURLPattern(expression) Then
+                Return expression.unifyImage
+            Else
+                Throw New SyntaxErrorException(expression)
+            End If
+        End Function
 
+        ''' <summary>
+        ''' 全部都使用同一的图案
+        ''' </summary>
+        ''' <param name="expression"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Private Function unifyImage(expression As String) As GetBrush
+            Dim image As Image = UrlEvaluator.EvaluateAsImage(expression)
+            Dim brush As New TextureBrush(image)
+
+            Return Iterator Function(nodes As IEnumerable(Of Node)) As IEnumerable(Of Map(Of Node, Brush))
+                       For Each n As Node In nodes
+                           Yield New Map(Of Node, Brush) With {
+                               .Key = n,
+                               .Maps = brush
+                           }
+                       Next
+                   End Function
         End Function
     End Module
 End Namespace
