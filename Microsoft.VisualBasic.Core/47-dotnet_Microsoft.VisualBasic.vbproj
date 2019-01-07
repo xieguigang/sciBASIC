@@ -918,11 +918,14 @@
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\BinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeBase.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\Enumerable.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeNode.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLSupports.vb" />
+    <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LCS.vb" />
+    <Compile Include="ComponentModel\Algorithm\DynamicProgramming\LongestCommonSubsequence.vb" />
     <Compile Include="ComponentModel\Algorithm\Levenshtein\DamerauLevenshteinDistance.vb" />
     <Compile Include="ComponentModel\DataSource\DefaultAttribute.vb" />
     <Compile Include="ComponentModel\DataSource\Property\GenericProperty.vb" />
@@ -936,6 +939,7 @@
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Collection\IsNullOrEmptyExtensions.vb" />
+    <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
     <Compile Include="Extensions\Image\Math\Models\Polygon.vb" />
@@ -997,9 +1001,9 @@
     <Compile Include="CommandLine\Reflection\Attributes\ExportAPI.vb" />
     <Compile Include="CommandLine\Interpreters\View\ManualBuilder.vb" />
     <Compile Include="ComponentModel\Algorithm\base\Combination\Combination.vb" />
-    <Compile Include="ComponentModel\Algorithm\DynamicProgramming.vb" />
+    <Compile Include="ComponentModel\Algorithm\DynamicProgramming\DynamicProgramming.vb" />
     <Compile Include="ComponentModel\Algorithm\base\SlideWindow\Extensions.vb" />
-    <Compile Include="ComponentModel\Algorithm\SCS.vb" />
+    <Compile Include="ComponentModel\Algorithm\DynamicProgramming\SCS.vb" />
     <Compile Include="ComponentModel\Count.vb" />
     <Compile Include="ComponentModel\DataSource\Abstract.vb" />
     <Compile Include="ComponentModel\DataSource\Repository\QueryCache.vb" />

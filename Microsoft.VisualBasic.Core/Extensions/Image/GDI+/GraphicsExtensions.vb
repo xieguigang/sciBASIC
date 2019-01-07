@@ -342,6 +342,12 @@ Namespace Imaging
             Return Image.FromStream(stream:=New MemoryStream(rawStream))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function LoadImage(stream As Stream) As Image
+            Return Image.FromStream(stream)
+        End Function
+
         ''' <summary>
         ''' 将图片对象转换为原始的字节流
         ''' </summary>

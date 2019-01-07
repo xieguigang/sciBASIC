@@ -58,7 +58,7 @@ Namespace Language.Python
         ''' <param name="[step]"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function slice(Of T)([set] As IEnumerable(Of T), start%, stop%, Optional step% = 1) As IEnumerable(Of T)
+        Public Iterator Function slice(Of T)([set] As IEnumerable(Of T), start%, Optional stop% = -1, Optional step% = 1) As IEnumerable(Of T)
             Dim array As T() = [set].Skip(start).ToArray
 
             If [stop] < 0 Then

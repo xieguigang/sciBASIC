@@ -42,7 +42,6 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports System.Xml
 
 Namespace Text.Xml
@@ -50,21 +49,11 @@ Namespace Text.Xml
     Public Module Extensions
 
         ''' <summary>
-        ''' 使用这个函数删除xml文本字符串之中的无效的字符
+        ''' 使用这个函数将html文档进行格式化，请注意，目标html文档应该是符合xml语法的
         ''' </summary>
-        ''' <param name="xml$"></param>
+        ''' <param name="html$"></param>
         ''' <returns></returns>
-        <Extension>
-        Public Function StripInvalidCharacters(xml$) As String
-            Dim sb As New StringBuilder(xml)
-
-            Call sb.Replace("&#x8;", ".")
-
-            Return sb.ToString
-        End Function
-
-        <Extension>
-        Public Function FormatHTML(html$) As String
+        <Extension> Public Function FormatHTML(html$) As String
             Dim xml$ = "<?xml version=""1.0""?>" & html
             Dim doc As New XmlDocument
             Dim ms As New MemoryStream

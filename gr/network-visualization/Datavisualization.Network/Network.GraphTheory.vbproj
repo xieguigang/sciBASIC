@@ -388,9 +388,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graph\GraphTree.vb" />
+    <Compile Include="Layouts\Cola\Class1.vb" />
+    <Compile Include="Layouts\Cola\DirectedEdge.vb" />
     <Compile Include="Graph\Selector.vb" />
     <Compile Include="IO\FileStream\Json\json.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
+    <Compile Include="Layouts\Cola\Extensions.vb" />
+    <Compile Include="Layouts\Cola\GridRouter\Models.vb" />
+    <Compile Include="Layouts\Cola\GridRouter\Router.vb" />
     <Compile Include="Layouts\Parameters.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />

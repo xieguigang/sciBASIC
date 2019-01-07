@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::412844ab5bc9da6e838bce79a7b7a4f0, mime\application%json\Parser\JsonParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class JsonParser
-    ' 
-    '         Properties: JSONvalue
-    ' 
-    '         Function: GetParserErrors, Open, OpenJSON, parse, parseArray
-    '                   parseBoolean, parseKey, parseNull, parseNumber, parseObject
-    '                   parseString, parseValue, StripString
-    ' 
-    '         Sub: ClearParserError, skipChar
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class JsonParser
+' 
+'         Properties: JSONvalue
+' 
+'         Function: GetParserErrors, Open, OpenJSON, parse, parseArray
+'                   parseBoolean, parseKey, parseNull, parseNumber, parseObject
+'                   parseString, parseValue, StripString
+' 
+'         Sub: ClearParserError, skipChar
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -55,6 +55,7 @@
 ' version 1.0.0 beta [debugged]
 ' READ ONLY!! Output part is under construction
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 
@@ -96,6 +97,7 @@ Namespace Parser
             End Using
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function OpenJSON(jsonStr As String) As JsonElement
             Return root = parse(jsonStr)
         End Function
@@ -107,8 +109,10 @@ Namespace Parser
         ''' <returns></returns>
         Private Function parse(ByRef str As String) As JsonElement
             Dim index As Long = 1
+
             psErrors = "*"
             skipChar(str, index)
+
             Select Case Mid(str, index, 1)
                 Case "{"
                     Return parseObject(str, index)
@@ -237,8 +241,8 @@ eh:
             Dim chr$, code$
             Dim sb As New StringBuilder
 
-            While Index > 0 AndAlso Index <= Len(str)
-                Chr = Mid(str, Index, 1)
+            While index > 0 AndAlso index <= Len(str)
+                chr = Mid(str, index, 1)
                 Select Case chr
                     Case "\"
                         index += 1

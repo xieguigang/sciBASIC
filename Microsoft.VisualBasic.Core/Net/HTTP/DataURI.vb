@@ -109,6 +109,21 @@ Namespace Net.Http
             Return New DataURI(base64:=TextEncodings.UTF8WithoutBOM.GetBytes(svg).ToBase64String, mine:="image/svg+xml")
         End Function
 
+        ''' <summary>
+        ''' 这个只能够从字符串的特征来初步判断是否是Data URI字符串
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
+        Public Shared Function IsWellFormedUriString(str As String) As Boolean
+            If InStr(str, "data:") <> 1 Then
+                Return False
+            Else
+                ' to do
+            End If
+
+            Return True
+        End Function
+
         Public Shared Function URIParser(uri As String) As DataURI
             Dim t = uri.Split(";"c) _
                 .Select(Function(p) p.StringSplit("[:=,]")) _

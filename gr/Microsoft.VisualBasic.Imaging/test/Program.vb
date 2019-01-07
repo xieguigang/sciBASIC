@@ -79,7 +79,15 @@ Module Program
         Call logo.SaveTo("D:\sciBASIC.txt")
 
         Dim charset = "php.NETPHP".GenerateFontWeights
-        logo = "php.NET".ASCIIImage("font-style: italic; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";", charset)
+        logo = "php.NET".ASCIIImage("font-style: strong; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";", charset)
+
+        Call Console.WriteLine()
+        Call Console.WriteLine(logo)
+
+        Call Console.WriteLine()
+
+        charset = "bioCAD.cloud ".GenerateFontWeights
+        logo = "bioCAD.cloud".ASCIIImage("font-style: normal; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";", charset)
 
         Call Console.WriteLine()
         Call Console.WriteLine(logo)

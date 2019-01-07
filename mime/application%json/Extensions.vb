@@ -50,15 +50,16 @@ Public Module Extensions
     ''' </summary>
     ''' <param name="JsonStr"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ParseJson(JsonStr As String) As JsonElement
-        Dim value As JsonElement = New JsonParser().OpenJSON(JsonStr)
-        Return value
+        Return New JsonParser().OpenJSON(JsonStr)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ParseJsonFile(JsonFile As String) As JsonElement
-        Dim value As JsonElement = New JsonParser().Open(JsonFile)
-        Return value
+        Return New JsonParser().Open(JsonFile)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::949ff0538894dc742d5dd624ff0f6d79, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DynamicProgramming\LCS_Length.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module LCS_Length
-    ' 
-    '         Function: __equals, MaxLengthSubString, MaxSet
-    ' 
-    '         Sub: __LCS
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module LCS_Length
+' 
+'         Function: __equals, MaxLengthSubString, MaxSet
+' 
+'         Sub: __LCS
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace DynamicProgramming
+Namespace ComponentModel.Algorithm.DynamicProgramming
 
     ''' <summary>
     ''' Longest Common Subsequence
     ''' </summary>
-    Public Module LCS_Length
+    Public Module LongestCommonSubsequenceExtension
 
         ''' <summary>
         ''' 比较两个字符串之间的最长的子串
@@ -62,6 +62,7 @@ Namespace DynamicProgramming
             Return MaxSet(a.ToArray, b.ToArray, AddressOf __equals)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function __equals(a As Char, b As Char) As Boolean
             Return a = b
         End Function

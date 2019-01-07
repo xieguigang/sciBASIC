@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::05e59390398e54608cf7ea8de00ebadf, Microsoft.VisualBasic.Core\Language\Value\Numeric\int.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class int
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: (+2 Overloads) CompareTo, Equals, (+2 Overloads) ToString
-    '         Operators: (+2 Overloads) -, (+2 Overloads) /, (+2 Overloads) +, (+4 Overloads) <, <<
-    '                    <=, (+4 Overloads) >, >=
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class int
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: (+2 Overloads) CompareTo, Equals, (+2 Overloads) ToString
+'         Operators: (+2 Overloads) -, (+2 Overloads) /, (+2 Overloads) +, (+4 Overloads) <, <<
+'                    <=, (+4 Overloads) >, >=
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -88,6 +88,19 @@ Namespace Language
                 Throw New Exception($"Miss-match of type:  {GetType(int).FullName} --> {type.FullName}")
             End If
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator IsTrue(n As int) As Boolean
+            Return Not n Is Nothing AndAlso n.Value <> 0
+        End Operator
+
+        Public Shared Operator IsFalse(n As int) As Boolean
+            If n Then
+                Return False
+            Else
+                Return True
+            End If
+        End Operator
 
         ''' <summary>
         ''' n &lt; value &lt;= n2
@@ -196,6 +209,17 @@ Namespace Language
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(n As int) As Integer
             Return n.Value
+        End Operator
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(x As int) As Integer
+            Dim i As Integer = x.Value
+            x.Value -= 1
+            Return -i
         End Operator
 
         ''' <summary>

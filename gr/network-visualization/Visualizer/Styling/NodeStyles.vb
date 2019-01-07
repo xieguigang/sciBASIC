@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::6e4c17725a3acad275e7a2f429d7d6f9, gr\network-visualization\Visualizer\Styling\NodeStyles.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module NodeStyles
-    ' 
-    '         Function: ColorExpression, ColorFromTypes, (+2 Overloads) DegreeAsSize, MapExpressionParser, SizeExpression
-    '                   ValDegreeAsSize
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module NodeStyles
+' 
+'         Function: ColorExpression, ColorFromTypes, (+2 Overloads) DegreeAsSize, MapExpressionParser, SizeExpression
+'                   ValDegreeAsSize
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,13 +64,15 @@ Namespace Styling
             Return nodes.ValDegreeAsSize(getDegree, sizeRange)
         End Function
 
-        <Extension> Public Function DegreeAsSize(nodes As IEnumerable(Of Node), sizeRange As DoubleRange, Optional degree$ = names.REFLECTION_ID_MAPPING_DEGREE) As Map(Of Node, Double)()
+        <Extension>
+        Public Function DegreeAsSize(nodes As IEnumerable(Of Node), sizeRange As DoubleRange, Optional degree$ = names.REFLECTION_ID_MAPPING_DEGREE) As Map(Of Node, Double)()
             Dim valDegree = Function(node As Node)
                                 Return node.Data(degree).ParseDouble
                             End Function
             Return nodes.DegreeAsSize(
                 getDegree:=valDegree,
-                sizeRange:=sizeRange)
+                sizeRange:=sizeRange
+            )
         End Function
 
         ''' <summary>
@@ -137,6 +139,18 @@ Namespace Styling
             Return out
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="expression$">
+        ''' + rgb(x,x,x,x)|#xxxxxx|xxxxxxx 所有的节点都使用相同的颜色
+        ''' + 映射类型                
+        '''    1. map(property, Continuous, schemaName, 250)，连续的数值型的映射
+        '''    2. map(property, Continuous, levels, startColor, endColor), 连续数值型的渐变映射
+        '''    3. map(property, Discrete, color1, color2, color3, color4, ...)，分类型的颜色离散映射
+        ''' + val(propertyName) 直接属性映射：即属性的值就是颜色值
+        ''' </param>
+        ''' <returns></returns>
         Public Function ColorExpression(expression$) As Func(Of Node(), Map(Of Node, Color)())
             If expression.IsColorExpression Then
                 Dim color As Color = expression.TranslateColor
@@ -256,74 +270,6 @@ Namespace Styling
                 .Trim("("c, ")"c) _
                 .Split(","c)
             Return (t(0), t(1), t.Skip(2).ToArray)
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="expression$">
-        ''' + 单词
-        ''' + 数字
-        ''' + map表达式：
-        '''    + ``map(单词, Continuous, min, max)``
-        '''    + ``map(单词, Discrete, size1, size2, size3, ...)``
-        ''' </param>
-        ''' <returns></returns>
-        Public Function SizeExpression(expression$) As Func(Of Node(), Map(Of Node, Double)())
-            If expression.MatchPattern(Casting.RegexpDouble) Then
-                Dim r# = Val(expression)
-                Return Function(nodes)
-                           Return nodes _
-                               .Select(Function(n)
-                                           Return New Map(Of Node, Double) With {
-                                               .Key = n,
-                                               .Maps = r
-                                           }
-                                       End Function) _
-                               .ToArray
-                       End Function
-            ElseIf expression.MatchPattern("map\(.+\)", RegexICSng) Then
-                Dim t = expression.MapExpressionParser
-
-                If t.type.TextEquals("Continuous") Then
-                    Dim range As DoubleRange = $"{t.values(0)},{t.values(1)}"
-                    Dim selector = t.var.SelectNodeValue
-                    Dim getValue = Function(node As Node) Val(selector(node))
-                    Return Function(nodes)
-                               Return nodes.ValDegreeAsSize(getValue, range)
-                           End Function
-                Else
-                    Dim sizeList#() = t.values _
-                        .Select(AddressOf Val) _
-                        .ToArray
-                    Return Function(nodes)
-                               Dim maps = nodes.DiscreteMapping(t.var)
-                               Dim out = maps _
-                                   .Select(Function(map)
-                                               Return New Map(Of Node, Double) With {
-                                                   .Key = map.Key,
-                                                   .Maps = sizeList(map.Maps)
-                                               }
-                                           End Function) _
-                                   .ToArray
-                               Return out
-                           End Function
-                End If
-
-            Else
-                ' 单词
-                Dim selector = expression.SelectNodeValue
-                Return Function(nodes)
-                           Return nodes _
-                               .Select(Function(n)
-                                           Return New Map(Of Node, Double) With {
-                                               .Key = n,
-                                               .Maps = Val(selector(n))
-                                           }
-                                       End Function) _
-                               .ToArray
-                       End Function
-            End If
         End Function
     End Module
 End Namespace

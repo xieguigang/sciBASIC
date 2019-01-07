@@ -400,7 +400,6 @@
     <Compile Include="FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb" />
     <Compile Include="FuzzyCMeans\Algorithm\Utils.vb" />
     <Compile Include="Clustering.vb" />
-    <Compile Include="DynamicProgramming\LCS_Length.vb" />
     <Compile Include="FuzzyCMeans\Entity.vb" />
     <Compile Include="Interface\DFL\I_FactorElement.vb" />
     <Compile Include="Interface\DFL\Node.vb" />

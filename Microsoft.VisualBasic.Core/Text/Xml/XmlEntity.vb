@@ -72,6 +72,37 @@ Namespace Text.Xml
                 .ToString
         End Function
 
+        ReadOnly invalidUtf8Escapes$() = {
+            "&#x0;", "&#x1;", "&#x2;", "&#x3;", "&#x4;", "&#x5;", "&#x6;", "&#x7;", "&#x8;", "&#x9;",
+            "&#xa;", "&#xb;", "&#xc;", "&#xd;", "&#xe;", "&#xf;",
+            "&#x10;", "&#x11;", "&#x12;", "&#x13;", "&#x14;", "&#x15;", "&#x16;", "&#x17;", "&#x18;", "&#x19;",
+            "&#x1a;", "&#x1b;", "&#x1c;", "&#x1d;", "&#x1e;", "&#x1f;"
+        }
+
+        Sub New()
+            invalidUtf8Escapes = invalidUtf8Escapes.AsList + invalidUtf8Escapes.Select(Function(c) c.ToUpper.Replace("X", "x"))
+        End Sub
+
+        ''' <summary>
+        ''' Removes all of the invalid utf8 xml code from the given string.
+        ''' (使用这个函数删除xml文本字符串之中的无效的UTF8转义字符，这个函数对转义字符的大小写不敏感)
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' http://7is7.com/software/chars.html
+        ''' </remarks>
+        <Extension>
+        Public Function StripInvalidUTF8Code(str As String) As String
+            With New StringBuilder(str)
+                For Each c As String In invalidUtf8Escapes
+                    Call .Replace(c, "")
+                Next
+
+                Return .ToString
+            End With
+        End Function
+
         ''' <summary>
         ''' 处理HTML之中的特殊符号的转义
         ''' </summary>
