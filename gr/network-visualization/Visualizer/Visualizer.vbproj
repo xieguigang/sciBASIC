@@ -260,6 +260,7 @@
     <Compile Include="Extensions.vb" />
     <Compile Include="Canvas.vb" />
     <Compile Include="Styling\Expression\BrushExpression.vb" />
+    <Compile Include="Styling\Expression\Syntax.vb" />
     <Compile Include="Styling\Expression\SizeExpression.vb" />
     <Compile Include="Styling\StyleJSON.vb" />
     <Compile Include="Styling\EdgeStyles.vb" />

@@ -209,7 +209,7 @@ Namespace Styling
                     End If
 
                     Dim range As DoubleRange = $"0,{colors.Length}"
-                    Dim selector = t.var.SelectNodeValue
+                    Dim selector = t.propertyName.SelectNodeValue
                     Dim getValue = Function(node As Node) Val(selector(node))
                     Return Function(nodes)
                                Dim index = nodes.ValDegreeAsSize(getValue, range) ' 在这里将属性值映射为等级的index，后面就可以直接引用颜色谱之中的结果了
@@ -231,7 +231,7 @@ Namespace Styling
                                 End Function) _
                         .ToArray
                     Return Function(nodes)
-                               Dim maps = nodes.DiscreteMapping(t.var)
+                               Dim maps = nodes.DiscreteMapping(t.propertyName)
                                Dim out = maps _
                                    .Select(Function(map)
                                                Return New Map(Of Node, Color) With {
@@ -256,32 +256,6 @@ Namespace Styling
                                        End Function) _
                                .ToArray
                        End Function
-            End If
-        End Function
-
-        ''' <summary>
-        ''' 表达式之中的值不可以有逗号或者括号
-        ''' </summary>
-        ''' <param name="expression$">
-        ''' + 区间映射 map(word, [min, max])
-        ''' + 离散映射 map(word, val1=map1, val2=map2, ...)
-        ''' </param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function MapExpressionParser(expression$) As (var$, type As MapperTypes, values As String())
-            Dim t$() = expression _
-                .GetStackValue("(", ")") _
-                .StringSplit("\s*,\s*")
-            Dim values$()
-
-            If t.Length = 3 AndAlso t(1).First = "["c AndAlso t(2).Last = "]"c Then
-                values = New String() {
-                    t(1).Substring(1),
-                    t(2).Substring(0, t(2).Length - 1)
-                }
-                Return (t(0), MapperTypes.Continuous, values)
-            Else
-                Return (t(0), MapperTypes.Discrete, t.Skip(1).ToArray)
             End If
         End Function
     End Module

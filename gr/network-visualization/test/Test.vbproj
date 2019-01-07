@@ -135,6 +135,7 @@
     </Compile>
     <Compile Include="drawTest.vb" />
     <Compile Include="layoutTest.vb" />
+    <Compile Include="expressionTest.vb" />
     <Compile Include="visualEffectsTest.vb" />
     <Compile Include="Test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

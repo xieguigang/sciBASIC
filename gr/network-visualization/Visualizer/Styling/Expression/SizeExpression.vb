@@ -41,7 +41,7 @@ Namespace Styling
 
             If t.type = MapperTypes.Continuous Then
                 Dim range As DoubleRange = $"{t.values(0)},{t.values(1)}"
-                Dim selector = t.var.SelectNodeValue
+                Dim selector = t.propertyName.SelectNodeValue
                 Dim getValue = Function(node As Node) Val(selector(node))
                 Return Function(nodes)
                            Return nodes.ValDegreeAsSize(getValue, range)
@@ -51,7 +51,7 @@ Namespace Styling
                     .Select(AddressOf Val) _
                     .ToArray
                 Return Function(nodes)
-                           Dim maps = nodes.DiscreteMapping(t.var)
+                           Dim maps = nodes.DiscreteMapping(t.propertyName)
                            Dim out = maps _
                                .Select(Function(map)
                                            Return New Map(Of Node, Double) With {
