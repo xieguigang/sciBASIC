@@ -157,7 +157,6 @@ Public Module NetworkVisualizer
     Public Function DrawImage(net As NetworkGraph,
                               Optional canvasSize$ = "1024,1024",
                               Optional padding$ = g.DefaultPadding,
-                              Optional styling As StyleMapper = Nothing,
                               Optional background$ = "white",
                               Optional defaultColor As Color = Nothing,
                               Optional displayId As Boolean = True,
