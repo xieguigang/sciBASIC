@@ -56,6 +56,16 @@ Namespace Styling
                 }
             End If
         End Function
+
+        ''' <summary>
+        ''' 因为可能会存在前导或者后置的空格，所以在这里就直接做模式匹配而不是绝对模式匹配了
+        ''' </summary>
+        ''' <param name="expression"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function IsMapExpression(expression As String) As Boolean
+            Return expression.MatchPattern("map\(.+\)", RegexICSng)
+        End Function
     End Module
 
     Public Structure MapExpression

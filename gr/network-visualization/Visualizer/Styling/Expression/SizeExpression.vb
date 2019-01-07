@@ -23,7 +23,7 @@ Namespace Styling
         Public Function Evaluate(expression As String) As GetSize
             If expression.MatchPattern(Casting.RegexpDouble) Then
                 Return expression.unifySize
-            ElseIf expression.MatchPattern("map\(.+\)", RegexICSng) Then
+            ElseIf IsMapExpression(expression) Then
                 Return expression.mappingSize
             Else
                 Return expression.passthroughSize
@@ -43,6 +43,7 @@ Namespace Styling
                 Dim range As DoubleRange = $"{t.values(0)},{t.values(1)}"
                 Dim selector = t.propertyName.SelectNodeValue
                 Dim getValue = Function(node As Node) Val(selector(node))
+
                 Return Function(nodes)
                            Return nodes.ValDegreeAsSize(getValue, range)
                        End Function
@@ -50,6 +51,7 @@ Namespace Styling
                 Dim sizeList#() = t.values _
                     .Select(AddressOf Val) _
                     .ToArray
+
                 Return Function(nodes)
                            Dim maps = nodes.DiscreteMapping(t.propertyName)
                            Dim out = maps _
