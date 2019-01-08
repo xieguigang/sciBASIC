@@ -87,7 +87,7 @@ Namespace Styling
         Private Shared Function __createSelector(selector$, style As NodeStyle) As StyleCreator
             Dim mapper As New StyleCreator With {
                 .selector = selector,
-                .fill = Styling.ColorExpression(style.fill),
+                .fill = BrushExpression.Evaluate(style.fill),
                 .stroke = Stroke.TryParse(style.stroke),
                 .size = SizeExpression.Evaluate(style.size)
             }
@@ -122,7 +122,7 @@ Namespace Styling
         ''' <summary>
         ''' 对对象进行填充的样式画笔
         ''' </summary>
-        Dim fill As Func(Of Node(), Map(Of Node, Color)())
+        Dim fill As GetBrush
         ''' <summary>
         ''' 主要是针对于节点对象的大小直径的获取函数
         ''' </summary>
