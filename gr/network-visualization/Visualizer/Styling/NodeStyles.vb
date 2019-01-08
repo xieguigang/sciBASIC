@@ -85,31 +85,7 @@ Namespace Styling
         ''' <returns></returns>
         <Extension>
         Public Function ColorFromTypes(nodes As IEnumerable(Of Node), schema$) As Map(Of Node, Color)()
-            Dim data As Node() = nodes.ToArray
-            Dim nodeTypes$() = data _
-                .Select(Function(o) o.Data(names.REFLECTION_ID_MAPPING_NODETYPE)) _
-                .ToArray
-            Dim types$() = nodeTypes _
-                .Distinct _
-                .ToArray
-            Dim colors As Dictionary(Of String, Color) =
-                Designer _
-                .GetColors(term:=schema, n:=types.Length) _
-                .SeqIterator _
-                .ToDictionary(Function(i) types(i),
-                              Function(color) color.value)
-            Dim out As Map(Of Node, Color)() =
-                nodeTypes _
-                .SeqIterator _
-                .Select(Function(type)
-                            Return New Map(Of Node, Color) With {
-                                .Key = data(type),
-                                .Maps = colors(type.value)
-                            }
-                        End Function) _
-                .ToArray
 
-            Return out
         End Function
 
         ''' <summary>

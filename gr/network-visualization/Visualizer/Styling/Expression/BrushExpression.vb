@@ -7,6 +7,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS.Parser
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -78,11 +79,57 @@ Namespace Styling
 
             If model.type = MapperTypes.Continuous Then
                 ' 区间映射只能够是颜色映射了
-                Return model.colorRangeMapper
+                If model.values(1).TextEquals("category") Then
+                    Return model.categoryMapper
+                Else
+                    Return model.colorRangeMapper
+                End If
             Else
                 ' 颜色和图案都可以具有离散映射
                 Return model.discreteMapper
             End If
+        End Function
+
+        ''' <summary>
+        ''' 差不多相当于离散映射的一种变种
+        ''' </summary>
+        ''' <param name="model">
+        ''' map(propertyName, [patternName, category])
+        ''' </param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function categoryMapper(model As MapExpression) As GetBrush
+            Dim selector = model.propertyName.SelectNodeValue
+            Dim schema$ = model.values(0)
+            Dim key As String
+            Dim brush As Brush
+
+            Return Iterator Function(nodes)
+                       Dim data As Node() = nodes.ToArray
+                       ' 与节点集合之中的元素一一对应的
+                       Dim nodeTypes$() = data _
+                           .Select(Function(o) CStrSafe(selector(o))) _
+                           .ToArray
+                       ' 去重之后用于生成字典的键名的
+                       Dim types$() = nodeTypes _
+                           .Distinct _
+                           .ToArray
+                       Dim colors As Dictionary(Of String, SolidBrush) = Designer _
+                           .GetColors(term:=schema, n:=types.Length) _
+                           .SeqIterator _
+                           .ToDictionary(Function(i) types(i),
+                                         Function(color) New SolidBrush(color.value))
+
+                       For i As Integer = 0 To data.Length - 1
+                           key = nodeTypes(i)
+                           brush = colors.TryGetValue(key, [default]:=Brushes.Black)
+
+                           Yield New Map(Of Node, Brush) With {
+                               .Key = data(i),
+                               .Maps = brush
+                           }
+                       Next
+                   End Function
         End Function
 
         ''' <summary>
@@ -96,14 +143,19 @@ Namespace Styling
             Dim brush As Brush
             Dim selector = model.propertyName.SelectNodeValue
 
-            For Each val As NamedValue(Of String) In model.values.Select(Function(s) s.GetTagValue("=", trim:=True))
-                If val.Value.IsColorExpression Then
-                    brush = New SolidBrush(val.Value.TranslateColor)
+            For Each p As NamedValue(Of String) In model _
+                .values _
+                .Select(Function(s)
+                            Return s.GetTagValue("=", trim:=True)
+                        End Function)
+
+                If p.Value.IsColorExpression Then
+                    brush = New SolidBrush(p.Value.TranslateColor)
                 Else
-                    brush = New TextureBrush(UrlEvaluator.EvaluateAsImage(val.Value))
+                    brush = New TextureBrush(UrlEvaluator.EvaluateAsImage(p.Value))
                 End If
 
-                brushList.Add(val.Name, brush)
+                brushList.Add(p.Name, brush)
             Next
 
             Return Iterator Function(nodes)
@@ -121,6 +173,11 @@ Namespace Styling
                    End Function
         End Function
 
+        ''' <summary>
+        ''' 区间映射，也可能是category映射
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <returns></returns>
         <Extension>
         Private Function colorRangeMapper(model As MapExpression) As GetBrush
             Dim patternName$ = model.values(0)
