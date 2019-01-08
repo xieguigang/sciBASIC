@@ -1,4 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Styling
@@ -65,6 +69,32 @@ Namespace Styling
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsMapExpression(expression As String) As Boolean
             Return expression.MatchPattern("map\(.+\)", RegexICSng)
+        End Function
+
+        ''' <summary>
+        ''' 将节点列表进行区间映射，这个函数返回``[节点值，目标区间值]``
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="nodes"></param>
+        ''' <param name="eval"></param>
+        ''' <param name="range">将节点的大小映射到这个半径大小的区间之内</param>
+        ''' <returns>``[节点值，目标区间值]``， 这个函数返回来的序列之中的元素的顺序是和函数参数所输入的节点序列之中的元素顺序是一致的</returns>
+        <Extension> Public Function RangeTransform(Of T As Class)(nodes As IEnumerable(Of T), eval As Func(Of T, Double), range As DoubleRange) As Map(Of T, Double)()
+            Dim array As T() = nodes.ToArray
+            Dim degrees#() = array.Select(eval).ToArray
+            Dim size#() = degrees.RangeTransform([to]:=range)
+            Dim out As Map(Of T, Double)() =
+                array _
+                .SeqIterator _
+                .Select(Function(x)
+                            Return New Map(Of T, Double) With {
+                                .Key = x.value,
+                                .Maps = size(x)
+                            }
+                        End Function) _
+                .ToArray
+
+            Return out
         End Function
     End Module
 

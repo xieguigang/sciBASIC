@@ -2,7 +2,6 @@
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Styling
@@ -45,24 +44,28 @@ Namespace Styling
                 Dim getValue = Function(node As Node) Val(selector(node))
 
                 Return Function(nodes)
-                           Return nodes.ValDegreeAsSize(getValue, range)
+                           Return nodes.RangeTransform(getValue, range)
                        End Function
             Else
-                Dim sizeList#() = t.values _
-                    .Select(AddressOf Val) _
-                    .ToArray
+                Dim sizeList As Dictionary(Of String, Single) = t _
+                    .values _
+                    .Select(Function(s) s.GetTagValue("=", trim:=True)) _
+                    .ToDictionary(Function(p) p.Name,
+                                  Function(p) CSng(Val(p.Value)))
+                Dim selector = t.propertyName.SelectNodeValue
+                Dim key$
+                Dim value#
 
-                Return Function(nodes)
-                           Dim maps = nodes.DiscreteMapping(t.propertyName)
-                           Dim out = maps _
-                               .Select(Function(map)
-                                           Return New Map(Of Node, Double) With {
-                                               .Key = map.Key,
-                                               .Maps = sizeList(map.Maps)
-                                           }
-                                       End Function) _
-                               .ToArray
-                           Return out
+                Return Iterator Function(nodes)
+                           For Each n As Node In nodes
+                               key = selector(n)
+                               value = sizeList.TryGetValue(key)
+
+                               Yield New Map(Of Node, Single) With {
+                                   .Key = n,
+                                   .Maps = value
+                               }
+                           Next
                        End Function
             End If
         End Function

@@ -8,6 +8,11 @@ Namespace HTML.CSS.Parser
 
     Public Module UrlEvaluator
 
+        ''' <summary>
+        ''' ``url(xxxxx)``
+        ''' </summary>
+        ''' <param name="expression"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsURLPattern(expression As String) As Boolean
             Return Strings.Trim(expression).IsPattern("url\(.+\)", RegexICSng)

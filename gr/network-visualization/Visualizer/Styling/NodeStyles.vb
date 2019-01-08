@@ -61,7 +61,7 @@ Namespace Styling
         <Extension> Public Function DegreeAsSize(nodes As IEnumerable(Of Node),
                                                  getDegree As Func(Of Node, Double),
                                                  sizeRange As DoubleRange) As Map(Of Node, Double)()
-            Return nodes.ValDegreeAsSize(getDegree, sizeRange)
+            Return nodes.RangeTransform(getDegree, sizeRange)
         End Function
 
         <Extension>
@@ -73,33 +73,6 @@ Namespace Styling
                 getDegree:=valDegree,
                 sizeRange:=sizeRange
             )
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <typeparam name="T"></typeparam>
-        ''' <param name="nodes"></param>
-        ''' <param name="getDegree"></param>
-        ''' <param name="sizeRange">将节点的大小映射到这个半径大小的区间之内</param>
-        ''' <returns></returns>
-        <Extension> Public Function ValDegreeAsSize(Of T)(nodes As IEnumerable(Of T),
-                                                          getDegree As Func(Of T, Double),
-                                                          sizeRange As DoubleRange) As Map(Of T, Double)()
-            Dim array As T() = nodes.ToArray
-            Dim degrees#() = array.Select(getDegree).ToArray
-            Dim size#() = degrees.RangeTransform([to]:=sizeRange)
-            Dim out As Map(Of T, Double)() =
-                array _
-                .SeqIterator _
-                .Select(Function(x)
-                            Return New Map(Of T, Double) With {
-                                .Key = x.value,
-                                .Maps = size(x)
-                            }
-                        End Function) _
-                .ToArray
-            Return out
         End Function
 
         ''' <summary>
@@ -212,7 +185,7 @@ Namespace Styling
                     Dim selector = t.propertyName.SelectNodeValue
                     Dim getValue = Function(node As Node) Val(selector(node))
                     Return Function(nodes)
-                               Dim index = nodes.ValDegreeAsSize(getValue, range) ' 在这里将属性值映射为等级的index，后面就可以直接引用颜色谱之中的结果了
+                               Dim index = nodes.RangeTransform(getValue, range) ' 在这里将属性值映射为等级的index，后面就可以直接引用颜色谱之中的结果了
                                Dim out = index _
                                    .Select(Function(map)
                                                Return New Map(Of Node, Color) With {
