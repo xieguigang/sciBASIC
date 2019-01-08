@@ -2,6 +2,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
@@ -91,7 +92,33 @@ Namespace Styling
         ''' <returns></returns>
         <Extension>
         Private Function discreteMapper(model As MapExpression) As GetBrush
+            Dim brushList As New Dictionary(Of String, Brush)
+            Dim brush As Brush
+            Dim selector = model.propertyName.SelectNodeValue
 
+            For Each val As NamedValue(Of String) In model.values.Select(Function(s) s.GetTagValue("=", trim:=True))
+                If val.Value.IsColorExpression Then
+                    brush = New SolidBrush(val.Value.TranslateColor)
+                Else
+                    brush = New TextureBrush(UrlEvaluator.EvaluateAsImage(val.Value))
+                End If
+
+                brushList.Add(val.Name, brush)
+            Next
+
+            Return Iterator Function(nodes)
+                       Dim key As String
+
+                       For Each node As Node In nodes
+                           key = CStrSafe(selector(node))
+                           brush = brushList.TryGetValue(key, default:=Brushes.Black)
+
+                           Yield New Map(Of Node, Brush) With {
+                               .Key = node,
+                               .Maps = brush
+                           }
+                       Next
+                   End Function
         End Function
 
         <Extension>
