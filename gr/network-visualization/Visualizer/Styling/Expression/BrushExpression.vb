@@ -23,6 +23,7 @@ Namespace Styling
         ''' 
         ''' + url(filepath/data uri) 所有节点都使用统一的图案
         ''' + map(propertyName, val1=url1, val2=url2, val3=url3)  离散映射
+        ''' + map(propertyName, [url(directory), *.png])  passthrough映射，属性值作为文件名，从directory之中读取图像文件，后面必须要跟文件拓展名
         ''' + rgb(x,x,x,x)|#xxxxx|xxxxx 颜色表达式，所有的节点都使用相同的颜色
         ''' + map(propertyName, val1=color1, val2=color2) 离散映射
         ''' + map(propertyName, [patternName, n]) 区间映射
@@ -69,6 +70,32 @@ Namespace Styling
         End Function
 
         ''' <summary>
+        ''' 属性名作为文件名，从指定的文件夹之中读取图片文件的passthrough映射
+        ''' </summary>
+        ''' <param name="model"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function imagePassthroughMapper(model As MapExpression) As GetBrush
+            Dim directory$ = model.values(Scan0).GetStackValue("(", ")").Trim(" "c, "'"c)
+            Dim extensionName$ = model.values(1).Trim(" "c, "."c, "*"c)
+            Dim selector = model.propertyName.SelectNodeValue
+            Dim filePath As String
+            Dim brush As Brush
+
+            Return Iterator Function(nodes As IEnumerable(Of Node))
+                       For Each n As Node In nodes
+                           filePath = $"{directory}/{selector(n)}.{extensionName}"
+                           brush = New TextureBrush(filePath.LoadImage)
+
+                           Yield New Map(Of Node, Brush) With {
+                               .Key = n,
+                               .Maps = brush
+                           }
+                       Next
+                   End Function
+        End Function
+
+        ''' <summary>
         ''' 在这里处理图案映射和颜色映射，对于图案映射而言，是没有区间映射的
         ''' </summary>
         ''' <param name="expression"></param>
@@ -81,6 +108,8 @@ Namespace Styling
                 ' 区间映射只能够是颜色映射了
                 If model.values(1).TextEquals("category") Then
                     Return model.categoryMapper
+                ElseIf UrlEvaluator.IsURLPattern(model.values.First) Then
+                    Return model.imagePassthroughMapper
                 Else
                     Return model.colorRangeMapper
                 End If
