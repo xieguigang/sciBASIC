@@ -1,97 +1,84 @@
 ﻿#Region "Microsoft.VisualBasic::7750c4d7d9c91c65254cf0017cf26532, Data_science\Mathematica\Math\DataFittings\Outlier.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Outlier
-    ' 
-    '     Function: OrderSequenceOutlierIndex, OutlierIndex, removesByIndex, RemovesOutlier
-    ' 
-    ' /********************************************************************************/
+' Module Outlier
+' 
+'     Function: OrderSequenceOutlierIndex, OutlierIndex, removesByIndex, RemovesOutlier
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
 
 Public Module Outlier
 
     ''' <summary>
-    ''' 返回所给定的数据点序列之中的异常点的下标值
+    ''' 这个函数只适用于线性回归的异常点自动删除操作，算法原理是：
+    ''' 
+    ''' 每一个点，减去最小值之后，可以得到一个从原点出发的二维向量
+    ''' 这个二维向量可以计算出一个相对于X轴的夹角
+    ''' 由于是线性回归，所以所有的正常点的夹角应该是几乎一样的
+    ''' 对于异常点而言，则可能会明显变大或者变小，这个时候使用四分位数就可以很容易的检测出来了
     ''' </summary>
-    ''' <param name="seq">采用四分位数方法进行异常点的计算分析</param>
-    ''' <returns></returns>
-    <Extension> Public Iterator Function OutlierIndex(seq As Vector) As IEnumerable(Of Integer)
-        Dim quartile = seq.Quartile(altPosition:=True)
-        Dim out = seq.Outlier(quartile).Outlier
-
-        For Each x As SeqValue(Of Double) In seq.SeqIterator
-            For Each o In out
-                If Math.Abs(x.value - o) <= 0.000001 Then
-                    Yield x.i
-                    Exit For
-                End If
-            Next
-        Next
-    End Function
-
-    ''' <summary>
-    ''' 尝试自动删除标准曲线之中的异常点
-    ''' </summary>
-    ''' <param name="index"></param>
-    ''' <param name="x"></param>
-    ''' <param name="y"></param>
+    ''' <param name="points"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function RemovesOutlier(index As IEnumerable(Of Integer), x As Vector, y As Vector) As (X As Vector, Y As Vector)
-        With index.OrderBy(Self(Of Integer)).ToArray
-            x = .removesByIndex(x.AsList)
-            y = .removesByIndex(y.AsList)
-        End With
+    Public Iterator Function DeleteOutlier(points As IEnumerable(Of PointF)) As IEnumerable(Of PointF)
+        Dim lineVector = points.ToArray
+        Dim minX = Aggregate p In lineVector Into Min(p.X)
+        Dim minY = Aggregate p In lineVector Into Min(p.Y)
+        Dim angles = lineVector.Select(Function(p) Trigonometric.GetAngle(minX, minY, p.X, p.Y)).AsVector
+        Dim quartile = angles.Quartile
+        Dim outliers = angles.Outlier(quartile).Outlier
 
-        Return (x, y)
-    End Function
+        For i As Integer = 0 To lineVector.Length - 1
+            Dim a = angles(i)
 
-    <Extension>
-    Private Function removesByIndex(index%(), list As List(Of Double)) As Vector
-        For i As Integer = 0 To index.Length - 1
-            Dim ind% = index(i) - i
-            list -= ind
+            If outliers.Any(Function(x) Math.Abs(x - a) <= 0.001) Then
+                ' 这是一个异常点
+            Else
+                ' 返回正常点
+                Yield lineVector(i)
+            End If
         Next
-
-        Return list.AsVector
     End Function
 
 #Region "Order sequence outlier"

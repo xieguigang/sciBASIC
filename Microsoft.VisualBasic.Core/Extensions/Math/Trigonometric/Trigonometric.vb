@@ -48,6 +48,9 @@ Imports sys = System.Math
 
 Namespace Math
 
+    ''' <summary>
+    ''' 三角函数拓展模块
+    ''' </summary>
     Public Module Trigonometric
 
         ''' <summary>
@@ -109,9 +112,16 @@ Namespace Math
         ''' <param name="p1"></param>
         ''' <param name="p2"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetAngle(p1 As Point, p2 As Point) As Double
-            Dim xDiff As Double = p2.X - p1.X
-            Dim yDiff As Double = p2.Y - p1.Y
+            Return GetAngle(p1.X, p1.Y, p2.X, p2.Y)
+        End Function
+
+        Public Function GetAngle(x1!, y1!, x2!, y2!) As Double
+            Dim xDiff As Double = x2 - x1
+            Dim yDiff As Double = y2 - y1
+
             Return 180 - (ToDegrees(sys.Atan2(yDiff, xDiff)) - 90)
         End Function
 
