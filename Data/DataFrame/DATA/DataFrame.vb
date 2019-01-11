@@ -46,7 +46,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -65,6 +64,13 @@ Namespace DATA
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(list As IEnumerable(Of EntityObject))
             entityList = list.ToDictionary
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub TagFieldName(tag$, fieldName$)
+            Call MappingsHelper _
+                .TagFieldName(entityList.Values, tag, fieldName) _
+                .ToArray
         End Sub
 
         ''' <summary>
@@ -122,13 +128,15 @@ Namespace DATA
         End Function
 
         ''' <summary>
-        ''' ``cbind`` operation
+        ''' ``cbind`` operation.
+        ''' （通过这个操作符进行两个数据集的合并，不会出现数据遗漏）
         ''' </summary>
         ''' <param name="data">unique</param>
         ''' <param name="appends">multiple</param>
         ''' <returns></returns>
         Public Shared Operator +(data As DataFrame, appends As IEnumerable(Of EntityObject)) As DataFrame
             For Each x As EntityObject In appends
+                ' 如果对象列表之中存在append，则进行属性合并
                 If data.entityList.ContainsKey(x.ID) Then
                     With data.entityList(x.ID)
                         For Each [property] In x.Properties
@@ -136,6 +144,7 @@ Namespace DATA
                         Next
                     End With
                 Else
+                    ' 当对象不存在的时候，则直接进行追加
                     data.entityList += x
                 End If
             Next
@@ -144,7 +153,7 @@ Namespace DATA
         End Operator
 
         ''' <summary>
-        ''' 这是一个可伸缩的Linq方法
+        ''' 这是一个可伸缩的Linq方法，可能会出现数据遗漏，即<paramref name="unique"/>数据集之中的数据可能会在合并之后出现缺失
         ''' </summary>
         ''' <param name="multiple"></param>
         ''' <param name="unique"></param>

@@ -77,6 +77,12 @@ Namespace CommandLine.Reflection
             Return entry
         End Function
 
+        ''' <summary>
+        ''' 大小写不敏感
+        ''' </summary>
+        ''' <param name="assembly"></param>
+        ''' <param name="entryPoint$"></param>
+        ''' <returns></returns>
         Public Shared Function GetDllMethod(assembly As Assembly, entryPoint$) As MethodInfo
             Dim entry As NamedValue(Of String) = GetPoint(entryPoint)
             Dim types As Type() = GetTypesHelper(assm:=assembly)

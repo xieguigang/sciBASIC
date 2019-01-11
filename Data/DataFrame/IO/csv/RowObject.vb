@@ -78,6 +78,10 @@ Namespace IO
             End If
         End Sub
 
+        Sub New(ParamArray columns$())
+            buffer = columns.AsList
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>

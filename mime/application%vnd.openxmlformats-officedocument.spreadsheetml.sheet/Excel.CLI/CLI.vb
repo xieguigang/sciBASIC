@@ -128,6 +128,44 @@ Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
             .CLICode
     End Function
 
+    <ExportAPI("/union")>
+    <Description("")>
+    <Usage("/union /in <*.csv.DIR> [/tag.field <null> /out <export.csv>]")>
+    Public Function Union(args As CommandLine) As Integer
+        Dim [in] As String = args("/in")
+        Dim out$ = args("/out") Or ([in].Split("*"c).First.TrimDIR & ".union.csv")
+        Dim source$()
+        Dim tagField As String = args("/tag.field")
+
+        If InStr([in], "*") > 0 Then
+            Dim t$() = [in].Split("*"c)
+            Dim dir$ = t(Scan0)
+            Dim file$ = t(1)
+
+            source = dir.ListDirectory() _
+                .Select(Function(folder) $"{folder}/{file}") _
+                .ToArray
+        Else
+            source = (ls - l - r - "*.csv" <= [in]).ToArray
+        End If
+
+        Dim unionData As DATA.DataFrame = DATA.DataFrame.Load(source(Scan0))
+
+        If Not tagField.StringEmpty Then
+            unionData.TagFieldName(source(Scan0).BaseName, tagField)
+        End If
+
+        For Each file As String In source.Skip(1)
+            If tagField.StringEmpty Then
+                unionData += EntityObject.LoadDataSet(file)
+            Else
+                unionData += MappingsHelper.TagFieldName(EntityObject.LoadDataSet(file), file.BaseName, tagField)
+            End If
+        Next
+
+        Return unionData.SaveTable(out).CLICode
+    End Function
+
     ''' <summary>
     ''' 指定文件夹之中的csv文件按照文件名中第一个小数点前面的单词作为分组的key，进行分组合并
     ''' </summary>

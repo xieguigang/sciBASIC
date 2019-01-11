@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Imaging
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports gdiImage = System.Drawing.Image
@@ -6,6 +7,16 @@ Imports gdiImage = System.Drawing.Image
 Namespace HTML.CSS.Parser
 
     Public Module UrlEvaluator
+
+        ''' <summary>
+        ''' ``url(xxxxx)``
+        ''' </summary>
+        ''' <param name="expression"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function IsURLPattern(expression As String) As Boolean
+            Return Strings.Trim(expression).IsPattern("url\(.+\)", RegexICSng)
+        End Function
 
         ''' <summary>
         ''' 暂时还不支持SVG图像

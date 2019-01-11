@@ -4,7 +4,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 
-Public Module Canvas
+Public Module CanvasDrawer
 
     <Extension>
     Public Function DrawImage(net As NetworkGraph,

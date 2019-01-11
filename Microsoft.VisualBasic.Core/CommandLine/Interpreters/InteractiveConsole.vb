@@ -76,10 +76,14 @@ Namespace CommandLine
             Dim input As Value(Of String) = ""
             Dim ps1 As PS1 = PS1.Fedora12
 
+            Call MyBase.Execute(args:=New CommandLine With {.Name = "?"})
+
+            Call Console.WriteLine()
+            Call Console.WriteLine()
             Call Console.Write(ps1.ToString)
             Call Console.Write(" ")
 
-            Do While Not (input = Console.ReadLine).TextEquals("quit()")
+            Do While Not (input = Console.ReadLine).TextEquals("exit")
                 With input.Value
                     If Not .StringEmpty Then
                         Call RunAppInternal(CLITools.TryParse(.ByRef))
@@ -89,6 +93,8 @@ Namespace CommandLine
                 Call Console.Write(ps1.ToString)
                 Call Console.Write(" ")
             Loop
+
+            Call Console.WriteLine("Bye bye.")
 
             Return 0
         End Function
@@ -103,6 +109,15 @@ Namespace CommandLine
                 Case "ls"   ' list directory
 
                     Dim directory$ = If(cmd.Tokens.ElementAtOrDefault(1), App.CurrentDirectory)
+
+                    If Not directory.DirectoryExists Then
+                        Console.ForegroundColor = ConsoleColor.Red
+                        Console.WriteLine($"Directory ""{directory}"" not exist on your filesystem!")
+                        Console.ForegroundColor = ConsoleColor.White
+
+                        Return
+                    End If
+
                     Dim directories = FileIO.FileSystem.GetDirectories(directory)
                     Dim files = FileIO.FileSystem.GetFiles(directory)
 
@@ -132,6 +147,8 @@ Namespace CommandLine
                 Case "help" ' view commandline help 
 
                     Call MyBase.Execute(args:=New CommandLine With {.Name = "?"})
+                    Call Console.WriteLine()
+                    Call Console.WriteLine()
 
                 Case "/@set"
 

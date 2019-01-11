@@ -312,6 +312,7 @@ Namespace CommandLine.ManView
                 Call sb.AppendLine()
                 Call sb.AppendLine("   " & $"1. You can using ""{AssemblyName} ??<commandName>"" for getting more details command help.")
                 Call sb.AppendLine("   " & $"2. Using command ""{AssemblyName} /CLI.dev [---echo]"" for CLI pipeline development.")
+                Call sb.AppendLine("   " & $"3. Using command ""{AssemblyName} /i"" for enter interactive console mode.")
             End If
 
             Return sb.ToString.TrimEnd(ASCII.CR, ASCII.LF, " "c)

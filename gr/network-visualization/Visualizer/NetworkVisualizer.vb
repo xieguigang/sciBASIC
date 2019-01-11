@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::93d72b5a9da31c5d09924e65cd6179b0, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module NetworkVisualizer
-    ' 
-    '     Properties: BackgroundColor, DefaultEdgeColor
-    ' 
-    '     Function: __scale, AutoScaler, CentralOffsets, DrawImage, GetBounds
-    '               GetDisplayText
-    ' 
-    ' /********************************************************************************/
+' Module NetworkVisualizer
+' 
+'     Properties: BackgroundColor, DefaultEdgeColor
+' 
+'     Function: __scale, AutoScaler, CentralOffsets, DrawImage, GetBounds
+'               GetDisplayText
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -157,7 +157,6 @@ Public Module NetworkVisualizer
     Public Function DrawImage(net As NetworkGraph,
                               Optional canvasSize$ = "1024,1024",
                               Optional padding$ = g.DefaultPadding,
-                              Optional styling As StyleMapper = Nothing,
                               Optional background$ = "white",
                               Optional defaultColor As Color = Nothing,
                               Optional displayId As Boolean = True,
@@ -409,48 +408,7 @@ Public Module NetworkVisualizer
                 Next
 
                 If displayId Then
-
-                    ' 使用退火算法计算出节点标签文本的位置
-                    Call d3js _
-                        .labeler _
-                        .Anchors(labels.Select(Function(x) x.anchor)) _
-                        .Labels(labels.Select(Function(x) x.label)) _
-                        .Size(frameSize) _
-                        .Start(nsweeps:=2000, showProgress:=False)
-
-                    For Each label In labels
-                        With label
-                            If Not labelColorAsNodeColor Then
-                                br = Brushes.Black
-                            Else
-                                br = .color
-                                br = New SolidBrush(DirectCast(br, SolidBrush).Color.Dark(0.005))
-                            End If
-
-                            With g.MeasureString(.label.text, .style)
-                                rect = New Rectangle(
-                                    label.label.X,
-                                    label.label.Y,
-                                    .Width,
-                                    .Height
-                                )
-                            End With
-
-                            Dim path As GraphicsPath = Imaging.GetStringPath(
-                                .label.text,
-                                g.DpiX,
-                                rect.ToFloat,
-                                .style,
-                                StringFormat.GenericTypographic
-                            )
-
-                            Call g.DrawString(.label.text, .style, br, .label.X, .label.Y)
-
-                            ' 绘制轮廓（描边）
-                            ' Call g.FillPath(br, path)
-                            ' Call g.DrawPath(New Pen(DirectCast(br, SolidBrush).Color.Dark(0.005), 4), path)
-                        End With
-                    Next
+                    Call g.drawLabels(labels, frameSize, labelColorAsNodeColor)
                 End If
             End Sub
 
@@ -458,4 +416,58 @@ Public Module NetworkVisualizer
 
         Return g.GraphicsPlots(frameSize, margin, background, plotInternal)
     End Function
+
+    ''' <summary>
+    ''' 使用退火算法计算出节点标签文本的位置
+    ''' </summary>
+    ''' 
+    <Extension>
+    Private Sub drawLabels(g As IGraphics,
+                           labels As List(Of (label As Label, anchor As Anchor, style As Font, color As Brush)),
+                           frameSize As Size,
+                           labelColorAsNodeColor As Boolean)
+        Dim br As Brush
+        Dim rect As Rectangle
+
+        Call d3js _
+            .labeler _
+            .Anchors(labels.Select(Function(x) x.anchor)) _
+            .Labels(labels.Select(Function(x) x.label)) _
+            .Size(frameSize) _
+            .Start(nsweeps:=2000, showProgress:=False)
+
+        For Each label In labels
+            With label
+                If Not labelColorAsNodeColor Then
+                    br = Brushes.Black
+                Else
+                    br = .color
+                    br = New SolidBrush(DirectCast(br, SolidBrush).Color.Dark(0.005))
+                End If
+
+                With g.MeasureString(.label.text, .style)
+                    rect = New Rectangle(
+                        label.label.X,
+                        label.label.Y,
+                        .Width,
+                        .Height
+                    )
+                End With
+
+                Dim path As GraphicsPath = Imaging.GetStringPath(
+                    .label.text,
+                    g.DpiX,
+                    rect.ToFloat,
+                    .style,
+                    StringFormat.GenericTypographic
+                )
+
+                Call g.DrawString(.label.text, .style, br, .label.X, .label.Y)
+
+                ' 绘制轮廓（描边）
+                ' Call g.FillPath(br, path)
+                ' Call g.DrawPath(New Pen(DirectCast(br, SolidBrush).Color.Dark(0.005), 4), path)
+            End With
+        Next
+    End Sub
 End Module
