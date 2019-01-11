@@ -86,6 +86,14 @@ Namespace NeuralNetwork.StoreProcedure
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 神经网络会要求输入的属性值之间是可以直接进行比较的,
+        ''' 所以为了能够直接进行比较,
+        ''' 在这里将sample的每一个属性都按列归一化为``[0,1]``之间的结果
+        ''' </summary>
+        ''' <param name="samples"></param>
+        ''' <param name="names"></param>
+        ''' <returns></returns>
         Public Shared Function CreateFromSamples(samples As IEnumerable(Of Sample), names As IEnumerable(Of String)) As NormalizeMatrix
             With samples.ToArray
                 Dim len% = .First.status.Length
@@ -95,6 +103,7 @@ Namespace NeuralNetwork.StoreProcedure
                 Dim [property] As Double()
 
                 For i As Integer = 0 To len - 1
+                    ' 遍历每一列的数据,将每一列的数据都执行归一化
                     index = i
                     [property] = .Select(Function(sample) sample.status(index)).ToArray
                     matrix += New SampleDistribution([property])

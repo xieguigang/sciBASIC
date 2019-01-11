@@ -66,8 +66,8 @@ Namespace NeuralNetwork
 
     Public Module Helpers
 
-        Public Const MaxEpochs As Integer = 10000
-        Public Const MinimumError As Double = 0.01
+        Public Property MaxEpochs As Integer = 10000
+        Public Property MinimumError As Double = 0.01
 
         ''' <summary>
         ''' <see cref="Sigmoid"/> as default
@@ -86,7 +86,7 @@ Namespace NeuralNetwork
         <Extension>
         Public Sub Train(ByRef neuron As Network, data As Sample(),
                          Optional trainingType As TrainingType = TrainingType.Epoch,
-                         Optional minErr As Double = MinimumError,
+                         Optional minErr As Double = 0.01,
                          Optional parallel As Boolean = False)
 
             If trainingType = TrainingType.Epoch Then

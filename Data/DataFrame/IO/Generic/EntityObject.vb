@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::e67b2765a3a0bd73cb8b31bcb16d0a3b, Data\DataFrame\IO\Generic\EntityObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class EntityObject
-    ' 
-    '         Properties: ID
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: ContainsIDField, Copy, GetIDList, (+4 Overloads) LoadDataSet, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class EntityObject
+' 
+'         Properties: ID
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: ContainsIDField, Copy, GetIDList, (+4 Overloads) LoadDataSet, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -145,6 +145,14 @@ Namespace IO
             End If
         End Function
 
+        ''' <summary>
+        ''' 获取数据集之中的被映射为ID列的值列表
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <param name="uidMap$"></param>
+        ''' <param name="tsv"></param>
+        ''' <param name="ignoreMapErrors"></param>
+        ''' <returns></returns>
         Public Shared Function GetIDList(path$, Optional uidMap$ = Nothing, Optional tsv As Boolean = False, Optional ignoreMapErrors As Boolean = False) As String()
             Dim table As File = If(tsv, File.LoadTsv(path), File.Load(path))
             Dim getIDsDefault = Function()
@@ -182,21 +190,56 @@ Namespace IO
         ''' 函数总是会从这一个参数返回第一列的标题，如果不存在ID列的话可以用这一列来作为ID（可能会出现意想不到的错误）
         ''' </param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function ContainsIDField(path$,
                                                Optional tsv As Boolean = False,
                                                Optional encoding As Encoding = Nothing,
                                                Optional ByRef firstColumn$ = Nothing) As Boolean
-            Dim header$()
+            Return readHeaders(
+                    path,
+                    tsv,
+                    encoding,
+                    firstColumn
+                ).Any(Function(s) s = NameOf(EntityObject.ID))
+        End Function
 
+        Private Shared Function readHeaders(path$, tsv As Boolean, encoding As Encoding, ByRef firstColumn$) As String()
+            Dim headers$()
+
+            ' 从文件的第一行数据之中得到列标题列表
+            ' 即表头字符串集合
             If Not tsv Then
-                header = New RowObject(path.ReadFirstLine(encoding)).ToArray
+                headers = New RowObject(path.ReadFirstLine(encoding)).ToArray
             Else
-                header = path.ReadFirstLine(encoding).Split(ASCII.TAB)
+                headers = path _
+                    .ReadFirstLine(encoding) _
+                    .Split(ASCII.TAB)
             End If
 
-            firstColumn = header(Scan0)
+            firstColumn = headers(Scan0)
 
-            Return Not header.FirstOrDefault(Function(s) s = NameOf(EntityObject.ID)) Is Nothing
+            Return headers
+        End Function
+
+        ''' <summary>
+        ''' 如果文件头之中存在ID列,则返回除了ID列以外的名称集合
+        ''' 如果文件头之中不存在ID列的话,则返回跳过第一列的名称的集合
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <param name="tsv"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
+        Public Shared Function GetPropertyNames(path$, Optional tsv As Boolean = False, Optional encoding As Encoding = Nothing) As String()
+            Dim headers$() = readHeaders(path, tsv, encoding, Nothing)
+
+            If headers.Any(Function(s) s = NameOf(EntityObject.ID)) Then
+                Return headers _
+                    .Where(Function(s) Not s = NameOf(EntityObject.ID)) _
+                    .ToArray
+            Else
+                Return headers.Skip(1).ToArray
+            End If
         End Function
 
         ''' <summary>
