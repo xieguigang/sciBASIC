@@ -84,19 +84,6 @@ Namespace NeuralNetwork
         End Function
 
         <Extension>
-        Public Sub Train(ByRef neuron As Network, data As Sample(),
-                         Optional trainingType As TrainingType = TrainingType.Epoch,
-                         Optional minErr As Double = 0.01,
-                         Optional parallel As Boolean = False)
-
-            If trainingType = TrainingType.Epoch Then
-                Call neuron.Train(data, Helpers.MaxEpochs, parallel)
-            Else
-                Call neuron.Train(data, minimumError:=minErr, parallel:=parallel)
-            End If
-        End Sub
-
-        <Extension>
         Friend Function PopulateAllSynapses(neuron As Neuron) As IEnumerable(Of Synapse)
             Return neuron.InputSynapses + neuron.OutputSynapses.AsList
         End Function
