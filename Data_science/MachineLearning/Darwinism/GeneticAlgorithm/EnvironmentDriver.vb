@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF
 
@@ -13,6 +14,10 @@ Namespace Darwinism.GAF
         ''' <returns></returns>
         Public Property Iterations As Integer
         Public Property Threshold As Double
+
+        Sub New(ga As GeneticAlgorithm(Of Chr))
+            Me.core = ga
+        End Sub
 
         Public Overrides Sub Train(Optional parallel As Boolean = False)
             terminated = False
@@ -68,6 +73,7 @@ Namespace Darwinism.GAF
             Console.WriteLine($"{NameOf(outPrint.iter)}{vbTab}{NameOf(outPrint.fit)}{vbTab}{NameOf(outPrint.chromosome)}")
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{iter}{vbTab}{fit}{vbTab}{chromosome}"
         End Function
