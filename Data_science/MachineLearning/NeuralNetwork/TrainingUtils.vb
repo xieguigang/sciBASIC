@@ -174,7 +174,7 @@ Namespace NeuralNetwork
                 For Each dataSet As Sample In dataSets
                     Call NeuronNetwork.ForwardPropagate(dataSet.status, parallel)
                     Call NeuronNetwork.BackPropagate(dataSet.target, parallel)
-                    Call errors.Add(CalculateError(dataSet.target))
+                    Call errors.Add(CalculateError(NeuronNetwork, dataSet.target))
                 Next
 
                 [error] = errors.Average()
@@ -189,8 +189,8 @@ Namespace NeuralNetwork
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function CalculateError(ParamArray targets As Double()) As Double
-            Return NeuronNetwork.OutputLayer _
+        Friend Shared Function CalculateError(neuronNetwork As Network, targets As Double()) As Double
+            Return neuronNetwork.OutputLayer _
                 .Neurons _
                 .Select(Function(n, i)
                             Return Math.Abs(n.CalculateError(targets(i)))

@@ -3,6 +3,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
 Namespace NeuralNetwork.Accelerator
 
@@ -71,6 +72,7 @@ Namespace NeuralNetwork.Accelerator
 
         Dim network As Network
         Dim synapses As NamedCollection(Of Synapse)()
+        Dim dataSets As Sample()
 
         Sub New(network As Network, synapses As NamedCollection(Of Synapse)())
             Me.network = network
@@ -78,7 +80,21 @@ Namespace NeuralNetwork.Accelerator
         End Sub
 
         Public Function Calculate(chromosome As WeightVector) As Double Implements Fitness(Of WeightVector).Calculate
+            For i As Integer = 0 To chromosome.weights.Length - 1
+                For Each s In synapses(i)
+                    s.Weight = chromosome.weights(i)
+                Next
+            Next
 
+            Dim errors As New List(Of Double)
+
+            For Each dataSet As Sample In dataSets
+                Call network.ForwardPropagate(dataSet.status, False)
+                Call network.BackPropagate(dataSet.target, False)
+                Call errors.Add(TrainingUtils.CalculateError(network, dataSet.target))
+            Next
+
+            Return errors.Average
         End Function
     End Class
 End Namespace
