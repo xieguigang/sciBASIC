@@ -74,6 +74,12 @@ Namespace NeuralNetwork
             End Get
         End Property
 
+        Public ReadOnly Property TrainingSet As Sample()
+            Get
+                Return _dataSets.ToArray
+            End Get
+        End Property
+
         ReadOnly _dataSets As New List(Of Sample)
         ReadOnly network As Network
 

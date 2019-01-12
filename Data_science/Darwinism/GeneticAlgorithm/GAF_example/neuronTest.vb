@@ -76,7 +76,7 @@ Module neuronTest
         Call test.Add({0, 1, 1, 0, 0, 0}, {1, 1, 1})
 
         ' Call test.Train()
-        Call test.NeuronNetwork.RunGAAccelerator
+        Call test.NeuronNetwork.RunGAAccelerator(test.TrainingSet)
 
         Dim classes1 = test.NeuronNetwork.Compute(0, 0, 0, 1, 1, 1)
         Dim classes2 = test.NeuronNetwork.Compute(1, 0, 0, 1, 1, 1)

@@ -10,15 +10,15 @@ Namespace NeuralNetwork.Accelerator
     Public Module GAExtensions
 
         <Extension>
-        Public Sub RunGAAccelerator(network As Network)
+        Public Sub RunGAAccelerator(network As Network, trainingSet As Sample(), Optional populationSize% = 1000)
             Dim synapses = network.PopulateAllSynapses _
                 .GroupBy(Function(s) s.ToString) _
                 .Select(Function(sg)
                             Return New NamedCollection(Of Synapse)(sg.Key, sg.ToArray)
                         End Function) _
                 .ToArray
-            Dim population As Population(Of WeightVector) = New WeightVector(synapses).InitialPopulation(5000)
-            Dim fitness As Fitness(Of WeightVector) = New Fitness(network, synapses)
+            Dim population As Population(Of WeightVector) = New WeightVector(synapses).InitialPopulation(populationSize)
+            Dim fitness As Fitness(Of WeightVector) = New Fitness(network, synapses, trainingSet)
             Dim ga As New GeneticAlgorithm(Of WeightVector)(population, fitness)
             Dim engine As New EnvironmentDriver(Of WeightVector)(ga) With {
                 .Iterations = 10000,
@@ -45,6 +45,10 @@ Namespace NeuralNetwork.Accelerator
                 Next
             End If
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return ""
+        End Function
 
         Public Function Crossover(another As WeightVector) As IEnumerable(Of WeightVector) Implements Chromosome(Of WeightVector).Crossover
             Dim thisClone As WeightVector = Me.Clone()
@@ -74,7 +78,8 @@ Namespace NeuralNetwork.Accelerator
         Dim synapses As NamedCollection(Of Synapse)()
         Dim dataSets As Sample()
 
-        Sub New(network As Network, synapses As NamedCollection(Of Synapse)())
+        Sub New(network As Network, synapses As NamedCollection(Of Synapse)(), trainingSet As Sample())
+            Me.dataSets = trainingSet
             Me.network = network
             Me.synapses = synapses
         End Sub
