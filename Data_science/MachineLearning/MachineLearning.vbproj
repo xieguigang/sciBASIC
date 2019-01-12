@@ -289,6 +289,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Darwinism\GeneticAlgorithm\EnvironmentDriver.vb" />
     <Compile Include="IterationReporter.vb" />
     <Compile Include="Darwinism\DifferentialEvolution.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Fitness.vb" />
@@ -296,8 +297,6 @@
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\MemoryDump.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\FitnessHelper.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb" />
-    <Compile Include="Darwinism\GeneticAlgorithm\Helper\ListenerHelper.vb" />
-    <Compile Include="Darwinism\GeneticAlgorithm\IterartionListener.vb" />
     <Compile Include="Darwinism\GeneticAlgorithm\Population.vb" />
     <Compile Include="Darwinism\Models\Chromosome.vb" />
     <Compile Include="Darwinism\Models\FitnessPool.vb" />
