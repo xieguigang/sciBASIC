@@ -73,7 +73,7 @@ Namespace NeuralNetwork
         End Sub
 
         Public Overrides Function ToString() As String
-
+            Return $"{InputNeuron.Guid}=>{OutputNeuron.Guid}"
         End Function
     End Class
 End Namespace

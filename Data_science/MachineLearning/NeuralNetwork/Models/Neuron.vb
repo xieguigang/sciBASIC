@@ -88,15 +88,18 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
         Public Sub New(Optional active As IActivationFunction = Nothing, Optional id As int = Nothing)
-            Static defaultID As DefaultValue(Of String) = "X"
-
             InputSynapses = {}
             OutputSynapses = {}
             Bias = Helpers.GetRandom()
             Value = Helpers.GetRandom
             BiasDelta = Helpers.GetRandom
             activation = active Or defaultActivation
-            Guid = id?.Hex Or defaultID
+
+            If Not id Is Nothing Then
+                Guid = (id + 1).Hex
+            Else
+                Guid = GetHashCode().ToHexString
+            End If
         End Sub
 
         ''' <summary>
