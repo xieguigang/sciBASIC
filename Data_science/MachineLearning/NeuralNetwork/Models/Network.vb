@@ -57,7 +57,7 @@ Namespace NeuralNetwork
     ''' <summary>
     ''' https://github.com/trentsartain/Neural-Network
     ''' </summary>
-    Public Class Network
+    Public Class Network : Inherits Model
 
 #Region "-- Properties --"
         Public Property LearnRate As Double

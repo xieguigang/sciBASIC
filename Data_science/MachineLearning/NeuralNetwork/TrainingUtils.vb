@@ -58,7 +58,7 @@ Namespace NeuralNetwork
     ''' <summary>
     ''' Tools for training the neuron network
     ''' </summary>
-    Public Class TrainingUtils
+    Public Class TrainingUtils : Inherits IterationReporter(Of Network)
 
         Public Property TrainingType As TrainingType = TrainingType.Epoch
         Public Property MinError As Double = Helpers.MinimumError
@@ -130,12 +130,8 @@ Namespace NeuralNetwork
         ''' <param name="parallel">
         ''' 小型的人工神经网络的训练,并不建议使用并行化
         ''' </param>
-        Public Sub Train(Optional parallel As Boolean = False, Optional normalize As Boolean = False)
+        Public Overrides Sub Train(Optional parallel As Boolean = False)
             Dim trainingDataSet As Sample() = _dataSets.ToArray
-
-            If normalize Then
-                trainingDataSet = trainingDataSet.NormalizeSamples
-            End If
 
             If TrainingType = TrainingType.Epoch Then
                 Call Train(trainingDataSet, Helpers.MaxEpochs, parallel)
@@ -145,7 +141,7 @@ Namespace NeuralNetwork
         End Sub
 
 #Region "-- Training --"
-        Public Sub Train(dataSets As Sample(), numEpochs As Integer, Optional parallel As Boolean = False)
+        Public Overloads Sub Train(dataSets As Sample(), numEpochs As Integer, Optional parallel As Boolean = False)
             Using progress As New ProgressBar("Training ANN...")
                 Dim tick As New ProgressProvider(numEpochs)
                 Dim msg$
@@ -160,11 +156,15 @@ Namespace NeuralNetwork
 
                     msg = $"Iterations: [{i}/{numEpochs}], Err={errors.Average}"
                     progress.SetProgress(tick.StepProgress, msg)
+
+                    If Not reporter Is Nothing Then
+                        Call reporter(i, errors.Average, NeuronNetwork)
+                    End If
                 Next
             End Using
         End Sub
 
-        Public Sub Train(dataSets As Sample(), minimumError As Double, Optional parallel As Boolean = False)
+        Public Overloads Sub Train(dataSets As Sample(), minimumError As Double, Optional parallel As Boolean = False)
             Dim [error] = 1.0
             Dim numEpochs = 0
 
@@ -181,6 +181,10 @@ Namespace NeuralNetwork
                 numEpochs += 1
 
                 Call $"{numEpochs}{ASCII.TAB}Error:={[error]}{ASCII.TAB}progress:={((minimumError / [error]) * 100).ToString("F2")}%".__DEBUG_ECHO
+
+                If Not reporter Is Nothing Then
+                    Call reporter(numEpochs, errors.Average, NeuronNetwork)
+                End If
             End While
         End Sub
 
@@ -203,8 +207,7 @@ Namespace NeuralNetwork
         ''' <param name="expectedResults">The corrects output</param>
         Public Sub Corrects(input As Double(), convertedResults As Double(), expectedResults As Double(),
                             Optional train As Boolean = True,
-                            Optional parallel As Boolean = False,
-                            Optional normalize As Boolean = False)
+                            Optional parallel As Boolean = False)
 
             Dim offendingDataSet As Sample = _dataSets _
                 .FirstOrDefault(Function(x)
@@ -217,7 +220,7 @@ Namespace NeuralNetwork
             End If
 
             If train Then
-                Call Me.Train(parallel, normalize)
+                Call Me.Train(parallel)
             End If
         End Sub
 

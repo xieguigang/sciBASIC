@@ -59,8 +59,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace NeuralNetwork
 
@@ -87,51 +85,6 @@ Namespace NeuralNetwork
         Friend Function PopulateAllSynapses(neuron As Neuron) As IEnumerable(Of Synapse)
             Return neuron.InputSynapses + neuron.OutputSynapses.AsList
         End Function
-
-        ''' <summary>
-        ''' 将所有的属性结果都归一化为相同等级的``[0,1]``区间内的数
-        ''' </summary>
-        ''' <param name="samples"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function NormalizeSamples(samples As Sample()) As Sample()
-            ' 每一行数据不可以直接比较
-            ' 但是每一列数据是可以直接做比较的
-            Call samples.Select(Function(s) s.status).ToArray.normalizeMatrix
-            Call samples.Select(Function(s) s.target).ToArray.normalizeMatrix
-
-            Return samples
-        End Function
-
-        <Extension>
-        Private Sub normalizeMatrix(ByRef matrix As Double()())
-            Dim m As Integer = matrix(Scan0).Length
-            Dim index%
-            Dim v As Vector
-            Dim val As Double
-            Dim avg As Double
-
-            For i As Integer = 0 To m - 1
-                index = i
-                v = matrix.Select(Function(x) x(index)).AsVector
-                v = v / v.Max
-                avg = v.Average
-
-                If avg.IsNaNImaginary Then
-                    avg = 0
-                End If
-
-                For j As Integer = 0 To matrix.Length - 1
-                    val = v.Item(j)
-
-                    If val.IsNaNImaginary Then
-                        val = avg
-                    End If
-
-                    matrix(j)(index) = val
-                Next
-            Next
-        End Sub
     End Module
 
     Public Enum TrainingType
