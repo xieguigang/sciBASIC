@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 
 Namespace Darwinism.GAF
@@ -29,9 +30,14 @@ Namespace Darwinism.GAF
                     Call core.Evolve()
                 End If
 
-                If Not reporter Is Nothing Then
-                    Call reporter(i, core.GetFitness(core.Best), core)
-                End If
+                With core.GetFitness(core.Best)
+                    If Not reporter Is Nothing Then
+                        Call reporter(i, .ByRef, core)
+                    End If
+                    If .CompareTo(Threshold) < 0 Then
+                        Exit For
+                    End If
+                End With
             Next
         End Sub
 

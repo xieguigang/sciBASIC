@@ -61,11 +61,13 @@ Public Class Demo
         Dim population As Population(Of MyVector) = New MyVector().InitialPopulation(5000)
         Dim fitness As Fitness(Of MyVector) = New MyVectorFitness()
         Dim ga As New GeneticAlgorithm(Of MyVector)(population, fitness)
-        '   Dim out As New List(Of outPrint)
+        Dim engine As New EnvironmentDriver(Of MyVector)(ga) With {
+            .Iterations = 10000,
+            .Threshold = 0.005
+        }
 
-        ga.AddDefaultListener '(Sub(x) Call out.Add(x))
-        ga.Evolve(5000)
-        '   out.SaveTo("./outPrint.csv")
+        Call engine.AttachReporter(Sub(i, e, g) EnvironmentDriver(Of MyVector).CreateReport(i, e, g).ToString.__DEBUG_ECHO)
+        Call engine.Train()
 
         Pause()
     End Sub
