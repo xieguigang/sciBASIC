@@ -268,11 +268,19 @@ Namespace Darwinism.GAF.ODEs
                     .y0 = fitness.y0
                 })
 #End If
-            Call ga.AddDefaultListener(Sub(x)
-                                           Call out.Add(x)
-                                           Call print(x, ga.Best.vars.Select(Function(v) New var(v)))
-                                       End Sub, threshold)
-            Call ga.Evolve(evolIterations%)
+            Dim reporter As New EnvironmentDriver(Of ParameterVector)(ga) With {
+                .Iterations = evolIterations,
+                .Threshold = threshold
+            }
+
+            Call reporter _
+                .AttachReporter(Sub(i, fit, environment)
+                                    Dim output = EnvironmentDriver(Of ParameterVector).CreateReport(i, fit, environment)
+
+                                    Call out.Add(output)
+                                    Call print(output, ga.Best.vars.Select(Function(v) New var(v)))
+                                End Sub) _
+                .Train()
 
             outPrint = out
 #If DEBUG Then
@@ -498,12 +506,19 @@ Namespace Darwinism.GAF.ODEs
                 driver,
                 randomGenerator)
             Dim out As New List(Of outPrint)
+            Dim reporter As New EnvironmentDriver(Of ParameterVector)(ga) With {
+                .Iterations = evolIterations,
+                .Threshold = threshold
+            }
 
-            Call ga.AddDefaultListener(Sub(x)
-                                           Call out.Add(x)
-                                           Call print(x, ga.Best.vars.Select(Function(v) New var(v)))
-                                       End Sub, threshold)
-            Call ga.Evolve(evolIterations%)
+            Call reporter _
+                .AttachReporter(Sub(i, fit, envir)
+                                    Dim output = EnvironmentDriver(Of ParameterVector).CreateReport(i, fit, envir)
+
+                                    Call out.Add(output)
+                                    Call print(output, ga.Best.vars.Select(Function(v) New var(v)))
+                                End Sub) _
+                .Train()
 
             outPrint = out
 #If DEBUG Then
