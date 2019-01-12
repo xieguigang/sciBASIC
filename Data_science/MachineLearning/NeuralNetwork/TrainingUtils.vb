@@ -50,6 +50,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.Text
 
 Namespace NeuralNetwork
 
@@ -137,6 +139,57 @@ Namespace NeuralNetwork
 
             Call Helpers.Train(NeuronNetwork, trainingDataSet, TrainingType, minErr:=MinError, parallel:=parallel)
         End Sub
+
+#Region "-- Training --"
+        Public Sub Train(dataSets As Sample(), numEpochs As Integer, Optional parallel As Boolean = False)
+            Using progress As New ProgressBar("Training ANN...")
+                Dim tick As New ProgressProvider(numEpochs)
+                Dim msg$
+                Dim errors As New List(Of Double)()
+
+                For i As Integer = 0 To numEpochs - 1
+                    For Each dataSet As Sample In dataSets
+                        Call NeuronNetwork.ForwardPropagate(dataSet.status, parallel)
+                        Call NeuronNetwork.BackPropagate(dataSet.target, parallel)
+                        Call errors.Add(CalculateError(dataSet.target))
+                    Next
+
+                    msg = $"Iterations: [{i}/{numEpochs}], Err={errors.Average}"
+                    progress.SetProgress(tick.StepProgress, msg)
+                Next
+            End Using
+        End Sub
+
+        Public Sub Train(dataSets As Sample(), minimumError As Double, Optional parallel As Boolean = False)
+            Dim [error] = 1.0
+            Dim numEpochs = 0
+
+            While [error] > minimumError AndAlso numEpochs < Integer.MaxValue
+                Dim errors As New List(Of Double)()
+
+                For Each dataSet As Sample In dataSets
+                    Call NeuronNetwork.ForwardPropagate(dataSet.status, parallel)
+                    Call NeuronNetwork.BackPropagate(dataSet.target, parallel)
+                    Call errors.Add(CalculateError(dataSet.target))
+                Next
+
+                [error] = errors.Average()
+                numEpochs += 1
+
+                Call $"{numEpochs}{ASCII.TAB}Error:={[error]}{ASCII.TAB}progress:={((minimumError / [error]) * 100).ToString("F2")}%".__DEBUG_ECHO
+            End While
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function CalculateError(ParamArray targets As Double()) As Double
+            Return NeuronNetwork.OutputLayer _
+                .Neurons _
+                .Select(Function(n, i)
+                            Return Math.Abs(n.CalculateError(targets(i)))
+                        End Function) _
+                .Sum()
+        End Function
+#End Region
 
         ''' <summary>
         ''' 
