@@ -1,50 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::91fd0f9eaa4c0b944c343e903bd2f92a, Data_science\MachineLearning\NeuralNetwork\Models\Neuron.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Neuron
-    ' 
-    '         Properties: Bias, BiasDelta, Gradient, InputSynapses, OutputSynapses
-    '                     Value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: CalculateError, CalculateGradient, CalculateValue, ToString, UpdateWeights
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Neuron
+' 
+'         Properties: Bias, BiasDelta, Gradient, InputSynapses, OutputSynapses
+'                     Value
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: CalculateError, CalculateGradient, CalculateValue, ToString, UpdateWeights
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 
 Namespace NeuralNetwork
@@ -71,6 +72,8 @@ Namespace NeuralNetwork
         Public Property Gradient As Double
         Public Property Value As Double
 
+        Public ReadOnly Property Guid As String
+
         ''' <summary>
         ''' The active function
         ''' </summary>
@@ -83,7 +86,7 @@ Namespace NeuralNetwork
         ''' 创建的神经链接是空的
         ''' </summary>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
-        Public Sub New(Optional active As IActivationFunction = Nothing)
+        Public Sub New(Optional active As IActivationFunction = Nothing, Optional id As int = Nothing)
             InputSynapses = {}
             OutputSynapses = {}
             Bias = Helpers.GetRandom()
@@ -97,8 +100,8 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="inputNeurons"></param>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
-        Public Sub New(inputNeurons As IEnumerable(Of Neuron), Optional active As IActivationFunction = Nothing)
-            Call Me.New(active)
+        Public Sub New(inputNeurons As IEnumerable(Of Neuron), Optional active As IActivationFunction = Nothing, Optional guid As int = Nothing)
+            Call Me.New(active, guid)
 
             For Each inputNeuron As Neuron In inputNeurons
                 Dim synapse As New Synapse(inputNeuron, Me)

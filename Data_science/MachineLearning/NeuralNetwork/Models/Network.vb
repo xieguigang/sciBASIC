@@ -92,6 +92,9 @@ Namespace NeuralNetwork
         ''' <param name="outputSize">``>=1``</param>
         ''' <param name="learnRate"></param>
         ''' <param name="momentum"></param>
+        ''' <remarks>
+        ''' 会在创建的时候赋值一个guid
+        ''' </remarks>
         Public Sub New(inputSize%, hiddenSize%(), outputSize%,
                        Optional learnRate# = 0.1,
                        Optional momentum# = 0.9,

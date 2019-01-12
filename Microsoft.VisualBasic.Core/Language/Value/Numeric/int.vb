@@ -58,6 +58,17 @@ Namespace Language
         Implements IEquatable(Of Integer)
         Implements IFormattable
 
+        ''' <summary>
+        ''' 转换为16进制
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Hex As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Value.ToHexString
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(Optional x% = Scan0)
             Value = x
