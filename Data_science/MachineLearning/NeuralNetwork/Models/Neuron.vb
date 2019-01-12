@@ -46,6 +46,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 
 Namespace NeuralNetwork
@@ -87,12 +88,15 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
         Public Sub New(Optional active As IActivationFunction = Nothing, Optional id As int = Nothing)
+            Static defaultID As DefaultValue(Of String) = "X"
+
             InputSynapses = {}
             OutputSynapses = {}
             Bias = Helpers.GetRandom()
             Value = Helpers.GetRandom
             BiasDelta = Helpers.GetRandom
             activation = active Or defaultActivation
+            Guid = id?.Hex Or defaultID
         End Sub
 
         ''' <summary>

@@ -91,11 +91,11 @@ Namespace NeuralNetwork
 
             If input Is Nothing Then
                 For i As Integer = 0 To size - 1
-                    Neurons(i) = New Neuron(active)
+                    Neurons(i) = New Neuron(active, guid)
                 Next
             Else
                 For i As Integer = 0 To size - 1
-                    Neurons(i) = New Neuron(input.Neurons, active)
+                    Neurons(i) = New Neuron(input.Neurons, active, guid)
                 Next
             End If
         End Sub
@@ -229,15 +229,15 @@ Namespace NeuralNetwork
         ''' <param name="input">s神经网络的输入层会作为隐藏层的输入</param>
         ''' <param name="size%"></param>
         ''' <param name="active"></param>
-        Sub New(input As Layer, size%(), active As IActivationFunction)
-            Dim hiddenPortal As New Layer(size(Scan0), active, input)
+        Sub New(input As Layer, size%(), active As IActivationFunction, guid As int)
+            Dim hiddenPortal As New Layer(size(Scan0), active, input, guid)
 
             Layers = New Layer(size.Length - 1) {}
             Layers(Scan0) = hiddenPortal
 
             ' 在隐藏层之中,前一层神经网络会作为后面的输出
             For i As Integer = 1 To size.Length - 1
-                Layers(i) = New Layer(size(i), active, input:=hiddenPortal)
+                Layers(i) = New Layer(size(i), active, input:=hiddenPortal, guid:=guid)
                 hiddenPortal = Layers(i)
             Next
 

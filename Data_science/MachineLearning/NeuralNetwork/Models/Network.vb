@@ -1,54 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::d7bb4365ff41b5047ecee348154439e1, Data_science\MachineLearning\NeuralNetwork\Models\Network.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Network
-    ' 
-    '         Properties: Activations, HiddenLayer, InputLayer, LearnRate, Momentum
-    '                     OutputLayer
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: CalculateError, Compute, ForwardPropagate, ToString
-    ' 
-    '         Sub: BackPropagate, (+2 Overloads) Train
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Network
+' 
+'         Properties: Activations, HiddenLayer, InputLayer, LearnRate, Momentum
+'                     OutputLayer
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: CalculateError, Compute, ForwardPropagate, ToString
+' 
+'         Sub: BackPropagate, (+2 Overloads) Train
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
@@ -101,14 +102,15 @@ Namespace NeuralNetwork
                        Optional active As LayerActives = Nothing)
 
             Dim activations As LayerActives = active Or LayerActives.GetDefaultConfig
+            Dim guid As int = 1000
 
             Me.LearnRate = learnRate
             Me.Momentum = momentum
             Me.Activations = activations.GetXmlModels
 
-            InputLayer = New Layer(inputSize, activations.input)
-            HiddenLayer = New HiddenLayers(InputLayer, hiddenSize, activations.hiddens)
-            OutputLayer = New Layer(outputSize, activations.output, input:=HiddenLayer.Output)
+            InputLayer = New Layer(inputSize, activations.input, guid:=guid)
+            HiddenLayer = New HiddenLayers(InputLayer, hiddenSize, activations.hiddens, guid)
+            OutputLayer = New Layer(outputSize, activations.output, input:=HiddenLayer.Output, guid:=guid)
         End Sub
 
         Public Overrides Function ToString() As String
