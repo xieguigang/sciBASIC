@@ -85,6 +85,17 @@ Namespace NeuralNetwork
         Friend Function PopulateAllSynapses(neuron As Neuron) As IEnumerable(Of Synapse)
             Return neuron.InputSynapses + neuron.OutputSynapses.AsList
         End Function
+
+        <Extension>
+        Friend Iterator Function PopulateAllSynapses(network As Network) As IEnumerable(Of Synapse)
+            For Each layer In network.HiddenLayer.AsList + {network.InputLayer, network.OutputLayer}
+                For Each neuron In layer
+                    For Each s In neuron.PopulateAllSynapses
+                        Yield s
+                    Next
+                Next
+            Next
+        End Function
     End Module
 
     Public Enum TrainingType

@@ -322,6 +322,7 @@
     <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\SigmoidFunction.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\ThresholdFunction.vb" />
+    <Compile Include="NeuralNetwork\Accelerator.vb" />
     <Compile Include="NeuralNetwork\Models\Layer.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\ActiveFunction.vb" />
     <Compile Include="NeuralNetwork\StoreProcedure\NormalizeMatrix.vb" />
