@@ -156,6 +156,10 @@ Namespace Darwinism.GAF
 
         Friend ReadOnly Pcompute As ParallelComputing(Of Chr) = AddressOf GA_PLinq
 
+        ''' <summary>
+        ''' 如果<paramref name="parallel"/>参数不是空的，则会启用这个参数的并行计算
+        ''' </summary>
+        ''' <param name="parallel"></param>
         Public Sub New(Optional parallel As ParallelComputing(Of Chr) = Nothing)
             If Not parallel Is Nothing Then
                 Pcompute = parallel

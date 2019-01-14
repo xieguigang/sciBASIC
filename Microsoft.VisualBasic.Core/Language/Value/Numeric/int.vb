@@ -58,6 +58,28 @@ Namespace Language
         Implements IEquatable(Of Integer)
         Implements IFormattable
 
+        ''' <summary>
+        ''' 转换为16进制
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Hex As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Convert.ToString(Value, 16).ToUpper
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 转换为8进制
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Oct As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Convert.ToString(Value, 8)
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(Optional x% = Scan0)
             Value = x
@@ -237,12 +259,11 @@ Namespace Language
         ''' <summary>
         ''' 位移<paramref name="n"/>个单位然后返回位移之后的结果值
         ''' 
-        ''' 对于<see cref="int"/>类型而言，其更加侧重于迭代器中的位移，所以这个加法运算是符合
-        ''' ```vbnet
-        ''' x += n
-        ''' ```
-        ''' 
-        ''' 但是对于<see cref="float"/>类型而言，其更加侧重于模型计算，所以其加法不符合上述的语法，
+        ''' + 对于<see cref="int"/>类型而言，其更加侧重于迭代器中的位移，所以这个加法运算是符合
+        '''   ```vbnet
+        '''   x += n
+        '''   ```
+        ''' + 但是对于<see cref="float"/>类型而言，其更加侧重于模型计算，所以其加法不符合上述的语法，
         ''' 不会修改源变量的值，返回的是一个单纯的<see cref="Double"/>值类型
         ''' </summary>
         ''' <param name="x"></param>

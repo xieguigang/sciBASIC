@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::6c6f14e7c999dc298d47b08ae6398bf4, Data_science\MachineLearning\NeuralNetwork\Models\Layer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Layer
-    ' 
-    '         Properties: Neurons, Output
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: (+2 Overloads) CalculateGradient, CalculateValue, Input, UpdateWeights
-    ' 
-    '     Class HiddenLayers
-    ' 
-    '         Properties: Layers, Output, Size
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: BackPropagate, ForwardPropagate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Layer
+' 
+'         Properties: Neurons, Output
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
+' 
+'         Sub: (+2 Overloads) CalculateGradient, CalculateValue, Input, UpdateWeights
+' 
+'     Class HiddenLayers
+' 
+'         Properties: Layers, Output, Size
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
+' 
+'         Sub: BackPropagate, ForwardPropagate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -85,16 +86,16 @@ Namespace NeuralNetwork
             Me.Neurons = neurons
         End Sub
 
-        Sub New(size%, active As IActivationFunction, Optional input As Layer = Nothing)
+        Sub New(size%, active As IActivationFunction, Optional input As Layer = Nothing, Optional guid As int = Nothing)
             Neurons = New Neuron(size - 1) {}
 
             If input Is Nothing Then
                 For i As Integer = 0 To size - 1
-                    Neurons(i) = New Neuron(active)
+                    Neurons(i) = New Neuron(active, guid)
                 Next
             Else
                 For i As Integer = 0 To size - 1
-                    Neurons(i) = New Neuron(input.Neurons, active)
+                    Neurons(i) = New Neuron(input.Neurons, active, guid)
                 Next
             End If
         End Sub
@@ -228,15 +229,15 @@ Namespace NeuralNetwork
         ''' <param name="input">s神经网络的输入层会作为隐藏层的输入</param>
         ''' <param name="size%"></param>
         ''' <param name="active"></param>
-        Sub New(input As Layer, size%(), active As IActivationFunction)
-            Dim hiddenPortal As New Layer(size(Scan0), active, input)
+        Sub New(input As Layer, size%(), active As IActivationFunction, guid As int)
+            Dim hiddenPortal As New Layer(size(Scan0), active, input, guid)
 
             Layers = New Layer(size.Length - 1) {}
             Layers(Scan0) = hiddenPortal
 
             ' 在隐藏层之中,前一层神经网络会作为后面的输出
             For i As Integer = 1 To size.Length - 1
-                Layers(i) = New Layer(size(i), active, input:=hiddenPortal)
+                Layers(i) = New Layer(size(i), active, input:=hiddenPortal, guid:=guid)
                 hiddenPortal = Layers(i)
             Next
 

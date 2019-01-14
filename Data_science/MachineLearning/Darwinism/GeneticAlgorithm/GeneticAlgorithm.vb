@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::8476509d836536cb736f778a081f6213, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GeneticAlgorithm
-    ' 
-    '         Properties: Best, Fitness, Iteration, ParentChromosomesSurviveCount, Population
-    '                     Worst
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __iterate, GetFitness
-    ' 
-    '         Sub: addIterationListener, Clear, (+2 Overloads) Evolve, removeIterationListener, Terminate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GeneticAlgorithm
+' 
+'         Properties: Best, Fitness, Iteration, ParentChromosomesSurviveCount, Population
+'                     Worst
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __iterate, GetFitness
+' 
+'         Sub: addIterationListener, Clear, (+2 Overloads) Evolve, removeIterationListener, Terminate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +63,7 @@
 ' limitations under the License.
 ' *****************************************************************************
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
@@ -73,21 +74,39 @@ Namespace Darwinism.GAF
     ''' The GA engine core
     ''' </summary>
     ''' <typeparam name="Chr"></typeparam>
-    Public Class GeneticAlgorithm(Of Chr As Chromosome(Of Chr))
+    Public Class GeneticAlgorithm(Of Chr As Chromosome(Of Chr)) : Inherits Model
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
         ReadOnly _chromosomesComparator As FitnessPool(Of Chr)
 
-        Public ReadOnly Property Fitness As Fitness(Of Chr)
-
         ''' <summary>
         ''' listeners of genetic algorithm iterations (handle callback afterwards)
         ''' </summary>
-        ReadOnly iterationListeners As New List(Of IterartionListener(Of Chr))
+        ReadOnly iterationListeners As New List(Of IterationReporter(Of GeneticAlgorithm(Of Chr)))
         ReadOnly seeds As IRandomSeeds
 
-        Dim _terminate As Boolean = False
+        Public ReadOnly Property Population As Population(Of Chr)
+        Public ReadOnly Property Fitness As Fitness(Of Chr)
+
+        Public ReadOnly Property Best As Chr
+            Get
+                Return Population(0)
+            End Get
+        End Property
+
+        Public ReadOnly Property Worst As Chr
+            Get
+                Return Population(Population.Size - 1)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Number of parental chromosomes, which survive (and move to new
+        ''' population)
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ParentChromosomesSurviveCount As Integer = ALL_PARENTAL_CHROMOSOMES
 
         ''' <summary>
         ''' 
@@ -164,58 +183,7 @@ Namespace Darwinism.GAF
             Next
         End Function
 
-        Public Sub Evolve(count As Integer)
-            _terminate = False
-
-            For i As Integer = 0 To count - 1
-                If _terminate Then
-                    Exit For
-                End If
-
-                Call Evolve()
-                _Iteration = i
-
-                For Each l As IterartionListener(Of Chr) In iterationListeners
-                    Call l.Update(Me)
-                Next
-            Next
-        End Sub
-
-        Public ReadOnly Property Iteration As Integer
-
-        Public Sub Terminate()
-            Me._terminate = True
-        End Sub
-
-        Public ReadOnly Property Population As Population(Of Chr)
-
-        Public ReadOnly Property Best As Chr
-            Get
-                Return Population(0)
-            End Get
-        End Property
-
-        Public ReadOnly Property Worst As Chr
-            Get
-                Return Population(Population.Size - 1)
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' Number of parental chromosomes, which survive (and move to new
-        ''' population)
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property ParentChromosomesSurviveCount As Integer = ALL_PARENTAL_CHROMOSOMES
-
-        Public Sub addIterationListener(listener As IterartionListener(Of Chr))
-            Me.iterationListeners.Add(listener)
-        End Sub
-
-        Public Sub removeIterationListener(listener As IterartionListener(Of Chr))
-            iterationListeners.Remove(listener)
-        End Sub
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFitness(chromosome As Chr) As Double
             Return _chromosomesComparator.Fitness(chromosome)
         End Function
@@ -223,6 +191,8 @@ Namespace Darwinism.GAF
         ''' <summary>
         ''' Clear the internal cache
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Clear()
             _chromosomesComparator.cache.Clear()
         End Sub

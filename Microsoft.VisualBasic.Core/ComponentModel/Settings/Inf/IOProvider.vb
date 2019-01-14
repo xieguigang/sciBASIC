@@ -69,14 +69,31 @@ Namespace ComponentModel.Settings.Inf
         ''' <returns></returns>
         <Extension>
         Public Function WriteProfile(Of T As Class)(x As T, path$) As Boolean
-            Dim ini As New IniFile(path)
+            Using ini As New IniFile(path)
+                Call x.WriteProfile(ini)
+                Call $"Ini profile data was saved at location: {path.GetFullPath}".__INFO_ECHO
+
+                Return True
+            End Using
+        End Function
+
+        ''' <summary>
+        ''' 将目标对象写为``*.ini``文件
+        ''' (目标对象之中的所有的简单属性都会被保存在一个对象名称的section中，)
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function WriteProfile(Of T As Class)(x As T, ini As IniFile) As Boolean
+            Dim sections = __getSections(Of T)()
             Dim msg$
 
             ' 首先写入global的配置数据
-            Call ClassMapper.ClassDumper(x:=x, type:=GetType(T), ini:=ini)
+            Call GetType(T).ClassDumper(x, ini:=ini)
 
-            For Each section As PropertyInfo In __getSections(Of T)()
-                Dim obj As Object = section.GetValue(x, Nothing)
+            For Each section As PropertyInfo In sections
+                Dim obj = section.GetValue(x, Nothing)
                 Dim schema As Type = section.PropertyType
 
                 If obj Is Nothing Then
@@ -87,14 +104,8 @@ Namespace ComponentModel.Settings.Inf
                     Call App.LogException(msg)
                 End If
 
-                Call ClassMapper.ClassDumper(
-                    x:=obj,
-                    type:=schema,
-                    ini:=ini
-                )
+                Call schema.ClassDumper(obj, ini:=ini)
             Next
-
-            Call $"Ini profile data was saved at location: {path.GetFullPath}".__INFO_ECHO
 
             Return True
         End Function

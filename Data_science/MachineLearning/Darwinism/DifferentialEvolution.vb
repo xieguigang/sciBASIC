@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::01dff755870b90e0f50ffa9226148766, Data_science\MachineLearning\Darwinism\DifferentialEvolution.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface IIndividual
-    ' 
-    '         Function: Yield
-    ' 
-    '         Sub: Put
-    ' 
-    '     Module DifferentialEvolution
-    ' 
-    '         Function: RMS
-    '         Delegate Function
-    ' 
-    '             Function: __subPopulationEvolute, Evolution, GetPopulation
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface IIndividual
+' 
+'         Function: Yield
+' 
+'         Sub: Put
+' 
+'     Module DifferentialEvolution
+' 
+'         Function: RMS
+'         Delegate Function
+' 
+'             Function: __subPopulationEvolute, Evolution, GetPopulation
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism
-Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper.ListenerHelper
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
 
@@ -199,7 +199,7 @@ Namespace Darwinism
 
                     bestFit = LQuery.Min(Function(x) x.Tag)
                     population = LQuery _
-                        .Select(Function(x) x.value) _
+                        .Select(Function(x) x.Value) _
                         .IteratesALL _
                         .Shuffles
 
@@ -240,7 +240,7 @@ Namespace Darwinism
             Dim bestFitness As Individual = [new](random)
             i = 0
             Do While (++i < PopulationSize)
-                Dim candidate As Individual = population(i.value - 1)
+                Dim candidate As Individual = population(i.Value - 1)
                 If (fitnessFunction(bestFitness) > fitnessFunction(candidate)) Then
                     bestFitness = candidate
                 End If
@@ -353,7 +353,7 @@ Namespace Darwinism
 
             Return New DoubleTagged(Of Individual()) With {
                 .Tag = bestFit,
-                .value = population
+                .Value = population
             }
         End Function
     End Module

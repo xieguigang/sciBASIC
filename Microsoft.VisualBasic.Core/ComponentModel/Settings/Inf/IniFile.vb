@@ -94,6 +94,18 @@ Namespace ComponentModel.Settings.Inf
             dataLines = dataLines.AsList.WritePrivateProfileString(section, key, value)
         End Sub
 
+        ''' <summary>
+        ''' 在给定的section,key上面写入注释
+        ''' </summary>
+        ''' <param name="section$"></param>
+        ''' <param name="key$"></param>
+        ''' <param name="comment">不需要添加注释符号,函数会自动添加</param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub WriteComment(section$, key$, comment$)
+            dataLines = dataLines.AsList.WriteProfileComments(section, key, comment)
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ReadValue(section$, key$) As String
             Return dataLines.GetPrivateProfileString(section, key)

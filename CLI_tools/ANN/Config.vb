@@ -50,15 +50,21 @@ Public Class Config
     <DataFrameColumn> Public Property momentum As Double = 0.9
     <DataFrameColumn> Public Property iterations As Integer = 10000
 
+#Region "所使用的激活函数的配置"
     ''' <summary>
     ''' ``func(args)``, using parser <see cref="FuncParser.TryParse(String)"/>
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' <see cref="input_active"/>, <see cref="hiddens_active"/>, <see cref="output_active"/>为空值属性的话,
+    ''' 会使用这个属性值为默认值
+    ''' </remarks>
     <DataFrameColumn> Public Property default_active As String = "Sigmoid()"
 
     <DataFrameColumn> Public Property input_active As String
     <DataFrameColumn> Public Property hiddens_active As String
     <DataFrameColumn> Public Property output_active As String
+#End Region
 
     ''' <summary>
     ''' ``a,b,c``使用逗号分隔的隐藏层每一层网络的节点数量的列表

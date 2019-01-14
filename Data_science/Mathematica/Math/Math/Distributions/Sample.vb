@@ -57,20 +57,17 @@ Namespace Distributions
     ''' </summary>
     Public Class SampleDistribution
 
-        Public Property min As Double
-        Public Property max As Double
-        Public Property average As Double
-        Public Property stdErr As Double
-
-        <XmlAttribute>
-        Public Property size As Integer
+        <XmlAttribute> Public Property min As Double
+        <XmlAttribute> Public Property max As Double
+        <XmlAttribute> Public Property average As Double
+        <XmlAttribute> Public Property stdErr As Double
+        <XmlAttribute> Public Property size As Integer
 
         ''' <summary>
         ''' 分别为0%, 25%, 50%, 75%, 100%
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute>
-        Public Property quantile As Double()
+        <XmlAttribute> Public Property quantile As Double()
 
         Sub New()
         End Sub

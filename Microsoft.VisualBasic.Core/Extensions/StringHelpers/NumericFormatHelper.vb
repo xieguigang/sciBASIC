@@ -153,10 +153,15 @@ Public Module NumericFormatHelper
         Return reverse.ToString("x4")
     End Function
 
+    ''' <summary>
+    ''' 转换为16进制
+    ''' </summary>
+    ''' <param name="this"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ToHexString(this As Integer) As String
-        Dim value As UInteger = CUInt(this)
-        Return ToHexString(value)
+        Return ToHexString(CUInt(this))
     End Function
 
     <Extension>

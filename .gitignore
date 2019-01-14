@@ -264,3 +264,4 @@ storage.ide-wal
 /www/data/github/App
 /gr/3DEngineTest/App
 *.stackdump
+/CLI_tools/Apps

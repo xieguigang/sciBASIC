@@ -89,11 +89,14 @@ Module CLI
             config.momentum
         )
 
-        For Each sample As Sample In samples.DataSamples
+        For Each sample As Sample In samples.PopulateNormalizedSamples
             Call trainingHelper.Add(sample.status, sample.target)
         Next
 
-        Call trainingHelper.Train()
+        Helpers.MaxEpochs = config.iterations
+
+        Call Console.WriteLine(trainingHelper.NeuronNetwork.ToString)
+        Call trainingHelper.Train(parallel)
 
         Return trainingHelper _
             .TakeSnapshot _
@@ -117,13 +120,23 @@ Module CLI
         Dim parallel As Boolean = args("/parallel")
         Dim network As Network = [in].LoadXml(Of NeuralNetwork).LoadModel
         Dim training As New TrainingUtils(network)
+        Dim logs$ = out.TrimSuffix & ".logs/"
 
-        For Each sample As Sample In samples.LoadXml(Of DataSet).DataSamples
+        For Each sample As Sample In samples.LoadXml(Of DataSet).PopulateNormalizedSamples
             Call training.Add(sample.status, sample.target)
         Next
 
         Call Console.WriteLine(network.ToString)
-        Call training.Train(parallel, normalize:=True)
+        Call training _
+            .AttachReporter(Sub(i, err, model)
+                                If i Mod 5 = 0 Then
+                                    Call NeuralNetwork _
+                                        .Snapshot(model) _
+                                        .GetXml _
+                                        .SaveTo($"{logs}/[{i}]error={err}.Xml")
+                                End If
+                            End Sub) _
+            .Train(parallel)
 
         Return training.TakeSnapshot _
             .GetXml _

@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::0d6d464b6c3ea57b1498fc09f5359866, Data_science\MachineLearning\NeuralNetwork\TrainingUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TrainingUtils
-    ' 
-    '         Properties: MinError, NeuronNetwork, TrainingType, XP
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: TakeSnapshot
-    ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, Train
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TrainingUtils
+' 
+'         Properties: MinError, NeuronNetwork, TrainingType, XP
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: TakeSnapshot
+' 
+'         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, Train
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -50,13 +50,15 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.Text
 
 Namespace NeuralNetwork
 
     ''' <summary>
     ''' Tools for training the neuron network
     ''' </summary>
-    Public Class TrainingUtils
+    Public Class TrainingUtils : Inherits IterationReporter(Of Network)
 
         Public Property TrainingType As TrainingType = TrainingType.Epoch
         Public Property MinError As Double = Helpers.MinimumError
@@ -66,8 +68,20 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property NeuronNetwork As Network
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return network
+            End Get
+        End Property
+
+        Public ReadOnly Property TrainingSet As Sample()
+            Get
+                Return _dataSets.ToArray
+            End Get
+        End Property
 
         ReadOnly _dataSets As New List(Of Sample)
+        ReadOnly network As Network
 
         ''' <summary>
         ''' 训练所使用到的经验数量,即数据集的大小s
@@ -86,11 +100,11 @@ Namespace NeuralNetwork
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function TakeSnapshot() As StoreProcedure.NeuralNetwork
-            Return StoreProcedure.NeuralNetwork.Snapshot(NeuronNetwork)
+            Return StoreProcedure.NeuralNetwork.Snapshot(network)
         End Function
 
         Sub New(net As Network)
-            NeuronNetwork = net
+            network = net
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -128,15 +142,75 @@ Namespace NeuralNetwork
         ''' <param name="parallel">
         ''' 小型的人工神经网络的训练,并不建议使用并行化
         ''' </param>
-        Public Sub Train(Optional parallel As Boolean = False, Optional normalize As Boolean = False)
+        Public Overrides Sub Train(Optional parallel As Boolean = False)
             Dim trainingDataSet As Sample() = _dataSets.ToArray
 
-            If normalize Then
-                trainingDataSet = trainingDataSet.NormalizeSamples
+            If TrainingType = TrainingType.Epoch Then
+                Call Train(trainingDataSet, Helpers.MaxEpochs, parallel)
+            Else
+                Call Train(trainingDataSet, minimumError:=Helpers.MinimumError, parallel:=parallel)
             End If
-
-            Call Helpers.Train(NeuronNetwork, trainingDataSet, TrainingType, minErr:=MinError, parallel:=parallel)
         End Sub
+
+#Region "-- Training --"
+        Public Overloads Sub Train(dataSets As Sample(), numEpochs As Integer, Optional parallel As Boolean = False)
+            Using progress As New ProgressBar("Training ANN...")
+                Dim tick As New ProgressProvider(numEpochs)
+                Dim msg$
+                Dim errors#
+
+                For i As Integer = 0 To numEpochs - 1
+                    errors = trainingImpl(dataSets, parallel)
+                    msg = $"Iterations: [{i}/{numEpochs}], Err={errors}"
+                    progress.SetProgress(tick.StepProgress, msg)
+
+                    If Not reporter Is Nothing Then
+                        Call reporter(i, errors, network)
+                    End If
+                Next
+            End Using
+        End Sub
+
+        Private Function trainingImpl(dataSets As Sample(), parallel As Boolean) As Double
+            Dim errors As New List(Of Double)()
+
+            For Each dataSet As Sample In dataSets
+                Call network.ForwardPropagate(dataSet.status, parallel)
+                Call network.BackPropagate(dataSet.target, parallel)
+                Call errors.Add(CalculateError(network, dataSet.target))
+            Next
+
+            Return errors.Average
+        End Function
+
+        Public Overloads Sub Train(dataSets As Sample(), minimumError As Double, Optional parallel As Boolean = False)
+            Dim [error] = 1.0
+            Dim numEpochs = 0
+            Dim progress$
+
+            While [error] > minimumError AndAlso numEpochs < Integer.MaxValue
+                [error] = trainingImpl(dataSets, parallel)
+                numEpochs += 1
+                progress = ((minimumError / [error]) * 100).ToString("F2")
+
+                Call $"{numEpochs}{ASCII.TAB}Error:={[error]}{ASCII.TAB}progress:={progress}%".__DEBUG_ECHO
+
+                If Not reporter Is Nothing Then
+                    Call reporter(numEpochs, [error], network)
+                End If
+            End While
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Friend Shared Function CalculateError(neuronNetwork As Network, targets As Double()) As Double
+            Return neuronNetwork.OutputLayer _
+                .Neurons _
+                .Select(Function(n, i)
+                            Return Math.Abs(n.CalculateError(targets(i)))
+                        End Function) _
+                .Sum()
+        End Function
+#End Region
 
         ''' <summary>
         ''' 
@@ -146,8 +220,7 @@ Namespace NeuralNetwork
         ''' <param name="expectedResults">The corrects output</param>
         Public Sub Corrects(input As Double(), convertedResults As Double(), expectedResults As Double(),
                             Optional train As Boolean = True,
-                            Optional parallel As Boolean = False,
-                            Optional normalize As Boolean = False)
+                            Optional parallel As Boolean = False)
 
             Dim offendingDataSet As Sample = _dataSets _
                 .FirstOrDefault(Function(x)
@@ -160,7 +233,7 @@ Namespace NeuralNetwork
             End If
 
             If train Then
-                Call Me.Train(parallel, normalize)
+                Call Me.Train(parallel)
             End If
         End Sub
 

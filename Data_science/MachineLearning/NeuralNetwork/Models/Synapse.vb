@@ -71,5 +71,9 @@ Namespace NeuralNetwork
             Weight = Helpers.GetRandom()
             WeightDelta = Helpers.GetRandom
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{InputNeuron.Guid}=>{OutputNeuron.Guid}"
+        End Function
     End Class
 End Namespace

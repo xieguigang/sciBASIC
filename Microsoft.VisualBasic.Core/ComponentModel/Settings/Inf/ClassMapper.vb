@@ -113,16 +113,22 @@ Namespace ComponentModel.Settings.Inf
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub ClassDumper(Of T As Class)(x As T, ini As IniFile)
-            Call ClassDumper(x, GetType(T), ini)
+            Call GetType(T).ClassDumper(x, ini)
         End Sub
 
-        Public Sub ClassDumper(x As Object, type As Type, ini As IniFile)
+        <Extension>
+        Public Sub ClassDumper(type As Type, x As Object, ini As IniFile)
             Dim maps = MapParser(type)
 
             For Each map In maps.Value
                 Dim key As String = map.field.Name
                 Dim value As String = Scripting.ToString(map.GetValue(x))
-                Call ini.WriteValue(maps.Name, key, value)
+
+                If value.StringEmpty Then
+                    Call ini.WriteComment(maps.Name, key, $"{key}=<{map.Type.FullName}>")
+                Else
+                    Call ini.WriteValue(maps.Name, key, value)
+                End If
             Next
         End Sub
 
