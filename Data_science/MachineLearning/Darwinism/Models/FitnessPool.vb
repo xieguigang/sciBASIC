@@ -59,7 +59,8 @@ Namespace Darwinism.Models
         Shared ReadOnly objToString As New DefaultValue(Of Func(Of Individual, String))(AddressOf Scripting.ToString)
 
         ''' <summary>
-        ''' 
+        ''' 因为这个缓存对象是默认通过``ToString``方法来生成键名的，所以假设<paramref name="toString"/>参数是空值的话，则必须要重写
+        ''' 目标<typeparamref name="Individual"/>的``ToString``方法
         ''' </summary>
         ''' <param name="cacl">Expression for descript how to calculate the fitness.</param>
         ''' <param name="toString">Obj to dictionary key</param>

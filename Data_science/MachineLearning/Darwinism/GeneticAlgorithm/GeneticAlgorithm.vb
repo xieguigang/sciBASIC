@@ -78,7 +78,7 @@ Namespace Darwinism.GAF
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        ReadOnly _chromosomesComparator As FitnessPool(Of Chr)
+        ReadOnly chromosomesComparator As FitnessPool(Of Chr)
 
         ''' <summary>
         ''' listeners of genetic algorithm iterations (handle callback afterwards)
@@ -117,10 +117,10 @@ Namespace Darwinism.GAF
         ''' </param>
         ''' <param name="seeds"></param>
         Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr), Optional seeds As IRandomSeeds = Nothing, Optional cacheSize% = 10000)
-            Me._Population = population
+            Me.Population = population
             Me.Fitness = fitnessFunc
-            Me._chromosomesComparator = New FitnessPool(Of Chr)(AddressOf fitnessFunc.Calculate, capacity:=cacheSize)
-            Me._Population.SortPopulationByFitness(Me, _chromosomesComparator)
+            Me.chromosomesComparator = New FitnessPool(Of Chr)(AddressOf fitnessFunc.Calculate, capacity:=cacheSize)
+            Me.Population.SortPopulationByFitness(Me, chromosomesComparator)
 
             If population.Parallel Then
                 Call "Genetic Algorithm running in parallel mode.".Warning
@@ -133,14 +133,15 @@ Namespace Darwinism.GAF
         End Sub
 
         Public Sub Evolve()
+            Dim i% = 0
             Dim parentPopulationSize As Integer = Population.Size
             Dim newPopulation As New Population(Of Chr)(_Population.Pcompute) With {
                 .Parallel = Population.Parallel
             }
-            Dim i As Integer = 0
 
             Do While (i < parentPopulationSize) AndAlso (i < ParentChromosomesSurviveCount)
-                newPopulation.Add(Population(i)) ' 旧的原有的种群
+                ' 旧的原有的种群
+                newPopulation.Add(Population(i))
                 i += 1
             Loop
 
@@ -148,15 +149,15 @@ Namespace Darwinism.GAF
             ' 这一步并不是限速的部分
             For Each c As Chr In parentPopulationSize% _
                 .Sequence _
-                .Select(AddressOf __iterate) _
+                .Select(AddressOf evolIterate) _
                 .IteratesALL ' 并行化计算每一个突变迭代
 
                 Call newPopulation.Add(c)
             Next
 
-            newPopulation.SortPopulationByFitness(Me, _chromosomesComparator)    ' 通过fitness排序来进行择优
-            newPopulation.Trim(parentPopulationSize)                             ' 剪裁掉后面的对象，达到淘汰的效果
-            _Population = newPopulation                                          ' 新种群替代旧的种群
+            newPopulation.SortPopulationByFitness(Me, chromosomesComparator) ' 通过fitness排序来进行择优
+            newPopulation.Trim(parentPopulationSize)                         ' 剪裁掉后面的对象，达到淘汰的效果
+            _Population = newPopulation                                      ' 新种群替代旧的种群
         End Sub
 
         ''' <summary>
@@ -164,7 +165,7 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="i%"></param>
         ''' <returns></returns>
-        Private Iterator Function __iterate(i%) As IEnumerable(Of Chr)
+        Private Iterator Function evolIterate(i%) As IEnumerable(Of Chr)
             Dim chromosome As Chr = Population(i)
             Dim mutated As Chr = chromosome.Mutate()   ' 突变
             Dim rnd As Random = seeds()
@@ -185,7 +186,7 @@ Namespace Darwinism.GAF
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFitness(chromosome As Chr) As Double
-            Return _chromosomesComparator.Fitness(chromosome)
+            Return chromosomesComparator.Fitness(chromosome)
         End Function
 
         ''' <summary>
@@ -194,7 +195,7 @@ Namespace Darwinism.GAF
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Clear()
-            _chromosomesComparator.cache.Clear()
+            chromosomesComparator.cache.Clear()
         End Sub
     End Class
 End Namespace

@@ -31,15 +31,6 @@ Namespace NeuralNetwork.Accelerator
     End Module
 
     ''' <summary>
-    ''' 模拟ANN计算
-    ''' 
-    ''' 所有的Bias都是零
-    ''' </summary>
-    Public Class ANNSimulator
-
-    End Class
-
-    ''' <summary>
     ''' 在这里假设所有的<see cref="Neuron.Bias"/>偏差值都是零
     ''' 所以GA优化就被简化为只和突触链接的权重相关
     ''' </summary>
@@ -62,8 +53,9 @@ Namespace NeuralNetwork.Accelerator
             End If
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return ""
+            Return String.Join(";", weights)
         End Function
 
         Public Function Crossover(another As WeightVector) As IEnumerable(Of WeightVector) Implements Chromosome(Of WeightVector).Crossover

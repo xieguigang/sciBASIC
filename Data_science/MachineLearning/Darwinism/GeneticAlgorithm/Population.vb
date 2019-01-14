@@ -178,15 +178,13 @@ Namespace Darwinism.GAF
                 Dim source = chromosomes _
                     .Select(Function(x)
                                 Return New NamedValue(Of Chr) With {
-                        .Name = x.ToString,
-                        .Value = x
-                    }
+                                    .Name = x.ToString,
+                                    .Value = x
+                                }
                             End Function) _
                     .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
                     .ToArray
-                Dim fitness As NamedValue(Of Double)() =
-                    Pcompute(GA, source) _
-                    .ToArray
+                Dim fitness As NamedValue(Of Double)() = Pcompute(GA, source).ToArray
 
                 For Each x As NamedValue(Of Double) In fitness
                     If Not comparator.cache.ContainsKey(x.Name) Then
