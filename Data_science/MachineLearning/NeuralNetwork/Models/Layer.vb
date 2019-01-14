@@ -113,6 +113,12 @@ Namespace NeuralNetwork
             Next
         End Sub
 
+        ''' <summary>
+        ''' 调用这个函数将会修改突触链接的权重值，这个函数只会在训练的时候被调用
+        ''' </summary>
+        ''' <param name="learnRate#"></param>
+        ''' <param name="momentum#"></param>
+        ''' <param name="parallel"></param>
         Public Sub UpdateWeights(learnRate#, momentum#, Optional parallel As Boolean = False)
             If Not parallel Then
                 For Each neuron As Neuron In Neurons

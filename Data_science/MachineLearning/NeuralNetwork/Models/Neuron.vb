@@ -46,7 +46,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 
 Namespace NeuralNetwork
@@ -71,6 +70,14 @@ Namespace NeuralNetwork
         Public Property Bias As Double
         Public Property BiasDelta As Double
         Public Property Gradient As Double
+        ''' <summary>
+        ''' 神经元之间传递的值，即预测的输出结果
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 在进行计算的时候，value会被替换为样本的输入值，所以value不需要被存储到Xml之中
+        ''' 在进行加速计算的时候也不需要被考虑到
+        ''' </remarks>
         Public Property Value As Double
 
         Public ReadOnly Property Guid As String
@@ -160,6 +167,12 @@ Namespace NeuralNetwork
             End If
         End Function
 
+        ''' <summary>
+        ''' 调用这个函数会修改突触链接权重，dias误差值等
+        ''' </summary>
+        ''' <param name="learnRate"></param>
+        ''' <param name="momentum"></param>
+        ''' <returns></returns>
         Public Function UpdateWeights(learnRate As Double, momentum As Double) As Integer
             Dim prevDelta = BiasDelta
             BiasDelta = learnRate * Gradient
