@@ -53,6 +53,10 @@ Namespace NeuralNetwork.Accelerator
             End If
         End Sub
 
+        ''' <summary>
+        ''' 需要这个方法重写来生成唯一的key
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return String.Join(";", weights)
