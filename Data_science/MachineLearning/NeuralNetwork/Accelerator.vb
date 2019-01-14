@@ -30,8 +30,24 @@ Namespace NeuralNetwork.Accelerator
         End Sub
     End Module
 
+    ''' <summary>
+    ''' 模拟ANN计算
+    ''' 
+    ''' 所有的Bias都是零
+    ''' </summary>
+    Public Class ANNSimulator
+
+    End Class
+
+    ''' <summary>
+    ''' 在这里假设所有的<see cref="Neuron.Bias"/>偏差值都是零
+    ''' 所以GA优化就被简化为只和突触链接的权重相关
+    ''' </summary>
     Public Class WeightVector : Implements Chromosome(Of WeightVector), ICloneable
 
+        ''' <summary>
+        ''' 突触链接的权重
+        ''' </summary>
         Friend weights#()
 
         Shared ReadOnly random As New Random
@@ -95,7 +111,10 @@ Namespace NeuralNetwork.Accelerator
 
             For Each dataSet As Sample In dataSets
                 Call network.ForwardPropagate(dataSet.status, False)
-                Call network.BackPropagate(dataSet.target, False)
+                ' 2019-1-14 因为在这里是计算误差，不是训练过程
+                ' 所以在这里不需要进行反向传播修改权重和bias参数
+                ' 否则会造成其他的解决方案的错误计算，因为反向传播将weights等参数更新了
+                ' Call network.BackPropagate(dataSet.target, False)
                 Call errors.Add(TrainingUtils.CalculateError(network, dataSet.target))
             Next
 

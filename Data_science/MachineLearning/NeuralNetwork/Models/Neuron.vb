@@ -157,14 +157,14 @@ Namespace NeuralNetwork
             Return target - Value
         End Function
 
-        Public Function CalculateGradient(Optional target As Double? = Nothing) As Double
-            If target Is Nothing Then
-                Gradient = OutputSynapses.Sum(Function(a) a.OutputNeuron.Gradient * a.Weight) * activation.Derivative(Value)
-                Return Gradient
-            Else
-                Gradient = CalculateError(target.Value) * activation.Derivative(Value)
-                Return Gradient
-            End If
+        Public Function CalculateGradient(target As Double) As Double
+            Gradient = CalculateError(target) * activation.Derivative(Value)
+            Return Gradient
+        End Function
+
+        Public Function CalculateGradient() As Double
+            Gradient = OutputSynapses.Sum(Function(a) a.OutputNeuron.Gradient * a.Weight) * activation.Derivative(Value)
+            Return Gradient
         End Function
 
         ''' <summary>
