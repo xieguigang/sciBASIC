@@ -165,9 +165,9 @@ Namespace NeuralNetwork
                     progress.SetProgress(tick.StepProgress, msg)
 
                     If Not reporter Is Nothing Then
-                        Call reporter(i, errors, network)
-                    End If
-                Next
+                Call reporter(i, errors, network)
+            End If
+            Next
             End Using
         End Sub
 
