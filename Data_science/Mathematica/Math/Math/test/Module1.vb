@@ -39,6 +39,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Algebra.LinearProgramming
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -69,8 +70,19 @@ Module Module1
         Console.ReadLine()
     End Sub
 
+    Sub Ptest()
+        Dim x = 1.25
+        Dim p = Bootstraping.AboveStandardDistribution(x, 10000000, 0, 1)
+
+        Call p.__DEBUG_ECHO
+
+        Pause()
+    End Sub
 
     Sub Main()
+
+        Call Ptest()
+
         Call vectorAPItest()
     End Sub
 

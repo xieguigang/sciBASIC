@@ -223,13 +223,22 @@ Public Module Bootstraping
         Return answer
     End Function
 
-    Public Function TrapezodialRule(a#, b#, n#, m#, sd#) As Double
-        Dim changeX As Double = (b - a) / n
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="a#"></param>
+    ''' <param name="b#"></param>
+    ''' <param name="resolution">计算的分辨率，越大越好</param>
+    ''' <param name="m#"></param>
+    ''' <param name="sd#"></param>
+    ''' <returns></returns>
+    Public Function TrapezodialRule(a#, b#, resolution#, m#, sd#) As Double
+        Dim changeX As Double = (b - a) / resolution
         Dim a1 As Double = ProbabilityDensity(a, m, sd)
         Dim b1 As Double = ProbabilityDensity(b, m, sd)
         Dim c As Double = 0.5 * (a1 + b1)
 
-        For i As Double = 1 To n - 1
+        For i As Double = 1 To resolution - 1
             c = c + ProbabilityDensity((a + (i * changeX)), m, sd)
         Next i
         c = changeX * c
