@@ -166,6 +166,12 @@ Namespace Math
             Return rand_normal
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <ExportAPI("NextGaussian")>
+        Public Function NextGaussian(Optional mu As Double = 0, Optional sigma As Double = 1) As Double
+            Return seeds.NextGaussian(mu, sigma)
+        End Function
+
         ''' <summary>
         ''' Generates values from a triangular distribution.
         ''' </summary>

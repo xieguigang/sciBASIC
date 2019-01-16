@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::98ed7fe3287b7ccb6f74a13392fd70f2, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Math\Poisson.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Poisson
-    ' 
-    '         Function: Dpois, qpois, rPois
-    ' 
-    '     Module Normal
-    ' 
-    '         Function: dnorm, pnorm, qnorm, (+2 Overloads) rnorm
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Poisson
+' 
+'         Function: Dpois, qpois, rPois
+' 
+'     Module Normal
+' 
+'         Function: dnorm, pnorm, qnorm, (+2 Overloads) rnorm
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -129,9 +130,10 @@ Namespace SyntaxAPI.MathExtension
             Throw New NotImplementedException
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("rnorm")>
         Public Function rnorm(x As Vector, m As Double, sd As Double) As Vector
-            Return New Vector(x.Select(Function(n) Bootstraping.ProbabilityDensity(n, m, sd)))
+            Return New Vector(x.Select(Function(n) Distributions.pnorm.ProbabilityDensity(n, m, sd)))
         End Function
 
         ''' <summary>
@@ -143,11 +145,13 @@ Namespace SyntaxAPI.MathExtension
         ''' <param name="m"></param>
         ''' <param name="sd"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function rnorm(n As Integer, m As Double, sd As Double) As Vector
-            Dim rand As New Random
-            Return New Vector(
-                n.Sequence.Select(
-                Function(x) rand.NextGaussian(m, sd)))  ' 不清楚在R之中是否是这样子来实现的
+            ' 不清楚在R之中是否是这样子来实现的
+            Return n.Sequence _
+                .Select(Function(x) RandomExtensions.NextGaussian(m, sd)) _
+                .AsVector
         End Function
     End Module
 End Namespace

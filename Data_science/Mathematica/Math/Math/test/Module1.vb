@@ -72,7 +72,7 @@ Module Module1
 
     Sub Ptest()
         Dim x = 1.25
-        Dim p = Bootstraping.AboveStandardDistribution(x, 10000000, 0, 1)
+        Dim p = Distributions.AboveStandardDistribution(x, 10000000, 0, 1)
 
         Call p.__DEBUG_ECHO
 

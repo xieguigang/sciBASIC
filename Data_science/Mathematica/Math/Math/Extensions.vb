@@ -50,12 +50,25 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports sys = System.Math
 
 ''' <summary>
 ''' 向量以及统计函数拓展
 ''' </summary>
 Public Module Extensions
+
+    ''' <summary>
+    ''' Create the vector model from target .NET object collection.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function [Shadows](Of T)(source As IEnumerable(Of T)) As IVector(Of T)
+        Return New IVector(Of T)(source)
+    End Function
 
     Public Function FlipCoin(Optional headsCutoff% = 50, Optional ntimes% = 100) As Double
         Dim rand As Integer = randf(0, ntimes)
