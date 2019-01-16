@@ -153,6 +153,10 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\mime\application%25netcdf\application.netCDF.vbproj">
+      <Project>{6ff317ff-1a81-4272-a894-bfbffb202b41}</Project>
+      <Name>application.netCDF</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

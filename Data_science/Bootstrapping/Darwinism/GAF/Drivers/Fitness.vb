@@ -67,8 +67,7 @@ Namespace Darwinism.GAF.Driver
     ''' <returns></returns>
     Public Delegate Function FitnessCompute(best As ParameterVector, fit As GAFFitness) As Double
 
-    Public Class GAFFitness
-        Implements Fitness(Of ParameterVector)
+    Public Class GAFFitness : Implements Fitness(Of ParameterVector)
 
         ''' <summary>
         ''' 真实的实验观察数据
@@ -111,6 +110,12 @@ Namespace Darwinism.GAF.Driver
         ''' <returns></returns>
         Public Property Ignores As String()
         Public Property weights As Dictionary(Of String, Double)
+
+        Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of ParameterVector).Cacheable
+            Get
+                Return True
+            End Get
+        End Property
 
         ''' <summary>
         ''' 从真实的实验观察数据来构建出拟合(这个构造函数是测试用的)

@@ -230,21 +230,31 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Sort")>
         Public Shared Function Sort(x As Vector, Optional decreasing As Boolean = False) As Vector
-            Return If(
-                Not decreasing,
-                New Vector(x.OrderBy(Function(n) n)),
-                New Vector(x.OrderByDescending(Function(n) n)))
+            If decreasing Then
+                Return New Vector(x.OrderByDescending(Function(n) n))
+            Else
+                Return New Vector(x.OrderBy(Function(n) n))
+            End If
         End Function
 
         ''' <summary>
-        ''' order returns a permutation which rearranges its first argument into ascending or descending order, breaking ties by further arguments. sort.list is the same, using only one argument.
+        ''' order returns a permutation which rearranges its first argument into ascending or descending order, 
+        ''' breaking ties by further arguments. sort.list is the same, using only one argument.
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Order")>
         Public Shared Function Order(x As Vector, Optional nalast As Boolean = True, Optional decreasing As Boolean = False) As Vector
-            Throw New NotImplementedException
+            Dim seq As IEnumerable(Of SeqValue(Of Double)) = x.SeqIterator(offset:=1).ToArray
+
+            If decreasing Then
+                seq = seq.OrderByDescending(Function(xi) xi.value)
+            Else
+                seq = seq.OrderBy(Function(xi) xi.value)
+            End If
+
+            Return seq.Select(Function(xi) xi.i).AsVector
         End Function
     End Class
 End Namespace

@@ -45,10 +45,15 @@ Imports Microsoft.VisualBasic.Text
 Module Module1
 
     Sub Main()
-        Dim path$ = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\scfa200ppmAIAEXPRT.AIA\200ppm-未处理.CDF"
+        Call testReaderDump()
+    End Sub
+
+    Sub testReaderDump()
+        Dim path$ = "D:\biodeep\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\100ppb.CDF"
         Dim file As New netCDFReader(path, Encodings.UTF8WithoutBOM)
 
         Call file.ToString.__DEBUG_ECHO
+        Call file.ToString.SaveTo("./dump.txt")
 
         Dim massvalue = file.getDataVariable("mass_values")
 

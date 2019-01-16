@@ -210,11 +210,12 @@ Namespace Text.Xml.Linq
 
         ''' <summary>
         ''' Apply on a ultra large size XML database, which its data size is greater than 1GB to 100GB or even more.
+        ''' (这个函数是直接忽略掉根节点的名称以及属性的,使用这个函数只需要关注于需要提取的数据的节点名称即可)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="path$"></param>
-        ''' <param name="typeName$"></param>
-        ''' <param name="xmlns$"></param>
+        ''' <param name="path">文件路径</param>
+        ''' <param name="typeName">目标节点名称,默认是使用类型<typeparamref name="T"/>的名称</param>
+        ''' <param name="xmlns">``xmlns=...``,只需要给出等号后面的url即可</param>
         ''' <returns></returns>
         <Extension>
         Public Function LoadUltraLargeXMLDataSet(Of T As Class)(path$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)

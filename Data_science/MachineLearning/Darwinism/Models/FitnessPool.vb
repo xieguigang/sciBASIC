@@ -1,47 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::6c29636e38eab0ddad54b9416168d762, Data_science\MachineLearning\Darwinism\Models\FitnessPool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class FitnessPool
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Fitness
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class FitnessPool
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Fitness
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 
 Namespace Darwinism.Models
 
@@ -49,7 +51,7 @@ Namespace Darwinism.Models
     ''' Compute fitness and cache the result data in this pool.
     ''' </summary>
     ''' <typeparam name="Individual"></typeparam>
-    Public Class FitnessPool(Of Individual)
+    Public Class FitnessPool(Of Individual) : Implements Fitness(Of Individual)
 
         Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
         Protected caclFitness As Func(Of Individual, Double)
@@ -57,6 +59,12 @@ Namespace Darwinism.Models
         Protected maxCapacity%
 
         Shared ReadOnly objToString As New DefaultValue(Of Func(Of Individual, String))(AddressOf Scripting.ToString)
+
+        Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
+            Get
+                Return True
+            End Get
+        End Property
 
         ''' <summary>
         ''' 因为这个缓存对象是默认通过``ToString``方法来生成键名的，所以假设<paramref name="toString"/>参数是空值的话，则必须要重写
@@ -78,7 +86,7 @@ Namespace Darwinism.Models
         ''' </summary>
         ''' <param name="[in]"></param>
         ''' <returns></returns>
-        Public Function Fitness([in] As Individual) As Double
+        Public Function Fitness([in] As Individual) As Double Implements Fitness(Of Individual).Calculate
             Dim key$ = indivToString([in])
             Dim fit As Double
 
@@ -109,5 +117,13 @@ Namespace Darwinism.Models
 
             Return fit
         End Function
+
+        ''' <summary>
+        ''' Clear all cache data.
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Clear()
+            Call cache.Clear()
+        End Sub
     End Class
 End Namespace

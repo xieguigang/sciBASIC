@@ -100,9 +100,6 @@ Namespace NeuralNetwork.StoreProcedure
         <XmlAttribute> Public Property delta As Double
         <XmlAttribute> Public Property gradient As Double
 
-        <XmlText>
-        Public Property value As Double
-
     End Class
 
     <XmlType("layer")> Public Class NeuronLayer : Inherits ListOf

@@ -226,14 +226,16 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CDFDataTypes.vb" />
+    <Compile Include="Data\CDFDataTypes.vb" />
+    <Compile Include="Data\StructureParser.vb" />
     <Compile Include="Data\Xml.vb" />
     <Compile Include="Components\CDFData.vb" />
+    <Compile Include="CDFWriter.vb" />
     <Compile Include="ToString.vb" />
-    <Compile Include="DataReader.vb" />
+    <Compile Include="Data\DataReader.vb" />
     <Compile Include="Components\Components.vb" />
     <Compile Include="Components\Header.vb" />
-    <Compile Include="TypeExtensions.vb" />
+    <Compile Include="Data\TypeExtensions.vb" />
     <Compile Include="Utils.vb" />
     <Compile Include="netCDFReader.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

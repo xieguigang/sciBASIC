@@ -89,10 +89,11 @@ Public Module LargeTextFile
     ''' <summary>
     ''' 当一个文件非常大以致无法使用任何现有的文本编辑器查看的时候，可以使用本方法查看其中的一部分数据 
     ''' </summary>
+    ''' <param name="length">字节长度</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
-    ''' 
+    ''' <remarks></remarks> 
     <ExportAPI("Peeks")>
+    <Extension>
     Public Function Peeks(path As String, Optional length% = 5 * 1024) As String
         Dim buffer As Char() = New Char(length - 1) {}
 

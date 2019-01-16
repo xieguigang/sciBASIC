@@ -73,6 +73,13 @@ Namespace Language.Default
             End Get
         End Property
 
+        Public ReadOnly Property IsTrue As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return DefaultValue.ParseBoolean
+            End Get
+        End Property
+
         Sub New([string] As String)
             DefaultValue = [string]
         End Sub

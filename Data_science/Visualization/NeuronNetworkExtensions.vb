@@ -111,7 +111,6 @@ Public Module NeuronNetworkExtensions
                             .ID = n.id,
                             .NodeType = type,
                             .Properties = New Dictionary(Of String, String) From {
-                                {"value", n.value},
                                 {"bias", n.bias},
                                 {"delta", n.delta},
                                 {"gradient", n.gradient}

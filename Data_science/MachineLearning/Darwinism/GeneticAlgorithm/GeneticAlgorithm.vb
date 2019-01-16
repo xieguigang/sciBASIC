@@ -78,7 +78,7 @@ Namespace Darwinism.GAF
 
         Const ALL_PARENTAL_CHROMOSOMES As Integer = Integer.MaxValue
 
-        ReadOnly chromosomesComparator As FitnessPool(Of Chr)
+        ReadOnly chromosomesComparator As Fitness(Of Chr)
 
         ''' <summary>
         ''' listeners of genetic algorithm iterations (handle callback afterwards)
@@ -116,10 +116,19 @@ Namespace Darwinism.GAF
         ''' Calculates the fitness of the mutated chromesome in <paramref name="population"/>
         ''' </param>
         ''' <param name="seeds"></param>
+        ''' <param name="cacheSize">
+        ''' -1 means no cache
+        ''' </param>
         Public Sub New(population As Population(Of Chr), fitnessFunc As Fitness(Of Chr), Optional seeds As IRandomSeeds = Nothing, Optional cacheSize% = 10000)
             Me.Population = population
             Me.Fitness = fitnessFunc
-            Me.chromosomesComparator = New FitnessPool(Of Chr)(AddressOf fitnessFunc.Calculate, capacity:=cacheSize)
+
+            If cacheSize <= 0 Then
+                Me.chromosomesComparator = fitnessFunc
+            Else
+                Me.chromosomesComparator = New FitnessPool(Of Chr)(AddressOf fitnessFunc.Calculate, capacity:=cacheSize)
+            End If
+
             Me.Population.SortPopulationByFitness(Me, chromosomesComparator)
 
             If population.Parallel Then
@@ -186,7 +195,7 @@ Namespace Darwinism.GAF
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFitness(chromosome As Chr) As Double
-            Return chromosomesComparator.Fitness(chromosome)
+            Return chromosomesComparator.Calculate(chromosome)
         End Function
 
         ''' <summary>
@@ -195,7 +204,9 @@ Namespace Darwinism.GAF
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Clear()
-            chromosomesComparator.cache.Clear()
+            If TypeOf chromosomesComparator Is FitnessPool(Of Chr) Then
+                Call DirectCast(chromosomesComparator, FitnessPool(Of Chr)).Clear()
+            End If
         End Sub
     End Class
 End Namespace

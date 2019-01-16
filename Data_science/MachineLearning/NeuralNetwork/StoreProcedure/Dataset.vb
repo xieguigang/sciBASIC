@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports row = Microsoft.VisualBasic.Data.csv.IO.DataSet
 
 Namespace NeuralNetwork.StoreProcedure
 
@@ -158,12 +159,29 @@ Namespace NeuralNetwork.StoreProcedure
             End Get
         End Property
 
+        ''' <summary>
+        ''' 神经网络的输出节点的数量
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property OutputSize As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return DataSamples(Scan0).target.Length
             End Get
         End Property
+
+        ''' <summary>
+        ''' 从csv文件数据之中读取和当前的数据集一样的元素顺序的向量用于预测分析
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetInput(data As row) As Double()
+            Return NormalizeMatrix _
+                .names _
+                .Select(Function(key) data(key)) _
+                .ToArray
+        End Function
 
         Public Iterator Function PopulateNormalizedSamples() As IEnumerable(Of Sample)
             Dim input#()

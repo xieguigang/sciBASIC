@@ -171,29 +171,33 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="GA"></param>
         ''' <param name="comparator"></param>
-        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
+        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As Fitness(Of Chr))
             Call Arrays.Shuffle(chromosomes)
 
-            If Parallel Then
-                Dim source = chromosomes _
-                    .Select(Function(x)
-                                Return New NamedValue(Of Chr) With {
-                                    .Name = x.ToString,
-                                    .Value = x
-                                }
-                            End Function) _
-                    .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
-                    .ToArray
-                Dim fitness As NamedValue(Of Double)() = Pcompute(GA, source).ToArray
-
-                For Each x As NamedValue(Of Double) In fitness
-                    If Not comparator.cache.ContainsKey(x.Name) Then
-                        Call comparator.cache.Add(x.Name, x.Value)
-                    End If
-                Next
+            If Parallel AndAlso comparator.Cacheable Then
+                Call parallelCacheFitness(GA, comparator)
             End If
 
-            chromosomes = (From c In chromosomes.AsParallel Order By comparator.Fitness(c) Ascending).AsList
+            chromosomes = (From c As Chr In chromosomes.AsParallel Order By comparator.Calculate(c) Ascending).AsList
+        End Sub
+
+        Private Sub parallelCacheFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
+            Dim source As NamedValue(Of Chr)() = chromosomes _
+                .Select(Function(x)
+                            Return New NamedValue(Of Chr) With {
+                                .Name = x.ToString,
+                                .Value = x
+                            }
+                        End Function) _
+                .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
+                .ToArray
+            Dim fitness As NamedValue(Of Double)() = Pcompute(GA, source).ToArray
+
+            For Each x As NamedValue(Of Double) In fitness
+                If Not comparator.cache.ContainsKey(x.Name) Then
+                    Call comparator.cache.Add(x.Name, x.Value)
+                End If
+            Next
         End Sub
 
         ''' <summary>

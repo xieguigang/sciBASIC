@@ -1,48 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::46e3cc83f4675c24a0e360758d28c365, CLI_tools\ANN\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: ConfigTemplate, Encourage, Train
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: ConfigTemplate, Encourage, Train
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
 Module CLI
@@ -60,7 +62,7 @@ Module CLI
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/training")>
-    <Usage("/training /samples <sample_matrix.Xml> [/config <config.ini> /parallel /out <ANN.Xml>]")>
+    <Usage("/training /samples <sample_matrix.Xml> [/config <config.ini> /parallel /GA.optimize /out <ANN.Xml>]")>
     Public Function Train(args As CommandLine) As Integer
         Dim in$ = args <= "/samples"
         Dim parallel As Boolean = args("/parallel")
@@ -96,7 +98,27 @@ Module CLI
         Helpers.MaxEpochs = config.iterations
 
         Call Console.WriteLine(trainingHelper.NeuronNetwork.ToString)
-        Call trainingHelper.Train(parallel)
+
+        If Not args("/GA.optimize").IsTrue Then
+            Using log As StreamWriter = $"{out.TrimSuffix}.log".OpenWriter
+                Dim synapses = trainingHelper.NeuronNetwork.GetSynapseGroups
+
+                Call log.WriteLine(synapses.Keys.JoinBy(vbCrLf))
+                Call trainingHelper _
+                    .AttachReporter(Sub(i, e, g)
+                                        Call $"[{i}] errors={e}, learn={g.LearnRate}".__DEBUG_ECHO
+                                        Call log.WriteLine((New Double() {i, e, g.LearnRate}.AsList + synapses.Select(Function(s) s.First.Weight)).JoinBy(vbTab))
+                                    End Sub) _
+                    .Train(parallel)
+            End Using
+        Else
+            Call trainingHelper _
+                .NeuronNetwork _
+                .RunGAAccelerator(
+                    trainingSet:=trainingHelper.TrainingSet,
+                    iterations:=config.iterations
+                 )
+        End If
 
         Return trainingHelper _
             .TakeSnapshot _

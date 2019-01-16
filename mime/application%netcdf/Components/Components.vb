@@ -134,6 +134,9 @@ Namespace Components
         End Function
     End Class
 
+    ''' <summary>
+    ''' 属对象性,主要是记录一些注解信息
+    ''' </summary>
     Public Class attribute
 
         ''' <summary>
@@ -157,6 +160,9 @@ Namespace Components
         End Function
     End Class
 
+    ''' <summary>
+    ''' 变量对象,CDF文件之中的实验数据之类的数据都是保存于这个对象之中的
+    ''' </summary>
     Public Class variable
 
         ''' <summary>

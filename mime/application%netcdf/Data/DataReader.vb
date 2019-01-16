@@ -45,6 +45,7 @@ Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
 
 ''' <summary>
 ''' Data reader methods for a given variable data value.
+''' (在这个模块之中读取<see cref="variable.value"/>数据变量的值)
 ''' </summary>
 Module DataReader
 
@@ -54,7 +55,7 @@ Module DataReader
     ''' <param name="buffer">Buffer for the file data</param>
     ''' <param name="variable">Variable metadata</param>
     ''' <returns>Data of the element</returns>
-    Public Function nonRecord(buffer, variable) As Object()
+    Public Function nonRecord(buffer As BinaryDataReader, variable As variable) As Object()
         ' variable type
         Dim type = TypeExtensions.str2num(variable.type)
         ' size of the data

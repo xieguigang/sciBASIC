@@ -258,16 +258,16 @@ Namespace Darwinism.GAF.ODEs
                 fitness,
                 randomGenerator)
             Dim out As New List(Of outPrint)
-#If DEBUG Then
-            Call ga.addIterationListener(
-                New Dump With {
-                    .a = fitness.a,
-                    .b = fitness.b,
-                    .n = fitness.n,
-                    .model = fitness.Model,
-                    .y0 = fitness.y0
-                })
-#End If
+            '#If DEBUG Then
+            '            Call ga.addIterationListener(
+            '                New Dump With {
+            '                    .a = fitness.a,
+            '                    .b = fitness.b,
+            '                    .n = fitness.n,
+            '                    .model = fitness.Model,
+            '                    .y0 = fitness.y0
+            '                })
+            '#End If
             Dim reporter As New EnvironmentDriver(Of ParameterVector)(ga) With {
                 .Iterations = evolIterations,
                 .Threshold = threshold

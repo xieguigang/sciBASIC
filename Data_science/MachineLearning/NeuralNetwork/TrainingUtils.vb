@@ -158,16 +158,18 @@ Namespace NeuralNetwork
                 Dim tick As New ProgressProvider(numEpochs)
                 Dim msg$
                 Dim errors#
+                Dim ETA$
 
                 For i As Integer = 0 To numEpochs - 1
                     errors = trainingImpl(dataSets, parallel)
-                    msg = $"Iterations: [{i}/{numEpochs}], Err={errors}"
+                    ETA = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
+                    msg = $"Iterations: [{i}/{numEpochs}], Err={errors}{vbTab} {ETA}"
                     progress.SetProgress(tick.StepProgress, msg)
 
                     If Not reporter Is Nothing Then
-                Call reporter(i, errors, network)
-            End If
-            Next
+                        Call reporter(i, errors, network)
+                    End If
+                Next
             End Using
         End Sub
 

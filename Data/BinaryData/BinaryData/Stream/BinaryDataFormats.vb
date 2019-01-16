@@ -97,9 +97,10 @@ Public Enum BinaryStringFormat
     ''' </summary>
     ZeroTerminated
 
-	''' <summary>
-	''' The string has neither prefix nor postfix. This format is only valid for writing strings. For reading
-	''' strings, the length has to be specified manually.
-	''' </summary>
-	NoPrefixOrTermination
+    ''' <summary>
+    ''' The string has neither prefix nor postfix. This format is only valid for writing strings. For reading
+    ''' strings, the length has to be specified manually.
+    ''' (经常使用这种模式用于写入Magic Header字符串)
+    ''' </summary>
+    NoPrefixOrTermination
 End Enum

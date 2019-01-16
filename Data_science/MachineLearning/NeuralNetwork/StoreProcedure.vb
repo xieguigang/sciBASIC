@@ -121,8 +121,7 @@ Namespace NeuralNetwork
                 Dim neuron As New Neuron(active) With {
                     .Bias = data.bias,
                     .BiasDelta = data.delta,
-                    .Gradient = data.gradient,
-                    .Value = data.value
+                    .Gradient = data.gradient
                 }
 
                 Yield New NamedValue(Of Neuron) With {

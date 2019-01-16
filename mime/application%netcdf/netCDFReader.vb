@@ -63,7 +63,7 @@ Public Class netCDFReader
     Dim globalAttributeTable As Dictionary(Of String, attribute)
     Dim variableTable As Dictionary(Of String, variable)
 
-    Const Magic$ = "CDF"
+    Public Const Magic$ = "CDF"
 
     ''' <summary>
     ''' Version for the NetCDF format
@@ -89,6 +89,7 @@ Public Class netCDFReader
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property recordDimension As recordDimension
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return header.recordDimension
         End Get
@@ -102,6 +103,7 @@ Public Class netCDFReader
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property dimensions As Dimension()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return header.dimensions
         End Get
@@ -116,6 +118,7 @@ Public Class netCDFReader
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property globalAttributes As attribute()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return header.globalAttributes
         End Get
@@ -151,6 +154,7 @@ Public Class netCDFReader
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property variables As variable()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return header.variables
         End Get
