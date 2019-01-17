@@ -60,7 +60,6 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
@@ -80,7 +79,21 @@ Namespace BarPlot.Histogram
     ''' </remarks>
     Public Structure HistogramData
 
-        Public x1#, x2#, y#
+        ''' <summary>
+        ''' 数据区域范围的下限
+        ''' </summary>
+        Public x1#
+        ''' <summary>
+        ''' 数据区域范围的上限
+        ''' </summary>
+        Public x2#
+        ''' <summary>
+        ''' 频数
+        ''' </summary>
+        Public y#
+        ''' <summary>
+        ''' 一般为平均值
+        ''' </summary>
         Public pointY#
 
         Public ReadOnly Property LinePoint As PointData
@@ -222,7 +235,7 @@ Namespace BarPlot.Histogram
         ''' <param name="hist"></param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(hist As IEnumerable(Of DataBinBox), step!)
+        Sub New(hist As IEnumerable(Of DataBinBox(Of Double)), step!)
             data = hist _
                 .Select(Function(range)
                             Dim data As Double() = range.Raw

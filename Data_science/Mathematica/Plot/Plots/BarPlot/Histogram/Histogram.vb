@@ -45,7 +45,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
@@ -324,7 +323,7 @@ Namespace BarPlot.Histogram
                                       Optional size$ = "1600,1200",
                                       Optional padding$ = DefaultPadding,
                                       Optional showGrid As Boolean = True,
-                                      Optional ByRef histData As IntegerTagged(Of Double)() = Nothing,
+                                      Optional ByRef histData As HistogramData() = Nothing,
                                       Optional xLabel$ = "X",
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
@@ -345,7 +344,7 @@ Namespace BarPlot.Histogram
                     .Serials = {s.SerialData}
                 }
 
-                histData = .Values.ToArray
+                histData = s.data
 
                 Return group.Plot(
                     bg:=bg, padding:=padding, size:=size,
@@ -353,7 +352,8 @@ Namespace BarPlot.Histogram
                     showTagChartLayer:=False,
                     xlabel:=xLabel, Ylabel:=yLabel,
                     xAxis:=xAxis,
-                    showLegend:=showLegend)
+                    showLegend:=showLegend
+                )
             End With
         End Function
     End Module

@@ -57,7 +57,7 @@ Namespace BarPlot.Histogram
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function NewModel(hist As IEnumerable(Of DataBinBox), step!, legend As Legend) As HistProfile
+        Public Function NewModel(hist As IEnumerable(Of DataBinBox(Of Double)), step!, legend As Legend) As HistProfile
             Return New HistProfile(hist, [step]) With {
                 .legend = legend
             }
