@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::2ff2a8e953272beb54e1d0026d81931c, Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\DataModel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Structure HistogramData
-    ' 
-    '         Properties: LinePoint, width
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class HistogramGroup
-    ' 
-    '         Properties: Samples, XRange, YRange
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Structure HistProfile
-    ' 
-    '         Properties: SerialData
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetLine
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Structure HistogramData
+' 
+'         Properties: LinePoint, width
+' 
+'         Function: ToString
+' 
+'     Class HistogramGroup
+' 
+'         Properties: Samples, XRange, YRange
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'     Structure HistProfile
+' 
+'         Properties: SerialData
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: GetLine
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BarPlot.Histogram
@@ -219,14 +220,21 @@ Namespace BarPlot.Histogram
         ''' Tag值为直方图的高，value值为直方图的平均值连线
         ''' </summary>
         ''' <param name="hist"></param>
-        Sub New(hist As Dictionary(Of Double, IntegerTagged(Of Double)), step!)
-            data = hist.Select(
-                Function(range) New HistogramData With {
-                    .x1 = range.Key,
-                    .x2 = .x1 + step!,
-                    .y = range.Value.Tag,
-                    .pointY = range.Value.Value
-                }).ToArray
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(hist As IEnumerable(Of DataBinBox), step!)
+            data = hist _
+                .Select(Function(range)
+                            Dim data As Double() = range.Raw
+
+                            Return New HistogramData With {
+                                .x1 = data.Min,
+                                .x2 = .x1 + step!,
+                                .y = data.Length,
+                                .pointY = data.Average
+                            }
+                        End Function) _
+                .ToArray
         End Sub
     End Structure
 End Namespace

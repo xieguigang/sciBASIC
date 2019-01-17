@@ -138,7 +138,7 @@ Namespace BarPlot
             Dim sy As Func(Of Single, Single) = mapper.YScaler(grect.Size, grect.Padding)
             Dim bottom = grect.Size.Height - grect.Padding.Bottom
             Dim angle! = -45
-            Dim leftMargins As New List(Of Single)
+            Dim leftMargins As New List(Of Double)
 
             ' Call g.DrawAxis(grect.Size, grect.Padding, mapper, showGrid)
 

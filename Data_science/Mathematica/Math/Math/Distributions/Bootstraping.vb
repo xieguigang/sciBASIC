@@ -181,8 +181,12 @@ Namespace Distributions
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Hist(data As Double(), Optional step! = 1) As IEnumerable(Of DataBinBox)
-            Return CutBins.FixedWidthBins(data.OrderBy(Function(x) x).ToArray, width:=[step])
+        Public Function Hist(data As Double(), Optional step! = 1) As IEnumerable(Of DataBinBox(Of Double))
+            Return CutBins.FixedWidthBins(Of Double)(
+                v:=data.OrderBy(Function(x) x).ToArray,
+                width:=[step],
+                eval:=Function(x) x
+            )
         End Function
     End Module
 End Namespace

@@ -87,23 +87,23 @@ Namespace BarPlot.Histogram
 
             Return New HistogramGroup With {
                 .Serials = {
-                New NamedValue(Of Color) With {
-                    .Name = NameOf(data),
-                    .Value = color.ToColor(Drawing.Color.Blue)
+                    New NamedValue(Of Color) With {
+                        .Name = NameOf(data),
+                        .Value = color.ToColor(Drawing.Color.Blue)
+                    }
+                },
+                .Samples = {
+                    New HistProfile With {
+                        .legend = New Legend With {
+                            .color = color,
+                            .fontstyle = CSSFont.Win10Normal,
+                            .style = LegendStyles.Rectangle,
+                            .title = NameOf(data)
+                        },
+                        .data = data.ToArray
+                    }
                 }
-            },
-            .Samples = {
-                New HistProfile With {
-                    .legend = New Legend With {
-                        .color = color,
-                        .fontstyle = CSSFont.Win10Normal,
-                        .style = LegendStyles.Rectangle,
-                        .title = NameOf(data)
-                    },
-                    .data = data.ToArray
-                }
-            }
-        }.Plot(bg, size, padding, showGrid)
+            }.Plot(bg, size, padding, showGrid)
         End Function
 
         ''' <summary>

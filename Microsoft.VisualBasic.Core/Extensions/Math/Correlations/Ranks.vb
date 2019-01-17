@@ -51,11 +51,13 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Math
 
+    Public Delegate Function Evaluate(Of T)(x As T) As Double
+
     Public Module Ranks
 
         Public Class Ranking(Of T)
 
-            Public Property Evaluate As Func(Of T, Double)
+            Public Property Evaluate As Evaluate(Of T)
             ''' <summary>
             ''' The sort direction
             ''' </summary>
@@ -68,7 +70,7 @@ Namespace Math
             Public Property Weight As Double = 1
 
             Public Function Sort(source As IEnumerable(Of T)) As SeqValue(Of (T, Double))()
-                Dim Evaluate As Func(Of T, Double) = Me.Evaluate
+                Dim Evaluate As Evaluate(Of T) = Me.Evaluate
                 Dim LQuery = (From x As T In source Select x, v = Evaluate(x)).ToArray
                 Dim result As SeqValue(Of (T, Double))()
                 Dim weights As IEnumerable(Of Double) = _Weight.Repeats(LQuery.Length)
