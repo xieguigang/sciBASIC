@@ -161,6 +161,12 @@ Namespace IO
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 取出某一个给定的属性的所有值
+        ''' </summary>
+        ''' <param name="datasets"></param>
+        ''' <param name="property$"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Vector(datasets As IEnumerable(Of DataSet), property$) As Double()
