@@ -167,6 +167,10 @@ Public Class CDFWriter : Implements IDisposable
         Return Me
     End Function
 
+    ''' <summary>
+    ''' 会需要在这个函数之中进行offset的计算操作
+    ''' </summary>
+    ''' <returns></returns>
     Private Function FileWriter(recordDimensionLength As UInteger)
         ' >>>>>>> header
         Call output.Write(recordDimensionLength)
@@ -228,6 +232,15 @@ Public Class CDFWriter : Implements IDisposable
         Next
     End Sub
 
+    ''' <summary>
+    ''' 添加一个变量数据
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="data">
+    ''' 可以直接添加变量值，因为<see cref="CDFData"/>对象之中定义有转换操作符，
+    ''' 所以可以在这里直接添加变量值对象，但是仅限于<see cref="CDFDataTypes"/>
+    ''' 之中所限定的类型元素或者其数组
+    ''' </param>
     Public Sub AddVariable(name$, data As CDFData)
 
     End Sub
