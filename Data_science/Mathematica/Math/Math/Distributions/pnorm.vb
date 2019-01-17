@@ -32,7 +32,8 @@ Namespace Distributions
         ''' <returns></returns>
         ''' <remarks>https://github.com/mpadge/tnorm</remarks>
         Public Function TruncNDist(len%, sd#) As Vector
-            Dim eps As Vector ' Set up truncated normal distribution
+            ' Set up truncated normal distribution
+            Dim eps As Vector
             Dim z As New List(Of Double)()
 
             While z.Count < len
@@ -53,7 +54,7 @@ Namespace Distributions
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Function StandardDistribution#(x#)
+        Public Function StandardDistribution(x As Double) As Double
             Dim answer As Double = 1 / ((sys.Sqrt(2 * sys.PI)))
             Dim exp1 As Double = sys.Pow(x, 2) / 2
             Dim exp As Double = sys.Pow(sys.E, -(exp1))
@@ -84,29 +85,33 @@ Namespace Distributions
             Dim expP2 As Double = 2 * sys.Pow(sd, 2.0)
             Dim expP3 = sys.E ^ -(exp / expP2)
             Dim y As Vector = answer * expP3
+
             Return y
         End Function
 
         Public Function AboveStandardDistribution(upperX As Double, resolution As Double, m As Double, sd As Double) As Double
             Dim lowerX As Double = m - 4.1 * sd
             Dim answer As Double = TrapezodialRule(lowerX, upperX, resolution, m, sd)
+
             Return 1 - answer
         End Function
 
         Public Function BelowStandardDistribution(upperX As Double, resolution As Double, m As Double, sd As Double) As Double
             Dim lowerX As Double = m + 4.1 * sd
             Dim answer As Double = TrapezodialRule(lowerX, upperX, resolution, m, sd)
-            Return 1 + answer 'lol
+
+            ' lol
+            Return 1 + answer
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function BetweenStandardDistribution(lowerX As Double, upperX As Double, resolution As Double, m As Double, sd As Double) As Double
-            Dim answer As Double = TrapezodialRule(lowerX, upperX, resolution, m, sd)
-            Return answer
+            Return TrapezodialRule(lowerX, upperX, resolution, m, sd)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function OutsideStandardDistribution(lowerX As Double, upperX As Double, resolution As Double, m As Double, sd As Double) As Double
-            Dim answer As Double = 1 - TrapezodialRule(lowerX, upperX, resolution, m, sd)
-            Return answer
+            Return 1 - TrapezodialRule(lowerX, upperX, resolution, m, sd)
         End Function
 
         ''' <summary>
@@ -119,17 +124,16 @@ Namespace Distributions
         ''' <param name="sd#"></param>
         ''' <returns></returns>
         Public Function TrapezodialRule(a#, b#, resolution#, m#, sd#) As Double
-            Dim changeX As Double = (b - a) / resolution
+            Dim dx As Double = (b - a) / resolution
             Dim a1 As Double = ProbabilityDensity(a, m, sd)
             Dim b1 As Double = ProbabilityDensity(b, m, sd)
             Dim c As Double = 0.5 * (a1 + b1)
 
             For i As Double = 1 To resolution - 1
-                c = c + ProbabilityDensity((a + (i * changeX)), m, sd)
-            Next i
-            c = changeX * c
+                c = c + ProbabilityDensity((a + (i * dx)), m, sd)
+            Next
 
-            Return c
+            Return dx * c
         End Function
     End Module
 End Namespace
