@@ -7,7 +7,8 @@ Imports Microsoft.VisualBasic.Language
 ''' 这个对象没有显式调用的文件写函数,必须要通过<see cref="IDisposable"/>接口来完成文件数据的写操作
 ''' </summary>
 ''' <remarks>
-''' 
+''' CDF文件之中，字符串仅允许ASCII字符，因为CDF文件之中的字符只有一个字节长度
+''' 如果要写入中文之类的非ASCII编码的字符串的话，只能够首先转换为字节流，然后再写入到variable的数据之中
 ''' </remarks>
 Public Class CDFWriter : Implements IDisposable
 
