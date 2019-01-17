@@ -70,6 +70,13 @@ Imports Microsoft.VisualBasic.Linq.IteratorExtensions
 ''' </summary>
 Public Module VectorExtensions
 
+    ''' <summary>
+    ''' 使用<paramref name="template"/>产生一个<paramref name="n"/>长度元素的目标序列
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="template"></param>
+    ''' <param name="n"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function Replicate(Of T)(template As T, n%) As IEnumerable(Of T)
         For i As Integer = 0 To n - 1

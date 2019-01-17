@@ -134,27 +134,15 @@ Namespace Math.Statistics.Linq
 
             Return Nothing
         End Function
-        '
-        ' Summary:
-        '     Computes the Median of a sequence of System.Double values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of System.Double values to calculate the Median of.
-        '
-        ' Returns:
-        '     The Median of the sequence of values.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
-        '
-        '   System.InvalidOperationException:
-        '     source contains no elements.
+
+        ''' <summary>
+        ''' Computes the Median of a sequence of <see cref="Double"/> values.
+        ''' </summary>
+        ''' <param name="source">A sequence of <see cref="Double"/> values to calculate the Median of.</param>
+        ''' <returns>The Median of the sequence of values.</returns>
         <Extension>
         Public Function Median(source As IEnumerable(Of Double)) As Double
             Dim sortedList = From number In source Order By number Select number
-
             Dim count As Integer = sortedList.Count()
             Dim itemIndex As Integer = count \ 2
 
@@ -166,6 +154,7 @@ Namespace Math.Statistics.Linq
             ' Odd number of items.
             Return sortedList.ElementAt(itemIndex)
         End Function
+
         '
         ' Summary:
         '     Computes the Median of a sequence of nullable System.Single values.
