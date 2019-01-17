@@ -184,7 +184,7 @@ Namespace Components
         ''' String with the type of the variable
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property type As String
+        <XmlAttribute> Public Property type As CDFDataTypes
         ''' <summary>
         ''' Number with the size of the variable
         ''' </summary>
@@ -204,7 +204,7 @@ Namespace Components
         Public Property value As CDFData
 
         Public Overrides Function ToString() As String
-            Return $"Dim {name}[offset={offset}] As {type}"
+            Return $"Dim {name}[offset={offset}] As {type.Description}"
         End Function
     End Class
 End Namespace

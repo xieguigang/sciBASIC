@@ -217,7 +217,7 @@ Public Class netCDFReader
             values = DataReader.nonRecord(buffer, variable)
         End If
 
-        Return (values, TypeExtensions.str2num(variable.type))
+        Return (values, variable.type)
     End Function
 
     ''' <summary>

@@ -196,7 +196,7 @@ Module StructureParser
                 .name = name,
                 .dimensions = dimensionsIds,
                 .attributes = attributes,
-                .type = TypeExtensions.num2str(type),
+                .type = CType(CInt(type), CDFDataTypes),
                 .size = varSize,
                 .offset = offset,
                 .record = record

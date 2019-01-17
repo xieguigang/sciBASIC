@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
+Imports Microsoft.VisualBasic.Language
 
 ''' <summary>
 ''' 这个对象没有显式调用的文件写函数,必须要通过<see cref="IDisposable"/>接口来完成文件数据的写操作
@@ -246,7 +247,7 @@ Public Class CDFWriter : Implements IDisposable
             Call output.Write(var.dimensions)
             ' attributes of this variable
             Call writeAttributes(output, var.attributes)
-            Call output.Write(str2num(var.type))
+            Call output.Write(sizeof(var.type))
             ' varSize
             Call output.Write(var.size)
             ' version = 1, write 4 bytes
@@ -288,8 +289,14 @@ Public Class CDFWriter : Implements IDisposable
     ''' 所以可以在这里直接添加变量值对象，但是仅限于<see cref="CDFDataTypes"/>
     ''' 之中所限定的类型元素或者其数组
     ''' </param>
-    Public Sub AddVariable(name$, data As CDFData)
-
+    Public Sub AddVariable(name$, data As CDFData, Optional attrs As attribute() = Nothing)
+        variables += New variable With {
+            .name = name,
+            .size = data.Length,
+            .type = data.cdfDataType,
+            .value = data,
+            .attributes = attrs
+        }
     End Sub
 
 #Region "IDisposable Support"

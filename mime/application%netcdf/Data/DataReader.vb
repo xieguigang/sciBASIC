@@ -56,16 +56,14 @@ Module DataReader
     ''' <param name="variable">Variable metadata</param>
     ''' <returns>Data of the element</returns>
     Public Function nonRecord(buffer As BinaryDataReader, variable As variable) As Object()
-        ' variable type
-        Dim type = TypeExtensions.str2num(variable.type)
         ' size of the data
-        Dim size = variable.size / sizeof(type)
+        Dim size = variable.size / sizeof(variable.type)
         ' iterates over the data
         Dim data As Object() = New Object(size - 1) {}
 
         ' 读取的结果是一个T()数组
         For i As Integer = 0 To size - 1
-            data(i) = TypeExtensions.readType(buffer, type, 1)
+            data(i) = TypeExtensions.readType(buffer, variable.type, 1)
         Next
 
         Return data
@@ -79,14 +77,10 @@ Module DataReader
     ''' <param name="recordDimension">Record dimension metadata</param>
     ''' <returns>Data of the element</returns>
     Public Function record(buffer As BinaryDataReader, variable As variable, recordDimension As recordDimension) As Object()
-        ' variable type
-        Dim type As CDFDataTypes = TypeExtensions.str2num(variable.type)
-        Dim width% = If(variable.size, variable.size / sizeof(type), 1)
-
+        Dim width% = If(variable.size, variable.size / sizeof(variable.type), 1)
         ' size of the data
         ' TODO streaming data
         Dim size = recordDimension.length
-
         ' iterates over the data
         Dim data As Object() = New Object(size - 1) {}
         Dim [step] = recordDimension.recordStep
@@ -99,7 +93,7 @@ Module DataReader
             If buffer.EndOfStream Then
                 data(i) = Nothing
             Else
-                data(i) = TypeExtensions.readType(buffer, type, width)
+                data(i) = TypeExtensions.readType(buffer, variable.type, width)
                 buffer.Seek(nextOffset, SeekOrigin.Begin)
             End If
         Next
