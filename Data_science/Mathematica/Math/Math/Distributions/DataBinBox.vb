@@ -22,6 +22,13 @@ Namespace Distributions
             End Get
         End Property
 
+        Public ReadOnly Property Sample As SampleDistribution
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New SampleDistribution(bin)
+            End Get
+        End Property
+
         ReadOnly bin As New List(Of Double)
 
         Public ReadOnly Property Count As Integer
@@ -30,6 +37,11 @@ Namespace Distributions
                 Return bin.Count
             End Get
         End Property
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(data As IEnumerable(Of Double))
+            bin = data.ToList
+        End Sub
 
         Public Shared Function GetBinMaps(data As IEnumerable(Of Double), method As BinMaps) As Double()
             Dim v As Double() = data.ToArray
