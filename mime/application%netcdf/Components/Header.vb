@@ -101,17 +101,17 @@ Namespace Components
             Me.version = version
 
             ' List of dimensions
-            Dim dimList = dimensionsList(buffer)
+            Dim dimList As DimensionList = buffer.dimensionsList()
 
             Me.recordDimension.id = dimList.recordId
             Me.recordDimension.name = dimList.recordName
             Me.dimensions = dimList.dimensions
 
             ' List of global attributes
-            Me.globalAttributes = attributesList(buffer).ToArray
+            Me.globalAttributes = buffer.attributesList().ToArray
 
             ' List of variables
-            Dim variables = variablesList(buffer, dimList.recordId, version)
+            Dim variables = buffer.variablesList(dimList.recordId, version)
             Me.variables = variables.variables
             Me.recordDimension.recordStep = variables.recordStep
         End Sub

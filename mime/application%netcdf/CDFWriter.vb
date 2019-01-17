@@ -201,6 +201,7 @@ Public Class CDFWriter : Implements IDisposable
         Call output.Write(CUInt(Header.NC_VARIABLE))
         ' variableSize 
         Call output.Write(CUInt(variables.Count))
+        Call CalcOffsets()
 
         For Each var As variable In variables
             Call output.Write(var.name, BinaryStringFormat.UInt32LengthPrefix)
@@ -219,6 +220,14 @@ Public Class CDFWriter : Implements IDisposable
         Next
 
         ' <<<<<<<< header
+    End Sub
+
+    ''' <summary>
+    ''' 这个函数在完成计算之后会直接修改<see cref="Variable"/> class之中的属性值
+    ''' 完成函数调用之后可以直接读取属性值
+    ''' </summary>
+    Private Sub CalcOffsets()
+        Dim current = output.Position
     End Sub
 
     Private Sub writeAttributes(output As BinaryDataWriter, attrs As attribute())
