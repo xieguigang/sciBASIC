@@ -1,7 +1,10 @@
-﻿Imports System.Runtime.CompilerServices
+﻿Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO
-Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' 这个对象没有显式调用的文件写函数,必须要通过<see cref="IDisposable"/>接口来完成文件数据的写操作
@@ -155,7 +158,7 @@ Public Class CDFWriter : Implements IDisposable
     Dim recordDimensionLength As UInteger
 
     Sub New(path As String)
-        output = New BinaryDataWriter(path.Open) With {
+        output = New BinaryDataWriter(path.Open, Encodings.ASCII) With {
             .ByteOrder = ByteOrder.BigEndian,
             .RerouteInt32ToUnsigned = True
         }
@@ -235,10 +238,35 @@ Public Class CDFWriter : Implements IDisposable
         Call output.Write(CUInt(Header.NC_VARIABLE))
         ' variableSize 
         Call output.Write(CUInt(variables.Count))
-        Call CalcOffsets()
+
+        ' 先生成每一个变量的header的buffer
+        Dim variableBuffers As New List(Of Byte())
+
+        For Each var As variable In variables
+            variableBuffers.Add(getVariableHeaderBuffer(var))
+        Next
+
+        Call CalcOffsets(variableBuffers)
 
         ' 在这个循环仅写入了变量的头部数据
-        For Each var As variable In variables
+        For i As Integer = 0 To variables.Count - 1
+            ' offset已经在计算offset函数的调用过程之中被替换掉了
+            ' 在这里直接写入buffer数据
+            Call output.Write(variableBuffers(i))
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' 因为这个步骤是发生在计算offset之前的
+    ''' 所以<see cref="variable.offset"/>，全部都是零
+    ''' 可以在计算完成之后，将buffer的末尾4个字节替换掉再写入文件
+    ''' </summary>
+    ''' <param name="var"></param>
+    ''' <returns></returns>
+    Private Shared Function getVariableHeaderBuffer(var As variable) As Byte()
+        Dim buffer As New MemoryStream
+
+        Using output = New BinaryDataWriter(buffer, Encoding.ASCII)
             Call output.writeName(var.name)
             ' dimensionality 
             Call output.Write(CUInt(var.dimensions.Length))
@@ -251,18 +279,31 @@ Public Class CDFWriter : Implements IDisposable
             Call output.Write(var.size)
             ' version = 1, write 4 bytes
             Call output.Write(var.offset)
-        Next
-    End Sub
+            Call output.Flush()
+        End Using
+
+        Return buffer.ToArray
+    End Function
 
     ''' <summary>
     ''' 这个函数在完成计算之后会直接修改<see cref="Variable"/> class之中的属性值
     ''' 完成函数调用之后可以直接读取属性值
     ''' </summary>
-    Private Sub CalcOffsets()
-        Dim current = output.Position
+    ''' <param name="buffers">
+    ''' 这个是和<see cref="variables"/>之中的元素一一对应的
+    ''' </param>
+    Private Sub CalcOffsets(buffers As List(Of Byte()))
+        ' 这个位置是在所有的变量头部之后的
+        ' 因为这个函数是发生在变量写入之前的，所以会需要加上自身的长度
+        ' 才会将offset的位置移动到数据区域的起始位置
+        Dim current = output.Position + buffers.Sum(Function(v) v.Length)
+
+        For i As Integer = 0 To variables.Count - 1
+
+        Next
     End Sub
 
-    Private Sub writeAttributes(output As BinaryDataWriter, attrs As attribute())
+    Private Shared Sub writeAttributes(output As BinaryDataWriter, attrs As attribute())
         ' List of global attributes
         Call output.Write(CUInt(Header.NC_ATTRIBUTE))
         ' attributeSize
@@ -287,6 +328,8 @@ Public Class CDFWriter : Implements IDisposable
     ''' 所以可以在这里直接添加变量值对象，但是仅限于<see cref="CDFDataTypes"/>
     ''' 之中所限定的类型元素或者其数组
     ''' </param>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AddVariable(name$, data As CDFData, Optional attrs As attribute() = Nothing)
         variables += New variable With {
             .name = name,
