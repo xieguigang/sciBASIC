@@ -178,46 +178,11 @@ Namespace Distributions
         ''' <returns>
         ''' 返回来的数据为区间的下限 -> {频数, 平均值}
         ''' </returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Hist(data As Double(), Optional step! = 1) As Dictionary(Of Double, IntegerTagged(Of Double))
-            Dim out As New Dictionary(Of Double, IntegerTagged(Of Double))
-            Dim i As int = 0
-            Dim x As New Value(Of Double)
-            Dim stop# = Fix(data.Max) + 1
-            Dim len% = data.Length
-            Dim avg#
-            Dim list As New List(Of Double)
-
-            ' 升序排序方便进行快速计算
-            data = data _
-                .OrderBy(Function(n) n) _
-                .ToArray
-
-            For min As Double = Fix(data.Min) - 1 To [stop] Step [step]
-                Dim upbound# = min + [step]
-                Dim n As Integer = 0
-
-                ' 因为数据已经是经过排序了的，所以在这里可以直接进行区间计数
-                Do While i < len AndAlso (x = data(++i)) >= min AndAlso x < upbound
-                    n += 1
-                    list += x.Value
-                Loop
-
-                avg = If(list.Count = 0, 0R, list.Average)
-                out(min) = New IntegerTagged(Of Double) With {
-                    .Tag = n,
-                    .Value = avg,
-                    .TagStr = $"[{min}, {upbound}]"
-                }
-
-                If i.Value = len Then
-                    Exit For
-                Else
-                    list *= 0
-                End If
-            Next
-
-            Return out
+        Public Function Hist(data As Double(), Optional step! = 1) As IEnumerable(Of DataBinBox)
+            Return CutBins.FixedWidthBins(data.OrderBy(Function(x) x).ToArray, width:=[step])
         End Function
     End Module
 End Namespace

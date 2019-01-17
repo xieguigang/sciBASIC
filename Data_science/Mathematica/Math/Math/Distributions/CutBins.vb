@@ -14,15 +14,22 @@ Namespace Distributions
         ''' </summary>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Iterator Function FixedWidthBins(data As IEnumerable(Of Double), k%) As IEnumerable(Of DataBinBox)
+        Public Function FixedWidthBins(data As IEnumerable(Of Double), k%) As IEnumerable(Of DataBinBox)
             ' 升序排序方便进行快速计算
             Dim v = data.OrderBy(Function(d) d).ToArray
+            Dim min# = v.First
+            Dim max# = v.Last
+            Dim width# = (max - min) / k
+
+            Return FixedWidthBins(v, width)
+        End Function
+
+        Public Iterator Function FixedWidthBins(v#(), width#) As IEnumerable(Of DataBinBox)
             Dim x As New Value(Of Double)
             Dim len% = v.Length
             Dim min# = v.First
             Dim max = v.Last
             Dim i As int = 0
-            Dim width# = (max - min) / k
             Dim lowerbound# = min
             Dim upbound#
             Dim list As New List(Of Double)
@@ -31,7 +38,7 @@ Namespace Distributions
                 upbound = lowerbound + width
 
                 ' 因为数据已经是经过排序了的，所以在这里可以直接进行区间计数
-                Do While i < len AndAlso (x = data(++i)) >= lowerbound AndAlso x < upbound
+                Do While i < len AndAlso (x = v(++i)) >= lowerbound AndAlso x < upbound
                     list += x
                 Loop
 
