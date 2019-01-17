@@ -83,6 +83,12 @@ Module Utils
         End If
     End Sub
 
+    <Extension>
+    Public Sub writeName(output As BinaryDataWriter, name$)
+        Call output.Write(name, BinaryStringFormat.UInt32LengthPrefix)
+        Call output.writePadding
+    End Sub
+
     ''' <summary>
     ''' Reads the name
     ''' </summary>

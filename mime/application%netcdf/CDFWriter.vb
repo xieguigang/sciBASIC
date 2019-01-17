@@ -221,8 +221,7 @@ Public Class CDFWriter : Implements IDisposable
         Call output.Write(CUInt(dimensionList.Length))
 
         For Each dimension In dimensionList
-            Call output.Write(dimension.name, BinaryStringFormat.UInt32LengthPrefix)
-            Call output.writePadding
+            Call output.writeName(dimension.name)
             Call output.Write(CUInt(dimension.size))
         Next
 
@@ -239,8 +238,7 @@ Public Class CDFWriter : Implements IDisposable
 
         ' 在这个循环仅写入了变量的头部数据
         For Each var As variable In variables
-            Call output.Write(var.name, BinaryStringFormat.UInt32LengthPrefix)
-            Call output.writePadding
+            Call output.writeName(var.name)
             ' dimensionality 
             Call output.Write(CUInt(var.dimensions.Length))
             ' dimensionsIds
@@ -270,8 +268,7 @@ Public Class CDFWriter : Implements IDisposable
         Call output.Write(CUInt(attrs.Length))
 
         For Each attr In attrs
-            Call output.Write(attr.name, BinaryStringFormat.UInt32LengthPrefix)
-            Call output.writePadding
+            Call output.writeName(attr.name)
             Call output.Write(CUInt(str2num(attr.type)))
             ' one string, size = 1
             Call output.Write(CUInt(1))
