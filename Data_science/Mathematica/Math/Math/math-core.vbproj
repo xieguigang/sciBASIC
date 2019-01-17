@@ -436,6 +436,7 @@
     <Compile Include="Algebra\Vector\Polynomial.vb" />
     <Compile Include="Crc32.vb" />
     <Compile Include="Distributions\DataBinBox.vb" />
+    <Compile Include="Distributions\CutBins.vb" />
     <Compile Include="Distributions\pnorm.vb" />
     <Compile Include="Distributions\Sample.vb" />
     <Compile Include="Distributions\Gaussian.vb" />
