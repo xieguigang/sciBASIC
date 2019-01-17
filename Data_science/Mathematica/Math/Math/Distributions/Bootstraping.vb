@@ -260,6 +260,8 @@ Namespace Distributions
             Dim x As New Value(Of Double)
             Dim stop# = Fix(data.Max) + 1
             Dim len% = data.Length
+            Dim avg#
+            Dim list As New List(Of Double)
 
             ' 升序排序方便进行快速计算
             data = data _
@@ -269,7 +271,6 @@ Namespace Distributions
             For min As Double = Fix(data.Min) - 1 To [stop] Step [step]
                 Dim upbound# = min + [step]
                 Dim n As Integer = 0
-                Dim list As New List(Of Double)
 
                 ' 因为数据已经是经过排序了的，所以在这里可以直接进行区间计数
                 Do While i < len AndAlso (x = data(++i)) >= min AndAlso x < upbound
@@ -277,15 +278,17 @@ Namespace Distributions
                     list += x.Value
                 Loop
 
-                Call out.Add(
-                    min, New IntegerTagged(Of Double) With {
-                        .Tag = n,
-                        .Value = If(list.Count = 0, 0R, list.Average),
-                        .TagStr = $"[{min}, {upbound}]"
-                    })
+                avg = If(list.Count = 0, 0R, list.Average)
+                out(min) = New IntegerTagged(Of Double) With {
+                    .Tag = n,
+                    .Value = avg,
+                    .TagStr = $"[{min}, {upbound}]"
+                }
 
                 If i.Value = len Then
                     Exit For
+                Else
+                    list *= 0
                 End If
             Next
 
