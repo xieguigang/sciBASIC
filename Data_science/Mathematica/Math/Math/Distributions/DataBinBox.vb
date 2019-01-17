@@ -47,7 +47,7 @@ Namespace Distributions
 
                     Return (Iterator Function() As IEnumerable(Of Double)
                                 For Each x As Double In v
-                                    If x - min < max - x Then
+                                    If (x - min) < (max - x) Then
                                         Yield min
                                     Else
                                         Yield max
