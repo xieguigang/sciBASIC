@@ -196,6 +196,18 @@ Public Class CDFWriter : Implements IDisposable
             If var.offset <> output.Position Then
                 Throw New Exception("Invalid offset position for the variable data blocks!")
             End If
+
+            If var.record Then
+
+            Else
+                ' nonrecord写入的是一个数组
+                If var.value.cdfDataType = CDFDataTypes.CHAR Then
+                    ' 直接写入字符串
+                    Call output.Write(var.value.chars)
+                Else
+                    Call output.Write(var.value.GetBuffer(Nothing))
+                End If
+            End If
         Next
     End Sub
 

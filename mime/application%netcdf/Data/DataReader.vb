@@ -63,6 +63,7 @@ Module DataReader
         ' iterates over the data
         Dim data As Object() = New Object(size - 1) {}
 
+        ' 读取的结果是一个T()数组
         For i As Integer = 0 To size - 1
             data(i) = TypeExtensions.readType(buffer, type, 1)
         Next
@@ -90,6 +91,7 @@ Module DataReader
         Dim data As Object() = New Object(size - 1) {}
         Dim [step] = recordDimension.recordStep
 
+        ' 读取的结果可能是一个T()()矩阵或者T()数组
         For i As Integer = 0 To size - 1
             Dim currentOffset& = buffer.Position
             Dim nextOffset = currentOffset + [step]
