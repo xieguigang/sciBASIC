@@ -147,6 +147,13 @@ Namespace NeuralNetwork.StoreProcedure
                     .items = samples
                 }
             End Operator
+
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Public Shared Widening Operator CType(samples As List(Of Sample)) As SampleList
+                Return New SampleList With {
+                    .items = samples.ToArray
+                }
+            End Operator
         End Class
 
         Public ReadOnly Property Size As Size
