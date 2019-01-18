@@ -42,10 +42,13 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.MIME.application.netCDF
 
 Module CLI
 
@@ -134,7 +137,7 @@ Module CLI
     ''' <returns></returns>
     ''' 
     <ExportAPI("/encourage")>
-    <Usage("/encourage /model <ANN.xml> /samples <samples.Xml> [/parallel /out <out.Xml>]")>
+    <Usage("/encourage /model <ANN.xml> /samples <samples.Xml> [/parallel /iterations <default=10000> /out <out.Xml>]")>
     Public Function Encourage(args As CommandLine) As Integer
         Dim in$ = args <= "/model"
         Dim samples$ = args <= "/samples"
@@ -144,21 +147,88 @@ Module CLI
         Dim training As New TrainingUtils(network)
         Dim logs$ = out.TrimSuffix & ".logs/"
 
+        Helpers.MaxEpochs = args("/iterations") Or 10000
+
         For Each sample As Sample In samples.LoadXml(Of DataSet).PopulateNormalizedSamples
             Call training.Add(sample.status, sample.target)
+        Next
+
+        Dim synapses = training _
+            .NeuronNetwork _
+            .GetSynapseGroups _
+            .Select(Function(g) g.First) _
+            .ToArray
+        Dim synapsesWeights As New Dictionary(Of String, List(Of Double))
+        Dim errors As New List(Of Double)
+        Dim index As New List(Of Integer)
+
+        For Each s In synapses
+            synapsesWeights.Add(s.ToString, New List(Of Double))
         Next
 
         Call Console.WriteLine(network.ToString)
         Call training _
             .AttachReporter(Sub(i, err, model)
-                                If i Mod 5 = 0 Then
-                                    Call NeuralNetwork _
-                                        .Snapshot(model) _
-                                        .GetXml _
-                                        .SaveTo($"{logs}/[{i}]error={err}.Xml")
-                                End If
+                                Call index.Add(i)
+                                Call errors.Add(err)
+                                Call synapses.DoEach(Sub(s) synapsesWeights(s.ToString).Add(s.Weight))
                             End Sub) _
             .Train(parallel)
+
+        Using debugger As New CDFWriter(out.TrimSuffix & ".debugger.CDF")
+            Dim attrs = {
+                 New Components.attribute With {.name = "Date", .type = CDFDataTypes.CHAR, .value = Now.ToString},
+                 New Components.attribute With {.name = "input_layer", .type = CDFDataTypes.CHAR, .value = network.InputLayer.Neurons.Length},
+                 New Components.attribute With {.name = "output_layer", .type = CDFDataTypes.CHAR, .value = network.OutputLayer.Neurons.Length},
+                 New Components.attribute With {.name = "hidden_layers", .type = CDFDataTypes.CHAR, .value = network.HiddenLayer.Select(Function(l) l.Neurons.Length).JoinBy(", ")},
+                 New Components.attribute With {.name = "synapse_edges", .type = CDFDataTypes.CHAR, .value = synapses.Length},
+                 New Components.attribute With {.name = "times", .type = CDFDataTypes.CHAR, .value = App.ElapsedMilliseconds},
+                 New Components.attribute With {.name = "ANN", .type = CDFDataTypes.CHAR, .value = network.GetType.FullName}
+            }
+            Dim dimensions = {
+                New Components.Dimension With {.name = "index_number", .size = 4},
+                New Components.Dimension With {.name = GetType(Double).FullName, .size = 8},
+                New Components.Dimension With {.name = GetType(String).FullName, .size = 1024}
+            }
+            Dim inputLayer = network.InputLayer.Neurons.Select(Function(n) n.Guid).Indexing
+            Dim outputLayer = network.OutputLayer.Neurons.Select(Function(n) n.Guid).Indexing
+            Dim hiddens As New List(Of SeqValue(Of Index(Of String)))
+
+            For Each layer In network.HiddenLayer.SeqIterator
+                hiddens.Add(New SeqValue(Of Index(Of String)) With {.i = layer, .value = layer.value.Neurons.Select(Function(n) n.Guid).Indexing})
+            Next
+
+            Dim getLocation = Function(guid As String) As String
+                                  If inputLayer.IndexOf(guid) > -1 Then
+                                      Return "in"
+                                  ElseIf outputLayer.IndexOf(guid) > -1 Then
+                                      Return "out"
+                                  Else
+                                      For Each layer In hiddens
+                                          If layer.value.IndexOf(guid) > -1 Then
+                                              Return $"hiddens-{layer.i}"
+                                          End If
+                                      Next
+                                  End If
+
+                                  Return "NA"
+                              End Function
+
+            debugger.GlobalAttributes(attrs).Dimensions(dimensions)
+
+            Call debugger.AddVariable("iterations", index.ToArray, {"index_number"})
+            Call debugger.AddVariable("fitness", errors.ToArray, {GetType(Double).FullName})
+
+            For Each s In synapses
+                attrs = {
+                    New Components.attribute With {.name = "input", .type = CDFDataTypes.CHAR, .value = s.InputNeuron.Guid},
+                    New Components.attribute With {.name = "output", .type = CDFDataTypes.CHAR, .value = s.OutputNeuron.Guid},
+                    New Components.attribute With {.name = "input_location", .type = CDFDataTypes.CHAR, .value = getLocation(s.InputNeuron.Guid)},
+                    New Components.attribute With {.name = "output_location", .type = CDFDataTypes.CHAR, .value = getLocation(s.OutputNeuron.Guid)}
+                }
+                debugger.AddVariable(s.ToString, synapsesWeights(s.ToString).ToArray, {GetType(Double).FullName}, attrs)
+            Next
+        End Using
 
         Return training.TakeSnapshot _
             .GetXml _

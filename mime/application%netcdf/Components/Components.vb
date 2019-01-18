@@ -159,7 +159,17 @@ Namespace Components
         ''' A number or string with the value of the attribute
         ''' </summary>
         ''' <returns></returns>
-        <XmlText> Public Property value As String
+        <XmlText>
+        Public Property value As String
+
+        Sub New()
+        End Sub
+
+        Sub New(name$, value$, type As CDFDataTypes)
+            Me.name = name
+            Me.value = value
+            Me.type = type
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"Dim {name} As {type.Description} = {value}"
