@@ -53,11 +53,19 @@ Module ToStringHelper
     Public Function toString(file As netCDFReader) As String
         Dim result As New StringBuilder
         Dim [dim] As Dimension
+        Dim summary$
+        Dim record = file.recordDimension
 
         result.AppendLine("DIMENSIONS")
         For Each dimension As SeqValue(Of Dimension) In file.dimensions.SeqIterator
             [dim] = dimension
-            result.AppendLine($"  [{dimension.i.ToString.PadLeft(2)}] {[dim].name.PadEnd(25)} = size: {[dim].size}")
+            summary = $"  [{dimension.i.ToString.PadLeft(2)}] {[dim].name.PadEnd(25)} = size: {[dim].size}"
+
+            If [dim].name = record.name Then
+                summary &= $" [recordDimension, size={record.length}x{record.recordStep}]"
+            End If
+
+            result.AppendLine(summary)
         Next
 
         result.AppendLine()

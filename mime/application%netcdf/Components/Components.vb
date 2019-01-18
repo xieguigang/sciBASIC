@@ -70,7 +70,7 @@ Imports System.Xml.Serialization
 Namespace Components
 
     ''' <summary>
-    ''' 
+    ''' ``[name => size]``
     ''' </summary>
     ''' 
     <XmlType("dim", [Namespace]:=Xml.netCDF)>

@@ -55,6 +55,9 @@ Module DataReader
     ''' <param name="buffer">Buffer for the file data</param>
     ''' <param name="variable">Variable metadata</param>
     ''' <returns>Data of the element</returns>
+    ''' <remarks>
+    ''' 非记录类型则是一个数组
+    ''' </remarks>
     Public Function nonRecord(buffer As BinaryDataReader, variable As variable) As Object()
         ' size of the data
         Dim size = variable.size / sizeof(variable.type)
@@ -76,6 +79,9 @@ Module DataReader
     ''' <param name="variable">Variable metadata</param>
     ''' <param name="recordDimension">Record dimension metadata</param>
     ''' <returns>Data of the element</returns>
+    ''' <remarks>
+    ''' 记录类型的数据可能是一个矩阵类型
+    ''' </remarks>
     Public Function record(buffer As BinaryDataReader, variable As variable, recordDimension As recordDimension) As Object()
         Dim width% = If(variable.size, variable.size / sizeof(variable.type), 1)
         ' size of the data

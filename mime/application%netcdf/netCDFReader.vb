@@ -102,6 +102,9 @@ Public Class netCDFReader
     '''  + `size`: Number with the size of the dimension
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 一个cdf文件之中只能够有一种<see cref="Dimension"/>可以是矩阵类型的么？
+    ''' </remarks>
     Public ReadOnly Property dimensions As Dimension()
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
