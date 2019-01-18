@@ -284,7 +284,8 @@ Public Class CDFWriter : Implements IDisposable
         Dim chunk As Byte()
 
         For i As Integer = 0 To variables.Count - 1
-            buffers(i).Fill(BitConverter.GetBytes(current), buffers(i).Length - 4)
+            chunk = BitConverter.GetBytes(current)
+            buffers(i).Fill(chunk, -4)
             chunk = variables(i).value.GetBuffer(output.Encoding)
             current += chunk.Length
             dataBuffer.AddRange(chunk)
@@ -307,7 +308,6 @@ Public Class CDFWriter : Implements IDisposable
             Call output.writeName(attr.name)
             ' type
             Call output.Write(attr.type)
-            ' one string, size = 1
 
             ' 在attributes里面，除了字符串，其他类型的数据都是只有一个元素
             Select Case attr.type
@@ -318,7 +318,6 @@ Public Class CDFWriter : Implements IDisposable
                     Dim stringBuffer = output.Encoding.GetBytes(attr.value)
                     Call output.Write(attr.value.Length)
                     Call output.Write(stringBuffer)
-                    Call output.writePadding
 #If DEBUG Then
                     Call $"{attr.value} [buffersize={stringBuffer.Length}]".__DEBUG_ECHO
 #End If
@@ -337,6 +336,9 @@ Public Class CDFWriter : Implements IDisposable
                 Case Else
                     Throw New NotImplementedException(attr.type.Description)
             End Select
+
+            ' 都必须要做一次padding
+            Call output.writePadding
         Next
     End Sub
 

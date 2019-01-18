@@ -223,6 +223,10 @@ Public Module VectorExtensions
     ''' <returns></returns>
     <Extension>
     Public Function Fill(Of T)(ByRef vector As T(), data As IEnumerable(Of T), start As int) As T()
+        If start < 0 Then
+            start = vector.Length + start.Value
+        End If
+
         For Each x As T In data
             vector(++start) = x
         Next
