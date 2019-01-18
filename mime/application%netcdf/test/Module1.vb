@@ -45,11 +45,37 @@ Imports Microsoft.VisualBasic.Text
 Module Module1
 
     Sub Main()
+        Call testWriter()
         Call testReaderDump()
     End Sub
 
+    Sub testWriter()
+        Dim path$ = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\5ppm.CDF"
+        Dim file As New netCDFReader(path, Encodings.UTF8WithoutBOM)
+
+        Using writer As New CDFWriter("./test.cdf")
+
+            Call writer.GlobalAttributes(file.globalAttributes).Dimensions(file.dimensions)
+
+            For Each var In file.variables
+                Call writer.AddVariable(var.name, file.getDataVariable(var), file.globalAttributes)
+            Next
+
+        End Using
+
+        file = New netCDFReader("./test.cdf", Encodings.UTF8WithoutBOM)
+        Call file.ToString.__DEBUG_ECHO
+        Call file.ToString.SaveTo("./dump.txt")
+
+        Dim massvalue = file.getDataVariable("mass_values")
+
+        Call Xml.SaveAsXml(file, "./output_dump.Xml")
+
+        Pause()
+    End Sub
+
     Sub testReaderDump()
-        Dim path$ = "D:\biodeep\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\100ppb.CDF"
+        Dim path$ = "D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\16s_contents\SCFA\SCFA测试标曲.AIA\5ppm.CDF"
         Dim file As New netCDFReader(path, Encodings.UTF8WithoutBOM)
 
         Call file.ToString.__DEBUG_ECHO
