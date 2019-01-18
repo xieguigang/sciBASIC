@@ -210,7 +210,7 @@ Public Class CDFWriter : Implements IDisposable
         Dim variableBuffers As New List(Of Byte())
 
         For Each var As variable In variables
-            variableBuffers.Add(getVariableHeaderBuffer(var, output.Encoding))
+            variableBuffers.Add(getVariableHeaderBuffer(var, output))
         Next
 
         Dim dataChunks As Byte() = CalcOffsets(variableBuffers)
@@ -233,10 +233,13 @@ Public Class CDFWriter : Implements IDisposable
     ''' </summary>
     ''' <param name="var"></param>
     ''' <returns></returns>
-    Private Shared Function getVariableHeaderBuffer(var As variable, encoding As Encoding) As Byte()
+    Private Shared Function getVariableHeaderBuffer(var As variable, writerTemplate As BinaryDataWriter) As Byte()
         Dim buffer As New MemoryStream
 
-        Using output = New BinaryDataWriter(buffer, encoding)
+        Using output = New BinaryDataWriter(buffer, writerTemplate.Encoding) With {
+            .ByteOrder = writerTemplate.ByteOrder,
+            .RerouteInt32ToUnsigned = writerTemplate.RerouteInt32ToUnsigned
+        }
             Call output.writeName(var.name)
 
             If var.dimensions Is Nothing Then

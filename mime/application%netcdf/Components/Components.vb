@@ -194,7 +194,7 @@ Namespace Components
         ''' Number with the offset where of the variable begins
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property offset As Long
+        <XmlAttribute> Public Property offset As UInteger
         ''' <summary>
         ''' True if Is a record variable, false otherwise
         ''' </summary>
