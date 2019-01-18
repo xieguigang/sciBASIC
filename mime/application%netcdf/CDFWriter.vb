@@ -279,12 +279,12 @@ Public Class CDFWriter : Implements IDisposable
         ' 这个位置是在所有的变量头部之后的
         ' 因为这个函数是发生在变量写入之前的，所以会需要加上自身的长度
         ' 才会将offset的位置移动到数据区域的起始位置
-        Dim current = output.Position + buffers.Sum(Function(v) v.Length)
+        Dim current As UInteger = output.Position + buffers.Sum(Function(v) v.Length)
         Dim dataBuffer As New List(Of Byte)
         Dim chunk As Byte()
 
         For i As Integer = 0 To variables.Count - 1
-            buffers(i).Fill(BitConverter.GetBytes(current), buffers(i).Length - 8)
+            buffers(i).Fill(BitConverter.GetBytes(current), buffers(i).Length - 4)
             chunk = variables(i).value.GetBuffer(output.Encoding)
             current += chunk.Length
             dataBuffer.AddRange(chunk)
