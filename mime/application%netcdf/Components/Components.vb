@@ -187,7 +187,7 @@ Namespace Components
         ''' <returns></returns>
         <XmlAttribute> Public Property type As CDFDataTypes
         ''' <summary>
-        ''' Number with the size of the variable
+        ''' Number with the size of the variable.(在文件之中的数据字节大小)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property size As Integer

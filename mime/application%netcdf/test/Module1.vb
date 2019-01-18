@@ -57,10 +57,17 @@ Module Module1
 
             Call writer.GlobalAttributes(file.globalAttributes).Dimensions(file.dimensions)
 
+            Dim dataPackage As Components.CDFData
+
             For Each var In file.variables
-                Call writer.AddVariable(
+                If var.name = "mass_values" Then
+                    Console.WriteLine()
+                End If
+
+                dataPackage = file.getDataVariable(var)
+                writer.AddVariable(
                     var.name,
-                    file.getDataVariable(var),
+                    dataPackage,
                     var.dimensions.Select(Function(i) file.dimensions(i)).ToArray,
                     file.globalAttributes
                 )
@@ -69,10 +76,14 @@ Module Module1
         End Using
 
         file = New netCDFReader("./test.cdf", Encodings.UTF8WithoutBOM)
+
+
+
         Call file.ToString.__DEBUG_ECHO
         Call file.ToString.SaveTo("./dump-writer.txt")
 
         Dim massvalue = file.getDataVariable("mass_values")
+        Dim scans = file.getDataVariable("actual_scan_number")
 
         Call Xml.SaveAsXml(file, "./output_dump-writer.Xml")
 

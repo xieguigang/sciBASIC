@@ -356,8 +356,8 @@ Public Class CDFWriter : Implements IDisposable
     Public Sub AddVariable(name$, data As CDFData, dims$(), Optional attrs As attribute() = Nothing)
         variables += New variable With {
             .name = name,
-            .size = data.Length,
             .type = data.cdfDataType,
+            .size = data.Length * sizeof(.type),
             .value = data,
             .attributes = attrs,
             .dimensions = dims _
