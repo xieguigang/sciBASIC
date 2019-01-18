@@ -157,8 +157,8 @@ Public Class CDFWriter : Implements IDisposable
     Dim variables As List(Of variable)
     Dim recordDimensionLength As UInteger
 
-    Sub New(path As String)
-        output = New BinaryDataWriter(path.Open, Encodings.ASCII) With {
+    Sub New(path As String, Optional encoding As Encodings = Encodings.UTF8)
+        output = New BinaryDataWriter(path.Open, encoding) With {
             .ByteOrder = ByteOrder.BigEndian,
             .RerouteInt32ToUnsigned = True
         }
@@ -238,8 +238,13 @@ Public Class CDFWriter : Implements IDisposable
 
         Using output = New BinaryDataWriter(buffer, Encoding.ASCII)
             Call output.writeName(var.name)
+
+            If var.dimensions Is Nothing Then
+                var.dimensions = {}
+            End If
+
             ' dimensionality 
-            Call output.Write(CUInt(var.dimensions.Length))
+            Call output.Write(CUInt(var.dimensions?.Length))
             ' dimensionsIds
             Call output.Write(var.dimensions)
             ' attributes of this variable
@@ -284,6 +289,10 @@ Public Class CDFWriter : Implements IDisposable
     End Function
 
     Private Shared Sub writeAttributes(output As BinaryDataWriter, attrs As attribute())
+        If attrs Is Nothing Then
+            attrs = {}
+        End If
+
         ' List of global attributes
         Call output.Write(CUInt(Header.NC_ATTRIBUTE))
         ' attributeSize

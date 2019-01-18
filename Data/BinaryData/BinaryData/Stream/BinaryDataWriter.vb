@@ -435,7 +435,7 @@ Public Class BinaryDataWriter
             Case BinaryStringFormat.WordLengthPrefix
                 Return WriteWordLengthPrefixString(value, encoding)
 
-            Case BinaryStringFormat.DwordLengthPrefix
+            Case BinaryStringFormat.DwordLengthPrefix, BinaryStringFormat.UInt32LengthPrefix
                 Return WriteDwordLengthPrefixString(value, encoding)
 
             Case BinaryStringFormat.ZeroTerminated
