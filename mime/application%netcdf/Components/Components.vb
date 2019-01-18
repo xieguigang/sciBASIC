@@ -148,7 +148,7 @@ Namespace Components
         ''' String with the type of the attribute
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property type As String
+        <XmlAttribute> Public Property type As CDFDataTypes
         ''' <summary>
         ''' A number or string with the value of the attribute
         ''' </summary>
@@ -156,7 +156,7 @@ Namespace Components
         <XmlText> Public Property value As String
 
         Public Overrides Function ToString() As String
-            Return $"Dim {name} As {type} = {value}"
+            Return $"Dim {name} As {type.Description} = {value}"
         End Function
     End Class
 

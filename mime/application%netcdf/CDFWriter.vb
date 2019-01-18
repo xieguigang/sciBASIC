@@ -187,13 +187,13 @@ Public Class CDFWriter : Implements IDisposable
         Call output.Write(recordDimensionLength)
         ' -------------------------dimensionsList----------------------------
         ' List of dimensions
-        Call output.Write(CUInt(Header.NC_DIMENSION))
+        Call output.Write(Header.NC_DIMENSION)
         ' dimensionSize
-        Call output.Write(CUInt(dimensionList.Length))
+        Call output.Write(dimensionList.Length)
 
         For Each dimension In dimensionList
             Call output.writeName(dimension.name)
-            Call output.Write(CUInt(dimension.size))
+            Call output.Write(dimension.size)
         Next
 
         ' ------------------------attributesList-----------------------------
@@ -210,7 +210,7 @@ Public Class CDFWriter : Implements IDisposable
         Dim variableBuffers As New List(Of Byte())
 
         For Each var As variable In variables
-            variableBuffers.Add(getVariableHeaderBuffer(var))
+            variableBuffers.Add(getVariableHeaderBuffer(var, output.Encoding))
         Next
 
         Dim dataChunks As Byte() = CalcOffsets(variableBuffers)
@@ -233,10 +233,10 @@ Public Class CDFWriter : Implements IDisposable
     ''' </summary>
     ''' <param name="var"></param>
     ''' <returns></returns>
-    Private Shared Function getVariableHeaderBuffer(var As variable) As Byte()
+    Private Shared Function getVariableHeaderBuffer(var As variable, encoding As Encoding) As Byte()
         Dim buffer As New MemoryStream
 
-        Using output = New BinaryDataWriter(buffer, Encoding.ASCII)
+        Using output = New BinaryDataWriter(buffer, encoding)
             Call output.writeName(var.name)
 
             If var.dimensions Is Nothing Then
@@ -294,17 +294,44 @@ Public Class CDFWriter : Implements IDisposable
         End If
 
         ' List of global attributes
-        Call output.Write(CUInt(Header.NC_ATTRIBUTE))
+        Call output.Write(Header.NC_ATTRIBUTE)
         ' attributeSize
-        Call output.Write(CUInt(attrs.Length))
+        Call output.Write(attrs.Length)
 
         For Each attr In attrs
             Call output.writeName(attr.name)
-            Call output.Write(CUInt(str2num(attr.type)))
+            ' type
+            Call output.Write(attr.type)
             ' one string, size = 1
-            Call output.Write(CUInt(1))
-            Call output.Write(attr.value, BinaryStringFormat.NoPrefixOrTermination)
-            Call output.writePadding
+
+            ' 在attributes里面，除了字符串，其他类型的数据都是只有一个元素
+            Select Case attr.type
+                Case CDFDataTypes.BYTE
+                    Call output.Write(1)
+                    Call output.Write(Byte.Parse(attr.value))
+                Case CDFDataTypes.CHAR
+                    Dim stringBuffer = output.Encoding.GetBytes(attr.value)
+                    Call output.Write(attr.value.Length)
+                    Call output.Write(stringBuffer)
+                    Call output.writePadding
+#If DEBUG Then
+                    Call $"{attr.value} [buffersize={stringBuffer.Length}]".__DEBUG_ECHO
+#End If
+                Case CDFDataTypes.DOUBLE
+                    Call output.Write(1)
+                    Call output.Write(Double.Parse(attr.value))
+                Case CDFDataTypes.FLOAT
+                    Call output.Write(1)
+                    Call output.Write(Single.Parse(attr.value))
+                Case CDFDataTypes.INT
+                    Call output.Write(1)
+                    Call output.Write(UInteger.Parse(attr.value))
+                Case CDFDataTypes.SHORT
+                    Call output.Write(1)
+                    Call output.Write(Short.Parse(attr.value))
+                Case Else
+                    Throw New NotImplementedException(attr.type.Description)
+            End Select
         Next
     End Sub
 
