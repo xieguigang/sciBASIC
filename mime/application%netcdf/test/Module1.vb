@@ -58,7 +58,12 @@ Module Module1
             Call writer.GlobalAttributes(file.globalAttributes).Dimensions(file.dimensions)
 
             For Each var In file.variables
-                Call writer.AddVariable(var.name, file.getDataVariable(var), file.globalAttributes)
+                Call writer.AddVariable(
+                    var.name,
+                    file.getDataVariable(var),
+                    var.dimensions.Select(Function(i) file.dimensions(i)).ToArray,
+                    file.globalAttributes
+                )
             Next
 
         End Using

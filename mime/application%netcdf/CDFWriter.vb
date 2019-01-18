@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
 Imports Microsoft.VisualBasic.Text
 
@@ -153,7 +154,7 @@ Public Class CDFWriter : Implements IDisposable
 
     Dim output As BinaryDataWriter
     Dim globalAttrs As attribute()
-    Dim dimensionList As Dimension()
+    Dim dimensionList As Dictionary(Of String, SeqValue(Of Dimension))
     Dim variables As List(Of variable)
     Dim recordDimensionLength As UInteger
 
@@ -175,7 +176,10 @@ Public Class CDFWriter : Implements IDisposable
     End Function
 
     Public Function Dimensions([dim] As Dimension()) As CDFWriter
-        dimensionList = [dim]
+        dimensionList = [dim] _
+            .SeqIterator _
+            .ToDictionary(Function(d) d.value.name,
+                          Function(d) d)
         Return Me
     End Function
 
@@ -189,10 +193,12 @@ Public Class CDFWriter : Implements IDisposable
         ' List of dimensions
         Call output.Write(Header.NC_DIMENSION)
         ' dimensionSize
-        Call output.Write(dimensionList.Length)
+        Call output.Write(dimensionList.Count)
 
-        For Each dimension In dimensionList
-            Call output.writeName(dimension.name)
+        For Each [dim] In dimensionList
+            Dim dimension As Dimension = [dim].Value
+
+            Call output.writeName([dim].Key)
             Call output.Write(dimension.size)
         Next
 
@@ -242,17 +248,13 @@ Public Class CDFWriter : Implements IDisposable
         }
             Call output.writeName(var.name)
 
-            If var.dimensions Is Nothing Then
-                var.dimensions = {}
-            End If
-
             ' dimensionality 
-            Call output.Write(CUInt(var.dimensions?.Length))
+            Call output.Write(CUInt(var.dimensions.Length))
             ' dimensionsIds
             Call output.Write(var.dimensions)
             ' attributes of this variable
             Call writeAttributes(output, var.attributes)
-            Call output.Write(sizeof(var.type))
+            Call output.Write(var.type)
             ' varSize
             Call output.Write(var.size)
             ' version = 1, write 4 bytes
@@ -347,16 +349,49 @@ Public Class CDFWriter : Implements IDisposable
     ''' 所以可以在这里直接添加变量值对象，但是仅限于<see cref="CDFDataTypes"/>
     ''' 之中所限定的类型元素或者其数组
     ''' </param>
-    ''' 
+    ''' <param name="dims">
+    ''' 这个列表必须要是<see cref="CDFWriter.Dimensions(Dimension())"/>之中的
+    ''' </param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Sub AddVariable(name$, data As CDFData, Optional attrs As attribute() = Nothing)
+    Public Sub AddVariable(name$, data As CDFData, dims$(), Optional attrs As attribute() = Nothing)
         variables += New variable With {
             .name = name,
             .size = data.Length,
             .type = data.cdfDataType,
             .value = data,
-            .attributes = attrs
+            .attributes = attrs,
+            .dimensions = dims _
+                .Select(Function(d) dimensionList(d).i) _
+                .ToArray
         }
+    End Sub
+
+    ''' <summary>
+    ''' 如果<paramref name="dims"/>是不存在的，则会自动添加
+    ''' 反之会使用旧的编号
+    ''' </summary>
+    ''' <param name="name"></param>
+    ''' <param name="data"></param>
+    ''' <param name="dims"></param>
+    ''' <param name="attrs"></param>
+    Public Sub AddVariable(name$, data As CDFData, dims As Dimension(), Optional attrs As attribute() = Nothing)
+        Dim dimNames As New List(Of String)
+
+        For Each d As Dimension In dims
+            If Not dimensionList.ContainsKey(d.name) Then
+                dimensionList(d.name) = New SeqValue(Of Dimension) With {
+                    .i = dimensionList.Count,
+                    .value = New Dimension With {
+                        .name = d.name,
+                        .size = d.size
+                    }
+                }
+            End If
+
+            Call dimNames.Add(d.name)
+        Next
+
+        Call AddVariable(name, data, dimNames, attrs)
     End Sub
 
 #Region "IDisposable Support"

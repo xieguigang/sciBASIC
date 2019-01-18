@@ -171,7 +171,8 @@ Namespace Components
         ''' <returns></returns>
         <XmlAttribute> Public Property name As String
         ''' <summary>
-        ''' Array with the dimension IDs of the variable
+        ''' Array with the dimension IDs of the variable.
+        ''' (<see cref="Header.dimensions"/>)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property dimensions As Integer()

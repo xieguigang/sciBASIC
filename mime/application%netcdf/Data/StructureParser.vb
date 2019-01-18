@@ -168,7 +168,7 @@ Module StructureParser
             ' Read variables size
             Dim attributes = attributesList(buffer).ToArray
             ' Read type
-            Dim type = buffer.ReadUInt32()
+            Dim type As CDFDataTypes = buffer.ReadUInt32()
 
             Utils.notNetcdf(((type < 1) AndAlso (type > 6)), $"non valid type {type}")
 
@@ -196,7 +196,7 @@ Module StructureParser
                 .name = name,
                 .dimensions = dimensionsIds,
                 .attributes = attributes,
-                .type = CType(CInt(type), CDFDataTypes),
+                .type = type,
                 .size = varSize,
                 .offset = offset,
                 .record = record
