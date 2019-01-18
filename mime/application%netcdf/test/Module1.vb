@@ -45,8 +45,8 @@ Imports Microsoft.VisualBasic.Text
 Module Module1
 
     Sub Main()
-        Call testWriter()
         Call testReaderDump()
+        Call testWriter()
     End Sub
 
     Sub testWriter()
@@ -70,11 +70,11 @@ Module Module1
 
         file = New netCDFReader("./test.cdf", Encodings.UTF8WithoutBOM)
         Call file.ToString.__DEBUG_ECHO
-        Call file.ToString.SaveTo("./dump.txt")
+        Call file.ToString.SaveTo("./dump-writer.txt")
 
         Dim massvalue = file.getDataVariable("mass_values")
 
-        Call Xml.SaveAsXml(file, "./output_dump.Xml")
+        Call Xml.SaveAsXml(file, "./output_dump-writer.Xml")
 
         Pause()
     End Sub
@@ -89,9 +89,6 @@ Module Module1
         Dim massvalue = file.getDataVariable("mass_values")
 
         Call Xml.SaveAsXml(file, "./output_dump.Xml")
-
-
-        Pause()
     End Sub
 
 End Module

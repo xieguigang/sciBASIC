@@ -222,14 +222,23 @@ Public Module VectorExtensions
     ''' <param name="start%"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Fill(Of T)(ByRef vector As T(), data As IEnumerable(Of T), start As int) As T()
+    Public Function Fill(Of T)(ByRef vector As T(),
+                               data As IEnumerable(Of T),
+                               start As int,
+                               Optional reverse As Boolean = False) As T()
         If start < 0 Then
             start = vector.Length + start.Value
         End If
 
-        For Each x As T In data
-            vector(++start) = x
-        Next
+        If reverse Then
+            For Each x As T In data.Reverse
+                vector(++start) = x
+            Next
+        Else
+            For Each x As T In data
+                vector(++start) = x
+            Next
+        End If
 
         Return vector
     End Function

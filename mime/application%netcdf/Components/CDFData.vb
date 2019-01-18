@@ -144,21 +144,25 @@ Namespace Components
                 Case CDFDataTypes.DOUBLE
                     Return numerics _
                         .Select(AddressOf BitConverter.GetBytes) _
+                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
                         .IteratesALL _
                         .ToArray
                 Case CDFDataTypes.FLOAT
                     Return tiny_num _
                         .Select(AddressOf BitConverter.GetBytes) _
+                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
                         .IteratesALL _
                         .ToArray
                 Case CDFDataTypes.INT
                     Return integers _
                         .Select(AddressOf BitConverter.GetBytes) _
+                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
                         .IteratesALL _
                         .ToArray
                 Case CDFDataTypes.SHORT
                     Return tiny_int _
                         .Select(AddressOf BitConverter.GetBytes) _
+                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
                         .IteratesALL _
                         .ToArray
                 Case Else

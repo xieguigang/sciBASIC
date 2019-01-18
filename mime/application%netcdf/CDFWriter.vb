@@ -285,7 +285,8 @@ Public Class CDFWriter : Implements IDisposable
 
         For i As Integer = 0 To variables.Count - 1
             chunk = BitConverter.GetBytes(current)
-            buffers(i).Fill(chunk, -4)
+            ' 因为CDF文件的byteorder是Big，所以在这里填充的时候会需要翻转一下顺序
+            buffers(i).Fill(chunk, -4, reverse:=True)
             chunk = variables(i).value.GetBuffer(output.Encoding)
             current += chunk.Length
             dataBuffer.AddRange(chunk)
@@ -318,9 +319,6 @@ Public Class CDFWriter : Implements IDisposable
                     Dim stringBuffer = output.Encoding.GetBytes(attr.value)
                     Call output.Write(attr.value.Length)
                     Call output.Write(stringBuffer)
-#If DEBUG Then
-                    Call $"{attr.value} [buffersize={stringBuffer.Length}]".__DEBUG_ECHO
-#End If
                 Case CDFDataTypes.DOUBLE
                     Call output.Write(1)
                     Call output.Write(Double.Parse(attr.value))
