@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6265426c834056129bea220c05049bb0, Data_science\Mathematica\Math\Math\Bootstraping.vb"
+﻿#Region "Microsoft.VisualBasic::968f0a58f3b26268510393140db7e27c, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,10 @@
 
     ' Summaries:
 
-    ' Module Bootstraping
+    '     Module Bootstraping
     ' 
-    '     Function: [Shadows], AboveStandardDistribution, BelowStandardDistribution, BetweenStandardDistribution, DeviationStandardization
-    '               Distributes, Hist, Logistic, OutsideStandardDistribution, (+2 Overloads) ProbabilityDensity
-    '               Sample, (+2 Overloads) Samples, Sampling, StandardDistribution, TrapezodialRule
-    '               TruncNDist, (+2 Overloads) Z
+    '         Function: Distributes, Hist, Sample, (+2 Overloads) Samples, Sampling
+    ' 
     ' 
     ' /********************************************************************************/
 

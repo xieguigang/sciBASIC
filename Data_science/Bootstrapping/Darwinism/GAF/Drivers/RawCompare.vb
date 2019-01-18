@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c570e65841923aa158414b196691d06, Data_science\Bootstrapping\Darwinism\GAF\Drivers\RawCompare.vb"
+﻿#Region "Microsoft.VisualBasic::487251907ece296d2d6c797dc49ada2c, Data_science\Bootstrapping\Darwinism\GAF\Drivers\RawCompare.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Class RawCompare
+    ' 
+    '         Properties: Cacheable
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Calculate

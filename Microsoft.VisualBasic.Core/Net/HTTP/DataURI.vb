@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ceb6354319261aae8d03df0bc8bc2aac, Microsoft.VisualBasic.Core\Net\HTTP\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::30ac82b8e9a5ffa17467b35f518157d4, Microsoft.VisualBasic.Core\Net\HTTP\DataURI.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Properties: base64, chartSet, mime
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: FromFile, SVGImage, ToStream, ToString, URIParser
+    '         Function: FromFile, IsWellFormedUriString, SVGImage, ToStream, ToString
+    '                   URIParser
     ' 
     ' 
     ' /********************************************************************************/

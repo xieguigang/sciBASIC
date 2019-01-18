@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06177ff4f26bbd3d4b5dc1c8814ed7c9, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::72844c690c02e44385c3a2da46722b73, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\NormalizeMatrix.vb"
 
     ' Author:
     ' 

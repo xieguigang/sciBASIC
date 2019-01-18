@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::671faebdc459d103783a344816e47711, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::bc3de2c6bbb70d9a3900f4ecefd4ec3f, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Fitness.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Interface Fitness
+    ' 
+    '         Properties: Cacheable
     ' 
     '         Function: Calculate
     ' 

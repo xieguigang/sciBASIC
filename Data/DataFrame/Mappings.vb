@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c67ca751d3ef372f3ee25e05c5f9ba0a, Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::edab721fba809ee0ffa54f2b3b1a131c, Data\DataFrame\Mappings.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Class MappingsHelper
     ' 
-    '     Function: CheckFieldConsistent, ColumnName, NamedValueMapsWrite, PropertyNames
+    '     Function: CheckFieldConsistent, ColumnName, NamedValueMapsWrite, PropertyNames, TagFieldName
     ' 
     ' /********************************************************************************/
 

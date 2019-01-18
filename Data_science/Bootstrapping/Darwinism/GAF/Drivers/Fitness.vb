@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3b2336c5aeb06d278c2ed296d1cc7c8, Data_science\Bootstrapping\Darwinism\GAF\Drivers\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::ab4e7a5c6fec659103ec9c36088b442f, Data_science\Bootstrapping\Darwinism\GAF\Drivers\Fitness.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     ' 
     '     Class GAFFitness
     ' 
-    '         Properties: Ignores, Model, modelVariables, observation, weights
-    '                     y0
+    '         Properties: Cacheable, Ignores, Model, modelVariables, observation
+    '                     weights, y0
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

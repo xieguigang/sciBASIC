@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38de72d159e0c303221b295b0b492b2d, Microsoft.VisualBasic.Core\Text\Xml\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::cf1ae4e3cac4b8b0fd261acf60a24436, Microsoft.VisualBasic.Core\Text\Xml\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: FormatHTML, StripInvalidCharacters
+    '         Function: FormatHTML
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc8c6f98a1a915a2dd4270d25243d37b, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Ranks.vb"
+﻿#Region "Microsoft.VisualBasic::e1202199871dd4ca34776ef09c46824e, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Ranks.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,9 @@
 
     ' Summaries:
 
+    '     Delegate Function
+    ' 
+    ' 
     '     Module Ranks
     ' 
     '         Function: Best, Sort
@@ -39,6 +42,7 @@
     '             Properties: Evaluate, Max, Weight
     ' 
     '             Function: Sort
+    ' 
     ' 
     ' 
     ' 

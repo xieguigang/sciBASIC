@@ -1,46 +1,46 @@
-﻿#Region "Microsoft.VisualBasic::98ed7fe3287b7ccb6f74a13392fd70f2, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Math\Poisson.vb"
+﻿#Region "Microsoft.VisualBasic::03dc76ea7fced29571717773050e5129, Data_science\Mathematica\Math\Math\Algebra\RSyntax\Math\Poisson.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module Poisson
-' 
-'         Function: Dpois, qpois, rPois
-' 
-'     Module Normal
-' 
-'         Function: dnorm, pnorm, qnorm, (+2 Overloads) rnorm
-' 
-' 
-' /********************************************************************************/
+    '     Module Poisson
+    ' 
+    '         Function: Dpois, qpois, rPois
+    ' 
+    '     Module Normal
+    ' 
+    '         Function: dnorm, pnorm, qnorm, (+2 Overloads) rnorm
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::723b2e75be07e7f61a2b912a0227cf55, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::e280b27e6d1d2972531e3081633bde9b, Microsoft.VisualBasic.Core\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module VectorExtensions
     ' 
-    '     Function: (+2 Overloads) After, Append, Coalesce, Delete, Fill
+    '     Function: (+2 Overloads) After, Append, Coalesce, Delete, (+2 Overloads) Fill
     '               GetRange, IndexOf, Last, LoadAsNumericVector, MappingData
     '               Midv, RepeatCalls, Replicate, (+2 Overloads) Sort, Split
     '               VectorShadows

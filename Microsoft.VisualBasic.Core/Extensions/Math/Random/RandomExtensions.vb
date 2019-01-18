@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33776f60c24dae9f2254b706bc01cec0, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::35e2b041f79cc0f6deab9578bfd4a3c3, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -39,10 +39,10 @@
     ' 
     '     Module RandomExtensions
     ' 
-    '         Function: (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, NextGaussian, NextTriangular
+    '         Function: (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, (+2 Overloads) NextGaussian, NextTriangular
     '                   Permutation, randf, RandomSingle, Seed
     ' 
-    '         Sub: (+2 Overloads) Shuffle
+    '         Sub: (+3 Overloads) Shuffle
     ' 
     ' 
     ' 
