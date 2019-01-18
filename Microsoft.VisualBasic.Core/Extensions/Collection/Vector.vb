@@ -186,6 +186,14 @@ Public Module VectorExtensions
         Call Add(Of T)(array, value.ToArray)
     End Sub
 
+    ''' <summary>
+    ''' 在原来的数组末尾追加由<paramref name="count"/>个<paramref name="item"/>填充的新数据
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="item"></param>
+    ''' <param name="count%"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Fill(Of T)(vector As T(), item As T, count%) As T()
         If count <= 0 Then
@@ -202,6 +210,24 @@ Public Module VectorExtensions
 
             Return newVector
         End If
+    End Function
+
+    ''' <summary>
+    ''' 使用给定的数据序列<paramref name="data"/>填充<paramref name="vector"/>的指定位置开始的区域
+    ''' 填充的长度为<paramref name="data"/>的序列长度
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="data"></param>
+    ''' <param name="start%"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Fill(Of T)(ByRef vector As T(), data As IEnumerable(Of T), start As int) As T()
+        For Each x As T In data
+            vector(++start) = x
+        Next
+
+        Return vector
     End Function
 
     ''' <summary>
@@ -278,15 +304,20 @@ Public Module VectorExtensions
         Return out
     End Function
 
-    <Extension> Public Function GetRange(Of T)(vector As T(), index%, count%) As T()
-        Dim fill As T() = New T(count - 1) {}
+    ''' <summary>
+    ''' 从所给定的数组之中获取得到指定位置范围内的数据
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="vector"></param>
+    ''' <param name="index%"></param>
+    ''' <param name="count%"></param>
+    ''' <returns></returns>
+    <Extension> Public Iterator Function GetRange(Of T)(vector As T(), index%, count%) As IEnumerable(Of T)
         Dim ends% = index + count - 1
 
         For i As Integer = index To ends
-            fill(i - index) = vector(i)
+            Yield vector(i)
         Next
-
-        Return fill
     End Function
 
     ''' <summary>

@@ -183,40 +183,7 @@ Public Class CDFWriter : Implements IDisposable
     ''' 会需要在这个函数之中进行offset的计算操作
     ''' </summary>
     Private Sub Save()
-        ' >>>>>>> header
-        Call writeCDFHeaders()
-        ' <<<<<<<< header
-        Call writeDataBlocks()
-    End Sub
 
-    ''' <summary>
-    ''' 在这里写入变量的值的部分数据
-    ''' </summary>
-    Private Sub writeDataBlocks()
-        ' 数据块写入开始
-        For Each var As variable In variables
-            ' 在这里offset应该是等于output的当前的指针位置的
-            ' 判断一下
-            ' 如果不相等，则说明前面的数据写入出错，或者计算出错了
-            If var.offset <> output.Position Then
-                Throw New Exception("Invalid offset position for the variable data blocks!")
-            End If
-
-            If var.record Then
-
-            Else
-                ' nonrecord写入的是一个数组
-                If var.value.cdfDataType = CDFDataTypes.CHAR Then
-                    ' 直接写入字符串
-                    Call output.Write(var.value.chars)
-                Else
-                    Call output.Write(var.value.GetBuffer(Nothing))
-                End If
-            End If
-        Next
-    End Sub
-
-    Private Sub writeCDFHeaders()
         Call output.Write(recordDimensionLength)
         ' -------------------------dimensionsList----------------------------
         ' List of dimensions
@@ -246,7 +213,7 @@ Public Class CDFWriter : Implements IDisposable
             variableBuffers.Add(getVariableHeaderBuffer(var))
         Next
 
-        Call CalcOffsets(variableBuffers)
+        Dim dataChunks As Byte() = CalcOffsets(variableBuffers)
 
         ' 在这个循环仅写入了变量的头部数据
         For i As Integer = 0 To variables.Count - 1
@@ -254,6 +221,9 @@ Public Class CDFWriter : Implements IDisposable
             ' 在这里直接写入buffer数据
             Call output.Write(variableBuffers(i))
         Next
+
+        ' 接着就是写入数据块了
+        Call output.Write(dataChunks)
     End Sub
 
     ''' <summary>
@@ -292,16 +262,26 @@ Public Class CDFWriter : Implements IDisposable
     ''' <param name="buffers">
     ''' 这个是和<see cref="variables"/>之中的元素一一对应的
     ''' </param>
-    Private Sub CalcOffsets(buffers As List(Of Byte()))
+    ''' <remarks>
+    ''' 函数返回数据块的缓存
+    ''' </remarks>
+    Private Function CalcOffsets(buffers As List(Of Byte())) As Byte()
         ' 这个位置是在所有的变量头部之后的
         ' 因为这个函数是发生在变量写入之前的，所以会需要加上自身的长度
         ' 才会将offset的位置移动到数据区域的起始位置
         Dim current = output.Position + buffers.Sum(Function(v) v.Length)
+        Dim dataBuffer As New List(Of Byte)
+        Dim chunk As Byte()
 
         For i As Integer = 0 To variables.Count - 1
-
+            buffers(i).Fill(BitConverter.GetBytes(current), buffers(i).Length - 8)
+            chunk = variables(i).value.GetBuffer(output.Encoding)
+            current += chunk.Length
+            dataBuffer.AddRange(chunk)
         Next
-    End Sub
+
+        Return dataBuffer
+    End Function
 
     Private Shared Sub writeAttributes(output As BinaryDataWriter, attrs As attribute())
         ' List of global attributes
