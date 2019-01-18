@@ -103,7 +103,7 @@ Namespace Components
             ' List of dimensions
             Dim dimList As DimensionList = buffer.dimensionsList()
 
-            Me.recordDimension.id = dimList.recordId
+            Me.recordDimension.id = If(dimList.recordId, dimList.recordId, -100)
             Me.recordDimension.name = dimList.recordName
             Me.dimensions = dimList.dimensions
 

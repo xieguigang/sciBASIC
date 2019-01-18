@@ -93,8 +93,14 @@ Namespace Components
 
     Public Class DimensionList
 
-        <XmlAttribute> Public Property recordId As Integer
+        <XmlAttribute> Public Property recordId As Integer?
         <XmlAttribute> Public Property recordName As String
+
+        Public ReadOnly Property HaveRecordDimension As Boolean
+            Get
+                Return Not (recordId Is Nothing AndAlso recordName = "NA")
+            End Get
+        End Property
 
         Public Property dimensions As Dimension()
 

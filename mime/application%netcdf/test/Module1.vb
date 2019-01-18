@@ -44,7 +44,17 @@ Imports Microsoft.VisualBasic.Text
 
 Module Module1
 
+    Sub summary()
+        Dim file As New netCDFReader("D:\smartnucl_integrative\biodeepDB\smartnucl_integrative\build_tools\CVD_kb\duke\2019-1-11test\TrainingSet_ANN_trained.encouraged.debugger.CDF", Encodings.UTF8WithoutBOM)
+
+        Call file.ToString.SaveTo("./testANN_debugger_summary.txt")
+
+        Pause()
+    End Sub
+
     Sub Main()
+        Call summary()
+
         Call testReaderDump()
         Call testWriter()
     End Sub
