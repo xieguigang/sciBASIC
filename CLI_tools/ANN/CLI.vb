@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::748308d6cc55dd5c318770db251e36f0, CLI_tools\ANN\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: ConfigTemplate, Encourage, Train
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: ConfigTemplate, Encourage, Train
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
@@ -101,17 +101,7 @@ Module CLI
         Call Console.WriteLine(trainingHelper.NeuronNetwork.ToString)
 
         If Not args("/GA.optimize").IsTrue Then
-            Using log As StreamWriter = $"{out.TrimSuffix}.log".OpenWriter
-                Dim synapses = trainingHelper.NeuronNetwork.GetSynapseGroups
-
-                Call log.WriteLine(synapses.Keys.JoinBy(vbCrLf))
-                Call trainingHelper _
-                    .AttachReporter(Sub(i, e, g)
-                                        Call $"[{i}] errors={e}, learn={g.LearnRate}".__DEBUG_ECHO
-                                        Call log.WriteLine((New Double() {i, e, g.LearnRate}.AsList + synapses.Select(Function(s) s.First.Weight)).JoinBy(vbTab))
-                                    End Sub) _
-                    .Train(parallel)
-            End Using
+            Call trainingHelper.runTrainingCommon(out.TrimSuffix & ".debugger.CDF", parallel)
         Else
             Call trainingHelper _
                 .NeuronNetwork _
@@ -126,6 +116,35 @@ Module CLI
             .GetXml _
             .SaveTo(out) _
             .CLICode
+    End Function
+
+    <Extension>
+    Private Function runTrainingCommon(trainer As TrainingUtils, debugCDF$, parallel As Boolean) As TrainingUtils
+        Dim synapses = trainer _
+          .NeuronNetwork _
+          .GetSynapseGroups _
+          .Select(Function(g) g.First) _
+          .ToArray
+        Dim synapsesWeights As New Dictionary(Of String, List(Of Double))
+        Dim errors As New List(Of Double)
+        Dim index As New List(Of Integer)
+
+        For Each s In synapses
+            synapsesWeights.Add(s.ToString, New List(Of Double))
+        Next
+
+        Call Console.WriteLine(trainer.NeuronNetwork.ToString)
+        Call trainer _
+            .AttachReporter(Sub(i, err, model)
+                                Call index.Add(i)
+                                Call errors.Add(err)
+                                Call synapses.DoEach(Sub(s) synapsesWeights(s.ToString).Add(s.Weight))
+                            End Sub) _
+            .Train(parallel)
+
+        Call Debugger.WriteCDF(trainer.NeuronNetwork, debugCDF, synapses, errors, index, synapsesWeights)
+
+        Return trainer
     End Function
 
     ''' <summary>
@@ -143,7 +162,6 @@ Module CLI
         Dim parallel As Boolean = args("/parallel")
         Dim network As Network = [in].LoadXml(Of NeuralNetwork).LoadModel
         Dim training As New TrainingUtils(network)
-        Dim logs$ = out.TrimSuffix & ".logs/"
 
         Helpers.MaxEpochs = args("/iterations") Or 10000
 
@@ -151,30 +169,9 @@ Module CLI
             Call training.Add(sample.status, sample.target)
         Next
 
-        Dim synapses = training _
-            .NeuronNetwork _
-            .GetSynapseGroups _
-            .Select(Function(g) g.First) _
-            .ToArray
-        Dim synapsesWeights As New Dictionary(Of String, List(Of Double))
-        Dim errors As New List(Of Double)
-        Dim index As New List(Of Integer)
-
-        For Each s In synapses
-            synapsesWeights.Add(s.ToString, New List(Of Double))
-        Next
-
-        Call Console.WriteLine(network.ToString)
-        Call training _
-            .AttachReporter(Sub(i, err, model)
-                                Call index.Add(i)
-                                Call errors.Add(err)
-                                Call synapses.DoEach(Sub(s) synapsesWeights(s.ToString).Add(s.Weight))
-                            End Sub) _
-            .Train(parallel)
-        Call Debugger.WriteCDF(network, out.TrimSuffix & ".debugger.CDF", synapses, errors, index, synapsesWeights)
-
-        Return training.TakeSnapshot _
+        Return training _
+            .runTrainingCommon(out.TrimSuffix & ".debugger.CDF", parallel) _
+            .TakeSnapshot _
             .GetXml _
             .SaveTo(out) _
             .CLICode
