@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::679ab956575a21dcdfd03a3f0259dc34, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::a006002e8ccec35b4058cedd168059fe, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Structure DefaultString
     ' 
-    '         Properties: DefaultValue, IsEmpty
+    '         Properties: DefaultValue, IsEmpty, IsTrue
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: assertIsNothing, LoadJson, LoadXml, ReadAllLines, ToString

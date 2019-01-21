@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d220e33675187244412f75bac45df92c, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IniFile.vb"
+﻿#Region "Microsoft.VisualBasic::e766188c81afafa7da17744b5bcc7786, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IniFile.vb"
 
     ' Author:
     ' 
@@ -39,7 +39,7 @@
     ' 
     '         Function: ReadValue, ToString
     ' 
-    '         Sub: (+2 Overloads) Dispose, Flush, WriteValue
+    '         Sub: (+2 Overloads) Dispose, Flush, WriteComment, WriteValue
     ' 
     ' 
     ' /********************************************************************************/

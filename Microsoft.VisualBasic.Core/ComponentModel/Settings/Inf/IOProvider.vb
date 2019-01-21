@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54118c312bdd77113acd60282993177c, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IOProvider.vb"
+﻿#Region "Microsoft.VisualBasic::50a728bb0733f09ef08349c8cc08e182, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IOProvider.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module IOProvider
     ' 
-    '         Function: __getPath, __getSections, EmptySection, (+2 Overloads) LoadProfile, (+2 Overloads) WriteProfile
+    '         Function: __getPath, __getSections, EmptySection, (+2 Overloads) LoadProfile, (+3 Overloads) WriteProfile
     ' 
     ' 
     ' /********************************************************************************/

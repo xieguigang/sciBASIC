@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6b79d43d1de6c6c2b7163d855ca0280, Data_science\MachineLearning\NeuralNetwork\Models\Synapse.vb"
+﻿#Region "Microsoft.VisualBasic::b7efc15487e47e9eeda6a0f83c8021db, Data_science\MachineLearning\NeuralNetwork\Models\Synapse.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,7 @@
     '         Properties: InputNeuron, OutputNeuron, Weight, WeightDelta
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

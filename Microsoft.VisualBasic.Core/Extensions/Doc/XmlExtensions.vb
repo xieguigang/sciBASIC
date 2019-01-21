@@ -1,45 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::a255f72cf04e575d0c02114eada3381f, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::540e3ff7aa2064585faa3559c6abc924, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module XmlExtensions
-' 
-'     Function: CodePage, CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, GetXmlAttrValue
-'               LoadFromXml, (+2 Overloads) LoadXml, SafeLoadXml, SaveAsXml, SetXmlEncoding
-'               SetXmlStandalone
-' 
-'     Sub: WriteXML
-' 
-' /********************************************************************************/
+    ' Module XmlExtensions
+    ' 
+    '     Function: CodePage, CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, GetXmlAttrValue
+    '               LoadFromXml, (+2 Overloads) LoadXml, SafeLoadXml, SaveAsXml, SetXmlEncoding
+    '               SetXmlStandalone
+    ' 
+    '     Sub: WriteXML
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

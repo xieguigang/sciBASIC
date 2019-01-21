@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd1b61932166abf44c2d61f01664ae4a, Microsoft.VisualBasic.Core\Text\Xml\Models\ValueTuples\NamedValues.vb"
+﻿#Region "Microsoft.VisualBasic::6ac8a38d311c87aba42bbdec6c4f6406, Microsoft.VisualBasic.Core\Text\Xml\Models\ValueTuples\NamedValues.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
+    '         Operators: +
     ' 
     '     Structure [Property]
     ' 

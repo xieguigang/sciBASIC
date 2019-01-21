@@ -1,60 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::30597085f169577662e128cc9d9bf8e7, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\Groups\DataGroup.vb"
+﻿#Region "Microsoft.VisualBasic::ceb83518d1160d211d36ce7bea90af32, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\Groups\DataGroup.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class TaggedGroupData
-' 
-'         Properties: Tag
-' 
-'         Function: ToString
-' 
-'     Class GroupListNode
-' 
-'         Properties: Count, Group, InitReads
-' 
-'         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
-' 
-'     Class GroupResult
-' 
-'         Properties: Count, Group, Tag
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: GetEnumerator, IEnumerable_GetEnumerator
-' 
-'         Sub: (+2 Overloads) Add
-' 
-' 
-' /********************************************************************************/
+    '     Class TaggedGroupData
+    ' 
+    '         Properties: Tag
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class ParallelGroup
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ParallelTask, SequentialTask
+    ' 
+    '     Class GroupResult
+    ' 
+    '         Properties: Count, Group, Tag
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator
+    ' 
+    '         Sub: (+2 Overloads) Add
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

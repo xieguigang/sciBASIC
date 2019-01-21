@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee4242eccc8173e8d7c026f6c5409b4a, Data_science\Mathematica\Plot\Plots\Fractions\RadarChart.vb"
+﻿#Region "Microsoft.VisualBasic::419b2c2df3ee377b16065c5c986375f8, Data_science\Mathematica\Plot\Plots\Fractions\RadarChart.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module RadarChart
     ' 
-    '         Function: Plot
+    '         Function: Plot, PlotSingleLayer
     ' 
     ' 
     ' /********************************************************************************/

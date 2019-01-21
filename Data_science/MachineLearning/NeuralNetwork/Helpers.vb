@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9a057b63804083ccc54625fd9846ca9, Data_science\MachineLearning\NeuralNetwork\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::a4447562f117b72308763e3b9397a317, Data_science\MachineLearning\NeuralNetwork\Helpers.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Module Helpers
     ' 
-    '         Function: GetRandom, NormalizeSamples, PopulateAllSynapses
+    '         Properties: MaxEpochs, MinimumError
     ' 
-    '         Sub: normalizeMatrix, Train
+    '         Function: GetRandom, (+2 Overloads) PopulateAllSynapses
     ' 
     '     Enum TrainingType
     ' 
@@ -44,12 +44,6 @@
     '  
     ' 
     ' 
-    ' 
-    '     Class Encoder
-    ' 
-    '         Function: Decode, Encode
-    ' 
-    '         Sub: AddMap
     ' 
     ' 
     ' /********************************************************************************/

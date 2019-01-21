@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48f4c269e1e470cce0e70b7efcead342, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
+﻿#Region "Microsoft.VisualBasic::180f0bd106a4112dd3456419844b79a7, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     ' 
     '         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator
     ' 
-    '         Sub: Add, (+2 Overloads) SortPopulationByFitness, Trim
+    '         Sub: Add, parallelCacheFitness, (+2 Overloads) SortPopulationByFitness, Trim
     ' 
     ' 
     ' 

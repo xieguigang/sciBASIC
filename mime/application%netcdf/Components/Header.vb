@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::247033f8f560ed10c7f90c81a1895b81, mime\application%netcdf\Components\Header.vb"
+﻿#Region "Microsoft.VisualBasic::b13ae30c26706b004795cb6a866175a5, mime\application%netcdf\Components\Header.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,6 @@
     '         Properties: dimensions, globalAttributes, recordDimension, variables, version
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: attributesList, dimensionsList, variablesList
     ' 
     ' 
     ' /********************************************************************************/

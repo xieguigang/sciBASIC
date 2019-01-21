@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66861314704c89db46b557391d437a35, CLI_tools\ANN\Config.vb"
+﻿#Region "Microsoft.VisualBasic::cd44cc2d352759542668cc8a7c0c9f4d, CLI_tools\ANN\Config.vb"
 
     ' Author:
     ' 
@@ -75,4 +75,3 @@ Public Class Config
     Public Shared ReadOnly Property [Default] As DefaultValue(Of Config) = New Config
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cc55a12c4ac36a29125f3475849acd2, Data\DataFrame\IO\csv\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::5f645771bcc0e31496c8f22ce7ce5fe2, Data\DataFrame\IO\csv\RowObject.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: AsLine, DirectGet, IsNullOrEmpty, IsReadOnly, NumbersOfColumn
     '                     Width
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     ' 
     '         Function: __mask, AddRange, AppendItem, (+2 Overloads) Contains, CreateObject
     '                   Distinct, GetALLNonEmptys, GetColumn, GetEnumerator, GetEnumerator1
