@@ -263,7 +263,7 @@ Public Class CDFWriter : Implements IDisposable
             variableBuffers.Add(getVariableHeaderBuffer(var, output))
         Next
 
-        Dim dataChunks As Byte() = CalcOffsets(variableBuffers)
+        Dim dataChunks As MemoryStream = CalcOffsets(variableBuffers)
 
         ' 在这个循环仅写入了变量的头部数据
         For i As Integer = 0 To variables.Count - 1
@@ -319,12 +319,15 @@ Public Class CDFWriter : Implements IDisposable
     ''' <remarks>
     ''' 函数返回数据块的缓存
     ''' </remarks>
-    Private Function CalcOffsets(buffers As List(Of Byte())) As Byte()
+    Private Function CalcOffsets(buffers As List(Of Byte())) As MemoryStream
         ' 这个位置是在所有的变量头部之后的
         ' 因为这个函数是发生在变量写入之前的，所以会需要加上自身的长度
         ' 才会将offset的位置移动到数据区域的起始位置
         Dim current As UInteger = output.Position + buffers.Sum(Function(v) v.Length)
-        Dim dataBuffer As New List(Of Byte)
+        ' 2019-1-21 当写入一个超大的CDF文件的时候
+        ' 字节数量会超过Array的最大元素数量上限
+        ' 所以在这里会需要使用MemoryStream对象来避免这个可能的问题
+        Dim dataBuffer As New MemoryStream
         Dim chunk As Byte()
 
         For i As Integer = 0 To variables.Count - 1
@@ -333,7 +336,7 @@ Public Class CDFWriter : Implements IDisposable
             buffers(i).Fill(chunk, -4, reverse:=True)
             chunk = variables(i).value.GetBuffer(output.Encoding)
             current += chunk.Length
-            dataBuffer.AddRange(chunk)
+            dataBuffer.Write(chunk, Scan0, chunk.Length)
         Next
 
         Return dataBuffer

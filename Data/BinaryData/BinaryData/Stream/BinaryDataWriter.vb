@@ -267,6 +267,36 @@ Public Class BinaryDataWriter
     End Sub
 
     ''' <summary>
+    ''' 将<paramref name="buffer"/>之中的所有数据都追加到当前的数据流之中
+    ''' </summary>
+    ''' <param name="buffer"></param>
+    Public Overloads Sub Write(buffer As MemoryStream, Optional chunkSize% = 4096)
+        Dim chunk As Byte() = New Byte(chunkSize - 1) {}
+        Dim ends& = buffer.Length - 1
+        Dim dl&
+
+        ' 重置读取指针位置
+        Call buffer.Seek(Scan0, SeekOrigin.Begin)
+
+        ' 分块读取buffer，然后写入流数据
+        Do While buffer.Position < ends
+            dl = ends - buffer.Position
+
+            If dl > chunkSize Then
+                Call buffer.Read(chunk, buffer.Position, chunkSize)
+            Else
+                Call buffer.Read(chunk, buffer.Position, dl)
+            End If
+
+            Call Write(chunk)
+
+            If dl < chunkSize Then
+                Exit Do
+            End If
+        Loop
+    End Sub
+
+    ''' <summary>
     ''' Writes the specified number of <see cref="Decimal"/> values into the current stream and advances the current
     ''' position by that number of <see cref="Decimal"/> values multiplied with the size of a single value.
     ''' </summary>
