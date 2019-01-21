@@ -283,9 +283,12 @@ Public Class BinaryDataWriter
             dl = ends - buffer.Position
 
             If dl > chunkSize Then
+                ' buffer之中还存在充足的数据进行复制
                 Call buffer.Read(chunk, buffer.Position, chunkSize)
             Else
-                Call buffer.Read(chunk, buffer.Position, dl)
+                ' 数据不足了
+                chunk = New Byte(dl - 1) {}
+                buffer.Read(chunk, buffer.Position, dl)
             End If
 
             Call Write(chunk)
