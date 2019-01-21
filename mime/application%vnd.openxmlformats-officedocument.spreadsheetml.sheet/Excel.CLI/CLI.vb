@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::42f4d3bcbd2887cf22d5cbd4ba86c312, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel.CLI\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: Association, cbind, Extract, newEmpty, Print
-    '               PushTable, rbind, rbindGroup, Union
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: Association, cbind, Extract, newEmpty, Print
+'               PushTable, rbind, rbindGroup, Union
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,35 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
 Imports Xlsx = Microsoft.VisualBasic.MIME.Office.Excel.File
 
 <CLI> Module CLI
+
+    ''' <summary>
+    ''' 为ID编号添加一个tag来让重复出现的ID编号变成唯一的编号
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    <ExportAPI("/Unique")>
+    <Usage("/Unique /in <dataset.csv> [/out <out.csv>]")>
+    <Description("Helper tools for make the ID column value uniques.")>
+    Public Function Unique(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.ID_unique.csv"
+        Dim file As csv = csv.Load(Path:=[in])
+        Dim idIndex As New Dictionary(Of String, String)
+
+        For Each row As RowObject In file
+            If idIndex.ContainsKey(row.First) Then
+                For i As Integer = 1 To Integer.MaxValue
+                    If Not idIndex.ContainsKey(row.First & "_" & i) Then
+                        row(Scan0) = row.First & "_" & i
+                        idIndex.Add(row.First, "")
+                        Exit For
+                    End If
+                Next
+            End If
+        Next
+
+        Return file.Save(out).CLICode
+    End Function
 
     ''' <summary>
     ''' /nothing.as.empty 可以允许将nothing使用空字符串进行替代，这样子就可以不抛出错误了
