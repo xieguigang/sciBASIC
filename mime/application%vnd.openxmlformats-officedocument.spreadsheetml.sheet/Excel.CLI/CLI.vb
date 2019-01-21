@@ -78,10 +78,12 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
                 For i As Integer = 1 To Integer.MaxValue
                     If Not idIndex.ContainsKey(row.First & "_" & i) Then
                         row(Scan0) = row.First & "_" & i
-                        idIndex.Add(row.First, "")
+                        idIndex.Add(row.First, "+")
                         Exit For
                     End If
                 Next
+            Else
+                idIndex.Add(row.First, "")
             End If
         Next
 
