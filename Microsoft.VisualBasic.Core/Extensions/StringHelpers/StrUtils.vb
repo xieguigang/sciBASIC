@@ -78,7 +78,6 @@
 '
 
 Imports System.Globalization
-Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
@@ -181,7 +180,7 @@ Public Module StrUtils
         Return AscW(c)
     End Function
 
-    ReadOnly newRandom As New DefaultValue(Of Random)(Function() New Random)
+    ReadOnly newRandom As New DefaultValue(Of Random)(Math.Seeds)
 
     ''' <summary>
     ''' 32-126

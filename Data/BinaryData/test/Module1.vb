@@ -48,7 +48,7 @@ Module Module1
 
     Sub writeTest2()
         Using out = New BinaryDataWriter("./sssss.txt".Open)
-            Dim buffer As New IO.MemoryStream(Encoding.UTF8.GetBytes("Hello world!!! 撒比大师大师框架汇顶科技安徽科技案发后看见爱上"))
+            Dim buffer As New IO.MemoryStream(Encoding.UTF8.GetBytes("Hello world!!! 撒比大师大师框架汇顶科技安徽科技案发后看见爱上" & RandomASCIIString(8192) & "writerBuffer test success;"))
 
             Call out.Write(buffer)
         End Using
