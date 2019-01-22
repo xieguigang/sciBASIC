@@ -319,8 +319,9 @@
     <Compile Include="NeuralNetwork\ActiveFunctions\BipolarSigmoidFunction.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\LayerActives.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\IActivationFunction.vb" />
-    <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\ReLU.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\SigmoidFunction.vb" />
+    <Compile Include="NeuralNetwork\ActiveFunctions\Sigmoid.vb" />
     <Compile Include="NeuralNetwork\ActiveFunctions\ThresholdFunction.vb" />
     <Compile Include="NeuralNetwork\Accelerator.vb" />
     <Compile Include="NeuralNetwork\Models\Layer.vb" />
