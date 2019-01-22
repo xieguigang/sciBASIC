@@ -270,7 +270,7 @@ Public Class BinaryDataWriter
     ''' 将<paramref name="buffer"/>之中的所有数据都追加到当前的数据流之中
     ''' </summary>
     ''' <param name="buffer"></param>
-    Public Overloads Sub Write(buffer As MemoryStream, Optional chunkSize% = 4096)
+    Public Overloads Sub Write(buffer As Stream, Optional chunkSize% = 4096)
         Dim chunk As Byte() = New Byte(chunkSize - 1) {}
         Dim ends& = buffer.Length
         Dim dl&
