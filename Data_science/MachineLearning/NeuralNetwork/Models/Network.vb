@@ -159,12 +159,12 @@ Namespace NeuralNetwork
         ''' 反向传播
         ''' </summary>
         ''' <param name="targets"></param>
-        Public Sub BackPropagate(targets As Double(), parallel As Boolean)
+        Public Sub BackPropagate(targets As Double(), truncate As Double, parallel As Boolean)
             LearnRate = LearnRate * 0.999999
             Momentum = 1 - LearnRate
 
-            Call OutputLayer.CalculateGradient(targets)
-            Call HiddenLayer.BackPropagate(LearnRate, Momentum, parallel)
+            Call OutputLayer.CalculateGradient(targets, truncate)
+            Call HiddenLayer.BackPropagate(LearnRate, Momentum, truncate, parallel)
             Call OutputLayer.UpdateWeights(LearnRate, Momentum, parallel)
         End Sub
 

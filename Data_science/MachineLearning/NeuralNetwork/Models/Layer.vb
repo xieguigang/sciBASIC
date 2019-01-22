@@ -158,21 +158,21 @@ Namespace NeuralNetwork
             End If
         End Sub
 
-        Public Sub CalculateGradient(targets As Double())
+        Public Sub CalculateGradient(targets As Double(), truncate As Double)
             For i As Integer = 0 To targets.Length - 1
-                Neurons(i).CalculateGradient(targets(i))
+                Neurons(i).CalculateGradient(targets(i), truncate)
             Next
         End Sub
 
-        Public Sub CalculateGradient(Optional parallel As Boolean = False)
+        Public Sub CalculateGradient(Optional parallel As Boolean = False, Optional truncate# = -1)
             If Not parallel Then
                 For Each neuron As Neuron In Neurons
-                    Call neuron.CalculateGradient()
+                    Call neuron.CalculateGradient(truncate)
                 Next
             Else
                 With Aggregate neuron As Neuron
                      In Neurons.AsParallel
-                     Into Sum(neuron.CalculateGradient)
+                     Into Sum(neuron.CalculateGradient(truncate))
                 End With
             End If
         End Sub
@@ -270,14 +270,14 @@ Namespace NeuralNetwork
             Next
         End Sub
 
-        Public Sub BackPropagate(learnRate#, momentum#, parallel As Boolean)
+        Public Sub BackPropagate(learnRate#, momentum#, truncate#, parallel As Boolean)
             Dim reverse = Layers.Reverse.ToArray
 
             ' 因为在调用函数计算之后,值变了
             ' 所以在这里会需要使用两个for each
             ' 不然计算会出bug
             For Each revLayer As Layer In reverse
-                Call revLayer.CalculateGradient(parallel)
+                Call revLayer.CalculateGradient(parallel, truncate)
             Next
             For Each revLayer As Layer In reverse
                 Call revLayer.UpdateWeights(learnRate, momentum, parallel)

@@ -157,13 +157,38 @@ Namespace NeuralNetwork
             Return target - Value
         End Function
 
-        Public Function CalculateGradient(target As Double) As Double
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="target"></param>
+        ''' <param name="truncate">大于零的时候，如果计算出来的<see cref="Gradient"/>大于这个阈值，将会被剪裁</param>
+        ''' <returns></returns>
+        Public Function CalculateGradient(target As Double, truncate As Double) As Double
             Gradient = CalculateError(target) * activation.Derivative(Value)
+
+            If truncate > 0 Then
+                If Gradient > truncate OrElse Gradient < -truncate Then
+                    Gradient = Math.Sign(Gradient) * truncate
+                End If
+            End If
+
             Return Gradient
         End Function
 
-        Public Function CalculateGradient() As Double
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="truncate">小于零表示不进行梯度剪裁</param>
+        ''' <returns></returns>
+        Public Function CalculateGradient(truncate As Double) As Double
             Gradient = OutputSynapses.Sum(Function(a) a.OutputNeuron.Gradient * a.Weight) * activation.Derivative(Value)
+
+            If truncate > 0 Then
+                If Gradient > truncate OrElse Gradient < -truncate Then
+                    Gradient = Math.Sign(Gradient) * truncate
+                End If
+            End If
+
             Return Gradient
         End Function
 

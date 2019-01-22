@@ -90,7 +90,9 @@ Module CLI
             samples.OutputSize,
             config.learnRate,
             config.momentum
-        )
+        ) With {
+            .Truncate = 1
+        }
 
         For Each sample As Sample In samples.PopulateNormalizedSamples
             Call trainingHelper.Add(sample.status, sample.target)
@@ -121,10 +123,10 @@ Module CLI
     <Extension>
     Private Function runTrainingCommon(trainer As TrainingUtils, debugCDF$, parallel As Boolean) As TrainingUtils
         Dim synapses = trainer _
-          .NeuronNetwork _
-          .GetSynapseGroups _
-          .Select(Function(g) g.First) _
-          .ToArray
+            .NeuronNetwork _
+            .GetSynapseGroups _
+            .Select(Function(g) g.First) _
+            .ToArray
         Dim synapsesWeights As New Dictionary(Of String, List(Of Double))
         Dim errors As New List(Of Double)
         Dim index As New List(Of Integer)
