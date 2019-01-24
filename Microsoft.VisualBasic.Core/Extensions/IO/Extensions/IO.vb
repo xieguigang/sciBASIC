@@ -156,6 +156,8 @@ Public Module IOExtensions
     <ExportAPI("Open.File")>
     <Extension>
     Public Function Open(path$, Optional mode As FileMode = FileMode.OpenOrCreate, Optional doClear As Boolean = True) As FileStream
+        Dim access As FileShare
+
         With path.ParentPath
             If Not .DirectoryExists Then
                 Call .MkDIR()
@@ -164,10 +166,15 @@ Public Module IOExtensions
 
         If doClear Then
             ' 在这里调用FlushStream函数的话会导致一个循环引用的问题
-            Call ClearFileBytes(path)
+            ClearFileBytes(path)
+            ' 为了保证数据不被破坏，写操作会锁文件
+            access = FileShare.None
+        Else
+            ' 读操作，则只允许共享读文件
+            access = FileShare.Read
         End If
 
-        Return File.Open(path, mode)
+        Return File.Open(path, mode, FileAccess.ReadWrite, access)
     End Function
 
     ''' <summary>
