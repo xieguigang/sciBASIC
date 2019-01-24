@@ -271,32 +271,9 @@ Public Class BinaryDataWriter
     ''' </summary>
     ''' <param name="buffer"></param>
     Public Overloads Sub Write(buffer As Stream, Optional chunkSize% = 4096)
-        Dim chunk As Byte() = New Byte(chunkSize - 1) {}
-        Dim ends& = buffer.Length
-        Dim dl&
-
-        ' 重置读取指针位置
-        Call buffer.Seek(Scan0, SeekOrigin.Begin)
-
-        ' 分块读取buffer，然后写入流数据
-        Do While buffer.Position < ends
-            dl = ends - buffer.Position
-
-            If dl > chunkSize Then
-                ' buffer之中还存在充足的数据进行复制
-                Call buffer.Read(chunk, Scan0, chunkSize)
-            Else
-                ' 数据不足了
-                chunk = New Byte(dl - 1) {}
-                buffer.Read(chunk, Scan0, dl)
-            End If
-
-            Call Write(chunk)
-
-            If dl < chunkSize Then
-                Exit Do
-            End If
-        Loop
+        For Each block As Byte() In buffer.PopulateBlocks
+            Call Write(block)
+        Next
     End Sub
 
     ''' <summary>
