@@ -85,14 +85,18 @@ Module CLI
                 .ToArray
         End If
 
+        Dim actives As New Activations.LayerActives With {
+            .hiddens = New Activations.Sigmoid,
+            .input = New Activations.Sigmoid,
+            .output = New Activations.Sigmoid
+        }
         Dim trainingHelper As New TrainingUtils(
             samples.Size.Width, hiddenSize,
             samples.OutputSize,
             config.learnRate,
-            config.momentum
-        ) With {
-            .Truncate = 1
-        }
+            config.momentum,
+            actives
+        )
 
         For Each sample As Sample In samples.PopulateNormalizedSamples
             Call trainingHelper.Add(sample.status, sample.target)

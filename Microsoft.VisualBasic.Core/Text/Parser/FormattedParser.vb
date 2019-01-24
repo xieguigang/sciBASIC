@@ -120,22 +120,22 @@ Namespace Text
 
         ''' <summary>
         ''' Parsing a line of string into several fields fragments based on the fields length.
+        ''' (假设表格之中的每一个字段都是等长的话, 则可以使用这个函数来进行解析)
         ''' </summary>
         ''' <param name="s">The input text line.</param>
-        ''' <param name="pos">The text length of each field property value.</param>
+        ''' <param name="fieldLength">The text length of each field property value.</param>
         ''' <returns></returns>
-        <Extension> Public Function FieldParser(s As String, pos As Integer()) As String()
-            Dim list As New List(Of String)
-            Dim offset As Integer
+        <Extension> Public Iterator Function FieldParser(s As String, fieldLength As Integer()) As IEnumerable(Of String)
+            Dim offset As Integer = Scan0
 
-            For Each len As Integer In pos.Take(pos.Length - 1)
-                list += s.Substring(offset, len)  ' 起始的位置是根据域的长度逐步叠加的
+            For Each len As Integer In fieldLength.Take(fieldLength.Length - 1)
+                ' 起始的位置是根据域的长度逐步叠加的
+                Yield s.Substring(offset, len)
+                ' 步进到下一个字段的起始位置
                 offset += len
             Next
 
-            list += s.Substring(offset)
-
-            Return list.ToArray
+            Yield s.Substring(offset)
         End Function
 
         ''' <summary>

@@ -170,6 +170,21 @@ Namespace CommandLine.InteropService
         End Function
     End Class
 
+    ''' <summary>
+    '''应用程序的执行驱动抽象接口, 这个抽象接口是为了兼容命令行应用和Docker环境下的命令行应用而设置的
+    ''' </summary>
+    Public Interface AppDriver
+
+        ''' <summary>
+        ''' 命令行命令或者可执行文件的路径
+        ''' </summary>
+        ''' <returns></returns>
+        Property App As String
+
+
+
+    End Interface
+
     Public MustInherit Class CLIBuilder
 
         Public Overrides Function ToString() As String

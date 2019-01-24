@@ -168,7 +168,7 @@ Namespace NeuralNetwork
                 For i As Integer = 0 To numEpochs - 1
                     errors = trainingImpl(dataSets, parallel)
                     ETA = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
-                    msg = $"Iterations: [{i}/{numEpochs}], Err={errors}{vbTab} {ETA}"
+                    msg = $"Iterations: [{i}/{numEpochs}], errors={errors}{vbTab}learn_rate={network.LearnRate} {ETA}"
                     progress.SetProgress(tick.StepProgress, msg)
 
                     If Not reporter Is Nothing Then
