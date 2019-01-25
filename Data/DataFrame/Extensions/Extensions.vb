@@ -369,7 +369,7 @@ Public Module Extensions
     <Extension> Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
                                                             Optional explicit As Boolean = False,
                                                             Optional skipEmpty As Boolean = True,
-                                                            Optional maps As Dictionary(Of String, String) = Nothing) As T()
+                                                            Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
         Dim sheet As File_csv
 
         If skipEmpty Then
@@ -382,8 +382,9 @@ Public Module Extensions
             sheet = dataSet
         End If
 
-        Dim df As DataFrame = IO.DataFrame.CreateObject(file:=sheet)
-        Return df.AsDataSource(Of T)(explicit, maps)
+        Return IO.DataFrame _
+            .CreateObject(file:=sheet) _
+            .AsDataSource(Of T)(explicit, maps)
     End Function
 
     ''' <summary>
@@ -396,12 +397,14 @@ Public Module Extensions
     ''' <remarks></remarks>
     <Extension> Public Function AsDataSource(Of T As Class)(df As DataFrame,
                                                             Optional explicit As Boolean = False,
-                                                            Optional maps As Dictionary(Of String, String) = Nothing) As T()
-        If Not maps Is Nothing Then
-            Call df.ChangeMapping(maps)
-        End If
-        Dim source As T() = Reflector.Convert(Of T)(df, explicit).ToArray
-        Return source
+                                                            Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
+        With df
+            If Not maps Is Nothing Then
+                Call .ChangeMapping(maps)
+            End If
+
+            Return Reflector.Convert(Of T)(.ByRef, explicit)
+        End With
     End Function
 
     ''' <summary>
@@ -467,7 +470,7 @@ Public Module Extensions
                 fast:=fast,
                 maps:=maps,
                 mute:=mute
-            )
+            ).AsList
             ms = .ElapsedMilliseconds
             fs = If(ms > 1000, (ms / 1000) & "sec", ms & "ms")
         End With

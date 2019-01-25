@@ -297,6 +297,11 @@ Namespace IO
             Return CreateObject(File)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Function Parse(Of T As Class)(content As String) As IEnumerable(Of T)
+            Return File.Parse(content).AsDataSource(Of T)
+        End Function
+
         Private Shared Function __getColumnList(table As IEnumerable(Of RowObject)) As List(Of String)
             Return LinqAPI.MakeList(Of String) _
  _
