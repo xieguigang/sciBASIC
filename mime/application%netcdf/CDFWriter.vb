@@ -263,7 +263,7 @@ Public Class CDFWriter : Implements IDisposable
             variableBuffers.Add(getVariableHeaderBuffer(var, output))
         Next
 
-        Dim dataChunks As Byte() = CalcOffsets(variableBuffers)
+        Dim tmp As String = CalcOffsets(variableBuffers)
 
         ' 在这个循环仅写入了变量的头部数据
         For i As Integer = 0 To variables.Count - 1
@@ -272,8 +272,10 @@ Public Class CDFWriter : Implements IDisposable
             Call output.Write(variableBuffers(i))
         Next
 
-        ' 接着就是写入数据块了
-        Call output.Write(dataChunks)
+        Using buffer As Stream = tmp.Open
+            ' 接着就是写入数据块了
+            Call output.Write(buffer)
+        End Using
     End Sub
 
     ''' <summary>
@@ -319,24 +321,31 @@ Public Class CDFWriter : Implements IDisposable
     ''' <remarks>
     ''' 函数返回数据块的缓存
     ''' </remarks>
-    Private Function CalcOffsets(buffers As List(Of Byte())) As Byte()
+    Private Function CalcOffsets(buffers As List(Of Byte())) As String
         ' 这个位置是在所有的变量头部之后的
         ' 因为这个函数是发生在变量写入之前的，所以会需要加上自身的长度
         ' 才会将offset的位置移动到数据区域的起始位置
         Dim current As UInteger = output.Position + buffers.Sum(Function(v) v.Length)
-        Dim dataBuffer As New List(Of Byte)
         Dim chunk As Byte()
+        Dim handle$ = App.GetAppSysTempFile(".dat", App.PID)
 
-        For i As Integer = 0 To variables.Count - 1
-            chunk = BitConverter.GetBytes(current)
-            ' 因为CDF文件的byteorder是Big，所以在这里填充的时候会需要翻转一下顺序
-            buffers(i).Fill(chunk, -4, reverse:=True)
-            chunk = variables(i).value.GetBuffer(output.Encoding)
-            current += chunk.Length
-            dataBuffer.AddRange(chunk)
-        Next
+        ' 2019-1-21 当写入一个超大的CDF文件的时候
+        ' 字节数量会超过Array的最大元素数量上限
+        ' 所以在这里会需要使用Stream对象来避免这个可能的问题
+        Using dataBuffer As FileStream = handle.Open
+            For i As Integer = 0 To variables.Count - 1
+                chunk = BitConverter.GetBytes(current)
+                ' 因为CDF文件的byteorder是Big，所以在这里填充的时候会需要翻转一下顺序
+                buffers(i).Fill(chunk, -4, reverse:=True)
+                chunk = variables(i).value.GetBuffer(output.Encoding)
+                current += chunk.Length
+                dataBuffer.Write(chunk, Scan0, chunk.Length)
+            Next
 
-        Return dataBuffer
+            Call dataBuffer.Flush()
+        End Using
+
+        Return handle
     End Function
 
     Private Shared Sub writeAttributes(output As BinaryDataWriter, attrs As attribute())

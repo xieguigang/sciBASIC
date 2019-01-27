@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::046dce4ed9ee4cd2dc9cc36753d665ef, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\ActiveFunction.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ActiveFunction
-    ' 
-    '         Properties: [Function], Arguments, name
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ActiveFunction
+' 
+'         Properties: [Function], Arguments, name
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -85,18 +85,28 @@ Namespace NeuralNetwork.StoreProcedure
         Public ReadOnly Property [Function]() As IActivationFunction
             Get
                 With Me
-                    Select Case Name
+                    Select Case name
                         Case NameOf(Activations.BipolarSigmoidFunction)
-                            Return New BipolarSigmoidFunction(!alpha)
-                        Case NameOf(Activations.Sigmoid)
-                            Return New Sigmoid
+                            If HasKey("alpha") Then
+                                Return New BipolarSigmoidFunction(!alpha)
+                            Else
+                                Return New BipolarSigmoidFunction
+                            End If
                         Case NameOf(Activations.SigmoidFunction)
-                            Return New SigmoidFunction(!alpha)
+                            Return New SigmoidFunction
+                        Case NameOf(Activations.Sigmoid)
+                            If HasKey("alpha") Then
+                                Return New Sigmoid(!alpha)
+                            Else
+                                Return New Sigmoid
+                            End If
                         Case NameOf(Activations.ThresholdFunction)
                             Return New ThresholdFunction
+                        Case NameOf(Activations.ReLU)
+                            Return New ReLU
                         Case Else
 #If DEBUG Then
-                            Call "".Warning
+                            Call $"Missing model: {name}".Warning
 #End If
                             Return New Activations.Sigmoid
                     End Select
@@ -105,8 +115,17 @@ Namespace NeuralNetwork.StoreProcedure
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function HasKey(name As String) As Boolean
+            If Arguments Is Nothing Then
+                Return False
+            Else
+                Return Arguments.Any(Function(tag) tag.name.TextEquals(name))
+            End If
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return $"{Name}({Arguments.Select(Function(a) $"{a.name}:={a.text}").JoinBy(", ")})"
+            Return $"{name}({Arguments.Select(Function(a) $"{a.name}:={a.text}").JoinBy(", ")})"
         End Function
     End Class
 End Namespace

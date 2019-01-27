@@ -75,6 +75,42 @@ Public Module StreamHelper
         End With
     End Function
 
+    ''' <summary>
+    ''' 这个函数会重置流的指针位置
+    ''' </summary>
+    ''' <param name="buffer"></param>
+    ''' <param name="chunkSize%"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function PopulateBlocks(buffer As Stream, Optional chunkSize% = 2048) As IEnumerable(Of Byte())
+        Dim chunk As Byte() = New Byte(chunkSize - 1) {}
+        Dim ends& = buffer.Length
+        Dim dl&
+
+        ' 重置读取指针位置
+        Call buffer.Seek(Scan0, SeekOrigin.Begin)
+
+        ' 分块读取buffer，然后写入流数据
+        Do While buffer.Position < ends
+            dl = ends - buffer.Position
+
+            If dl > chunkSize Then
+                ' buffer之中还存在充足的数据进行复制
+                Call buffer.Read(chunk, Scan0, chunkSize)
+            Else
+                ' 数据不足了
+                chunk = New Byte(dl - 1) {}
+                buffer.Read(chunk, Scan0, dl)
+            End If
+
+            Yield chunk
+
+            If dl < chunkSize Then
+                Exit Do
+            End If
+        Loop
+    End Function
+
     <Extension>
     Public Sub Write(stream As Stream, value$, Optional encoding As Encoding = Nothing)
         With (encoding Or UTF8).GetBytes(value)

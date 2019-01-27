@@ -62,6 +62,11 @@ Namespace NeuralNetwork
 
         Public Property TrainingType As TrainingType = TrainingType.Epoch
         Public Property MinError As Double = Helpers.MinimumError
+        ''' <summary>
+        ''' 对<see cref="Neuron.Gradient"/>的剪裁限制阈值，小于等于零表示不进行剪裁，默认不剪裁
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Truncate As Double = -1
 
         ''' <summary>
         ''' 最终得到的训练结果神经网络
@@ -163,7 +168,7 @@ Namespace NeuralNetwork
                 For i As Integer = 0 To numEpochs - 1
                     errors = trainingImpl(dataSets, parallel)
                     ETA = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
-                    msg = $"Iterations: [{i}/{numEpochs}], Err={errors}{vbTab} {ETA}"
+                    msg = $"Iterations: [{i}/{numEpochs}], errors={errors}{vbTab}learn_rate={network.LearnRate} {ETA}"
                     progress.SetProgress(tick.StepProgress, msg)
 
                     If Not reporter Is Nothing Then
@@ -178,7 +183,7 @@ Namespace NeuralNetwork
 
             For Each dataSet As Sample In dataSets
                 Call network.ForwardPropagate(dataSet.status, parallel)
-                Call network.BackPropagate(dataSet.target, parallel)
+                Call network.BackPropagate(dataSet.target, Truncate, parallel)
                 Call errors.Add(CalculateError(network, dataSet.target))
             Next
 

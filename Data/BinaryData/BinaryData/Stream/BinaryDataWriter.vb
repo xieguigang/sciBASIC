@@ -267,6 +267,16 @@ Public Class BinaryDataWriter
     End Sub
 
     ''' <summary>
+    ''' 将<paramref name="buffer"/>之中的所有数据都追加到当前的数据流之中
+    ''' </summary>
+    ''' <param name="buffer"></param>
+    Public Overloads Sub Write(buffer As Stream, Optional chunkSize% = 4096)
+        For Each block As Byte() In buffer.PopulateBlocks
+            Call Write(block)
+        Next
+    End Sub
+
+    ''' <summary>
     ''' Writes the specified number of <see cref="Decimal"/> values into the current stream and advances the current
     ''' position by that number of <see cref="Decimal"/> values multiplied with the size of a single value.
     ''' </summary>
