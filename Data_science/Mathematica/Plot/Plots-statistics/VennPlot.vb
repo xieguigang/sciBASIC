@@ -18,11 +18,15 @@ Public Module VennPlot
     ''' <summary>
     ''' 绘制两个集合间的文氏图
     ''' </summary>
+    ''' <param name="opacity">
+    ''' 为了更加清楚的显示出交集区域，在这里会使用一个统一的透明度值
+    ''' </param>
     ''' <returns></returns>
     Public Function Venn2(a As VennSet, b As VennSet,
                           Optional size$ = "3000,2600",
                           Optional margin$ = g.DefaultPadding,
-                          Optional bg$ = "white") As GraphicsData
+                          Optional bg$ = "white",
+                          Optional opacity# = 0.85) As GraphicsData
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rectangle As GraphicsRegion)
                 Dim region As Rectangle = rectangle.PlotRegion
@@ -31,20 +35,23 @@ Public Module VennPlot
                 Dim ra = a.Size / (a.Size + b.Size) * region.Width / 2
                 Dim rb = b.Size / (a.Size + b.Size) * region.Width / 2
                 ' 将交集大小转换为圆心的偏移量
-                Dim offset = a.intersections(b.Name) / sys.Min(a.Size, b.Size) * (ra + rb)
+                Dim offset = a.intersections(b.Name) / sys.Min(a.Size, b.Size) * sys.Min(ra, rb)
                 Dim dx = (region.Width - (ra + rb + (ra + rb - offset))) / 2
                 Dim x, y As Integer
+                Dim fill As Brush
 
                 ' 绘制代表两个集合的圆
                 x = region.Left + dx + ra
                 y = region.Top + (region.Height - ra) / 2
+                fill = a.color.Opacity(opacity)
 
-                Call g.DrawCircle(New PointF(x, y), ra, a.color)
+                Call g.DrawCircle(New PointF(x, y), ra, fill)
 
                 x = region.Right - dx - rb
                 y = region.Top + (region.Height - rb) / 2
+                fill = b.color.Opacity(opacity)
 
-                Call g.DrawCircle(New PointF(x, y), rb, b.color)
+                Call g.DrawCircle(New PointF(x, y), rb, fill)
             End Sub
 
         Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
