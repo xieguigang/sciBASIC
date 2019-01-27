@@ -28,8 +28,11 @@ Public Module VennPlot
                           Optional margin$ = g.DefaultPadding,
                           Optional bg$ = "white",
                           Optional opacity# = 0.85,
-                          Optional strokeCSS$ = Stroke.AxisStroke) As GraphicsData
+                          Optional strokeCSS$ = Stroke.AxisStroke,
+                          Optional regionTitleFontCSS$ = CSSFont.Win7Large) As GraphicsData
+
         Dim strokePen As Pen = Stroke.TryParse(strokeCSS)
+        Dim regionTitleFont As Font = CSSFont.TryParse(regionTitleFontCSS)
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rectangle As GraphicsRegion)
                 Dim region As Rectangle = rectangle.PlotRegion
