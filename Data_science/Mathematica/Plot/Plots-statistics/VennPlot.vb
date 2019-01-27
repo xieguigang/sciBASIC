@@ -1,8 +1,11 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports sys = System.Math
 
 ''' <summary>
 ''' + 圆的半径大小直接与集合的大小相关
@@ -20,7 +23,19 @@ Public Module VennPlot
                           Optional size$ = "3000,2600",
                           Optional margin$ = g.DefaultPadding,
                           Optional bg$ = "white") As GraphicsData
+        Dim plotInternal =
+            Sub(ByRef g As IGraphics, rectangle As GraphicsRegion)
+                Dim region As Rectangle = rectangle.PlotRegion
+                ' 计算两个圆的半径大小
+                ' ra + rb = width
+                Dim ra = a.Size / (a.Size + b.Size) * region.Width / 2
+                Dim rb = b.Size / (a.Size + b.Size) * region.Width / 2
+                ' 将交集大小转换为圆心的偏移量
+                Dim offset = a.intersections(b.Name) / sys.Min(a.Size, b.Size) * (ra + rb)
 
+            End Sub
+
+        Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
     End Function
 End Module
 
