@@ -157,12 +157,18 @@ Namespace Imaging
             Return path
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Opacity(fill As Color, val#) As Color
+            Return Color.FromArgb(val * 255, baseColor:=fill)
+        End Function
+
         <Extension>
         Public Function Opacity(fill As Brush, val#) As Brush
             If TypeOf fill Is SolidBrush Then
                 Dim color As Color = DirectCast(fill, SolidBrush).Color
 
-                color = Color.FromArgb(val * 255, color)
+                color = color.Opacity(val)
                 fill = New SolidBrush(color)
 
                 Return fill

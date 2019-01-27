@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports sys = System.Math
 
@@ -26,7 +27,9 @@ Public Module VennPlot
                           Optional size$ = "3000,2600",
                           Optional margin$ = g.DefaultPadding,
                           Optional bg$ = "white",
-                          Optional opacity# = 0.85) As GraphicsData
+                          Optional opacity# = 0.85,
+                          Optional strokeCSS$ = Stroke.AxisStroke) As GraphicsData
+        Dim strokePen As Pen = Stroke.TryParse(strokeCSS)
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rectangle As GraphicsRegion)
                 Dim region As Rectangle = rectangle.PlotRegion
@@ -38,20 +41,20 @@ Public Module VennPlot
                 Dim offset = a.intersections(b.Name) / sys.Min(a.Size, b.Size) * sys.Min(ra, rb)
                 Dim dx = (region.Width - (ra + rb + (ra + rb - offset))) / 2
                 Dim x, y As Integer
-                Dim fill As Brush
+                Dim fill As Color
 
                 ' 绘制代表两个集合的圆
                 x = region.Left + dx + ra
                 y = region.Top + (region.Height - 2 * ra) / 2 + ra
                 fill = a.color.Opacity(opacity)
 
-                Call g.DrawCircle(New PointF(x, y), ra, fill)
+                Call g.DrawCircle(New PointF(x, y), fill, strokePen, ra)
 
                 x = region.Right - dx - rb
                 y = region.Top + (region.Height - 2 * rb) / 2 + rb
                 fill = b.color.Opacity(opacity)
 
-                Call g.DrawCircle(New PointF(x, y), rb, fill)
+                Call g.DrawCircle(New PointF(x, y), fill, strokePen, rb)
             End Sub
 
         Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
@@ -76,7 +79,7 @@ Public Class VennSet : Implements INamedValue
     ''' </summary>
     ''' <returns></returns>
     Public Property Size As Integer
-    Public Property color As Brush
+    Public Property color As Color
 
     ''' <summary>
     ''' 当前的这个集合与其他的集合之间的交集大小
