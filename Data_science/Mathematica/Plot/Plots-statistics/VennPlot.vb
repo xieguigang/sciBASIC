@@ -32,7 +32,19 @@ Public Module VennPlot
                 Dim rb = b.Size / (a.Size + b.Size) * region.Width / 2
                 ' 将交集大小转换为圆心的偏移量
                 Dim offset = a.intersections(b.Name) / sys.Min(a.Size, b.Size) * (ra + rb)
+                Dim dx = (region.Width - (ra + rb + (ra + rb - offset))) / 2
+                Dim x, y As Integer
 
+                ' 绘制代表两个集合的圆
+                x = region.Left + dx + ra
+                y = region.Top + (region.Height - ra) / 2
+
+                Call g.DrawCircle(New PointF(x, y), ra, a.color)
+
+                x = region.Right - dx - rb
+                y = region.Top + (region.Height - rb) / 2
+
+                Call g.DrawCircle(New PointF(x, y), rb, b.color)
             End Sub
 
         Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
