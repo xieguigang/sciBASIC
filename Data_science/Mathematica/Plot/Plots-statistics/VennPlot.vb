@@ -42,13 +42,13 @@ Public Module VennPlot
 
                 ' 绘制代表两个集合的圆
                 x = region.Left + dx + ra
-                y = region.Top + (region.Height - 2 * ra) / 2
+                y = region.Top + (region.Height - 2 * ra) / 2 + ra
                 fill = a.color.Opacity(opacity)
 
                 Call g.DrawCircle(New PointF(x, y), ra, fill)
 
                 x = region.Right - dx - rb
-                y = region.Top + (region.Height - 2 * rb) / 2
+                y = region.Top + (region.Height - 2 * rb) / 2 + rb
                 fill = b.color.Opacity(opacity)
 
                 Call g.DrawCircle(New PointF(x, y), rb, fill)
