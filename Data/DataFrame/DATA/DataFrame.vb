@@ -84,7 +84,7 @@ Namespace DATA
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function [As](Of T As Class)() As T()
+        Public Function [As](Of T As Class)() As IEnumerable(Of T)
             Return entityList.Values _
                 .ToCsvDoc _
                 .AsDataSource(Of T)
