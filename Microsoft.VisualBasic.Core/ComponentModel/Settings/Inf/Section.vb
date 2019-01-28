@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::1122da036990ffe63fc903bb9611ee8c, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Section.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Section
-    ' 
-    '         Properties: Items, Name
-    ' 
-    '         Function: CreateDocFragment, GetValue, ToString
-    ' 
-    '         Sub: SetValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Section
+' 
+'         Properties: Items, Name
+' 
+'         Function: CreateDocFragment, GetValue, ToString
+' 
+'         Sub: SetValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -48,6 +48,7 @@ Imports System.Text
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports HashValue = Microsoft.VisualBasic.Text.Xml.Models.NamedValue
 
@@ -67,26 +68,24 @@ Namespace ComponentModel.Settings.Inf
         <XmlElement>
         Public Property Items As HashValue()
             Get
-                Return _internalTable.Values.ToArray
+                Return configTable.Values.ToArray
             End Get
             Set(value As HashValue())
-                If value Is Nothing Then
-                    value = New HashValue() {}
-                End If
+                Static emptyList As New DefaultValue(Of HashValue())(Function() {}, isLazy:=False)
 
-                _internalTable = value.ToDictionary(Function(x) x.name.ToLower)
+                configTable = (value Or emptyList).ToDictionary(Function(x) x.name.ToLower)
             End Set
         End Property
 
         ''' <summary>
         ''' 这个字典之中的所有键名称都是小写形式的
         ''' </summary>
-        Dim _internalTable As Dictionary(Of HashValue)
+        Dim configTable As Dictionary(Of HashValue)
 
         Public Function GetValue(Key As String) As String
             With Key.ToLower
-                If _internalTable.ContainsKey(.ByRef) Then
-                    Return _internalTable(.ByRef).text
+                If configTable.ContainsKey(.ByRef) Then
+                    Return configTable(.ByRef).text
                 Else
                     Return ""
                 End If
@@ -101,17 +100,17 @@ Namespace ComponentModel.Settings.Inf
         Public Sub SetValue(Name As String, value As String)
             Dim KeyFind As String = Name.ToLower
 
-            If _internalTable.ContainsKey(KeyFind) Then
-                Call _internalTable.Remove(KeyFind)
+            If configTable.ContainsKey(KeyFind) Then
+                Call configTable.Remove(KeyFind)
             End If
 
-            Call _internalTable.Add(KeyFind, New HashValue(Name, value))
+            Call configTable.Add(KeyFind, New HashValue(Name, value))
         End Sub
 
         Public Function CreateDocFragment() As String
             Dim sb As New StringBuilder($"[{Name}]")
 
-            For Each item As HashValue In _internalTable.Values
+            For Each item As HashValue In configTable.Values
                 Call sb.AppendLine($"{item.name}={item.text}")
             Next
 
@@ -119,7 +118,7 @@ Namespace ComponentModel.Settings.Inf
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[{Name}] with {_internalTable.Keys.ToArray.GetJson()}"
+            Return $"[{Name}] with {configTable.Keys.ToArray.GetJson()}"
         End Function
     End Class
 End Namespace
