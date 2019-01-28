@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -226,12 +226,55 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HDF5\chunked\BTreeChunkIndex.vb" />
+    <Compile Include="HDF5\chunked\Chunk.vb" />
+    <Compile Include="HDF5\chunked\ChunkDecoder.vb" />
+    <Compile Include="HDF5\chunked\ChunkDecoderFactory.vb" />
+    <Compile Include="HDF5\chunked\ChunkFactory.vb" />
+    <Compile Include="HDF5\chunked\ChunkIndex.vb" />
+    <Compile Include="HDF5\chunked\ChunkKey.vb" />
+    <Compile Include="HDF5\chunked\ChunkNode.vb" />
+    <Compile Include="HDF5\chunked\DoubleChunk.vb" />
+    <Compile Include="HDF5\chunked\ExtensibleArrayChunkIndex.vb" />
+    <Compile Include="HDF5\chunked\FixedArrayChunkIndex.vb" />
+    <Compile Include="HDF5\chunked\InflateDecoder.vb" />
+    <Compile Include="HDF5\chunked\Int32Chunk.vb" />
+    <Compile Include="HDF5\chunked\UncompressedDecoder.vb" />
+    <Compile Include="HDF5\DataObject.vb" />
+    <Compile Include="HDF5\Flags.vb" />
+    <Compile Include="HDF5\groups\FractalHeap.vb" />
+    <Compile Include="HDF5\groups\FractalHeapGroupIndex.vb" />
+    <Compile Include="HDF5\groups\GroupBTree.vb" />
+    <Compile Include="HDF5\groups\GroupIndex.vb" />
+    <Compile Include="HDF5\groups\LocalHeap.vb" />
+    <Compile Include="HDF5\groups\SimpleGroupIndex.vb" />
+    <Compile Include="HDF5\Hdf5Data.vb" />
+    <Compile Include="HDF5\Hdf5File.vb" />
+    <Compile Include="HDF5\HeaderReader.vb" />
+    <Compile Include="HDF5\message\AttributeMessage.vb" />
+    <Compile Include="HDF5\message\ContinuationMessage.vb" />
+    <Compile Include="HDF5\message\DataLayoutMessage.vb" />
+    <Compile Include="HDF5\message\DataspaceMessage.vb" />
+    <Compile Include="HDF5\message\DataStorageMessage.vb" />
+    <Compile Include="HDF5\message\DatatypeMessage.vb" />
+    <Compile Include="HDF5\message\FillValueMessage.vb" />
+    <Compile Include="HDF5\message\Filter.vb" />
+    <Compile Include="HDF5\message\GroupInfoMessage.vb" />
+    <Compile Include="HDF5\message\LinkInfoMessage.vb" />
+    <Compile Include="HDF5\message\LinkMessage.vb" />
+    <Compile Include="HDF5\message\Message.vb" />
+    <Compile Include="HDF5\message\SymbolTableMessage.vb" />
+    <Compile Include="HDF5\message\UnknownMessage.vb" />
+    <Compile Include="HDF5\RenjinHdf5.vb" />
+    <Compile Include="HDF5\Superblock.vb" />
+    <Compile Include="HDF5\vector\ChunkCursor.vb" />
+    <Compile Include="HDF5\vector\ChunkedDataset.vb" />
+    <Compile Include="HDF5\vector\ChunkedDoubleVector.vb" />
     <Compile Include="Data\CDFDataTypes.vb" />
     <Compile Include="Data\StructureParser.vb" />
     <Compile Include="Data\Xml.vb" />
     <Compile Include="Components\CDFData.vb" />
     <Compile Include="CDFWriter.vb" />
-    <Compile Include="HDF5\HDF5Reader.vb" />
     <Compile Include="ToString.vb" />
     <Compile Include="Data\DataReader.vb" />
     <Compile Include="Components\Components.vb" />
@@ -284,6 +327,12 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="HDF5" />
+    <Folder Include="HDF5\chunked" />
+    <Folder Include="HDF5\groups" />
+    <Folder Include="HDF5\message" />
+    <Folder Include="HDF5\vector" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
