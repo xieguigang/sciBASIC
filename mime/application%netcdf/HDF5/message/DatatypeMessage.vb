@@ -22,7 +22,6 @@ Namespace org.renjin.hdf5.message
 
         Public Const MESSAGE_TYPE As Integer = &H3
 
-
         Private signLocation As Integer
         Private bitOffset As Integer
         Private bitPrecision As Integer
@@ -32,20 +31,9 @@ Namespace org.renjin.hdf5.message
         Private mantissaSize As Integer
         Private exponentBias As Long
 
-
         Public Overridable ReadOnly Property DataClass As DataClass
-
         Public Overridable ReadOnly Property Signed As Boolean
-            Get
-                Return Signed
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property Size As Integer
-            Get
-                Return Size
-            End Get
-        End Property
 
 
         Public Overridable ReadOnly Property DoubleIEE754 As Boolean
@@ -61,10 +49,6 @@ Namespace org.renjin.hdf5.message
         End Property
 
         Public Overridable ReadOnly Property ByteOrder As ByteOrder
-            Get
-                Return ByteOrder
-            End Get
-        End Property
 
 
         'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:

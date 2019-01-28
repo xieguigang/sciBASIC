@@ -1,40 +1,34 @@
 Namespace org.renjin.hdf5.message
 
+    Public Enum LayoutClass
+        COMPACT
+        CONTIGUOUS
+        CHUNKED
+        VIRTUAL
+    End Enum
 
+    Public Enum ChunkIndexingType
+        [SINGLE]
+        IMPLICIT
+        FIXED_ARRAY
+        EXTENSIBLE_ARRAY
+        BTREE
+    End Enum
 
-	Public Class DataLayoutMessage
+    Public Class DataLayoutMessage
 		Inherits Message
 
 		Public Const MESSAGE_TYPE As Integer = &H8
 
 
-		Public Enum LayoutClass
-			COMPACT
-			CONTIGUOUS
-			CHUNKED
-			VIRTUAL
-		End Enum
+        Private rawAddress As Long
 
-		Public Enum ChunkIndexingType
-			[SINGLE]
-			IMPLICIT
-			FIXED_ARRAY
-			EXTENSIBLE_ARRAY
-			BTREE
-		End Enum
 
-		Private version As SByte
-		Private layoutClass As LayoutClass
-		Private rawAddress As Long
-		Private chunkIndexAddress As Long
-		Private datasetElementSize As Integer
-		Private dimensionSize() As Integer
-		Private dimensionality As Integer
+        Private dimensionSize() As Integer
 
-		Private chunkIndexingType As ChunkIndexingType = ChunkIndexingType.BTREE
 
-		Private maxBits As Integer
-		Private indexElements As Integer
+        Private maxBits As Integer
+        Private indexElements As Integer
 		Private minPointers As Integer
 		Private minElements As Integer
 
@@ -43,9 +37,51 @@ Namespace org.renjin.hdf5.message
 		''' </summary>
 		Private pageBits As Integer
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: public DataLayoutMessage(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Public Sub New(reader As org.renjin.hdf5.HeaderReader)
+        Public Overridable Property Version As SByte
+        Public Overridable Property LayoutClass As LayoutClass
+        Public Overridable Property ChunkIndexAddress As Long
+        Public Overridable Property DatasetElementSize As Integer
+        Public Overridable Property Dimensionality As Integer
+
+        Public Overridable Function getChunkSize(dimensionIndex As Integer) As Integer
+            Return dimensionSize(dimensionIndex)
+        End Function
+
+        Public Overridable ReadOnly Property ChunkIndexingType As ChunkIndexingType = ChunkIndexingType.BTREE
+
+        Public Overridable ReadOnly Property ChunkSize As Integer()
+            Get
+                Return dimensionSize
+            End Get
+        End Property
+
+        Public Overridable ReadOnly Property ChunkCount As Long
+            Get
+                Dim count As Long = 1
+                For i As Integer = 0 To Dimensionality - 1
+                    count *= dimensionSize(i)
+                Next i
+                Return count
+            End Get
+        End Property
+
+        Public Overridable Function getDimensionSize(i As Integer) As Integer
+            Return dimensionSize(i)
+        End Function
+
+        Public Overridable ReadOnly Property ChunkElementCount As Long
+            Get
+                Dim count As Long = 1
+                For i As Integer = 0 To Dimensionality - 1
+                    count *= getChunkSize(i)
+                Next i
+                Return count
+            End Get
+        End Property
+
+        'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+        'ORIGINAL LINE: public DataLayoutMessage(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
+        Public Sub New(reader As org.renjin.hdf5.HeaderReader)
 			version = reader.readByte()
 			If version = 3 Then
 				readVersion3(reader)
@@ -105,8 +141,8 @@ Namespace org.renjin.hdf5.message
 			datasetElementSize = CInt(reader.readUInt(dimensionSizeEncodedLength))
 
 			Dim chunkIndexingTypeIndex As Integer = reader.readUInt8()
-			chunkIndexingType = System.Enum.GetValues(GetType(ChunkIndexingType))(chunkIndexingTypeIndex - 1)
-			Select Case chunkIndexingType
+            _ChunkIndexingType = System.Enum.GetValues(GetType(ChunkIndexingType))(chunkIndexingTypeIndex - 1)
+            Select Case chunkIndexingType
 				Case ChunkIndexingType.FIXED_ARRAY
 					readFixedArrayProperties(reader)
 				Case ChunkIndexingType.EXTENSIBLE_ARRAY
@@ -122,86 +158,14 @@ Namespace org.renjin.hdf5.message
 			pageBits = reader.readUInt8()
 		End Sub
 
-		Private Sub readExtensibleArrayProperties(reader As org.renjin.hdf5.HeaderReader)
-			maxBits = reader.readUInt8()
-			indexElements = reader.readUInt8()
-			minPointers = reader.readUInt8()
-			minElements = reader.readUInt8()
-			pageBits = reader.readUInt8()
+        Private Sub readExtensibleArrayProperties(reader As org.renjin.hdf5.HeaderReader)
+            maxBits = reader.readUInt8()
+            indexElements = reader.readUInt8()
+            minPointers = reader.readUInt8()
+            minElements = reader.readUInt8()
+            pageBits = reader.readUInt8()
 
-		End Sub
-
-		Public Overridable Property Version As SByte
-			Get
-				Return version
-			End Get
-		End Property
-
-		Public Overridable Property LayoutClass As LayoutClass
-			Get
-				Return layoutClass
-			End Get
-		End Property
-
-		Public Overridable Property ChunkIndexAddress As Long
-			Get
-				Return chunkIndexAddress
-			End Get
-		End Property
-
-		Public Overridable Property DatasetElementSize As Integer
-			Get
-				Return datasetElementSize
-			End Get
-		End Property
-
-		Public Overridable Property Dimensionality As Integer
-			Get
-				Return dimensionality
-			End Get
-		End Property
-
-		Public Overridable Function getChunkSize(dimensionIndex As Integer) As Integer
-			Return dimensionSize(dimensionIndex)
-		End Function
-
-		Public Overridable Property ChunkIndexingType As ChunkIndexingType
-			Get
-				Return chunkIndexingType
-			End Get
-		End Property
-
-		Public Overridable Property ChunkSize As Integer()
-			Get
-				Return dimensionSize
-			End Get
-		End Property
-
-		Public Overridable Property ChunkCount As Long
-			Get
-				Dim count As Long = 1
-				For i As Integer = 0 To dimensionality - 1
-					count *= dimensionSize(i)
-				Next i
-				Return count
-			End Get
-		End Property
-
-		Public Overridable Function getDimensionSize(i As Integer) As Integer
-			Return dimensionSize(i)
-		End Function
-
-		Public Overridable Property ChunkElementCount As Long
-			Get
-				Dim count As Long = 1
-				For i As Integer = 0 To dimensionality - 1
-					count *= getChunkSize(i)
-				Next i
-				Return count
-			End Get
-		End Property
-
-
-	End Class
+        End Sub
+    End Class
 
 End Namespace

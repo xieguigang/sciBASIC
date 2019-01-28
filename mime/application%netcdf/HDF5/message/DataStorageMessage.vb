@@ -17,9 +17,9 @@ Namespace org.renjin.hdf5.message
 
 		Public Const MESSAGE_TYPE As Integer = &HB
 
-		Private ReadOnly filters As IList(Of Filter) = New List(Of Filter)()
+        Public Overridable Property Filters As New List(Of Filter)
 
-		Public Sub New(reader As org.renjin.hdf5.HeaderReader)
+        Public Sub New(reader As org.renjin.hdf5.HeaderReader)
 			Dim version As SByte = reader.readByte()
 			If version = 1 Then
 				readVersion1(reader)
@@ -35,39 +35,39 @@ Namespace org.renjin.hdf5.message
 			reader.readReserved(2)
 			reader.readReserved(4)
 
-			For i As Integer = 0 To numFilters - 1
-				Dim filterId As Integer = reader.readUInt16()
+            For i As Integer = 0 To numFilters - 1
+                Dim filterId As Integer = reader.readUInt16()
 
-	'            
-	'             * Each filter has an optional null-terminated ASCII name and this field holds the length of the name
-	'             * including the null termination padded with nulls to be a multiple of eight. If the filter has
-	'             * no name then a value of zero is stored in this field.
-	'             
-				Dim nameLength As Integer = reader.readUInt16()
+                '            
+                '             * Each filter has an optional null-terminated ASCII name and this field holds the length of the name
+                '             * including the null termination padded with nulls to be a multiple of eight. If the filter has
+                '             * no name then a value of zero is stored in this field.
+                '             
+                Dim nameLength As Integer = reader.readUInt16()
 
-				Dim flags As Integer = reader.readUInt16()
-				Dim [optional] As Boolean = (flags And &H1) <> 0
+                Dim flags As Integer = reader.readUInt16()
+                Dim [optional] As Boolean = (flags And &H1) <> 0
 
-				Dim numClientDataValues As Integer = reader.readUInt16()
+                Dim numClientDataValues As Integer = reader.readUInt16()
 
-				Dim name As String = Nothing
-				If nameLength <> 0 Then
-					name = reader.readNullTerminatedAsciiString(nameLength)
-				End If
+                Dim name As String = Nothing
+                If nameLength <> 0 Then
+                    name = reader.readNullTerminatedAsciiString(nameLength)
+                End If
 
-				Dim clientData() As Integer = reader.readIntArray(numClientDataValues)
+                Dim clientData() As Integer = reader.readIntArray(numClientDataValues)
 
-	'            
-	'             * Four bytes of zeroes are added to the message at this point if the Client Data Number of
-	'             * Values field contains an odd number.
-	'             
-				If numClientDataValues Mod 2 <> 0 Then
-					reader.readReserved(4)
-				End If
+                '            
+                '             * Four bytes of zeroes are added to the message at this point if the Client Data Number of
+                '             * Values field contains an odd number.
+                '             
+                If numClientDataValues Mod 2 <> 0 Then
+                    reader.readReserved(4)
+                End If
 
-				filters.Add(New Filter(filterId, name, clientData, [optional]))
-			Next i
-		End Sub
+                filters.Add(New Filter(filterId, name, clientData, [optional]))
+            Next
+        End Sub
 
 		Private Sub readVersion2(reader As org.renjin.hdf5.HeaderReader)
 			Dim numFilters As Integer = reader.readUInt8()
@@ -106,11 +106,6 @@ Namespace org.renjin.hdf5.message
 			Next i
 		End Sub
 
-		Public Overridable Property Filters As IList(Of Filter)
-			Get
-				Return filters
-			End Get
-		End Property
-	End Class
+    End Class
 
 End Namespace

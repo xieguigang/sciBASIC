@@ -19,15 +19,17 @@ Namespace org.renjin.hdf5.message
 		Public Const EXTERNAL As SByte = 64
 
 		Private version As SByte
-		Private linkType As SByte
-		Private creationOrder As Long
-		Private charset As java.nio.charset.Charset
-		Private address As Long
-		Private ReadOnly linkName As String
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: public LinkMessage(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Public Sub New(reader As org.renjin.hdf5.HeaderReader)
+        Private creationOrder As Long
+		Private charset As java.nio.charset.Charset
+
+        Public Overridable Property LinkName As String
+        Public Overridable Property LinkType As SByte
+        Public Overridable Property Address As Long
+
+        'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+        'ORIGINAL LINE: public LinkMessage(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
+        Public Sub New(reader As org.renjin.hdf5.HeaderReader)
 			version = reader.readByte()
 			Dim flags As org.renjin.hdf5.Flags = reader.readFlags()
 
@@ -59,23 +61,6 @@ Namespace org.renjin.hdf5.message
 			End Select
 		End Sub
 
-		Public Overridable Property LinkName As String
-			Get
-				Return linkName
-			End Get
-		End Property
-
-		Public Overridable Property LinkType As SByte
-			Get
-				Return linkType
-			End Get
-		End Property
-
-		Public Overridable Property Address As Long
-			Get
-				Return address
-			End Get
-		End Property
-	End Class
+    End Class
 
 End Namespace
