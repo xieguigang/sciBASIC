@@ -44,8 +44,8 @@ Namespace org.renjin.hdf5.vector
 
 		Private Function checkedIntCast(size As Long) As Integer
 			If size > Integer.MaxValue Then
-				Throw New org.renjin.eval.EvalException("Size too large: " & size)
-			End If
+                Throw New Exception("Size too large: " & size)
+            End If
 			Return CInt(size)
 		End Function
 
@@ -63,13 +63,13 @@ Namespace org.renjin.hdf5.vector
 			Return (New org.renjin.sexp.AttributeMap.Builder()).DimDim(New org.renjin.sexp.IntArrayVector(intDims)).build()
 		End Function
 
-		Public Overridable Property VectorLength32 As Integer
-			Get
-				Return checkedIntCast(vectorLength)
-			End Get
-		End Property
+        Public Overridable ReadOnly Property VectorLength32 As Integer
+            Get
+                Return checkedIntCast(vectorLength)
+            End Get
+        End Property
 
-		Public Overridable Function vectorIndexToHdfsArrayIndex(vectorIndex As Long) As Long()
+        Public Overridable Function vectorIndexToHdfsArrayIndex(vectorIndex As Long) As Long()
 			Dim arrayIndex(nDim - 1) As Long
 			Dim i As Integer = 0
 			Do While i <> nDim

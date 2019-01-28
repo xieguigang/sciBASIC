@@ -26,11 +26,11 @@ Namespace org.renjin.hdf5.vector
 		Public Overrides Function getElementAsDouble(i As Integer) As Double
 
 			If chunk Is Nothing OrElse (Not chunk.containsVectorIndex(i)) Then
-				Try
-					chunk = dataset.chunkAt(i)
-				Catch e As java.io.IOException
-					Throw New org.renjin.eval.EvalException("I/O Error while accessing HDF5 File: " & e.Message, e)
-				End Try
+                Try
+                    chunk = dataset.chunkAt(i)
+                Catch e As Exception
+                    Throw New Exception("I/O Error while accessing HDF5 File: " & e.Message, e)
+                End Try
 			End If
 
 			Return chunk.valueAt(i)
