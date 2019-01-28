@@ -157,6 +157,26 @@ Namespace Imaging
             Return path
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Opacity(fill As Color, val#) As Color
+            Return Color.FromArgb(val * 255, baseColor:=fill)
+        End Function
+
+        <Extension>
+        Public Function Opacity(fill As Brush, val#) As Brush
+            If TypeOf fill Is SolidBrush Then
+                Dim color As Color = DirectCast(fill, SolidBrush).Color
+
+                color = color.Opacity(val)
+                fill = New SolidBrush(color)
+
+                Return fill
+            Else
+                Return fill
+            End If
+        End Function
+
         ''' <summary>
         ''' 同时兼容颜色以及图片纹理画刷的创建
         ''' </summary>

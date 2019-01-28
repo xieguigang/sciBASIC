@@ -433,7 +433,7 @@ Public Module Extensions
     ''' <param name="explicit"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function AsDataSource(Of T As Class)(lines As IEnumerable(Of String), Optional delimiter$ = ",", Optional explicit As Boolean = True) As T()
+    <Extension> Public Function AsDataSource(Of T As Class)(lines As IEnumerable(Of String), Optional delimiter$ = ",", Optional explicit As Boolean = True) As IEnumerable(Of T)
         Dim splitter As String = String.Format(DataImports.SplitRegxExpression, delimiter)
         Dim rows As IEnumerable(Of RowObject) = From line As String
                                                 In lines
@@ -492,10 +492,8 @@ Public Module Extensions
     ''' 列名称隐式解析，即不强制要求属性上面有<see cref="ColumnAttribute"/>标记，默认是，否则只解析出带有<see cref="ColumnAttribute"/>自定义属性标记的属性作为csv的列的数据源
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String), Optional explicit As Boolean = True, Optional trimBlanks As Boolean = False) As T()
-        Dim dataFrame As File = File.Load(source.ToArray, trimBlanks)
-        Dim buf As T() = dataFrame.AsDataSource(Of T)(Not explicit)
-        Return buf
+    <Extension> Public Function LoadStream(Of T As Class)(source As IEnumerable(Of String), Optional explicit As Boolean = True, Optional trimBlanks As Boolean = False) As IEnumerable(Of T)
+        Return New File(File.Load(source.ToArray, trimBlanks)).AsDataSource(Of T)(Not explicit)
     End Function
 
     ''' <summary>
