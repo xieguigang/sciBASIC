@@ -60,22 +60,22 @@ Namespace org.renjin.hdf5.chunked
 			Dim [off] As Integer = 0
 			Dim len As Integer = buffer.Length
 			Dim n As Integer
-			Try
-				n = inf.inflate(buffer, [off], len)
-				Do While n = 0
-					If inf.finished() OrElse inf.needsDictionary() Then
-						Exit Do
-					End If
-					If inf.needsInput() Then
-						Throw New java.io.EOFException("Unexpected end of deflated chunk.")
-					End If
-					[off] += n
-					len -= n
-					n = inf.inflate(buffer, [off], len)
-				Loop
-			Catch e As java.util.zip.DataFormatException
-				Throw New java.io.IOException(e)
-			End Try
+            Try
+                n = inf.inflate(buffer, [off], len)
+                Do While n = 0
+                    If inf.finished() OrElse inf.needsDictionary() Then
+                        Exit Do
+                    End If
+                    If inf.needsInput() Then
+                        Throw New Exception("Unexpected end of deflated chunk.")
+                    End If
+                    [off] += n
+                    len -= n
+                    n = inf.inflate(buffer, [off], len)
+                Loop
+            Catch e As Exception
+                Throw New Exception(e)
+            End Try
 
 			Return chunkFactory.wrap(chunkOffset, java.nio.ByteBuffer.wrap(buffer))
 	'

@@ -13,12 +13,12 @@ Namespace org.renjin.hdf5.chunked
 		Me.factory = factory
 	  End Sub
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: public Chunk read(long[] chunkOffset, long address, int size) throws java.io.IOException
-	  Public Overrides Function read(chunkOffset() As Long, address As Long, size As Integer) As Chunk Implements ChunkDecoder.read
-		Dim buffer As java.nio.MappedByteBuffer = file.map(java.nio.channels.FileChannel.MapMode.READ_ONLY, address, size)
-		Return factory.wrap(chunkOffset, buffer)
-	  End Function
-	End Class
+        'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+        'ORIGINAL LINE: public Chunk read(long[] chunkOffset, long address, int size) throws java.io.IOException
+        Public Function read(chunkOffset() As Long, address As Long, size As Integer) As Chunk Implements ChunkDecoder.read
+            Dim buffer As java.nio.MappedByteBuffer = file.map(java.nio.channels.FileChannel.MapMode.READ_ONLY, address, size)
+            Return factory.wrap(chunkOffset, buffer)
+        End Function
+    End Class
 
 End Namespace

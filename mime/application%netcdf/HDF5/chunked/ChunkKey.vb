@@ -6,25 +6,18 @@ Namespace org.renjin.hdf5.chunked
 
 
 	Public Class ChunkKey
-		''' <summary>
-		''' Size of chunk in bytes.
-		''' </summary>
-		Private chunkSize As Integer
 
-		''' <summary>
-		''' Filter mask, a 32-bit bit field indicating which filters have been skipped for this chunk. Each filter has an
-		''' index number in the pipeline (starting at 0, with the first filter to apply) and if that filter is skipped, the
-		''' bit corresponding to its index is set.
-		''' </summary>
-		Private filterMask As Integer
+        ''' <summary>
+        ''' Filter mask, a 32-bit bit field indicating which filters have been skipped for this chunk. Each filter has an
+        ''' index number in the pipeline (starting at 0, with the first filter to apply) and if that filter is skipped, the
+        ''' bit corresponding to its index is set.
+        ''' </summary>
+        Private filterMask As Integer
 
-		Private offset() As Long
 
-		Private childPointer As Long
-
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: public ChunkKey(org.renjin.hdf5.HeaderReader reader, int dimensionality, boolean hasChildPointer) throws java.io.IOException
-		Public Sub New(reader As org.renjin.hdf5.HeaderReader, dimensionality As Integer, hasChildPointer As Boolean)
+        'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+        'ORIGINAL LINE: public ChunkKey(org.renjin.hdf5.HeaderReader reader, int dimensionality, boolean hasChildPointer) throws java.io.IOException
+        Public Sub New(reader As org.renjin.hdf5.HeaderReader, dimensionality As Integer, hasChildPointer As Boolean)
 
 			chunkSize = reader.readUInt32AsInt()
 
@@ -48,34 +41,27 @@ Namespace org.renjin.hdf5.chunked
 			End If
 		End Sub
 
-		''' <summary>
-		''' The tree node contains file addresses of subtrees or data depending on the node level.
-		''' 
-		''' <p>Nodes at Level 0 point to data addresses, either raw data chunks or group nodes. Nodes at non-zero levels
-		''' point to other nodes of the same B-tree.
-		''' 
-		''' <p>For raw data chunk nodes, the child pointer is the address of a single raw data chunk. For group nodes,
-		''' the child pointer points to a symbol table, which contains information for multiple symbol table entries.
-		''' </summary>
-		Public Overridable Property ChildPointer As Long
-			Get
-				Return childPointer
-			End Get
-		End Property
+        ''' <summary>
+        ''' The tree node contains file addresses of subtrees or data depending on the node level.
+        ''' 
+        ''' <p>Nodes at Level 0 point to data addresses, either raw data chunks or group nodes. Nodes at non-zero levels
+        ''' point to other nodes of the same B-tree.
+        ''' 
+        ''' <p>For raw data chunk nodes, the child pointer is the address of a single raw data chunk. For group nodes,
+        ''' the child pointer points to a symbol table, which contains information for multiple symbol table entries.
+        ''' </summary>
+        Public Overridable ReadOnly Property ChildPointer As Long
 
-		''' 
-		''' <returns> the size of the chunk, in bytes. </returns>
-		Public Overridable Property ChunkSize As Integer
-			Get
-				Return chunkSize
-			End Get
-		End Property
+        ''' 
+        ''' <returns> the size of the chunk, in bytes. </returns>
+        Public Overridable ReadOnly Property ChunkSize As Integer
 
 
-		''' <summary>
-		''' Compares this chunk's offset with the given index.
-		''' </summary>
-		Public Overridable Function compare(index() As Long) As Integer
+
+        ''' <summary>
+        ''' Compares this chunk's offset with the given index.
+        ''' </summary>
+        Public Overridable Function compare(index() As Long) As Integer
 			For i As Integer = 0 To offset.Length - 1
 				If offset(i) <> index(i) Then
 					Return Long.Compare(offset(i), index(i))
@@ -84,18 +70,15 @@ Namespace org.renjin.hdf5.chunked
 			Return 0
 		End Function
 
-		''' <summary>
-		''' 	The offset of the chunk within the dataset where D is the number of dimensions of the dataset.
-		''' 	For example, if a chunk in a 3-dimensional dataset begins at the position [5,5,5], there will be three
-		''' 	such 64-bit values, each with the value of 5.
-		''' </summary>
-		Public Overridable Property Offset As Long()
-			Get
-				Return offset
-			End Get
-		End Property
+        ''' <summary>
+        ''' 	The offset of the chunk within the dataset where D is the number of dimensions of the dataset.
+        ''' 	For example, if a chunk in a 3-dimensional dataset begins at the position [5,5,5], there will be three
+        ''' 	such 64-bit values, each with the value of 5.
+        ''' </summary>
+        Public Overridable ReadOnly Property Offset As Long()
 
-		Public Overrides Function ToString() As String
+
+        Public Overrides Function ToString() As String
 			Dim s As New StringBuilder("ChunkKey{")
 			For i As Integer = 0 To offset.Length - 1
 				If i > 0 Then

@@ -5,9 +5,9 @@ Namespace org.renjin.hdf5.chunked
 		Inherits Chunk
 
 	  Private ReadOnly buffer As java.nio.IntBuffer
-	  Private ReadOnly chunkOffset() As Long
+        Private Overrides ReadOnly Property chunkOffset() As Long
 
-	  Public Sub New(chunkOffset() As Long, buffer As java.nio.IntBuffer)
+        Public Sub New(chunkOffset() As Long, buffer As java.nio.IntBuffer)
 		MyBase.New(chunkOffset)
 		Me.chunkOffset = chunkOffset
 		Me.buffer = buffer

@@ -27,8 +27,8 @@ Namespace org.renjin.hdf5.groups
 		  reader.checkSignature("TREE")
 		  Dim nodeType As Integer = reader.readUInt8()
 		  If nodeType <> 0 Then
-			Throw New IllegalStateException("Expected nodeType 0 (group nodes), found: " & nodeType)
-		  End If
+                    Throw New Exception("Expected nodeType 0 (group nodes), found: " & nodeType)
+                End If
 
 		  nodeLevel = reader.readUInt8()
 		  Dim entriesUsed As Integer = reader.readUInt16()
@@ -49,13 +49,13 @@ Namespace org.renjin.hdf5.groups
 		  Next i
 		End Sub
 
-		Public Overridable Property Leaf As Boolean
-			Get
-			  Return nodeLevel = 0
-			End Get
-		End Property
+            Public Overridable ReadOnly Property Leaf As Boolean
+                Get
+                    Return nodeLevel = 0
+                End Get
+            End Property
 
-	  End Class
+        End Class
 
 
 	  Public Class SymbolTableNode

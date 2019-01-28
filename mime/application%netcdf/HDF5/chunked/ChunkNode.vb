@@ -17,8 +17,8 @@ Namespace org.renjin.hdf5.chunked
 			reader.checkSignature("TREE")
 			nodeType = reader.readByte()
 			If nodeType <> 1 Then
-				Throw New IllegalStateException("Expected nodeType = chunk (1)")
-			End If
+                Throw New Exception("Expected nodeType = chunk (1)")
+            End If
 			nodeLevel = reader.readUInt8()
 			Dim entriesUsed As Integer = reader.readUInt16()
 			addressLeftSibling = reader.readOffset()
@@ -46,8 +46,8 @@ Namespace org.renjin.hdf5.chunked
 					Return keys(i)
 				End If
 			Next i
-			Throw New IllegalStateException()
-		End Function
+            Throw New Exception()
+        End Function
 	End Class
 
 End Namespace

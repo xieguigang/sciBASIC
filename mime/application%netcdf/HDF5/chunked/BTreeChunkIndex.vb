@@ -69,10 +69,10 @@ Namespace org.renjin.hdf5.chunked
 'ORIGINAL LINE: private Chunk getChunk(long[] index) throws java.io.IOException
 		Private Function getChunk(index() As Long) As Chunk
 			Dim key As ChunkKey = findNode(index)
-			Try
-				Return chunkCache.get(key)
-			Catch e As java.util.concurrent.ExecutionException
-				Throw New Exception(e)
+            Try
+                Return chunkCache.get(key)
+            Catch e As Exception
+                Throw New Exception(e)
 			End Try
 		End Function
 
