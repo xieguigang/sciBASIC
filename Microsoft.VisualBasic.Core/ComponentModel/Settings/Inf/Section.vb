@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports HashValue = Microsoft.VisualBasic.Text.Xml.Models.NamedValue
+Imports HashValue = Microsoft.VisualBasic.Text.Xml.Models.Property
 
 Namespace ComponentModel.Settings.Inf
 
@@ -65,14 +65,17 @@ Namespace ComponentModel.Settings.Inf
         ''' <returns></returns>
         <XmlAttribute> Public Property Name As String
 
+        <XmlText>
+        Public Property Comment As String
+
+        Shared ReadOnly emptyList As New DefaultValue(Of HashValue())(Function() {}, isLazy:=False)
+
         <XmlElement>
         Public Property Items As HashValue()
             Get
                 Return configTable.Values.ToArray
             End Get
             Set(value As HashValue())
-                Static emptyList As New DefaultValue(Of HashValue())(Function() {}, isLazy:=False)
-
                 configTable = (value Or emptyList).ToDictionary(Function(x) x.name.ToLower)
             End Set
         End Property
@@ -85,7 +88,7 @@ Namespace ComponentModel.Settings.Inf
         Public Function GetValue(Key As String) As String
             With Key.ToLower
                 If configTable.ContainsKey(.ByRef) Then
-                    Return configTable(.ByRef).text
+                    Return configTable(.ByRef).value
                 Else
                     Return ""
                 End If
@@ -97,25 +100,55 @@ Namespace ComponentModel.Settings.Inf
         ''' </summary>
         ''' <param name="Name"></param>
         ''' <param name="value"></param>
-        Public Sub SetValue(Name As String, value As String)
+        Public Sub SetValue(Name$, value$, Optional comment$ = Nothing)
             Dim KeyFind As String = Name.ToLower
 
             If configTable.ContainsKey(KeyFind) Then
                 Call configTable.Remove(KeyFind)
             End If
 
-            Call configTable.Add(KeyFind, New HashValue(Name, value))
+            configTable(KeyFind) = New HashValue With {
+                .name = Name,
+                .Comment = comment,
+                .value = value
+            }
         End Sub
 
+        ''' <summary>
+        ''' 利用这个函数所生成的文档片段的格式如下所示
+        ''' 
+        ''' ```
+        ''' [name]
+        ''' # comment region of 
+        ''' # this section
+        '''
+        ''' ; comment of this key
+        ''' key=value
+        ''' ; comment of this key
+        ''' key=value
+        ''' ```
+        ''' </summary>
+        ''' <returns></returns>
         Public Function CreateDocFragment() As String
             Dim sb As New StringBuilder($"[{Name}]")
 
+            Call appendComments(sb, Comment, "#")
+
             For Each item As HashValue In configTable.Values
-                Call sb.AppendLine($"{item.name}={item.text}")
+                Call appendComments(sb, item.Comment, ";")
+                Call sb.AppendLine($"{item.name}={item.value}")
             Next
 
             Return sb.ToString
         End Function
+
+        Private Shared Sub appendComments(sb As StringBuilder, comments$, symbol$)
+            If Not comments.StringEmpty Then
+                For Each line As String In comments.LineTokens
+                    Call sb.AppendLine(symbol & " " & line)
+                Next
+            End If
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"[{Name}] with {configTable.Keys.ToArray.GetJson()}"

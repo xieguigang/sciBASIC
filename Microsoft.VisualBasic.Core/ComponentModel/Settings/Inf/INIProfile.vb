@@ -104,7 +104,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <returns></returns>
         Public Iterator Function PopulateSections(path As String) As IEnumerable(Of Section)
             Dim sectionName$ = Nothing
-            Dim values As New List(Of NamedValue)
+            Dim values As New List(Of [Property])
 
             For Each line As String In path.readDataLines
                 If r.Match(line.Trim, RegexoSectionHeader).Success Then
@@ -121,7 +121,7 @@ Namespace ComponentModel.Settings.Inf
                     sectionName = line.GetStackValue("[", "]")
                 ElseIf r.Match(line, RegexpKeyValueItem, RegexICSng).Success Then
                     With line.Trim.GetTagValue("=", trim:=True)
-                        values += New NamedValue(.Name, .Value)
+                        values += New [Property](.Name, .Value, Nothing)
                     End With
                 End If
             Next
