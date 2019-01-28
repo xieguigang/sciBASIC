@@ -231,6 +231,7 @@
     <Compile Include="Data\Xml.vb" />
     <Compile Include="Components\CDFData.vb" />
     <Compile Include="CDFWriter.vb" />
+    <Compile Include="HDF5\HDF5Reader.vb" />
     <Compile Include="ToString.vb" />
     <Compile Include="Data\DataReader.vb" />
     <Compile Include="Components\Components.vb" />
@@ -283,5 +284,6 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
