@@ -1,72 +1,48 @@
-Imports Microsoft.VisualBasic
-Imports System
+Imports Microsoft.VisualBasic.Data.IO
 
 Namespace org.renjin.hdf5
 
 
-	Public Class Superblock
+    Public Class Superblock
 
-		Private Const MAX_LENGTH As Long = 1000
+        Private Const MAX_LENGTH As Long = 1000
 
-		Private ReadOnly superBlockVersion As SByte
-		Private offsetsSize As SByte
-		Private lengthsSize As SByte
-		Private fileConsistencyFlags As SByte
-		Private baseAddress As Long
-		Private superBlockExtensionAddress As Long
-		Private endOfFileAddress As Long
-		Private rootGroupObjectHeaderAddress As Long
-		Private superBlockChecksum As Integer
-		Private driverInformationBlockAddress As Long
-		Private groupLeafNodeK As Integer
+        Private fileConsistencyFlags As SByte
+
+        Private superBlockExtensionAddress As Long
+        Private endOfFileAddress As Long
+        Private superBlockChecksum As Integer
+        Private driverInformationBlockAddress As Long
+        Private groupLeafNodeK As Integer
 
         Public Overridable ReadOnly Property SuperBlockVersion As SByte
-            Get
-                Return SuperBlockVersion
-            End Get
-        End Property
+
 
         Public Overridable ReadOnly Property BaseAddress As Long
-            Get
-                Return BaseAddress
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property OffsetSize As SByte
-            Get
-                Return offsetsSize
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property LengthSize As SByte
-            Get
-                Return lengthsSize
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property RootGroupObjectHeaderAddress As Long
-            Get
-                Return RootGroupObjectHeaderAddress
-            End Get
-        End Property
 
         'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
         'ORIGINAL LINE: public Superblock(java.nio.channels.FileChannel channel) throws java.io.IOException
         Public Sub New(channel As java.nio.channels.FileChannel)
 
             Dim buffer As java.nio.MappedByteBuffer = channel.map(java.nio.channels.FileChannel.MapMode.READ_ONLY, 0, Math.Min(channel.size(), MAX_LENGTH))
-            buffer.order(java.nio.ByteOrder.LITTLE_ENDIAN)
+            buffer.order(ByteOrder.LittleEndian)
 
             readAndCheckSignature(buffer)
 
-            superBlockVersion = buffer.get()
+            SuperBlockVersion = buffer.get()
 
-            If superBlockVersion = 0 Then
+            If SuperBlockVersion = 0 Then
                 readVersion0(buffer)
-            ElseIf superBlockVersion = 2 OrElse superBlockVersion = 3 Then
+            ElseIf SuperBlockVersion = 2 OrElse SuperBlockVersion = 3 Then
                 readVersion2(buffer)
             Else
-                Throw New java.io.IOException("Unsupported superblock version: " & superBlockVersion)
+                Throw New Exception("Unsupported superblock version: " & SuperBlockVersion)
             End If
         End Sub
 
@@ -90,14 +66,14 @@ Namespace org.renjin.hdf5
 
 
             If offsetsSize = 8 Then
-                baseAddress = buffer.Long
+                BaseAddress = buffer.Long
                 Dim freeFilespaceInfoAddress As Long = buffer.Long
                 endOfFileAddress = buffer.Long
                 driverInformationBlockAddress = buffer.Long
 
                 ' Root Group Symbol Table Entry should start here...
                 Dim linkNameOffset As Long = buffer.Long
-                rootGroupObjectHeaderAddress = buffer.Long
+                RootGroupObjectHeaderAddress = buffer.Long
                 Dim cacheType As Integer = buffer.Int
 
                 If cacheType = 2 Then
@@ -131,10 +107,10 @@ Namespace org.renjin.hdf5
                 Throw New java.io.IOException("Unsupported offsets/length size: " & offsetsSize)
             End If
 
-            baseAddress = buffer.Long
+            BaseAddress = buffer.Long
             superBlockExtensionAddress = buffer.Long
             endOfFileAddress = buffer.Long
-            rootGroupObjectHeaderAddress = buffer.Long
+            RootGroupObjectHeaderAddress = buffer.Long
             superBlockChecksum = buffer.Int
         End Sub
 
@@ -145,7 +121,7 @@ Namespace org.renjin.hdf5
             buffer.get(array)
 
             If Not (array(1) = AscW("H"c) AndAlso array(2) = AscW("D"c) AndAlso array(3) = AscW("F"c) AndAlso array(4) = ControlChars.Cr AndAlso array(5) = ControlChars.Lf AndAlso array(6) = &H1A AndAlso array(7) = ControlChars.Lf) Then 'array[0] == 137 &&
-                Throw New java.io.IOException("Invalid format signature: " & java.util.Arrays.ToString(array))
+                Throw New Exception("Invalid format signature: " & java.util.Arrays.ToString(array))
             End If
         End Sub
     End Class

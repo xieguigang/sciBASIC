@@ -13,8 +13,8 @@ Namespace org.renjin.hdf5
 			org.renjin.repackaged.guava.base.Preconditions.checkNotNull(superblock, "superblock")
 			Me.superblock = superblock
 			Me.buffer = buffer
-			Me.buffer.order(java.nio.ByteOrder.LITTLE_ENDIAN)
-		End Sub
+            Me.buffer.order(ByteOrder.LITTLEENDIAN)
+        End Sub
 
 		Public Overridable Function readByte() As SByte
 			Return buffer.get()
@@ -28,8 +28,8 @@ Namespace org.renjin.hdf5
 
 			For i As Integer = 0 To expected.Length - 1
 				If expected(i) <> array(i) Then
-					Throw New java.io.IOException("Invalid signature. Expected: " & signature)
-				End If
+                    Throw New Exception("Invalid signature. Expected: " & signature)
+                End If
 			Next i
 		End Sub
 
@@ -58,8 +58,8 @@ Namespace org.renjin.hdf5
 		Public Overridable Function readUInt64() As Long
 			Dim value As Long = buffer.Long
 			If value < 0 Then
-				Throw New java.io.IOException("Unsigned long overflow")
-			End If
+                Throw New Exception("Unsigned long overflow")
+            End If
 			Return value
 		End Function
 
@@ -68,8 +68,8 @@ Namespace org.renjin.hdf5
 		Public Overridable Function readVariableLengthSizeAsInt(flags As Flags) As Integer
 			Dim length As Long = readVariableLengthSize(flags.value() And &H3)
 			If length > Integer.MaxValue Then
-				Throw New java.io.IOException("Overflow")
-			End If
+                Throw New Exception("Overflow")
+            End If
 			Return CInt(length)
 		End Function
 
@@ -117,8 +117,8 @@ Namespace org.renjin.hdf5
 			Dim value As Long = buffer.Long
 			' -1 is the UNSPECIFIED value
 			If value < -1 Then
-				Throw New java.io.IOException("Long offset overflow")
-			End If
+                Throw New Exception("Long offset overflow")
+            End If
 			Return value
 		End Function
 
@@ -131,8 +131,8 @@ Namespace org.renjin.hdf5
 			Dim value As Long = buffer.Long
 			' -1 is the UNSPECIFIED value
 			If value < -1 Then
-				Throw New java.io.IOException("Long length overflow")
-			End If
+                Throw New Exception("Long length overflow")
+            End If
 			Return value
 		End Function
 
@@ -172,8 +172,8 @@ Namespace org.renjin.hdf5
 		Public Overridable Function readUInt32AsInt() As Integer
 			Dim value As Long = readUInt32()
 			If value > Integer.MaxValue Then
-				Throw New java.io.IOException("Integer overflow")
-			End If
+                Throw New Exception("Integer overflow")
+            End If
 			Return CInt(value)
 		End Function
 
@@ -197,12 +197,10 @@ Namespace org.renjin.hdf5
 			Return New String(bytes.toByteArray(), org.renjin.repackaged.guava.base.Charsets.US_ASCII)
 		End Function
 
-		''' <summary>
-		''' Reads an integer of the given size </summary>
-		''' <param name="byteSize"> the size of the integer in bytes </param>
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: public long readUInt(int byteSize) throws java.io.IOException
-		Public Overridable Function readUInt(byteSize As Integer) As Long
+        ''' <summary>
+        ''' Reads an integer of the given size </summary>
+        ''' <param name="byteSize"> the size of the integer in bytes </param>
+        Public Overridable Function readUInt(byteSize As Integer) As Long
 			Select Case byteSize
 				Case 1
 					Return readUInt8()
