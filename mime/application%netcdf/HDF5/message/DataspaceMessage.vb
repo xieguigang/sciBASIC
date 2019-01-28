@@ -42,7 +42,7 @@ Namespace org.renjin.hdf5.message
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public DataspaceMessage(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Public Sub New(ByVal reader As org.renjin.hdf5.HeaderReader)
+		Public Sub New(reader As org.renjin.hdf5.HeaderReader)
 			version = reader.readByte()
 			If version = 1 Then
 				readVersion1(reader)
@@ -55,7 +55,7 @@ Namespace org.renjin.hdf5.message
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readVersion1(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Private Sub readVersion1(ByVal reader As org.renjin.hdf5.HeaderReader)
+		Private Sub readVersion1(reader As org.renjin.hdf5.HeaderReader)
 			dimensionality = reader.readUInt8()
 			Dim flags As org.renjin.hdf5.Flags = reader.readFlags()
 			reader.readReserved(1)
@@ -75,7 +75,7 @@ Namespace org.renjin.hdf5.message
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readVersion2(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Private Sub readVersion2(ByVal reader As org.renjin.hdf5.HeaderReader)
+		Private Sub readVersion2(reader As org.renjin.hdf5.HeaderReader)
 			dimensionality = reader.readUInt8()
 			Dim flags As org.renjin.hdf5.Flags = reader.readFlags()
 
@@ -94,7 +94,7 @@ Namespace org.renjin.hdf5.message
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readMaximumSize(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Private Sub readMaximumSize(ByVal reader As org.renjin.hdf5.HeaderReader)
+		Private Sub readMaximumSize(reader As org.renjin.hdf5.HeaderReader)
 			maximumSize = New Long(dimensionality - 1){}
 			For i As Integer = 0 To dimensionality - 1
 				maximumSize(i) = reader.readLength()
@@ -103,7 +103,7 @@ Namespace org.renjin.hdf5.message
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readPermutationIndices(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Private Sub readPermutationIndices(ByVal reader As org.renjin.hdf5.HeaderReader)
+		Private Sub readPermutationIndices(reader As org.renjin.hdf5.HeaderReader)
 			permutationIndex = New Long(dimensionality - 1){}
 			For i As Integer = 0 To dimensionality - 1
 				permutationIndex(i) = reader.readLength()
@@ -127,7 +127,7 @@ Namespace org.renjin.hdf5.message
 			End Get
 		End Property
 
-		Public Overridable Function getDimensionSize(ByVal d As Integer) As Long
+		Public Overridable Function getDimensionSize(d As Integer) As Long
 			Return dimensionSize(d)
 		End Function
 

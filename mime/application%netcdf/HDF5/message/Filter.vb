@@ -15,7 +15,7 @@ Namespace org.renjin.hdf5.message
 		Private ReadOnly clientData() As Integer
 		Private ReadOnly [optional] As Boolean
 
-		Friend Sub New(ByVal filterId As Integer, ByVal name As String, ByVal clientData() As Integer, ByVal [optional] As Boolean)
+		Friend Sub New(filterId As Integer, name As String, clientData() As Integer, [optional] As Boolean)
 			Me.filterId = filterId
 			Me.name = name
 			Me.clientData = clientData

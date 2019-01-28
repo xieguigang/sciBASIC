@@ -9,7 +9,7 @@ Namespace org.renjin.hdf5
 		Private superblock As Superblock
 		Private buffer As java.nio.ByteBuffer
 
-		Public Sub New(ByVal superblock As Superblock, ByVal buffer As java.nio.ByteBuffer)
+		Public Sub New(superblock As Superblock, buffer As java.nio.ByteBuffer)
 			org.renjin.repackaged.guava.base.Preconditions.checkNotNull(superblock, "superblock")
 			Me.superblock = superblock
 			Me.buffer = buffer
@@ -22,7 +22,7 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public void checkSignature(String signature) throws java.io.IOException
-		Public Overridable Sub checkSignature(ByVal signature As String)
+		Public Overridable Sub checkSignature(signature As String)
 			Dim expected() As SByte = signature.getBytes(org.renjin.repackaged.guava.base.Charsets.US_ASCII)
 			Dim array() As SByte = readBytes(expected.Length)
 
@@ -65,7 +65,7 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public int readVariableLengthSizeAsInt(Flags flags) throws java.io.IOException
-		Public Overridable Function readVariableLengthSizeAsInt(ByVal flags As Flags) As Integer
+		Public Overridable Function readVariableLengthSizeAsInt(flags As Flags) As Integer
 			Dim length As Long = readVariableLengthSize(flags.value() And &H3)
 			If length > Integer.MaxValue Then
 				Throw New java.io.IOException("Overflow")
@@ -75,7 +75,7 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public long readVariableLengthSize(int size) throws java.io.IOException
-		Public Overridable Function readVariableLengthSize(ByVal size As Integer) As Long
+		Public Overridable Function readVariableLengthSize(size As Integer) As Long
 			Select Case size
 				Case 0
 					Return readUInt8()
@@ -94,7 +94,7 @@ Namespace org.renjin.hdf5
 		''' <summary>
 		''' Sets the number of remaining bytes left in this header. </summary>
 		''' <param name="length"> number of bytes </param>
-		Public Overridable Sub updateLimit(ByVal length As Integer)
+		Public Overridable Sub updateLimit(length As Integer)
 			buffer.limit(buffer.position() + length)
 		End Sub
 
@@ -102,7 +102,7 @@ Namespace org.renjin.hdf5
 			Return buffer.remaining()
 		End Function
 
-		Public Overridable Function readBytes(ByVal size As Integer) As SByte()
+		Public Overridable Function readBytes(size As Integer) As SByte()
 			Dim bytes(size - 1) As SByte
 			buffer.get(bytes)
 			Return bytes
@@ -136,7 +136,7 @@ Namespace org.renjin.hdf5
 			Return value
 		End Function
 
-		Public Overridable Function readString(ByVal length As Integer, ByVal charset As java.nio.charset.Charset) As String
+		Public Overridable Function readString(length As Integer, charset As java.nio.charset.Charset) As String
 			Dim bytes() As SByte = readBytes(length)
 			Return New String(bytes, charset)
 		End Function
@@ -145,7 +145,7 @@ Namespace org.renjin.hdf5
 			Return buffer.get(0)
 		End Function
 
-		Public Overridable Sub readReserved(ByVal byteCount As Integer)
+		Public Overridable Sub readReserved(byteCount As Integer)
 			For i As Integer = 0 To byteCount - 1
 				Dim reserved As SByte = readByte()
 			Next i
@@ -159,7 +159,7 @@ Namespace org.renjin.hdf5
 			Return buffer.Int
 		End Function
 
-		Public Overridable Function readIntArray(ByVal count As Integer) As Integer()
+		Public Overridable Function readIntArray(count As Integer) As Integer()
 			Dim array(count - 1) As Integer
 			For i As Integer = 0 To count - 1
 				array(i) = readUInt()
@@ -177,7 +177,7 @@ Namespace org.renjin.hdf5
 			Return CInt(value)
 		End Function
 
-		Public Overridable Function readNullTerminatedAsciiString(ByVal nameLength As Integer) As String
+		Public Overridable Function readNullTerminatedAsciiString(nameLength As Integer) As String
 			Dim bytes() As SByte = readBytes(nameLength)
 			Dim len As Integer = 0
 			Do While bytes(len) <> 0 AndAlso len < bytes.Length
@@ -202,7 +202,7 @@ Namespace org.renjin.hdf5
 		''' <param name="byteSize"> the size of the integer in bytes </param>
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public long readUInt(int byteSize) throws java.io.IOException
-		Public Overridable Function readUInt(ByVal byteSize As Integer) As Long
+		Public Overridable Function readUInt(byteSize As Integer) As Long
 			Select Case byteSize
 				Case 1
 					Return readUInt8()
@@ -220,7 +220,7 @@ Namespace org.renjin.hdf5
 		''' <summary>
 		''' If the reader is not currently aligned to the given multiple, advance the position until it is. </summary>
 		''' <param name="multiple"> </param>
-		Public Overridable Sub alignTo(ByVal multiple As Integer)
+		Public Overridable Sub alignTo(multiple As Integer)
 			Dim misalignment As Integer = (buffer.position() Mod multiple)
 			If misalignment <> 0 Then
 				buffer.position(buffer.position() + misalignment)
@@ -229,7 +229,7 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public long[] readOffsets(int count) throws java.io.IOException
-		Public Overridable Function readOffsets(ByVal count As Integer) As Long()
+		Public Overridable Function readOffsets(count As Integer) As Long()
 			Dim offsets(count - 1) As Long
 			For i As Integer = 0 To count - 1
 				offsets(i) = readOffset()

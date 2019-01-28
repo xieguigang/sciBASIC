@@ -13,7 +13,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public ChunkNode(org.renjin.hdf5.message.DataLayoutMessage dataLayout, org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Public Sub New(ByVal dataLayout As org.renjin.hdf5.message.DataLayoutMessage, ByVal reader As org.renjin.hdf5.HeaderReader)
+		Public Sub New(dataLayout As org.renjin.hdf5.message.DataLayoutMessage, reader As org.renjin.hdf5.HeaderReader)
 			reader.checkSignature("TREE")
 			nodeType = reader.readByte()
 			If nodeType <> 1 Then
@@ -37,7 +37,7 @@ Namespace org.renjin.hdf5.chunked
 			End Get
 		End Property
 
-		Public Overridable Function findChildAddress(ByVal chunkCoordinates() As Long) As ChunkKey
+		Public Overridable Function findChildAddress(chunkCoordinates() As Long) As ChunkKey
 			For i As Integer = 0 To keys.Length - 2
 				Dim lower As Integer = keys(i).compare(chunkCoordinates)
 				Dim upper As Integer = keys(i+1).compare(chunkCoordinates)

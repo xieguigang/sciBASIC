@@ -46,7 +46,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public FixedArrayChunkIndex(org.renjin.hdf5.Hdf5Data file, org.renjin.hdf5.message.DataspaceMessage dataspace, org.renjin.hdf5.message.DataLayoutMessage layout, ChunkDecoder decoder) throws java.io.IOException
-		Public Sub New(ByVal file As org.renjin.hdf5.Hdf5Data, ByVal dataspace As org.renjin.hdf5.message.DataspaceMessage, ByVal layout As org.renjin.hdf5.message.DataLayoutMessage, ByVal decoder As ChunkDecoder)
+		Public Sub New(file As org.renjin.hdf5.Hdf5Data, dataspace As org.renjin.hdf5.message.DataspaceMessage, layout As org.renjin.hdf5.message.DataLayoutMessage, decoder As ChunkDecoder)
 			Me.file = file
 			Me.layout = layout
 			Me.decoder = decoder
@@ -98,7 +98,7 @@ Namespace org.renjin.hdf5.chunked
 			Me.chunkCache = org.renjin.repackaged.guava.cache.CacheBuilder.newBuilder().softValues().build()
 		End Sub
 
-		Private Function ceilDiv(ByVal dimensionSize As Long, ByVal chunkSize As Integer) As Integer
+		Private Function ceilDiv(dimensionSize As Long, chunkSize As Integer) As Integer
 			Dim count As Integer = CInt(dimensionSize \ chunkSize)
 			If dimensionSize Mod chunkSize <> 0 Then
 				count = count + 1
@@ -106,13 +106,13 @@ Namespace org.renjin.hdf5.chunked
 			Return count
 		End Function
 
-		Private Shared Function headerSize(ByVal superblock As org.renjin.hdf5.Superblock) As Integer
+		Private Shared Function headerSize(superblock As org.renjin.hdf5.Superblock) As Integer
 			Return 4 + 4 + superblock.LengthSize + superblock.OffsetSize + 4 ' checksum -  data block adddres -  max num entries -  version + client id ... -  signature
 		End Function
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public Chunk chunkAt(long[] arrayIndex) throws java.io.IOException
-		Public Overrides Function chunkAt(ByVal arrayIndex() As Long) As Chunk
+		Public Overrides Function chunkAt(arrayIndex() As Long) As Chunk
 			Dim chunkIndex As Integer = arrayIndexToChunkIndex(arrayIndex)
 
 			Dim chunk As Chunk = chunkCache.getIfPresent(chunkIndex)
@@ -135,7 +135,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private Chunk readChunk(long[] arrayIndex, long chunkAddress) throws java.io.IOException
-		Private Function readChunk(ByVal arrayIndex() As Long, ByVal chunkAddress As Long) As Chunk
+		Private Function readChunk(arrayIndex() As Long, chunkAddress As Long) As Chunk
 
 			Dim chunkOffset() As Long = elementToChunk(arrayIndex)
 			Dim chunkSize As Long = layout.ChunkElementCount * layout.DatasetElementSize
@@ -143,7 +143,7 @@ Namespace org.renjin.hdf5.chunked
 			Return decoder.read(chunkOffset, chunkAddress, org.renjin.repackaged.guava.primitives.Ints.checkedCast(chunkSize))
 		End Function
 
-		Private Function elementToChunk(ByVal arrayIndex() As Long) As Long()
+		Private Function elementToChunk(arrayIndex() As Long) As Long()
 			Dim chunkOffset() As Long = java.util.Arrays.copyOf(arrayIndex, arrayIndex.Length)
 			For i As Integer = 0 To chunkOffset.Length - 1
 				chunkOffset(i) = (chunkOffset(i) \ chunkSize(i)) * chunkSize(i)
@@ -151,7 +151,7 @@ Namespace org.renjin.hdf5.chunked
 			Return chunkOffset
 		End Function
 
-		Public Overridable Function arrayIndexToChunkIndex(ByVal arrayIndex() As Long) As Integer
+		Public Overridable Function arrayIndexToChunkIndex(arrayIndex() As Long) As Integer
 			Dim chunkIndex As Long = 0
 			Dim offset As Long = 1
 			For i As Integer = chunkDims.Length-1 To 0 Step -1

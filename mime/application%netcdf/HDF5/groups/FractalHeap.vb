@@ -30,7 +30,7 @@ Namespace org.renjin.hdf5.groups
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public FractalHeap(org.renjin.hdf5.Hdf5Data file, long address) throws java.io.IOException
-		Public Sub New(ByVal file As org.renjin.hdf5.Hdf5Data, ByVal address As Long)
+		Public Sub New(file As org.renjin.hdf5.Hdf5Data, address As Long)
 			Me.file = file
 
 			Dim reader As org.renjin.hdf5.HeaderReader = file.readerAt(address, maxHeaderSize(file.Superblock))
@@ -74,7 +74,7 @@ Namespace org.renjin.hdf5.groups
 			End Get
 		End Property
 
-		Public Shared Function maxHeaderSize(ByVal superblock As org.renjin.hdf5.Superblock) As Long
+		Public Shared Function maxHeaderSize(superblock As org.renjin.hdf5.Superblock) As Long
 			Return 4 + 1 + 4 + 1 + 4 + 13 * superblock.LengthSize + 3 * superblock.OffsetSize + 2 + 4 + 2 + 4 + 100 + 4 ' checksum -  I/O filter information ?? -  i/o filter mask -  current row -  max heap size + start # fo rows -  table width -  offset fields -  length fields -  Max size of managed objects -  Flags -  Heap ID Length + I/O filters encoded length -  Version -  Signature
 
 		End Function
@@ -109,7 +109,7 @@ Namespace org.renjin.hdf5.groups
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public DirectBlock(long address, long size) throws java.io.IOException
-			Public Sub New(ByVal outerInstance As FractalHeap, ByVal address As Long, ByVal size As Long)
+			Public Sub New(outerInstance As FractalHeap, address As Long, size As Long)
 					Me.outerInstance = outerInstance
 
 				buffer = outerInstance.file.bufferAt(address, size)

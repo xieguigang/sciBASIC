@@ -21,7 +21,7 @@ Namespace org.renjin.hdf5.groups
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private Node(long address) throws java.io.IOException
-		Private Sub New(ByVal outerInstance As GroupBTree, ByVal address As Long)
+		Private Sub New(outerInstance As GroupBTree, address As Long)
 				Me.outerInstance = outerInstance
 		  Dim reader As org.renjin.hdf5.HeaderReader = outerInstance.file.readerAt(address)
 		  reader.checkSignature("TREE")
@@ -66,7 +66,7 @@ Namespace org.renjin.hdf5.groups
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private SymbolTableNode(long address) throws java.io.IOException
-		Private Sub New(ByVal outerInstance As GroupBTree, ByVal address As Long)
+		Private Sub New(outerInstance As GroupBTree, address As Long)
 				Me.outerInstance = outerInstance
 		  Dim reader As org.renjin.hdf5.HeaderReader = outerInstance.file.readerAt(address)
 		  reader.checkSignature("SNOD")
@@ -97,7 +97,7 @@ Namespace org.renjin.hdf5.groups
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public SymbolTableEntry(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Public Sub New(ByVal outerInstance As GroupBTree, ByVal reader As org.renjin.hdf5.HeaderReader)
+		Public Sub New(outerInstance As GroupBTree, reader As org.renjin.hdf5.HeaderReader)
 				Me.outerInstance = outerInstance
 		  linkNameOffset = reader.readOffset()
 		  linkName = outerInstance.localHeap.stringAt(linkNameOffset)
@@ -110,7 +110,7 @@ Namespace org.renjin.hdf5.groups
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public GroupBTree(org.renjin.hdf5.Hdf5Data file, org.renjin.hdf5.message.SymbolTableMessage symbolTable) throws java.io.IOException
-	  Public Sub New(ByVal file As org.renjin.hdf5.Hdf5Data, ByVal symbolTable As org.renjin.hdf5.message.SymbolTableMessage)
+	  Public Sub New(file As org.renjin.hdf5.Hdf5Data, symbolTable As org.renjin.hdf5.message.SymbolTableMessage)
 		Me.file = file
 		Me.symbolTable = symbolTable
 		Me.localHeap = New LocalHeap(file, symbolTable.LocalHeapAddress)
@@ -120,7 +120,7 @@ Namespace org.renjin.hdf5.groups
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public org.renjin.hdf5.DataObject getObject(String name) throws java.io.IOException
-	  Public Overrides Function getObject(ByVal name As String) As org.renjin.hdf5.DataObject Implements GroupIndex.getObject
+	  Public Overrides Function getObject(name As String) As org.renjin.hdf5.DataObject Implements GroupIndex.getObject
 
 		Dim node As Node = rootNode
 		Do While Not node.Leaf
@@ -138,7 +138,7 @@ Namespace org.renjin.hdf5.groups
 		Throw New System.ArgumentException(name)
 	  End Function
 
-	  Public Overridable Function findChildAddress(ByVal node As Node, ByVal name As String) As SymbolTableNode
+	  Public Overridable Function findChildAddress(node As Node, name As String) As SymbolTableNode
 
 		If node.keys.length = 2 AndAlso node.keys(0) Is Nothing Then
 		  Return node.keys(1)
@@ -155,7 +155,7 @@ Namespace org.renjin.hdf5.groups
 	'    throw new IllegalStateException();
 	  End Function
 
-	  Private Function compare(ByVal key As SymbolTableNode, ByVal name As String) As Integer
+	  Private Function compare(key As SymbolTableNode, name As String) As Integer
 		If key Is Nothing Then
 		  Return -1
 		End If

@@ -4,26 +4,26 @@ Namespace org.renjin.hdf5.vector
 
 
 	Public Class ChunkedDoubleVector
-		Inherits org.renjin.sexp.DoubleVector
+        Inherits DoubleVector
 
-		Private ReadOnly dataset As ChunkedDataset
+        Private ReadOnly dataset As ChunkedDataset
 		Private chunk As ChunkCursor = Nothing
 
-		Public Sub New(ByVal dataset As ChunkedDataset)
+		Public Sub New(dataset As ChunkedDataset)
 			MyBase.New(dataset.buildAttributes())
 			Me.dataset = dataset
 		End Sub
 
-		Public Sub New(ByVal dataset As ChunkedDataset, ByVal attributeMap As org.renjin.sexp.AttributeMap)
+		Public Sub New(dataset As ChunkedDataset, attributeMap As org.renjin.sexp.AttributeMap)
 			MyBase.New(attributeMap)
 			Me.dataset = dataset
 		End Sub
 
-		Protected Friend Overrides Function cloneWithNewAttributes(ByVal attributeMap As org.renjin.sexp.AttributeMap) As org.renjin.sexp.SEXP
+		Protected Friend Overrides Function cloneWithNewAttributes(attributeMap As org.renjin.sexp.AttributeMap) As org.renjin.sexp.SEXP
 			Return New ChunkedDoubleVector(Me.dataset, attributeMap)
 		End Function
 
-		Public Overrides Function getElementAsDouble(ByVal i As Integer) As Double
+		Public Overrides Function getElementAsDouble(i As Integer) As Double
 
 			If chunk Is Nothing OrElse (Not chunk.containsVectorIndex(i)) Then
 				Try
@@ -36,15 +36,17 @@ Namespace org.renjin.hdf5.vector
 			Return chunk.valueAt(i)
 		End Function
 
-		Public Property Overrides ConstantAccessTime As Boolean
-			Get
-				Return True
-			End Get
-		End Property
+        Public ReadOnly Property ConstantAccessTime As Boolean
+            Get
+                Return True
+            End Get
+        End Property
 
-		Public Overrides Function length() As Integer
-			Return dataset.VectorLength32
-		End Function
-	End Class
+        Public ReadOnly Property length() As Integer
+            Get
+                Return dataset.VectorLength32
+            End Get
+        End Property
+    End Class
 
 End Namespace

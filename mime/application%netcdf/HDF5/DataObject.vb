@@ -19,7 +19,7 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public DataObject(Hdf5Data file, long address) throws java.io.IOException
-		Public Sub New(ByVal file As Hdf5Data, ByVal address As Long)
+		Public Sub New(file As Hdf5Data, address As Long)
 			Me.file = file
 			Me.address = address
 
@@ -34,7 +34,7 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readVersion1(HeaderReader reader) throws java.io.IOException
-		Private Sub readVersion1(ByVal reader As HeaderReader)
+		Private Sub readVersion1(reader As HeaderReader)
 			version = reader.readByte()
 			If version <> 1 Then
 				Throw New java.io.IOException("Unsupported data object header version: " & version)
@@ -58,7 +58,7 @@ Namespace org.renjin.hdf5
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readContinuationV1(ContinuationMessage continuationMessage) throws java.io.IOException
 'JAVA TO VB CONVERTER NOTE: The parameter continuationMessage was renamed since it may cause conflicts with calls to static members of the user-defined type with this name:
-		Private Sub readContinuationV1(ByVal continuationMessage_Renamed As ContinuationMessage)
+		Private Sub readContinuationV1(continuationMessage_Renamed As ContinuationMessage)
 			Dim reader As HeaderReader = file.readerAt(continuationMessage_Renamed.Offset, continuationMessage_Renamed.Length)
 
 			' Continuation blocks for version 1 object headers have no special formatting information;
@@ -70,7 +70,7 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readMessagesVersion1(HeaderReader reader, int objectHeaderSize) throws java.io.IOException
-		Private Sub readMessagesVersion1(ByVal reader As HeaderReader, ByVal objectHeaderSize As Integer)
+		Private Sub readMessagesVersion1(reader As HeaderReader, objectHeaderSize As Integer)
 
 			Do While objectHeaderSize > 0
 
@@ -96,7 +96,7 @@ Namespace org.renjin.hdf5
 			Loop
 		End Sub
 
-		Private Sub addMessage(ByVal message As Message)
+		Private Sub addMessage(message As Message)
 			messages.Add(message)
 			If TypeOf message Is ContinuationMessage Then
 				continuations.AddLast(CType(message, ContinuationMessage))
@@ -105,7 +105,7 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readVersion2(HeaderReader reader) throws java.io.IOException
-		Private Sub readVersion2(ByVal reader As HeaderReader)
+		Private Sub readVersion2(reader As HeaderReader)
 			reader.checkSignature("OHDR")
 
 			version = reader.readByte()
@@ -144,7 +144,7 @@ Namespace org.renjin.hdf5
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readContinuationV2(ContinuationMessage continuationMessage, Flags flags) throws java.io.IOException
 'JAVA TO VB CONVERTER NOTE: The parameter continuationMessage was renamed since it may cause conflicts with calls to static members of the user-defined type with this name:
-		Private Sub readContinuationV2(ByVal continuationMessage_Renamed As ContinuationMessage, ByVal flags As Flags)
+		Private Sub readContinuationV2(continuationMessage_Renamed As ContinuationMessage, flags As Flags)
 			Dim reader As HeaderReader = file.readerAt(continuationMessage_Renamed.Offset, continuationMessage_Renamed.Length)
 			reader.checkSignature("OCHK")
 			readMessagesV2(reader, flags)
@@ -152,7 +152,7 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readMessagesV2(HeaderReader reader, Flags flags) throws java.io.IOException
-		Private Sub readMessagesV2(ByVal reader As HeaderReader, ByVal flags As Flags)
+		Private Sub readMessagesV2(reader As HeaderReader, flags As Flags)
 
 			' A gap in an object header chunk is inferred by the end of the messages for the chunk before the beginning
 			' of the chunk’s checksum. Gaps are always smaller than the size of an object header message prefix
@@ -180,7 +180,7 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private Message createMessage(int messageType, byte[] messageData) throws java.io.IOException
-		Private Function createMessage(ByVal messageType As Integer, ByVal messageData() As SByte) As Message
+		Private Function createMessage(messageType As Integer, messageData() As SByte) As Message
 
 			Dim reader As New HeaderReader(file.Superblock, java.nio.ByteBuffer.wrap(messageData))
 			Select Case messageType
@@ -211,15 +211,15 @@ Namespace org.renjin.hdf5
 			End Select
 		End Function
 
-		Public Overridable Function getMessages(Of T As Message)(ByVal messageClass As Type) As IEnumerable(Of T)
+		Public Overridable Function getMessages(Of T As Message)(messageClass As Type) As IEnumerable(Of T)
 			Return org.renjin.repackaged.guava.collect.Iterables.filter(messages, messageClass)
 		End Function
 
-		Public Overridable Function getMessage(Of T As Message)(ByVal messageClass As Type) As T
+		Public Overridable Function getMessage(Of T As Message)(messageClass As Type) As T
 			Return org.renjin.repackaged.guava.collect.Iterables.getOnlyElement(getMessages(messageClass))
 		End Function
 
-		Public Overridable Function hasMessage(ByVal messageClass As Type) As Boolean
+		Public Overridable Function hasMessage(messageClass As Type) As Boolean
 'JAVA TO VB CONVERTER NOTE: The variable message was renamed since Visual Basic does not handle local variables named the same as class members well:
 			For Each message_Renamed As Message In messages
 				If message_Renamed.GetType().Equals(messageClass) Then
@@ -229,7 +229,7 @@ Namespace org.renjin.hdf5
 			Return False
 		End Function
 
-		Public Overridable Function getMessageIfPresent(Of T As Message)(ByVal messageClass As Type) As org.renjin.repackaged.guava.base.Optional(Of T)
+		Public Overridable Function getMessageIfPresent(Of T As Message)(messageClass As Type) As org.renjin.repackaged.guava.base.Optional(Of T)
 'JAVA TO VB CONVERTER NOTE: The variable message was renamed since Visual Basic does not handle local variables named the same as class members well:
 			For Each message_Renamed As Message In messages
 				If message_Renamed.GetType().Equals(messageClass) Then

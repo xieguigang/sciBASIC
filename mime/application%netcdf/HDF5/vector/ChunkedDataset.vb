@@ -19,7 +19,7 @@ Namespace org.renjin.hdf5.vector
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public ChunkedDataset(org.renjin.hdf5.Hdf5File file, org.renjin.hdf5.DataObject object) throws java.io.IOException
-		Public Sub New(ByVal file As org.renjin.hdf5.Hdf5File, ByVal [object] As org.renjin.hdf5.DataObject)
+		Public Sub New(file As org.renjin.hdf5.Hdf5File, [object] As org.renjin.hdf5.DataObject)
 			dataspace = [object].getMessage(GetType(org.renjin.hdf5.message.DataspaceMessage))
 			datatype = [object].getMessage(GetType(org.renjin.hdf5.message.DatatypeMessage))
 			layout = [object].getMessage(GetType(org.renjin.hdf5.message.DataLayoutMessage))
@@ -42,7 +42,7 @@ Namespace org.renjin.hdf5.vector
 			chunkIndex = file.openChunkIndex([object])
 		End Sub
 
-		Private Function checkedIntCast(ByVal size As Long) As Integer
+		Private Function checkedIntCast(size As Long) As Integer
 			If size > Integer.MaxValue Then
 				Throw New org.renjin.eval.EvalException("Size too large: " & size)
 			End If
@@ -69,7 +69,7 @@ Namespace org.renjin.hdf5.vector
 			End Get
 		End Property
 
-		Public Overridable Function vectorIndexToHdfsArrayIndex(ByVal vectorIndex As Long) As Long()
+		Public Overridable Function vectorIndexToHdfsArrayIndex(vectorIndex As Long) As Long()
 			Dim arrayIndex(nDim - 1) As Long
 			Dim i As Integer = 0
 			Do While i <> nDim
@@ -80,7 +80,7 @@ Namespace org.renjin.hdf5.vector
 			Return arrayIndex
 		End Function
 
-		Public Overridable Function hdfsArrayIndexToVectorIndex(ByVal arrayIndex() As Long) As Long
+		Public Overridable Function hdfsArrayIndexToVectorIndex(arrayIndex() As Long) As Long
 			Dim vectorIndex As Long = 0
 			Dim offset As Long = 1
 
@@ -96,7 +96,7 @@ Namespace org.renjin.hdf5.vector
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public ChunkCursor chunkAt(int vectorIndex) throws java.io.IOException
-		Public Overridable Function chunkAt(ByVal vectorIndex As Integer) As ChunkCursor
+		Public Overridable Function chunkAt(vectorIndex As Integer) As ChunkCursor
 			Dim arrayIndex() As Long = vectorIndexToHdfsArrayIndex(vectorIndex)
 			Dim chunk As org.renjin.hdf5.chunked.Chunk = chunkIndex.chunkAt(arrayIndex)
 

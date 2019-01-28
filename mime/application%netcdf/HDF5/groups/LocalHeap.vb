@@ -17,7 +17,7 @@ Namespace org.renjin.hdf5.groups
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public LocalHeap(org.renjin.hdf5.Hdf5Data file, long address) throws java.io.IOException
-	  Public Sub New(ByVal file As org.renjin.hdf5.Hdf5Data, ByVal address As Long)
+	  Public Sub New(file As org.renjin.hdf5.Hdf5Data, address As Long)
 		Me.file = file
 		Dim reader As org.renjin.hdf5.HeaderReader = file.readerAt(address, 48)
 		reader.checkSignature("HEAP")
@@ -35,7 +35,7 @@ Namespace org.renjin.hdf5.groups
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public String stringAt(long offset) throws java.io.IOException
-	  Public Overridable Function stringAt(ByVal offset As Long) As String
+	  Public Overridable Function stringAt(offset As Long) As String
 		Dim reader As org.renjin.hdf5.HeaderReader = file.readerAt(dataSegmentAddress + offset)
 		Return reader.readNullTerminatedAsciiString()
 	  End Function

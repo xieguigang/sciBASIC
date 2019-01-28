@@ -7,7 +7,7 @@ Namespace org.renjin.hdf5.chunked
 
 		Private ReadOnly chunkOffset() As Long
 
-		Public Sub New(ByVal chunkOffset() As Long)
+		Public Sub New(chunkOffset() As Long)
 			Me.chunkOffset = chunkOffset
 		End Sub
 
@@ -17,7 +17,7 @@ Namespace org.renjin.hdf5.chunked
 			End Get
 		End Property
 
-		Public MustOverride Function getDoubleAt(ByVal i As Integer) As Double
+		Public MustOverride Function getDoubleAt(i As Integer) As Double
 	End Class
 
 End Namespace

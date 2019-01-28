@@ -30,7 +30,7 @@ Namespace org.renjin.hdf5.chunked
 
 		Private ReadOnly chunkSizeBytes As Integer
 
-		Public Sub New(ByVal file As org.renjin.hdf5.Hdf5Data, ByVal dataLayout As org.renjin.hdf5.message.DataLayoutMessage, ByVal chunkFactory As ChunkFactory)
+		Public Sub New(file As org.renjin.hdf5.Hdf5Data, dataLayout As org.renjin.hdf5.message.DataLayoutMessage, chunkFactory As ChunkFactory)
 			Me.file = file
 			Me.chunkSize = org.renjin.repackaged.guava.primitives.Ints.checkedCast(dataLayout.ChunkElementCount)
 			Me.chunkFactory = chunkFactory
@@ -40,7 +40,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public Chunk read(long[] chunkOffset, long address, int size) throws java.io.IOException
-		Public Overrides Function read(ByVal chunkOffset() As Long, ByVal address As Long, ByVal size As Integer) As Chunk Implements ChunkDecoder.read
+		Public Overrides Function read(chunkOffset() As Long, address As Long, size As Integer) As Chunk Implements ChunkDecoder.read
 
 			' Set up our buffer for reading in the compressed data
 			If deflatedBufferArray Is Nothing OrElse deflatedBufferArray.Length < size Then

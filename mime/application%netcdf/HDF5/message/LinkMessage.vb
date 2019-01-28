@@ -27,7 +27,7 @@ Namespace org.renjin.hdf5.message
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public LinkMessage(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Public Sub New(ByVal reader As org.renjin.hdf5.HeaderReader)
+		Public Sub New(reader As org.renjin.hdf5.HeaderReader)
 			version = reader.readByte()
 			Dim flags As org.renjin.hdf5.Flags = reader.readFlags()
 

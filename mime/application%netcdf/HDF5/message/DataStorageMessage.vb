@@ -19,7 +19,7 @@ Namespace org.renjin.hdf5.message
 
 		Private ReadOnly filters As IList(Of Filter) = New List(Of Filter)()
 
-		Public Sub New(ByVal reader As org.renjin.hdf5.HeaderReader)
+		Public Sub New(reader As org.renjin.hdf5.HeaderReader)
 			Dim version As SByte = reader.readByte()
 			If version = 1 Then
 				readVersion1(reader)
@@ -30,7 +30,7 @@ Namespace org.renjin.hdf5.message
 			End If
 		End Sub
 
-		Private Sub readVersion1(ByVal reader As org.renjin.hdf5.HeaderReader)
+		Private Sub readVersion1(reader As org.renjin.hdf5.HeaderReader)
 			Dim numFilters As Integer = reader.readUInt8()
 			reader.readReserved(2)
 			reader.readReserved(4)
@@ -69,7 +69,7 @@ Namespace org.renjin.hdf5.message
 			Next i
 		End Sub
 
-		Private Sub readVersion2(ByVal reader As org.renjin.hdf5.HeaderReader)
+		Private Sub readVersion2(reader As org.renjin.hdf5.HeaderReader)
 			Dim numFilters As Integer = reader.readUInt8()
 
 			For i As Integer = 0 To numFilters - 1

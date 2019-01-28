@@ -113,7 +113,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public ExtensibleArrayChunkIndex(org.renjin.hdf5.Hdf5Data file, org.renjin.hdf5.message.DataspaceMessage dataspace, org.renjin.hdf5.message.DataLayoutMessage layout, ChunkFactory chunkDecoder) throws java.io.IOException
-	  Public Sub New(ByVal file As org.renjin.hdf5.Hdf5Data, ByVal dataspace As org.renjin.hdf5.message.DataspaceMessage, ByVal layout As org.renjin.hdf5.message.DataLayoutMessage, ByVal chunkDecoder As ChunkFactory)
+	  Public Sub New(file As org.renjin.hdf5.Hdf5Data, dataspace As org.renjin.hdf5.message.DataspaceMessage, layout As org.renjin.hdf5.message.DataLayoutMessage, chunkDecoder As ChunkFactory)
 		Me.file = file
 		Me.dataspace = dataspace
 		Me.dimensions = dataspace.Dimensionality
@@ -124,7 +124,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readHeader(org.renjin.hdf5.Hdf5Data file, org.renjin.hdf5.message.DataLayoutMessage layout) throws java.io.IOException
-	  Private Sub readHeader(ByVal file As org.renjin.hdf5.Hdf5Data, ByVal layout As org.renjin.hdf5.message.DataLayoutMessage)
+	  Private Sub readHeader(file As org.renjin.hdf5.Hdf5Data, layout As org.renjin.hdf5.message.DataLayoutMessage)
 		Dim headerSize As Integer = 12 + 6 * file.Superblock.LengthSize + file.Superblock.OffsetSize + 4
 		Dim reader As org.renjin.hdf5.HeaderReader = file.readerAt(layout.ChunkIndexAddress, headerSize)
 		reader.checkSignature("EAHD")
@@ -155,7 +155,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private void readIndex(org.renjin.hdf5.Hdf5Data file) throws java.io.IOException
-	  Private Sub readIndex(ByVal file As org.renjin.hdf5.Hdf5Data)
+	  Private Sub readIndex(file As org.renjin.hdf5.Hdf5Data)
 		Dim indexSize As Long = 6 + file.Superblock.OffsetSize + indexBlockElements * elementSize + indexBlockDataPointers * file.Superblock.OffsetSize + numSecondaryBlocks * file.Superblock.OffsetSize + 4 ' checksum -  elements -  header address -  signature, version, client id
 
 		Dim reader As org.renjin.hdf5.HeaderReader = file.readerAt(indexBlockAddress, indexSize)
@@ -177,13 +177,13 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public Chunk chunkAt(long[] arrayIndex) throws java.io.IOException
-	  Public Overrides Function chunkAt(ByVal arrayIndex() As Long) As Chunk
+	  Public Overrides Function chunkAt(arrayIndex() As Long) As Chunk
 		Return readDataBlock(dataBlockAddresses(0))
 	  End Function
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private Chunk readDataBlock(long address) throws java.io.IOException
-	  Private Function readDataBlock(ByVal address As Long) As Chunk
+	  Private Function readDataBlock(address As Long) As Chunk
 		Dim buffer As java.nio.ByteBuffer = file.bufferAt(address, dataBlockSize)
 
 		Dim prefixSize As Integer = 6 + file.Superblock.OffsetSize + dimensions * file.Superblock.OffsetSize ' block offset -  header address -  signature, version, client id

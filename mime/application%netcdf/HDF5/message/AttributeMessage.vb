@@ -20,7 +20,7 @@ Namespace org.renjin.hdf5.message
 
 	  Public Const MESSAGE_TYPE As Integer = &HC
 
-	  Public Sub New(ByVal reader As org.renjin.hdf5.HeaderReader)
+	  Public Sub New(reader As org.renjin.hdf5.HeaderReader)
 
 	  End Sub
 	End Class

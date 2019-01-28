@@ -8,11 +8,11 @@ Namespace org.renjin.hdf5.chunked
 
 	  Private file As org.renjin.hdf5.Hdf5Data
 
-	  Public Sub New(ByVal file As org.renjin.hdf5.Hdf5Data)
+	  Public Sub New(file As org.renjin.hdf5.Hdf5Data)
 		Me.file = file
 	  End Sub
 
-	  Public Overridable Function create(ByVal datatype As org.renjin.hdf5.message.DatatypeMessage, ByVal dataLayout As org.renjin.hdf5.message.DataLayoutMessage, ByVal dataStorage As org.renjin.repackaged.guava.base.Optional(Of org.renjin.hdf5.message.DataStorageMessage)) As ChunkDecoder
+	  Public Overridable Function create(datatype As org.renjin.hdf5.message.DatatypeMessage, dataLayout As org.renjin.hdf5.message.DataLayoutMessage, dataStorage As org.renjin.repackaged.guava.base.Optional(Of org.renjin.hdf5.message.DataStorageMessage)) As ChunkDecoder
 
 		Dim factory As ChunkFactory = createFactory(datatype)
 
@@ -38,7 +38,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: 'final' parameters are not allowed in .NET:
 'ORIGINAL LINE: public ChunkFactory createFactory(final org.renjin.hdf5.message.DatatypeMessage datatype)
-	  Public Overridable Function createFactory(ByVal datatype As org.renjin.hdf5.message.DatatypeMessage) As ChunkFactory
+	  Public Overridable Function createFactory(datatype As org.renjin.hdf5.message.DatatypeMessage) As ChunkFactory
 		If datatype.DoubleIEE754 Then
 		  Return New ChunkFactoryAnonymousInnerClassHelper()
 
@@ -52,7 +52,7 @@ Namespace org.renjin.hdf5.chunked
 	  Private Class ChunkFactoryAnonymousInnerClassHelper
 		  Implements ChunkFactory
 
-		  Public Overrides Function wrap(ByVal chunkOffset() As Long, ByVal buffer As java.nio.ByteBuffer) As Chunk Implements ChunkFactory.wrap
+		  Public Overrides Function wrap(chunkOffset() As Long, buffer As java.nio.ByteBuffer) As Chunk Implements ChunkFactory.wrap
 			buffer.order(datatype.ByteOrder)
 			Return New DoubleChunk(chunkOffset, buffer.asDoubleBuffer())
 		  End Function
@@ -61,7 +61,7 @@ Namespace org.renjin.hdf5.chunked
 	  Private Class ChunkFactoryAnonymousInnerClassHelper2
 		  Implements ChunkFactory
 
-		  Public Overrides Function wrap(ByVal chunkOffset() As Long, ByVal buffer As java.nio.ByteBuffer) As Chunk Implements ChunkFactory.wrap
+		  Public Overrides Function wrap(chunkOffset() As Long, buffer As java.nio.ByteBuffer) As Chunk Implements ChunkFactory.wrap
 			buffer.order(datatype.ByteOrder)
 			Return New Int32Chunk(chunkOffset, buffer.asIntBuffer())
 		  End Function

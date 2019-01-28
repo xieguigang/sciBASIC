@@ -6,7 +6,7 @@ Namespace org.renjin.hdf5.message
 		Private type As Integer
 		Private ReadOnly messageData() As SByte
 
-		Public Sub New(ByVal messageType As Integer, ByVal messageData() As SByte)
+		Public Sub New(messageType As Integer, messageData() As SByte)
 			Me.type = messageType
 			Me.messageData = messageData
 		End Sub

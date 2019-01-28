@@ -8,7 +8,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: Chunk read(long[] chunkOffset, long address, int size) throws java.io.IOException;
-	  Function read(ByVal chunkOffset() As Long, ByVal address As Long, ByVal size As Integer) As Chunk
+	  Function read(chunkOffset() As Long, address As Long, size As Integer) As Chunk
 
 	End Interface
 

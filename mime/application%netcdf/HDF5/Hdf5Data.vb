@@ -9,7 +9,7 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public Hdf5Data(java.io.File file) throws java.io.IOException
-	  Public Sub New(ByVal file As java.io.File)
+	  Public Sub New(file As java.io.File)
 		Dim randomAccessFile As New java.io.RandomAccessFile(file, "r")
 		channel = randomAccessFile.Channel
 		superblock = New Superblock(channel)
@@ -23,19 +23,19 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public DataObject objectAt(long address) throws java.io.IOException
-	  Public Overridable Function objectAt(ByVal address As Long) As DataObject
+	  Public Overridable Function objectAt(address As Long) As DataObject
 		Return New DataObject(Me, address)
 	  End Function
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public HeaderReader readerAt(long address) throws java.io.IOException
-	  Public Overridable Function readerAt(ByVal address As Long) As HeaderReader
+	  Public Overridable Function readerAt(address As Long) As HeaderReader
 		Return readerAt(address, 1024 * 5)
 	  End Function
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public HeaderReader readerAt(long address, long maxHeaderSize) throws java.io.IOException
-	  Public Overridable Function readerAt(ByVal address As Long, ByVal maxHeaderSize As Long) As HeaderReader
+	  Public Overridable Function readerAt(address As Long, maxHeaderSize As Long) As HeaderReader
 		Dim buffer As java.nio.MappedByteBuffer = channel.map(java.nio.channels.FileChannel.MapMode.READ_ONLY, address, Math.Min(maxHeaderSize, channel.size() - address))
 
 		Return New HeaderReader(superblock, buffer)
@@ -43,19 +43,19 @@ Namespace org.renjin.hdf5
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public java.nio.ByteBuffer bufferAt(long address, long size) throws java.io.IOException
-	  Public Overridable Function bufferAt(ByVal address As Long, ByVal size As Long) As java.nio.ByteBuffer
+	  Public Overridable Function bufferAt(address As Long, size As Long) As java.nio.ByteBuffer
 		Return channel.map(java.nio.channels.FileChannel.MapMode.READ_ONLY, address, size)
 	  End Function
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public int read(java.nio.ByteBuffer buffer, long address) throws java.io.IOException
-	  Public Overridable Function read(ByVal buffer As java.nio.ByteBuffer, ByVal address As Long) As Integer
+	  Public Overridable Function read(buffer As java.nio.ByteBuffer, address As Long) As Integer
 		Return channel.read(buffer, address)
 	  End Function
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public java.nio.MappedByteBuffer map(java.nio.channels.FileChannel.MapMode mode, long address, long size) throws java.io.IOException
-	  Public Overridable Function map(ByVal mode As java.nio.channels.FileChannel.MapMode, ByVal address As Long, ByVal size As Long) As java.nio.MappedByteBuffer
+	  Public Overridable Function map(mode As java.nio.channels.FileChannel.MapMode, address As Long, size As Long) As java.nio.MappedByteBuffer
 		Return channel.map(mode, address, size)
 	  End Function
 	End Class

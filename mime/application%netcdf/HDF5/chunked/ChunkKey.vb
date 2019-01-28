@@ -24,7 +24,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public ChunkKey(org.renjin.hdf5.HeaderReader reader, int dimensionality, boolean hasChildPointer) throws java.io.IOException
-		Public Sub New(ByVal reader As org.renjin.hdf5.HeaderReader, ByVal dimensionality As Integer, ByVal hasChildPointer As Boolean)
+		Public Sub New(reader As org.renjin.hdf5.HeaderReader, dimensionality As Integer, hasChildPointer As Boolean)
 
 			chunkSize = reader.readUInt32AsInt()
 
@@ -75,7 +75,7 @@ Namespace org.renjin.hdf5.chunked
 		''' <summary>
 		''' Compares this chunk's offset with the given index.
 		''' </summary>
-		Public Overridable Function compare(ByVal index() As Long) As Integer
+		Public Overridable Function compare(index() As Long) As Integer
 			For i As Integer = 0 To offset.Length - 1
 				If offset(i) <> index(i) Then
 					Return Long.Compare(offset(i), index(i))
@@ -107,7 +107,7 @@ Namespace org.renjin.hdf5.chunked
 			Return s.ToString()
 		End Function
 
-		Public Overrides Function Equals(ByVal o As Object) As Boolean
+		Public Overrides Function Equals(o As Object) As Boolean
 			If Me Is o Then
 				Return True
 			End If

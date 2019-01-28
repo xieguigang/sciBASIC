@@ -15,7 +15,7 @@ Namespace org.renjin.hdf5.message
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public SymbolTableMessage(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-	  Public Sub New(ByVal reader As org.renjin.hdf5.HeaderReader)
+	  Public Sub New(reader As org.renjin.hdf5.HeaderReader)
 		bTreeAddress = reader.readOffset()
 		localHeapAddress = reader.readOffset()
 	  End Sub

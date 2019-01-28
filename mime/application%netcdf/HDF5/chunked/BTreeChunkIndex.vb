@@ -21,7 +21,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public BTreeChunkIndex(org.renjin.hdf5.Hdf5Data file, org.renjin.hdf5.message.DataLayoutMessage dataLayout, ChunkDecoder decoder) throws java.io.IOException
-		Public Sub New(ByVal file As org.renjin.hdf5.Hdf5Data, ByVal dataLayout As org.renjin.hdf5.message.DataLayoutMessage, ByVal decoder As ChunkDecoder)
+		Public Sub New(file As org.renjin.hdf5.Hdf5Data, dataLayout As org.renjin.hdf5.message.DataLayoutMessage, decoder As ChunkDecoder)
 			Me.file = file
 			Me.dataLayout = dataLayout
 			Me.rootNode = readNode(dataLayout.ChunkIndexAddress, 4096)
@@ -39,7 +39,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private ChunkNode getNode(ChunkKey key) throws java.io.IOException
-		Private Function getNode(ByVal key As ChunkKey) As ChunkNode
+		Private Function getNode(key As ChunkKey) As ChunkNode
 'JAVA TO VB CONVERTER NOTE: The variable node was renamed since Visual Basic does not handle local variables named the same as class members well:
 			Dim node_Renamed As ChunkNode = nodes(key.ChildPointer)
 			If node_Renamed Is Nothing Then
@@ -51,7 +51,7 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private ChunkNode readNode(long address, int size) throws java.io.IOException
-		Private Function readNode(ByVal address As Long, ByVal size As Integer) As ChunkNode
+		Private Function readNode(address As Long, size As Integer) As ChunkNode
 			Return New ChunkNode(dataLayout, file.readerAt(address, size))
 		End Function
 
@@ -60,14 +60,14 @@ Namespace org.renjin.hdf5.chunked
 		''' </summary>
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: public Chunk chunkAt(long[] arrayIndex) throws java.io.IOException
-		Public Overrides Function chunkAt(ByVal arrayIndex() As Long) As Chunk
+		Public Overrides Function chunkAt(arrayIndex() As Long) As Chunk
 			Debug.Assert(dataLayout.Dimensionality = arrayIndex.Length, "Invalid dimensionality")
 			Return getChunk(arrayIndex)
 		End Function
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private Chunk getChunk(long[] index) throws java.io.IOException
-		Private Function getChunk(ByVal index() As Long) As Chunk
+		Private Function getChunk(index() As Long) As Chunk
 			Dim key As ChunkKey = findNode(index)
 			Try
 				Return chunkCache.get(key)
@@ -78,13 +78,13 @@ Namespace org.renjin.hdf5.chunked
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private Chunk readChunkData(ChunkKey key) throws java.io.IOException
-		Private Function readChunkData(ByVal key As ChunkKey) As Chunk
+		Private Function readChunkData(key As ChunkKey) As Chunk
 			Return chunkDecoder.read(key.Offset, key.ChildPointer, key.ChunkSize)
 		End Function
 
 'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
 'ORIGINAL LINE: private ChunkKey findNode(long[] chunkCoordinates) throws java.io.IOException
-		Private Function findNode(ByVal chunkCoordinates() As Long) As ChunkKey
+		Private Function findNode(chunkCoordinates() As Long) As ChunkKey
 
 'JAVA TO VB CONVERTER NOTE: The variable node was renamed since Visual Basic does not handle local variables named the same as class members well:
 			Dim node_Renamed As ChunkNode = rootNode

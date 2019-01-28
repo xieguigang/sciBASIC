@@ -11,7 +11,7 @@ Namespace org.renjin.hdf5.message
 		Private estimatedNumberEntries As Integer = -1
 		Private estimatedLinkNameLengthOfEntries As Integer = -1
 
-		Public Sub New(ByVal reader As org.renjin.hdf5.HeaderReader)
+		Public Sub New(reader As org.renjin.hdf5.HeaderReader)
 			Dim version As SByte = reader.readByte()
 			Dim flags As org.renjin.hdf5.Flags = reader.readFlags()
 
