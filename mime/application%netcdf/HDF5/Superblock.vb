@@ -20,9 +20,9 @@ Namespace org.renjin.hdf5
 
         Public Overridable ReadOnly Property BaseAddress As Long
 
-        Public Overridable ReadOnly Property OffsetSize As SByte
+        Public Overridable ReadOnly Property OffsetsSize As SByte
 
-        Public Overridable ReadOnly Property LengthSize As SByte
+        Public Overridable ReadOnly Property LengthsSize As SByte
 
         Public Overridable ReadOnly Property RootGroupObjectHeaderAddress As Long
 
@@ -104,7 +104,7 @@ Namespace org.renjin.hdf5
             fileConsistencyFlags = buffer.get()
 
             If offsetsSize <> 8 OrElse lengthsSize <> 8 Then
-                Throw New java.io.IOException("Unsupported offsets/length size: " & offsetsSize)
+                Throw New Exception("Unsupported offsets/length size: " & OffsetsSize)
             End If
 
             BaseAddress = buffer.Long
