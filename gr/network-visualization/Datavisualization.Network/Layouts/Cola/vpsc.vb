@@ -4,12 +4,12 @@ Imports any = System.Object
 Namespace Layouts.Cola
 
     Class PositionStats
-        Private AB As number = 0
-        Private AD As number = 0
-        Private A2 As number = 0
-        Private scale As number
+        Private AB As Double = 0
+        Private AD As Double = 0
+        Private A2 As Double = 0
+        Private scale As Double
 
-        Public Sub New(scale As number)
+        Public Sub New(scale As Double)
             Me.scale = scale
         End Sub
 
@@ -22,54 +22,54 @@ Namespace Layouts.Cola
             Me.A2 += wi * ai * ai
         End Sub
 
-        Private Function getPosn() As number
+        Private Function getPosn() As Double
             Return (Me.AD - Me.AB) / Me.A2
         End Function
     End Class
 
     Class Constraint
-        Private lm As number
+        Private lm As Double
         Private active As Boolean = False
         Private unsatisfiable As Boolean = False
 
         Public left As Variable
         Public right As Variable
-        Public gap As number
+        Public gap As Double
         Public equality As Boolean = False
 
-        Public Sub New(left As Variable, right As Variable, gap As number, Optional equality As Boolean = False)
+        Public Sub New(left As Variable, right As Variable, gap As Double, Optional equality As Boolean = False)
             Me.left = left
             Me.right = right
             Me.gap = gap
             Me.equality = equality
         End Sub
 
-        Private Function slack() As number
+        Private Function slack() As Double
             Return If(Me.unsatisfiable, Number.MAX_VALUE, Me.right.scale * Me.right.position() - Me.gap - Me.left.scale * Me.left.position())
         End Function
     End Class
 
     Class Variable
-        Private offset As number = 0
+        Private offset As Double = 0
         Private block As Block
         Private [cInt] As Constraint()
         Private cOut As Constraint()
 
-        Public desiredPosition As number
-        Public weight As number = 1
-        Public scale As number = 1
+        Public desiredPosition As Double
+        Public weight As Double = 1
+        Public scale As Double = 1
 
-        Public Sub New(desiredPosition As number, Optional weight As number = 1, Optional scale As number = 1)
+        Public Sub New(desiredPosition As Double, Optional weight As Double = 1, Optional scale As Double = 1)
             Me.desiredPosition = desiredPosition
             Me.weight = weight
             Me.scale = scale
         End Sub
 
-        Private Function dfdv() As number
+        Private Function dfdv() As Double
             Return 2.0 * Me.weight * (Me.position() - Me.desiredPosition)
         End Function
 
-        Private Function position() As number
+        Private Function position() As Double
             Return (Me.block.ps.scale * Me.block.posn + Me.offset) / Me.scale
         End Function
 
@@ -83,9 +83,9 @@ Namespace Layouts.Cola
 
     Class Block
         Private vars As Variable() = {}
-        Private posn As number
+        Private posn As Double
         Private ps As PositionStats
-        Private blockInd As number
+        Private blockInd As Double
 
         Public Sub New(v As Variable)
             v.offset = 0
@@ -111,7 +111,7 @@ Namespace Layouts.Cola
             Me.posn = Me.ps.getPosn()
         End Sub
 
-        Private Function compute_lm(v As Variable, u As Variable, postAction As Action(Of Constraint)) As number
+        Private Function compute_lm(v As Variable, u As Variable, postAction As Action(Of Constraint)) As Double
             Dim dfdv = v.dfdv()
             v.visitNeighbours(u, Function(c, [next])
                                      Dim _dfdv = Me.compute_lm([next], v, postAction)
@@ -237,7 +237,7 @@ Namespace Layouts.Cola
             Return Nothing
         End Function
 
-        Private Sub mergeAcross(b As Block, c As Constraint, dist As number)
+        Private Sub mergeAcross(b As Block, c As Constraint, dist As Double)
             c.active = True
             Dim i As Integer = 0, n As Integer = b.vars.length
             While i < n
@@ -249,7 +249,7 @@ Namespace Layouts.Cola
             Me.posn = Me.ps.getPosn()
         End Sub
 
-        Private Function cost() As number
+        Private Function cost() As Double
             Dim sum = 0
             Dim i = Me.vars.length
             While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)

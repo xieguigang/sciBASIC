@@ -5,12 +5,12 @@ Namespace Layouts.Cola
 
     Class LineSegment
 
-        Public x1 As number
-        Public y1 As number
-        Public x2 As number
-        Public y2 As number
+        Public x1 As Double
+        Public y1 As Double
+        Public x2 As Double
+        Public y2 As Double
 
-        Public Sub New(x1 As number, y1 As number, x2 As number, y2 As number)
+        Public Sub New(x1 As Double, y1 As Double, x2 As Double, y2 As Double)
             Me.x1 = x1
             Me.y1 = y1
             Me.x2 = x2
@@ -61,7 +61,7 @@ Namespace Layouts.Cola
         '     *            &lt;0 for P2 right of the line
         '     
 
-        Private Shared Function isLeft(P0 As Point, P1 As Point, P2 As Point) As number
+        Private Shared Function isLeft(P0 As Point, P1 As Point, P2 As Point) As Double
             Return (P1.x - P0.x) * (P2.y - P0.y) - (P2.x - P0.x) * (P1.y - P0.y)
         End Function
 
@@ -378,12 +378,12 @@ Namespace Layouts.Cola
 
         Private Class VisibilityVertex
 
-            Public id As number
-            Public polyid As number
-            Public polyvertid As number
+            Public id As Double
+            Public polyid As Double
+            Public polyvertid As Double
             Public p As TVGPoint
 
-            Public Sub New(id As number, polyid As number, polyvertid As number, p As TVGPoint)
+            Public Sub New(id As Double, polyid As Double, polyvertid As Double, p As TVGPoint)
                 p.vv = Me
                 Me.id = id
                 Me.polyid = polyid
@@ -401,7 +401,7 @@ Namespace Layouts.Cola
 
                 Me.target = target
             End Sub
-            Public ReadOnly Property length() As number
+            Public ReadOnly Property length() As Double
                 Get
                     Dim dx = Me.source.p.x - Me.target.p.x
                     Dim dy = Me.source.p.y - Me.target.p.y
@@ -456,12 +456,12 @@ Namespace Layouts.Cola
                     Me.E = g0.E.slice(0)
                 End If
             End Sub
-            Private Sub addEdgeIfVisible(u As TVGPoint, v As TVGPoint, i1 As number, i2 As number)
+            Private Sub addEdgeIfVisible(u As TVGPoint, v As TVGPoint, i1 As Double, i2 As Double)
                 If Not Me.intersectsPolys(New LineSegment(u.x, u.y, v.x, v.y), i1, i2) Then
                     Me.E.push(New VisibilityEdge(u.vv, v.vv))
                 End If
             End Sub
-            Private Function addPoint(p As TVGPoint, i1 As number) As VisibilityVertex
+            Private Function addPoint(p As TVGPoint, i1 As Double) As VisibilityVertex
                 Dim n = Me.P.length
                 Me.V.push(New VisibilityVertex(Me.V.length, n, 0, p))
                 For i As var = 0 To n - 1
@@ -475,7 +475,7 @@ Namespace Layouts.Cola
                 Next
                 Return p.vv
             End Function
-            Private Function intersectsPolys(l As LineSegment, i1 As number, i2 As number) As Boolean
+            Private Function intersectsPolys(l As LineSegment, i1 As Double, i2 As Double) As Boolean
                 Dim i As Integer = 0, n As Integer = Me.P.length
                 While i < n
                     If i <> i1 AndAlso i <> i2 AndAlso intersects(l, Me.P(i)).length > 0 Then

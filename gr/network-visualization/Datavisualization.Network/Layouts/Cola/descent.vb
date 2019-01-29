@@ -4,57 +4,6 @@ Imports System.Collections.Generic
 Namespace Layouts.Cola
 
     '*
-    ' * Descent respects a collection of locks over nodes that should not move
-    ' * @class Locks
-    ' 
-
-    Class Locks
-        Public locks As Dictionary(Of number, number())
-        '*
-        '     * add a lock on the node at index id
-        '     * @method add
-        '     * @param id index of node to be locked
-        '     * @param x required position for node
-        '     
-
-        Private Sub add(id As number, x As number())
-            ' DEBUG
-            '                    if (isNaN(x[0]) || isNaN(x[1])) debugger;
-            '        DEBUG 
-
-            Me.locks(id) = x
-        End Sub
-        '*
-        '     * @method clear clear all locks
-        '     
-
-        Private Sub clear()
-            Me.locks = New Dictionary(Of number, number())()
-        End Sub
-        '*
-        '     * @isEmpty
-        '     * @returns false if no locks exist
-        '     
-
-        Private Function isEmpty() As Boolean
-            For Each l As var In Me.locks.Keys
-                Return False
-            Next
-            Return True
-        End Function
-        '*
-        '     * perform an operation on each lock
-        '     * @apply
-        '     
-
-        Private Sub apply(f As Action(Of number, number()))
-            For Each l As var In Me.locks.Keys
-                f(l, Me.locks(l))
-            Next
-        End Sub
-    End Class
-
-    '*
     ' * Uses a gradient descent approach to reduce a stress or p-stress goal function over a graph with specified ideal edge lengths or a square matrix of dissimilarities.
     ' * The standard stress function over a graph nodes with position vectors x,y,z is (mathematica input):
     ' *   stress[x_,y_,z_,D_,w_]:=Sum[w[[i,j]] (length[x[[i]],y[[i]],z[[i]],x[[j]],y[[j]],z[[j]]]-d[[i,j]])^2,{i,Length[x]-1},{j,i+1,Length[x]}]
@@ -66,22 +15,22 @@ Namespace Layouts.Cola
     ' 
 
     Class Descent
-        Public threshold As number = 0.0001
+        Public threshold As Double = 0.0001
         '* Hessian Matrix
         '     * @property H {number[][][]}
         '     
 
-        Public H As number()()()
+        Public H As Double()()()
         '* gradient vector
         '     * @property G {number[][]}
         '     
 
-        Public g As number()()
+        Public g As Double()()
         '* positions vector
         '     * @property x {number[][]}
         '     
 
-        Public x As number()()
+        Public x As Double()()
         '*
         '     * @property k {number} dimensionality
         '     
@@ -96,27 +45,27 @@ Namespace Layouts.Cola
 
         Public locks As Locks
 
-        Private Shared zeroDistance As number = 0.0000000001
-        Private minD As number
+        Private Shared zeroDistance As Double = 0.0000000001
+        Private minD As Double
 
         ' pool of arrays of size n used internally, allocated in constructor
-        Private Hd As number()()
-        Private a As number()()
-        Private b As number()()
-        Private c As number()()
-        Private d As number()()
-        Private e As number()()
-        Private ia As number()()
-        Private ib As number()()
-        Private xtmp As number()()
+        Private Hd As Double()()
+        Private a As Double()()
+        Private b As Double()()
+        Private c As Double()()
+        Private d As Double()()
+        Private e As Double()()
+        Private ia As Double()()
+        Private ib As Double()()
+        Private xtmp As Double()()
 
 
         ' Parameters for grid snap stress.
         ' TODO: Make a pluggable "StressTerm" class instead of this
         ' mess.
-        Public numGridSnapNodes As number = 0
-        Public snapGridSize As number = 100
-        Public snapStrength As number = 1000
+        Public numGridSnapNodes As Double = 0
+        Public snapGridSize As Double = 100
+        Public snapStrength As Double = 1000
         Public scaleSnapByMaxH As Boolean = False
 
         Private random As Random = New PseudoRandom()
@@ -124,8 +73,8 @@ Namespace Layouts.Cola
         Public project As Func(Of number(), number(), number(), number)() = Nothing
 
 
-        Public D As number()()
-        Public G As number()()
+        Public D As Double()()
+        Public G As Double()()
 
         '*
         '     * @method constructor
@@ -136,11 +85,11 @@ Namespace Layouts.Cola
         '     * If G[i][j] <= 1 then it is used as a weighting on the contribution of the variance between ideal and actual separation between i and j to the goal function
         '     
 
-        Public Sub New(x As number()(), D__1 As number()(), Optional G As number()() = Nothing)
+        Public Sub New(x As Double()(), D__1 As Double()(), Optional G As Double()() = Nothing)
             Me.x = x
-            Me.k = x.length
+            Me.k = x.Length
             ' dimensionality
-            Dim n = InlineAssignHelper(Me.n, x(0).length)
+            Dim n = InlineAssignHelper(Me.n, x(0).Length)
             ' number of nodes
             Me.H = New Array(Me.k)
             Me.g = New Array(Me.k)
@@ -189,7 +138,7 @@ Namespace Layouts.Cola
             End While
         End Sub
 
-        Public Shared Function createSquareMatrix(n As number, f As Func(Of number, number, number)) As number()()
+        Public Shared Function createSquareMatrix(n As Double, f As Func(Of number, number, number)) As Double()()
             Dim M = New Array(n)
             For i As var = 0 To n - 1
                 M(i) = New Array(n)
@@ -200,20 +149,20 @@ Namespace Layouts.Cola
             Return M
         End Function
 
-        Private Function offsetDir() As number()
+        Private Function offsetDir() As Double()
             Dim u = New Array(Me.k)
             Dim l = 0
             For i As var = 0 To Me.k - 1
                 Dim x = InlineAssignHelper(u(i), Me.random.getNextBetween(0.01, 1) - 0.5)
                 l += x * x
             Next
-            l = Math.sqrt(l)
+            l = Math.Sqrt(l)
             Return u.map(Function(x) x *= Me.minD / l)
         End Function
 
         ' compute first and second derivative information storing results in this.g and this.H
-        Public Sub computeDerivatives(x As number()())
-            Dim n As number = Me.n
+        Public Sub computeDerivatives(x As Double()())
+            Dim n As Double = Me.n
             If n < 1 Then
                 Return
             End If
@@ -224,10 +173,10 @@ Namespace Layouts.Cola
             '                            if (isNaN(x[i][u])) debugger;
             '        DEBUG 
 
-            Dim d__1 As number() = New Array(Me.k)
-            Dim d2__2 As number() = New Array(Me.k)
-            Dim Huu As number() = New Array(Me.k)
-            Dim maxH As number = 0
+            Dim d__1 As Double() = New Array(Me.k)
+            Dim d2__2 As Double() = New Array(Me.k)
+            Dim Huu As Double() = New Array(Me.k)
+            Dim maxH As Double = 0
 
             For u As var = 0 To n - 1
                 For i = 0 To Me.k - 1
@@ -256,9 +205,9 @@ Namespace Layouts.Cola
                             x(i)(v) += rd(i)
                         Next
                     End While
-                    Dim l As number = Math.sqrt(sd2)
-                    Dim D__3 As number = Me.D(u)(v)
-                    Dim weight = If(Me.G IsNot Nothing, Me.G(u)(v), 1)
+                    Dim l As Double = Math.Sqrt(sd2)
+                    Dim D__3 As Double = Me.d(u)(v)
+                    Dim weight = If(Me.g IsNot Nothing, Me.g(u)(v), 1)
                     If weight > 1 AndAlso l > D__3 OrElse Not isFinite(D__3) Then
                         For i = 0 To Me.k - 1
                             Me.H(i)(u)(v) = 0
@@ -268,12 +217,12 @@ Namespace Layouts.Cola
                     If weight > 1 Then
                         weight = 1
                     End If
-                    Dim D2__4 As number = D__3 * D__3
-                    Dim gs As number = 2 * weight * (l - D__3) / (D2__4 * l)
+                    Dim D2__4 As Double = D__3 * D__3
+                    Dim gs As Double = 2 * weight * (l - D__3) / (D2__4 * l)
                     Dim l3 = l * l * l
-                    Dim hs As number = 2 * -weight / (D2__4 * l3)
+                    Dim hs As Double = 2 * -weight / (D2__4 * l3)
                     If Not isFinite(gs) Then
-                        console.log(gs)
+                        Console.log(gs)
                     End If
                     For i = 0 To Me.k - 1
                         Me.g(i)(u) += d__1(i) * gs
@@ -330,9 +279,9 @@ Namespace Layouts.Cola
 
         End Sub
 
-        Private Shared Function dotProd(a As number(), b As number()) As number
+        Private Shared Function dotProd(a As Double(), b As Double()) As Double
             Dim x = 0
-            Dim i = a.length
+            Dim i = a.Length
             While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)
                 x += a(i) * b(i)
             End While
@@ -340,8 +289,8 @@ Namespace Layouts.Cola
         End Function
 
         ' result r = matrix m * vector v
-        Private Shared Sub rightMultiply(m As number()(), v As number(), r As number())
-            Dim i = m.length
+        Private Shared Sub rightMultiply(m As Double()(), v As Double(), r As Double())
+            Dim i = m.Length
             While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)
                 r(i) = Descent.dotProd(m(i), v)
             End While
@@ -350,7 +299,7 @@ Namespace Layouts.Cola
         ' computes the optimal step size to take in direction d using the
         ' derivative information in this.g and this.H
         ' returns the scalar multiplier to apply to d to get the optimal step
-        Public Function computeStepSize(d As number()()) As number
+        Public Function computeStepSize(d As Double()()) As Double
             Dim numerator = 0.0
             Dim denominator = 0.0
             For i As var = 0 To Me.k - 1
@@ -364,7 +313,7 @@ Namespace Layouts.Cola
             Return 1 * numerator / denominator
         End Function
 
-        Public Function reduceStress() As number
+        Public Function reduceStress() As Double
             Me.computeDerivatives(Me.x)
             Dim alpha = Me.computeStepSize(Me.g)
             For i As var = 0 To Me.k - 1
@@ -373,9 +322,9 @@ Namespace Layouts.Cola
             Return Me.computeStress()
         End Function
 
-        Private Shared Sub copy(a As number()(), b As number()())
-            Dim m = a.length
-            Dim n = b(0).length
+        Private Shared Sub copy(a As Double()(), b As Double()())
+            Dim m = a.Length
+            Dim n = b(0).Length
             For i As var = 0 To m - 1
                 For j As var = 0 To n - 1
                     b(i)(j) = a(i)(j)
@@ -389,7 +338,7 @@ Namespace Layouts.Cola
         ' r: result positions will be returned here
         ' d: unconstrained descent vector
         ' stepSize: amount to step along d
-        Private Sub stepAndProject(x0 As number()(), r As number()(), d As number()(), stepSize As number)
+        Private Sub stepAndProject(x0 As Double()(), r As Double()(), d As Double()(), stepSize As Double)
             Descent.copy(x0, r)
             Me.takeDescentStep(r(0), d(0), stepSize)
             If Me.project IsNot Nothing Then
@@ -428,7 +377,7 @@ Namespace Layouts.Cola
             Descent.mApply(Me.k, Me.n, f)
         End Sub
 
-        Private Sub computeNextPosition(x0 As number()(), r As number()())
+        Private Sub computeNextPosition(x0 As Double()(), r As Double()())
             Me.computeDerivatives(x0)
             Dim alpha = Me.computeStepSize(Me.g)
             Me.stepAndProject(x0, r, Me.g, alpha)
@@ -441,23 +390,23 @@ Namespace Layouts.Cola
             If Me.project IsNot Nothing Then
                 Me.matrixApply(Function(i, j) InlineAssignHelper(Me.e(i)(j), x0(i)(j) - r(i)(j)))
                 Dim beta = Me.computeStepSize(Me.e)
-                beta = Math.max(0.2, Math.min(beta, 1))
+                beta = Math.Max(0.2, Math.Min(beta, 1))
                 Me.stepAndProject(x0, r, Me.e, beta)
             End If
         End Sub
 
-        Public Function run(iterations As number) As number
+        Public Function run(iterations As Double) As Double
             Dim stress = number.MaxValue
             Dim converged = False
             While Not converged AndAlso System.Math.Max(System.Threading.Interlocked.Decrement(iterations), iterations + 1) > 0
                 Dim s = Me.rungeKutta()
-                converged = Math.abs(stress / s - 1) < Me.threshold
+                converged = Math.Abs(stress / s - 1) < Me.threshold
                 stress = s
             End While
             Return stress
         End Function
 
-        Public Function rungeKutta() As number
+        Public Function rungeKutta() As Double
             Me.computeNextPosition(Me.x, Me.a)
             Descent.mid(Me.x, Me.a, Me.ia)
             Me.computeNextPosition(Me.ia, Me.b)
@@ -475,17 +424,17 @@ Namespace Layouts.Cola
             Return disp
         End Function
 
-        Private Shared Sub mid(a As number()(), b As number()(), m As number()())
-            Descent.mApply(a.length, a(0).length, Function(i, j) InlineAssignHelper(m(i)(j), a(i)(j) + (b(i)(j) - a(i)(j)) / 2.0))
+        Private Shared Sub mid(a As Double()(), b As Double()(), m As Double()())
+            Descent.mApply(a.Length, a(0).Length, Function(i, j) InlineAssignHelper(m(i)(j), a(i)(j) + (b(i)(j) - a(i)(j)) / 2.0))
         End Sub
 
-        Public Sub takeDescentStep(x As number(), d As number(), stepSize As number)
+        Public Sub takeDescentStep(x As Double(), d As Double(), stepSize As Double)
             For i As var = 0 To Me.n - 1
                 x(i) = x(i) - stepSize * d(i)
             Next
         End Sub
 
-        Public Function computeStress() As number
+        Public Function computeStress() As Double
             Dim stress = 0.0
             Dim u As Integer = 0, nMinus1 As Integer = Me.n - 1
             While u < nMinus1
@@ -496,8 +445,8 @@ Namespace Layouts.Cola
                         Dim dx = Me.x(i)(u) - Me.x(i)(v)
                         l += dx * dx
                     Next
-                    l = Math.sqrt(l)
-                    Dim d = Me.D(u)(v)
+                    l = Math.Sqrt(l)
+                    Dim d = Me.d(u)(v)
                     If Not isFinite(d) Then
                         Continue While
                     End If
@@ -518,10 +467,10 @@ Namespace Layouts.Cola
 
     ' Linear congruential pseudo random number generator
     Class PseudoRandom
-        Private a As number = 214013
-        Private c As number = 2531011
-        Private m As number = 2147483648UI
-        Private range As number = 32767
+        Private a As Double = 214013
+        Private c As Double = 2531011
+        Private m As Double = 2147483648UI
+        Private range As Double = 32767
         Public seed As Integer = 1
 
         Public Sub New(Optional seed As Integer = 1)
@@ -529,13 +478,13 @@ Namespace Layouts.Cola
         End Sub
 
         ' random real between 0 and 1
-        Public Function getNext() As number
+        Public Function getNext() As Double
             Me.seed = CInt(Math.Truncate((Me.seed * Me.a + Me.c) Mod Me.m))
             Return (Me.seed >> 16) / Me.range
         End Function
 
         ' random real between min and max
-        Public Function getNextBetween(min As number, max As number) As number
+        Public Function getNextBetween(min As Double, max As Double) As Double
             Return min + Me.getNext() * (max - min)
         End Function
     End Class

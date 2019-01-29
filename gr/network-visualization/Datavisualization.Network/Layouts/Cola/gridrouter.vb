@@ -18,7 +18,7 @@ Namespace Layouts.Cola
         Private backToFront As any
         Private obstacles As any
         Private passableEdges As any
-        Private Function avg(a As any()) As number
+        Private Function avg(a As any()) As Double
             Return a.reduce(Function(x, y) x + y) / a.Length
         End Function
 
@@ -42,7 +42,7 @@ Namespace Layouts.Cola
         End Function
 
         ' get the depth of the given node in the group hierarchy
-        Private Function getDepth(v As any) As number
+        Private Function getDepth(v As any) As Double
             Dim depth = 0
             While v.parent <> Me.root
                 depth += 1
@@ -52,7 +52,7 @@ Namespace Layouts.Cola
         End Function
 
         ' medial axes between node centres and also boundary lines for the grid
-        Private Function midPoints(a As number()) As number()
+        Private Function midPoints(a As Double()) As Double()
             Dim gap = a(1) - a(0)
             Dim mids = New Double() {a(0) - gap / 2}
             For i As var = 1 To a.Length - 1
@@ -63,9 +63,9 @@ Namespace Layouts.Cola
         End Function
 
         Public originalnodes As Node()
-        Public groupPadding As number
+        Public groupPadding As Double
 
-        Public Sub New(originalnodes As Node(), accessor As NodeAccessor(Of Node), Optional groupPadding As number = 12)
+        Public Sub New(originalnodes As Node(), accessor As NodeAccessor(Of Node), Optional groupPadding As Double = 12)
             Me.nodes = originalnodes.map(Function(v, i) New NodeWrapper(i, accessor.getBounds(v), accessor.getChildren(v)))
             Me.leaves = Me.nodes.filter(Function(v) v.leaf)
             Me.groups = Me.nodes.filter(Function(g) Not g.leaf)
@@ -293,7 +293,7 @@ Namespace Layouts.Cola
         '   e1 = edge of s1, e2 = edge of s2
         '   if leftOf(e1,e2) create constraint s1.x + gap <= s2.x
         '   else if leftOf(e2,e1) create cons. s2.x + gap <= s1.x
-        Private Shared Sub nudgeSegs(x As String, y As String, routes As any, segments As any, leftOf As any, gap As number)
+        Private Shared Sub nudgeSegs(x As String, y As String, routes As any, segments As any, leftOf As any, gap As Double)
             Dim n = segments.length
             If n <= 1 Then
                 Return
@@ -361,7 +361,7 @@ Namespace Layouts.Cola
                        End Function)
         End Sub
 
-        Private Shared Sub nudgeSegments(routes As any, x As String, y As String, leftOf As Func(Of number, number, Boolean), gap As number)
+        Private Shared Sub nudgeSegments(routes As any, x As String, y As String, leftOf As Func(Of number, number, Boolean), gap As Double)
             Dim vsegmentsets = GridRouter.getSegmentSets(routes, x, y)
             ' scan the grouped (by x) segment sets to find co-linear bundles
             For i As var = 0 To vsegmentsets.length - 1
@@ -406,7 +406,7 @@ Namespace Layouts.Cola
         ' @param source function to retrieve the index of the source node for a given edge
         ' @param target function to retrieve the index of the target node for a given edge
         ' @returns an array giving, for each edge, an array of segments, each segment a pair of points in an array
-        Private Function routeEdges(Of Edge)(edges As Edge(), nudgeGap As number, source As Func(Of Edge, number), target As Func(Of Edge, number)) As Point()()()
+        Private Function routeEdges(Of Edge)(edges As Edge(), nudgeGap As Double, source As Func(Of Edge, number), target As Func(Of Edge, number)) As Point()()()
             Dim routePaths = edges.map(Function(e) Me.route(source(e), target(e)))
             Dim order = GridRouter.orderEdges(routePaths)
             Dim routes = routePaths.map(Function(e) GridRouter.makeSegments(e))
@@ -431,7 +431,7 @@ Namespace Layouts.Cola
                            End Function)
         End Sub
 
-        Private Shared Function angleBetween2Lines(line1 As Point(), line2 As Point()) As number
+        Private Shared Function angleBetween2Lines(line1 As Point(), line2 As Point()) As Double
             Dim angle1 = Math.Atan2(line1(0).y - line1(1).y, line1(0).x - line1(1).x)
             Dim angle2 = Math.Atan2(line2(0).y - line2(1).y, line2(0).x - line2(1).x)
             Dim diff = angle1 - angle2
@@ -447,8 +447,8 @@ Namespace Layouts.Cola
         End Function
 
         Public Class Pair
-            Public l As number
-            Public r As number
+            Public l As Double
+            Public r As Double
         End Class
 
         ' for the given list of ordered pairs, returns a function that (efficiently) looks-up a specific pair to
@@ -551,7 +551,7 @@ Namespace Layouts.Cola
 
         ' find a route between node s and node t
         ' returns an array of indices to verts
-        Public Function route(s As number, t As number) As Point()
+        Public Function route(s As Double, t As Double) As Point()
             Dim source = Me.nodes(CType(s, number))
             Dim target = Me.nodes(CType(t, number))
             Me.obstacles = Me.siblingObstacles(source, target)
@@ -615,7 +615,7 @@ Namespace Layouts.Cola
             Return pathPoints.filter(Function(v, i) Not (i < pathPoints.length - 1 AndAlso pathPoints(i + 1).node = source AndAlso v.node = source OrElse i > 0 AndAlso v.node = target AndAlso pathPoints(i - 1).node = target))
         End Function
 
-        Public Shared Function getRoutePath(route As Point()(), cornerradius As number, arrowwidth As number, arrowheight As number) As any
+        Public Shared Function getRoutePath(route As Point()(), cornerradius As Double, arrowwidth As Double, arrowheight As Double) As any
             Dim result = New With {
             Key .routepath = "M " & route(0)(0).x & " "c & route(0)(0).y & " "c,
             Key .arrowpath = ""

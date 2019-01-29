@@ -90,7 +90,7 @@ Namespace Layouts.Cola.GridRouter
         Public rect As Rectangle2D
         Public children As Integer()
 
-        Public Sub New(id As number, rect As Rectangle2D, children As Integer())
+        Public Sub New(id As Double, rect As Rectangle2D, children As Integer())
             Me.id = id
             Me.rect = rect
             Me.children = children
@@ -101,13 +101,13 @@ Namespace Layouts.Cola.GridRouter
 
     Public Class Vert
 
-        Public id As number
-        Public x As number
-        Public y As number
+        Public id As Double
+        Public x As Double
+        Public y As Double
         Public node As NodeWrapper
         Public line
 
-        Sub New(id As number, x As number, y As number, Optional node As NodeWrapper = Nothing, Optional line As Object = Nothing)
+        Sub New(id As Double, x As Double, y As Double, Optional node As NodeWrapper = Nothing, Optional line As Object = Nothing)
             Me.id = id
             Me.x = x
             Me.y = y
@@ -119,7 +119,7 @@ Namespace Layouts.Cola.GridRouter
     Public Class [Event]
         Public type As Integer
         Public s As route
-        Public pos As number
+        Public pos As Double
 
         Public Structure Comparer : Implements IComparer(Of [Event])
 
@@ -135,7 +135,7 @@ Namespace Layouts.Cola.GridRouter
     Public Class GridLine
 
         Public nodes As NodeWrapper()
-        Public pos As number
+        Public pos As Double
 
         Public Structure Comparer : Implements IComparer(Of GridLine)
 

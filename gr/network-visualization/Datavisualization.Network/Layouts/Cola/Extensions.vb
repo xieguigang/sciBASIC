@@ -51,7 +51,7 @@ Namespace Layouts.Cola
 
     Public Module Extensions
 
-        Public Function compareEvents(a As [Event], b As [Event]) As number
+        Public Function compareEvents(a As [Event], b As [Event]) As Double
             If (a.pos > b.pos) Then
                 Return 1
             End If
@@ -94,7 +94,7 @@ Namespace Layouts.Cola
         ''' <param name="target">The target Rectangle.</param>
         ''' <param name="ah">The size of the arrow head, a distance to shorten the line by.</param>
         ''' <returns></returns>
-        Public Function makeEdgeBetween(source As Rectangle2D, target As Rectangle2D, ah As number) As DirectedEdge
+        Public Function makeEdgeBetween(source As Rectangle2D, target As Rectangle2D, ah As Double) As DirectedEdge
             Dim si = source.rayIntersection(target.CenterX, target.CenterY) Or New Point2D(source.CenterX, source.CenterY).AsDefault
             Dim ti = target.rayIntersection(source.CenterX, source.CenterY) Or New Point2D(target.CenterX, target.CenterY).AsDefault
             Dim dx = ti.X - si.X
@@ -120,7 +120,7 @@ Namespace Layouts.Cola
         ''' <param name="ah">The size of the arrow head, a distance to shorten the
         ''' line by.</param>
         ''' <returns>The point an arrow head of the specified size would need to start.</returns>
-        Public Function makeEdgeTo(s As Point2D, target As Rectangle2D, ah As number) As Point2D
+        Public Function makeEdgeTo(s As Point2D, target As Rectangle2D, ah As Double) As Point2D
             Dim ti = target.rayIntersection(s.X, s.Y)
 
             If (ti Is Nothing) Then
@@ -151,7 +151,7 @@ Namespace Layouts.Cola
         ''' <param name="lowerBound"></param>
         ''' <param name="upperBound"></param>
         ''' <returns></returns>
-        Public Function removeOverlapInOneDimension(spans As (size As number, desiredCenter As number)(), lowerBound As number, upperBound As number) As (newCenters As number(), lowerBound As number, upperBound As number)
+        Public Function removeOverlapInOneDimension(spans As (size As Double, desiredCenter As Double)(), lowerBound As Double, upperBound As Double) As (newCenters As Double(), lowerBound As Double, upperBound As Double)
 
             Dim vs As Variable() = spans.Select(Function(s) New Variable(s.desiredCenter)).ToArray
             Dim cs As New List(Of Constraint)

@@ -20,7 +20,7 @@ Namespace Layouts.Cola
             desired_ratio = If(desired_ratio IsNot Nothing, desired_ratio, 1)
             node_size = If(node_size IsNot Nothing, node_size, 0)
 
-            Dim real_width As number = 0, real_height As number = 0, min_width As number = 0, global_bottom As number = 0
+            Dim real_width As Double = 0, real_height As Double = 0, min_width As Double = 0, global_bottom As Double = 0
 
             Dim line As Object() = {}
 
@@ -215,7 +215,7 @@ Namespace Layouts.Cola
 
             ' one iteration of the optimization method
             ' (gives a proper, but not necessarily optimal packing)
-            Dim [step] = Function(data As any(), max_width As number)
+            Dim [step] = Function(data As any(), max_width As Double)
                              line = New any() {}
                              real_width = 0
                              real_height = 0
@@ -231,7 +231,7 @@ Namespace Layouts.Cola
                          End Function
 
             ' looking for a position to one box
-            Dim put_rect = Function(rect As any, max_width As number)
+            Dim put_rect = Function(rect As any, max_width As Double)
 
 
                                Dim parent = undefined

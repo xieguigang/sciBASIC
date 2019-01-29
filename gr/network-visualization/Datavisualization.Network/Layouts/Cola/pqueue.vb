@@ -41,8 +41,8 @@ Namespace Layouts.Cola
             End If
         End Sub
 
-        Public Function count() As number
-            Return If(Me.empty(), 0, 1 + Me.subheaps.reduce(Function(n As number, h As PairingHeap(Of T))
+        Public Function count() As Double
+            Return If(Me.empty(), 0, 1 + Me.subheaps.reduce(Function(n As Double, h As PairingHeap(Of T))
                                                                 Return n + h.count()
 
                                                             End Function, 0))
@@ -212,7 +212,7 @@ Namespace Layouts.Cola
         '     * @return number of elements in queue
         '     
 
-        Public Function count() As number
+        Public Function count() As Double
             Return Me.root.count()
         End Function
     End Class

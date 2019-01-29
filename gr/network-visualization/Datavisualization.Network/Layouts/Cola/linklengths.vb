@@ -4,19 +4,19 @@ Imports number = System.Double
 Namespace Layouts.Cola
 
     Interface LinkAccessor(Of Link)
-        Function getSourceIndex(l As Link) As number
-        Function getTargetIndex(l As Link) As number
+        Function getSourceIndex(l As Link) As Double
+        Function getTargetIndex(l As Link) As Double
     End Interface
 
     Interface LinkLengthAccessor(Of Link)
         Inherits LinkAccessor(Of Link)
-        Sub setLength(l As Link, value As number)
+        Sub setLength(l As Link, value As Double)
     End Interface
 
     Class linkLengthExtensions
 
         ' compute the size of the union of two sets a and b
-        Private Function unionCount(a As any, b As any) As number
+        Private Function unionCount(a As any, b As any) As Double
             Dim u = New Object() {}
             For Each i As var In a.keys
                 u(i) = New Object() {}
@@ -28,7 +28,7 @@ Namespace Layouts.Cola
         End Function
 
         ' compute the size of the intersection of two sets a and b
-        Private Function intersectionCount(a As number(), b As number()) As number
+        Private Function intersectionCount(a As Double(), b As Double()) As Double
             Dim n = 0
             For Each i As var In a.keys
                 If b(i) IsNot Nothing Then
@@ -57,7 +57,7 @@ Namespace Layouts.Cola
         End Function
 
         ' modify the lengths of the specified links by the result of function f weighted by w
-        Private Sub computeLinkLengths(Of Link)(links As Link(), w As number, f As Func(Of any, any, number), la As LinkLengthAccessor(Of Link))
+        Private Sub computeLinkLengths(Of Link)(links As Link(), w As Double, f As Func(Of any, any, number), la As LinkLengthAccessor(Of Link))
             Dim neighbours = getNeighbours(links, la)
             links.ForEach(Function(l)
                               Dim a = neighbours(la.getSourceIndex(l))
@@ -71,7 +71,7 @@ Namespace Layouts.Cola
         '     * @class symmetricDiffLinkLengths
         '     
 
-        Private Sub symmetricDiffLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As number = 1)
+        Private Sub symmetricDiffLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As Double = 1)
             computeLinkLengths(links, w, Function(a, b) Math.Sqrt(unionCount(a, b) - intersectionCount(a, b)), la)
         End Sub
 
@@ -79,32 +79,32 @@ Namespace Layouts.Cola
         '     * @class jaccardLinkLengths
         '     
 
-        Private Sub jaccardLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As number = 1)
+        Private Sub jaccardLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As Double = 1)
             computeLinkLengths(links, w, Function(a, b) If(Math.Min([Object].keys(a).length, [Object].keys(b).length) < 1.1, 0, intersectionCount(a, b) / unionCount(a, b)), la)
         End Sub
 
         Public Interface IConstraint
-            Property left() As number
-            Property right() As number
-            Property gap() As number
+            Property left() As Double
+            Property right() As Double
+            Property gap() As Double
         End Interface
 
 
         Public Interface DirectedEdgeConstraints
             Property axis() As String
-            Property gap() As number
+            Property gap() As Double
         End Interface
 
         Public Interface LinkSepAccessor(Of Link)
             Inherits LinkAccessor(Of Link)
-            Function getMinSeparation(l As Link) As number
+            Function getMinSeparation(l As Link) As Double
         End Interface
 
         '* generate separation constraints for all edges unless both their source and sink are in the same strongly connected component
         '     * @class generateDirectedEdgeConstraints
         '     
 
-        Private Function generateDirectedEdgeConstraints(Of Link)(n As number, links As Link(), axis As String, la As LinkSepAccessor(Of Link)) As IConstraint()
+        Private Function generateDirectedEdgeConstraints(Of Link)(n As Double, links As Link(), axis As String, la As LinkSepAccessor(Of Link)) As IConstraint()
             Dim components = stronglyConnectedComponents(n, links, la)
             Dim nodes = New Object() {}
             components.forEach(Function(c, i) c.forEach(Function(v) InlineAssignHelper(nodes(v), i)))
@@ -131,7 +131,7 @@ Namespace Layouts.Cola
         '     * adaptation of https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
         '     
 
-        Private Function stronglyConnectedComponents(Of Link)(numVertices As number, edges As Link(), la As LinkAccessor(Of Link)) As number()()
+        Private Function stronglyConnectedComponents(Of Link)(numVertices As Double, edges As Link(), la As LinkAccessor(Of Link)) As Double()()
             Dim nodes = New Object() {}
             Dim index = 0
             Dim stack = New Object() {}

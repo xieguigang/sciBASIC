@@ -18,8 +18,8 @@ Namespace Layouts.Cola
     End Enum
     Class [Event]
         Private type As EventType
-        Private alpha As number
-        Private stress As number
+        Private alpha As Double
+        Private stress As Double
         Private listener As Action
     End Class
     Class InputNode
@@ -32,41 +32,41 @@ Namespace Layouts.Cola
         '     * x and y will be computed by layout as the Node's centroid
         '     
 
-        Private x As number
+        Private x As Double
         '*
         '     * x and y will be computed by layout as the Node's centroid
         '     
 
-        Private y As number
+        Private y As Double
         '*
         '     * specify a width and height of the node's bounding box if you turn on avoidOverlaps
         '     
 
-        Private width As number
+        Private width As Double
         '*
         '     * specify a width and height of the node's bounding box if you turn on avoidOverlaps
         '     
 
-        Private height As number
+        Private height As Double
         '*
         '     * selective bit mask.  !=0 means layout will not move.
         '     
 
-        Private fixed As number
+        Private fixed As Double
     End Class
 
     Class Node : Inherits InputNode
         ' Client-passed node may be missing these properties, which will be set
         ' upon ingestion
-        Private y As number
-        Private x As number
+        Private y As Double
+        Private x As Double
     End Class
 
     Class Group
         Private bounds As Rectangle2D
         Private leaves As Node()
         Private groups As Group()
-        Private padding As number
+        Private padding As Double
 
         Public Shared Function isGroup(g As any) As Boolean
             Return g.leaves IsNot Nothing OrElse g.groups IsNot Nothing
@@ -80,15 +80,15 @@ Namespace Layouts.Cola
         Property target() As NodeRefType
 
         ' ideal length the layout should try to achieve for this link
-        Property length() As number
+        Property length() As Double
 
         ' how hard we should try to satisfy this link's ideal length
         ' must be in the range: 0 < weight <= 1
         ' if unspecified 1 is the default
-        Property weight() As number
+        Property weight() As Double
     End Interface
 
-    Public Delegate Function LinkNumericPropertyAccessor(t As Link(Of Node)) As number
+    Public Delegate Function LinkNumericPropertyAccessor(t As Link(Of Node)) As Double
 
     Interface LinkLengthTypeAccessor
         Inherits LinkLengthAccessor(Of Link(Of Node))
@@ -100,14 +100,14 @@ Namespace Layouts.Cola
     ' 
 
     Class Layout
-        Private _canvasSize As number() = {1, 1}
-        Private _linkDistance As number = 20
-        Private _defaultNodeSize As number = 10
+        Private _canvasSize As Double() = {1, 1}
+        Private _linkDistance As Double = 20
+        Private _defaultNodeSize As Double = 10
         Private _linkLengthCalculator As any = Nothing
         Private _linkType As any = Nothing
         Private _avoidOverlaps As Boolean = False
         Private _handleDisconnected As Boolean = True
-        Private _alpha As number
+        Private _alpha As Double
         Private _lastStress As any
         Private _running As Boolean = False
         Private _nodes As any() = {}
@@ -115,12 +115,12 @@ Namespace Layouts.Cola
         Private _rootGroup As any = Nothing
         Private _links As Link(Of Node)() = {}
         Private _constraints As any() = {}
-        Private _distanceMatrix As number()() = Nothing
+        Private _distanceMatrix As Double()() = Nothing
         Private _descent As Descent = Nothing
         Private _directedLinkConstraints As any = Nothing
-        Private _threshold As number = 0.01
+        Private _threshold As Double = 0.01
         Private _visibilityGraph As any = Nothing
-        Private _groupCompactness As number = 0.000001
+        Private _groupCompactness As Double = 0.000001
 
         ' sub-class and override this property to replace with a more sophisticated eventing mechanism
         Protected [event] As any = Nothing
@@ -344,7 +344,7 @@ Namespace Layouts.Cola
         '     * @param minSeparation {number|link=>number} either a number specifying a minimum spacing required across all links or a function to return the minimum spacing for each link
         '     
 
-        Private Function flowLayout(Optional axis As String = "y", Optional minSeparation As number = 0) As Layout
+        Private Function flowLayout(Optional axis As String = "y", Optional minSeparation As Double = 0) As Layout
 
             Me._directedLinkConstraints = New With {
             Key .axis = axis,
@@ -431,10 +431,10 @@ Namespace Layouts.Cola
         '     * @type {Number}
         '     
 
-        Private Function defaultNodeSize() As number
+        Private Function defaultNodeSize() As Double
             Return Me._defaultNodeSize
         End Function
-        Private Function defaultNodeSize(x As number) As Layout
+        Private Function defaultNodeSize(x As Double) As Layout
 
             Me._defaultNodeSize = x
             Return Me
@@ -446,10 +446,10 @@ Namespace Layouts.Cola
         '     * @type {Number}
         '     
 
-        Private Function groupCompactness() As number
+        Private Function groupCompactness() As Double
             Return Me._groupCompactness
         End Function
-        Private Function groupCompactness(x As number) As Layout
+        Private Function groupCompactness(x As Double) As Layout
 
             Me._groupCompactness = x
             Return Me
@@ -463,7 +463,7 @@ Namespace Layouts.Cola
             Return Me._linkDistance
         End Function
 
-        Private Function linkDistance(x As number) As Layout
+        Private Function linkDistance(x As Double) As Layout
             Me._linkDistance = If(GetType(x) = [Function], x, +x)
             Me._linkLengthCalculator = Nothing
             Return Me
@@ -480,24 +480,24 @@ Namespace Layouts.Cola
             Return Me
         End Function
 
-        Private Function linkType(f As number) As Layout
+        Private Function linkType(f As Double) As Layout
             Me._linkType = f
             Return Me
         End Function
 
-        Private Function convergenceThreshold() As number
+        Private Function convergenceThreshold() As Double
             Return Me._threshold
         End Function
-        Private Function convergenceThreshold(x As number) As Layout
+        Private Function convergenceThreshold(x As Double) As Layout
 
             Me._threshold = If(GetType(x) = [Function], x, +x)
             Return Me
         End Function
 
-        Private Function alpha() As number
+        Private Function alpha() As Double
             Return Me._alpha
         End Function
-        Private Function alpha(x As number) As Layout
+        Private Function alpha(x As Double) As Layout
 
             x = +x
             If Me._alpha Then
@@ -524,7 +524,7 @@ Namespace Layouts.Cola
 
         End Function
 
-        Private Function getLinkLength(link As Link(Of Node)) As number
+        Private Function getLinkLength(link As Link(Of Node)) As Double
             If GetType(_linkDistance) = [Function] Then
                 Return DirectCast(Me._linkDistance, LinkNumericPropertyAccessor)(link)
             Else
@@ -532,11 +532,11 @@ Namespace Layouts.Cola
             End If
         End Function
 
-        Private Shared Sub setLinkLength(link As Link(Of Node), length As number)
+        Private Shared Sub setLinkLength(link As Link(Of Node), length As Double)
             link.length = length
         End Sub
 
-        Private Function getLinkType(link As Link(Of Node)) As number
+        Private Function getLinkType(link As Link(Of Node)) As Double
             Return If(GetType(_linkType) = [Function], Me._linkType(link), 0)
         End Function
 
@@ -558,7 +558,7 @@ Namespace Layouts.Cola
         '     * @param {number} [w] a multiplier for the effect of the length adjustment (e.g. 0.7)
         '     
 
-        Private Function symmetricDiffLinkLengths(idealLength As number, Optional w As number = 1) As Layout
+        Private Function symmetricDiffLinkLengths(idealLength As Double, Optional w As Double = 1) As Layout
             Me.linkDistance(Function(l) idealLength * l.length)
             Me._linkLengthCalculator = Function() symmetricDiffLinkLengths(Me._links, Me.linkAccessor, w)
             Return Me
@@ -575,7 +575,7 @@ Namespace Layouts.Cola
         '     * @param {number} [w] a multiplier for the effect of the length adjustment (e.g. 0.7)
         '     
 
-        Private Function jaccardLinkLengths(idealLength As number, Optional w As number = 1) As Layout
+        Private Function jaccardLinkLengths(idealLength As Double, Optional w As Double = 1) As Layout
             Me.linkDistance(Function(l) idealLength * l.length)
             Me._linkLengthCalculator = Function() jaccardLinkLengths(Me._links, Me.linkAccessor, w)
             Return Me
@@ -592,7 +592,7 @@ Namespace Layouts.Cola
         '     * @param [centerGraph=true] Center graph on restart
         '     
 
-        Private Function start(Optional initialUnconstrainedIterations As number = 0, Optional initialUserConstraintIterations As number = 0, Optional initialAllConstraintsIterations As number = 0, Optional gridSnapIterations As number = 0, Optional keepRunning As Boolean = True, Optional centerGraph As Boolean = True) As Layout
+        Private Function start(Optional initialUnconstrainedIterations As Double = 0, Optional initialUserConstraintIterations As Double = 0, Optional initialAllConstraintsIterations As Double = 0, Optional gridSnapIterations As Double = 0, Optional keepRunning As Boolean = True, Optional centerGraph As Boolean = True) As Layout
             Dim n__1 = Me.nodes().length
             Dim N__2 = n__1 + 2 * Me._groups.Length
             Dim m = Me._links.Length
@@ -776,7 +776,7 @@ Namespace Layouts.Cola
             Return If(keepRunning, Me.[resume](), Me)
         End Function
 
-        Private Sub initialLayout(iterations As number, x As number(), y As number())
+        Private Sub initialLayout(iterations As Double, x As Double(), y As Double())
             If Me._groups.Length > 0 AndAlso iterations > 0 Then
                 ' construct a flat graph with dummy nodes for the groups and edges connecting group dummy nodes to their children
                 ' todo: edges attached to groups are replaced with edges connected to the corresponding group dummy node
@@ -824,7 +824,7 @@ Namespace Layouts.Cola
         End Sub
 
         ' recalculate nodes position for disconnected graphs
-        Private Sub separateOverlappingComponents(width As number, height As number, Optional centerGraph As Boolean = True)
+        Private Sub separateOverlappingComponents(width As Double, height As Double, Optional centerGraph As Boolean = True)
             ' recalculate nodes position for disconnected graphs
             If Not Me._distanceMatrix AndAlso Me._handleDisconnected Then
                 Dim x = Me._descent.x(0)
@@ -858,7 +858,7 @@ Namespace Layouts.Cola
 
         ''' find a visibility graph over the set of nodes.  assumes all nodes have a
         ''' bounds property (a rectangle) and that no pair of bounds overlaps.
-        Private Sub prepareEdgeRouting(Optional nodeMargin As number = 0)
+        Private Sub prepareEdgeRouting(Optional nodeMargin As Double = 0)
             Me._visibilityGraph = New TangentVisibilityGraph(Me._nodes.map(Function(v)
                                                                                Return v.bounds.inflate(-nodeMargin).vertices()
 
@@ -875,7 +875,7 @@ Namespace Layouts.Cola
         '     *                      of the edge by.  Defaults to 5.
         '     
 
-        Private Function routeEdge(edge As any, Optional ah As number = 5, Optional draw As any = Nothing) As any
+        Private Function routeEdge(edge As any, Optional ah As Double = 5, Optional draw As any = Nothing) As any
             Dim lineData = New Object() {}
             'if (d.source.id === 10 && d.target.id === 11) {
             '    debugger;
@@ -932,12 +932,12 @@ Namespace Layouts.Cola
         End Function
 
         'The link source and target may be just a node index, or they may be references to nodes themselves.
-        Private Shared Function getSourceIndex(e As Link(Of Node)) As number
+        Private Shared Function getSourceIndex(e As Link(Of Node)) As Double
             Return If(GetType(e.source) Is Double, CType(e.source, number), DirectCast(e.source, Node).index)
         End Function
 
         'The link source and target may be just a node index, or they may be references to nodes themselves.
-        Private Shared Function getTargetIndex(e As Link(Of Node)) As number
+        Private Shared Function getTargetIndex(e As Link(Of Node)) As Double
             Return If(GetType(e.target) Is Double, CType(e.target, number), DirectCast(e.target, Node).index)
         End Function
 

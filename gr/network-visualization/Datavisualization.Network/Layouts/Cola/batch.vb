@@ -11,13 +11,13 @@ Namespace Layouts.Cola
         '     * @property groupMargin space around groups
         '     
 
-        Private Function gridify(pgLayout As Object, nudgeGap As number, margin As number, groupMargin As number) As Object
+        Private Function gridify(pgLayout As Object, nudgeGap As Double, margin As Double, groupMargin As Double) As Object
             pgLayout.cola.start(0, 0, 0, 10, False)
             Dim gridrouter = route(pgLayout.cola.nodes(), pgLayout.cola.groups(), margin, groupMargin)
             Return gridrouter.routeEdges(Of Object)(pgLayout.powerGraph.powerEdges, nudgeGap, Function(e) e.source.routerNode.id, Function(e) e.target.routerNode.id)
         End Function
 
-        Private Function route(Of Node)(nodes As Node(), groups As any, margin As number, groupMargin As number) As GridRouter(Of Object)
+        Private Function route(Of Node)(nodes As Node(), groups As any, margin As Double, groupMargin As Double) As GridRouter(Of Object)
             nodes.ForEach(Sub(d)
                               d.routerNode = New With {
                               Key .name = d.name,
@@ -48,7 +48,7 @@ Namespace Layouts.Cola
 
         End Interface
 
-        Private Function powerGraphGridLayout(graph As network, size As number(), grouppadding As number) As Object
+        Private Function powerGraphGridLayout(graph As network, size As Double(), grouppadding As Double) As Object
             ' compute power graph
             Dim powerGraph = Nothing
             graph.nodes.ForEach(Function(v, i) InlineAssignHelper(v.index, i))

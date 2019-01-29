@@ -6,16 +6,16 @@ Namespace Layouts.Cola
     Interface LinkTypeAccessor(Of Link)
         Inherits LinkAccessor(Of Link)
         ' return a unique identifier for the type of the link
-        Function [getType](Link As any) As number
+        Function [getType](Link As any) As Double
     End Interface
 
     Class PowerEdge
 
         Public source As any
         Public target As any
-        Public type As number
+        Public type As Double
 
-        Private Sub New(source As any, target As any, type As number)
+        Private Sub New(source As any, target As any, type As Double)
             Me.source = source
             Me.target = target
             Me.type = type
@@ -30,9 +30,9 @@ Namespace Layouts.Cola
         ' top level modules and candidates for merges
         Private roots As ModuleSet()
         ' remaining edge count
-        Private R As number
+        Private R As Double
 
-        Public Sub New(n As number, edges As Link(), linkAccessor As LinkTypeAccessor(Of Link), rootGroup As any())
+        Public Sub New(n As Double, edges As Link(), linkAccessor As LinkTypeAccessor(Of Link), rootGroup As any())
             Me.modules = New Array(n)
             Me.roots = New Object() {}
             If rootGroup Then
@@ -80,7 +80,7 @@ Namespace Layouts.Cola
         End Function
 
         ' merge modules a and b keeping track of their power edges and removing the from roots
-        Private Function merge(a As [Module], b As [Module], Optional k As number = 0) As [Module]
+        Private Function merge(a As [Module], b As [Module], Optional k As Double = 0) As [Module]
             Dim inInt = a.incoming.intersection(b.incoming)
             Dim outInt = a.outgoing.intersection(b.outgoing)
             Dim children = New ModuleSet()
@@ -112,7 +112,7 @@ Namespace Layouts.Cola
             Return m
         End Function
 
-        Private Function rootMerges(Optional k As number = 0) As any()
+        Private Function rootMerges(Optional k As Double = 0) As any()
             Dim rs = Me.roots(k).modules()
             Dim n = rs.length
             Dim merges = New Array(n * (n - 1))
@@ -153,7 +153,7 @@ Namespace Layouts.Cola
             Next
         End Function
 
-        Private Function nEdges(a As [Module], b As [Module]) As number
+        Private Function nEdges(a As [Module], b As [Module]) As Double
             Dim inInt = a.incoming.intersection(b.incoming)
             Dim outInt = a.outgoing.intersection(b.outgoing)
             Return Me.R - inInt.count() - outInt.count()
@@ -237,7 +237,7 @@ Namespace Layouts.Cola
             Return i
         End Function
 
-        Private Function intersectionCount(m As any, n As any) As number
+        Private Function intersectionCount(m As any, n As any) As Double
             Return [Object].keys(intersection(m, n)).length
         End Function
 
@@ -273,15 +273,15 @@ Namespace Layouts.Cola
 
 
     Class [Module]
-        Private gid As number
+        Private gid As Double
 
-        Private id As number
+        Private id As Double
         Public outgoing As New LinkSets()
         Public incoming As New LinkSets()
         Public children As New ModuleSet()
         Public definition As any
 
-        Public Sub New(id As number, Optional outgoing As LinkSets = Nothing, Optional incoming As LinkSets = Nothing, Optional children As ModuleSet = Nothing, Optional definition As any = Nothing)
+        Public Sub New(id As Double, Optional outgoing As LinkSets = Nothing, Optional incoming As LinkSets = Nothing, Optional children As ModuleSet = Nothing, Optional definition As any = Nothing)
             Me.id = id
             Me.outgoing = outgoing
             Me.incoming = incoming
@@ -315,7 +315,7 @@ Namespace Layouts.Cola
 
     Class ModuleSet
         Private table As any = New Object() {}
-        Private Function count() As number
+        Private Function count() As Double
             Return [Object].keys(Me.table).length
         End Function
         Private Function intersection(other As ModuleSet) As ModuleSet
@@ -323,10 +323,10 @@ Namespace Layouts.Cola
             result.table = intersection(Me.table, other.table)
             Return result
         End Function
-        Private Function intersectionCount(other As ModuleSet) As number
+        Private Function intersectionCount(other As ModuleSet) As Double
             Return Me.intersection(other).count()
         End Function
-        Private Function contains(id As number) As Boolean
+        Private Function contains(id As Double) As Boolean
             Return Me.table.Have(id)
         End Function
         Private Sub add(m As [Module])
@@ -354,11 +354,11 @@ Namespace Layouts.Cola
 
     Class LinkSets
         Private sets As any = New Object() {}
-        Private n As number = 0
-        Public Function count() As number
+        Private n As Double = 0
+        Public Function count() As Double
             Return Me.n
         End Function
-        Private Function contains(id As number) As Boolean
+        Private Function contains(id As Double) As Boolean
             Dim result = False
             Me.forAllModules(Function(m)
                                  If Not result AndAlso m.id = id Then
@@ -368,12 +368,12 @@ Namespace Layouts.Cola
                              End Function)
             Return result
         End Function
-        Private Sub add(linktype As number, m As [Module])
+        Private Sub add(linktype As Double, m As [Module])
             Dim s As ModuleSet = If(Me.sets.Have(linktype), Me.sets(linktype), InlineAssignHelper(Me.sets(linktype), New ModuleSet()))
             s.add(m)
             Me.n += 1
         End Sub
-        Private Sub remove(linktype As number, m As [Module])
+        Private Sub remove(linktype As Double, m As [Module])
             Dim ms = DirectCast(Me.sets(linktype), ModuleSet)
             ms.remove(m)
             If ms.count() = 0 Then

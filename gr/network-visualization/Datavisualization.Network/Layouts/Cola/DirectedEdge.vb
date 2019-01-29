@@ -124,7 +124,7 @@ Namespace Layouts.Cola
         Public [next] As RBNode(Of Node, Object)
 
         Public r As Rectangle2D
-        Public pos As number
+        Public pos As Double
 
         Public Shared Function makeRBTree() As RBNode(Of Node, Object)
             Return New RBNode(Of Node, Object)(Nothing, Nothing)
@@ -133,27 +133,27 @@ Namespace Layouts.Cola
     End Class
 
     Public Class Variable
-        Public offset As number = 0
+        Public offset As Double = 0
         Public block As Block
         Public cIn As Constraint()
         Public cOut As Constraint()
-        Public weight As number = 1
-        Public scale As number = 1
-        Public desiredPosition As number
+        Public weight As Double = 1
+        Public scale As Double = 1
+        Public desiredPosition As Double
 
-        Public ReadOnly Property dfdv As number
+        Public ReadOnly Property dfdv As Double
             Get
                 Return 2 * weight * (position - desiredPosition)
             End Get
         End Property
 
-        Public ReadOnly Property position As number
+        Public ReadOnly Property position As Double
             Get
                 Return (block.ps.scale * block.posn + offset) / scale
             End Get
         End Property
 
-        Sub New(desiredPosition As number, Optional weight As Double = 1, Optional scale As Double = 1)
+        Sub New(desiredPosition As Double, Optional weight As Double = 1, Optional scale As Double = 1)
             Me.desiredPosition = desiredPosition
             Me.weight = weight
             Me.scale = scale
@@ -181,11 +181,11 @@ Namespace Layouts.Cola
 
     Public Class Block
         Public ps As PositionStats
-        Public posn As number
+        Public posn As Double
         Public vars As New List(Of Variable)
         Public blockInd As Integer
 
-        Public ReadOnly Property cost As number
+        Public ReadOnly Property cost As Double
             Get
                 Dim sum = 0
                 Dim i As int = vars.Count
@@ -225,7 +225,7 @@ Namespace Layouts.Cola
             posn = ps.Posn
         End Sub
 
-        Private Function compute_lm(v As Variable, u As Variable, postAction As Action(Of Constraint)) As number
+        Private Function compute_lm(v As Variable, u As Variable, postAction As Action(Of Constraint)) As Double
             Dim dfdv = v.dfdv
 
             v.visitNeighbours(u, Sub(c, [next])
@@ -362,7 +362,7 @@ Namespace Layouts.Cola
             Return Nothing
         End Function
 
-        Public Sub mergeAcross(b As Block, c As Constraint, dist As number)
+        Public Sub mergeAcross(b As Block, c As Constraint, dist As Double)
             c.active = True
             For i As Integer = 0 To b.vars.Count - 1
                 Dim v = b.vars(i)
@@ -379,7 +379,7 @@ Namespace Layouts.Cola
         Dim list As New List(Of Block)
         Public vs As Variable()
 
-        Public ReadOnly Property cost As number
+        Public ReadOnly Property cost As Double
             Get
                 Return Aggregate b In list.ReverseIterator Into Sum(b.cost)
             End Get
@@ -488,7 +488,7 @@ Namespace Layouts.Cola
         Public vs As Variable()
         Public cs As Constraint()
 
-        Public ReadOnly Property cost As number
+        Public ReadOnly Property cost As Double
             Get
                 Return bs.cost()
             End Get
@@ -519,7 +519,7 @@ Namespace Layouts.Cola
         ''' Note: it throws away any previous block Structure.
         ''' </summary>
         ''' <param name="ps"></param>
-        Public Sub setStartingPositions(ps As number())
+        Public Sub setStartingPositions(ps As Double())
             inactive = cs.Select(Function(c)
                                      c.active = False
                                      Return c
@@ -530,7 +530,7 @@ Namespace Layouts.Cola
                        End Sub)
         End Sub
 
-        Public Sub setDesiredPositions(ps As number())
+        Public Sub setDesiredPositions(ps As Double())
             vs.ForEach(Sub(v, i)
                            v.desiredPosition = ps(i)
                        End Sub)
@@ -620,7 +620,7 @@ Namespace Layouts.Cola
         ''' repeatedly build And split block structure until we converge to an optimal solution
         ''' </summary>
         ''' <returns></returns>
-        Public Function solve() As number
+        Public Function solve() As Double
             satisfy()
             Dim lastcost = number.MaxValue, cost = bs.cost()
             While (Math.Abs(lastcost - cost) > 0.0001)
@@ -633,19 +633,19 @@ Namespace Layouts.Cola
     End Class
 
     Public Class PositionStats
-        Public scale As number
+        Public scale As Double
 
-        Public AB As number = 0
-        Public AD As number = 0
-        Public A2 As number = 0
+        Public AB As Double = 0
+        Public AD As Double = 0
+        Public A2 As Double = 0
 
-        Public ReadOnly Property Posn As number
+        Public ReadOnly Property Posn As Double
             Get
                 Return (AD - AB) / A2
             End Get
         End Property
 
-        Sub New(scale As number)
+        Sub New(scale As Double)
             Me.scale = scale
         End Sub
 
@@ -661,23 +661,23 @@ Namespace Layouts.Cola
     End Class
 
     Public Class Constraint
-        Public lm As number
+        Public lm As Double
         Public active As Boolean = False
         Public unsatisfiable As Boolean = False
 
         Public left As Variable
         Public right As Variable
-        Public gap As number
+        Public gap As Double
         Public equality As Boolean = False
 
-        Sub New(left As Variable, right As Variable, gap As number, Optional equality As Boolean = False)
+        Sub New(left As Variable, right As Variable, gap As Double, Optional equality As Boolean = False)
             Me.left = left
             Me.right = right
             Me.gap = gap
             Me.equality = equality
         End Sub
 
-        Public ReadOnly Property slack As number
+        Public ReadOnly Property slack As Double
             Get
                 If unsatisfiable Then
                     Return number.MaxValue
