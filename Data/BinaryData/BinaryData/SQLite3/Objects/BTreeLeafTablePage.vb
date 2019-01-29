@@ -7,18 +7,10 @@ Namespace ManagedSqlite.Core.Objects
     ''' </summary>
     Friend Class BTreeLeafTablePage
         Inherits BTreePage
+
         Public Property Cells() As Cell()
-            Get
-                Return m_Cells
-            End Get
-            Private Set
-                m_Cells = Value
-            End Set
-        End Property
-        Private m_Cells As Cell()
 
         Public Sub New(reader As ReaderBase, page As UInteger, header As BTreeHeader, cellOffsets As UShort())
-
             MyBase.New(reader, page, header, cellOffsets)
         End Sub
 

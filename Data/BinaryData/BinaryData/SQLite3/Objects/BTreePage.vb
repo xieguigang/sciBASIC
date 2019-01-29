@@ -11,11 +11,11 @@ Namespace ManagedSqlite.Core.Objects
 
         Protected Friend ReadOnly Property CellOffsets() As UShort()
 
-        Protected Sub New(reader__1 As ReaderBase, page__2 As UInteger, header__3 As BTreeHeader, cellOffsets__4 As UShort())
-            Reader = reader__1
-            Page = page__2
-            Header = header__3
-            CellOffsets = cellOffsets__4
+        Protected Sub New(reader As ReaderBase, page As UInteger, header As BTreeHeader, cellOffsets As UShort())
+            Me.Reader = reader
+            Me.Page = page
+            Me.Header = header
+            Me.CellOffsets = cellOffsets
         End Sub
 
         Friend Shared Function Parse(reader As ReaderBase, page As UInteger) As BTreePage
@@ -44,12 +44,12 @@ Namespace ManagedSqlite.Core.Objects
                     Throw New ArgumentOutOfRangeException()
                 Case BTreeType.InteriorTableBtreePage
                     res = New BTreeInteriorTablePage(reader, page, header, cellOffsets)
-                    Exit Select
+
                 Case BTreeType.LeafIndexBtreePage
                     Throw New ArgumentOutOfRangeException()
                 Case BTreeType.LeafTableBtreePage
                     res = New BTreeLeafTablePage(reader, page, header, cellOffsets)
-                    Exit Select
+
                 Case Else
                     Throw New ArgumentOutOfRangeException()
             End Select

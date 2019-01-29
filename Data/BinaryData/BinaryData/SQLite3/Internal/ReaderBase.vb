@@ -20,39 +20,15 @@ Namespace ManagedSqlite.Core.Internal
         Private ReadOnly _binaryReader As BinaryReader
 
         Public Property TextEncoding() As SqliteEncoding
-            Get
-                Return m_TextEncoding
-            End Get
-            Private Set
-                m_TextEncoding = Value
-            End Set
-        End Property
-        Private m_TextEncoding As SqliteEncoding
 
         Private _encoding As Encoding
 
         Public Property PageSize() As UShort
-            Get
-                Return m_PageSize
-            End Get
-            Private Set
-                m_PageSize = Value
-            End Set
-        End Property
-        Private m_PageSize As UShort
 
         ''' <summary>
         ''' Reserved space at the end of every page
         ''' </summary>
         Public Property ReservedSpace() As Byte
-            Get
-                Return m_ReservedSpace
-            End Get
-            Private Set
-                m_ReservedSpace = Value
-            End Set
-        End Property
-        Private m_ReservedSpace As Byte
 
         Public Sub New(stream As Stream)
             _stream = stream
@@ -77,13 +53,13 @@ Namespace ManagedSqlite.Core.Internal
             Select Case TextEncoding
                 Case SqliteEncoding.UTF8
                     _encoding = Encoding.UTF8
-                    Exit Select
+
                 Case SqliteEncoding.UTF16LE
                     _encoding = Encoding.Unicode
-                    Exit Select
+
                 Case SqliteEncoding.UTF16BE
                     _encoding = Encoding.BigEndianUnicode
-                    Exit Select
+
                 Case Else
                     Throw New ArgumentOutOfRangeException()
             End Select
@@ -207,12 +183,7 @@ Namespace ManagedSqlite.Core.Internal
             Return res
         End Function
 
-        Public Function ReadVarInt() As Long
-            Dim NULL As Byte
-            Return ReadVarInt(NULL)
-        End Function
-
-        Public Function ReadVarInt(ByRef readBytes As Byte) As Long
+        Public Function ReadVarInt(Optional ByRef readBytes As Byte = 0) As Long
             Dim res As Long = 0
 
             ' Decode huffman encoding

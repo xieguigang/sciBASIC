@@ -8,21 +8,20 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables
 Namespace ManagedSqlite.Core
     Public Class Sqlite3Database
         Implements IDisposable
+
         Private ReadOnly _settings As Sqlite3Settings
         Private ReadOnly _reader As ReaderBase
 
         Private _sizeInPages As UInteger
+        Private _masterTable As Sqlite3MasterTable
 
         Public Property Header() As DatabaseHeader
+
+        Public ReadOnly Property GetTables() As IEnumerable(Of Sqlite3SchemaRow)
             Get
-                Return m_Header
+                Return _masterTable.Tables
             End Get
-            Private Set
-                m_Header = Value
-            End Set
         End Property
-        Private m_Header As DatabaseHeader
-        Private _masterTable As Sqlite3MasterTable
 
         Public Sub New(file As Stream, Optional settings As Sqlite3Settings = Nothing)
             _settings = If(settings, New Sqlite3Settings())
@@ -79,12 +78,6 @@ Namespace ManagedSqlite.Core
 
             Throw New Exception("Unable to find table named " & name)
         End Function
-
-        Public ReadOnly Property GetTables() As IEnumerable(Of Sqlite3SchemaRow)
-            Get
-                Return _masterTable.Tables
-            End Get
-        End Property
 
         Public Sub Dispose() Implements IDisposable.Dispose
             _reader.Dispose()

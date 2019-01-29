@@ -6,15 +6,16 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 
 Namespace ManagedSqlite.Core.Tables
     Public Class Sqlite3Table
-        Private ReadOnly _reader As ReaderBase
+
+        Private ReadOnly reader As ReaderBase
 
         Private ReadOnly Property RootPage() As BTreePage
         Public ReadOnly Property SchemaDefinition() As Sqlite3SchemaRow
 
-        Friend Sub New(reader As ReaderBase, rootPage__1 As BTreePage, table As Sqlite3SchemaRow)
+        Friend Sub New(reader As ReaderBase, rootPage As BTreePage, table As Sqlite3SchemaRow)
             SchemaDefinition = table
-            _reader = reader
-            RootPage = rootPage__1
+            Me.reader = reader
+            Me.RootPage = rootPage
         End Sub
 
         Public Iterator Function EnumerateRows() As IEnumerable(Of Sqlite3Row)
@@ -26,8 +27,8 @@ Namespace ManagedSqlite.Core.Tables
 
                 ' Create a new stream to cover any fragmentation that might occur
                 ' The stream is started in the current cells "resident" data, and will overflow to any other pages as needed
-                Using dataStream As New SqliteDataStream(_reader, cell.Page, CUShort(cell.CellOffset + cell.Cell.CellHeaderSize), cell.Cell.DataSizeInCell, cell.Cell.FirstOverflowPage, cell.Cell.DataSize)
-                    Dim reader As New ReaderBase(dataStream, _reader)
+                Using dataStream As New SqliteDataStream(reader, cell.Page, CUShort(cell.CellOffset + cell.Cell.CellHeaderSize), cell.Cell.DataSizeInCell, cell.Cell.FirstOverflowPage, cell.Cell.DataSize)
+                    Dim reader As New ReaderBase(dataStream, Me.reader)
                     Dim null As Byte
                     Dim headerSize As Long = reader.ReadVarInt(null)
 
@@ -83,26 +84,26 @@ Namespace ManagedSqlite.Core.Tables
                         Select Case meta.Type
                             Case SqliteDataType.Null
                                 rowData(i) = Nothing
-                                Exit Select
+                                
                             Case SqliteDataType.[Integer]
                                 ' TODO: Do we handle negatives correctly?
                                 rowData(i) = reader.ReadInteger(CByte(meta.Length))
-                                Exit Select
+                                
                             Case SqliteDataType.Float
                                 rowData(i) = BitConverter.Int64BitsToDouble(reader.ReadInteger(CByte(meta.Length)))
-                                Exit Select
+                                
                             Case SqliteDataType.Boolean0
                                 rowData(i) = False
-                                Exit Select
+                                
                             Case SqliteDataType.Boolean1
                                 rowData(i) = True
-                                Exit Select
+                                
                             Case SqliteDataType.Blob
                                 rowData(i) = reader.Read(meta.Length)
-                                Exit Select
+                                
                             Case SqliteDataType.Text
                                 rowData(i) = reader.ReadString(meta.Length)
-                                Exit Select
+                                
                             Case Else
                                 Throw New ArgumentOutOfRangeException()
                         End Select
