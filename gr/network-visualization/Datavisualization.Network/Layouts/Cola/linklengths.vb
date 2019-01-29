@@ -1,17 +1,8 @@
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports any = System.Object
-Imports number = System.Double
+Imports sys = System.Math
 
 Namespace Layouts.Cola
-
-    Interface LinkAccessor(Of Link)
-        Function getSourceIndex(l As Link) As Double
-        Function getTargetIndex(l As Link) As Double
-    End Interface
-
-    Interface LinkLengthAccessor(Of Link)
-        Inherits LinkAccessor(Of Link)
-        Sub setLength(l As Link, value As Double)
-    End Interface
 
     Class linkLengthExtensions
 
@@ -39,55 +30,68 @@ Namespace Layouts.Cola
         End Function
 
         Private Function getNeighbours(Of Link)(links As Link(), la As LinkAccessor(Of Link)) As any
-            Dim neighbours = New Object() {}
-            Dim addNeighbours = Function(u, v)
+            Dim neighbours = New Object()() {}
+            Dim addNeighbours = Sub(u As Integer, v As Integer)
                                     If neighbours(u) Is Nothing Then
                                         neighbours(u) = New Object() {}
                                     End If
                                     neighbours(u)(v) = New Object() {}
-
-                                End Function
-            links.ForEach(Function(e)
-                              Dim u = la.getSourceIndex(e), v = la.getTargetIndex(e)
-                              addNeighbours(u, v)
-                              addNeighbours(v, u)
-
-                          End Function)
+                                End Sub
+            links.DoEach(Sub(e)
+                             Dim u = la.getSourceIndex(e), v = la.getTargetIndex(e)
+                             addNeighbours(u, v)
+                             addNeighbours(v, u)
+                         End Sub)
             Return neighbours
         End Function
 
-        ' modify the lengths of the specified links by the result of function f weighted by w
-        Private Sub computeLinkLengths(Of Link)(links As Link(), w As Double, f As Func(Of any, any, number), la As LinkLengthAccessor(Of Link))
+        ''' <summary>
+        ''' modify the lengths of the specified links by the result of function f weighted by w
+        ''' </summary>
+        ''' <typeparam name="Link"></typeparam>
+        ''' <param name="links"></param>
+        ''' <param name="w"></param>
+        ''' <param name="f"></param>
+        ''' <param name="la"></param>
+        Private Sub computeLinkLengths(Of Link)(links As Link(), w As Double, f As Func(Of any, any, Double), la As LinkLengthAccessor(Of Link))
             Dim neighbours = getNeighbours(links, la)
-            links.ForEach(Function(l)
-                              Dim a = neighbours(la.getSourceIndex(l))
-                              Dim b = neighbours(la.getTargetIndex(l))
-                              la.setLength(l, 1 + w * f(a, b))
 
-                          End Function)
+            links.DoEach(Sub(l)
+                             Dim a = neighbours(la.getSourceIndex(l))
+                             Dim b = neighbours(la.getTargetIndex(l))
+
+                             Call la.setLength()(l, 1 + w * f(a, b))
+                         End Sub)
         End Sub
 
-        '* modify the specified link lengths based on the symmetric difference of their neighbours
-        '     * @class symmetricDiffLinkLengths
-        '     
-
+        ''' <summary>
+        ''' modify the specified link lengths based on the symmetric difference of their neighbours
+        ''' </summary>
+        ''' <typeparam name="Link"></typeparam>
+        ''' <param name="links"></param>
+        ''' <param name="la"></param>
+        ''' <param name="w"></param>
         Private Sub symmetricDiffLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As Double = 1)
             computeLinkLengths(links, w, Function(a, b) Math.Sqrt(unionCount(a, b) - intersectionCount(a, b)), la)
         End Sub
 
-        '* modify the specified links lengths based on the jaccard difference between their neighbours
-        '     * @class jaccardLinkLengths
-        '     
-
+        ''' <summary>
+        ''' modify the specified links lengths based on the jaccard difference between their neighbours
+        ''' </summary>
+        ''' <typeparam name="Link"></typeparam>
+        ''' <param name="links"></param>
+        ''' <param name="la"></param>
+        ''' <param name="w"></param>
         Private Sub jaccardLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As Double = 1)
-            computeLinkLengths(links, w, Function(a, b) If(Math.Min([Object].keys(a).length, [Object].keys(b).length) < 1.1, 0, intersectionCount(a, b) / unionCount(a, b)), la)
+            computeLinkLengths(links, w, Function(a, b) If(sys.Min([Object].keys(a).length, [Object].keys(b).length) < 1.1, 0, intersectionCount(a, b) / unionCount(a, b)), la)
         End Sub
 
-        Public Interface IConstraint
-            Property left() As Double
-            Property right() As Double
-            Property gap() As Double
-        End Interface
+        Public Class IConstraint
+            Public Property axis As String
+            Public Property left() As Double
+            Public Property right() As Double
+            Public Property gap() As Double
+        End Class
 
 
         Public Interface DirectedEdgeConstraints
@@ -95,32 +99,40 @@ Namespace Layouts.Cola
             Property gap() As Double
         End Interface
 
-        Public Interface LinkSepAccessor(Of Link)
+        Public Class LinkSepAccessor(Of Link)
             Inherits LinkAccessor(Of Link)
-            Function getMinSeparation(l As Link) As Double
-        End Interface
 
-        '* generate separation constraints for all edges unless both their source and sink are in the same strongly connected component
-        '     * @class generateDirectedEdgeConstraints
-        '     
+            Public Delegate Function IGetMinSeperation(l As Link) As Double
 
-        Private Function generateDirectedEdgeConstraints(Of Link)(n As Double, links As Link(), axis As String, la As LinkSepAccessor(Of Link)) As IConstraint()
+            Public Property getMinSeparation As IGetMinSeperation
+        End Class
+
+        ''' <summary>
+        ''' generate separation constraints for all edges unless both their source and sink are in the same strongly connected component
+        ''' </summary>
+        ''' <typeparam name="Link"></typeparam>
+        ''' <param name="n"></param>
+        ''' <param name="links"></param>
+        ''' <param name="axis"></param>
+        ''' <param name="la"></param>
+        ''' <returns></returns>
+        Private Function generateDirectedEdgeConstraints(Of Link)(n As Double, links As Link(), axis As String, la As LinkSepAccessor(Of Link)) As List(Of IConstraint)
             Dim components = stronglyConnectedComponents(n, links, la)
             Dim nodes = New Object() {}
-            components.forEach(Function(c, i) c.forEach(Function(v) InlineAssignHelper(nodes(v), i)))
-            Dim constraints As any() = {}
-            links.ForEach(Function(l)
-                              Dim ui = la.getSourceIndex(l), vi = la.getTargetIndex(l), u = nodes(ui), v = nodes(vi)
-                              If u IsNot v Then
-                                  constraints.push(New With {
-                                  Key .axis = axis,
-                                  Key .left = ui,
-                                  Key .right = vi,
-                                  Key .gap = la.getMinSeparation(l)
+            components.ForEach(Sub(c, i) c.DoEach(Sub(v) nodes(v) = i))
+            Dim constraints As New List(Of IConstraint)
+            links.DoEach(Sub(l)
+                             Dim ui = la.getSourceIndex(l), vi = la.getTargetIndex(l), u = nodes(ui), v = nodes(vi)
+                             If u IsNot v Then
+                                 constraints.Add(New IConstraint With {
+                                  .axis = axis,
+                                  .left = ui,
+                                  .right = vi,
+                                  .gap = la.getMinSeparation(l)
                               })
-                              End If
+                             End If
 
-                          End Function)
+                         End Sub)
             Return constraints
         End Function
 
@@ -158,7 +170,7 @@ Namespace Layouts.Cola
                                     If v.lowlink = v.index Then
                                         ' start a new strongly connected component
                                         Dim component = New Object() {}
-                                        While stack.length
+                                        While stack.Length
                                             w = stack.pop()
                                             w.onStack = False
                                             'add w to current strongly connected component

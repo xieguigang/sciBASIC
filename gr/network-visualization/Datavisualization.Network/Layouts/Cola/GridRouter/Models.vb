@@ -82,6 +82,22 @@ Namespace Layouts.Cola.GridRouter
 
     End Class
 
+    Public Class LinkAccessor(Of Link)
+
+        Public Delegate Function IGetIndex(l As Link) As Integer
+
+        Public Property getSourceIndex As IGetIndex
+        Public Property getTargetIndex As IGetIndex
+    End Class
+
+    Public Class LinkLengthAccessor(Of Link)
+        Inherits LinkAccessor(Of Link)
+
+        Public Delegate Sub SetLinkLength(l As Link, value As Double)
+
+        Public Property setLength As SetLinkLength
+    End Class
+
     Public Class NodeWrapper
         Public leaf As Boolean
         Public parent As NodeWrapper

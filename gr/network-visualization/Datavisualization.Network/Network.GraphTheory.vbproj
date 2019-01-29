@@ -410,7 +410,6 @@
     <Compile Include="Layouts\Cola\powergraph.vb" />
     <Compile Include="Layouts\Cola\pqueue.vb" />
     <Compile Include="Layouts\Cola\shortestpaths.vb" />
-    <Compile Include="Layouts\Cola\vpsc.vb" />
     <Compile Include="Layouts\Parameters.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />

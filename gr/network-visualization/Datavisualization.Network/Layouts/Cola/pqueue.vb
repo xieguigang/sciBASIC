@@ -16,7 +16,7 @@ Namespace Layouts.Cola
         Public Overloads Function toString(selector As any) As String
             Dim str = ""
             Dim needComma = False
-            For i As var = 0 To Me.subheaps.length - 1
+            For i As Integer = 0 To Me.subheaps.Length - 1
                 Dim subheap As PairingHeap(Of T) = Me.subheaps(i)
                 If Not subheap.elem Then
                     needComma = False
