@@ -3,24 +3,7 @@ Imports number = System.Double
 
 Namespace Layouts.Cola
 
-    Class Link3D
-        Private length As number
-        Public source As number
-        Public target As number
 
-        Public Sub New(source As number, target As number)
-            Me.source = source
-            Me.target = target
-        End Sub
-
-        Public Function actualLength(x As number()()) As number
-            Return Math.sqrt(x.reduce(Function(c As number, v As number())
-                                          Dim dx = v(Me.target) - v(Me.source)
-                                          Return c + dx * dx
-
-                                      End Function, 0))
-        End Function
-    End Class
     Class Node3D
         Inherits GraphNode
         ' if fixed, layout will not move the node from its specified starting position

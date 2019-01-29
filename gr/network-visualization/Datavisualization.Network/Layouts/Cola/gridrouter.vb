@@ -1,4 +1,6 @@
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports any = System.Object
 Imports number = System.Double
 
@@ -177,9 +179,9 @@ Namespace Layouts.Cola
             lines.forEach(Function(l, li)
                               ' create vertices at the intersections of nodes and lines
                               Me.nodes.ForEach(Function(v, i)
-                                                   v.rect.lineIntersections(l.x1, l.y1, l.x2, l.y2).forEach(Function(intersect, j)
+                                                   v.rect.lineIntersections(l.x1, l.y1, l.x2, l.y2).ForEach(Function(intersect, j)
                                                                                                                 'console.log(li+','+i+','+j+':'+intersect.x + ',' + intersect.y);
-                                                                                                                Dim p = New Vert(Me.verts.Length, intersect.x, intersect.y, v, l)
+                                                                                                                Dim p = New Vert(Me.verts.Length, intersect.X, intersect.Y, v, l)
                                                                                                                 Me.verts.push(p)
                                                                                                                 l.verts.push(p)
                                                                                                                 v.ports.push(p)
@@ -440,8 +442,8 @@ Namespace Layouts.Cola
         End Function
 
         ' does the path a-b-c describe a left turn?
-        Private Shared Function isLeft(a As Point, b As Point, c As Point) As Boolean
-            Return ((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x)) <= 0
+        Private Shared Function isLeft(a As Point2D, b As Point2D, c As Point2D) As Boolean
+            Return ((b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X)) <= 0
         End Function
 
         Public Class Pair
@@ -465,10 +467,10 @@ Namespace Layouts.Cola
 
         ' returns an ordering (a lookup function) that determines the correct order to nudge the
         ' edge paths apart to minimize crossings
-        Private Shared Function orderEdges(edges As any) As any
+        Private Shared Function orderEdges(edges As edge()) As any
             Dim edgeOrder = New Object() {}
-            For i As var = 0 To edges.length - 2
-                For j As var = i + 1 To edges.length - 1
+            For i As Integer = 0 To edges.Length - 2
+                For j As Integer = i + 1 To edges.Length - 1
                     Dim e = edges(i)
                     Dim f = edges(j)
                     Dim lcs = New LongestCommonSubsequence(e, f)

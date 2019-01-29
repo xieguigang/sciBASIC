@@ -73,9 +73,9 @@ Namespace Layouts.Cola
 
 
         Public Function computeGroupBounds(g As ProjectionGroup) As Rectangle2D
-            g.bounds = If(Not g.leaves Is Nothing, g.leaves.reduce(Of Leaf, Rectangle2D)(Function(r As Rectangle2D, C As Leaf)
-                                                                                             Return C.bounds.Union(r)
-                                                                                         End Function, New Rectangle2D()), New Rectangle2D())
+            g.bounds = If(Not g.leaves Is Nothing, g.leaves.reduce(Of Rectangle2D)(Function(r As Rectangle2D, C As Leaf)
+                                                                                       Return C.bounds.Union(r)
+                                                                                   End Function, New Rectangle2D()), New Rectangle2D())
 
             If Not g.groups Is Nothing Then
                 g.bounds = g.groups.reduce(Of ProjectionGroup, Rectangle2D)(Function(r As Rectangle2D, C As ProjectionGroup)
@@ -87,8 +87,17 @@ Namespace Layouts.Cola
             Return g.bounds
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <typeparam name="T">序列的类型</typeparam>
+        ''' <typeparam name="V">序列进行降维之后的结果类型</typeparam>
+        ''' <param name="seq"></param>
+        ''' <param name="produce"></param>
+        ''' <param name="init"></param>
+        ''' <returns></returns>
         <Extension>
-        Private Function reduce(Of T, T2, V)(seq As IEnumerable(Of T), produce As Func(Of V, T, V), init As V) As V
+        Public Function Reduce(Of T, V)(seq As IEnumerable(Of T), produce As Func(Of V, T, V), init As V) As V
             For Each x As T In seq
                 init = produce(init, x)
             Next
