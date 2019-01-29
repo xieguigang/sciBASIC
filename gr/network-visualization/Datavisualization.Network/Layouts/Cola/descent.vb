@@ -1,7 +1,18 @@
-Imports number = System.Double
-Imports System.Collections.Generic
+Imports System.Threading
 
 Namespace Layouts.Cola
+
+    '*
+    ' * Uses a gradient descent approach to reduce a stress or p-stress goal function over a graph with specified ideal edge lengths or a square matrix of dissimilarities.
+    ' * The standard stress function over a graph nodes with position vectors x,y,z is (mathematica input):
+    ' *   stress[x_,y_,z_,D_,w_]:=Sum[w[[i,j]] (length[x[[i]],y[[i]],z[[i]],x[[j]],y[[j]],z[[j]]]-d[[i,j]])^2,{i,Length[x]-1},{j,i+1,Length[x]}]
+    ' * where: D is a square matrix of ideal separations between nodes, w is matrix of weights for those separations
+    ' *        length[x1_, y1_, z1_, x2_, y2_, z2_] = Sqrt[(x1 - x2)^2 + (y1 - y2)^2 + (z1 - z2)^2]
+    ' * below, we use wij = 1/(Dij^2)
+    ' *
+    ' * @class Descent
+    ' 
+
 
     '*
     ' * Uses a gradient descent approach to reduce a stress or p-stress goal function over a graph with specified ideal edge lengths or a square matrix of dissimilarities.
@@ -68,13 +79,13 @@ Namespace Layouts.Cola
         Public snapStrength As Double = 1000
         Public scaleSnapByMaxH As Boolean = False
 
-        Private random As Random = New PseudoRandom()
+        Private random As Random = Math.Seeds
 
-        Public project As Func(Of number(), number(), number(), number)() = Nothing
+        Public project As Func(Of Double(), Double(), Double(), Double)() = Nothing
 
 
-        Public D As Double()()
-        Public G As Double()()
+        Public Dmatrix As Double()()
+        Public Gmatrix As Double()()
 
         '*
         '     * @method constructor
@@ -85,64 +96,64 @@ Namespace Layouts.Cola
         '     * If G[i][j] <= 1 then it is used as a weighting on the contribution of the variance between ideal and actual separation between i and j to the goal function
         '     
 
-        Public Sub New(x As Double()(), D__1 As Double()(), Optional G As Double()() = Nothing)
+        Public Sub New(x As Double()(), Dmatrix As Double()(), Optional G As Double()() = Nothing)
             Me.x = x
             Me.k = x.Length
             ' dimensionality
-            Dim n = InlineAssignHelper(Me.n, x(0).Length)
+            Me.n = x(0).Length
             ' number of nodes
-            Me.H = New Array(Me.k)
-            Me.g = New Array(Me.k)
-            Me.Hd = New Array(Me.k)
-            Me.a = New Array(Me.k)
-            Me.b = New Array(Me.k)
-            Me.c = New Array(Me.k)
-            Me.d = New Array(Me.k)
-            Me.e = New Array(Me.k)
-            Me.ia = New Array(Me.k)
-            Me.ib = New Array(Me.k)
-            Me.xtmp = New Array(Me.k)
+            Me.H = New Double(Me.k)()() {}
+            Me.g = New Double(Me.k)() {}
+            Me.Hd = New Double(Me.k)() {}
+            Me.a = New Double(Me.k)() {}
+            Me.b = New Double(Me.k)() {}
+            Me.c = New Double(Me.k)() {}
+            Me.d = New Double(Me.k)() {}
+            Me.e = New Double(Me.k)() {}
+            Me.ia = New Double(Me.k)() {}
+            Me.ib = New Double(Me.k)() {}
+            Me.xtmp = New Double(Me.k)() {}
             Me.locks = New Locks()
-            Me.minD = number.MaxValue
+            Me.minD = Double.MaxValue
             Dim i As Integer = n
             Dim j As Integer
-            While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)
+            While System.Math.Max(Interlocked.Decrement(i), i + 1)
                 j = n
-                While System.Threading.Interlocked.Decrement(j) > i
-                    Dim d__2 = D__1(i)(j)
-                    If d__2 > 0 AndAlso d__2 < Me.minD Then
-                        Me.minD = d__2
+                While Interlocked.Decrement(j) > i
+                    Dim d = Dmatrix(i)(j)
+                    If d > 0 AndAlso d < Me.minD Then
+                        Me.minD = d
                     End If
                 End While
             End While
-            If Me.minD = number.MaxValue Then
+            If Me.minD = Double.MaxValue Then
                 Me.minD = 1
             End If
             i = Me.k
-            While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)
-                Me.g(i) = New Array(n)
-                Me.H(i) = New Array(n)
+            While System.Math.Max(Interlocked.Decrement(i), i + 1)
+                Me.g(i) = New Double(Me.k) {}
+                Me.H(i) = New Double(Me.k)() {}
                 j = n
-                While System.Math.Max(System.Threading.Interlocked.Decrement(j), j + 1)
-                    Me.H(i)(j) = New Array(n)
+                While System.Math.Max(Interlocked.Decrement(j), j + 1)
+                    Me.H(i)(j) = New Double(Me.k) {}
                 End While
-                Me.Hd(i) = New Array(n)
-                Me.a(i) = New Array(n)
-                Me.b(i) = New Array(n)
-                Me.c(i) = New Array(n)
-                Me.d(i) = New Array(n)
-                Me.e(i) = New Array(n)
-                Me.ia(i) = New Array(n)
-                Me.ib(i) = New Array(n)
-                Me.xtmp(i) = New Array(n)
+                Me.Hd(i) = New Double(Me.k) {}
+                Me.a(i) = New Double(Me.k) {}
+                Me.b(i) = New Double(Me.k) {}
+                Me.c(i) = New Double(Me.k) {}
+                Me.d(i) = New Double(Me.k) {}
+                Me.e(i) = New Double(Me.k) {}
+                Me.ia(i) = New Double(Me.k) {}
+                Me.ib(i) = New Double(Me.k) {}
+                Me.xtmp(i) = New Double(Me.k) {}
             End While
         End Sub
 
-        Public Shared Function createSquareMatrix(n As Double, f As Func(Of number, number, number)) As Double()()
-            Dim M = New Array(n)
-            For i As var = 0 To n - 1
-                M(i) = New Array(n)
-                For j As var = 0 To n - 1
+        Public Shared Function createSquareMatrix(n As Double, f As Func(Of Double, Double, Double)) As Double()()
+            Dim M = New Double(n)() {}
+            For i As Integer = 0 To n - 1
+                M(i) = New Double(n) {}
+                For j As Integer = 0 To n - 1
                     M(i)(j) = f(i, j)
                 Next
             Next
@@ -150,19 +161,24 @@ Namespace Layouts.Cola
         End Function
 
         Private Function offsetDir() As Double()
-            Dim u = New Array(Me.k)
-            Dim l = 0
-            For i As var = 0 To Me.k - 1
-                Dim x = InlineAssignHelper(u(i), Me.random.getNextBetween(0.01, 1) - 0.5)
+            Dim u = New Double(Me.k) {}
+            Dim l# = 0
+            Dim x#
+
+            For i As Integer = 0 To Me.k - 1
+                u(i) = Me.random.getNextBetween(0.01, 1) - 0.5
+                x = u(i)
                 l += x * x
             Next
+
             l = Math.Sqrt(l)
-            Return u.map(Function(x) x *= Me.minD / l)
+
+            Return u.Select(Function(xi) xi * Me.minD / l).ToArray
         End Function
 
         ' compute first and second derivative information storing results in this.g and this.H
         Public Sub computeDerivatives(x As Double()())
-            Dim n As Double = Me.n
+            Dim n As Integer = Me.n
             If n < 1 Then
                 Return
             End If
@@ -173,16 +189,16 @@ Namespace Layouts.Cola
             '                            if (isNaN(x[i][u])) debugger;
             '        DEBUG 
 
-            Dim d__1 As Double() = New Array(Me.k)
-            Dim d2__2 As Double() = New Array(Me.k)
-            Dim Huu As Double() = New Array(Me.k)
+            Dim d__1 As Double() = New Double(Me.k) {}
+            Dim d2__2 As Double() = New Double(Me.k) {}
+            Dim Huu As Double() = New Double(Me.k) {}
             Dim maxH As Double = 0
 
-            For u As var = 0 To n - 1
+            For u As Integer = 0 To n - 1
                 For i = 0 To Me.k - 1
                     Huu(i) = InlineAssignHelper(Me.g(i)(u), 0)
                 Next
-                For v As var = 0 To n - 1
+                For v As Integer = 0 To n - 1
                     If u = v Then
                         Continue For
                     End If
@@ -191,7 +207,7 @@ Namespace Layouts.Cola
                     Dim maxDisplaces = n
                     ' avoid infinite loop in the case of numerical issues, such as huge values
                     Dim sd2 = 0.0
-                    While System.Math.Max(System.Threading.Interlocked.Decrement(maxDisplaces), maxDisplaces + 1)
+                    While System.Math.Max(Interlocked.Decrement(maxDisplaces), maxDisplaces + 1)
                         sd2 = 0.0
                         For i = 0 To Me.k - 1
                             Dim dx = InlineAssignHelper(d__1(i), x(i)(u) - x(i)(v))
@@ -206,9 +222,9 @@ Namespace Layouts.Cola
                         Next
                     End While
                     Dim l As Double = Math.Sqrt(sd2)
-                    Dim D__3 As Double = Me.d(u)(v)
-                    Dim weight = If(Me.g IsNot Nothing, Me.g(u)(v), 1)
-                    If weight > 1 AndAlso l > D__3 OrElse Not isFinite(D__3) Then
+                    Dim D__3 As Double = Me.Dmatrix(u)(v)
+                    Dim weight = If(Me.Gmatrix IsNot Nothing, Me.Gmatrix(u)(v), 1)
+                    If weight > 1 AndAlso l > D__3 OrElse Not D__3.IsNaNImaginary Then
                         For i = 0 To Me.k - 1
                             Me.H(i)(u)(v) = 0
                         Next
@@ -221,9 +237,7 @@ Namespace Layouts.Cola
                     Dim gs As Double = 2 * weight * (l - D__3) / (D2__4 * l)
                     Dim l3 = l * l * l
                     Dim hs As Double = 2 * -weight / (D2__4 * l3)
-                    If Not isFinite(gs) Then
-                        Console.log(gs)
-                    End If
+
                     For i = 0 To Me.k - 1
                         Me.g(i)(u) += d__1(i) * gs
                         Huu(i) -= InlineAssignHelper(Me.H(i)(u)(v), hs * (l3 + D__3 * (d2__2(i) - sd2) + l * sd2))
@@ -240,7 +254,7 @@ Namespace Layouts.Cola
             Dim k = w / (r * r)
             Dim numNodes = Me.numGridSnapNodes
             'var numNodes = n;
-            For u As var = 0 To numNodes - 1
+            For u As Integer = 0 To numNodes - 1
                 For i = 0 To Me.k - 1
                     Dim xiu = Me.x(i)(u)
                     Dim m = xiu / g
@@ -260,29 +274,19 @@ Namespace Layouts.Cola
                 Next
             Next
             If Not Me.locks.isEmpty() Then
-                Me.locks.apply(Function(u, p)
+                Me.locks.apply(Sub(u, p)
                                    For i = 0 To Me.k - 1
                                        Me.H(i)(u)(u) += maxH
                                        Me.g(i)(u) -= maxH * (p(i) - x(i)(u))
                                    Next
-
-                               End Function)
+                               End Sub)
             End If
-            ' DEBUG
-            '                    for (var u: number = 0; u < n; ++u)
-            '                        for (i = 0; i < this.k; ++i) {
-            '                            if (isNaN(this.g[i][u])) debugger;
-            '                            for (var v: number = 0; v < n; ++v)
-            '                                if (isNaN(this.H[i][u][v])) debugger;
-            '                        }
-            '        DEBUG 
-
         End Sub
 
         Private Shared Function dotProd(a As Double(), b As Double()) As Double
             Dim x = 0
             Dim i = a.Length
-            While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)
+            While System.Math.Max(Interlocked.Decrement(i), i + 1)
                 x += a(i) * b(i)
             End While
             Return x
@@ -302,12 +306,12 @@ Namespace Layouts.Cola
         Public Function computeStepSize(d As Double()()) As Double
             Dim numerator = 0.0
             Dim denominator = 0.0
-            For i As var = 0 To Me.k - 1
+            For i As Integer = 0 To Me.k - 1
                 numerator += Descent.dotProd(Me.g(i), d(i))
                 Descent.rightMultiply(Me.H(i), d(i), Me.Hd(i))
                 denominator += Descent.dotProd(d(i), Me.Hd(i))
             Next
-            If denominator = 0 OrElse Not isFinite(denominator) Then
+            If denominator = 0 OrElse Not denominator.IsNaNImaginary Then
                 Return 0
             End If
             Return 1 * numerator / denominator
@@ -316,7 +320,7 @@ Namespace Layouts.Cola
         Public Function reduceStress() As Double
             Me.computeDerivatives(Me.x)
             Dim alpha = Me.computeStepSize(Me.g)
-            For i As var = 0 To Me.k - 1
+            For i = 0 To Me.k - 1
                 Me.takeDescentStep(Me.x(i), Me.g(i), alpha)
             Next
             Return Me.computeStress()
@@ -325,8 +329,8 @@ Namespace Layouts.Cola
         Private Shared Sub copy(a As Double()(), b As Double()())
             Dim m = a.Length
             Dim n = b(0).Length
-            For i As var = 0 To m - 1
-                For j As var = 0 To n - 1
+            For i = 0 To m - 1
+                For j = 0 To n - 1
                     b(i)(j) = a(i)(j)
                 Next
             Next
@@ -350,7 +354,7 @@ Namespace Layouts.Cola
             End If
 
             ' todo: allow projection against constraints in higher dimensions
-            For i As var = 2 To Me.k - 1
+            For i = 2 To Me.k - 1
                 Me.takeDescentStep(r(i), d(i), stepSize)
             Next
 
@@ -390,15 +394,15 @@ Namespace Layouts.Cola
             If Me.project IsNot Nothing Then
                 Me.matrixApply(Function(i, j) InlineAssignHelper(Me.e(i)(j), x0(i)(j) - r(i)(j)))
                 Dim beta = Me.computeStepSize(Me.e)
-                beta = Math.Max(0.2, Math.Min(beta, 1))
+                beta = Math.Max(0.2, System.Math.Min(beta, 1))
                 Me.stepAndProject(x0, r, Me.e, beta)
             End If
         End Sub
 
-        Public Function run(iterations As Double) As Double
-            Dim stress = number.MaxValue
+        Public Function run(iterations As Integer) As Double
+            Dim stress = Double.MaxValue
             Dim converged = False
-            While Not converged AndAlso System.Math.Max(System.Threading.Interlocked.Decrement(iterations), iterations + 1) > 0
+            While Not converged AndAlso System.Math.Max(Interlocked.Decrement(iterations), iterations + 1) > 0
                 Dim s = Me.rungeKutta()
                 converged = Math.Abs(stress / s - 1) < Me.threshold
                 stress = s
@@ -414,13 +418,12 @@ Namespace Layouts.Cola
             Me.computeNextPosition(Me.ib, Me.c)
             Me.computeNextPosition(Me.c, Me.d)
             Dim disp = 0.0
-            Me.matrixApply(Function(i, j)
+            Me.matrixApply(Sub(i, j)
                                Dim x = (Me.a(i)(j) + 2.0 * Me.b(i)(j) + 2.0 * Me.c(i)(j) + Me.d(i)(j)) / 6.0
                                Dim d = Me.x(i)(j) - x
                                disp += d * d
                                Me.x(i)(j) = x
-
-                           End Function)
+                           End Sub)
             Return disp
         End Function
 
@@ -429,7 +432,7 @@ Namespace Layouts.Cola
         End Sub
 
         Public Sub takeDescentStep(x As Double(), d As Double(), stepSize As Double)
-            For i As var = 0 To Me.n - 1
+            For i = 0 To Me.n - 1
                 x(i) = x(i) - stepSize * d(i)
             Next
         End Sub
@@ -441,13 +444,13 @@ Namespace Layouts.Cola
                 Dim v As Integer = u + 1, n As Integer = Me.n
                 While v < n
                     Dim l = 0.0
-                    For i As var = 0 To Me.k - 1
+                    For i = 0 To Me.k - 1
                         Dim dx = Me.x(i)(u) - Me.x(i)(v)
                         l += dx * dx
                     Next
                     l = Math.Sqrt(l)
-                    Dim d = Me.d(u)(v)
-                    If Not isFinite(d) Then
+                    Dim d = Me.Dmatrix(u)(v)
+                    If Not d.IsNaNImaginary Then
                         Continue While
                     End If
                     Dim rl = d - l
@@ -462,30 +465,6 @@ Namespace Layouts.Cola
         Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
             target = value
             Return value
-        End Function
-    End Class
-
-    ' Linear congruential pseudo random number generator
-    Class PseudoRandom
-        Private a As Double = 214013
-        Private c As Double = 2531011
-        Private m As Double = 2147483648UI
-        Private range As Double = 32767
-        Public seed As Integer = 1
-
-        Public Sub New(Optional seed As Integer = 1)
-            Me.seed = seed
-        End Sub
-
-        ' random real between 0 and 1
-        Public Function getNext() As Double
-            Me.seed = CInt(Math.Truncate((Me.seed * Me.a + Me.c) Mod Me.m))
-            Return (Me.seed >> 16) / Me.range
-        End Function
-
-        ' random real between min and max
-        Public Function getNextBetween(min As Double, max As Double) As Double
-            Return min + Me.getNext() * (max - min)
         End Function
     End Class
 End Namespace
