@@ -92,8 +92,7 @@ Namespace CommandLine
         Function Run() As Integer
     End Interface
 
-    Public Structure ProcessEx
-        Implements IIORedirectAbstract
+    Public Structure ProcessEx : Implements IIORedirectAbstract
 
         Public Property Bin As String Implements IIORedirectAbstract.Bin
         Public Property CLIArguments As String Implements IIORedirectAbstract.CLIArguments
@@ -114,7 +113,7 @@ Namespace CommandLine
             Return Start(True)
         End Function
 
-        Public Function Start(Optional WaitForExit As Boolean = False) As Integer Implements IIORedirectAbstract.Start
+        Public Function Start(Optional waitForExit As Boolean = False) As Integer Implements IIORedirectAbstract.Start
             Dim proc As New Process
 
             Try
@@ -125,17 +124,17 @@ Namespace CommandLine
                 Throw ex
             End Try
 
-            If WaitForExit Then
-                Call __wait(proc)
+            If waitForExit Then
+                Call wait(proc)
                 Return proc.ExitCode
             Else
-                Dim h As Action(Of Process) = AddressOf __wait
+                Dim h As Action(Of Process) = AddressOf wait
                 Call New Thread(Sub() Call h(proc)).Start()
                 Return 0
             End If
         End Function
 
-        Private Sub __wait(proc As Process)
+        Private Sub wait(proc As Process)
             Call proc.WaitForExit()
             RaiseEvent ProcessExit(proc.ExitCode, Now.ToString)
         End Sub

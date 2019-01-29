@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0897cfdb0fbe46d52a3d8888c7d82ee8, gr\Microsoft.VisualBasic.Imaging\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::b038eb1a06903ed84083266f8a2cbbc7, gr\Microsoft.VisualBasic.Imaging\test\Program.vb"
 
     ' Author:
     ' 
@@ -79,7 +79,15 @@ Module Program
         Call logo.SaveTo("D:\sciBASIC.txt")
 
         Dim charset = "php.NETPHP".GenerateFontWeights
-        logo = "php.NET".ASCIIImage("font-style: italic; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";", charset)
+        logo = "php.NET".ASCIIImage("font-style: strong; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";", charset)
+
+        Call Console.WriteLine()
+        Call Console.WriteLine(logo)
+
+        Call Console.WriteLine()
+
+        charset = "bioCAD.cloud ".GenerateFontWeights
+        logo = "bioCAD.cloud".ASCIIImage("font-style: normal; font-size: 10; font-family: " & FontFace.MicrosoftYaHei & ";", charset)
 
         Call Console.WriteLine()
         Call Console.WriteLine(logo)

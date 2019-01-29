@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33776f60c24dae9f2254b706bc01cec0, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::35e2b041f79cc0f6deab9578bfd4a3c3, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -39,10 +39,10 @@
     ' 
     '     Module RandomExtensions
     ' 
-    '         Function: (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, NextGaussian, NextTriangular
+    '         Function: (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, (+2 Overloads) NextGaussian, NextTriangular
     '                   Permutation, randf, RandomSingle, Seed
     ' 
-    '         Sub: (+2 Overloads) Shuffle
+    '         Sub: (+3 Overloads) Shuffle
     ' 
     ' 
     ' 
@@ -87,11 +87,10 @@ Namespace Math
         ''' If a negative number is specified, the absolute value of the number is used.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Seed() As Integer
-            Dim seeds& = CLng(Integer.MaxValue) * 2
-            Randomize()
-            seeds = (Rnd() * SecurityString.ToLong(SecurityString.GetMd5Hash(Now.ToString))) / seeds
-            Return CInt(seeds)
+            Return Math.Abs(CInt(Math.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
         End Function
 
         Const RandfMultiply# = 10000
@@ -112,7 +111,13 @@ Namespace Math
             Return resultInteger / RandfMultiply
         End Function
 
-        ReadOnly seeds As New Random(Rnd() * 10000)
+        ''' <summary>
+        ''' 一般来说，在获取随机数的时候并不推荐重新构建一个新的随机数发生器
+        ''' 可以在全局范围内重复使用这个随机数发生器
+        ''' 不同的代码重复使用这个种子，这样子可以尽量的模拟出真正的随机行为
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Seeds As New Random()
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RandomSingle() As Single
@@ -167,11 +172,18 @@ Namespace Math
             Return rand_normal
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <ExportAPI("NextGaussian")>
+        Public Function NextGaussian(Optional mu As Double = 0, Optional sigma As Double = 1) As Double
+            Return seeds.NextGaussian(mu, sigma)
+        End Function
+
         ''' <summary>
         ''' Generates values from a triangular distribution.
         ''' </summary>
         ''' <remarks>
-        ''' See http://en.wikipedia.org/wiki/Triangular_distribution for a description of the triangular probability distribution and the algorithm for generating one.
+        ''' See http://en.wikipedia.org/wiki/Triangular_distribution for a description of the triangular 
+        ''' probability distribution and the algorithm for generating one.
         ''' </remarks>
         ''' <param name="r"></param>
         ''' <param name = "a">Minimum</param>
@@ -205,12 +217,21 @@ Namespace Math
         ''' <param name="r"></param>
         ''' <param name = "list"></param>
         <Extension> Public Sub Shuffle(Of T)(r As Random, ByRef list As List(Of T))
+            Dim j As Integer
+            Dim temp As T
+
             For i As Integer = 0 To list.Count - 1
-                Dim j As Integer = r.[Next](0, i + 1)
-                Dim temp As T = list(j)
+                j = r.[Next](0, i + 1)
+                temp = list(j)
                 list(j) = list(i)
                 list(i) = temp
             Next
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub Shuffle(Of T)(ByRef list As List(Of T))
+            Call seeds.Shuffle(list)
         End Sub
 
         ''' <summary>
@@ -221,9 +242,12 @@ Namespace Math
         ''' 
         <ExportAPI("Shuffle")>
         Public Sub Shuffle(r As Random, ByRef list As IList)
+            Dim j As Integer
+            Dim temp As Object
+
             For i As Integer = 0 To list.Count - 1
-                Dim j As Integer = r.[Next](0, i + 1)
-                Dim temp = list(j)
+                j = r.[Next](0, i + 1)
+                temp = list(j)
                 list(j) = list(i)
                 list(i) = temp
             Next

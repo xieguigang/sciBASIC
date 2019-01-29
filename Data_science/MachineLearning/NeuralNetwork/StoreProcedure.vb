@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::570a0ca714598e3be22f8ba8dd787c13, Data_science\MachineLearning\NeuralNetwork\StoreProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::943cc39c751704c4c09d210dc49c3bad, Data_science\MachineLearning\NeuralNetwork\StoreProcedure.vb"
 
     ' Author:
     ' 
@@ -121,8 +121,7 @@ Namespace NeuralNetwork
                 Dim neuron As New Neuron(active) With {
                     .Bias = data.bias,
                     .BiasDelta = data.delta,
-                    .Gradient = data.gradient,
-                    .Value = data.value
+                    .Gradient = data.gradient
                 }
 
                 Yield New NamedValue(Of Neuron) With {

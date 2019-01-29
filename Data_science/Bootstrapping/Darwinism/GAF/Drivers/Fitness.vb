@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3b2336c5aeb06d278c2ed296d1cc7c8, Data_science\Bootstrapping\Darwinism\GAF\Drivers\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::ab4e7a5c6fec659103ec9c36088b442f, Data_science\Bootstrapping\Darwinism\GAF\Drivers\Fitness.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     ' 
     '     Class GAFFitness
     ' 
-    '         Properties: Ignores, Model, modelVariables, observation, weights
-    '                     y0
+    '         Properties: Cacheable, Ignores, Model, modelVariables, observation
+    '                     weights, y0
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
@@ -67,8 +67,7 @@ Namespace Darwinism.GAF.Driver
     ''' <returns></returns>
     Public Delegate Function FitnessCompute(best As ParameterVector, fit As GAFFitness) As Double
 
-    Public Class GAFFitness
-        Implements Fitness(Of ParameterVector)
+    Public Class GAFFitness : Implements Fitness(Of ParameterVector)
 
         ''' <summary>
         ''' 真实的实验观察数据
@@ -111,6 +110,12 @@ Namespace Darwinism.GAF.Driver
         ''' <returns></returns>
         Public Property Ignores As String()
         Public Property weights As Dictionary(Of String, Double)
+
+        Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of ParameterVector).Cacheable
+            Get
+                Return True
+            End Get
+        End Property
 
         ''' <summary>
         ''' 从真实的实验观察数据来构建出拟合(这个构造函数是测试用的)

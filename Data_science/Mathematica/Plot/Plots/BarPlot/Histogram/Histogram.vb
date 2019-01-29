@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1eee5b4dc39d06b49a514ca0236c5f3, Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\Histogram.vb"
+﻿#Region "Microsoft.VisualBasic::c176a3449e6963f3c96c283bb180af0d, Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\Histogram.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
@@ -56,6 +55,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -86,23 +86,23 @@ Namespace BarPlot.Histogram
 
             Return New HistogramGroup With {
                 .Serials = {
-                New NamedValue(Of Color) With {
-                    .Name = NameOf(data),
-                    .Value = color.ToColor(Drawing.Color.Blue)
+                    New NamedValue(Of Color) With {
+                        .Name = NameOf(data),
+                        .Value = color.ToColor(Drawing.Color.Blue)
+                    }
+                },
+                .Samples = {
+                    New HistProfile With {
+                        .legend = New Legend With {
+                            .color = color,
+                            .fontstyle = CSSFont.Win10Normal,
+                            .style = LegendStyles.Rectangle,
+                            .title = NameOf(data)
+                        },
+                        .data = data.ToArray
+                    }
                 }
-            },
-            .Samples = {
-                New HistProfile With {
-                    .legend = New Legend With {
-                        .color = color,
-                        .fontstyle = CSSFont.Win10Normal,
-                        .style = LegendStyles.Rectangle,
-                        .title = NameOf(data)
-                    },
-                    .data = data.ToArray
-                }
-            }
-        }.Plot(bg, size, padding, showGrid)
+            }.Plot(bg, size, padding, showGrid)
         End Function
 
         ''' <summary>
@@ -229,7 +229,7 @@ Namespace BarPlot.Histogram
                     Dim scaler As New DataScaler With {
                         .X = X,
                         .Y = Y,
-                        .Region = region.PlotRegion,
+                        .region = region.PlotRegion,
                         .AxisTicks = (XTicks, YTicks)
                     }
 
@@ -323,7 +323,7 @@ Namespace BarPlot.Histogram
                                       Optional size$ = "1600,1200",
                                       Optional padding$ = DefaultPadding,
                                       Optional showGrid As Boolean = True,
-                                      Optional ByRef histData As IntegerTagged(Of Double)() = Nothing,
+                                      Optional ByRef histData As HistogramData() = Nothing,
                                       Optional xLabel$ = "X",
                                       Optional yLabel$ = "Y",
                                       Optional xAxis$ = Nothing,
@@ -344,7 +344,7 @@ Namespace BarPlot.Histogram
                     .Serials = {s.SerialData}
                 }
 
-                histData = .Values.ToArray
+                histData = s.data
 
                 Return group.Plot(
                     bg:=bg, padding:=padding, size:=size,
@@ -352,7 +352,8 @@ Namespace BarPlot.Histogram
                     showTagChartLayer:=False,
                     xlabel:=xLabel, Ylabel:=yLabel,
                     xAxis:=xAxis,
-                    showLegend:=showLegend)
+                    showLegend:=showLegend
+                )
             End With
         End Function
     End Module

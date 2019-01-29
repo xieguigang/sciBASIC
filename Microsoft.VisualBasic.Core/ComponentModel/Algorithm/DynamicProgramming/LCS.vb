@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::949ff0538894dc742d5dd624ff0f6d79, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\DynamicProgramming\LCS_Length.vb"
+﻿#Region "Microsoft.VisualBasic::2d36972eb0db76a21d3c01728f21b71d, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\LCS.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Module LCS_Length
+    '     Module LongestCommonSubsequenceExtension
     ' 
     '         Function: __equals, MaxLengthSubString, MaxSet
     ' 
@@ -42,15 +42,15 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace DynamicProgramming
+Namespace ComponentModel.Algorithm.DynamicProgramming
 
     ''' <summary>
     ''' Longest Common Subsequence
     ''' </summary>
-    Public Module LCS_Length
+    Public Module LongestCommonSubsequenceExtension
 
         ''' <summary>
         ''' 比较两个字符串之间的最长的子串
@@ -62,6 +62,7 @@ Namespace DynamicProgramming
             Return MaxSet(a.ToArray, b.ToArray, AddressOf __equals)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function __equals(a As Char, b As Char) As Boolean
             Return a = b
         End Function

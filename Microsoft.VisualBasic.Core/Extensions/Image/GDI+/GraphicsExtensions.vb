@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ceab6e114bde434d5109c60edf574226, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6d348a098c85c6e0683ff6b4f4073bf6, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Function: BackgroundGraphics, CanvasCreateFromImageFile, (+2 Overloads) Clone, ColorBrush, CreateCanvas2D
     '                   (+3 Overloads) CreateGDIDevice, CreateGrayBitmap, EntireImage, GetBrush, GetBrushes
     '                   (+2 Overloads) GetIcon, GetStreamBuffer, GetStringPath, (+2 Overloads) GraphicsPath, ImageAddFrame
-    '                   IsValidGDIParameter, (+2 Overloads) LoadImage, OpenDevice, (+2 Overloads) PointF, SaveIcon
+    '                   IsValidGDIParameter, (+3 Overloads) LoadImage, OpenDevice, (+2 Overloads) PointF, SaveIcon
     '                   SizeF, ToFloat, ToPoint, ToPoints, ToStream
     ' 
     '         Sub: (+5 Overloads) DrawCircle
@@ -155,6 +155,26 @@ Namespace Imaging
             Next
 
             Return path
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Opacity(fill As Color, val#) As Color
+            Return Color.FromArgb(val * 255, baseColor:=fill)
+        End Function
+
+        <Extension>
+        Public Function Opacity(fill As Brush, val#) As Brush
+            If TypeOf fill Is SolidBrush Then
+                Dim color As Color = DirectCast(fill, SolidBrush).Color
+
+                color = color.Opacity(val)
+                fill = New SolidBrush(color)
+
+                Return fill
+            Else
+                Return fill
+            End If
         End Function
 
         ''' <summary>
@@ -340,6 +360,12 @@ Namespace Imaging
         <ExportAPI("LoadImage")>
         <Extension> Public Function LoadImage(rawStream As Byte()) As Image
             Return Image.FromStream(stream:=New MemoryStream(rawStream))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function LoadImage(stream As Stream) As Image
+            Return Image.FromStream(stream)
         End Function
 
         ''' <summary>

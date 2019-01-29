@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28a273fda70df9b9189a0e33d33b646b, mime\application%netcdf\Components\Components.vb"
+﻿#Region "Microsoft.VisualBasic::49dc398955cafc610639c9fa19231350, mime\application%netcdf\Components\Components.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '     Class DimensionList
     ' 
-    '         Properties: dimensions, recordId, recordName
+    '         Properties: dimensions, HaveRecordDimension, recordId, recordName
     ' 
     '         Function: ToString
     ' 
@@ -51,6 +51,7 @@
     ' 
     '         Properties: name, type, value
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString
     ' 
     '     Class variable
@@ -70,7 +71,7 @@ Imports System.Xml.Serialization
 Namespace Components
 
     ''' <summary>
-    ''' 
+    ''' ``[name => size]``
     ''' </summary>
     ''' 
     <XmlType("dim", [Namespace]:=Xml.netCDF)>
@@ -93,8 +94,14 @@ Namespace Components
 
     Public Class DimensionList
 
-        <XmlAttribute> Public Property recordId As Integer
+        <XmlAttribute> Public Property recordId As Integer?
         <XmlAttribute> Public Property recordName As String
+
+        Public ReadOnly Property HaveRecordDimension As Boolean
+            Get
+                Return Not (recordId Is Nothing AndAlso recordName = "NA")
+            End Get
+        End Property
 
         Public Property dimensions As Dimension()
 
@@ -134,6 +141,9 @@ Namespace Components
         End Function
     End Class
 
+    ''' <summary>
+    ''' 属对象性,主要是记录一些注解信息
+    ''' </summary>
     Public Class attribute
 
         ''' <summary>
@@ -145,18 +155,31 @@ Namespace Components
         ''' String with the type of the attribute
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property type As String
+        <XmlAttribute> Public Property type As CDFDataTypes
         ''' <summary>
         ''' A number or string with the value of the attribute
         ''' </summary>
         ''' <returns></returns>
-        <XmlText> Public Property value As String
+        <XmlText>
+        Public Property value As String
+
+        Sub New()
+        End Sub
+
+        Sub New(name$, value$, type As CDFDataTypes)
+            Me.name = name
+            Me.value = value
+            Me.type = type
+        End Sub
 
         Public Overrides Function ToString() As String
-            Return $"Dim {name} As {type} = {value}"
+            Return $"Dim {name} As {type.Description} = {value}"
         End Function
     End Class
 
+    ''' <summary>
+    ''' 变量对象,CDF文件之中的实验数据之类的数据都是保存于这个对象之中的
+    ''' </summary>
     Public Class variable
 
         ''' <summary>
@@ -165,7 +188,8 @@ Namespace Components
         ''' <returns></returns>
         <XmlAttribute> Public Property name As String
         ''' <summary>
-        ''' Array with the dimension IDs of the variable
+        ''' Array with the dimension IDs of the variable.
+        ''' (<see cref="Header.dimensions"/>)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property dimensions As Integer()
@@ -178,9 +202,9 @@ Namespace Components
         ''' String with the type of the variable
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property type As String
+        <XmlAttribute> Public Property type As CDFDataTypes
         ''' <summary>
-        ''' Number with the size of the variable
+        ''' Number with the size of the variable.(在文件之中的数据字节大小)
         ''' </summary>
         ''' <returns></returns>
         <XmlAttribute> Public Property size As Integer
@@ -188,7 +212,7 @@ Namespace Components
         ''' Number with the offset where of the variable begins
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property offset As Long
+        <XmlAttribute> Public Property offset As UInteger
         ''' <summary>
         ''' True if Is a record variable, false otherwise
         ''' </summary>
@@ -198,7 +222,7 @@ Namespace Components
         Public Property value As CDFData
 
         Public Overrides Function ToString() As String
-            Return $"Dim {name}[offset={offset}] As {type}"
+            Return $"Dim {name}[offset={offset}] As {type.Description}"
         End Function
     End Class
 End Namespace

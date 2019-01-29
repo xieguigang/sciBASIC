@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::226f2cbb19aa40906cdd0c68f2f55862, Microsoft.VisualBasic.Core\CommandLine\Reflection\RunDll.vb"
+﻿#Region "Microsoft.VisualBasic::e89d959e6a8a1b5bfde7cb4d9886656c, Microsoft.VisualBasic.Core\CommandLine\Reflection\RunDll.vb"
 
     ' Author:
     ' 
@@ -77,6 +77,12 @@ Namespace CommandLine.Reflection
             Return entry
         End Function
 
+        ''' <summary>
+        ''' 大小写不敏感
+        ''' </summary>
+        ''' <param name="assembly"></param>
+        ''' <param name="entryPoint$"></param>
+        ''' <returns></returns>
         Public Shared Function GetDllMethod(assembly As Assembly, entryPoint$) As MethodInfo
             Dim entry As NamedValue(Of String) = GetPoint(entryPoint)
             Dim types As Type() = GetTypesHelper(assm:=assembly)

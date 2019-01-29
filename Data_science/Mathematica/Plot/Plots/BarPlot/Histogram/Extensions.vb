@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::685dbf379544f99c950e9f4cc3b0c0b4, Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e567c8fd1cd96733c26960a2ecb25bfc, Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\Extensions.vb"
 
     ' Author:
     ' 
@@ -41,8 +41,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace BarPlot.Histogram
 
@@ -57,7 +57,7 @@ Namespace BarPlot.Histogram
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function NewModel(hist As Dictionary(Of Double, IntegerTagged(Of Double)), step!, legend As Legend) As HistProfile
+        Public Function NewModel(hist As IEnumerable(Of DataBinBox(Of Double)), step!, legend As Legend) As HistProfile
             Return New HistProfile(hist, [step]) With {
                 .legend = legend
             }

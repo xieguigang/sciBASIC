@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::253b52145970fcc48e49ad15076160c7, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3c1551a972b2f9fff20b27c9caab56fd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module Extensions
     ' 
-    '         Function: (+3 Overloads) Enlarge, GetTextAnchor, (+2 Overloads) Move, (+2 Overloads) MoveTo, Rotate
+    '         Function: (+3 Overloads) Enlarge, GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
     ' 
     '         Sub: ShapeGlow
     '         Enum MoveTypes
@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Extensions
 
@@ -77,28 +78,13 @@ Namespace Drawing2D
 
         Public ReadOnly BlackBrush As DefaultValue(Of Brush) = Brushes.Black
 
-        ''' <summary>
-        ''' 以当前的点为圆心，向<paramref name="angle"/>方向移动给定的距离
-        ''' </summary>
-        ''' <param name="pt"></param>
-        ''' <param name="distance#"></param>
-        ''' <param name="angle#"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function Move(pt As Point, distance#, angle#) As Point
-            Dim X = pt.X + distance * Math.Sin(angle * Math.PI / 180)
-            Dim Y = pt.Y + distance * Math.Cos(angle * Math.PI / 180)
-
-            Return New Point(X, Y)
-        End Function
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Move(rect As RectangleF, distance#, angle#) As RectangleF
             Return New RectangleF With {
-                .Location = rect.Location _
-                    .ToPoint _
-                    .Move(distance, angle),
+                .Location = rect _
+                    .Location _
+                    .MovePoint(angle, distance),
                 .Size = rect.Size
             }
         End Function

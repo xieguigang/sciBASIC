@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea94968d475d4816fc323de2965f7a90, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Math.vb"
+﻿#Region "Microsoft.VisualBasic::deedf17da6de49576ebe6d243ec03d3b, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Math.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '         Function: Abs, BesselI, Exp, floor, (+2 Overloads) Log
     '                   Log10, (+3 Overloads) Max, (+3 Overloads) Min, Order, pchisq
-    '                   round, Sign, Sinh, Sort, Sqrt
-    '                   (+2 Overloads) Sum, Trunc
+    '                   Quantile, round, Sign, Sinh, Sort
+    '                   Sqrt, (+2 Overloads) Sum, Trunc
     ' 
     ' 
     ' /********************************************************************************/
@@ -48,6 +48,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports sys = System.Math
 
@@ -87,6 +88,24 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Log(Optional base# = sys.E) As Vector
             Return Vector.Log(Me, base)
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="percentage">``[0, 1]``之间</param>
+        ''' <returns></returns>
+        Public Function Quantile(ParamArray percentage As Double()) As Vector
+            With GKQuantile
+                If percentage.Length = 0 Then
+                    ' 返回默认的0, 0.25, 0.5, 0.75, 1
+                    percentage = {0, 0.25, 0.5, 0.75, 1}
+                End If
+
+                Return percentage _
+                    .Select(Function(p) .Query(p)) _
+                    .AsVector
+            End With
         End Function
 
         ''' <summary>
@@ -230,21 +249,31 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Sort")>
         Public Shared Function Sort(x As Vector, Optional decreasing As Boolean = False) As Vector
-            Return If(
-                Not decreasing,
-                New Vector(x.OrderBy(Function(n) n)),
-                New Vector(x.OrderByDescending(Function(n) n)))
+            If decreasing Then
+                Return New Vector(x.OrderByDescending(Function(n) n))
+            Else
+                Return New Vector(x.OrderBy(Function(n) n))
+            End If
         End Function
 
         ''' <summary>
-        ''' order returns a permutation which rearranges its first argument into ascending or descending order, breaking ties by further arguments. sort.list is the same, using only one argument.
+        ''' order returns a permutation which rearranges its first argument into ascending or descending order, 
+        ''' breaking ties by further arguments. sort.list is the same, using only one argument.
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Order")>
         Public Shared Function Order(x As Vector, Optional nalast As Boolean = True, Optional decreasing As Boolean = False) As Vector
-            Throw New NotImplementedException
+            Dim seq As IEnumerable(Of SeqValue(Of Double)) = x.SeqIterator(offset:=1).ToArray
+
+            If decreasing Then
+                seq = seq.OrderByDescending(Function(xi) xi.value)
+            Else
+                seq = seq.OrderBy(Function(xi) xi.value)
+            End If
+
+            Return seq.Select(Function(xi) xi.i).AsVector
         End Function
     End Class
 End Namespace

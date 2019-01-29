@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dffcf04baed0d3461935517652eab7e, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
+﻿#Region "Microsoft.VisualBasic::2b6b4843d78e92f16018424dfa5cc012, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: CPU_NUMBER, Recommended_NUM_THREADS
     ' 
-    '         Function: [Where], AutoConfig, (+3 Overloads) LQuery
+    '         Function: [Where], AutoConfig, DefaultConfig, (+3 Overloads) LQuery
     ' 
     ' 
     ' /********************************************************************************/
@@ -43,7 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Parallel.Tasks
 
 Namespace Parallel.Linq
@@ -79,6 +79,10 @@ Namespace Parallel.Linq
                 Return Environment.ProcessorCount
             End Get
         End Property
+
+        Public Function DefaultConfig() As DefaultValue(Of Integer?)
+            Return CPU_NUMBER
+        End Function
 
         ''' <summary>
         ''' 假如小于0，则认为是自动配置，0被认为是单线程，反之直接返回

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50ce1810adea8accac4d1c56a0dd119b, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\Dataset.vb"
+﻿#Region "Microsoft.VisualBasic::bfdebaf29830ae469d1d86478aaaf4d8, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\Dataset.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,14 @@
     ' 
     '         Properties: DataSamples, NormalizeMatrix, OutputSize, Size
     ' 
-    '         Function: ToString
+    '         Function: GetInput, PopulateNormalizedSamples, ToString
+    '         Class SampleList
+    ' 
+    '             Properties: items
+    ' 
+    '             Function: getSize
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,11 +57,14 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Text.Xml.Models
+Imports row = Microsoft.VisualBasic.Data.csv.IO.DataSet
 
 Namespace NeuralNetwork.StoreProcedure
 
@@ -74,12 +84,18 @@ Namespace NeuralNetwork.StoreProcedure
         ''' Neuron network input parameters
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property status As Double()
+        ''' <remarks>
+        ''' 属性值可能会很长,为了XML文件的美观,在这里使用element
+        ''' </remarks>
+        <XmlElement>
+        Public Property status As Double()
+
         ''' <summary>
         ''' The network expected output values
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property target As Double()
+        <XmlAttribute>
+        Public Property target As Double()
 
         ''' <summary>
         ''' Create a new training dataset
@@ -105,31 +121,99 @@ Namespace NeuralNetwork.StoreProcedure
     ''' <summary>
     ''' A training dataset that stored in XML file.
     ''' </summary>
+    ''' <remarks>
+    ''' 一般只需要生成这个数据对象, 之后就可以直接使用这个对象来进行统一的训练代码调用即可
+    ''' </remarks>
     Public Class DataSet : Inherits XmlDataModel
 
         <XmlElement("sample")>
-        Public Property DataSamples As Sample()
+        Public Property DataSamples As SampleList
         <XmlElement("normalization")>
         Public Property NormalizeMatrix As NormalizeMatrix
 
+        Public Class SampleList : Inherits ListOf
+
+            <XmlElement>
+            Public Property items As Sample()
+
+            Default Public ReadOnly Property Item(index As Integer) As Sample
+                <MethodImpl(MethodImplOptions.AggressiveInlining)>
+                Get
+                    Return items(index)
+                End Get
+            End Property
+
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Protected Overrides Function getSize() As Integer
+                Return items?.Length
+            End Function
+
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Public Shared Widening Operator CType(samples As Sample()) As SampleList
+                Return New SampleList With {
+                    .items = samples
+                }
+            End Operator
+
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Public Shared Widening Operator CType(samples As List(Of Sample)) As SampleList
+                Return New SampleList With {
+                    .items = samples.ToArray
+                }
+            End Operator
+        End Class
+
         Public ReadOnly Property Size As Size
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Size With {
                     .Width = DataSamples(Scan0).status.Length,
-                    .Height = DataSamples.Length
+                    .Height = DataSamples.size
                 }
             End Get
         End Property
 
+        ''' <summary>
+        ''' 神经网络的输出节点的数量
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property OutputSize As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return DataSamples(Scan0).target.Length
             End Get
         End Property
 
+        ''' <summary>
+        ''' 从csv文件数据之中读取和当前的数据集一样的元素顺序的向量用于预测分析
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetInput(data As row) As Double()
+            Return NormalizeMatrix _
+                .names _
+                .Select(Function(key) data(key)) _
+                .ToArray
+        End Function
+
+        Public Iterator Function PopulateNormalizedSamples() As IEnumerable(Of Sample)
+            Dim input#()
+
+            For Each sample As Sample In DataSamples.items
+                input = NormalizeMatrix.NormalizeInput(sample)
+                sample = New Sample With {
+                    .ID = sample.ID,
+                    .status = input,
+                    .target = sample.target
+                }
+
+                Yield sample
+            Next
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"DataSet with {Size.Height} samples and {Size.Width} properties in each sample."
         End Function
-
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f73d515026ca726a44b251cc2734739, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::c2bc2e3eb115487852ccd6423f30d941, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: average, max, min, quantile, size
     '                     stdErr
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: GetRange, ToString
     ' 
     ' 
@@ -47,6 +47,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -57,42 +58,41 @@ Namespace Distributions
     ''' </summary>
     Public Class SampleDistribution
 
-        Public Property min As Double
-        Public Property max As Double
-        Public Property average As Double
-        Public Property stdErr As Double
-
-        <XmlAttribute>
-        Public Property size As Integer
+        <XmlAttribute> Public Property min As Double
+        <XmlAttribute> Public Property max As Double
+        <XmlAttribute> Public Property average As Double
+        <XmlAttribute> Public Property stdErr As Double
+        <XmlAttribute> Public Property size As Integer
 
         ''' <summary>
         ''' 分别为0%, 25%, 50%, 75%, 100%
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute>
-        Public Property quantile As Double()
+        <XmlAttribute> Public Property quantile As Double()
 
         Sub New()
         End Sub
 
         Sub New(data As IEnumerable(Of Double))
-            With data.ToArray
-                Dim q As QuantileEstimationGK = .GKQuantile
+            Call Me.New(data.SafeQuery.ToArray)
+        End Sub
 
-                min = .Min
-                max = .Max
-                average = .Average
-                stdErr = .StdError
-                size = .Length
+        Sub New(v As Double())
+            Dim q As QuantileEstimationGK = v.GKQuantile
 
-                quantile = {
-                    q.Query(0),
-                    q.Query(0.25),
-                    q.Query(0.5),
-                    q.Query(0.75),
-                    q.Query(1)
-                }
-            End With
+            min = v.Min
+            max = v.Max
+            average = v.Average
+            stdErr = v.StdError
+            size = v.Length
+
+            quantile = {
+                q.Query(0),
+                q.Query(0.25),
+                q.Query(0.5),
+                q.Query(0.75),
+                q.Query(1)
+            }
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

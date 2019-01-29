@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9e751fb0c36ed5fa7c7e67d5d93ff8b, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::fa3d72954d9da99cc751745bf10baa15, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Properties: HasValue, Value
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Equals, GetUnderlyingType, (+2 Overloads) GetValueOrDefault, IsNothing, ToString
+    '         Function: Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault, IsNothing
+    '                   ToString
     '         Operators: -, (+3 Overloads) +, <=, <>, =
     '                    >=
     '         Interface IValueOf
@@ -52,6 +53,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
 
@@ -182,8 +184,19 @@ Namespace Language
         ''' Display <see cref="value"/> ``ToString()`` function value.
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return InputHandler.ToString(Value)
+        End Function
+
+        ''' <summary>
+        ''' Get json string of the <see cref="Value"/>.
+        ''' </summary>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetJson() As String
+            Return Value.GetJson
         End Function
 
         Public Overloads Shared Operator +(list As Generic.List(Of Value(Of T)), x As Value(Of T)) As Generic.List(Of Value(Of T))

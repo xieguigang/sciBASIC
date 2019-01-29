@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bc529e0321cc00db84459e43177e86b, Data_science\Mathematica\Plot\Plots\BarPlot\BarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::54b1c3743c7481ac8a01e95d5a3e64e5, Data_science\Mathematica\Plot\Plots\BarPlot\BarPlot.vb"
 
     ' Author:
     ' 
@@ -138,7 +138,7 @@ Namespace BarPlot
             Dim sy As Func(Of Single, Single) = mapper.YScaler(grect.Size, grect.Padding)
             Dim bottom = grect.Size.Height - grect.Padding.Bottom
             Dim angle! = -45
-            Dim leftMargins As New List(Of Single)
+            Dim leftMargins As New List(Of Double)
 
             ' Call g.DrawAxis(grect.Size, grect.Padding, mapper, showGrid)
 

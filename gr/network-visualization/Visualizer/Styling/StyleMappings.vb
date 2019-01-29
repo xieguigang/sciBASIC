@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4748d54d11a482f98f7597fd8f5d31b1, gr\network-visualization\Visualizer\Styling\StyleMappings.vb"
+﻿#Region "Microsoft.VisualBasic::28b0fa801e7bf4ee7bef46f68db8d37c, gr\network-visualization\Visualizer\Styling\StyleMappings.vb"
 
     ' Author:
     ' 
@@ -33,16 +33,7 @@
 
     '     Module StyleMappings
     ' 
-    ' 
-    '         Enum MapperTypes
-    ' 
-    '             Continuous, Discrete, Passthrough
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Function: ColorMapping, DiscreteMapping, GetProperty, (+2 Overloads) NumericMapping
+    '         Function: ColorMapping, DiscreteMapping, GetProperty, (+2 Overloads) NumericMapping
     ' 
     ' 
     ' /********************************************************************************/
@@ -72,30 +63,12 @@ Namespace Styling
     ''' </summary>
     Public Module StyleMappings
 
-        ''' <summary>
-        ''' 从graph的属性值到相应的图形属性(节点大小，颜色，字体，形状)的映射操作类型
-        ''' </summary>
-        Public Enum MapperTypes
-            ''' <summary>
-            ''' 连续的数值型的映射
-            ''' </summary>
-            Continuous
-            ''' <summary>
-            ''' 离散的分类映射
-            ''' </summary>
-            Discrete
-            ''' <summary>
-            ''' 直接映射
-            ''' </summary>
-            Passthrough
-        End Enum
-
         Public Function GetProperty(Of T)() As Dictionary(Of String, Func(Of T, Object))
             Dim type As Type = GetType(T)
             Dim properties As PropertyInfo() = type _
-            .GetProperties(PublicProperty) _
-            .Where(Function(p) p.GetIndexParameters.IsNullOrEmpty) _
-            .ToArray
+                .GetProperties(PublicProperty) _
+                .Where(Function(p) p.GetIndexParameters.IsNullOrEmpty) _
+                .ToArray
             Dim out As New Dictionary(Of String, Func(Of T, Object))
 
             For Each prop As PropertyInfo In properties
@@ -156,6 +129,12 @@ Namespace Styling
             Return out
         End Function
 
+        ''' <summary>
+        ''' 离散映射，即一组已知的值映射到另一组已知的值
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <param name="property$"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function DiscreteMapping(source As IEnumerable(Of Node), property$) As Map(Of Node, Integer)()
             Dim selector = [property].SelectNodeValue

@@ -388,9 +388,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graph\GraphTree.vb" />
+    <Compile Include="Layouts\Cola\batch.vb" />
+    <Compile Include="Layouts\Cola\descent.vb" />
+    <Compile Include="Layouts\Cola\DirectedEdge.vb" />
     <Compile Include="Graph\Selector.vb" />
     <Compile Include="IO\FileStream\Json\json.vb" />
     <Compile Include="Layouts\BarycentricMethod.vb" />
+    <Compile Include="Layouts\Cola\Extensions.vb" />
+    <Compile Include="Layouts\Cola\Geom\geom.vb" />
+    <Compile Include="Layouts\Cola\Geom\Models.vb" />
+    <Compile Include="Layouts\Cola\Geom\TangentVisibilityGraph.vb" />
+    <Compile Include="Layouts\Cola\gridrouter.vb" />
+    <Compile Include="Layouts\Cola\GridRouter\Models.vb" />
+    <Compile Include="Layouts\Cola\handledisconnected.vb" />
+    <Compile Include="Layouts\Cola\layout.vb" />
+    <Compile Include="Layouts\Cola\layout3d.vb" />
+    <Compile Include="Layouts\Cola\linklengths.vb" />
+    <Compile Include="Layouts\Cola\Models\Locks.vb" />
+    <Compile Include="Layouts\Cola\Models\Node3D.vb" />
+    <Compile Include="Layouts\Cola\Models\Link3D.vb" />
+    <Compile Include="Layouts\Cola\powergraph.vb" />
+    <Compile Include="Layouts\Cola\pqueue.vb" />
+    <Compile Include="Layouts\Cola\shortestpaths.vb" />
     <Compile Include="Layouts\Parameters.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />

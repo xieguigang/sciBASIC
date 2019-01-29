@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6795b3109517c1ff0cd60caae3da7fd, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d044f04f45f2a2ff749f74a6afee9795, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -535,20 +535,26 @@ Public Module PathExtensions
             Return False
         End If
         If path.IndexOf(ASCII.CR) > -1 OrElse path.IndexOf(ASCII.LF) > -1 Then
-            Return False ' 包含有回车符或者换行符，则肯定不是文件路径了
-        End If
-
-        If Not String.IsNullOrEmpty(path) AndAlso
-            FileIO.FileSystem.FileExists(path) Then  ' 文件存在
-
-            If ZERO_Nonexists Then
-                Return FileSystem.FileLen(path) > 0
-            Else
-                Return True
-            End If
-        Else
+            ' 包含有回车符或者换行符，则肯定不是文件路径了
             Return False
         End If
+
+        If Not String.IsNullOrEmpty(path) Then
+            Try
+                ' 文件存在
+                If FileIO.FileSystem.FileExists(path) Then
+                    If ZERO_Nonexists Then
+                        Return FileSystem.FileLen(path) > 0
+                    Else
+                        Return True
+                    End If
+                End If
+            Catch ex As Exception
+                Return False
+            End Try
+        End If
+
+        Return False
     End Function
 
     ''' <summary>

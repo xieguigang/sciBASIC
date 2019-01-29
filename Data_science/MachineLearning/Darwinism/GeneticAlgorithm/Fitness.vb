@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::671faebdc459d103783a344816e47711, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::bc3de2c6bbb70d9a3900f4ecefd4ec3f, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Fitness.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,8 @@
 
     '     Interface Fitness
     ' 
+    '         Properties: Cacheable
+    ' 
     '         Function: Calculate
     ' 
     ' 
@@ -63,8 +65,17 @@ Namespace Darwinism.GAF
     ''' <summary>
     ''' 描述了如何从将目标染色体计算为fitness，从而能够量化突变带来的的优点
     ''' </summary>
-    ''' <typeparam name="Chr"></typeparam>
-    Public Interface Fitness(Of Chr As Chromosome(Of Chr))
+    ''' <typeparam name="Chr">
+    ''' 这个泛型类型应该是集成至<see cref="Chromosome(Of Chr)"/>,但是为了兼容``DifferentialEvolution``
+    ''' 模块计算函数的类型约束,在这里就不添加约束了
+    ''' </typeparam>
+    Public Interface Fitness(Of Chr)
+
+        ''' <summary>
+        ''' 这个计算模块是否会缓存计算结果?
+        ''' </summary>
+        ''' <returns></returns>
+        ReadOnly Property Cacheable As Boolean
 
         ''' <summary>
         ''' Assume that ``chromosome1`` is better than ``chromosome2``

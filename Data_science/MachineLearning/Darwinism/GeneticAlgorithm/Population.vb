@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48f4c269e1e470cce0e70b7efcead342, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
+﻿#Region "Microsoft.VisualBasic::180f0bd106a4112dd3456419844b79a7, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Population.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     ' 
     '         Function: GA_PLinq, GetEnumerator, IEnumerable_GetEnumerator
     ' 
-    '         Sub: Add, (+2 Overloads) SortPopulationByFitness, Trim
+    '         Sub: Add, parallelCacheFitness, (+2 Overloads) SortPopulationByFitness, Trim
     ' 
     ' 
     ' 
@@ -156,6 +156,10 @@ Namespace Darwinism.GAF
 
         Friend ReadOnly Pcompute As ParallelComputing(Of Chr) = AddressOf GA_PLinq
 
+        ''' <summary>
+        ''' 如果<paramref name="parallel"/>参数不是空的，则会启用这个参数的并行计算
+        ''' </summary>
+        ''' <param name="parallel"></param>
         Public Sub New(Optional parallel As ParallelComputing(Of Chr) = Nothing)
             If Not parallel Is Nothing Then
                 Pcompute = parallel
@@ -167,31 +171,33 @@ Namespace Darwinism.GAF
         ''' </summary>
         ''' <param name="GA"></param>
         ''' <param name="comparator"></param>
-        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
+        Friend Sub SortPopulationByFitness(GA As GeneticAlgorithm(Of Chr), comparator As Fitness(Of Chr))
             Call Arrays.Shuffle(chromosomes)
 
-            If Parallel Then
-                Dim source = chromosomes _
-                    .Select(Function(x)
-                                Return New NamedValue(Of Chr) With {
-                        .Name = x.ToString,
-                        .Value = x
-                    }
-                            End Function) _
-                    .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
-                    .ToArray
-                Dim fitness As NamedValue(Of Double)() =
-                    Pcompute(GA, source) _
-                    .ToArray
-
-                For Each x As NamedValue(Of Double) In fitness
-                    If Not comparator.cache.ContainsKey(x.Name) Then
-                        Call comparator.cache.Add(x.Name, x.Value)
-                    End If
-                Next
+            If Parallel AndAlso comparator.Cacheable Then
+                Call parallelCacheFitness(GA, comparator)
             End If
 
-            chromosomes = (From c In chromosomes.AsParallel Order By comparator.Fitness(c) Ascending).AsList
+            chromosomes = (From c As Chr In chromosomes.AsParallel Order By comparator.Calculate(c) Ascending).AsList
+        End Sub
+
+        Private Sub parallelCacheFitness(GA As GeneticAlgorithm(Of Chr), comparator As FitnessPool(Of Chr))
+            Dim source As NamedValue(Of Chr)() = chromosomes _
+                .Select(Function(x)
+                            Return New NamedValue(Of Chr) With {
+                                .Name = x.ToString,
+                                .Value = x
+                            }
+                        End Function) _
+                .Where(Function(x) Not comparator.cache.ContainsKey(x.Name)) _
+                .ToArray
+            Dim fitness As NamedValue(Of Double)() = Pcompute(GA, source).ToArray
+
+            For Each x As NamedValue(Of Double) In fitness
+                If Not comparator.cache.ContainsKey(x.Name) Then
+                    Call comparator.cache.Add(x.Name, x.Value)
+                End If
+            Next
         End Sub
 
         ''' <summary>

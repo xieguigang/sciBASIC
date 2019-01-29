@@ -99,9 +99,10 @@ Public Module DataImports
     <Extension> Public Function [Imports](Of T As Class)(path$,
                                                          Optional delimiter$ = ",",
                                                          Optional encoding As Encoding = Nothing,
-                                                         Optional nameMaps As Dictionary(Of String, String) = Nothing) As T()
+                                                         Optional nameMaps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
 
         Dim source As IO.File = [Imports](path, delimiter, encoding)
+
         If source.RowNumbers = 0 Then
             Return New T() {}
         Else
@@ -125,7 +126,7 @@ Public Module DataImports
     ''' <param name="maps"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function ImportsData(Of T As Class)(text$, Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As T()
+    Public Function ImportsData(Of T As Class)(text$, Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
         Return ImportsData(text.LineTokens, delimiter) _
             .AsDataSource(Of T)(maps:=maps)
     End Function
@@ -138,8 +139,10 @@ Public Module DataImports
     ''' <param name="delimiter$"></param>
     ''' <param name="maps"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ImportsData(Of T As Class)(text As IEnumerable(Of String), Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As T()
+    Public Function ImportsData(Of T As Class)(text As IEnumerable(Of String), Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
         Return ImportsData(text, delimiter).AsDataSource(Of T)(maps:=maps)
     End Function
 
@@ -151,7 +154,7 @@ Public Module DataImports
     ''' <param name="maps"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function ImportsTsv(Of T As Class)(lines As IEnumerable(Of String), Optional maps As NameMapping = Nothing) As T()
+    Public Function ImportsTsv(Of T As Class)(lines As IEnumerable(Of String), Optional maps As NameMapping = Nothing) As IEnumerable(Of T)
         Return ImportsData(lines, ASCII.TAB) _
             .AsDataSource(Of T)(maps:=maps)
     End Function

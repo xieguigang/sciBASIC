@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4c2b31d45c923624a03b61ae047e2e7, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::f0ee0b9e22aea4b707ca23e1c0459b6d, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -161,13 +161,19 @@ Public Module KeyValuePairExtensions
     ''' Target <paramref name="item"/> contains in <paramref name="define"/> list.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="item"></param>
+    ''' <param name="item">对于空值,这个函数总是返回false</param>
     ''' <param name="define"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function IsOneOfA(Of T)(item As T, define As Index(Of T)) As Boolean
-        Return define.IndexOf(item) > -1
+        ' System.ArgumentNullException: Value cannot be null.
+        ' Parameter name: key
+        If item Is Nothing Then
+            Return False
+        Else
+            Return define.IndexOf(item) > -1
+        End If
     End Function
 
     ''' <summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::992ffb00fb8ac813b61f7e02a3637e6e, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::34422d63e3fc3ebd7f5c3027ff7ab98d, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -86,6 +86,15 @@ Namespace Text.Xml.Linq
             End If
 
             Return xmlDoc
+        End Function
+
+        <Extension>
+        Public Function GetXmlNodeDoc(element As XElement) As XmlDocument
+            Using xmlReader As XmlReader = element.CreateReader()
+                Dim XmlDoc As New XmlDocument()
+                XmlDoc.Load(xmlReader)
+                Return XmlDoc
+            End Using
         End Function
 
         ''' <summary>
@@ -210,24 +219,37 @@ Namespace Text.Xml.Linq
 
         ''' <summary>
         ''' Apply on a ultra large size XML database, which its data size is greater than 1GB to 100GB or even more.
+        ''' (这个函数是直接忽略掉根节点的名称以及属性的,使用这个函数只需要关注于需要提取的数据的节点名称即可)
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
-        ''' <param name="path$"></param>
-        ''' <param name="typeName$"></param>
-        ''' <param name="xmlns$"></param>
+        ''' <param name="path">文件路径</param>
+        ''' <param name="typeName">目标节点名称,默认是使用类型<typeparamref name="T"/>的名称</param>
+        ''' <param name="xmlns">``xmlns=...``,只需要给出等号后面的url即可</param>
         ''' <returns></returns>
         <Extension>
         Public Function LoadUltraLargeXMLDataSet(Of T As Class)(path$, Optional typeName$ = Nothing, Optional xmlns$ = Nothing) As IEnumerable(Of T)
-            Dim nodeName$ = GetType(T).GetTypeName([default]:=typeName)
-            Return nodeName _
-                .UltraLargeXmlNodesIterator(path) _
-                .NodeInstanceBuilder(Of T)(xmlns, xmlNode:=nodeName)
+            With GetType(T).GetTypeName([default]:=typeName)
+                Return .UltraLargeXmlNodesIterator(path) _
+                    .Select(Function(node) node.ToString) _
+                    .NodeInstanceBuilder(Of T)(xmlns, xmlNode:= .ByRef)
+            End With
+        End Function
+
+        ''' <summary>
+        ''' 可以使用函数<see cref="GetXmlNodeDoc(XElement)"/>来进行类型的转换操作
+        ''' </summary>
+        ''' <param name="path$"></param>
+        ''' <param name="typeName$"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function IteratesArrayNodes(path$, typeName$) As IEnumerable(Of XElement)
+            Return typeName.UltraLargeXmlNodesIterator(path)
         End Function
 
         <Extension>
-        Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, path$) As IEnumerable(Of String)
+        Private Iterator Function UltraLargeXmlNodesIterator(nodeName$, path$) As IEnumerable(Of XElement)
             Dim el As New Value(Of XElement)
-            Dim XML$
 
             Using reader As XmlReader = XmlReader.Create(path)
 
@@ -237,8 +259,7 @@ Namespace Text.Xml.Linq
                     ' Parse the file And return each of the child_node
                     If (reader.NodeType = XmlNodeType.Element AndAlso reader.Name = nodeName) Then
                         If (Not (el = XNode.ReadFrom(reader)) Is Nothing) Then
-                            XML = el.Value.ToString
-                            Yield XML
+                            Yield el.Value
                         End If
                     End If
                 Loop

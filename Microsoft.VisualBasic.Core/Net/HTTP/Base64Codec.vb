@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0707d00d8702b95f89a654b32b25d8e, Microsoft.VisualBasic.Core\Net\HTTP\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::139c3bffa56849d2cacea5813314c0c2, Microsoft.VisualBasic.Core\Net\HTTP\Base64Codec.vb"
 
     ' Author:
     ' 
@@ -65,6 +65,12 @@ Namespace Net.Http
             Return (encoding Or UTF8).GetBytes(text).ToBase64String
         End Function
 
+        ''' <summary>
+        ''' 将base64字符串还原为原来的字符串文本
+        ''' </summary>
+        ''' <param name="base64$"></param>
+        ''' <param name="encoding"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function DecodeBase64(base64$, Optional encoding As Encoding = Nothing) As String

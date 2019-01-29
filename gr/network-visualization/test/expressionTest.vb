@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c9b05f09bf9f51e59576d0f689cc1d6, mime\application%netcdf\CDFDataTypes.vb"
+﻿#Region "Microsoft.VisualBasic::2f72c8425595a707153d963a868698ea, gr\network-visualization\test\expressionTest.vb"
 
     ' Author:
     ' 
@@ -31,27 +31,28 @@
 
     ' Summaries:
 
-    ' Enum CDFDataTypes
+    ' Module expressionTest
     ' 
-    ' 
-    '  
-    ' 
-    ' 
+    '     Sub: Main
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-''' <summary>
-''' The enum values of the CDF data types.
-''' </summary>
-Public Enum CDFDataTypes As Integer
-    undefined = -1
+Imports Microsoft.VisualBasic.Data.visualize.Network.Styling
 
-    [BYTE] = 1
-    [CHAR] = 2
-    [SHORT] = 3
-    [INT] = 4
-    [FLOAT] = 5
-    [DOUBLE] = 6
-End Enum
+Module expressionTest
+
+    Const rangeMapper = "map(degree, [100,200])"
+    Const discreteMapper = "map(domain, A=1, B=2, C= 99, G=8888)"
+
+    Sub Main()
+
+        Dim a = SyntaxExtensions.MapExpressionParser(rangeMapper)
+        Dim b = SyntaxExtensions.MapExpressionParser(discreteMapper)
+
+        Pause()
+
+    End Sub
+End Module
+

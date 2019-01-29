@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f373c75ad154d628a3f0bdc6c30fb26, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
+﻿#Region "Microsoft.VisualBasic::31fb2b3b70bf371ddd138f5e6a43ad1e, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
 
     ' Author:
     ' 
@@ -170,9 +170,9 @@ Namespace Quantile
         End Sub
 
         ''' <summary>
-        ''' 使用数量百分比来获取得到对应的阈值，<paramref name="quantile"/>为0-1之间的百分比值
+        ''' 使用数量百分比来获取得到对应的阈值，<paramref name="quantile"/>为``[0,1]``之间的百分比值
         ''' </summary>
-        ''' <param name="quantile#">0-1之间的百分比值</param>
+        ''' <param name="quantile#">``[0,1]``之间的百分比值</param>
         ''' <returns>阈值</returns>
         Public Function Query(quantile#) As Double
             Dim rankMin As Integer = 0

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c29636e38eab0ddad54b9416168d762, Data_science\MachineLearning\Darwinism\Models\FitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::c80cf24ce603bc323fe813a1c5e7fa96, Data_science\MachineLearning\Darwinism\Models\FitnessPool.vb"
 
     ' Author:
     ' 
@@ -33,15 +33,22 @@
 
     '     Class FitnessPool
     ' 
+    '         Properties: Cacheable
+    ' 
     '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: Fitness
+    ' 
+    '         Sub: Clear
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 
 Namespace Darwinism.Models
 
@@ -49,7 +56,7 @@ Namespace Darwinism.Models
     ''' Compute fitness and cache the result data in this pool.
     ''' </summary>
     ''' <typeparam name="Individual"></typeparam>
-    Public Class FitnessPool(Of Individual)
+    Public Class FitnessPool(Of Individual) : Implements Fitness(Of Individual)
 
         Protected Friend ReadOnly cache As New Dictionary(Of String, Double)
         Protected caclFitness As Func(Of Individual, Double)
@@ -58,8 +65,15 @@ Namespace Darwinism.Models
 
         Shared ReadOnly objToString As New DefaultValue(Of Func(Of Individual, String))(AddressOf Scripting.ToString)
 
+        Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
+            Get
+                Return True
+            End Get
+        End Property
+
         ''' <summary>
-        ''' 
+        ''' 因为这个缓存对象是默认通过``ToString``方法来生成键名的，所以假设<paramref name="toString"/>参数是空值的话，则必须要重写
+        ''' 目标<typeparamref name="Individual"/>的``ToString``方法
         ''' </summary>
         ''' <param name="cacl">Expression for descript how to calculate the fitness.</param>
         ''' <param name="toString">Obj to dictionary key</param>
@@ -77,7 +91,7 @@ Namespace Darwinism.Models
         ''' </summary>
         ''' <param name="[in]"></param>
         ''' <returns></returns>
-        Public Function Fitness([in] As Individual) As Double
+        Public Function Fitness([in] As Individual) As Double Implements Fitness(Of Individual).Calculate
             Dim key$ = indivToString([in])
             Dim fit As Double
 
@@ -108,5 +122,13 @@ Namespace Darwinism.Models
 
             Return fit
         End Function
+
+        ''' <summary>
+        ''' Clear all cache data.
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Clear()
+            Call cache.Clear()
+        End Sub
     End Class
 End Namespace

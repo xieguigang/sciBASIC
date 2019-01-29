@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15d269a76385f3855f516a7abd2a486e, Data_science\Mathematica\Plot\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::daa23defb3bbe97b1b82146f532a1f94, Data_science\Mathematica\Plot\Plots\Fractions\PieChart.vb"
 
     ' Author:
     ' 
@@ -141,7 +141,7 @@ Namespace Fractions
                     centra = layoutRect.Centre
 
                     ' 首先需要进行阴影的绘制
-                    With topLeft.Move(shadowDistance, shadowAngle)
+                    With topLeft.MovePoint(shadowDistance, shadowAngle)
                         Dim circle As New GraphicsPath
 
                         Call circle.AddEllipse(.X, .Y, CSng(r * 2), CSng(r * 2))

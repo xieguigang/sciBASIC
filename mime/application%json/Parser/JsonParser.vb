@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::412844ab5bc9da6e838bce79a7b7a4f0, mime\application%json\Parser\JsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::24c2a8a4791484955e88152507a442e5, mime\application%json\Parser\JsonParser.vb"
 
     ' Author:
     ' 
@@ -55,6 +55,7 @@
 ' version 1.0.0 beta [debugged]
 ' READ ONLY!! Output part is under construction
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 
@@ -96,6 +97,7 @@ Namespace Parser
             End Using
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function OpenJSON(jsonStr As String) As JsonElement
             Return root = parse(jsonStr)
         End Function
@@ -107,8 +109,10 @@ Namespace Parser
         ''' <returns></returns>
         Private Function parse(ByRef str As String) As JsonElement
             Dim index As Long = 1
+
             psErrors = "*"
             skipChar(str, index)
+
             Select Case Mid(str, index, 1)
                 Case "{"
                     Return parseObject(str, index)
@@ -237,8 +241,8 @@ eh:
             Dim chr$, code$
             Dim sb As New StringBuilder
 
-            While Index > 0 AndAlso Index <= Len(str)
-                Chr = Mid(str, Index, 1)
+            While index > 0 AndAlso index <= Len(str)
+                chr = Mid(str, index, 1)
                 Select Case chr
                     Case "\"
                         index += 1

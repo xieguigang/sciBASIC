@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05e59390398e54608cf7ea8de00ebadf, Microsoft.VisualBasic.Core\Language\Value\Numeric\int.vb"
+﻿#Region "Microsoft.VisualBasic::c2068dbaa5a7d6d89df530e3681f7911, Microsoft.VisualBasic.Core\Language\Value\Numeric\int.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,12 @@
 
     '     Class int
     ' 
+    '         Properties: Hex, Oct
+    ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) CompareTo, Equals, (+2 Overloads) ToString
-    '         Operators: (+2 Overloads) -, (+2 Overloads) /, (+2 Overloads) +, (+4 Overloads) <, <<
-    '                    <=, (+4 Overloads) >, >=
+    '         Operators: (+3 Overloads) -, (+2 Overloads) /, (+2 Overloads) +, (+4 Overloads) <, <<
+    '                    <=, (+4 Overloads) >, >=, (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
     ' 
     ' 
     ' /********************************************************************************/
@@ -57,6 +59,28 @@ Namespace Language
         Implements IComparable(Of Integer)
         Implements IEquatable(Of Integer)
         Implements IFormattable
+
+        ''' <summary>
+        ''' 转换为16进制
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Hex As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Convert.ToString(Value, 16).ToUpper
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 转换为8进制
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Oct As String
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Convert.ToString(Value, 8)
+            End Get
+        End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(Optional x% = Scan0)
@@ -88,6 +112,19 @@ Namespace Language
                 Throw New Exception($"Miss-match of type:  {GetType(int).FullName} --> {type.FullName}")
             End If
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator IsTrue(n As int) As Boolean
+            Return Not n Is Nothing AndAlso n.Value <> 0
+        End Operator
+
+        Public Shared Operator IsFalse(n As int) As Boolean
+            If n Then
+                Return False
+            Else
+                Return True
+            End If
+        End Operator
 
         ''' <summary>
         ''' n &lt; value &lt;= n2
@@ -199,6 +236,17 @@ Namespace Language
         End Operator
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        Public Shared Operator -(x As int) As Integer
+            Dim i As Integer = x.Value
+            x.Value -= 1
+            Return -i
+        End Operator
+
+        ''' <summary>
         ''' Auto increment value with step 1 and then returns the previous value.
         ''' (自增1然后返回之前的值)
         ''' </summary>
@@ -213,12 +261,11 @@ Namespace Language
         ''' <summary>
         ''' 位移<paramref name="n"/>个单位然后返回位移之后的结果值
         ''' 
-        ''' 对于<see cref="int"/>类型而言，其更加侧重于迭代器中的位移，所以这个加法运算是符合
-        ''' ```vbnet
-        ''' x += n
-        ''' ```
-        ''' 
-        ''' 但是对于<see cref="float"/>类型而言，其更加侧重于模型计算，所以其加法不符合上述的语法，
+        ''' + 对于<see cref="int"/>类型而言，其更加侧重于迭代器中的位移，所以这个加法运算是符合
+        '''   ```vbnet
+        '''   x += n
+        '''   ```
+        ''' + 但是对于<see cref="float"/>类型而言，其更加侧重于模型计算，所以其加法不符合上述的语法，
         ''' 不会修改源变量的值，返回的是一个单纯的<see cref="Double"/>值类型
         ''' </summary>
         ''' <param name="x"></param>

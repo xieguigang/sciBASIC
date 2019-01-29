@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01dff755870b90e0f50ffa9226148766, Data_science\MachineLearning\Darwinism\DifferentialEvolution.vb"
+﻿#Region "Microsoft.VisualBasic::b8eaf2c35415b265934a3a49e2d470e1, Data_science\MachineLearning\Darwinism\DifferentialEvolution.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism
-Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper.ListenerHelper
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
 
@@ -199,7 +199,7 @@ Namespace Darwinism
 
                     bestFit = LQuery.Min(Function(x) x.Tag)
                     population = LQuery _
-                        .Select(Function(x) x.value) _
+                        .Select(Function(x) x.Value) _
                         .IteratesALL _
                         .Shuffles
 
@@ -240,7 +240,7 @@ Namespace Darwinism
             Dim bestFitness As Individual = [new](random)
             i = 0
             Do While (++i < PopulationSize)
-                Dim candidate As Individual = population(i.value - 1)
+                Dim candidate As Individual = population(i.Value - 1)
                 If (fitnessFunction(bestFitness) > fitnessFunction(candidate)) Then
                     bestFitness = candidate
                 End If
@@ -353,7 +353,7 @@ Namespace Darwinism
 
             Return New DoubleTagged(Of Individual()) With {
                 .Tag = bestFit,
-                .value = population
+                .Value = population
             }
         End Function
     End Module

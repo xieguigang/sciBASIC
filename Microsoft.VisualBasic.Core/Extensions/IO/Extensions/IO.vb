@@ -140,13 +140,15 @@ Public Module IOExtensions
     End Function
 
     ''' <summary>
-    ''' Safe open a local file handle.
+    ''' Safe open a local file handle. Warning: this function is set to write mode by default, 
+    ''' if want using for read file, set <paramref name="doClear"/> to false!
     ''' (打开本地文件指针，这是一个安全的函数，会自动创建不存在的文件夹。这个函数默认是写模式的)
     ''' </summary>
     ''' <param name="path">文件的路径</param>
     ''' <param name="mode">File open mode, default is create a new file.(文件指针的打开模式)</param>
     ''' <param name="doClear">
-    ''' By default is clear all of the data in source file.
+    ''' By default is clear all of the data in source file. Which means it is open for write 
+    ''' new file data by default. If want to append data or read file, set this argument to false.
     ''' (写模式下默认将原来的文件数据清空)
     ''' 是否将原来的文件之中的数据清空？默认是，否则将会以追加模式工作
     ''' </param>
@@ -154,6 +156,8 @@ Public Module IOExtensions
     <ExportAPI("Open.File")>
     <Extension>
     Public Function Open(path$, Optional mode As FileMode = FileMode.OpenOrCreate, Optional doClear As Boolean = True) As FileStream
+        Dim access As FileShare
+
         With path.ParentPath
             If Not .DirectoryExists Then
                 Call .MkDIR()
@@ -162,10 +166,15 @@ Public Module IOExtensions
 
         If doClear Then
             ' 在这里调用FlushStream函数的话会导致一个循环引用的问题
-            Call ClearFileBytes(path)
+            ClearFileBytes(path)
+            ' 为了保证数据不被破坏，写操作会锁文件
+            access = FileShare.None
+        Else
+            ' 读操作，则只允许共享读文件
+            access = FileShare.Read
         End If
 
-        Return File.Open(path, mode)
+        Return File.Open(path, mode, FileAccess.ReadWrite, access)
     End Function
 
     ''' <summary>

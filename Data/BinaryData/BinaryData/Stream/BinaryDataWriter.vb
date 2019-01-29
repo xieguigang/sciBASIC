@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8e5b031db8e63f0395ba0573449066e, Data\BinaryData\BinaryData\Stream\BinaryDataWriter.vb"
+﻿#Region "Microsoft.VisualBasic::16e06b4a4616fb5a613dc0f23793fe2d, Data\BinaryData\BinaryData\Stream\BinaryDataWriter.vb"
 
     ' Author:
     ' 
@@ -33,14 +33,14 @@
 
     ' Class BinaryDataWriter
     ' 
-    '     Properties: ByteOrder, Encoding, Position
+    '     Properties: ByteOrder, Encoding, Position, RerouteInt32ToUnsigned
     ' 
     '     Constructor: (+5 Overloads) Sub New
     ' 
-    '     Function: DecimalToBytes, ReserveOffset, (+2 Overloads) Seek, (+2 Overloads) TemporarySeek
+    '     Function: DecimalToBytes, ReserveOffset, (+2 Overloads) Seek, (+2 Overloads) TemporarySeek, (+2 Overloads) Write
+    '               WriteByteLengthPrefixString, WriteDwordLengthPrefixString, WriteNoPrefixOrTerminationString, WriteWordLengthPrefixString, WriteZeroTerminatedString
     ' 
-    '     Sub: Align, (+21 Overloads) Write, WriteByteLengthPrefixString, WriteDwordLengthPrefixString, WriteMultiple
-    '          WriteNoPrefixOrTerminationString, WriteReversed, WriteWordLengthPrefixString, WriteZeroTerminatedString
+    '     Sub: Align, (+19 Overloads) Write, WriteMultiple, WriteReversed
     ' 
     ' /********************************************************************************/
 
@@ -134,6 +134,13 @@ Public Class BinaryDataWriter
             _needsReversion = _byteOrder <> ByteOrderHelper.SystemByteOrder
         End Set
     End Property
+
+    ''' <summary>
+    ''' 为了兼容一些VB6.0的程序数据, 启用这个选项之后,
+    ''' 所有的<see cref="Integer"/>在写入文件之前都将会被转换为<see cref="UInteger"/>
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property RerouteInt32ToUnsigned As Boolean = False
 
     ''' <summary>
     ''' Gets the encoding used for string related operations where no other encoding has been provided. Due to the
@@ -260,6 +267,16 @@ Public Class BinaryDataWriter
     End Sub
 
     ''' <summary>
+    ''' 将<paramref name="buffer"/>之中的所有数据都追加到当前的数据流之中
+    ''' </summary>
+    ''' <param name="buffer"></param>
+    Public Overloads Sub Write(buffer As Stream, Optional chunkSize% = 4096)
+        For Each block As Byte() In buffer.PopulateBlocks
+            Call Write(block)
+        Next
+    End Sub
+
+    ''' <summary>
     ''' Writes the specified number of <see cref="Decimal"/> values into the current stream and advances the current
     ''' position by that number of <see cref="Decimal"/> values multiplied with the size of a single value.
     ''' </summary>
@@ -328,6 +345,8 @@ Public Class BinaryDataWriter
         If _needsReversion Then
             Dim bytes As Byte() = BitConverter.GetBytes(value)
             WriteReversed(bytes)
+        ElseIf RerouteInt32ToUnsigned Then
+            MyBase.Write(CUInt(value))
         Else
             MyBase.Write(value)
         End If
@@ -403,9 +422,9 @@ Public Class BinaryDataWriter
     ''' <param name="format">The binary format in which the string will be written.</param>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Overloads Sub Write(value As String, format As BinaryStringFormat)
-        Write(value, format, Encoding)
-    End Sub
+    Public Overloads Function Write(value As String, format As BinaryStringFormat) As Integer
+        Return Write(value, format, Encoding)
+    End Function
 
     ''' <summary>
     ''' Writes a string to this stream with the given encoding and advances the current position of the stream in
@@ -415,27 +434,30 @@ Public Class BinaryDataWriter
     ''' <param name="value">The value to write.</param>
     ''' <param name="format">The binary format in which the string will be written.</param>
     ''' <param name="encoding">The encoding used for converting the string.</param>
-    Public Overloads Sub Write(value As String, format As BinaryStringFormat, encoding As Encoding)
+    ''' <returns>
+    ''' 这个函数返回写入的数据的字节大小长度,主要是用于字节的padding操作
+    ''' </returns>
+    Public Overloads Function Write(value As String, format As BinaryStringFormat, encoding As Encoding) As Integer
         Select Case format
             Case BinaryStringFormat.ByteLengthPrefix
-                WriteByteLengthPrefixString(value, encoding)
+                Return WriteByteLengthPrefixString(value, encoding)
 
             Case BinaryStringFormat.WordLengthPrefix
-                WriteWordLengthPrefixString(value, encoding)
+                Return WriteWordLengthPrefixString(value, encoding)
 
-            Case BinaryStringFormat.DwordLengthPrefix
-                WriteDwordLengthPrefixString(value, encoding)
+            Case BinaryStringFormat.DwordLengthPrefix, BinaryStringFormat.UInt32LengthPrefix
+                Return WriteDwordLengthPrefixString(value, encoding)
 
             Case BinaryStringFormat.ZeroTerminated
-                WriteZeroTerminatedString(value, encoding)
+                Return WriteZeroTerminatedString(value, encoding)
 
             Case BinaryStringFormat.NoPrefixOrTermination
-                WriteNoPrefixOrTerminationString(value, encoding)
+                Return WriteNoPrefixOrTerminationString(value, encoding)
 
             Case Else
                 Throw New ArgumentOutOfRangeException("format", "The specified binary string format is invalid")
         End Select
-    End Sub
+    End Function
 
     ''' <summary>
     ''' Writes an 2-byte unsigned integer value to this stream and advances the current position of the stream by
@@ -523,30 +545,70 @@ Public Class BinaryDataWriter
         MyBase.Write(bytes)
     End Sub
 
-    Private Sub WriteByteLengthPrefixString(value As String, encoding As Encoding)
+    ''' <summary>
+    ''' 1 + size
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    Private Function WriteByteLengthPrefixString(value As String, encoding As Encoding) As Integer
+        Dim buffer = encoding.GetBytes(value)
         Write(CByte(value.Length))
-        Write(encoding.GetBytes(value))
-    End Sub
+        Write(buffer)
+        Return 1 + buffer.Length
+    End Function
 
-    Private Sub WriteWordLengthPrefixString(value As String, encoding As Encoding)
+    ''' <summary>
+    ''' 2 + size
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    Private Function WriteWordLengthPrefixString(value As String, encoding As Encoding) As Integer
+        Dim buffer = encoding.GetBytes(value)
         Write(CShort(value.Length))
-        Write(encoding.GetBytes(value))
-    End Sub
+        Write(buffer)
+        Return 2 + buffer.Length
+    End Function
 
-    Private Sub WriteDwordLengthPrefixString(value As String, encoding As Encoding)
+    ''' <summary>
+    ''' 4 + size
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    Private Function WriteDwordLengthPrefixString(value As String, encoding As Encoding) As Integer
+        Dim buffer = encoding.GetBytes(value)
         Write(value.Length)
-        Write(encoding.GetBytes(value))
-    End Sub
+        Write(buffer)
+        Return 4 + buffer.Length
+    End Function
 
-    Private Sub WriteZeroTerminatedString(value As String, encoding As Encoding)
-        Write(encoding.GetBytes(value))
+    ''' <summary>
+    ''' size + 1
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    Private Function WriteZeroTerminatedString(value As String, encoding As Encoding) As Integer
+        Dim buffer = encoding.GetBytes(value)
+        Write(buffer)
         Write(CByte(0))
-    End Sub
+        Return buffer.Length + 1
+    End Function
 
+    ''' <summary>
+    ''' size
+    ''' </summary>
+    ''' <param name="value"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Sub WriteNoPrefixOrTerminationString(value As String, encoding As Encoding)
-        Write(encoding.GetBytes(value))
-    End Sub
+    Private Function WriteNoPrefixOrTerminationString(value As String, encoding As Encoding) As Integer
+        Dim buffer = encoding.GetBytes(value)
+        Call Write(buffer)
+        Return buffer.Length
+    End Function
 
     Private Function DecimalToBytes(value As Decimal) As Byte()
         ' Get the bytes of the decimal.

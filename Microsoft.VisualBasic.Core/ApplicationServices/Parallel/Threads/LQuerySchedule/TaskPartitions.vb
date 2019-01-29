@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c77d1da748079d1ae782dc55a1cb89d5, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb"
+﻿#Region "Microsoft.VisualBasic::9380a5103ef66474f25d48e8c3553151, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\LQuerySchedule\TaskPartitions.vb"
 
     ' Author:
     ' 
@@ -87,26 +87,29 @@ Namespace Parallel.Linq
         Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), parTokens%, Optional echo As Boolean = True) As IEnumerable(Of T())
             Dim buf As New List(Of T)
             Dim n As Integer = 0
+            Dim count As Integer = 0
             Dim parts As Integer
 
             For Each x As T In source
                 If n = parTokens Then
                     Yield buf.ToArray
-                    buf.Clear()
+
+                    buf *= 0
                     n = 0
                     parts += 1
                 End If
 
                 buf.Add(x)
                 n += 1
+                count += 1
             Next
 
-            If buf.Count > 0 Then
+            If buf > 0 Then
                 Yield buf.ToArray
             End If
 
             If echo Then
-                Call $"Large data set data partitioning(partitions:={parts}) jobs done!".__DEBUG_ECHO
+                Call $"Large data_set(size:={count}) partitioning(partitions:={parts}) jobs done!".__DEBUG_ECHO
             End If
         End Function
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69b1f85294e1a352a41b23a60d0afa2a, Data_science\Mathematica\Math\Math\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::eb1d8b53301ba628eee85e3cde31d8ff, Data_science\Mathematica\Math\Math\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,10 @@
 
     ' Module Extensions
     ' 
-    '     Function: (+4 Overloads) AsVector, DoubleRange, FDR, FirstDecrease, FirstIncrease
-    '               FlipCoin, IntRange, IsInside, Iterates, (+2 Overloads) Range
-    '               Reach, seq2, Sim, SSM, Tanimoto
-    '               X, Y
+    '     Function: [Shadows], (+4 Overloads) AsVector, DoubleRange, FDR, FirstDecrease
+    '               FirstIncrease, FlipCoin, IntRange, IsInside, Iterates
+    '               (+2 Overloads) Range, Reach, seq2, Sim, SSM
+    '               Tanimoto, X, Y
     ' 
     ' /********************************************************************************/
 
@@ -50,12 +50,25 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports sys = System.Math
 
 ''' <summary>
 ''' 向量以及统计函数拓展
 ''' </summary>
 Public Module Extensions
+
+    ''' <summary>
+    ''' Create the vector model from target .NET object collection.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function [Shadows](Of T)(source As IEnumerable(Of T)) As IVector(Of T)
+        Return New IVector(Of T)(source)
+    End Function
 
     Public Function FlipCoin(Optional headsCutoff% = 50, Optional ntimes% = 100) As Double
         Dim rand As Integer = randf(0, ntimes)

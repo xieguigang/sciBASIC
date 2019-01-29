@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ceb6354319261aae8d03df0bc8bc2aac, Microsoft.VisualBasic.Core\Net\HTTP\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::30ac82b8e9a5ffa17467b35f518157d4, Microsoft.VisualBasic.Core\Net\HTTP\DataURI.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Properties: base64, chartSet, mime
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: FromFile, SVGImage, ToStream, ToString, URIParser
+    '         Function: FromFile, IsWellFormedUriString, SVGImage, ToStream, ToString
+    '                   URIParser
     ' 
     ' 
     ' /********************************************************************************/
@@ -107,6 +108,21 @@ Namespace Net.Http
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function SVGImage(svg As String) As DataURI
             Return New DataURI(base64:=TextEncodings.UTF8WithoutBOM.GetBytes(svg).ToBase64String, mine:="image/svg+xml")
+        End Function
+
+        ''' <summary>
+        ''' 这个只能够从字符串的特征来初步判断是否是Data URI字符串
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
+        Public Shared Function IsWellFormedUriString(str As String) As Boolean
+            If InStr(str, "data:") <> 1 Then
+                Return False
+            Else
+                ' to do
+            End If
+
+            Return True
         End Function
 
         Public Shared Function URIParser(uri As String) As DataURI

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ff2a8e953272beb54e1d0026d81931c, Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\DataModel.vb"
+﻿#Region "Microsoft.VisualBasic::f6f1b667d6b87dde5ea86e0f308aa6b5, Data_science\Mathematica\Plot\Plots\BarPlot\Histogram\DataModel.vb"
 
     ' Author:
     ' 
@@ -60,13 +60,13 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace BarPlot.Histogram
@@ -79,7 +79,21 @@ Namespace BarPlot.Histogram
     ''' </remarks>
     Public Structure HistogramData
 
-        Public x1#, x2#, y#
+        ''' <summary>
+        ''' 数据区域范围的下限
+        ''' </summary>
+        Public x1#
+        ''' <summary>
+        ''' 数据区域范围的上限
+        ''' </summary>
+        Public x2#
+        ''' <summary>
+        ''' 频数
+        ''' </summary>
+        Public y#
+        ''' <summary>
+        ''' 一般为平均值
+        ''' </summary>
         Public pointY#
 
         Public ReadOnly Property LinePoint As PointData
@@ -219,14 +233,21 @@ Namespace BarPlot.Histogram
         ''' Tag值为直方图的高，value值为直方图的平均值连线
         ''' </summary>
         ''' <param name="hist"></param>
-        Sub New(hist As Dictionary(Of Double, IntegerTagged(Of Double)), step!)
-            data = hist.Select(
-                Function(range) New HistogramData With {
-                    .x1 = range.Key,
-                    .x2 = .x1 + step!,
-                    .y = range.Value.Tag,
-                    .pointY = range.Value.Value
-                }).ToArray
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(hist As IEnumerable(Of DataBinBox(Of Double)), step!)
+            data = hist _
+                .Select(Function(range)
+                            Dim data As Double() = range.Raw
+
+                            Return New HistogramData With {
+                                .x1 = data.Min,
+                                .x2 = .x1 + step!,
+                                .y = data.Length,
+                                .pointY = data.Average
+                            }
+                        End Function) _
+                .ToArray
         End Sub
     End Structure
 End Namespace

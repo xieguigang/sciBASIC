@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0275fd23a80ffbfde2ad164d805cd17e, mime\application%netcdf\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::eaf6417dc0cc3ded796413200023e314, mime\application%netcdf\Data\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -33,39 +33,36 @@
 
     ' Module TypeExtensions
     ' 
+    '     Constructor: (+1 Overloads) Sub New
     '     Function: num2str, readNumber, readType, sizeof, str2num
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
 
 Module TypeExtensions
+
+    ReadOnly description As Dictionary(Of CDFDataTypes, String)
+    ReadOnly enumParser As Dictionary(Of String, CDFDataTypes)
+
+    Sub New()
+        description = Enums(Of CDFDataTypes).ToDictionary(Function(type) type, Function(type) type.Description)
+        enumParser = description.ReverseMaps
+    End Sub
 
     ''' <summary>
     ''' Parse a number into their respective type
     ''' </summary>
     ''' <param name="type">type - integer that represents the type</param>
     ''' <returns>parsed value of the type</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function num2str(type As CDFDataTypes) As String
-        Select Case type
-            Case CDFDataTypes.BYTE
-                Return "byte"
-            Case CDFDataTypes.CHAR
-                Return "char"
-            Case CDFDataTypes.SHORT
-                Return "short"
-            Case CDFDataTypes.INT
-                Return "int"
-            Case CDFDataTypes.FLOAT
-                Return "float"
-            Case CDFDataTypes.DOUBLE
-                Return "double"
-            Case Else
-                ' istanbul ignore next 
-                Return "undefined"
-        End Select
+        ' ([default]:="undefined") istanbul ignore next 
+        Return description.TryGetValue(type, [default]:="undefined")
     End Function
 
     ''' <summary>
@@ -98,24 +95,10 @@ Module TypeExtensions
     ''' </summary>
     ''' <param name="type">type - string that represents the type</param>
     ''' <returns>parsed value of the type</returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function str2num(type As String) As CDFDataTypes
-        Select Case LCase(type)
-            Case "byte"
-                Return CDFDataTypes.BYTE
-            Case "char"
-                Return CDFDataTypes.CHAR
-            Case "short"
-                Return CDFDataTypes.SHORT
-            Case "int"
-                Return CDFDataTypes.INT
-            Case "float"
-                Return CDFDataTypes.FLOAT
-            Case "double"
-                Return CDFDataTypes.DOUBLE
-            Case Else
-                ' istanbul ignore next
-                Return CDFDataTypes.undefined
-        End Select
+        Return enumParser.TryGetValue(LCase(type), [default]:=CDFDataTypes.undefined)
     End Function
 
     ''' <summary>
@@ -139,7 +122,11 @@ Module TypeExtensions
     End Function
 
     ''' <summary>
-    ''' Given a type And a size reads the next element
+    ''' Given a type And a size reads the next element.
+    ''' (这个函数会根据<paramref name="type"/>类以及<paramref name="size"/>的不同而返回不同的数据结果:
+    ''' + 根据<paramref name="type"/>可能会返回字符串或者数字
+    ''' + 如果<paramref name="size"/>等于1,则只会返回单个数字, 如果<paramref name="size"/>大于1, 则会返回一个数组
+    ''' )
     ''' </summary>
     ''' <param name="buffer">buffer - Buffer for the file data</param>
     ''' <param name="type">type - Type of the data to read</param>

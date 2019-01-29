@@ -41,6 +41,9 @@
 
 Module Program
 
+    Public Const CsvTools$ = "Comma-Separated Values CLI Helpers"
+    Public Const XlsxTools$ = "Microsoft Xlsx File CLI Tools"
+
     Public Function Main() As Integer
         Return GetType(CLI).RunCLI(App.CommandLine)
     End Function
