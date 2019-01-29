@@ -435,6 +435,9 @@
     <Compile Include="Algebra\SVD.vb" />
     <Compile Include="Algebra\Vector\Polynomial.vb" />
     <Compile Include="Crc32.vb" />
+    <Compile Include="Distributions\DataBinBox.vb" />
+    <Compile Include="Distributions\CutBins.vb" />
+    <Compile Include="Distributions\pnorm.vb" />
     <Compile Include="Distributions\Sample.vb" />
     <Compile Include="Distributions\Gaussian.vb" />
     <Compile Include="Scripting\Factors\NamedVector.vb" />
@@ -488,7 +491,7 @@
     <Compile Include="Spline\CubicSpline\CubicSplineVector.vb" />
     <Compile Include="Spline\CubicSpline\CubicEval.vb" />
     <Compile Include="Spline\CubicSpline\CubicSpline.vb" />
-    <Compile Include="Bootstraping.vb" />
+    <Compile Include="Distributions\Bootstraping.vb" />
     <Compile Include="Distributions\Beta.vb" />
     <Compile Include="Distributions\DirichletDistribution.vb" />
     <Compile Include="Distributions\Gamma.vb" />

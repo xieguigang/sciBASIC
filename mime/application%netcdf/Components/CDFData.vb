@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99bd6739900c820154c9a4f77e7b78f2, mime\application%netcdf\Components\CDFData.vb"
+﻿#Region "Microsoft.VisualBasic::0820fdc57c01de243b707a59bbc61f73, mime\application%netcdf\Components\CDFData.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: byteStream, cdfDataType, chars, integers, Length
     '                     numerics, tiny_int, tiny_num
     ' 
-    '         Function: ToString
+    '         Function: GetBuffer, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,12 +44,16 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Components
 
+    ''' <summary>
+    '''  存储在CDF文件之中的数据的统一接口模块
+    ''' </summary>
     Public Class CDFData
 
         ''' <summary>
@@ -131,6 +135,39 @@ Namespace Components
             End If
 
             Return $"[{cdfDataType}] {stringify}"
+        End Function
+
+        Public Function GetBuffer(encoding As Encoding) As Byte()
+            Select Case cdfDataType
+                Case CDFDataTypes.BYTE : Return Convert.FromBase64String(byteStream)
+                Case CDFDataTypes.CHAR : Return encoding.GetBytes(chars)
+                Case CDFDataTypes.DOUBLE
+                    Return numerics _
+                        .Select(AddressOf BitConverter.GetBytes) _
+                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
+                        .IteratesALL _
+                        .ToArray
+                Case CDFDataTypes.FLOAT
+                    Return tiny_num _
+                        .Select(AddressOf BitConverter.GetBytes) _
+                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
+                        .IteratesALL _
+                        .ToArray
+                Case CDFDataTypes.INT
+                    Return integers _
+                        .Select(AddressOf BitConverter.GetBytes) _
+                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
+                        .IteratesALL _
+                        .ToArray
+                Case CDFDataTypes.SHORT
+                    Return tiny_int _
+                        .Select(AddressOf BitConverter.GetBytes) _
+                        .Select(Function(b) DirectCast(b, IEnumerable(Of Byte)).Reverse) _
+                        .IteratesALL _
+                        .ToArray
+                Case Else
+                    Throw New NotImplementedException(cdfDataType.Description)
+            End Select
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

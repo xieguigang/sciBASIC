@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::996fa1afa9af10014cce475c515748fa, Data_science\Darwinism\GeneticAlgorithm\GAF_example\neuronTest.vb"
+﻿#Region "Microsoft.VisualBasic::1f59d5066c366de573e9cc2ee56bccc9, Data_science\Darwinism\GeneticAlgorithm\GAF_example\neuronTest.vb"
 
     ' Author:
     ' 
@@ -40,6 +40,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Module neuronTest
@@ -74,7 +75,8 @@ Module neuronTest
         Call test.Add({1, 0, 0, 1, 1, 1}, {0, 0, 1})
         Call test.Add({0, 1, 1, 0, 0, 0}, {1, 1, 1})
 
-        Call test.Train()
+        ' Call test.Train()
+        Call test.NeuronNetwork.RunGAAccelerator(test.TrainingSet)
 
         Dim classes1 = test.NeuronNetwork.Compute(0, 0, 0, 1, 1, 1)
         Dim classes2 = test.NeuronNetwork.Compute(1, 0, 0, 1, 1, 1)

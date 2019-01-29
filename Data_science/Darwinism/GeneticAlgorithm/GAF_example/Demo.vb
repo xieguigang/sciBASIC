@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f579d67fade7b48a2b6c48e01267f4c, Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
+﻿#Region "Microsoft.VisualBasic::5d6b5996b843aa453c1f05d443cd7dd9, Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
 
     ' Author:
     ' 
@@ -61,11 +61,13 @@ Public Class Demo
         Dim population As Population(Of MyVector) = New MyVector().InitialPopulation(5000)
         Dim fitness As Fitness(Of MyVector) = New MyVectorFitness()
         Dim ga As New GeneticAlgorithm(Of MyVector)(population, fitness)
-        '   Dim out As New List(Of outPrint)
+        Dim engine As New EnvironmentDriver(Of MyVector)(ga) With {
+            .Iterations = 10000,
+            .Threshold = 0.005
+        }
 
-        ga.AddDefaultListener '(Sub(x) Call out.Add(x))
-        ga.Evolve(5000)
-        '   out.SaveTo("./outPrint.csv")
+        Call engine.AttachReporter(Sub(i, e, g) EnvironmentDriver(Of MyVector).CreateReport(i, e, g).ToString.__DEBUG_ECHO)
+        Call engine.Train()
 
         Pause()
     End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16fa206d18df6c7dc9a00ac6a6da6113, Data_science\Mathematica\Math\Math\Spline\BezierCurve.vb"
+﻿#Region "Microsoft.VisualBasic::4c69c1146e2a5871230d646915a1e369, Data_science\Mathematica\Math\Math\Spline\BezierCurve.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: MidPoint, ReCalculate
+    '         Function: MidPoint, MidPoints, ReCalculate
     ' 
     '         Sub: CreateBezier, PopulateBezierPoints
     ' 
@@ -171,6 +171,23 @@ Namespace Interpolation
                 .X = (control1.X + control2.X) / 2,
                 .Y = (control1.Y + control2.Y) / 2
             }
+        End Function
+
+        ''' <summary>
+        ''' medial axes between node centres And also boundary lines for the grid
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <returns></returns>
+        Public Shared Iterator Function MidPoints(a As Double()) As IEnumerable(Of Double)
+            Dim gap = a(1) - a(0)
+
+            Yield a(0) - gap / 2
+
+            For i As Integer = 1 To a.Length - 1
+                Yield (a(i) + a(i - 1)) / 2
+            Next
+
+            Yield a(a.Length - 1) + gap / 2
         End Function
     End Class
 End Namespace

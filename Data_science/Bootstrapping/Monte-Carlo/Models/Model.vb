@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f40cf71e124b00cc1aec0a4cd1da84f, Data_science\Bootstrapping\Monte-Carlo\Models\Model.vb"
+﻿#Region "Microsoft.VisualBasic::f5b6bdc4ae50f996d73fda81c6a8250f, Data_science\Bootstrapping\Monte-Carlo\Models\Model.vb"
 
     ' Author:
     ' 
@@ -44,8 +44,8 @@
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Emit
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Calculus
+Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace MonteCarlo
 
@@ -160,7 +160,7 @@ Namespace MonteCarlo
 
                 TryCast(x, RefModel).RefValues = New ValueVector With {
                     .Y = ref.y,
-                    .value = Scan0
+                    .Value = Scan0
                 }
                 TryCast(x, RefModel).Delta = partTokens
             End If
@@ -211,7 +211,7 @@ Namespace MonteCarlo
                     LinqAPI.DefaultFirst(Of DoubleTagged(Of Integer)) <= From x As DoubleTagged(Of Integer)
                                                                          In dist.Values
                                                                          Select x
-                                                                         Order By x.value Descending
+                                                                         Order By x.Value Descending
                 parms(var$) = most.Tag
             Next
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2b7be939df9c777bafc51825a4cc984, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\SCS.vb"
+﻿#Region "Microsoft.VisualBasic::b6f3b5144db49c530543e62920605973, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\SCS.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace ComponentModel.Algorithm
+Namespace ComponentModel.Algorithm.DynamicProgramming
 
     ''' <summary>
     ''' shortest_common_superstring

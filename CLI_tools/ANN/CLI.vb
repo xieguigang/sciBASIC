@@ -1,48 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::46e3cc83f4675c24a0e360758d28c365, CLI_tools\ANN\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::748308d6cc55dd5c318770db251e36f0, CLI_tools\ANN\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: ConfigTemplate, Encourage, Train
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: ConfigTemplate, Encourage, Train
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
 
 Module CLI
@@ -60,7 +63,7 @@ Module CLI
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/training")>
-    <Usage("/training /samples <sample_matrix.Xml> [/config <config.ini> /parallel /out <ANN.Xml>]")>
+    <Usage("/training /samples <sample_matrix.Xml> [/config <config.ini> /parallel /GA.optimize /out <ANN.Xml>]")>
     Public Function Train(args As CommandLine) As Integer
         Dim in$ = args <= "/samples"
         Dim parallel As Boolean = args("/parallel")
@@ -82,24 +85,72 @@ Module CLI
                 .ToArray
         End If
 
+        Dim actives As New Activations.LayerActives With {
+            .hiddens = New Activations.Sigmoid,
+            .input = New Activations.Sigmoid,
+            .output = New Activations.Sigmoid
+        }
         Dim trainingHelper As New TrainingUtils(
             samples.Size.Width, hiddenSize,
             samples.OutputSize,
             config.learnRate,
-            config.momentum
+            config.momentum,
+            actives
         )
 
-        For Each sample As Sample In samples.DataSamples
+        For Each sample As Sample In samples.PopulateNormalizedSamples
             Call trainingHelper.Add(sample.status, sample.target)
         Next
 
-        Call trainingHelper.Train()
+        Helpers.MaxEpochs = config.iterations
+
+        Call Console.WriteLine(trainingHelper.NeuronNetwork.ToString)
+
+        If Not args("/GA.optimize").IsTrue Then
+            Call trainingHelper.runTrainingCommon(out.TrimSuffix & ".debugger.CDF", parallel)
+        Else
+            Call trainingHelper _
+                .NeuronNetwork _
+                .RunGAAccelerator(
+                    trainingSet:=trainingHelper.TrainingSet,
+                    iterations:=config.iterations
+                 )
+        End If
 
         Return trainingHelper _
             .TakeSnapshot _
             .GetXml _
             .SaveTo(out) _
             .CLICode
+    End Function
+
+    <Extension>
+    Private Function runTrainingCommon(trainer As TrainingUtils, debugCDF$, parallel As Boolean) As TrainingUtils
+        Dim synapses = trainer _
+            .NeuronNetwork _
+            .GetSynapseGroups _
+            .Select(Function(g) g.First) _
+            .ToArray
+        Dim synapsesWeights As New Dictionary(Of String, List(Of Double))
+        Dim errors As New List(Of Double)
+        Dim index As New List(Of Integer)
+
+        For Each s In synapses
+            synapsesWeights.Add(s.ToString, New List(Of Double))
+        Next
+
+        Call Console.WriteLine(trainer.NeuronNetwork.ToString)
+        Call trainer _
+            .AttachReporter(Sub(i, err, model)
+                                Call index.Add(i)
+                                Call errors.Add(err)
+                                Call synapses.DoEach(Sub(s) synapsesWeights(s.ToString).Add(s.Weight))
+                            End Sub) _
+            .Train(parallel)
+
+        Call Debugger.WriteCDF(trainer.NeuronNetwork, debugCDF, synapses, errors, index, synapsesWeights)
+
+        Return trainer
     End Function
 
     ''' <summary>
@@ -109,7 +160,7 @@ Module CLI
     ''' <returns></returns>
     ''' 
     <ExportAPI("/encourage")>
-    <Usage("/encourage /model <ANN.xml> /samples <samples.Xml> [/parallel /out <out.Xml>]")>
+    <Usage("/encourage /model <ANN.xml> /samples <samples.Xml> [/parallel /iterations <default=10000> /out <out.Xml>]")>
     Public Function Encourage(args As CommandLine) As Integer
         Dim in$ = args <= "/model"
         Dim samples$ = args <= "/samples"
@@ -118,17 +169,17 @@ Module CLI
         Dim network As Network = [in].LoadXml(Of NeuralNetwork).LoadModel
         Dim training As New TrainingUtils(network)
 
-        For Each sample As Sample In samples.LoadXml(Of DataSet).DataSamples
+        Helpers.MaxEpochs = args("/iterations") Or 10000
+
+        For Each sample As Sample In samples.LoadXml(Of DataSet).PopulateNormalizedSamples
             Call training.Add(sample.status, sample.target)
         Next
 
-        Call Console.WriteLine(network.ToString)
-        Call training.Train(parallel, normalize:=True)
-
-        Return training.TakeSnapshot _
+        Return training _
+            .runTrainingCommon(out.TrimSuffix & ".debugger.CDF", parallel) _
+            .TakeSnapshot _
             .GetXml _
             .SaveTo(out) _
             .CLICode
     End Function
 End Module
-

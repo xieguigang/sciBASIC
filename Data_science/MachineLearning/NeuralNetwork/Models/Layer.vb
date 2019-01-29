@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c6f14e7c999dc298d47b08ae6398bf4, Data_science\MachineLearning\NeuralNetwork\Models\Layer.vb"
+﻿#Region "Microsoft.VisualBasic::0663593de3469bc1076b230d5360e6f2, Data_science\MachineLearning\NeuralNetwork\Models\Layer.vb"
 
     ' Author:
     ' 
@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -85,16 +86,16 @@ Namespace NeuralNetwork
             Me.Neurons = neurons
         End Sub
 
-        Sub New(size%, active As IActivationFunction, Optional input As Layer = Nothing)
+        Sub New(size%, active As IActivationFunction, Optional input As Layer = Nothing, Optional guid As int = Nothing)
             Neurons = New Neuron(size - 1) {}
 
             If input Is Nothing Then
                 For i As Integer = 0 To size - 1
-                    Neurons(i) = New Neuron(active)
+                    Neurons(i) = New Neuron(active, guid)
                 Next
             Else
                 For i As Integer = 0 To size - 1
-                    Neurons(i) = New Neuron(input.Neurons, active)
+                    Neurons(i) = New Neuron(input.Neurons, active, guid)
                 Next
             End If
         End Sub
@@ -112,6 +113,12 @@ Namespace NeuralNetwork
             Next
         End Sub
 
+        ''' <summary>
+        ''' 调用这个函数将会修改突触链接的权重值，这个函数只会在训练的时候被调用
+        ''' </summary>
+        ''' <param name="learnRate#"></param>
+        ''' <param name="momentum#"></param>
+        ''' <param name="parallel"></param>
         Public Sub UpdateWeights(learnRate#, momentum#, Optional parallel As Boolean = False)
             If Not parallel Then
                 For Each neuron As Neuron In Neurons
@@ -139,6 +146,11 @@ Namespace NeuralNetwork
             Else
                 ' 在这里将结果值赋值到一个临时的匿名变量中
                 ' 来触发这个并行调用表达式
+                '
+                ' 2019-1-14 因为在计算的时候，取的neuron.value是上一层网络的值
+                ' 只是修改当前网络的节点值
+                ' 并没有修改上一层网络的任何参数
+                ' 所以在这里的并行是没有问题的
                 With Aggregate neuron As Neuron
                      In Neurons.AsParallel
                      Into Sum(neuron.CalculateValue)
@@ -146,21 +158,21 @@ Namespace NeuralNetwork
             End If
         End Sub
 
-        Public Sub CalculateGradient(targets As Double())
+        Public Sub CalculateGradient(targets As Double(), truncate As Double)
             For i As Integer = 0 To targets.Length - 1
-                Neurons(i).CalculateGradient(targets(i))
+                Neurons(i).CalculateGradient(targets(i), truncate)
             Next
         End Sub
 
-        Public Sub CalculateGradient(Optional parallel As Boolean = False)
+        Public Sub CalculateGradient(Optional parallel As Boolean = False, Optional truncate# = -1)
             If Not parallel Then
                 For Each neuron As Neuron In Neurons
-                    Call neuron.CalculateGradient()
+                    Call neuron.CalculateGradient(truncate)
                 Next
             Else
                 With Aggregate neuron As Neuron
                      In Neurons.AsParallel
-                     Into Sum(neuron.CalculateGradient)
+                     Into Sum(neuron.CalculateGradient(truncate))
                 End With
             End If
         End Sub
@@ -228,15 +240,15 @@ Namespace NeuralNetwork
         ''' <param name="input">s神经网络的输入层会作为隐藏层的输入</param>
         ''' <param name="size%"></param>
         ''' <param name="active"></param>
-        Sub New(input As Layer, size%(), active As IActivationFunction)
-            Dim hiddenPortal As New Layer(size(Scan0), active, input)
+        Sub New(input As Layer, size%(), active As IActivationFunction, guid As int)
+            Dim hiddenPortal As New Layer(size(Scan0), active, input, guid)
 
             Layers = New Layer(size.Length - 1) {}
             Layers(Scan0) = hiddenPortal
 
             ' 在隐藏层之中,前一层神经网络会作为后面的输出
             For i As Integer = 1 To size.Length - 1
-                Layers(i) = New Layer(size(i), active, input:=hiddenPortal)
+                Layers(i) = New Layer(size(i), active, input:=hiddenPortal, guid:=guid)
                 hiddenPortal = Layers(i)
             Next
 
@@ -258,14 +270,14 @@ Namespace NeuralNetwork
             Next
         End Sub
 
-        Public Sub BackPropagate(learnRate#, momentum#, parallel As Boolean)
+        Public Sub BackPropagate(learnRate#, momentum#, truncate#, parallel As Boolean)
             Dim reverse = Layers.Reverse.ToArray
 
             ' 因为在调用函数计算之后,值变了
             ' 所以在这里会需要使用两个for each
             ' 不然计算会出bug
             For Each revLayer As Layer In reverse
-                Call revLayer.CalculateGradient(parallel)
+                Call revLayer.CalculateGradient(parallel, truncate)
             Next
             For Each revLayer As Layer In reverse
                 Call revLayer.UpdateWeights(learnRate, momentum, parallel)

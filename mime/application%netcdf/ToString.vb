@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca0c93cca11f4ddfe93a497fa0957972, mime\application%netcdf\ToString.vb"
+﻿#Region "Microsoft.VisualBasic::f81bf5833d1e0f73e4d84ce55be4ef41, mime\application%netcdf\ToString.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
 
 ''' <summary>
@@ -51,10 +52,20 @@ Module ToStringHelper
     <Extension>
     Public Function toString(file As netCDFReader) As String
         Dim result As New StringBuilder
+        Dim [dim] As Dimension
+        Dim summary$
+        Dim record = file.recordDimension
 
         result.AppendLine("DIMENSIONS")
-        For Each dimension In file.dimensions
-            result.AppendLine($"  {dimension.name.PadEnd(30)} = size: {dimension.size}")
+        For Each dimension As SeqValue(Of Dimension) In file.dimensions.SeqIterator
+            [dim] = dimension
+            summary = $"  [{dimension.i.ToString.PadLeft(2)}] {[dim].name.PadEnd(25)} = size: {[dim].size}"
+
+            If [dim].name = record.name Then
+                summary &= $" [recordDimension, size={record.length}x{record.recordStep}]"
+            End If
+
+            result.AppendLine(summary)
         Next
 
         result.AppendLine()

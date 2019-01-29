@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a255f72cf04e575d0c02114eada3381f, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::540e3ff7aa2064585faa3559c6abc924, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
 
     ' Author:
     ' 
@@ -143,7 +143,7 @@ Public Module XmlExtensions
             xmlDoc = preprocess(xmlDoc)
         End If
         If stripInvalidsCharacter Then
-            xmlDoc = xmlDoc.StripInvalidCharacters
+            xmlDoc = xmlDoc.StripInvalidUTF8Code
         End If
 
         Using stream As New StringReader(s:=xmlDoc)

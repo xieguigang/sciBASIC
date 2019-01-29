@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5d3762958fd49cd68202dd0ca4a3045, Data_science\Mathematica\Plot\Plots-statistics\ZScores.vb"
+﻿#Region "Microsoft.VisualBasic::7051fd0e8abb85e4f160903cc95f6fd4, Data_science\Mathematica\Plot\Plots-statistics\ZScores.vb"
 
     ' Author:
     ' 
@@ -57,13 +57,14 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 ''' <summary>
-''' Plot of the <see cref="Bootstraping.Z"/>
+''' Plot of the <see cref="Distributions.Z"/>
 ''' </summary>
 Public Module ZScoresPlot
 

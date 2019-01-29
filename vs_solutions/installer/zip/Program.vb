@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ece9636037c28b6d7b3db7ba8d2dae6, vs_solutions\installer\zip\Program.vb"
+﻿#Region "Microsoft.VisualBasic::8f13478a05170ab12da69ba0cd468f79, vs_solutions\installer\zip\Program.vb"
 
     ' Author:
     ' 
@@ -43,12 +43,13 @@ Imports System.ComponentModel
 Imports System.IO
 Imports System.IO.Compression
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.ApplicationServices.GZip
+Imports Microsoft.VisualBasic.ApplicationServices.ZipLib
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Net.Http
 
-Module Program
+<CLI> Module Program
 
     Public Function Main() As Integer
         Return GetType(Program).RunCLI(App.CommandLine)
@@ -60,7 +61,7 @@ Module Program
         Dim in$ = args <= "/file"
         Dim out$ = args("/out") Or [in].ChangeSuffix("gzip")
         Dim file As Stream = [in].Open(FileMode.Open, False)
-        Dim gzip = file.ZipStream
+        Dim gzip = file.GZipStream
 
         Return gzip.FlushStream(out).CLICode
     End Function
@@ -82,13 +83,14 @@ Module Program
         Dim tree As Boolean = args("/tree")
 
         If isDirectory Then
-            Call GZip.DirectoryArchive(
+            Call ZipLib.DirectoryArchive(
                 args.Tokens.Last,
                 saveZip:=temp,
                 action:=ArchiveAction.Replace,
                 compression:=CompressionLevel.Fastest,
                 fileOverwrite:=Overwrite.Always,
-                flatDirectory:=Not tree)
+                flatDirectory:=Not tree
+            )
         Else
             Call args.Tokens _
                 .Skip(3) _
@@ -96,17 +98,18 @@ Module Program
                     temp,
                     action:=ArchiveAction.Replace,
                     compression:=CompressionLevel.Fastest,
-                    fileOverwrite:=Overwrite.Always)
+                    fileOverwrite:=Overwrite.Always
+                )
         End If
 
         Try
-            Call System.IO.File.Delete(out)
+            Call File.Delete(out)
         Catch ex As Exception
 
         End Try
 
         Call out.ParentPath.MkDIR
-        Call System.IO.File.Copy(temp, out)
+        Call File.Copy(temp, out)
 
         Return 0
     End Function

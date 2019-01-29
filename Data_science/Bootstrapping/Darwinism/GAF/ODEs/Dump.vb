@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e872510207a8808bfae332d681562992, Data_science\Bootstrapping\Darwinism\GAF\ODEs\Dump.vb"
+﻿#Region "Microsoft.VisualBasic::9e920582814285e78921066f94666f6c, Data_science\Bootstrapping\Darwinism\GAF\ODEs\Dump.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Text
 
 Namespace Darwinism.GAF.ODEs
 
-    Public Class Dump : Implements IterartionListener(Of ParameterVector)
+    Public Class Dump
 
         Public model As Type
         Public n%, a%, b%
@@ -55,7 +55,7 @@ Namespace Darwinism.GAF.ODEs
 
         Dim i As New Uid(caseSensitive:=False)
 
-        Public Sub Update(environment As GeneticAlgorithm(Of ParameterVector)) Implements IterartionListener(Of ParameterVector).Update
+        Public Sub Update(iteration%, fitness#, environment As GeneticAlgorithm(Of ParameterVector))
             Dim best As ParameterVector = environment.Best
             Dim vars As Dictionary(Of String, Double) =
                 best _

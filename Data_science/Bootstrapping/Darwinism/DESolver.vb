@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c1e09258fe9c83c95499623b7c00914, Data_science\Bootstrapping\Darwinism\DESolver.vb"
+﻿#Region "Microsoft.VisualBasic::2745116154fa9e8a4a170b8f76163c99, Data_science\Bootstrapping\Darwinism\DESolver.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.DifferentialEvolution
-Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF.Helper.ListenerHelper
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Calculus
 

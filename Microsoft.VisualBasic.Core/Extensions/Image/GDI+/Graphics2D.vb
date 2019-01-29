@@ -244,7 +244,8 @@ Namespace Imaging
         End Function
 
         Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)
-            Throw New NotImplementedException()
+            Call Me.DrawCircle(center, radius, New SolidBrush(fill))
+            Call Me.DrawCircle(center, radius, stroke, fill:=False)
         End Sub
     End Class
 End Namespace

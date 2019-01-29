@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3c79c0c61f7a108524347607d3a52d3, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\INIProfile.vb"
+﻿#Region "Microsoft.VisualBasic::80dfb7f3011eb71f60fd0eb678caaa29, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\INIProfile.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@
     '     Module INIProfile
     ' 
     '         Function: (+2 Overloads) GetPrivateProfileString, isCommentsOrBlank, PopulateSections, readDataLines, WritePrivateProfileString
+    '                   WriteProfileComments
     ' 
     '         Sub: WritePrivateProfileString
     ' 
@@ -64,17 +65,21 @@ Namespace ComponentModel.Settings.Inf
         Const RegexpKeyValueItem$ = "^\s*[^=]+\s*=\s*.*$"
 
         ''' <summary>
-        ''' 在读取的时候会将注释行以及空白行给删除掉
+        ''' 在读取的时候会将空白行给删除掉
         ''' </summary>
         ''' <param name="path"></param>
         ''' <returns></returns>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Private Function readDataLines(path As String) As IEnumerable(Of String)
+        Private Function readDataLines(path As String, removeComments As Boolean) As IEnumerable(Of String)
+            Dim isBlank = Function(strLine As String) As Boolean
+                              Return strLine.StringEmpty(True) OrElse (removeComments AndAlso strLine.isCommentsOrBlank)
+                          End Function
+
             Return From line As String
                    In path.ReadAllLines
                    Let strLine As String = line.Trim
-                   Where Not strLine.isCommentsOrBlank
+                   Where Not isBlank(strLine)
                    Select strLine
         End Function
 
@@ -91,7 +96,7 @@ Namespace ComponentModel.Settings.Inf
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("GetValue", Info:="Get profile data from the ini file which the data is stores in a specific path like: ``section/key``")>
         Public Function GetPrivateProfileString(section$, key$, path$) As String
-            Return path.readDataLines _
+            Return path.readDataLines(True) _
                 .ToArray _
                 .GetPrivateProfileString(section, key)
         End Function
@@ -103,24 +108,33 @@ Namespace ComponentModel.Settings.Inf
         ''' <returns></returns>
         Public Iterator Function PopulateSections(path As String) As IEnumerable(Of Section)
             Dim sectionName$ = Nothing
-            Dim values As New List(Of NamedValue)
+            Dim values As New List(Of [Property])
+            Dim comments As String = ""
+            Dim sectionComments As String = ""
 
-            For Each line As String In path.readDataLines
+            For Each line As String In path.readDataLines(removeComments:=False)
                 If r.Match(line.Trim, RegexoSectionHeader).Success Then
                     ' 找到了新的section的起始
                     ' 则将前面的数据抛出
                     If Not sectionName.StringEmpty Then
                         Yield New Section With {
                             .Name = sectionName,
-                            .Items = values
+                            .Items = values,
+                            .Comment = sectionComments
                         }
                     End If
 
                     values *= 0
                     sectionName = line.GetStackValue("[", "]")
+                    sectionComments = ""
+                ElseIf line.First = "#"c Then
+                    sectionComments = sectionComments & vbCrLf & Mid(line, 2).Trim
+                ElseIf line.First = ";" Then
+                    comments = comments & vbCrLf & Mid(line, 2).Trim
                 ElseIf r.Match(line, RegexpKeyValueItem, RegexICSng).Success Then
                     With line.Trim.GetTagValue("=", trim:=True)
-                        values += New NamedValue(.Name, .Value)
+                        values += New [Property](.Name, .Value, comments)
+                        comments = ""
                     End With
                 End If
             Next
@@ -129,7 +143,8 @@ Namespace ComponentModel.Settings.Inf
             If Not sectionName.StringEmpty Then
                 Yield New Section With {
                     .Name = sectionName,
-                    .Items = values
+                    .Items = values,
+                    .Comment = sectionComments
                 }
             End If
         End Function
@@ -141,6 +156,9 @@ Namespace ComponentModel.Settings.Inf
         ''' <param name="section$"></param>
         ''' <param name="key$"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 比较轻量化的文件解析
+        ''' </remarks>
         <Extension>
         Public Function GetPrivateProfileString(lines$(), section$, key$) As String
             Dim sectionFind$ = String.Format("^\s*\[{0}\]\s*$", section)
@@ -178,47 +196,6 @@ Namespace ComponentModel.Settings.Inf
             Return String.IsNullOrEmpty(str) OrElse (str.First = ";"c OrElse str.First = "#"c)
         End Function
 
-        <Extension>
-        Public Function WritePrivateProfileString(lines As List(Of String), section$, key$, value$) As String()
-            Dim sectionFind As String = $"^\s*\[{section}\]\s*$"
-            ' 当存在该Section的时候，则从该Index位置处开始进行key的搜索
-            Dim keyFind As String = $"^\s*{key}\s*=\s*.*$"
-            Dim appendSection As Boolean = True
-
-            For index As Integer = 0 To lines.Count - 1
-                If r.Match(lines(index), sectionFind, RegexICSng).Success Then
-
-                    ' 找到了section的起始，则下面的数据到下一个section出现之前都是需要进行查找的数据
-                    For i As Integer = index + 1 To lines.Count - 1
-                        Dim line As String = lines(i)
-
-                        If r.Match(line.Trim, keyFind, RegexICSng).Success Then
-                            ' 找到了
-                            ' 在这里进行值替换，然后退出循环
-                            lines(i) = $"{key}={value}"
-                            Exit For
-                        ElseIf r.Match(line.Trim, RegexoSectionHeader).Success Then
-                            ' 已经匹配到了下一个section的起始了
-                            ' 没有找到，则进行新建
-                            ' 然后退出循环
-                            lines.Insert(i - 1, $"{key}={value}")
-                            Exit For
-                        End If
-                    Next
-
-                    appendSection = False
-                End If
-            Next
-
-            If appendSection Then
-                ' 没有找到section，则需要追加新的数据
-                lines += $"[{section}]"
-                lines += $"{key}={value}"
-            End If
-
-            Return lines
-        End Function
-
         ''' <summary>
         ''' Setting profile data from the ini file which the data is stores in a specific path like: ``section/key``. 
         ''' If the path is not exists, the function will create new.
@@ -234,10 +211,9 @@ Namespace ComponentModel.Settings.Inf
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("SetValue", Info:="Setting profile data from the ini file which the data is stores in a specific path like: ``section/key``. If the path is not exists, the function will create new.")>
         Public Sub WritePrivateProfileString(section$, key$, value$, path$)
-            Call path.ReadAllLines _
-                .AsList _
-                .WritePrivateProfileString(section, key, value) _
-                .SaveTo(path)
+            Using ini As New IniFile(path)
+                Call ini.WriteValue(section, key, value)
+            End Using
         End Sub
     End Module
 End Namespace

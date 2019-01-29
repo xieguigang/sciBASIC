@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c570e65841923aa158414b196691d06, Data_science\Bootstrapping\Darwinism\GAF\Drivers\RawCompare.vb"
+﻿#Region "Microsoft.VisualBasic::487251907ece296d2d6c797dc49ada2c, Data_science\Bootstrapping\Darwinism\GAF\Drivers\RawCompare.vb"
 
     ' Author:
     ' 
@@ -33,6 +33,8 @@
 
     '     Class RawCompare
     ' 
+    '         Properties: Cacheable
+    ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: Calculate
     ' 
@@ -56,8 +58,7 @@ Namespace Darwinism.GAF.Driver
     ''' 不像<see cref="GAFFitness"/>接受的是经过插值处理的原始数据，
     ''' 这个``fitness``驱动程序接受的是未经过任何处理的原始数据
     ''' </summary>
-    Public Class RawCompare
-        Implements Fitness(Of ParameterVector)
+    Public Class RawCompare : Implements Fitness(Of ParameterVector)
 
         ''' <summary>
         ''' TIME
@@ -92,6 +93,12 @@ Namespace Darwinism.GAF.Driver
                 }
             Next
         End Sub
+
+        Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of ParameterVector).Cacheable
+            Get
+                Return False
+            End Get
+        End Property
 
         Public Function Calculate(chromosome As ParameterVector) As Double Implements Fitness(Of ParameterVector).Calculate
             Dim result As ODEsOut = MonteCarlo.Model.RunTest(model, y0, chromosome.vars, n, a, b)

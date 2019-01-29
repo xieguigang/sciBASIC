@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dab233955c3b56aa5d39ffd710697ec, mime\application%netcdf\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::eda3ccaa289ad426228e2a3b1ac8ef85, mime\application%netcdf\Utils.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: notNetcdf, readName
     ' 
-    '     Sub: padding
+    '     Sub: padding, writeName, writePadding
     ' 
     ' /********************************************************************************/
 
@@ -44,6 +44,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Language
 
 Module Utils
 
@@ -72,6 +73,22 @@ Module Utils
         End If
     End Sub
 
+    <Extension> Public Sub writePadding(output As BinaryDataWriter)
+        Dim n As Value(Of Long) = 0
+
+        If ((n = (output.Position Mod 4)) <> 0) Then
+            For i As Integer = 1 To 4 - CLng(n)
+                Call output.Write(CByte(0))
+            Next
+        End If
+    End Sub
+
+    <Extension>
+    Public Sub writeName(output As BinaryDataWriter, name$)
+        Call output.Write(name, BinaryStringFormat.UInt32LengthPrefix)
+        Call output.writePadding
+    End Sub
+
     ''' <summary>
     ''' Reads the name
     ''' </summary>
@@ -88,6 +105,7 @@ Module Utils
         ' TODO
 
         ' Apply padding
+        ' 数据的长度应该是4的整数倍,如果不是,则会使用0进行填充
         Call buffer.padding()
 
         Return New String(name)

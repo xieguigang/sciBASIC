@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::258dc4860a8137aec93da96af2701d48, Microsoft.VisualBasic.Core\Language\Language\Python\Collection.vb"
+﻿#Region "Microsoft.VisualBasic::fc635583bce5b182f2e806513dc8a7a1, Microsoft.VisualBasic.Core\Language\Language\Python\Collection.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@ Namespace Language.Python
         ''' <param name="[step]"></param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function slice(Of T)([set] As IEnumerable(Of T), start%, stop%, Optional step% = 1) As IEnumerable(Of T)
+        Public Iterator Function slice(Of T)([set] As IEnumerable(Of T), start%, Optional stop% = -1, Optional step% = 1) As IEnumerable(Of T)
             Dim array As T() = [set].Skip(start).ToArray
 
             If [stop] < 0 Then

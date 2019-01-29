@@ -752,6 +752,18 @@ B21,B22,B23,...
                                                    .ToList(Function(x) x.row)
             Return first + rows
         End Function
+
+        ''' <summary>
+        ''' 对目标文本内容字符串进行解析，得到csv文件对象数据模型
+        ''' </summary>
+        ''' <param name="content$"></param>
+        ''' <param name="trimBlanks"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Parse(content$, Optional trimBlanks As Boolean = True) As File
+            Return New File(Load(content.LineTokens, trimBlanks))
+        End Function
 #End Region
 
         Public Shared Function Join(ParamArray list As File()) As File

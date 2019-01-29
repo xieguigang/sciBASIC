@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35f8fcd9c401d2e908d9b917cc3fee14, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadQueue.vb"
+﻿#Region "Microsoft.VisualBasic::ee7085a89d6da3f3e69575abf655dfa5, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\ThreadQueue.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ThreadQueue
     ' 
-    '         Properties: MultiThreadSupport
+    '         Properties: MultiThreadSupport, Sleep
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: AddToQueue, (+2 Overloads) Dispose, exeQueue, WaitQueue
@@ -43,6 +43,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 
 Namespace Parallel
@@ -53,11 +54,6 @@ Namespace Parallel
     Public Class ThreadQueue : Implements IDisposable
 
         ''' <summary>
-        ''' Writer Thread ☺
-        ''' </summary>
-        Dim MyThread As New Thread(AddressOf exeQueue)
-
-        ''' <summary>
         ''' If TRUE, the Writing process will be separated from the main thread.
         ''' </summary>
         Public Property MultiThreadSupport As Boolean = True
@@ -65,7 +61,16 @@ Namespace Parallel
         ''' <summary>
         ''' Just my queue
         ''' </summary>
-        ReadOnly Queue As New Queue(Of Action)(6666)
+        ReadOnly queue As New Queue(Of Action)(6666)
+        ''' <summary>
+        ''' lock
+        ''' </summary>
+        ReadOnly dummy As New Object()
+
+        ''' <summary>
+        ''' Writer Thread ☺
+        ''' </summary>
+        Dim myThread As New Thread(AddressOf exeQueue)
 
         ''' <summary>
         ''' Is thread running?
@@ -73,12 +78,16 @@ Namespace Parallel
         ''' </summary>
         Dim QSolverRunning As Boolean = False
 
-        Dim waitForExit As Boolean = False
-
         ''' <summary>
-        ''' lock
+        ''' 任务队列是否是处于休眠状态?(任务队列的内容是空的)
         ''' </summary>
-        Dim dummy As New Object()
+        ''' <returns></returns>
+        Public ReadOnly Property Sleep As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Not QSolverRunning
+            End Get
+        End Property
 
         Sub New()
             QSolverRunning = False
@@ -87,24 +96,26 @@ Namespace Parallel
         ''' <summary>
         ''' Add an Action to the queue.
         ''' </summary>
-        ''' <param name="A">()=>{ .. }</param>
+        ''' <param name="A">``() => { .. }``, 任务的执行内容</param>
         Public Sub AddToQueue(A As Action)
-            SyncLock Queue
-                Call Queue.Enqueue(A)
+            SyncLock queue
+                Call queue.Enqueue(A)
             End SyncLock
 
-            If MultiThreadSupport Then ' 只需要将任务添加到队列之中就行了
+            If MultiThreadSupport Then
+                ' 只需要将任务添加到队列之中就行了
                 SyncLock dummy
-                    If Not MyThread.IsAlive Then
+                    If Not myThread.IsAlive Then
                         QSolverRunning = False
-                        MyThread = New Thread(AddressOf exeQueue)
+                        myThread = New Thread(AddressOf exeQueue)
 
-                        MyThread.Name = "xConsole · Multi-Thread Writer"
-                        MyThread.Start()
+                        myThread.Name = "xConsole · Multi-Thread Writer"
+                        myThread.Start()
                     End If
                 End SyncLock
             Else
-                exeQueue()  ' 等待线程任务的执行完毕
+                ' 等待线程任务的执行完毕
+                exeQueue()
             End If
         End Sub
 
@@ -123,17 +134,17 @@ Namespace Parallel
         Private Sub exeQueue()
             QSolverRunning = True
 
-            While Queue IsNot Nothing AndAlso Queue.Count > 0
+            While queue IsNot Nothing AndAlso queue.Count > 0
                 Call Thread.MemoryBarrier()
 
                 While True
                     Dim a As Action
 
-                    SyncLock Queue
-                        If Queue.Count = 0 Then
+                    SyncLock queue
+                        If queue.Count = 0 Then
                             Exit While
                         Else
-                            a = Queue.Dequeue()
+                            a = queue.Dequeue()
                         End If
                     End SyncLock
 
@@ -155,7 +166,6 @@ Namespace Parallel
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)。
                     Call WaitQueue()
-                    waitForExit = True
                 End If
 
                 ' TODO: 释放未托管资源(未托管对象)并在以下内容中替代 Finalize()。

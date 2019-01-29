@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d84b39c59c0294a067990e3bc662355f, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\ClassMapper.vb"
+﻿#Region "Microsoft.VisualBasic::f7e20381c0c72bcdc83a6345c24fda37, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\ClassMapper.vb"
 
     ' Author:
     ' 
@@ -90,7 +90,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <typeparam name="T"></typeparam>
         ''' <param name="ini"></param>
         ''' <returns></returns>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ClassWriter(Of T As {New, Class})(ini As IniFile) As T
             Return DirectCast(ClassWriter(ini, GetType(T)), T)
@@ -113,16 +113,22 @@ Namespace ComponentModel.Settings.Inf
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub ClassDumper(Of T As Class)(x As T, ini As IniFile)
-            Call ClassDumper(x, GetType(T), ini)
+            Call GetType(T).ClassDumper(x, ini)
         End Sub
 
-        Public Sub ClassDumper(x As Object, type As Type, ini As IniFile)
+        <Extension>
+        Public Sub ClassDumper(type As Type, x As Object, ini As IniFile)
             Dim maps = MapParser(type)
 
-            For Each map In maps.Value
+            For Each map As BindProperty(Of DataFrameColumnAttribute) In maps.Value
                 Dim key As String = map.field.Name
                 Dim value As String = Scripting.ToString(map.GetValue(x))
-                Call ini.WriteValue(maps.Name, key, value)
+
+                If value.StringEmpty Then
+                    Call ini.WriteComment(maps.Name, $"{key}=<{map.Type.FullName}>", key)
+                Else
+                    Call ini.WriteValue(maps.Name, key, value)
+                End If
             Next
         End Sub
 

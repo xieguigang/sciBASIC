@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93d72b5a9da31c5d09924e65cd6179b0, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::6c3216b42aff9fe88a639331cc2e1fcb, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,8 @@
     ' 
     '     Function: __scale, AutoScaler, CentralOffsets, DrawImage, GetBounds
     '               GetDisplayText
+    ' 
+    '     Sub: drawLabels
     ' 
     ' /********************************************************************************/
 
@@ -157,7 +159,6 @@ Public Module NetworkVisualizer
     Public Function DrawImage(net As NetworkGraph,
                               Optional canvasSize$ = "1024,1024",
                               Optional padding$ = g.DefaultPadding,
-                              Optional styling As StyleMapper = Nothing,
                               Optional background$ = "white",
                               Optional defaultColor As Color = Nothing,
                               Optional displayId As Boolean = True,
@@ -409,48 +410,7 @@ Public Module NetworkVisualizer
                 Next
 
                 If displayId Then
-
-                    ' 使用退火算法计算出节点标签文本的位置
-                    Call d3js _
-                        .labeler _
-                        .Anchors(labels.Select(Function(x) x.anchor)) _
-                        .Labels(labels.Select(Function(x) x.label)) _
-                        .Size(frameSize) _
-                        .Start(nsweeps:=2000, showProgress:=False)
-
-                    For Each label In labels
-                        With label
-                            If Not labelColorAsNodeColor Then
-                                br = Brushes.Black
-                            Else
-                                br = .color
-                                br = New SolidBrush(DirectCast(br, SolidBrush).Color.Dark(0.005))
-                            End If
-
-                            With g.MeasureString(.label.text, .style)
-                                rect = New Rectangle(
-                                    label.label.X,
-                                    label.label.Y,
-                                    .Width,
-                                    .Height
-                                )
-                            End With
-
-                            Dim path As GraphicsPath = Imaging.GetStringPath(
-                                .label.text,
-                                g.DpiX,
-                                rect.ToFloat,
-                                .style,
-                                StringFormat.GenericTypographic
-                            )
-
-                            Call g.DrawString(.label.text, .style, br, .label.X, .label.Y)
-
-                            ' 绘制轮廓（描边）
-                            ' Call g.FillPath(br, path)
-                            ' Call g.DrawPath(New Pen(DirectCast(br, SolidBrush).Color.Dark(0.005), 4), path)
-                        End With
-                    Next
+                    Call g.drawLabels(labels, frameSize, labelColorAsNodeColor)
                 End If
             End Sub
 
@@ -458,4 +418,58 @@ Public Module NetworkVisualizer
 
         Return g.GraphicsPlots(frameSize, margin, background, plotInternal)
     End Function
+
+    ''' <summary>
+    ''' 使用退火算法计算出节点标签文本的位置
+    ''' </summary>
+    ''' 
+    <Extension>
+    Private Sub drawLabels(g As IGraphics,
+                           labels As List(Of (label As Label, anchor As Anchor, style As Font, color As Brush)),
+                           frameSize As Size,
+                           labelColorAsNodeColor As Boolean)
+        Dim br As Brush
+        Dim rect As Rectangle
+
+        Call d3js _
+            .labeler _
+            .Anchors(labels.Select(Function(x) x.anchor)) _
+            .Labels(labels.Select(Function(x) x.label)) _
+            .Size(frameSize) _
+            .Start(nsweeps:=2000, showProgress:=False)
+
+        For Each label In labels
+            With label
+                If Not labelColorAsNodeColor Then
+                    br = Brushes.Black
+                Else
+                    br = .color
+                    br = New SolidBrush(DirectCast(br, SolidBrush).Color.Dark(0.005))
+                End If
+
+                With g.MeasureString(.label.text, .style)
+                    rect = New Rectangle(
+                        label.label.X,
+                        label.label.Y,
+                        .Width,
+                        .Height
+                    )
+                End With
+
+                Dim path As GraphicsPath = Imaging.GetStringPath(
+                    .label.text,
+                    g.DpiX,
+                    rect.ToFloat,
+                    .style,
+                    StringFormat.GenericTypographic
+                )
+
+                Call g.DrawString(.label.text, .style, br, .label.X, .label.Y)
+
+                ' 绘制轮廓（描边）
+                ' Call g.FillPath(br, path)
+                ' Call g.DrawPath(New Pen(DirectCast(br, SolidBrush).Color.Dark(0.005), 4), path)
+            End With
+        Next
+    End Sub
 End Module

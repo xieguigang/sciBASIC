@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea1daa84803b48980a51d1f9790d0f5d, Data_science\Mathematica\Plot\Plots-statistics\SampleView.vb"
+﻿#Region "Microsoft.VisualBasic::5bb52eb8d8253d4ddc6eef6fa6607030, Data_science\Mathematica\Plot\Plots-statistics\SampleView.vb"
 
     ' Author:
     ' 
@@ -49,6 +49,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Statistics.MomentFunctions
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
@@ -135,7 +136,7 @@ Public Module SampleView
                 Dim scaler As New DataScaler With {
                     .X = X,
                     .Y = Y,
-                    .Region = up,
+                    .region = up,
                     .AxisTicks = (XTicks, YTicks)
                 }
 
@@ -170,7 +171,7 @@ Public Module SampleView
                 scaler = New DataScaler(rev:=True) With {
                     .X = X,
                     .Y = Y,
-                    .Region = down,
+                    .region = down,
                     .AxisTicks = (XTicks, YTicks)
                 }
 

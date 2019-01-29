@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b55edccc506b8261933f2baf752b0dd9, Data_science\Bootstrapping\Darwinism\GAF\ODEs\Protocol.vb"
+﻿#Region "Microsoft.VisualBasic::42944117fde7a7baaef735a443411fc5, Data_science\Bootstrapping\Darwinism\GAF\ODEs\Protocol.vb"
 
     ' Author:
     ' 
@@ -258,21 +258,29 @@ Namespace Darwinism.GAF.ODEs
                 fitness,
                 randomGenerator)
             Dim out As New List(Of outPrint)
-#If DEBUG Then
-            Call ga.addIterationListener(
-                New Dump With {
-                    .a = fitness.a,
-                    .b = fitness.b,
-                    .n = fitness.n,
-                    .model = fitness.Model,
-                    .y0 = fitness.y0
-                })
-#End If
-            Call ga.AddDefaultListener(Sub(x)
-                                           Call out.Add(x)
-                                           Call print(x, ga.Best.vars.Select(Function(v) New var(v)))
-                                       End Sub, threshold)
-            Call ga.Evolve(evolIterations%)
+            '#If DEBUG Then
+            '            Call ga.addIterationListener(
+            '                New Dump With {
+            '                    .a = fitness.a,
+            '                    .b = fitness.b,
+            '                    .n = fitness.n,
+            '                    .model = fitness.Model,
+            '                    .y0 = fitness.y0
+            '                })
+            '#End If
+            Dim reporter As New EnvironmentDriver(Of ParameterVector)(ga) With {
+                .Iterations = evolIterations,
+                .Threshold = threshold
+            }
+
+            Call reporter _
+                .AttachReporter(Sub(i, fit, environment)
+                                    Dim output = EnvironmentDriver(Of ParameterVector).CreateReport(i, fit, environment)
+
+                                    Call out.Add(output)
+                                    Call print(output, ga.Best.vars.Select(Function(v) New var(v)))
+                                End Sub) _
+                .Train()
 
             outPrint = out
 #If DEBUG Then
@@ -498,12 +506,19 @@ Namespace Darwinism.GAF.ODEs
                 driver,
                 randomGenerator)
             Dim out As New List(Of outPrint)
+            Dim reporter As New EnvironmentDriver(Of ParameterVector)(ga) With {
+                .Iterations = evolIterations,
+                .Threshold = threshold
+            }
 
-            Call ga.AddDefaultListener(Sub(x)
-                                           Call out.Add(x)
-                                           Call print(x, ga.Best.vars.Select(Function(v) New var(v)))
-                                       End Sub, threshold)
-            Call ga.Evolve(evolIterations%)
+            Call reporter _
+                .AttachReporter(Sub(i, fit, envir)
+                                    Dim output = EnvironmentDriver(Of ParameterVector).CreateReport(i, fit, envir)
+
+                                    Call out.Add(output)
+                                    Call print(output, ga.Best.vars.Select(Function(v) New var(v)))
+                                End Sub) _
+                .Train()
 
             outPrint = out
 #If DEBUG Then

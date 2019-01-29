@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52ec399d0193b08b140bd319a1c3d6c9, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::8310675ef1d052d76360d380167acc4d, Microsoft.VisualBasic.Core\Language\Linq\List(Of T).vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+5 Overloads) Sub New
     '         Function: [Default], Pop, PopAll, ReverseIterator, ValuesEnumerator
-    '         Operators: (+5 Overloads) -, *, ^, (+6 Overloads) +, (+2 Overloads) <
+    '         Operators: (+5 Overloads) -, *, ^, (+7 Overloads) +, (+2 Overloads) <
     '                    (+2 Overloads) <>, (+2 Overloads) =, (+2 Overloads) >, >>
     ' 
     ' 
@@ -322,6 +322,21 @@ Namespace Language
         End Operator
 
         ''' <summary>
+        ''' Adds an object to the end of the <see cref="List(Of T)"/>.
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <param name="x">
+        ''' The object to be added to the end of the <see cref="List(Of T)"/>. 
+        ''' The value can be null for reference types.
+        ''' </param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(list As List(Of T), x As Value(Of T)) As List(Of T)
+            Return list + x.Value
+        End Operator
+
+        ''' <summary>
         ''' Adds an object to the begin of the <see cref="List(Of T)"/>.
         ''' </summary>
         ''' <param name="list"></param>
@@ -581,6 +596,10 @@ Namespace Language
             Throw New NotImplementedException
         End Operator
 
+        ''' <summary>
+        ''' 反向的枚举出当前列表之中的所有元素
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function ReverseIterator() As IEnumerable(Of T)
             For i As Integer = Count - 1 To 0 Step -1
                 Yield MyBase.Item(i)

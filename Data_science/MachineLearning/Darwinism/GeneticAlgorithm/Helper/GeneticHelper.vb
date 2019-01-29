@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81f1e602224c11a906b1a3bf5efb648e, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
+﻿#Region "Microsoft.VisualBasic::77435066faa8298a69c38399a2ad244f, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
 
     ' Author:
     ' 
@@ -127,7 +127,9 @@ Namespace Darwinism.GAF.Helper
 
         ''' <summary>
         ''' The simplest strategy for creating initial population <br/>
-        ''' in real life it could be more complex
+        ''' in real life it could be more complex.
+        ''' 
+        ''' (如果<paramref name="parallel"/>计算函数是空值，则整个GA的计算过程为串行计算过程)
         ''' </summary>
         <Extension>
         Public Function InitialPopulation(Of T As Chromosome(Of T))(base As T, populationSize%, Optional parallel As ParallelComputing(Of T) = Nothing) As Population(Of T)

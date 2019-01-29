@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1539f4d8a854daa344ffd4d4aeacea1c, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::628fa058f830830dfe57d121b3140ac3, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -161,6 +161,12 @@ Namespace IO
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 取出某一个给定的属性的所有值
+        ''' </summary>
+        ''' <param name="datasets"></param>
+        ''' <param name="property$"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Vector(datasets As IEnumerable(Of DataSet), property$) As Double()

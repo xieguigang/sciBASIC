@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f88945d5b9a69e8946e33cab3084d3e2, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Point2D.vb"
+﻿#Region "Microsoft.VisualBasic::d4055b0aa975f4692a5ab25a6c4105c5, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Point2D.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: Point, X, Y
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: Clone, Equals, ToString
+    '         Function: Clone, (+2 Overloads) Equals, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,6 +44,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports sys = System.Math
 
 Namespace Imaging.LayoutModel
@@ -52,6 +53,28 @@ Namespace Imaging.LayoutModel
     ''' Implements a 2-dimensional point with <see cref="Double"/> precision coordinates.
     ''' </summary>
     <Serializable> Public Class Point2D : Implements ICloneable
+
+        ''' <summary>
+        ''' Returns the x-coordinate of the point.
+        ''' </summary>
+        ''' <returns> Returns the x-coordinate. </returns>
+        Public Property X As Double
+
+        ''' <summary>
+        ''' Returns the x-coordinate of the point.
+        ''' </summary>
+        ''' <returns> Returns the x-coordinate. </returns>
+        Public Property Y As Double
+
+        ''' <summary>
+        ''' Returns the coordinates as a new point.
+        ''' </summary>
+        ''' <returns> Returns a new point for the location. </returns>
+        Public Overridable ReadOnly Property Point As Point
+            Get
+                Return New Point(CInt(Fix(sys.Round(X))), CInt(Fix(sys.Round(Y))))
+            End Get
+        End Property
 
         ''' <summary>
         ''' Constructs a new point at (0, 0).
@@ -86,28 +109,6 @@ Namespace Imaging.LayoutModel
             Me.Y = y
         End Sub
 
-        ''' <summary>
-        ''' Returns the x-coordinate of the point.
-        ''' </summary>
-        ''' <returns> Returns the x-coordinate. </returns>
-        Public Overridable Property X As Double
-
-        ''' <summary>
-        ''' Returns the x-coordinate of the point.
-        ''' </summary>
-        ''' <returns> Returns the x-coordinate. </returns>
-        Public Overridable Property Y As Double
-
-        ''' <summary>
-        ''' Returns the coordinates as a new point.
-        ''' </summary>
-        ''' <returns> Returns a new point for the location. </returns>
-        Public Overridable ReadOnly Property Point As Point
-            Get
-                Return New Point(CInt(Fix(sys.Round(X))), CInt(Fix(sys.Round(Y))))
-            End Get
-        End Property
-
         ''' 
         ''' <summary>
         ''' Returns true if the given object equals this rectangle.
@@ -120,6 +121,11 @@ Namespace Imaging.LayoutModel
             End If
 
             Return False
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Function Equals(a As Point2D, b As Point2D) As Boolean
+            Return Math.Abs(a.X - b.X) <= 0.001 AndAlso Math.Abs(a.Y - b.Y) <= 0.001
         End Function
 
         ''' <summary>

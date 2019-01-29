@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c8c031a7eeaf7fb7d23a7938113249a, mime\application%netcdf\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::63a1326451513104d5a52ebf23b6547c, mime\application%netcdf\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -63,7 +63,7 @@ Public Class netCDFReader
     Dim globalAttributeTable As Dictionary(Of String, attribute)
     Dim variableTable As Dictionary(Of String, variable)
 
-    Const Magic$ = "CDF"
+    Public Const Magic$ = "CDF"
 
     ''' <summary>
     ''' Version for the NetCDF format
@@ -89,6 +89,7 @@ Public Class netCDFReader
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property recordDimension As recordDimension
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return header.recordDimension
         End Get
@@ -101,7 +102,11 @@ Public Class netCDFReader
     '''  + `size`: Number with the size of the dimension
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' 一个cdf文件之中只能够有一种<see cref="Dimension"/>可以是矩阵类型的么？
+    ''' </remarks>
     Public ReadOnly Property dimensions As Dimension()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return header.dimensions
         End Get
@@ -116,6 +121,7 @@ Public Class netCDFReader
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property globalAttributes As attribute()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return header.globalAttributes
         End Get
@@ -151,6 +157,7 @@ Public Class netCDFReader
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property variables As variable()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return header.variables
         End Get
@@ -213,7 +220,7 @@ Public Class netCDFReader
             values = DataReader.nonRecord(buffer, variable)
         End If
 
-        Return (values, TypeExtensions.str2num(variable.type))
+        Return (values, variable.type)
     End Function
 
     ''' <summary>
