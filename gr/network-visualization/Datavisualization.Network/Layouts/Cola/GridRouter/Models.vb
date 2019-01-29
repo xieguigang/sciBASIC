@@ -72,10 +72,15 @@ Imports number = System.Double
 
 Namespace Layouts.Cola.GridRouter
 
-    Public Interface NodeAccessor(Of Node)
-        Function getChildren(v As Node) As number()
-        Function getBounds(v As Node) As Rectangle2D
-    End Interface
+    Public Class NodeAccessor(Of Node)
+
+        Public Delegate Function IGetChildren(v As Node) As Integer()
+        Public Delegate Function IGetBounds(v As Node) As Rectangle2D
+
+        Public Property getChildren As IGetChildren
+        Public Property getBounds As IGetBounds
+
+    End Class
 
     Public Class NodeWrapper
         Public leaf As Boolean

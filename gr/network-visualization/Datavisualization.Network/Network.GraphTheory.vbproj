@@ -388,7 +388,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graph\GraphTree.vb" />
-    <Compile Include="Layouts\Cola\adaptor.vb" />
     <Compile Include="Layouts\Cola\batch.vb" />
     <Compile Include="Layouts\Cola\descent.vb" />
     <Compile Include="Layouts\Cola\DirectedEdge.vb" />
