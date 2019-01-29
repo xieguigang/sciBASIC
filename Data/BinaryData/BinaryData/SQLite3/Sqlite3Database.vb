@@ -6,8 +6,14 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables
 
 Namespace ManagedSqlite.Core
-    Public Class Sqlite3Database
-        Implements IDisposable
+
+    ''' <summary>
+    ''' MBW.Utilities.ManagedSqlite
+    ''' 
+    ''' > https://github.com/LordMike/MBW.Utilities.ManagedSqlite
+    ''' > https://www.sqlite.org/fileformat.html
+    ''' </summary>
+    Public Class Sqlite3Database : Implements IDisposable
 
         Private ReadOnly _settings As Sqlite3Settings
         Private ReadOnly _reader As ReaderBase
