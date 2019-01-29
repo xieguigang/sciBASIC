@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::50a728bb0733f09ef08349c8cc08e182, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IOProvider.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module IOProvider
-    ' 
-    '         Function: __getPath, __getSections, EmptySection, (+2 Overloads) LoadProfile, (+3 Overloads) WriteProfile
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module IOProvider
+' 
+'         Function: __getPath, __getSections, EmptySection, (+2 Overloads) LoadProfile, (+3 Overloads) WriteProfile
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -45,6 +45,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace ComponentModel.Settings.Inf
 
@@ -170,7 +171,7 @@ Namespace ComponentModel.Settings.Inf
             Return DirectCast(obj, T)
         End Function
 
-        Private Function __getPath(Of T As Class)() As String
+        Private Function __getPath(Of T As Class)() As DefaultValue(Of String)
             Dim path As IniMapIO = GetType(T).GetAttribute(Of IniMapIO)
 
             If path Is Nothing Then
@@ -180,8 +181,17 @@ Namespace ComponentModel.Settings.Inf
             End If
         End Function
 
+        ''' <summary>
+        ''' 加载配置文件然后反序列化为一个指定类型的.NET对象
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="fileExists"></param>
+        ''' <param name="path">
+        ''' 如果这个参数是空值，则会需要在<typeparamref name="T"/>类型定义之中定义有一个<see cref="IniMapIO"/>属性来存储文件路径
+        ''' </param>
+        ''' <returns></returns>
         Public Function LoadProfile(Of T As Class)(Optional ByRef fileExists As Boolean = False, Optional ByRef path$ = Nothing) As T
-            path = __getPath(Of T)()
+            path = path Or __getPath(Of T)()
             fileExists = path.FileExists
 
             If Not fileExists Then

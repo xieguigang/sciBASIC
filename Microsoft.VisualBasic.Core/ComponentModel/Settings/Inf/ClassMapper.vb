@@ -90,7 +90,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <typeparam name="T"></typeparam>
         ''' <param name="ini"></param>
         ''' <returns></returns>
-        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ClassWriter(Of T As {New, Class})(ini As IniFile) As T
             Return DirectCast(ClassWriter(ini, GetType(T)), T)
