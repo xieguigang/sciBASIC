@@ -114,17 +114,25 @@ Namespace ComponentModel.Settings.Inf
         ''' <summary>
         ''' 在给定的section,key上面写入注释
         ''' </summary>
-        ''' <param name="section$"></param>
-        ''' <param name="key$"></param>
+        ''' <param name="section"></param>
+        ''' <param name="key">如果这个键名称不存在的话，则是将注释写入到目标<paramref name="section"/>之中的</param>
         ''' <param name="comment">不需要添加注释符号,函数会自动添加</param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub WriteComment(section$, key$, comment$)
+        Public Sub WriteComment(section$, comment$, Optional key$ = Nothing)
             ' section和key都不存在的话，则找不到写入注释的位置
             If Not data.ContainsKey(section) Then
                 Return
-            ElseIf Not data(section).Have(key) Then
-                Return
+            Else
+                If key.StringEmpty Then
+                    ' 当key是空字符串，则将comment写在section之中
+                    data(section).Comment = comment
+                    Return
+                Else
+                    If Not data(section).Have(key) Then
+                        Return
+                    End If
+                End If
             End If
 
             data(section).SetComments(key, comment)

@@ -151,7 +151,12 @@ Namespace ComponentModel.Settings.Inf
         Public Function CreateDocFragment() As String
             Dim sb As New StringBuilder($"[{Name}]")
 
+            Call sb.AppendLine()
             Call appendComments(sb, Comment, "#")
+
+            If Not Comment.StringEmpty Then
+                Call sb.AppendLine()
+            End If
 
             For Each item As HashValue In configTable.Values
                 Call appendComments(sb, item.Comment, ";")
