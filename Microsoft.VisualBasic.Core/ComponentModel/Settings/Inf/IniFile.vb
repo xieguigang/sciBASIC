@@ -1,51 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::e766188c81afafa7da17744b5bcc7786, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IniFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class IniFile
-    ' 
-    '         Properties: FileExists, path
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ReadValue, ToString
-    ' 
-    '         Sub: (+2 Overloads) Dispose, Flush, WriteComment, WriteValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class IniFile
+' 
+'         Properties: FileExists, path
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ReadValue, ToString
+' 
+'         Sub: (+2 Overloads) Dispose, Flush, WriteComment, WriteValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 
@@ -59,6 +60,7 @@ Namespace ComponentModel.Settings.Inf
         Public ReadOnly Property path As String
 
         Public ReadOnly Property FileExists As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return path.FileLength > -1
             End Get
@@ -67,7 +69,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <summary>
         ''' 为了避免频繁的读写文件，会使用这个数组来做缓存
         ''' </summary>
-        Dim dataLines As String()
+        Dim data As Dictionary(Of String, Section)
 
         ''' <summary>
         ''' Open a ini file handle.
@@ -75,14 +77,22 @@ Namespace ComponentModel.Settings.Inf
         ''' <param name="INIPath"></param>
         Public Sub New(INIPath As String)
             path = IO.Path.GetFullPath(PathMapper.GetMapPath(INIPath))
-            dataLines = path.ReadAllLines
+            data = INIProfile _
+                .PopulateSections(path) _
+                .ToDictionary(Function(s)
+                                  Return s.Name
+                              End Function)
         End Sub
 
         ''' <summary>
         ''' 将缓存数据写入文件之中
         ''' </summary>
         Public Sub Flush()
-            Call dataLines.SaveTo(path)
+            Using write As StreamWriter = path.OpenWriter
+                For Each section As Section In data.Values
+                    Call write.WriteLine(section.CreateDocFragment)
+                Next
+            End Using
         End Sub
 
         Public Overrides Function ToString() As String
@@ -90,8 +100,15 @@ Namespace ComponentModel.Settings.Inf
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub WriteValue(section$, key$, value$)
-            dataLines = dataLines.AsList.WritePrivateProfileString(section, key, value)
+        Public Sub WriteValue(section$, key$, value$, Optional comments$ = Nothing)
+            If Not data.ContainsKey(section) Then
+                data(section) = New Section With {
+                    .Name = section,
+                    .Items = {}
+                }
+            End If
+
+            data(section).SetValue(key, value, comments)
         End Sub
 
         ''' <summary>
@@ -103,12 +120,23 @@ Namespace ComponentModel.Settings.Inf
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteComment(section$, key$, comment$)
-            dataLines = dataLines.AsList.WriteProfileComments(section, key, comment)
+            ' section和key都不存在的话，则找不到写入注释的位置
+            If Not data.ContainsKey(section) Then
+                Return
+            ElseIf Not data(section).Have(key) Then
+                Return
+            End If
+
+            data(section).SetComments(key, comment)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ReadValue(section$, key$) As String
-            Return dataLines.GetPrivateProfileString(section, key)
+            If data.ContainsKey(section) Then
+                Return data(section).GetValue(key)
+            Else
+                Return Nothing
+            End If
         End Function
 
 #Region "IDisposable Support"
