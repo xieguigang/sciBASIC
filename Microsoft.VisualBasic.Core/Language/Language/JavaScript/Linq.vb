@@ -21,5 +21,29 @@ Namespace Language.JavaScript
 
             Return init
         End Function
+
+        <Extension>
+        Public Function Sort(Of T)(seq As IEnumerable(Of T), comparer As Comparison(Of T)) As IEnumerable(Of T)
+            With New List(Of T)(seq)
+                Call .Sort(comparer)
+                Return .AsEnumerable
+            End With
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Sort(Of T)(seq As IEnumerable(Of T), comparer As Func(Of T, T, Double)) As IEnumerable(Of T)
+            Return seq.Sort(Function(x, y)
+                                Dim d As Double = comparer(x, y)
+
+                                If d > 0 Then
+                                    Return 1
+                                ElseIf d < 0 Then
+                                    Return -1
+                                Else
+                                    Return 0
+                                End If
+                            End Function)
+        End Function
     End Module
 End Namespace
