@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Language.JavaScript
 Imports any = System.Object
 Imports number = System.Double
 
@@ -37,15 +38,19 @@ Namespace Layouts.Cola
         Public Sub forEach(f As Action(Of T, PairingHeap(Of T)))
             If Not Me.empty() Then
                 f(Me.elem, Me)
-                Me.subheaps.forEach(Function(s) s.forEach(f))
+                Me.subheaps.DoEach(Sub(s) s.forEach(f))
             End If
         End Sub
 
         Public Function count() As Double
-            Return If(Me.empty(), 0, 1 + Me.subheaps.reduce(Function(n As Double, h As PairingHeap(Of T))
-                                                                Return n + h.count()
-
-                                                            End Function, 0))
+            If Me.empty Then
+                Return 0
+            Else
+                Return 1 + subheaps _
+                    .Reduce(Function(n As Double, h As PairingHeap(Of T))
+                                Return n + h.count()
+                            End Function, 0)
+            End If
         End Function
 
         Public Function min() As T
@@ -60,7 +65,7 @@ Namespace Layouts.Cola
             If Me Is h Then
                 Return True
             End If
-            For i As var = 0 To Me.subheaps.length - 1
+            For i As Integer = 0 To Me.subheaps.Length - 1
                 If Me.subheaps(i).contains(h) Then
                     Return True
                 End If
@@ -69,7 +74,7 @@ Namespace Layouts.Cola
         End Function
 
         Public Function isHeap(lessThan As Func(Of T, T, Boolean)) As Boolean
-            Return Me.subheaps.every(Function(h) lessThan(Me.elem, h.elem) AndAlso h.isHeap(lessThan))
+            Return Me.subheaps.All(Function(h) lessThan(Me.elem, h.elem) AndAlso h.isHeap(lessThan))
         End Function
 
         Public Function insert(obj As T, lessThan As Func(Of T, T, Boolean)) As PairingHeap(Of T)
@@ -99,9 +104,9 @@ Namespace Layouts.Cola
         End Function
 
         Public Function mergePairs(lessThan As Func(Of T, T, Boolean)) As PairingHeap(Of T)
-            If Me.subheaps.length = 0 Then
+            If Me.subheaps.Length = 0 Then
                 Return New PairingHeap(Of T)(Nothing)
-            ElseIf Me.subheaps.length = 1 Then
+            ElseIf Me.subheaps.Length = 1 Then
                 Return Me.subheaps(0)
             Else
                 Dim firstPair = Me.subheaps.pop().merge(Me.subheaps.pop(), lessThan)
