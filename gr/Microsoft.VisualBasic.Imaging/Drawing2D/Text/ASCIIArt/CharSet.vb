@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::6947fa84197aac957a316d15fa220dd1, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\CharSet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module CharSet
-    ' 
-    '         Function: (+2 Overloads) GenerateFontWeights, (+2 Overloads) GetGeneralSize, GetWeight, LinearMap
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module CharSet
+' 
+'         Function: (+2 Overloads) GenerateFontWeights, (+2 Overloads) GetGeneralSize, GetWeight, LinearMap
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -44,6 +44,7 @@ Imports System.Drawing
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Drawing2D.Text.ASCIIArt
@@ -66,8 +67,8 @@ Namespace Drawing2D.Text.ASCIIArt
 "
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetDotMatrix() As WeightedChar()
-            Return FrogASCII.TrimNewLine("").Trim.AsEnumerable.Distinct.GenerateFontWeights
+        Public Function GetDotMatrix(Optional font As Font = Nothing) As WeightedChar()
+            Return FrogASCII.TrimNewLine("").Trim.AsEnumerable.Distinct.GenerateFontWeights(font)
         End Function
 
         '
@@ -90,17 +91,23 @@ Namespace Drawing2D.Text.ASCIIArt
         '         
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GenerateFontWeights() As WeightedChar()
+        Public Function GenerateFontWeights(Optional font As Font = Nothing) As WeightedChar()
+            Dim allPrintables = Enumerable _
+                .Range(32, 126) _
+                .Select(AddressOf Convert.ToChar) _
+                .ToArray
+
             ' New object to hold Image, Weight and Char of new character
             ' For i As Integer = 32 To 126
-            Return Enumerable.Range(32, 126 - 32).Select(Function(i) Convert.ToChar(i)).GenerateFontWeights
+            Return allPrintables.GenerateFontWeights(font Or SystemFonts.DefaultFont.AsDefault)
         End Function
 
         <Extension>
-        Public Function GenerateFontWeights(chars As IEnumerable(Of Char)) As WeightedChar()
+        Public Function GenerateFontWeights(chars As IEnumerable(Of Char), Optional font As Font = Nothing) As WeightedChar()
             ' Collect chars, their Images and weights in a list of WeightedChar
             Dim weightedChars As New List(Of WeightedChar)()
-            Dim commonsize As SizeF = GetGeneralSize()
+            Dim charList = chars.SafeQuery.Distinct.ToArray
+            Dim commonsize As SizeF = charList.GetGeneralSize(font Or SystemFonts.DefaultFont.AsDefault)
 
             ' Get standard size (nxn square), which will be common to all CharImages
             For Each c As Char In chars.SafeQuery.Distinct
@@ -133,15 +140,11 @@ Namespace Drawing2D.Text.ASCIIArt
 
 #Region "[GenerateFontWeights Helper methods]"
 
-        Private Function GetGeneralSize() As SizeF
-            Dim allPrintables = Enumerable _
-                .Range(32, 126) _
-                .Select(AddressOf Convert.ToChar) _
-                .ToArray
-
+        <Extension>
+        Private Function GetGeneralSize(allPrintables As Char(), font As Font) As SizeF
             ' Create a dummy bitmap just to get a graphics object
             Using g As IGraphics = New Size(1, 1).CreateGDIDevice
-                Return g.GetGeneralSize(allPrintables, SystemFonts.DefaultFont)
+                Return g.GetGeneralSize(allPrintables, font)
             End Using
         End Function
 

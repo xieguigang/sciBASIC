@@ -72,6 +72,10 @@ Module Program
 
     Sub ASCIIArt_test()
 
+        Call "../1537192287563.jpg".LoadImage.GetBinaryBitmap().Convert2ASCII({"+"c, "-"c, "*"c, "."c}.GenerateFontWeights(New Font(FontFace.Consolas, 10))).SaveTo("../ascii.txt")
+
+        Pause()
+
         Dim logo = "sciBASIC#".ASCIIImage
 
         Call Console.WriteLine(logo)
