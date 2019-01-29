@@ -1,21 +1,21 @@
 Imports System.Collections.Generic
-Imports MBW.Utilities.ManagedSqlite.Core.Helpers
-Imports MBW.Utilities.ManagedSqlite.Core.Internal
-Imports MBW.Utilities.ManagedSqlite.Core.Objects
-Imports MBW.Utilities.ManagedSqlite.Core.Objects.Enums
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Helpers
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 
-Namespace MBW.Utilities.ManagedSqlite.Core.Tables
-	Public Class Sqlite3Table
-		Private ReadOnly _reader As ReaderBase
+Namespace ManagedSqlite.Core.Tables
+    Public Class Sqlite3Table
+        Private ReadOnly _reader As ReaderBase
 
-		Private ReadOnly Property RootPage() As BTreePage
-		Public ReadOnly Property SchemaDefinition() As Sqlite3SchemaRow
+        Private ReadOnly Property RootPage() As BTreePage
+        Public ReadOnly Property SchemaDefinition() As Sqlite3SchemaRow
 
-		Friend Sub New(reader As ReaderBase, rootPage__1 As BTreePage, table As Sqlite3SchemaRow)
-			SchemaDefinition = table
-			_reader = reader
-			RootPage = rootPage__1
-		End Sub
+        Friend Sub New(reader As ReaderBase, rootPage__1 As BTreePage, table As Sqlite3SchemaRow)
+            SchemaDefinition = table
+            _reader = reader
+            RootPage = rootPage__1
+        End Sub
 
         Public Iterator Function EnumerateRows() As IEnumerable(Of Sqlite3Row)
             Dim cells As IEnumerable(Of BTreeCellData) = BTreeTools.WalkTableBTree(RootPage)

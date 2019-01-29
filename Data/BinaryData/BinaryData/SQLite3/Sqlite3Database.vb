@@ -1,54 +1,54 @@
 Imports System.Collections.Generic
 Imports System.IO
-Imports MBW.Utilities.ManagedSqlite.Core.Internal
-Imports MBW.Utilities.ManagedSqlite.Core.Objects
-Imports MBW.Utilities.ManagedSqlite.Core.Objects.Headers
-Imports MBW.Utilities.ManagedSqlite.Core.Tables
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables
 
-Namespace MBW.Utilities.ManagedSqlite.Core
-	Public Class Sqlite3Database
-		Implements IDisposable
-		Private ReadOnly _settings As Sqlite3Settings
-		Private ReadOnly _reader As ReaderBase
+Namespace ManagedSqlite.Core
+    Public Class Sqlite3Database
+        Implements IDisposable
+        Private ReadOnly _settings As Sqlite3Settings
+        Private ReadOnly _reader As ReaderBase
 
-		Private _sizeInPages As UInteger
+        Private _sizeInPages As UInteger
 
-		Public Property Header() As DatabaseHeader
-			Get
-				Return m_Header
-			End Get
-			Private Set
-				m_Header = Value
-			End Set
-		End Property
-		Private m_Header As DatabaseHeader
-		Private _masterTable As Sqlite3MasterTable
+        Public Property Header() As DatabaseHeader
+            Get
+                Return m_Header
+            End Get
+            Private Set
+                m_Header = Value
+            End Set
+        End Property
+        Private m_Header As DatabaseHeader
+        Private _masterTable As Sqlite3MasterTable
 
-		Public Sub New(file As Stream, Optional settings As Sqlite3Settings = Nothing)
-			_settings = If(settings, New Sqlite3Settings())
-			_reader = New ReaderBase(file)
+        Public Sub New(file As Stream, Optional settings As Sqlite3Settings = Nothing)
+            _settings = If(settings, New Sqlite3Settings())
+            _reader = New ReaderBase(file)
 
-			Initialize()
-			InitializeMasterTable()
-		End Sub
+            Initialize()
+            InitializeMasterTable()
+        End Sub
 
-		Private Sub Initialize()
-			Header = DatabaseHeader.Parse(_reader)
+        Private Sub Initialize()
+            Header = DatabaseHeader.Parse(_reader)
 
-			' Database Size in pages adjustment
-			' https://www.sqlite.org/fileformat.html#in_header_database_size
+            ' Database Size in pages adjustment
+            ' https://www.sqlite.org/fileformat.html#in_header_database_size
 
-			Dim expectedPages As UInteger = CUInt(_reader.Length \ Header.PageSize)
+            Dim expectedPages As UInteger = CUInt(_reader.Length \ Header.PageSize)
 
-			' TODO: Warn on mismatch
-			_sizeInPages = Math.Max(expectedPages, Header.DatabaseSizeInPages)
+            ' TODO: Warn on mismatch
+            _sizeInPages = Math.Max(expectedPages, Header.DatabaseSizeInPages)
 
-			_reader.ApplySqliteDatabaseHeader(Header)
-		End Sub
+            _reader.ApplySqliteDatabaseHeader(Header)
+        End Sub
 
-		Private Sub InitializeMasterTable()
-			' Parse table on Page 1, the sqlite_master table
-			Dim rootBtree As BTreePage = BTreePage.Parse(_reader, 1)
+        Private Sub InitializeMasterTable()
+            ' Parse table on Page 1, the sqlite_master table
+            Dim rootBtree As BTreePage = BTreePage.Parse(_reader, 1)
 
             ' Fake the schema for the sqlite_master table
             Dim schemaRow As New Sqlite3SchemaRow() With {
@@ -60,34 +60,34 @@ Namespace MBW.Utilities.ManagedSqlite.Core
             }
 
             Dim table As New Sqlite3Table(_reader, rootBtree, schemaRow)
-			_masterTable = New Sqlite3MasterTable(table)
-		End Sub
+            _masterTable = New Sqlite3MasterTable(table)
+        End Sub
 
-		Public Function GetTable(name As String) As Sqlite3Table
-			Dim tables As IEnumerable(Of Sqlite3SchemaRow) = GetTables
+        Public Function GetTable(name As String) As Sqlite3Table
+            Dim tables As IEnumerable(Of Sqlite3SchemaRow) = GetTables
 
-			For Each table As Sqlite3SchemaRow In tables
-				If table.TableName <> name OrElse table.Type <> "table" Then
-					Continue For
-				End If
+            For Each table As Sqlite3SchemaRow In tables
+                If table.TableName <> name OrElse table.Type <> "table" Then
+                    Continue For
+                End If
 
-				' Found it
-				Dim root As BTreePage = BTreePage.Parse(_reader, table.RootPage)
-				Dim tbl As New Sqlite3Table(_reader, root, table)
-				Return tbl
-			Next
+                ' Found it
+                Dim root As BTreePage = BTreePage.Parse(_reader, table.RootPage)
+                Dim tbl As New Sqlite3Table(_reader, root, table)
+                Return tbl
+            Next
 
-			Throw New Exception("Unable to find table named " & name)
-		End Function
+            Throw New Exception("Unable to find table named " & name)
+        End Function
 
-		Public ReadOnly Property GetTables() As IEnumerable(Of Sqlite3SchemaRow)
-			Get
-				Return _masterTable.Tables
-			End Get
-		End Property
+        Public ReadOnly Property GetTables() As IEnumerable(Of Sqlite3SchemaRow)
+            Get
+                Return _masterTable.Tables
+            End Get
+        End Property
 
-		Public Sub Dispose() Implements IDisposable.Dispose
-			_reader.Dispose()
-		End Sub
-	End Class
+        Public Sub Dispose() Implements IDisposable.Dispose
+            _reader.Dispose()
+        End Sub
+    End Class
 End Namespace

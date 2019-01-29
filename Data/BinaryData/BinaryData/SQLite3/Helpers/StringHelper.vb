@@ -1,7 +1,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace MBW.Utilities.ManagedSqlite.Core.Helpers
+Namespace ManagedSqlite.Core.Helpers
     Module StringHelper
 
         <Extension>

@@ -1,21 +1,21 @@
 Imports System.Collections.Generic
-Imports MBW.Utilities.ManagedSqlite.Core.Objects
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
 
-Namespace MBW.Utilities.ManagedSqlite.Core.Helpers
-	Friend NotInheritable Class BTreeTools
-		Private Sub New()
-		End Sub
-		Public Shared Function WalkTableBTree(node As BTreePage) As IEnumerable(Of BTreeCellData)
-			If node.[GetType]() Is GetType(BTreeInteriorTablePage) Then
-				Return WalkTableBTree(DirectCast(node, BTreeInteriorTablePage))
-			End If
+Namespace ManagedSqlite.Core.Helpers
+    Friend NotInheritable Class BTreeTools
+        Private Sub New()
+        End Sub
+        Public Shared Function WalkTableBTree(node As BTreePage) As IEnumerable(Of BTreeCellData)
+            If node.[GetType]() Is GetType(BTreeInteriorTablePage) Then
+                Return WalkTableBTree(DirectCast(node, BTreeInteriorTablePage))
+            End If
 
-			If node.[GetType]() Is GetType(BTreeLeafTablePage) Then
-				Return WalkTableBTree(DirectCast(node, BTreeLeafTablePage))
-			End If
+            If node.[GetType]() Is GetType(BTreeLeafTablePage) Then
+                Return WalkTableBTree(DirectCast(node, BTreeLeafTablePage))
+            End If
 
-			Throw New ArgumentException("Did not receive a compatible BTreePage", nameof(node))
-		End Function
+            Throw New ArgumentException("Did not receive a compatible BTreePage", NameOf(node))
+        End Function
 
         Private Shared Iterator Function WalkTableBTree(interior As BTreeInteriorTablePage) As IEnumerable(Of BTreeCellData)
             ' Walk sub-pages and yield their data

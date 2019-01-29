@@ -1,5 +1,5 @@
-Namespace MBW.Utilities.ManagedSqlite.Core
-	Public Class Sqlite3Settings
+Namespace ManagedSqlite.Core
+    Public Class Sqlite3Settings
 
-	End Class
+    End Class
 End Namespace

@@ -1,8 +1,7 @@
-Imports System.Linq
-Imports MBW.Utilities.ManagedSqlite.Core.Internal
-Imports MBW.Utilities.ManagedSqlite.Core.Objects.Enums
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 
-Namespace MBW.Utilities.ManagedSqlite.Core.Objects.Headers
+Namespace ManagedSqlite.Core.Objects.Headers
     Public Class DatabaseHeader
         Public Const HeaderSize As Integer = 100
 

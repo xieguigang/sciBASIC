@@ -1,6 +1,6 @@
 Imports System.IO
 
-Namespace MBW.Utilities.ManagedSqlite.Core.Helpers
+Namespace ManagedSqlite.Core.Helpers
     Module StreamHelper
 
         <System.Runtime.CompilerServices.Extension>

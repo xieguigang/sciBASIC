@@ -1,8 +1,8 @@
-Imports MBW.Utilities.ManagedSqlite.Core.Objects.Enums
+Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 
-Namespace MBW.Utilities.ManagedSqlite.Core.Objects
-	Friend Structure ColumnDataMeta
-		Public Length As UShort
-		Public Type As SqliteDataType
-	End Structure
+Namespace ManagedSqlite.Core.Objects
+    Friend Structure ColumnDataMeta
+        Public Length As UShort
+        Public Type As SqliteDataType
+    End Structure
 End Namespace

@@ -1,43 +1,41 @@
 
-Namespace MBW.Utilities.ManagedSqlite.Core.Tables
-	Public Class Sqlite3Row
-		Public ReadOnly Property Table() As Sqlite3Table
-		Public ReadOnly Property RowId() As Long
-		Public ReadOnly Property ColumnData() As Object()
+Namespace ManagedSqlite.Core.Tables
+    Public Class Sqlite3Row
+        Public ReadOnly Property Table() As Sqlite3Table
+        Public ReadOnly Property RowId() As Long
+        Public ReadOnly Property ColumnData() As Object()
 
-		Friend Sub New(table__1 As Sqlite3Table, rowId__2 As Long, columnData__3 As Object())
-			Table = table__1
-			RowId = rowId__2
-			ColumnData = columnData__3
-		End Sub
+        Friend Sub New(table As Sqlite3Table, rowId As Long, columnData As Object())
+            Me.Table = table
+            Me.RowId = rowId
+            Me.ColumnData = columnData
+        End Sub
 
-		Public Function TryGetOrdinal(index As UShort, ByRef value As Object) As Boolean
-			value = Nothing
+        Public Function TryGetOrdinal(index As UShort, ByRef value As Object) As Boolean
+            value = Nothing
 
-			If ColumnData.Length > index Then
-				value = ColumnData(index)
-				Return True
-			End If
+            If ColumnData.Length > index Then
+                value = ColumnData(index)
+                Return True
+            End If
 
-			Return False
-		End Function
+            Return False
+        End Function
 
-		Public Function TryGetOrdinal(Of T)(index As UShort, ByRef value As T) As Boolean
-			Dim tmp As Object
+        Public Function TryGetOrdinal(Of T)(index As UShort, Optional ByRef value As T = Nothing) As Boolean
+            Dim tmp As Object = Nothing
 
-			value = Nothing
+            If Not TryGetOrdinal(index, tmp) Then
+                Return False
+            End If
 
-			If Not TryGetOrdinal(index, tmp) Then
-				Return False
-			End If
+            ' TODO: Is null a success case?
+            If tmp Is Nothing Then
+                Return False
+            End If
 
-			' TODO: Is null a success case?
-			If tmp Is Nothing Then
-				Return False
-			End If
-
-			value = DirectCast(Convert.ChangeType(tmp, GetType(T)), T)
-			Return True
-		End Function
-	End Class
+            value = DirectCast(Convert.ChangeType(tmp, GetType(T)), T)
+            Return True
+        End Function
+    End Class
 End Namespace
