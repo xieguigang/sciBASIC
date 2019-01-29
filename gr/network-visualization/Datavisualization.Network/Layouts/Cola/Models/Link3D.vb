@@ -1,4 +1,6 @@
-﻿Namespace Layouts.Cola
+﻿Imports Microsoft.VisualBasic.Language.JavaScript
+
+Namespace Layouts.Cola
 
     Public Class Link3D
 

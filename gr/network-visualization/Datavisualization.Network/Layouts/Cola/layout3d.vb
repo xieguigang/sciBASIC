@@ -3,26 +3,6 @@ Imports number = System.Double
 
 Namespace Layouts.Cola
 
-
-    Class Node3D
-        Inherits GraphNode
-        ' if fixed, layout will not move the node from its specified starting position
-        Public fixed As [Boolean]
-        Public width As number
-        Public height As number
-        Public px As number
-        Public py As number
-        Public bounds As Rectangle
-        Public variable As Variable
-
-        Public x As number, y As number, z As number
-
-        Public Sub New(Optional x As number = 0, Optional y As number = 0, Optional z As number = 0)
-            Me.x = x
-            Me.y = y
-            Me.z = z
-        End Sub
-    End Class
     Class Layout3D
         Shared dims As String() = {"x", "y", "z"}
         Shared k As number = Layout3D.dims.Length

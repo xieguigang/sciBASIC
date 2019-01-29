@@ -959,6 +959,7 @@
     <Compile Include="Extensions\Trinity\Word.vb" />
     <Compile Include="Extensions\Trinity\WordClass.vb" />
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
+    <Compile Include="Language\Language\JavaScript\Linq.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
     <Compile Include="Language\Language\Python\NamespaceDoc.vb" />
     <Compile Include="Net\HTTP\ZipStream.vb" />

@@ -402,6 +402,7 @@
     <Compile Include="Layouts\Cola\layout.vb" />
     <Compile Include="Layouts\Cola\layout3d.vb" />
     <Compile Include="Layouts\Cola\linklengths.vb" />
+    <Compile Include="Layouts\Cola\Models\Class1.vb" />
     <Compile Include="Layouts\Cola\Models\Link3D.vb" />
     <Compile Include="Layouts\Cola\powergraph.vb" />
     <Compile Include="Layouts\Cola\pqueue.vb" />
