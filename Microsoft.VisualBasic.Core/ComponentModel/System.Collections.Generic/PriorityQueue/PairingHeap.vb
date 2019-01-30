@@ -1,10 +1,42 @@
-﻿Imports Microsoft.VisualBasic.Language.JavaScript
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace ComponentModel.Collection
 
     Public Class PairingHeap(Of T)
-        Private subheaps As Stack(Of PairingHeap(Of T))
+
+        Dim subheaps As Stack(Of PairingHeap(Of T))
+
         Public elem As T
+
+        Public ReadOnly Property count() As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                If Me.empty Then
+                    Return 0
+                Else
+                    Return 1 + subheaps _
+                        .Reduce(Function(n As Double, h As PairingHeap(Of T))
+                                    Return n + h.count()
+                                End Function, 0)
+                End If
+            End Get
+        End Property
+
+        Public ReadOnly Property min() As T
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Me.elem
+            End Get
+        End Property
+
+        Public ReadOnly Property empty() As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Me.elem Is Nothing
+            End Get
+        End Property
+
         ' from: https://gist.github.com/nervoussystem
         '{elem:object, subheaps:[array of heaps]}
         Public Sub New(elem As T)
@@ -12,9 +44,10 @@ Namespace ComponentModel.Collection
             Me.elem = elem
         End Sub
 
-        Public Overloads Function toString(selector As Func(Of T, String)) As String
+        Public Overloads Function ToString(selector As Func(Of T, String)) As String
             Dim str = ""
             Dim needComma = False
+
             For i As Integer = 0 To Me.subheaps.Count - 1
                 Dim subheap As PairingHeap(Of T) = Me.subheaps(i)
                 If Not subheap.elem Is Nothing Then
@@ -24,13 +57,19 @@ Namespace ComponentModel.Collection
                 If needComma Then
                     str = str & ","
                 End If
-                str = str & subheap.toString(selector)
+                str = str & subheap.ToString(selector)
                 needComma = True
             Next
+
             If str <> "" Then
                 str = "(" & str & ")"
             End If
-            Return (If(Me.elem Is Nothing, selector(Me.elem), "")) & str
+
+            If Me.elem Is Nothing Then
+                Return selector(Me.elem) & str
+            Else
+                Return str
+            End If
         End Function
 
         Public Sub forEach(f As Action(Of T, PairingHeap(Of T)))
@@ -39,25 +78,6 @@ Namespace ComponentModel.Collection
                 Me.subheaps.DoEach(Sub(s) s.forEach(f))
             End If
         End Sub
-
-        Public Function count() As Double
-            If Me.empty Then
-                Return 0
-            Else
-                Return 1 + subheaps _
-                    .Reduce(Function(n As Double, h As PairingHeap(Of T))
-                                Return n + h.count()
-                            End Function, 0)
-            End If
-        End Function
-
-        Public Function min() As T
-            Return Me.elem
-        End Function
-
-        Public Function empty() As Boolean
-            Return Me.elem Is Nothing
-        End Function
 
         Public Function contains(h As PairingHeap(Of T)) As Boolean
             If Me Is h Then
@@ -107,11 +127,12 @@ Namespace ComponentModel.Collection
             ElseIf Me.subheaps.Count = 1 Then
                 Return Me.subheaps(0)
             Else
-                Dim firstPair = Me.subheaps.pop().merge(Me.subheaps.pop(), lessThan)
+                Dim firstPair = Me.subheaps.Pop().merge(Me.subheaps.Pop(), lessThan)
                 Dim remaining = Me.mergePairs(lessThan)
                 Return firstPair.merge(remaining, lessThan)
             End If
         End Function
+
         Public Function decreaseKey(subheap As PairingHeap(Of T), newValue As T, setHeapNode As Action(Of T, PairingHeap(Of T)), lessThan As Func(Of T, T, Boolean)) As PairingHeap(Of T)
             Dim newHeap = subheap.removeMin(lessThan)
             'reassign subheap values to preserve tree

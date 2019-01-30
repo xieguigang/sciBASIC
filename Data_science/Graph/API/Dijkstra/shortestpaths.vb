@@ -49,8 +49,10 @@ Namespace Layouts.Cola.shortestpaths
     ' * @param es {Edge[]} array of edges
     ' 
 
-    Class Calculator(Of Link)
-        Private neighbours As Node()
+    Public Class Calculator(Of Link)
+
+        Dim neighbours As Node()
+
         Public n As Integer
         Public es As Link()
 
@@ -120,24 +122,24 @@ Namespace Layouts.Cola.shortestpaths
                     Exit While
                 End If
                 Dim i = u.neighbours.Length
-                While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)
+                While System.Math.Max(Interlocked.Decrement(i), i + 1)
                     Dim neighbour = u.neighbours(i)
 
                     Dim v = Me.neighbours(neighbour.id)
 
                     ' don't double back
-                    If qu.prev AndAlso v.id = qu.prev.node.id Then
+                    If qu.prev IsNot Nothing AndAlso v.id = qu.prev.node.id Then
                         Continue While
                     End If
 
                     ' don't retraverse an edge if it has already been explored
                     ' from a lower cost route
-                    Dim viduid = v.id + ","c + u.id
+                    Dim viduid = v.id & "," & u.id
                     If visitedFrom.IndexOf(viduid) > -1 AndAlso visitedFrom(viduid) <= qu.d Then
                         Continue While
                     End If
 
-                    Dim cc = If(qu.prev, prevCost(qu.prev.node.id, u.id, v.id), 0)
+                    Dim cc = If(qu.prev IsNot Nothing, prevCost(qu.prev.node.id, u.id, v.id), 0)
                     Dim t = qu.d + neighbour.distance + cc
 
                     ' store cost of this traversal
@@ -146,7 +148,7 @@ Namespace Layouts.Cola.shortestpaths
                 End While
             End While
             Dim path As Double() = {}
-            While qu.prev
+            While qu.prev IsNot Nothing
                 qu = qu.prev
                 path.push(qu.node.id)
             End While

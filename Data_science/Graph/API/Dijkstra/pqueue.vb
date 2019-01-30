@@ -1,6 +1,4 @@
-Imports Microsoft.VisualBasic.Language.JavaScript
 Imports any = System.Object
-Imports number = System.Double
 
 Namespace Layouts.Cola
 
