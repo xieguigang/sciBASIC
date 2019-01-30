@@ -9,32 +9,32 @@ Namespace Layouts.Cola
         ''' <summary>
         ''' index in nodes array, this is initialized by Layout.start()
         ''' </summary>
-        Private index As Integer
+        Public index As Integer
 
         ''' <summary>
         ''' x and y will be computed by layout as the Node's centroid
         ''' </summary>
-        Private x As Double
+        Public x As Double
 
         ''' <summary>
         ''' x and y will be computed by layout as the Node's centroid
         ''' </summary>
-        Private y As Double
+        Public y As Double
 
         ''' <summary>
         ''' specify a width and height of the node's bounding box if you turn on avoidOverlaps
         ''' </summary>
-        Private width As Double
+        Public width As Double
 
         ''' <summary>
         ''' specify a width and height of the node's bounding box if you turn on avoidOverlaps
         ''' </summary>
-        Private height As Double
+        Public height As Double
 
         ''' <summary>
         ''' selective bit mask.  !=0 means layout will not move.
         ''' </summary>
-        Private fixed As Double
+        Public fixed As Double
     End Class
 
     ''' <summary>
@@ -59,10 +59,11 @@ Namespace Layouts.Cola
     End Class
 
     Public Class Group
-        Private bounds As Rectangle2D
-        Private leaves As Node()
-        Private groups As Group()
-        Private padding As Double
+
+        Public bounds As Rectangle2D
+        Public leaves As Node()
+        Public groups As Group()
+        Public padding As Double
 
         Public Shared Function isGroup(g As Group) As Boolean
             Return g.leaves IsNot Nothing OrElse g.groups IsNot Nothing
@@ -70,18 +71,25 @@ Namespace Layouts.Cola
     End Class
 
 
-    Interface Link(Of NodeRefType)
-        Property source() As NodeRefType
-        Property target() As NodeRefType
+    Public Class Link(Of NodeRefType)
 
-        ' ideal length the layout should try to achieve for this link
-        Property length() As Double
+        Public Property source() As NodeRefType
+        Public Property target() As NodeRefType
 
-        ' how hard we should try to satisfy this link's ideal length
-        ' must be in the range: 0 < weight <= 1
-        ' if unspecified 1 is the default
-        Property weight() As Double
-    End Interface
+        ''' <summary>
+        ''' ideal length the layout should try to achieve for this link 
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property length() As Double
+
+        ''' <summary>
+        ''' how hard we should try to satisfy this link's ideal length
+        ''' must be in the range: ``0 &lt; weight &lt;= 1``
+        ''' if unspecified 1 is the default
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property weight() As Double
+    End Class
 
     Public Delegate Function LinkNumericPropertyAccessor(t As Link(Of Node)) As Double
 

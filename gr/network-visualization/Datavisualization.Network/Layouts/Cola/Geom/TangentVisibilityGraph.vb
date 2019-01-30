@@ -56,7 +56,7 @@ Namespace Layouts.Cola
             End If
         End Sub
 
-        Private Function addPoint(p As TVGPoint, i1 As Double) As VisibilityVertex
+        Public Function addPoint(p As TVGPoint, i1 As Double) As VisibilityVertex
             Dim n = Me.P.Length
             Me.V.Add(New VisibilityVertex(Me.V.Count, n, 0, p))
             For i As Integer = 0 To n - 1
@@ -72,7 +72,7 @@ Namespace Layouts.Cola
             Return p.vv
         End Function
 
-        Private Function intersectsPolys(l As Line, i1 As Double, i2 As Double) As Boolean
+        Public Function intersectsPolys(l As Line, i1 As Double, i2 As Double) As Boolean
             Dim i As Integer = 0, n As Integer = Me.P.Length
             While i < n
                 If i <> i1 AndAlso i <> i2 AndAlso intersects(l, Me.P(i)).Length > 0 Then

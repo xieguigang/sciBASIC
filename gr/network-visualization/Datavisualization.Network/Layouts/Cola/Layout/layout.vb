@@ -784,8 +784,8 @@ Namespace Layouts.Cola
         '     *                      of the edge by.  Defaults to 5.
         '     
 
-        Private Function routeEdge(edge As any, Optional ah As Double = 5, Optional draw As Action(Of TangentVisibilityGraph) = Nothing) As any
-            Dim lineData As List(Of TVGPoint)
+        Private Function routeEdge(edge As any, Optional ah As Double = 5, Optional draw As Action(Of TangentVisibilityGraph) = Nothing) As List(Of Point2D)
+            Dim lineData As List(Of Point2D)
             'if (d.source.id === 10 && d.target.id === 11) {
             '    debugger;
             '}
@@ -813,14 +813,14 @@ Namespace Layouts.Cola
             Dim spCalc = New Calculator(vg2.V.Length, vg2.E, sourceInd, targetInd, length)
             Dim shortestPath = spCalc.PathFromNodeToNode(start.id, [end].id)
 
-            If shortestPath.Length = 1 OrElse shortestPath.Length = vg2.V.Length Then
+            If shortestPath.Length = 1 OrElse shortestPath.Length = vg2.V.Count Then
                 Dim route = makeEdgeBetween(edge.source.innerBounds, edge.target.innerBounds, ah)
-                lineData = New any() {route.sourceIntersection, route.arrowStart}
+                lineData = New List(Of Point2D) From {route.sourceIntersection, route.arrowStart}
             Else
                 Dim n = shortestPath.Length - 2
                 Dim p = vg2.V(shortestPath(n)).p
                 Dim q = vg2.V(shortestPath(0)).p
-                lineData = New List(Of TVGPoint) From {edge.source.innerBounds.rayIntersection(p.X, p.Y)}
+                lineData = New List(Of Point2D) From {edge.source.innerBounds.rayIntersection(p.X, p.Y)}
 
                 For i As Integer = n To 0 Step -1
                     lineData.Add(vg2.V(shortestPath(i)).p)

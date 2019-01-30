@@ -1,19 +1,55 @@
-Imports any = System.Double
+Imports System.Threading
+Imports any = System.Object
 Imports number = System.Double
 
 Namespace Layouts.Cola
 
-    Class handleDisconnected
+    Public Class packingOptions
+        Public PADDING As Integer = 10
+        Public GOLDEN_SECTION As Double = (1 + Math.Sqrt(5)) / 2
+        Public FLOAT_EPSILON As Double = 0.0001
+        Public MAX_INERATIONS As Integer = 100
+    End Class
 
-        Private packingOptions As Object = New With {
-        Key .PADDING = 10,
-        Key .GOLDEN_SECTION = (1 + Math.sqrt(5)) / 2,
-        Key .FLOAT_EPSILON = 0.0001,
-        Key .MAX_INERATIONS = 100
-    }
+    Public Module handleDisconnected
 
-        ' assign x, y to nodes while using box packing algorithm for disconnected graphs
-        Private Sub applyPacking(graphs As Array(Of any), w As Integer, h As Integer, Optional node_size As System.Nullable(Of number) = Nothing, Optional desired_ratio As System.Nullable(Of Integer) = 1, Optional centerGraph As Boolean = True)
+        ReadOnly packingOptions As New packingOptions
+
+        ''' <summary>
+        ''' get bounding boxes for all separate graphs
+        ''' </summary>
+        ''' <param name="graphs"></param>
+        Private Sub calculate_bb(graphs As any(), node_size#)
+            graphs.DoEach(Sub(graph)
+                              Dim min_x = number.MaxValue, min_y = number.MaxValue
+                              Dim max_x = 0, max_y = 0
+
+                              graph.array.forEach(Sub(v)
+                                                      Dim w = If(v.width IsNot Nothing, v.width, node_size)
+                                                      Dim h = If(v.height IsNot Nothing, v.height, node_size)
+                                                      w /= 2
+                                                      h /= 2
+                                                      max_x = System.Math.Max(v.x + w, max_x)
+                                                      min_x = System.Math.Min(v.x - w, min_x)
+                                                      max_y = System.Math.Max(v.y + h, max_y)
+                                                      min_y = System.Math.Min(v.y - h, min_y)
+                                                  End Sub)
+
+                              graph.width = max_x - min_x
+                              graph.height = max_y - min_y
+                          End Sub)
+        End Sub
+
+        ''' <summary>
+        ''' assign x, y to nodes while using box packing algorithm for disconnected graphs
+        ''' </summary>
+        ''' <param name="graphs"></param>
+        ''' <param name="w"></param>
+        ''' <param name="h"></param>
+        ''' <param name="node_size"></param>
+        ''' <param name="desired_ratio"></param>
+        ''' <param name="centerGraph"></param>
+        Public Sub applyPacking(graphs As Array(Of any), w As Integer, h As Integer, Optional node_size As Double? = Nothing, Optional desired_ratio As Integer? = 1, Optional centerGraph As Boolean = True)
 
             Dim init_x As Integer = 0, init_y As Integer = 0, svg_width As Integer = w, svg_height As Integer = h
 
@@ -28,7 +64,7 @@ Namespace Layouts.Cola
                 Return
             End If
 
-            ''' that would take care of single nodes problem
+            ' that would take care of single nodes problem
             ' graphs.forEach(function (g) {
             '     if (g.array.length == 1) {
             '         g.array[0].x = 0;
@@ -36,38 +72,14 @@ Namespace Layouts.Cola
             '     }
             ' });
 
+
             calculate_bb(graphs)
             apply(graphs, desired_ratio)
             If centerGraph Then
                 put_nodes_to_right_positions(graphs)
             End If
 
-            ' get bounding boxes for all separate graphs
-            Dim calculate_bb = Function(graphs As Array(Of any))
 
-                                   graphs.forEach(Function(g) calculate_single_bb(g))
-
-                                   Dim calculate_single_bb = Function(graph As Array(Of any))
-                                                                 Dim min_x = Number.MAX_VALUE, min_y = Number.MAX_VALUE, max_x = 0, max_y = 0
-
-                                                                 graph.array.forEach(Function(v)
-                                                                                         Dim w = If(v.width IsNot Nothing, v.width, node_size)
-                                                                                         Dim h = If(v.height IsNot Nothing, v.height, node_size)
-                                                                                         w /= 2
-                                                                                         h /= 2
-                                                                                         max_x = Math.max(v.x + w, max_x)
-                                                                                         min_x = Math.min(v.x - w, min_x)
-                                                                                         max_y = Math.max(v.y + h, max_y)
-                                                                                         min_y = Math.min(v.y - h, min_y)
-
-                                                                                     End Function)
-
-                                                                 graph.width = max_x - min_x
-                                                                 graph.height = max_y - min_y
-
-                                                             End Function
-
-                               End Function
 
             'function plot(data, left, right, opt_x, opt_y) {
             '    // plot the cost function
@@ -147,7 +159,7 @@ Namespace Layouts.Cola
             ' starts box packing algorithm
             ' desired ratio is 1 by default
             Dim apply = Function(data, desired_ratio)
-                            Dim curr_best_f = Number.POSITIVE_INFINITY
+                            Dim curr_best_f = number.POSITIVE_INFINITY
                             Dim curr_best = 0
                             data.sort(Function(a, b) b.height - a.height)
 
@@ -160,13 +172,13 @@ Namespace Layouts.Cola
                             Dim right = InlineAssignHelper(x2, get_entire_width(data))
                             Dim iterationCounter = 0
 
-                            Dim f_x1 = Number.MAX_VALUE
-                            Dim f_x2 = Number.MAX_VALUE
+                            Dim f_x1 = number.MAX_VALUE
+                            Dim f_x2 = number.MAX_VALUE
                             Dim flag = -1
                             ' determines which among f_x1 and f_x2 to recompute
 
-                            Dim dx = Number.MAX_VALUE
-                            Dim df = Number.MAX_VALUE
+                            Dim dx = number.MAX_VALUE
+                            Dim df = number.MAX_VALUE
 
                             While (dx > min_width) OrElse df > packingOptions.FLOAT_EPSILON
 
@@ -179,8 +191,8 @@ Namespace Layouts.Cola
                                     Dim f_x2 = [step](data, x2)
                                 End If
 
-                                dx = Math.abs(x1 - x2)
-                                df = Math.abs(f_x1 - f_x2)
+                                dx = Math.Abs(x1 - x2)
+                                df = Math.Abs(f_x1 - f_x2)
 
                                 If f_x1 < curr_best_f Then
                                     curr_best_f = f_x1
@@ -204,7 +216,7 @@ Namespace Layouts.Cola
                                     flag = 0
                                 End If
 
-                                If System.Math.Max(System.Threading.Interlocked.Increment(iterationCounter), iterationCounter - 1) > 100 Then
+                                If System.Math.Max(Interlocked.Increment(iterationCounter), iterationCounter - 1) > 100 Then
                                     Exit While
                                 End If
                             End While
@@ -221,12 +233,12 @@ Namespace Layouts.Cola
                              real_height = 0
                              global_bottom = init_y
 
-                             For i As var = 0 To data.length - 1
+                             For i As var = 0 To data.Length - 1
                                  Dim o = data(i)
                                  put_rect(o, max_width)
                              Next
 
-                             Return Math.abs(get_real_ratio() - desired_ratio)
+                             Return Math.Abs(get_real_ratio() - desired_ratio)
 
                          End Function
 
@@ -236,7 +248,7 @@ Namespace Layouts.Cola
 
                                Dim parent = undefined
 
-                               For i As var = 0 To line.length - 1
+                               For i As var = 0 To line.Length - 1
                                    If (line(i).space_left >= rect.height) AndAlso (line(i).x + line(i).width + rect.width + packingOptions.PADDING - max_width) <= packingOptions.FLOAT_EPSILON Then
                                        parent = line(i)
                                        Exit For
@@ -245,7 +257,7 @@ Namespace Layouts.Cola
 
                                line.push(rect)
 
-                               If parent <> undefined Then
+                               If parent IsNot Nothing Then
                                    rect.x = parent.x + parent.width + packingOptions.PADDING
                                    rect.y = parent.bottom
                                    rect.space_left = rect.height
@@ -283,70 +295,78 @@ Namespace Layouts.Cola
                                  End Function
         End Sub
 
-        '*
-        '     * connected components of graph
-        '     * returns an array of {}
-        '     
-
-        Private Function separateGraphs(nodes As any, links As any) As Object
+        ''' <summary>
+        ''' connected components of graph, returns an array of {}
+        ''' </summary>
+        ''' <param name="nodes"></param>
+        ''' <param name="links"></param>
+        ''' <returns></returns>
+        Public Function separateGraphs(nodes As any, links As Link(Of Node)()) As Object
             Dim marks = New Object() {}
-            Dim ways = New Object() {}
+            Dim ways As New List(Of List(Of Node))
             Dim graphs = New Object() {}
             Dim clusters = 0
 
-            For i As var = 0 To links.length - 1
+            For i As Integer = 0 To links.Length - 1
                 Dim link = links(i)
                 Dim n1 = link.source
                 Dim n2 = link.target
-                If ways(n1.index) Then
-                    ways(n1.index).push(n2)
+
+                If Not ways(n1.index) Is Nothing Then
+                    ways(n1.index).Add(n2)
                 Else
-                    ways(n1.index) = New any() {n2}
+                    ways(n1.index) = New List(Of Node) From {n2}
                 End If
 
-                If ways(n2.index) Then
-                    ways(n2.index).push(n1)
+                If Not ways(n2.index) Is Nothing Then
+                    ways(n2.index).Add(n1)
                 Else
-                    ways(n2.index) = New any() {n1}
+                    ways(n2.index) = New List(Of Node) {n1}
                 End If
             Next
 
-            For i As var = 0 To nodes.length - 1
+            For i As Integer = 0 To nodes.length - 1
                 Dim node = nodes(i)
-                If marks(node.index) Then
+
+                If marks(node.index) IsNot Nothing Then
                     Continue For
+                Else
+                    Call explore_node(node, True, marks, clusters, ways)
                 End If
-                explore_node(node, True)
             Next
 
-            Dim explore_node = Function(n, is_new)
-                                   If marks(n.index) <> undefined Then
-                                       Return
-                                   End If
-                                   If is_new Then
-                                       clusters += 1
-                                       graphs.push(New With {
-                Key .array = New Object() {}
-            })
-                                   End If
-                                   marks(n.index) = clusters
-                                   graphs(clusters - 1).array.push(n)
-                                   Dim adjacent = ways(n.index)
-                                   If Not adjacent Then
-                                       Return
-                                   End If
 
-                                   For j As var = 0 To adjacent.length - 1
-                                       explore_node(adjacent(j), False)
-                                   Next
-
-                               End Function
 
             Return graphs
         End Function
+
+        Private Sub explore_node(n As Node, is_new As Boolean, marks As any(), ByRef clusters As Integer, ways As List(Of List(Of Node)))
+            If marks(n.index) IsNot Nothing Then
+                Return
+            End If
+            If is_new Then
+                clusters += 1
+                graphs.push(New With {
+Key .array = New Object() {}
+})
+            End If
+            marks(n.index) = clusters
+            graphs(clusters - 1).array.push(n)
+
+            Dim adjacent = ways(n.index)
+
+            If adjacent Is Nothing Then
+                Return
+            End If
+
+            For j As Integer = 0 To adjacent.Count - 1
+                explore_node(adjacent(j), False, marks, clusters, ways)
+            Next
+        End Sub
+
         Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
             target = value
             Return value
         End Function
-    End Class
+    End Module
 End Namespace
