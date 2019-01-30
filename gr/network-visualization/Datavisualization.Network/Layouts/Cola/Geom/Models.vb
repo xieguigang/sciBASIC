@@ -2,6 +2,8 @@
 
 Namespace Layouts.Cola
 
+
+
     Class PolyPoint : Inherits Point2D
 
         Public Property polyIndex() As Integer

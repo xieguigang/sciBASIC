@@ -85,7 +85,7 @@ Namespace Layouts.Cola
 
         Public Function tick() As Double
             Me.descent.locks.clear()
-            For i As var = 0 To Me.nodes.Length - 1
+            For i As Integer = 0 To Me.nodes.Length - 1
                 Dim v = Me.nodes(i)
                 If v.fixed Then
                     Me.descent.locks.add(i, New number() {v.x, v.y, v.z})

@@ -2,7 +2,7 @@
 
 Namespace Layouts.Cola
 
-    Public Class LinkAccessor : Inherits LinkLengthAccessor(Of any)
+    Public Class LinkAccessor : Inherits LinkLengthAccessor(Of Link3D)
 
         Public Function getSourceIndex(e As any) As Double
             Return e.source
