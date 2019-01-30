@@ -25,7 +25,7 @@ Namespace Layouts.Cola
     ' * @class Descent
     ' 
 
-    Class Descent
+    Public Class Descent
         Public threshold As Double = 0.0001
         '* Hessian Matrix
         '     * @property H {number[][][]}
