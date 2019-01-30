@@ -2,7 +2,7 @@
 
 Namespace Layouts.Cola
 
-    Public Class Node3D : Inherits GraphNode
+    Public Class Node3D
 
         ' if fixed, layout will not move the node from its specified starting position
         Public fixed As Boolean

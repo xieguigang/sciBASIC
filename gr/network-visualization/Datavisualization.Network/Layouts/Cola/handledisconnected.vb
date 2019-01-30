@@ -46,37 +46,34 @@ Namespace Layouts.Cola
         ''' </summary>
         ''' <param name="data"></param>
         ''' <param name="desired_ratio"></param>
-        Private Sub apply(data, desired_ratio)
+        Private Sub apply(data As any(), desired_ratio As Double)
             Dim curr_best_f = number.POSITIVE_INFINITY
             Dim curr_best = 0
-            data.sort(Function(a, b) b.height - a.height)
+            data.Sort(Function(a, b) b.height - a.height)
 
-            min_width = data.reduce(Function(a, b)
-                                        Return If(a.width < b.width, a.width, b.width)
-
-                                    End Function)
+            min_width = data.reduce(Function(a, b) If(a.width < b.width, a.width, b.width))
 
             Dim left = InlineAssignHelper(x1, min_width)
             Dim right = InlineAssignHelper(x2, get_entire_width(data))
             Dim iterationCounter = 0
 
-            Dim f_x1 = number.MAX_VALUE
-            Dim f_x2 = number.MAX_VALUE
+            Dim f_x1 = number.MaxValue
+            Dim f_x2 = number.MaxValue
             Dim flag = -1
             ' determines which among f_x1 and f_x2 to recompute
 
-            Dim dx = number.MAX_VALUE
-            Dim df = number.MAX_VALUE
+            Dim dx = number.MaxValue
+            Dim df = number.MaxValue
 
             While (dx > min_width) OrElse df > packingOptions.FLOAT_EPSILON
 
                 If flag <> 1 Then
                     Dim x1 = right - (right - left) / packingOptions.GOLDEN_SECTION
-                    Dim f_x1 = [step](data, x1)
+                    f_x1 = [step](data, x1)
                 End If
                 If flag <> 0 Then
                     Dim x2 = left + (right - left) / packingOptions.GOLDEN_SECTION
-                    Dim f_x2 = [step](data, x2)
+                    f_x2 = [step](data, x2)
                 End If
 
                 dx = Math.Abs(x1 - x2)
@@ -108,6 +105,7 @@ Namespace Layouts.Cola
                     Exit While
                 End If
             End While
+
             ' plot(data, min_width, get_entire_width(data), curr_best, curr_best_f);
             [step](data, curr_best)
         End Sub
@@ -129,11 +127,11 @@ Namespace Layouts.Cola
         End Function
 
         ' looking for a position to one box
-        Private Sub put_rect(rect As any, max_width As Double)
-            Dim parent = Nothing
+        Private Sub put_rect(rect As Rectangle2D, max_width As Double)
+            Dim parent As Rectangle2D = Nothing
 
             For i As Integer = 0 To line.Length - 1
-                If (line(i).space_left >= rect.height) AndAlso (line(i).x + line(i).width + rect.width + packingOptions.PADDING - max_width) <= packingOptions.FLOAT_EPSILON Then
+                If (line(i).space_left >= rect.Height) AndAlso (line(i).x + line(i).width + rect.Width + packingOptions.PADDING - max_width) <= packingOptions.FLOAT_EPSILON Then
                     parent = line(i)
                     Exit For
                 End If
@@ -142,25 +140,25 @@ Namespace Layouts.Cola
             line.push(rect)
 
             If parent IsNot Nothing Then
-                rect.x = parent.x + parent.width + packingOptions.PADDING
-                rect.y = parent.bottom
-                rect.space_left = rect.height
-                rect.bottom = rect.y
-                parent.space_left -= rect.height + packingOptions.PADDING
-                parent.bottom += rect.height + packingOptions.PADDING
+                rect.X = parent.x + parent.width + packingOptions.PADDING
+                rect.Y = parent.bottom
+                rect.space_left = rect.Height
+                rect.Bottom = rect.Y
+                parent.space_left -= rect.Height + packingOptions.PADDING
+                parent.bottom += rect.Height + packingOptions.PADDING
             Else
-                rect.y = global_bottom
-                global_bottom += rect.height + packingOptions.PADDING
-                rect.x = init_x
-                rect.bottom = rect.y
-                rect.space_left = rect.height
+                rect.Y = global_bottom
+                global_bottom += rect.Height + packingOptions.PADDING
+                rect.X = init_x
+                rect.Bottom = rect.Y
+                rect.space_left = rect.Height
             End If
 
-            If rect.y + rect.height - real_height > -packingOptions.FLOAT_EPSILON Then
-                real_height = rect.y + rect.height - init_y
+            If rect.Y + rect.Height - real_height > -packingOptions.FLOAT_EPSILON Then
+                real_height = rect.Y + rect.Height - init_y
             End If
-            If rect.x + rect.width - real_width > -packingOptions.FLOAT_EPSILON Then
-                real_width = rect.x + rect.width - init_x
+            If rect.X + rect.Width - real_width > -packingOptions.FLOAT_EPSILON Then
+                real_width = rect.X + rect.Width - init_x
             End If
 
         End Sub
@@ -194,6 +192,10 @@ Namespace Layouts.Cola
                           End Sub)
         End Sub
 
+        Dim init_x As Integer = 0, init_y As Integer = 0
+        Dim svg_width As Integer, svg_height As Integer
+        Dim real_width As Double = 0, real_height As Double = 0, min_width As Double = 0, global_bottom As Double = 0
+
         ''' <summary>
         ''' assign x, y to nodes while using box packing algorithm for disconnected graphs
         ''' </summary>
@@ -203,16 +205,25 @@ Namespace Layouts.Cola
         ''' <param name="node_size"></param>
         ''' <param name="desired_ratio"></param>
         ''' <param name="centerGraph"></param>
+        ''' <remarks>
+        ''' 这个函数是整个计算流程的起始函数
+        ''' </remarks>
         Public Sub applyPacking(graphs As Array(Of any), w As Integer, h As Integer, Optional node_size As Double? = Nothing, Optional desired_ratio As Integer? = 1, Optional centerGraph As Boolean = True)
 
-            Dim init_x As Integer = 0, init_y As Integer = 0, svg_width As Integer = w, svg_height As Integer = h
+            init_x = 0
+            init_y = 0
+            svg_width = w
+            svg_height = h
 
             desired_ratio = If(desired_ratio IsNot Nothing, desired_ratio, 1)
             node_size = If(node_size IsNot Nothing, node_size, 0)
 
-            Dim real_width As Double = 0, real_height As Double = 0, min_width As Double = 0, global_bottom As Double = 0
+            real_width = 0
+            real_height = 0
+            min_width = 0
+            global_bottom = 0
 
-            Dim line As Object() = {}
+            Dim line As New List(Of Line)
 
             If graphs.length = 0 Then
                 Return
@@ -227,7 +238,7 @@ Namespace Layouts.Cola
             ' });
 
 
-            calculate_bb(graphs)
+            calculate_bb(graphs, node_size)
             apply(graphs, desired_ratio)
             If centerGraph Then
                 put_nodes_to_right_positions(graphs)
@@ -271,20 +282,19 @@ Namespace Layouts.Cola
 
             '}
 
-
-            Dim get_entire_width = Function(data)
-                                       Dim width = 0
-                                       data.forEach(Function(d) width += d.width + packingOptions.PADDING)
-                                       Return width
-
-                                   End Function
-
-
-            Dim get_real_ratio = Function()
-                                     Return (real_width / real_height)
-
-                                 End Function
         End Sub
+
+        Private Function get_entire_width(data) As Double
+            Dim width = 0.0
+            data.forEach(Sub(d) width += d.width + packingOptions.PADDING)
+            Return width
+        End Function
+
+        Public ReadOnly Property get_real_ratio() As Double
+            Get
+                Return (real_width / real_height)
+            End Get
+        End Property
 
         ''' <summary>
         ''' connected components of graph, returns an array of {}

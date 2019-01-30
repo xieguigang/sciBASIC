@@ -1,3 +1,5 @@
+Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports any = System.Object
 Imports number = System.Double
@@ -149,19 +151,16 @@ Namespace Layouts.Cola
                 ' if we have links but no nodes, create the nodes array now with empty objects for the links to point at.
                 ' in this case the links are expected to be numeric indices for nodes in the range 0..n-1 where n is the number of nodes
                 Dim n = 0
-                Me._links.ForEach(Function(l)
-                                      n = Math.Max(n, CType(l.source, number), CType(l.target, number))
-
-                                  End Function)
-                Me._nodes = New Array(System.Threading.Interlocked.Increment(n))
-                For i As var = 0 To n - 1
+                Me._links.DoEach(Sub(l) n = Math.Max(n, CType(l.source, number), CType(l.target, number)))
+                Me._nodes = New Array(Interlocked.Increment(n))
+                For i As Integer = 0 To n - 1
                     Me._nodes(i) = New any() {}
                 Next
             End If
             Return Me._nodes
         End Function
-        Private Function nodes(v As Array(Of InputNode)) As Layout
 
+        Public Function nodes(v As Array(Of InputNode)) As Layout
             Me._nodes = v
             Return Me
         End Function
@@ -172,11 +171,11 @@ Namespace Layouts.Cola
         '     * @default empty list
         '     
 
-        Private Function groups() As Array(Of Group)
+        Public Function groups() As Array(Of Group)
             Return Me._groups
         End Function
-        Private Function groups(x As Array(Of Group)) As Layout
 
+        Public Function groups(x As Array(Of Group)) As Layout
             Me._groups = x
             Me._rootGroup = New any() {}
             Me._groups.ForEach(Function(g)
@@ -206,7 +205,7 @@ Namespace Layouts.Cola
             Return Me
         End Function
 
-        Private Function powerGraphGroups(f As Action(Of any)) As Layout
+        Public Function powerGraphGroups(f As Action(Of any)) As Layout
             Dim g = powergraph.getGroups(Me._nodes, Me._links, Me.linkAccessor, Me._rootGroup)
             Me.groups(g.groups)
             f(g)
@@ -220,11 +219,11 @@ Namespace Layouts.Cola
         '     * @default false
         '     
 
-        Private Function avoidOverlaps() As Boolean
+        Public Function avoidOverlaps() As Boolean
             Return Me._avoidOverlaps
         End Function
-        Private Function avoidOverlaps(v As [Boolean]) As Layout
 
+        Public Function avoidOverlaps(v As [Boolean]) As Layout
             Me._avoidOverlaps = v
             Return Me
         End Function
@@ -238,11 +237,11 @@ Namespace Layouts.Cola
         '     * @default true
         '     
 
-        Private Function handleDisconnected() As Boolean
+        Public Function handleDisconnected() As Boolean
             Return Me._handleDisconnected
         End Function
-        Private Function handleDisconnected(v As Boolean) As Layout
 
+        Public Function handleDisconnected(v As Boolean) As Layout
             Me._handleDisconnected = v
             Return Me
         End Function
@@ -254,8 +253,7 @@ Namespace Layouts.Cola
         '     * @param minSeparation {number|link=>number} either a number specifying a minimum spacing required across all links or a function to return the minimum spacing for each link
         '     
 
-        Private Function flowLayout(Optional axis As String = "y", Optional minSeparation As Double = 0) As Layout
-
+        Public Function flowLayout(Optional axis As String = "y", Optional minSeparation As Double = 0) As Layout
             Me._directedLinkConstraints = New With {
             Key .axis = axis,
             Key .getMinSeparation = minSeparation
@@ -263,7 +261,7 @@ Namespace Layouts.Cola
             Return Me
         End Function
 
-        Private Function flowLayout(Optional axis As String = "y", Optional minSeparation As Func(Of any, number) = Nothing) As Layout
+        Public Function flowLayout(Optional axis As String = "y", Optional minSeparation As Func(Of any, number) = Nothing) As Layout
             Me._directedLinkConstraints = New With {
             Key .axis = axis,
             Key .getMinSeparation = Function() minSeparation
@@ -276,12 +274,12 @@ Namespace Layouts.Cola
         '     * @property links {array}
         '     * @default empty list
         '     
-
-        Private Function links() As Array(Of Link(Of Node))
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function links() As Array(Of Link(Of Node))
             Return Me._links
         End Function
-        Private Function links(x As Array(Of Link(Of Node))) As Layout
 
+        Public Function links(x As Array(Of Link(Of Node))) As Layout
             Me._links = x
             Return Me
         End Function
