@@ -43,9 +43,6 @@ Namespace Layouts.Cola
     ''' </summary>
     Public Class Node : Inherits InputNode
 
-        Public y As Double
-        Public x As Double
-
         Public prev As RBNode(Of Node, Object)
         Public [next] As RBNode(Of Node, Object)
 
