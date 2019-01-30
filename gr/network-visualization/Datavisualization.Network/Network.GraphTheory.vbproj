@@ -417,7 +417,6 @@
     <Compile Include="Layouts\Cola\PowerGraph\LinkSet.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\PowerEdge.vb" />
     <Compile Include="Layouts\Cola\pqueue.vb" />
-    <Compile Include="Layouts\Cola\shortestpaths.vb" />
     <Compile Include="Layouts\Parameters.vb" />
     <Compile Include="Layouts\ForceDirected\LayoutUpdater.vb" />
     <Compile Include="Layouts\ForceDirected\General\Triple.vb" />
