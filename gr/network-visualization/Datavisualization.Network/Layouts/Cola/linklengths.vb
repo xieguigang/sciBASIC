@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports any = System.Object
 Imports sys = System.Math
@@ -7,25 +8,20 @@ Namespace Layouts.Cola
     Module linkLengthExtensions
 
         ' compute the size of the union of two sets a and b
-        Private Function unionCount(a As any, b As any) As Double
-            Dim u = New Object() {}
-            For Each i As var In a.keys
-                u(i) = New Object() {}
-            Next
-            For Each i As var In b.keys
-                u(i) = New Object() {}
-            Next
-            Return [Object].keys(u).length
+        Private Function unionCount(a As Integer(), b As Integer()) As Integer
+            Return (a.AsList + b).Distinct.Count
         End Function
 
         ' compute the size of the intersection of two sets a and b
-        Private Function intersectionCount(a As Double(), b As Double()) As Double
+        Private Function intersectionCount(a As Integer(), b As Index(Of Integer)) As Integer
             Dim n = 0
-            For Each i As var In a.keys
-                If b(i) IsNot Nothing Then
+
+            For Each i As Integer In a
+                If b.IndexOf(x:=i) > -1 Then
                     n += 1
                 End If
             Next
+
             Return n
         End Function
 
@@ -208,7 +204,7 @@ Namespace Layouts.Cola
             Public onStack As Boolean
         End Class
 
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
+        Private Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
             target = value
             Return value
         End Function
