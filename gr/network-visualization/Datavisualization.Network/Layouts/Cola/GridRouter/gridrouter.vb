@@ -11,9 +11,7 @@ Imports number = System.Double
 
 Namespace Layouts.Cola
 
-
-
-    Class GridRouter(Of Node)
+    Public Class GridRouter(Of Node)
         Private leaves As NodeWrapper() = Nothing
         Private groups As NodeWrapper()
         Private nodes As NodeWrapper()
@@ -33,7 +31,7 @@ Namespace Layouts.Cola
             Dim ls = Me.leaves.slice(0, Me.leaves.Length).ToArray
             While ls.Length > 0
                 ' find a column of all leaves overlapping in axis with the first leaf
-                Dim overlapping = ls.Where(Function(v) v.rect("overlap" & axis.toUpperCase())(ls(0).rect)).ToArray
+                Dim overlapping = ls.Where(Function(v) v.rect("overlap" & Strings.UCase(axis))(ls(0).rect)).ToArray
                 Dim col = New GridLine With {
                 .nodes = overlapping,
                 .pos = overlapping.Select(Function(v) v.rect("c"c & axis)()).average
@@ -556,7 +554,7 @@ Namespace Layouts.Cola
             Me.obstacles = Me.siblingObstacles(source, target)
 
             Dim obstacleLookup As New Dictionary(Of String, Object)
-            Me.obstacles.doEach(Sub(o) obstacleLookup(o.id.ToString) = o)
+            Me.obstacles.DoEach(Sub(o) obstacleLookup(o.id.ToString) = o)
             Me.passableEdges = Me.edges _
                 .Where(Function(e)
                            Dim u = Me.verts(e.source)

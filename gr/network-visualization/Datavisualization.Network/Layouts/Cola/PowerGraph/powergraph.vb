@@ -2,7 +2,7 @@ Namespace Layouts.Cola
 
     Module powergraphExtensions
 
-        Public Sub toGroups(modules As ModuleSet, group As Group, groups As Group())
+        Public Sub toGroups(modules As ModuleSet, group As Group, groups As List(Of Group))
             Call modules.forAll(Sub(m)
                                     If m.isLeaf Then
                                         If group.leaves Is Nothing Then
@@ -12,7 +12,7 @@ Namespace Layouts.Cola
                                         group.leaves.Add(m.id)
                                     Else
                                         Dim g = group
-                                        m.gid = groups.Length
+                                        m.gid = groups.Count
 
                                         If (Not m.isIsland OrElse m.isPredefined) Then
                                             g = New [Group] With {.id = m.gid}
@@ -73,7 +73,7 @@ Namespace Layouts.Cola
     End Module
 
     Public Class PowerGraph
-        Public Property groups As List(Of Integer)
+        Public Property groups As List(Of Group)
         Public powerEdges As List(Of PowerEdge)
     End Class
 

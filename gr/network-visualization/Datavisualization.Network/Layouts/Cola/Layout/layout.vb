@@ -326,10 +326,11 @@ Namespace Layouts.Cola
         '     * @type {Number}
         '     
 
-        Private Function defaultNodeSize() As Double
+        Public Function defaultNodeSize() As Double
             Return Me._defaultNodeSize
         End Function
-        Private Function defaultNodeSize(x As Double) As Layout
+
+        Public Function defaultNodeSize(x As Double) As Layout
             Me._defaultNodeSize = x
             Return Me
         End Function
@@ -340,11 +341,11 @@ Namespace Layouts.Cola
         '     * @type {Number}
         '     
 
-        Private Function groupCompactness() As Double
+        Public Function groupCompactness() As Double
             Return Me._groupCompactness
         End Function
-        Private Function groupCompactness(x As Double) As Layout
 
+        Public Function groupCompactness(x As Double) As Layout
             Me._groupCompactness = x
             Return Me
         End Function
@@ -353,44 +354,47 @@ Namespace Layouts.Cola
         '     * links have an ideal distance, The automatic layout will compute layout that tries to keep links (AKA edges) as close as possible to this length.
         '     
 
-        Private Function linkDistance() As Double
+        Public Function linkDistance() As Double
             Return Me._linkDistance
         End Function
 
-        Private Function linkDistance(x As Double) As Layout
+        Public Function linkDistance(x As Double) As Layout
             Me._linkDistance = If(GetType(x) = [Function], x, +x)
             Me._linkLengthCalculator = Nothing
             Return Me
         End Function
-        Private Function linkDistance(x As LinkNumericPropertyAccessor) As Layout
+
+        Public Function linkDistance(x As LinkNumericPropertyAccessor) As Layout
             Me._linkDistance = If(GetType(x) = [Function], x, +x)
             Me._linkLengthCalculator = Nothing
             Return Me
 
         End Function
 
-        Private Function linkType(f As [Function]) As Layout
+        Public Function linkType(f As [Function]) As Layout
             Me._linkType = f
             Return Me
         End Function
 
-        Private Function linkType(f As Double) As Layout
+        Public Function linkType(f As Double) As Layout
             Me._linkType = f
             Return Me
         End Function
 
-        Private Function convergenceThreshold() As Double
+        Public Function convergenceThreshold() As Double
             Return Me._threshold
         End Function
-        Private Function convergenceThreshold(x As Double) As Layout
+
+        Public Function convergenceThreshold(x As Double) As Layout
             Me._threshold = If(GetType(x) = [Function], x, +x)
             Return Me
         End Function
 
-        Private Function alpha() As Double
+        Public Function alpha() As Double
             Return Me._alpha
         End Function
-        Private Function alpha(x As Double) As Layout
+
+        Public Function alpha(x As Double) As Layout
 
             x = +x
             If Me._alpha Then
@@ -417,7 +421,7 @@ Namespace Layouts.Cola
 
         End Function
 
-        Private Function getLinkLength(link As Link(Of Node)) As Double
+        Public Function getLinkLength(link As Link(Of Node)) As Double
             If GetType(_linkDistance) = [Function] Then
                 Return DirectCast(Me._linkDistance, LinkNumericPropertyAccessor)(link)
             Else
@@ -425,7 +429,7 @@ Namespace Layouts.Cola
             End If
         End Function
 
-        Private Shared Sub setLinkLength(link As Link(Of Node), length As Double)
+        Public Shared Sub setLinkLength(link As Link(Of Node), length As Double)
             link.length = length
         End Sub
 

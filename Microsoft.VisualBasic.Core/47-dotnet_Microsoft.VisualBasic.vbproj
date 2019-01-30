@@ -962,6 +962,7 @@
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
     <Compile Include="Language\Language\JavaScript\Linq.vb" />
     <Compile Include="Language\Language\JavaScript\JavaScriptObject.vb" />
+    <Compile Include="Language\Language\JavaScript\UnionType.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
     <Compile Include="Language\Language\Python\NamespaceDoc.vb" />
     <Compile Include="Net\HTTP\ZipStream.vb" />

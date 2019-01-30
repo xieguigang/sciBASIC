@@ -48,14 +48,14 @@ Namespace Layouts.Cola
         Private Function initModulesFromGroup(group As Group) As ModuleSet
             Dim moduleSet = New ModuleSet()
             Me.roots.Add(moduleSet)
-            For i As Integer = 0 To group.leaves.Length - 1
+            For i As Integer = 0 To group.leaves.Count - 1
                 Dim node = group.leaves(i)
                 Dim [module] = New [Module](node.id)
                 Me.modules(node.id) = [module]
                 moduleSet.add([module])
             Next
             If Not group.groups.IsNullOrEmpty Then
-                For j As Integer = 0 To group.groups.Length - 1
+                For j As Integer = 0 To group.groups.Count - 1
                     Dim child = group.groups(j)
                     ' Propagate group properties (like padding, stiffness, ...) as module definition so that the generated power graph group will inherit it
                     Dim definition = New Dictionary(Of String, Object)
@@ -170,9 +170,9 @@ Namespace Layouts.Cola
             Return Me.R - inInt.count() - outInt.count()
         End Function
 
-        Public Function getGroupHierarchy(retargetedEdges As List(Of PowerEdge)) As List(Of Integer)
-            Dim groups As New List(Of Integer)
-            Dim root = New Object() {}
+        Public Function getGroupHierarchy(retargetedEdges As List(Of PowerEdge)) As List(Of Group)
+            Dim groups As New List(Of Group)
+            Dim root As New Group
 
             Call toGroups(Me.roots(0), root, groups)
             Call Me.allEdges() _

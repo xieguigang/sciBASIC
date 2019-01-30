@@ -140,12 +140,12 @@ Namespace Layouts.Cola.GridRouter
         Sub New()
         End Sub
 
-        Public Sub New(id As Double, rect As Rectangle2D, children As Integer())
+        Public Sub New(id As Double, rect As Rectangle2D, children As IEnumerable(Of Integer))
             Me.id = id
             Me.rect = rect
-            Me.children = children
+            Me.children = children.ToList
 
-            leaf = children.IsNullOrEmpty
+            leaf = Me.children.IsNullOrEmpty
         End Sub
     End Class
 
@@ -168,7 +168,7 @@ Namespace Layouts.Cola.GridRouter
 
     Public Class [Event]
         Public type As Integer
-        Public s As route
+        Public s As Segment
         Public pos As Double
 
         Public Structure Comparer : Implements IComparer(Of [Event])
