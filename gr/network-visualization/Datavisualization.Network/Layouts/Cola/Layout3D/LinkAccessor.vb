@@ -2,19 +2,30 @@
 
 Namespace Layouts.Cola
 
-    Public Class LinkAccessor : Inherits LinkLengthAccessor(Of Link3D)
+    Public Class LinkAccessor(Of T) : Inherits LinkLengthAccessor(Of T)
 
-        Public Function getSourceIndex(e As any) As Double
+        Public Function getSourceIndex(e As T) As Double
             Return e.source
         End Function
-        Public Function getTargetIndex(e As any) As Double
+        Public Function getTargetIndex(e As T) As Double
             Return e.target
         End Function
-        Public Function getLength(e As any) As Double
+        Public Function getLength(e As T) As Double
             Return e.length
         End Function
-        Public Sub setLength(e As any, l As Double)
+        Public Sub setLength(e As T, l As Double)
             e.length = l
         End Sub
+    End Class
+
+    Public Class LinkTypeAccessor(Of Link) : Inherits LinkAccessor(Of Link)
+
+        Public Delegate Function IGetLinkType(link As Link) As Integer
+
+        ''' <summary>
+        ''' return a unique identifier for the type of the link
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property GetLinkType As IGetLinkType
     End Class
 End Namespace
