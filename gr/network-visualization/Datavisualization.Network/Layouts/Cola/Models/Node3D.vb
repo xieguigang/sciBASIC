@@ -2,18 +2,12 @@
 
 Namespace Layouts.Cola
 
-    Public Class Node3D
+    Public Class Node3D : Inherits Node
 
-        ' if fixed, layout will not move the node from its specified starting position
-        Public fixed As Boolean
-        Public width As Double
-        Public height As Double
-        Public px As Double
-        Public py As Double
         Public bounds As Rectangle2D
         Public variable As Variable
 
-        Public x As Double, y As Double, z As Double
+        Public z As Double
 
         Default Public Property Axis(dimName As String) As Double
             Get

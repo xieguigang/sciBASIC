@@ -32,7 +32,7 @@ Namespace Layouts.Cola
         Public stress As Double
         Public listener As Action
 
-        Public Property Accessor(name As String) As Object
+        Default Public Property Accessor(name As String) As Object
             Get
                 Select Case name
                     Case NameOf(type)

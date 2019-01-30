@@ -1,5 +1,6 @@
 Imports System.Threading
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
+Imports Microsoft.VisualBasic.Language.JavaScript
 Imports any = System.Object
 Imports number = System.Double
 
@@ -20,21 +21,21 @@ Namespace Layouts.Cola
         ''' get bounding boxes for all separate graphs
         ''' </summary>
         ''' <param name="graphs"></param>
-        Private Sub calculate_bb(graphs As any(), node_size#)
+        Private Sub calculate_bb(graphs As List(Of Graph), node_size#)
             graphs.DoEach(Sub(graph)
                               Dim min_x = number.MaxValue, min_y = number.MaxValue
                               Dim max_x = 0, max_y = 0
 
-                              graph.array.forEach(Sub(v)
-                                                      Dim w = If(v.width IsNot Nothing, v.width, node_size)
-                                                      Dim h = If(v.height IsNot Nothing, v.height, node_size)
-                                                      w /= 2
-                                                      h /= 2
-                                                      max_x = System.Math.Max(v.x + w, max_x)
-                                                      min_x = System.Math.Min(v.x - w, min_x)
-                                                      max_y = System.Math.Max(v.y + h, max_y)
-                                                      min_y = System.Math.Min(v.y - h, min_y)
-                                                  End Sub)
+                              graph.array.DoEach(Sub(v)
+                                                     Dim w = If(v.width IsNot Nothing, v.width, node_size)
+                                                     Dim h = If(v.height IsNot Nothing, v.height, node_size)
+                                                     w /= 2
+                                                     h /= 2
+                                                     max_x = System.Math.Max(v.x + w, max_x)
+                                                     min_x = System.Math.Min(v.x - w, min_x)
+                                                     max_y = System.Math.Max(v.y + h, max_y)
+                                                     min_y = System.Math.Min(v.y - h, min_y)
+                                                 End Sub)
 
                               graph.width = max_x - min_x
                               graph.height = max_y - min_y
@@ -46,13 +47,18 @@ Namespace Layouts.Cola
         ''' </summary>
         ''' <param name="data"></param>
         ''' <param name="desired_ratio"></param>
-        Private Sub apply(data As any(), desired_ratio As Double)
-            Dim curr_best_f = number.POSITIVE_INFINITY
+        Private Sub apply(data As List(Of Graph), desired_ratio As Double)
+            Dim curr_best_f = number.MaxValue
             Dim curr_best = 0
             data.Sort(Function(a, b) b.height - a.height)
 
-            min_width = data.reduce(Function(a, b) If(a.width < b.width, a.width, b.width))
+            'min_width = data.Reduce(Function(a, b) {
+            '    return a.width < b.width ? a.width : b.width;
+            '});
 
+            min_width = Aggregate g In data Into Min(g.width)
+
+            Dim x1, x2 As Double
             Dim left = InlineAssignHelper(x1, min_width)
             Dim right = InlineAssignHelper(x2, get_entire_width(data))
             Dim iterationCounter = 0
@@ -68,12 +74,12 @@ Namespace Layouts.Cola
             While (dx > min_width) OrElse df > packingOptions.FLOAT_EPSILON
 
                 If flag <> 1 Then
-                    Dim x1 = right - (right - left) / packingOptions.GOLDEN_SECTION
-                    f_x1 = [step](data, x1)
+                    x1 = right - (right - left) / packingOptions.GOLDEN_SECTION
+                    f_x1 = [step](data, x1, desired_ratio)
                 End If
                 If flag <> 0 Then
-                    Dim x2 = left + (right - left) / packingOptions.GOLDEN_SECTION
-                    f_x2 = [step](data, x2)
+                    x2 = left + (right - left) / packingOptions.GOLDEN_SECTION
+                    f_x2 = [step](data, x2, desired_ratio)
                 End If
 
                 dx = Math.Abs(x1 - x2)
@@ -107,18 +113,18 @@ Namespace Layouts.Cola
             End While
 
             ' plot(data, min_width, get_entire_width(data), curr_best, curr_best_f);
-            [step](data, curr_best)
+            [step](data, curr_best, desired_ratio)
         End Sub
 
         ' one iteration of the optimization method
         ' (gives a proper, but not necessarily optimal packing)
-        Private Function [step](data As any(), max_width As Double) As Double
-            line = New any() {}
+        Private Function [step](data As List(Of Graph), max_width As Double, desired_ratio As Double) As Double
+            line = New List(Of Rectangle2D)
             real_width = 0
             real_height = 0
             global_bottom = init_y
 
-            For i As var = 0 To data.Length - 1
+            For i As Integer = 0 To data.Count - 1
                 Dim o = data(i)
                 put_rect(o, max_width)
             Next
@@ -130,22 +136,22 @@ Namespace Layouts.Cola
         Private Sub put_rect(rect As Rectangle2D, max_width As Double)
             Dim parent As Rectangle2D = Nothing
 
-            For i As Integer = 0 To line.Length - 1
+            For i As Integer = 0 To line.Count - 1
                 If (line(i).space_left >= rect.Height) AndAlso (line(i).x + line(i).width + rect.Width + packingOptions.PADDING - max_width) <= packingOptions.FLOAT_EPSILON Then
                     parent = line(i)
                     Exit For
                 End If
             Next
 
-            line.push(rect)
+            line.Add(rect)
 
             If parent IsNot Nothing Then
-                rect.X = parent.x + parent.width + packingOptions.PADDING
-                rect.Y = parent.bottom
+                rect.X = parent.X + parent.Width + packingOptions.PADDING
+                rect.Y = parent.Bottom
                 rect.space_left = rect.Height
                 rect.Bottom = rect.Y
                 parent.space_left -= rect.Height + packingOptions.PADDING
-                parent.bottom += rect.Height + packingOptions.PADDING
+                parent.Bottom += rect.Height + packingOptions.PADDING
             Else
                 rect.Y = global_bottom
                 global_bottom += rect.Height + packingOptions.PADDING
@@ -167,25 +173,31 @@ Namespace Layouts.Cola
         ''' actual assigning of position to nodes
         ''' </summary>
         ''' <param name="graphs"></param>
-        Private Sub put_nodes_to_right_positions(graphs As any())
+        Private Sub put_nodes_to_right_positions(graphs As List(Of Graph))
             graphs.DoEach(Sub(g)
                               ' calculate current graph center:
                               Dim center = New Point2D() With {.X = 0, .Y = 0}
 
-                              g.array.forEach(Sub(node)
+                              g.array.ForEach(Sub(node)
                                                   center.X += node.x
                                                   center.Y += node.y
                                               End Sub)
 
-                              center.X /= g.array.length
-                              center.Y /= g.array.length
+                              center.X /= g.array.Count
+                              center.Y /= g.array.Count
 
                               ' calculate current top left corner:
-                              Dim corner = New Point2D() With {.X = center.X - g.width / 2, .Y = center.Y - g.height / 2}
-                              Dim offset = New Point2D() With {.X = g.x - corner.X + svg_width \ 2 - real_width / 2, .Y = g.y - corner.Y + svg_height \ 2 - real_height / 2}
+                              Dim corner = New Point2D() With {
+                                .X = center.X - g.width / 2,
+                                .Y = center.Y - g.height / 2
+                              }
+                              Dim offset = New Point2D() With {
+                                .X = g.x - corner.X + svg_width \ 2 - real_width / 2,
+                                .Y = g.y - corner.Y + svg_height \ 2 - real_height / 2
+                              }
 
                               ' put nodes:
-                              g.array.forEach(Sub(node)
+                              g.array.ForEach(Sub(node)
                                                   node.x += offset.X
                                                   node.y += offset.Y
                                               End Sub)
@@ -195,6 +207,7 @@ Namespace Layouts.Cola
         Dim init_x As Integer = 0, init_y As Integer = 0
         Dim svg_width As Integer, svg_height As Integer
         Dim real_width As Double = 0, real_height As Double = 0, min_width As Double = 0, global_bottom As Double = 0
+        Dim line As New List(Of Rectangle2D)
 
         ''' <summary>
         ''' assign x, y to nodes while using box packing algorithm for disconnected graphs
@@ -208,7 +221,7 @@ Namespace Layouts.Cola
         ''' <remarks>
         ''' 这个函数是整个计算流程的起始函数
         ''' </remarks>
-        Public Sub applyPacking(graphs As Array(Of any), w As Integer, h As Integer, Optional node_size As Double? = Nothing, Optional desired_ratio As Integer? = 1, Optional centerGraph As Boolean = True)
+        Public Sub applyPacking(graphs As List(Of Graph), w As Integer, h As Integer, Optional node_size As Double? = Nothing, Optional desired_ratio As Integer? = 1, Optional centerGraph As Boolean = True)
 
             init_x = 0
             init_y = 0
@@ -223,9 +236,7 @@ Namespace Layouts.Cola
             min_width = 0
             global_bottom = 0
 
-            Dim line As New List(Of Line)
-
-            If graphs.length = 0 Then
+            If graphs.Count = 0 Then
                 Return
             End If
 
@@ -302,10 +313,10 @@ Namespace Layouts.Cola
         ''' <param name="nodes"></param>
         ''' <param name="links"></param>
         ''' <returns></returns>
-        Public Function separateGraphs(nodes As any, links As Link(Of Node)()) As Object
+        Public Shared Function separateGraphs(nodes As any, links As Link(Of Node)()) As List(Of Graph)
             Dim marks = New Object() {}
             Dim ways As New List(Of List(Of Node))
-            Dim graphs = New Object() {}
+            Dim graphs As New List(Of Graph)
             Dim clusters = 0
 
             For i As Integer = 0 To links.Length - 1
@@ -322,7 +333,7 @@ Namespace Layouts.Cola
                 If Not ways(n2.index) Is Nothing Then
                     ways(n2.index).Add(n1)
                 Else
-                    ways(n2.index) = New List(Of Node) {n1}
+                    ways(n2.index) = New List(Of Node) From {n1}
                 End If
             Next
 
@@ -332,27 +343,25 @@ Namespace Layouts.Cola
                 If marks(node.index) IsNot Nothing Then
                     Continue For
                 Else
-                    Call explore_node(node, True, marks, clusters, ways)
+                    Call explore_node(node, True, marks, clusters, ways, graphs)
                 End If
             Next
-
-
 
             Return graphs
         End Function
 
-        Private Sub explore_node(n As Node, is_new As Boolean, marks As any(), ByRef clusters As Integer, ways As List(Of List(Of Node)))
+        Private Shared Sub explore_node(n As Node, is_new As Boolean, marks As any(), ByRef clusters As Integer, ways As List(Of List(Of Node)), graphs As List(Of Graph))
             If marks(n.index) IsNot Nothing Then
                 Return
             End If
             If is_new Then
                 clusters += 1
-                graphs.push(New With {
-Key .array = New Object() {}
-})
+                graphs.Add(New Graph With {
+                           .array = New List(Of Node)
+                           })
             End If
             marks(n.index) = clusters
-            graphs(clusters - 1).array.push(n)
+            graphs(clusters - 1).array.Add(n)
 
             Dim adjacent = ways(n.index)
 
@@ -361,7 +370,7 @@ Key .array = New Object() {}
             End If
 
             For j As Integer = 0 To adjacent.Count - 1
-                explore_node(adjacent(j), False, marks, clusters, ways)
+                explore_node(adjacent(j), False, marks, clusters, ways, graphs)
             Next
         End Sub
 
@@ -369,5 +378,9 @@ Key .array = New Object() {}
             target = value
             Return value
         End Function
+    End Class
+
+    Public Class Graph : Inherits Rectangle2D
+        Public array As New List(Of Node)
     End Class
 End Namespace

@@ -24,7 +24,7 @@ Namespace Language.JavaScript
         ''' <param name="init"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Reduce(Of T, V)(seq As IEnumerable(Of T), produce As Func(Of V, T, V), init As V) As V
+        Public Function Reduce(Of T, V)(seq As IEnumerable(Of T), produce As Func(Of V, T, V), init As V = Nothing) As V
             For Each x As T In seq
                 init = produce(init, x)
             Next

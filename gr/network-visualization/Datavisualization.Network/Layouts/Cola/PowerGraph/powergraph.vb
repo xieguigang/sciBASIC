@@ -51,33 +51,34 @@ Namespace Layouts.Cola
             Return [Object].keys(intersection(m, n)).length
         End Function
 
-        Private Function getGroups(Of Link)(nodes As any(), links As Link(), la As LinkTypeAccessor(Of Link), rootGroup As any()) As any
+        Public Function getGroups(Of Link)(nodes As Node(), links As Link(), la As LinkTypeAccessor(Of Link), rootGroup As Group) As PowerGraph
             Dim n = nodes.Length
-            Dim c = New Configuration(n, links, la, rootGroup)
+            Dim c = New Configuration(Of Link)(n, links, la, rootGroup)
+
             While c.greedyMerge()
-
-
             End While
-            Dim powerEdges As PowerEdge() = {}
+
+            Dim powerEdges As New List(Of PowerEdge)
             Dim g = c.getGroupHierarchy(powerEdges)
-            powerEdges.ForEach(Function(e)
-                                   Dim f = Function([end])
-                                               Dim g = e([end])
-                                               If GetType(g) Is Double Then
-                                                   e([end]) = nodes(g)
-                                               End If
 
-                                           End Function
-                                   f("source")
-                                   f("target")
+            powerEdges.DoEach(Sub(e)
+                                  Dim f = Sub([end] As String) e([end]) = nodes(e([end]))
 
-                               End Function)
-            Return New With {
-            Key .groups = g,
-            Key .powerEdges = powerEdges
-        }
+                                  Call f("source")
+                                  Call f("target")
+                              End Sub)
+
+            Return New PowerGraph With {
+                .groups = g,
+                .powerEdges = powerEdges
+            }
         End Function
 
     End Module
+
+    Public Class PowerGraph
+        Public Property groups As List(Of Integer)
+        Public powerEdges As List(Of PowerEdge)
+    End Class
 
 End Namespace

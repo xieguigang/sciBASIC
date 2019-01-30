@@ -11,7 +11,7 @@ Namespace Layouts.Cola
         Public outgoing As New LinkSets
         Public incoming As New LinkSets
         Public children As New ModuleSet
-        Public definition As any
+        Public definition As Dictionary(Of String, Object)
 
         Default Public Property LinkSetItem(name As String) As LinkSets
             Get
@@ -56,7 +56,7 @@ Namespace Layouts.Cola
                        Optional outgoing As LinkSets = Nothing,
                        Optional incoming As LinkSets = Nothing,
                        Optional children As ModuleSet = Nothing,
-                       Optional definition As any = Nothing)
+                       Optional definition As Dictionary(Of String, Object) = Nothing)
 
             Me.id = id
             Me.outgoing = outgoing
@@ -65,7 +65,7 @@ Namespace Layouts.Cola
             Me.definition = definition
         End Sub
 
-        Private Sub getEdges(es As List(Of PowerEdge))
+        Public Sub getEdges(es As List(Of PowerEdge))
             Me.outgoing.forAll(Sub(ms, edgetype)
                                    ms.forAll(Sub(target)
                                                  es.Add(New PowerEdge(Me.id, target.id, edgetype))

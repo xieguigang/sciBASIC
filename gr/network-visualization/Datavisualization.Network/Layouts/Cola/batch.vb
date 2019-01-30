@@ -59,9 +59,9 @@ Namespace Layouts.Cola
         ''' <param name="size"></param>
         ''' <param name="grouppadding"></param>
         ''' <returns></returns>
-        Public Function powerGraphGridLayout(graph As network, size As Double(), grouppadding As Double) As Object
+        Public Function powerGraphGridLayout(graph As network, size As Double(), grouppadding As Double) As LayoutGraph
             ' compute power graph
-            Dim powerGraph = Nothing
+            Dim powerGraph As PowerGraph
 
             Call graph.nodes.ForEach(Sub(v, i) v.index = i)
             Call New Layout() _
@@ -76,33 +76,35 @@ Namespace Layouts.Cola
             ' construct a flat graph with dummy nodes for the groups and edges connecting group dummy nodes to their children
             ' power edges attached to groups are replaced with edges connected to the corresponding group dummy node
             Dim n = graph.nodes.Length
-            Dim edges = New Object() {}
+            Dim edges As New List(Of PowerEdge)
             Dim vs = graph.nodes.ToList
             vs.ForEach(Function(v, i) InlineAssignHelper(v.index, i))
-            powerGraph.groups.forEach(Function(g)
+            powerGraph.groups.forEach(Sub(g)
                                           Dim sourceInd = InlineAssignHelper(g.index, g.id + n)
                                           vs.Add(g)
                                           If g.leaves IsNot Nothing Then
-                                              g.leaves.forEach(Function(v) edges.push(New With {
-                                                  Key .source = sourceInd,
-                                                  Key .target = v.index
-                                              }))
+                                              g.leaves.forEach(Sub(v)
+                                                                   Call edges.Add(New PowerEdge With {
+                                                  .source = sourceInd,
+                                                  .target = v.index
+                                              })
+                                                               End Sub)
                                           End If
                                           If g.groups IsNot Nothing Then
-                                              g.groups.forEach(Function(gg) edges.push(New With {
-                                                  Key .source = sourceInd,
-                                                  Key .target = gg.id + n
-                                              }))
-                                          End If
-
-                                      End Function)
-            powerGraph.powerEdges.forEach(Function(e)
-                                              edges.push(New With {
-                                                  Key .source = e.source.index,
-                                                  Key .target = e.target.index
+                                              g.groups.forEach(Sub(gg)
+                                                                   Call edges.Add(New PowerEdge With {
+                                                  .source = sourceInd,
+                                                  .target = gg.id + n
                                               })
-
-                                          End Function)
+                                                               End Sub)
+                                          End If
+                                      End Sub)
+            powerGraph.powerEdges.forEach(Sub(e)
+                                              Call edges.Add(New PowerEdge With {
+                                                  .source = e.source.index,
+                                                  .target = e.target.index
+                                              })
+                                          End Sub)
 
             ' layout the flat graph with dummy nodes and edges
             Call New Layout().size(size).nodes(vs).links(edges).avoidOverlaps(False).linkDistance(30).symmetricDiffLinkLengths(5).convergenceThreshold(0.0001).start(100, 0, 0, 0, False)
@@ -113,13 +115,20 @@ Namespace Layouts.Cola
             '.flowLayout('y', 30)
 
 
-            Return New With {
-            Key .cola = New Layout().convergenceThreshold(0.001).size(size).avoidOverlaps(True).nodes(graph.nodes).links(graph.links).groupCompactness(0.0001).linkDistance(30).symmetricDiffLinkLengths(5).powerGraphGroups(Function(d)
-                                                                                                                                                                                                                                 powerGraph = d
-                                                                                                                                                                                                                                 powerGraph.groups.forEach(Function(v) InlineAssignHelper(v.padding, grouppadding))
-
-                                                                                                                                                                                                                             End Function).start(50, 0, 100, 0, False),
-            Key .powerGraph = powerGraph
+            Return New LayoutGraph With {
+            .cola = New Layout().convergenceThreshold(0.001) _
+                .size(size) _
+                .avoidOverlaps(True) _
+                .nodes(graph.nodes) _
+                .links(graph.links) _
+                .groupCompactness(0.0001) _
+                .linkDistance(30) _
+                .symmetricDiffLinkLengths(5) _
+                .powerGraphGroups(Sub(d)
+                                      powerGraph = d
+                                      powerGraph.groups.ForEach(Function(v) InlineAssignHelper(v.padding, grouppadding))
+                                  End Sub).start(50, 0, 100, 0, False),
+            .powerGraph = powerGraph
         }
         End Function
         Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
@@ -127,4 +136,9 @@ Namespace Layouts.Cola
             Return value
         End Function
     End Module
+
+    Public Class LayoutGraph
+        Public cola As Layout
+        Public powerGraph As PowerGraph
+    End Class
 End Namespace

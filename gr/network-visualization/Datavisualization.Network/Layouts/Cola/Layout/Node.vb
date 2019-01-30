@@ -32,6 +32,7 @@ Namespace Layouts.Cola
         Public height As Double
 
         ''' <summary>
+        ''' if fixed, layout will not move the node from its specified starting position
         ''' selective bit mask.  !=0 means layout will not move.
         ''' </summary>
         Public fixed As Double
@@ -43,11 +44,18 @@ Namespace Layouts.Cola
     ''' </summary>
     Public Class Node : Inherits InputNode
 
+        Public id As Integer
+
         Public prev As RBNode(Of Node, Object)
         Public [next] As RBNode(Of Node, Object)
 
         Public r As Rectangle2D
         Public pos As Double
+        Public _dragGroupOffsetY As Double
+        Public _dragGroupOffsetX As Double
+        Public px As Double?
+        Public py As Double?
+        Public parent As Group
 
         Public Shared Function makeRBTree() As RBNode(Of Node, Object)
             Return New RBNode(Of Node, Object)(Nothing, Nothing)
@@ -57,10 +65,27 @@ Namespace Layouts.Cola
 
     Public Class Group
 
+        Public id As Integer
         Public bounds As Rectangle2D
-        Public leaves As Node()
+        Public leaves As List(Of Node)
         Public groups As Group()
-        Public padding As Double
+        Public padding As Double?
+        Public parent As Group
+
+        Public ReadOnly Iterator Property keys As IEnumerable(Of String)
+            Get
+
+            End Get
+        End Property
+
+        Default Public Property PropertyValue(name As String) As Object
+            Get
+
+            End Get
+            Set(value As Object)
+
+            End Set
+        End Property
 
         Public Shared Function isGroup(g As Group) As Boolean
             Return g.leaves IsNot Nothing OrElse g.groups IsNot Nothing
@@ -90,8 +115,10 @@ Namespace Layouts.Cola
 
     Public Delegate Function LinkNumericPropertyAccessor(t As Link(Of Node)) As Double
 
-    Interface LinkLengthTypeAccessor
+    Public Class LinkLengthTypeAccessor
         Inherits LinkLengthAccessor(Of Link(Of Node))
         Overloads Function [getType]() As LinkNumericPropertyAccessor
-    End Interface
+
+        End Function
+    End Class
 End Namespace
