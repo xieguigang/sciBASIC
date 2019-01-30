@@ -4,11 +4,10 @@ Imports number = System.Double
 
 Namespace Layouts.Cola
 
-
-    '*
-    ' * @class PriorityQueue a min priority queue backed by a pairing heap
-    ' 
-
+    ''' <summary>
+    ''' a min priority queue backed by a pairing heap
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Class PriorityQueue(Of T)
         Private root As PairingHeap(Of T)
         Private lessThan As Func(Of T, T, Boolean)
