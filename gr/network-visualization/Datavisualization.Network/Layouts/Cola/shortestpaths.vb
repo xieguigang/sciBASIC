@@ -1,8 +1,10 @@
+Imports System.Threading
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports number = System.Double
 
-Namespace Layouts.Cola
+Namespace Layouts.Cola.shortestpaths
 
-    Class Neighbour
+    Public Class Neighbour
 
         Public id As Double
         Public distance As Double
@@ -13,7 +15,7 @@ Namespace Layouts.Cola
         End Sub
     End Class
 
-    Class Node
+    Public Class Node
 
         Public id As Double
 
@@ -49,24 +51,24 @@ Namespace Layouts.Cola
 
     Class Calculator(Of Link)
         Private neighbours As Node()
-        Public n As Double
+        Public n As Integer
         Public es As Link()
 
         Private Sub New(n As Double, es As Link(), getSourceIndex As Func(Of Link, number), getTargetIndex As Func(Of Link, number), getLength As Func(Of Link, number))
-            Me.neighbours = New Array(Me.n)
+            Me.neighbours = New Node(Me.n - 1) {}
             Dim i = Me.n
-            While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)
+            While System.Math.Max(Interlocked.Decrement(i), i + 1)
                 Me.neighbours(i) = New Node(i)
             End While
 
-            i = Me.es.length
-            While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)
+            i = Me.es.Length
+            While System.Math.Max(Interlocked.Decrement(i), i + 1)
                 Dim e = Me.es(i)
                 Dim u = getSourceIndex(e)
                 Dim v = getTargetIndex(e)
                 Dim d = getLength(e)
-                Me.neighbours(u).neighbours.push(New Neighbour(v, d))
-                Me.neighbours(v).neighbours.push(New Neighbour(u, d))
+                Me.neighbours(u).neighbours.Add(New Neighbour(v, d))
+                Me.neighbours(v).neighbours.Add(New Neighbour(u, d))
             End While
         End Sub
 
@@ -80,8 +82,8 @@ Namespace Layouts.Cola
         '     
 
         Private Function DistanceMatrix() As Double()()
-            Dim D = New Array(Me.n)
-            For i As var = 0 To Me.n - 1
+            Dim D = New Double(Me.n)() {}
+            For i As Integer = 0 To Me.n - 1
                 D(i) = Me.dijkstraNeighbours(i)
             Next
             Return D
@@ -117,7 +119,7 @@ Namespace Layouts.Cola
                 If u.id = [end] Then
                     Exit While
                 End If
-                Dim i = u.neighbours.length
+                Dim i = u.neighbours.Length
                 While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)
                     Dim neighbour = u.neighbours(i)
 
@@ -131,7 +133,7 @@ Namespace Layouts.Cola
                     ' don't retraverse an edge if it has already been explored
                     ' from a lower cost route
                     Dim viduid = v.id + ","c + u.id
-                    If visitedFrom.indexOf(viduid) > -1 AndAlso visitedFrom(viduid) <= qu.d Then
+                    If visitedFrom.IndexOf(viduid) > -1 AndAlso visitedFrom(viduid) <= qu.d Then
                         Continue While
                     End If
 
@@ -153,12 +155,12 @@ Namespace Layouts.Cola
 
         Private Function dijkstraNeighbours(start As Double, Optional dest As Double = -1) As Double()
             Dim q = New PriorityQueue(Of Node)(Function(a, b) a.d <= b.d)
-            Dim i As Integer = Me.neighbours.length
+            Dim i As Integer = Me.neighbours.Length
             Dim d As Double() = New Array(i)
 
             While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)
                 Dim node = Me.neighbours(i)
-                node.d = If(i = start, 0, Number.POSITIVE_INFINITY)
+                node.d = If(i = start, 0, number.POSITIVE_INFINITY)
                 node.q = q.push(node)
             End While
             While Not q.empty()
@@ -174,12 +176,12 @@ Namespace Layouts.Cola
                     End While
                     Return path
                 End If
-                i = u.neighbours.length
+                i = u.neighbours.Length
                 While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)
                     Dim neighbour = u.neighbours(i)
                     Dim v = Me.neighbours(neighbour.id)
                     Dim t = u.d + neighbour.distance
-                    If u.d <> Number.MAX_VALUE AndAlso v.d > t Then
+                    If u.d <> number.MAX_VALUE AndAlso v.d > t Then
                         v.d = t
                         v.prev = u
                         q.reduceKey(v.q, v, Function(e, q) InlineAssignHelper(e.q, q))

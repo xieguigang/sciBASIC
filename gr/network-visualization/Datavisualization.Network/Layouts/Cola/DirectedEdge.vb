@@ -118,20 +118,6 @@ Namespace Layouts.Cola
 
     End Structure
 
-    Public Class Node
-
-        Public prev As RBNode(Of Node, Object)
-        Public [next] As RBNode(Of Node, Object)
-
-        Public r As Rectangle2D
-        Public pos As Double
-
-        Public Shared Function makeRBTree() As RBNode(Of Node, Object)
-            Return New RBNode(Of Node, Object)(Nothing, Nothing)
-        End Function
-
-    End Class
-
     Public Class Variable
         Public offset As Double = 0
         Public block As Block

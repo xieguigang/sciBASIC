@@ -1,4 +1,5 @@
-﻿Namespace Layouts.Cola
+﻿
+Namespace Layouts.Cola
 
     ''' <summary>
     ''' The layout process fires three events:

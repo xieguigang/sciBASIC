@@ -1,55 +1,72 @@
-﻿
+﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
+
 Namespace Layouts.Cola
+
     Public Class InputNode
-        '*
-        '     * index in nodes array, this is initialized by Layout.start()
-        '     
 
+        ''' <summary>
+        ''' index in nodes array, this is initialized by Layout.start()
+        ''' </summary>
         Private index As Integer
-        '*
-        '     * x and y will be computed by layout as the Node's centroid
-        '     
 
+        ''' <summary>
+        ''' x and y will be computed by layout as the Node's centroid
+        ''' </summary>
         Private x As Double
-        '*
-        '     * x and y will be computed by layout as the Node's centroid
-        '     
 
+        ''' <summary>
+        ''' x and y will be computed by layout as the Node's centroid
+        ''' </summary>
         Private y As Double
-        '*
-        '     * specify a width and height of the node's bounding box if you turn on avoidOverlaps
-        '     
 
+        ''' <summary>
+        ''' specify a width and height of the node's bounding box if you turn on avoidOverlaps
+        ''' </summary>
         Private width As Double
-        '*
-        '     * specify a width and height of the node's bounding box if you turn on avoidOverlaps
-        '     
 
+        ''' <summary>
+        ''' specify a width and height of the node's bounding box if you turn on avoidOverlaps
+        ''' </summary>
         Private height As Double
-        '*
-        '     * selective bit mask.  !=0 means layout will not move.
-        '     
 
+        ''' <summary>
+        ''' selective bit mask.  !=0 means layout will not move.
+        ''' </summary>
         Private fixed As Double
     End Class
 
-    Class Node : Inherits InputNode
-        ' Client-passed node may be missing these properties, which will be set
-        ' upon ingestion
-        Private y As Double
-        Private x As Double
+    ''' <summary>
+    ''' Client-passed node may be missing these properties, which will be set
+    ''' upon ingestion
+    ''' </summary>
+    Public Class Node : Inherits InputNode
+
+        Public y As Double
+        Public x As Double
+
+        Public prev As RBNode(Of Node, Object)
+        Public [next] As RBNode(Of Node, Object)
+
+        Public r As Rectangle2D
+        Public pos As Double
+
+        Public Shared Function makeRBTree() As RBNode(Of Node, Object)
+            Return New RBNode(Of Node, Object)(Nothing, Nothing)
+        End Function
+
     End Class
 
-    Class Group
+    Public Class Group
         Private bounds As Rectangle2D
         Private leaves As Node()
         Private groups As Group()
         Private padding As Double
 
-        Public Shared Function isGroup(g As any) As Boolean
+        Public Shared Function isGroup(g As Group) As Boolean
             Return g.leaves IsNot Nothing OrElse g.groups IsNot Nothing
         End Function
-
     End Class
 
 
