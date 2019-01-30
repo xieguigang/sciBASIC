@@ -486,7 +486,7 @@ Namespace Layouts.Cola
         Public Const ZERO_UPPERBOUND = -0.0000000001
 
         Public vs As Variable()
-        Public cs As Constraint()
+        Public cs As List(Of Constraint)
 
         Public ReadOnly Property cost As Double
             Get
@@ -494,7 +494,7 @@ Namespace Layouts.Cola
             End Get
         End Property
 
-        Sub New(vs As Variable(), cs As Constraint())
+        Sub New(vs As Variable(), cs As List(Of Constraint))
             Me.vs = vs
             vs.ForEach(Sub(v, i)
                            v.cIn = {}

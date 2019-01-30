@@ -4,6 +4,16 @@ Namespace Language.JavaScript
 
     Public Module Linq
 
+        <Extension>
+        Public Sub splice(Of T)(array As T(), index As Integer, howmany As Integer, ParamArray items As T())
+            Throw New NotImplementedException
+        End Sub
+
+        <Extension>
+        Public Sub splice(Of T)(list As List(Of T), index As Integer, howmany As Integer, ParamArray items As T())
+            Throw New NotImplementedException
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>

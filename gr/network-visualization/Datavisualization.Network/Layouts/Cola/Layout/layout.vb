@@ -4,102 +4,10 @@ Imports number = System.Double
 
 Namespace Layouts.Cola
 
-    '*
-    '     * The layout process fires three events:
-    '     *  - start: layout iterations started
-    '     *  - tick: fired once per iteration, listen to this to animate
-    '     *  - end: layout converged, you might like to zoom-to-fit or something at notification of this event
-    '     
-
-    Enum EventType
-        start
-        tick
-        [end]
-    End Enum
-    Class [Event]
-        Private type As EventType
-        Private alpha As Double
-        Private stress As Double
-        Private listener As Action
-    End Class
-    Class InputNode
-        '*
-        '     * index in nodes array, this is initialized by Layout.start()
-        '     
-
-        Private index As Integer
-        '*
-        '     * x and y will be computed by layout as the Node's centroid
-        '     
-
-        Private x As Double
-        '*
-        '     * x and y will be computed by layout as the Node's centroid
-        '     
-
-        Private y As Double
-        '*
-        '     * specify a width and height of the node's bounding box if you turn on avoidOverlaps
-        '     
-
-        Private width As Double
-        '*
-        '     * specify a width and height of the node's bounding box if you turn on avoidOverlaps
-        '     
-
-        Private height As Double
-        '*
-        '     * selective bit mask.  !=0 means layout will not move.
-        '     
-
-        Private fixed As Double
-    End Class
-
-    Class Node : Inherits InputNode
-        ' Client-passed node may be missing these properties, which will be set
-        ' upon ingestion
-        Private y As Double
-        Private x As Double
-    End Class
-
-    Class Group
-        Private bounds As Rectangle2D
-        Private leaves As Node()
-        Private groups As Group()
-        Private padding As Double
-
-        Public Shared Function isGroup(g As any) As Boolean
-            Return g.leaves IsNot Nothing OrElse g.groups IsNot Nothing
-        End Function
-
-    End Class
-
-
-    Interface Link(Of NodeRefType)
-        Property source() As NodeRefType
-        Property target() As NodeRefType
-
-        ' ideal length the layout should try to achieve for this link
-        Property length() As Double
-
-        ' how hard we should try to satisfy this link's ideal length
-        ' must be in the range: 0 < weight <= 1
-        ' if unspecified 1 is the default
-        Property weight() As Double
-    End Interface
-
-    Public Delegate Function LinkNumericPropertyAccessor(t As Link(Of Node)) As Double
-
-    Interface LinkLengthTypeAccessor
-        Inherits LinkLengthAccessor(Of Link(Of Node))
-        Overloads Function [getType]() As LinkNumericPropertyAccessor
-    End Interface
-    '*
-    ' * Main interface to cola layout.
-    ' * @class Layout
-    ' 
-
-    Class Layout
+    ''' <summary>
+    ''' Main interface to cola layout.
+    ''' </summary>
+    Public Class Layout
         Private _canvasSize As Double() = {1, 1}
         Private _linkDistance As Double = 20
         Private _defaultNodeSize As Double = 10
@@ -122,17 +30,19 @@ Namespace Layouts.Cola
         Private _visibilityGraph As any = Nothing
         Private _groupCompactness As Double = 0.000001
 
-        ' sub-class and override this property to replace with a more sophisticated eventing mechanism
-        Protected [event] As any = Nothing
+        ''' <summary>
+        ''' sub-class and override this property to replace with a more sophisticated eventing mechanism
+        ''' </summary>
+        Protected [event] As [Event] = Nothing
 
         ' subscribe a listener to an event
         ' sub-class and override this method to replace with a more sophisticated eventing mechanism
         Public Function [on](e As EventType, listener As Action(Of [Event])) As Layout
             ' override me!
-            If Not Me.[event] Then
+            If Me.[event] Is Nothing Then
                 Me.[event] = New any() {}
             End If
-            If GetType(e) Is [String] Then
+            If e.GetType() Is GetType(String) Then
                 Me.[event](EventType(e)) = listener
             Else
                 Me.[event](e) = listener
@@ -899,17 +809,17 @@ Namespace Layouts.Cola
             Dim sourceInd = Function(e) e.source.id
             Dim targetInd = Function(e) e.target.id
             Dim length = Function(e) e.length()
-            Dim spCalc = New Calculator(vg2.V.length, vg2.E, sourceInd, targetInd, length)
+            Dim spCalc = New Calculator(vg2.V.Length, vg2.E, sourceInd, targetInd, length)
             Dim shortestPath = spCalc.PathFromNodeToNode(start.id, [end].id)
 
-            If shortestPath.Length = 1 OrElse shortestPath.Length = vg2.V.length Then
+            If shortestPath.Length = 1 OrElse shortestPath.Length = vg2.V.Length Then
                 Dim route = makeEdgeBetween(edge.source.innerBounds, edge.target.innerBounds, ah)
                 lineData = New any() {route.sourceIntersection, route.arrowStart}
             Else
                 Dim n = shortestPath.Length - 2
                 Dim p = vg2.V(shortestPath(n)).p
                 Dim q = vg2.V(shortestPath(0)).p
-                Dim lineData = New any() {edge.source.innerBounds.rayIntersection(p.x, p.y)}
+                Dim lineData = New any() {edge.source.innerBounds.rayIntersection(p.X, p.Y)}
 
                 For i As var = n To 0 Step -1
                     lineData.push(vg2.V(shortestPath(i)).p)

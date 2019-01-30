@@ -1,76 +1,81 @@
 ﻿#Region "Microsoft.VisualBasic::74f205abf366bf056f1afc4a98c62b05, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\Models.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface NodeAccessor
-    ' 
-    '         Function: getBounds, getChildren
-    ' 
-    '     Class NodeWrapper
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class Vert
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class [Event]
-    ' 
-    ' 
-    '         Structure Comparer
-    ' 
-    '             Function: Compare
-    ' 
-    ' 
-    ' 
-    '     Class GridLine
-    ' 
-    ' 
-    '         Structure Comparer
-    ' 
-    '             Function: Compare
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface NodeAccessor
+' 
+'         Function: getBounds, getChildren
+' 
+'     Class NodeWrapper
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class Vert
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class [Event]
+' 
+' 
+'         Structure Comparer
+' 
+'             Function: Compare
+' 
+' 
+' 
+'     Class GridLine
+' 
+' 
+'         Structure Comparer
+' 
+'             Function: Compare
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports number = System.Double
 
 Namespace Layouts.Cola.GridRouter
+
+    Public Class LinkLine : Inherits Line
+        Public verts As List(Of Vert)
+    End Class
 
     Public Class NodeAccessor(Of Node)
 
@@ -101,7 +106,7 @@ Namespace Layouts.Cola.GridRouter
     Public Class NodeWrapper
         Public leaf As Boolean
         Public parent As NodeWrapper
-        Public ports As Vert()
+        Public ports As List(Of Vert)
         Public id As Integer
         Public rect As Rectangle2D
         Public children As Integer()

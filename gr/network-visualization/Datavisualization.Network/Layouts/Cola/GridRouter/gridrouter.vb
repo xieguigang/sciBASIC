@@ -1,10 +1,17 @@
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
+Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.Language.Python
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports any = System.Object
 Imports number = System.Double
 
 Namespace Layouts.Cola
+
+
 
     Class GridRouter(Of Node)
         Private leaves As NodeWrapper() = Nothing
@@ -13,29 +20,26 @@ Namespace Layouts.Cola
         Private cols As GridLine()
         Private rows As GridLine()
         Private root As any
-        Private verts As Vert()
-        Private edges As any
+        Private verts As List(Of Vert)
+        Private edges As List(Of Link3D)
         Private backToFront As any
         Private obstacles As any
         Private passableEdges As any
-        Private Function avg(a As any()) As Double
-            Return a.reduce(Function(x, y) x + y) / a.Length
-        End Function
 
         ' in the given axis, find sets of leaves overlapping in that axis
         ' center of each GridLine is average of all nodes in column
-        Private Function getGridLines(axis As String) As GridLine()
-            Dim columns = New Object() {}
-            Dim ls = Me.leaves.slice(0, Me.leaves.Length)
-            While ls.length > 0
+        Private Function getGridLines(axis As String) As List(Of GridLine)
+            Dim columns As New List(Of GridLine)
+            Dim ls = Me.leaves.slice(0, Me.leaves.Length).ToArray
+            While ls.Length > 0
                 ' find a column of all leaves overlapping in axis with the first leaf
-                Dim overlapping = ls.filter(Function(v) v.rect("overlap" & axis.toUpperCase())(ls(0).rect))
-                Dim col = New With {
-                Key .nodes = overlapping,
-                Key .pos = Me.avg(overlapping.map(Function(v) v.rect("c"c & axis)()))
+                Dim overlapping = ls.Where(Function(v) v.rect("overlap" & axis.toUpperCase())(ls(0).rect)).ToArray
+                Dim col = New GridLine With {
+                .nodes = overlapping,
+                .pos = overlapping.Select(Function(v) v.rect("c"c & axis)()).average
             }
-                columns.push(col)
-                col.nodes.forEach(Function(v) ls.splice(ls.indexOf(v), 1))
+                columns.Add(col)
+                col.nodes.DoEach(Sub(v) ls.splice(ls.IndexOf(v), 1))
             End While
             columns.Sort(Function(a, b) a.pos - b.pos)
             Return columns
@@ -51,17 +55,6 @@ Namespace Layouts.Cola
             Return depth
         End Function
 
-        ' medial axes between node centres and also boundary lines for the grid
-        Private Function midPoints(a As Double()) As Double()
-            Dim gap = a(1) - a(0)
-            Dim mids = New Double() {a(0) - gap / 2}
-            For i As var = 1 To a.Length - 1
-                mids.push((a(i) + a(i - 1)) / 2)
-            Next
-            mids.push(a(a.Length - 1) + gap / 2)
-            Return mids
-        End Function
-
         Public originalnodes As Node()
         Public groupPadding As Double
 
@@ -73,26 +66,25 @@ Namespace Layouts.Cola
             Me.rows = Me.getGridLines("y"c)
 
             ' create parents for each node or group that is a member of another's children
-            Me.groups.ForEach(Function(v) v.children.ForEach(Function(c) InlineAssignHelper(Me.nodes(CType(c, number)).parent, v)))
+            Me.groups.DoEach(Sub(v) v.children.DoEach(Sub(c) InlineAssignHelper(Me.nodes(CType(c, number)).parent, v)))
 
             ' root claims the remaining orphans
             Me.root = New With {
             Key .children = New Object() {}
         }
-            Me.nodes.ForEach(Function(v)
-                                 If v.parent Is Nothing Then
-                                     v.parent = Me.root
-                                     Me.root.children.push(v.id)
-                                 End If
+            Me.nodes.DoEach(Sub(v)
+                                If v.parent Is Nothing Then
+                                    v.parent = Me.root
+                                    Me.root.children.push(v.id)
+                                End If
 
-                                 ' each node will have grid vertices associated with it,
-                                 ' some inside the node and some on the boundary
-                                 ' leaf nodes will have exactly one internal node at the center
-                                 ' and four boundary nodes
-                                 ' groups will have potentially many of each
-                                 v.ports = New Object() {}
-
-                             End Function)
+                                ' each node will have grid vertices associated with it,
+                                ' some inside the node and some on the boundary
+                                ' leaf nodes will have exactly one internal node at the center
+                                ' and four boundary nodes
+                                ' groups will have potentially many of each
+                                v.ports = New List(Of Vert)
+                            End Sub)
 
             ' nodes ordered by their position in the group hierarchy
             Me.backToFront = Me.nodes.slice(0)
@@ -102,15 +94,14 @@ Namespace Layouts.Cola
             ' has to be done from front to back, i.e. inside groups to outside groups
             ' such that each can be made large enough to enclose its interior
             Dim frontToBackGroups = Me.backToFront.slice(0).reverse().filter(Function(g) Not g.leaf)
-            frontToBackGroups.forEach(Function(v)
-                                          Dim r = Rectangle.empty()
-                                          v.children.forEach(Function(c) InlineAssignHelper(r, r.union(Me.nodes(c).rect)))
+            frontToBackGroups.forEach(Sub(v)
+                                          Dim r = New Rectangle2D()
+                                          v.children.forEach(Function(c) InlineAssignHelper(r, r.Union(Me.nodes(c).rect)))
                                           v.rect = r.inflate(Me.groupPadding)
+                                      End Sub)
 
-                                      End Function)
-
-            Dim colMids = Me.midPoints(Me.cols.map(Function(r) r.pos))
-            Dim rowMids = Me.midPoints(Me.rows.map(Function(r) r.pos))
+            Dim colMids = BezierCurve.MidPoints(Me.cols.Select(Function(r) r.pos).ToArray).ToArray
+            Dim rowMids = BezierCurve.MidPoints(Me.rows.Select(Function(r) r.pos).ToArray).ToArray
 
             ' setup extents of lines
             Dim rowx__1 = colMids(0)
@@ -119,97 +110,98 @@ Namespace Layouts.Cola
             Dim colY__4 = rowMids(rowMids.Length - 1)
 
             ' horizontal lines
-            Dim hlines = Me.rows.map(Function(r) New With {
-            Key .x1 = rowx__1,
-            Key .x2 = rowX__2,
-            Key .y1 = r.pos,
-            Key .y2 = r.pos
-        }).concat(rowMids.map(Function(m) New With {
-            Key .x1 = rowx__1,
-            Key .x2 = rowX__2,
-            Key .y1 = m,
-            Key .y2 = m
-        }))
+            Dim hlines = Me.rows.Select(Function(r) New LinkLine With {
+             .X1 = rowx__1,
+             .X2 = rowX__2,
+             .Y1 = r.pos,
+             .Y2 = r.pos
+        }).Concat(rowMids.Select(Function(m) New LinkLine With {
+             .X1 = rowx__1,
+             .X2 = rowX__2,
+             .Y1 = m,
+             .Y2 = m
+        })).ToArray
 
             ' vertical lines
-            Dim vlines = Me.cols.map(Function(c) New With {
-            Key .x1 = c.pos,
-            Key .x2 = c.pos,
-            Key .y1 = coly__3,
-            Key .y2 = colY__4
-        }).concat(colMids.map(Function(m) New With {
-            Key .x1 = m,
-            Key .x2 = m,
-            Key .y1 = coly__3,
-            Key .y2 = colY__4
-        }))
+            Dim vlines = Me.cols.Select(Function(c) New LinkLine With {
+            .X1 = c.pos,
+            .X2 = c.pos,
+            .Y1 = coly__3,
+            .Y2 = colY__4
+        }).Concat(colMids.Select(Function(m) New LinkLine With {
+            .X1 = m,
+            .X2 = m,
+            .Y1 = coly__3,
+            .Y2 = colY__4
+        })).ToArray
 
             ' the full set of lines
-            Dim lines = hlines.concat(vlines)
+            Dim lines = hlines.Concat(vlines).ToArray
 
             ' we record the vertices associated with each line
-            lines.forEach(Function(l) InlineAssignHelper(l.verts, New Object() {}))
+            lines.DoEach(Sub(l) l.verts = New List(Of Vert))
 
             ' the routing graph
-            Me.verts = New Vert() {}
-            Me.edges = New Object() {}
+            Me.verts = New List(Of Vert)
+            Me.edges = New List(Of Link3D)
 
             ' create vertices at the crossings of horizontal and vertical grid-lines
-            hlines.forEach(Function(h) vlines.forEach(Function(v)
-                                                          Dim p = New Vert(Me.verts.Length, v.x1, h.y1)
-                                                          h.verts.push(p)
-                                                          v.verts.push(p)
-                                                          Me.verts.push(p)
+            hlines.DoEach(Sub(h)
+                              vlines.DoEach(Sub(v)
+                                                Dim p = New Vert(Me.verts.Count, v.X1, h.Y1)
+                                                h.verts.Add(p)
+                                                v.verts.Add(p)
+                                                Me.verts.Add(p)
 
-                                                          ' assign vertices to the nodes immediately under them
-                                                          Dim i As Integer = Me.backToFront.length
-                                                          While (System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1)) > 0
-                                                              Dim node = Me.backToFront(i)
-                                                              Dim r = node.rect
-                                                              Dim dx = Math.Abs(p.x - r.cx())
-                                                              Dim dy = Math.Abs(p.y - r.cy())
-                                                              If dx < r.width() / 2 AndAlso dy < r.height() / 2 Then
-                                                                  DirectCast(p, any).node = node
-                                                                  Exit While
-                                                              End If
-                                                          End While
+                                                ' assign vertices to the nodes immediately under them
+                                                Dim i As Integer = Me.backToFront.length
+                                                While (System.Math.Max(Interlocked.Decrement(i), i + 1)) > 0
+                                                    Dim node = Me.backToFront(i)
+                                                    Dim r = node.rect
+                                                    Dim dx = Math.Abs(p.x - r.cx())
+                                                    Dim dy = Math.Abs(p.y - r.cy())
+                                                    If dx < r.width() / 2 AndAlso dy < r.height() / 2 Then
+                                                        DirectCast(p, any).node = node
+                                                        Exit While
+                                                    End If
+                                                End While
+                                            End Sub)
+                          End Sub)
 
-                                                      End Function))
-
-            lines.forEach(Function(l, li)
+            lines.ForEach(Sub(l, li)
                               ' create vertices at the intersections of nodes and lines
-                              Me.nodes.ForEach(Function(v, i)
-                                                   v.rect.lineIntersections(l.x1, l.y1, l.x2, l.y2).ForEach(Function(intersect, j)
-                                                                                                                'console.log(li+','+i+','+j+':'+intersect.x + ',' + intersect.y);
-                                                                                                                Dim p = New Vert(Me.verts.Length, intersect.X, intersect.Y, v, l)
-                                                                                                                Me.verts.push(p)
-                                                                                                                l.verts.push(p)
-                                                                                                                v.ports.push(p)
-
-                                                                                                            End Function)
-
-                                               End Function)
+                              Me.nodes.ForEach(Sub(v, i)
+                                                   v.rect _
+                                                    .lineIntersections(l.X1, l.Y1, l.X2, l.Y2) _
+                                                    .ForEach(Sub(intersect, j)
+                                                                 'console.log(li+','+i+','+j+':'+intersect.x + ',' + intersect.y);
+                                                                 Dim p = New Vert(Me.verts.Count, intersect.X, intersect.Y, v, l)
+                                                                 Me.verts.Add(p)
+                                                                 l.verts.Add(p)
+                                                                 v.ports.Add(p)
+                                                             End Sub)
+                                               End Sub)
 
                               ' split lines into edges joining vertices
-                              Dim isHoriz = Math.Abs(l.y1 - l.y2) < 0.1
-                              Dim delta = Function(a, b) If(isHoriz, b.x - a.x, b.y - a.y)
-                              l.verts.sort(delta)
-                              For i As var = 1 To l.verts.length - 1
-                                  Dim u = l.verts(i - 1), v = l.verts(i)
-                                  If u.node AndAlso u.node = v.node AndAlso u.node.leaf Then
+                              Dim isHoriz = Math.Abs(l.Y1 - l.Y2) < 0.1
+                              Dim delta = Function(a As Vert, b As Vert)
+                                              Return If(isHoriz, b.x - a.x, b.y - a.y)
+                                          End Function
+                              l.verts.Sort(delta)
+                              For i As Integer = 1 To l.verts.Count - 1
+                                  Dim u = l.verts(i - 1)
+                                  Dim v = l.verts(i)
+
+                                  If u.node IsNot Nothing AndAlso u.node Is v.node AndAlso u.node.leaf Then
                                       Continue For
                                   End If
-                                  Me.edges.push(New With {
-                Key .source = u.id,
-                Key .target = v.id,
-                Key .length = Math.Abs(delta(u, v))
+                                  Me.edges.Add(New Link3D With {
+                .source = u.id,
+                .target = v.id,
+                .length = Math.Abs(delta(u, v))
             })
                               Next
-
-
-
-
-                          End Function)
+                          End Sub)
         End Sub
 
         ' find path from v to root including both v and root
@@ -272,7 +264,7 @@ Namespace Layouts.Cola
             ' vsegmentsets is a set of sets of segments grouped by x position
             Dim vsegmentsets = New Object() {}
             Dim segmentset = Nothing
-            For i As var = 0 To vsegments.Length - 1
+            For i As Integer = 0 To vsegments.Length - 1
                 Dim s = vsegments(i)
                 If Not segmentset OrElse Math.Abs(s(0)(x) - segmentset.pos) > 0.1 Then
                     segmentset = New With {
@@ -299,9 +291,9 @@ Namespace Layouts.Cola
                 Return
             End If
             Dim vs = segments.map(Function(s) New Variable(s(0)(x)))
-            Dim cs = New Object() {}
-            For i As var = 0 To n - 1
-                For j As var = 0 To n - 1
+            Dim cs As New List(Of Constraint)
+            For i As Integer = 0 To n - 1
+                For j As Integer = 0 To n - 1
                     If i = j Then
                         Continue For
                     End If
@@ -340,13 +332,13 @@ Namespace Layouts.Cola
                     End If
                     If lind >= 0 Then
                         'console.log(x+' constraint: ' + lind + '<' + rind);
-                        cs.push(New Constraint(vs(lind), vs(rind), gap))
+                        cs.Add(New Constraint(vs(lind), vs(rind), gap))
                     End If
                 Next
             Next
             Dim solver = New Solver(vs, cs)
             solver.solve()
-            vs.forEach(Function(v, i)
+            vs.forEach(Sub(v, i)
                            Dim s = segments(i)
                            Dim pos = v.position()
                            s(0)(x) = InlineAssignHelper(s(1)(x), pos)
@@ -357,22 +349,21 @@ Namespace Layouts.Cola
                            If s.i < route.length - 1 Then
                                route(s.i + 1)(0)(x) = pos
                            End If
-
-                       End Function)
+                       End Sub)
         End Sub
 
         Private Shared Sub nudgeSegments(routes As any, x As String, y As String, leftOf As Func(Of number, number, Boolean), gap As Double)
             Dim vsegmentsets = GridRouter.getSegmentSets(routes, x, y)
             ' scan the grouped (by x) segment sets to find co-linear bundles
-            For i As var = 0 To vsegmentsets.length - 1
+            For i As Integer = 0 To vsegmentsets.length - 1
                 Dim ss = vsegmentsets(i)
-                Dim events = New Object() {}
-                For j As var = 0 To ss.segments.length - 1
+                Dim events = New List(Of [Event])
+                For j As Integer = 0 To ss.segments.length - 1
                     Dim s = ss.segments(j)
-                    events.push(New With {
-                    Key .type = 0,
-                    Key .s = s,
-                    Key .pos = Math.Min(s(0)(y), s(1)(y))
+                    events.Add(New [Event] With {
+                    .type = 0,
+                    .s = s,
+                    .pos = Math.Min(s(0)(y), s(1)(y))
                 })
                     events.push(New With {
                     Key .type = 1,

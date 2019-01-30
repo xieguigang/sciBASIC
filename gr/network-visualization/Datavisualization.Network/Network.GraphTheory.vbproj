@@ -398,10 +398,12 @@
     <Compile Include="Layouts\Cola\Geom\geom.vb" />
     <Compile Include="Layouts\Cola\Geom\Models.vb" />
     <Compile Include="Layouts\Cola\Geom\TangentVisibilityGraph.vb" />
-    <Compile Include="Layouts\Cola\gridrouter.vb" />
+    <Compile Include="Layouts\Cola\GridRouter\gridrouter.vb" />
     <Compile Include="Layouts\Cola\GridRouter\Models.vb" />
     <Compile Include="Layouts\Cola\handledisconnected.vb" />
-    <Compile Include="Layouts\Cola\layout.vb" />
+    <Compile Include="Layouts\Cola\Layout\Node.vb" />
+    <Compile Include="Layouts\Cola\Layout\Event.vb" />
+    <Compile Include="Layouts\Cola\Layout\layout.vb" />
     <Compile Include="Layouts\Cola\Layout3D\LinkAccessor.vb" />
     <Compile Include="Layouts\Cola\Layout3D\layout3d.vb" />
     <Compile Include="Layouts\Cola\Layout3D\Module1.vb" />

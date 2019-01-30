@@ -8,6 +8,9 @@ Namespace Layouts.Cola
         Public source As Integer
         Public target As Integer
 
+        Sub New()
+        End Sub
+
         Public Sub New(source As Integer, target As Integer)
             Me.source = source
             Me.target = target
