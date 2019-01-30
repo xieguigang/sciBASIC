@@ -2,11 +2,11 @@
 
     Public Class PowerEdge
 
-        Public source As any
-        Public target As any
-        Public type As Double
+        Public source As Integer
+        Public target As Integer
+        Public type As Integer
 
-        Private Sub New(source As any, target As any, type As Double)
+        Sub New(source As Integer, target As Integer, type As Integer)
             Me.source = source
             Me.target = target
             Me.type = type

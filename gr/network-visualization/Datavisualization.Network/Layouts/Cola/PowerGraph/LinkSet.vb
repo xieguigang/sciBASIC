@@ -6,7 +6,7 @@
 
         Public ReadOnly Property count() As Integer
 
-        Private Function contains(id As Integer) As Boolean
+        Public Function contains(id As Integer) As Boolean
             Dim result = False
 
             Me.forAllModules(Sub(m)
@@ -17,13 +17,13 @@
             Return result
         End Function
 
-        Private Sub add(linktype As Double, m As [Module])
+        Public Sub add(linktype As Double, m As [Module])
             Dim s As ModuleSet = If(Me.sets.Have(linktype), Me.sets(linktype), InlineAssignHelper(Me.sets(linktype), New ModuleSet()))
             s.add(m)
             Me._count += 1
         End Sub
 
-        Private Sub remove(linktype As Double, m As [Module])
+        Public Sub remove(linktype As Double, m As [Module])
             Dim ms = DirectCast(Me.sets(linktype), ModuleSet)
             ms.remove(m)
             If ms.count() = 0 Then
@@ -42,7 +42,7 @@
             Me.forAll(Sub(ms, lt) Call ms.forAll(f))
         End Sub
 
-        Private Function intersection(other As LinkSets) As LinkSets
+        Public Function intersection(other As LinkSets) As LinkSets
             Dim result As New LinkSets()
 
             Me.forAll(Sub(ms, lt)

@@ -5,13 +5,34 @@ Namespace Layouts.Cola
 
     Public Class [Module]
 
-        Public gid As Double
+        Public gid As Integer?
         Public id As Integer
 
         Public outgoing As New LinkSets
         Public incoming As New LinkSets
         Public children As New ModuleSet
         Public definition As any
+
+        Default Public Property LinkSetItem(name As String) As LinkSets
+            Get
+                If name = NameOf(outgoing) Then
+                    Return outgoing
+                ElseIf name = NameOf(incoming) Then
+                    Return incoming
+                Else
+                    Throw New NotImplementedException(name)
+                End If
+            End Get
+            Set(value As LinkSets)
+                If name = NameOf(outgoing) Then
+                    outgoing = value
+                ElseIf name = NameOf(incoming) Then
+                    incoming = value
+                Else
+                    Throw New NotImplementedException(name)
+                End If
+            End Set
+        End Property
 
         Public ReadOnly Property isLeaf() As Boolean
             Get
@@ -44,10 +65,10 @@ Namespace Layouts.Cola
             Me.definition = definition
         End Sub
 
-        Private Sub getEdges(es As PowerEdge())
+        Private Sub getEdges(es As List(Of PowerEdge))
             Me.outgoing.forAll(Sub(ms, edgetype)
                                    ms.forAll(Sub(target)
-                                                 es.push(New PowerEdge(Me.id, target.id, edgetype))
+                                                 es.Add(New PowerEdge(Me.id, target.id, edgetype))
                                              End Sub)
                                End Sub)
         End Sub

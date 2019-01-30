@@ -5,8 +5,8 @@ Namespace Layouts.Cola
 
     Module powergraphExtensions
 
-        Private Sub toGroups(modules As ModuleSet, group As any, groups As any)
-            modules.forAll(Function(m)
+        Private Sub toGroups(modules As ModuleSet, group As Integer, groups As List(Of Integer))
+            modules.forAll(Sub(m)
                                If m.isLeaf() Then
                                    If Not group.leaves Then
                                        group.leaves = New Object() {}
@@ -14,7 +14,7 @@ Namespace Layouts.Cola
                                    group.leaves.push(m.id)
                                Else
                                    Dim g = group
-                                   m.gid = groups.length
+                                   m.gid = groups.Count
                                    If Not m.isIsland() OrElse m.isPredefined() Then
                                        g = New With {
                     Key .id = m.gid
@@ -29,12 +29,11 @@ Namespace Layouts.Cola
                                            group.groups = New any() {}
                                        End If
                                        group.groups.push(m.gid)
-                                       groups.push(g)
+                                       groups.Add(g)
                                    End If
                                    toGroups(m.children, g, groups)
                                End If
-
-                           End Function)
+                           End Sub)
         End Sub
 
 
