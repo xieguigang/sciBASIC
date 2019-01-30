@@ -769,10 +769,9 @@ Namespace Layouts.Cola
         ''' find a visibility graph over the set of nodes.  assumes all nodes have a
         ''' bounds property (a rectangle) and that no pair of bounds overlaps.
         Private Sub prepareEdgeRouting(Optional nodeMargin As Double = 0)
-            Me._visibilityGraph = New TangentVisibilityGraph(Me._nodes.map(Function(v)
-                                                                               Return v.bounds.inflate(-nodeMargin).vertices()
-
-                                                                           End Function))
+            Me._visibilityGraph = New TangentVisibilityGraph(Me._nodes.Select(Function(v)
+                                                                                  Return v.bounds.inflate(-nodeMargin).vertices()
+                                                                              End Function))
         End Sub
 
         '*
@@ -785,27 +784,29 @@ Namespace Layouts.Cola
         '     *                      of the edge by.  Defaults to 5.
         '     
 
-        Private Function routeEdge(edge As any, Optional ah As Double = 5, Optional draw As any = Nothing) As any
-            Dim lineData = New Object() {}
+        Private Function routeEdge(edge As any, Optional ah As Double = 5, Optional draw As Action(Of TangentVisibilityGraph) = Nothing) As any
+            Dim lineData As List(Of TVGPoint)
             'if (d.source.id === 10 && d.target.id === 11) {
             '    debugger;
             '}
             Dim vg2 = New TangentVisibilityGraph(Me._visibilityGraph.P, New With {
-            Key .V = Me._visibilityGraph.V,
-            Key .E = Me._visibilityGraph.E
+             .V = Me._visibilityGraph.V,
+             .E = Me._visibilityGraph.E
         })
             Dim port1 = New TVGPoint() With {
-            Key.x = edge.source.x,
-            Key.y = edge.source.y
+            .X = edge.source.x,
+            .Y = edge.source.y
         }
             Dim port2 = New TVGPoint() With {
-            Key.x = edge.target.x,
-            Key.y = edge.target.y
+            .X = edge.target.x,
+            .Y = edge.target.y
         }
             Dim start = vg2.addPoint(port1, edge.source.index)
             Dim [end] = vg2.addPoint(port2, edge.target.index)
+
             vg2.addEdgeIfVisible(port1, port2, edge.source.index, edge.target.index)
-            RaiseEvent draw(vg2)
+            Call draw(vg2)
+
             Dim sourceInd = Function(e) e.source.id
             Dim targetInd = Function(e) e.target.id
             Dim length = Function(e) e.length()
@@ -819,12 +820,12 @@ Namespace Layouts.Cola
                 Dim n = shortestPath.Length - 2
                 Dim p = vg2.V(shortestPath(n)).p
                 Dim q = vg2.V(shortestPath(0)).p
-                Dim lineData = New any() {edge.source.innerBounds.rayIntersection(p.X, p.Y)}
+                lineData = New List(Of TVGPoint) From {edge.source.innerBounds.rayIntersection(p.X, p.Y)}
 
-                For i As var = n To 0 Step -1
-                    lineData.push(vg2.V(shortestPath(i)).p)
+                For i As Integer = n To 0 Step -1
+                    lineData.Add(vg2.V(shortestPath(i)).p)
                 Next
-                lineData.push(makeEdgeTo(q, edge.target.innerBounds, ah))
+                lineData.Add(makeEdgeTo(q, edge.target.innerBounds, ah))
             End If
             'lineData.forEach((v, i) => {
             '    if (i > 0) {

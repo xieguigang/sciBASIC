@@ -2,15 +2,13 @@
 
 Namespace Layouts.Cola
 
-
-
-    Class PolyPoint : Inherits Point2D
+    Public Class PolyPoint : Inherits Point2D
 
         Public Property polyIndex() As Integer
 
     End Class
 
-    Class tangentPoly
+    Public Class tangentPoly
 
         ''' <summary>
         ''' index of rightmost tangent point V[rtan]
@@ -25,7 +23,7 @@ Namespace Layouts.Cola
 
     End Class
 
-    Class BiTangent
+    Public Class BiTangent
 
         Public t1 As Integer, t2 As Integer
 
@@ -38,19 +36,18 @@ Namespace Layouts.Cola
         End Sub
     End Class
 
-    Class BiTangents
+    Public Class BiTangents
         Public rl As BiTangent
         Public lr As BiTangent
         Public ll As BiTangent
         Public rr As BiTangent
     End Class
 
-    Class TVGPoint
-        Inherits Point2D
+    Public Class TVGPoint : Inherits Point2D
         Public vv As VisibilityVertex
     End Class
 
-    Class VisibilityVertex
+    Public Class VisibilityVertex
 
         Public id As Double
         Public polyid As Double
@@ -66,7 +63,7 @@ Namespace Layouts.Cola
         End Sub
     End Class
 
-    Class VisibilityEdge
+    Public Class VisibilityEdge
         Public source As VisibilityVertex
         Public target As VisibilityVertex
 
