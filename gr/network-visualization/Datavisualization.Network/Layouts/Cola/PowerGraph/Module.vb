@@ -86,7 +86,7 @@ Namespace Layouts.Cola
 
         Public Function intersection(other As ModuleSet) As ModuleSet
             Dim result = New ModuleSet()
-            result.table = intersection(Me.table, other.table)
+            result.table = powergraphExtensions.intersection(Me.table, other.table)
             Return result
         End Function
 

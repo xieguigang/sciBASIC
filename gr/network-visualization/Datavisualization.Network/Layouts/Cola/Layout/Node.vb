@@ -68,7 +68,7 @@ Namespace Layouts.Cola
         Public id As Integer
         Public bounds As Rectangle2D
         Public leaves As List(Of Node)
-        Public groups As Group()
+        Public groups As List(Of Group)
         Public padding As Double?
         Public parent As Group
 

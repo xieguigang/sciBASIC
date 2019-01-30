@@ -73,6 +73,32 @@ Imports number = System.Double
 
 Namespace Layouts.Cola.GridRouter
 
+    Public Class SVGRoutePath
+        Public routepath As String
+        Public arrowpath As String
+    End Class
+
+    Public Class vsegmentsets
+        Public segments As List(Of Segment)
+        Public pos As Double
+    End Class
+
+    Public Class Segment
+        Public edgeid As Integer
+        Public i As Integer
+        Public Points As Point2D()
+
+        Default Public ReadOnly Property Pt(i As Integer) As Point2D
+            Get
+                Return Points(i)
+            End Get
+        End Property
+
+        Public Sub Reverse()
+            Points = Points.Reverse.ToArray
+        End Sub
+    End Class
+
     Public Class LinkLine : Inherits Line
         Public verts As List(Of Vert)
     End Class
@@ -109,7 +135,10 @@ Namespace Layouts.Cola.GridRouter
         Public ports As List(Of Vert)
         Public id As Integer
         Public rect As Rectangle2D
-        Public children As Integer()
+        Public children As List(Of Integer)
+
+        Sub New()
+        End Sub
 
         Public Sub New(id As Double, rect As Rectangle2D, children As Integer())
             Me.id = id

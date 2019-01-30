@@ -66,6 +66,29 @@ Namespace Imaging.LayoutModel
         ''' <returns> Returns the x-coordinate. </returns>
         Public Property Y As Double
 
+        Default Public Property Axis(a As String) As Double
+            Get
+                Select Case UCase(a)
+                    Case NameOf(X)
+                        Return X
+                    Case NameOf(Y)
+                        Return Y
+                    Case Else
+                        Throw New NotImplementedException(a)
+                End Select
+            End Get
+            Set(value As Double)
+                Select Case UCase(a)
+                    Case NameOf(X)
+                        X = value
+                    Case NameOf(Y)
+                        Y = value
+                    Case Else
+                        Throw New NotImplementedException(a)
+                End Select
+            End Set
+        End Property
+
         ''' <summary>
         ''' Returns the coordinates as a new point.
         ''' </summary>

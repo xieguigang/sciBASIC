@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::7c60f26b349ba7c703d31fe4cc177889, Microsoft.VisualBasic.Core\Extensions\Image\Math\GeometryMath.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GeometryMath
-    ' 
-    '         Function: GetLineIntersection, (+4 Overloads) IntersectionOf, (+2 Overloads) QuadrantRegion
-    ' 
-    '     Enum QuadrantRegions
-    ' 
-    '         LeftBottom, LeftTop, RightBottom, RightTop, XLeft
-    '         XRight, YBottom, YTop
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum Intersection
-    ' 
-    '         Containment, Intersection, None, Tangent
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GeometryMath
+' 
+'         Function: GetLineIntersection, (+4 Overloads) IntersectionOf, (+2 Overloads) QuadrantRegion
+' 
+'     Enum QuadrantRegions
+' 
+'         LeftBottom, LeftTop, RightBottom, RightTop, XLeft
+'         XRight, YBottom, YTop
+' 
+'  
+' 
+' 
+' 
+'     Enum Intersection
+' 
+'         Containment, Intersection, None, Tangent
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports sys = System.Math
 
@@ -70,6 +71,18 @@ Namespace Imaging.Math2D
     ''' 与几何相关的辅助类
     ''' </summary>
     Public Module GeometryMath
+
+        Public Function angleBetween2Lines(line1 As Point2D(), line2 As Point2D()) As Double
+            Dim angle1 = Math.Atan2(line1(0).Y - line1(1).Y, line1(0).X - line1(1).X)
+            Dim angle2 = Math.Atan2(line2(0).Y - line2(1).Y, line2(0).X - line2(1).X)
+            Dim diff = angle1 - angle2
+
+            If diff > Math.PI OrElse diff < -Math.PI Then
+                diff = angle2 - angle1
+            End If
+
+            Return diff
+        End Function
 
         ''' <summary>
         ''' 判断线段与多边形的关系

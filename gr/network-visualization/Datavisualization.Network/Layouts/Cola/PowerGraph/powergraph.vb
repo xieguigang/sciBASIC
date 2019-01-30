@@ -1,54 +1,50 @@
-Imports number = System.Double
-Imports any = System.Object
-
 Namespace Layouts.Cola
 
     Module powergraphExtensions
 
-        Private Sub toGroups(modules As ModuleSet, group As Integer, groups As List(Of Integer))
-            modules.forAll(Sub(m)
-                               If m.isLeaf() Then
-                                   If Not group.leaves Then
-                                       group.leaves = New Object() {}
-                                   End If
-                                   group.leaves.push(m.id)
-                               Else
-                                   Dim g = group
-                                   m.gid = groups.Count
-                                   If Not m.isIsland() OrElse m.isPredefined() Then
-                                       g = New With {
-                    Key .id = m.gid
-                }
-                                       If m.isPredefined() Then
-                                           ' Apply original group properties
-                                           For Each prop As var In m.definition.keys
-                                               g(prop) = m.definition(prop)
-                                           Next
-                                       End If
-                                       If Not group.groups Then
-                                           group.groups = New any() {}
-                                       End If
-                                       group.groups.push(m.gid)
-                                       groups.Add(g)
-                                   End If
-                                   toGroups(m.children, g, groups)
-                               End If
-                           End Sub)
+        Public Sub toGroups(modules As ModuleSet, group As Group, groups As Group())
+            Call modules.forAll(Sub(m)
+                                    If m.isLeaf Then
+                                        If group.leaves Is Nothing Then
+                                            group.leaves = New List(Of Node)
+                                        End If
+
+                                        group.leaves.Add(m.id)
+                                    Else
+                                        Dim g = group
+                                        m.gid = groups.Length
+
+                                        If (Not m.isIsland OrElse m.isPredefined) Then
+                                            g = New [Group] With {.id = m.gid}
+
+                                            If m.isPredefined Then
+                                                For Each prop As String In m.definition.Keys
+                                                    g(prop) = m.definition(prop)
+                                                Next
+                                            End If
+                                            If group.groups.IsNullOrEmpty Then
+                                                group.groups = New List(Of Group)
+                                            End If
+
+                                            group.groups.Add(m.gid)
+                                            groups.Add(g)
+                                        End If
+
+                                        toGroups(m.children, g, groups)
+                                    End If
+                                End Sub)
         End Sub
 
+        Public Function intersection(Of T)(m As Dictionary(Of String, T), n As Dictionary(Of String, T)) As Dictionary(Of String, T)
+            Dim i As New Dictionary(Of String, T)
 
-        Public Function intersection(m As any, n As any) As any
-            Dim i = New Object() {}
-            For Each v As var In m.keys
-                If n.Have(v) Then
+            For Each v As String In m.Keys
+                If n.ContainsKey(v) Then
                     i(v) = m(v)
                 End If
             Next
-            Return i
-        End Function
 
-        Private Function intersectionCount(m As any, n As any) As Double
-            Return [Object].keys(intersection(m, n)).length
+            Return i
         End Function
 
         Public Function getGroups(Of Link)(nodes As Node(), links As Link(), la As LinkTypeAccessor(Of Link), rootGroup As Group) As PowerGraph

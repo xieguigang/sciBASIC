@@ -1,3 +1,4 @@
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports any = System.Object
@@ -25,7 +26,7 @@ Namespace Layouts.Cola
             Return n
         End Function
 
-        Private Function getNeighbours(Of Link)(links As Link(), la As LinkAccessor(Of Link)) As any
+        Private Function getNeighbours(Of Link)(links As Link(), la As LinkAccessor(Of Link)) As Object()()
             Dim neighbours = New Object()() {}
             Dim addNeighbours = Sub(u As Integer, v As Integer)
                                     If neighbours(u) Is Nothing Then
@@ -50,7 +51,7 @@ Namespace Layouts.Cola
         ''' <param name="f"></param>
         ''' <param name="la"></param>
         Private Sub computeLinkLengths(Of Link)(links As Link(), w As Double, f As Func(Of any, any, Double), la As LinkLengthAccessor(Of Link))
-            Dim neighbours = getNeighbours(links, la)
+            Dim neighbours = getNeighbours(Of Link)(links, la)
 
             links.DoEach(Sub(l)
                              Dim a = neighbours(la.getSourceIndex(l))
@@ -138,7 +139,7 @@ Namespace Layouts.Cola
             Dim components As New List(Of Integer())
             Dim strongConnect As Action(Of NodeIndexer) = Sub(v As NodeIndexer)
                                                               ' Set the depth index for v to the smallest unused index
-                                                              v.index = InlineAssignHelper(v.lowlink, System.Math.Max(System.Threading.Interlocked.Increment(index), index - 1))
+                                                              v.index = InlineAssignHelper(v.lowlink, System.Math.Max(Interlocked.Increment(index), index - 1))
                                                               stack.Push(v)
                                                               v.onStack = True
 

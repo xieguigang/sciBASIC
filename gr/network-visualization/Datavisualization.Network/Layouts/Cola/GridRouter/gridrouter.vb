@@ -19,12 +19,12 @@ Namespace Layouts.Cola
         Private nodes As NodeWrapper()
         Private cols As GridLine()
         Private rows As GridLine()
-        Private root As any
+        Private root As NodeWrapper
         Private verts As List(Of Vert)
         Private edges As List(Of Link3D)
         Private backToFront As any
-        Private obstacles As any
-        Private passableEdges As any
+        Private obstacles As NodeWrapper()
+        Private passableEdges As List(Of Link3D)
 
         ' in the given axis, find sets of leaves overlapping in that axis
         ' center of each GridLine is average of all nodes in column
@@ -59,23 +59,23 @@ Namespace Layouts.Cola
         Public groupPadding As Double
 
         Public Sub New(originalnodes As Node(), accessor As NodeAccessor(Of Node), Optional groupPadding As Double = 12)
-            Me.nodes = originalnodes.map(Function(v, i) New NodeWrapper(i, accessor.getBounds(v), accessor.getChildren(v)))
-            Me.leaves = Me.nodes.filter(Function(v) v.leaf)
-            Me.groups = Me.nodes.filter(Function(g) Not g.leaf)
-            Me.cols = Me.getGridLines("x"c)
-            Me.rows = Me.getGridLines("y"c)
+            Me.nodes = originalnodes.Select(Function(v, i) New NodeWrapper(i, accessor.getBounds(v), accessor.getChildren(v))).ToArray
+            Me.leaves = Me.nodes.Where(Function(v) v.leaf).ToArray
+            Me.groups = Me.nodes.Where(Function(g) Not g.leaf).ToArray
+            Me.cols = Me.getGridLines("x").ToArray
+            Me.rows = Me.getGridLines("y").ToArray
 
             ' create parents for each node or group that is a member of another's children
             Me.groups.DoEach(Sub(v) v.children.DoEach(Sub(c) InlineAssignHelper(Me.nodes(CType(c, number)).parent, v)))
 
             ' root claims the remaining orphans
-            Me.root = New With {
-            Key .children = New Object() {}
+            Me.root = New NodeWrapper With {
+             .children = New List(Of Integer)
         }
             Me.nodes.DoEach(Sub(v)
                                 If v.parent Is Nothing Then
                                     v.parent = Me.root
-                                    Me.root.children.push(v.id)
+                                    Me.root.children.Add(v.id)
                                 End If
 
                                 ' each node will have grid vertices associated with it,
@@ -205,75 +205,97 @@ Namespace Layouts.Cola
         End Sub
 
         ' find path from v to root including both v and root
-        Private Function findLineage(v As any) As any
-            Dim lineage = New Object() {v}
+        Private Function findLineage(v As NodeWrapper) As NodeWrapper()
+            Dim lineage As New List(Of NodeWrapper) From {v}
             Do
                 v = v.parent
-                lineage.push(v)
+                lineage.Add(v)
             Loop While v IsNot Me.root
-            Return lineage.Reverse()
+            Return lineage.AsEnumerable.Reverse().ToArray
         End Function
 
         ' find path connecting a and b through their lowest common ancestor
-        Private Function findAncestorPathBetween(a As any, b As any) As any
+        Private Function findAncestorPathBetween(a As NodeWrapper, b As NodeWrapper) As AncestorPath
             Dim aa = Me.findLineage(a)
             Dim ba = Me.findLineage(b)
             Dim i = 0
-            While aa(i) = ba(i)
+            While aa(i) Is ba(i)
                 i += 1
             End While
             ' i-1 to include common ancestor only once (as first element)
-            Return New With {
-            Key .commonAncestor = aa(i - 1),
-            Key .lineages = aa.slice(i).concat(ba.slice(i))
+            Return New AncestorPath With {
+             .commonAncestor = aa(i - 1),
+             .lineages = aa.slice(i).Concat(ba.slice(i)).ToArray
         }
         End Function
 
+        Public Class AncestorPath
+            Public commonAncestor As NodeWrapper
+            Public lineages As NodeWrapper()
+        End Class
+
         ' when finding a path between two nodes a and b, siblings of a and b on the
         ' paths from a and b to their least common ancestor are obstacles
-        Public Function siblingObstacles(a As any, b As any) As any
-            Dim path = Me.findAncestorPathBetween(a, b)
-            Dim lineageLookup = New Object() {}
-            path.lineages.forEach(Function(v) InlineAssignHelper(lineageLookup(v.id), New Object() {}))
-            Dim obstacles = path.commonAncestor.children.filter(Function(v) Not (lineageLookup.Have(v)))
+        Public Function siblingObstacles(a As NodeWrapper, b As NodeWrapper) As NodeWrapper()
+            Dim path As AncestorPath = Me.findAncestorPathBetween(a, b)
+            Dim lineageLookup = New Dictionary(Of String, Object)
 
-            path.lineages.filter(Function(v) v.parent <> path.commonAncestor).forEach(Function(v) InlineAssignHelper(obstacles, obstacles.concat(v.parent.children.filter(Function(c) c <> v.id))))
+            path.lineages.DoEach(Sub(v)
+                                     lineageLookup(v.id.ToString) = Nothing
+                                 End Sub)
 
-            Return obstacles.map(Function(v) Me.nodes(v))
+            Dim obstacles = path _
+                .commonAncestor _
+                .children _
+                .Where(Function(v) Not (lineageLookup.ContainsKey(v.ToString))) _
+                .ToArray
+
+            path.lineages _
+                .Where(Function(v)
+                           Return Not v.parent Is path.commonAncestor
+                       End Function) _
+                .DoEach(Sub(v)
+                            obstacles = obstacles _
+                                .Concat(v.parent.children.Where(Function(c) c <> v.id)) _
+                                .ToArray
+                        End Sub)
+
+            Return obstacles.Select(Function(v) Me.nodes(v)).ToArray
         End Function
 
         ' for the given routes, extract all the segments orthogonal to the axis x
         ' and return all them grouped by x position
-        Private Shared Function getSegmentSets(routes As any, x As Integer, y As Integer) As any
+        Private Shared Function getSegmentSets(routes As List(Of Segment()), x As Integer, y As Integer) As List(Of vsegmentsets)
             ' vsegments is a list of vertical segments sorted by x position
-            Dim vsegments = New Object() {}
-            For ei As var = 0 To routes.length - 1
+            Dim vsegments As New List(Of Segment)
+
+            For ei As Integer = 0 To routes.Count - 1
                 Dim route = routes(ei)
-                For si As var = 0 To route.length - 1
+                For si As Integer = 0 To route.Length - 1
                     Dim s = route(si)
                     s.edgeid = ei
                     s.i = si
                     Dim sdx = s(1)(x) - s(0)(x)
                     If Math.Abs(sdx) < 0.1 Then
-                        vsegments.push(s)
+                        vsegments.Add(s)
                     End If
                 Next
             Next
             vsegments.Sort(Function(a, b) a(0)(x) - b(0)(x))
 
             ' vsegmentsets is a set of sets of segments grouped by x position
-            Dim vsegmentsets = New Object() {}
-            Dim segmentset = Nothing
-            For i As Integer = 0 To vsegments.Length - 1
-                Dim s = vsegments(i)
-                If Not segmentset OrElse Math.Abs(s(0)(x) - segmentset.pos) > 0.1 Then
-                    segmentset = New With {
-                    Key .pos = s(0)(x),
-                    Key .segments = New Object() {}
+            Dim vsegmentsets = New List(Of vsegmentsets)
+            Dim segmentset As vsegmentsets = Nothing
+            For i As Integer = 0 To vsegments.Count - 1
+                Dim s As Segment = vsegments(i)
+                If segmentset Is Nothing OrElse Math.Abs(s(0)(x) - segmentset.pos) > 0.1 Then
+                    segmentset = New vsegmentsets With {
+                    .pos = s(0)(x),
+                    .segments = New List(Of Segment)
                 }
-                    vsegmentsets.push(segmentset)
+                    vsegmentsets.Add(segmentset)
                 End If
-                segmentset.segments.push(s)
+                segmentset.segments.Add(s)
             Next
             Return vsegmentsets
         End Function
@@ -285,12 +307,12 @@ Namespace Layouts.Cola
         '   e1 = edge of s1, e2 = edge of s2
         '   if leftOf(e1,e2) create constraint s1.x + gap <= s2.x
         '   else if leftOf(e2,e1) create cons. s2.x + gap <= s1.x
-        Private Shared Sub nudgeSegs(x As String, y As String, routes As any, segments As any, leftOf As any, gap As Double)
-            Dim n = segments.length
+        Private Shared Sub nudgeSegs(x As String, y As String, routes As List(Of Segment()), segments As List(Of Segment), leftOf As any, gap As Double)
+            Dim n = segments.Count
             If n <= 1 Then
                 Return
             End If
-            Dim vs = segments.map(Function(s) New Variable(s(0)(x)))
+            Dim vs As Variable() = segments.Select(Function(s) New Variable(s(0)(x))).ToArray
             Dim cs As New List(Of Constraint)
             For i As Integer = 0 To n - 1
                 For j As Integer = 0 To n - 1
@@ -338,7 +360,7 @@ Namespace Layouts.Cola
             Next
             Dim solver = New Solver(vs, cs)
             solver.solve()
-            vs.forEach(Sub(v, i)
+            vs.ForEach(Sub(v, i)
                            Dim s = segments(i)
                            Dim pos = v.position()
                            s(0)(x) = InlineAssignHelper(s(1)(x), pos)
@@ -346,47 +368,46 @@ Namespace Layouts.Cola
                            If s.i > 0 Then
                                route(s.i - 1)(1)(x) = pos
                            End If
-                           If s.i < route.length - 1 Then
+                           If s.i < route.Length - 1 Then
                                route(s.i + 1)(0)(x) = pos
                            End If
                        End Sub)
         End Sub
 
-        Private Shared Sub nudgeSegments(routes As any, x As String, y As String, leftOf As Func(Of number, number, Boolean), gap As Double)
-            Dim vsegmentsets = GridRouter.getSegmentSets(routes, x, y)
+        Private Shared Sub nudgeSegments(routes As List(Of Segment()), x As String, y As String, leftOf As Func(Of number, number, Boolean), gap As Double)
+            Dim vsegmentsets As List(Of vsegmentsets) = GridRouter(Of Node).getSegmentSets(routes, x, y)
             ' scan the grouped (by x) segment sets to find co-linear bundles
-            For i As Integer = 0 To vsegmentsets.length - 1
+            For i As Integer = 0 To vsegmentsets.Count - 1
                 Dim ss = vsegmentsets(i)
                 Dim events = New List(Of [Event])
-                For j As Integer = 0 To ss.segments.length - 1
-                    Dim s = ss.segments(j)
+                For j As Integer = 0 To ss.segments.Count - 1
+                    Dim s As Segment = ss.segments(j)
                     events.Add(New [Event] With {
                     .type = 0,
                     .s = s,
-                    .pos = Math.Min(s(0)(y), s(1)(y))
+                    .pos = System.Math.Min(s(0)(y), s(1)(y))
                 })
-                    events.push(New With {
-                    Key .type = 1,
-                    Key .s = s,
-                    Key .pos = Math.Max(s(0)(y), s(1)(y))
+                    events.Add(New [Event] With {
+                     .type = 1,
+                     .s = s,
+                     .pos = Math.Max(s(0)(y), s(1)(y))
                 })
                 Next
                 events.Sort(Function(a, b) a.pos - b.pos + a.type - b.type)
-                Dim open = New Object() {}
+                Dim open As New List(Of Segment)
                 Dim openCount = 0
-                events.ForEach(Function(e)
-                                   If e.type = 0 Then
-                                       open.push(e.s)
-                                       openCount += 1
-                                   Else
-                                       openCount -= 1
-                                   End If
-                                   If openCount = 0 Then
-                                       GridRouter.nudgeSegs(x, y, routes, open, leftOf, gap)
-                                       open = New any() {}
-                                   End If
-
-                               End Function)
+                events.DoEach(Sub(e)
+                                  If e.type = 0 Then
+                                      open.Add(e.s)
+                                      openCount += 1
+                                  Else
+                                      openCount -= 1
+                                  End If
+                                  If openCount = 0 Then
+                                      GridRouter(Of Node).nudgeSegs(x, y, routes, open, leftOf, gap)
+                                      open = New List(Of Segment)
+                                  End If
+                              End Sub)
             Next
         End Sub
 
@@ -397,40 +418,29 @@ Namespace Layouts.Cola
         ' @param source function to retrieve the index of the source node for a given edge
         ' @param target function to retrieve the index of the target node for a given edge
         ' @returns an array giving, for each edge, an array of segments, each segment a pair of points in an array
-        Private Function routeEdges(Of Edge)(edges As Edge(), nudgeGap As Double, source As Func(Of Edge, number), target As Func(Of Edge, number)) As Point()()()
-            Dim routePaths = edges.map(Function(e) Me.route(source(e), target(e)))
-            Dim order = GridRouter.orderEdges(routePaths)
-            Dim routes = routePaths.map(Function(e) GridRouter.makeSegments(e))
-            GridRouter.nudgeSegments(routes, "x"c, "y"c, order, nudgeGap)
-            GridRouter.nudgeSegments(routes, "y"c, "x"c, order, nudgeGap)
-            GridRouter.unreverseEdges(routes, routePaths)
+        Private Function routeEdges(Of Edge)(edges As Edge(), nudgeGap As Double, source As Func(Of Edge, number), target As Func(Of Edge, number)) As List(Of Segment())
+            Dim routePaths = edges.Select(Function(e) Me.route(source(e), target(e))).ToArray
+            Dim order = GridRouter(Of Node).orderEdges(routePaths)
+            Dim routes As List(Of Segment()) = routePaths.Select(Function(e) GridRouter(Of Node).makeSegments(e).ToArray).ToList
+            GridRouter(Of Node).nudgeSegments(routes, "x"c, "y"c, order, nudgeGap)
+            GridRouter(Of Node).nudgeSegments(routes, "y"c, "x"c, order, nudgeGap)
+            GridRouter(Of Node).unreverseEdges(routes, routePaths)
             Return routes
         End Function
 
         ' path may have been reversed by the subsequence processing in orderEdges
         ' so now we need to restore the original order
-        Private Shared Sub unreverseEdges(routes As any, routePaths As any)
-            routes.forEach(Function(segments, i)
+        Private Shared Sub unreverseEdges(routes As List(Of Segment()), routePaths As Point2D()())
+            routes.ForEach(Sub(segments, i)
                                Dim path = routePaths(i)
                                If DirectCast(path, any).reversed Then
-                                   segments.reverse()
+                                   segments.Reverse()
                                    ' reverse order of segments
                                    ' reverse each segment
-                                   segments.forEach(Function(segment) segment.reverse())
+                                   segments.DoEach(Sub(segment) segment.Reverse())
                                End If
-
-                           End Function)
+                           End Sub)
         End Sub
-
-        Private Shared Function angleBetween2Lines(line1 As Point(), line2 As Point()) As Double
-            Dim angle1 = Math.Atan2(line1(0).y - line1(1).y, line1(0).x - line1(1).x)
-            Dim angle2 = Math.Atan2(line2(0).y - line2(1).y, line2(0).x - line2(1).x)
-            Dim diff = angle1 - angle2
-            If diff > Math.PI OrElse diff < -Math.PI Then
-                diff = angle2 - angle1
-            End If
-            Return diff
-        End Function
 
         ' does the path a-b-c describe a left turn?
         Private Shared Function isLeft(a As Point2D, b As Point2D, c As Point2D) As Boolean
@@ -438,16 +448,16 @@ Namespace Layouts.Cola
         End Function
 
         Public Class Pair
-            Public l As Double
-            Public r As Double
+            Public l As Integer
+            Public r As Integer
         End Class
 
         ' for the given list of ordered pairs, returns a function that (efficiently) looks-up a specific pair to
         ' see if it exists in the list
-        Private Shared Function getOrder(pairs As Pair()) As Func(Of number, number, Boolean)
+        Private Shared Function getOrder(pairs As List(Of Pair)) As Func(Of number, number, Boolean)
             Dim outgoing = New Object() {}
-            For i As var = 0 To pairs.Length - 1
-                Dim p = pairs(i)
+            For i As Integer = 0 To pairs.Count - 1
+                Dim p As Pair = pairs(i)
                 If outgoing(p.l) Is Nothing Then
                     outgoing(p.l) = New any() {}
                 End If
@@ -458,34 +468,36 @@ Namespace Layouts.Cola
 
         ' returns an ordering (a lookup function) that determines the correct order to nudge the
         ' edge paths apart to minimize crossings
-        Private Shared Function orderEdges(edges As edge()) As any
-            Dim edgeOrder = New Object() {}
+        Private Shared Function orderEdges(edges As Point2D()()) As any
+            Dim edgeOrder As New List(Of Pair)
+
             For i As Integer = 0 To edges.Length - 2
                 For j As Integer = i + 1 To edges.Length - 1
                     Dim e = edges(i)
                     Dim f = edges(j)
                     Dim lcs = New LongestCommonSubsequence(e, f)
-                    Dim u As any, vi As any, vj As any
+                    Dim u As Point2D, vi As Point2D, vj As Point2D
+
                     If lcs.length = 0 Then
                         Continue For
                     End If
+
                     ' no common subpath
                     If lcs.reversed Then
                         ' if we found a common subpath but one of the edges runs the wrong way,
                         ' then reverse f.
-                        f.reverse()
+                        f.Reverse()
                         f.reversed = True
                         lcs = New LongestCommonSubsequence(e, f)
                     End If
-                    If (lcs.si <= 0 OrElse lcs.ti <= 0) AndAlso (lcs.si + lcs.length >= e.length OrElse lcs.ti + lcs.length >= f.length) Then
+
+                    If (lcs.si <= 0 OrElse lcs.ti <= 0) AndAlso (lcs.si + lcs.length >= e.Length OrElse lcs.ti + lcs.length >= f.Length) Then
                         ' the paths do not diverge, so make an arbitrary ordering decision
-                        edgeOrder.push(New With {
-                        Key .l = i,
-                        Key .r = j
-                    })
+                        edgeOrder.Add(New Pair With {.l = i, .r = j})
                         Continue For
                     End If
-                    If lcs.si + lcs.length >= e.length OrElse lcs.ti + lcs.length >= f.length Then
+
+                    If lcs.si + lcs.length >= e.Length OrElse lcs.ti + lcs.length >= f.Length Then
                         ' if the common subsequence of the
                         ' two edges being considered goes all the way to the
                         ' end of one (or both) of the lines then we have to
@@ -499,80 +511,77 @@ Namespace Layouts.Cola
                         vi = e(lcs.si + lcs.length)
                         vj = f(lcs.ti + lcs.length)
                     End If
-                    If GridRouter.isLeft(u, vi, vj) Then
-                        edgeOrder.push(New With {
-                        Key .l = j,
-                        Key .r = i
-                    })
+
+                    If isLeft(u, vi, vj) Then
+                        edgeOrder.Add(New Pair With {.l = j, .r = i})
                     Else
-                        edgeOrder.push(New With {
-                        Key .l = i,
-                        Key .r = j
-                    })
+                        edgeOrder.Add(New Pair With {.l = i, .r = j})
                     End If
                 Next
             Next
             'edgeOrder.forEach(function (e) { console.log('l:' + e.l + ',r:' + e.r) });
-            Return GridRouter.getOrder(edgeOrder)
+            Return GridRouter(Of Node).getOrder(edgeOrder)
+        End Function
+
+        Private Shared Function isStraight(a As Point2D, b As Point2D, c As Point2D) As Boolean
+            Return Math.Abs((b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X)) < 0.001
         End Function
 
         ' for an orthogonal path described by a sequence of points, create a list of segments
         ' if consecutive segments would make a straight line they are merged into a single segment
         ' segments are over cloned points, not the original vertices
-        Private Shared Function makeSegments(path As Point()) As Point()()
-            Dim copyPoint = Function(p As Point)
-                                Return New Point() With {
-            Key.x = p.x,
-            Key.y = p.y
-        }
-
-                            End Function
-            Dim isStraight = Function(a, b, c) Math.Abs((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x)) < 0.001
-            Dim segments = New Object() {}
+        Private Shared Function makeSegments(path As Point2D()) As List(Of Segment)
+            Dim copyPoint = Function(p As Point2D) New Point2D(p)
+            Dim segments = New List(Of Segment)
             Dim a = copyPoint(path(0))
-            For i As var = 1 To path.Length - 1
-                Dim b = copyPoint(path(i)), c = If(i < path.Length - 1, path(i + 1), Nothing)
-                If Not c OrElse Not isStraight(a, b, c) Then
-                    segments.push(New any() {a, b})
+
+            For i As Integer = 1 To path.Length - 1
+                Dim b = copyPoint(path(i))
+                Dim c = If(i < path.Length - 1, path(i + 1), Nothing)
+
+                If c Is Nothing OrElse Not isStraight(a, b, c) Then
+                    segments.Add(New Segment With {.Points = {a, b}})
                     a = b
                 End If
             Next
+
             Return segments
         End Function
 
         ' find a route between node s and node t
         ' returns an array of indices to verts
-        Public Function route(s As Double, t As Double) As Point()
-            Dim source = Me.nodes(CType(s, number))
-            Dim target = Me.nodes(CType(t, number))
+        Public Function route(s As Integer, t As Integer) As Point2D()
+            Dim source = Me.nodes(s)
+            Dim target = Me.nodes(t)
             Me.obstacles = Me.siblingObstacles(source, target)
 
-            Dim obstacleLookup = New Object() {}
-            Me.obstacles.forEach(Function(o) InlineAssignHelper(obstacleLookup(o.id), o))
-            Me.passableEdges = Me.edges.filter(Function(e)
-                                                   Dim u = Me.verts(e.source)
-                                                   Dim v = Me.verts(e.target)
-                                                   Return Not (u.node AndAlso obstacleLookup.Have(u.node.id) OrElse v.node AndAlso obstacleLookup.Have(v.node.id))
-
-                                               End Function)
+            Dim obstacleLookup As New Dictionary(Of String, Object)
+            Me.obstacles.doEach(Sub(o) obstacleLookup(o.id.ToString) = o)
+            Me.passableEdges = Me.edges _
+                .Where(Function(e)
+                           Dim u = Me.verts(e.source)
+                           Dim v = Me.verts(e.target)
+                           Return Not (u.node IsNot Nothing AndAlso obstacleLookup.ContainsKey(u.node.id.ToString) OrElse v.node IsNot Nothing AndAlso obstacleLookup.ContainsKey(v.node.id.ToString))
+                       End Function) _
+                .ToList
 
             ' add dummy segments linking ports inside source and target
-            For i As Integer = 1 To source.ports.Length - 1
+            For i As Integer = 1 To source.ports.Count - 1
                 Dim u = source.ports(0).id
                 Dim v = source.ports(i).id
-                Me.passableEdges.push(New With {
-                Key .source = u,
-                Key .target = v,
-                Key .length = 0
+                Me.passableEdges.Add(New Link3D With {
+                .source = u,
+                .target = v,
+                .length = 0
             })
             Next
-            For i As var = 1 To target.ports.Length - 1
+            For i As Integer = 1 To target.ports.Count - 1
                 Dim u = target.ports(0).id
                 Dim v = target.ports(i).id
-                Me.passableEdges.push(New With {
-                Key .source = u,
-                Key .target = v,
-                Key .length = 0
+                Me.passableEdges.Add(New Link3D With {
+                 .source = u,
+                 .target = v,
+                 .length = 0
             })
             Next
 
@@ -606,18 +615,18 @@ Namespace Layouts.Cola
             Return pathPoints.filter(Function(v, i) Not (i < pathPoints.length - 1 AndAlso pathPoints(i + 1).node = source AndAlso v.node = source OrElse i > 0 AndAlso v.node = target AndAlso pathPoints(i - 1).node = target))
         End Function
 
-        Public Shared Function getRoutePath(route As Point()(), cornerradius As Double, arrowwidth As Double, arrowheight As Double) As any
-            Dim result = New With {
-            Key .routepath = "M " & route(0)(0).x & " "c & route(0)(0).y & " "c,
-            Key .arrowpath = ""
+        Public Shared Function getRoutePath(route As Point2D()(), cornerradius As Double, arrowwidth As Double, arrowheight As Double) As SVGRoutePath
+            Dim result As New SVGRoutePath With {
+             .routepath = "M " & route(0)(0).X & " "c & route(0)(0).Y & " "c,
+             .arrowpath = ""
         }
             If route.Length > 1 Then
-                For i As var = 0 To route.Length - 1
+                For i As Integer = 0 To route.Length - 1
                     Dim li = route(i)
-                    Dim x = li(1).x
-                    Dim y = li(1).y
-                    Dim dx = x - li(0).x
-                    Dim dy = y - li(0).y
+                    Dim x = li(1).X
+                    Dim y = li(1).Y
+                    Dim dx = x - li(0).X
+                    Dim dy = y - li(0).Y
                     If i < route.Length - 1 Then
                         If Math.Abs(dx) > 0 Then
                             x -= dx / Math.Abs(dx) * cornerradius
@@ -626,13 +635,13 @@ Namespace Layouts.Cola
                         End If
                         result.routepath += "L " & x & " "c & y & " "c
                         Dim l = route(i + 1)
-                        Dim x0 = l(0).x
-                        Dim y0 = l(0).y
-                        Dim x1 = l(1).x
-                        Dim y1 = l(1).y
+                        Dim x0 = l(0).X
+                        Dim y0 = l(0).Y
+                        Dim x1 = l(1).X
+                        Dim y1 = l(1).Y
                         dx = x1 - x0
                         dy = y1 - y0
-                        Dim angle = If(GridRouter.angleBetween2Lines(li, l) < 0, 1, 0)
+                        Dim angle = If(GeometryMath.angleBetween2Lines(li, l) < 0, 1, 0)
                         'console.log(cola.GridRouter.angleBetween2Lines(li, l))
                         Dim x2
                         Dim y2
@@ -667,10 +676,10 @@ Namespace Layouts.Cola
                 Next
             Else
                 Dim li = route(0)
-                Dim x = li(1).x
-                Dim y = li(1).y
-                Dim dx = x - li(0).x
-                Dim dy = y - li(0).y
+                Dim x = li(1).X
+                Dim y = li(1).Y
+                Dim dx = x - li(0).X
+                Dim dy = y - li(0).Y
                 Dim arrowtip = New number() {x, y}
                 Dim arrowcorner1
                 Dim arrowcorner2

@@ -201,31 +201,6 @@ Namespace Layouts.Cola
                            End Sub)
         End Sub
 
-        Private Sub toGroups(modules As ModuleSet, group As Group, groups As Group())
-            Call modules.forAll(Sub(m)
-                                    If m.isLeaf Then
-                                        If group.leaves Is Nothing Then
-                                            group.leaves = New List(Of Node)
-                                        End If
-
-                                        group.leaves.Add(m.id)
-                                    Else
-                                        Dim g = group
-                                        m.gid = groups.Length
-
-                                        If (Not m.isIsland OrElse m.isPredefined) Then
-                                            g = New [Group] With {.id = m.gid}
-
-                                            If m.isPredefined Then
-                                                For Each prop As String In m.definition.Keys
-                                                    g(prop) = m.definition(prop)
-                                                Next
-                                            End If
-                                        End If
-                                    End If
-                                End Sub)
-        End Sub
-
         Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
             target = value
             Return value

@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
+
 Namespace Layouts.Cola
 
     ''' <summary>
@@ -31,6 +33,8 @@ Namespace Layouts.Cola
         Public alpha As Double
         Public stress As Double
         Public listener As Action
+        Public s As Segment
+        Public pos As Double
 
         Default Public Property Accessor(name As String) As Object
             Get
