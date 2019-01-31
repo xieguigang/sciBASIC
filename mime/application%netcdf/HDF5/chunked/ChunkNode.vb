@@ -11,9 +11,7 @@ Namespace org.renjin.hdf5.chunked
 
 		Private keys() As ChunkKey
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: public ChunkNode(org.renjin.hdf5.message.DataLayoutMessage dataLayout, org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Public Sub New(dataLayout As org.renjin.hdf5.message.DataLayoutMessage, reader As org.renjin.hdf5.HeaderReader)
+        Public Sub New(dataLayout As org.renjin.hdf5.message.DataLayoutMessage, reader As org.renjin.hdf5.HeaderReader)
 			reader.checkSignature("TREE")
 			nodeType = reader.readByte()
 			If nodeType <> 1 Then

@@ -79,8 +79,6 @@ Namespace org.renjin.hdf5.message
             End Get
         End Property
 
-        'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: public DataLayoutMessage(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
         Public Sub New(reader As org.renjin.hdf5.HeaderReader)
 			version = reader.readByte()
 			If version = 3 Then
@@ -92,9 +90,7 @@ Namespace org.renjin.hdf5.message
 			End If
 		End Sub
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: private void readVersion3(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Private Sub readVersion3(reader As org.renjin.hdf5.HeaderReader)
+        Private Sub readVersion3(reader As org.renjin.hdf5.HeaderReader)
 			layoutClass = System.Enum.GetValues(GetType(LayoutClass))(reader.readUInt8())
 			Select Case layoutClass
 				Case LayoutClass.CHUNKED
@@ -104,9 +100,7 @@ Namespace org.renjin.hdf5.message
 			End Select
 		End Sub
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: private void readChunkedPropertiesV3(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Private Sub readChunkedPropertiesV3(reader As org.renjin.hdf5.HeaderReader)
+        Private Sub readChunkedPropertiesV3(reader As org.renjin.hdf5.HeaderReader)
 			dimensionality = reader.readUInt8() - 1
 			chunkIndexAddress = reader.readOffset()
 
@@ -117,10 +111,7 @@ Namespace org.renjin.hdf5.message
 			datasetElementSize = reader.readUInt32AsInt()
 		End Sub
 
-
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: private void readVersion4(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Private Sub readVersion4(reader As org.renjin.hdf5.HeaderReader)
+        Private Sub readVersion4(reader As org.renjin.hdf5.HeaderReader)
 			layoutClass = System.Enum.GetValues(GetType(LayoutClass))(reader.readUInt8())
 			Select Case layoutClass
 				Case LayoutClass.CHUNKED
@@ -128,9 +119,7 @@ Namespace org.renjin.hdf5.message
 			End Select
 		End Sub
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: private void readChunkedPropertiesV4(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Private Sub readChunkedPropertiesV4(reader As org.renjin.hdf5.HeaderReader)
+        Private Sub readChunkedPropertiesV4(reader As org.renjin.hdf5.HeaderReader)
 			Dim flags As org.renjin.hdf5.Flags = reader.readFlags()
 			dimensionality = reader.readUInt8() - 1
 			Dim dimensionSizeEncodedLength As Integer = reader.readUInt8()
