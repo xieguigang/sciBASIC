@@ -252,10 +252,5 @@ Namespace Layouts.Cola
                                Configuration(Of Link).getEdges(m.children, es)
                            End Sub)
         End Sub
-
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
     End Class
 End Namespace

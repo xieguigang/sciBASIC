@@ -79,7 +79,7 @@ Namespace Layouts.Cola
         Private root As NodeWrapper
         Private verts As List(Of Vert)
         Private edges As List(Of Link3D)
-        Private backToFront As any
+        Private backToFront As NodeWrapper()
         Private obstacles As NodeWrapper()
         Private passableEdges As List(Of Link3D)
 
@@ -124,19 +124,23 @@ Namespace Layouts.Cola
         Public groupPadding As Double
 
         Public Sub New(originalnodes As Node(), accessor As NodeAccessor(Of Node), Optional groupPadding As Double = 12)
-            Me.nodes = originalnodes.Select(Function(v, i) New NodeWrapper(i, accessor.getBounds(v), accessor.getChildren(v))).ToArray
+            Me.nodes = originalnodes _
+                .Select(Function(v, i)
+                            Return New NodeWrapper(i, accessor.getBounds(v), accessor.getChildren(v))
+                        End Function) _
+                .ToArray
             Me.leaves = Me.nodes.Where(Function(v) v.leaf).ToArray
             Me.groups = Me.nodes.Where(Function(g) Not g.leaf).ToArray
             Me.cols = Me.getGridLines("x").ToArray
             Me.rows = Me.getGridLines("y").ToArray
 
             ' create parents for each node or group that is a member of another's children
-            Me.groups.DoEach(Sub(v) v.children.DoEach(Sub(c) InlineAssignHelper(Me.nodes(CType(c, number)).parent, v)))
+            Me.groups.DoEach(Sub(v) v.children.DoEach(Sub(c) Me.nodes(c).parent = v))
 
             ' root claims the remaining orphans
             Me.root = New NodeWrapper With {
-             .children = New List(Of Integer)
-        }
+                 .children = New List(Of Integer)
+            }
             Me.nodes.DoEach(Sub(v)
                                 If v.parent Is Nothing Then
                                     v.parent = Me.root
@@ -152,18 +156,24 @@ Namespace Layouts.Cola
                             End Sub)
 
             ' nodes ordered by their position in the group hierarchy
-            Me.backToFront = Me.nodes.slice(0)
+            Me.backToFront = Me.nodes.slice(0).ToArray
             Me.backToFront.sort(Function(x, y) Me.getDepth(x) - Me.getDepth(y))
 
             ' compute boundary rectangles for each group
             ' has to be done from front to back, i.e. inside groups to outside groups
             ' such that each can be made large enough to enclose its interior
-            Dim frontToBackGroups = Me.backToFront.slice(0).reverse().filter(Function(g) Not g.leaf)
-            frontToBackGroups.forEach(Sub(v)
-                                          Dim r = New Rectangle2D()
-                                          v.children.forEach(Function(c) InlineAssignHelper(r, r.Union(Me.nodes(c).rect)))
-                                          v.rect = r.inflate(Me.groupPadding)
-                                      End Sub)
+            Dim frontToBackGroups = Me.backToFront _
+                .slice(0) _
+                .Reverse() _
+                .Where(Function(g) Not g.leaf) _
+                .ToArray
+
+            frontToBackGroups.DoEach(
+                Sub(v)
+                    Dim r = New Rectangle2D()
+                    v.children.DoEach(Sub(c) r = r.Union(Me.nodes(c).rect))
+                    v.rect = r.inflate(Me.groupPadding)
+                End Sub)
 
             Dim colMids = BezierCurve.MidPoints(Me.cols.Select(Function(r) r.pos).ToArray).ToArray
             Dim rowMids = BezierCurve.MidPoints(Me.rows.Select(Function(r) r.pos).ToArray).ToArray
@@ -223,8 +233,8 @@ Namespace Layouts.Cola
                                                 While (System.Math.Max(Interlocked.Decrement(i), i + 1)) > 0
                                                     Dim node = Me.backToFront(i)
                                                     Dim r = node.rect
-                                                    Dim dx = Math.Abs(p.X - r.cx())
-                                                    Dim dy = Math.Abs(p.Y - r.cy())
+                                                    Dim dx = Math.Abs(p.X - r.CenterX())
+                                                    Dim dy = Math.Abs(p.Y - r.CenterY())
                                                     If dx < r.width() / 2 AndAlso dy < r.height() / 2 Then
                                                         DirectCast(p, any).node = node
                                                         Exit While
@@ -452,20 +462,26 @@ Namespace Layouts.Cola
                     End If
                 Next
             Next
+
             Dim solver = New Solver(vs, cs)
-            solver.solve()
-            vs.ForEach(Sub(v, i)
-                           Dim s = segments(i)
-                           Dim pos = v.position()
-                           s(0)(x) = InlineAssignHelper(s(1)(x), pos)
-                           Dim route = routes(s.edgeid)
-                           If s.i > 0 Then
-                               route(s.i - 1)(1)(x) = pos
-                           End If
-                           If s.i < route.Length - 1 Then
-                               route(s.i + 1)(0)(x) = pos
-                           End If
-                       End Sub)
+
+            Call solver.solve()
+            Call vs.ForEach(Sub(v, i)
+                                Dim s = segments(i)
+                                Dim pos = v.position()
+                                Dim route = routes(s.edgeid)
+
+                                s(1)(x) = pos
+                                s(0)(x) = s(1)(x)
+
+                                If s.i > 0 Then
+                                    route(s.i - 1)(1)(x) = pos
+                                End If
+
+                                If s.i < route.Length - 1 Then
+                                    route(s.i + 1)(0)(x) = pos
+                                End If
+                            End Sub)
         End Sub
 
         Private Shared Sub nudgeSegments(routes As List(Of Segment()), x As String, y As String, leftOf As Func(Of Integer, Integer, Boolean), gap As Double)
@@ -811,10 +827,6 @@ Namespace Layouts.Cola
                 End If
             End If
             Return result
-        End Function
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
         End Function
     End Class
 End Namespace

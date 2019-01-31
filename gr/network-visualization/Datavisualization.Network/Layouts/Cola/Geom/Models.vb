@@ -125,12 +125,13 @@ Namespace Layouts.Cola
         Public polyvertid As Double
         Public p As TVGPoint
 
-        Public Sub New(id As Double, polyid As Double, polyvertid As Double, p As TVGPoint)
-            p.vv = Me
+        Public Sub New(id As Integer, polyid As Double, polyvertid As Double, p As TVGPoint)
             Me.id = id
             Me.polyid = polyid
             Me.polyvertid = polyvertid
             Me.p = p
+
+            p.vv = Me
         End Sub
     End Class
 
@@ -149,7 +150,6 @@ Namespace Layouts.Cola
 
         Sub New(source As VisibilityVertex, target As VisibilityVertex)
             Me.source = source
-
             Me.target = target
         End Sub
     End Class

@@ -82,8 +82,8 @@ Namespace Layouts.Cola
                               Dim max_x = 0, max_y = 0
 
                               graph.array.DoEach(Sub(v)
-                                                     Dim w = If(v.width IsNot Nothing, v.width, node_size)
-                                                     Dim h = If(v.height IsNot Nothing, v.height, node_size)
+                                                     Dim w = If(v.width <> 0, v.width, node_size)
+                                                     Dim h = If(v.height <> 0, v.height, node_size)
                                                      w /= 2
                                                      h /= 2
                                                      max_x = System.Math.Max(v.x + w, max_x)
@@ -113,16 +113,16 @@ Namespace Layouts.Cola
 
             min_width = Aggregate g In data Into Min(g.width)
 
-            Dim x1, x2 As Double
-            Dim left = InlineAssignHelper(x1, min_width)
-            Dim right = InlineAssignHelper(x2, get_entire_width(data))
+            Dim x1 = min_width
+            Dim x2 = get_entire_width(data)
+            Dim left = x1
+            Dim right = x2
             Dim iterationCounter = 0
-
             Dim f_x1 = number.MaxValue
             Dim f_x2 = number.MaxValue
             Dim flag = -1
-            ' determines which among f_x1 and f_x2 to recompute
 
+            ' determines which among f_x1 and f_x2 to recompute
             Dim dx = number.MaxValue
             Dim df = number.MaxValue
 
@@ -274,7 +274,7 @@ Namespace Layouts.Cola
         ''' <param name="desired_ratio"></param>
         ''' <param name="centerGraph"></param>
         ''' <remarks>
-        ''' ��������������������̵���ʼ����
+        ''' 这个函数是整个计算流程的起始函数
         ''' </remarks>
         Public Sub applyPacking(graphs As List(Of Graph), w As Integer, h As Integer, Optional node_size As Double? = Nothing, Optional desired_ratio As Integer? = 1, Optional centerGraph As Boolean = True)
 
@@ -428,11 +428,6 @@ Namespace Layouts.Cola
                 explore_node(adjacent(j), False, marks, clusters, ways, graphs)
             Next
         End Sub
-
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
     End Class
 
     Public Class Graph : Inherits Rectangle2D
