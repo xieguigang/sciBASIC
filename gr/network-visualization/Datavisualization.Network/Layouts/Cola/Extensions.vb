@@ -41,6 +41,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.JavaScript
@@ -65,6 +66,18 @@ Namespace Layouts.Cola
     End Class
 
     Public Module Extensions
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub setXCentre(rect As Rectangle2D, cx As Double)
+            rect.X += (cx - rect.CenterX)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub setYCentre(rect As Rectangle2D, cy As number)
+            rect.Y += (cy - rect.CenterY)
+        End Sub
 
         Public Function compareEvents(a As [Event], b As [Event]) As Double
             If (a.pos > b.pos) Then

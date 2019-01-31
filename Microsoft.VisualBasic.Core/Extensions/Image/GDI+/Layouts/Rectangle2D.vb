@@ -62,6 +62,9 @@ Namespace Imaging.LayoutModel
     ''' <summary>
     ''' Implements a 2-dimensional rectangle with double precision coordinates.
     ''' </summary>
+    ''' <remarks>
+    ''' 除了左上角+宽和高这种方式进行矩形区域的定义，还可以用左上角+右下角的方式来定义一个矩形
+    ''' </remarks>
     Public Class Rectangle2D : Inherits Point2D
 
         ''' <summary>
@@ -394,6 +397,10 @@ Namespace Imaging.LayoutModel
             Return $"{Me.GetType.Name} [x={X}, y={Y}, w={Width}, h={Height}]"
         End Function
 
+        ''' <summary>
+        ''' 枚举出当前的这个矩形对象之中的4个顶点坐标
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function Vertices() As IEnumerable(Of Point2D)
             Yield New Point2D(X, Y)
             Yield New Point2D(Right, Y)
