@@ -1,5 +1,6 @@
 Imports System.Runtime.CompilerServices
 Imports System.Threading
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports any = System.Object
 Imports number = System.Double
@@ -18,14 +19,14 @@ Namespace Layouts.Cola
         Private _avoidOverlaps As Boolean = False
         Private _handleDisconnected As Boolean = True
         Private _alpha As Double
-        Private _lastStress As Double
+        Private _lastStress As Double?
         Private _running As Boolean = False
         Private _nodes As Node() = {}
         Private _groups As Group() = {}
         Private _rootGroup As Group
         Private _links As Link(Of Node)() = {}
         Private _constraints As Constraint() = {}
-        Private _distanceMatrix As Double()() = Nothing
+        Private _distanceMatrix As Integer()() = Nothing
         Private _descent As Descent = Nothing
         Private _directedLinkConstraints As any = Nothing
         Private _threshold As Double = 0.01
@@ -83,7 +84,6 @@ Namespace Layouts.Cola
             Dim n = Me._nodes.Length
             Dim m = Me._links.Length
             Dim o As Node
-            Dim i As Integer
 
             Me._descent.locks.clear()
             For i As Integer = 0 To n - 1
@@ -146,9 +146,9 @@ Namespace Layouts.Cola
                 ' in this case the links are expected to be numeric indices for nodes in the range 0..n-1 where n is the number of nodes
                 Dim n = 0
                 Me._links.DoEach(Sub(l) n = Math.Max(n, CType(l.source, number), CType(l.target, number)))
-                Me._nodes = New Array(Interlocked.Increment(n))
+                Me._nodes = New Node(Interlocked.Increment(n)) {}
                 For i As Integer = 0 To n - 1
-                    Me._nodes(i) = New any() {}
+                    Me._nodes(i) = New Node
                 Next
             End If
             Return Me._nodes
@@ -190,7 +190,7 @@ Namespace Layouts.Cola
                                   End If
                               End Sub)
             Me._rootGroup.leaves = Me._nodes.Where(Function(v) v.parent Is Nothing).ToList
-            Me._rootGroup.groups = Me._groups.Where(Function(g) g.parent Is Nothing).ToArray
+            Me._rootGroup.groups = Me._groups.Where(Function(g) g.parent Is Nothing).ToList
 
             Return Me
         End Function
@@ -281,10 +281,11 @@ Namespace Layouts.Cola
         '     * @default empty list
         '     
 
-        Private Function constraints() As Constraint()
+        Public Function constraints() As Constraint()
             Return Me._constraints
         End Function
-        Private Function constraints(c As Constraint()) As Layout
+
+        Public Function constraints(c As Constraint()) As Layout
             Me._constraints = c
             Return Me
         End Function
@@ -297,10 +298,11 @@ Namespace Layouts.Cola
         '     * @default null
         '     
 
-        Private Function distanceMatrix() As Double()()
+        Public Function distanceMatrix() As Integer()()
             Return Me._distanceMatrix
         End Function
-        Private Function distanceMatrix(d As Double()()) As Layout
+
+        Public Function distanceMatrix(d As Integer()()) As Layout
             Me._distanceMatrix = d
             Return Me
         End Function
@@ -315,6 +317,7 @@ Namespace Layouts.Cola
         Public Function size() As Double()
             Return Me._canvasSize
         End Function
+
         Public Function size(x As Double()) As Layout
             Me._canvasSize = x
             Return Me
@@ -525,14 +528,14 @@ Namespace Layouts.Cola
             'should we do this to clearly label groups?
             'this._groups.forEach((g, i) => g.groupIndex = i);
 
-            Dim distances As any
+            Dim distances As Integer()()
 
             If Not Me._distanceMatrix Is Nothing Then
                 ' use the user specified distanceMatrix
                 distances = Me._distanceMatrix
             Else
                 ' construct an n X n distance matrix based on shortest paths through graph (with respect to edge.length).
-                distances = (New Calculator(N__2, Me._links, AddressOf Layout.getSourceIndex, AddressOf Layout.getTargetIndex, Function(l) Me.getLinkLength(l))).DistanceMatrix()
+                distances = (New Dijkstra.Calculator(Of Link(Of Node))(N__2, Me._links, AddressOf Layout.getSourceIndex, AddressOf Layout.getTargetIndex, Function(l) Me.getLinkLength(l))).DistanceMatrix()
 
                 ' G is a square matrix with G[i][j] = 1 iff there exists an edge between node i and node j
                 ' otherwise 2. (
@@ -600,7 +603,7 @@ Namespace Layouts.Cola
                 Me.linkAccessor.getMinSeparation = Me._directedLinkConstraints.getMinSeparation
 
                 ' todo: add containment constraints between group dummy nodes and their children
-                curConstraints = curConstraints.Concat(generateDirectedEdgeConstraints(n__1, Me._links, Me._directedLinkConstraints.axis, (Me.linkAccessor)))
+                curConstraints = curConstraints.Concat(generateDirectedEdgeConstraints(Of Link(Of Node))(n__1, Me._links, Me._directedLinkConstraints.axis, (Me.linkAccessor)))
             End If
 
             Me.avoidOverlaps(False)
@@ -742,7 +745,7 @@ Namespace Layouts.Cola
                 Me._nodes.ForEach(Sub(v, i)
                                       Me._descent.x(0)(i) = v.x
                                       Me._descent.x(1)(i) = v.y
-                                      If v.bounds Then
+                                      If v.bounds IsNot Nothing Then
                                           v.bounds.setXCentre(v.x)
                                           v.bounds.setYCentre(v.y)
                                       End If
@@ -750,20 +753,25 @@ Namespace Layouts.Cola
             End If
         End Sub
 
-        Private Function [resume]() As Layout
+        Public Function [resume]() As Layout
             Return Me.alpha(0.1)
         End Function
 
-        Private Function [stop]() As Layout
+        Public Function [stop]() As Layout
             Return Me.alpha(0)
         End Function
 
+        ''' <summary>
         ''' find a visibility graph over the set of nodes.  assumes all nodes have a
         ''' bounds property (a rectangle) and that no pair of bounds overlaps.
+        ''' </summary>
+        ''' <param name="nodeMargin"></param>
         Private Sub prepareEdgeRouting(Optional nodeMargin As Double = 0)
-            Me._visibilityGraph = New TangentVisibilityGraph(Me._nodes.Select(Function(v)
-                                                                                  Return v.bounds.inflate(-nodeMargin).vertices()
-                                                                              End Function))
+            Me._visibilityGraph = New TangentVisibilityGraph(
+                Me._nodes _
+                  .Select(Function(v)
+                              Return v.bounds.inflate(-nodeMargin).Vertices()
+                          End Function))
         End Sub
 
         '*
@@ -799,17 +807,17 @@ Namespace Layouts.Cola
             vg2.addEdgeIfVisible(port1, port2, edge.source.index, edge.target.index)
             Call draw(vg2)
 
-            Dim sourceInd = Function(e) e.source.id
-            Dim targetInd = Function(e) e.target.id
-            Dim length = Function(e) e.length()
-            Dim spCalc = New Calculator(vg2.V.Length, vg2.E, sourceInd, targetInd, length)
+            Dim sourceInd = Function(e As VisibilityEdge) e.source.id
+            Dim targetInd = Function(e As VisibilityEdge) e.target.id
+            Dim length = Function(e As VisibilityEdge) e.length
+            Dim spCalc = New Dijkstra.Calculator(Of VisibilityEdge)(vg2.V.Count, vg2.E, sourceInd, targetInd, length)
             Dim shortestPath = spCalc.PathFromNodeToNode(start.id, [end].id)
 
-            If shortestPath.Length = 1 OrElse shortestPath.Length = vg2.V.Count Then
+            If shortestPath.Count = 1 OrElse shortestPath.Count = vg2.V.Count Then
                 Dim route = makeEdgeBetween(edge.source.innerBounds, edge.target.innerBounds, ah)
                 lineData = New List(Of Point2D) From {route.sourceIntersection, route.arrowStart}
             Else
-                Dim n = shortestPath.Length - 2
+                Dim n = shortestPath.Count - 2
                 Dim p = vg2.V(shortestPath(n)).p
                 Dim q = vg2.V(shortestPath(0)).p
                 lineData = New List(Of Point2D) From {edge.source.innerBounds.rayIntersection(p.X, p.Y)}
@@ -968,9 +976,6 @@ Namespace Layouts.Cola
             d.fixed = d.fixed And Not 4
             ' unset bit 3
         End Sub
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
+
     End Class
 End Namespace

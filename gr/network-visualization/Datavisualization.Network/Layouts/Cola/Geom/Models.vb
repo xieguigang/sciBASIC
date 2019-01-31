@@ -49,7 +49,7 @@ Namespace Layouts.Cola
 
     Public Class VisibilityVertex
 
-        Public id As Double
+        Public id As Integer
         Public polyid As Double
         Public polyvertid As Double
         Public p As TVGPoint

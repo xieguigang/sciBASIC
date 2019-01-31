@@ -92,7 +92,7 @@ Namespace Layouts.Cola
         ''' <param name="axis"></param>
         ''' <param name="la"></param>
         ''' <returns></returns>
-        Private Function generateDirectedEdgeConstraints(Of Link)(n As Double, links As Link(), axis As String, la As LinkSepAccessor(Of Link)) As List(Of IConstraint)
+        Public Function generateDirectedEdgeConstraints(Of Link)(n As Double, links As Link(), axis As String, la As LinkSepAccessor(Of Link)) As List(Of IConstraint)
             Dim components = stronglyConnectedComponents(n, links, la)
             Dim nodes As New List(Of Integer)
             Dim constraints As New List(Of IConstraint)
