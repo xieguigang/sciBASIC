@@ -318,7 +318,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Dijkstra\pqueue.vb" />
     <Compile Include="API\Dijkstra\shortestpaths.vb" />
     <Compile Include="API\PageRank\WeightedPRGraph.vb" />
     <Compile Include="API\PageRank\GraphMatrix.vb" />

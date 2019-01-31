@@ -1,9 +1,8 @@
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports any = System.Object
 
-Namespace Layouts.Cola
+Namespace ComponentModel.Collection
 
     ''' <summary>
     ''' a min priority queue backed by a pairing heap
