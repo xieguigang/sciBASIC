@@ -1,65 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::064f88a98661b0cfface4cdf684fb6d3, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Node.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class InputNode
-    ' 
-    ' 
-    ' 
-    '     Class Node
-    ' 
-    '         Function: makeRBTree
-    ' 
-    '     Class Group
-    ' 
-    '         Function: isGroup
-    ' 
-    '     Class Link
-    ' 
-    '         Properties: length, source, target, weight
-    ' 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class LinkLengthTypeAccessor
-    ' 
-    '         Function: [getType]
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class InputNode
+' 
+' 
+' 
+'     Class Node
+' 
+'         Function: makeRBTree
+' 
+'     Class Group
+' 
+'         Function: isGroup
+' 
+'     Class Link
+' 
+'         Properties: length, source, target, weight
+' 
+'     Delegate Function
+' 
+' 
+'     Class LinkLengthTypeAccessor
+' 
+'         Function: [getType]
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
@@ -125,6 +126,10 @@ Namespace Layouts.Cola
             Return New RBNode(Of Node, Object)(Nothing, Nothing)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(node As Node) As Point2D
+            Return New Point2D(node.x, node.y)
+        End Operator
     End Class
 
     Public Class Group

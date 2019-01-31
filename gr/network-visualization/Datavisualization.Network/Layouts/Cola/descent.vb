@@ -84,7 +84,7 @@ Namespace Layouts.Cola
         '     * @property G {number[][]}
         '     
 
-        Public g As Integer()()
+        Public g As Double()()
         '* positions vector
         '     * @property x {number[][]}
         '     
@@ -179,7 +179,7 @@ Namespace Layouts.Cola
             End If
             i = Me.k
             While System.Math.Max(Interlocked.Decrement(i), i + 1)
-                Me.g(i) = New Integer(Me.k) {}
+                Me.g(i) = New Double(Me.k) {}
                 Me.H(i) = New Double(Me.k)() {}
                 j = n
                 While System.Math.Max(Interlocked.Decrement(j), j + 1)
@@ -197,7 +197,7 @@ Namespace Layouts.Cola
             End While
         End Sub
 
-        Public Shared Function createSquareMatrix(n As Integer, f As Func(Of Integer, Integer, Integer)) As Integer()()
+        Public Shared Function createSquareMatrix(n As Integer, f As Func(Of Integer, Integer, Integer)) As Double()()
             Dim M As New List(Of Integer())
 
             For i As Integer = 0 To n - 1

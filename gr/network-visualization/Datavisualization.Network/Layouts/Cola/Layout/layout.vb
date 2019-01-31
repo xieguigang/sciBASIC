@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::2b191cddafc6ea7757870daaaa729ec9, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\layout.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Layout
-    ' 
-    '         Function: [on], [resume], [stop], (+2 Overloads) alpha, (+2 Overloads) avoidOverlaps
-    '                   (+2 Overloads) constraints, (+2 Overloads) convergenceThreshold, (+2 Overloads) defaultNodeSize, (+2 Overloads) distanceMatrix, (+2 Overloads) dragOrigin
-    '                   (+2 Overloads) flowLayout, getLinkLength, getLinkType, (+2 Overloads) getSourceIndex, (+2 Overloads) getTargetIndex
-    '                   (+2 Overloads) groupCompactness, (+2 Overloads) groups, (+2 Overloads) handleDisconnected, jaccardLinkLengths, (+3 Overloads) linkDistance
-    '                   linkId, (+2 Overloads) links, (+2 Overloads) linkType, (+2 Overloads) nodes, powerGraphGroups
-    '                   routeEdge, (+2 Overloads) size, start, symmetricDiffLinkLengths, tick
-    ' 
-    '         Sub: (+2 Overloads) drag, (+2 Overloads) dragEnd, (+2 Overloads) dragStart, initialLayout, kick
-    '              mouseOut, mouseOver, prepareEdgeRouting, separateOverlappingComponents, setLinkLength
-    '              stopNode, storeOffset, trigger, updateNodePositions
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Layout
+' 
+'         Function: [on], [resume], [stop], (+2 Overloads) alpha, (+2 Overloads) avoidOverlaps
+'                   (+2 Overloads) constraints, (+2 Overloads) convergenceThreshold, (+2 Overloads) defaultNodeSize, (+2 Overloads) distanceMatrix, (+2 Overloads) dragOrigin
+'                   (+2 Overloads) flowLayout, getLinkLength, getLinkType, (+2 Overloads) getSourceIndex, (+2 Overloads) getTargetIndex
+'                   (+2 Overloads) groupCompactness, (+2 Overloads) groups, (+2 Overloads) handleDisconnected, jaccardLinkLengths, (+3 Overloads) linkDistance
+'                   linkId, (+2 Overloads) links, (+2 Overloads) linkType, (+2 Overloads) nodes, powerGraphGroups
+'                   routeEdge, (+2 Overloads) size, start, symmetricDiffLinkLengths, tick
+' 
+'         Sub: (+2 Overloads) drag, (+2 Overloads) dragEnd, (+2 Overloads) dragStart, initialLayout, kick
+'              mouseOut, mouseOver, prepareEdgeRouting, separateOverlappingComponents, setLinkLength
+'              stopNode, storeOffset, trigger, updateNodePositions
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -53,6 +53,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
+Imports Microsoft.VisualBasic.Language.JavaScript
 Imports any = System.Object
 Imports number = System.Double
 
@@ -63,10 +64,10 @@ Namespace Layouts.Cola
     ''' </summary>
     Public Class Layout
         Private _canvasSize As Double() = {1, 1}
-        Private _linkDistance As Double = 20
+        Private _linkDistance As UnionType(Of Double) = 20
         Private _defaultNodeSize As Double = 10
         Private _linkLengthCalculator As Action = Nothing
-        Private _linkType As any = Nothing
+        Private _linkType As UnionType(Of Integer) = Nothing
         Private _avoidOverlaps As Boolean = False
         Private _handleDisconnected As Boolean = True
         Private _alpha As Double
@@ -80,7 +81,7 @@ Namespace Layouts.Cola
         Private _distanceMatrix As Integer()() = Nothing
         Private _descent As Descent = Nothing
         Private _directedLinkConstraints As any = Nothing
-        Private _threshold As Double = 0.01
+        Private _threshold As UnionType(Of Double) = 0.01
         Private _visibilityGraph As any = Nothing
         Private _groupCompactness As Double = 0.000001
 
@@ -125,9 +126,10 @@ Namespace Layouts.Cola
         Protected Function tick() As Boolean
             If Me._alpha < Me._threshold Then
                 Me._running = False
+                Me._alpha = 0
                 Me.trigger(New [Event] With {
                  .type = EventType.[end],
-                 .alpha = InlineAssignHelper(Me._alpha, 0),
+                 .alpha = 0,
                  .stress = Me._lastStress
             })
                 Return True
@@ -230,13 +232,15 @@ Namespace Layouts.Cola
                                   If g.leaves IsNot Nothing Then
                                       g.leaves.ForEach(Sub(v, i)
                                                            ' InlineAssignHelper(g.leaves(i), Me._nodes(v)).parent = g
-                                                           InlineAssignHelper(g.leaves(i), v).parent = g
+                                                           g.leaves(i) = v
+                                                           g.leaves(i).parent = g
                                                        End Sub)
                                   End If
                                   If g.groups IsNot Nothing Then
                                       g.groups.ForEach(Sub(gi, i)
                                                            ' (InlineAssignHelper(g.groups(i), Me._groups(gi))).parent = g
-                                                           InlineAssignHelper(g.groups(i), gi).parent = g
+                                                           g.groups(i) = gi
+                                                           g.groups(i).parent = g
                                                        End Sub)
                                   End If
                               End Sub)
@@ -412,21 +416,23 @@ Namespace Layouts.Cola
             Return Me._linkDistance
         End Function
 
-        Public Function linkDistance(x As Double) As Layout
-            Me._linkDistance = If(GetType(x) = [Function], x, +x)
+        Public Function linkDistance(x As UnionType(Of Double)) As Layout
+            Me._linkDistance = x
             Me._linkLengthCalculator = Nothing
             Return Me
         End Function
 
         Public Function linkDistance(x As LinkNumericPropertyAccessor) As Layout
-            Me._linkDistance = If(GetType(x) = [Function], x, +x)
+            Me._linkDistance = New UnionType(Of number) With {
+                .lambda1 = Function(any) x(any)
+            }
             Me._linkLengthCalculator = Nothing
-            Return Me
 
+            Return Me
         End Function
 
-        Public Function linkType(f As [Function]) As Layout
-            Me._linkType = f
+        Public Function linkType(f As Func(Of Integer)) As Layout
+            Me._linkType = New UnionType(Of Integer) With {.lambda = f}
             Return Me
         End Function
 
@@ -439,8 +445,8 @@ Namespace Layouts.Cola
             Return Me._threshold
         End Function
 
-        Public Function convergenceThreshold(x As Double) As Layout
-            Me._threshold = If(GetType(x) = [Function], x, +x)
+        Public Function convergenceThreshold(x As UnionType(Of Double)) As Layout
+            Me._threshold = x
             Return Me
         End Function
 
@@ -464,9 +470,10 @@ Namespace Layouts.Cola
                 ' otherwise, fire it up!
                 If Not Me._running Then
                     Me._running = True
+                    Me._alpha = x
                     Me.trigger(New [Event] With {
                     .type = EventType.start,
-                    .alpha = InlineAssignHelper(Me._alpha, x)
+                    .alpha = x
                 })
                     Me.kick()
                 End If
@@ -476,10 +483,10 @@ Namespace Layouts.Cola
         End Function
 
         Public Function getLinkLength(link As Link(Of Node)) As Double
-            If GetType(_linkDistance) = [Function] Then
-                Return DirectCast(Me._linkDistance, LinkNumericPropertyAccessor)(link)
+            If _linkDistance.IsLambda Then
+                Return _linkDistance(link)
             Else
-                Return CType(Me._linkDistance, number)
+                Return _linkDistance
             End If
         End Function
 
@@ -488,7 +495,7 @@ Namespace Layouts.Cola
         End Sub
 
         Private Function getLinkType(link As Link(Of Node)) As Double
-            Return If(GetType(_linkType) = [Function], Me._linkType(link), 0)
+            Return If(_linkType.IsLambda, _linkType(link), 0)
         End Function
 
         Private linkAccessor As New LinkLengthTypeAccessor() With {
@@ -604,9 +611,11 @@ Namespace Layouts.Cola
                                      Dim v = Layout.getTargetIndex(e)
 
                                      If e.weight Then
-                                         G__3(u)(v) = InlineAssignHelper(G__3(v)(u), e.weight)
+                                         G__3(v)(u) = e.weight
+                                         G__3(u)(v) = e.weight
                                      Else
-                                         G__3(u)(v) = InlineAssignHelper(G__3(v)(u), 1)
+                                         G__3(v)(u) = 1
+                                         G__3(u)(v) = 1
                                      End If
                                  End Sub)
             End If
@@ -616,8 +625,10 @@ Namespace Layouts.Cola
             If Not Me._rootGroup Is Nothing AndAlso Me._rootGroup.groups IsNot Nothing Then
                 Dim i = n__1
                 Dim addAttraction = Sub(ii As Integer, j As Integer, strength As Double, idealDistance As Double)
-                                        G__3(ii)(j) = InlineAssignHelper(G__3(j)(ii), strength)
-                                        D(ii)(j) = InlineAssignHelper(D(j)(ii), idealDistance)
+                                        G__3(j)(ii) = strength
+                                        G__3(ii)(j) = strength
+                                        D(j)(ii) = idealDistance
+                                        D(ii)(j) = idealDistance
                                     End Sub
                 Me._groups.DoEach(Sub(g__4)
                                       addAttraction(i, i + 1, Me._groupCompactness, 0.1)
@@ -741,8 +752,9 @@ Namespace Layouts.Cola
                 .index = v.index
             }).ToList
                 Me._groups.ForEach(Sub(g, i)
+                                       g.index = n + i
                                        vs.Add(New Node With {
-                                       .index = InlineAssignHelper(g.index, n + i)
+                                       .index = g.index
                                    })
                                    End Sub)
                 Me._groups.ForEach(Sub(g, i)
@@ -964,10 +976,13 @@ Namespace Layouts.Cola
         ''' </summary>
         ''' <param name="d"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function dragOrigin(d As Node) As Point2D
             Return d
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function dragOrigin(d As Group) As Point2D
             Return New Point2D() With {
                 .X = d.bounds.CenterX(),

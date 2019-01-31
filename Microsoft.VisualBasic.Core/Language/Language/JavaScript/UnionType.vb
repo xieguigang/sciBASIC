@@ -77,8 +77,18 @@ Namespace Language.JavaScript
             End Get
         End Property
 
+        Public ReadOnly Property IsLambda As Boolean
+            Get
+                With {
+                    lambda, lambda1, lambda2, lambda3
+                }
+                    Return .Any(Function(f) Not f Is Nothing)
+                End With
+            End Get
+        End Property
+
         Public Overloads Function [GetType]() As Type
-            If {lambda, lambda1, lambda2, lambda3}.Any(Function(f) Not f Is Nothing) Then
+            If IsLambda Then
                 ' 是一个函数
                 Return GetType(Func(Of T))
             Else
