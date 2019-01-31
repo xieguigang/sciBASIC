@@ -63,18 +63,29 @@ Namespace Layouts.Cola
             Return result
         End Function
 
-        Public Sub add(linktype As Double, m As [Module])
-            Dim s As ModuleSet = If(Me.sets.Have(linktype), Me.sets(linktype), InlineAssignHelper(Me.sets(linktype), New ModuleSet()))
+        Public Sub add(linktype As Integer, m As [Module])
+            Dim s As ModuleSet
+
+            If Me.sets.ContainsKey(linktype.ToString) Then
+                s = Me.sets(linktype.ToString)
+            Else
+                s = New ModuleSet()
+                Me.sets(linktype.ToString) = s
+            End If
+
             s.add(m)
             Me._count += 1
         End Sub
 
-        Public Sub remove(linktype As Double, m As [Module])
-            Dim ms = DirectCast(Me.sets(linktype), ModuleSet)
+        Public Sub remove(linktype As Integer, m As [Module])
+            Dim ms = sets(linktype.ToString)
+
             ms.remove(m)
+
             If ms.count() = 0 Then
-                Delete(Me.sets, linktype)
+                Me.sets.Remove(linktype.ToString)
             End If
+
             Me._count -= 1
         End Sub
 
@@ -104,11 +115,6 @@ Namespace Layouts.Cola
                       End Sub)
 
             Return result
-        End Function
-
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
         End Function
     End Class
 End Namespace
