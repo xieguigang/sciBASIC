@@ -103,6 +103,7 @@ Namespace Layouts.Cola
     End Class
 
     Public Class Constraint
+
         Public lm As Double
         Public active As Boolean = False
         Public unsatisfiable As Boolean = False
@@ -110,7 +111,9 @@ Namespace Layouts.Cola
         Public left As Variable
         Public right As Variable
         Public gap As Double
-        Public equality As Boolean = False
+        Public equality As Boolean? = False
+        Public axis As String
+        Public type As String
 
         Sub New(left As Variable, right As Variable, gap As Double, Optional equality As Boolean = False)
             Me.left = left

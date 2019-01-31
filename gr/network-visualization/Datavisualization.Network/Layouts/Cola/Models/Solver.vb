@@ -1,50 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::3933e1518f1ce17fbd4de696b64f1488, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Solver.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Solver
-    ' 
-    '         Properties: cost
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: mostViolated, solve
-    ' 
-    '         Sub: satisfy, setDesiredPositions, setStartingPositions
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Solver
+' 
+'         Properties: cost
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: mostViolated, solve
+' 
+'         Sub: satisfy, setDesiredPositions, setStartingPositions
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace Layouts.Cola
 
@@ -59,28 +61,32 @@ Namespace Layouts.Cola
         Public cs As List(Of Constraint)
 
         Public ReadOnly Property cost As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return bs.cost()
             End Get
         End Property
 
-        Sub New(vs As Variable(), cs As List(Of Constraint))
+        Sub New(vs As Variable(), cs As IEnumerable(Of Constraint))
             Me.vs = vs
-            vs.ForEach(Sub(v, i)
-                           v.cIn = {}
-                           v.cOut = {}
 
-                       End Sub)
-            Me.cs = cs
-            cs.ForEach(Sub(C, i)
-                           C.left.cOut.Add(C)
-                           C.right.cIn.Add(C)
-                       End Sub)
+            Me.vs.ForEach(Sub(v, i)
+                              v.cIn = {}
+                              v.cOut = {}
+                          End Sub)
+            Me.cs = cs.ToList
+            Me.cs.ForEach(Sub(C, i)
+                              C.left.cOut.Add(C)
+                              C.right.cIn.Add(C)
+                          End Sub)
 
-            inactive = cs.Select(Function(C)
-                                     C.active = False
-                                     Return C
-                                 End Function).AsList
+            inactive = Me.cs _
+                .Select(Function(C)
+                            C.active = False
+                            Return C
+                        End Function) _
+                .AsList
+
             bs = Nothing
         End Sub
 
