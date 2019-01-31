@@ -145,7 +145,7 @@ Namespace Layouts.Cola
         '     * If G[i][j] <= 1 then it is used as a weighting on the contribution of the variance between ideal and actual separation between i and j to the goal function
         '     
 
-        Public Sub New(x As Double()(), Dmatrix As Integer()(), Optional G As Double()() = Nothing)
+        Public Sub New(x As Double()(), Dmatrix As Double()(), Optional G As Double()() = Nothing)
             Me.x = x
             Me.k = x.Length
             ' dimensionality
