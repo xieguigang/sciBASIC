@@ -70,6 +70,7 @@ Imports number = System.Double
 Namespace Layouts.Cola
 
     Public Class GridRouter(Of Node)
+
         Private leaves As NodeWrapper() = Nothing
         Private groups As NodeWrapper()
         Private nodes As NodeWrapper()
@@ -82,8 +83,12 @@ Namespace Layouts.Cola
         Private obstacles As NodeWrapper()
         Private passableEdges As List(Of Link3D)
 
-        ' in the given axis, find sets of leaves overlapping in that axis
-        ' center of each GridLine is average of all nodes in column
+        ''' <summary>
+        ''' in the given axis, find sets of leaves overlapping in that axis
+        ''' center of each GridLine is average of all nodes in column
+        ''' </summary>
+        ''' <param name="axis"></param>
+        ''' <returns></returns>
         Private Function getGridLines(axis As String) As List(Of GridLine)
             Dim columns As New List(Of GridLine)
             Dim ls = Me.leaves.slice(0, Me.leaves.Length).ToArray
@@ -101,7 +106,11 @@ Namespace Layouts.Cola
             Return columns
         End Function
 
-        ' get the depth of the given node in the group hierarchy
+        ''' <summary>
+        ''' get the depth of the given node in the group hierarchy
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
         Private Function getDepth(v As any) As Double
             Dim depth = 0
             While v.parent <> Me.root
@@ -214,8 +223,8 @@ Namespace Layouts.Cola
                                                 While (System.Math.Max(Interlocked.Decrement(i), i + 1)) > 0
                                                     Dim node = Me.backToFront(i)
                                                     Dim r = node.rect
-                                                    Dim dx = Math.Abs(p.x - r.cx())
-                                                    Dim dy = Math.Abs(p.y - r.cy())
+                                                    Dim dx = Math.Abs(p.X - r.cx())
+                                                    Dim dy = Math.Abs(p.Y - r.cy())
                                                     If dx < r.width() / 2 AndAlso dy < r.height() / 2 Then
                                                         DirectCast(p, any).node = node
                                                         Exit While
@@ -241,7 +250,7 @@ Namespace Layouts.Cola
                               ' split lines into edges joining vertices
                               Dim isHoriz = Math.Abs(l.Y1 - l.Y2) < 0.1
                               Dim delta = Function(a As Vert, b As Vert)
-                                              Return If(isHoriz, b.x - a.x, b.y - a.y)
+                                              Return If(isHoriz, b.X - a.X, b.Y - a.Y)
                                           End Function
                               l.verts.Sort(delta)
                               For i As Integer = 1 To l.verts.Count - 1
@@ -260,7 +269,11 @@ Namespace Layouts.Cola
                           End Sub)
         End Sub
 
-        ' find path from v to root including both v and root
+        ''' <summary>
+        ''' find path from v to root including both v and root
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
         Private Function findLineage(v As NodeWrapper) As NodeWrapper()
             Dim lineage As New List(Of NodeWrapper) From {v}
             Do
@@ -270,7 +283,12 @@ Namespace Layouts.Cola
             Return lineage.AsEnumerable.Reverse().ToArray
         End Function
 
-        ' find path connecting a and b through their lowest common ancestor
+        ''' <summary>
+        ''' find path connecting a and b through their lowest common ancestor
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Private Function findAncestorPathBetween(a As NodeWrapper, b As NodeWrapper) As AncestorPath
             Dim aa = Me.findLineage(a)
             Dim ba = Me.findLineage(b)
@@ -290,8 +308,13 @@ Namespace Layouts.Cola
             Public lineages As NodeWrapper()
         End Class
 
-        ' when finding a path between two nodes a and b, siblings of a and b on the
-        ' paths from a and b to their least common ancestor are obstacles
+        ''' <summary>
+        ''' when finding a path between two nodes a and b, siblings of a and b on the
+        ''' paths from a and b to their least common ancestor are obstacles
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Public Function siblingObstacles(a As NodeWrapper, b As NodeWrapper) As NodeWrapper()
             Dim path As AncestorPath = Me.findAncestorPathBetween(a, b)
             Dim lineageLookup = New Dictionary(Of String, Object)
@@ -319,8 +342,14 @@ Namespace Layouts.Cola
             Return obstacles.Select(Function(v) Me.nodes(v)).ToArray
         End Function
 
-        ' for the given routes, extract all the segments orthogonal to the axis x
-        ' and return all them grouped by x position
+        ''' <summary>
+        ''' for the given routes, extract all the segments orthogonal to the axis x
+        ''' and return all them grouped by x position
+        ''' </summary>
+        ''' <param name="routes"></param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
         Private Shared Function getSegmentSets(routes As List(Of Segment()), x As Integer, y As Integer) As List(Of vsegmentsets)
             ' vsegments is a list of vertical segments sorted by x position
             Dim vsegments As New List(Of Segment)
@@ -356,13 +385,22 @@ Namespace Layouts.Cola
             Return vsegmentsets
         End Function
 
-        ' for all segments in this bundle create a vpsc problem such that
-        ' each segment's x position is a variable and separation constraints
-        ' are given by the partial order over the edges to which the segments belong
-        ' for each pair s1,s2 of segments in the open set:
-        '   e1 = edge of s1, e2 = edge of s2
-        '   if leftOf(e1,e2) create constraint s1.x + gap <= s2.x
-        '   else if leftOf(e2,e1) create cons. s2.x + gap <= s1.x
+        ''' <summary>
+        ''' for all segments in this bundle create a vpsc problem such that
+        ''' each segment's x position is a variable and separation constraints
+        ''' are given by the partial order over the edges to which the segments belong
+        ''' for each pair s1,s2 of segments in the open set:
+        ''' 
+        ''' + e1 = edge of s1, e2 = edge of s2
+        ''' + if leftOf(e1,e2) create constraint s1.x + gap &lt;= s2.x
+        ''' + else if leftOf(e2,e1) create cons. s2.x + gap &lt;= s1.x
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="routes"></param>
+        ''' <param name="segments"></param>
+        ''' <param name="leftOf"></param>
+        ''' <param name="gap"></param>
         Private Shared Sub nudgeSegs(x As String, y As String, routes As List(Of Segment()), segments As List(Of Segment), leftOf As any, gap As Double)
             Dim n = segments.Count
             If n <= 1 Then
@@ -474,7 +512,7 @@ Namespace Layouts.Cola
         ' @param source function to retrieve the index of the source node for a given edge
         ' @param target function to retrieve the index of the target node for a given edge
         ' @returns an array giving, for each edge, an array of segments, each segment a pair of points in an array
-        Public Function routeEdges(Of Edge)(edges As Edge(), nudgeGap As Double, source As Func(Of Edge, number), target As Func(Of Edge, number)) As List(Of Segment())
+        Public Function routeEdges(Of Edge)(edges As Edge(), nudgeGap As Double, source As Func(Of Edge, Integer), target As Func(Of Edge, Integer)) As List(Of Segment())
             Dim routePaths As Vert()() = edges.Select(Function(e) Me.route(source(e), target(e))).ToArray
             Dim order = GridRouter(Of Node).orderEdges(routePaths)
             Dim routes As List(Of Segment()) = routePaths.Select(Function(e) GridRouter(Of Node).makeSegments(e).ToArray).ToList
@@ -650,8 +688,8 @@ Namespace Layouts.Cola
                                   Dim a = Me.verts(u)
                                   Dim b = Me.verts(v)
                                   Dim c = Me.verts(w)
-                                  Dim dx = Math.Abs(c.x - a.x)
-                                  Dim dy = Math.Abs(c.y - a.y)
+                                  Dim dx = Math.Abs(c.X - a.X)
+                                  Dim dy = Math.Abs(c.Y - a.Y)
 
                                   ' don't count bends from internal node edges
                                   If a.node Is source AndAlso a.node Is b.node OrElse b.node Is target AndAlso b.node Is c.node Then

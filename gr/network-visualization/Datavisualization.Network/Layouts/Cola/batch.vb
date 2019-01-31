@@ -63,19 +63,28 @@ Namespace Layouts.Cola
     ''' </summary>
     Public Module batch
 
-        '*
-        '     * @property nudgeGap spacing between parallel edge segments
-        '     * @property margin space around nodes
-        '     * @property groupMargin space around groups
-        '     
-
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="pgLayout"></param>
+        ''' <param name="nudgeGap">spacing between parallel edge segments</param>
+        ''' <param name="margin">space around nodes</param>
+        ''' <param name="groupMargin">space around groups</param>
+        ''' <returns></returns>
         Private Function gridify(pgLayout As LayoutGraph, nudgeGap As Double, margin As Double, groupMargin As Double) As Object
+            Dim gridrouter As GridRouter(Of Node)
+            Dim edges As PowerEdge(Of Node)()
+            Dim getSource As Func(Of PowerEdge(Of Node), Integer) = Function(e) e.source.routerNode.id
+            Dim getTarget As Func(Of PowerEdge(Of Node), Integer) = Function(e) e.target.routerNode.id
+
             pgLayout.cola.start(0, 0, 0, 10, False)
-            Dim gridrouter As GridRouter(Of Object) = route(pgLayout.cola.nodes(), pgLayout.cola.groups(), margin, groupMargin)
-            Return gridrouter.routeEdges(Of PowerEdge)(pgLayout.powerGraph.powerEdges.ToArray, nudgeGap, Function(e) e.source.routerNode.id, Function(e) e.target.routerNode.id)
+            gridrouter = route(pgLayout.cola.nodes(), pgLayout.cola.groups(), margin, groupMargin)
+            edges = pgLayout.powerGraph.powerEdges.ToArray
+
+            Return gridrouter.routeEdges(edges, nudgeGap, getSource, getTarget)
         End Function
 
-        Private Function route(nodes As Node(), groups As Group(), margin As Double, groupMargin As Double) As GridRouter(Of Object)
+        Private Function route(nodes As Node(), groups As Group(), margin As Double, groupMargin As Double) As GridRouter(Of Node)
             nodes.DoEach(Sub(d)
                              d.routerNode = New Node With {
                                .name = d.name,
@@ -94,10 +103,12 @@ Namespace Layouts.Cola
                                                                             d.routerNode.id = i
                                                                             Return d.routerNode
                                                                         End Function)
-            Return New GridRouter(Of Node)(gridRouterNodes, New NodeAccessor(Of Node) With {
+            Dim accessor As New NodeAccessor(Of Node) With {
             .getChildren = Function(v) v.children,
             .getBounds = Function(v) v.bounds
-        }, margin - groupMargin)
+        }
+
+            Return New GridRouter(Of Node)(gridRouterNodes, accessor, margin - groupMargin)
         End Function
 
         ''' <summary>
@@ -109,7 +120,7 @@ Namespace Layouts.Cola
         ''' <returns></returns>
         Public Function powerGraphGridLayout(graph As network, size As Double(), grouppadding As Double) As LayoutGraph
             ' compute power graph
-            Dim powerGraph As PowerGraph = Nothing
+            Dim powerGraph As PowerGraph(Of Node) = Nothing
 
             Call graph.nodes.ForEach(Sub(v, i) v.index = i)
             Call New Layout() _
@@ -125,34 +136,34 @@ Namespace Layouts.Cola
             ' construct a flat graph with dummy nodes for the groups and edges connecting group dummy nodes to their children
             ' power edges attached to groups are replaced with edges connected to the corresponding group dummy node
             Dim n = graph.nodes.Length
-            Dim edges As New List(Of PowerEdge)
+            Dim edges As New List(Of PowerEdge(Of Integer))
             Dim vs = graph.nodes.ToList
             vs.ForEach(Sub(v, i) v.index = i)
-            powerGraph.groups.forEach(Sub(g)
+            powerGraph.groups.ForEach(Sub(g)
                                           Dim sourceInd%
 
                                           g.index = g.id + n
                                           sourceInd = g.index
                                           vs.Add(g)
                                           If g.leaves IsNot Nothing Then
-                                              g.leaves.forEach(Sub(v)
-                                                                   Call edges.Add(New PowerEdge With {
+                                              g.leaves.ForEach(Sub(v)
+                                                                   Call edges.Add(New PowerEdge(Of Integer) With {
                                                   .source = sourceInd,
                                                   .target = v.index
                                               })
                                                                End Sub)
                                           End If
                                           If g.groups IsNot Nothing Then
-                                              g.groups.forEach(Sub(gg)
-                                                                   Call edges.Add(New PowerEdge With {
+                                              g.groups.ForEach(Sub(gg)
+                                                                   Call edges.Add(New PowerEdge(Of Integer) With {
                                                   .source = sourceInd,
                                                   .target = gg.id + n
                                               })
                                                                End Sub)
                                           End If
                                       End Sub)
-            powerGraph.powerEdges.forEach(Sub(e)
-                                              Call edges.Add(New PowerEdge With {
+            powerGraph.powerEdges.ForEach(Sub(e)
+                                              Call edges.Add(New PowerEdge(Of Integer) With {
                                                   .source = e.source.index,
                                                   .target = e.target.index
                                               })
@@ -188,6 +199,6 @@ Namespace Layouts.Cola
 
     Public Class LayoutGraph
         Public cola As Layout
-        Public powerGraph As PowerGraph
+        Public powerGraph As PowerGraph(Of Node)
     End Class
 End Namespace

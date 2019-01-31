@@ -120,9 +120,9 @@ Namespace Layouts.Cola
 
     End Module
 
-    Public Class PowerGraph
+    Public Class PowerGraph(Of T)
         Public Property groups As List(Of Group)
-        Public powerEdges As List(Of PowerEdge)
+        Public powerEdges As List(Of PowerEdge(Of T))
     End Class
 
 End Namespace

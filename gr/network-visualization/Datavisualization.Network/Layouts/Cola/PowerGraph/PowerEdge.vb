@@ -42,13 +42,13 @@
 
 Namespace Layouts.Cola
 
-    Public Class PowerEdge
+    Public Class PowerEdge(Of T)
 
-        Public source As Integer
-        Public target As Integer
+        Public source As T
+        Public target As T
         Public type As Integer
 
-        Default Public Property Item(name As String) As Integer
+        Default Public Property Item(name As String) As T
             Get
                 If name = NameOf(source) Then
                     Return source
@@ -58,11 +58,11 @@ Namespace Layouts.Cola
                     Throw New NotImplementedException(name)
                 End If
             End Get
-            Set(value As Integer)
+            Set
                 If name = NameOf(source) Then
-                    source = value
+                    source = Value
                 ElseIf name = NameOf(target) Then
-                    target = value
+                    target = Value
                 Else
                     Throw New NotImplementedException(name)
                 End If
@@ -72,7 +72,7 @@ Namespace Layouts.Cola
         Sub New()
         End Sub
 
-        Sub New(source As Integer, target As Integer, type As Integer)
+        Sub New(source As T, target As T, type As Integer)
             Me.source = source
             Me.target = target
             Me.type = type
