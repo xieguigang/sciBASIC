@@ -45,11 +45,13 @@ Namespace Layouts.Cola
     Public Class Node : Inherits InputNode
 
         Public id As Integer
-
+        Public name As String
+        Public routerNode As Node
         Public prev As RBNode(Of Node, Object)
         Public [next] As RBNode(Of Node, Object)
 
         Public r As Rectangle2D
+        Public bounds As Rectangle2D
         Public pos As Double
         Public _dragGroupOffsetY As Double
         Public _dragGroupOffsetX As Double
@@ -65,12 +67,14 @@ Namespace Layouts.Cola
 
     Public Class Group
 
+        Public routerNode As Group
         Public id As Integer
         Public bounds As Rectangle2D
         Public leaves As List(Of Node)
         Public groups As List(Of Group)
         Public padding As Double?
         Public parent As Group
+        Public index As Integer
 
         Public ReadOnly Iterator Property keys As IEnumerable(Of String)
             Get

@@ -1,6 +1,4 @@
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
-Imports any = System.Object
-Imports number = System.Double
 
 Namespace Layouts.Cola
 
@@ -21,31 +19,31 @@ Namespace Layouts.Cola
         '     * @property groupMargin space around groups
         '     
 
-        Private Function gridify(pgLayout As Object, nudgeGap As Double, margin As Double, groupMargin As Double) As Object
+        Private Function gridify(pgLayout As LayoutGraph, nudgeGap As Double, margin As Double, groupMargin As Double) As Object
             pgLayout.cola.start(0, 0, 0, 10, False)
-            Dim gridrouter = route(pgLayout.cola.nodes(), pgLayout.cola.groups(), margin, groupMargin)
-            Return gridrouter.routeEdges(Of Object)(pgLayout.powerGraph.powerEdges, nudgeGap, Function(e) e.source.routerNode.id, Function(e) e.target.routerNode.id)
+            Dim gridrouter As GridRouter(Of Object) = route(pgLayout.cola.nodes(), pgLayout.cola.groups(), margin, groupMargin)
+            Return gridrouter.routeEdges(Of PowerEdge)(pgLayout.powerGraph.powerEdges.ToArray, nudgeGap, Function(e) e.source.routerNode.id, Function(e) e.target.routerNode.id)
         End Function
 
-        Private Function route(Of Node)(nodes As Node(), groups As any, margin As Double, groupMargin As Double) As GridRouter(Of Object)
-            nodes.ForEach(Sub(d)
-                              d.routerNode = New With {
+        Private Function route(nodes As Node(), groups As Group(), margin As Double, groupMargin As Double) As GridRouter(Of Object)
+            nodes.DoEach(Sub(d)
+                             d.routerNode = New Node With {
                                .name = d.name,
                                .bounds = d.bounds.inflate(-margin)
                           }
-                          End Sub)
-            groups.forEach(Function(d)
-                               d.routerNode = New With {
+                         End Sub)
+            groups.DoEach(Sub(d)
+
+
+                              d.routerNode = New [Group] With {
                                 .bounds = d.bounds.inflate(-groupMargin),
-                                .children = (If(d.groups IsNot Nothing, d.groups.map(Function(c) nodes.Length + c.id), New Object() {})).concat(If(d.leaves IsNot Nothing, d.leaves.map(Function(c) c.index), New Object() {}))
+                                .children = (If(d.groups IsNot Nothing, d.groups.Select(Function(c) nodes.Length + c.id), New Object() {})).Concat(If(d.leaves IsNot Nothing, d.leaves.Select(Function(c) c.index), New Object() {}))
                            }
-
-                           End Function)
-            Dim gridRouterNodes As Node() = nodes.Concat(groups).map(Function(d, i)
-                                                                         d.routerNode.id = i
-                                                                         Return d.routerNode
-
-                                                                     End Function)
+                          End Sub)
+            Dim gridRouterNodes As Node() = nodes.Concat(groups).Select(Function(d, i)
+                                                                            d.routerNode.id = i
+                                                                            Return d.routerNode
+                                                                        End Function)
             Return New GridRouter(Of Node)(gridRouterNodes, New NodeAccessor(Of Node) With {
             .getChildren = Function(v) v.children,
             .getBounds = Function(v) v.bounds
@@ -61,7 +59,7 @@ Namespace Layouts.Cola
         ''' <returns></returns>
         Public Function powerGraphGridLayout(graph As network, size As Double(), grouppadding As Double) As LayoutGraph
             ' compute power graph
-            Dim powerGraph As PowerGraph
+            Dim powerGraph As PowerGraph = Nothing
 
             Call graph.nodes.ForEach(Sub(v, i) v.index = i)
             Call New Layout() _
@@ -69,8 +67,9 @@ Namespace Layouts.Cola
                 .nodes(graph.nodes) _
                 .links(graph.links) _
                 .powerGraphGroups(Sub(d)
+                                      ' powerGraph对象是在这里被赋值初始化的
                                       powerGraph = d
-                                      powerGraph.groups.forEach(Sub(v) v.padding = grouppadding)
+                                      powerGraph.groups.ForEach(Sub(v) v.padding = grouppadding)
                                   End Sub)
 
             ' construct a flat graph with dummy nodes for the groups and edges connecting group dummy nodes to their children
@@ -78,9 +77,12 @@ Namespace Layouts.Cola
             Dim n = graph.nodes.Length
             Dim edges As New List(Of PowerEdge)
             Dim vs = graph.nodes.ToList
-            vs.ForEach(Function(v, i) InlineAssignHelper(v.index, i))
+            vs.ForEach(Sub(v, i) v.index = i)
             powerGraph.groups.forEach(Sub(g)
-                                          Dim sourceInd = InlineAssignHelper(g.index, g.id + n)
+                                          Dim sourceInd%
+
+                                          g.index = g.id + n
+                                          sourceInd = g.index
                                           vs.Add(g)
                                           If g.leaves IsNot Nothing Then
                                               g.leaves.forEach(Sub(v)
@@ -126,15 +128,12 @@ Namespace Layouts.Cola
                 .symmetricDiffLinkLengths(5) _
                 .powerGraphGroups(Sub(d)
                                       powerGraph = d
-                                      powerGraph.groups.ForEach(Function(v) InlineAssignHelper(v.padding, grouppadding))
+                                      powerGraph.groups.DoEach(Sub(v) v.padding = grouppadding)
                                   End Sub).start(50, 0, 100, 0, False),
             .powerGraph = powerGraph
         }
         End Function
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
+
     End Module
 
     Public Class LayoutGraph

@@ -416,7 +416,7 @@ Namespace Layouts.Cola
         ' @param source function to retrieve the index of the source node for a given edge
         ' @param target function to retrieve the index of the target node for a given edge
         ' @returns an array giving, for each edge, an array of segments, each segment a pair of points in an array
-        Private Function routeEdges(Of Edge)(edges As Edge(), nudgeGap As Double, source As Func(Of Edge, number), target As Func(Of Edge, number)) As List(Of Segment())
+        Public Function routeEdges(Of Edge)(edges As Edge(), nudgeGap As Double, source As Func(Of Edge, number), target As Func(Of Edge, number)) As List(Of Segment())
             Dim routePaths = edges.Select(Function(e) Me.route(source(e), target(e))).ToArray
             Dim order = GridRouter(Of Node).orderEdges(routePaths)
             Dim routes As List(Of Segment()) = routePaths.Select(Function(e) GridRouter(Of Node).makeSegments(e).ToArray).ToList

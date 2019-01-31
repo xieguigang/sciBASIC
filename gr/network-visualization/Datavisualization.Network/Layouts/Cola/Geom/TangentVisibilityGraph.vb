@@ -8,7 +8,7 @@ Namespace Layouts.Cola
         Public E As New List(Of VisibilityEdge)
         Public P As TVGPoint()()
 
-        Public Sub New(P__1 As TVGPoint()(), Optional g0 As any = Nothing)
+        Public Sub New(P__1 As TVGPoint()(), Optional g0 As Object = Nothing)
             If g0 Is Nothing Then
                 Dim n = P__1.Length
                 ' For each node...
@@ -36,7 +36,7 @@ Namespace Layouts.Cola
                     For j As Integer = i + 1 To n - 1
                         Dim Pj__4 = P__1(j)
                         Dim t = tangents(Pi, Pj__4)
-                        For Each q As var In t.keys
+                        For Each q As String In t.keys
                             Dim c = t(q)
                             Dim source = Pi(c.t1)
                             Dim target = Pj__4(c.t2)

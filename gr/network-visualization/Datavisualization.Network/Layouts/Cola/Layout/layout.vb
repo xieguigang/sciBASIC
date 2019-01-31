@@ -312,10 +312,10 @@ Namespace Layouts.Cola
         '     * @type {Array of Number}
         '     
 
-        Private Function size() As Double()
+        Public Function size() As Double()
             Return Me._canvasSize
         End Function
-        Private Function size(x As Double()) As Layout
+        Public Function size(x As Double()) As Layout
             Me._canvasSize = x
             Return Me
         End Function
@@ -455,7 +455,7 @@ Namespace Layouts.Cola
         '     * @param {number} [w] a multiplier for the effect of the length adjustment (e.g. 0.7)
         '     
 
-        Private Function symmetricDiffLinkLengths(idealLength As Double, Optional w As Double = 1) As Layout
+        Public Function symmetricDiffLinkLengths(idealLength As Double, Optional w As Double = 1) As Layout
             Me.linkDistance(Function(l) idealLength * l.length)
             Me._linkLengthCalculator = Function() symmetricDiffLinkLengths(Me._links, Me.linkAccessor, w)
             Return Me
@@ -472,7 +472,7 @@ Namespace Layouts.Cola
         '     * @param {number} [w] a multiplier for the effect of the length adjustment (e.g. 0.7)
         '     
 
-        Private Function jaccardLinkLengths(idealLength As Double, Optional w As Double = 1) As Layout
+        Public Function jaccardLinkLengths(idealLength As Double, Optional w As Double = 1) As Layout
             Me.linkDistance(Function(l) idealLength * l.length)
             Me._linkLengthCalculator = Function() jaccardLinkLengths(Me._links, Me.linkAccessor, w)
             Return Me
@@ -561,9 +561,9 @@ Namespace Layouts.Cola
 
             If Not Me._rootGroup Is Nothing AndAlso Me._rootGroup.groups IsNot Nothing Then
                 Dim i = n__1
-                Dim addAttraction = Sub(i As Integer, j As Integer, strength As Double, idealDistance As Double)
-                                        G__3(i)(j) = InlineAssignHelper(G__3(j)(i), strength)
-                                        D(i)(j) = InlineAssignHelper(D(j)(i), idealDistance)
+                Dim addAttraction = Sub(ii As Integer, j As Integer, strength As Double, idealDistance As Double)
+                                        G__3(ii)(j) = InlineAssignHelper(G__3(j)(ii), strength)
+                                        D(ii)(j) = InlineAssignHelper(D(j)(ii), idealDistance)
                                     End Sub
                 Me._groups.DoEach(Sub(g__4)
                                       addAttraction(i, i + 1, Me._groupCompactness, 0.1)
@@ -591,7 +591,7 @@ Namespace Layouts.Cola
             Else
                 Me._rootGroup = New [Group] With {
                 .leaves = Me._nodes.ToList,
-                .groups = New Object() {}
+                .groups = New List(Of [Group])
             }
             End If
 
@@ -737,17 +737,16 @@ Namespace Layouts.Cola
                                   End Sub)
                 Dim graphs = Cola.handleDisconnected.separateGraphs(Me._nodes, Me._links)
 
-                Cola.handleDisconnected.applyPacking(graphs, width, height, Me._defaultNodeSize, 1, centerGraph)
+                Call New handleDisconnected().applyPacking(graphs, width, height, Me._defaultNodeSize, 1, centerGraph)
 
-                Me._nodes.ForEach(Function(v, i)
+                Me._nodes.ForEach(Sub(v, i)
                                       Me._descent.x(0)(i) = v.x
                                       Me._descent.x(1)(i) = v.y
                                       If v.bounds Then
                                           v.bounds.setXCentre(v.x)
                                           v.bounds.setYCentre(v.y)
                                       End If
-
-                                  End Function)
+                                  End Sub)
             End If
         End Sub
 
