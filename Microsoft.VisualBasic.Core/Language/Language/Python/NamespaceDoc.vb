@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd41909ac7af4e0011cea5f18d0bc056, Microsoft.VisualBasic.Core\Language\Language\Python\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::d801a3b7a2c8d2bd3bc1ca1b485b3415, Microsoft.VisualBasic.Core\Language\Language\Python\NamespaceDoc.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e766188c81afafa7da17744b5bcc7786, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IniFile.vb"
+﻿#Region "Microsoft.VisualBasic::136f0568fcde1a437db9944c1b3c978f, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IniFile.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 
@@ -59,6 +60,7 @@ Namespace ComponentModel.Settings.Inf
         Public ReadOnly Property path As String
 
         Public ReadOnly Property FileExists As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return path.FileLength > -1
             End Get
@@ -67,7 +69,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <summary>
         ''' 为了避免频繁的读写文件，会使用这个数组来做缓存
         ''' </summary>
-        Dim dataLines As String()
+        Dim data As Dictionary(Of String, Section)
 
         ''' <summary>
         ''' Open a ini file handle.
@@ -75,14 +77,22 @@ Namespace ComponentModel.Settings.Inf
         ''' <param name="INIPath"></param>
         Public Sub New(INIPath As String)
             path = IO.Path.GetFullPath(PathMapper.GetMapPath(INIPath))
-            dataLines = path.ReadAllLines
+            data = INIProfile _
+                .PopulateSections(path) _
+                .ToDictionary(Function(s)
+                                  Return s.Name
+                              End Function)
         End Sub
 
         ''' <summary>
         ''' 将缓存数据写入文件之中
         ''' </summary>
         Public Sub Flush()
-            Call dataLines.SaveTo(path)
+            Using write As StreamWriter = path.OpenWriter
+                For Each section As Section In data.Values
+                    Call write.WriteLine(section.CreateDocFragment)
+                Next
+            End Using
         End Sub
 
         Public Overrides Function ToString() As String
@@ -90,25 +100,51 @@ Namespace ComponentModel.Settings.Inf
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub WriteValue(section$, key$, value$)
-            dataLines = dataLines.AsList.WritePrivateProfileString(section, key, value)
+        Public Sub WriteValue(section$, key$, value$, Optional comments$ = Nothing)
+            If Not data.ContainsKey(section) Then
+                data(section) = New Section With {
+                    .Name = section,
+                    .Items = {}
+                }
+            End If
+
+            data(section).SetValue(key, value, comments)
         End Sub
 
         ''' <summary>
         ''' 在给定的section,key上面写入注释
         ''' </summary>
-        ''' <param name="section$"></param>
-        ''' <param name="key$"></param>
+        ''' <param name="section"></param>
+        ''' <param name="key">如果这个键名称不存在的话，则是将注释写入到目标<paramref name="section"/>之中的</param>
         ''' <param name="comment">不需要添加注释符号,函数会自动添加</param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub WriteComment(section$, key$, comment$)
-            dataLines = dataLines.AsList.WriteProfileComments(section, key, comment)
+        Public Sub WriteComment(section$, comment$, Optional key$ = Nothing)
+            ' section和key都不存在的话，则找不到写入注释的位置
+            If Not data.ContainsKey(section) Then
+                Return
+            Else
+                If key.StringEmpty Then
+                    ' 当key是空字符串，则将comment写在section之中
+                    data(section).Comment = comment
+                    Return
+                Else
+                    If Not data(section).Have(key) Then
+                        Return
+                    End If
+                End If
+            End If
+
+            data(section).SetComments(key, comment)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ReadValue(section$, key$) As String
-            Return dataLines.GetPrivateProfileString(section, key)
+            If data.ContainsKey(section) Then
+                Return data(section).GetValue(key)
+            Else
+                Return Nothing
+            End If
         End Function
 
 #Region "IDisposable Support"

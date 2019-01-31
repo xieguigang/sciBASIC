@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::106b627df067f9f6e373ee8117b35bc9, Data_science\SVM\SVM\method\SvmArgument.vb"
+﻿#Region "Microsoft.VisualBasic::6e10f9e85dbc1c78d4616d54ce68cfe7, Data_science\SVM\SVM\method\SvmArgument.vb"
 
     ' Author:
     ' 

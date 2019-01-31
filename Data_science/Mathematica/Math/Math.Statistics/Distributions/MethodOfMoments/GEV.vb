@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19afe85d7a408a1d2c4c071f2a9f1994, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\GEV.vb"
+﻿#Region "Microsoft.VisualBasic::276583d0212be1c905ce48664176d898, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\GEV.vb"
 
     ' Author:
     ' 

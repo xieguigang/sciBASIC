@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74f205abf366bf056f1afc4a98c62b05, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\Models.vb"
+﻿#Region "Microsoft.VisualBasic::c515805863a6e7ff11067937257f31b8, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\Models.vb"
 
     ' Author:
     ' 
@@ -31,26 +31,53 @@
 
     ' Summaries:
 
-    '     Interface NodeAccessor
+    '     Class SVGRoutePath
     ' 
-    '         Function: getBounds, getChildren
+    ' 
+    ' 
+    '     Class vsegmentsets
+    ' 
+    ' 
+    ' 
+    '     Class Segment
+    ' 
+    '         Sub: Reverse
+    ' 
+    '     Class LinkLine
+    ' 
+    ' 
+    ' 
+    '     Class NodeAccessor
+    ' 
+    ' 
+    '         Delegate Function
+    ' 
+    ' 
+    '         Delegate Function
+    ' 
+    '             Properties: getBounds, getChildren
+    ' 
+    '     Class LinkAccessor
+    ' 
+    ' 
+    '         Delegate Function
+    ' 
+    '             Properties: getSourceIndex, getTargetIndex
+    ' 
+    '     Class LinkLengthAccessor
+    ' 
+    ' 
+    '         Delegate Sub
+    ' 
+    '             Properties: setLength
     ' 
     '     Class NodeWrapper
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class Vert
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class [Event]
-    ' 
-    ' 
-    '         Structure Comparer
-    ' 
-    '             Function: Compare
-    ' 
-    ' 
     ' 
     '     Class GridLine
     ' 
@@ -62,47 +89,106 @@
     ' 
     ' 
     ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
-Imports number = System.Double
+Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Namespace Layouts.Cola.GridRouter
 
-    Public Interface NodeAccessor(Of Node)
-        Function getChildren(v As Node) As number()
-        Function getBounds(v As Node) As Rectangle2D
-    End Interface
+    Public Class SVGRoutePath
+        Public routepath As String
+        Public arrowpath As String
+    End Class
+
+    Public Class vsegmentsets
+        Public segments As List(Of Segment)
+        Public pos As Double
+    End Class
+
+    Public Class Segment
+        Public edgeid As Integer
+        Public i As Integer
+        Public Points As Point2D()
+
+        Default Public ReadOnly Property Pt(i As Integer) As Point2D
+            Get
+                Return Points(i)
+            End Get
+        End Property
+
+        Public Sub Reverse()
+            Points = Points.Reverse.ToArray
+        End Sub
+    End Class
+
+    Public Class LinkLine : Inherits Line
+        Public verts As List(Of Vert)
+    End Class
+
+    Public Class NodeAccessor(Of Node)
+
+        Public Delegate Function IGetChildren(v As Node) As Integer()
+        Public Delegate Function IGetBounds(v As Node) As Rectangle2D
+
+        Public Property getChildren As IGetChildren
+        Public Property getBounds As IGetBounds
+
+    End Class
+
+    Public Class LinkAccessor(Of Link)
+
+        Public Delegate Function IGetIndex(l As Link) As Integer
+
+        Public Property getSourceIndex As IGetIndex
+        Public Property getTargetIndex As IGetIndex
+    End Class
+
+    Public Class LinkLengthAccessor(Of Link)
+        Inherits LinkAccessor(Of Link)
+
+        Public Delegate Sub SetLinkLength(l As Link, value As Double)
+
+        Public Property setLength As SetLinkLength
+    End Class
 
     Public Class NodeWrapper
         Public leaf As Boolean
         Public parent As NodeWrapper
-        Public ports As Vert()
+        Public ports As List(Of Vert)
         Public id As Integer
         Public rect As Rectangle2D
-        Public children As Integer()
+        Public children As List(Of Integer)
 
-        Public Sub New(id As number, rect As Rectangle2D, children As Integer())
+        Sub New()
+        End Sub
+
+        Public Sub New(id As Double, rect As Rectangle2D, children As IEnumerable(Of Integer))
             Me.id = id
             Me.rect = rect
-            Me.children = children
+            Me.children = children.ToList
 
-            leaf = children.IsNullOrEmpty
+            leaf = Me.children.IsNullOrEmpty
         End Sub
     End Class
 
-    Public Class Vert
+    Public Class Vert : Inherits Point2D
 
-        Public id As number
-        Public x As number
-        Public y As number
+        Public id As Double
         Public node As NodeWrapper
         Public line
 
-        Sub New(id As number, x As number, y As number, Optional node As NodeWrapper = Nothing, Optional line As Object = Nothing)
+        Sub New(id As Double, x As Double, y As Double, Optional node As NodeWrapper = Nothing, Optional line As Object = Nothing)
             Me.id = id
             Me.x = x
             Me.y = y
@@ -111,26 +197,13 @@ Namespace Layouts.Cola.GridRouter
         End Sub
     End Class
 
-    Public Class [Event]
-        Public type As Integer
-        Public s As route
-        Public pos As number
-
-        Public Structure Comparer : Implements IComparer(Of [Event])
-
-            Public Function Compare(a As [Event], b As [Event]) As Integer Implements IComparer(Of [Event]).Compare
-                Return a.pos - b.pos + a.type - b.type
-            End Function
-        End Structure
-    End Class
-
     ''' <summary>
     ''' a horizontal Or vertical line of nodes
     ''' </summary>
     Public Class GridLine
 
         Public nodes As NodeWrapper()
-        Public pos As number
+        Public pos As Double
 
         Public Structure Comparer : Implements IComparer(Of GridLine)
 

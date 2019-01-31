@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d0273ac0fd20a9d581d665b55411aa7, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\BinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::72c30d405799c84b5d94d83c62d7948d, Microsoft.VisualBasic.Core\Serialization\BinaryDumping\BinaryReader.vb"
 
     ' Author:
     ' 

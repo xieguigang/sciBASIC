@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50a728bb0733f09ef08349c8cc08e182, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IOProvider.vb"
+﻿#Region "Microsoft.VisualBasic::7f4fd9ecd8e7b49fe63cf276c90a67b6, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IOProvider.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 
 Namespace ComponentModel.Settings.Inf
 
@@ -170,7 +171,7 @@ Namespace ComponentModel.Settings.Inf
             Return DirectCast(obj, T)
         End Function
 
-        Private Function __getPath(Of T As Class)() As String
+        Private Function __getPath(Of T As Class)() As DefaultValue(Of String)
             Dim path As IniMapIO = GetType(T).GetAttribute(Of IniMapIO)
 
             If path Is Nothing Then
@@ -180,8 +181,17 @@ Namespace ComponentModel.Settings.Inf
             End If
         End Function
 
+        ''' <summary>
+        ''' 加载配置文件然后反序列化为一个指定类型的.NET对象
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="fileExists"></param>
+        ''' <param name="path">
+        ''' 如果这个参数是空值，则会需要在<typeparamref name="T"/>类型定义之中定义有一个<see cref="IniMapIO"/>属性来存储文件路径
+        ''' </param>
+        ''' <returns></returns>
         Public Function LoadProfile(Of T As Class)(Optional ByRef fileExists As Boolean = False, Optional ByRef path$ = Nothing) As T
-            path = __getPath(Of T)()
+            path = path Or __getPath(Of T)()
             fileExists = path.FileExists
 
             If Not fileExists Then

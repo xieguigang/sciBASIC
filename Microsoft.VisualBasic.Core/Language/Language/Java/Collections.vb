@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d0f98729dabf9adc41e585745d2c0ac, Microsoft.VisualBasic.Core\Language\Language\Java\Collections.vb"
+﻿#Region "Microsoft.VisualBasic::05ed8542e0bde23290ea9842fb090118, Microsoft.VisualBasic.Core\Language\Language\Java\Collections.vb"
 
     ' Author:
     ' 

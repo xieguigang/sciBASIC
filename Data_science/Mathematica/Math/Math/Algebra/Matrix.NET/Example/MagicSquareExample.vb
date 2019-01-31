@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a42f128a12a50a87947e3acdd77ff5d, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Example\MagicSquareExample.vb"
+﻿#Region "Microsoft.VisualBasic::ad5abd35edd7dd1fb00a13590076af66, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Example\MagicSquareExample.vb"
 
     ' Author:
     ' 

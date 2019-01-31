@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::683d8eafc41ab9e1a8fb91211c620648, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::59bf99ac8b302584aeaf6579450981b0, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Model\Directory\Abstract.vb"
 
     ' Author:
     ' 

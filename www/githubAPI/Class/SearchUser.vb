@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa37a47a161a4bd28961c6d8f0341bb0, www\githubAPI\Class\SearchUser.vb"
+﻿#Region "Microsoft.VisualBasic::0ad9c27db04a246cde7cf84c89873018, www\githubAPI\Class\SearchUser.vb"
 
     ' Author:
     ' 

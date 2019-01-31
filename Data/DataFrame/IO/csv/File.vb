@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49dc9ae998a43b291ae48b2e684eedb0, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::d1db2a27aaf7fb6580267514e38f782d, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -51,8 +51,8 @@
     ' 
     '             Function: __getDefaultPath, __LINQ_LOAD, __loads, Contains, (+2 Overloads) Distinct
     '                       FastLoad, GetEnumerator, GetEnumerator1, IndexOf, IsNullOrEmpty
-    '                       Join, (+2 Overloads) Load, LoadTsv, Normalization, Remove
-    '                       RemoveSubRow
+    '                       Join, (+2 Overloads) Load, LoadTsv, Normalization, Parse
+    '                       Remove, RemoveSubRow
     ' 
     '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
     '                  RemoveAt

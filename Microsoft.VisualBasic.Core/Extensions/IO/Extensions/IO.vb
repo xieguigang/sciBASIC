@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b6714930826e413b5320efe5892ef2d, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\IO.vb"
+﻿#Region "Microsoft.VisualBasic::9363cef36d567a333d418eb0f44cc2cc, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\IO.vb"
 
     ' Author:
     ' 
@@ -147,15 +147,15 @@ Public Module IOExtensions
     ''' <param name="path">文件的路径</param>
     ''' <param name="mode">File open mode, default is create a new file.(文件指针的打开模式)</param>
     ''' <param name="doClear">
-    ''' By default is clear all of the data in source file. Which means it is open for write 
+    ''' By default is preserve all of the data in source file. Which means it is open for write 
     ''' new file data by default. If want to append data or read file, set this argument to false.
     ''' (写模式下默认将原来的文件数据清空)
-    ''' 是否将原来的文件之中的数据清空？默认是，否则将会以追加模式工作
+    ''' 是否将原来的文件之中的数据清空？默认不是，否则将会以追加模式工作
     ''' </param>
     ''' <returns></returns>
     <ExportAPI("Open.File")>
     <Extension>
-    Public Function Open(path$, Optional mode As FileMode = FileMode.OpenOrCreate, Optional doClear As Boolean = True) As FileStream
+    Public Function Open(path$, Optional mode As FileMode = FileMode.OpenOrCreate, Optional doClear As Boolean = False) As FileStream
         Dim access As FileShare
 
         With path.ParentPath

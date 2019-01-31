@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2bd67d02436d8c2d82c25d9b0d927163, Data_science\SVM\SVM\method\GradientDescent.vb"
+﻿#Region "Microsoft.VisualBasic::9a240a864f264452270b59bdba5ba11b, Data_science\SVM\SVM\method\GradientDescent.vb"
 
     ' Author:
     ' 

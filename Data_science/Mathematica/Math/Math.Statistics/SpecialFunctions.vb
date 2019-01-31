@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f298aaee5fe210aacdba250eef338b5d, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::a37ee0cf6c31a39656dd7cbbe7f618df, Data_science\Mathematica\Math\Math.Statistics\SpecialFunctions.vb"
 
     ' Author:
     ' 

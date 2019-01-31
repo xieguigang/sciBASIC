@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0fcd8f9dc61e9692270663703b1ba91, Microsoft.VisualBasic.Core\Language\Language\Python\Regexp.vb"
+﻿#Region "Microsoft.VisualBasic::ab30b487b449be23e5a9d0953d89542f, Microsoft.VisualBasic.Core\Language\Language\Python\Regexp.vb"
 
     ' Author:
     ' 

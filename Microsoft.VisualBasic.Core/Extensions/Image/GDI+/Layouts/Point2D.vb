@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4055b0aa975f4692a5ab25a6c4105c5, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Point2D.vb"
+﻿#Region "Microsoft.VisualBasic::9a3dd3a9b61e0603798830948a7f441b, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Point2D.vb"
 
     ' Author:
     ' 
@@ -65,6 +65,29 @@ Namespace Imaging.LayoutModel
         ''' </summary>
         ''' <returns> Returns the x-coordinate. </returns>
         Public Property Y As Double
+
+        Default Public Overridable Property Axis(a As String) As Double
+            Get
+                Select Case UCase(a)
+                    Case NameOf(X)
+                        Return X
+                    Case NameOf(Y)
+                        Return Y
+                    Case Else
+                        Throw New NotImplementedException(a)
+                End Select
+            End Get
+            Set(value As Double)
+                Select Case UCase(a)
+                    Case NameOf(X)
+                        X = value
+                    Case NameOf(Y)
+                        Y = value
+                    Case Else
+                        Throw New NotImplementedException(a)
+                End Select
+            End Set
+        End Property
 
         ''' <summary>
         ''' Returns the coordinates as a new point.

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2c0eabae5b96d4f2ae3ba3da2006ffd, Data_science\Mathematica\Plot\Plots\3D\g\Grid.vb"
+﻿#Region "Microsoft.VisualBasic::47f43462f418549d5cb7876b2ef55571, Data_science\Mathematica\Plot\Plots\3D\g\Grid.vb"
 
     ' Author:
     ' 

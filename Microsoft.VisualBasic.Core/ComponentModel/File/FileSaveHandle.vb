@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aecaeac84a7bc06b34db9cc0314b7be1, Microsoft.VisualBasic.Core\ComponentModel\File\FileSaveHandle.vb"
+﻿#Region "Microsoft.VisualBasic::bd978faa87a7eccb3c8bd4a9a14a5500, Microsoft.VisualBasic.Core\ComponentModel\File\FileSaveHandle.vb"
 
     ' Author:
     ' 

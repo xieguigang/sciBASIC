@@ -935,6 +935,8 @@
     <Compile Include="ComponentModel\Ranges\Selector\NumericTagged.vb" />
     <Compile Include="ComponentModel\Ranges\Unit.vb" />
     <Compile Include="ComponentModel\Settings\Inf\IOProvider.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\FactorValue.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
@@ -959,6 +961,9 @@
     <Compile Include="Extensions\Trinity\Word.vb" />
     <Compile Include="Extensions\Trinity\WordClass.vb" />
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
+    <Compile Include="Language\Language\JavaScript\Linq.vb" />
+    <Compile Include="Language\Language\JavaScript\JavaScriptObject.vb" />
+    <Compile Include="Language\Language\JavaScript\UnionType.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
     <Compile Include="Language\Language\Python\NamespaceDoc.vb" />
     <Compile Include="Net\HTTP\ZipStream.vb" />
@@ -1155,7 +1160,6 @@
     <Compile Include="ComponentModel\Settings\DataModels\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
     <Compile Include="ApplicationServices\IOHandler.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\Binding.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />

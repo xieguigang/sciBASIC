@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fe72b005db99f4b5b9e352cf52bda6f, gr\Microsoft.VisualBasic.Imaging\Drivers\ImageSynthesis.vb"
+﻿#Region "Microsoft.VisualBasic::6917b8c8af09007df9ce6117b6648e38, gr\Microsoft.VisualBasic.Imaging\Drivers\ImageSynthesis.vb"
 
     ' Author:
     ' 

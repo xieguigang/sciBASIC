@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2445e556510fe666be8c798f6a53e6d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\ConvexHull.vb"
+﻿#Region "Microsoft.VisualBasic::3396794c52a4e0e8eb8e69381b9bcb53, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\ConvexHull\ConvexHull.vb"
 
     ' Author:
     ' 

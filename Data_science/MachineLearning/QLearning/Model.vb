@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41102014eb8773fe47ce9813dcd51b3a, Data_science\MachineLearning\QLearning\Model.vb"
+﻿#Region "Microsoft.VisualBasic::585f3860b591689891284f999b029255, Data_science\MachineLearning\QLearning\Model.vb"
 
     ' Author:
     ' 

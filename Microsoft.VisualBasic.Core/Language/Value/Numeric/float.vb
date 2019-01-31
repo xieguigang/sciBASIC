@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee81197d8117588452030dc667220d62, Microsoft.VisualBasic.Core\Language\Value\Numeric\float.vb"
+﻿#Region "Microsoft.VisualBasic::91f74f236ca476476fb4ecfd5dea9440, Microsoft.VisualBasic.Core\Language\Value\Numeric\float.vb"
 
     ' Author:
     ' 

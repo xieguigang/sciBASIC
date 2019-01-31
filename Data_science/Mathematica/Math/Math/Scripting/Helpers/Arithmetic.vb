@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8832e29d20fd2dea90c36b93a9078914, Data_science\Mathematica\Math\Math\Scripting\Helpers\Arithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::f2ed5b7f1902e25e6aa117ae9f7fa04f, Data_science\Mathematica\Math\Math\Scripting\Helpers\Arithmetic.vb"
 
     ' Author:
     ' 

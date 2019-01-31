@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c246c82a03b290bfded94e5a9624160d, Data_science\MachineLearning\NeuralNetwork\TrainingUtils.vb"
+﻿#Region "Microsoft.VisualBasic::dae8da6c2598d4d08fa9d24050e9aad9, Data_science\MachineLearning\NeuralNetwork\TrainingUtils.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Class TrainingUtils
     ' 
-    '         Properties: MinError, NeuronNetwork, TrainingSet, TrainingType, XP
+    '         Properties: MinError, NeuronNetwork, TrainingSet, TrainingType, Truncate
+    '                     XP
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

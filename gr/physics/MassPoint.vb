@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e3295c999331cb1630162076bc17a41, gr\physics\MassPoint.vb"
+﻿#Region "Microsoft.VisualBasic::d8844823e12ebbedfa04069dc7fd91ec, gr\physics\MassPoint.vb"
 
     ' Author:
     ' 
