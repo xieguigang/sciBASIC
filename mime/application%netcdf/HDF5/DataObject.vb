@@ -10,7 +10,7 @@ Namespace org.renjin.hdf5
         Private address As Long
         Private version As SByte
         Private ReadOnly messages As IList(Of MessageBase) = New List(Of MessageBase)()
-        Private ReadOnly continuations As LinkedList(Of ContinuationMessage) = New java.util.ArrayDeque(Of ContinuationMessage)()
+        Private ReadOnly continuations As New java.util.ArrayDeque(Of ContinuationMessage)()
 
         Public Sub New(file As Hdf5Data, address As Long)
             Me.file = file

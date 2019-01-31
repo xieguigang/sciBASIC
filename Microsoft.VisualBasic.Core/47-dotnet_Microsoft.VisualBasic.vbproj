@@ -965,6 +965,13 @@
     <Compile Include="Language\Language\JavaScript\JavaScriptObject.vb" />
     <Compile Include="Language\Language\JavaScript\UnionType.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
+    <Compile Include="Language\Language\Java\nio\Buffer.vb" />
+    <Compile Include="Language\Language\Java\nio\ByteBuffer.vb" />
+    <Compile Include="Language\Language\Java\nio\HeapIntBuffer.vb" />
+    <Compile Include="Language\Language\Java\nio\IntBuffer.vb" />
+    <Compile Include="Language\Language\Java\util\AbstractCollection.vb" />
+    <Compile Include="Language\Language\Java\util\ArrayDeque.vb" />
+    <Compile Include="Language\Language\Java\util\Deque.vb" />
     <Compile Include="Language\Language\Python\NamespaceDoc.vb" />
     <Compile Include="Net\HTTP\ZipStream.vb" />
     <Compile Include="Net\HTTP\Multipart.vb" />
