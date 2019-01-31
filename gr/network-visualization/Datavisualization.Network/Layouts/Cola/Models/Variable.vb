@@ -48,6 +48,8 @@
 Namespace Layouts.Cola
 
     Public Class Variable
+
+        Public index As Integer
         Public offset As Double = 0
         Public block As Block
         Public cIn As Constraint()

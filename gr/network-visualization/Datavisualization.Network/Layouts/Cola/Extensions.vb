@@ -87,7 +87,7 @@ Namespace Layouts.Cola
             rect.Y += (cy - rect.CenterY)
         End Sub
 
-        Public Function compareEvents(a As [Event], b As [Event]) As Double
+        Public Function compareEvents(a As [Event], b As [Event]) As Integer
             If (a.pos > b.pos) Then
                 Return 1
             End If

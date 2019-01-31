@@ -126,15 +126,16 @@ Namespace Layouts.Cola
                 Return
             End If
             Me.project(x0, y0, x0, x, Function(v) v.px, Me.xConstraints,
-                generateXGroupConstraints,
-                Function(v)
-                    Return v.bounds.setXCentre(InlineAssignHelper(x(v.variable.index), v.variable.position()))
-                End Function,
+               AddressOf generateXGroupConstraints,
+                Sub(v, i)
+                    x(v.variable.index) = v.variable.position()
+                    v.bounds.setXCentre(x(v.variable.index))
+                End Sub,
                 Sub(g)
                     Dim xmin = InlineAssignHelper(x(g.minVar.index), g.minVar.position())
                     Dim xmax = InlineAssignHelper(x(g.maxVar.index), g.maxVar.position())
                     Dim p2 = g.padding / 2
-                    g.bounds.x = xmin - p2
+                    g.bounds.X = xmin - p2
                     g.bounds.X = xmax + p2
                 End Sub)
         End Sub
@@ -144,14 +145,19 @@ Namespace Layouts.Cola
                 Return
             End If
             Me.project(x0, y0, y0, y, Function(v) v.py, Me.yConstraints,
-                generateYGroupConstraints, Function(v) v.bounds.setYCentre(InlineAssignHelper(y(v.variable.index), v.variable.position())), Sub(g)
-                                                                                                                                                Dim ymin = InlineAssignHelper(y(g.minVar.index), g.minVar.position())
-                                                                                                                                                Dim ymax = InlineAssignHelper(y(g.maxVar.index), g.maxVar.position())
-                                                                                                                                                Dim p2 = g.padding / 2
+               AddressOf generateYGroupConstraints,
+               Sub(v, i)
+                   y(v.variable.index) = v.variable.position()
+                   v.bounds.setYCentre(y(v.variable.index))
+               End Sub,
+               Sub(g)
+                   Dim ymin = InlineAssignHelper(y(g.minVar.index), g.minVar.position())
+                   Dim ymax = InlineAssignHelper(y(g.maxVar.index), g.maxVar.position())
+                   Dim p2 = g.padding / 2
 
-                                                                                                                                                g.bounds.y = ymin - p2
-                                                                                                                                                g.bounds.Y = ymax + p2
-                                                                                                                                            End Sub)
+                   g.bounds.Y = ymin - p2
+                   g.bounds.Y = ymax + p2
+               End Sub)
         End Sub
 
         Public Function projectFunctions() As Action(Of Double(), Double(), Double())()
@@ -161,8 +167,13 @@ Namespace Layouts.Cola
             }
         End Function
 
-        Private Sub project(x0 As Double(), y0 As Double(), start As Double(), desired As Double(), getDesired As Func(Of GraphNode, Double), cs As Constraint(),
-            generateConstraints As Func(Of ProjectionGroup, Constraint()), updateNodeBounds As Func(Of GraphNode, any), updateGroupBounds As Func(Of ProjectionGroup, any))
+        Private Sub project(x0 As Double(), y0 As Double(), start As Double(), desired As Double(),
+                            getDesired As Func(Of GraphNode, Double),
+                            cs As Constraint(),
+                            generateConstraints As Func(Of ProjectionGroup, Constraint()),
+                            updateNodeBounds As Action(Of GraphNode, Integer),
+                            updateGroupBounds As Action(Of ProjectionGroup, Integer))
+
             Me.setupVariablesAndBounds(x0, y0, desired, getDesired)
             If Me.rootGroup IsNot Nothing AndAlso Me.avoidOverlaps Then
                 computeGroupBounds(Me.rootGroup)

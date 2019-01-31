@@ -123,8 +123,8 @@ Namespace Layouts.Cola
         Public py As Double?
         Public parent As Group
 
-        Public Shared Function makeRBTree() As RBNode(Of Node, Object)
-            Return New RBNode(Of Node, Object)(Nothing, Nothing)
+        Public Shared Function makeRBTree() As RBNode(Of Integer, Node)
+            Return New RBNode(Of Integer, Node)(Nothing, Nothing)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

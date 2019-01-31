@@ -1,21 +1,23 @@
 ﻿Imports System.Threading
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
+Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace Layouts.Cola
 
     Public Class RectAccessors
-        Public getCentre As Func(Of Rectangle2D, Number)
-        Public getOpen As Func(Of Rectangle2D, Number)
-        Public getClose As Func(Of Rectangle2D, Number)
-        Public getSize As Func(Of Rectangle2D, Number)
-        Public makeRect As Func(Of Number, Number, Number, Number, Rectangle2D)
-        Public findNeighbours As Action(Of Node, RBTree(Of Node))
+        Public getCentre As Func(Of Rectangle2D, Double)
+        Public getOpen As Func(Of Rectangle2D, Double)
+        Public getClose As Func(Of Rectangle2D, Double)
+        Public getSize As Func(Of Rectangle2D, Double)
+        Public makeRect As Func(Of Double, Double, Double, Double, Rectangle2D)
+        Public findNeighbours As Action(Of Node, RBTree(Of Integer, Node))
     End Class
 
     Module ProjectionExtensions
 
         Private xRect As New RectAccessors() With {
-            .getCentre = Function(r) r.cx(),
+            .getCentre = Function(r) r.CenterX,
             .getOpen = Function(r) r.Y,
             .getClose = Function(r) r.Y,
             .getSize = Function(r) r.Width(),
@@ -24,7 +26,7 @@ Namespace Layouts.Cola
         }
 
         Private yRect As New RectAccessors() With {
-            .getCentre = Function(r) r.cy(),
+            .getCentre = Function(r) r.CenterY,
             .getOpen = Function(r) r.X,
             .getClose = Function(r) r.X,
             .getSize = Function(r) r.Height(),
@@ -37,7 +39,7 @@ Namespace Layouts.Cola
             Dim childConstraints As Constraint() = If(Not gn, New Constraint() {}, root.groups.reduce(Function(ccs, g) ccs.concat(generateGroupConstraints(g, f, minSep, True)), New Constraint() {}))
             Dim n = (If(isContained, 2, 0)) + ln + gn
             Dim vs As Variable() = New Variable(n) {}
-            Dim rs As Rectangle2D() = New Variable(n) {}
+            Dim rs As Rectangle2D() = New Rectangle2D(n) {}
             Dim i = 0
             Dim add = Sub(r, v)
                           rs(i) = r
@@ -86,7 +88,7 @@ Namespace Layouts.Cola
         Private Function generateConstraints(rs As Rectangle2D(), vars As Variable(), rect As RectAccessors, minSep As Double) As Constraint()
             Dim n__1 = rs.Length
             Dim N__2 = 2 * n__1
-            Dim events = New Array(Of [Event])(N__2)
+            Dim events = New [Event](N__2) {}
             For i As Integer = 0 To n__1 - 1
                 Dim r = rs(i)
                 Dim v = New Node(vars(i), r, rect.getCentre(r))
@@ -97,7 +99,7 @@ Namespace Layouts.Cola
             Call events.Sort(compareEvents)
 
             Dim cs As New List(Of Constraint)
-            Dim scanline = makeRBTree()
+            Dim scanline = Node.makeRBTree()
 
             For i As Integer = 0 To N__2 - 1
                 Dim e = events(i)
@@ -129,7 +131,7 @@ Namespace Layouts.Cola
             Return cs
         End Function
 
-        Private Sub findXNeighbours(v As Node, scanline As RBTree(Of Node))
+        Private Sub findXNeighbours(v As Node, scanline As RBTree(Of Integer, Node))
             Dim f = Sub(forward As String, reverse As String)
                         Dim it = scanline.findIter(v)
                         Dim u
@@ -149,7 +151,7 @@ Namespace Layouts.Cola
             f("prev", "next")
         End Sub
 
-        Private Sub findYNeighbours(v As Node, scanline As RBTree(Of Node))
+        Private Sub findYNeighbours(v As Node, scanline As RBTree(Of Integer, Node))
             Dim f = Sub(forward As String, reverse As String)
                         Dim u = scanline.findIter(v)(forward)()
                         If u IsNot Nothing AndAlso u.r.overlapX(v.r) > 0 Then
