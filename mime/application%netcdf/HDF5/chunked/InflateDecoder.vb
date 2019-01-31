@@ -60,8 +60,8 @@ Namespace org.renjin.hdf5.chunked
 			Dim [off] As Integer = 0
 			Dim len As Integer = buffer.Length
 			Dim n As Integer
-            Try
-                n = inf.inflate(buffer, [off], len)
+
+            n = inf.inflate(buffer, [off], len)
                 Do While n = 0
                     If inf.finished() OrElse inf.needsDictionary() Then
                         Exit Do
@@ -73,11 +73,9 @@ Namespace org.renjin.hdf5.chunked
                     len -= n
                     n = inf.inflate(buffer, [off], len)
                 Loop
-            Catch e As Exception
-                Throw New Exception(e)
-            End Try
 
-			Return chunkFactory.wrap(chunkOffset, java.nio.ByteBuffer.wrap(buffer))
+
+                Return chunkFactory.wrap(chunkOffset, java.nio.ByteBuffer.wrap(buffer))
 	'
 	'        // Allocate a new array of doubles and decode the uncompressed data
 	'        // into floating point numbers

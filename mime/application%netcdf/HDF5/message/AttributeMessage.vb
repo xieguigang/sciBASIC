@@ -16,9 +16,9 @@ Namespace org.renjin.hdf5.message
 	''' however.
 	''' </summary>
 	Public Class AttributeMessage
-		Inherits Message
+        Inherits MessageBase
 
-	  Public Const MESSAGE_TYPE As Integer = &HC
+        Public Const MESSAGE_TYPE As Integer = &HC
 
 	  Public Sub New(reader As org.renjin.hdf5.HeaderReader)
 

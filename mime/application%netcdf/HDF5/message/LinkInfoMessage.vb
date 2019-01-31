@@ -4,7 +4,7 @@ Namespace org.renjin.hdf5.message
 
 
     Public Class LinkInfoMessage
-        Inherits Message
+        Inherits MessageBase
 
         Public Const MESSAGE_TYPE As Integer = &H2
 

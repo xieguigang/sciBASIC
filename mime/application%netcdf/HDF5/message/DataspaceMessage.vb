@@ -2,7 +2,7 @@ Imports System
 
 Namespace org.renjin.hdf5.message
 
-    Public Enum Type
+    Public Enum messageType
         ''' <summary>
         ''' A scalar dataspace; in other words, a dataspace with a single, dimensionless element.
         ''' </summary>
@@ -25,9 +25,9 @@ Namespace org.renjin.hdf5.message
     ''' datasets requiring a more complex layout are not yet supported.
     ''' </summary>
     Public Class DataspaceMessage
-		Inherits Message
+        Inherits MessageBase
 
-		Public Const MESSAGE_TYPE As Integer = &H1
+        Public Const MESSAGE_TYPE As Integer = &H1
 
         Private ReadOnly version As SByte
 
@@ -47,7 +47,7 @@ Namespace org.renjin.hdf5.message
         End Property
 
         Public Overridable Property Dimensionality As Integer
-        Public Overridable Property Type As Type = Type.SIMPLE
+        Public Overridable Property Type As messageType = messageType.SIMPLE
 
         'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
         'ORIGINAL LINE: public DataspaceMessage(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException

@@ -13,9 +13,9 @@ Namespace org.renjin.hdf5.message
 	''' group’s fractal heap. Currently, only datasets using chunked data storage use the filter pipeline on their raw data.</p>
 	''' </summary>
 	Public Class DataStorageMessage
-		Inherits Message
+        Inherits MessageBase
 
-		Public Const MESSAGE_TYPE As Integer = &HB
+        Public Const MESSAGE_TYPE As Integer = &HB
 
         Public Overridable Property Filters As New List(Of Filter)
 

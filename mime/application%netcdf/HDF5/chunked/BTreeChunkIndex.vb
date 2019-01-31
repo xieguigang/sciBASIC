@@ -37,48 +37,37 @@ Namespace org.renjin.hdf5.chunked
 
 		End Sub
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: private ChunkNode getNode(ChunkKey key) throws java.io.IOException
-		Private Function getNode(key As ChunkKey) As ChunkNode
-'JAVA TO VB CONVERTER NOTE: The variable node was renamed since Visual Basic does not handle local variables named the same as class members well:
-			Dim node_Renamed As ChunkNode = nodes(key.ChildPointer)
-			If node_Renamed Is Nothing Then
-				node_Renamed = readNode(key.ChildPointer, key.ChunkSize)
-				nodes(key.ChildPointer) = node_Renamed
-			End If
-			Return node_Renamed
-		End Function
+        Private Function getNode(key As ChunkKey) As ChunkNode
+            Dim node_Renamed As ChunkNode = nodes(key.ChildPointer)
+            If node_Renamed Is Nothing Then
+                node_Renamed = readNode(key.ChildPointer, key.ChunkSize)
+                nodes(key.ChildPointer) = node_Renamed
+            End If
+            Return node_Renamed
+        End Function
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: private ChunkNode readNode(long address, int size) throws java.io.IOException
-		Private Function readNode(address As Long, size As Integer) As ChunkNode
+        'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+        'ORIGINAL LINE: private ChunkNode readNode(long address, int size) throws java.io.IOException
+        Private Function readNode(address As Long, size As Integer) As ChunkNode
 			Return New ChunkNode(dataLayout, file.readerAt(address, size))
 		End Function
 
-		''' <summary>
-		''' Returns the chunk containing the value at the given
-		''' </summary>
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: public Chunk chunkAt(long[] arrayIndex) throws java.io.IOException
-		Public Overrides Function chunkAt(arrayIndex() As Long) As Chunk
+        ''' <summary>
+        ''' Returns the chunk containing the value at the given
+        ''' </summary>
+        Public Overrides Function chunkAt(arrayIndex() As Long) As Chunk
 			Debug.Assert(dataLayout.Dimensionality = arrayIndex.Length, "Invalid dimensionality")
 			Return getChunk(arrayIndex)
 		End Function
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: private Chunk getChunk(long[] index) throws java.io.IOException
-		Private Function getChunk(index() As Long) As Chunk
-			Dim key As ChunkKey = findNode(index)
-            Try
-                Return chunkCache.get(key)
-            Catch e As Exception
-                Throw New Exception(e)
-			End Try
-		End Function
+        Private Function getChunk(index() As Long) As Chunk
+            Dim key As ChunkKey = findNode(index)
+            Return chunkCache.get(key)
+        End Function
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: private Chunk readChunkData(ChunkKey key) throws java.io.IOException
-		Private Function readChunkData(key As ChunkKey) As Chunk
+        'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
+        'ORIGINAL LINE: private Chunk readChunkData(ChunkKey key) throws java.io.IOException
+        Private Function readChunkData(key As ChunkKey) As Chunk
 			Return chunkDecoder.read(key.Offset, key.ChildPointer, key.ChunkSize)
 		End Function
 

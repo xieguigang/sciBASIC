@@ -31,13 +31,13 @@ Namespace org.renjin.hdf5.chunked
 			Next i
 		End Sub
 
-		Public Overridable Property Leaf As Boolean
-			Get
-				Return nodeLevel = 0
-			End Get
-		End Property
+        Public Overridable ReadOnly Property Leaf As Boolean
+            Get
+                Return nodeLevel = 0
+            End Get
+        End Property
 
-		Public Overridable Function findChildAddress(chunkCoordinates() As Long) As ChunkKey
+        Public Overridable Function findChildAddress(chunkCoordinates() As Long) As ChunkKey
 			For i As Integer = 0 To keys.Length - 2
 				Dim lower As Integer = keys(i).compare(chunkCoordinates)
 				Dim upper As Integer = keys(i+1).compare(chunkCoordinates)

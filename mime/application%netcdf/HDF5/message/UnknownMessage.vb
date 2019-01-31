@@ -1,9 +1,9 @@
 Namespace org.renjin.hdf5.message
 
 	Public Class UnknownMessage
-		Inherits Message
+        Inherits MessageBase
 
-		Private type As Integer
+        Private type As Integer
 		Private ReadOnly messageData() As SByte
 
 		Public Sub New(messageType As Integer, messageData() As SByte)

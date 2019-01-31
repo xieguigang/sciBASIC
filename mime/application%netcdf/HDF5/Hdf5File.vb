@@ -65,14 +65,14 @@ Namespace org.renjin.hdf5
             Dim chunkDecoder As ChunkDecoder = decoderFactory.create(datatype, layout, storage)
 
             Select Case layout.ChunkIndexingType
-                Case BTREE
+                Case ChunkIndexingType.BTREE
                     Return New BTreeChunkIndex(file, layout, chunkDecoder)
-                Case FIXED_ARRAY
+                Case ChunkIndexingType.FIXED_ARRAY
                     Return New FixedArrayChunkIndex(file, dataspace, layout, chunkDecoder)
-                Case EXTENSIBLE_ARRAY
+                Case ChunkIndexingType.EXTENSIBLE_ARRAY
                     Return New ExtensibleArrayChunkIndex(file, dataspace, layout, decoderFactory.createFactory(datatype))
                 Case Else
-                    Throw New System.NotSupportedException("indexing type: " & layout.ChunkIndexingType)
+                    Throw New NotSupportedException("indexing type: " & layout.ChunkIndexingType)
             End Select
         End Function
     End Class

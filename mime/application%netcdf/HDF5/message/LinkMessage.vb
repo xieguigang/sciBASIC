@@ -10,9 +10,9 @@ Namespace org.renjin.hdf5.message
 	''' set to the "undefined address" value.
 	''' </summary>
 	Public Class LinkMessage
-		Inherits Message
+        Inherits MessageBase
 
-		Public Const MESSAGE_TYPE As Integer = &H6
+        Public Const MESSAGE_TYPE As Integer = &H6
 
 		Public Const HARD_LINK As SByte = 0
 		Public Const SOFT_LINK As SByte = 1

@@ -18,7 +18,7 @@ Namespace org.renjin.hdf5.message
     End Enum
 
     Public Class DatatypeMessage
-        Inherits Message
+        Inherits MessageBase
 
         Public Const MESSAGE_TYPE As Integer = &H3
 

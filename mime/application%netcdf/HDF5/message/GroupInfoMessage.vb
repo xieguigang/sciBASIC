@@ -2,9 +2,9 @@ Namespace org.renjin.hdf5.message
 
 
 	Public Class GroupInfoMessage
-		Inherits Message
+        Inherits MessageBase
 
-		Public Const MESSAGE_TYPE As Integer = &HA
+        Public Const MESSAGE_TYPE As Integer = &HA
 
 		Private linkPhaseChangeMaximumCompactValue As Integer = -1
 		Private linkPhaseChangeMinimumDenseValue As Integer = -1

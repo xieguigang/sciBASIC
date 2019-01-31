@@ -16,9 +16,9 @@ Namespace org.renjin.hdf5.message
     End Enum
 
     Public Class DataLayoutMessage
-		Inherits Message
+        Inherits MessageBase
 
-		Public Const MESSAGE_TYPE As Integer = &H8
+        Public Const MESSAGE_TYPE As Integer = &H8
 
 
         Private rawAddress As Long

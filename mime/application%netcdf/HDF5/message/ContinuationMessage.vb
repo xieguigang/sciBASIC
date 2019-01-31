@@ -7,7 +7,7 @@ Namespace org.renjin.hdf5.message
     ''' current data object. This can be used when header blocks become too large or are likely to change over time.
     ''' </summary>
     Public Class ContinuationMessage
-        Inherits Message
+        Inherits MessageBase
 
         Public Const MESSAGE_TYPE As Integer = &H10
 

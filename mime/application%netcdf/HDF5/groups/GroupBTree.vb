@@ -64,9 +64,7 @@ Namespace org.renjin.hdf5.groups
 
 		Private ReadOnly entries() As SymbolTableEntry
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: private SymbolTableNode(long address) throws java.io.IOException
-		Private Sub New(outerInstance As GroupBTree, address As Long)
+            Private Sub New(outerInstance As GroupBTree, address As Long)
 				Me.outerInstance = outerInstance
 		  Dim reader As org.renjin.hdf5.HeaderReader = outerInstance.file.readerAt(address)
 		  reader.checkSignature("SNOD")
@@ -95,9 +93,7 @@ Namespace org.renjin.hdf5.groups
 		Private ReadOnly cacheType As Integer
 		Private ReadOnly scratch() As SByte
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: public SymbolTableEntry(org.renjin.hdf5.HeaderReader reader) throws java.io.IOException
-		Public Sub New(outerInstance As GroupBTree, reader As org.renjin.hdf5.HeaderReader)
+            Public Sub New(outerInstance As GroupBTree, reader As org.renjin.hdf5.HeaderReader)
 				Me.outerInstance = outerInstance
 		  linkNameOffset = reader.readOffset()
 		  linkName = outerInstance.localHeap.stringAt(linkNameOffset)
@@ -108,9 +104,7 @@ Namespace org.renjin.hdf5.groups
 		End Sub
 	  End Class
 
-'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-'ORIGINAL LINE: public GroupBTree(org.renjin.hdf5.Hdf5Data file, org.renjin.hdf5.message.SymbolTableMessage symbolTable) throws java.io.IOException
-	  Public Sub New(file As org.renjin.hdf5.Hdf5Data, symbolTable As org.renjin.hdf5.message.SymbolTableMessage)
+        Public Sub New(file As org.renjin.hdf5.Hdf5Data, symbolTable As org.renjin.hdf5.message.SymbolTableMessage)
 		Me.file = file
 		Me.symbolTable = symbolTable
 		Me.localHeap = New LocalHeap(file, symbolTable.LocalHeapAddress)

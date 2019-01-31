@@ -7,7 +7,7 @@ Namespace org.renjin.hdf5.message
     ''' which are located with this message.
     ''' </summary>
     Public Class SymbolTableMessage
-        Inherits Message
+        Inherits MessageBase
 
         Public Const MESSAGE_TYPE As Integer = &H11
         Private ReadOnly bTreeAddress As Long

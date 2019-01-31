@@ -12,7 +12,7 @@ Namespace org.renjin.hdf5
         Private ReadOnly file As Hdf5Data
         Private address As Long
         Private version As SByte
-        Private ReadOnly messages As IList(Of message) = New List(Of message)()
+        Private ReadOnly messages As IList(Of MessageBase) = New List(Of MessageBase)()
         Private ReadOnly continuations As LinkedList(Of ContinuationMessage) = New java.util.ArrayDeque(Of ContinuationMessage)()
 
         'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
@@ -66,8 +66,6 @@ Namespace org.renjin.hdf5
         End Sub
 
 
-        'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
-        'ORIGINAL LINE: private void readMessagesVersion1(HeaderReader reader, int objectHeaderSize) throws java.io.IOException
         Private Sub readMessagesVersion1(reader As HeaderReader, objectHeaderSize As Integer)
 
             Do While objectHeaderSize > 0
@@ -94,7 +92,7 @@ Namespace org.renjin.hdf5
             Loop
         End Sub
 
-        Private Sub addMessage(message As message)
+        Private Sub addMessage(message As MessageBase)
             messages.Add(message)
             If TypeOf message Is ContinuationMessage Then
                 continuations.AddLast(CType(message, ContinuationMessage))
@@ -178,7 +176,7 @@ Namespace org.renjin.hdf5
 
         'JAVA TO VB CONVERTER WARNING: Method 'throws' clauses are not available in .NET:
         'ORIGINAL LINE: private Message createMessage(int messageType, byte[] messageData) throws java.io.IOException
-        Private Function createMessage(messageType As Integer, messageData() As SByte) As message
+        Private Function createMessage(messageType As Integer, messageData() As SByte) As MessageBase
 
             Dim reader As New HeaderReader(file.Superblock, java.nio.ByteBuffer.wrap(messageData))
             Select Case messageType
@@ -209,17 +207,17 @@ Namespace org.renjin.hdf5
             End Select
         End Function
 
-        Public Overridable Function getMessages(Of T As message)(messageClass As Type) As IEnumerable(Of T)
+        Public Overridable Function getMessages(Of T As MessageBase)(messageClass As Type) As IEnumerable(Of T)
             Return org.renjin.repackaged.guava.collect.Iterables.filter(messages, messageClass)
         End Function
 
-        Public Overridable Function getMessage(Of T As message)(messageClass As Type) As T
+        Public Overridable Function getMessage(Of T As MessageBase)(messageClass As Type) As T
             Return org.renjin.repackaged.guava.collect.Iterables.getOnlyElement(getMessages(messageClass))
         End Function
 
         Public Overridable Function hasMessage(messageClass As Type) As Boolean
             'JAVA TO VB CONVERTER NOTE: The variable message was renamed since Visual Basic does not handle local variables named the same as class members well:
-            For Each message_Renamed As message In messages
+            For Each message_Renamed As MessageBase In messages
                 If message_Renamed.GetType().Equals(messageClass) Then
                     Return True
                 End If
@@ -227,9 +225,9 @@ Namespace org.renjin.hdf5
             Return False
         End Function
 
-        Public Overridable Function getMessageIfPresent(Of T As message)(messageClass As Type) As org.renjin.repackaged.guava.base.Optional(Of T)
+        Public Overridable Function getMessageIfPresent(Of T As MessageBase)(messageClass As Type) As org.renjin.repackaged.guava.base.Optional(Of T)
             'JAVA TO VB CONVERTER NOTE: The variable message was renamed since Visual Basic does not handle local variables named the same as class members well:
-            For Each message_Renamed As message In messages
+            For Each message_Renamed As MessageBase In messages
                 If message_Renamed.GetType().Equals(messageClass) Then
                     Return org.renjin.repackaged.guava.base.Optional.of(Of T)(CType(message_Renamed, T))
                 End If
