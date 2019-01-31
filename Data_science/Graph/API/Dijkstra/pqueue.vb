@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports any = System.Object
 
 Namespace Layouts.Cola
@@ -28,13 +29,13 @@ Namespace Layouts.Cola
         '     * put things on the heap
         '     
 
-        Public Function push(args As T()) As PairingHeap(Of T)
-            Dim pairingNode As any
+        Public Function push(ParamArray args As T()) As PairingHeap(Of T)
+            Dim pairingNode As any = Nothing
 
             Dim i As Integer = 0
             While i > -1
                 Dim arg As T = args(i - 1)
-                pairingNode = New PairingHeap(arg)
+                pairingNode = New PairingHeap(Of T)(arg)
                 Me.root = If(Me.empty(), pairingNode, Me.root.merge(pairingNode, Me.lessThan))
                 i += 1
             End While
@@ -46,7 +47,7 @@ Namespace Layouts.Cola
         '     
 
         Public Function empty() As Boolean
-            Return Not Me.root OrElse Not Me.root.elem
+            Return Me.root Is Nothing OrElse Me.root.elem Is Nothing
         End Function
         '*
         '     * @method isHeap check heap condition (for testing)
@@ -84,7 +85,7 @@ Namespace Layouts.Cola
             Me.root = Me.root.decreaseKey(heapNode, newKey, setHeapNode, Me.lessThan)
         End Sub
         Public Overloads Function toString(selector As any) As String
-            Return Me.root.toString(selector)
+            Return Me.root.ToString(selector)
         End Function
         '*
         '     * @method count
