@@ -59,7 +59,7 @@ Namespace Layouts.Cola
     End Interface
 
     ''' <summary>
-    ''' ���ģ���Ƕ��⿪�����粼�����ɵļ��㺯���Ľӿ�
+    ''' 这个模块是对外开放网络布局生成的计算函数的接口
     ''' </summary>
     Public Module batch
 
@@ -101,7 +101,7 @@ Namespace Layouts.Cola
         End Function
 
         ''' <summary>
-        ''' �����￪ʼ���в��ֵļ���
+        ''' 从这里开始进行布局的计算
         ''' </summary>
         ''' <param name="graph"></param>
         ''' <param name="size"></param>
@@ -117,7 +117,7 @@ Namespace Layouts.Cola
                 .nodes(graph.nodes) _
                 .links(graph.links) _
                 .powerGraphGroups(Sub(d)
-                                      ' powerGraph�����������ﱻ��ֵ��ʼ����
+                                      ' powerGraph对象是在这里被赋值初始化的
                                       powerGraph = d
                                       powerGraph.groups.ForEach(Sub(v) v.padding = grouppadding)
                                   End Sub)

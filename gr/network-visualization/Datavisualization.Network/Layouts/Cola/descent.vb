@@ -1,52 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::76ed838e92e62141784cde7b02a4e619, gr\network-visualization\Datavisualization.Network\Layouts\Cola\descent.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Descent
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: computeStepSize, computeStress, createSquareMatrix, dotProd, offsetDir
-    '                   reduceStress, run, rungeKutta
-    ' 
-    '         Sub: computeDerivatives, computeNextPosition, copy, mApply, matrixApply
-    '              mid, rightMultiply, stepAndProject, takeDescentStep
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Descent
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: computeStepSize, computeStress, createSquareMatrix, dotProd, offsetDir
+'                   reduceStress, run, rungeKutta
+' 
+'         Sub: computeDerivatives, computeNextPosition, copy, mApply, matrixApply
+'              mid, rightMultiply, stepAndProject, takeDescentStep
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Threading
+Imports Microsoft.VisualBasic.Math
 
 Namespace Layouts.Cola
 
@@ -151,7 +152,7 @@ Namespace Layouts.Cola
             Me.n = x(0).Length
             ' number of nodes
             Me.H = New Double(Me.k)()() {}
-            Me.g = New Integer(Me.k)() {}
+            Me.g = New Double(Me.k)() {}
             Me.Hd = New Double(Me.k)() {}
             Me.a = New Double(Me.k)() {}
             Me.b = New Double(Me.k)() {}
@@ -198,10 +199,10 @@ Namespace Layouts.Cola
         End Sub
 
         Public Shared Function createSquareMatrix(n As Integer, f As Func(Of Integer, Integer, Integer)) As Double()()
-            Dim M As New List(Of Integer())
+            Dim M As New List(Of Double())
 
             For i As Integer = 0 To n - 1
-                M.Add(New Integer(n - 1) {})
+                M.Add(New Double(n - 1) {})
                 For j As Integer = 0 To n - 1
                     M(i)(j) = f(i, j)
                 Next
@@ -216,7 +217,7 @@ Namespace Layouts.Cola
             Dim x#
 
             For i As Integer = 0 To Me.k - 1
-                u(i) = Me.random.getNextBetween(0.01, 1) - 0.5
+                u(i) = Me.random.GetNextBetween(0.01, 1) - 0.5
                 x = u(i)
                 l += x * x
             Next

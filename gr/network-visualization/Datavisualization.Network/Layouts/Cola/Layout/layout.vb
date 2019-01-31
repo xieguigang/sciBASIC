@@ -63,6 +63,7 @@ Namespace Layouts.Cola
     ''' Main interface to cola layout.
     ''' </summary>
     Public Class Layout
+
         Private _canvasSize As Double() = {1, 1}
         Private _linkDistance As UnionType(Of Double) = 20
         Private _defaultNodeSize As Double = 10

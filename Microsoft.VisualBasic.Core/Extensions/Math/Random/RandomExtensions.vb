@@ -126,6 +126,12 @@ Namespace Math
             Return seeds.NextDouble()
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetNextBetween(r As Random, min#, max#) As Double
+            Return (max - min) * r.NextDouble + min
+        End Function
+
         <Extension>
         Public Function GetRandomValue(rng As DoubleRange) As Double
             SyncLock seeds
