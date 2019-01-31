@@ -50,11 +50,11 @@ Namespace Layouts.Cola
 
     Module powergraphExtensions
 
-        Public Sub toGroups(modules As ModuleSet, group As Group, groups As List(Of Group))
+        Public Sub toGroups(modules As ModuleSet, group As IndexGroup, groups As List(Of IndexGroup))
             Call modules.forAll(Sub(m)
                                     If m.isLeaf Then
                                         If group.leaves Is Nothing Then
-                                            group.leaves = New List(Of Node)
+                                            group.leaves = New List(Of Integer)
                                         End If
 
                                         group.leaves.Add(m.id)
@@ -63,7 +63,7 @@ Namespace Layouts.Cola
                                         m.gid = groups.Count
 
                                         If (Not m.isIsland OrElse m.isPredefined) Then
-                                            g = New [Group] With {.id = m.gid}
+                                            g = New IndexGroup With {.id = m.gid}
 
                                             If m.isPredefined Then
                                                 For Each prop As String In m.definition.Keys
@@ -71,7 +71,7 @@ Namespace Layouts.Cola
                                                 Next
                                             End If
                                             If group.groups.IsNullOrEmpty Then
-                                                group.groups = New List(Of Group)
+                                                group.groups = New List(Of Integer)
                                             End If
 
                                             group.groups.Add(m.gid)
@@ -95,14 +95,14 @@ Namespace Layouts.Cola
             Return i
         End Function
 
-        Public Function getGroups(Of Link)(nodes As Node(), links As Link(), la As LinkTypeAccessor(Of Link), rootGroup As Group) As PowerGraph
+        Public Function getGroups(Of Link)(nodes As Node(), links As Link(), la As LinkTypeAccessor(Of Link), rootGroup As Group) As PowerGraph(Of Node)
             Dim n = nodes.Length
             Dim c = New Configuration(Of Link)(n, links, la, rootGroup)
 
             While c.greedyMerge()
             End While
 
-            Dim powerEdges As New List(Of PowerEdge)
+            Dim powerEdges As New List(Of PowerEdge(Of Node))
             Dim g = c.getGroupHierarchy(powerEdges)
 
             powerEdges.DoEach(Sub(e)
@@ -112,7 +112,7 @@ Namespace Layouts.Cola
                                   Call f("target")
                               End Sub)
 
-            Return New PowerGraph With {
+            Return New PowerGraph(Of Node) With {
                 .groups = g,
                 .powerEdges = powerEdges
             }

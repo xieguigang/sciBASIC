@@ -118,10 +118,10 @@ Namespace Layouts.Cola
             Me.definition = definition
         End Sub
 
-        Public Sub getEdges(es As List(Of PowerEdge))
+        Public Sub getEdges(es As List(Of PowerEdge(Of Integer)))
             Me.outgoing.forAll(Sub(ms, edgetype)
                                    ms.forAll(Sub(target)
-                                                 es.Add(New PowerEdge(Me.id, target.id, edgetype))
+                                                 es.Add(New PowerEdge(Of Integer)(Me.id, target.id, edgetype))
                                              End Sub)
                                End Sub)
         End Sub

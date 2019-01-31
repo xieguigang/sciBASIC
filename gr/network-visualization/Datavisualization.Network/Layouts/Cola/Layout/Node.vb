@@ -132,13 +132,23 @@ Namespace Layouts.Cola
         End Operator
     End Class
 
-    Public Class Group
+    Public Interface IGroup(Of T, L)
+        Property id As Integer
+        Property groups As List(Of T)
+        Property leaves As List(Of L)
+    End Interface
+
+    Public Class IndexGroup : Implements IGroup(Of Integer, Integer)
+
+        Public Property leaves As List(Of Integer) Implements IGroup(Of Integer, Integer).leaves
+        Public Property groups As List(Of Integer) Implements IGroup(Of Integer, Integer).groups
+        Public Property id As Integer Implements IGroup(Of Integer, Integer).id
+    End Class
+
+    Public Class Group : Implements IGroup(Of Group, Node)
 
         Public routerNode As Group
-        Public id As Integer
         Public bounds As Rectangle2D
-        Public leaves As List(Of Node)
-        Public groups As List(Of Group)
         Public padding As Double?
         Public parent As Group
         Public index As Integer
@@ -157,6 +167,10 @@ Namespace Layouts.Cola
 
             End Set
         End Property
+
+        Public Property groups As List(Of Group) Implements IGroup(Of Group, Node).groups
+        Public Property leaves As List(Of Node) Implements IGroup(Of Group, Node).leaves
+        Public Property id As Integer Implements IGroup(Of Group, Node).id
 
         Public Shared Function isGroup(g As Group) As Boolean
             Return g.leaves IsNot Nothing OrElse g.groups IsNot Nothing
