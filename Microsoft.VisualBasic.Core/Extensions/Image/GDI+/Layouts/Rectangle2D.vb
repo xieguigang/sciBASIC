@@ -130,6 +130,20 @@ Namespace Imaging.LayoutModel
             End Get
         End Property
 
+        Default Public Overrides Property Axis(a As String) As Double
+            Get
+                Select Case Strings.LCase(a)
+                    Case "cx" : Return CenterX
+                    Case "cy" : Return CenterY
+                    Case Else
+                        Return MyBase.Axis(a)
+                End Select
+            End Get
+            Set(value As Double)
+                MyBase.Axis(a) = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' Constructs a new rectangle at (0, 0) with the width and height set to 0.
         ''' </summary>
@@ -192,6 +206,17 @@ Namespace Imaging.LayoutModel
         Sub New(width%, height%)
             Call Me.New(0, 0, width, height)
         End Sub
+
+        Public Function OverlapLambda(axis As String) As Func(Of Rectangle2D, Double)
+            Select Case Strings.LCase(axis)
+                Case "x"
+                    Return AddressOf OverlapX
+                Case "y"
+                    Return AddressOf OverlapY
+                Case Else
+                    Throw New InvalidExpressionException(axis)
+            End Select
+        End Function
 
         Public Function OverlapX(r As Rectangle2D) As Double
             Dim ux = CenterX, vx = r.CenterX

@@ -89,10 +89,10 @@ Namespace Layouts.Cola
             Dim ls = Me.leaves.slice(0, Me.leaves.Length).ToArray
             While ls.Length > 0
                 ' find a column of all leaves overlapping in axis with the first leaf
-                Dim overlapping = ls.Where(Function(v) v.rect("overlap" & Strings.UCase(axis))(ls(0).rect)).ToArray
+                Dim overlapping As NodeWrapper() = ls.Where(Function(v) v.rect.OverlapLambda(axis)(ls(0).rect) > 0).ToArray
                 Dim col = New GridLine With {
                 .nodes = overlapping,
-                .pos = overlapping.Select(Function(v) v.rect("c"c & axis)()).average
+                .pos = overlapping.Select(Function(v) v.rect("c"c & axis)).Average
             }
                 columns.Add(col)
                 col.nodes.DoEach(Sub(v) ls.splice(ls.IndexOf(v), 1))

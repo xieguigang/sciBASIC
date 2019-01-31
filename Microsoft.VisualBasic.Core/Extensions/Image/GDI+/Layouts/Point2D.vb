@@ -66,7 +66,7 @@ Namespace Imaging.LayoutModel
         ''' <returns> Returns the x-coordinate. </returns>
         Public Property Y As Double
 
-        Default Public Property Axis(a As String) As Double
+        Default Public Overridable Property Axis(a As String) As Double
             Get
                 Select Case UCase(a)
                     Case NameOf(X)
