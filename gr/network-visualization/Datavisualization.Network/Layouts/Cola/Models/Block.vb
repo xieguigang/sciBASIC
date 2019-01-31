@@ -1,4 +1,6 @@
-﻿Namespace Layouts.Cola
+﻿Imports Microsoft.VisualBasic.Language
+
+Namespace Layouts.Cola
 
     Public Class Block
         Public ps As PositionStats

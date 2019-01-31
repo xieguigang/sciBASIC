@@ -166,19 +166,6 @@ Namespace Layouts.Cola.GridRouter
         End Sub
     End Class
 
-    Public Class [Event]
-        Public type As Integer
-        Public s As Segment
-        Public pos As Double
-
-        Public Structure Comparer : Implements IComparer(Of [Event])
-
-            Public Function Compare(a As [Event], b As [Event]) As Integer Implements IComparer(Of [Event]).Compare
-                Return a.pos - b.pos + a.type - b.type
-            End Function
-        End Structure
-    End Class
-
     ''' <summary>
     ''' a horizontal Or vertical line of nodes
     ''' </summary>

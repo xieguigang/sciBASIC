@@ -1,4 +1,6 @@
-﻿Namespace Layouts.Cola
+﻿Imports Microsoft.VisualBasic.Language
+
+Namespace Layouts.Cola
 
     Public Class Blocks : Implements IEnumerable(Of Block)
 
@@ -72,7 +74,8 @@
         ''' </summary>
         ''' <param name="inactive"></param>
         Public Sub split(ByRef inactive As List(Of Constraint))
-            updateBlockPositions()
+            Call updateBlockPositions()
+
             For Each b In list
                 Dim v = b.findMinLM()
                 If (Not v Is Nothing AndAlso v.lm < Solver.LAGRANGIAN_TOLERANCE) Then

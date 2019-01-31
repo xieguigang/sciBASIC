@@ -35,6 +35,15 @@ Namespace Layouts.Cola
         Public listener As Action
         Public s As Segment
         Public pos As Double
+        Public isOpen As Boolean
+        Public v As Node
+
+        Public Structure Comparer : Implements IComparer(Of [Event])
+
+            Public Function Compare(a As [Event], b As [Event]) As Integer Implements IComparer(Of [Event]).Compare
+                Return a.pos - b.pos + a.type - b.type
+            End Function
+        End Structure
 
         Default Public Property Accessor(name As String) As Object
             Get

@@ -59,7 +59,7 @@
         End Sub
 
         Private Function mostViolated() As Constraint
-            Dim minSlack = Number.MaxValue
+            Dim minSlack = Double.MaxValue
             Dim v As Constraint = Nothing
             Dim l = inactive
             Dim n = l.Count
@@ -143,8 +143,12 @@
         ''' </summary>
         ''' <returns></returns>
         Public Function solve() As Double
+            Dim lastcost = Double.MaxValue
+            Dim cost#
+
             satisfy()
-            Dim lastcost = Number.MaxValue, cost = bs.cost()
+            cost = bs.cost()
+
             While (Math.Abs(lastcost - cost) > 0.0001)
                 satisfy()
                 lastcost = cost

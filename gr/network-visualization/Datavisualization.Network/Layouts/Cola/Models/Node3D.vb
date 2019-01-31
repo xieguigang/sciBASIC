@@ -4,7 +4,6 @@ Namespace Layouts.Cola
 
     Public Class Node3D : Inherits Node
 
-        Public bounds As Rectangle2D
         Public variable As Variable
 
         Public z As Double

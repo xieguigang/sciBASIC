@@ -1,53 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::aa32b6a2c48c9a19436d777da05fb707, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: compareEvents, computeGroupBounds, makeEdgeBetween, makeEdgeTo, reduce
-    '                   removeOverlapInOneDimension
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Extensions
+' 
+'         Function: compareEvents, computeGroupBounds, makeEdgeBetween, makeEdgeTo, reduce
+'                   removeOverlapInOneDimension
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.JavaScript
 Imports Microsoft.VisualBasic.Language.Python
 Imports number = System.Double
 
 Namespace Layouts.Cola
+
+    Public Class Leaf
+        Public bounds As Rectangle2D
+        Public variable As Variable
+    End Class
+
+    Public Class ProjectionGroup
+        Public bounds As Rectangle2D
+        Public padding As number
+        Public stiffness As number
+        Public leaves As Leaf()
+        Public groups As ProjectionGroup()
+        Public minVar As Variable
+        Public maxVar As Variable
+    End Class
 
     Public Module Extensions
 
@@ -71,16 +86,15 @@ Namespace Layouts.Cola
             Return 0
         End Function
 
-
         Public Function computeGroupBounds(g As ProjectionGroup) As Rectangle2D
-            g.bounds = If(Not g.leaves Is Nothing, g.leaves.reduce(Of Rectangle2D)(Function(r As Rectangle2D, C As Leaf)
-                                                                                       Return C.bounds.Union(r)
-                                                                                   End Function, New Rectangle2D()), New Rectangle2D())
+            g.bounds = If(Not g.leaves Is Nothing, g.leaves.Reduce(Function(r As Rectangle2D, C As Leaf)
+                                                                       Return C.bounds.Union(r)
+                                                                   End Function, New Rectangle2D()), New Rectangle2D())
 
             If Not g.groups Is Nothing Then
-                g.bounds = g.groups.reduce(Of ProjectionGroup, Rectangle2D)(Function(r As Rectangle2D, C As ProjectionGroup)
-                                                                                Return computeGroupBounds(C).Union(r)
-                                                                            End Function, g.bounds)
+                g.bounds = g.groups.Reduce(Function(r As Rectangle2D, C As ProjectionGroup)
+                                               Return computeGroupBounds(C).Union(r)
+                                           End Function, g.bounds)
             End If
 
             g.bounds = g.bounds.inflate(g.padding)
