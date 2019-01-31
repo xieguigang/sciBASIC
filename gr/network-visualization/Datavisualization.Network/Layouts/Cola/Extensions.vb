@@ -55,11 +55,10 @@ Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.JavaScript
 Imports Microsoft.VisualBasic.Language.Python
-Imports number = System.Double
 
 Namespace Layouts.Cola
 
-    Public Class Leaf
+    Public Class Leaf : Inherits JavaScriptObject
         Public bounds As Rectangle2D
         Public variable As Variable
     End Class

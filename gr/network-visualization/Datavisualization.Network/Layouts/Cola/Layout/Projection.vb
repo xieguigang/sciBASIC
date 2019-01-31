@@ -1,11 +1,13 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.Language.Python
 
 Namespace Layouts.Cola
 
     Public Class Projection
-        Private xConstraints As Constraint()
-        Private yConstraints As Constraint()
+        Private xConstraints As List(Of Constraint)
+        Private yConstraints As List(Of Constraint)
         Private variables As Variable()
 
         Private nodes As GraphNode()
@@ -16,7 +18,7 @@ Namespace Layouts.Cola
         Sub New(nodes As GraphNode(),
                 groups As ProjectionGroup(),
                 Optional rootGroup As ProjectionGroup = Nothing,
-                Optional constraints As Constraint() = Nothing,
+                Optional constraints As Constraint(Of Integer)() = Nothing,
                 Optional avoidOverlaps As Boolean = False)
 
             Me.nodes = nodes
@@ -52,12 +54,12 @@ Namespace Layouts.Cola
             End If
         End Sub
 
-        Private Function createSeparation(c As Constraint) As Constraint
-            Return New Constraint(Me.nodes(c.left).variable, Me.nodes(c.right).variable, c.gap, If(c.equality IsNot Nothing, c.equality, False))
+        Private Function createSeparation(c As Constraint(Of Integer)) As Constraint(Of Variable)
+            Return New Constraint(Of Variable)(Me.nodes(c.left).variable, Me.nodes(c.right).variable, c.gap, If(c.equality IsNot Nothing, c.equality, False))
         End Function
 
         ' simple satisfaction of alignment constraints to ensure initial feasibility
-        Private Sub makeFeasible(c As Constraint)
+        Private Sub makeFeasible(c As Constraint(Of Integer))
             If Not Me.avoidOverlaps Then
                 Return
             End If
@@ -68,7 +70,7 @@ Namespace Layouts.Cola
                 axis = "y"c
                 [dim] = "height"
             End If
-            Dim vs As GraphNode() = c.offsets.map(Function(o) Me.nodes(o.node)).sort(Function(a, b) a(axis) - b(axis))
+            Dim vs As GraphNode() = c.offsets.Select(Function(o) Me.nodes(o.node)).Sort(Function(a, b) a(axis) - b(axis))
             Dim p As GraphNode = Nothing
             vs.DoEach(Sub(v)
                           ' if two nodes overlap then shove the second one along
@@ -83,18 +85,18 @@ Namespace Layouts.Cola
                       End Sub)
         End Sub
 
-        Private Sub createAlignment(c As Constraint)
+        Private Sub createAlignment(c As Constraint(Of Integer))
             Dim u = Me.nodes(c.offsets(0).node).variable
             Me.makeFeasible(c)
             Dim cs = If(c.axis = "x", Me.xConstraints, Me.yConstraints)
-            c.offsets.slice(1).doEach(Sub(o)
+            c.offsets.slice(1).DoEach(Sub(o)
                                           Dim v = Me.nodes(o.node).variable
-                                          cs.push(New Constraint(u, v, o.offset, True))
+                                          cs.Add(New Constraint(u, v, o.offset, True))
                                       End Sub)
         End Sub
 
-        Private Sub createConstraints(constraints As Constraint())
-            Dim isSep = Function(c As Constraint) c.type Is Nothing OrElse c.type = "separation"
+        Private Sub createConstraints(constraints As Constraint(Of Integer)())
+            Dim isSep = Function(c As Constraint(Of Integer)) c.type Is Nothing OrElse c.type = "separation"
             Me.xConstraints = constraints.Where(Function(c) c.axis = "x" AndAlso isSep(c)).Select(Function(c) Me.createSeparation(c))
             Me.yConstraints = constraints.Where(Function(c) c.axis = "y" AndAlso isSep(c)).Select(Function(c) Me.createSeparation(c))
             constraints.Where(Function(c) c.type = "alignment").DoEach(Sub(c) Me.createAlignment(c))
@@ -124,13 +126,17 @@ Namespace Layouts.Cola
                 Return
             End If
             Me.project(x0, y0, x0, x, Function(v) v.px, Me.xConstraints,
-                generateXGroupConstraints, Function(v) v.bounds.setXCentre(InlineAssignHelper(x(v.variable.index), v.variable.position())), Sub(g)
-                                                                                                                                                Dim xmin = InlineAssignHelper(x(g.minVar.index), g.minVar.position())
-                                                                                                                                                Dim xmax = InlineAssignHelper(x(g.maxVar.index), g.maxVar.position())
-                                                                                                                                                Dim p2 = g.padding / 2
-                                                                                                                                                g.bounds.x = xmin - p2
-                                                                                                                                                g.bounds.X = xmax + p2
-                                                                                                                                            End Sub)
+                generateXGroupConstraints,
+                Function(v)
+                    Return v.bounds.setXCentre(InlineAssignHelper(x(v.variable.index), v.variable.position()))
+                End Function,
+                Sub(g)
+                    Dim xmin = InlineAssignHelper(x(g.minVar.index), g.minVar.position())
+                    Dim xmax = InlineAssignHelper(x(g.maxVar.index), g.maxVar.position())
+                    Dim p2 = g.padding / 2
+                    g.bounds.x = xmin - p2
+                    g.bounds.X = xmax + p2
+                End Sub)
         End Sub
 
         Public Sub yProject(x0 As Double(), y0 As Double(), y As Double())
@@ -164,7 +170,7 @@ Namespace Layouts.Cola
             End If
             Me.solve(Me.variables, cs, start, desired)
             Me.nodes.ForEach(updateNodeBounds)
-            If Me.rootGroup AndAlso Me.avoidOverlaps Then
+            If Me.rootGroup IsNot Nothing AndAlso Me.avoidOverlaps Then
                 Me.groups.ForEach(updateGroupBounds)
                 computeGroupBounds(Me.rootGroup)
             End If

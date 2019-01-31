@@ -102,31 +102,57 @@ Namespace Layouts.Cola
         End Sub
     End Class
 
-    Public Class Constraint
+    Public Class Constraint : Inherits Constraint(Of Variable)
+
+        Public Overrides ReadOnly Property slack As Double
+            Get
+                If unsatisfiable Then
+                    Return number.MaxValue
+                Else
+                    Return right.scale * right.position - gap - left.scale * left.position
+                End If
+            End Get
+        End Property
+
+        Sub New(left As Variable, right As Variable, gap As Double, Optional equality As Boolean = False)
+            Call MyBase.New(left, right, gap, equality)
+        End Sub
+    End Class
+
+    Public Class ConstraintOffset
+        Public node As Integer
+        Public offset As Double
+    End Class
+
+    Public Class Constraint(Of T)
 
         Public lm As Double
         Public active As Boolean = False
         Public unsatisfiable As Boolean = False
 
-        Public left As Variable
-        Public right As Variable
+        Public left As T
+        Public right As T
         Public gap As Double
         Public equality As Boolean? = False
         Public axis As String
         Public type As String
+        Public offsets As ConstraintOffset()
 
-        Sub New(left As Variable, right As Variable, gap As Double, Optional equality As Boolean = False)
+        Sub New(left As T, right As T, gap As Double, Optional equality As Boolean = False)
             Me.left = left
             Me.right = right
             Me.gap = gap
             Me.equality = equality
         End Sub
 
-        Public ReadOnly Property slack As Double
+        Public Overridable ReadOnly Property slack As Double
             Get
-                If unsatisfiable Then
+                If unsatisfiable OrElse GetType(T) Is GetType(Integer) Then
                     Return number.MaxValue
                 Else
+                    Dim left = DirectCast(CObj(Me.left), Variable)
+                    Dim right = DirectCast(CObj(Me.right), Variable)
+
                     Return right.scale * right.position - gap - left.scale * left.position
                 End If
             End Get
