@@ -78,6 +78,7 @@ Namespace Dijkstra
         Public Sub New(id As Double)
             Me.neighbours = New Neighbour() {}
         End Sub
+
         Public neighbours As Neighbour()
         Public d As Integer
         Public prev As Node
@@ -97,14 +98,10 @@ Namespace Dijkstra
         End Sub
     End Class
 
-    '*
-    ' * calculates all-pairs shortest paths or shortest paths from a single node
-    ' * @class Calculator
-    ' * @constructor
-    ' * @param n {number} number of nodes
-    ' * @param es {Edge[]} array of edges
-    ' 
-
+    ''' <summary>
+    ''' calculates all-pairs shortest paths or shortest paths from a single node
+    ''' </summary>
+    ''' <typeparam name="Link"></typeparam>
     Public Class Calculator(Of Link)
 
         Dim neighbours As Node()
@@ -112,22 +109,37 @@ Namespace Dijkstra
         Public n As Integer
         Public es As Link()
 
-        Sub New(n As Double, es As IEnumerable(Of Link), getSourceIndex As Func(Of Link, number), getTargetIndex As Func(Of Link, number), getLength As Func(Of Link, number))
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="n">number of nodes</param>
+        ''' <param name="es">array of edges</param>
+        ''' <param name="getSourceIndex"></param>
+        ''' <param name="getTargetIndex"></param>
+        ''' <param name="getLength"></param>
+        Sub New(n As Integer, es As IEnumerable(Of Link),
+                getSourceIndex As Func(Of Link, number),
+                getTargetIndex As Func(Of Link, number),
+                getLength As Func(Of Link, number))
+
+            Dim i As Integer = n
+
             Me.n = n
             Me.es = es.ToArray
             Me.neighbours = New Node(Me.n - 1) {}
 
-            Dim i = Me.n
             While System.Math.Max(Interlocked.Decrement(i), i + 1)
                 Me.neighbours(i) = New Node(i)
             End While
 
             i = Me.es.Length
+
             While System.Math.Max(Interlocked.Decrement(i), i + 1)
                 Dim e = Me.es(i)
                 Dim u = getSourceIndex(e)
                 Dim v = getTargetIndex(e)
                 Dim d = getLength(e)
+
                 Me.neighbours(u).neighbours.Add(New Neighbour(v, d))
                 Me.neighbours(v).neighbours.Add(New Neighbour(u, d))
             End While
@@ -141,9 +153,11 @@ Namespace Dijkstra
         ''' <returns>return the distance matrix</returns>
         Public Function DistanceMatrix() As Integer()()
             Dim D = New Integer(Me.n)() {}
+
             For i As Integer = 0 To Me.n - 1
                 D(i) = Me.dijkstraNeighbours(i).ToArray
             Next
+
             Return D
         End Function
 
@@ -171,19 +185,24 @@ Namespace Dijkstra
         ''' <param name="[end]"></param>
         ''' <param name="prevCost"></param>
         ''' <returns></returns>
-        Private Function PathFromNodeToNodeWithPrevCost(start As Integer, [end] As Integer, prevCost As Func(Of number, number, number, number)) As List(Of Integer)
-            Dim q = New PriorityQueue(Of QueueEntry)(Function(a, b) a.d <= b.d)
-            Dim u = Me.neighbours(start)
-            Dim qu = New QueueEntry(u, Nothing, 0)
-            Dim visitedFrom = New Object() {}
+        Public Function PathFromNodeToNodeWithPrevCost(start As Integer, [end] As Integer, prevCost As Func(Of Integer, Integer, Integer, Double)) As List(Of Integer)
+            Dim q As New PriorityQueue(Of QueueEntry)(Function(a, b) a.d <= b.d)
+            Dim u As Node = Me.neighbours(start)
+            Dim qu As New QueueEntry(u, Nothing, 0)
+            Dim visitedFrom As New Dictionary(Of String, Double)
+
             q.push(qu)
+
             While Not q.empty()
                 qu = q.pop()
                 u = qu.node
+
                 If u.id = [end] Then
                     Exit While
                 End If
+
                 Dim i = u.neighbours.Length
+
                 While System.Math.Max(Interlocked.Decrement(i), i + 1)
                     Dim neighbour = u.neighbours(i)
 
@@ -197,7 +216,7 @@ Namespace Dijkstra
                     ' don't retraverse an edge if it has already been explored
                     ' from a lower cost route
                     Dim viduid = v.id & "," & u.id
-                    If visitedFrom.IndexOf(viduid) > -1 AndAlso visitedFrom(viduid) <= qu.d Then
+                    If visitedFrom.ContainsKey(viduid) AndAlso visitedFrom(viduid) <= qu.d Then
                         Continue While
                     End If
 
@@ -209,11 +228,14 @@ Namespace Dijkstra
                     q.push(New QueueEntry(v, qu, t))
                 End While
             End While
+
             Dim path As New List(Of Integer)
+
             While qu.prev IsNot Nothing
                 qu = qu.prev
                 path.Add(qu.node.id)
             End While
+
             Return path
         End Function
 
@@ -227,10 +249,12 @@ Namespace Dijkstra
                 node.d = If(i = start, 0, number.PositiveInfinity)
                 node.q = q.push(node)
             End While
+
             While Not q.empty()
-                ' console.log(q.toString(function (u) { return u.id + "=" + (u.d === Number.POSITIVE_INFINITY ? "\u221E" : u.d.toFixed(2) )}));
                 Dim u = q.pop()
+
                 d(u.id) = u.d
+
                 If u.id = dest Then
                     Dim path As New List(Of Integer)
                     Dim v = u
@@ -240,7 +264,9 @@ Namespace Dijkstra
                     End While
                     Return path
                 End If
+
                 i = u.neighbours.Length
+
                 While System.Math.Max(Interlocked.Decrement(i), i + 1)
                     Dim neighbour = u.neighbours(i)
                     Dim v = Me.neighbours(neighbour.id)
@@ -252,6 +278,7 @@ Namespace Dijkstra
                     End If
                 End While
             End While
+
             Return d.ToList
         End Function
     End Class

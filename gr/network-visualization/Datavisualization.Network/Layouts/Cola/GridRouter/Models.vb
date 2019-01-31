@@ -182,11 +182,9 @@ Namespace Layouts.Cola.GridRouter
         End Sub
     End Class
 
-    Public Class Vert
+    Public Class Vert : Inherits Point2D
 
         Public id As Double
-        Public x As Double
-        Public y As Double
         Public node As NodeWrapper
         Public line
 

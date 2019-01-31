@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::f4604b29301739f4b82a1b354b6a87e1, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\gridrouter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class GridRouter
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: findAncestorPathBetween, findLineage, getDepth, getGridLines, getOrder
-    '                   getRoutePath, getSegmentSets, InlineAssignHelper, isLeft, isStraight
-    '                   makeSegments, orderEdges, route, routeEdges, siblingObstacles
-    ' 
-    '         Sub: nudgeSegments, nudgeSegs, unreverseEdges
-    '         Class AncestorPath
-    ' 
-    ' 
-    ' 
-    '         Class Pair
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class GridRouter
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: findAncestorPathBetween, findLineage, getDepth, getGridLines, getOrder
+'                   getRoutePath, getSegmentSets, InlineAssignHelper, isLeft, isStraight
+'                   makeSegments, orderEdges, route, routeEdges, siblingObstacles
+' 
+'         Sub: nudgeSegments, nudgeSegs, unreverseEdges
+'         Class AncestorPath
+' 
+' 
+' 
+'         Class Pair
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
@@ -429,7 +430,7 @@ Namespace Layouts.Cola
                        End Sub)
         End Sub
 
-        Private Shared Sub nudgeSegments(routes As List(Of Segment()), x As String, y As String, leftOf As Func(Of number, number, Boolean), gap As Double)
+        Private Shared Sub nudgeSegments(routes As List(Of Segment()), x As String, y As String, leftOf As Func(Of Integer, Integer, Boolean), gap As Double)
             Dim vsegmentsets As List(Of vsegmentsets) = GridRouter(Of Node).getSegmentSets(routes, x, y)
             ' scan the grouped (by x) segment sets to find co-linear bundles
             For i As Integer = 0 To vsegmentsets.Count - 1
@@ -474,7 +475,7 @@ Namespace Layouts.Cola
         ' @param target function to retrieve the index of the target node for a given edge
         ' @returns an array giving, for each edge, an array of segments, each segment a pair of points in an array
         Public Function routeEdges(Of Edge)(edges As Edge(), nudgeGap As Double, source As Func(Of Edge, number), target As Func(Of Edge, number)) As List(Of Segment())
-            Dim routePaths = edges.Select(Function(e) Me.route(source(e), target(e))).ToArray
+            Dim routePaths As Vert()() = edges.Select(Function(e) Me.route(source(e), target(e))).ToArray
             Dim order = GridRouter(Of Node).orderEdges(routePaths)
             Dim routes As List(Of Segment()) = routePaths.Select(Function(e) GridRouter(Of Node).makeSegments(e).ToArray).ToList
             GridRouter(Of Node).nudgeSegments(routes, "x"c, "y"c, order, nudgeGap)
@@ -509,7 +510,7 @@ Namespace Layouts.Cola
 
         ' for the given list of ordered pairs, returns a function that (efficiently) looks-up a specific pair to
         ' see if it exists in the list
-        Private Shared Function getOrder(pairs As List(Of Pair)) As Func(Of number, number, Boolean)
+        Private Shared Function getOrder(pairs As List(Of Pair)) As Func(Of Integer, Integer, Boolean)
             Dim outgoing = New Object() {}
             For i As Integer = 0 To pairs.Count - 1
                 Dim p As Pair = pairs(i)
@@ -523,14 +524,14 @@ Namespace Layouts.Cola
 
         ' returns an ordering (a lookup function) that determines the correct order to nudge the
         ' edge paths apart to minimize crossings
-        Private Shared Function orderEdges(edges As Point2D()()) As any
+        Private Shared Function orderEdges(edges As Vert()()) As Func(Of Integer, Integer, Boolean)
             Dim edgeOrder As New List(Of Pair)
 
             For i As Integer = 0 To edges.Length - 2
                 For j As Integer = i + 1 To edges.Length - 1
                     Dim e = edges(i)
                     Dim f = edges(j)
-                    Dim lcs = New LongestCommonSubsequence(e, f)
+                    Dim lcs = New LongestCommonSubsequence(Of Point2D)(e, f, AddressOf Point2D.Equals)
                     Dim u As Point2D, vi As Point2D, vj As Point2D
 
                     If lcs.length = 0 Then
@@ -541,9 +542,9 @@ Namespace Layouts.Cola
                     If lcs.reversed Then
                         ' if we found a common subpath but one of the edges runs the wrong way,
                         ' then reverse f.
-                        f.Reverse()
-                        f.reversed = True
-                        lcs = New LongestCommonSubsequence(e, f)
+                        f = f.Reverse().ToArray
+                        ' f.reversed = True
+                        lcs = New LongestCommonSubsequence(Of Point2D)(e, f, AddressOf Point2D.Equals)
                     End If
 
                     If (lcs.si <= 0 OrElse lcs.ti <= 0) AndAlso (lcs.si + lcs.length >= e.Length OrElse lcs.ti + lcs.length >= f.Length) Then
@@ -605,7 +606,7 @@ Namespace Layouts.Cola
 
         ' find a route between node s and node t
         ' returns an array of indices to verts
-        Public Function route(s As Integer, t As Integer) As Point2D()
+        Public Function route(s As Integer, t As Integer) As Vert()
             Dim source = Me.nodes(s)
             Dim target = Me.nodes(t)
             Me.obstacles = Me.siblingObstacles(source, target)
@@ -640,34 +641,53 @@ Namespace Layouts.Cola
             })
             Next
 
-            Dim getSource = Function(e) e.source
-            Dim getTarget = Function(e) e.target
-            Dim getLength = Function(e) e.length
+            Dim getSource = Function(e As Link3D) e.source
+            Dim getTarget = Function(e As Link3D) e.target
+            Dim getLength = Function(e As Link3D) e.length
 
-            Dim shortestPathCalculator = New Calculator(Me.verts.Length, Me.passableEdges, getSource, getTarget, getLength)
-            Dim bendPenalty = Function(u, v, w)
+            Dim shortestPathCalculator = New Dijkstra.Calculator(Of Link3D)(Me.verts.Count, Me.passableEdges, getSource, getTarget, getLength)
+            Dim bendPenalty = Function(u As Integer, v As Integer, w As Integer) As Double
                                   Dim a = Me.verts(u)
                                   Dim b = Me.verts(v)
                                   Dim c = Me.verts(w)
                                   Dim dx = Math.Abs(c.x - a.x)
                                   Dim dy = Math.Abs(c.y - a.y)
+
                                   ' don't count bends from internal node edges
                                   If a.node Is source AndAlso a.node Is b.node OrElse b.node Is target AndAlso b.node Is c.node Then
                                       Return 0
                                   End If
-                                  Return If(dx > 1 AndAlso dy > 1, 1000, 0)
 
+                                  Return If(dx > 1 AndAlso dy > 1, 1000, 0)
                               End Function
 
             ' get shortest path
-            Dim shortestPath = shortestPathCalculator.PathFromNodeToNodeWithPrevCost(source.ports(0).id, target.ports(0).id, bendPenalty)
+            Dim shortestPath = shortestPathCalculator.PathFromNodeToNodeWithPrevCost(
+                source.ports(0).id,
+                target.ports(0).id,
+                bendPenalty
+            )
 
             ' shortest path is reversed and does not include the target port
-            Dim pathPoints = shortestPath.Reverse().map(Function(vi) Me.verts(vi))
-            pathPoints.push(Me.nodes(target.id).ports(0))
+            Dim pathPoints As List(Of Vert) = shortestPath _
+                .AsEnumerable _
+                .Reverse() _
+                .Select(Function(vi) Me.verts(vi)) _
+                .ToList
+
+            Call pathPoints.Add(Me.nodes(target.id).ports(0))
 
             ' filter out any extra end points that are inside the source or target (i.e. the dummy segments above)
-            Return pathPoints.filter(Function(v, i) Not (i < pathPoints.length - 1 AndAlso pathPoints(i + 1).node = source AndAlso v.node = source OrElse i > 0 AndAlso v.node = target AndAlso pathPoints(i - 1).node = target))
+            Return pathPoints _
+                .Where(Function(v, i)
+                           Return Not (i < pathPoints.Count - 1 AndAlso
+                               pathPoints(i + 1).node Is source AndAlso
+                               v.node Is source OrElse
+                               i > 0 AndAlso
+                               v.node Is target AndAlso
+                               pathPoints(i - 1).node Is target)
+                       End Function) _
+                .ToArray
         End Function
 
         Public Shared Function getRoutePath(route As Point2D()(), cornerradius As Double, arrowwidth As Double, arrowheight As Double) As SVGRoutePath
