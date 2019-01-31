@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddae0b72912f83cfa8aec30722a11992, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::325c74d8db577a6ea2b0656b51948588, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -37,6 +37,10 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetLastCLRException, GetLastError, RunDotNetApp, RunProgram, ToString
+    ' 
+    '     Interface AppDriver
+    ' 
+    '         Properties: App
     ' 
     '     Class CLIBuilder
     ' 

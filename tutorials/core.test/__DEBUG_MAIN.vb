@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4af5ff61c4b47c4c01deef54ea7009c0, vs_solutions\tutorials\core.test\__DEBUG_MAIN.vb"
+﻿#Region "Microsoft.VisualBasic::4af5ff61c4b47c4c01deef54ea7009c0, tutorials\core.test\__DEBUG_MAIN.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c10d2bc2466b4716673df29d1848f5a, Data\BinaryData\BinaryData\Storage\StringWriter.vb"
+﻿#Region "Microsoft.VisualBasic::101f479c2f1ea836c79f49966c0e3b41, Data\BinaryData\BinaryData\Storage\StringWriter.vb"
 
     ' Author:
     ' 

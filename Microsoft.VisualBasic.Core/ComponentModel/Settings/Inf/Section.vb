@@ -1,46 +1,46 @@
-﻿#Region "Microsoft.VisualBasic::1122da036990ffe63fc903bb9611ee8c, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Section.vb"
+﻿#Region "Microsoft.VisualBasic::83f3623d7f95a677563e10329e2dce5d, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Section.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Section
-' 
-'         Properties: Items, Name
-' 
-'         Function: CreateDocFragment, GetValue, ToString
-' 
-'         Sub: SetValue
-' 
-' 
-' /********************************************************************************/
+    '     Class Section
+    ' 
+    '         Properties: Comment, Items, Name
+    ' 
+    '         Function: CreateDocFragment, GetValue, Have, ToString
+    ' 
+    '         Sub: appendComments, Delete, SetComments, SetValue
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

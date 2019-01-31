@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6539795b767b954659bbefc88cc0d931, gr\Microsoft.VisualBasic.Imaging\SVG\XML\g.vb"
+﻿#Region "Microsoft.VisualBasic::51a410bc94c90e8e86d6f3ee8c60cbd4, gr\Microsoft.VisualBasic.Imaging\SVG\XML\g.vb"
 
     ' Author:
     ' 

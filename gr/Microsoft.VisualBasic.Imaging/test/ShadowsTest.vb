@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7f0ba086482faa5176bb823f58ad39e, gr\Microsoft.VisualBasic.Imaging\test\ShadowsTest.vb"
+﻿#Region "Microsoft.VisualBasic::030f7829ee69a1b7385ed6984920e083, gr\Microsoft.VisualBasic.Imaging\test\ShadowsTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5f0c55e852ec68544ff92b047747fa9, Microsoft.VisualBasic.Core\Extensions\Collection\ByteStreamExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8d13c139900788629b8facfbad71157c, Microsoft.VisualBasic.Core\Extensions\Collection\ByteStreamExtensions.vb"
 
     ' Author:
     ' 

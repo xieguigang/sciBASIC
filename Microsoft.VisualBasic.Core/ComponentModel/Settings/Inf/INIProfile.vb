@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80dfb7f3011eb71f60fd0eb678caaa29, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\INIProfile.vb"
+﻿#Region "Microsoft.VisualBasic::cd7b0b8cf190022f2edd465c920b58e3, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\INIProfile.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,7 @@
 
     '     Module INIProfile
     ' 
-    '         Function: (+2 Overloads) GetPrivateProfileString, isCommentsOrBlank, PopulateSections, readDataLines, WritePrivateProfileString
-    '                   WriteProfileComments
+    '         Function: (+2 Overloads) GetPrivateProfileString, isCommentsOrBlank, PopulateSections, readDataLines
     ' 
     '         Sub: WritePrivateProfileString
     ' 

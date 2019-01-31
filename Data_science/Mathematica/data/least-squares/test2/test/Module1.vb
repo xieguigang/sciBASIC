@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e59a7e70c2e18dde60912cc5bfbea72, Data_science\Mathematica\data\least-squares\test2\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::5b99be8ad1c9f75e72c72e060dddfa6a, Data_science\Mathematica\data\least-squares\test2\test\Module1.vb"
 
     ' Author:
     ' 

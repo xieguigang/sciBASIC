@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f06212264dcbe2c8ee471c92d47e8d9, gr\network-visualization\Datavisualization.Network\Layouts\Cola\DirectedEdge.vb"
+﻿#Region "Microsoft.VisualBasic::ffb4938fd261d8e92f530f459a3327cd, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\DirectedEdge.vb"
 
     ' Author:
     ' 
@@ -34,50 +34,6 @@
     '     Structure DirectedEdge
     ' 
     ' 
-    ' 
-    '     Class Node
-    ' 
-    '         Function: makeRBTree
-    ' 
-    '     Class Variable
-    ' 
-    '         Properties: dfdv, position
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: visitNeighbours
-    ' 
-    '         Operators: (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
-    ' 
-    '     Class Block
-    ' 
-    '         Properties: cost
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: compute_lm, createSplitBlock, findMinLM, findMinLMBetween, findPath
-    '                   isActiveDirectedPathBetween, split, splitBetween
-    ' 
-    '         Sub: addVariable, mergeAcross, populateSplitBlock, traverse, updateWeightedPosition
-    ' 
-    '     Class Blocks
-    ' 
-    '         Properties: cost
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator
-    ' 
-    '         Sub: insert, merge, remove, split, updateBlockPositions
-    ' 
-    '     Class Solver
-    ' 
-    '         Properties: cost
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: mostViolated, solve
-    ' 
-    '         Sub: satisfy, setDesiredPositions, setStartingPositions
     ' 
     '     Class PositionStats
     ' 

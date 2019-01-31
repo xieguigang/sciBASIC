@@ -1,3 +1,53 @@
+ï»¿#Region "Microsoft.VisualBasic::c359335b573f44a8f7daa6d72e59a8f5, gr\network-visualization\Datavisualization.Network\Layouts\Cola\batch.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Interface network
+    ' 
+    '         Properties: links, nodes
+    ' 
+    '     Module batch
+    ' 
+    '         Function: gridify, powerGraphGridLayout, route
+    ' 
+    '     Class LayoutGraph
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 
 Namespace Layouts.Cola
@@ -9,7 +59,7 @@ Namespace Layouts.Cola
     End Interface
 
     ''' <summary>
-    ''' Õâ¸öÄ£¿éÊÇ¶ÔÍâ¿ª·ÅÍøÂç²¼¾ÖÉú³ÉµÄ¼ÆËãº¯ÊýµÄ½Ó¿Ú
+    ''' ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½Ç¶ï¿½ï¿½â¿ªï¿½ï¿½ï¿½ï¿½ï¿½ç²¼ï¿½ï¿½ï¿½ï¿½ï¿½ÉµÄ¼ï¿½ï¿½ãº¯ï¿½ï¿½ï¿½Ä½Ó¿ï¿½
     ''' </summary>
     Public Module batch
 
@@ -51,7 +101,7 @@ Namespace Layouts.Cola
         End Function
 
         ''' <summary>
-        ''' ´ÓÕâÀï¿ªÊ¼½øÐÐ²¼¾ÖµÄ¼ÆËã
+        ''' ï¿½ï¿½ï¿½ï¿½ï¿½ï¿ªÊ¼ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ÖµÄ¼ï¿½ï¿½ï¿½
         ''' </summary>
         ''' <param name="graph"></param>
         ''' <param name="size"></param>
@@ -67,7 +117,7 @@ Namespace Layouts.Cola
                 .nodes(graph.nodes) _
                 .links(graph.links) _
                 .powerGraphGroups(Sub(d)
-                                      ' powerGraph¶ÔÏóÊÇÔÚÕâÀï±»¸³Öµ³õÊ¼»¯µÄ
+                                      ' powerGraphï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï±»ï¿½ï¿½Öµï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
                                       powerGraph = d
                                       powerGraph.groups.ForEach(Sub(v) v.padding = grouppadding)
                                   End Sub)

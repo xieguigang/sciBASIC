@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eff06b7025b8c1c0e14304c5078d4d17, Data\BinaryData\BinaryData\Repository\BinarySearchIndex.vb"
+﻿#Region "Microsoft.VisualBasic::a50d44173bb943ce6ecbba6e9833f4c0, Data\BinaryData\BinaryData\Repository\BinarySearchIndex.vb"
 
     ' Author:
     ' 

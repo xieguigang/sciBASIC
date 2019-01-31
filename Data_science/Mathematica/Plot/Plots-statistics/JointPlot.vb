@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1acf9236eeb5e7d7a54e51a7d8614c2, Data_science\Mathematica\Plot\Plots-statistics\JointPlot.vb"
+﻿#Region "Microsoft.VisualBasic::522f35d0acc94909a8053a5f2b9d6469, Data_science\Mathematica\Plot\Plots-statistics\JointPlot.vb"
 
     ' Author:
     ' 

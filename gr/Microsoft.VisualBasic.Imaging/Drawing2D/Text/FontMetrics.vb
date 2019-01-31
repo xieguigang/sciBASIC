@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf0a800fec042c8e168d795826f02f68, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
+﻿#Region "Microsoft.VisualBasic::68de761b1a44c645c72163c684bf0fc5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\FontMetrics.vb"
 
     ' Author:
     ' 

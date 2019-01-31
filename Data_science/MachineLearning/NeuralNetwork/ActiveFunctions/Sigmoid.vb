@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ee2645f7cc80252ba873ad250db36bc, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\SigmoidFunction.vb"
+﻿#Region "Microsoft.VisualBasic::bd99e019a9d0cd21c341d8884ddcd44d, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\Sigmoid.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class SigmoidFunction
+    '     Class Sigmoid
     ' 
     '         Properties: Alpha, Store
     ' 

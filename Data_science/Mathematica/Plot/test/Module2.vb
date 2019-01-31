@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9424e359c435406547ec802c827d5ff, Data_science\Mathematica\Plot\test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::1b5dcb4b3f48844a59ea114a4f6ee292, Data_science\Mathematica\Plot\test\Module2.vb"
 
     ' Author:
     ' 

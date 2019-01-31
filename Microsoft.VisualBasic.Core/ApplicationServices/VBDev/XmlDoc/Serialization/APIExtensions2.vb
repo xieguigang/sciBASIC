@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59b6996e31c81563c827f8228eb76858, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions2.vb"
+﻿#Region "Microsoft.VisualBasic::c9e138543849a97e4d555996abd710cf, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Serialization\APIExtensions2.vb"
 
     ' Author:
     ' 

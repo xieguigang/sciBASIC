@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a601e76aef37afbfcceef80194b0269d, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::abe0a21c303f2077b04a8409c72f5626, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\StreamHelper.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module StreamHelper
     ' 
-    '     Function: CopyStream
+    '     Function: CopyStream, PopulateBlocks
     ' 
     '     Sub: Write, WriteLine
     ' 

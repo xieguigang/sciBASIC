@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55d4f31bbc4942d23859c91625a604e3, Data\OCR\test\AlignTest.vb"
+﻿#Region "Microsoft.VisualBasic::0de791d2c279a2b59edf032ed8c262ab, Data\OCR\test\AlignTest.vb"
 
     ' Author:
     ' 

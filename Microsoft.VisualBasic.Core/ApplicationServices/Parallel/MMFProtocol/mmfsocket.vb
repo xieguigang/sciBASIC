@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab3c4c8a2c451e14dce950d548490d07, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\MMFProtocol\MMFSocket.vb"
+﻿#Region "Microsoft.VisualBasic::08c8213225e73b35bd9d520458dbcf8b, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\MMFProtocol\MMFSocket.vb"
 
     ' Author:
     ' 

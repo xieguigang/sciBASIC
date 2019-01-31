@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db69acb59f8336f3fe6691c5465ab9c9, vs_solutions\tutorials\core.test\PriorityQueueTest.vb"
+﻿#Region "Microsoft.VisualBasic::95ea402a027d1e454286b94b4beb4b45, tutorials\core.test\PriorityQueueTest.vb"
 
     ' Author:
     ' 

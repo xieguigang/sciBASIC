@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfa30b087e13472b88cc01edc0dbd362, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::fae593fd387caa422ab075fd28fee89b, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
 
     ' Author:
     ' 

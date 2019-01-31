@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc09a15bdadea7e26e1ece43f98898c1, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Beta.vb"
+﻿#Region "Microsoft.VisualBasic::f9fff18ceaede6c833704740de2f5ac4, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Beta.vb"
 
     ' Author:
     ' 

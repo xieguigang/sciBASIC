@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16e06b4a4616fb5a613dc0f23793fe2d, Data\BinaryData\BinaryData\Stream\BinaryDataWriter.vb"
+﻿#Region "Microsoft.VisualBasic::099b2a33136dcd6903a34f9eef94bb8c, Data\BinaryData\BinaryData\Stream\BinaryDataWriter.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '     Function: DecimalToBytes, ReserveOffset, (+2 Overloads) Seek, (+2 Overloads) TemporarySeek, (+2 Overloads) Write
     '               WriteByteLengthPrefixString, WriteDwordLengthPrefixString, WriteNoPrefixOrTerminationString, WriteWordLengthPrefixString, WriteZeroTerminatedString
     ' 
-    '     Sub: Align, (+19 Overloads) Write, WriteMultiple, WriteReversed
+    '     Sub: Align, (+20 Overloads) Write, WriteMultiple, WriteReversed
     ' 
     ' /********************************************************************************/
 
