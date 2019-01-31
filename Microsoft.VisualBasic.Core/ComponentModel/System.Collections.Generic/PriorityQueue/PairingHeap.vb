@@ -1,8 +1,17 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace ComponentModel.Collection
 
+    ''' <summary>
+    ''' from: https://gist.github.com/nervoussystem
+    ''' ``{elem:object, subheaps:[array of heaps]}``
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <remarks>
+    ''' 堆对象应该没有节点删除的操作吧？
+    ''' </remarks>
     Public Class PairingHeap(Of T)
 
         Dim subheaps As Stack(Of PairingHeap(Of T))
@@ -37,14 +46,12 @@ Namespace ComponentModel.Collection
             End Get
         End Property
 
-        ' from: https://gist.github.com/nervoussystem
-        '{elem:object, subheaps:[array of heaps]}
         Public Sub New(elem As T)
             Me.subheaps = New Stack(Of PairingHeap(Of T))
             Me.elem = elem
         End Sub
 
-        Public Overloads Function ToString(selector As Func(Of T, String)) As String
+        Public Overloads Function ToString(selector As IToString(Of T)) As String
             Dim str = ""
             Dim needComma = False
 
@@ -95,10 +102,19 @@ Namespace ComponentModel.Collection
             Return Me.subheaps.All(Function(h) lessThan(Me.elem, h.elem) AndAlso h.isHeap(lessThan))
         End Function
 
-        Public Function insert(obj As T, lessThan As Func(Of T, T, Boolean)) As PairingHeap(Of T)
+        Public Function Insert(obj As T, lessThan As Func(Of T, T, Boolean)) As PairingHeap(Of T)
             Return Me.merge(New PairingHeap(Of T)(obj), lessThan)
         End Function
 
+        ''' <summary>
+        ''' 优先度比较大的对象将会先被push到stack之中
+        ''' </summary>
+        ''' <param name="heap2"></param>
+        ''' <param name="lessThan"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 会在这个函数始终构建出一个二叉树的结构
+        ''' </remarks>
         Public Function merge(heap2 As PairingHeap(Of T), lessThan As Func(Of T, T, Boolean)) As PairingHeap(Of T)
             If Me.empty() Then
                 Return heap2

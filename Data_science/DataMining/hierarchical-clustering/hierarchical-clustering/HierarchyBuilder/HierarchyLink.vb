@@ -75,6 +75,16 @@ Namespace Hierarchy
         Private Function __compareTo(obj As Object) As Integer Implements IComparable.CompareTo
             Return compareTo(obj)
         End Function
+
+        Public Shared Function LessThan() As Func(Of HierarchyLink, HierarchyLink, Boolean)
+            Return Function(a, b)
+                       If a.compareTo(b) < 0 Then
+                           Return True
+                       Else
+                           Return False
+                       End If
+                   End Function
+        End Function
     End Class
 
     Module LinkHashCode
