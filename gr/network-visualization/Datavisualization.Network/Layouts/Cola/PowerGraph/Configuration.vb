@@ -83,7 +83,8 @@ Namespace Layouts.Cola
             Else
                 Me.roots.Add(New ModuleSet())
                 For i As Integer = 0 To n - 1
-                    Me.roots(0).add(InlineAssignHelper(Me.modules(i), New [Module](i)))
+                    Me.modules(i) = New [Module](i)
+                    Me.roots(0).add(Me.modules(i))
                 Next
             End If
             Me.R = edges.Length
@@ -147,7 +148,7 @@ Namespace Layouts.Cola
         ''' <param name="b"></param>
         ''' <param name="k"></param>
         ''' <returns></returns>
-        Public Function merge(a As [Module], b As [Module], Optional k As Double = 0) As [Module]
+        Public Function merge(a As [Module], b As [Module], Optional k As Integer = 0) As [Module]
             Dim inInt = a.incoming.intersection(b.incoming)
             Dim outInt = a.outgoing.intersection(b.outgoing)
             Dim children = New ModuleSet()
