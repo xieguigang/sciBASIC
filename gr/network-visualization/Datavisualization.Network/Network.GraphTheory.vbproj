@@ -415,8 +415,9 @@
     <Compile Include="Layouts\Cola\Models\Locks.vb" />
     <Compile Include="Layouts\Cola\Models\Node3D.vb" />
     <Compile Include="Layouts\Cola\Models\Link3D.vb" />
+    <Compile Include="Layouts\Cola\PowerGraph\PowerGraph.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\Configuration.vb" />
-    <Compile Include="Layouts\Cola\PowerGraph\powergraph.vb" />
+    <Compile Include="Layouts\Cola\PowerGraph\AlgorithmExtensions.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\Module.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\LinkSet.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\PowerEdge.vb" />
