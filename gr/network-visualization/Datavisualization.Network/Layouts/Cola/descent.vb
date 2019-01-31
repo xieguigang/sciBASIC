@@ -36,7 +36,7 @@ Namespace Layouts.Cola
         '     * @property G {number[][]}
         '     
 
-        Public g As Double()()
+        Public g As Integer()()
         '* positions vector
         '     * @property x {number[][]}
         '     
@@ -96,14 +96,14 @@ Namespace Layouts.Cola
         '     * If G[i][j] <= 1 then it is used as a weighting on the contribution of the variance between ideal and actual separation between i and j to the goal function
         '     
 
-        Public Sub New(x As Double()(), Dmatrix As Double()(), Optional G As Double()() = Nothing)
+        Public Sub New(x As Double()(), Dmatrix As Integer()(), Optional G As Double()() = Nothing)
             Me.x = x
             Me.k = x.Length
             ' dimensionality
             Me.n = x(0).Length
             ' number of nodes
             Me.H = New Double(Me.k)()() {}
-            Me.g = New Double(Me.k)() {}
+            Me.g = New Integer(Me.k)() {}
             Me.Hd = New Double(Me.k)() {}
             Me.a = New Double(Me.k)() {}
             Me.b = New Double(Me.k)() {}
@@ -131,7 +131,7 @@ Namespace Layouts.Cola
             End If
             i = Me.k
             While System.Math.Max(Interlocked.Decrement(i), i + 1)
-                Me.g(i) = New Double(Me.k) {}
+                Me.g(i) = New Integer(Me.k) {}
                 Me.H(i) = New Double(Me.k)() {}
                 j = n
                 While System.Math.Max(Interlocked.Decrement(j), j + 1)
@@ -149,15 +149,17 @@ Namespace Layouts.Cola
             End While
         End Sub
 
-        Public Shared Function createSquareMatrix(n As Double, f As Func(Of Double, Double, Double)) As Double()()
-            Dim M = New Double(n)() {}
+        Public Shared Function createSquareMatrix(n As Integer, f As Func(Of Integer, Integer, Integer)) As Integer()()
+            Dim M As New List(Of Integer())
+
             For i As Integer = 0 To n - 1
-                M(i) = New Double(n) {}
+                M.Add(New Integer(n - 1) {})
                 For j As Integer = 0 To n - 1
                     M(i)(j) = f(i, j)
                 Next
             Next
-            Return M
+
+            Return M.ToArray
         End Function
 
         Private Function offsetDir() As Double()
@@ -196,7 +198,8 @@ Namespace Layouts.Cola
 
             For u As Integer = 0 To n - 1
                 For i = 0 To Me.k - 1
-                    Huu(i) = InlineAssignHelper(Me.g(i)(u), 0)
+                    Me.g(i)(u) = 0
+                    Huu(i) = 0
                 Next
                 For v As Integer = 0 To n - 1
                     If u = v Then
@@ -210,8 +213,11 @@ Namespace Layouts.Cola
                     While System.Math.Max(Interlocked.Decrement(maxDisplaces), maxDisplaces + 1)
                         sd2 = 0.0
                         For i = 0 To Me.k - 1
-                            Dim dx = InlineAssignHelper(d__1(i), x(i)(u) - x(i)(v))
-                            sd2 += InlineAssignHelper(d2__2(i), dx * dx)
+                            Dim dx#
+                            d__1(i) = x(i)(u) - x(i)(v)
+                            dx = d__1(i)
+                            d2__2(i) = dx * dx
+                            sd2 += d2__2(i)
                         Next
                         If sd2 > 0.000000001 Then
                             Exit While
@@ -240,11 +246,13 @@ Namespace Layouts.Cola
 
                     For i = 0 To Me.k - 1
                         Me.g(i)(u) += d__1(i) * gs
-                        Huu(i) -= InlineAssignHelper(Me.H(i)(u)(v), hs * (l3 + D__3 * (d2__2(i) - sd2) + l * sd2))
+                        Me.H(i)(u)(v) = hs * (l3 + D__3 * (d2__2(i) - sd2) + l * sd2)
+                        Huu(i) -= Me.H(i)(u)(v)
                     Next
                 Next
                 For i = 0 To Me.k - 1
-                    maxH = Math.Max(maxH, InlineAssignHelper(Me.H(i)(u)(u), Huu(i)))
+                    Me.H(i)(u)(u) = Huu(i)
+                    maxH = Math.Max(maxH, Huu(i))
                 Next
             Next
             ' Grid snap forces
@@ -370,9 +378,9 @@ Namespace Layouts.Cola
 
         Private Shared Sub mApply(m As Integer, n As Integer, f As Action(Of Integer, Integer))
             Dim i = m
-            While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1) > 0
+            While System.Math.Max(Interlocked.Decrement(i), i + 1) > 0
                 Dim j = n
-                While System.Math.Max(System.Threading.Interlocked.Decrement(j), j + 1) > 0
+                While System.Math.Max(Interlocked.Decrement(j), j + 1) > 0
                     f(i, j)
                 End While
             End While
@@ -392,7 +400,9 @@ Namespace Layouts.Cola
             '        DEBUG 
 
             If Me.project IsNot Nothing Then
-                Me.matrixApply(Function(i, j) InlineAssignHelper(Me.e(i)(j), x0(i)(j) - r(i)(j)))
+                Me.matrixApply(Sub(i, j)
+                                   Me.e(i)(j) = x0(i)(j) - r(i)(j)
+                               End Sub)
                 Dim beta = Me.computeStepSize(Me.e)
                 beta = Math.Max(0.2, System.Math.Min(beta, 1))
                 Me.stepAndProject(x0, r, Me.e, beta)
@@ -428,7 +438,9 @@ Namespace Layouts.Cola
         End Function
 
         Private Shared Sub mid(a As Double()(), b As Double()(), m As Double()())
-            Descent.mApply(a.Length, a(0).Length, Function(i, j) InlineAssignHelper(m(i)(j), a(i)(j) + (b(i)(j) - a(i)(j)) / 2.0))
+            Descent.mApply(a.Length, a(0).Length, Sub(i, j)
+                                                      m(i)(j) = a(i)(j) + (b(i)(j) - a(i)(j)) / 2.0
+                                                  End Sub)
         End Sub
 
         Public Sub takeDescentStep(x As Double(), d As Double(), stepSize As Double)
@@ -462,9 +474,6 @@ Namespace Layouts.Cola
             End While
             Return stress
         End Function
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
+
     End Class
 End Namespace

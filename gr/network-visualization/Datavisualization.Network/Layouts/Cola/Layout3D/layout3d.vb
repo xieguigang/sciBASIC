@@ -1,4 +1,5 @@
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports any = System.Object
 Imports number = System.Double
 
@@ -53,14 +54,16 @@ Namespace Layouts.Cola
             Me.links.DoEach(Sub(e) e.length *= Me.idealLinkLength)
 
             ' Create the distance matrix that Cola needs
-            Dim distanceMatrix = (New Calculator(n, Me.links, Function(e) e.source, Function(e) e.target, Function(e) e.length)).DistanceMatrix()
-
+            Dim distanceMatrix = (New Dijkstra.Calculator(Of Link3D)(n, Me.links, Function(e) e.source, Function(e) e.target, Function(e) e.length)).DistanceMatrix()
             Dim D = Descent.createSquareMatrix(n, Function(i, j) distanceMatrix(i)(j))
 
             ' G is a square matrix with G[i][j] = 1 iff there exists an edge between node i and node j
             ' otherwise 2.
             Dim G = Descent.createSquareMatrix(n, Function() 2)
-            Me.links.ForEach(Function(source, target) InlineAssignHelper(G(source)(target), InlineAssignHelper(G(target)(source), 1)))
+            Me.links.ForEach(Sub(source, target)
+                                 G(target)(source) = 1
+                                 G(source)(target) = G(target)(source)
+                             End Sub)
 
             Me.descent = New Descent(Me.result, D)
             Me.descent.threshold = 0.001
@@ -93,9 +96,6 @@ Namespace Layouts.Cola
             Next
             Return Me.descent.rungeKutta()
         End Function
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
+
     End Class
 End Namespace
