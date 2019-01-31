@@ -62,6 +62,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 
@@ -138,11 +139,13 @@ Namespace Layouts.Cola
         Property leaves As List(Of L)
     End Interface
 
-    Public Class IndexGroup : Implements IGroup(Of Integer, Integer)
+    Public Class IndexGroup : Inherits DynamicPropertyBase(Of Object)
+        Implements IGroup(Of Integer, Integer)
 
         Public Property leaves As List(Of Integer) Implements IGroup(Of Integer, Integer).leaves
         Public Property groups As List(Of Integer) Implements IGroup(Of Integer, Integer).groups
         Public Property id As Integer Implements IGroup(Of Integer, Integer).id
+
     End Class
 
     Public Class Group : Implements IGroup(Of Group, Node)

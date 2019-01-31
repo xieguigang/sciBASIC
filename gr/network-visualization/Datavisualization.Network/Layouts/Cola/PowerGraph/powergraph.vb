@@ -1,86 +1,91 @@
 ﻿#Region "Microsoft.VisualBasic::1f5729bd52830a89b70a08e3f1124e38, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\powergraph.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module powergraphExtensions
-    ' 
-    '         Function: getGroups, intersection
-    ' 
-    '         Sub: toGroups
-    ' 
-    '     Class PowerGraph
-    ' 
-    '         Properties: groups
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module powergraphExtensions
+' 
+'         Function: getGroups, intersection
+' 
+'         Sub: toGroups
+' 
+'     Class PowerGraph
+' 
+'         Properties: groups
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace Layouts.Cola
 
     Module powergraphExtensions
 
+        <Extension>
+        Private Sub toGroups(m As [Module], group As IndexGroup, groups As List(Of IndexGroup))
+            If m.isLeaf Then
+                If group.leaves Is Nothing Then
+                    group.leaves = New List(Of Integer)
+                End If
+
+                group.leaves.Add(m.id)
+            Else
+                Dim g = group
+                m.gid = groups.Count
+
+                If (Not m.isIsland OrElse m.isPredefined) Then
+                    g = New IndexGroup With {.id = m.gid}
+
+                    If m.isPredefined Then
+                        For Each prop As String In m.definition.Keys
+                            g(prop) = m.definition(prop)
+                        Next
+                    End If
+                    If group.groups.IsNullOrEmpty Then
+                        group.groups = New List(Of Integer)
+                    End If
+
+                    group.groups.Add(m.gid)
+                    groups.Add(g)
+                End If
+
+                toGroups(m.children, g, groups)
+            End If
+        End Sub
+
         Public Sub toGroups(modules As ModuleSet, group As IndexGroup, groups As List(Of IndexGroup))
-            Call modules.forAll(Sub(m)
-                                    If m.isLeaf Then
-                                        If group.leaves Is Nothing Then
-                                            group.leaves = New List(Of Integer)
-                                        End If
-
-                                        group.leaves.Add(m.id)
-                                    Else
-                                        Dim g = group
-                                        m.gid = groups.Count
-
-                                        If (Not m.isIsland OrElse m.isPredefined) Then
-                                            g = New IndexGroup With {.id = m.gid}
-
-                                            If m.isPredefined Then
-                                                For Each prop As String In m.definition.Keys
-                                                    g(prop) = m.definition(prop)
-                                                Next
-                                            End If
-                                            If group.groups.IsNullOrEmpty Then
-                                                group.groups = New List(Of Integer)
-                                            End If
-
-                                            group.groups.Add(m.gid)
-                                            groups.Add(g)
-                                        End If
-
-                                        toGroups(m.children, g, groups)
-                                    End If
-                                End Sub)
+            Call modules.forAll(Sub(m As [Module]) m.toGroups(group, groups))
         End Sub
 
         Public Function intersection(Of T)(m As Dictionary(Of String, T), n As Dictionary(Of String, T)) As Dictionary(Of String, T)
@@ -102,15 +107,19 @@ Namespace Layouts.Cola
             While c.greedyMerge()
             End While
 
+            Dim powerEdgeIndices As New List(Of PowerEdge(Of Integer))
             Dim powerEdges As New List(Of PowerEdge(Of Node))
-            Dim g = c.getGroupHierarchy(powerEdges)
+            Dim g = c.getGroupHierarchy(powerEdgeIndices)
 
-            powerEdges.DoEach(Sub(e)
-                                  Dim f = Sub([end] As String) e([end]) = nodes(e([end]))
+            powerEdgeIndices.DoEach(Sub(e)
+                                        ' javascript之中，对象类型在这里发生了转换
+                                        ' 将index转换为具体的node对象
+                                        Dim nodeEdge As New PowerEdge(Of Node)
+                                        Dim f = Sub([end] As String) nodeEdge([end]) = nodes(e([end]))
 
-                                  Call f("source")
-                                  Call f("target")
-                              End Sub)
+                                        Call f("source")
+                                        Call f("target")
+                                    End Sub)
 
             Return New PowerGraph(Of Node) With {
                 .groups = g,
@@ -121,7 +130,7 @@ Namespace Layouts.Cola
     End Module
 
     Public Class PowerGraph(Of T)
-        Public Property groups As List(Of Group)
+        Public Property groups As List(Of IndexGroup)
         Public powerEdges As List(Of PowerEdge(Of T))
     End Class
 
