@@ -81,11 +81,13 @@ Namespace Layouts.Cola
                     Dim Pi = P__1(i)
                     For j As Integer = i + 1 To n - 1
                         Dim Pj__4 = P__1(j)
-                        Dim t = tangents(Pi, Pj__4)
-                        For Each q As String In t.keys
-                            Dim c = t(q)
+                        Dim t As BiTangents = tangents(Pi, Pj__4)
+
+                        For Each q As String In t
+                            Dim c As BiTangent = t(q)
                             Dim source = Pi(c.t1)
                             Dim target = Pj__4(c.t2)
+
                             Me.addEdgeIfVisible(source, target, i, j)
                         Next
                     Next
@@ -96,7 +98,7 @@ Namespace Layouts.Cola
             End If
         End Sub
 
-        Public Sub addEdgeIfVisible(u As TVGPoint, v As TVGPoint, i1 As Double, i2 As Double)
+        Public Sub addEdgeIfVisible(u As TVGPoint, v As TVGPoint, i1 As Integer, i2 As Integer)
             If Not Me.intersectsPolys(New Line(u.X, u.Y, v.X, v.Y), i1, i2) Then
                 Me.E.Add(New VisibilityEdge(u.vv, v.vv))
             End If
@@ -118,7 +120,7 @@ Namespace Layouts.Cola
             Return p.vv
         End Function
 
-        Public Function intersectsPolys(l As Line, i1 As Double, i2 As Double) As Boolean
+        Public Function intersectsPolys(l As Line, i1 As Integer, i2 As Integer) As Boolean
             Dim i As Integer = 0, n As Integer = Me.P.Length
             While i < n
                 If i <> i1 AndAlso i <> i2 AndAlso intersects(l, Me.P(i)).Length > 0 Then

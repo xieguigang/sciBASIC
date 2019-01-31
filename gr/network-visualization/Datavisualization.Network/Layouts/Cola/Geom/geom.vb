@@ -399,12 +399,13 @@ Namespace Layouts.Cola
             Return ints.ToArray
         End Function
 
-        Private Function tangents(V As Point2D(), W As Point2D()) As BiTangents
+        Public Function tangents(V As Point2D(), W As Point2D()) As BiTangents
             Dim m = V.Length - 1
             Dim n = W.Length - 1
             Dim bt = New BiTangents()
-            For i = 0 To m - 1
-                For j = 0 To n - 1
+
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
                     Dim v1 = V(If(i = 0, m - 1, i - 1))
                     Dim v2 = V(i)
                     Dim v3 = V(i + 1)

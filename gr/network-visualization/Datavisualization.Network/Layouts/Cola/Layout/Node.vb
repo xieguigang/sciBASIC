@@ -133,10 +133,10 @@ Namespace Layouts.Cola
         End Operator
     End Class
 
-    Public Interface IGroup(Of T, L)
+    Public Interface IGroup(Of TGroups, TLeaves)
         Property id As Integer
-        Property groups As List(Of T)
-        Property leaves As List(Of L)
+        Property groups As List(Of TGroups)
+        Property leaves As List(Of TLeaves)
     End Interface
 
     Public Class IndexGroup : Inherits DynamicPropertyBase(Of Object)

@@ -1,72 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::61f983e55a5391508eb6542a77fb94d0, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\Models.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class PolyPoint
-    ' 
-    '         Properties: polyIndex
-    ' 
-    '     Class tangentPoly
-    ' 
-    '         Properties: ltan, rtan
-    ' 
-    '     Class BiTangent
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Class BiTangents
-    ' 
-    ' 
-    ' 
-    '     Class TVGPoint
-    ' 
-    ' 
-    ' 
-    '     Class VisibilityVertex
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class VisibilityEdge
-    ' 
-    '         Properties: length
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class PolyPoint
+' 
+'         Properties: polyIndex
+' 
+'     Class tangentPoly
+' 
+'         Properties: ltan, rtan
+' 
+'     Class BiTangent
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'     Class BiTangents
+' 
+' 
+' 
+'     Class TVGPoint
+' 
+' 
+' 
+'     Class VisibilityVertex
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class VisibilityEdge
+' 
+'         Properties: length
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
+Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace Layouts.Cola
 
@@ -104,11 +105,13 @@ Namespace Layouts.Cola
         End Sub
     End Class
 
-    Public Class BiTangents
+    Public Class BiTangents : Inherits JavaScriptObject
+
         Public rl As BiTangent
         Public lr As BiTangent
         Public ll As BiTangent
         Public rr As BiTangent
+
     End Class
 
     Public Class TVGPoint : Inherits Point2D
@@ -132,14 +135,10 @@ Namespace Layouts.Cola
     End Class
 
     Public Class VisibilityEdge
+
         Public source As VisibilityVertex
         Public target As VisibilityVertex
 
-        Private Sub New(source As VisibilityVertex, target As VisibilityVertex)
-            Me.source = source
-
-            Me.target = target
-        End Sub
         Public ReadOnly Property length() As Double
             Get
                 Dim dx = Me.source.p.X - Me.target.p.X
@@ -147,5 +146,11 @@ Namespace Layouts.Cola
                 Return Math.Sqrt(dx * dx + dy * dy)
             End Get
         End Property
+
+        Sub New(source As VisibilityVertex, target As VisibilityVertex)
+            Me.source = source
+
+            Me.target = target
+        End Sub
     End Class
 End Namespace

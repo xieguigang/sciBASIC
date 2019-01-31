@@ -120,7 +120,7 @@ Namespace Layouts.Cola
         ''' <returns></returns>
         Public Function powerGraphGridLayout(graph As network, size As Double(), grouppadding As Double) As LayoutGraph
             ' compute power graph
-            Dim powerGraph As PowerGraph(Of Node) = Nothing
+            Dim powerGraph As PowerGraph(Of Node, Group, Group) = Nothing
 
             Call graph.nodes.ForEach(Sub(v, i) v.index = i)
             Call New Layout() _
@@ -139,6 +139,7 @@ Namespace Layouts.Cola
             Dim edges As New List(Of PowerEdge(Of Integer))
             Dim vs = graph.nodes.ToList
             vs.ForEach(Sub(v, i) v.index = i)
+
             powerGraph.groups.ForEach(Sub(g)
                                           Dim sourceInd%
 
@@ -162,6 +163,7 @@ Namespace Layouts.Cola
                                                                End Sub)
                                           End If
                                       End Sub)
+
             powerGraph.powerEdges.ForEach(Sub(e)
                                               Call edges.Add(New PowerEdge(Of Integer) With {
                                                   .source = e.source.index,
@@ -199,6 +201,6 @@ Namespace Layouts.Cola
 
     Public Class LayoutGraph
         Public cola As Layout
-        Public powerGraph As PowerGraph(Of Node)
+        Public powerGraph As PowerGraph(Of Node, Group, Group)
     End Class
 End Namespace
