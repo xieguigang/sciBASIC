@@ -745,7 +745,7 @@ Namespace Layouts.Cola
                 ' construct a flat graph with dummy nodes for the groups and edges connecting group dummy nodes to their children
                 ' todo: edges attached to groups are replaced with edges connected to the corresponding group dummy node
                 Dim n = Me._nodes.Length
-                Dim edges = Me._links.Select(Function(e) New PowerEdge With {
+                Dim edges = Me._links.Select(Function(e) New PowerEdge(Of Integer) With {
                 .source = DirectCast(e.source, Node).index,
                 .target = DirectCast(e.target, Node).index
             }).ToArray
@@ -760,13 +760,13 @@ Namespace Layouts.Cola
                                    End Sub)
                 Me._groups.ForEach(Sub(g, i)
                                        If g.leaves IsNot Nothing Then
-                                           g.leaves.DoEach(Sub(v) edges.Add(New PowerEdge With {
+                                           g.leaves.DoEach(Sub(v) edges.Add(New PowerEdge(Of Integer) With {
                                            .source = g.index,
                                            .target = v.index
                                        }))
                                        End If
                                        If g.groups IsNot Nothing Then
-                                           g.groups.DoEach(Sub(gg) edges.Add(New PowerEdge With {
+                                           g.groups.DoEach(Sub(gg) edges.Add(New PowerEdge(Of Integer) With {
                                            .source = g.index,
                                            .target = gg.index
                                        }))

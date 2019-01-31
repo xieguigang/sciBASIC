@@ -187,45 +187,47 @@ Namespace Layouts.Cola
             Dim index = 0
             Dim stack As New Stack(Of NodeIndexer)
             Dim components As New List(Of Integer())
-            Dim strongConnect As Action(Of NodeIndexer) = Sub(v As NodeIndexer)
-                                                              ' Set the depth index for v to the smallest unused index
-                                                              v.index = InlineAssignHelper(v.lowlink, System.Math.Max(Interlocked.Increment(index), index - 1))
-                                                              stack.Push(v)
-                                                              v.onStack = True
+            Dim strongConnect As Action(Of NodeIndexer) =
+                Sub(v As NodeIndexer)
+                    ' Set the depth index for v to the smallest unused index
+                    v.lowlink = Math.Max(Interlocked.Increment(index), index - 1)
+                    v.index = v.lowlink
+                    stack.Push(v)
+                    v.onStack = True
 
-                                                              ' Consider successors of v
-                                                              For Each w As NodeIndexer In v.out
-                                                                  If w.index Is Nothing Then
-                                                                      ' Successor w has not yet been visited; recurse on it
-                                                                      strongConnect(w)
-                                                                      v.lowlink = sys.Min(v.lowlink, w.lowlink)
-                                                                  ElseIf w.onStack Then
-                                                                      ' Successor w is in stack S and hence in the current SCC
-                                                                      v.lowlink = sys.Min(v.lowlink, CType(w.index, Integer))
-                                                                  End If
-                                                              Next
+                    ' Consider successors of v
+                    For Each w As NodeIndexer In v.out
+                        If w.index Is Nothing Then
+                            ' Successor w has not yet been visited; recurse on it
+                            strongConnect(w)
+                            v.lowlink = sys.Min(v.lowlink, w.lowlink)
+                        ElseIf w.onStack Then
+                            ' Successor w is in stack S and hence in the current SCC
+                            v.lowlink = sys.Min(v.lowlink, CType(w.index, Integer))
+                        End If
+                    Next
 
-                                                              ' If v is a root node, pop the stack and generate an SCC
-                                                              If v.lowlink = v.index Then
-                                                                  ' start a new strongly connected component
-                                                                  Dim component As New List(Of NodeIndexer)
+                    ' If v is a root node, pop the stack and generate an SCC
+                    If v.lowlink = v.index Then
+                        ' start a new strongly connected component
+                        Dim component As New List(Of NodeIndexer)
 
-                                                                  While stack.Count > 0
-                                                                      Dim w = stack.Pop()
-                                                                      w.onStack = False
-                                                                      'add w to current strongly connected component
-                                                                      component.Add(w)
+                        While stack.Count > 0
+                            Dim w = stack.Pop()
+                            w.onStack = False
+                            'add w to current strongly connected component
+                            component.Add(w)
 
-                                                                      If w Is v Then
-                                                                          Exit While
-                                                                      End If
-                                                                  End While
+                            If w Is v Then
+                                Exit While
+                            End If
+                        End While
 
-                                                                  ' output the current strongly connected component
-                                                                  components.Add(component.Select(Function(vi) vi.id).ToArray)
-                                                              End If
+                        ' output the current strongly connected component
+                        components.Add(component.Select(Function(vi) vi.id).ToArray)
+                    End If
 
-                                                          End Sub
+                End Sub
             For i As Integer = 0 To numVertices - 1
                 nodes.Add(New NodeIndexer With {
                           .id = i,
