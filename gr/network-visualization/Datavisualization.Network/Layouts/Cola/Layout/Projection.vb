@@ -131,9 +131,16 @@ Namespace Layouts.Cola
                     x(v.variable.index) = v.variable.position()
                     v.bounds.setXCentre(x(v.variable.index))
                 End Sub,
-                Sub(g)
-                    Dim xmin = InlineAssignHelper(x(g.minVar.index), g.minVar.position())
-                    Dim xmax = InlineAssignHelper(x(g.maxVar.index), g.maxVar.position())
+                Sub(g, i)
+                    Dim xmin#
+                    Dim xmax#
+
+                    x(g.minVar.index) = g.minVar.position()
+                    x(g.maxVar.index) = g.maxVar.position()
+
+                    xmin = x(g.minVar.index)
+                    xmax = x(g.maxVar.index)
+
                     Dim p2 = g.padding / 2
                     g.bounds.X = xmin - p2
                     g.bounds.X = xmax + p2
@@ -150,9 +157,16 @@ Namespace Layouts.Cola
                    y(v.variable.index) = v.variable.position()
                    v.bounds.setYCentre(y(v.variable.index))
                End Sub,
-               Sub(g)
-                   Dim ymin = InlineAssignHelper(y(g.minVar.index), g.minVar.position())
-                   Dim ymax = InlineAssignHelper(y(g.maxVar.index), g.maxVar.position())
+               Sub(g, i)
+                   Dim ymin#
+                   Dim ymax#
+
+                   y(g.minVar.index) = g.minVar.position()
+                   y(g.maxVar.index) = g.maxVar.position()
+
+                   ymin = y(g.minVar.index)
+                   ymax = y(g.maxVar.index)
+
                    Dim p2 = g.padding / 2
 
                    g.bounds.Y = ymin - p2
@@ -196,7 +210,6 @@ Namespace Layouts.Cola
     End Class
 
     Public Class IndexedVariable : Inherits Variable
-        Public index As Integer
 
         Sub New(index As Integer, w As Double)
             Call MyBase.New(0, w)
