@@ -1,58 +1,109 @@
 ﻿#Region "Microsoft.VisualBasic::b34924e5c49c5cc1ad7b0d6159e96dd4, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\RBTree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class RBTree
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: doubleRotate, Insert, Remove, singleRotate
-    ' 
-    '     Class RBNode
-    ' 
-    '         Properties: Child, Red
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: IsRed, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class RBTree
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: doubleRotate, Insert, Remove, singleRotate
+' 
+'     Class RBNode
+' 
+'         Properties: Child, Red
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: IsRed, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 
 Namespace ComponentModel.Algorithm.BinaryTree
 
     Public Class RBTree(Of K, V) : Inherits TreeBase(Of K, V)
+
+        ''' <summary>
+        ''' returns a null iterator call <see cref="Iterator(Of K, V).next"/> or 
+        ''' <see cref="Iterator(Of K, V).prev()"/> to point to an element
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Iterator As Iterator(Of K, V)
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New Iterator(Of K, V)(Me)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' returns null if tree is empty
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property min() As V
+            Get
+                Dim res = Me._root
+                If res Is Nothing Then
+                    Return Nothing
+                End If
+
+                While res.Left IsNot Nothing
+                    res = res.Left
+                End While
+
+                Return res.Value
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' returns null if tree is empty
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property max() As V
+            Get
+                Dim res As RBNode(Of K, V) = Me._root
+                If res Is Nothing Then
+                    Return Nothing
+                End If
+
+                While res.Right IsNot Nothing
+                    res = res.Right
+                End While
+
+                Return res.Value
+            End Get
+        End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
@@ -177,7 +228,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
                         Dim sr = singleRotate(node, dir)
                         p.Child(last) = sr
                         p = sr
-                    ElseIf Not RBNode(Of K, v).IsRed(node.Child(Not dir)) Then
+                    ElseIf Not RBNode(Of K, V).IsRed(node.Child(Not dir)) Then
                         Dim sibling = p.Child(Not last)
 
                         If Not sibling Is Nothing Then
@@ -225,13 +276,139 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Function
 
         ''' <summary>
+        ''' returns node data if found, null otherwise
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        Public Function find(key As K) As V
+            Dim res As RBNode(Of K, V) = Me._root
+
+            While res IsNot Nothing
+                Dim c As Integer = Me.compares(key, res.Key)
+
+                If c = 0 Then
+                    Return res.Value
+                Else
+                    res = res.Child(c > 0)
+                End If
+            End While
+
+            Return Nothing
+        End Function
+
+        ''' <summary>
         ''' returns iterator to node if found, null otherwise
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        Public Function findIter(key As K) As Iterator(Of K, V)
+            Dim res As RBNode(Of K, V) = Me._root
+            Dim iter = Me.Iterator
+
+            While res IsNot Nothing
+                Dim c = Me.compares(key, res.Key)
+
+                If c = 0 Then
+                    iter._cursor = res
+                    Return iter
+                Else
+                    iter._ancestors.Push(res)
+                    res = res.Child(c > 0)
+                End If
+            End While
+
+            Return Nothing
+        End Function
+
+        ''' <summary>
+        ''' Returns an interator to the tree node immediately before (or at) the element
         ''' </summary>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Function findIter(data)
-            Dim res = _root
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function lowerBound(data As K) As Iterator(Of K, V)
+            Return Me._bound(data, Me.compares)
+        End Function
 
+        ''' <summary>
+        ''' Returns an interator to the tree node immediately after (or at) the element
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function upperBound(data As Object) As Iterator(Of K, V)
+            Dim cmp = Me.compares
+            Dim reverse_cmp = Function(a, b) cmp(b, a)
+
+            Return Me._bound(data, reverse_cmp)
+        End Function
+
+        ''' <summary>
+        ''' calls cb on each node's data, in order
+        ''' </summary>
+        ''' <param name="cb"></param>
+        Public Sub [each](cb As Action(Of V))
+            Dim it = Me.Iterator()
+            Dim data As New Value(Of V)
+
+            While (data = it.[next]()) IsNot Nothing
+                cb(data)
+            End While
+        End Sub
+
+        ''' <summary>
+        ''' calls cb on each node's data, in reverse order
+        ''' </summary>
+        ''' <param name="cb"></param>
+        Public Sub reach(cb As Action(Of V))
+            Dim it = Me.Iterator()
+            Dim data As New Value(Of V)
+
+            While (data = it.prev()) IsNot Nothing
+                cb(data)
+            End While
+        End Sub
+
+        ''' <summary>
+        ''' used for lowerBound and upperBound
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="cmp"></param>
+        ''' <returns></returns>
+        Public Function _bound(data As K, cmp As Comparison(Of K)) As Iterator(Of K, V)
+            Dim cur As RBNode(Of K, V) = Me._root
+            Dim iter = Me.Iterator()
+
+            While cur IsNot Nothing
+                Dim c = Me.compares(data, cur.Key)
+
+                If c = 0 Then
+                    iter._cursor = cur
+                    Return iter
+                End If
+
+                iter._ancestors.Push(cur)
+                cur = cur.Child(c > 0)
+            End While
+
+            For i As Integer = iter._ancestors.Count - 1 To 0 Step -1
+                cur = iter._ancestors(i)
+                If cmp(data, cur.Key) > 0 Then
+                    iter._cursor = cur
+
+                    Do While iter._ancestors.Count > i
+                        iter._ancestors.Pop()
+                    Loop
+
+                    Return iter
+                End If
+            Next
+
+            iter._ancestors.Clear()
+
+            Return iter
         End Function
 
         Private Shared Function singleRotate(root As RBNode(Of K, V), dir As Boolean) As RBNode(Of K, V)

@@ -6,17 +6,30 @@
         Public _ancestors As Stack(Of RBNode(Of K, V))
         Public _cursor As RBNode(Of K, V)
 
-        Public Sub New(tree As RBTree(Of K, V))
-            Me._tree = tree
-            Me._ancestors = New Stack(Of RBNode(Of K, V))
-            Me._cursor = Nothing
-        End Sub
-
         Public ReadOnly Property data() As V
             Get
                 Return If(Me._cursor IsNot Nothing, Me._cursor.Value, Nothing)
             End Get
         End Property
+
+        Default Public ReadOnly Property GetDirectionValue(dir As String) As Func(Of V)
+            Get
+                Select Case dir
+                    Case NameOf(prev)
+                        Return AddressOf prev
+                    Case NameOf([next])
+                        Return AddressOf [next]
+                    Case Else
+                        Throw New NotImplementedException
+                End Select
+            End Get
+        End Property
+
+        Public Sub New(tree As RBTree(Of K, V))
+            Me._tree = tree
+            Me._ancestors = New Stack(Of RBNode(Of K, V))
+            Me._cursor = Nothing
+        End Sub
 
         ''' <summary>
         ''' if null-iterator, returns first node
@@ -91,10 +104,10 @@
             Me._cursor = start
         End Sub
 
-        Public Sub _maxNode(start As Object)
-            While start.right IsNot Nothing
+        Public Sub _maxNode(start As RBNode(Of K, V))
+            While start.Right IsNot Nothing
                 Me._ancestors.Push(start)
-                start = start.right
+                start = start.Right
             End While
             Me._cursor = start
         End Sub

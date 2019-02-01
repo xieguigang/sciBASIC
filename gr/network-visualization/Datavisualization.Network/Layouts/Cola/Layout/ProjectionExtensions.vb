@@ -1,6 +1,7 @@
 ﻿Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace Layouts.Cola
@@ -36,7 +37,7 @@ Namespace Layouts.Cola
 
         Private Function generateGroupConstraints(root As ProjectionGroup, d As RectAccessors, minSep As Double, Optional isContained As Boolean = False) As Constraint()
             Dim padding = root.padding, gn = If(root.groups IsNot Nothing, root.groups.Length, 0), ln = If(root.leaves IsNot Nothing, root.leaves.Length, 0)
-            Dim childConstraints As Constraint() = If(Not gn, New Constraint() {}, root.groups.reduce(Function(ccs, g) ccs.concat(generateGroupConstraints(g, f, minSep, True)), New Constraint() {}))
+            Dim childConstraints As Constraint() = If(Not gn, New Constraint() {}, root.groups.Reduce(Function(ccs, g) ccs.Concat(generateGroupConstraints(g, f, minSep, True)), New Constraint() {}))
             Dim n = (If(isContained, 2, 0)) + ln + gn
             Dim vs As Variable() = New Variable(n) {}
             Dim rs As Rectangle2D() = New Rectangle2D(n) {}
@@ -103,28 +104,31 @@ Namespace Layouts.Cola
 
             For i As Integer = 0 To N__2 - 1
                 Dim e = events(i)
-                Dim v = e.v
+                Dim v As Node = e.v
                 If e.isOpen Then
-                    scanline.insert(v)
+                    scanline.Insert(v.id, v)
                     rect.findNeighbours(v, scanline)
                 Else
                     ' close event
-                    scanline.remove(v)
+                    scanline.Remove(v.id)
                     Dim makeConstraint = Sub(l, r)
                                              Dim sep = (rect.getSize(l.r) + rect.getSize(r.r)) / 2 + minSep
                                              cs.Add(New Constraint(l.v, r.v, sep))
                                          End Sub
                     Dim visitNeighbours As Action(Of String, String, Action(Of Object, Object)) =
                         Sub(forward, reverse, mkcon)
-                            Dim u, it = v(forward).iterator()
-                            While (InlineAssignHelper(u, it(forward)())) IsNot Nothing
+                            Dim u As New Value(Of Object)
+                            Dim it = v(forward).Iterator()
+
+                            While (u = it(forward)()) IsNot Nothing
                                 mkcon(u, v)
-                                u(reverse).remove(v)
+                                u.Value(reverse).remove(v)
                             End While
 
                         End Sub
-                    visitNeighbours("prev", "next", Sub(u, v) makeConstraint(u, v))
-                    visitNeighbours("next", "prev", Sub(u, v) makeConstraint(v, u))
+
+                    visitNeighbours("prev", "next", Sub(u, vi) makeConstraint(u, vi))
+                    visitNeighbours("next", "prev", Sub(u, vi) makeConstraint(vi, u))
                 End If
             Next
 
@@ -133,12 +137,13 @@ Namespace Layouts.Cola
 
         Private Sub findXNeighbours(v As Node, scanline As RBTree(Of Integer, Node))
             Dim f = Sub(forward As String, reverse As String)
-                        Dim it = scanline.findIter(v)
-                        Dim u
-                        While (InlineAssignHelper(u, it(forward)())) IsNot Nothing
+                        Dim it = scanline.findIter(v.id)
+                        Dim u As New Value(Of Object)
+
+                        While (u = it(forward)()) IsNot Nothing
                             Dim uovervX = u.r.overlapX(v.r)
                             If uovervX <= 0 OrElse uovervX <= u.r.overlapY(v.r) Then
-                                v(forward).insert(u)
+                                v(forward).Insert(u)
                                 u(reverse).insert(v)
                             End If
                             If uovervX <= 0 Then
@@ -153,9 +158,10 @@ Namespace Layouts.Cola
 
         Private Sub findYNeighbours(v As Node, scanline As RBTree(Of Integer, Node))
             Dim f = Sub(forward As String, reverse As String)
-                        Dim u = scanline.findIter(v)(forward)()
+                        Dim u = scanline.findIter(v.id)(forward)()
+
                         If u IsNot Nothing AndAlso u.r.overlapX(v.r) > 0 Then
-                            v(forward).insert(u)
+                            v(forward).Insert(u)
                             u(reverse).insert(v)
                         End If
                     End Sub

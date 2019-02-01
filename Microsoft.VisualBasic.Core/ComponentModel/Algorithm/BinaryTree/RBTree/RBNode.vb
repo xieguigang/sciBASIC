@@ -28,7 +28,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End Set
         End Property
 
-        Public Sub New(key As K, value As V, Optional parent As BinaryTree(Of K, V) = Nothing, Optional toString As Func(Of K, String) = Nothing)
+        Public Sub New(key As K, value As V,
+                       Optional parent As BinaryTree(Of K, V) = Nothing,
+                       Optional toString As Func(Of K, String) = Nothing)
+
             MyBase.New(key, value, parent, toString)
         End Sub
 
