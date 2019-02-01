@@ -406,7 +406,7 @@
     <Compile Include="Layouts\Cola\Layout\Node.vb" />
     <Compile Include="Layouts\Cola\Layout\Event.vb" />
     <Compile Include="Layouts\Cola\Layout\layout.vb" />
-    <Compile Include="Layouts\Cola\Layout3D\LinkAccessor.vb" />
+    <Compile Include="Layouts\Cola\Models\Accessor\LinkAccessor.vb" />
     <Compile Include="Layouts\Cola\Layout3D\layout3d.vb" />
     <Compile Include="Layouts\Cola\Layout3D\Module1.vb" />
     <Compile Include="Layouts\Cola\linklengths.vb" />

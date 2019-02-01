@@ -54,6 +54,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
     Public Class RBTree(Of K, V) : Inherits TreeBase(Of K, V)
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
             MyBase.New(compares, views)
         End Sub
@@ -223,6 +224,16 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Return Not found Is Nothing
         End Function
 
+        ''' <summary>
+        ''' returns iterator to node if found, null otherwise
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        Public Function findIter(data)
+            Dim res = _root
+
+        End Function
+
         Private Shared Function singleRotate(root As RBNode(Of K, V), dir As Boolean) As RBNode(Of K, V)
             Dim save = root.Child(Not dir)
 
@@ -241,38 +252,4 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Function
     End Class
 
-    Public Class RBNode(Of K, V) : Inherits BinaryTree(Of K, V)
-
-        Public Property Red As Boolean
-
-        Public Property Child(dir As Boolean) As RBNode(Of K, V)
-            Get
-                If dir Then
-                    Return Right
-                Else
-                    Return Left
-                End If
-            End Get
-            Set(value As RBNode(Of K, V))
-                If dir Then
-                    Right = value
-                Else
-                    Left = value
-                End If
-            End Set
-        End Property
-
-        Public Sub New(key As K, value As V, Optional parent As BinaryTree(Of K, V) = Nothing, Optional toString As Func(Of K, String) = Nothing)
-            MyBase.New(key, value, parent, toString)
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return $"[{If(Red, "Red", "Black")}] {MyBase.ToString}"
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Friend Shared Function IsRed(node As RBNode(Of K, V)) As Boolean
-            Return Not node Is Nothing AndAlso node.Red
-        End Function
-    End Class
 End Namespace

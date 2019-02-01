@@ -93,6 +93,15 @@ Namespace Layouts.Cola
         Public isOpen As Boolean
         Public v As Node
 
+        Sub New(isOpen As Boolean, v As Node, pos As Double)
+            Me.isOpen = isOpen
+            Me.v = v
+            Me.pos = pos
+        End Sub
+
+        Sub New()
+        End Sub
+
         Public Structure Comparer : Implements IComparer(Of [Event])
 
             Public Function Compare(a As [Event], b As [Event]) As Integer Implements IComparer(Of [Event]).Compare
