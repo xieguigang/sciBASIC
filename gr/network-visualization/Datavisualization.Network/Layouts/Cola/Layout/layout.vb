@@ -108,7 +108,7 @@ Namespace Layouts.Cola
         ' sub-classes can override this method to replace with a more sophisticated eventing mechanism
         Protected Sub trigger(e As [Event])
             If Not Me.[event] Is Nothing AndAlso Me.[event](e.type) IsNot Nothing Then
-                Me.[event](e.type)(e)
+                Call Me.[event](e.type)(e)
             End If
         End Sub
 
@@ -519,7 +519,7 @@ Namespace Layouts.Cola
 
         Public Function symmetricDiffLinkLengths(idealLength As Double, Optional w As Double = 1) As Layout
             Me.linkDistance(Function(l) idealLength * l.length)
-            Me._linkLengthCalculator = Function() symmetricDiffLinkLengths(Me._links, Me.linkAccessor, w)
+            Me._linkLengthCalculator = Sub() linkLengthExtensions.symmetricDiffLinkLengths(Me._links, Me.linkAccessor, w)
             Return Me
         End Function
 
@@ -536,7 +536,7 @@ Namespace Layouts.Cola
 
         Public Function jaccardLinkLengths(idealLength As Double, Optional w As Double = 1) As Layout
             Me.linkDistance(Function(l) idealLength * l.length)
-            Me._linkLengthCalculator = Function() jaccardLinkLengths(Me._links, Me.linkAccessor, w)
+            Me._linkLengthCalculator = Sub() linkLengthExtensions.jaccardLinkLengths(Me._links, Me.linkAccessor, w)
             Return Me
         End Function
 

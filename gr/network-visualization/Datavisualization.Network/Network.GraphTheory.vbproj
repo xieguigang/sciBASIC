@@ -392,6 +392,7 @@
     <Compile Include="Layouts\Cola\descent.vb" />
     <Compile Include="Layouts\Cola\Layout\ProjectionExtensions.vb" />
     <Compile Include="Layouts\Cola\Layout\Projection.vb" />
+    <Compile Include="Layouts\Cola\Models\Accessor\RectAccessors.vb" />
     <Compile Include="Layouts\Cola\Models\DirectedEdge.vb" />
     <Compile Include="Graph\Selector.vb" />
     <Compile Include="IO\FileStream\Json\json.vb" />

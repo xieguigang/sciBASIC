@@ -113,7 +113,7 @@ Namespace Layouts.Cola
                     ' Propagate group properties (like padding, stiffness, ...) as module definition so that the generated power graph group will inherit it
                     Dim definition = New Dictionary(Of String, Object)
 
-                    For Each prop As String In child.keys
+                    For Each prop As String In child
                         If prop <> "leaves" AndAlso prop <> "groups" Then
                             definition(prop) = child(prop)
                         End If

@@ -58,12 +58,22 @@ Namespace Layouts.Cola
 
     Module linkLengthExtensions
 
-        ' compute the size of the union of two sets a and b
+        ''' <summary>
+        ''' compute the size of the union of two sets a and b
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Private Function unionCount(a As Integer(), b As Integer()) As Integer
             Return (a.AsList + b).Distinct.Count
         End Function
 
-        ' compute the size of the intersection of two sets a and b
+        ''' <summary>
+        ''' compute the size of the intersection of two sets a and b
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         Private Function intersectionCount(a As Integer(), b As Index(Of Integer)) As Integer
             Dim n = 0
 
@@ -76,13 +86,13 @@ Namespace Layouts.Cola
             Return n
         End Function
 
-        Private Function getNeighbours(Of Link)(links As Link(), la As LinkAccessor(Of Link)) As Object()()
-            Dim neighbours = New Object()() {}
+        Private Function getNeighbours(Of Link)(links As Link(), la As LinkAccessor(Of Link)) As Dictionary(Of Integer, Dictionary(Of Integer, Object))
+            Dim neighbours As New Dictionary(Of Integer, Dictionary(Of Integer, Object))
             Dim addNeighbours = Sub(u As Integer, v As Integer)
                                     If neighbours(u) Is Nothing Then
-                                        neighbours(u) = New Object() {}
+                                        neighbours(u) = New Dictionary(Of Integer, any)
                                     End If
-                                    neighbours(u)(v) = New Object() {}
+                                    neighbours(u)(v) = New Object
                                 End Sub
             links.DoEach(Sub(e)
                              Dim u = la.getSourceIndex(e), v = la.getTargetIndex(e)
@@ -100,7 +110,7 @@ Namespace Layouts.Cola
         ''' <param name="w"></param>
         ''' <param name="f"></param>
         ''' <param name="la"></param>
-        Private Sub computeLinkLengths(Of Link)(links As Link(), w As Double, f As Func(Of any, any, Double), la As LinkLengthAccessor(Of Link))
+        Private Sub computeLinkLengths(Of Link)(links As Link(), w As Double, f As Func(Of Dictionary(Of Integer, any), Dictionary(Of Integer, any), Double), la As LinkLengthAccessor(Of Link))
             Dim neighbours = getNeighbours(Of Link)(links, la)
 
             links.DoEach(Sub(l)
@@ -118,7 +128,7 @@ Namespace Layouts.Cola
         ''' <param name="links"></param>
         ''' <param name="la"></param>
         ''' <param name="w"></param>
-        Private Sub symmetricDiffLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As Double = 1)
+        Public Sub symmetricDiffLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As Double = 1)
             computeLinkLengths(links, w, Function(a, b) Math.Sqrt(unionCount(a, b) - intersectionCount(a, b)), la)
         End Sub
 
@@ -130,7 +140,7 @@ Namespace Layouts.Cola
         ''' <param name="la"></param>
         ''' <param name="w"></param>
         Public Sub jaccardLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As Double = 1)
-            computeLinkLengths(links, w, Function(a, b) If(sys.Min([Object].keys(a).length, [Object].keys(b).length) < 1.1, 0, intersectionCount(a, b) / unionCount(a, b)), la)
+            computeLinkLengths(links, w, Function(a, b) If(sys.Min(a.Keys.Count, b.Keys.Count) < 1.1, 0, intersectionCount(a, b) / unionCount(a, b)), la)
         End Sub
 
         ''' <summary>

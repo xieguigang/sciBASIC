@@ -88,10 +88,10 @@ Namespace Layouts.Cola
         Public Function start(Optional iterations As Double = 100) As Layout3D
             Dim n = Me.nodes.Length
 
-            Dim linkAccessor = New LinkAccessor()
+            Dim linkAccessor As New LinkAccessor(Of Link3D)()
 
             If Me.useJaccardLinkLengths Then
-                jaccardLinkLengths(Me.links, linkAccessor, 1.5)
+                linkLengthExtensions.jaccardLinkLengths(Of Link3D)(Me.links, linkAccessor, 1.5)
             End If
 
             Me.links.DoEach(Sub(e) e.length *= Me.idealLinkLength)
@@ -115,7 +115,7 @@ Namespace Layouts.Cola
             '    axis: 'y', left: e.source, right: e.target, gap: e.length*1.5
             '});
             If Me.constraints.IsNullOrEmpty Then
-                Me.descent.project = New Projection(DirectCast(Me.nodes, GraphNode()), Nothing, Nothing, Me.constraints).projectFunctions()
+                Me.descent.project = New Projection(Me.nodes, Nothing, Nothing, Me.constraints).projectFunctions()
             End If
 
             For i As Integer = 0 To Me.nodes.Length - 1

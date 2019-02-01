@@ -1,4 +1,5 @@
-﻿Imports System.Threading
+﻿Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
@@ -6,18 +7,9 @@ Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace Layouts.Cola
 
-    Public Class RectAccessors
-        Public getCentre As Func(Of Rectangle2D, Double)
-        Public getOpen As Func(Of Rectangle2D, Double)
-        Public getClose As Func(Of Rectangle2D, Double)
-        Public getSize As Func(Of Rectangle2D, Double)
-        Public makeRect As Func(Of Double, Double, Double, Double, Rectangle2D)
-        Public findNeighbours As Action(Of Node, RBTree(Of Integer, Node))
-    End Class
-
     Module ProjectionExtensions
 
-        Private xRect As New RectAccessors() With {
+        ReadOnly xRect As New RectAccessors() With {
             .getCentre = Function(r) r.CenterX,
             .getOpen = Function(r) r.Y,
             .getClose = Function(r) r.Y,
@@ -26,7 +18,7 @@ Namespace Layouts.Cola
             .findNeighbours = AddressOf findXNeighbours
         }
 
-        Private yRect As New RectAccessors() With {
+        ReadOnly yRect As New RectAccessors() With {
             .getCentre = Function(r) r.CenterY,
             .getOpen = Function(r) r.X,
             .getClose = Function(r) r.X,
@@ -35,9 +27,26 @@ Namespace Layouts.Cola
             .findNeighbours = AddressOf findYNeighbours
         }
 
-        Private Function generateGroupConstraints(root As ProjectionGroup, d As RectAccessors, minSep As Double, Optional isContained As Boolean = False) As Constraint()
-            Dim padding = root.padding, gn = If(root.groups IsNot Nothing, root.groups.Length, 0), ln = If(root.leaves IsNot Nothing, root.leaves.Length, 0)
-            Dim childConstraints As Constraint() = If(Not gn, New Constraint() {}, root.groups.Reduce(Function(ccs, g) ccs.Concat(generateGroupConstraints(g, f, minSep, True)), New Constraint() {}))
+        Private Function generateGroupConstraints(root As ProjectionGroup,
+                                                  f As RectAccessors,
+                                                  minSep As Double,
+                                                  Optional isContained As Boolean = False) As Constraint()
+
+            Dim padding As Double = root.padding
+            Dim gn = If(root.groups IsNot Nothing, root.groups.Length, 0)
+            Dim ln = If(root.leaves IsNot Nothing, root.leaves.Length, 0)
+            Dim childConstraints As Constraint()
+
+            If Not gn Then
+                childConstraints = New Constraint() {}
+            Else
+                childConstraints = root _
+                    .groups _
+                    .Reduce(Function(ccs, g)
+                                Return ccs.Concat(generateGroupConstraints(g, f, minSep, True))
+                            End Function, New Constraint() {})
+            End If
+
             Dim n = (If(isContained, 2, 0)) + ln + gn
             Dim vs As Variable() = New Variable(n) {}
             Dim rs As Rectangle2D() = New Rectangle2D(n) {}
@@ -49,7 +58,13 @@ Namespace Layouts.Cola
             If isContained Then
                 ' if this group is contained by another, then we add two dummy vars and rectangles for the borders
                 Dim b As Rectangle2D = root.bounds
-                Dim c = f.getCentre(b), s = f.getSize(b) / 2, open = f.getOpen(b), close = f.getClose(b), min = c - s + padding / 2, max = c + s - padding / 2
+                Dim c = f.getCentre(b)
+                Dim s = f.getSize(b) / 2
+                Dim open = f.getOpen(b)
+                Dim close = f.getClose(b)
+                Dim min = c - s + padding / 2
+                Dim max = c + s - padding / 2
+
                 root.minVar.desiredPosition = min
                 add(f.makeRect(open, close, min, padding), root.minVar)
                 root.maxVar.desiredPosition = max
@@ -97,7 +112,7 @@ Namespace Layouts.Cola
                 events(i + n__1) = New [Event](False, v, rect.getClose(r))
             Next
 
-            Call events.Sort(compareEvents)
+            Call events.Sort(AddressOf compareEvents)
 
             Dim cs As New List(Of Constraint)
             Dim scanline = Node.makeRBTree()
@@ -156,13 +171,19 @@ Namespace Layouts.Cola
             f("prev", "next")
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Private Sub Insert(tree As RBTree(Of Integer, Node), v As Node)
+            Call tree.Insert(v.id, v)
+        End Sub
+
         Private Sub findYNeighbours(v As Node, scanline As RBTree(Of Integer, Node))
             Dim f = Sub(forward As String, reverse As String)
                         Dim u = scanline.findIter(v.id)(forward)()
 
-                        If u IsNot Nothing AndAlso u.r.overlapX(v.r) > 0 Then
+                        If u IsNot Nothing AndAlso u.r.OverlapX(v.r) > 0 Then
                             v(forward).Insert(u)
-                            u(reverse).insert(v)
+                            u(reverse).Insert(v)
                         End If
                     End Sub
 
