@@ -2,6 +2,11 @@
 
 Namespace ComponentModel.Algorithm.BinaryTree
 
+    ''' <summary>
+    ''' 与键名所对应的数据是存储在<see cref="BinaryTree(Of K, V).Value"/>之中的
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
     Public Class RBNode(Of K, V) : Inherits BinaryTree(Of K, V)
 
         Public Property Red As Boolean

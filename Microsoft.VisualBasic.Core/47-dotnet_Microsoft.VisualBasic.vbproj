@@ -918,6 +918,7 @@
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\BinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\Iterator.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\RBNode.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\RBTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeBase.vb" />
