@@ -1,53 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::2471b603f35b5e1f73e656bcaf04a556, gr\network-visualization\Datavisualization.Network\Layouts\Cola\linklengths.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module linkLengthExtensions
-    ' 
-    '         Function: generateDirectedEdgeConstraints, getNeighbours, InlineAssignHelper, intersectionCount, stronglyConnectedComponents
-    '                   unionCount
-    ' 
-    '         Sub: computeLinkLengths, jaccardLinkLengths, symmetricDiffLinkLengths
-    '         Class NodeIndexer
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module linkLengthExtensions
+' 
+'         Function: generateDirectedEdgeConstraints, getNeighbours, InlineAssignHelper, intersectionCount, stronglyConnectedComponents
+'                   unionCount
+' 
+'         Sub: computeLinkLengths, jaccardLinkLengths, symmetricDiffLinkLengths
+'         Class NodeIndexer
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
@@ -64,8 +65,9 @@ Namespace Layouts.Cola
         ''' <param name="a"></param>
         ''' <param name="b"></param>
         ''' <returns></returns>
-        Private Function unionCount(a As Integer(), b As Integer()) As Integer
-            Return (a.AsList + b).Distinct.Count
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function unionCount(a As Dictionary(Of Integer, any), b As Dictionary(Of Integer, any)) As Integer
+            Return (a.Keys.AsList + b.Keys).Distinct.Count
         End Function
 
         ''' <summary>
@@ -74,11 +76,11 @@ Namespace Layouts.Cola
         ''' <param name="a"></param>
         ''' <param name="b"></param>
         ''' <returns></returns>
-        Private Function intersectionCount(a As Integer(), b As Index(Of Integer)) As Integer
+        Private Function intersectionCount(a As Dictionary(Of Integer, any), b As Dictionary(Of Integer, any)) As Integer
             Dim n = 0
 
-            For Each i As Integer In a
-                If b.IndexOf(x:=i) > -1 Then
+            For Each i As Integer In a.Keys
+                If b.ContainsKey(i) Then
                     n += 1
                 End If
             Next
