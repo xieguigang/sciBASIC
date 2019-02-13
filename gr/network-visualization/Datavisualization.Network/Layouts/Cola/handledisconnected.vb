@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::ce95bce27f5d3b08e7167fd0ef905d47, gr\network-visualization\Datavisualization.Network\Layouts\Cola\handledisconnected.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class packingOptions
-    ' 
-    ' 
-    ' 
-    '     Class handleDisconnected
-    ' 
-    '         Properties: get_real_ratio
-    ' 
-    '         Function: [step], get_entire_width, InlineAssignHelper, separateGraphs
-    ' 
-    '         Sub: apply, applyPacking, calculate_bb, explore_node, put_nodes_to_right_positions
-    '              put_rect
-    ' 
-    '     Class Graph
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class packingOptions
+' 
+' 
+' 
+'     Class handleDisconnected
+' 
+'         Properties: get_real_ratio
+' 
+'         Function: [step], get_entire_width, InlineAssignHelper, separateGraphs
+' 
+'         Sub: apply, applyPacking, calculate_bb, explore_node, put_nodes_to_right_positions
+'              put_rect
+' 
+'     Class Graph
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -92,8 +92,8 @@ Namespace Layouts.Cola
                                                      min_y = System.Math.Min(v.y - h, min_y)
                                                  End Sub)
 
-                              graph.width = max_x - min_x
-                              graph.height = max_y - min_y
+                              graph.Width = max_x - min_x
+                              graph.Height = max_y - min_y
                           End Sub)
         End Sub
 
@@ -105,13 +105,13 @@ Namespace Layouts.Cola
         Private Sub apply(data As List(Of Graph), desired_ratio As Double)
             Dim curr_best_f = number.MaxValue
             Dim curr_best = 0
-            data.Sort(Function(a, b) b.height - a.height)
+            data.Sort(Function(a, b) b.Height - a.Height)
 
             'min_width = data.Reduce(Function(a, b) {
             '    return a.width < b.width ? a.width : b.width;
             '});
 
-            min_width = Aggregate g In data Into Min(g.width)
+            min_width = Aggregate g In data Into Min(g.Width)
 
             Dim x1 = min_width
             Dim x2 = get_entire_width(data)
@@ -192,7 +192,7 @@ Namespace Layouts.Cola
             Dim parent As Rectangle2D = Nothing
 
             For i As Integer = 0 To line.Count - 1
-                If (line(i).space_left >= rect.Height) AndAlso (line(i).x + line(i).width + rect.Width + packingOptions.PADDING - max_width) <= packingOptions.FLOAT_EPSILON Then
+                If (line(i).space_left >= rect.Height) AndAlso (line(i).X + line(i).Width + rect.Width + packingOptions.PADDING - max_width) <= packingOptions.FLOAT_EPSILON Then
                     parent = line(i)
                     Exit For
                 End If
@@ -243,12 +243,12 @@ Namespace Layouts.Cola
 
                               ' calculate current top left corner:
                               Dim corner = New Point2D() With {
-                                .X = center.X - g.width / 2,
-                                .Y = center.Y - g.height / 2
+                                .X = center.X - g.Width / 2,
+                                .Y = center.Y - g.Height / 2
                               }
                               Dim offset = New Point2D() With {
-                                .X = g.x - corner.X + svg_width \ 2 - real_width / 2,
-                                .Y = g.y - corner.Y + svg_height \ 2 - real_height / 2
+                                .X = g.X - corner.X + svg_width \ 2 - real_width / 2,
+                                .Y = g.Y - corner.Y + svg_height \ 2 - real_height / 2
                               }
 
                               ' put nodes:

@@ -1,5 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Imaging.LayoutModel
-Imports Microsoft.VisualBasic.Language.JavaScript
+﻿Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace Layouts.Cola
 

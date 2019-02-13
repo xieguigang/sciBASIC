@@ -77,7 +77,16 @@ Namespace Layouts.Cola
         Private _nodes As Node() = {}
         Private _groups As Group() = {}
         Private _rootGroup As Group
+
+        ''' <summary>
+        ''' 与<see cref="_indexLinks"/>是一一对应的
+        ''' </summary>
         Private _links As Link(Of Node)() = {}
+        ''' <summary>
+        ''' 因为在typescript里面，类型是可变的，所以在这里会需要这个额外的index对象来保持兼容
+        ''' </summary>
+        Private _indexLinks As Link(Of Integer)() = {}
+
         Private _constraints As Constraint() = {}
         Private _distanceMatrix As Integer()() = Nothing
         Private _descent As Descent = Nothing
@@ -496,7 +505,7 @@ Namespace Layouts.Cola
             Return If(_linkType.IsLambda, _linkType(link), 0)
         End Function
 
-        Private linkAccessor As New LinkTypeAccessor(Of Link(Of Integer)) With {
+        Private linkAccessor As New LinkTypeAccessor(Of Link(Of Node)) With {
         .getSourceIndex = AddressOf Layout.getSourceIndex,
         .getTargetIndex = AddressOf Layout.getTargetIndex,
         .setLength = Sub(l, len) l.length = len,
@@ -598,14 +607,12 @@ Namespace Layouts.Cola
                 ' G is a square matrix with G[i][j] = 1 iff there exists an edge between node i and node j
                 ' otherwise 2. (
                 G__3 = Descent.createSquareMatrix(N__2, Function() 2)
-                Me._links.DoEach(Sub(l)
-                                     If GetType(l.source) Is Double Then
-                                         l.source = Me._nodes(l.source)
-                                     End If
-                                     If GetType(l.target) Is Double Then
-                                         l.target = Me._nodes(l.target)
-                                     End If
-                                 End Sub)
+                Me._links.ForEach(Sub(l, i)
+                                      Dim index = _indexLinks(i)
+
+                                      l.source = Me._nodes(index.source)
+                                      l.target = Me._nodes(index.target)
+                                  End Sub)
                 Me._links.DoEach(Sub(e)
                                      Dim u = Layout.getSourceIndex(e)
                                      Dim v = Layout.getTargetIndex(e)

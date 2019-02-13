@@ -101,18 +101,30 @@ Namespace Imaging.LayoutModel
             End Get
         End Property
 
-        Public ReadOnly Property Right As Double
+        Public Property Right As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return X + Width
             End Get
+            Set(value As Double)
+                ' 保持当前的位置不变，但是宽度变了
+                Width = value - X
+            End Set
         End Property
 
-        Public ReadOnly Property Bottom As Double
+        ''' <summary>
+        ''' 底部的``Y``坐标值
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Bottom As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Y + Height
             End Get
+            Set(value As Double)
+                ' 保持当前的位置不变，但是高度变了
+                Height = value - Y
+            End Set
         End Property
 
         ''' <summary>
