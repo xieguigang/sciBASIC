@@ -115,7 +115,7 @@ Namespace Layouts.Cola
             '    axis: 'y', left: e.source, right: e.target, gap: e.length*1.5
             '});
             If Me.constraints.IsNullOrEmpty Then
-                Me.descent.project = New Projection(Me.nodes, Nothing, Nothing, Me.constraints).projectFunctions()
+                Me.descent.project = New Projection(Of Node3D)(Me.nodes, Nothing, Nothing, Me.constraints).projectFunctions()
             End If
 
             For i As Integer = 0 To Me.nodes.Length - 1

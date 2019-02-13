@@ -695,7 +695,7 @@ Namespace Layouts.Cola
 
             ' apply initialIterations with user constraints but no nonoverlap constraints
             If curConstraints.Length > 0 Then
-                Me._descent.project = New Projection(Me._nodes, Me._groups, Me._rootGroup, curConstraints).projectFunctions()
+                Me._descent.project = New Projection(Of Node)(Me._nodes, Me._groups, Me._rootGroup, curConstraints).projectFunctions()
             End If
             Me._descent.run(initialUserConstraintIterations)
             Me.separateOverlappingComponents(w, h, centerGraph)
@@ -707,7 +707,7 @@ Namespace Layouts.Cola
                                       v.x = x(i)
                                       v.y = y(i)
                                   End Sub)
-                Me._descent.project = New Projection(Me._nodes, Me._groups, Me._rootGroup, curConstraints, True).projectFunctions()
+                Me._descent.project = New Projection(Of Node)(Me._nodes, Me._groups, Me._rootGroup, curConstraints, True).projectFunctions()
                 Me._nodes.ForEach(Sub(v, i)
                                       x(i) = v.x
                                       y(i) = v.y

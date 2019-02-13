@@ -62,8 +62,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language.JavaScript
 
@@ -171,65 +169,5 @@ Namespace Layouts.Cola
         Public Shared Narrowing Operator CType(node As Node) As Point2D
             Return New Point2D(node.x, node.y)
         End Operator
-    End Class
-
-    Public Interface Indexed
-        Property id As Integer
-    End Interface
-
-    Public Interface IGroup(Of TGroups, TLeaves) : Inherits Indexed
-        Property groups As List(Of TGroups)
-        Property leaves As List(Of TLeaves)
-    End Interface
-
-    Public Class IndexGroup : Inherits DynamicPropertyBase(Of Object)
-        Implements IGroup(Of Integer, Integer)
-
-        Public Property leaves As List(Of Integer) Implements IGroup(Of Integer, Integer).leaves
-        Public Property groups As List(Of Integer) Implements IGroup(Of Integer, Integer).groups
-        Public Property id As Integer Implements IGroup(Of Integer, Integer).id
-
-    End Class
-
-    Public Class Group : Inherits Node
-        Implements IGroup(Of Group, Node)
-
-        Public Property groups As List(Of Group) Implements IGroup(Of Group, Node).groups
-        Public Property leaves As List(Of Node) Implements IGroup(Of Group, Node).leaves
-        Public Property padding As Double?
-
-        Public Shared Function isGroup(g As Group) As Boolean
-            Return g.leaves IsNot Nothing OrElse g.groups IsNot Nothing
-        End Function
-    End Class
-
-
-    Public Class Link(Of NodeRefType)
-
-        Public Property source() As NodeRefType
-        Public Property target() As NodeRefType
-
-        ''' <summary>
-        ''' ideal length the layout should try to achieve for this link 
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property length() As Double
-
-        ''' <summary>
-        ''' how hard we should try to satisfy this link's ideal length
-        ''' must be in the range: ``0 &lt; weight &lt;= 1``
-        ''' if unspecified 1 is the default
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property weight() As Double
-    End Class
-
-    Public Delegate Function LinkNumericPropertyAccessor(t As Link(Of Node)) As Double
-
-    Public Class LinkLengthTypeAccessor
-        Inherits LinkLengthAccessor(Of Link(Of Node))
-
-        Public Shadows [getType] As LinkNumericPropertyAccessor
-        Public getMinSeparation As UnionType(Of Double)
     End Class
 End Namespace

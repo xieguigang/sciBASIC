@@ -130,7 +130,7 @@ Namespace Layouts.Cola
 
         Private random As Random = Math.Seeds
 
-        Public project As Func(Of Double(), Double(), Double(), Double)() = Nothing
+        Public project As Action(Of Double(), Double(), Double())() = Nothing
 
 
         Public Dmatrix As Double()()
