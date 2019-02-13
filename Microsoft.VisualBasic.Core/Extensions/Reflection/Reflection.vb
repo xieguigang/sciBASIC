@@ -76,6 +76,25 @@ Public Module EmitReflection
     End Function
 
     ''' <summary>
+    ''' 这个方法的调用是否是不需要任何参数的？
+    ''' </summary>
+    ''' <param name="method"></param>
+    ''' <param name="optionalAsNone"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IsNonParametric(method As MethodInfo, Optional optionalAsNone As Boolean = False) As Boolean
+        Dim params = method.GetParameters
+
+        If params.IsNullOrEmpty Then
+            Return True
+        ElseIf optionalAsNone Then
+            Return Not params.Any(Function(p) Not p.IsOptional)
+        End If
+
+        Return False
+    End Function
+
+    ''' <summary>
     ''' Try to handle for the bugs in VisualBasic language: 
     ''' 
     ''' https://github.com/dotnet/roslyn/issues/23050

@@ -78,6 +78,9 @@ Namespace Language.JavaScript
             End Set
         End Property
 
+        ''' <summary>
+        ''' 如果存在无参数的函数，则也会被归类为只读属性？
+        ''' </summary>
         Sub New()
             Dim type As Type = MyClass.GetType
             Dim properties As PropertyInfo() = type.GetProperties(PublicProperty).ToArray

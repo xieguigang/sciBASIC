@@ -155,6 +155,11 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Call Me.New(Nothing, field)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(method As MethodInfo)
+            Call Me.New(Nothing, method)
+        End Sub
+
         Sub New(attr As T, field As FieldInfo, Optional getName As IToString(Of T) = Nothing)
             Me.field = attr
             Me.member = field
@@ -167,6 +172,28 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             With field
                 __setValue = AddressOf field.SetValue  ' .DeclaringType.FieldSet(.Name)
                 __getValue = AddressOf field.GetValue  ' .DeclaringType.FieldGet(.Name)
+            End With
+        End Sub
+
+        Sub New(attr As T, method As MethodInfo, Optional getName As IToString(Of T) = Nothing)
+            Me.field = attr
+            Me.member = method
+
+            Type = method.ReturnType
+
+            If Not getName Is Nothing Then
+                name = getName(attr)
+            End If
+
+            If method.IsNonParametric(optionalAsNone:=True) Then
+                Throw New InvalidConstraintException("Only allows parameterless method or all of the parameter should be optional!")
+            End If
+
+            With field
+                __setValue = Sub(a, b)
+                                 Throw New ReadOnlyException
+                             End Sub
+                __getValue = Function(obj) method.Invoke(obj, {})
             End With
         End Sub
 
