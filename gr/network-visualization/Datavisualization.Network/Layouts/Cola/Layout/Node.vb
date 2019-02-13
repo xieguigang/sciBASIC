@@ -196,7 +196,7 @@ Namespace Layouts.Cola
 
         Public Property groups As List(Of Group) Implements IGroup(Of Group, Node).groups
         Public Property leaves As List(Of Node) Implements IGroup(Of Group, Node).leaves
-        Public Property padding As Double
+        Public Property padding As Double?
 
         Public Shared Function isGroup(g As Group) As Boolean
             Return g.leaves IsNot Nothing OrElse g.groups IsNot Nothing

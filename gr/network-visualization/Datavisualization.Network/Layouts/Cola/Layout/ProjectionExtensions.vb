@@ -153,13 +153,14 @@ Namespace Layouts.Cola
         Private Sub findXNeighbours(v As Node, scanline As RBTree(Of Integer, Node))
             Dim f = Sub(forward As String, reverse As String)
                         Dim it = scanline.findIter(v.id)
-                        Dim u As New Value(Of Object)
+                        Dim u As New Value(Of Node)
 
                         While (u = it(forward)()) IsNot Nothing
-                            Dim uovervX = u.r.overlapX(v.r)
-                            If uovervX <= 0 OrElse uovervX <= u.r.overlapY(v.r) Then
+                            Dim uovervX = u.Value.r.OverlapX(v.r)
+
+                            If uovervX <= 0 OrElse uovervX <= u.Value.r.OverlapY(v.r) Then
                                 v(forward).Insert(u)
-                                u(reverse).insert(v)
+                                u.Value(reverse).insert(v)
                             End If
                             If uovervX <= 0 Then
                                 Exit While
