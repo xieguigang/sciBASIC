@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace Layouts.Cola
 
-    Public Class InputNode
+    Public Class InputNode : Inherits JavaScriptObject
 
         ''' <summary>
         ''' index in nodes array, this is initialized by Layout.start()
@@ -108,35 +108,37 @@ Namespace Layouts.Cola
     ''' upon ingestion
     ''' </summary>
     Public Class Node : Inherits InputNode
+        Implements Indexed
 
-        Public id As Integer
+        Public Property id As Integer Implements Indexed.id
         Public name As String
         Public routerNode As Node
         Public prev As RBTree(Of Integer, Node)
         Public [next] As RBTree(Of Integer, Node)
+        Public children As Integer()
 
-        Default Public Property GetNode(direction As String) As RBTree(Of Integer, Node)
-            Get
-                Select Case direction
-                    Case NameOf(prev)
-                        Return prev
-                    Case NameOf([next])
-                        Return [next]
-                    Case Else
-                        Throw New NotImplementedException(direction)
-                End Select
-            End Get
-            Set
-                Select Case direction
-                    Case NameOf(prev)
-                        prev = Value
-                    Case NameOf([next])
-                        [next] = Value
-                    Case Else
-                        Throw New NotImplementedException(direction)
-                End Select
-            End Set
-        End Property
+        'Default Public Property GetNode(direction As String) As RBTree(Of Integer, Node)
+        '    Get
+        '        Select Case direction
+        '            Case NameOf(prev)
+        '                Return prev
+        '            Case NameOf([next])
+        '                Return [next]
+        '            Case Else
+        '                Throw New NotImplementedException(direction)
+        '        End Select
+        '    End Get
+        '    Set
+        '        Select Case direction
+        '            Case NameOf(prev)
+        '                prev = Value
+        '            Case NameOf([next])
+        '                [next] = Value
+        '            Case Else
+        '                Throw New NotImplementedException(direction)
+        '        End Select
+        '    End Set
+        'End Property
 
         Public r As Rectangle2D
         Public v As Variable
@@ -171,8 +173,11 @@ Namespace Layouts.Cola
         End Operator
     End Class
 
-    Public Interface IGroup(Of TGroups, TLeaves)
+    Public Interface Indexed
         Property id As Integer
+    End Interface
+
+    Public Interface IGroup(Of TGroups, TLeaves) : Inherits Indexed
         Property groups As List(Of TGroups)
         Property leaves As List(Of TLeaves)
     End Interface
@@ -186,18 +191,12 @@ Namespace Layouts.Cola
 
     End Class
 
-    Public Class Group : Inherits JavaScriptObject
+    Public Class Group : Inherits Node
         Implements IGroup(Of Group, Node)
-
-        Public routerNode As Group
-        Public bounds As Rectangle2D
-        Public padding As Double?
-        Public parent As Group
-        Public index As Integer
 
         Public Property groups As List(Of Group) Implements IGroup(Of Group, Node).groups
         Public Property leaves As List(Of Node) Implements IGroup(Of Group, Node).leaves
-        Public Property id As Integer Implements IGroup(Of Group, Node).id
+        Public Property padding As Double
 
         Public Shared Function isGroup(g As Group) As Boolean
             Return g.leaves IsNot Nothing OrElse g.groups IsNot Nothing

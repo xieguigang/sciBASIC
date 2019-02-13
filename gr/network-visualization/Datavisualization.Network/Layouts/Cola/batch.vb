@@ -1,54 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::c359335b573f44a8f7daa6d72e59a8f5, gr\network-visualization\Datavisualization.Network\Layouts\Cola\batch.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface network
-    ' 
-    '         Properties: links, nodes
-    ' 
-    '     Module batch
-    ' 
-    '         Function: gridify, powerGraphGridLayout, route
-    ' 
-    '     Class LayoutGraph
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface network
+' 
+'         Properties: links, nodes
+' 
+'     Module batch
+' 
+'         Function: gridify, powerGraphGridLayout, route
+' 
+'     Class LayoutGraph
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Layouts.Cola
 
@@ -71,7 +72,7 @@ Namespace Layouts.Cola
         ''' <param name="margin">space around nodes</param>
         ''' <param name="groupMargin">space around groups</param>
         ''' <returns></returns>
-        Private Function gridify(pgLayout As LayoutGraph, nudgeGap As Double, margin As Double, groupMargin As Double) As Object
+        Private Function gridify(pgLayout As LayoutGraph, nudgeGap As Double, margin As Double, groupMargin As Double) As List(Of Segment())
             Dim gridrouter As GridRouter(Of Node)
             Dim edges As PowerEdge(Of Node)()
             Dim getSource As Func(Of PowerEdge(Of Node), Integer) = Function(e) e.source.routerNode.id
@@ -92,17 +93,16 @@ Namespace Layouts.Cola
                           }
                          End Sub)
             groups.DoEach(Sub(d)
-
-
+                              Dim childs As Integer() = d.groups.SafeQuery.Select(Function(c) nodes.Length + c.id).AsList + d.leaves.SafeQuery.Select(Function(c) c.index)
                               d.routerNode = New [Group] With {
                                 .bounds = d.bounds.inflate(-groupMargin),
-                                .children = (If(d.groups IsNot Nothing, d.groups.Select(Function(c) nodes.Length + c.id), New Object() {})).Concat(If(d.leaves IsNot Nothing, d.leaves.Select(Function(c) c.index), New Object() {}))
+                                .children = childs
                            }
                           End Sub)
             Dim gridRouterNodes As Node() = nodes.Concat(groups).Select(Function(d, i)
                                                                             d.routerNode.id = i
                                                                             Return d.routerNode
-                                                                        End Function)
+                                                                        End Function).ToArray
             Dim accessor As New NodeAccessor(Of Node) With {
             .getChildren = Function(v) v.children,
             .getBounds = Function(v) v.bounds
