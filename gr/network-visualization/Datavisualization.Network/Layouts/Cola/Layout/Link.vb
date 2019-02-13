@@ -1,7 +1,4 @@
-﻿Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
-Imports Microsoft.VisualBasic.Language.JavaScript
-
-Namespace Layouts.Cola
+﻿Namespace Layouts.Cola
 
     Public Class Link(Of NodeRefType)
 
@@ -21,14 +18,5 @@ Namespace Layouts.Cola
         ''' </summary>
         ''' <returns></returns>
         Public Property weight() As Double
-    End Class
-
-    Public Delegate Function LinkNumericPropertyAccessor(t As Link(Of Node)) As Double
-
-    Public Class LinkLengthTypeAccessor
-        Inherits LinkLengthAccessor(Of Link(Of Node))
-
-        Public Shadows [getType] As LinkNumericPropertyAccessor
-        Public getMinSeparation As UnionType(Of Double)
     End Class
 End Namespace

@@ -1,108 +1,109 @@
 ﻿#Region "Microsoft.VisualBasic::c515805863a6e7ff11067937257f31b8, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\Models.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SVGRoutePath
-    ' 
-    ' 
-    ' 
-    '     Class vsegmentsets
-    ' 
-    ' 
-    ' 
-    '     Class Segment
-    ' 
-    '         Sub: Reverse
-    ' 
-    '     Class LinkLine
-    ' 
-    ' 
-    ' 
-    '     Class NodeAccessor
-    ' 
-    ' 
-    '         Delegate Function
-    ' 
-    ' 
-    '         Delegate Function
-    ' 
-    '             Properties: getBounds, getChildren
-    ' 
-    '     Class LinkAccessor
-    ' 
-    ' 
-    '         Delegate Function
-    ' 
-    '             Properties: getSourceIndex, getTargetIndex
-    ' 
-    '     Class LinkLengthAccessor
-    ' 
-    ' 
-    '         Delegate Sub
-    ' 
-    '             Properties: setLength
-    ' 
-    '     Class NodeWrapper
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Class Vert
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class GridLine
-    ' 
-    ' 
-    '         Structure Comparer
-    ' 
-    '             Function: Compare
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SVGRoutePath
+' 
+' 
+' 
+'     Class vsegmentsets
+' 
+' 
+' 
+'     Class Segment
+' 
+'         Sub: Reverse
+' 
+'     Class LinkLine
+' 
+' 
+' 
+'     Class NodeAccessor
+' 
+' 
+'         Delegate Function
+' 
+' 
+'         Delegate Function
+' 
+'             Properties: getBounds, getChildren
+' 
+'     Class LinkAccessor
+' 
+' 
+'         Delegate Function
+' 
+'             Properties: getSourceIndex, getTargetIndex
+' 
+'     Class LinkLengthAccessor
+' 
+' 
+'         Delegate Sub
+' 
+'             Properties: setLength
+' 
+'     Class NodeWrapper
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'     Class Vert
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class GridLine
+' 
+' 
+'         Structure Comparer
+' 
+'             Function: Compare
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace Layouts.Cola.GridRouter
 
@@ -152,14 +153,12 @@ Namespace Layouts.Cola.GridRouter
 
         Public Property getSourceIndex As IGetIndex
         Public Property getTargetIndex As IGetIndex
-    End Class
-
-    Public Class LinkLengthAccessor(Of Link)
-        Inherits LinkAccessor(Of Link)
+        Public Property getMinSeparation As UnionType(Of Double)
 
         Public Delegate Sub SetLinkLength(l As Link, value As Double)
 
         Public Property setLength As SetLinkLength
+
     End Class
 
     Public Class NodeWrapper
@@ -190,8 +189,8 @@ Namespace Layouts.Cola.GridRouter
 
         Sub New(id As Double, x As Double, y As Double, Optional node As NodeWrapper = Nothing, Optional line As Object = Nothing)
             Me.id = id
-            Me.x = x
-            Me.y = y
+            Me.X = x
+            Me.Y = y
             Me.node = node
             Me.line = line
         End Sub

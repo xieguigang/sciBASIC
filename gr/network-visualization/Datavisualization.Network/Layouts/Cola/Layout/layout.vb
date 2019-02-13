@@ -424,7 +424,7 @@ Namespace Layouts.Cola
             Return Me
         End Function
 
-        Public Function linkDistance(x As LinkNumericPropertyAccessor) As Layout
+        Public Function linkDistance(x As Func(Of Link(Of Node), Double)) As Layout
             Me._linkDistance = New UnionType(Of number) With {
                 .lambda1 = Function(any) x(any)
             }
@@ -492,21 +492,17 @@ Namespace Layouts.Cola
             End If
         End Function
 
-        Public Shared Sub setLinkLength(link As Link(Of Node), length As Double)
-            link.length = length
-        End Sub
-
         Private Function getLinkType(link As Link(Of Node)) As Double
             Return If(_linkType.IsLambda, _linkType(link), 0)
         End Function
 
-        Private linkAccessor As New LinkLengthTypeAccessor() With {
+        Private linkAccessor As New LinkTypeAccessor(Of Link(Of Integer)) With {
         .getSourceIndex = AddressOf Layout.getSourceIndex,
         .getTargetIndex = AddressOf Layout.getTargetIndex,
-        .setLength = AddressOf Layout.setLinkLength,
-        .[getType] = Function(l)
-                         Return If(_linkType.IsLambda, Me._linkType(l), 0)
-                     End Function
+        .setLength = Sub(l, len) l.length = len,
+        .GetLinkType = Function(l)
+                           Return If(_linkType.IsLambda, Me._linkType(l), 0)
+                       End Function
     }
 
         '*
@@ -664,12 +660,12 @@ Namespace Layouts.Cola
             }
             End If
 
-            Dim curConstraints = If(Me._constraints Is Nothing, Me._constraints, New Object() {})
+            Dim curConstraints = If(Me._constraints Is Nothing, Me._constraints, {})
             If Me._directedLinkConstraints IsNot Nothing Then
                 Me.linkAccessor.getMinSeparation = Me._directedLinkConstraints.getMinSeparation
 
                 ' todo: add containment constraints between group dummy nodes and their children
-                curConstraints = curConstraints.Concat(generateDirectedEdgeConstraints(Of Link(Of Node))(n__1, Me._links, Me._directedLinkConstraints.axis, (Me.linkAccessor)))
+                curConstraints = curConstraints.Concat(generateDirectedEdgeConstraints(Of Link(Of Node))(n__1, Me._links, Me._directedLinkConstraints.axis, Me.linkAccessor))
             End If
 
             Me.avoidOverlaps(False)

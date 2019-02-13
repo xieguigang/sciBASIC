@@ -54,19 +54,15 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 
 Namespace Layouts.Cola
 
-    Public Class LinkAccessor(Of T) : Inherits LinkLengthAccessor(Of T)
+    Public Class LinkAccessor : Inherits LinkAccessor(Of Link(Of Integer))
 
-        Public Function getSourceIndex(e As T) As Double
-            Return e.source
-        End Function
-        Public Function getTargetIndex(e As T) As Double
-            Return e.target
-        End Function
-        Public Function getLength(e As T) As Double
-            Return e.length
-        End Function
-        Public Sub setLength(e As T, l As Double)
-            e.length = l
+        Public getLength As Func(Of Link(Of Integer), Double)
+
+        Sub New()
+            Me.getSourceIndex = Function(e) e.source
+            Me.getTargetIndex = Function(e) e.target
+            Me.getLength = Function(e) e.length
+            Me.setLength = Sub(e, l) e.length = l
         End Sub
     End Class
 

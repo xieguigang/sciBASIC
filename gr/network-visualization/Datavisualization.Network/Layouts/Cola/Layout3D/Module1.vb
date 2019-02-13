@@ -65,11 +65,9 @@ Namespace Layouts.Cola
     End Class
 
     Public Class LinkSepAccessor(Of Link)
-        Inherits LinkAccessor(Of Link)
-
-        Public Delegate Function IGetMinSeperation(l As Link) As Double
+        Inherits LinkAccessor
 
         Public Property axis As String
-        Public Property getMinSeparation As UnionType(Of Double)
+
     End Class
 End Namespace

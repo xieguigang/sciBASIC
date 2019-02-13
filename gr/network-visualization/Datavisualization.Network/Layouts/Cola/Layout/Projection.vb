@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Imaging.LayoutModel
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.JavaScript
 Imports Microsoft.VisualBasic.Language.Python
@@ -105,22 +106,22 @@ Namespace Layouts.Cola
         End Sub
 
         Private Sub setupVariablesAndBounds(x0 As Double(), y0 As Double(), desired As Double(), getDesired As Func(Of GraphNode, Double))
-            Me.nodes.ForEach(Sub(v, i)
+            Call Me.nodes _
+                .ForEach(Sub(v, i)
+                             If v.fixed Then
+                                 v.variable.weight = If(v.fixedWeight, v.fixedWeight, 1000)
+                                 desired(i) = getDesired(v)
+                             Else
+                                 v.variable.weight = 1
+                             End If
 
-                                 If v.fixed Then
-                                     v.variable.weight = If(v.fixedWeight, v.fixedWeight, 1000)
-                                     desired(i) = getDesired(v)
-                                 Else
-                                     v.variable.weight = 1
-                                 End If
+                             Dim w = (v.width OrElse 0) / 2
+                             Dim h = (v.height OrElse 0) / 2
+                             Dim ix = x0(i)
+                             Dim iy = y0(i)
 
-                                 Dim w = (v.width OrElse 0) / 2
-                                 Dim h = (v.height OrElse 0) / 2
-                                 Dim ix = x0(i)
-                                 Dim iy = y0(i)
-
-                                 v.bounds = New Rectangle2D(ix - w, ix + w, iy - h, iy + h)
-                             End Sub)
+                             v.bounds = New Rectangle2D(ix - w, ix + w, iy - h, iy + h)
+                         End Sub)
         End Sub
 
         Public Sub xProject(x0 As Double(), y0 As Double(), x As Double())
@@ -176,6 +177,7 @@ Namespace Layouts.Cola
                End Sub)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function projectFunctions() As Action(Of Double(), Double(), Double())()
             Return {
                 Sub(x0, y0, x) Me.xProject(x0, y0, x),

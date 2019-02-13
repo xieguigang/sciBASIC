@@ -112,7 +112,7 @@ Namespace Layouts.Cola
         ''' <param name="w"></param>
         ''' <param name="f"></param>
         ''' <param name="la"></param>
-        Private Sub computeLinkLengths(Of Link)(links As Link(), w As Double, f As Func(Of Dictionary(Of Integer, any), Dictionary(Of Integer, any), Double), la As LinkLengthAccessor(Of Link))
+        Private Sub computeLinkLengths(Of Link)(links As Link(), w As Double, f As Func(Of Dictionary(Of Integer, any), Dictionary(Of Integer, any), Double), la As LinkAccessor(Of Link))
             Dim neighbours = getNeighbours(Of Link)(links, la)
 
             links.DoEach(Sub(l)
@@ -130,7 +130,7 @@ Namespace Layouts.Cola
         ''' <param name="links"></param>
         ''' <param name="la"></param>
         ''' <param name="w"></param>
-        Public Sub symmetricDiffLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As Double = 1)
+        Public Sub symmetricDiffLinkLengths(Of Link)(links As Link(), la As LinkAccessor(Of Link), Optional w As Double = 1)
             computeLinkLengths(links, w, Function(a, b) Math.Sqrt(unionCount(a, b) - intersectionCount(a, b)), la)
         End Sub
 
@@ -141,7 +141,7 @@ Namespace Layouts.Cola
         ''' <param name="links"></param>
         ''' <param name="la"></param>
         ''' <param name="w"></param>
-        Public Sub jaccardLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As Double = 1)
+        Public Sub jaccardLinkLengths(Of Link)(links As Link(), la As LinkAccessor(Of Link), Optional w As Double = 1)
             computeLinkLengths(links, w, Function(a, b) If(sys.Min(a.Keys.Count, b.Keys.Count) < 1.1, 0, intersectionCount(a, b) / unionCount(a, b)), la)
         End Sub
 
@@ -154,7 +154,7 @@ Namespace Layouts.Cola
         ''' <param name="axis"></param>
         ''' <param name="la"></param>
         ''' <returns></returns>
-        Public Function generateDirectedEdgeConstraints(Of Link)(n As Double, links As Link(), axis As String, la As LinkSepAccessor(Of Link)) As List(Of IConstraint)
+        Public Function generateDirectedEdgeConstraints(Of Link)(n As Double, links As Link(), axis As String, la As LinkAccessor(Of Link)) As List(Of IConstraint)
             Dim components = stronglyConnectedComponents(n, links, la)
             Dim nodes As New List(Of Integer)
             Dim constraints As New List(Of IConstraint)
