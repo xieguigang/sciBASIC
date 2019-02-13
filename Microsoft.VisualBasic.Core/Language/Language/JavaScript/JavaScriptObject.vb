@@ -46,7 +46,11 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace Language.JavaScript
 
-    Public Class JavaScriptObject : Implements IEnumerable(Of String)
+    Public Interface IJavaScriptObjectAccessor
+        Default Property Accessor(name As String) As Object
+    End Interface
+
+    Public Class JavaScriptObject : Implements IEnumerable(Of String), IJavaScriptObjectAccessor
 
         Dim members As New Dictionary(Of String, BindProperty(Of DataFrameColumnAttribute))
 
@@ -55,7 +59,7 @@ Namespace Language.JavaScript
         ''' </summary>
         ''' <param name="memberName"></param>
         ''' <returns></returns>
-        Default Public Property Accessor(memberName As String) As Object
+        Default Public Property Accessor(memberName As String) As Object Implements IJavaScriptObjectAccessor.Accessor
             Get
                 If members.ContainsKey(memberName) Then
                     Return members(memberName).GetValue(Me)

@@ -53,6 +53,8 @@
 #End Region
 
 
+Imports Microsoft.VisualBasic.Language.JavaScript
+
 Namespace Layouts.Cola
 
     Public Class IConstraint
@@ -67,6 +69,7 @@ Namespace Layouts.Cola
 
         Public Delegate Function IGetMinSeperation(l As Link) As Double
 
-        Public Property getMinSeparation As IGetMinSeperation
+        Public Property axis As String
+        Public Property getMinSeparation As UnionType(Of Double)
     End Class
 End Namespace

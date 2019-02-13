@@ -146,8 +146,8 @@ Namespace Layouts.Cola
         Public pos As Double
         Public _dragGroupOffsetY As Double
         Public _dragGroupOffsetX As Double
-        Public px As Double?
-        Public py As Double?
+        Public Property px As Double?
+        Public Property py As Double?
         Public parent As Group
 
         Sub New()
@@ -228,8 +228,8 @@ Namespace Layouts.Cola
 
     Public Class LinkLengthTypeAccessor
         Inherits LinkLengthAccessor(Of Link(Of Node))
-        Overloads Function [getType]() As LinkNumericPropertyAccessor
 
-        End Function
+        Public Shadows [getType] As LinkNumericPropertyAccessor
+        Public getMinSeparation As UnionType(Of Double)
     End Class
 End Namespace

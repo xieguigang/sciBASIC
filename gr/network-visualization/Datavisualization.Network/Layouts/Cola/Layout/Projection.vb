@@ -5,7 +5,8 @@ Imports Microsoft.VisualBasic.Language.Python
 
 Namespace Layouts.Cola
 
-    Public Class Projection
+    Public Class Projection(Of GraphNode As IGraphNode)
+
         Private xConstraints As List(Of Constraint)
         Private yConstraints As List(Of Constraint)
         Private variables As Variable()
@@ -72,6 +73,7 @@ Namespace Layouts.Cola
             End If
             Dim vs As GraphNode() = c.offsets.Select(Function(o) Me.nodes(o.node)).Sort(Function(a, b) a(axis) - b(axis))
             Dim p As GraphNode = Nothing
+
             vs.DoEach(Sub(v)
                           ' if two nodes overlap then shove the second one along
                           If Not p Is Nothing Then
@@ -216,16 +218,5 @@ Namespace Layouts.Cola
 
             Me.index = index
         End Sub
-    End Class
-
-    Public Class GraphNode : Inherits Leaf
-        Public fixed As Boolean
-        Public fixedWeight As Double?
-        Public width As Double
-        Public height As Double
-        Public x As Double
-        Public y As Double
-        Public px As Double
-        Public py As Double
     End Class
 End Namespace

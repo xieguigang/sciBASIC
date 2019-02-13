@@ -59,8 +59,8 @@ Imports Microsoft.VisualBasic.Language.Python
 Namespace Layouts.Cola
 
     Public Class Leaf : Inherits JavaScriptObject
-        Public bounds As Rectangle2D
-        Public variable As Variable
+        Public Overridable Property bounds As Rectangle2D
+        Public Overridable Property variable As Variable
     End Class
 
     Public Class ProjectionGroup
