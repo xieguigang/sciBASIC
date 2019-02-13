@@ -129,7 +129,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' <summary>
         ''' Clear the binary tree.
         ''' </summary>
-        Public Sub clear()
+        Public Overrides Sub Clear()
             Call KillTree(root)
             Call stack.Clear()
         End Sub
@@ -369,7 +369,11 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Call stack.Remove(nodeToDelete)
         End Sub
 
-        ' Simple 'drawing' routines
+        ''' <summary>
+        ''' Simple 'drawing' routines
+        ''' </summary>
+        ''' <param name="node"></param>
+        ''' <returns></returns>
         Private Function drawNode(node As BinaryTree(Of K, V)) As String
             If node Is Nothing Then
                 Return "empty"

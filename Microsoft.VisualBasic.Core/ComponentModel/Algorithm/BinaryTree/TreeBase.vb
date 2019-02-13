@@ -84,7 +84,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' <summary>
         ''' 将整棵树销毁
         ''' </summary>
-        Public Sub Clear()
+        Public Overridable Sub Clear()
             _root = Nothing
             stack.Clear()
         End Sub
