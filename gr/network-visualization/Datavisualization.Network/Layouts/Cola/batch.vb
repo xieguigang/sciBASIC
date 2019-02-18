@@ -205,6 +205,8 @@ Namespace Layouts.Cola
             '                          End Sub).start(50, 0, 100, 0, False),
             '    .powerGraph = powerGraph
             '}
+
+            Throw New NotImplementedException
         End Function
 
     End Module
