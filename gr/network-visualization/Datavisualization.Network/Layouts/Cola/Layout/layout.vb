@@ -87,7 +87,7 @@ Namespace Layouts.Cola
         ''' </summary>
         Private _indexLinks As Link(Of Integer)() = {}
 
-        Private _constraints As Constraint() = {}
+        Private _constraints As Constraint(Of Integer)() = {}
         Private _distanceMatrix As Integer()() = Nothing
         Private _descent As Descent = Nothing
         Private _directedLinkConstraints As LinkSepAccessor(Of Link(Of Node)) = Nothing
@@ -347,11 +347,11 @@ Namespace Layouts.Cola
         '     * @default empty list
         '     
 
-        Public Function constraints() As Constraint()
+        Public Function constraints() As Constraint(Of Integer)()
             Return Me._constraints
         End Function
 
-        Public Function constraints(c As Constraint()) As Layout
+        Public Function constraints(c As Constraint(Of Integer)()) As Layout
             Me._constraints = c
             Return Me
         End Function
@@ -667,7 +667,8 @@ Namespace Layouts.Cola
             }
             End If
 
-            Dim curConstraints = If(Me._constraints Is Nothing, Me._constraints, {})
+            Dim curConstraints As Constraint(Of Integer)() = If(Me._constraints Is Nothing, Me._constraints, {})
+
             If Me._directedLinkConstraints IsNot Nothing Then
                 Me.linkAccessor.getMinSeparation = Me._directedLinkConstraints.getMinSeparation
 

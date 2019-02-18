@@ -56,6 +56,13 @@ Namespace Layouts.Cola
             End If
         End Sub
 
+        ''' <summary>
+        ''' 在这个函数会需要index
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function createSeparation(c As Constraint(Of Integer)) As Constraint(Of Variable)
             Return New Constraint(Of Variable)(Me.nodes(c.left).variable, Me.nodes(c.right).variable, c.gap, If(c.equality IsNot Nothing, c.equality, False))
         End Function
@@ -90,19 +97,38 @@ Namespace Layouts.Cola
 
         Private Sub createAlignment(c As Constraint(Of Integer))
             Dim u = Me.nodes(c.offsets(0).node).variable
-            Me.makeFeasible(c)
-            Dim cs = If(c.axis = "x", Me.xConstraints, Me.yConstraints)
-            c.offsets.slice(1).DoEach(Sub(o)
-                                          Dim v = Me.nodes(o.node).variable
-                                          cs.Add(New Constraint(u, v, o.offset, True))
-                                      End Sub)
+            Dim cs As List(Of Constraint)
+
+            ' cs列表是引用自模块变量： 
+            ' xConstraints和yConstraints
+            '
+            ' 在下面会对这两个模块变量之中的列表元素进行追加
+            makeFeasible(c)
+            cs = If(c.axis = "x", Me.xConstraints, Me.yConstraints)
+            c _
+                .offsets _
+                .slice(1) _
+                .DoEach(Sub(o)
+                            Dim v = Me.nodes(o.node).variable
+                            Dim cv As New Constraint(u, v, o.offset, True)
+
+                            cs.Add(cv)
+                        End Sub)
         End Sub
 
         Private Sub createConstraints(constraints As Constraint(Of Integer)())
             Dim isSep = Function(c As Constraint(Of Integer)) c.type Is Nothing OrElse c.type = "separation"
+
             Me.xConstraints = constraints.Where(Function(c) c.axis = "x" AndAlso isSep(c)).Select(Function(c) Me.createSeparation(c))
             Me.yConstraints = constraints.Where(Function(c) c.axis = "y" AndAlso isSep(c)).Select(Function(c) Me.createSeparation(c))
-            constraints.Where(Function(c) c.type = "alignment").DoEach(Sub(c) Me.createAlignment(c))
+
+            Call constraints _
+                .Where(Function(c)
+                           Return c.type = "alignment"
+                       End Function) _
+                .DoEach(Sub(c)
+                            Call createAlignment(c)
+                        End Sub)
         End Sub
 
         Private Sub setupVariablesAndBounds(x0 As Double(), y0 As Double(), desired As Double(), getDesired As Func(Of GraphNode, Double))

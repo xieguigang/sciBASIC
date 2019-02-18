@@ -63,15 +63,15 @@ Namespace Layouts.Cola
         Public Overridable Property variable As Variable
     End Class
 
-    Public Class ProjectionGroup
-        Public bounds As Rectangle2D
-        Public padding As Double
-        Public stiffness As Double
-        Public leaves As Leaf()
-        Public groups As ProjectionGroup()
-        Public minVar As Variable
-        Public maxVar As Variable
-    End Class
+    Public Interface ProjectionGroup
+        Property bounds As Rectangle2D
+        Property padding As Double?
+        Property stiffness As Double?
+        Property leaves As List(Of Leaf)
+        Property groups As List(Of ProjectionGroup)
+        Property minVar As Variable
+        Property maxVar As Variable
+    End Interface
 
     Public Module Extensions
 

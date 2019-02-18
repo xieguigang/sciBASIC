@@ -1,7 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
-Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.JavaScript
 
@@ -33,8 +32,8 @@ Namespace Layouts.Cola
                                                   Optional isContained As Boolean = False) As Constraint()
 
             Dim padding As Double = root.padding
-            Dim gn = If(root.groups IsNot Nothing, root.groups.Length, 0)
-            Dim ln = If(root.leaves IsNot Nothing, root.leaves.Length, 0)
+            Dim gn = If(root.groups IsNot Nothing, root.groups.Count, 0)
+            Dim ln = If(root.leaves IsNot Nothing, root.leaves.Count, 0)
             Dim childConstraints As Constraint()
 
             If Not gn Then

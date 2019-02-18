@@ -72,33 +72,33 @@ Namespace Layouts.Cola
         ''' <summary>
         ''' index in nodes array, this is initialized by Layout.start()
         ''' </summary>
-        Public index As Integer
+        Public Property index As Integer
 
         ''' <summary>
         ''' x and y will be computed by layout as the Node's centroid
         ''' </summary>
-        Public x As Double
+        Public Overridable Property x As Double
 
         ''' <summary>
         ''' x and y will be computed by layout as the Node's centroid
         ''' </summary>
-        Public y As Double
+        Public Overridable Property y As Double
 
         ''' <summary>
         ''' specify a width and height of the node's bounding box if you turn on avoidOverlaps
         ''' </summary>
-        Public width As Double
+        Public Overridable Property width As Double
 
         ''' <summary>
         ''' specify a width and height of the node's bounding box if you turn on avoidOverlaps
         ''' </summary>
-        Public height As Double
+        Public Overridable Property height As Double
 
         ''' <summary>
         ''' if fixed, layout will not move the node from its specified starting position
         ''' selective bit mask.  !=0 means layout will not move.
         ''' </summary>
-        Public fixed As Double
+        Public Overridable Property fixed As Double
     End Class
 
     ''' <summary>
@@ -107,6 +107,7 @@ Namespace Layouts.Cola
     ''' </summary>
     Public Class Node : Inherits InputNode
         Implements Indexed
+        Implements IGraphNode
 
         Public Property id As Integer Implements Indexed.id
         Public name As String
@@ -140,12 +141,19 @@ Namespace Layouts.Cola
 
         Public r As Rectangle2D
         Public v As Variable
-        Public bounds As Rectangle2D
         Public pos As Double
         Public _dragGroupOffsetY As Double
         Public _dragGroupOffsetX As Double
-        Public Property px As Double?
-        Public Property py As Double?
+        Public Property bounds As Rectangle2D Implements IGraphNode.bounds
+        Public Property variable As Variable Implements IGraphNode.variable
+        Public Overloads Property width As Double Implements IGraphNode.width
+        Public Overloads Property height As Double Implements IGraphNode.height
+        Public Property px As Double? Implements IGraphNode.px
+        Public Property py As Double? Implements IGraphNode.py
+        Public Overloads Property x As Double Implements IGraphNode.x
+        Public Overloads Property y As Double Implements IGraphNode.y
+        Public Overloads Property fixed As Boolean Implements IGraphNode.fixed
+        Public Property fixedWeight As Double? Implements IGraphNode.fixedWeight
         Public parent As Group
 
         Sub New()
