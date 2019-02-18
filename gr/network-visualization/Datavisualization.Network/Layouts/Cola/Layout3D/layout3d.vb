@@ -57,10 +57,10 @@ Namespace Layouts.Cola
         Private result As Double()()
         Public constraints As any() = Nothing
         Public nodes As Node3D()
-        Public links As Link3D()
+        Public links As Link(Of Integer)()
         Public idealLinkLength As Double = 1
 
-        Public Sub New(nodes As Node3D(), links As Link3D(), Optional idealLinkLength As Double = 1)
+        Public Sub New(nodes As Node3D(), links As Link(Of Integer)(), Optional idealLinkLength As Double = 1)
             Me.result = MAT(Of Double)(Layout3D.k, nodes.Length)
             Me.nodes = nodes
             Me.links = links
@@ -89,10 +89,10 @@ Namespace Layouts.Cola
         Public Function start(Optional iterations As Double = 100) As Layout3D
             Dim n = Me.nodes.Length
 
-            Dim linkAccessor As New LinkAccessor(Of Link3D)
+            Dim linkAccessor As New LinkAccessor(Of Link(Of Integer))
 
             If Me.useJaccardLinkLengths Then
-                linkLengthExtensions.jaccardLinkLengths(Of Link3D)(Me.links, linkAccessor, 1.5)
+                linkLengthExtensions.jaccardLinkLengths(Of Link(Of Integer))(Me.links, linkAccessor, 1.5)
             End If
 
             Me.links.DoEach(Sub(e) e.length *= Me.idealLinkLength)
@@ -104,10 +104,11 @@ Namespace Layouts.Cola
             ' G is a square matrix with G[i][j] = 1 iff there exists an edge between node i and node j
             ' otherwise 2.
             Dim G = Descent.createSquareMatrix(n, Function() 2)
-            Me.links.ForEach(Sub(source, target)
-                                 G(target)(source) = 1
-                                 G(source)(target) = G(target)(source)
-                             End Sub)
+
+            Me.links.DoEach(Sub(link)
+                                G(link.target)(link.source) = 1
+                                G(link.source)(link.target) = G(link.target)(link.source)
+                            End Sub)
 
             Me.descent = New Descent(Me.result, D)
             Me.descent.threshold = 0.001

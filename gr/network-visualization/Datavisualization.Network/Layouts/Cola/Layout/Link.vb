@@ -1,5 +1,9 @@
 ﻿Namespace Layouts.Cola
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="NodeRefType">可以是节点对象类型的实例或者节点数组的下标数字值</typeparam>
     Public Class Link(Of NodeRefType)
 
         Public Property source() As NodeRefType
