@@ -17,7 +17,8 @@ Namespace Layouts.Cola
         Public Property leaves As List(Of Integer) Implements IGroup(Of Integer, Integer).leaves
         Public Property groups As List(Of Integer) Implements IGroup(Of Integer, Integer).groups
         Public Property id As Integer Implements IGroup(Of Integer, Integer).id
-
+        Public Property padding As Double
+        Public Property index As Integer
     End Class
 
     Public Class Group : Inherits Node
