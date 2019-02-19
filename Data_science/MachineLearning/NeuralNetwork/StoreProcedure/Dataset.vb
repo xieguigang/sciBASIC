@@ -88,7 +88,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' 属性值可能会很长,为了XML文件的美观,在这里使用element
         ''' </remarks>
         <XmlElement>
-        Public Property status As Double()
+        Public Property status As NumericVector
 
         ''' <summary>
         ''' The network expected output values
@@ -102,8 +102,11 @@ Namespace NeuralNetwork.StoreProcedure
         ''' </summary>
         ''' <param name="values">Neuron network input parameters</param>
         ''' <param name="targets">The network expected output values</param>
-        Public Sub New(values#(), targets#())
-            Me.status = values
+        Public Sub New(values#(), targets#(), Optional inputName$ = Nothing)
+            Me.status = New NumericVector With {
+                .name = inputName,
+                .vector = values
+            }
             Me.target = targets
         End Sub
 
@@ -114,7 +117,7 @@ Namespace NeuralNetwork.StoreProcedure
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{status.AsVector.ToString} => {target.AsVector.ToString}"
+            Return $"{status.vector.AsVector.ToString} => {target.AsVector.ToString}"
         End Function
     End Class
 

@@ -72,8 +72,8 @@ Namespace NeuralNetwork.StoreProcedure
         Public Function NormalizeInput(sample As Sample) As Double()
             Static normalRange As DoubleRange = {0, 1}
 
-            Return sample _
-                .status _
+            Return sample.status _
+                .vector _
                 .Select(Function(x, i)
                             x = matrix(i).GetRange.ScaleMapping(x, normalRange)
 
