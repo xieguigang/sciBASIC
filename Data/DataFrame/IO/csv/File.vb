@@ -256,6 +256,16 @@ B21,B22,B23,...
             End Get
         End Property
 
+        Public ReadOnly Iterator Property Comments(Optional prefix$ = "#") As IEnumerable(Of String)
+            Get
+                For Each row As RowObject In _innerTable
+                    If InStr(row.First, prefix) = 1 Then
+                        Yield row.AsLine(" ")
+                    End If
+                Next
+            End Get
+        End Property
+
         ''' <summary>
         ''' 删除空白的列
         ''' </summary>
@@ -712,6 +722,7 @@ B21,B22,B23,...
             Return csv
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadTsv(path$, Optional encoding As Encodings = Encodings.UTF8) As File
             Return DataImports.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function
