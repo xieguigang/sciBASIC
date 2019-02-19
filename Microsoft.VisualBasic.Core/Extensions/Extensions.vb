@@ -512,7 +512,7 @@ Public Module Extensions
 
 #If DEBUG Then
             If Not mute Then
-                Call PrintException($"missing_index:={Scripting.ToString(Index)}!", trace)
+                Call PrintException($"missing_index:={keys.Select(AddressOf Scripting.ToString).GetJson}!", trace)
             End If
 #End If
             Return [default]
