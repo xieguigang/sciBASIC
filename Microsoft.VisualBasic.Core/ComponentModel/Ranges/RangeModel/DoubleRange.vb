@@ -145,7 +145,7 @@ Namespace ComponentModel.Ranges.Model
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return ToString("G2")
+            Return ToString("F2")
         End Function
 
         Public Overloads Function ToString(format As String) As String
