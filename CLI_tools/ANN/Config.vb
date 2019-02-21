@@ -49,6 +49,7 @@ Public Class Config
 
     <DataFrameColumn> Public Property learnRate As Double = 0.1
     <DataFrameColumn> Public Property momentum As Double = 0.9
+    <DataFrameColumn> Public Property learnRateDecay As Double = 0.0000000001
     <DataFrameColumn> Public Property iterations As Integer = 10000
 
 #Region "所使用的激活函数的配置"

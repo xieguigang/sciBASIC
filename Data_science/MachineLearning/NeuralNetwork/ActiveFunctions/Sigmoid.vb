@@ -81,7 +81,7 @@ Namespace NeuralNetwork.Activations
     ''' </remarks>
     ''' 
     <Serializable>
-    Public Class Sigmoid : Implements IActivationFunction
+    Public Class Sigmoid : Inherits IActivationFunction
 
         ''' <summary>
         ''' Sigmoid's alpha value.
@@ -97,7 +97,7 @@ Namespace NeuralNetwork.Activations
         ''' 
         Public Property Alpha() As Double = 2.0R
 
-        Public ReadOnly Property Store As ActiveFunction Implements IActivationFunction.Store
+        Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
                     .Arguments = {
@@ -135,7 +135,7 @@ Namespace NeuralNetwork.Activations
         '''
         ''' <remarks>The method calculates function value at point <paramref name="x"/>.</remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function [Function](x As Double) As Double Implements IActivationFunction.[Function]
+        Public Overrides Function [Function](x As Double) As Double
             Return (1 / (1 + Math.Exp(-_Alpha * x)))
         End Function
 
@@ -149,9 +149,8 @@ Namespace NeuralNetwork.Activations
         ''' 
         ''' <remarks>The method calculates function derivative at point <paramref name="x"/>.</remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Derivative(x As Double) As Double Implements IActivationFunction.Derivative
+        Public Overrides Function Derivative(x As Double) As Double
             Dim y As Double = [Function](x)
-
             Return (_Alpha * y * (1 - y))
         End Function
 
@@ -173,8 +172,12 @@ Namespace NeuralNetwork.Activations
         ''' so they can save the amount of calculations using this method to calculate derivative.</note></para>
         ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Derivative2(y As Double) As Double Implements IActivationFunction.Derivative2
+        Public Overrides Function Derivative2(y As Double) As Double
             Return (_Alpha * y * (1 - y))
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{NameOf(Sigmoid)}(alpha:={Alpha})"
         End Function
     End Class
 End Namespace
