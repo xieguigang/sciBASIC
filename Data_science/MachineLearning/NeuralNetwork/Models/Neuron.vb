@@ -198,7 +198,7 @@ Namespace NeuralNetwork
         ''' <param name="learnRate"></param>
         ''' <param name="momentum"></param>
         ''' <returns></returns>
-        Public Function UpdateWeights(learnRate As Double, momentum As Double) As Integer
+        Public Function UpdateWeights(learnRate#, momentum#) As Integer
             Dim prevDelta = BiasDelta
             BiasDelta = learnRate * Gradient
             Bias += BiasDelta + momentum * prevDelta

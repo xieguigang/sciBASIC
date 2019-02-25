@@ -51,10 +51,28 @@ Namespace Scripting
     Public Module FuncParser
 
         ''' <summary>
-        ''' &lt;Function>(args) expression
+        ''' 这个为自定义函数表达式的解析
+        ''' 
+        ''' > &lt;Function>(args) expression
         ''' </summary>
         ''' <param name="s"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 例如可以解析一个用户输入的自定义的Lambda表达式:
+        ''' 
+        ''' ```vbnet
+        ''' ' func(args) expression
+        ''' add(x, y, z) x+y+z
+        ''' ```
+        ''' 
+        ''' 也可以用来解析一个函数的调用表达式
+        ''' 
+        ''' ```vbnet
+        ''' add(1, 2, z:=3)
+        ''' ```
+        ''' 
+        ''' 因为这个函数是直接进行字符串分隔符切割的, 所以没有办法解析复杂表达式的参数
+        ''' </remarks>
         Public Function TryParse(s As String) As Func
             Dim define As String = Mid(s, 1, InStr(s, ")"))
             Dim expr As String = Mid(s, define.Length + 1)
@@ -65,6 +83,13 @@ Namespace Scripting
             Dim name As String = Mid(define, 1, InStr(define, "(") - 1)
             Dim args As String = Mid(define, name.Length + 1).GetStackValue("(", ")")
 
+            ' 因为这个函数是用来解析自定义函数申明的
+            ' 因为函数申明之中的参数只需要填写变量名称即可
+            ' 结构非常简单
+            ' 所以在这里直接使用分隔符进行切割即可满足要求
+            '
+            ' 如果是函数调用表达式的解析的话,因为函数的参数可能是一个表达式,会比较复杂
+            ' 所以这个函数解析对于函数调用表达式的解析可能不适用
             Return New Func With {
                 .Args = args _
                     .Split(","c) _

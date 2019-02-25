@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::d1765a0428d299fd88c154abdf2ba3d4, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\ThresholdFunction.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ThresholdFunction
-    ' 
-    '         Properties: Store
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: [Function], Derivative, Derivative2
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ThresholdFunction
+' 
+'         Properties: Store
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: [Function], Derivative, Derivative2
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -74,19 +74,19 @@ Namespace NeuralNetwork.Activations
     ''' </remarks>
     '''
     <Serializable>
-    Public Class ThresholdFunction : Implements IActivationFunction
+    Public Class Threshold : Inherits IActivationFunction
 
         ''' <summary>
-        ''' Initializes a new instance of the <see cref="ThresholdFunction"/> class.
+        ''' Initializes a new instance of the <see cref="Threshold"/> class.
         ''' </summary>
         Public Sub New()
         End Sub
 
-        Public ReadOnly Property Store As ActiveFunction Implements IActivationFunction.Store
+        Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
                     .Arguments = {},
-                    .Name = NameOf(ThresholdFunction)
+                    .name = NameOf(Threshold)
                 }
             End Get
         End Property
@@ -101,7 +101,7 @@ Namespace NeuralNetwork.Activations
         '''
         ''' <remarks>The method calculates function value at point <paramref name="x"/>.</remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function [Function](x As Double) As Double Implements IActivationFunction.[Function]
+        Public Overrides Function [Function](x As Double) As Double
             Return If((x >= 0), 1, 0)
         End Function
 
@@ -116,7 +116,7 @@ Namespace NeuralNetwork.Activations
         ''' <remarks><para><note>The method is not supported, because it is not possible to
         ''' calculate derivative of the function.</note></para></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Derivative(x As Double) As Double Implements IActivationFunction.Derivative
+        Public Overrides Function Derivative(x As Double) As Double
             Return 0
         End Function
 
@@ -131,8 +131,12 @@ Namespace NeuralNetwork.Activations
         ''' <remarks><para><note>The method is not supported, because it is not possible to
         ''' calculate derivative of the function.</note></para></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Derivative2(y As Double) As Double Implements IActivationFunction.Derivative2
+        Public Overrides Function Derivative2(y As Double) As Double
             Return 0
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{NameOf(Threshold)}()"
         End Function
     End Class
 End Namespace

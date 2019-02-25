@@ -182,6 +182,8 @@ Namespace Serialization.JSON
 
             If String.Equals(json, "null", StringComparison.OrdinalIgnoreCase) Then
                 Return Nothing
+            ElseIf json.StringEmpty Then
+                Throw New NullReferenceException("Empty json text!")
             End If
 
             Using MS As New MemoryStream(Encoding.UTF8.GetBytes(json))
