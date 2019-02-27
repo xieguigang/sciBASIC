@@ -16,6 +16,14 @@ Public Structure Validation
         Return Me.GetJson
     End Function
 
+    Public Function ToDataSet() As Dictionary(Of String, Double)
+        Return New Dictionary(Of String, Double) From {
+            {NameOf(Specificity), Specificity},
+            {NameOf(Sensibility), Sensibility},
+            {NameOf(Accuracy), Accuracy}
+        }
+    End Function
+
     ''' <summary>
     ''' 
     ''' </summary>
