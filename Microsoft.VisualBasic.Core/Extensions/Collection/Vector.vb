@@ -261,6 +261,14 @@ Public Module VectorExtensions
     End Function
 
     <Extension>
+    Public Function Delete(Of T)(list As System.Collections.Generic.List(Of T), index%) As T()
+        With New System.Collections.Generic.List(Of T)(list)
+            Call .RemoveAt(index)
+            Return .ToArray
+        End With
+    End Function
+
+    <Extension>
     Public Sub InsertAt(Of T)(ByRef vector As T(), value As T, index%)
         Dim newVector As T() = New T(vector.Length) {}
 
