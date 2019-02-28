@@ -1460,6 +1460,16 @@ Namespace Math
         End Function
 #End Region
 
+        <Extension>
+        Public Iterator Function CumSum(vector As IEnumerable(Of Double)) As IEnumerable(Of Double)
+            Dim sum#
+
+            For Each x As Double In vector
+                sum += x
+                Yield sum
+            Next
+        End Function
+
         ''' <summary>
         ''' 阶乘
         ''' </summary>
