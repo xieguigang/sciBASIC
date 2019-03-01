@@ -104,10 +104,32 @@ Namespace Drawing2D
 
         Private Function GetTextAnchor(left!, right!, width!, height!, top!, bottom!, anchor As PointF) As Point
             Dim points As Point() = {
-                New Point(left + width / 2, top),    ' top
-                New Point(left + width / 2, bottom), ' bottom,
-                New Point(left, top + height / 2),   ' left,
-                New Point(right, top + height / 2)   ' right
+                New Point(left + width / 2, top),        ' top
+                New Point(left, top),                    ' top_left
+                New Point(left + width, top),            ' top_right
+                New Point(left + width / 3, top),        ' top 1/3
+                New Point(left + width / 3 * 2, top),    ' top 2/3
+                New Point(left + width / 4, top),        ' top 1/4
+                New Point(left + width / 4 * 3, top),    ' top 3/4
+                New Point(left + width / 5, top),        ' top 1/5
+                New Point(left + width / 5 * 2, top),    ' top 2/5
+                New Point(left + width / 5 * 3, top),    ' top 3/5
+                New Point(left + width / 5 * 4, top),    ' top 4/5
+ _
+                New Point(left + width / 2, bottom),     ' bottom,
+                New Point(left, bottom),                 ' bottom_left,
+                New Point(left + width, bottom),         ' bottom_right,
+                New Point(left + width / 3, bottom),     ' bottom 1/3,
+                New Point(left + width / 3 * 2, bottom), ' bottom 2/3,
+                New Point(left + width / 4, bottom),     ' bottom 1/4,
+                New Point(left + width / 4 * 3, bottom), ' bottom 3/4,
+                New Point(left + width / 5, bottom),     ' bottom 1/5,
+                New Point(left + width / 5 * 2, bottom), ' bottom 2/5,
+                New Point(left + width / 5 * 3, bottom), ' bottom 3/5,
+                New Point(left + width / 5 * 4, bottom), ' bottom 4/5,
+ _
+                New Point(left, top + height / 2),       ' left,
+                New Point(right, top + height / 2)       ' right
             }
             Dim d#() = points.Distance(anchor.ToPoint)
 
@@ -240,7 +262,7 @@ Namespace Drawing2D
         Public Function MoveTo(shape As IEnumerable(Of Point), location As PointF, Optional type As MoveTypes = MoveTypes.BoundsBoxTopLeft) As Point()
             Return shape _
                 .Select(Function(point) point.PointF) _
-                .MoveTo(location) _
+                .MoveTo(location, type) _
                 .Select(Function(point) point.ToPoint) _
                 .ToArray
         End Function
