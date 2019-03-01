@@ -110,6 +110,19 @@ Namespace d3js.Layout
 
         Public ReadOnly Property Rectangle As RectangleF
 
+        Sub New()
+        End Sub
+
+        Sub New(label$, pos As PointF, size As SizeF)
+            Me.text = label
+            Me.Rectangle = New RectangleF(pos, size)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(label$, pos As Point, size As SizeF)
+            Call Me.New(label, pos.PointF, size)
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{text}@({X.ToString("F2")},{Y.ToString("F2")})"
         End Function

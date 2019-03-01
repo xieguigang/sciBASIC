@@ -11,6 +11,11 @@ Public Structure Validation
     Dim Specificity As Double
     Dim Sensibility As Double
     Dim Accuracy As Double
+    Dim All As Integer
+    Dim TP As Integer
+    Dim FP As Integer
+    Dim TN As Integer
+    Dim FN As Integer
 
     Public Overrides Function ToString() As String
         Return Me.GetJson
@@ -20,7 +25,12 @@ Public Structure Validation
         Return New Dictionary(Of String, Double) From {
             {NameOf(Specificity), Specificity},
             {NameOf(Sensibility), Sensibility},
-            {NameOf(Accuracy), Accuracy}
+            {NameOf(Accuracy), Accuracy},
+            {NameOf(All), All},
+            {"True Positive", TP},
+            {"False Positive", FP},
+            {"True Negative", TN},
+            {"False Negative", FN}
         }
     End Function
 
@@ -76,7 +86,12 @@ Public Structure Validation
         Return New Validation With {
             .Sensibility = TP / (TP + FN) * 100,
             .Specificity = TN / (TN + FP) * 100,
-            .Accuracy = (TP + TN) / All * 100
+            .Accuracy = (TP + TN) / All * 100,
+            .All = All,
+            .FN = FN,
+            .FP = FP,
+            .TN = TN,
+            .TP = TP
         }
     End Function
 End Structure
