@@ -329,8 +329,8 @@ Public Module PathExtensions
     ''' 枚举所有非法的路径字符
     ''' </summary>
     ''' <remarks></remarks>
-    Public Const ILLEGAL_PATH_CHARACTERS_ENUMERATION As String = ":*?""<>|&"
-    Public Const ILLEGAL_FILENAME_CHARACTERS As String = "\/" & ILLEGAL_PATH_CHARACTERS_ENUMERATION
+    Public Const ILLEGAL_PATH_CHARACTERS As String = ":*?""<>|&"
+    Public Const ILLEGAL_FILENAME_CHARACTERS As String = "\/" & ILLEGAL_PATH_CHARACTERS
 
     ''' <summary>
     ''' 将目标字符串之中的非法的字符替换为"_"符号以成为正确的文件名字符串。当参数<paramref name="OnlyASCII"/>为真的时候，意味着所有的非字母或者数字的字符都会被替换为下划线，默认为真
@@ -436,7 +436,7 @@ Public Module PathExtensions
         Dim fileName As String = tokens.Last
 
         ' 由于这里是判断文件是否合法，所以之判断文件名就行了，即token列表的最后一个元素
-        For Each ch As Char In ILLEGAL_PATH_CHARACTERS_ENUMERATION
+        For Each ch As Char In ILLEGAL_PATH_CHARACTERS
             If fileName.IndexOf(ch) > -1 Then
                 Return True
             End If

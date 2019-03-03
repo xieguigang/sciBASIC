@@ -175,6 +175,7 @@ Public Module ListExtensions
 
     ''' <summary>
     ''' Take elements by <paramref name="index"/> list. 
+    ''' (将指定<paramref name="index"/>下标的元素从原始数据<paramref name="source"/>序列之中提取出来)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -191,7 +192,7 @@ Public Module ListExtensions
                                             Optional offSet% = 0,
                                             Optional reversed As Boolean = False) As T()
         If reversed Then
-            Return source.__reversedTake(index)
+            Return source.__reversedTake(index).ToArray
         End If
 
         Dim result As T() = New T(index.Length - 1) {}
@@ -214,26 +215,24 @@ Public Module ListExtensions
     End Function
 
     ''' <summary>
-    ''' 反选，即将所有不出现在<paramref name="indexs"></paramref>之中的元素都选取出来
+    ''' 反选，即将所有不出现在<paramref name="index"></paramref>之中的元素都选取出来
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="collection"></param>
-    ''' <param name="indexs"></param>
+    ''' <param name="index"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
     <Extension>
-    Private Function __reversedTake(Of T)(collection As IEnumerable(Of T), indexs As Integer()) As T()
-        Dim indices As New Index(Of Integer)(indexs)
-        Dim out As New List(Of T)
+    Private Iterator Function __reversedTake(Of T)(collection As IEnumerable(Of T), index As Integer()) As IEnumerable(Of T)
+        Dim indices As New Index(Of Integer)(index)
 
         For Each x As SeqValue(Of T) In collection.SeqIterator
-            If indices.IndexOf(x:=x.i) = -1 Then  ' 不存在于顶点的列表之中，即符合反选的条件，则添加进入结果之中
-                out += x.value
+            ' 不存在于顶点的列表之中，即符合反选的条件，则添加进入结果之中
+            If indices.IndexOf(x:=x.i) = -1 Then
+                Yield x.value
             End If
         Next
-
-        Return out
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
