@@ -311,10 +311,10 @@ Namespace d3js.Layout
                 Dim tickProvider As New ProgressProvider(nsweeps)
                 Dim p#
 
-                progress = New ProgressBar("Labels layouting...", 1, CLS:=True)
+                progress = New ProgressBar("Labels layouting...")
                 tick = Sub(currT#)
                            p = tickProvider.StepProgress
-                           progress.SetProgress(p, currT.ToString("F2"))
+                           progress.SetProgress(p, "Current temperature: " & currT.ToString("F2"))
                        End Sub
             Else
                 tick = Sub()
