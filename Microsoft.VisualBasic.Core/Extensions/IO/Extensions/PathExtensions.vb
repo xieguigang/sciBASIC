@@ -265,12 +265,17 @@ Public Module PathExtensions
     ''' <summary>
     ''' Yield subfolders' FullName
     ''' </summary>
-    ''' <param name="DIR$"></param>
+    ''' <param name="DIR">文件夹不存在，则返回空的列表</param>
     ''' <param name="[option]"></param>
     ''' <returns></returns>
     <Extension>
     Public Iterator Function ListDirectory(DIR$, Optional [option] As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly) As IEnumerable(Of String)
         Dim current As New DirectoryInfo(DIR)
+
+        If Not current.Exists Then
+            ' 文件夹不存在，则返回空的列表
+            Return
+        End If
 
         For Each folder In current.EnumerateDirectories
             Yield folder.FullName
