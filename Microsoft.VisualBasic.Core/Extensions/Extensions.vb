@@ -477,6 +477,13 @@ Public Module Extensions
         End If
     End Function
 
+    <Extension>
+    Public Function GetValueOrNull(Of K, V)(table As IDictionary(Of K, V), key As K) As V
+        Dim refOut As V = Nothing
+        Call table.TryGetValue(key, value:=refOut)
+        Return refOut
+    End Function
+
     ''' <summary>
     ''' 假若不存在目标键名，则返回空值，默认值为空值
     ''' </summary>

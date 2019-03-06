@@ -258,6 +258,30 @@ Public Module StringHelpers
         Return New String(chs.ToArray)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ByteString(bytes As SByte()) As String
+        Return bytes.ByteString(0, bytes.Length)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ByteString(bytes As SByte(), index As Integer, count As Integer) As String
+        Return Encoding.UTF8.GetString(DirectCast(DirectCast(bytes, Object), Byte()), index, count)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ByteString(bytes As SByte(), encoding As String) As String
+        Return bytes.ByteString(Scan0, bytes.Length, encoding)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ByteString(bytes As SByte(), index As Integer, count As Integer, encoding As String) As String
+        Return System.Text.Encoding.GetEncoding(encoding).GetString(DirectCast(DirectCast(bytes, Object), Byte()), index, count)
+    End Function
+
     '
     ' Summary:
     '     Replaces the format item in a specified string with the string representation

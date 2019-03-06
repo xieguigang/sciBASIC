@@ -231,6 +231,42 @@
     <Compile Include="Data\Xml.vb" />
     <Compile Include="Components\CDFData.vb" />
     <Compile Include="CDFWriter.vb" />
+    <Compile Include="HDF5\HDF5Reader.vb" />
+    <Compile Include="HDF5\io\BinaryFileReader.vb" />
+    <Compile Include="HDF5\io\BinaryReader.vb" />
+    <Compile Include="HDF5\io\ReadHelper.vb" />
+    <Compile Include="HDF5\structure\AttributeMessage.vb" />
+    <Compile Include="HDF5\structure\BLinkTreeNode.vb" />
+    <Compile Include="HDF5\structure\BTreeEntry.vb" />
+    <Compile Include="HDF5\structure\ContinueMessage.vb" />
+    <Compile Include="HDF5\structure\DataBTree.vb" />
+    <Compile Include="HDF5\structure\DataChunk.vb" />
+    <Compile Include="HDF5\structure\DataChunkIterator.vb" />
+    <Compile Include="HDF5\structure\DataNode.vb" />
+    <Compile Include="HDF5\structure\DataObject.vb" />
+    <Compile Include="HDF5\structure\DataObjectFacade.vb" />
+    <Compile Include="HDF5\structure\DataspaceMessage.vb" />
+    <Compile Include="HDF5\structure\DataTypeMessage.vb" />
+    <Compile Include="HDF5\structure\FillValueMessage.vb" />
+    <Compile Include="HDF5\structure\FillValueOldMessage.vb" />
+    <Compile Include="HDF5\structure\Group.vb" />
+    <Compile Include="HDF5\structure\GroupBTree.vb" />
+    <Compile Include="HDF5\structure\GroupMessage.vb" />
+    <Compile Include="HDF5\structure\GroupNode.vb" />
+    <Compile Include="HDF5\structure\LastModifiedMessage.vb" />
+    <Compile Include="HDF5\structure\Layout.vb" />
+    <Compile Include="HDF5\structure\LayoutField.vb" />
+    <Compile Include="HDF5\structure\LayoutMessage.vb" />
+    <Compile Include="HDF5\structure\LinkMessage.vb" />
+    <Compile Include="HDF5\structure\LocalHeap.vb" />
+    <Compile Include="HDF5\structure\ObjectHeader.vb" />
+    <Compile Include="HDF5\structure\ObjectHeaderMessage.vb" />
+    <Compile Include="HDF5\structure\ObjectHeaderMessageType.vb" />
+    <Compile Include="HDF5\structure\ObjectHeaderScratchpadFormat.vb" />
+    <Compile Include="HDF5\structure\StructureMember.vb" />
+    <Compile Include="HDF5\structure\Superblock.vb" />
+    <Compile Include="HDF5\structure\SymbolicLinkScratchpadFormat.vb" />
+    <Compile Include="HDF5\structure\SymbolTableEntry.vb" />
     <Compile Include="ToString.vb" />
     <Compile Include="Data\DataReader.vb" />
     <Compile Include="Components\Components.vb" />
@@ -282,9 +318,6 @@
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HDF5\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
