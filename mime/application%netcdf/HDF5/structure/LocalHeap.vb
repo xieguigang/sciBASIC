@@ -16,7 +16,7 @@ Namespace HDF5.[Structure]
 
     Public Class LocalHeap
 
-        Public Shared ReadOnly m_SIGNATURE As SByte() = New SByte() {CSByte("H"c), CSByte("E"c), CSByte("A"c), CSByte("P"c)}
+        Public Shared ReadOnly LOCALHEAP_SIGNATURE As SByte() = New SByte() {CSByte("H"c), CSByte("E"c), CSByte("A"c), CSByte("P"c)}
 
         Private m_address As Long
 
@@ -83,7 +83,7 @@ Namespace HDF5.[Structure]
         Public Overridable ReadOnly Property validSignature() As Boolean
             Get
                 For i As Integer = 0 To 3
-                    If Me.m_SIGNATURE(i) <> m_SIGNATURE(i) Then
+                    If Me.m_signature(i) <> LOCALHEAP_SIGNATURE(i) Then
                         Return False
                     End If
                 Next

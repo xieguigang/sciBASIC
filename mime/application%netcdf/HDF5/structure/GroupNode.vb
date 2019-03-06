@@ -14,9 +14,9 @@ Namespace HDF5.[Structure]
 
 	Public Class GroupNode
 
-		Public Shared ReadOnly m_SIGNATURE As SByte() = New SByte() {CSByte("S"C), CSByte("N"C), CSByte("O"C), CSByte("D"C)}
+        Public Shared ReadOnly GROUPNODE_SIGNATURE As SByte() = New SByte() {CSByte("S"c), CSByte("N"c), CSByte("O"c), CSByte("D"c)}
 
-		Private m_address As Long
+        Private m_address As Long
 		Private m_signature As SByte()
 		Private m_version As Integer
 		Private m_entryNumber As Integer
@@ -53,10 +53,10 @@ Namespace HDF5.[Structure]
 		Private ReadOnly Property validSignature() As Boolean
 			Get
 				For i As Integer = 0 To 3
-					If Me.m_signature(i) <> m_SIGNATURE(i) Then
-						Return False
-					End If
-				Next
+                    If Me.m_signature(i) <> GROUPNODE_SIGNATURE(i) Then
+                        Return False
+                    End If
+                Next
 				Return True
 			End Get
 		End Property

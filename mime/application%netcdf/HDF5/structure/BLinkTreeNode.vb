@@ -15,7 +15,7 @@ Namespace HDF5.[Structure]
 
 
     Public Class BLinkTreeNode
-        Public Shared ReadOnly m_SIGNATURE As SByte() = New SByte() {CSByte("T"c), CSByte("R"c), CSByte("E"c), CSByte("E"c)}
+        Public Shared ReadOnly BLINKTREENODE_SIGNATURE As SByte() = New SByte() {CSByte("T"c), CSByte("R"c), CSByte("E"c), CSByte("E"c)}
 
         Private m_signature As SByte()
         Private m_nodeType As Integer
@@ -82,7 +82,7 @@ Namespace HDF5.[Structure]
         Public Overridable ReadOnly Property validSignature() As Boolean
             Get
                 For i As Integer = 0 To 3
-                    If Me.m_SIGNATURE(i) <> m_SIGNATURE(i) Then
+                    If Me.m_signature(i) <> BLINKTREENODE_SIGNATURE(i) Then
                         Return False
                     End If
                 Next
