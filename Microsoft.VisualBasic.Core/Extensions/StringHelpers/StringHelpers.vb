@@ -260,25 +260,25 @@ Public Module StringHelpers
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ByteString(bytes As SByte()) As String
+    Public Function ByteString(bytes As Byte()) As String
         Return bytes.ByteString(0, bytes.Length)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ByteString(bytes As SByte(), index As Integer, count As Integer) As String
+    Public Function ByteString(bytes As Byte(), index As Integer, count As Integer) As String
         Return Encoding.UTF8.GetString(DirectCast(DirectCast(bytes, Object), Byte()), index, count)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ByteString(bytes As SByte(), encoding As String) As String
+    Public Function ByteString(bytes As Byte(), encoding As String) As String
         Return bytes.ByteString(Scan0, bytes.Length, encoding)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function ByteString(bytes As SByte(), index As Integer, count As Integer, encoding As String) As String
+    Public Function ByteString(bytes As Byte(), index As Integer, count As Integer, encoding As String) As String
         Return System.Text.Encoding.GetEncoding(encoding).GetString(DirectCast(DirectCast(bytes, Object), Byte()), index, count)
     End Function
 
