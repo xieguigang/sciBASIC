@@ -9,7 +9,7 @@
 
 Imports System.IO
 
-Namespace edu.arizona.cs.hdf5.io
+Namespace HDF5.IO
 
 
     Public Class ReadHelper

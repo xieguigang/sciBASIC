@@ -8,9 +8,7 @@
 
 
 
-Imports BinaryReader = edu.arizona.cs.hdf5.io.BinaryReader
-Imports ReadHelper = edu.arizona.cs.hdf5.io.ReadHelper
-Namespace edu.arizona.cs.hdf5.structure
+Namespace HDF5.[Structure]
 
 	Public Class DataChunk
 

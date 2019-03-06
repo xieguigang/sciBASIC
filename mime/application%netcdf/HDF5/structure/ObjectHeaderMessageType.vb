@@ -8,7 +8,7 @@ Imports System.Collections.Generic
 ' 
 
 
-Namespace edu.arizona.cs.hdf5.structure
+Namespace HDF5.[Structure]
 	Public Class ObjectHeaderMessageType
 		Private Shared MAX_MESSAGE As Integer = 23
 		Private Shared hash As IDictionary(Of String, ObjectHeaderMessageType) = New Dictionary(Of String, ObjectHeaderMessageType)(10)

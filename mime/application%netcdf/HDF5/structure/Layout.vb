@@ -8,7 +8,7 @@ Imports System.Collections.Generic
 ' 
 
 
-Namespace edu.arizona.cs.hdf5.structure
+Namespace HDF5.[Structure]
 
 	Public Class Layout
 

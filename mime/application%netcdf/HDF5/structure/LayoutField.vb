@@ -6,7 +6,7 @@
 ' 
 
 
-Namespace edu.arizona.cs.hdf5.structure
+Namespace HDF5.[Structure]
 	Public Class LayoutField
 
 		Private m_name As String

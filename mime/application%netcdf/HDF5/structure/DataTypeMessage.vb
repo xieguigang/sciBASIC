@@ -8,11 +8,10 @@
 
 
 
-Imports BinaryReader = edu.arizona.cs.hdf5.io.BinaryReader
-Imports edu.arizona.cs.hdf5.io
+
 Imports System.Collections.Generic
 Imports System.IO
-Namespace edu.arizona.cs.hdf5.structure
+Namespace HDF5.[Structure]
 
 	Public Class DataTypeMessage
 

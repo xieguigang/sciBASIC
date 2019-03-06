@@ -9,7 +9,7 @@
 
 Imports System.IO
 
-Namespace edu.arizona.cs.hdf5.structure
+Namespace HDF5.[Structure]
 
 	Public Class DataNode
 

@@ -7,11 +7,9 @@
 ' 
 
 
-
-Imports BinaryReader = edu.arizona.cs.hdf5.io.BinaryReader
-Imports ReadHelper = edu.arizona.cs.hdf5.io.ReadHelper
 Imports System.IO
-Namespace edu.arizona.cs.hdf5.structure
+
+Namespace HDF5.[Structure]
 
 	Public Class DataspaceMessage
 		Private m_address As Long

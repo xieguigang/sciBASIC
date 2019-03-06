@@ -8,8 +8,7 @@
 
 
 
-Imports BinaryReader = edu.arizona.cs.hdf5.io.BinaryReader
-Namespace edu.arizona.cs.hdf5.structure
+Namespace HDF5.[Structure]
 
 	Public Class FillValueOldMessage
 		Private m_address As Long

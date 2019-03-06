@@ -6,7 +6,7 @@
 ' * Modified by iychoi@email.arizona.edu
 ' 
 
-Namespace edu.arizona.cs.hdf5.structure
+Namespace HDF5.[Structure]
 
 	Public Class LastModifiedMessage
 		Private m_address As Long
