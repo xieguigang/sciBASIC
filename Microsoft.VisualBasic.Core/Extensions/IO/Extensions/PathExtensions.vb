@@ -1087,16 +1087,18 @@ Public Module PathExtensions
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' 这个函数为单纯的字符串解析函数，不依赖于文件系统的API
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("File.Name")>
     <Extension>
     Public Function FileName(path As String) As String
-        Try
-            Return FileIO.FileSystem.GetFileInfo(path).Name
-        Catch ex As Exception
-            Throw New InvalidOperationException(path, ex)
-        End Try
+        If path.StringEmpty Then
+            Return ""
+        Else
+            Return path.StringSplit("(\\|/)").Last
+        End If
     End Function
 
     ''' <summary>

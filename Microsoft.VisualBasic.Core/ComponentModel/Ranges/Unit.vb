@@ -118,6 +118,24 @@ Namespace ComponentModel.Ranges
         Public Function Unit(Of T As Structure)(value#, unitVal As T) As UnitValue(Of T)
             Return New UnitValue(Of T)(value, unitVal)
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Unit(Of T As Structure)(value&, unitVal As T) As UnitValue(Of T)
+            Return New UnitValue(Of T)(value, unitVal)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Unit(Of T As Structure)(value%, unitVal As T) As UnitValue(Of T)
+            Return New UnitValue(Of T)(value, unitVal)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Unit(Of T As Structure)(value!, unitVal As T) As UnitValue(Of T)
+            Return New UnitValue(Of T)(value, unitVal)
+        End Function
     End Module
 
     Public Enum ByteSize As Long
