@@ -5,6 +5,9 @@
 
 
 Imports System.IO
+Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5
+Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.Structure
+Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
 
 Namespace edu.arizona.cs.hdf5.test
 
@@ -102,7 +105,7 @@ Namespace edu.arizona.cs.hdf5.test
                     If showData Then
                         Dim dataCountPerChunk As Integer = chunk.size \ chunkSize(0)
                         For i As Integer = 0 To dataCountPerChunk - 1
-                            Dim bytes As SByte() = chunkReader.readBytes(chunkSize(0))
+                            Dim bytes As SByte() = chunkReader.ReadBytes(chunkSize(0))
 
                             For j As Integer = 0 To fields.Count - 1
                                 Dim field As LayoutField = fields(j)
@@ -114,7 +117,7 @@ Namespace edu.arizona.cs.hdf5.test
                                 Dim name As String = field.name
 
                                 If dataType = DataTypeMessage.DATATYPE_STRING Then
-                                    Dim val As String = StringHelperClass.NewString(bytes, offset, len)
+                                    Dim val As String = bytes.ByteString(offset, len)
                                     Console.WriteLine(name & " : " & val.Trim())
                                 End If
                             Next

@@ -6,12 +6,9 @@
 ' * Modified by iychoi@email.arizona.edu
 ' 
 
-
-
-
-Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
 Imports System.IO
 Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
+Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
