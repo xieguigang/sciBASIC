@@ -36,7 +36,10 @@ Namespace HDF5.IO
             Me.m_randomaccessfile = New FileStream(file.FullName, FileMode.Open)
         End Sub
 
-        Public Overrides WriteOnly Property offset() As Long
+        Public Overrides Property offset() As Long
+            Get
+                Return Me.m_offset
+            End Get
             Set
                 If Value < 0 Then
                     Throw New System.ArgumentException("offset must be positive and bigger than 0")

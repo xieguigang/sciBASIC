@@ -10,79 +10,81 @@
 Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
 
 Imports System.IO
+Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
+
 Namespace HDF5.[Structure]
 
-	Public Class GroupBTree
+    Public Class GroupBTree
 
-		Public Shared ReadOnly SIGNATURE As SByte() = New SByte() {CSByte("T"C), CSByte("R"C), CSByte("E"C), CSByte("E"C)}
+        Public Shared ReadOnly SIGNATURE As SByte() = New SByte() {CSByte("T"c), CSByte("R"c), CSByte("E"c), CSByte("E"c)}
 
-		Private m_address As Long
+        Private m_address As Long
 
-		Private m_SymbolTableEntries As List(Of SymbolTableEntry)
+        Private m_SymbolTableEntries As List(Of SymbolTableEntry)
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
-			[in].offset = address
+            [in].offset = address
 
-			Me.m_address = address
+            Me.m_address = address
 
-			Me.m_SymbolTableEntries = New List(Of SymbolTableEntry)()
+            Me.m_SymbolTableEntries = New List(Of SymbolTableEntry)()
 
-			Dim entryList As New List(Of BTreeEntry)()
-			readAllEntries([in], sb, address, entryList)
+            Dim entryList As New List(Of BTreeEntry)()
+            readAllEntries([in], sb, address, entryList)
 
-			For Each e As BTreeEntry In entryList
-				Dim node As New GroupNode([in], sb, e.targetAddress)
-				m_SymbolTableEntries.AddRange(node.symbols)
-			Next
-		End Sub
+            For Each e As BTreeEntry In entryList
+                Dim node As New GroupNode([in], sb, e.targetAddress)
+                m_SymbolTableEntries.AddRange(node.symbols)
+            Next
+        End Sub
 
         Private Sub readAllEntries([in] As BinaryReader, sb As Superblock, address As Long, entryList As List(Of BTreeEntry))
-			[in].offset = address
+            [in].offset = address
 
-			Dim signature__1 As SByte() = [in].readBytes(4)
-			For i As Integer = 0 To 3
-				If signature__1(i) <> SIGNATURE(i) Then
-					Throw New IOException("signature is not valid")
-				End If
-			Next
+            Dim signature__1 As SByte() = [in].readBytes(4)
+            For i As Integer = 0 To 3
+                If signature__1(i) <> SIGNATURE(i) Then
+                    Throw New IOException("signature is not valid")
+                End If
+            Next
 
-			Dim type As Integer = [in].readByte()
-			Dim level As Integer = [in].readByte()
-			Dim entryNum As Integer = [in].readShort()
+            Dim type As Integer = [in].readByte()
+            Dim level As Integer = [in].readByte()
+            Dim entryNum As Integer = [in].readShort()
 
-			Dim leftAddress As Long = ReadHelper.readO([in], sb)
-			Dim rightAddress As Long = ReadHelper.readO([in], sb)
+            Dim leftAddress As Long = ReadHelper.readO([in], sb)
+            Dim rightAddress As Long = ReadHelper.readO([in], sb)
 
-			Dim myEntries As New List(Of BTreeEntry)()
-			For i As Integer = 0 To entryNum - 1
-				myEntries.Add(New BTreeEntry([in], sb, [in].offset))
-			Next
+            Dim myEntries As New List(Of BTreeEntry)()
+            For i As Integer = 0 To entryNum - 1
+                myEntries.Add(New BTreeEntry([in], sb, [in].offset))
+            Next
 
-			If level = 0 Then
-				entryList.AddRange(myEntries)
-			Else
-				For Each entry As BTreeEntry In myEntries
-					readAllEntries([in], sb, entry.targetAddress, entryList)
-				Next
-			End If
-		End Sub
+            If level = 0 Then
+                entryList.AddRange(myEntries)
+            Else
+                For Each entry As BTreeEntry In myEntries
+                    readAllEntries([in], sb, entry.targetAddress, entryList)
+                Next
+            End If
+        End Sub
 
-		Public Overridable ReadOnly Property symbolTableEntries() As List(Of SymbolTableEntry)
-			Get
-				Return Me.m_SymbolTableEntries
-			End Get
-		End Property
+        Public Overridable ReadOnly Property symbolTableEntries() As List(Of SymbolTableEntry)
+            Get
+                Return Me.m_SymbolTableEntries
+            End Get
+        End Property
 
-		Public Overridable Sub printValues()
-			Console.WriteLine("GroupBTree >>>")
-			Console.WriteLine("address : " & Me.m_address)
+        Public Overridable Sub printValues()
+            Console.WriteLine("GroupBTree >>>")
+            Console.WriteLine("address : " & Me.m_address)
 
-			For i As Integer = 0 To Me.m_SymbolTableEntries.Count - 1
-				Me.m_SymbolTableEntries(i).printValues()
-			Next
+            For i As Integer = 0 To Me.m_SymbolTableEntries.Count - 1
+                Me.m_SymbolTableEntries(i).printValues()
+            Next
 
-			Console.WriteLine("GroupBTree <<<")
-		End Sub
-	End Class
+            Console.WriteLine("GroupBTree <<<")
+        End Sub
+    End Class
 
 End Namespace
