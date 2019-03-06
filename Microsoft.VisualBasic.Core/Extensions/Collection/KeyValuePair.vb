@@ -76,6 +76,25 @@ Public Module KeyValuePairExtensions
         End If
     End Function
 
+#Region "HashMapHelper"
+
+    '	Copyright ©  - 2017 Tangible Software Solutions Inc.
+    '	This class can be used by anyone provided that the copyright notice remains intact.
+    '
+    '	This class is used to replace calls to some Java HashMap or Hashtable methods.
+
+    <Extension>
+    Public Function SetOfKeyValuePairs(Of TKey, TValue)(dictionary As IDictionary(Of TKey, TValue)) As HashSet(Of KeyValuePair(Of TKey, TValue))
+        Dim entries As New HashSet(Of KeyValuePair(Of TKey, TValue))()
+
+        For Each keyValuePair As KeyValuePair(Of TKey, TValue) In dictionary
+            Call entries.Add(keyValuePair)
+        Next
+
+        Return entries
+    End Function
+#End Region
+
     ''' <summary>
     ''' Create a tuple for two elements
     ''' </summary>
