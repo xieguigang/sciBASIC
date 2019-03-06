@@ -486,7 +486,7 @@ Public Module Extensions
     ''' <param name="index"></param>
     ''' <param name="[default]"></param>
     ''' <returns></returns>
-    <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
+    <Extension> Public Function GetValueOrDefault(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
                                                              index As TKey,
                                                              Optional [default] As TValue = Nothing,
                                                              Optional mute As Boolean = False,
