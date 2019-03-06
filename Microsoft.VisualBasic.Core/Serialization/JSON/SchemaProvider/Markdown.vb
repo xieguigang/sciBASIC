@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0accccd17be7a2fa72a9e3f1e7089fb, Microsoft.VisualBasic.Core\Serialization\JSON\SchemaProvider\Markdown.vb"
+﻿#Region "Microsoft.VisualBasic::f7d000e655eeff168dfa4f42e4248053, Microsoft.VisualBasic.Core\Serialization\JSON\SchemaProvider\Markdown.vb"
 
     ' Author:
     ' 

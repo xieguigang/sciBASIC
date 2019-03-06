@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f532319ba203ff80910141664ccdb0f8, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Line.vb"
+﻿#Region "Microsoft.VisualBasic::d95835778349348f609695497b663a28, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Line.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,12 @@
 
     ' Summaries:
 
-    '     Structure Line
+    '     Class Line
     ' 
     '         Properties: Length, P1, P2, X1, X2
     '                     Y1, Y2
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 
@@ -49,9 +49,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace Imaging.Math2D
 
-    Public Structure Line
-
-        Public Shared ReadOnly Empty As New Line
+    Public Class Line
 
         ''' <summary>
         ''' (<see cref="X1"/>, <see cref="Y1"/>)
@@ -89,6 +87,16 @@ Namespace Imaging.Math2D
             Me.Y2 = p2.Y
         End Sub
 
+        Sub New()
+        End Sub
+
+        Sub New(x1!, y1!, x2!, y2!)
+            Me.X1 = x1
+            Me.X2 = x2
+            Me.Y1 = y1
+            Me.Y2 = y2
+        End Sub
+
 #Region "Points"
         Public Property X1 As Single
         Public Property X2 As Single
@@ -114,5 +122,5 @@ Namespace Imaging.Math2D
         Public Shared Widening Operator CType(twoPoints As PointF()) As Line
             Return New Line(twoPoints(0), twoPoints(1))
         End Operator
-    End Structure
+    End Class
 End Namespace

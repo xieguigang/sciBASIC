@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62798caaba8525dfd9a80d54fd53d28b, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\Parallel\StreamAPI.vb"
+﻿#Region "Microsoft.VisualBasic::2a1c1959b7a366caf94f8d97b7328bce, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\Parallel\StreamAPI.vb"
 
     ' Author:
     ' 

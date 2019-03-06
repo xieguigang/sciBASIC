@@ -773,6 +773,16 @@ Namespace LinearAlgebra
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CumSum() As Vector
+            Return Math.CumSum(Me)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Abs() As Vector
+            Return Abs(Me)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ScaleToRange(range As DoubleRange) As Vector
             Return Me.RangeTransform(range)
         End Function

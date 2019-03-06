@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fe83de4776e93e92457ebf05ec97725, mime\text%yaml\1.1\Base\YAMLNodeType.vb"
+﻿#Region "Microsoft.VisualBasic::4efc758f3f1c45982f3bc04e05a3137a, mime\text%yaml\1.1\Base\YAMLNodeType.vb"
 
     ' Author:
     ' 

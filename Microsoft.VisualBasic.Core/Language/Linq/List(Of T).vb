@@ -396,6 +396,11 @@ Namespace Language
             Return list
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator +(list As List(Of T), [iterator] As Func(Of IEnumerable(Of T))) As List(Of T)
+            Return list + iterator()
+        End Operator
+
         ''' <summary>
         ''' Append <paramref name="list2"/> to the end of <paramref name="list1"/>
         ''' </summary>

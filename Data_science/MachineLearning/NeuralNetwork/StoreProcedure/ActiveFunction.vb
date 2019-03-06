@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::046dce4ed9ee4cd2dc9cc36753d665ef, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\ActiveFunction.vb"
+﻿#Region "Microsoft.VisualBasic::b892bb6ab5ede99150b3757f60d16d4c, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\ActiveFunction.vb"
 
 ' Author:
 ' 
@@ -35,7 +35,7 @@
 ' 
 '         Properties: [Function], Arguments, name
 ' 
-'         Function: ToString
+'         Function: HasKey, ToString
 ' 
 ' 
 ' /********************************************************************************/
@@ -44,7 +44,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
+Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Namespace NeuralNetwork.StoreProcedure
@@ -71,6 +73,7 @@ Namespace NeuralNetwork.StoreProcedure
         Public Property Arguments As NamedValue()
 
         Default Public ReadOnly Property Item(name As String) As Double
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Arguments _
                     .FirstOrDefault(Function(tag) tag.name.TextEquals(name)) _
@@ -86,11 +89,11 @@ Namespace NeuralNetwork.StoreProcedure
             Get
                 With Me
                     Select Case name
-                        Case NameOf(Activations.BipolarSigmoidFunction)
+                        Case NameOf(Activations.BipolarSigmoid)
                             If HasKey("alpha") Then
-                                Return New BipolarSigmoidFunction(!alpha)
+                                Return New BipolarSigmoid(!alpha)
                             Else
-                                Return New BipolarSigmoidFunction
+                                Return New BipolarSigmoid
                             End If
                         Case NameOf(Activations.SigmoidFunction)
                             Return New SigmoidFunction
@@ -100,8 +103,8 @@ Namespace NeuralNetwork.StoreProcedure
                             Else
                                 Return New Sigmoid
                             End If
-                        Case NameOf(Activations.ThresholdFunction)
-                            Return New ThresholdFunction
+                        Case NameOf(Activations.Threshold)
+                            Return New Threshold
                         Case NameOf(Activations.ReLU)
                             Return New ReLU
                         Case Else
@@ -126,6 +129,45 @@ Namespace NeuralNetwork.StoreProcedure
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"{name}({Arguments.Select(Function(a) $"{a.name}:={a.text}").JoinBy(", ")})"
+        End Function
+
+        ''' <summary>
+        ''' 将激活函数从数据模型转换为对象模型
+        ''' </summary>
+        ''' <param name="af"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(af As ActiveFunction) As IActivationFunction
+            Return af.Function
+        End Operator
+
+#Region "Default Expressions"
+        Public Shared ReadOnly Property ReLU As DefaultValue(Of String) = "ReLU()"
+        Public Shared ReadOnly Property Threshold As DefaultValue(Of String) = "Threshold()"
+        Public Shared ReadOnly Property Sigmoid As DefaultValue(Of String) = "Sigmoid(alpha:=2.0)"
+        Public Shared ReadOnly Property BipolarSigmoid As DefaultValue(Of String) = "BipolarSigmoid(alpha:=2.0)"
+#End Region
+
+        ''' <summary>
+        ''' 将文本表达式解析为激活函数的模型
+        ''' </summary>
+        ''' <param name="expression">这个字符串表达式应该是<see cref="IActivationFunction.ToString()"/>的函数输出结果字符串</param>
+        ''' <returns></returns>
+        Public Shared Function Parse(expression As String) As ActiveFunction
+            Dim func As Func = FuncParser.TryParse(expression)
+
+            Return New ActiveFunction With {
+                .name = func.Name,
+                .Arguments = func.Args _
+                    .Select(Function(a) a.GetTagValue(":=")) _
+                    .Select(Function(a)
+                                Return New NamedValue With {
+                                    .name = a.Name,
+                                    .text = a.Value
+                                }
+                            End Function) _
+                    .ToArray
+            }
         End Function
     End Class
 End Namespace

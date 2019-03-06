@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c21baafbe2919617014255a1fda34477, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
+﻿#Region "Microsoft.VisualBasic::37b4af0eb807ad412efa0c60e9bcb9fd, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
 
     ' Author:
     ' 
@@ -62,6 +62,9 @@ Namespace Imaging.LayoutModel
     ''' <summary>
     ''' Implements a 2-dimensional rectangle with double precision coordinates.
     ''' </summary>
+    ''' <remarks>
+    ''' 除了左上角+宽和高这种方式进行矩形区域的定义，还可以用左上角+右下角的方式来定义一个矩形
+    ''' </remarks>
     Public Class Rectangle2D : Inherits Point2D
 
         ''' <summary>
@@ -98,18 +101,30 @@ Namespace Imaging.LayoutModel
             End Get
         End Property
 
-        Public ReadOnly Property Right As Double
+        Public Property Right As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return X + Width
             End Get
+            Set(value As Double)
+                ' 保持当前的位置不变，但是宽度变了
+                Width = value - X
+            End Set
         End Property
 
-        Public ReadOnly Property Bottom As Double
+        ''' <summary>
+        ''' 底部的``Y``坐标值
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Bottom As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return Y + Height
             End Get
+            Set(value As Double)
+                ' 保持当前的位置不变，但是高度变了
+                Height = value - Y
+            End Set
         End Property
 
         ''' <summary>
@@ -125,6 +140,20 @@ Namespace Imaging.LayoutModel
 
                 Return New RectangleF(ix, iy, iw, ih)
             End Get
+        End Property
+
+        Default Public Overrides Property Axis(a As String) As Double
+            Get
+                Select Case Strings.LCase(a)
+                    Case "cx" : Return CenterX
+                    Case "cy" : Return CenterY
+                    Case Else
+                        Return MyBase.Axis(a)
+                End Select
+            End Get
+            Set(value As Double)
+                MyBase.Axis(a) = value
+            End Set
         End Property
 
         ''' <summary>
@@ -189,6 +218,17 @@ Namespace Imaging.LayoutModel
         Sub New(width%, height%)
             Call Me.New(0, 0, width, height)
         End Sub
+
+        Public Function OverlapLambda(axis As String) As Func(Of Rectangle2D, Double)
+            Select Case Strings.LCase(axis)
+                Case "x"
+                    Return AddressOf OverlapX
+                Case "y"
+                    Return AddressOf OverlapY
+                Case Else
+                    Throw New InvalidExpressionException(axis)
+            End Select
+        End Function
 
         Public Function OverlapX(r As Rectangle2D) As Double
             Dim ux = CenterX, vx = r.CenterX
@@ -394,6 +434,10 @@ Namespace Imaging.LayoutModel
             Return $"{Me.GetType.Name} [x={X}, y={Y}, w={Width}, h={Height}]"
         End Function
 
+        ''' <summary>
+        ''' 枚举出当前的这个矩形对象之中的4个顶点坐标
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function Vertices() As IEnumerable(Of Point2D)
             Yield New Point2D(X, Y)
             Yield New Point2D(Right, Y)

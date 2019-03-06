@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ef41e1ebef365810b0030fc71625602, Data_science\MachineLearning\NeuralNetwork\Models\Network.vb"
+﻿#Region "Microsoft.VisualBasic::a265b0e1c788b03252ea59119b2b2d5a, Data_science\MachineLearning\NeuralNetwork\Models\Network.vb"
 
     ' Author:
     ' 
@@ -68,6 +68,24 @@ Namespace NeuralNetwork
         Public Property OutputLayer As Layer
 
         ''' <summary>
+        ''' 1 - <see cref="LearnRateDecay"/>
+        ''' </summary>
+        Dim remains As Double
+
+        ''' <summary>
+        ''' 学习率的衰减速率
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property LearnRateDecay As Double
+            Get
+                Return 1 - remains
+            End Get
+            Set(value As Double)
+                remains = 1 - value
+            End Set
+        End Property
+
+        ''' <summary>
         ''' 激活函数
         ''' </summary>
         ''' <returns></returns>
@@ -83,6 +101,7 @@ Namespace NeuralNetwork
         ''' <param name="activations"></param>
         Friend Sub New(activations As LayerActives)
             Me.Activations = activations.GetXmlModels
+            Me.LearnRateDecay = 0.00000001
         End Sub
 
         ''' <summary>
@@ -107,6 +126,7 @@ Namespace NeuralNetwork
             Me.LearnRate = learnRate
             Me.Momentum = momentum
             Me.Activations = activations.GetXmlModels
+            Me.LearnRateDecay = 0.00000001
 
             InputLayer = New Layer(inputSize, activations.input, guid:=guid)
             HiddenLayer = New HiddenLayers(InputLayer, hiddenSize, activations.hiddens, guid)
@@ -160,7 +180,7 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="targets"></param>
         Public Sub BackPropagate(targets As Double(), truncate As Double, parallel As Boolean)
-            LearnRate = LearnRate * 0.999999
+            LearnRate = LearnRate * remains
             Momentum = 1 - LearnRate
 
             Call OutputLayer.CalculateGradient(targets, truncate)

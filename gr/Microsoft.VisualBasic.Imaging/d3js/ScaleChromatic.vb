@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41a77974b7b3c48828fb84b6963d0996, gr\Microsoft.VisualBasic.Imaging\d3js\ScaleChromatic.vb"
+﻿#Region "Microsoft.VisualBasic::fd68761433179889fe8b6c0379d701e7, gr\Microsoft.VisualBasic.Imaging\d3js\ScaleChromatic.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ef9933f6aad80a8477e2b62c084bdd8, Data_science\Mathematica\Plot\test\ChartingBase.Test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::acc141cfecb7f55dc2f37fd233596d3c, Data_science\Mathematica\Plot\test\ChartingBase.Test\Module1.vb"
 
     ' Author:
     ' 

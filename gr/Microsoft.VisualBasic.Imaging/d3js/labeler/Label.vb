@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2a7110f3e396d5e618b96523b582ce6, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
+﻿#Region "Microsoft.VisualBasic::92c51eb650a793bc4cef6c68c6e7af5e, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
     ' Author:
     ' 
@@ -109,6 +109,19 @@ Namespace d3js.Layout
         Public Property text As String
 
         Public ReadOnly Property Rectangle As RectangleF
+
+        Sub New()
+        End Sub
+
+        Sub New(label$, pos As PointF, size As SizeF)
+            Me.text = label
+            Me.Rectangle = New RectangleF(pos, size)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(label$, pos As Point, size As SizeF)
+            Call Me.New(label, pos.PointF, size)
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"{text}@({X.ToString("F2")},{Y.ToString("F2")})"

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fe2e1edf6b8dae01b760015281f8e01, Data_science\Mathematica\Math\DataFittings\TestPoint.vb"
+﻿#Region "Microsoft.VisualBasic::75f778e755b91dab0b2fcf45cb398236, Data_science\Mathematica\Math\DataFittings\TestPoint.vb"
 
     ' Author:
     ' 

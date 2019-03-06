@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4fe024ece0d0edf2eebf5960b00f08e, Microsoft.VisualBasic.Core\Text\Xml\Models\Coordinate.vb"
+﻿#Region "Microsoft.VisualBasic::e437f1e97ae03e2ffad19a618184450d, Microsoft.VisualBasic.Core\Text\Xml\Models\Coordinate.vb"
 
     ' Author:
     ' 

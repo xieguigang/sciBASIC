@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38b3129abf7e0286c285d2b2e4c3a548, Data_science\Mathematica\Math\Math\Algebra\Helpers\Function.vb"
+﻿#Region "Microsoft.VisualBasic::8331afb9b91f31f997916549edb4c860, Data_science\Mathematica\Math\Math\Algebra\Helpers\Function.vb"
 
     ' Author:
     ' 

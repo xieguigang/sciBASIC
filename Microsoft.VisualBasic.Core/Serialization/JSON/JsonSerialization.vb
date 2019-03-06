@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13d066718eb77c8eee2f252c495064d0, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::5e9cfd8c559238192f2334433e86acaa, Microsoft.VisualBasic.Core\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -182,6 +182,8 @@ Namespace Serialization.JSON
 
             If String.Equals(json, "null", StringComparison.OrdinalIgnoreCase) Then
                 Return Nothing
+            ElseIf json.StringEmpty Then
+                Throw New NullReferenceException("Empty json text!")
             End If
 
             Using MS As New MemoryStream(Encoding.UTF8.GetBytes(json))

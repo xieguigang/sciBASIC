@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33ec11383a0c1f0680f65f1a9fd7d9d0, Microsoft.VisualBasic.Core\Extensions\Math\Percentage.vb"
+﻿#Region "Microsoft.VisualBasic::ade59e8aaf858a06d9158fc9af56f6d3, Microsoft.VisualBasic.Core\Extensions\Math\Percentage.vb"
 
     ' Author:
     ' 

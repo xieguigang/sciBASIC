@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34156b971341d9f178c56966b3b3ca89, Microsoft.VisualBasic.Core\ComponentModel\File\XmlDataModel.vb"
+﻿#Region "Microsoft.VisualBasic::cf05ea830031d35df826a4d5fe5d2369, Microsoft.VisualBasic.Core\ComponentModel\File\XmlDataModel.vb"
 
     ' Author:
     ' 
@@ -83,7 +83,7 @@ Namespace ComponentModel
             Dim fullName$ = modelType.FullName
             Dim assembly$ = modelType.Assembly.FullName
             Dim update As Date = File.GetLastWriteTime(modelType.Assembly.Location)
-            Dim md5$ = modelType.Assembly.Location.GetFileHashString
+            Dim md5$ = modelType.Assembly.Location.GetFileMd5
             Dim trace$ = vbCrLf &
                 "     model:     " & fullName & vbCrLf &
                 "     assembly:  " & assembly & vbCrLf &

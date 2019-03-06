@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82b8a81446192d9e1e1b9c706babde62, Data_science\Bootstrapping\Normalization.vb"
+﻿#Region "Microsoft.VisualBasic::86a7710a84e41a67ffc95ba91de226a2, Data_science\Bootstrapping\Normalization.vb"
 
     ' Author:
     ' 

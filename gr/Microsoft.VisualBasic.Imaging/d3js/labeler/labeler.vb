@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::312fdf1b22cce283f19785bbb2bd9eb5, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
+﻿#Region "Microsoft.VisualBasic::726b7f0cdd929301cbc0cb8eababfcd3, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
 
     ' Author:
     ' 
@@ -311,10 +311,10 @@ Namespace d3js.Layout
                 Dim tickProvider As New ProgressProvider(nsweeps)
                 Dim p#
 
-                progress = New ProgressBar("Labels layouting...", 1, CLS:=True)
+                progress = New ProgressBar("Labels layouting...")
                 tick = Sub(currT#)
                            p = tickProvider.StepProgress
-                           progress.SetProgress(p, currT.ToString("F2"))
+                           progress.SetProgress(p, "Current temperature: " & currT.ToString("F2"))
                        End Sub
             Else
                 tick = Sub()

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e2fbf8adb874fd9d9186367f45e0c95, Data\SearchEngine\SearchEngine\Comparer.vb"
+﻿#Region "Microsoft.VisualBasic::1d8022d685200f14f00ab72d6ff092fb, Data\SearchEngine\SearchEngine\Comparer.vb"
 
     ' Author:
     ' 

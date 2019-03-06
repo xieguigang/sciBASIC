@@ -75,6 +75,11 @@ Namespace Scripting
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Delegate Function TextGrepMethodToken(source$, args$()) As String
+    ''' <summary>
+    ''' 从目标源文本字符串之中进行字符串解析的操作
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     Public Delegate Function TextGrepMethod(source As String) As String
 
     ''' <summary>

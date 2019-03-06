@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df6c3f7715ff69b9289b5f164e05cc50, Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\UnitExpression.vb"
+﻿#Region "Microsoft.VisualBasic::8acc92736372e231c84147e49d724e71, Data_science\Mathematica\Math\Math\Scripting\Arithmetic.Expression\UnitExpression.vb"
 
     ' Author:
     ' 

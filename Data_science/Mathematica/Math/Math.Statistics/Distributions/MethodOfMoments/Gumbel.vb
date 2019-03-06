@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1577722a588d109e7253d21279fcfb46, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Gumbel.vb"
+﻿#Region "Microsoft.VisualBasic::702fd254209f6971ffb8dfae92f7babb, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Gumbel.vb"
 
     ' Author:
     ' 

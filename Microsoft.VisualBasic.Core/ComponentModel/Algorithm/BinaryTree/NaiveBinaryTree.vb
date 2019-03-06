@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6abf7be1188e9cce30e4aa8d6f07be60, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::56290aec980b7c48f676752ce44a9033, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb"
 
     ' Author:
     ' 
@@ -111,10 +111,13 @@ Namespace ComponentModel.Algorithm.BinaryTree
             MyBase.New(compares, views)
         End Sub
 
-        ' Recursive destruction of binary search tree, called by method clear
-        ' and destroy. Can be used to kill a sub-tree of a larger tree.
-        ' This is a hanger on from its Delphi origins, it might be dispensable
-        ' given the garbage collection abilities of .NET
+        ''' <summary>
+        ''' Recursive destruction of binary search tree, called by method clear
+        ''' and destroy. Can be used to kill a sub-tree of a larger tree.
+        ''' This is a hanger on from its Delphi origins, it might be dispensable
+        ''' given the garbage collection abilities of .NET
+        ''' </summary>
+        ''' <param name="p"></param>
         Private Sub KillTree(ByRef p As BinaryTree(Of K, V))
             If p IsNot Nothing Then
                 KillTree(p.Left)
@@ -126,7 +129,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' <summary>
         ''' Clear the binary tree.
         ''' </summary>
-        Public Sub clear()
+        Public Overrides Sub Clear()
             Call KillTree(root)
             Call stack.Clear()
         End Sub
@@ -257,11 +260,16 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         ''' <summary>
         ''' Delete a given node. This is the more complex method in the binary search
-        ''' class. The method considers three senarios, 1) the deleted node has no
-        ''' children; 2) the deleted node as one child; 3) the deleted node has two
-        ''' children. Case one and two are relatively simple to handle, the only
-        ''' unusual considerations are when the node is the root node. Case 3) is
-        ''' much more complicated. It requires the location of the successor node.
+        ''' class. The method considers three senarios, 
+        ''' 
+        ''' + 1) the deleted node has no children; 
+        ''' + 2) the deleted node as one child; 
+        ''' + 3) the deleted node has two children. 
+        ''' 
+        ''' Case one and two are relatively simple to handle, the only unusual considerations 
+        ''' are when the node is the root node. Case ``3)`` is much more complicated. It 
+        ''' requires the location of the successor node.
+        ''' 
         ''' The node to be deleted is then replaced by the sucessor node and the
         ''' successor node itself deleted. Throws an exception if the method fails
         ''' to locate the node for deletion.
@@ -361,7 +369,11 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Call stack.Remove(nodeToDelete)
         End Sub
 
-        ' Simple 'drawing' routines
+        ''' <summary>
+        ''' Simple 'drawing' routines
+        ''' </summary>
+        ''' <param name="node"></param>
+        ''' <returns></returns>
         Private Function drawNode(node As BinaryTree(Of K, V)) As String
             If node Is Nothing Then
                 Return "empty"

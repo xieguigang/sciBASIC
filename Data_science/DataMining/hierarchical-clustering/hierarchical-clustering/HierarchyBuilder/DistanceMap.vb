@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a41557f619c1c85b98abac71b72ae4dc, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
+﻿#Region "Microsoft.VisualBasic::a8e857bb5eb62ca19e81c54f400a3785, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\DistanceMap.vb"
 
     ' Author:
     ' 
@@ -37,17 +37,17 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: Add, FindByCodePair, Remove, RemoveFirst, ToList
-    '                   ToString
+    '         Function: Add, Dequeue, FindByCodePair, Remove, RemoveFirst
+    '                   ToList, ToString
     ' 
-    '         Sub: Sort
+    '         Sub: Enqueue, Sort
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
 Namespace Hierarchy
@@ -60,7 +60,7 @@ Namespace Hierarchy
     Public Class DistanceMap
 
         Dim linkTable As New Dictionary(Of String, HierarchyLink)
-        Dim data As New PriorityQueue(Of HierarchyLink)
+        Dim data As New List(Of HierarchyLink)
 
         ''' <summary>
         ''' Peak into the minimum distance
@@ -68,7 +68,8 @@ Namespace Hierarchy
         ''' </summary>
         Public ReadOnly Property MinimalDistance() As Double
             Get
-                Dim peek As HierarchyLink = data.Peek()
+                ' data.Peek()
+                Dim peek As HierarchyLink = data(Scan0)
 
                 If peek IsNot Nothing Then
                     Return peek.Tree.LinkageDistance
@@ -82,7 +83,7 @@ Namespace Hierarchy
         End Sub
 
         Sub New(links As IEnumerable(Of HierarchyTreeNode))
-            For Each x In links
+            For Each x As HierarchyTreeNode In links
                 Dim link As New HierarchyLink(x)
 
                 If Not linkTable.ContainsKey(link.HashKey) Then
@@ -90,11 +91,27 @@ Namespace Hierarchy
                 End If
             Next
 
-            data = New PriorityQueue(Of HierarchyLink)(linkTable.Values)
+            data = New List(Of HierarchyLink)(linkTable.Values)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Sub Enqueue(queueItem As HierarchyLink)
+            Call data.Add(queueItem)
+            Call data.Sort()
+        End Sub
+
+        ''' <summary>
+        ''' Poll
+        ''' </summary>
+        ''' <returns></returns>
+        Private Function Dequeue() As HierarchyLink
+            Dim frontItem As HierarchyLink = data(Scan0)
+            data.RemoveAt(index:=Scan0)
+            Return frontItem
+        End Function
+
         Public Function ToList() As IList(Of HierarchyTreeNode)
-            Dim l As IList(Of HierarchyTreeNode) = New List(Of HierarchyTreeNode)
+            Dim l As New List(Of HierarchyTreeNode)
             For Each clusterPair As HierarchyLink In data
                 l.Add(clusterPair.Tree)
             Next
@@ -107,10 +124,10 @@ Namespace Hierarchy
         End Function
 
         Public Function RemoveFirst() As HierarchyTreeNode
-            Dim poll As HierarchyLink = data.Dequeue
+            Dim poll As HierarchyLink = Dequeue()
 
             Do While poll IsNot Nothing AndAlso poll.removed
-                poll = data.Dequeue
+                poll = Dequeue()
             Loop
 
             If poll Is Nothing Then
@@ -124,15 +141,19 @@ Namespace Hierarchy
         End Function
 
         Public Function Remove(link As HierarchyTreeNode) As Boolean
-            Dim ___remove As HierarchyLink = linkTable.RemoveAndGet(hashCodePair(link))
-            If ___remove Is Nothing Then
+            Dim removed As HierarchyLink = linkTable.RemoveAndGet(hashCodePair(link))
+
+            If removed Is Nothing Then
                 Return False
+            Else
+                removed.removed = True
+                data.Remove(removed)
             End If
-            ___remove.removed = True
-            data.Remove(___remove)
+
             Return True
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Sort()
             Call data.Sort()
         End Sub
@@ -152,7 +173,7 @@ Namespace Hierarchy
                 Call linkTable.Add(hlink.HashKey, hlink)
 
                 If Not direct Then
-                    Call data.Enqueue(hlink)
+                    Call Enqueue(hlink)
                 Else
                     Call data.Add(hlink)
                 End If

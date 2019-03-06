@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::deb0fe73b458011a0eee5f2b51528cd5, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::fa2d4a43f9fe32cb36e6d8799253fb64, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\Serialization.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,6 @@
 
     ' Summaries:
 
-    '     Class GenericINIProfile
-    ' 
-    '         Properties: Sections
-    ' 
-    '         Function: __getDefaultPath, Load, Save
-    ' 
     '     Class ClassName
     ' 
     '         Properties: Name
@@ -56,41 +50,10 @@
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports System.Text
-Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ComponentModel.Settings.Inf
-
-    ''' <summary>
-    ''' 通用的配置文件模型
-    ''' </summary>
-    Public Class GenericINIProfile : Inherits ITextFile
-
-        <XmlElement> Public Property Sections As Section()
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Load(path As String) As GenericINIProfile
-            Return New GenericINIProfile With {
-                .FilePath = path,
-                .Sections = INIProfile _
-                    .PopulateSections(path) _
-                    .ToArray
-            }
-        End Function
-
-        Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Return Sections _
-                .Select(Function(sec) sec.CreateDocFragment) _
-                .SaveTo(getPath(FilePath), Encoding)
-        End Function
-
-        Protected Overrides Function __getDefaultPath() As String
-            Return FilePath
-        End Function
-    End Class
 
     ''' <summary>
     ''' 定义在Ini配置文件之中的Section的名称

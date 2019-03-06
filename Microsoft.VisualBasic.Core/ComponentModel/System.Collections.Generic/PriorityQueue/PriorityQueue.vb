@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9dbc70c8a7df8057d1d1449a5c94baf7, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::5ace0d2cf316361ee4908b71b18ba6dd, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb"
 
     ' Author:
     ' 
@@ -33,148 +33,147 @@
 
     '     Class PriorityQueue
     ' 
-    '         Properties: Count
-    ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: Contains, Dequeue, GetEnumerator, IEnumerable_GetEnumerator, Peek
-    '                   ToString
+    '         Function: count, empty, isHeap, pop, push
+    '                   top, ToString
     ' 
-    '         Sub: Add, Clear, Enqueue, Remove, Sort
+    '         Sub: forEach, reduceKey
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-'! 
-'@file PriorityQueue.cs
-'@author Woong Gyu La a.k.a Chris. <juhgiyo@gmail.com>
-'		<http://github.com/juhgiyo/epForceDirectedGraph.cs>
-'@date September 27, 2013
-'@brief PriorityQueue Interface
-'@version 2.0
-'
-'@section LICENSE
-'
-'The MIT License (MIT)
-'
-'Copyright (c) 2013 Woong Gyu La <juhgiyo@gmail.com>
-'
-'Permission is hereby granted, free of charge, to any person obtaining a copy
-'of this software and associated documentation files (the "Software"), to deal
-'in the Software without restriction, including without limitation the rights
-'to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-'copies of the Software, and to permit persons to whom the Software is
-'furnished to do so, subject to the following conditions:
-'
-'The above copyright notice and this permission notice shall be included in
-'all copies or substantial portions of the Software.
-'
-'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-'IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-'FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-'AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-'LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-'OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-'THE SOFTWARE.
-'
-'@section DESCRIPTION
-'
-'An Interface for the PriorityQueue Class.
-'
-'
-
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization
+Imports any = System.Object
 
 Namespace ComponentModel.Collection
 
     ''' <summary>
-    ''' An Interface for the PriorityQueue Class.
+    ''' a min priority queue backed by a pairing heap
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class PriorityQueue(Of T As IComparable)
-        Implements IEnumerable(Of T)
+    Public Class PriorityQueue(Of T)
 
-        Protected list As New List(Of T)
-
-        Public Overridable ReadOnly Property Count() As Integer
-            Get
-                Return list.Count
-            End Get
-        End Property
-
-        Sub New()
-        End Sub
-
-        Sub New(source As IEnumerable(Of T))
-            list = source.ToList
-            list.Sort()
-        End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Sub Enqueue(queueItem As T)
-            Call list.Add(queueItem)
-            Call list.Sort()
-        End Sub
+        Dim root As PairingHeap(Of T)
+        Dim lessThan As Func(Of T, T, Boolean)
 
         ''' <summary>
-        ''' Add without sort
+        ''' ������캯���Ĳ�����һ���Ƚϵı��ʽ�������Ƚ���������֮������ȶȹ�ϵ
+        ''' ������������߼���ϵ��
+        ''' 
+        ''' ```
+        ''' priority = a &lt; b
+        ''' ```
         ''' </summary>
-        ''' <param name="x"></param>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(x As T)
-            Call list.Add(x)
+        ''' <param name="lessThan"></param>
+        Public Sub New(lessThan As Func(Of T, T, Boolean))
+            Me.lessThan = lessThan
         End Sub
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Sort()
-            Call list.Sort()
+        Sub New(source As IEnumerable(Of T), lessThan As Func(Of T, T, Boolean))
+            Call Me.New(lessThan)
+
+            For Each element As T In source.SafeQuery
+                Call Me.push(element)
+            Next
         End Sub
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Sub Clear()
-            Call list.Clear()
-        End Sub
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Sub Remove(o As T)
-            Call list.Remove(o)
-        End Sub
-
+        '*
+        '     * @method top
+        '     * @return the top element (the min element as defined by lessThan)
+        '     
         ''' <summary>
-        ''' Poll
+        ''' �൱��Stack��Peek����
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Function Dequeue() As T
-            Dim frontItem As T = list(0)
-            list.RemoveAt(0)
-            Return frontItem
+        Public Function top() As T
+            If Me.empty() Then
+                Return Nothing
+            End If
+            Return Me.root.elem
         End Function
+        '*
+        '     * @method push
+        '     * put things on the heap
+        '     
 
-        Public Overridable Function Peek() As T
-            Dim frontItem As T = list(0)
-            Return frontItem
+        Public Function push(ParamArray args As T()) As PairingHeap(Of T)
+            Dim pairingNode As any = Nothing
+            Dim i As Integer = 0
+            Dim arg As T
+
+            While i > -1
+                arg = args(i - 1)
+                pairingNode = New PairingHeap(Of T)(arg)
+
+                If Me.empty Then
+                    root = pairingNode
+                Else
+                    root = root.merge(pairingNode, Me.lessThan)
+                End If
+
+                i += 1
+            End While
+
+            Return pairingNode
         End Function
+        '*
+        '     * @method empty
+        '     * @return true if no more elements in queue
+        '     
 
-        Public Overrides Function ToString() As String
-            Return $"Queue {list.Count} items, 1st_item:={Peek.GetJson}"
+        Public Function empty() As Boolean
+            Return Me.root Is Nothing OrElse Me.root.elem Is Nothing
         End Function
+        '*
+        '     * @method isHeap check heap condition (for testing)
+        '     * @return true if queue is in valid state
+        '     
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function Contains(queueItem As T) As Boolean
-            Return list.Contains(queueItem)
+        Public Function isHeap() As Boolean
+            Return Me.root.isHeap(Me.lessThan)
         End Function
+        '*
+        '     * @method forEach apply f to each element of the queue
+        '     * @param f function to apply
+        '     
 
-        Public Overridable Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
-            For Each x As T In list
-                Yield x
-            Next
+        Public Sub forEach(f As any)
+            Me.root.forEach(f)
+        End Sub
+        '*
+        '     * @method pop remove and return the min element from the queue
+        '     
+
+        Public Function pop() As T
+            If Me.empty() Then
+                Return Nothing
+            End If
+            Dim obj = Me.root.min()
+            Me.root = Me.root.removeMin(Me.lessThan)
+            Return obj
         End Function
+        '*
+        '     * @method reduceKey reduce the key value of the specified heap node
+        '     
 
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
+        Public Sub reduceKey(heapNode As PairingHeap(Of T), newKey As T, setHeapNode As Action(Of T, PairingHeap(Of T)))
+            Me.root = Me.root.decreaseKey(heapNode, newKey, setHeapNode, Me.lessThan)
+        End Sub
+
+        Public Overloads Function ToString(selector As IToString(Of T)) As String
+            Return Me.root.ToString(selector)
+        End Function
+        '*
+        '     * @method count
+        '     * @return number of elements in queue
+        '     
+
+        Public Function count() As Double
+            Return Me.root.count()
         End Function
     End Class
 End Namespace

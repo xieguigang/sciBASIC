@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53e7c6597d5aef0c229055d7d29eadc6, Microsoft.VisualBasic.Core\Text\Xml\Serialization\XmlComment.vb"
+﻿#Region "Microsoft.VisualBasic::2ea8673eecd4a8bbd78db8d5c2f814ff, Microsoft.VisualBasic.Core\Text\Xml\Serialization\XmlComment.vb"
 
     ' Author:
     ' 

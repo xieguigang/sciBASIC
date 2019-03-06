@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdd374cf1c3767c2aaa12a5ee42212e4, Data_science\Mathematica\Math\DataFittings\Linear\IFitted.vb"
+﻿#Region "Microsoft.VisualBasic::42bd38ccfe993e3987882d5222e28a6e, Data_science\Mathematica\Math\DataFittings\Linear\IFitted.vb"
 
     ' Author:
     ' 

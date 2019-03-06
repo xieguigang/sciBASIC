@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8648fe83a66ddf5e41cf174952956ce4, Data_science\MachineLearning\NeuralNetwork\Models\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::a655485097fedd58ebd00e878d53b6d1, Data_science\MachineLearning\NeuralNetwork\Models\Neuron.vb"
 
     ' Author:
     ' 
@@ -198,7 +198,7 @@ Namespace NeuralNetwork
         ''' <param name="learnRate"></param>
         ''' <param name="momentum"></param>
         ''' <returns></returns>
-        Public Function UpdateWeights(learnRate As Double, momentum As Double) As Integer
+        Public Function UpdateWeights(learnRate#, momentum#) As Integer
             Dim prevDelta = BiasDelta
             BiasDelta = learnRate * Gradient
             Bias += BiasDelta + momentum * prevDelta

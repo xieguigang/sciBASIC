@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75071cc3f3375cdda757054c2193cc07, Data_science\DataMining\hierarchical-clustering\Test\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::385438241cd6465da81b96d469e2e704, Data_science\DataMining\hierarchical-clustering\Test\KMeans.vb"
 
     ' Author:
     ' 
@@ -47,8 +47,8 @@ Module KMeans
 
     Sub Main()
 
-        Dim data = DataSet.LoadDataSet("C:\Users\xieguigang\Desktop\8.27\8.27\2. 17-92 vs ctrl\3. DEPs\data.csv").ToKMeansModels
-        data = data.Kmeans(15)
-        data.SaveTo("C:\Users\xieguigang\Desktop\8.27\8.27\2. 17-92 vs ctrl\3. DEPs\heatmap.kmeans.csv")
+        'Dim data = DataSet.LoadDataSet("C:\Users\xieguigang\Desktop\8.27\8.27\2. 17-92 vs ctrl\3. DEPs\data.csv").ToKMeansModels
+        'data = data.Kmeans(15)
+        'data.SaveTo("C:\Users\xieguigang\Desktop\8.27\8.27\2. 17-92 vs ctrl\3. DEPs\heatmap.kmeans.csv")
     End Sub
 End Module

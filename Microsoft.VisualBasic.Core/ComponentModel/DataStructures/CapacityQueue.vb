@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a01ebd5b55b9a07c10fd4c8ee2c3af7c, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\CapacityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::0cabb00b88c852b43e6bd76a216bfaec, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\CapacityQueue.vb"
 
     ' Author:
     ' 

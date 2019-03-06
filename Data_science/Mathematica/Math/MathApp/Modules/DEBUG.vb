@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e24f8aae196198dffbef94fdf37a3df7, Data_science\Mathematica\Math\MathApp\Modules\DEBUG.vb"
+﻿#Region "Microsoft.VisualBasic::c60e2faf059cf1476ebed585647a59f1, Data_science\Mathematica\Math\MathApp\Modules\DEBUG.vb"
 
     ' Author:
     ' 

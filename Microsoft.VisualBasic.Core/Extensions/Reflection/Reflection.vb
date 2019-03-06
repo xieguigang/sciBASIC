@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cd3df138de15ae01780bace3f68965f, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::ef290ccb65062207b320741898f7574e, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -73,6 +73,25 @@ Public Module EmitReflection
     <Extension>
     Public Function ResourcesSatellite(assembly As Assembly) As ResourcesSatellite
         Return New ResourcesSatellite(assembly)
+    End Function
+
+    ''' <summary>
+    ''' 这个方法的调用是否是不需要任何参数的？
+    ''' </summary>
+    ''' <param name="method"></param>
+    ''' <param name="optionalAsNone"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IsNonParametric(method As MethodInfo, Optional optionalAsNone As Boolean = False) As Boolean
+        Dim params = method.GetParameters
+
+        If params.IsNullOrEmpty Then
+            Return True
+        ElseIf optionalAsNone Then
+            Return Not params.Any(Function(p) Not p.IsOptional)
+        End If
+
+        Return False
     End Function
 
     ''' <summary>

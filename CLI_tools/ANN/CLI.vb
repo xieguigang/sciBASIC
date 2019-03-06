@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::748308d6cc55dd5c318770db251e36f0, CLI_tools\ANN\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::65bce83f50b2c3fd33d49fd60fa8b851, CLI_tools\ANN\CLI.vb"
 
 ' Author:
 ' 
@@ -33,7 +33,7 @@
 
 ' Module CLI
 ' 
-'     Function: ConfigTemplate, Encourage, Train
+'     Function: ConfigTemplate, Encourage, runTrainingCommon, Train
 ' 
 ' /********************************************************************************/
 
@@ -43,6 +43,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator
@@ -85,10 +86,11 @@ Module CLI
                 .ToArray
         End If
 
+        Dim defaultActive As DefaultValue(Of String) = config.default_active Or ActiveFunction.Sigmoid
         Dim actives As New Activations.LayerActives With {
-            .hiddens = New Activations.Sigmoid,
-            .input = New Activations.Sigmoid,
-            .output = New Activations.Sigmoid
+            .hiddens = ActiveFunction.Parse(config.hiddens_active Or defaultActive),
+            .input = ActiveFunction.Parse(config.input_active Or defaultActive),
+            .output = ActiveFunction.Parse(config.output_active Or defaultActive)
         }
         Dim trainingHelper As New TrainingUtils(
             samples.Size.Width, hiddenSize,
@@ -97,6 +99,8 @@ Module CLI
             config.momentum,
             actives
         )
+
+        trainingHelper.NeuronNetwork.LearnRateDecay = config.learnRateDecay
 
         For Each sample As Sample In samples.PopulateNormalizedSamples
             Call trainingHelper.Add(sample.status, sample.target)

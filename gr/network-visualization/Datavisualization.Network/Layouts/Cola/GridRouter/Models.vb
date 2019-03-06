@@ -1,127 +1,199 @@
-﻿#Region "Microsoft.VisualBasic::74f205abf366bf056f1afc4a98c62b05, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\Models.vb"
+﻿#Region "Microsoft.VisualBasic::c515805863a6e7ff11067937257f31b8, gr\network-visualization\Datavisualization.Network\Layouts\Cola\GridRouter\Models.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface NodeAccessor
-    ' 
-    '         Function: getBounds, getChildren
-    ' 
-    '     Class NodeWrapper
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class Vert
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class [Event]
-    ' 
-    ' 
-    '         Structure Comparer
-    ' 
-    '             Function: Compare
-    ' 
-    ' 
-    ' 
-    '     Class GridLine
-    ' 
-    ' 
-    '         Structure Comparer
-    ' 
-    '             Function: Compare
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SVGRoutePath
+' 
+' 
+' 
+'     Class vsegmentsets
+' 
+' 
+' 
+'     Class Segment
+' 
+'         Sub: Reverse
+' 
+'     Class LinkLine
+' 
+' 
+' 
+'     Class NodeAccessor
+' 
+' 
+'         Delegate Function
+' 
+' 
+'         Delegate Function
+' 
+'             Properties: getBounds, getChildren
+' 
+'     Class LinkAccessor
+' 
+' 
+'         Delegate Function
+' 
+'             Properties: getSourceIndex, getTargetIndex
+' 
+'     Class LinkLengthAccessor
+' 
+' 
+'         Delegate Sub
+' 
+'             Properties: setLength
+' 
+'     Class NodeWrapper
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'     Class Vert
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class GridLine
+' 
+' 
+'         Structure Comparer
+' 
+'             Function: Compare
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
-Imports number = System.Double
+Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace Layouts.Cola.GridRouter
 
-    Public Interface NodeAccessor(Of Node)
-        Function getChildren(v As Node) As number()
-        Function getBounds(v As Node) As Rectangle2D
-    End Interface
+    Public Class SVGRoutePath
+        Public routepath As String
+        Public arrowpath As String
+    End Class
+
+    Public Class vsegmentsets
+        Public segments As List(Of Segment)
+        Public pos As Double
+    End Class
+
+    Public Class Segment
+        Public edgeid As Integer
+        Public i As Integer
+        Public Points As Point2D()
+
+        Default Public ReadOnly Property Pt(i As Integer) As Point2D
+            Get
+                Return Points(i)
+            End Get
+        End Property
+
+        Public Sub Reverse()
+            Points = Points.Reverse.ToArray
+        End Sub
+    End Class
+
+    Public Class LinkLine : Inherits Line
+        Public verts As List(Of Vert)
+    End Class
+
+    Public Class NodeAccessor(Of Node)
+
+        Public Delegate Function IGetChildren(v As Node) As Integer()
+        Public Delegate Function IGetBounds(v As Node) As Rectangle2D
+
+        Public Property getChildren As IGetChildren
+        Public Property getBounds As IGetBounds
+
+    End Class
+
+    Public Class LinkAccessor(Of Link)
+
+        Public Delegate Function IGetIndex(l As Link) As Integer
+
+        Public Property getSourceIndex As IGetIndex
+        Public Property getTargetIndex As IGetIndex
+        Public Property getMinSeparation As UnionType(Of Double)
+
+        Public Delegate Sub SetLinkLength(l As Link, value As Double)
+
+        Public Property setLength As SetLinkLength
+
+    End Class
 
     Public Class NodeWrapper
         Public leaf As Boolean
         Public parent As NodeWrapper
-        Public ports As Vert()
+        Public ports As List(Of Vert)
         Public id As Integer
         Public rect As Rectangle2D
-        Public children As Integer()
+        Public children As List(Of Integer)
 
-        Public Sub New(id As number, rect As Rectangle2D, children As Integer())
+        Sub New()
+        End Sub
+
+        Public Sub New(id As Double, rect As Rectangle2D, children As IEnumerable(Of Integer))
             Me.id = id
             Me.rect = rect
-            Me.children = children
+            Me.children = children.ToList
 
-            leaf = children.IsNullOrEmpty
+            leaf = Me.children.IsNullOrEmpty
         End Sub
     End Class
 
-    Public Class Vert
+    Public Class Vert : Inherits Point2D
 
-        Public id As number
-        Public x As number
-        Public y As number
+        Public id As Double
         Public node As NodeWrapper
         Public line
 
-        Sub New(id As number, x As number, y As number, Optional node As NodeWrapper = Nothing, Optional line As Object = Nothing)
+        Sub New(id As Double, x As Double, y As Double, Optional node As NodeWrapper = Nothing, Optional line As Object = Nothing)
             Me.id = id
-            Me.x = x
-            Me.y = y
+            Me.X = x
+            Me.Y = y
             Me.node = node
             Me.line = line
         End Sub
-    End Class
-
-    Public Class [Event]
-        Public type As Integer
-        Public s As route
-        Public pos As number
-
-        Public Structure Comparer : Implements IComparer(Of [Event])
-
-            Public Function Compare(a As [Event], b As [Event]) As Integer Implements IComparer(Of [Event]).Compare
-                Return a.pos - b.pos + a.type - b.type
-            End Function
-        End Structure
     End Class
 
     ''' <summary>
@@ -130,7 +202,7 @@ Namespace Layouts.Cola.GridRouter
     Public Class GridLine
 
         Public nodes As NodeWrapper()
-        Public pos As number
+        Public pos As Double
 
         Public Structure Comparer : Implements IComparer(Of GridLine)
 

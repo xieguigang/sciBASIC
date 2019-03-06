@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::bfdebaf29830ae469d1d86478aaaf4d8, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\Dataset.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Sample
-    ' 
-    '         Properties: ID, status, target
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    '     Class DataSet
-    ' 
-    '         Properties: DataSamples, NormalizeMatrix, OutputSize, Size
-    ' 
-    '         Function: GetInput, PopulateNormalizedSamples, ToString
-    '         Class SampleList
-    ' 
-    '             Properties: items
-    ' 
-    '             Function: getSize
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Sample
+' 
+'         Properties: ID, status, target
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: ToString
+' 
+'     Class DataSet
+' 
+'         Properties: DataSamples, NormalizeMatrix, OutputSize, Size
+' 
+'         Function: GetInput, PopulateNormalizedSamples, ToString
+'         Class SampleList
+' 
+'             Properties: items
+' 
+'             Function: getSize
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +62,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports row = Microsoft.VisualBasic.Data.csv.IO.DataSet
@@ -88,7 +89,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' 属性值可能会很长,为了XML文件的美观,在这里使用element
         ''' </remarks>
         <XmlElement>
-        Public Property status As Double()
+        Public Property status As NumericVector
 
         ''' <summary>
         ''' The network expected output values
@@ -102,8 +103,11 @@ Namespace NeuralNetwork.StoreProcedure
         ''' </summary>
         ''' <param name="values">Neuron network input parameters</param>
         ''' <param name="targets">The network expected output values</param>
-        Public Sub New(values#(), targets#())
-            Me.status = values
+        Public Sub New(values#(), targets#(), Optional inputName$ = Nothing)
+            Me.status = New NumericVector With {
+                .name = inputName,
+                .vector = values
+            }
             Me.target = targets
         End Sub
 
@@ -114,7 +118,7 @@ Namespace NeuralNetwork.StoreProcedure
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{status.AsVector.ToString} => {target.AsVector.ToString}"
+            Return $"{status.vector.AsVector.ToString} => {target.AsVector.ToString}"
         End Function
     End Class
 
@@ -128,13 +132,21 @@ Namespace NeuralNetwork.StoreProcedure
 
         <XmlElement("sample")>
         Public Property DataSamples As SampleList
+
+        ''' <summary>
+        ''' 主要是对<see cref="Sample.status"/>输入向量进行``[0, 1]``区间内的归一化操作
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement("normalization")>
         Public Property NormalizeMatrix As NormalizeMatrix
 
         Public Class SampleList : Inherits ListOf
 
-            <XmlElement>
-            Public Property items As Sample()
+            ''' <summary>
+            ''' 样本列表
+            ''' </summary>
+            ''' <returns></returns>
+            <XmlElement("sample")> Public Property items As Sample()
 
             Default Public ReadOnly Property Item(index As Integer) As Sample
                 <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -146,6 +158,14 @@ Namespace NeuralNetwork.StoreProcedure
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Protected Overrides Function getSize() As Integer
                 Return items?.Length
+            End Function
+
+            Public Iterator Function [Select](Of T)(project As Func(Of Sample, Integer, T)) As IEnumerable(Of T)
+                Dim i As int = Scan0
+
+                For Each item As Sample In items
+                    Yield project(item, ++i)
+                Next
             End Function
 
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -163,6 +183,10 @@ Namespace NeuralNetwork.StoreProcedure
             End Operator
         End Class
 
+        ''' <summary>
+        ''' 样本的矩阵大小：``[属性长度, 样本数量]``
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Size As Size
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

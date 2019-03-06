@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::3c1551a972b2f9fff20b27c9caab56fd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: (+3 Overloads) Enlarge, GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
-    ' 
-    '         Sub: ShapeGlow
-    '         Enum MoveTypes
-    ' 
-    '             BoundsBoxTopLeft, PolygonCentre
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Extensions
+' 
+'         Function: (+3 Overloads) Enlarge, GetTextAnchor, Move, (+2 Overloads) MoveTo, Rotate
+' 
+'         Sub: ShapeGlow
+'         Enum MoveTypes
+' 
+'             BoundsBoxTopLeft, PolygonCentre
+' 
+' 
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -98,15 +98,54 @@ Namespace Drawing2D
         <Extension>
         Public Function GetTextAnchor(textLayout As Rectangle, anchor As PointF) As Point
             With textLayout
-                Dim points As Point() = {
-                    New Point(.Left + .Width / 2, .Top),    ' top
-                    New Point(.Left + .Width / 2, .Bottom), ' bottom,
-                    New Point(.Left, .Top + .Height / 2),   ' left,
-                    New Point(.Right, .Top + .Height / 2)   ' right
-                }
-                Dim d#() = points.Distance(anchor.ToPoint)
+                Return GetTextAnchor(.Left, .Right, .Width, .Height, .Top, .Bottom, anchor)
+            End With
+        End Function
 
-                Return points(Which.Min(d))
+        Private Function GetTextAnchor(left!, right!, width!, height!, top!, bottom!, anchor As PointF) As Point
+            Dim points As Point() = {
+                New Point(left + width / 2, top),        ' top
+                New Point(left, top),                    ' top_left
+                New Point(left + width, top),            ' top_right
+                New Point(left + width / 3, top),        ' top 1/3
+                New Point(left + width / 3 * 2, top),    ' top 2/3
+                New Point(left + width / 4, top),        ' top 1/4
+                New Point(left + width / 4 * 3, top),    ' top 3/4
+                New Point(left + width / 5, top),        ' top 1/5
+                New Point(left + width / 5 * 2, top),    ' top 2/5
+                New Point(left + width / 5 * 3, top),    ' top 3/5
+                New Point(left + width / 5 * 4, top),    ' top 4/5
+ _
+                New Point(left + width / 2, bottom),     ' bottom,
+                New Point(left, bottom),                 ' bottom_left,
+                New Point(left + width, bottom),         ' bottom_right,
+                New Point(left + width / 3, bottom),     ' bottom 1/3,
+                New Point(left + width / 3 * 2, bottom), ' bottom 2/3,
+                New Point(left + width / 4, bottom),     ' bottom 1/4,
+                New Point(left + width / 4 * 3, bottom), ' bottom 3/4,
+                New Point(left + width / 5, bottom),     ' bottom 1/5,
+                New Point(left + width / 5 * 2, bottom), ' bottom 2/5,
+                New Point(left + width / 5 * 3, bottom), ' bottom 3/5,
+                New Point(left + width / 5 * 4, bottom), ' bottom 4/5,
+ _
+                New Point(left, top + height / 2),       ' left,
+                New Point(right, top + height / 2)       ' right
+            }
+            Dim d#() = points.Distance(anchor.ToPoint)
+
+            Return points(Which.Min(d))
+        End Function
+
+        ''' <summary>
+        ''' 分别计算出<paramref name="textLayout"/>的上下左右对<paramref name="anchor"/>的距离，取最小的距离的位置并返回
+        ''' </summary>
+        ''' <param name="textLayout">标签文本的大小和位置，生成一个<see cref="Rectangle"/>布局对象</param>
+        ''' <param name="anchor">这个标签文本所属的对象的锚点</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function GetTextAnchor(textLayout As RectangleF, anchor As PointF) As Point
+            With textLayout
+                Return GetTextAnchor(.Left, .Right, .Width, .Height, .Top, .Bottom, anchor)
             End With
         End Function
 
@@ -223,7 +262,7 @@ Namespace Drawing2D
         Public Function MoveTo(shape As IEnumerable(Of Point), location As PointF, Optional type As MoveTypes = MoveTypes.BoundsBoxTopLeft) As Point()
             Return shape _
                 .Select(Function(point) point.PointF) _
-                .MoveTo(location) _
+                .MoveTo(location, type) _
                 .Select(Function(point) point.ToPoint) _
                 .ToArray
         End Function

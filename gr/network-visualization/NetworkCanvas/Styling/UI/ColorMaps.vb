@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45b6c5b318dace4467b3e9a7230509b4, gr\network-visualization\NetworkCanvas\Styling\UI\ColorMaps.vb"
+﻿#Region "Microsoft.VisualBasic::557647e80219f28baaafa8160252ef5b, gr\network-visualization\NetworkCanvas\Styling\UI\ColorMaps.vb"
 
     ' Author:
     ' 

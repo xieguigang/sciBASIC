@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a405701adae07c86e813a7226119ba7, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeBase.vb"
+﻿#Region "Microsoft.VisualBasic::d0d38f7bbe88ad4665ca33c51f5a3d66, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeBase.vb"
 
     ' Author:
     ' 
@@ -47,6 +47,11 @@ Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.Algorithm.BinaryTree
 
+    ''' <summary>
+    ''' 二叉树对象的通用模板
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
     Public MustInherit Class TreeBase(Of K, V)
 
         ''' <summary>
@@ -74,6 +79,14 @@ Namespace ComponentModel.Algorithm.BinaryTree
         Sub New(compares As Comparison(Of K), Optional views As Func(Of K, String) = Nothing)
             Me.compares = compares
             Me.views = views
+        End Sub
+
+        ''' <summary>
+        ''' 将整棵树销毁
+        ''' </summary>
+        Public Overridable Sub Clear()
+            _root = Nothing
+            stack.Clear()
         End Sub
 
         Public Function GetAllNodes() As BinaryTree(Of K, V)()

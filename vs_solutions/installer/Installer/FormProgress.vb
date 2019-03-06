@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77c21062a1ba260edb7e0d663108ec66, vs_solutions\installer\Installer\FormProgress.vb"
+﻿#Region "Microsoft.VisualBasic::cabffe0d5bdc2db0dc87f2abdfa93c20, vs_solutions\installer\Installer\FormProgress.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bc28f94c702b4f367d81a1aa492f096, Data\BinaryData\BinaryData\Extensions\ReaderProvider.vb"
+﻿#Region "Microsoft.VisualBasic::51e86c3ac5fa0b5c906c5ec7d2076a80, Data\BinaryData\BinaryData\Extensions\ReaderProvider.vb"
 
     ' Author:
     ' 

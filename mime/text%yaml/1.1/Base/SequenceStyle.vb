@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ae29356743e0f24df8a842156bed716, mime\text%yaml\1.1\Base\SequenceStyle.vb"
+﻿#Region "Microsoft.VisualBasic::af3049e344b85a6da6fea3244406ec4b, mime\text%yaml\1.1\Base\SequenceStyle.vb"
 
     ' Author:
     ' 

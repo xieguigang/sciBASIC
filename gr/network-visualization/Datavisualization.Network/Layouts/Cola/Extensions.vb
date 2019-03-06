@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa32b6a2c48c9a19436d777da05fb707, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::1b431f4ff7fdb7386e6493fb7288ba3a, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Extensions.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,19 @@
 
     ' Summaries:
 
+    '     Class Leaf
+    ' 
+    ' 
+    ' 
+    '     Class ProjectionGroup
+    ' 
+    ' 
+    ' 
     '     Module Extensions
     ' 
-    '         Function: compareEvents, computeGroupBounds, makeEdgeBetween, makeEdgeTo, reduce
-    '                   removeOverlapInOneDimension
+    '         Function: compareEvents, computeGroupBounds, makeEdgeBetween, makeEdgeTo, removeOverlapInOneDimension
+    ' 
+    '         Sub: setXCentre, setYCentre
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,14 +53,41 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.JavaScript
 Imports Microsoft.VisualBasic.Language.Python
-Imports number = System.Double
 
 Namespace Layouts.Cola
 
+    Public Class Leaf : Inherits JavaScriptObject
+        Public Overridable Property bounds As Rectangle2D
+        Public Overridable Property variable As Variable
+    End Class
+
+    Public Interface ProjectionGroup
+        Property bounds As Rectangle2D
+        Property padding As Double?
+        Property stiffness As Double?
+        Property leaves As List(Of Leaf)
+        Property groups As List(Of ProjectionGroup)
+        Property minVar As Variable
+        Property maxVar As Variable
+    End Interface
+
     Public Module Extensions
 
-        Public Function compareEvents(a As [Event], b As [Event]) As number
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub setXCentre(rect As Rectangle2D, cx As Double)
+            rect.X += (cx - rect.CenterX)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub setYCentre(rect As Rectangle2D, cy As Double)
+            rect.Y += (cy - rect.CenterY)
+        End Sub
+
+        Public Function compareEvents(a As [Event], b As [Event]) As Integer
             If (a.pos > b.pos) Then
                 Return 1
             End If
@@ -71,29 +107,19 @@ Namespace Layouts.Cola
             Return 0
         End Function
 
-
         Public Function computeGroupBounds(g As ProjectionGroup) As Rectangle2D
-            g.bounds = If(Not g.leaves Is Nothing, g.leaves.reduce(Of Leaf, Rectangle2D)(Function(r As Rectangle2D, C As Leaf)
-                                                                                             Return C.bounds.Union(r)
-                                                                                         End Function, New Rectangle2D()), New Rectangle2D())
+            g.bounds = If(Not g.leaves Is Nothing, g.leaves.Reduce(Function(r As Rectangle2D, C As Leaf)
+                                                                       Return C.bounds.Union(r)
+                                                                   End Function, New Rectangle2D()), New Rectangle2D())
 
             If Not g.groups Is Nothing Then
-                g.bounds = g.groups.reduce(Of ProjectionGroup, Rectangle2D)(Function(r As Rectangle2D, C As ProjectionGroup)
-                                                                                Return computeGroupBounds(C).Union(r)
-                                                                            End Function, g.bounds)
+                g.bounds = g.groups.Reduce(Function(r As Rectangle2D, C As ProjectionGroup)
+                                               Return computeGroupBounds(C).Union(r)
+                                           End Function, g.bounds)
             End If
 
             g.bounds = g.bounds.inflate(g.padding)
             Return g.bounds
-        End Function
-
-        <Extension>
-        Private Function reduce(Of T, T2, V)(seq As IEnumerable(Of T), produce As Func(Of V, T, V), init As V) As V
-            For Each x As T In seq
-                init = produce(init, x)
-            Next
-
-            Return init
         End Function
 
         ''' <summary>
@@ -103,7 +129,7 @@ Namespace Layouts.Cola
         ''' <param name="target">The target Rectangle.</param>
         ''' <param name="ah">The size of the arrow head, a distance to shorten the line by.</param>
         ''' <returns></returns>
-        Public Function makeEdgeBetween(source As Rectangle2D, target As Rectangle2D, ah As number) As DirectedEdge
+        Public Function makeEdgeBetween(source As Rectangle2D, target As Rectangle2D, ah As Double) As DirectedEdge
             Dim si = source.rayIntersection(target.CenterX, target.CenterY) Or New Point2D(source.CenterX, source.CenterY).AsDefault
             Dim ti = target.rayIntersection(source.CenterX, source.CenterY) Or New Point2D(target.CenterX, target.CenterY).AsDefault
             Dim dx = ti.X - si.X
@@ -129,7 +155,7 @@ Namespace Layouts.Cola
         ''' <param name="ah">The size of the arrow head, a distance to shorten the
         ''' line by.</param>
         ''' <returns>The point an arrow head of the specified size would need to start.</returns>
-        Public Function makeEdgeTo(s As Point2D, target As Rectangle2D, ah As number) As Point2D
+        Public Function makeEdgeTo(s As Point2D, target As Rectangle2D, ah As Double) As Point2D
             Dim ti = target.rayIntersection(s.X, s.Y)
 
             If (ti Is Nothing) Then
@@ -160,7 +186,7 @@ Namespace Layouts.Cola
         ''' <param name="lowerBound"></param>
         ''' <param name="upperBound"></param>
         ''' <returns></returns>
-        Public Function removeOverlapInOneDimension(spans As (size As number, desiredCenter As number)(), lowerBound As number, upperBound As number) As (newCenters As number(), lowerBound As number, upperBound As number)
+        Public Function removeOverlapInOneDimension(spans As (size As Double, desiredCenter As Double)(), lowerBound As Double, upperBound As Double) As (newCenters As Double(), lowerBound As Double, upperBound As Double)
 
             Dim vs As Variable() = spans.Select(Function(s) New Variable(s.desiredCenter)).ToArray
             Dim cs As New List(Of Constraint)

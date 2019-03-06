@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9aceac9ffd1e656fd8885b968f2bbbaa, www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
+﻿#Region "Microsoft.VisualBasic::f326c36f4dc30a9d20ba7ec1e056c2ff, www\Microsoft.VisualBasic.NETProtocol\IPv4\CIDR.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86f1301294429c5c3046d67efcb2b35e, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::1c266df41dc9b55ab410484c8ffa5c14, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -1459,6 +1459,16 @@ Namespace Math
             Return sys.DivRem(a, b, result)
         End Function
 #End Region
+
+        <Extension>
+        Public Iterator Function CumSum(vector As IEnumerable(Of Double)) As IEnumerable(Of Double)
+            Dim sum#
+
+            For Each x As Double In vector
+                sum += x
+                Yield sum
+            Next
+        End Function
 
         ''' <summary>
         ''' 阶乘
