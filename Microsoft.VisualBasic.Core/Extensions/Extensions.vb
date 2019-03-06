@@ -477,6 +477,13 @@ Public Module Extensions
         End If
     End Function
 
+    <Extension>
+    Public Function GetValueOrNull(Of K, V)(table As IDictionary(Of K, V), key As K) As V
+        Dim refOut As V = Nothing
+        Call table.TryGetValue(key, value:=refOut)
+        Return refOut
+    End Function
+
     ''' <summary>
     ''' 假若不存在目标键名，则返回空值，默认值为空值
     ''' </summary>
@@ -486,7 +493,7 @@ Public Module Extensions
     ''' <param name="index"></param>
     ''' <param name="[default]"></param>
     ''' <returns></returns>
-    <Extension> Public Function GetValueOrDefault(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
+    <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
                                                              index As TKey,
                                                              Optional [default] As TValue = Nothing,
                                                              Optional mute As Boolean = False,
