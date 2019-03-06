@@ -3,6 +3,9 @@
 ' * Written by iychoi@email.arizona.edu
 ' 
 
+Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
+Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.Structure
+
 Namespace HDF5
 
 

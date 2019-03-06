@@ -7,6 +7,9 @@
 ' 
 
 Imports System.IO
+Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
+Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
+
 
 Namespace HDF5.[Structure]
 
@@ -27,7 +30,7 @@ Namespace HDF5.[Structure]
             Dim flags As SByte = 0
             Dim encoding As SByte = 0
             ' 0 = ascii, 1 = UTF-8
-            Me.m_version = [in].ReadByte()
+            Me.m_version = [in].readByte()
 
             If Me.m_version = 1 Then
                 [in].skipBytes(1)
@@ -36,13 +39,13 @@ Namespace HDF5.[Structure]
                 typeSize = [in].readShort()
                 spaceSize = [in].readShort()
             ElseIf (Me.m_version = 2) OrElse (Me.m_version = 3) Then
-                flags = [in].ReadByte()
+                flags = [in].readByte()
                 nameSize = [in].readShort()
                 typeSize = [in].readShort()
                 spaceSize = [in].readShort()
 
                 If Me.m_version = 3 Then
-                    encoding = [in].ReadByte()
+                    encoding = [in].readByte()
                 End If
             Else
                 Throw New IOException("version error")

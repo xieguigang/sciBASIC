@@ -7,6 +7,8 @@
 ' 
 
 
+Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
+
 Namespace HDF5.[Structure]
 
 

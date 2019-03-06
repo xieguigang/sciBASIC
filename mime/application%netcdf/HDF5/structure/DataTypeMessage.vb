@@ -9,7 +9,7 @@
 
 
 
-Imports System.Collections.Generic
+Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
 Imports System.IO
 Namespace HDF5.[Structure]
 
