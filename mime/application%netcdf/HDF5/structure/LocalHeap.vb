@@ -8,6 +8,7 @@
 
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
 Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
 
@@ -16,7 +17,7 @@ Namespace HDF5.[Structure]
 
     Public Class LocalHeap
 
-        Public Shared ReadOnly LOCALHEAP_SIGNATURE As SByte() = New SByte() {CSByte("H"c), CSByte("E"c), CSByte("A"c), CSByte("P"c)}
+        Public Shared ReadOnly LOCALHEAP_SIGNATURE As SByte() = New CharStream() From {"H"c, "E"c, "A"c, "P"c}
 
         Private m_address As Long
 
@@ -38,7 +39,7 @@ Namespace HDF5.[Structure]
             [in].offset = address
 
             ' signature
-            Me.m_SIGNATURE = [in].readBytes(4)
+            Me.m_signature = [in].readBytes(4)
 
             If Not Me.validSignature Then
                 Throw New IOException("signature is not valid")
@@ -76,7 +77,7 @@ Namespace HDF5.[Structure]
 
         Public Overridable ReadOnly Property signature() As SByte()
             Get
-                Return Me.m_SIGNATURE
+                Return Me.m_signature
             End Get
         End Property
 
@@ -130,7 +131,7 @@ Namespace HDF5.[Structure]
         Public Overridable Sub printValues()
             Console.WriteLine("LocalHeap >>>")
             Console.WriteLine("address : " & Me.m_address)
-            Console.WriteLine("signature : " & (Me.m_SIGNATURE(0) And &HFF).ToString("x") & (Me.m_SIGNATURE(1) And &HFF).ToString("x") & (Me.m_SIGNATURE(2) And &HFF).ToString("x") & (Me.m_SIGNATURE(3) And &HFF).ToString("x"))
+            Console.WriteLine("signature : " & (Me.m_signature(0) And &HFF).ToString("x") & (Me.m_signature(1) And &HFF).ToString("x") & (Me.m_signature(2) And &HFF).ToString("x") & (Me.m_signature(3) And &HFF).ToString("x"))
 
             Console.WriteLine("version : " & Me.m_version)
             Console.WriteLine("data segment size : " & Me.m_dataSegmentSize)

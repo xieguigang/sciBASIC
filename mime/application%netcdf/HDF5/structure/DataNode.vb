@@ -8,6 +8,7 @@
 
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
 Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
 
@@ -15,7 +16,7 @@ Namespace HDF5.[Structure]
 
     Public Class DataNode
 
-        Public Shared ReadOnly SIGNATURE As SByte() = New SByte() {CSByte("T"c), CSByte("R"c), CSByte("E"c), CSByte("E"c)}
+        Public Shared ReadOnly SIGNATURE As SByte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
 
         Private m_address As Long
         Private m_layout As Layout

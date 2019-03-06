@@ -8,6 +8,7 @@
 
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
 Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
 
@@ -15,7 +16,7 @@ Namespace HDF5.[Structure]
 
 
     Public Class BLinkTreeNode
-        Public Shared ReadOnly BLINKTREENODE_SIGNATURE As SByte() = New SByte() {CSByte("T"c), CSByte("R"c), CSByte("E"c), CSByte("E"c)}
+        Public Shared ReadOnly BLINKTREENODE_SIGNATURE As SByte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
 
         Private m_signature As SByte()
         Private m_nodeType As Integer
@@ -35,18 +36,18 @@ Namespace HDF5.[Structure]
         Public Sub New([in] As BinaryReader, sb As Superblock)
 
             ' signature
-            Me.m_SIGNATURE = New SByte(3) {}
+            Me.m_signature = New SByte(3) {}
 
             For i As Integer = 0 To 3
-                Me.m_SIGNATURE(i) = [in].ReadByte()
+                Me.m_signature(i) = [in].readByte()
             Next
 
             If Not Me.validSignature Then
                 Throw New IOException("signature is not valid")
             End If
 
-            Me.m_nodeType = [in].ReadByte()
-            Me.m_nodeLevel = [in].ReadByte()
+            Me.m_nodeType = [in].readByte()
+            Me.m_nodeLevel = [in].readByte()
             Me.m_entriesUsed = [in].readShort()
 
             Me.m_totalBLinkTreeNodeSize = 8
@@ -75,7 +76,7 @@ Namespace HDF5.[Structure]
 
         Public Overridable ReadOnly Property signature() As SByte()
             Get
-                Return Me.m_SIGNATURE
+                Return Me.m_signature
             End Get
         End Property
 
@@ -98,7 +99,7 @@ Namespace HDF5.[Structure]
 
         Public Overridable Sub printValues()
             Console.WriteLine("BLinkTreeNode >>>")
-            Console.WriteLine("signature : " & (Me.m_SIGNATURE(0) And &HFF).ToString("x") & (Me.m_SIGNATURE(1) And &HFF).ToString("x") & (Me.m_SIGNATURE(2) And &HFF).ToString("x") & (Me.m_SIGNATURE(3) And &HFF).ToString("x"))
+            Console.WriteLine("signature : " & (Me.m_signature(0) And &HFF).ToString("x") & (Me.m_signature(1) And &HFF).ToString("x") & (Me.m_signature(2) And &HFF).ToString("x") & (Me.m_signature(3) And &HFF).ToString("x"))
             '
             '            System.out.println("version : " + this.m_version);
             '            System.out.println("data segment size : " + this.m_dataSegmentSize);

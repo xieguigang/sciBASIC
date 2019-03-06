@@ -11,12 +11,13 @@ Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.Bin
 
 Imports System.IO
 Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
+Imports Microsoft.VisualBasic.Language
 
 Namespace HDF5.[Structure]
 
     Public Class GroupBTree
 
-        Public Shared ReadOnly SIGNATURE As SByte() = New SByte() {CSByte("T"c), CSByte("R"c), CSByte("E"c), CSByte("E"c)}
+        Public Shared ReadOnly SIGNATURE As SByte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
 
         Private m_address As Long
 
