@@ -15,7 +15,7 @@ Namespace HDF5.[Structure]
 
 
     Public Class Superblock
-        Public Shared ReadOnly FORMAT_SIGNATURE As SByte() = {&H89, &H48, &H44, &H46, &HD, &HA, &H1A, &HA}.Select(Function(i) CSByte(i))
+        Public Shared ReadOnly FORMAT_SIGNATURE As SByte() = {&H89, &H48, &H44, &H46, &HD, &HA, &H1A, &HA}.Select(Function(i) CSByte(i)).ToArray
 
         Private m_address As Long
 
