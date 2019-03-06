@@ -47,7 +47,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.HtmlParser
 
@@ -74,7 +73,7 @@ Public Module HttpGet
                                       Optional headers As Dictionary(Of String, String) = Nothing,
                                       Optional proxy As String = Nothing,
                                       Optional doNotRetry404 As Boolean = True,
-                                      Optional UA$ = UserAgent.GoogleChrome,
+                                      Optional UA$ = Nothing,
                                       Optional refer$ = Nothing) As String
 #Else
     ''' <summary>
@@ -160,7 +159,7 @@ RETRY:      Return __get(url, headers, proxy, UA)
         Dim webRequest As HttpWebRequest = HttpWebRequest.Create(url)
 
         webRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
-        webRequest.UserAgent = If(UA = UserAgent.GoogleChrome, DefaultUA, UA)
+        webRequest.UserAgent = UA Or DefaultUA
 
         If HttpRequestTimeOut > 0 Then
             webRequest.Timeout = 1000 * HttpRequestTimeOut

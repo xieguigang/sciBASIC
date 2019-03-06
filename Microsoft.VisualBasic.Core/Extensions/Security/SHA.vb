@@ -299,7 +299,7 @@ Namespace SecurityString
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared ReadOnly Property CertificateSigned As SHA256 =
-            New SHA256(password:=Microsoft.VisualBasic.SecurityString.GetFileHashString(GetType(SHA256).Assembly.Location), saltValue:="ATCGCGAT")
+            New SHA256(password:=Microsoft.VisualBasic.SecurityString.GetFileMd5(GetType(SHA256).Assembly.Location), saltValue:="ATCGCGAT")
 
         ''' <summary>
         ''' 双重动态数据签名
@@ -317,8 +317,8 @@ Namespace SecurityString
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Shared Function GetDynamicsCertification(TypeInfo As Type) As SHA256
-            Dim Password As String = Microsoft.VisualBasic.SecurityString.GetFileHashString(TypeInfo.Assembly.Location)
-            Dim saltValue As String = Microsoft.VisualBasic.SecurityString.GetFileHashString(GetType(SHA256).Assembly.Location)
+            Dim Password As String = Microsoft.VisualBasic.SecurityString.GetFileMd5(TypeInfo.Assembly.Location)
+            Dim saltValue As String = Microsoft.VisualBasic.SecurityString.GetFileMd5(GetType(SHA256).Assembly.Location)
             saltValue = Mid(saltValue, 3, 8)
             Return New SHA256(Password, saltValue)
         End Function

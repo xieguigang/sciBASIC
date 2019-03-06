@@ -1,47 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::d4e24ef5df87a839ca5674d4f8d08eb5, Microsoft.VisualBasic.Core\Extensions\Security\Md5.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module MD5Hash
-    ' 
-    '         Function: GetFileHashString, (+2 Overloads) GetHashCode, (+3 Overloads) GetMd5Hash, GetMd5Hash2, NewUid
-    '                   SaltValue, StringToByteArray, (+2 Overloads) ToLong, VerifyFile, VerifyMd5Hash
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module MD5Hash
+' 
+'         Function: GetFileHashString, (+2 Overloads) GetHashCode, (+3 Overloads) GetMd5Hash, GetMd5Hash2, NewUid
+'                   SaltValue, StringToByteArray, (+2 Overloads) ToLong, VerifyFile, VerifyMd5Hash
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Security.Cryptography
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -229,13 +231,24 @@ Namespace SecurityString
         ''' 
         <ExportAPI("File.Md5", Info:="Get the md5 hash calculation value for a specific file.")>
         <Extension>
-        Public Function GetFileHashString(<Parameter("Path.Uri", "The file path of the target file to be calculated.")> PathUri As String) As String
-            If Not PathUri.FileExists OrElse FileIO.FileSystem.GetFileInfo(PathUri).Length = 0 Then
-                Return ""
-            End If
+        Public Function GetFileMd5(<Parameter("Path.Uri", "The file path of the target file to be calculated.")> PathUri As String) As String
+            Dim size& = PathUri.FileLength
 
-            Dim bufs As Byte() = IO.File.ReadAllBytes(PathUri)
-            Return GetMd5Hash(bufs)
+            If size <= 0 Then
+                Return ""
+            ElseIf size < 1024 * 1024 * 5 Then
+                ' small files
+                Dim bufs As Byte() = File.ReadAllBytes(PathUri)
+                Return GetMd5Hash(bufs)
+            Else
+                ' large files
+                Using stream As New FileStream(PathUri, FileMode.Open, FileAccess.Read, FileShare.Read, 1024 * 1024 * 2)
+                    Dim sha As New SHA256Managed()
+                    Dim checksum = sha.ComputeHash(stream)
+
+                    Return BitConverter.ToString(checksum).Replace("-", String.Empty)
+                End Using
+            End If
         End Function
 
         ''' <summary>

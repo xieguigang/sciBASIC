@@ -83,7 +83,7 @@ Namespace ComponentModel
             Dim fullName$ = modelType.FullName
             Dim assembly$ = modelType.Assembly.FullName
             Dim update As Date = File.GetLastWriteTime(modelType.Assembly.Location)
-            Dim md5$ = modelType.Assembly.Location.GetFileHashString
+            Dim md5$ = modelType.Assembly.Location.GetFileMd5
             Dim trace$ = vbCrLf &
                 "     model:     " & fullName & vbCrLf &
                 "     assembly:  " & assembly & vbCrLf &
