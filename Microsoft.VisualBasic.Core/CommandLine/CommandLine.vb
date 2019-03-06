@@ -745,12 +745,12 @@ Namespace CommandLine
         ''' <param name="name">The parameter name, and its argument value should be a valid file path</param>
         ''' <param name="[default]">Default file path if the argument value is not exists</param>
         ''' <returns></returns>
-        Public Function OpenHandle(name$, Optional default$ = "") As int
+        Public Function OpenHandle(name$, Optional default$ = "") As VBInteger
             Dim file As String = Me(name)
             If String.IsNullOrEmpty(file) Then
                 file = [default]
             End If
-            Return New int(FileHandles.OpenHandle(file))
+            Return New VBInteger(FileHandles.OpenHandle(file))
         End Function
 #End Region
 

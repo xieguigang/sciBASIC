@@ -53,7 +53,7 @@ Namespace Language
     ''' <summary>
     ''' <see cref="System.Double"/>
     ''' </summary>
-    Public Class float : Inherits Value(Of Double)
+    Public Class VBDouble : Inherits Value(Of Double)
         Implements IComparable
         Implements IConvertible
         Implements IEquatable(Of Double)
@@ -75,10 +75,10 @@ Namespace Language
 
             If type.Equals(GetType(Double)) Then
                 Return Value.CompareTo(DirectCast(obj, Double))
-            ElseIf type.Equals(GetType(float)) Then
-                Return Value.CompareTo(DirectCast(obj, float).Value)
+            ElseIf type.Equals(GetType(VBDouble)) Then
+                Return Value.CompareTo(DirectCast(obj, VBDouble).Value)
             Else
-                Throw New Exception($"Miss-match of type:  {GetType(float).FullName} --> {type.FullName}")
+                Throw New Exception($"Miss-match of type:  {GetType(VBDouble).FullName} --> {type.FullName}")
             End If
         End Function
 
@@ -91,65 +91,65 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Shared Operator <(n#, x As float) As float
+        Public Shared Operator <(n#, x As VBDouble) As VBDouble
             If n >= x.Value Then
-                Return New float(Double.MaxValue)
+                Return New VBDouble(Double.MaxValue)
             Else
                 Return x
             End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator *(n#, x As float) As Double
+        Public Shared Operator *(n#, x As VBDouble) As Double
             Return n * x.Value
         End Operator
 
-        Public Overloads Shared Operator +(x As float, y As float) As Double
+        Public Overloads Shared Operator +(x As VBDouble, y As VBDouble) As Double
             Return x.Value + y.Value
         End Operator
 
-        Public Overloads Shared Operator /(x As float, y As float) As Double
+        Public Overloads Shared Operator /(x As VBDouble, y As VBDouble) As Double
             Return x.Value / y.Value
         End Operator
 
-        Public Overloads Shared Operator +(x#, y As float) As Double
+        Public Overloads Shared Operator +(x#, y As VBDouble) As Double
             Return x + y.Value
         End Operator
 
-        Public Overloads Shared Widening Operator CType(x As Double) As float
-            Return New float(x)
+        Public Overloads Shared Widening Operator CType(x As Double) As VBDouble
+            Return New VBDouble(x)
         End Operator
 
-        Public Overloads Shared Operator <=(x As float, n As Double) As Boolean
+        Public Overloads Shared Operator <=(x As VBDouble, n As Double) As Boolean
             Return x.Value <= n
         End Operator
 
-        Public Overloads Shared Operator >=(x As float, n As Double) As Boolean
+        Public Overloads Shared Operator >=(x As VBDouble, n As Double) As Boolean
             Return x.Value >= n
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Operator /(x As float, n As Double) As Double
+        Public Overloads Shared Operator /(x As VBDouble, n As Double) As Double
             Return x.Value / n
         End Operator
 
-        Public Shared Operator >(n As Double, x As float) As float
+        Public Shared Operator >(n As Double, x As VBDouble) As VBDouble
             Return x
         End Operator
 
-        Public Shared Operator ^(x As float, power As Double) As Double
+        Public Shared Operator ^(x As VBDouble, power As Double) As Double
             Return x.Value ^ power
         End Operator
 
-        Public Overloads Shared Narrowing Operator CType(f As float) As Double
+        Public Overloads Shared Narrowing Operator CType(f As VBDouble) As Double
             Return f.Value
         End Operator
 
-        Public Overloads Shared Operator -(a As float, b As float) As Double
+        Public Overloads Shared Operator -(a As VBDouble, b As VBDouble) As Double
             Return a.Value - b.Value
         End Operator
 
-        Public Overloads Shared Operator *(a As float, b As float) As Double
+        Public Overloads Shared Operator *(a As VBDouble, b As VBDouble) As Double
             Return a.Value * b.Value
         End Operator
 #End Region

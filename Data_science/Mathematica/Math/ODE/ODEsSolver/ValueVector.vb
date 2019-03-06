@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class ValueVector : Inherits int
+Public Class ValueVector : Inherits VBInteger
 
     Public Property Y As Dictionary(Of NamedCollection(Of Double))
 

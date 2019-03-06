@@ -103,7 +103,7 @@ Namespace FuzzyCMeans
             Dim clusterCenters As List(Of Entity) = AlgorithmsUtils.MakeInitialSeeds(coordinates, numberOfClusters)
             Dim clusters As Dictionary(Of Entity, Entity)
             Dim membershipMatrix As Dictionary(Of Entity, List(Of Double)) = Nothing
-            Dim iteration As int = 0
+            Dim iteration As VBInteger = 0
             Dim ptClone As New Value(Of Entity)
             '  Dim clusterColors As New Dictionary(Of Entity, Color)()
 

@@ -121,7 +121,7 @@ Namespace NeuralNetwork
                        Optional active As LayerActives = Nothing)
 
             Dim activations As LayerActives = active Or LayerActives.GetDefaultConfig
-            Dim guid As int = 100
+            Dim guid As VBInteger = 100
 
             Me.LearnRate = learnRate
             Me.Momentum = momentum

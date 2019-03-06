@@ -164,7 +164,7 @@ Namespace Darwinism
 
             Dim bestFit# = Integer.MaxValue
             Dim fitnessFunction As Func(Of Individual, Double) = AddressOf New FitnessPool(Of Individual)(target, capacity:=PopulationSize * 100).Fitness
-            Dim i As int = Scan0
+            Dim i As VBInteger = Scan0
 
             If randomGenerator Is Nothing Then
                 randomGenerator = Function() New Random

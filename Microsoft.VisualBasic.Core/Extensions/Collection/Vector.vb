@@ -224,7 +224,7 @@ Public Module VectorExtensions
     <Extension>
     Public Function Fill(Of T)(ByRef vector As T(),
                                data As IEnumerable(Of T),
-                               start As int,
+                               start As VBInteger,
                                Optional reverse As Boolean = False) As T()
         If start < 0 Then
             start = vector.Length + start.Value

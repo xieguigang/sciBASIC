@@ -97,7 +97,7 @@ Public Module Normalization
             raw.Value.ToDictionary(
             Function(x) CSng(x.Time),
             Function(p) New PointF(CSng(p.Time), CSng(p.Y)))
-        Dim i As int = Scan0
+        Dim i As VBInteger = Scan0
         Dim preX As Value(Of Single) = intr.Value(++i).X
 
         Do While ++i < intr.Value.Length - 1

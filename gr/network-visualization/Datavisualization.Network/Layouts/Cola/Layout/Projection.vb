@@ -46,7 +46,7 @@ Namespace Layouts.Cola
                                  v.bounds = New Rectangle2D(v.x - w2, v.x + w2, v.y - h2, v.y + h2)
                              End Sub)
                 computeGroupBounds(rootGroup)
-                Dim i As int = nodes.Length
+                Dim i As VBInteger = nodes.Length
                 groups.DoEach(Sub(g)
                                   g.minVar = New IndexedVariable(++i, If(g.stiffness <> 0, g.stiffness, 0.01))
                                   variables(i) = g.minVar

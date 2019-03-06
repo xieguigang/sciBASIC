@@ -150,7 +150,7 @@ Namespace ComponentModel.Ranges
     ''' 
     ''' </summary>
     ''' <typeparam name="TUnit">枚举类型，基础类型必须是值等于1</typeparam>
-    Public Class UnitValue(Of TUnit As Structure) : Inherits float
+    Public Class UnitValue(Of TUnit As Structure) : Inherits VBDouble
 
         ''' <summary>
         ''' 分（d） ``10^-1``

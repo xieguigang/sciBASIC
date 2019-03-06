@@ -94,7 +94,7 @@ Namespace NeuralNetwork
         ''' 创建的神经链接是空的
         ''' </summary>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
-        Public Sub New(Optional active As IActivationFunction = Nothing, Optional id As int = Nothing)
+        Public Sub New(Optional active As IActivationFunction = Nothing, Optional id As VBInteger = Nothing)
             InputSynapses = {}
             OutputSynapses = {}
             Bias = Helpers.GetRandom()
@@ -114,7 +114,7 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="inputNeurons"></param>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
-        Public Sub New(inputNeurons As IEnumerable(Of Neuron), Optional active As IActivationFunction = Nothing, Optional guid As int = Nothing)
+        Public Sub New(inputNeurons As IEnumerable(Of Neuron), Optional active As IActivationFunction = Nothing, Optional guid As VBInteger = Nothing)
             Call Me.New(active, guid)
 
             For Each inputNeuron As Neuron In inputNeurons

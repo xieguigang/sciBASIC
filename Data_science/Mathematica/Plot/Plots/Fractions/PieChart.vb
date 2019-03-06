@@ -129,8 +129,8 @@ Namespace Fractions
 
                 If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式
 
-                    Dim start As New float
-                    Dim sweep As New float
+                    Dim start As New VBDouble
+                    Dim sweep As New VBDouble
                     Dim alpha As Single, pt As PointF
                     Dim labelSize As SizeF
                     Dim label$

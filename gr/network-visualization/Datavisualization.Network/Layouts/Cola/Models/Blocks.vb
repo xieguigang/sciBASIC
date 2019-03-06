@@ -62,7 +62,7 @@ Namespace Layouts.Cola
         End Property
 
         Sub New(vs As Variable())
-            Dim n As int = vs.Length
+            Dim n As VBInteger = vs.Length
 
             While (--n)
                 Dim b As New Block(vs(n))

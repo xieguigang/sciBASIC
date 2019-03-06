@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Language
 ''' <summary>
 ''' Y variable in the ODE
 ''' </summary>
-Public Class var : Inherits float
+Public Class var : Inherits VBDouble
     Implements Ivar
     Implements ICloneable
     Implements IAddress(Of Integer)

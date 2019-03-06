@@ -56,7 +56,7 @@ Namespace ComponentModel
     ''' <summary>
     ''' The object counter
     ''' </summary>
-    Public Class Counter : Inherits int
+    Public Class Counter : Inherits VBInteger
 
         ''' <summary>
         ''' Create a new integer counter start from ZERO.(新建一个计数器)

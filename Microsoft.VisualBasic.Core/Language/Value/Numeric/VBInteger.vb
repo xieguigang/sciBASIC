@@ -54,7 +54,7 @@ Namespace Language
     ''' <summary>
     ''' Alias of <see cref="Int32"/>
     ''' </summary>
-    Public Class int : Inherits Value(Of Integer)
+    Public Class VBInteger : Inherits Value(Of Integer)
         Implements IComparable
         Implements IComparable(Of Integer)
         Implements IEquatable(Of Integer)
@@ -97,7 +97,7 @@ Namespace Language
         End Function
 
         ''' <summary>
-        ''' Compare <see cref="Int"/> or <see cref="Int32"/>
+        ''' Compare <see cref="VBInteger"/> or <see cref="Int32"/>
         ''' </summary>
         ''' <param name="obj"></param>
         ''' <returns></returns>
@@ -106,19 +106,19 @@ Namespace Language
 
             If type.Equals(GetType(Integer)) Then
                 Return Value.CompareTo(DirectCast(obj, Integer))
-            ElseIf type.Equals(GetType(int)) Then
-                Return Value.CompareTo(DirectCast(obj, int).Value)
+            ElseIf type.Equals(GetType(VBInteger)) Then
+                Return Value.CompareTo(DirectCast(obj, VBInteger).Value)
             Else
-                Throw New Exception($"Miss-match of type:  {GetType(int).FullName} --> {type.FullName}")
+                Throw New Exception($"Miss-match of type:  {GetType(VBInteger).FullName} --> {type.FullName}")
             End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator IsTrue(n As int) As Boolean
+        Public Shared Operator IsTrue(n As VBInteger) As Boolean
             Return Not n Is Nothing AndAlso n.Value <> 0
         End Operator
 
-        Public Shared Operator IsFalse(n As int) As Boolean
+        Public Shared Operator IsFalse(n As VBInteger) As Boolean
             If n Then
                 Return False
             Else
@@ -133,9 +133,9 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Shared Operator <(n As Integer, x As int) As int
+        Public Shared Operator <(n As Integer, x As VBInteger) As VBInteger
             If n >= x.Value Then
-                Return New int(Integer.MaxValue)
+                Return New VBInteger(Integer.MaxValue)
             Else
                 Return x
             End If
@@ -148,17 +148,17 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator <(x As int, n As Integer) As Boolean
+        Public Shared Operator <(x As VBInteger, n As Integer) As Boolean
             Return x.Value < n
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator <(n As Double, x As int) As Boolean
+        Public Shared Operator <(n As Double, x As VBInteger) As Boolean
             Return n < x.Value
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator >(n As Double, x As int) As Boolean
+        Public Shared Operator >(n As Double, x As VBInteger) As Boolean
             Return n > x.Value
         End Operator
 
@@ -169,27 +169,27 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator >(x As int, n As Integer) As Boolean
+        Public Shared Operator >(x As VBInteger, n As Integer) As Boolean
             Return x.Value > n
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Operator <=(x As int, n As Integer) As Boolean
+        Public Overloads Shared Operator <=(x As VBInteger, n As Integer) As Boolean
             Return x.Value <= n
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Operator >=(x As int, n As Integer) As Boolean
+        Public Overloads Shared Operator >=(x As VBInteger, n As Integer) As Boolean
             Return x.Value >= n
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator >(n As Integer, x As int) As int
+        Public Shared Operator >(n As Integer, x As VBInteger) As VBInteger
             Return x
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Operator -(x As int, n As Integer) As int
+        Public Overloads Shared Operator -(x As VBInteger, n As Integer) As VBInteger
             x.Value -= n
             Return x
         End Operator
@@ -201,17 +201,17 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Operator -(x%, n As int) As Integer
+        Public Overloads Shared Operator -(x%, n As VBInteger) As Integer
             Return x - n.Value
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator /(x As int, b As Integer) As Double
+        Public Shared Operator /(x As VBInteger, b As Integer) As Double
             Return x.Value / b
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator /(x As Integer, b As int) As Double
+        Public Shared Operator /(x As Integer, b As VBInteger) As Double
             Return x / b.Value
         End Operator
 
@@ -221,17 +221,17 @@ Namespace Language
         ''' <param name="n"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Widening Operator CType(n As Integer) As int
-            Return New int(n)
+        Public Overloads Shared Widening Operator CType(n As Integer) As VBInteger
+            Return New VBInteger(n)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Narrowing Operator CType(n As int) As Double
+        Public Overloads Shared Narrowing Operator CType(n As VBInteger) As Double
             Return CDbl(n.Value)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Narrowing Operator CType(n As int) As Integer
+        Public Overloads Shared Narrowing Operator CType(n As VBInteger) As Integer
             Return n.Value
         End Operator
 
@@ -240,7 +240,7 @@ Namespace Language
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Shared Operator -(x As int) As Integer
+        Public Shared Operator -(x As VBInteger) As Integer
             Dim i As Integer = x.Value
             x.Value -= 1
             Return -i
@@ -252,7 +252,7 @@ Namespace Language
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator +(x As int) As Integer
+        Public Overloads Shared Operator +(x As VBInteger) As Integer
             Dim i As Integer = x.Value
             x.Value += 1
             Return i
@@ -261,17 +261,17 @@ Namespace Language
         ''' <summary>
         ''' 位移<paramref name="n"/>个单位然后返回位移之后的结果值
         ''' 
-        ''' + 对于<see cref="int"/>类型而言，其更加侧重于迭代器中的位移，所以这个加法运算是符合
+        ''' + 对于<see cref="VBInteger"/>类型而言，其更加侧重于迭代器中的位移，所以这个加法运算是符合
         '''   ```vbnet
         '''   x += n
         '''   ```
-        ''' + 但是对于<see cref="float"/>类型而言，其更加侧重于模型计算，所以其加法不符合上述的语法，
+        ''' + 但是对于<see cref="VBDouble"/>类型而言，其更加侧重于模型计算，所以其加法不符合上述的语法，
         ''' 不会修改源变量的值，返回的是一个单纯的<see cref="Double"/>值类型
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="n%"></param>
         ''' <returns></returns>
-        Public Overloads Shared Operator +(x As int, n%) As int
+        Public Overloads Shared Operator +(x As VBInteger, n%) As VBInteger
             x.Value += n
             Return x
         End Operator
@@ -280,12 +280,12 @@ Namespace Language
 
         'End Operator
 
-        Public Shared Operator >(source As IEnumerable, handle As int) As Boolean
+        Public Shared Operator >(source As IEnumerable, handle As VBInteger) As Boolean
             Dim file As FileHandle = FileHandles.__getHandle(handle.Value)
             Return IOHandler.DefaultHandle()(source, file.FileName, file.encoding)
         End Operator
 
-        Public Shared Operator <(source As IEnumerable, handle As int) As Boolean
+        Public Shared Operator <(source As IEnumerable, handle As VBInteger) As Boolean
             Throw New NotSupportedException
         End Operator
 
@@ -295,7 +295,7 @@ Namespace Language
         ''' <param name="p"></param>
         ''' <param name="x"></param>
         ''' <returns></returns>
-        Public Shared Operator <<(p As int, x%) As Integer
+        Public Shared Operator <<(p As VBInteger, x%) As Integer
             Dim i As Integer = p.Value
             p.Value += x
             Return i

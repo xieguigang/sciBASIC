@@ -86,7 +86,7 @@ Namespace NeuralNetwork
             Me.Neurons = neurons
         End Sub
 
-        Sub New(size%, active As IActivationFunction, Optional input As Layer = Nothing, Optional guid As int = Nothing)
+        Sub New(size%, active As IActivationFunction, Optional input As Layer = Nothing, Optional guid As VBInteger = Nothing)
             Neurons = New Neuron(size - 1) {}
 
             If input Is Nothing Then
@@ -240,7 +240,7 @@ Namespace NeuralNetwork
         ''' <param name="input">s神经网络的输入层会作为隐藏层的输入</param>
         ''' <param name="size%"></param>
         ''' <param name="active"></param>
-        Sub New(input As Layer, size%(), active As IActivationFunction, guid As int)
+        Sub New(input As Layer, size%(), active As IActivationFunction, guid As VBInteger)
             Dim hiddenPortal As New Layer(size(Scan0), active, input, guid)
 
             Layers = New Layer(size.Length - 1) {}

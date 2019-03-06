@@ -243,7 +243,7 @@ Namespace MonteCarlo
 
             Dim experimentObservation As VectorTagged(Of Dictionary(Of String, Double)) =
                 observation.Sampling(eigenvectors, partN, EstimatesProtocol.Observation)
-            Dim i As int = 0
+            Dim i As VBInteger = 0
 
             Call observation.params.GetJson.__DEBUG_ECHO
 
