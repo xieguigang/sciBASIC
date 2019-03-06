@@ -1,10 +1,6 @@
 {
   "ExpandedNodes": [
-    "\\Microsoft.VisualBasic.Core\\ComponentModel",
-    "\\Microsoft.VisualBasic.Core\\ComponentModel\\Algorithm",
-    "\\Microsoft.VisualBasic.Core\\ComponentModel\\Algorithm\\BinaryTree",
-    "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\\Excel"
+    ""
   ],
   "PreviewInSolutionExplorer": false
 }
