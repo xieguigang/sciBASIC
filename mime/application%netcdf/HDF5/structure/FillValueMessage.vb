@@ -21,7 +21,7 @@ Namespace HDF5.[Structure]
         Private m_fillWriteTime As Integer
         Private m_hasFillValue As Boolean
         Private m_size As Integer
-        Private m_value As SByte()
+        Private m_value As Byte()
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             [in].offset = address
@@ -37,8 +37,8 @@ Namespace HDF5.[Structure]
                 Me.m_hasFillValue = ([in].readByte() <> 0)
             Else
                 Me.m_flags = [in].readByte()
-                Me.m_spaceAllocateTime = CSByte(Me.m_flags And 3)
-                Me.m_fillWriteTime = CSByte((Me.m_flags >> 2) And 3)
+                Me.m_spaceAllocateTime = CByte(Me.m_flags And 3)
+                Me.m_fillWriteTime = CByte((Me.m_flags >> 2) And 3)
                 Me.m_hasFillValue = (Me.m_flags And 32) <> 0
             End If
 
@@ -95,7 +95,7 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Overridable ReadOnly Property value() As SByte()
+        Public Overridable ReadOnly Property value() As Byte()
             Get
                 Return Me.m_value
             End Get

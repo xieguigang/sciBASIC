@@ -29,7 +29,7 @@ Namespace HDF5.[Structure]
         Private m_address As Long
         Private m_type As Integer
         Private m_version As Integer
-        Private m_flags As SByte()
+        Private m_flags As Byte()
         Private m_byteSize As Integer
         Private m_littleEndian As Boolean
 
@@ -47,7 +47,7 @@ Namespace HDF5.[Structure]
 
             Me.m_address = address
 
-            Dim tandv As SByte = [in].readByte()
+            Dim tandv As Byte = [in].readByte()
             Me.m_type = (tandv And &HF)
             Me.m_version = ((tandv And &HF0) >> 4)
 
@@ -68,10 +68,10 @@ Namespace HDF5.[Structure]
             ElseIf Me.m_type = DATATYPE_FLOATING_POINT Then
                 Dim bitOffset As Short = [in].readShort()
                 Dim bitPrecision As Short = [in].readShort()
-                Dim expLocation As SByte = [in].readByte()
-                Dim expSize As SByte = [in].readByte()
-                Dim manLocation As SByte = [in].readByte()
-                Dim manSize As SByte = [in].readByte()
+                Dim expLocation As Byte = [in].readByte()
+                Dim expSize As Byte = [in].readByte()
+                Dim manLocation As Byte = [in].readByte()
+                Dim manSize As Byte = [in].readByte()
                 Dim expBias As Integer = [in].readInt()
             ElseIf Me.m_type = DATATYPE_TIME Then
                 Dim bitPrecision As Short = [in].readShort()
@@ -82,7 +82,7 @@ Namespace HDF5.[Structure]
                 Dim bitOffset As Short = [in].readShort()
                 Dim bitPrecision As Short = [in].readShort()
             ElseIf Me.m_type = DATATYPE_OPAQUE Then
-                Dim len As SByte = Me.m_flags(0)
+                Dim len As Byte = Me.m_flags(0)
                 Me.m_opaqueDesc = If((len > 0), [in].readASCIIString(len).Trim(), Nothing)
             ElseIf Me.m_type = DATATYPE_COMPOUND Then
                 Dim nmembers As Integer = (Me.m_flags(1) * 256) + Me.m_flags(0)

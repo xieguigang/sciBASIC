@@ -18,7 +18,7 @@ Namespace HDF5.[Structure]
         Private m_objectHeaderAddress As Long
         Private m_cacheType As Integer
         Private m_reserved As Integer
-        Private m_scratchpadSpace As SByte()
+        Private m_scratchpadSpace As Byte()
         '16
         Private m_size As Integer
 
@@ -96,7 +96,7 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Overridable ReadOnly Property scratchpadSpace() As SByte()
+        Public Overridable ReadOnly Property scratchpadSpace() As Byte()
             Get
                 Return Me.m_scratchpadSpace
             End Get

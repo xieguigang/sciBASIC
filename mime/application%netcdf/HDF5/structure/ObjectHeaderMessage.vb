@@ -17,7 +17,7 @@ Namespace HDF5.[Structure]
 
 		Private m_headerMessageType As ObjectHeaderMessageType
 		Private m_sizeOfHeaderMessageData As Integer
-		Private m_headerMessageFlags As SByte
+		Private m_headerMessageFlags As Byte
 		Private m_groupMessage As GroupMessage
 		Private m_fillvalueMessage As FillValueMessage
 		Private m_fillvalueoldMessage As FillValueOldMessage
@@ -30,7 +30,7 @@ Namespace HDF5.[Structure]
 		Private m_lastmodifiedMessage As LastModifiedMessage
 		Private m_headerLength As Integer
 
-		Private m_headerMessageData As SByte()
+		Private m_headerMessageData As Byte()
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
 			[in].offset = address
@@ -119,7 +119,7 @@ Namespace HDF5.[Structure]
 			End Get
 		End Property
 
-		Public Overridable ReadOnly Property headerMessageFlags() As SByte
+		Public Overridable ReadOnly Property headerMessageFlags() As Byte
 			Get
 				Return Me.m_headerMessageFlags
 			End Get
@@ -131,7 +131,7 @@ Namespace HDF5.[Structure]
 			End Get
 		End Property
 
-		Public Overridable ReadOnly Property headerMessageData() As SByte()
+		Public Overridable ReadOnly Property headerMessageData() As Byte()
 			Get
 				Return Me.m_headerMessageData
 			End Get

@@ -15,7 +15,7 @@ Namespace HDF5.[Structure]
     Public Class FillValueOldMessage
         Private m_address As Long
         Private m_size As Integer
-        Private m_value As SByte()
+        Private m_value As Byte()
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             [in].offset = address
@@ -38,7 +38,7 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Overridable ReadOnly Property value() As SByte()
+        Public Overridable ReadOnly Property value() As Byte()
             Get
                 Return Me.m_value
             End Get

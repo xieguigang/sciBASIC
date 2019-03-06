@@ -9,7 +9,7 @@ Namespace HDF5.IO
         Protected Friend m_littleEndian As Boolean
         Protected Friend m_maxOffset As Long
 
-        Public MustOverride Function readByte() As SByte
+        Public MustOverride Function readByte() As Byte
 
         Public MustOverride Sub close()
 
@@ -58,12 +58,12 @@ Namespace HDF5.IO
             End Get
         End Property
 
-        Public Overridable Function readBytes(n As Integer) As SByte()
+        Public Overridable Function readBytes(n As Integer) As Byte()
             If n < 0 Then
                 Throw New System.ArgumentException("n should be greater than 0")
             End If
 
-            Dim buf As SByte() = New SByte(n - 1) {}
+            Dim buf As Byte() = New Byte(n - 1) {}
             For i As Integer = 0 To n - 1
                 buf(i) = readByte()
             Next
@@ -83,7 +83,7 @@ Namespace HDF5.IO
 
 
         Public Overridable Function readInt() As Integer
-            Dim data As SByte() = readBytes(4)
+            Dim data As Byte() = readBytes(4)
             Dim temp As Integer = 0
 
             If Me.m_littleEndian Then
@@ -102,7 +102,7 @@ Namespace HDF5.IO
 
 
         Public Overridable Function readLong() As Long
-            Dim data As SByte() = readBytes(8)
+            Dim data As Byte() = readBytes(8)
             Dim temp As Long = 0
 
             If Me.m_littleEndian Then
@@ -129,7 +129,7 @@ Namespace HDF5.IO
 
 
         Public Overridable Function readShort() As Short
-            Dim data As SByte() = readBytes(2)
+            Dim data As Byte() = readBytes(2)
             Dim temp As Short = 0
 
             If Me.m_littleEndian Then

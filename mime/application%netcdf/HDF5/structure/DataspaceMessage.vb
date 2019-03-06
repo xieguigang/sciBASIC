@@ -17,7 +17,7 @@ Namespace HDF5.[Structure]
         Private m_address As Long
         Private m_version As Integer
         Private m_numberOfDimensions As Integer
-        Private m_flags As SByte
+        Private m_flags As Byte
         Private m_type As Integer
         Private m_dimensionLength As Integer()
         Private m_maxDimensionLength As Integer()
@@ -78,7 +78,7 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Overridable ReadOnly Property flags() As SByte
+        Public Overridable ReadOnly Property flags() As Byte
             Get
                 Return Me.m_flags
             End Get

@@ -16,9 +16,9 @@ Namespace HDF5.[Structure]
 
 
     Public Class BLinkTreeNode
-        Public Shared ReadOnly BLINKTREENODE_SIGNATURE As SByte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
+        Public Shared ReadOnly BLINKTREENODE_SIGNATURE As Byte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
 
-        Private m_signature As SByte()
+        Private m_signature As Byte()
         Private m_nodeType As Integer
         Private m_nodeLevel As Integer
         Private m_entriesUsed As Integer
@@ -27,7 +27,7 @@ Namespace HDF5.[Structure]
         Private m_addressOfRightSibling As Long
 
         Private m_offsetToLocalHeap As List(Of System.Nullable(Of Long))
-        Private m_keyOfChild As List(Of SByte())
+        Private m_keyOfChild As List(Of Byte())
 
         Private m_addressOfChild As List(Of System.Nullable(Of Long))
 
@@ -36,7 +36,7 @@ Namespace HDF5.[Structure]
         Public Sub New([in] As BinaryReader, sb As Superblock)
 
             ' signature
-            Me.m_signature = New SByte(3) {}
+            Me.m_signature = New Byte(3) {}
 
             For i As Integer = 0 To 3
                 Me.m_signature(i) = [in].readByte()
@@ -58,7 +58,7 @@ Namespace HDF5.[Structure]
             Me.m_totalBLinkTreeNodeSize += sb.sizeOfOffsets * 2
 
             Me.m_offsetToLocalHeap = New List(Of System.Nullable(Of Long))()
-            Me.m_keyOfChild = New List(Of SByte())()
+            Me.m_keyOfChild = New List(Of Byte())()
             Me.m_addressOfChild = New List(Of System.Nullable(Of Long))()
 
             For i As Integer = 0 To Me.m_entriesUsed - 1
@@ -74,7 +74,7 @@ Namespace HDF5.[Structure]
             Next
         End Sub
 
-        Public Overridable ReadOnly Property signature() As SByte()
+        Public Overridable ReadOnly Property signature() As Byte()
             Get
                 Return Me.m_signature
             End Get

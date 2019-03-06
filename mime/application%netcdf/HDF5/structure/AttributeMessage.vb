@@ -27,8 +27,8 @@ Namespace HDF5.[Structure]
             Me.m_address = address
 
             Dim nameSize As Short, typeSize As Short, spaceSize As Short
-            Dim flags As SByte = 0
-            Dim encoding As SByte = 0
+            Dim flags As Byte = 0
+            Dim encoding As Byte = 0
             ' 0 = ascii, 1 = UTF-8
             Me.m_version = [in].readByte()
 

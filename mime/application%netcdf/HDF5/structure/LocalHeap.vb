@@ -17,18 +17,18 @@ Namespace HDF5.[Structure]
 
     Public Class LocalHeap
 
-        Public Shared ReadOnly LOCALHEAP_SIGNATURE As SByte() = New CharStream() From {"H"c, "E"c, "A"c, "P"c}
+        Public Shared ReadOnly LOCALHEAP_SIGNATURE As Byte() = New CharStream() From {"H"c, "E"c, "A"c, "P"c}
 
         Private m_address As Long
 
-        Private m_signature As SByte()
+        Private m_signature As Byte()
         Private m_version As Integer
-        Private m_reserved0 As SByte()
+        Private m_reserved0 As Byte()
         Private m_dataSegmentSize As Long
         Private m_offsetToHeadOfFreeList As Long
         Private m_addressOfDataSegment As Long
 
-        Private m_data As SByte()
+        Private m_data As Byte()
 
         Private m_totalLocalHeapSize As Integer
 
@@ -75,7 +75,7 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Overridable ReadOnly Property signature() As SByte()
+        Public Overridable ReadOnly Property signature() As Byte()
             Get
                 Return Me.m_signature
             End Get
@@ -122,7 +122,7 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Overridable ReadOnly Property data() As SByte()
+        Public Overridable ReadOnly Property data() As Byte()
             Get
                 Return Me.m_data
             End Get

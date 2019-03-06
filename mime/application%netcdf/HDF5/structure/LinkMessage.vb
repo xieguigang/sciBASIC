@@ -15,8 +15,8 @@ Namespace HDF5.[Structure]
         Private m_address As Long
 
         Private m_version As Integer
-        Private m_flags As SByte
-        Private m_encoding As SByte
+        Private m_flags As Byte
+        Private m_encoding As Byte
         Private m_linkType As Integer
         ' 0=hard, 1=soft, 64 = external
         Private m_creationOrder As Long
@@ -74,13 +74,13 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Overridable ReadOnly Property flags() As SByte
+        Public Overridable ReadOnly Property flags() As Byte
             Get
                 Return Me.m_flags
             End Get
         End Property
 
-        Public Overridable ReadOnly Property encoding() As SByte
+        Public Overridable ReadOnly Property encoding() As Byte
             Get
                 Return Me.m_encoding
             End Get

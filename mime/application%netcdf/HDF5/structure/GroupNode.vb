@@ -15,10 +15,10 @@ Namespace HDF5.[Structure]
 
     Public Class GroupNode
 
-        Public Shared ReadOnly GROUPNODE_SIGNATURE As SByte() = New CharStream() From {"S"c, "N"c, "O"c, "D"c}
+        Public Shared ReadOnly GROUPNODE_SIGNATURE As Byte() = New CharStream() From {"S"c, "N"c, "O"c, "D"c}
 
         Private m_address As Long
-        Private m_signature As SByte()
+        Private m_signature As Byte()
         Private m_version As Integer
         Private m_entryNumber As Integer
 
@@ -68,7 +68,7 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Overridable ReadOnly Property signature() As SByte()
+        Public Overridable ReadOnly Property signature() As Byte()
             Get
                 Return Me.m_signature
             End Get

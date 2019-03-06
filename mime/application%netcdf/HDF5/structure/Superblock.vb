@@ -15,11 +15,11 @@ Namespace HDF5.[Structure]
 
 
     Public Class Superblock
-        Public Shared ReadOnly FORMAT_SIGNATURE As SByte() = {&H89, &H48, &H44, &H46, &HD, &HA, &H1A, &HA}.Select(Function(i) CSByte(i)).ToArray
+        Public Shared ReadOnly FORMAT_SIGNATURE As Byte() = {&H89, &H48, &H44, &H46, &HD, &HA, &H1A, &HA}.Select(Function(i) CByte(i)).ToArray
 
         Private m_address As Long
 
-        Private m_formatSignature As SByte()
+        Private m_formatSignature As Byte()
         Private m_versionOfSuperblock As Integer
         Private m_versionOfFileFreeSpaceStorage As Integer
         Private m_versionOfRootGroupSymbolTableEntry As Integer
@@ -106,7 +106,7 @@ Namespace HDF5.[Structure]
             Throw New IOException("version 2 is not implemented")
         End Sub
 
-        Public Overridable ReadOnly Property formatSignature() As SByte()
+        Public Overridable ReadOnly Property formatSignature() As Byte()
             Get
                 Return Me.m_formatSignature
             End Get

@@ -16,7 +16,7 @@ Namespace HDF5.[Structure]
 
     Public Class DataNode
 
-        Public Shared ReadOnly SIGNATURE As SByte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
+        Public Shared ReadOnly SIGNATURE As Byte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
 
         Private m_address As Long
         Private m_layout As Layout
@@ -42,7 +42,7 @@ Namespace HDF5.[Structure]
 
             Me.m_address = address
             Me.m_layout = layout
-            Dim signature__1 As SByte() = [in].readBytes(4)
+            Dim signature__1 As Byte() = [in].readBytes(4)
 
             For i As Integer = 0 To 3
                 If signature__1(i) <> SIGNATURE(i) Then

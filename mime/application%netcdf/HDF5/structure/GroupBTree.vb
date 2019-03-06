@@ -17,7 +17,7 @@ Namespace HDF5.[Structure]
 
     Public Class GroupBTree
 
-        Public Shared ReadOnly SIGNATURE As SByte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
+        Public Shared ReadOnly SIGNATURE As Byte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
 
         Private m_address As Long
 
@@ -42,7 +42,7 @@ Namespace HDF5.[Structure]
         Private Sub readAllEntries([in] As BinaryReader, sb As Superblock, address As Long, entryList As List(Of BTreeEntry))
             [in].offset = address
 
-            Dim signature__1 As SByte() = [in].readBytes(4)
+            Dim signature__1 As Byte() = [in].readBytes(4)
             For i As Integer = 0 To 3
                 If signature__1(i) <> SIGNATURE(i) Then
                     Throw New IOException("signature is not valid")

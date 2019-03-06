@@ -130,11 +130,11 @@ Namespace HDF5.IO
             Return (s And &HFFFF)
         End Function
 
-        Public Shared Function unsignedByteToShort(b As SByte) As Short
+        Public Shared Function unsignedByteToShort(b As Byte) As Short
             Return CShort(b And &HFF)
         End Function
 
-        Public Shared Function bytesToUnsignedInt(upper As SByte, lower As SByte) As Integer
+        Public Shared Function bytesToUnsignedInt(upper As Byte, lower As Byte) As Integer
             Return unsignedByteToShort(upper) * 256 + unsignedByteToShort(lower)
         End Function
 
