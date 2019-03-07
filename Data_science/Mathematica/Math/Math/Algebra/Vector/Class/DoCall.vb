@@ -72,9 +72,17 @@ Namespace LinearAlgebra
                 End If
             End With
 
+            Dim target As Object = Nothing
+
+            If info.Attributes.HasFlag(MethodAttributes.SpecialName) Then
+                target = Activator.CreateInstance(info.DeclaringType)
+            End If
+
             For i As Integer = 0 To length - 1
-                inputs = arguments.Select(Function(a) a.Populate).ToArray
-                out = info.Invoke(Nothing, inputs)
+                inputs = arguments _
+                    .Select(Function(a) a.Populate) _
+                    .ToArray
+                out = info.Invoke(target, inputs)
 
                 Yield DirectCast(out, TOut)
             Next
