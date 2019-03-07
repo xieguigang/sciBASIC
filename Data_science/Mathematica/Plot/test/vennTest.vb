@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cedad5acc3873e277db4b6788683af71, Data_science\Mathematica\Plot\test\vennTest.vb"
+﻿#Region "Microsoft.VisualBasic::74762c459fd07f86c8cad2111bf5c033, Data_science\Mathematica\Plot\test\vennTest.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Module vennTest
         Call VennPlot.Venn2(a, b).AsGDIImage.SaveAs("./venn2.png")
     End Sub
 End Module
-

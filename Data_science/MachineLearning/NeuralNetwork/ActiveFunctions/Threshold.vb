@@ -1,45 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::d1765a0428d299fd88c154abdf2ba3d4, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\ThresholdFunction.vb"
+﻿#Region "Microsoft.VisualBasic::c71009e0225d2870c29d8c5d2d8dfd81, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\Threshold.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class ThresholdFunction
-' 
-'         Properties: Store
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: [Function], Derivative, Derivative2
-' 
-' 
-' /********************************************************************************/
+    '     Class Threshold
+    ' 
+    '         Properties: Store
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: [Function], Derivative, Derivative2, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

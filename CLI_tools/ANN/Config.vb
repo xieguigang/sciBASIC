@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5947aec5fbcd1650f5159bbc5e1cbbdf, CLI_tools\ANN\Config.vb"
+﻿#Region "Microsoft.VisualBasic::d34fd09ec63a68ac2bb373c7e0d4f261, CLI_tools\ANN\Config.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     ' Class Config
     ' 
     '     Properties: [Default], default_active, hidden_size, hiddens_active, input_active
-    '                 iterations, learnRate, momentum, output_active
+    '                 iterations, learnRate, learnRateDecay, momentum, output_active
     ' 
     ' /********************************************************************************/
 

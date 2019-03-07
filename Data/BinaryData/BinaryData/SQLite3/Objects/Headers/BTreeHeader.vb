@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45bb73f85ea5a4edc9687c891dd14068, Data\BinaryData\BinaryData\SQLite3\Objects\Headers\BTreeHeader.vb"
+﻿#Region "Microsoft.VisualBasic::ddfdc198ad55fbdae069a06a224a124e, Data\BinaryData\BinaryData\SQLite3\Objects\Headers\BTreeHeader.vb"
 
     ' Author:
     ' 
@@ -78,4 +78,3 @@ Namespace ManagedSqlite.Core.Objects.Headers
         End Function
     End Structure
 End Namespace
-

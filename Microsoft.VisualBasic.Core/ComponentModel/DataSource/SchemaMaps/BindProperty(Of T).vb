@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::556e1f13978c8001fac6295c3396460e, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
+﻿#Region "Microsoft.VisualBasic::6248876d415b08d11e14bdad794e4f3c, Microsoft.VisualBasic.Core\ComponentModel\DataSource\SchemaMaps\BindProperty(Of T).vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Identity, IsNull, IsPrimitive, Type
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+6 Overloads) Sub New
     ' 
     '         Function: FromSchemaTable, GetValue, ToString
     ' 

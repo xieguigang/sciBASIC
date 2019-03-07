@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5a894d43b06e70fd5b9d602bddc7221, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
+﻿#Region "Microsoft.VisualBasic::ddbfb5a6571bfb21e8d67c68844b81ff, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '     Module UnitConvertorExtensions
     ' 
-    '         Function: Base, GetUnitConvertor, IndexOf, Unit
+    '         Function: Base, GetUnitConvertor, IndexOf, (+4 Overloads) Unit
     ' 
     '     Enum ByteSize
     ' 

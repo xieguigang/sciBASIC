@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a03fb2597e73605960086094cc6c621, Data\BinaryData\BinaryData\SQLite3\Helpers\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::3facf2cf8422c23f6ed37e59ec3c26ed, Data\BinaryData\BinaryData\SQLite3\Helpers\StreamHelper.vb"
 
     ' Author:
     ' 
@@ -70,4 +70,3 @@ Namespace ManagedSqlite.Core.Helpers
         End Function
     End Module
 End Namespace
-

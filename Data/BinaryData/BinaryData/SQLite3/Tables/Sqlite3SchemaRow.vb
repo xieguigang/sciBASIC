@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::023f1600f4f4c38685fb9d33169bd767, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3SchemaRow.vb"
+﻿#Region "Microsoft.VisualBasic::9c3786fa699cd23ea602d62c004be179, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3SchemaRow.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Namespace ManagedSqlite.Core.Tables
 
     End Class
 End Namespace
-

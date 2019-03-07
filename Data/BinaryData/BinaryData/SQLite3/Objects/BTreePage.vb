@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1d05c2b611a4f974fe44256e18c889c, Data\BinaryData\BinaryData\SQLite3\Objects\BTreePage.vb"
+﻿#Region "Microsoft.VisualBasic::d34e4e17906d8981272bf7eb17dcc5b3, Data\BinaryData\BinaryData\SQLite3\Objects\BTreePage.vb"
 
     ' Author:
     ' 
@@ -107,4 +107,3 @@ Namespace ManagedSqlite.Core.Objects
         Protected MustOverride Sub ParseInternal()
     End Class
 End Namespace
-

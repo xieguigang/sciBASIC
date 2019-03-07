@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef290ccb65062207b320741898f7574e, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::d736d03bd5960b197ff66a2f58143b26, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -38,8 +38,8 @@
     '               FullName, GetAllEnumFlags, (+3 Overloads) GetAssemblyDetails, (+2 Overloads) GetAttribute, GetDelegateInvokeEntryPoint
     '               GetDouble, GetFullName, GetInt, (+2 Overloads) GetReadWriteProperties, GetTypeElement
     '               GetTypesHelper, (+2 Overloads) GetValue, (+2 Overloads) GetVersion, IsInheritsFrom, IsModule
-    '               IsNumericType, ModuleVersion, NamespaceEntry, ResourcesSatellite, Source
-    '               Usage
+    '               IsNonParametric, IsNumericType, ModuleVersion, NamespaceEntry, ResourcesSatellite
+    '               Source, Usage
     ' 
     '     Sub: RunApp
     ' 

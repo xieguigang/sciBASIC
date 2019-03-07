@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::857576b799b84ac584db0baddc575e25, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\ReLU.vb"
+﻿#Region "Microsoft.VisualBasic::0b47bfe62d853bbca7261d24dfc19c59, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\ReLU.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Store
     ' 
-    '         Function: [Function], Derivative, Derivative2
+    '         Function: [Function], Derivative, Derivative2, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37b4af0eb807ad412efa0c60e9bcb9fd, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
+﻿#Region "Microsoft.VisualBasic::36e514099caeeb4140f6a8ab98e877ea, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Rectangle2D.vb"
 
     ' Author:
     ' 
@@ -39,8 +39,8 @@
     '         Constructor: (+7 Overloads) Sub New
     ' 
     '         Function: Clone, contains, Equals, inflate, intersection
-    '                   intersectLine, OverlapX, OverlapY, ToString, union
-    '                   Union, Vertices
+    '                   intersectLine, OverlapLambda, OverlapX, OverlapY, ToString
+    '                   union, Union, Vertices
     ' 
     '         Sub: add, grow, setRect
     ' 

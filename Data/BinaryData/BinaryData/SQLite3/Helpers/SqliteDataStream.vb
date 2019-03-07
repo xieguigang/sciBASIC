@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2500fce1fd3a6e3ca9acf948a7b8af42, Data\BinaryData\BinaryData\SQLite3\Helpers\SqliteDataStream.vb"
+﻿#Region "Microsoft.VisualBasic::f8269b236cfef814f867cd61576e9763, Data\BinaryData\BinaryData\SQLite3\Helpers\SqliteDataStream.vb"
 
     ' Author:
     ' 
@@ -139,4 +139,3 @@ Namespace ManagedSqlite.Core.Helpers
         End Property
     End Class
 End Namespace
-

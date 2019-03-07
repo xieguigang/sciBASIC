@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4ecbc8b4f6dc1ce864d31b488fe1384, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\Configuration.vb"
+﻿#Region "Microsoft.VisualBasic::b09caf4388fb051b089ece53c181a6b2, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\Configuration.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: allEdges, getGroupHierarchy, greedyMerge, initModulesFromGroup, InlineAssignHelper
-    '                   merge, nEdges, rootMerges, updateLambda
+    '         Function: allEdges, getGroupHierarchy, greedyMerge, initModulesFromGroup, merge
+    '                   nEdges, rootMerges, updateLambda
     ' 
     '         Sub: getEdges
     '         Class ModuleMerge

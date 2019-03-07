@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb7dbe20bcd5a16787bf1a5d0d697584, Data\BinaryData\BinaryData\SQLite3\Internal\ReaderBase.vb"
+﻿#Region "Microsoft.VisualBasic::18f6c93e5f5147783e45d21ecd15b09b, Data\BinaryData\BinaryData\SQLite3\Internal\ReaderBase.vb"
 
     ' Author:
     ' 
@@ -319,4 +319,3 @@ Namespace ManagedSqlite.Core.Internal
         End Function
     End Class
 End Namespace
-

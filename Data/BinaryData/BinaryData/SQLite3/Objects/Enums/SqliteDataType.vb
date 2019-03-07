@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::212dba3538831edfdf36c40bd8050404, Data\BinaryData\BinaryData\SQLite3\Objects\Enums\SqliteDataType.vb"
+﻿#Region "Microsoft.VisualBasic::9b7ee2eb204f267309a18003eba97255, Data\BinaryData\BinaryData\SQLite3\Objects\Enums\SqliteDataType.vb"
 
     ' Author:
     ' 
@@ -54,4 +54,3 @@ Namespace ManagedSqlite.Core.Objects.Enums
         Text = 13
     End Enum
 End Namespace
-

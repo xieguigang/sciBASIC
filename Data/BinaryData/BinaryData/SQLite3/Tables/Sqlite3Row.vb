@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c67ace8281c9eee2eb5104a7df34311, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3Row.vb"
+﻿#Region "Microsoft.VisualBasic::077be9cc1354dc3434ceaf82b1a5319a, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3Row.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
 
 #End Region
 
-
 Namespace ManagedSqlite.Core.Tables
     Public Class Sqlite3Row
         Public ReadOnly Property Table() As Sqlite3Table
@@ -84,4 +83,3 @@ Namespace ManagedSqlite.Core.Tables
         End Function
     End Class
 End Namespace
-

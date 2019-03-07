@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c10780e21cb8a11c5122ea53825d60f6, Data\BinaryData\BinaryData\SQLite3\Helpers\StringHelper.vb"
+﻿#Region "Microsoft.VisualBasic::f9195dcb7aa60aabb38fd964406020b0, Data\BinaryData\BinaryData\SQLite3\Helpers\StringHelper.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
 
 #End Region
 
-
 Imports System.Runtime.CompilerServices
 
 Namespace ManagedSqlite.Core.Helpers
@@ -52,4 +51,3 @@ Namespace ManagedSqlite.Core.Helpers
         End Function
     End Module
 End Namespace
-

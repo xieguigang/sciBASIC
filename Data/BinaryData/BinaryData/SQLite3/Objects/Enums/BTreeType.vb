@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0d99da90ee854cfb9563accb252fbd4, Data\BinaryData\BinaryData\SQLite3\Objects\Enums\BTreeType.vb"
+﻿#Region "Microsoft.VisualBasic::37b6d5a7270f5537fb17e5fe853143b6, Data\BinaryData\BinaryData\SQLite3\Objects\Enums\BTreeType.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Namespace ManagedSqlite.Core.Objects.Enums
         LeafTableBtreePage = &HD
     End Enum
 End Namespace
-

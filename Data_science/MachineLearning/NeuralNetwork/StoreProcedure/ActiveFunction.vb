@@ -1,44 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::b892bb6ab5ede99150b3757f60d16d4c, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\ActiveFunction.vb"
+﻿#Region "Microsoft.VisualBasic::af736bc41848536c889b92c6d697fd06, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\ActiveFunction.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class ActiveFunction
-' 
-'         Properties: [Function], Arguments, name
-' 
-'         Function: HasKey, ToString
-' 
-' 
-' /********************************************************************************/
+    '     Class ActiveFunction
+    ' 
+    '         Properties: [Function], Arguments, BipolarSigmoid, name, ReLU
+    '                     Sigmoid, Threshold
+    ' 
+    '         Function: HasKey, Parse, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

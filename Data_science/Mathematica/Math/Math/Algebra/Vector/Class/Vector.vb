@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5ca45152f281abb32cac94bdd6cef63, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::ae88218ca9d13de3b03ebb1ea70c8b9c, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -37,8 +37,8 @@
     '                     Range, SumMagnitude, Unit, Zero
     ' 
     '         Constructor: (+8 Overloads) Sub New
-    '         Function: DotProduct, Ones, Order, Product, rand
-    '                   ScaleToRange, SumMagnitudes, (+2 Overloads) ToString
+    '         Function: Abs, CumSum, DotProduct, Ones, Order
+    '                   Product, rand, ScaleToRange, SumMagnitudes, (+2 Overloads) ToString
     '         Operators: (+4 Overloads) -, (+5 Overloads) *, (+3 Overloads) /, (+2 Overloads) ^, (+4 Overloads) +
     '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
     '                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d126a01da1774ede47acd60da6ae37f9, Data_science\Mathematica\Math\Math\Distributions\CutBins.vb"
+﻿#Region "Microsoft.VisualBasic::6db684828636d21e856add497e9d0813, Data_science\Mathematica\Math\Math\Distributions\CutBins.vb"
 
     ' Author:
     ' 

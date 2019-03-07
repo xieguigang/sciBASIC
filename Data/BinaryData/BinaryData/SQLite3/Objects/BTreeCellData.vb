@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6de80e646e316e213fc2dd2344f9127d, Data\BinaryData\BinaryData\SQLite3\Objects\BTreeCellData.vb"
+﻿#Region "Microsoft.VisualBasic::35eb7b45c8427503071a70380296e750, Data\BinaryData\BinaryData\SQLite3\Objects\BTreeCellData.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Namespace ManagedSqlite.Core.Objects
         Friend Property CellOffset() As UShort
     End Class
 End Namespace
-

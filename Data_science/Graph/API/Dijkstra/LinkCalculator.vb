@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e89b5758ce62d1227be2ffe1e34b35ca, Data_science\Graph\API\Dijkstra\LinkCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::85b9e3a8de0d809ff41f43bcfbb1f3ce, Data_science\Graph\API\Dijkstra\LinkCalculator.vb"
 
     ' Author:
     ' 

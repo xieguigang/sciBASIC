@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32277d44a34c72923f9587e3d40ce5ee, Data\BinaryData\BinaryData\SQLite3\Objects\BTreeInteriorTablePage.vb"
+﻿#Region "Microsoft.VisualBasic::31ea600258d26ab129fb033a307fb4ab, Data\BinaryData\BinaryData\SQLite3\Objects\BTreeInteriorTablePage.vb"
 
     ' Author:
     ' 
@@ -86,4 +86,3 @@ Namespace ManagedSqlite.Core.Objects
         End Structure
     End Class
 End Namespace
-

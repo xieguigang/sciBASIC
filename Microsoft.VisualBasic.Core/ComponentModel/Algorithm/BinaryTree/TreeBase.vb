@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0d38f7bbe88ad4665ca33c51f5a3d66, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeBase.vb"
+﻿#Region "Microsoft.VisualBasic::71b7b514b3e5ff4f56b5f91bdefb5f2c, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeBase.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,10 @@
     '         Properties: root
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
     '         Function: GetAllNodes
+    ' 
+    '         Sub: Clear
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,3 +1,51 @@
+ï»¿#Region "Microsoft.VisualBasic::1eb4587b05aed8323095d612dc6c8b49, mime\application%netcdf\HDF5\structure\Superblock.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Superblock
+    ' 
+    '         Properties: address, addressOfFileFreeSpaceInfo, baseAddress, driverInformationBlockAddress, endOfFileAddress
+    '                     fileConsistencyFlags, formatSignature, groupInternalNodeK, groupLeafNodeK, indexedStorageInterNodeK
+    '                     rootGroupSymbolTableEntry, sizeOfLengths, sizeOfOffsets, totalSuperBlockSize, validFormatSignature
+    '                     versionOfFileFreeSpaceStorage, versionOfRootGroupSymbolTableEntry, versionOfShardedHeaderMessageFormat, versionOfSuperblock
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: printValues, readVersion1, readVersion2
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 
 '
 ' * Mostly copied from NETCDF4 source code.
@@ -15,10 +63,10 @@ Namespace HDF5.[Structure]
     ''' <summary>
     ''' The superblock may begin at certain predefined offsets within the HDF5 file, allowing a 
     ''' block of unspecified content for users to place additional information at the beginning 
-    ''' (and end) of the HDF5 file without limiting the HDF5 Library¡¯s ability to manage the 
+    ''' (and end) of the HDF5 file without limiting the HDF5 Libraryï¿½ï¿½s ability to manage the 
     ''' objects within the file itself. This feature was designed to accommodate wrapping an 
     ''' HDF5 file in another file format or adding descriptive information to an HDF5 file without 
-    ''' requiring the modification of the actual file¡¯s information. The superblock is located 
+    ''' requiring the modification of the actual fileï¿½ï¿½s information. The superblock is located 
     ''' by searching for the HDF5 format signature at byte offset 0, byte offset 512, and at 
     ''' successive locations in the file, each a multiple of two of the previous location; 
     ''' in other words, at these byte offsets: 0, 512, 1024, 2048, and so on.
@@ -276,3 +324,4 @@ Namespace HDF5.[Structure]
     End Class
 
 End Namespace
+

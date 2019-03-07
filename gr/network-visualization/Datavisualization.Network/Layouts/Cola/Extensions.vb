@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b431f4ff7fdb7386e6493fb7288ba3a, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::068edcb94a2b03cb25178ee9c8dee59c, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Extensions.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,12 @@
 
     '     Class Leaf
     ' 
+    '         Properties: bounds, variable
     ' 
+    '     Interface ProjectionGroup
     ' 
-    '     Class ProjectionGroup
-    ' 
-    ' 
+    '         Properties: bounds, groups, leaves, maxVar, minVar
+    '                     padding, stiffness
     ' 
     '     Module Extensions
     ' 

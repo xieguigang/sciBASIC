@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4942d06ce6fa736fcc0a3a83f046e102, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout3D\LinkAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::c304147761157bff532cd096bb5df7e7, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Accessor\LinkAccessor.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,7 @@
 
     '     Class LinkAccessor
     ' 
-    '         Function: getLength, getSourceIndex, getTargetIndex
-    ' 
-    '         Sub: setLength
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class LinkTypeAccessor
     ' 

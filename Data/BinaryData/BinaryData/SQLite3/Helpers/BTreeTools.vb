@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ac8325945852e940682dbb288aef567, Data\BinaryData\BinaryData\SQLite3\Helpers\BTreeTools.vb"
+﻿#Region "Microsoft.VisualBasic::59ff434b6167c9d78f54fc2915db811f, Data\BinaryData\BinaryData\SQLite3\Helpers\BTreeTools.vb"
 
     ' Author:
     ' 
@@ -96,4 +96,3 @@ Namespace ManagedSqlite.Core.Helpers
         End Function
     End Class
 End Namespace
-

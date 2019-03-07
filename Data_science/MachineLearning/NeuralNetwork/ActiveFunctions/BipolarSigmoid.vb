@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::490bf22f3dbf2c88b195d2d01eccd0e1, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\BipolarSigmoidFunction.vb"
+﻿#Region "Microsoft.VisualBasic::f0293e49c2f9023c094bbe4787686b7a, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\BipolarSigmoid.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,12 @@
 
     ' Summaries:
 
-    '     Class BipolarSigmoidFunction
+    '     Class BipolarSigmoid
     ' 
     '         Properties: Alpha, Store
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: [Function], Derivative, Derivative2
+    '         Function: [Function], Derivative, Derivative2, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7e09549a9aed382ee36c99ff609715b, Data\BinaryData\BinaryData\SQLite3\Objects\Enums\FileReadVersion.vb"
+﻿#Region "Microsoft.VisualBasic::ce68c96ba5390d9d2112133230e80981, Data\BinaryData\BinaryData\SQLite3\Objects\Enums\FileReadVersion.vb"
 
     ' Author:
     ' 
@@ -50,4 +50,3 @@ Namespace ManagedSqlite.Core.Objects.Enums
         WAL = 2
     End Enum
 End Namespace
-

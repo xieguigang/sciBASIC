@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa3d72954d9da99cc751745bf10baa15, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::547e21d2d7b1167252af937e351d079a, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: HasValue, Value
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault, IsNothing
-    '                   ToString
+    '         Function: [Default], Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault
+    '                   IsNothing, ToString
     '         Operators: -, (+3 Overloads) +, <=, <>, =
     '                    >=
     '         Interface IValueOf

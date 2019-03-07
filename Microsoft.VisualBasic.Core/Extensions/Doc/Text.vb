@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ecbffeb0f8dfda65eb9d20b57cd2754e, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::3a24edc355d7a640dc3880b99ac2d4b6, Microsoft.VisualBasic.Core\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 

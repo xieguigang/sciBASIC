@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91f74f236ca476476fb4ecfd5dea9440, Microsoft.VisualBasic.Core\Language\Value\Numeric\float.vb"
+﻿#Region "Microsoft.VisualBasic::83be96a41eaeccc991bca0d692285d75, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBDouble.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class float
+    '     Class VBDouble
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: CompareTo, Equals, GetTypeCode, ToBoolean, ToByte

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0ee0b9e22aea4b707ca23e1c0459b6d, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::dc76fcbfcc1c5e001e4af67549877f2a, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,9 @@
     '               EnumParser, FlatTable, (+2 Overloads) GetByKey, GroupByKey, HaveData
     '               IGrouping, IsOneOfA, IterateNameCollections, IterateNameValues, IteratesAll
     '               Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection
-    '               ParserDictionary, RemoveAndGet, ReverseMaps, Selects, (+2 Overloads) Subset
-    '               Takes, (+3 Overloads) ToDictionary, Tsv, Tuple, (+2 Overloads) Values
-    '               XMLModel
+    '               ParserDictionary, RemoveAndGet, ReverseMaps, Selects, SetOfKeyValuePairs
+    '               (+2 Overloads) Subset, Takes, (+3 Overloads) ToDictionary, Tsv, Tuple
+    '               (+2 Overloads) Values, XMLModel
     ' 
     '     Sub: SortByKey, SortByValue
     ' 

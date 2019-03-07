@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56290aec980b7c48f676752ce44a9033, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb"
+﻿#Region "Microsoft.VisualBasic::1cab0da9ef50f6674ce07f1b33dad9fc, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '         Function: add, drawNode, findSuccessor, FindSymbol, insert
     '                   ToString
     ' 
-    '         Sub: clear, delete, KillTree
+    '         Sub: Clear, delete, KillTree
     ' 
     ' 
     ' /********************************************************************************/

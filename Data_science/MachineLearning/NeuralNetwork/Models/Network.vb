@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a265b0e1c788b03252ea59119b2b2d5a, Data_science\MachineLearning\NeuralNetwork\Models\Network.vb"
+﻿#Region "Microsoft.VisualBasic::2e0408a59c914f09701e995afaf35ae8, Data_science\MachineLearning\NeuralNetwork\Models\Network.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class Network
     ' 
-    '         Properties: Activations, HiddenLayer, InputLayer, LearnRate, Momentum
-    '                     OutputLayer
+    '         Properties: Activations, HiddenLayer, InputLayer, LearnRate, LearnRateDecay
+    '                     Momentum, OutputLayer
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

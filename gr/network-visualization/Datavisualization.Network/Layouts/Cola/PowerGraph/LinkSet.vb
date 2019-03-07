@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3d0a0813a9423e69b5364ad2e47970d, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\LinkSet.vb"
+﻿#Region "Microsoft.VisualBasic::4ec36bd2c457bd9c5fd9e70f2dbe6fbc, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\LinkSet.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: count
     ' 
-    '         Function: contains, InlineAssignHelper, intersection
+    '         Function: contains, intersection
     ' 
     '         Sub: add, forAll, forAllModules, remove
     ' 

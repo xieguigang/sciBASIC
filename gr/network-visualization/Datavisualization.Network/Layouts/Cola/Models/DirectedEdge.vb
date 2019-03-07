@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffb4938fd261d8e92f530f459a3327cd, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\DirectedEdge.vb"
+﻿#Region "Microsoft.VisualBasic::9e245be03faf8b7d265bd34704a72c58, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\DirectedEdge.vb"
 
     ' Author:
     ' 
@@ -41,6 +41,16 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: addVariable
+    ' 
+    '     Class Constraint
+    ' 
+    '         Properties: slack
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class ConstraintOffset
+    ' 
+    ' 
     ' 
     '     Class Constraint
     ' 

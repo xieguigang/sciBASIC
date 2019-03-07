@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1753c7ac40f4782388f9840dd141e32b, Data\BinaryData\BinaryData\SQLite3\Objects\ColumnDataMeta.vb"
+﻿#Region "Microsoft.VisualBasic::1efddd23f6d53119b5b2fae0006fd418, Data\BinaryData\BinaryData\SQLite3\Objects\ColumnDataMeta.vb"
 
     ' Author:
     ' 
@@ -48,4 +48,3 @@ Namespace ManagedSqlite.Core.Objects
         Public Type As SqliteDataType
     End Structure
 End Namespace
-

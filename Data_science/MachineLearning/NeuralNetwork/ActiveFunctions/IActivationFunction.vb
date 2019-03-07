@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9339f6109b1a7ed806b9c3beea0edc7, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
+﻿#Region "Microsoft.VisualBasic::56243c01bc66bfe7b1d456ab53f07120, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,9 @@
 
     ' Summaries:
 
-    '     Interface IActivationFunction
+    '     Class IActivationFunction
     ' 
-    '         Properties: Store
     ' 
-    '         Function: [Function], Derivative, Derivative2
     ' 
     ' 
     ' /********************************************************************************/
