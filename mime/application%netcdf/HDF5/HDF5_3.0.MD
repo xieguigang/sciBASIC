@@ -127,37 +127,71 @@ The superblock is composed of the format signature, followed by a superblock ver
 
 Currently, there are four versions of the superblock format:
 
-Version 0 is the default format.
-Version 1 is the same as version 0 but with the “Indexed Storage Internal Node K” field for storing non-default B-tree ‘K’ value.
-Version 2 has some fields eliminated and compressed from superblock format versions 0 and 1. It has added checksum support and superblock extension to store additional superblock metadata.
-Version 3 is the same as version 2 except that the field “File Consistency Flags” is used for file locking. This format version will enable support for the latest version.
++ Version 0 is the default format.
++ Version 1 is the same as version 0 but with the “Indexed Storage Internal Node K” field for storing non-default B-tree ‘K’ value.
++ Version 2 has some fields eliminated and compressed from superblock format versions 0 and 1. It has added checksum support and superblock extension to store additional superblock metadata.
++ Version 3 is the same as version 2 except that the field “File Consistency Flags” is used for file locking. This format version will enable support for the latest version.
+
 Versions 0 and 1 of the superblock are described below:
 
-Layout: Superblock (Versions 0 and 1)
-byte	byte	byte	byte
+##### Layout: Superblock (Versions 0 and 1)
 
-Format Signature (8 bytes)
+<table>
+    <thead></thead>
+    <tbody style="text-align: center;">
+    <tr>
+        <th>byte</th>
+        <th>byte</th>
+        <th>byte</th>
+        <th>byte</th>
+    </tr>
+    <tr>
+        <td colspan="4"><br>Format Signature <em>(8 bytes)</em><br><br></td>
+    </tr>
+    <tr>
+        <td>Version # of Superblock</td>
+        <td>Version # of File’s Free Space Storage</td>
+        <td>Version # of Root Group Symbol Table Entry</td>
+        <td>Reserved <em>(zero)</em></td>
+    </tr>
+    <tr>
+        <td>Version Number of Shared Header Message Format</td>
+        <td>Size of Offsets</td>
+        <td>Size of Lengths</td>
+        <td>Reserved <em>(zero)</em></td>
+    </tr>
+    <tr>
+        <td colspan="2">Group Leaf Node K</td>
+        <td colspan="2">Group Internal Node K</td>
+    </tr>
+    <tr>
+        <td colspan="4">File Consistency Flags</td>
+    </tr>
+    <tr>
+        <td colspan="2" style="border:dotted;">Indexed Storage Internal Node K<sup>1</sup></td>
+        <td colspan="2" style="border:dotted;">Reserved <em>(zero)</em><sup>1</sup></td>
+    </tr>
+    <tr>
+        <td colspan="4"><br>Base Address<sup>O</sup><br><br></td>
+    </tr>
+    <tr>
+        <td colspan="4"><br>Address of File Free space Info<sup>O</sup><br><br></td>
+    </tr>
+    <tr>
+        <td colspan="4"><br>End of File Address<sup>O</sup><br><br></td>
+    </tr>
+    <tr>
+        <td colspan="4"><br>Driver Information Block Address<sup>O</sup><br><br></td>
+    </tr>
+    <tr>
+        <td colspan="4">Root Group Symbol Table Entry</td>
+    </tr>
+    </tbody>
+</table>
 
-Version # of Superblock	Version # of File’s Free Space Storage	Version # of Root Group Symbol Table Entry	Reserved (zero)
-Version Number of Shared Header Message Format	Size of Offsets	Size of Lengths	Reserved (zero)
-Group Leaf Node K	Group Internal Node K
-File Consistency Flags
-Indexed Storage Internal Node K1	Reserved (zero)1
++ (Items marked with a ‘1’ in the above table are new in version 1 of the superblock.)
++ (Items marked with an ‘O’ in the above table are of the size specified in the Size of Offsets field in the superblock.)
 
-Base AddressO
-
-
-Address of File Free space InfoO
-
-
-End of File AddressO
-
-
-Driver Information Block AddressO
-
-Root Group Symbol Table Entry
- 	(Items marked with a ‘1’ in the above table are new in version 1 of the superblock.)
- 	(Items marked with an ‘O’ in the above table are of the size specified in the Size of Offsets field in the superblock.)
 Fields: Superblock (Versions 0 and 1)
 Field Name	Description
 Format Signature
