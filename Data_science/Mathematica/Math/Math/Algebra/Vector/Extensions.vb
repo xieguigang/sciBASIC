@@ -134,6 +134,7 @@ Namespace LinearAlgebra
             Return New Vector(v)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsVector(range As DoubleRange, Optional counts% = 1000) As Vector
             Return New Vector(range.Enumerate(counts))

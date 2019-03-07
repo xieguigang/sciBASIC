@@ -199,6 +199,10 @@ Namespace Language
             Return Value.GetJson
         End Function
 
+        Public Shared Function [Default]() As Value(Of T)
+            Return New Value(Of T)(Nothing)
+        End Function
+
         Public Overloads Shared Operator +(list As Generic.List(Of Value(Of T)), x As Value(Of T)) As Generic.List(Of Value(Of T))
             Call list.Add(x)
             Return list
