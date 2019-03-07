@@ -6,7 +6,6 @@
 ' * Modified by iychoi@email.arizona.edu
 ' 
 
-Imports System.IO
 Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
 Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
 
@@ -178,9 +177,9 @@ Namespace HDF5.[Structure]
 
                 [in].setLittleEndian()
             ElseIf Me.m_type = DATATYPE_VARIABLE_LENGTH Then
-                ' Throw New IOException("data type variable length is not implemented")
+                Throw New Exception("data type variable length is not implemented")
             ElseIf Me.m_type = DATATYPE_ARRAY Then
-                ' Throw New IOException("data type array is not implemented")
+                Throw New Exception("data type array is not implemented")
             End If
         End Sub
 
