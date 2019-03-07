@@ -77,7 +77,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <summary>
         ''' 动态属性表
         ''' </summary>
-        Dim propertyTable As Dictionary(Of String, T)
+        Protected propertyTable As Dictionary(Of String, T)
 
         ''' <summary>
         ''' Gets/sets item value by using property name.
