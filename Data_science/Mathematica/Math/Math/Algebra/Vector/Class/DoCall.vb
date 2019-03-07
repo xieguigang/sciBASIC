@@ -7,7 +7,7 @@ Namespace LinearAlgebra
     Partial Class Vector
 
         ''' <summary>
-        ''' 
+        ''' Try to call target <paramref name="method"/> in vector mode.
         ''' </summary>
         ''' <typeparam name="TOut"></typeparam>
         ''' <param name="method">只可以是静态的共享方法</param>
@@ -32,8 +32,13 @@ Namespace LinearAlgebra
             Next
 
             Dim length%
+            Dim inputs As Object()
+            Dim out As Object
 
-            With arguments.Where(Function(a) a.Length > 1).Select(Function(a) a.Length).ToArray
+            With arguments.Where(Function(a) a.Length > 1) _
+                          .Select(Function(a) a.Length) _
+                          .ToArray
+
                 If .Length > 1 AndAlso .Any(Function(n) n <> .First) Then
                     Throw New Exception("Element length is not agree!")
                 Else
@@ -42,13 +47,16 @@ Namespace LinearAlgebra
             End With
 
             For i As Integer = 0 To length - 1
-                Yield info.Invoke(Nothing, arguments.Select(Function(a) a.Populate).ToArray)
+                inputs = arguments.Select(Function(a) a.Populate).ToArray
+                out = info.Invoke(Nothing, inputs)
+
+                Yield DirectCast(out, TOut)
             Next
         End Function
     End Class
 
     ''' <summary>
-    ''' Numeric argument
+    ''' Numeric argument for <see cref="Vector.Call(Of TOut)([Delegate], Argument())"/>
     ''' </summary>
     Public Class Argument
 
