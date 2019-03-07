@@ -26,10 +26,10 @@ Namespace HDF5.[Structure]
         Private m_addressOfLeftSibling As Long
         Private m_addressOfRightSibling As Long
 
-        Private m_offsetToLocalHeap As List(Of System.Nullable(Of Long))
+        Private m_offsetToLocalHeap As List(Of Long)
         Private m_keyOfChild As List(Of Byte())
 
-        Private m_addressOfChild As List(Of System.Nullable(Of Long))
+        Private m_addressOfChild As List(Of Long)
 
         Private m_totalBLinkTreeNodeSize As Integer
 
@@ -57,13 +57,13 @@ Namespace HDF5.[Structure]
 
             Me.m_totalBLinkTreeNodeSize += sb.sizeOfOffsets * 2
 
-            Me.m_offsetToLocalHeap = New List(Of System.Nullable(Of Long))()
+            Me.m_offsetToLocalHeap = New List(Of Long)()
             Me.m_keyOfChild = New List(Of Byte())()
-            Me.m_addressOfChild = New List(Of System.Nullable(Of Long))()
+            Me.m_addressOfChild = New List(Of Long)()
 
             For i As Integer = 0 To Me.m_entriesUsed - 1
                 If Me.m_nodeType = 0 Then
-                    Dim key As System.Nullable(Of Long) = ReadHelper.readL([in], sb)
+                    Dim key As Long = ReadHelper.readL([in], sb)
                     Me.m_offsetToLocalHeap.Add(key)
                 ElseIf Me.m_nodeType = 1 Then
                     Dim chunksize As Integer = [in].readInt()
