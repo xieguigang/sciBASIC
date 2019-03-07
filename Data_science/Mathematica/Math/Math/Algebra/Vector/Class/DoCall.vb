@@ -1,10 +1,36 @@
 ﻿Imports System.Reflection
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 
 Namespace LinearAlgebra
 
     Partial Class Vector
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function [Call](method As Func(Of Double, Double), x As Argument) As Vector
+            Return Vector.Call(Of Double)(method, x).AsVector
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function [Call](method As Func(Of Double, Double, Double), x As Argument, y As Argument) As Vector
+            Return Vector.Call(Of Double)(method, x, y).AsVector
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function [Call](method As Func(Of Double, Double, Double, Double), x As Argument, y As Argument, z As Argument) As Vector
+            Return Vector.Call(Of Double)(method, x, y, z).AsVector
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function [Call](method As Func(Of Double, Double, Double, Double, Double), ParamArray args As Argument()) As Vector
+            Return Vector.Call(Of Double)(method, args).AsVector
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function [Call](method As Func(Of Double, Double, Double, Double, Double, Double), ParamArray args As Argument()) As Vector
+            Return Vector.Call(Of Double)(method, args).AsVector
+        End Function
 
         ''' <summary>
         ''' Try to call target <paramref name="method"/> in vector mode.
