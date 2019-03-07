@@ -2,6 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports ArgumentAttribute = Microsoft.VisualBasic.CommandLine.Reflection.Argument
 
 Namespace LinearAlgebra
 
@@ -87,104 +88,112 @@ Namespace LinearAlgebra
                 Yield DirectCast(out, TOut)
             Next
         End Function
-    End Class
 
-    ''' <summary>
-    ''' Numeric argument for <see cref="Vector.Call(Of TOut)([Delegate], Argument())"/>
-    ''' </summary>
-    Public Class Argument
+        ''' <summary>
+        ''' Numeric argument for <see cref="Vector.Call(Of TOut)([Delegate], Argument())"/>
+        ''' </summary>
+        ''' <remarks>
+        ''' ###### 2019-03-07 
+        ''' 因为这个类的名称会与<see cref="ArgumentAttribute"/>产生冲突，所以将这个对象移到内部了
+        ''' </remarks>
+        Public Class Argument
 
-        Dim value As Object
-        Dim type As Type
-        Dim i As VBInteger
+            Dim value As Object
+            Dim type As Type
+            Dim i As VBInteger
 
-        Public ReadOnly Property Length As Integer
+            Public ReadOnly Property Length As Integer
 
-        Public ReadOnly Property IsPrimitive As Boolean
-            Get
-                Return DataFramework.IsPrimitive(type)
-            End Get
-        End Property
+            Public ReadOnly Property IsPrimitive As Boolean
+                Get
+                    Return DataFramework.IsPrimitive(type)
+                End Get
+            End Property
 
-        Public ReadOnly Property IsVector As Boolean
-            Get
-                Return type Is GetType(Vector)
-            End Get
-        End Property
+            Public ReadOnly Property IsVector As Boolean
+                Get
+                    Return type Is GetType(Vector)
+                End Get
+            End Property
 
-        Public ReadOnly Property IsCollection As Boolean
-            Get
-                Return Not IsVector AndAlso Not IsArray AndAlso Not IsPrimitive
-            End Get
-        End Property
+            Public ReadOnly Property IsCollection As Boolean
+                Get
+                    Return Not IsVector AndAlso Not IsArray AndAlso Not IsPrimitive
+                End Get
+            End Property
 
-        Public ReadOnly Property IsArray As Boolean
-            Get
-                Return type Is GetType(Double())
-            End Get
-        End Property
+            Public ReadOnly Property IsArray As Boolean
+                Get
+                    Return type Is GetType(Double())
+                End Get
+            End Property
 
-        Friend Sub New(value As Object)
-            Me.value = value
+            Friend Sub New(value As Object)
+                Me.value = value
 
-            If value Is Nothing Then
-                Me.type = Nothing
-                Me.Length = 1
-            Else
-                Me.type = value.GetType
-            End If
-
-            If Not IsPrimitive AndAlso Not type Is Nothing Then
-                ' is array/vector/collection
-                If IsArray Then
-                    Me.Length = DirectCast(value, Array).Length
-                ElseIf IsVector Then
-                    Me.Length = DirectCast(value, Vector).Length
+                If value Is Nothing Then
+                    Me.type = Nothing
+                    Me.Length = 1
                 Else
-                    Me.Length = DirectCast(value, IList).Count
+                    Me.type = value.GetType
                 End If
 
-                i = 0
-            Else
-                ' is a number value
-                Me.Length = 1
-            End If
-        End Sub
+                If Not IsPrimitive AndAlso Not type Is Nothing Then
+                    ' is array/vector/collection
+                    If IsArray Then
+                        Me.Length = DirectCast(value, Array).Length
+                    ElseIf IsVector Then
+                        Me.Length = DirectCast(value, Vector).Length
+                    Else
+                        Me.Length = DirectCast(value, IList).Count
+                    End If
 
-        Public Function Populate() As Object
-            If value Is Nothing Then
-                Return Nothing
-            End If
+                    i = 0
+                Else
+                    ' is a number value
+                    Me.Length = 1
+                End If
+            End Sub
 
-            If IsPrimitive Then
-                Return value
-            ElseIf IsVector Then
-                Return DirectCast(value, Vector)(++i)
-            ElseIf IsArray Then
-                Return DirectCast(value, Array).GetValue(++i)
-            Else
-                Return DirectCast(value, IList).Item(++i)
-            End If
-        End Function
+            ''' <summary>
+            ''' Iterator function
+            ''' </summary>
+            ''' <returns></returns>
+            Public Function Populate() As Object
+                If value Is Nothing Then
+                    Return Nothing
+                End If
 
-        Public Overloads Function [GetType]() As Type
-            Return type
-        End Function
+                If IsPrimitive Then
+                    Return value
+                ElseIf IsVector Then
+                    Return DirectCast(value, Vector)(++i)
+                ElseIf IsArray Then
+                    Return DirectCast(value, Array).GetValue(++i)
+                Else
+                    Return DirectCast(value, IList).Item(++i)
+                End If
+            End Function
 
-        Public Shared Widening Operator CType(x As Double) As Argument
-            Return New Argument(x)
-        End Operator
+            Public Overloads Function [GetType]() As Type
+                Return type
+            End Function
 
-        Public Shared Widening Operator CType(x As Vector) As Argument
-            Return New Argument(x)
-        End Operator
+            Public Shared Widening Operator CType(x As Double) As Argument
+                Return New Argument(x)
+            End Operator
 
-        Public Shared Widening Operator CType(x As Double()) As Argument
-            Return New Argument(x)
-        End Operator
+            Public Shared Widening Operator CType(x As Vector) As Argument
+                Return New Argument(x)
+            End Operator
 
-        Public Shared Widening Operator CType(x As List(Of Double)) As Argument
-            Return New Argument(x)
-        End Operator
+            Public Shared Widening Operator CType(x As Double()) As Argument
+                Return New Argument(x)
+            End Operator
+
+            Public Shared Widening Operator CType(x As System.Collections.Generic.List(Of Double)) As Argument
+                Return New Argument(x)
+            End Operator
+        End Class
     End Class
 End Namespace
