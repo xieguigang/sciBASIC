@@ -3306,6 +3306,7 @@ This field exists if bit 1 of flags is set.
 + **Status:** Required for dataset or committed datatype (formerly named datatype) objects; may not be repeated.
 + **Description:** 
 > The datatype message defines the datatype for each element of a dataset or a common datatype for sharing between multiple datasets. A datatype can describe an atomic type like a fixed- or floating-point type or more complex types like a C struct (compound datatype), array (array datatype), or C++ vector (variable-length datatype).
+>
 > Datatype messages that are part of a dataset object do not describe how elements are related to one another; the dataspace message is used for that purpose. Datatype messages that are part of a committed datatype (formerly named datatype) message describe a common datatype that can be shared by multiple datasets in the file.
 
 + **Format of Data:** See the tables below.
@@ -3336,44 +3337,144 @@ This field exists if bit 1 of flags is set.
     </tbody>
 </table>
 
-
-Fields: Datatype Message
-Field Name	Description
-Class and Version
-
-The version of the datatype message and the datatype’s class information are packed together in this field. The version number is packed in the top 4 bits of the field and the class is contained in the bottom 4 bits.
-
-The version number information is used for changes in the format of the datatype message and is described here:
-Version	Description
-0	Never used
-1	Used by early versions of the library to encode compound datatypes with explicit array fields. See the compound datatype description below for further details.
-2	Used when an array datatype needs to be encoded.
-3	Used when a VAX byte-ordered type needs to be encoded. Packs various other datatype classes more efficiently also.
-The class of the datatype determines the format for the class bit field and properties portion of the datatype message, which are described below. The following classes are currently defined:
-Value	Description
-0	Fixed-Point
-1	Floating-point
-2	Time
-3	String
-4	Bit field
-5	Opaque
-6	Compound
-7	Reference
-8	Enumerated
-9	Variable-Length
-10	Array
-Class Bit Fields
-
-The information in these bit fields is specific to each datatype class and is described below. All bits not defined for a datatype class are set to zero.
-
-Size
-
-The size of a datatype element in bytes.
-
-Properties
-
-This variable-sized sequence of bytes encodes information specific to each datatype class and is described for each class below. If there is no property information specified for a datatype class, the size of this field is zero bytes.
-
+<table style="text-align:center; width: 95%;">
+    <caption>
+        Fields: Datatype Message
+    </caption>
+	<tbody style="text-align:center;">
+    <tr>
+          <th width="30%">Field Name</th>
+          <th>Description</th>
+	</tr>
+	<tr>
+	  <td><p>Class and Version</p></td>
+	  <td>
+            <p>The version of the datatype message and the datatype’s class
+                information are packed together in this field.  The version
+                number is packed in the top 4 bits of the field and the class
+                is contained in the bottom 4 bits.
+            </p>
+            <p>The version number information is used for changes in the
+                format of the datatype message and is described here:
+                <table class="list">
+                    <tbody><tr>
+                      <th width="20%" align="center">Version</th>
+                      <th width="80%" align="left">Description</th>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>0</code></td>
+                      <td>Never used
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>1</code></td>
+                      <td>Used by early versions of the library to encode
+                            compound datatypes with explicit array fields.
+                            See the compound datatype description below for
+                            further details.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>2</code></td>
+                      <td>Used when an array datatype needs to be encoded.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>3</code></td>
+                      <td>Used when a VAX byte-ordered type needs to be
+                        encoded.  Packs various other datatype classes more
+                        efficiently also.
+                      </td>
+                    </tr>
+                </tbody>
+                </table>
+            </p>
+            <p>The class of the datatype determines the format for the class
+                bit field and properties portion of the datatype message, which
+                are described below.  The
+                following classes are currently defined:
+                <table class="list">
+                    <tbody><tr>
+                      <th width="20%" align="center">Value</th>
+                      <th width="80%" align="left">Description</th>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>0</code></td>
+                      <td>Fixed-Point</td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>1</code></td>
+                      <td>Floating-point</td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>2</code></td>
+                      <td>Time</td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>3</code></td>
+                      <td>String</td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>4</code></td>
+                      <td>Bit field</td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>5</code></td>
+                      <td>Opaque</td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>6</code></td>
+                      <td>Compound</td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>7</code></td>
+                      <td>Reference</td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>8</code></td>
+                      <td>Enumerated</td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>9</code></td>
+                      <td>Variable-Length</td>
+                    </tr>
+                    <tr>
+                      <td align="center"><code>10</code></td>
+                      <td>Array</td>
+                    </tr>
+                </tbody>
+            </table>
+            </p>            
+          </td>
+    </tr>
+	<tr>
+	  <td><p>Class Bit Fields</p></td>
+	  <td>
+            <p>The information in these bit fields is specific to each datatype
+                class and is described below.  All bits not defined for a
+                datatype class are set to zero.
+            </p>
+          </td>
+	</tr>
+	<tr>
+	  <td><p>Size</p></td>
+	  <td>
+            <p>The size of a datatype element in bytes.
+            </p>
+          </td>
+	</tr>
+	<tr>
+	  <td><p>Properties</p></td>
+	  <td>
+            <p>This variable-sized sequence of bytes encodes information
+                specific to each datatype class and is described for each class
+                below.  If there is no property information specified for a
+                datatype class, the size of this field is zero bytes.
+            </p>
+          </td>
+	</tr>
+      </tbody>
+</table>
 
 Class specific information for the Fixed-point Numbers class (Class 0):
 

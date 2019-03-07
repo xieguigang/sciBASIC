@@ -245,6 +245,7 @@
     <Compile Include="HDF5\structure\DataNode.vb" />
     <Compile Include="HDF5\structure\DataObject.vb" />
     <Compile Include="HDF5\structure\DataObjectFacade.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\Messages\Message.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb" />
     <Compile Include="HDF5\structure\FillValueMessage.vb" />
