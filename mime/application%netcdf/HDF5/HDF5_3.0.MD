@@ -1,5 +1,18 @@
 # HDF5 File Format Specification Version 3.0
 
+<!-- vscode-markdown-toc -->
+* 1. [Content Table](#ContentTable)
+* 2. [II. Disk Format: Level 0 - File Metadata](#II.DiskFormat:Level0-FileMetadata)
+	* 2.1. [II.A. Disk Format: Level 0A - Format Signature and Superblock](#II.A.DiskFormat:Level0A-FormatSignatureandSuperblock)
+
+<!-- vscode-markdown-toc-config
+	numbering=true
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
+##  1. <a name='ContentTable'></a>Content Table
+
 1. Introduction
    1. This Document
    2. Changes for HDF5 1.10
@@ -60,7 +73,8 @@ The Implicit Index
 The Fixed Array Index
 The Extensible Array Index
 The Version 2 B-trees Index
-I. Introduction
+
+## I. Introduction
  	
 HDF5 Groups	 
  	Figure 1: Relationships among the HDF5 root group, other groups, and objects
@@ -87,7 +101,8 @@ At the lowest level, as information is actually written to the disk, an HDF5 fil
 
 The HDF5 Library uses these low-level objects to represent the higher-level objects that are then presented to the user or to applications through the APIs. For instance, a group is an object header that contains a message that points to a local heap (for storing the links to objects in the group) and to a B-tree (which indexes the links). A dataset is an object header that contains messages that describe the datatype, dataspace, layout, filters, external files, fill value, and other elements with the layout message pointing to either a raw data chunk or to a B-tree that points to raw data chunks.
 
-I.A. This Document
+### I.A. This Document
+
 This document describes the lower-level data objects; the higher-level objects and their properties are described in the HDF5 User’s Guide.
 
 Three levels of information comprise the file format. Level 0 contains basic information for identifying and defining information about the file. Level 1 information contains the information about the pieces of a file shared by many objects in the file (such as B-trees and heaps). Level 2 is the rest of the file and contains all of the data objects with each object partitioned into header information, also known as metadata, and data.
@@ -96,9 +111,10 @@ The various components of the lower-level data objects are described in pairs of
 
 The sizes of various fields in the following layout tables are determined by looking at the number of columns the field spans in the table. There are exceptions:
 
-The size may be overridden by specifying a size in parentheses
-The size of addresses is determined by the Size of Offsets field in the superblock and is indicated in this document with a superscripted ‘O’
-The size of length fields is determined by the Size of Lengths field in the superblock and is indicated in this document with a superscripted ‘L’
++ The size may be overridden by specifying a size in parentheses
++ The size of addresses is determined by the Size of Offsets field in the superblock and is indicated in this document with a superscripted ‘O’
++ The size of length fields is determined by the Size of Lengths field in the superblock and is indicated in this document with a superscripted ‘L’
+
 Values for all fields in this document should be treated as unsigned integers, unless otherwise noted in the description of a field. Additionally, all metadata fields are stored in little-endian byte order.
 
 All checksums used in the format are computed with the Jenkins’ lookup3 algorithm.
@@ -107,19 +123,20 @@ Whenever a bit flag or field is mentioned for an entry, bits are numbered from t
 
 Various format tables in this document have cells with “This space inserted only to align table nicely”. These entries in the table are just to make the table presentation nicer and do not represent any values or padding in the file.
 
-I.B. Changes for HDF5 1.10
+### I.B. Changes for HDF5 1.10
+
 The following sections have been changed or added for the 1.10 release:
 
-In the “Disk Format: Level 0A - Format Signature and Superblock” section, version 3 of the superblock was added.
-In the “Disk Format: Level 0C - Superblock Extension” section, a link to the Data Storage message was added.
-In the “Disk Format: Level 1A2 - Version 2 B-trees” section, additional B-tree types were added. Tables that describe the type 10 and 11 record layouts were added at the end of the section.
-The “Disk Format: Level 1F - Global Heap Block for Virtual Datasets” was added.
-“The Data Layout Message” section was changed. The name was changed, and version 4 of the data layout message was added for the virtual type.
-“Appendix C: Types of Indexes for Dataset Chunks” was added. Five indexing types were added.
++ In the “Disk Format: Level 0A - Format Signature and Superblock” section, version 3 of the superblock was added.
++ In the “Disk Format: Level 0C - Superblock Extension” section, a link to the Data Storage message was added.
++ In the “Disk Format: Level 1A2 - Version 2 B-trees” section, additional B-tree types were added. Tables that describe the type 10 and 11 record layouts were added at the end of the section.
++ The “Disk Format: Level 1F - Global Heap Block for Virtual Datasets” was added.
++ “The Data Layout Message” section was changed. The name was changed, and version 4 of the data layout message was added for the virtual type.
++ “Appendix C: Types of Indexes for Dataset Chunks” was added. Five indexing types were added.
 
-## II. Disk Format: Level 0 - File Metadata
+##  2. <a name='II.DiskFormat:Level0-FileMetadata'></a>II. Disk Format: Level 0 - File Metadata
 
-### II.A. Disk Format: Level 0A - Format Signature and Superblock
+###  2.1. <a name='II.A.DiskFormat:Level0A-FormatSignatureandSuperblock'></a>II.A. Disk Format: Level 0A - Format Signature and Superblock
 
 The superblock may begin at certain predefined offsets within the HDF5 file, allowing a block of unspecified content for users to place additional information at the beginning (and end) of the HDF5 file without limiting the HDF5 Library’s ability to manage the objects within the file itself. This feature was designed to accommodate wrapping an HDF5 file in another file format or adding descriptive information to an HDF5 file without requiring the modification of the actual file’s information. The superblock is located by searching for the HDF5 format signature at byte offset 0, byte offset 512, and at successive locations in the file, each a multiple of two of the previous location; in other words, at these byte offsets: 0, 512, 1024, 2048, and so on.
 
@@ -531,13 +548,17 @@ The superblock extension is used to store superblock metadata which is either op
 Shared Message Table message containing information to locate the master table of shared object header message indices.
 B-tree ‘K’ Values message containing non-default B-tree ‘K’ values.
 Driver Info message containing information needed by the file driver in order to reopen a file. See also the “Disk Format: Level 0B - File Driver Info” section above.
-III. Disk Format: Level 1 - File Infrastructure
-III.A. Disk Format: Level 1A - B-trees and B-tree Nodes
+
+## III. Disk Format: Level 1 - File Infrastructure
+
+### III.A. Disk Format: Level 1A - B-trees and B-tree Nodes
+
 B-trees allow flexible storage for objects which tend to grow in ways that cause the object to be stored discontiguously. B-trees are described in various algorithms books including “Introduction to Algorithms” by Thomas H. Cormen, Charles E. Leiserson, and Ronald L. Rivest. B-trees are used in several places in the HDF5 file format, when an index is needed for another data structure.
 
 The version 1 B-tree structure described below is the original index structure. The version 1 B-trees are being phased out in favor of the version 2 B-trees described below. Note that both types of structures may be found in the same file depending on the application settings when creating the file.
 
-III.A.1. Disk Format: Level 1A1 - Version 1 B-trees
+#### III.A.1. Disk Format: Level 1A1 - Version 1 B-trees
+
 Version 1 B-trees in HDF5 files are an implementation of the B-link tree. The sibling nodes at a particular level in the tree are stored in a doubly-linked list. See the “Efficient Locking for Concurrent Operations on B-trees” paper by Phillip Lehman and S. Bing Yao as published in the ACM Transactions on Database Systems, Vol. 6, No. 4, December 1981.
 
 The B-trees implemented by the file format contain one more key than the number of children. In other words, each child pointer out of a B-tree node has a left key and a right key. The pointers out of internal nodes point to sub-trees while the pointers out of leaf nodes point to symbol nodes and raw data chunks. Aside from that difference, internal nodes and leaf nodes are identical.
@@ -1312,24 +1333,43 @@ Offset to Link Value
 
 The value of a symbolic link (that is, the name of the thing to which it points) is stored in the local heap. This field is the 4-byte offset into the local heap for the start of the link value, which is null terminated.
 
-III.D. Disk Format: Level 1D - Local Heaps
+### III.D. Disk Format: Level 1D - Local Heaps
+
 A local heap is a collection of small pieces of data that are particular to a single object in the HDF5 file. Objects can be inserted and removed from the heap at any time. The address of a heap does not change once the heap is created. For example, a group stores addresses of objects in symbol table nodes with the names of links stored in the group’s local heap.
 
-Layout: Local Heap
-byte	byte	byte	byte
-Signature
-Version	Reserved (zero)
+#### Layout: Local Heap
 
-Data Segment SizeL
+<table style="text-align: center; width: 95%;">
+    <thead></thead>
+    <tbody style="text-align: center;">
+        <tr>
+            <th>byte</th>
+            <th>byte</th>
+            <th>byte</th>
+            <th>byte</th>
+        </tr>
+        <tr>
+            <td colspan="4">Signature</td>
+        </tr>
+        <tr>
+            <td>Version</td>
+            <td colspan="3">Reserved <em>(zero)</em></td>
+        </tr>
+        <tr>
+            <td colspan="4"><br>Data Segment Size<sup>L</sup><br><br></td>
+        </tr>
+        <tr>
+            <td colspan="4"><br>Offset to Head of Free-list<sup>L</sup><br><br></td>
+        </tr>
+        <tr>
+            <td colspan="4"><br>Address of Data Segment<sup>O</sup><br><br></td>
+        </tr>
+    </tbody>
+</table>
 
++ (Items marked with an ‘L’ in the above table are of the size specified in the Size of Lengths field in the superblock.)
++ (Items marked with an ‘O’ in the above table are of the size specified in the Size of Offsets field in the superblock.)
 
-Offset to Head of Free-listL
-
-
-Address of Data SegmentO
-
- 	(Items marked with an ‘L’ in the above table are of the size specified in the Size of Lengths field in the superblock.)
- 	(Items marked with an ‘O’ in the above table are of the size specified in the Size of Offsets field in the superblock.)
 Fields: Local Heap
 Field Name	Description
 Signature
