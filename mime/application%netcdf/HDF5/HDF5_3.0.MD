@@ -2,8 +2,17 @@
 
 <!-- vscode-markdown-toc -->
 * 1. [Content Table](#ContentTable)
-* 2. [II. Disk Format: Level 0 - File Metadata](#II.DiskFormat:Level0-FileMetadata)
-	* 2.1. [II.A. Disk Format: Level 0A - Format Signature and Superblock](#II.A.DiskFormat:Level0A-FormatSignatureandSuperblock)
+* 2. [I. Introduction](#I.Introduction)
+	* 2.1. [I.A. This Document](#I.A.ThisDocument)
+	* 2.2. [I.B. Changes for HDF5 1.10](#I.B.ChangesforHDF51.10)
+* 3. [II. Disk Format: Level 0 - File Metadata](#II.DiskFormat:Level0-FileMetadata)
+	* 3.1. [II.A. Disk Format: Level 0A - Format Signature and Superblock](#II.A.DiskFormat:Level0A-FormatSignatureandSuperblock)
+* 4. [III. Disk Format: Level 1 - File Infrastructure](#III.DiskFormat:Level1-FileInfrastructure)
+	* 4.1. [III.A. Disk Format: Level 1A - B-trees and B-tree Nodes](#III.A.DiskFormat:Level1A-B-treesandB-treeNodes)
+		* 4.1.1. [III.A.1. Disk Format: Level 1A1 - Version 1 B-trees](#III.A.1.DiskFormat:Level1A1-Version1B-trees)
+	* 4.2. [III.D. Disk Format: Level 1D - Local Heaps](#III.D.DiskFormat:Level1D-LocalHeaps)
+		* 4.2.1. [Layout: Local Heap](#Layout:LocalHeap)
+		* 4.2.2. [IV.A.2.d. The Datatype Message](#IV.A.2.d.TheDatatypeMessage)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -74,7 +83,7 @@ The Fixed Array Index
 The Extensible Array Index
 The Version 2 B-trees Index
 
-## I. Introduction
+##  2. <a name='I.Introduction'></a>I. Introduction
  	
 HDF5 Groups	 
  	Figure 1: Relationships among the HDF5 root group, other groups, and objects
@@ -101,7 +110,7 @@ At the lowest level, as information is actually written to the disk, an HDF5 fil
 
 The HDF5 Library uses these low-level objects to represent the higher-level objects that are then presented to the user or to applications through the APIs. For instance, a group is an object header that contains a message that points to a local heap (for storing the links to objects in the group) and to a B-tree (which indexes the links). A dataset is an object header that contains messages that describe the datatype, dataspace, layout, filters, external files, fill value, and other elements with the layout message pointing to either a raw data chunk or to a B-tree that points to raw data chunks.
 
-### I.A. This Document
+###  2.1. <a name='I.A.ThisDocument'></a>I.A. This Document
 
 This document describes the lower-level data objects; the higher-level objects and their properties are described in the HDF5 User’s Guide.
 
@@ -123,7 +132,7 @@ Whenever a bit flag or field is mentioned for an entry, bits are numbered from t
 
 Various format tables in this document have cells with “This space inserted only to align table nicely”. These entries in the table are just to make the table presentation nicer and do not represent any values or padding in the file.
 
-### I.B. Changes for HDF5 1.10
+###  2.2. <a name='I.B.ChangesforHDF51.10'></a>I.B. Changes for HDF5 1.10
 
 The following sections have been changed or added for the 1.10 release:
 
@@ -134,9 +143,9 @@ The following sections have been changed or added for the 1.10 release:
 + “The Data Layout Message” section was changed. The name was changed, and version 4 of the data layout message was added for the virtual type.
 + “Appendix C: Types of Indexes for Dataset Chunks” was added. Five indexing types were added.
 
-##  2. <a name='II.DiskFormat:Level0-FileMetadata'></a>II. Disk Format: Level 0 - File Metadata
+##  3. <a name='II.DiskFormat:Level0-FileMetadata'></a>II. Disk Format: Level 0 - File Metadata
 
-###  2.1. <a name='II.A.DiskFormat:Level0A-FormatSignatureandSuperblock'></a>II.A. Disk Format: Level 0A - Format Signature and Superblock
+###  3.1. <a name='II.A.DiskFormat:Level0A-FormatSignatureandSuperblock'></a>II.A. Disk Format: Level 0A - Format Signature and Superblock
 
 The superblock may begin at certain predefined offsets within the HDF5 file, allowing a block of unspecified content for users to place additional information at the beginning (and end) of the HDF5 file without limiting the HDF5 Library’s ability to manage the objects within the file itself. This feature was designed to accommodate wrapping an HDF5 file in another file format or adding descriptive information to an HDF5 file without requiring the modification of the actual file’s information. The superblock is located by searching for the HDF5 format signature at byte offset 0, byte offset 512, and at successive locations in the file, each a multiple of two of the previous location; in other words, at these byte offsets: 0, 512, 1024, 2048, and so on.
 
@@ -549,15 +558,15 @@ Shared Message Table message containing information to locate the master table o
 B-tree ‘K’ Values message containing non-default B-tree ‘K’ values.
 Driver Info message containing information needed by the file driver in order to reopen a file. See also the “Disk Format: Level 0B - File Driver Info” section above.
 
-## III. Disk Format: Level 1 - File Infrastructure
+##  4. <a name='III.DiskFormat:Level1-FileInfrastructure'></a>III. Disk Format: Level 1 - File Infrastructure
 
-### III.A. Disk Format: Level 1A - B-trees and B-tree Nodes
+###  4.1. <a name='III.A.DiskFormat:Level1A-B-treesandB-treeNodes'></a>III.A. Disk Format: Level 1A - B-trees and B-tree Nodes
 
 B-trees allow flexible storage for objects which tend to grow in ways that cause the object to be stored discontiguously. B-trees are described in various algorithms books including “Introduction to Algorithms” by Thomas H. Cormen, Charles E. Leiserson, and Ronald L. Rivest. B-trees are used in several places in the HDF5 file format, when an index is needed for another data structure.
 
 The version 1 B-tree structure described below is the original index structure. The version 1 B-trees are being phased out in favor of the version 2 B-trees described below. Note that both types of structures may be found in the same file depending on the application settings when creating the file.
 
-#### III.A.1. Disk Format: Level 1A1 - Version 1 B-trees
+####  4.1.1. <a name='III.A.1.DiskFormat:Level1A1-Version1B-trees'></a>III.A.1. Disk Format: Level 1A1 - Version 1 B-trees
 
 Version 1 B-trees in HDF5 files are an implementation of the B-link tree. The sibling nodes at a particular level in the tree are stored in a doubly-linked list. See the “Efficient Locking for Concurrent Operations on B-trees” paper by Phillip Lehman and S. Bing Yao as published in the ACM Transactions on Database Systems, Vol. 6, No. 4, December 1981.
 
@@ -1333,11 +1342,11 @@ Offset to Link Value
 
 The value of a symbolic link (that is, the name of the thing to which it points) is stored in the local heap. This field is the 4-byte offset into the local heap for the start of the link value, which is null terminated.
 
-### III.D. Disk Format: Level 1D - Local Heaps
+###  4.2. <a name='III.D.DiskFormat:Level1D-LocalHeaps'></a>III.D. Disk Format: Level 1D - Local Heaps
 
 A local heap is a collection of small pieces of data that are particular to a single object in the HDF5 file. Objects can be inserted and removed from the heap at any time. The address of a heap does not change once the heap is created. For example, a group stores addresses of objects in symbol table nodes with the names of links stored in the group’s local heap.
 
-#### Layout: Local Heap
+####  4.2.1. <a name='Layout:LocalHeap'></a>Layout: Local Heap
 
 <table style="text-align: center; width: 95%;">
     <thead></thead>
@@ -3289,25 +3298,43 @@ If there are no links in the group, or the group’s links are stored “compact
 
 This field exists if bit 1 of flags is set.
 
-IV.A.2.d. The Datatype Message
-Header Message Name: Datatype
-Header Message Type: 0x0003
-Length: Variable
-Status: Required for dataset or committed datatype (formerly named datatype) objects; may not be repeated.
-Description:	
-The datatype message defines the datatype for each element of a dataset or a common datatype for sharing between multiple datasets. A datatype can describe an atomic type like a fixed- or floating-point type or more complex types like a C struct (compound datatype), array (array datatype), or C++ vector (variable-length datatype).
+####  4.2.2. <a name='IV.A.2.d.TheDatatypeMessage'></a>IV.A.2.d. The Datatype Message
 
-Datatype messages that are part of a dataset object do not describe how elements are related to one another; the dataspace message is used for that purpose. Datatype messages that are part of a committed datatype (formerly named datatype) message describe a common datatype that can be shared by multiple datasets in the file.
++ **Header Message Name:** Datatype
++ **Header Message Type:** 0x0003
++ **Length:** Variable
++ **Status:** Required for dataset or committed datatype (formerly named datatype) objects; may not be repeated.
++ **Description:** 
+> The datatype message defines the datatype for each element of a dataset or a common datatype for sharing between multiple datasets. A datatype can describe an atomic type like a fixed- or floating-point type or more complex types like a C struct (compound datatype), array (array datatype), or C++ vector (variable-length datatype).
+> Datatype messages that are part of a dataset object do not describe how elements are related to one another; the dataspace message is used for that purpose. Datatype messages that are part of a committed datatype (formerly named datatype) message describe a common datatype that can be shared by multiple datasets in the file.
 
-Format of Data: See the tables below.
-Layout: Datatype Message
-byte	byte	byte	byte
-Class and Version	Class Bit Field, Bits 0-7	Class Bit Field, Bits 8-15	Class Bit Field, Bits 16-23
-Size
++ **Format of Data:** See the tables below.
 
-
-Properties
-
+<table style="text-align:center; width:95%;">
+    <caption>
+        Layout: Datatype Message
+    </caption>
+	<tbody style="text-align:center;">
+        <tr>
+            <th width="25%">byte</th>
+            <th width="25%">byte</th>
+            <th width="25%">byte</th>
+            <th width="25%">byte</th>
+        </tr>
+        <tr>
+            <td>Class and Version</td>
+            <td>Class Bit Field, Bits 0-7</td>
+            <td>Class Bit Field, Bits 8-15</td>
+            <td>Class Bit Field, Bits 16-23</td>
+        </tr>
+        <tr>
+            <td colspan="4">Size</td>
+        </tr>
+        <tr>
+            <td colspan="4"><br><br>Properties<br><br><br></td>
+        </tr>
+    </tbody>
+</table>
 
 
 Fields: Datatype Message
