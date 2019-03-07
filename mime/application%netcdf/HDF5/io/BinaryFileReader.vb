@@ -42,10 +42,10 @@ Namespace HDF5.IO
             End Get
             Set
                 If Value < 0 Then
-                    Throw New System.ArgumentException("offset must be positive and bigger than 0")
+                    Throw New ArgumentException("offset must be positive and bigger than 0")
                 End If
                 If Value > Me.m_filesize Then
-                    Throw New System.ArgumentException("offset must be positive and smaller than filesize")
+                    Throw New ArgumentException("offset must be positive and smaller than filesize")
                 End If
 
                 If Me.m_offset = Value Then

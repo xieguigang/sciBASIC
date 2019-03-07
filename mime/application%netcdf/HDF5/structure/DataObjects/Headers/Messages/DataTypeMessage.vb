@@ -6,26 +6,74 @@
 ' * Modified by iychoi@email.arizona.edu
 ' 
 
-Imports System.IO
 Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
 Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
+    ''' <summary>
+    ''' The datatype message defines the datatype for each element of a dataset or 
+    ''' a common datatype for sharing between multiple datasets. A datatype can 
+    ''' describe an atomic type like a fixed- or floating-point type or more complex 
+    ''' types like a C struct (compound datatype), array (array datatype), or C++ 
+    ''' vector (variable-length datatype).
+    '''
+    ''' Datatype messages that are part Of a dataset Object Do Not describe how 
+    ''' elements are related To one another; the dataspace message Is used For that 
+    ''' purpose. Datatype messages that are part Of a committed datatype (formerly 
+    ''' named datatype) message describe a common datatype that can be Shared by 
+    ''' multiple datasets In the file.
+    ''' </summary>
     Public Class DataTypeMessage
 
+        ''' <summary>
+        ''' Fixed-Point
+        ''' </summary>
         Public Const DATATYPE_FIXED_POINT As Integer = 0
+        ''' <summary>
+        ''' Floating-point
+        ''' </summary>
         Public Const DATATYPE_FLOATING_POINT As Integer = 1
+        ''' <summary>
+        ''' Time
+        ''' </summary>
         Public Const DATATYPE_TIME As Integer = 2
+        ''' <summary>
+        ''' String
+        ''' </summary>
         Public Const DATATYPE_STRING As Integer = 3
+        ''' <summary>
+        ''' Bit field
+        ''' </summary>
         Public Const DATATYPE_BIT_FIELD As Integer = 4
+        ''' <summary>
+        ''' Opaque
+        ''' </summary>
         Public Const DATATYPE_OPAQUE As Integer = 5
+        ''' <summary>
+        ''' Compound
+        ''' </summary>
         Public Const DATATYPE_COMPOUND As Integer = 6
+        ''' <summary>
+        ''' Reference
+        ''' </summary>
         Public Const DATATYPE_REFERENCE As Integer = 7
+        ''' <summary>
+        ''' Enumerated
+        ''' </summary>
         Public Const DATATYPE_ENUMS As Integer = 8
+        ''' <summary>
+        ''' Variable-Length
+        ''' </summary>
         Public Const DATATYPE_VARIABLE_LENGTH As Integer = 9
+        ''' <summary>
+        ''' Array
+        ''' </summary>
         Public Const DATATYPE_ARRAY As Integer = 10
 
+        ''' <summary>
+        ''' 当前的这个对象在文件之中的起始位置
+        ''' </summary>
         Private m_address As Long
         Private m_type As Integer
         Private m_version As Integer
@@ -129,9 +177,9 @@ Namespace HDF5.[Structure]
 
                 [in].setLittleEndian()
             ElseIf Me.m_type = DATATYPE_VARIABLE_LENGTH Then
-                Throw New IOException("data type variable length is not implemented")
+                Throw New Exception("data type variable length is not implemented")
             ElseIf Me.m_type = DATATYPE_ARRAY Then
-                Throw New IOException("data type array is not implemented")
+                Throw New Exception("data type array is not implemented")
             End If
         End Sub
 

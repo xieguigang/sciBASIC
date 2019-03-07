@@ -245,8 +245,9 @@
     <Compile Include="HDF5\structure\DataNode.vb" />
     <Compile Include="HDF5\structure\DataObject.vb" />
     <Compile Include="HDF5\structure\DataObjectFacade.vb" />
-    <Compile Include="HDF5\structure\DataspaceMessage.vb" />
-    <Compile Include="HDF5\structure\DataTypeMessage.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\Messages\Message.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb" />
     <Compile Include="HDF5\structure\FillValueMessage.vb" />
     <Compile Include="HDF5\structure\FillValueOldMessage.vb" />
     <Compile Include="HDF5\structure\Group.vb" />
@@ -258,7 +259,7 @@
     <Compile Include="HDF5\structure\LayoutField.vb" />
     <Compile Include="HDF5\structure\LayoutMessage.vb" />
     <Compile Include="HDF5\structure\LinkMessage.vb" />
-    <Compile Include="HDF5\structure\LocalHeap.vb" />
+    <Compile Include="HDF5\structure\Infrastructure\LocalHeap.vb" />
     <Compile Include="HDF5\structure\ObjectHeader.vb" />
     <Compile Include="HDF5\structure\ObjectHeaderMessage.vb" />
     <Compile Include="HDF5\structure\ObjectHeaderMessageType.vb" />
@@ -319,5 +320,6 @@
       <Name>47-dotnet_Microsoft.VisualBasic</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

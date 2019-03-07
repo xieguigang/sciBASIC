@@ -126,6 +126,9 @@ Namespace ComponentModel
         End Function
     End Class
 
+    ''' <summary>
+    ''' 将文件之中的字段名称映射为另一个名称的帮助模块
+    ''' </summary>
     Public Class NameMapping : Inherits MapsHelper(Of String)
 
         Shared ReadOnly emptyMaps As DefaultValue(Of Dictionary(Of String, String)) = New Dictionary(Of String, String)()
@@ -135,6 +138,7 @@ Namespace ComponentModel
             Call MyBase.New(dictionary Or emptyMaps, [default])
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key$, map$)
             Call __maps.Add(key, map)
         End Sub

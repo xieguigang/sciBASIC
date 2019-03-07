@@ -14,7 +14,7 @@ Namespace HDF5.[Structure]
 
     Public Class DataObjectFacade
 
-        Private Shared ObjectAddressMap As New Dictionary(Of System.Nullable(Of Long), DataObject)()
+        Private Shared ObjectAddressMap As New Dictionary(Of Long, DataObject)()
 
         Private m_address As Long
         Private m_dataObject As DataObject

@@ -67,6 +67,13 @@ Namespace IO
             End Get
         End Property
 
+        Public ReadOnly Property Vector As Double()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Me.propertyTable.Values.ToArray
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
@@ -117,14 +124,17 @@ Namespace IO
         ''' <param name="uidMap">
         ''' 默认是使用csv文件的第一行第一个单元格中的内容作为标识符，但是有时候可能标识符不是在第一列的，则这个时候就需要对这个参数进行赋值了
         ''' </param>
+        ''' <param name="fieldNameMaps">
+        ''' [name_in_file => name_after_load]
+        ''' </param>
         ''' <returns></returns>
-        ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadDataSet(path$,
                                            Optional uidMap$ = Nothing,
+                                           Optional fieldNameMaps As Dictionary(Of String, String) = Nothing,
                                            Optional tsv As Boolean = False,
                                            Optional encoding As Encoding = Nothing) As IEnumerable(Of DataSet)
-            Return EntityObject.LoadDataSet(path, uidMap, tsv, encoding).AsDataSet
+            Return EntityObject.LoadDataSet(path, uidMap, fieldNameMaps, tsv, encoding).AsDataSet
         End Function
 
         Public Shared Function LoadDataSet(Of T As DataSet)(path$,

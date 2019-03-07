@@ -162,10 +162,10 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' 取出某一个给定的属性的所有值
+        ''' 取出某一个给定的属性的所有值。取出来的数据元素之间的顺序是和<paramref name="datasets"/>之中的元素的顺序是一致的。
         ''' </summary>
         ''' <param name="datasets"></param>
-        ''' <param name="property$"></param>
+        ''' <param name="property">字典的键名称</param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>

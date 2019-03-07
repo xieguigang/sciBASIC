@@ -6,16 +6,31 @@
 ' * Modified by iychoi@email.arizona.edu
 ' 
 
-
 Imports System.IO
 Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
 Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
+
 Namespace HDF5.[Structure]
 
-
-
+    ''' <summary>
+    ''' The superblock may begin at certain predefined offsets within the HDF5 file, allowing a 
+    ''' block of unspecified content for users to place additional information at the beginning 
+    ''' (and end) of the HDF5 file without limiting the HDF5 Library¡¯s ability to manage the 
+    ''' objects within the file itself. This feature was designed to accommodate wrapping an 
+    ''' HDF5 file in another file format or adding descriptive information to an HDF5 file without 
+    ''' requiring the modification of the actual file¡¯s information. The superblock is located 
+    ''' by searching for the HDF5 format signature at byte offset 0, byte offset 512, and at 
+    ''' successive locations in the file, each a multiple of two of the previous location; 
+    ''' in other words, at these byte offsets: 0, 512, 1024, 2048, and so on.
+    '''
+    ''' The superblock Is composed Of the format signature, followed by a superblock version number 
+    ''' And information that Is specific To Each version Of the superblock.
+    ''' </summary>
     Public Class Superblock
-        Public Shared ReadOnly FORMAT_SIGNATURE As Byte() = {&H89, &H48, &H44, &H46, &HD, &HA, &H1A, &HA}.Select(Function(i) CByte(i)).ToArray
+
+        Shared ReadOnly SUPERBLOCK_SIGNATURE As Byte() = {&H89, &H48, &H44, &H46, &HD, &HA, &H1A, &HA} _
+            .Select(Function(i) CByte(i)) _
+            .ToArray
 
         Private m_address As Long
 
@@ -121,7 +136,7 @@ Namespace HDF5.[Structure]
         Public Overridable ReadOnly Property validFormatSignature() As Boolean
             Get
                 For i As Integer = 0 To 7
-                    If Me.m_formatSignature(i) <> FORMAT_SIGNATURE(i) Then
+                    If Me.m_formatSignature(i) <> SUPERBLOCK_SIGNATURE(i) Then
                         Return False
                     End If
                 Next
