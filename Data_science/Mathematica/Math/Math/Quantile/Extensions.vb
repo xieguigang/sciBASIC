@@ -114,7 +114,7 @@ Namespace Quantile
                                    Optional compact_size% = 1000) As QuantileEstimationGK
             Dim estimator As New QuantileEstimationGK(epsilon, compact_size)
 
-            For Each x As Long In source
+            For Each x As Double In source
                 Call estimator.Insert(x)
             Next
 

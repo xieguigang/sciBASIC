@@ -51,7 +51,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 Imports FieldTuple = System.Collections.Generic.KeyValuePair(Of String, System.Reflection.PropertyInfo)
-Imports RowTokens = System.Collections.Generic.IEnumerable(Of System.String)
+Imports RowTokens = System.Collections.Generic.IEnumerable(Of String)
 
 Namespace ComponentModel.DataSourceModel
 
@@ -116,8 +116,11 @@ Namespace ComponentModel.DataSourceModel
                 .OrderBy(Function(field)
                              Return field.field.Index
                          End Function) _
-                .ToDictionary(Function(i) i.field.Index)
+                .ToDictionary(Function(i)
+                                  Return i.field.Index
+                              End Function)
             Dim str$
+            Dim objVal As Object
             Dim fields As PropertyInfo() = data _
                 .First _
                 .Count _
@@ -141,9 +144,10 @@ Namespace ComponentModel.DataSourceModel
 
                     With fields(col)
                         If Not .IsNothing Then
-                            Call .SetValue(
-                                obj:=o,
-                                value:=Scripting.CTypeDynamic(str, .PropertyType))
+                            objVal = Scripting.CTypeDynamic(str, .PropertyType)
+
+                            ' set property value
+                            Call .SetValue(obj:=o, value:=objVal)
                         End If
                     End With
                 Next
@@ -175,7 +179,7 @@ Namespace ComponentModel.DataSourceModel
             Dim line$ = stream.ReadLine
             Dim headers$() = line _
                 .Split(ASCII.TAB) _
-    .Select(selector:=process Or withoutProcess) _
+                .Select(selector:=process Or withoutProcess) _
                 .ToArray
 
             If lower Then
@@ -193,16 +197,17 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="path"></param>
         ''' <param name="skipFirstLine">The first line of the text document maybe is the title headers, skip this line?</param>
         ''' <returns></returns>
-        Private Function LoadFile(path$, Optional encoding As Encoding = Nothing, Optional skipFirstLine As Boolean = False) As IEnumerable(Of RowTokens)
+        Public Function LoadFile(path$, Optional encoding As Encoding = Nothing, Optional skipFirstLine As Boolean = False) As IEnumerable(Of RowTokens)
             Dim lines As String() = TextDoc.ReadAllLines(path, encoding Or UTF8)
             Dim LQuery = LinqAPI.Exec(Of RowTokens) _
  _
                 () <= From strLine As String
                       In lines
-                      Let t As String() = Strings.Split(strLine, vbTab) ' 跳过标题行
+                      Let t As String() = Strings.Split(strLine, vbTab)
                       Select DirectCast(t, RowTokens)
 
             If skipFirstLine Then
+                ' 跳过标题行
                 Return LQuery.Skip(1)
             Else
                 Return LQuery
