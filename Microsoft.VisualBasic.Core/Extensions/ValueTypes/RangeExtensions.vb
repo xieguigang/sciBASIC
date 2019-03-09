@@ -48,9 +48,7 @@ Namespace ValueTypes
     Public Module RangeExtensions
 
         ''' <summary>
-        ''' 这个函数返回[0, 1]之间的百分比位置值.
-        ''' 
-        ''' ```vbnet
+        ''' ```
         ''' d = <paramref name="value"/> - <see cref="DoubleRange.Min"/>
         ''' p% = d / <see cref="DoubleRange.Length"/> * 100%
         ''' ```
