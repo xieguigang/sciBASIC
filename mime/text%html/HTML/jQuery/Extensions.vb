@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e524005c9e5eb91b5146febae8b41210, mime\text%html\HTML\jQuery\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e4f070fe14275ae887fa1cf8ce2f026e, mime\text%html\HTML\jQuery\Extensions.vb"
 
     ' Author:
     ' 

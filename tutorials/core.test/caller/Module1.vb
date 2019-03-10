@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50f8a39259909f32af6350f646bb1537, tutorials\core.test\caller\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::81f1a30fe43105133579f9ad49236b5a, tutorials\core.test\caller\Module1.vb"
 
     ' Author:
     ' 

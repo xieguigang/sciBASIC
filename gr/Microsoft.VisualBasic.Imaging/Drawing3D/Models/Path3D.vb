@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a4243e4879ffde9fa4fc24be8837266, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
+﻿#Region "Microsoft.VisualBasic::b57c88bb78e9058d870395177cad4005, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
 
     ' Author:
     ' 

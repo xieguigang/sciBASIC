@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24b13cc75929d945706caddec5b92b1f, Microsoft.VisualBasic.Core\Language\Value\CharStream.vb"
+﻿#Region "Microsoft.VisualBasic::0566c1a5678bc16b2846e1951e6d6c0a, Microsoft.VisualBasic.Core\Language\Value\CharStream.vb"
 
     ' Author:
     ' 

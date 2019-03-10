@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::408d5f9d8f0b610734baa01728c56287, Data\SearchEngine\SearchEngine\Adapter\Text.vb"
+﻿#Region "Microsoft.VisualBasic::a2e0b5b64aca125848b6845516bd2c2e, Data\SearchEngine\SearchEngine\Adapter\Text.vb"
 
     ' Author:
     ' 

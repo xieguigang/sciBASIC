@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da0fe537e502eaa234a58447f83a8cce, tutorials\socketTest\Protocols.vb"
+﻿#Region "Microsoft.VisualBasic::46edf06c78d5217d6f0d1180b7f79ec0, tutorials\socketTest\Protocols.vb"
 
     ' Author:
     ' 

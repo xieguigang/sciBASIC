@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::765d3616374e97c0d4ce0e6392c22f29, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\NetFile.vb"
+﻿#Region "Microsoft.VisualBasic::1d8b063c53181b6bb1252729aff21f56, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\NetFile.vb"
 
     ' Author:
     ' 

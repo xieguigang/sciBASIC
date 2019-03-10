@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a4d1f6d0cdb1f1307a812a683d643ae, mime\text%yaml\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::362b51c73f54d8ce38efbf02fb856b73, mime\text%yaml\test\Module1.vb"
 
     ' Author:
     ' 

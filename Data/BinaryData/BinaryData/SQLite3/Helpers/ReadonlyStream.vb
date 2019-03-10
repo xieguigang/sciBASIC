@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93f6a83769b7733e227e6108d2870de9, Data\BinaryData\BinaryData\SQLite3\Helpers\ReadonlyStream.vb"
+﻿#Region "Microsoft.VisualBasic::9704d2abad72d3f1599506577b2ce89f, Data\BinaryData\BinaryData\SQLite3\Helpers\ReadonlyStream.vb"
 
     ' Author:
     ' 

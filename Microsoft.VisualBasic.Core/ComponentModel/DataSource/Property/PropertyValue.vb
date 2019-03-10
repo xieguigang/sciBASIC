@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09103db9f3b42def3f59569a98d7d368, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\PropertyValue.vb"
+﻿#Region "Microsoft.VisualBasic::955cb25b01fa63265ea9a9affab86884, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\PropertyValue.vb"
 
     ' Author:
     ' 

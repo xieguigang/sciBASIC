@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccf5aa5cec92a31b78fde241f83b76b8, mime\application%netcdf\HDF5\structure\BLinkTreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::7f7275987f7da52ec6a554c43ee62323, mime\application%netcdf\HDF5\structure\BLinkTreeNode.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '
 ' * Mostly copied from NETCDF4 source code.
@@ -159,4 +158,3 @@ Namespace HDF5.[Structure]
     End Class
 
 End Namespace
-

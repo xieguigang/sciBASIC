@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e498829f11290d8836a2e1592cfab139, gr\Microsoft.VisualBasic.Imaging\test\ExifTest.vb"
+﻿#Region "Microsoft.VisualBasic::5310eac6a6b6fc4a5847cdf60db6c638, gr\Microsoft.VisualBasic.Imaging\test\ExifTest.vb"
 
     ' Author:
     ' 

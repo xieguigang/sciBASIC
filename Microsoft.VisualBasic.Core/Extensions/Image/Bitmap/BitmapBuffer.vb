@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a647313fb64d477e080229f308b3733, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::cc34a7dff173f9a554f5678a30949bef, Microsoft.VisualBasic.Core\Extensions\Image\Bitmap\BitmapBuffer.vb"
 
     ' Author:
     ' 

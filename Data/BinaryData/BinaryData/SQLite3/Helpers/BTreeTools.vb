@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59ff434b6167c9d78f54fc2915db811f, Data\BinaryData\BinaryData\SQLite3\Helpers\BTreeTools.vb"
+﻿#Region "Microsoft.VisualBasic::b5b5b7c5298232075253c8ec5a0666b1, Data\BinaryData\BinaryData\SQLite3\Helpers\BTreeTools.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9195dcb7aa60aabb38fd964406020b0, Data\BinaryData\BinaryData\SQLite3\Helpers\StringHelper.vb"
+﻿#Region "Microsoft.VisualBasic::24b3e6c9de38aca9c3c467096cd62014, Data\BinaryData\BinaryData\SQLite3\Helpers\StringHelper.vb"
 
     ' Author:
     ' 

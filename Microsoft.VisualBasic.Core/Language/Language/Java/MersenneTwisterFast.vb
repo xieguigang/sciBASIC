@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff44d6c535633fec44e72f9a62a7eeaf, Microsoft.VisualBasic.Core\Language\Language\Java\MersenneTwisterFast.vb"
+﻿#Region "Microsoft.VisualBasic::120bc0a3db9510757289f89883c14448, Microsoft.VisualBasic.Core\Language\Language\Java\MersenneTwisterFast.vb"
 
     ' Author:
     ' 

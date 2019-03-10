@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0df0be03512a14520799e88652c775f4, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Filter.vb"
+﻿#Region "Microsoft.VisualBasic::a45799ec19150676a93f275d90172f4e, gr\Microsoft.VisualBasic.Imaging\SVG\CSS\Filter.vb"
 
     ' Author:
     ' 

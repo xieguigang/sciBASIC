@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d8a08ef541e19700cc87284aed671af, mime\application%netcdf\HDF5\io\ReadHelper.vb"
+﻿#Region "Microsoft.VisualBasic::8a3fd7379763c26ee1cd872b3a9b842c, mime\application%netcdf\HDF5\io\ReadHelper.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '
 ' * Some part of this code is copied from NETCDF4 source code.
@@ -205,4 +204,3 @@ Namespace HDF5.IO
     End Class
 
 End Namespace
-

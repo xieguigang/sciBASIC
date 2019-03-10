@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0293e49c2f9023c094bbe4787686b7a, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\BipolarSigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::c955936e5dce1e3582fbe266f76eed3c, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\BipolarSigmoid.vb"
 
     ' Author:
     ' 

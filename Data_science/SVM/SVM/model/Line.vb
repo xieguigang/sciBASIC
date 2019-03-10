@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f2f4420a2b1f9659bf0c72ba28bd034, Data_science\SVM\SVM\model\Line.vb"
+﻿#Region "Microsoft.VisualBasic::a5729b3ec7312e6dc5dc6cecd0ee437d, Data_science\SVM\SVM\model\Line.vb"
 
     ' Author:
     ' 

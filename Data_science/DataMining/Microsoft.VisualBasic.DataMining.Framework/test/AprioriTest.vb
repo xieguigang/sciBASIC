@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adb49d9face1a3834d87450e2f5c5e34, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\AprioriTest.vb"
+﻿#Region "Microsoft.VisualBasic::bd243db2c8f68054c902a32c365cf9ea, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\AprioriTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08c37d07e12bcd1b14d7abbe21a4729f, Microsoft.VisualBasic.Core\Text\Xml\Models\Href.vb"
+﻿#Region "Microsoft.VisualBasic::9d3f40a25715fd1359f2d587091df4fc, Microsoft.VisualBasic.Core\Text\Xml\Models\Href.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::debfddc8e0d4d125c72b8b71eca7698f, mime\application%rdf+xml\DataModel\Bag.vb"
+﻿#Region "Microsoft.VisualBasic::e478f0bb8097c21c171bc0f352f3dc8d, mime\application%rdf+xml\DataModel\Bag.vb"
 
     ' Author:
     ' 

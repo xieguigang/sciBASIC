@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cccc247a90a767eac97b91db48465b0e, tutorials\core.test\wmfImage.vb"
+﻿#Region "Microsoft.VisualBasic::b97371cadf1e9527b003478a6cb37d47, tutorials\core.test\wmfImage.vb"
 
     ' Author:
     ' 

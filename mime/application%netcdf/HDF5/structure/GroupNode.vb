@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37cc68465faa6d0326350b20ed091e32, mime\application%netcdf\HDF5\structure\GroupNode.vb"
+﻿#Region "Microsoft.VisualBasic::e5d4dad8922d203696714ff812c540b2, mime\application%netcdf\HDF5\structure\GroupNode.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '
 ' * Mostly copied from NETCDF4 source code.
@@ -155,4 +154,3 @@ Namespace HDF5.[Structure]
     End Class
 
 End Namespace
-

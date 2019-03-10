@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5eaa0c470aa3f638ac1a9b97eca11515, Data\Trinity\Html\Article.vb"
+﻿#Region "Microsoft.VisualBasic::7960c166748ca52f9678ff3d41839f04, Data\Trinity\Html\Article.vb"
 
     ' Author:
     ' 

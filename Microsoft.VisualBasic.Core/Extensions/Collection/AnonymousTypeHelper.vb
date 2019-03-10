@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6db64a7ce6f5f36f90346656404429d, Microsoft.VisualBasic.Core\Extensions\Collection\AnonymousTypeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::d4f476bccb1fc043519be1073163b50f, Microsoft.VisualBasic.Core\Extensions\Collection\AnonymousTypeHelper.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module AnonymousTypeHelper
     ' 
-    '     Function: (+2 Overloads) CopyTypeDef
+    '     Function: CopyTypeDef, CreateEmptyList
     ' 
     ' /********************************************************************************/
 

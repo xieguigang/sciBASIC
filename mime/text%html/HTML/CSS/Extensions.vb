@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dec09f7ac5c73e4de15d22c8bfd657cf, mime\text%html\HTML\CSS\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a67f45c9cc3356e6facafc5784b7ee8f, mime\text%html\HTML\CSS\Extensions.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::520034f76890db40b273c3a19be63e0f, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Node.vb"
+﻿#Region "Microsoft.VisualBasic::9d76e0d0be88e8e01a01eb8262603692, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Node.vb"
 
     ' Author:
     ' 

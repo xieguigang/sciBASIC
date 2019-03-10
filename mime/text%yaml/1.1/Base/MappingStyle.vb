@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51b25e8268f0b8c6f622b8db80e519a9, mime\text%yaml\1.1\Base\MappingStyle.vb"
+﻿#Region "Microsoft.VisualBasic::0b0798c5ba9d9de12299e5ac8630625d, mime\text%yaml\1.1\Base\MappingStyle.vb"
 
     ' Author:
     ' 

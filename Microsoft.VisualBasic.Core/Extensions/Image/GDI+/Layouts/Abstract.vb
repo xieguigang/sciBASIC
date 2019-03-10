@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e6a85756b8c22b42bc9fa0cfce08b6b, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::431e8e930b9b22255258159323a200e2, Microsoft.VisualBasic.Core\Extensions\Image\GDI+\Layouts\Abstract.vb"
 
     ' Author:
     ' 

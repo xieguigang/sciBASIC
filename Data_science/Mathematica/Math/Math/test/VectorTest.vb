@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73e8224f8ce57d39cdffd30897e1f11d, Data_science\Mathematica\Math\Math\test\VectorTest.vb"
+﻿#Region "Microsoft.VisualBasic::75ac74a04ae6fdaa4c56aa835a6c80c9, Data_science\Mathematica\Math\Math\test\VectorTest.vb"
 
     ' Author:
     ' 
@@ -51,4 +51,3 @@ Module VectorTest
         Pause()
     End Sub
 End Module
-

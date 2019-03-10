@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5464232b57e72bc75b485fe8ad034a11, tutorials\core.test\ParallelLoadingTest.vb"
+﻿#Region "Microsoft.VisualBasic::1d2ac1cf5ac7872c44adf8376406de28, tutorials\core.test\ParallelLoadingTest.vb"
 
     ' Author:
     ' 

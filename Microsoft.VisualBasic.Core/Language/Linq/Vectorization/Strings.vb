@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5922be49c16581d2f9acb65ba92610e2, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Strings.vb"
+﻿#Region "Microsoft.VisualBasic::b63b98204b941b66bd8cc91a2c5ec967, Microsoft.VisualBasic.Core\Language\Linq\Vectorization\Strings.vb"
 
     ' Author:
     ' 

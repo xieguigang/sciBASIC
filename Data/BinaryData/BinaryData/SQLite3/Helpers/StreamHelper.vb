@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3facf2cf8422c23f6ed37e59ec3c26ed, Data\BinaryData\BinaryData\SQLite3\Helpers\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::7500205a3115076332d6ea07a5753a99, Data\BinaryData\BinaryData\SQLite3\Helpers\StreamHelper.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe76b0f3b682d888641590d889dfdd32, mime\application%netcdf\Data\StructureParser.vb"
+﻿#Region "Microsoft.VisualBasic::d7084a658eb7742c675806a90012f86e, mime\application%netcdf\Data\StructureParser.vb"
 
     ' Author:
     ' 

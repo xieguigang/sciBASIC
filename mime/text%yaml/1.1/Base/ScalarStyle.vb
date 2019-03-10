@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7b2d63d99ae0596fac4d841c07c708a, mime\text%yaml\1.1\Base\ScalarStyle.vb"
+﻿#Region "Microsoft.VisualBasic::38f4823865b692f8ff225ecde842d0d7, mime\text%yaml\1.1\Base\ScalarStyle.vb"
 
     ' Author:
     ' 

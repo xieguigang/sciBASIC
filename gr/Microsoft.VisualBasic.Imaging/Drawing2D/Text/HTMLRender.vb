@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61c56aad51c97d8ac1b9afc05c8fca9e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\HTMLRender.vb"
+﻿#Region "Microsoft.VisualBasic::2943d06b853cf05d38c103d12e9ab5b9, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\HTMLRender.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3c2ddf604a3f903b7ce6781615aaef1, Data\BinaryData\BinaryData\Stream\Offset.vb"
+﻿#Region "Microsoft.VisualBasic::baa36795a0c195f88141848d089b0ece, Data\BinaryData\BinaryData\Stream\Offset.vb"
 
     ' Author:
     ' 

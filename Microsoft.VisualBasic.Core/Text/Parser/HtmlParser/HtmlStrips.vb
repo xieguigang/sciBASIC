@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::544f9d3ddbab1d123a17ec6d203e81b5, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::481893c7090305a777c67dc50c42bb79, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b87e05774ed8edcd13ce01c3e9aa077, mime\application%netcdf\HDF5\structure\LayoutMessage.vb"
+﻿#Region "Microsoft.VisualBasic::08f2172644131e16fc9182fe72e593c9, mime\application%netcdf\HDF5\structure\LayoutMessage.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '
 ' * Mostly copied from NETCDF4 source code.
@@ -176,4 +175,3 @@ Namespace HDF5.[Structure]
     End Class
 
 End Namespace
-

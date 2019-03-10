@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b20d146fd0c8ab9b886d43673607cf34, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Math2DHelper.vb"
+﻿#Region "Microsoft.VisualBasic::0718e38c3818cc4466539722b240ca0c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Math2DHelper.vb"
 
     ' Author:
     ' 

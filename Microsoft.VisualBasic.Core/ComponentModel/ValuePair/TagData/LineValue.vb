@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed5ba19c67abf11edf0e3844aef51abf, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
+﻿#Region "Microsoft.VisualBasic::9c5346459b805490ebb94c144fc4f0fd, Microsoft.VisualBasic.Core\ComponentModel\ValuePair\TagData\LineValue.vb"
 
     ' Author:
     ' 

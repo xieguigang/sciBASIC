@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1eb4587b05aed8323095d612dc6c8b49, mime\application%netcdf\HDF5\structure\Superblock.vb"
+﻿#Region "Microsoft.VisualBasic::86a75d47a20bb405f71330ed6f4dd74b, mime\application%netcdf\HDF5\structure\Superblock.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '
 ' * Mostly copied from NETCDF4 source code.
@@ -324,4 +323,3 @@ Namespace HDF5.[Structure]
     End Class
 
 End Namespace
-
