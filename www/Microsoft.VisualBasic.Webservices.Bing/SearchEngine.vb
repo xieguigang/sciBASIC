@@ -41,9 +41,9 @@
 
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 ''' <summary>
 ''' VisualBasic interface wrapper of Microsoft bing.com search engine.

@@ -43,7 +43,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Academic

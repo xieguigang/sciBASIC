@@ -46,10 +46,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
-Namespace Text
+Namespace Text.Parser
 
     ''' <summary>
     ''' Parser API for the well formatted documents.

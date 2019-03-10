@@ -46,7 +46,7 @@ Imports Microsoft.VisualBasic.Data
 Imports Microsoft.VisualBasic.Data.Trinity.NLP
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports r = System.Text.RegularExpressions.Regex
 
 Public Module Translation

@@ -41,10 +41,10 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
+Imports r = System.Text.RegularExpressions.Regex
 
-Namespace Text.HtmlParser
+Namespace Text.Parser.HtmlParser
 
     ''' <summary>
     ''' The string parser for the table html text block
@@ -60,12 +60,15 @@ Namespace Text.HtmlParser
         <Extension>
         Public Function GetTablesHTML(html As String, Optional greedy As Boolean = False) As String()
             Dim regxp As String = If(greedy, "<table.+</table>", "<table.+?</table>")
-            Dim tbls As String() = Regex.Matches(html, regxp, RegexICSng).ToArray
+            Dim tbls As String() = r.Matches(html, regxp, RegexICSng).ToArray
             Return tbls
         End Function
 
+        Const RowPatterns$ = "<tr.+?</tr>"
+        Const ColumnPatterns$ = "(<td.+?</td>)|(<th.+?</th>)"
+
         ''' <summary>
-        ''' Parsing the html text betweens the tag &lt;tr>&lt;/tr> by using regex expression.
+        ''' Parsing the html text betweens the tag ``&lt;tr>&lt;/tr>`` by using regex expression.
         ''' </summary>
         ''' <param name="table"></param>
         ''' <returns></returns>
@@ -74,26 +77,24 @@ Namespace Text.HtmlParser
         Public Function GetRowsHTML(table As String) As String()
             If table Is Nothing Then
                 Return {}
+            Else
+                Dim rows As String() = r.Matches(table, RowPatterns, RegexICSng).ToArray
+                Return rows
             End If
-            Dim rows As String() = Regex.Matches(
-                table,
-                "<tr.+?</tr>",
-                RegexOptions.Singleline Or RegexOptions.IgnoreCase).ToArray
-            Return rows
         End Function
 
         ''' <summary>
-        ''' The td tag is trimmed in this function.(请注意，在本函数之中，&lt;td>标签是被去除掉了的)
+        ''' The td tag is trimmed in this function.(请注意，在本函数之中，``&lt;td>``标签是被去除掉了的)
         ''' </summary>
         ''' <param name="row"></param>
         ''' <returns></returns>
         ''' 
         <Extension>
         Public Function GetColumnsHTML(row As String) As String()
-            Dim cols As String() = Regex.Matches(row, "(<td.+?</td>)|(<th.+?</th>)", RegexICSng).ToArray
+            Dim cols As String() = r.Matches(row, ColumnPatterns, RegexICSng).ToArray
             cols = cols _
-                    .Select(Function(s) s.GetValue) _
-                    .ToArray
+                .Select(Function(s) s.GetValue) _
+                .ToArray
             Return cols
         End Function
     End Module

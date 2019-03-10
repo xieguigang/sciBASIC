@@ -49,7 +49,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 ''' <summary>
 ''' 一个结果条目

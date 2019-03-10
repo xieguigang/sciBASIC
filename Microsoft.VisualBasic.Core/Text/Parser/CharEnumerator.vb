@@ -45,7 +45,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Emit.Marshal
 
-Namespace Text
+Namespace Text.Parser
 
     Public Class CharEnumerator : Inherits Pointer(Of Char)
 

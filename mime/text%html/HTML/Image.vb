@@ -47,7 +47,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Namespace HTML
 

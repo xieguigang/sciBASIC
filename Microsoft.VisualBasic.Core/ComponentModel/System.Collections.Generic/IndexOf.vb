@@ -275,6 +275,12 @@ Namespace ComponentModel.Collection
             Return New Index(Of T)(source:=objs)
         End Operator
 
+        ''' <summary>
+        ''' Add a new key to this index object.
+        ''' </summary>
+        ''' <param name="index">Element key index object.</param>
+        ''' <param name="element"></param>
+        ''' <returns></returns>
         Public Shared Operator +(index As Index(Of T), element As T) As Index(Of T)
             Call index.Add(element)
             Return index

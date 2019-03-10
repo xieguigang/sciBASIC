@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports r = System.Text.RegularExpressions.Regex
 
-Namespace Text.HtmlParser
+Namespace Text.Parser.HtmlParser
 
     ''' <summary>
     ''' Html text document operations for a given html text

@@ -56,7 +56,9 @@ Public Module AnonymousTypeHelper
     ''' </param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <Extension> Public Function CopyTypeDef(Of TAnonymousType As Class)(typedef As IEnumerable(Of TAnonymousType)) As List(Of TAnonymousType)
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension> Public Function CreateEmptyList(Of TAnonymousType As Class)(typedef As IEnumerable(Of TAnonymousType)) As List(Of TAnonymousType)
         Return New List(Of TAnonymousType)
     End Function
 #Enable Warning
