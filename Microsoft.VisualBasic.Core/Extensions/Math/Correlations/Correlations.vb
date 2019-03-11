@@ -88,6 +88,8 @@ Namespace Math.Correlations
     <Package("Correlations", Category:=APICategories.UtilityTools, Publisher:="amethyst.asuka@gcmodeller.org")>
     Public Module Correlations
 
+        ReadOnly objectEquals As New DefaultValue(Of Func(Of Object, Object, Boolean))(Function(x, y) x.Equals(y))
+
         ''' <summary>
         ''' The Jaccard index, also known as Intersection over Union and the Jaccard similarity coefficient 
         ''' (originally coined coefficient de communauté by Paul Jaccard), is a statistic used for comparing 
@@ -103,12 +105,8 @@ Namespace Math.Correlations
         ''' <param name="equal"></param>
         ''' <returns></returns>
         Public Function JaccardIndex(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of T), Optional equal As Func(Of Object, Object, Boolean) = Nothing) As Double
-            If equal Is Nothing Then
-                equal = Function(x, y) x.Equals(y)
-            End If
-
-            Dim setA As New [Set](a, equal)
-            Dim setB As New [Set](b, equal)
+            Dim setA As New [Set](a, equal Or objectEquals)
+            Dim setB As New [Set](b, equal Or objectEquals)
 
             ' (If A and B are both empty, we define J(A,B) = 1.)
             If setA.Length = setB.Length AndAlso setA.Length = 0 Then
@@ -173,7 +171,6 @@ Namespace Math.Correlations
         ''' https://github.com/felipebravom/RankCorrelation
         ''' </remarks>
         Public Function rankKendallTauBeta(x As Double(), y As Double()) As Double
-            Debug.Assert(x.Length = y.Length)
             Dim x_n As Integer = x.Length
             Dim y_n As Integer = y.Length
             Dim x_rank As Double() = New Double(x_n - 1) {}
@@ -189,6 +186,7 @@ Namespace Math.Correlations
             Next
 
             Dim c As Integer = 1
+
             For Each v As Double In sorted.Keys.OrderByDescending(Function(k) k)
                 Dim r As Double = 0
                 For Each i As Integer In sorted(v)
@@ -204,6 +202,7 @@ Namespace Math.Correlations
             Next
 
             sorted.Clear()
+
             For i As Integer = 0 To y_n - 1
                 Dim v As Double = y(i)
                 If sorted.ContainsKey(v) = False Then
@@ -213,6 +212,7 @@ Namespace Math.Correlations
             Next
 
             c = 1
+
             For Each v As Double In sorted.Keys.OrderByDescending(Function(k) k)
                 Dim r As Double = 0
                 For Each i As Integer In sorted(v)
@@ -240,8 +240,6 @@ Namespace Math.Correlations
         ''' https://github.com/felipebravom/RankCorrelation
         ''' </remarks>
         Public Function kendallTauBeta(x As Double(), y As Double()) As Double
-            Debug.Assert(x.Length = y.Length)
-
             Dim c As Integer = 0
             Dim d As Integer = 0
             Dim xTies As New Dictionary(Of Double?, HashSet(Of Integer?))()
@@ -300,9 +298,8 @@ Namespace Math.Correlations
                 denom += 0.000000001
             End If
 
-            Dim td As Double = diff / (denom) ' 0.000..1 added on 11/02/2013 fixing NaN error
-
-            Debug.Assert(td >= -1 AndAlso td <= 1, td)
+            ' 0.000..1 added on 11/02/2013 fixing NaN error
+            Dim td As Double = diff / (denom)
 
             Return td
         End Function

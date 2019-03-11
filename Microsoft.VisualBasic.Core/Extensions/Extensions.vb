@@ -409,6 +409,21 @@ Public Module Extensions
         Return value
     End Function
 
+    <Extension>
+    Public Function ElementAtOrNull(Of T)(array As T(), index As Integer) As T
+        If array Is Nothing Then
+            Return Nothing
+        ElseIf index < 0 Then
+            index = array.Length + index
+        End If
+
+        If index < 0 OrElse index >= array.Length Then
+            Return Nothing
+        Else
+            Return array(index)
+        End If
+    End Function
+
     <Extension> Public Function [Set](Of T)(ByRef array As T(), index As Integer, value As T) As T()
         If index < 0 Then
             Return array

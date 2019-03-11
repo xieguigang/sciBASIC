@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::b62325c0704b5a456b1714bb83ade99f, Data\DataFrame\IO\DataFrame.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataFrame
-    ' 
-    '         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
-    '                     IsClosed, Item, RecordsAffected, SchemaOridinal
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: [Select], __createObject, __createSchemaOridinal, __createTableVector, __getColumnList
-    '                   __reviewColumnHeader, AddAttribute, CreateDataSource, CreateObject, csv
-    '                   EnumerateData, Generate, GetBoolean, GetByte, GetBytes
-    '                   GetChar, GetChars, GetData, GetDataTypeName, GetDateTime
-    '                   GetDecimal, GetDouble, GetEnumerator2, GetFieldType, GetFloat
-    '                   GetGuid, GetInt16, GetInt32, GetInt64, GetName
-    '                   GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
-    '                   GetValues, IDataRecord_GetValue, IsDBNull, Load, Parse
-    '                   Read, ToString
-    ' 
-    '         Sub: ChangeMapping, Close, CopyFrom, Reset
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataFrame
+' 
+'         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
+'                     IsClosed, Item, RecordsAffected, SchemaOridinal
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: [Select], __createObject, __createSchemaOridinal, __createTableVector, __getColumnList
+'                   __reviewColumnHeader, AddAttribute, CreateDataSource, CreateObject, csv
+'                   EnumerateData, Generate, GetBoolean, GetByte, GetBytes
+'                   GetChar, GetChars, GetData, GetDataTypeName, GetDateTime
+'                   GetDecimal, GetDouble, GetEnumerator2, GetFieldType, GetFloat
+'                   GetGuid, GetInt16, GetInt32, GetInt64, GetName
+'                   GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString, GetValue
+'                   GetValues, IDataRecord_GetValue, IsDBNull, Load, Parse
+'                   Read, ToString
+' 
+'         Sub: ChangeMapping, Close, CopyFrom, Reset
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -269,14 +269,49 @@ Namespace IO
         ''' </summary>
         ''' <returns></returns>
         Public Function csv() As File
-            Dim File As New File
-            File += New RowObject(__columnList)
-            File += DirectCast(_innerTable, IEnumerable(Of RowObject))
-            Return File
+            Dim file As New File
+            file += New RowObject(__columnList)
+            file += DirectCast(_innerTable, IEnumerable(Of RowObject))
+            Return file
         End Function
 
         Protected Friend Sub New()
         End Sub
+
+        ''' <summary>
+        ''' Create a new dataframe with column value assigned
+        ''' </summary>
+        ''' <param name="columns">
+        ''' 只支持基础类型,不支持复杂类型,因为csv文件的单元格不适用于复杂数据类型的数据文本的存储
+        ''' </param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(ParamArray columns As ArgumentReference())
+            Call Initialize(ColumnRows(columns).AsList, Me)
+        End Sub
+
+        Private Shared Iterator Function ColumnRows(columns As ArgumentReference()) As IEnumerable(Of RowObject)
+            Dim matrix As Object()() = columns _
+                .Select(Function(c)
+                            Return DirectCast(c.value, IEnumerable).ToVector
+                        End Function) _
+                .ToArray
+            Dim maxLen = Aggregate c In matrix Into Max(c.Length)
+            Dim row As IEnumerable(Of String)
+
+            ' yield title row
+            Yield New RowObject(columns.Select(Function(c) c.name))
+
+            For i As Integer = 0 To maxLen - 1
+#Disable Warning
+                row = matrix _
+                    .Select(Function(v)
+                                Return v.ElementAtOrNull(i)
+                            End Function) _
+                    .Select(AddressOf Scripting.ToString)
+#Enable Warning
+                Yield New RowObject(row)
+            Next
+        End Function
 
         ''' <summary>
         ''' Try loading a excel csv data file as a dynamics data frame object.(尝试加载一个Csv文件为数据框对象，请注意，第一行必须要为标题行)
@@ -294,7 +329,7 @@ Namespace IO
                 file = File.Load(path, encoding)
             End If
 
-            Return CreateObject(File)
+            Return CreateObject(file)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -360,15 +395,18 @@ Namespace IO
             End Try
         End Function
 
+        Private Shared Sub Initialize(table As List(Of RowObject), dataframe As DataFrame)
+            dataframe._innerTable = table.Skip(1).AsList
+            dataframe.__columnList = __getColumnList(table)
+            dataframe._SchemaOridinal = __createSchemaOridinal(dataframe)
+        End Sub
+
         Private Shared Function __createObject(file As File) As DataFrame
-            Dim df As New DataFrame With {
-                ._innerTable = file._innerTable.Skip(1).AsList,
+            Dim dataframe As New DataFrame With {
                 .FilePath = file.FilePath
             }
-            df.__columnList = __getColumnList(file._innerTable)
-            df._SchemaOridinal = __createSchemaOridinal(df)
-
-            Return df
+            Call Initialize(file._innerTable, dataframe)
+            Return dataframe
         End Function
 
         Protected Friend Overrides Function __createTableVector() As RowObject()

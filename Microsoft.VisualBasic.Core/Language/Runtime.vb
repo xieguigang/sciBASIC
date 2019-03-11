@@ -1,68 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::592555dd2c6e5c688ee4eb66f89500f4, Microsoft.VisualBasic.Core\Language\Runtime.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ArgumentReference
-    ' 
-    '         Properties: Expression, Key
-    ' 
-    '         Function: ToString
-    '         Operators: <>, =
-    ' 
-    '     Class TypeSchema
-    ' 
-    '         Properties: Type
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Equals, ToString
-    '         Operators: (+2 Overloads) And, (+2 Overloads) Or
-    ' 
-    '     Class Runtime
-    ' 
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ArgumentReference
+' 
+'         Properties: Expression, Key
+' 
+'         Function: ToString
+'         Operators: <>, =
+' 
+'     Class TypeSchema
+' 
+'         Properties: Type
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Equals, ToString
+'         Operators: (+2 Overloads) And, (+2 Overloads) Or
+' 
+'     Class Runtime
+' 
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language.Default
 
 Namespace Language
 
+    ''' <summary>
+    ''' ``[name => value]`` tuple
+    ''' </summary>
     Public Class ArgumentReference : Implements INamedValue
 
         Public name$, value
@@ -102,6 +106,11 @@ Namespace Language
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function [As](Of T)() As NamedValue(Of T)
+            Return New NamedValue(Of T)(name, value)
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"Dim {name} As Object = {Scripting.ToString(value, "null")}"
         End Function
@@ -120,6 +129,11 @@ Namespace Language
 
         Public Shared Operator <>(var As ArgumentReference, value As Object) As ArgumentReference
             Throw New NotImplementedException
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(arg As ArgumentReference) As (name As String, value As Object)
+            Return (arg.name, arg.value)
         End Operator
     End Class
 
