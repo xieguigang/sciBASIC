@@ -173,7 +173,7 @@ Namespace NeuralNetwork
                     progress.SetProgress(tick.StepProgress, msg)
 
                     If errors < 1 Then
-                        network.LearnRate = errors
+                        network.LearnRate = errors / 3
                     End If
 
                     If Not reporter Is Nothing Then
