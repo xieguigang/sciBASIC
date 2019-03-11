@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::ce75948f50eb07f3958071402aa033b0, CLI_tools\ANN\CLI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module CLI
-    ' 
-    '     Function: ConfigTemplate, Encourage, runTrainingCommon, Train
-    ' 
-    ' /********************************************************************************/
+' Module CLI
+' 
+'     Function: ConfigTemplate, Encourage, runTrainingCommon, Train
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -48,8 +48,40 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
+Imports Microsoft.VisualBasic.MIME.application.netCDF
+Imports DataFrame = Microsoft.VisualBasic.Data.csv.IO.DataFrame
+Imports VisualBasic = Microsoft.VisualBasic.Language.Runtime
 
 Module CLI
+
+    <ExportAPI("/Summary.Debugger.Dump")>
+    <Usage("/Summary.Debugger.Dump /in <debugger_out.cdf>")>
+    Public Sub SummaryDebuggerDump(args As CommandLine)
+        Call New netCDFReader(args <= "/in").Print()
+    End Sub
+
+    ''' <summary>
+    ''' 导出误差率曲线数据
+    ''' </summary>
+    ''' <param name="args"></param>
+    ''' <returns></returns>
+    ''' 
+    <ExportAPI("/Export.Errors.Curve")>
+    <Usage("/Export.Errors.Curve /in <debugger_out.cdf> [/out <errors.csv>]")>
+    Public Function ExportErrorCurve(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.errors.csv"
+        Dim cdf As New netCDFReader([in])
+        Dim errors = cdf.getDataVariable("fitness").numerics
+        Dim index = cdf.getDataVariable("iterations").integers
+
+        With New VisualBasic
+            Return New DataFrame(!iterations = index, !fitness = errors) _
+                .csv _
+                .Save(out) _
+                .CLICode
+        End With
+    End Function
 
     <ExportAPI("/config.template")>
     <Usage("/config.template [/save <default=./config.ini>]")>

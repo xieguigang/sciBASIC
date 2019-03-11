@@ -61,7 +61,8 @@ Module Debugger
                  New Components.attribute With {.name = "hidden_layers", .type = CDFDataTypes.CHAR, .value = network.HiddenLayer.Select(Function(l) l.Neurons.Length).JoinBy(", ")},
                  New Components.attribute With {.name = "synapse_edges", .type = CDFDataTypes.CHAR, .value = synapses.Length},
                  New Components.attribute With {.name = "times", .type = CDFDataTypes.CHAR, .value = App.ElapsedMilliseconds},
-                 New Components.attribute With {.name = "ANN", .type = CDFDataTypes.CHAR, .value = network.GetType.FullName}
+                 New Components.attribute With {.name = "ANN", .type = CDFDataTypes.CHAR, .value = network.GetType.FullName},
+                 New Components.attribute With {.name = "Github", .type = CDFDataTypes.CHAR, .value = LICENSE.githubURL}
             }
             Dim dimensions = {
                 New Components.Dimension With {.name = "index_number", .size = 4},
@@ -96,6 +97,10 @@ Module Debugger
 
             Call debugger.AddVariable("iterations", index.ToArray, {"index_number"})
             Call debugger.AddVariable("fitness", errors.ToArray, {GetType(Double).FullName})
+
+            For Each active In network.Activations
+                Call debugger.AddVariable("active=" & active.Key, active.Value.ToString, {GetType(String).FullName})
+            Next
 
             For Each s In synapses
                 attrs = {

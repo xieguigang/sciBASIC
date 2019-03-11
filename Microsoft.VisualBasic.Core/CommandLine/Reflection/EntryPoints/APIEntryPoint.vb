@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::6ae21554a4700d0bc3b8a933c53555b2, Microsoft.VisualBasic.Core\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class APIEntryPoint
-    ' 
-    '         Properties: Arguments, EntryPoint, IsInstanceMethod, target
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: __directInvoke, DirectInvoke, EntryPointFullName, HelpInformation, (+2 Overloads) Invoke
-    '                   InvokeCLI
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class APIEntryPoint
+' 
+'         Properties: Arguments, EntryPoint, IsInstanceMethod, target
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: __directInvoke, DirectInvoke, EntryPointFullName, HelpInformation, (+2 Overloads) Invoke
+'                   InvokeCLI
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -305,17 +305,26 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <remarks></remarks>
         Public Function InvokeCLI(parameters As Object(), target As Object, Optional [Throw] As Boolean = True) As Integer
             Dim rtvl As Object = Invoke(parameters, target, [Throw])
-            Dim Type As Type = rtvl.GetType
 
-            If Type = GetType(Integer) OrElse
-                Type = GetType(Long) OrElse
-                Type = GetType(Double) OrElse
-                Type = GetType(Short) Then
-
-                Return CType(rtvl, Integer)
+            If EntryPoint.ReturnType Is GetType(Void) Then
+                ' is a sub
+                ' always return zero
+                Return 0
+            ElseIf rtvl Is Nothing Then
+                ' function return value is nothing
+                Return -1
             Else
-                Dim value As Integer = If(rtvl Is Nothing, -1, 0)
-                Return value
+                Dim type As Type = rtvl.GetType
+
+                If type = GetType(Integer) OrElse
+                   type = GetType(Long) OrElse
+                   type = GetType(Double) OrElse
+                   type = GetType(Short) Then
+
+                    Return CType(rtvl, Integer)
+                Else
+                    Return 0
+                End If
             End If
         End Function
 #End Region
