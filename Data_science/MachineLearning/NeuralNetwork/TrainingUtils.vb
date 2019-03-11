@@ -172,9 +172,9 @@ Namespace NeuralNetwork
                     msg = $"Iterations: [{i}/{numEpochs}], errors={errors}{vbTab}learn_rate={network.LearnRate} {ETA}"
                     progress.SetProgress(tick.StepProgress, msg)
 
-                    If errors < 1 Then
-                        network.LearnRate = errors / 3
-                    End If
+                    'If errors < 1 Then
+                    '    network.LearnRate = errors / 3
+                    'End If
 
                     If Not reporter Is Nothing Then
                         Call reporter(i, errors, network)

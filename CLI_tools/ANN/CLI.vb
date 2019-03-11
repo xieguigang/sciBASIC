@@ -145,7 +145,7 @@ Module CLI
         )
 
         trainingHelper.NeuronNetwork.LearnRateDecay = config.learnRateDecay
-        trainingHelper.Truncate = 2
+        ' trainingHelper.Truncate = 20
 
         For Each sample As Sample In samples.PopulateNormalizedSamples(dummyExtends)
             Call trainingHelper.Add(sample.status, sample.target)
