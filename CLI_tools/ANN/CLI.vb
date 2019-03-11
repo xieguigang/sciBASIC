@@ -124,9 +124,10 @@ Module CLI
             .input = ActiveFunction.Parse(config.input_active Or defaultActive),
             .output = ActiveFunction.Parse(config.output_active Or defaultActive)
         }
+        Dim dummyExtends% = 6
         Dim trainingHelper As New TrainingUtils(
             samples.Size.Width, hiddenSize,
-            samples.OutputSize,
+            samples.OutputSize + dummyExtends,
             config.learnRate,
             config.momentum,
             actives
@@ -134,7 +135,7 @@ Module CLI
 
         trainingHelper.NeuronNetwork.LearnRateDecay = config.learnRateDecay
 
-        For Each sample As Sample In samples.PopulateNormalizedSamples
+        For Each sample As Sample In samples.PopulateNormalizedSamples(dummyExtends)
             Call trainingHelper.Add(sample.status, sample.target)
         Next
 
