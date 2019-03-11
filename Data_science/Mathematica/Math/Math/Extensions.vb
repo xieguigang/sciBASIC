@@ -137,6 +137,15 @@ Public Module Extensions
     End Function
 
     ''' <summary>
+    ''' FDR错误控制法是Benjamini于1995年提出一种方法,通过控制FDR(False Discovery Rate)来决定P值的域值. 
+    ''' 假设你挑选了``R``个差异表达的基因，其中有``S``个是真正有差异表达的，另外有``V``个其实是没有差异表达的，是假阳性的。
+    ''' 实践中希望错误比例``Q＝V/R``平均而言不能超过某个预先设定的值（比如0.05），在统计学上，
+    ''' 这也就等价于控制FDR不能超过5％.
+    ''' 
+    ''' 对所有候选基因的p值进行从小到大排序，则若想控制fdr不能超过q，则只需找到最大的正整数i，使得 
+    ''' ``p(i)&lt;= (i*q)/m``.然后，挑选对应p(1),p(2),...,p(i)的基因做为差异表达基因，这样就能从统计学上
+    ''' 保证fdr不超过q。因此，FDR的计算公式如下
+    ''' 
     ''' ``FDR = length(pvalue)*pvalue/rank(pvalue)``
     ''' </summary>
     ''' <param name="pvalue"></param>
