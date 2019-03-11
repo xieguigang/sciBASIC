@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64a212aa64fc4b6ebc1e5234edc18773, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
+﻿#Region "Microsoft.VisualBasic::c5225b4af5fd36e23f324d22b213f8db, gr\Microsoft.VisualBasic.Imaging\d3js\scale\IScale.vb"
 
     ' Author:
     ' 

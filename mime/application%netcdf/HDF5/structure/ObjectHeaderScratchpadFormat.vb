@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6621f81dc640e1c51ef92c8ffa8f9d83, mime\application%netcdf\HDF5\structure\ObjectHeaderScratchpadFormat.vb"
+﻿#Region "Microsoft.VisualBasic::e834a18c5f0a35ed4221ad54ae3fbec0, mime\application%netcdf\HDF5\structure\ObjectHeaderScratchpadFormat.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '
 ' * Mostly copied from NETCDF4 source code.
@@ -110,4 +109,3 @@ Namespace HDF5.[Structure]
     End Class
 
 End Namespace
-

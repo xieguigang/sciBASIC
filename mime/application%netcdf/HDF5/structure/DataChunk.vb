@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fbcb2c2298b4101cad87a2592d580a8, mime\application%netcdf\HDF5\structure\DataChunk.vb"
+﻿#Region "Microsoft.VisualBasic::01b5a70dd219d474a6e435fd43200af7, mime\application%netcdf\HDF5\structure\DataChunk.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '
 ' * Mostly copied from NETCDF4 source code.
@@ -128,4 +127,3 @@ Namespace HDF5.[Structure]
     End Class
 
 End Namespace
-

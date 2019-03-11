@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::130b7311f6a8f174fbfc81795c78adc9, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\SlideWindow\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::645e34468475fd9a042e5e697adf66c2, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\base\SlideWindow\Extensions.vb"
 
     ' Author:
     ' 

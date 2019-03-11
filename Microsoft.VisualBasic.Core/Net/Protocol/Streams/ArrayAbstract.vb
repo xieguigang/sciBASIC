@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::caea15ee86f20fc11ef8717b7b145706, Microsoft.VisualBasic.Core\Net\Protocol\Streams\ArrayAbstract.vb"
+﻿#Region "Microsoft.VisualBasic::e52c60785e17e642c2addcc5c88d17f1, Microsoft.VisualBasic.Core\Net\Protocol\Streams\ArrayAbstract.vb"
 
     ' Author:
     ' 

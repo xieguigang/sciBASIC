@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::867a991f956604f21f7eb1ea8bc0f4c3, Data_science\Mathematica\SignalProcessing\WaveletTransform\Constructors\Daubechies.vb"
+﻿#Region "Microsoft.VisualBasic::c15d359e743beb8b3c0660c748febde7, Data_science\Mathematica\SignalProcessing\WaveletTransform\Constructors\Daubechies.vb"
 
     ' Author:
     ' 

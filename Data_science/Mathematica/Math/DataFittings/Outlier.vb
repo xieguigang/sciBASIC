@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5259795d0603abe8e84b073d48bcdc2b, Data_science\Mathematica\Math\DataFittings\Outlier.vb"
+﻿#Region "Microsoft.VisualBasic::7547509921d18d4a9ed6d034ae7713a1, Data_science\Mathematica\Math\DataFittings\Outlier.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6592fc5b5e7fcb6e9d9c9fc1a89fa460, mime\application%netcdf\HDF5\structure\LayoutField.vb"
+﻿#Region "Microsoft.VisualBasic::0643358e0848cab314fd791e9176d16f, mime\application%netcdf\HDF5\structure\LayoutField.vb"
 
     ' Author:
     ' 
@@ -99,4 +99,3 @@ Namespace HDF5.[Structure]
 	End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51c905ee22ee2a6e6c8b36d276a6cdc9, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::e72c1819df62abe71b1a2879fc89c6d0, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 ''' <summary>
 ''' Tools for http get

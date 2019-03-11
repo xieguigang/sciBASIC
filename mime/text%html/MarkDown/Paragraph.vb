@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bf9067fc6366a38dfea105fa1cadb67, mime\text%html\MarkDown\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::8b53f7fd97cf9b50a4718a3d47f77b45, mime\text%html\MarkDown\Paragraph.vb"
 
     ' Author:
     ' 
@@ -41,9 +41,10 @@
 #End Region
 
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.MIME.Markup.MarkDown.Span
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Markup.MarkDown.Span
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace MarkDown
 

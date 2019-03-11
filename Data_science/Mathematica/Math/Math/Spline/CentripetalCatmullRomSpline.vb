@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6818dfe6fa916242f3c167754e0b905, Data_science\Mathematica\Math\Math\Spline\CentripetalCatmullRomSpline.vb"
+﻿#Region "Microsoft.VisualBasic::fed4f42b48c5663d33fe0e8afd4a1731, Data_science\Mathematica\Math\Math\Spline\CentripetalCatmullRomSpline.vb"
 
     ' Author:
     ' 

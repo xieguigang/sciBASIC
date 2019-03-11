@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0965289e3eaf0038712d540a7382413e, Microsoft.VisualBasic.Core\Text\IO\TextFileEncodingDetector.vb"
+﻿#Region "Microsoft.VisualBasic::5f43b698ba21ad10df9cb0c9dd72dc57, Microsoft.VisualBasic.Core\Text\IO\TextFileEncodingDetector.vb"
 
     ' Author:
     ' 

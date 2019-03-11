@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a4653d898a398b46b2d25c613bd51dc, mime\text%html\MarkDown\Span\LinksParser.vb"
+﻿#Region "Microsoft.VisualBasic::b2eec2ed7cda2195c08eceb5b8175036, mime\text%html\MarkDown\Span\LinksParser.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
 #End Region
 
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace MarkDown.Span
 

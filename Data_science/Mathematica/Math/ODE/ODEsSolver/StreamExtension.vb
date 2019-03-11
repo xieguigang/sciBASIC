@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b8b26eba820a42da629f6bd3a819fbe, Data_science\Mathematica\Math\ODE\ODEsSolver\StreamExtension.vb"
+﻿#Region "Microsoft.VisualBasic::94b96a03eac039d31add7e1eb33445d6, Data_science\Mathematica\Math\ODE\ODEsSolver\StreamExtension.vb"
 
     ' Author:
     ' 

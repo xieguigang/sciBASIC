@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::03139aafad0bf0b8ac5db6c599bdfb58, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Triangle.vb"
+﻿#Region "Microsoft.VisualBasic::134091b26ae2f4d43be901b32e1aa10d, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Triangle.vb"
 
     ' Author:
     ' 

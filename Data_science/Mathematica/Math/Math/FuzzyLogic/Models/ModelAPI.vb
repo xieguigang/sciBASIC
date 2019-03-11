@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8cb246e90e164a052216fd40b107d4a1, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\ModelAPI.vb"
+﻿#Region "Microsoft.VisualBasic::b0814fd6f2a5f33a58bddd8f9429ba9d, Data_science\Mathematica\Math\Math\FuzzyLogic\Models\ModelAPI.vb"
 
     ' Author:
     ' 

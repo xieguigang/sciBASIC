@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38179f0262ece98779d6dc89d8b2cc56, mime\application%netcdf\HDF5\io\BinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::d396442c0e23d605a78385ec31baaf0d, mime\application%netcdf\HDF5\io\BinaryReader.vb"
 
     ' Author:
     ' 
@@ -227,4 +227,3 @@ Namespace HDF5.IO
     End Class
 
 End Namespace
-

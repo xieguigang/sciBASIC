@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4603d2122c5744292327442ff236a8ea, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::d7497de54115f6639b4080343f28b85c, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -56,6 +56,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace CommandLine.InteropService
 

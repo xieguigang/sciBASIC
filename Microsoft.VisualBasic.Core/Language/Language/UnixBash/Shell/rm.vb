@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed5c63b298fc2b051b5de076932172ae, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\rm.vb"
+﻿#Region "Microsoft.VisualBasic::49ae1c1c0e3f129439b691bcc5e5705d, Microsoft.VisualBasic.Core\Language\Language\UnixBash\Shell\rm.vb"
 
     ' Author:
     ' 

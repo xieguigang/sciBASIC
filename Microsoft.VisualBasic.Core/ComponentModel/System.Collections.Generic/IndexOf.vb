@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cea36b6d1c7ffb15d05a1b31af45f5e3, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::3a33647a4cbdc7ce8c8ff0703e711c55, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -275,6 +275,12 @@ Namespace ComponentModel.Collection
             Return New Index(Of T)(source:=objs)
         End Operator
 
+        ''' <summary>
+        ''' Add a new key to this index object.
+        ''' </summary>
+        ''' <param name="index">Element key index object.</param>
+        ''' <param name="element"></param>
+        ''' <returns></returns>
         Public Shared Operator +(index As Index(Of T), element As T) As Index(Of T)
             Call index.Add(element)
             Return index

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c82045a56ccf9a6611a6f19d9df9155, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PipelineCLI.vb"
+﻿#Region "Microsoft.VisualBasic::f9c537d0cc552ed8793446d19ab169e0, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\PipelineCLI.vb"
 
     ' Author:
     ' 

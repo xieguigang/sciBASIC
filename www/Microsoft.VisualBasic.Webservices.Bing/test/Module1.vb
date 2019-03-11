@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50c6ea33bfbbc9a7c61974bf99ad5a2f, www\Microsoft.VisualBasic.Webservices.Bing\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::04044fa645c4e5d609c954ca34804703, www\Microsoft.VisualBasic.Webservices.Bing\test\Module1.vb"
 
     ' Author:
     ' 

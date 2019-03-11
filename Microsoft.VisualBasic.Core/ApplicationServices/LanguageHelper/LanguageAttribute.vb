@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b25e743ee7591c1e71fdaa2fd2db4d63, Microsoft.VisualBasic.Core\ApplicationServices\LanguageHelper\LanguageAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::32440ddcf8c97f7be3cf918c5dd8093d, Microsoft.VisualBasic.Core\ApplicationServices\LanguageHelper\LanguageAttribute.vb"
 
     ' Author:
     ' 

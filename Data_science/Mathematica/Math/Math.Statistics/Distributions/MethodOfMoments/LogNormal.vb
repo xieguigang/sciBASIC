@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::382706df072fa14e1c68fe82e02b226f, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogNormal.vb"
+﻿#Region "Microsoft.VisualBasic::18e0245aec13d72e55c901da6561ef4f, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogNormal.vb"
 
     ' Author:
     ' 

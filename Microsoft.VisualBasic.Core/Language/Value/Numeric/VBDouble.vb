@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83be96a41eaeccc991bca0d692285d75, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBDouble.vb"
+﻿#Region "Microsoft.VisualBasic::b46fb107a9dd14e75e54f6e063a8932d, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBDouble.vb"
 
     ' Author:
     ' 

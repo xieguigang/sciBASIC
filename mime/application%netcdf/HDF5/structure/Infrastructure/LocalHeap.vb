@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e6be876a68b43e6e4973de3d2bbc902, mime\application%netcdf\HDF5\structure\Infrastructure\LocalHeap.vb"
+﻿#Region "Microsoft.VisualBasic::a849e5d234919673e6938d8b76363248, mime\application%netcdf\HDF5\structure\Infrastructure\LocalHeap.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '
 ' * Mostly copied from NETCDF4 source code.
@@ -215,4 +214,3 @@ Namespace HDF5.[Structure]
     End Class
 
 End Namespace
-

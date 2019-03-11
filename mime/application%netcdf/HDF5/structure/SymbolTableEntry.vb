@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0f6fab94953628e1a152947ab656bbc, mime\application%netcdf\HDF5\structure\SymbolTableEntry.vb"
+﻿#Region "Microsoft.VisualBasic::764b210460aaa9e5487e31e496bb5c42, mime\application%netcdf\HDF5\structure\SymbolTableEntry.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '
 ' * Mostly copied from NETCDF4 source code.
@@ -196,4 +195,3 @@ Namespace HDF5.[Structure]
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::094911135c6824fc45785e7a13f4cdfa, gr\network-visualization\Visualizer\Styling\Expression\SizeExpression.vb"
+﻿#Region "Microsoft.VisualBasic::a161d50106ca816f96d21d84756d5b91, gr\network-visualization\Visualizer\Styling\Expression\SizeExpression.vb"
 
     ' Author:
     ' 

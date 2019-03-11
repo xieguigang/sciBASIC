@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c69e6e0f1acf36bb04b2b3cbb252d26, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\DoCall.vb"
+﻿#Region "Microsoft.VisualBasic::d59eddff78e4a9d86ef95970489ec230, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\DoCall.vb"
 
     ' Author:
     ' 

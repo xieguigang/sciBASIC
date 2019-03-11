@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f61a2d513e29652188a886d4659906c, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Octahedron.vb"
+﻿#Region "Microsoft.VisualBasic::640d585d66a5bf006eb289d8fab9687a, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Shapes\Octahedron.vb"
 
     ' Author:
     ' 

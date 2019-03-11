@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f15c3bec8897be389b15949bd09eb9f2, Microsoft.VisualBasic.Core\Extensions\ValueTypes\TimeSpanScale.vb"
+﻿#Region "Microsoft.VisualBasic::9abbd0feae7d88a1385a7b1b27ae1eeb, Microsoft.VisualBasic.Core\Extensions\ValueTypes\TimeSpanScale.vb"
 
     ' Author:
     ' 

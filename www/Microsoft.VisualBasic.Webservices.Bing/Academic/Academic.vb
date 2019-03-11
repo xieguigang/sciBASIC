@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e46775da26c0be1f4b8730b25447dfa2, www\Microsoft.VisualBasic.Webservices.Bing\Academic\Academic.vb"
+﻿#Region "Microsoft.VisualBasic::54107145f56d52a0fbdf477c8a045fd0, www\Microsoft.VisualBasic.Webservices.Bing\Academic\Academic.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Scripting.MetaData
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Academic

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::caee8921de8aef7e1ccec0d478fa11a3, Data\BinaryData\BinaryData\Extensions\FixLengthString.vb"
+﻿#Region "Microsoft.VisualBasic::6e9cce0d67ecbc1f78a9a1db13f2dae5, Data\BinaryData\BinaryData\Extensions\FixLengthString.vb"
 
     ' Author:
     ' 

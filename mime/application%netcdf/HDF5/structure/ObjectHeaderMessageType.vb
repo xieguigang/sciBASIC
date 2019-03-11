@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04267838c513f248e25540cd6a29c8ea, mime\application%netcdf\HDF5\structure\ObjectHeaderMessageType.vb"
+﻿#Region "Microsoft.VisualBasic::0b7f34ceec52210423629e26bd8e3cca, mime\application%netcdf\HDF5\structure\ObjectHeaderMessageType.vb"
 
     ' Author:
     ' 
@@ -130,4 +130,3 @@ Namespace HDF5.[Structure]
 		End Property
 	End Class
 End Namespace
-

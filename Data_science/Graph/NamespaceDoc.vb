@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42f959b21b6122749cfa0d83e2fb80c7, Data_science\Graph\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::5205ab4f06c4421186cf0c22a64468d0, Data_science\Graph\NamespaceDoc.vb"
 
     ' Author:
     ' 

@@ -943,6 +943,8 @@
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Collection\IsNullOrEmptyExtensions.vb" />
+    <Compile Include="Extensions\Collection\Linq\Enumeration.vb" />
+    <Compile Include="Extensions\Collection\Linq\SeqValue.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
@@ -1113,6 +1115,7 @@
     <Compile Include="Serialization\Abstract.vb" />
     <Compile Include="Serialization\JSON\AnonymousJSON.vb" />
     <Compile Include="Text\Parser\CharEnumerator.vb" />
+    <Compile Include="Text\Parser\TryParse.vb" />
     <Compile Include="Text\Patterns\Regexp.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />

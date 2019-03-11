@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c61d31cbf3bfcf6a60745eb5670cb52f, mime\text%yaml\1.1\Base\Emitter.vb"
+﻿#Region "Microsoft.VisualBasic::b2545b69d2d9bb6a168fe506faccb9b8, mime\text%yaml\1.1\Base\Emitter.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbbbd2c41e1657db270004a827fe80eb, mime\text%html\HTML\Image.vb"
+﻿#Region "Microsoft.VisualBasic::11a8d9f44d6624ed9cf997f9d6419aaa, mime\text%html\HTML\Image.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq.Extensions
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Namespace HTML
 

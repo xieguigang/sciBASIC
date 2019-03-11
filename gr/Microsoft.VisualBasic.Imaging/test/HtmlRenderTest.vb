@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ddcdef950eba93a936a826907724eae, gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
+﻿#Region "Microsoft.VisualBasic::b3b104c8976e1236b0acf8bd8d1188f0, gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
 
     ' Author:
     ' 

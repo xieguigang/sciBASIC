@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c13eb1352343e2cb3fb08e5d9614c58, mime\application%netcdf\HDF5\HDF5Reader.vb"
+﻿#Region "Microsoft.VisualBasic::20157b1c1fd6d6c84ee14d2e8c98a95d, mime\application%netcdf\HDF5\HDF5Reader.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 '
 ' * Written by iychoi@email.arizona.edu
@@ -170,4 +169,3 @@ Namespace HDF5
     End Class
 
 End Namespace
-

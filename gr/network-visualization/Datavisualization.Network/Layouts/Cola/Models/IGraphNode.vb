@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2ceb08e53682a7a743f0f4de217291d, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\IGraphNode.vb"
+﻿#Region "Microsoft.VisualBasic::140cbf7865daf2ad6e34dac643d7ae6f, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\IGraphNode.vb"
 
     ' Author:
     ' 

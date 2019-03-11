@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dee2d8d0f53ba05d0eac663a4e5700d, Microsoft.VisualBasic.Core\Text\Xml\XmlBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::78afd42db1ad39f3890cf2ebe6c5bb71, Microsoft.VisualBasic.Core\Text\Xml\XmlBuilder.vb"
 
     ' Author:
     ' 

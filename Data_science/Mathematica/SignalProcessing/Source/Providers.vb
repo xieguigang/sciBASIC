@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b96e26df5b3c28ce33d71ea1609e2b69, Data_science\Mathematica\SignalProcessing\Source\Providers.vb"
+﻿#Region "Microsoft.VisualBasic::677e8dec4bbac2e1c6fe1a5439c066ad, Data_science\Mathematica\SignalProcessing\Source\Providers.vb"
 
     ' Author:
     ' 

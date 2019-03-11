@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::378c45f6f934e666375d27fb6c5e3c42, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\AlgorithmExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::9a204185c69496c5960a9fb786b4ce39, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\AlgorithmExtensions.vb"
 
     ' Author:
     ' 

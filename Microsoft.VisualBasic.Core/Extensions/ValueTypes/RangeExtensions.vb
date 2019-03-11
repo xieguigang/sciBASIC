@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1d0cec8228de1019b9c7e5945b6c7ef, Microsoft.VisualBasic.Core\Extensions\ValueTypes\RangeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::b1c22cec845b7163a9fd2eda5d8b5433, Microsoft.VisualBasic.Core\Extensions\ValueTypes\RangeExtensions.vb"
 
     ' Author:
     ' 
@@ -48,9 +48,7 @@ Namespace ValueTypes
     Public Module RangeExtensions
 
         ''' <summary>
-        ''' 这个函数返回[0, 1]之间的百分比位置值.
-        ''' 
-        ''' ```vbnet
+        ''' ```
         ''' d = <paramref name="value"/> - <see cref="DoubleRange.Min"/>
         ''' p% = d / <see cref="DoubleRange.Length"/> * 100%
         ''' ```
