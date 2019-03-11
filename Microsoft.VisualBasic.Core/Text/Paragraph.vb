@@ -49,6 +49,13 @@ Namespace Text
 
     Public Module Paragraph
 
+        <Extension>
+        Public Iterator Function Chunks(text$, lineBreak%) As IEnumerable(Of String)
+            For i As Integer = 1 To text.Length Step lineBreak
+                Yield Mid(text, i, lineBreak)
+            Next
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
