@@ -60,6 +60,17 @@ Module CLI
         Call New netCDFReader(args <= "/in").Print()
     End Sub
 
+    <ExportAPI("/Snapshot.min_errors")>
+    <Usage("/Snapshot.min_errors /in <debugger.cdf> [/out <snapshot.Xml>]")>
+    Public Function MinErrorSnapshot(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.Snapshot.min_errors.Xml"
+        Dim debugger As New netCDFReader([in])
+        Dim errors = debugger.getDataVariable("fitness").numerics
+        Dim index = Which.Min(errors)
+
+    End Function
+
     ''' <summary>
     ''' 导出误差率曲线数据
     ''' </summary>
@@ -124,7 +135,7 @@ Module CLI
             .input = ActiveFunction.Parse(config.input_active Or defaultActive),
             .output = ActiveFunction.Parse(config.output_active Or defaultActive)
         }
-        Dim dummyExtends% = 6
+        Dim dummyExtends% = 8
         Dim trainingHelper As New TrainingUtils(
             samples.Size.Width, hiddenSize,
             samples.OutputSize + dummyExtends,
@@ -176,12 +187,19 @@ Module CLI
             synapsesWeights.Add(s.ToString, New List(Of Double))
         Next
 
+        Dim minErr# = 99999
+
         Call Console.WriteLine(trainer.NeuronNetwork.ToString)
         Call trainer _
             .AttachReporter(Sub(i, err, model)
                                 Call index.Add(i)
                                 Call errors.Add(err)
                                 Call synapses.DoEach(Sub(s) synapsesWeights(s.ToString).Add(s.Weight))
+
+                                If err < minErr Then
+                                    Call trainer.TakeSnapshot.GetXml.SaveTo("./minerror.Xml")
+                                    minErr = err
+                                End If
                             End Sub) _
             .Train(parallel)
 
