@@ -1,51 +1,51 @@
 ﻿#Region "Microsoft.VisualBasic::605ec5ac32e983e8dd79aeaf01e197ff, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module VBMath
-    ' 
-    '         Function: (+7 Overloads) Abs, Acos, Asin, Atan, Atan2
-    '                   BigMul, (+2 Overloads) Ceiling, Cos, Cosh, Covariance
-    '                   CumSum, Distance, (+2 Overloads) DivRem, (+6 Overloads) EuclideanDistance, Exp
-    '                   Factorial, FactorialSequence, (+2 Overloads) Floor, FormatNumeric, Hypot
-    '                   IEEERemainder, IsPowerOf2, (+2 Overloads) Log, Log10, Log2
-    '                   LogN, (+12 Overloads) Max, (+11 Overloads) Min, PoissonPDF, Pow
-    '                   Pow2, (+2 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, (+8 Overloads) Round
-    '                   RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign, Sin
-    '                   Sinh, Sqrt, Sum, Tan, Tanh
-    '                   (+2 Overloads) Truncate, WeighedAverage
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module VBMath
+' 
+'         Function: (+7 Overloads) Abs, Acos, Asin, Atan, Atan2
+'                   BigMul, (+2 Overloads) Ceiling, Cos, Cosh, Covariance
+'                   CumSum, Distance, (+2 Overloads) DivRem, (+6 Overloads) EuclideanDistance, Exp
+'                   Factorial, FactorialSequence, (+2 Overloads) Floor, FormatNumeric, Hypot
+'                   IEEERemainder, IsPowerOf2, (+2 Overloads) Log, Log10, Log2
+'                   LogN, (+12 Overloads) Max, (+11 Overloads) Min, PoissonPDF, Pow
+'                   Pow2, (+2 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS, (+8 Overloads) Round
+'                   RSD, (+4 Overloads) SD, (+2 Overloads) seq, (+7 Overloads) Sign, Sin
+'                   Sinh, Sqrt, Sum, Tan, Tanh
+'                   (+2 Overloads) Truncate, WeighedAverage
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -1764,6 +1764,53 @@ Namespace Math
                     .Sum
             End If
         End Function
+
+#Region "Sum all tuple members"
+
+        ''' <summary>
+        ''' Sum all tuple members
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Sum(t As ValueTuple(Of Double, Double)) As Double
+            Return t.Item1 + t.Item2
+        End Function
+
+        ''' <summary>
+        ''' Sum all tuple members
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Sum(t As ValueTuple(Of Double, Double, Double)) As Double
+            Return t.Item1 + t.Item2 + t.Item3
+        End Function
+
+        ''' <summary>
+        ''' Sum all tuple members
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Sum(t As ValueTuple(Of Double, Double, Double, Double)) As Double
+            Return t.Item1 + t.Item2 + t.Item3 + t.Item4
+        End Function
+
+        ''' <summary>
+        ''' Sum all tuple members
+        ''' </summary>
+        ''' <param name="t"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Sum(t As ValueTuple(Of Double, Double, Double, Double, Double)) As Double
+            Return t.Item1 + t.Item2 + t.Item3 + t.Item4 + t.Item5
+        End Function
+#End Region
 
         ''' <summary>
         ''' 计算出所有的数的乘积
