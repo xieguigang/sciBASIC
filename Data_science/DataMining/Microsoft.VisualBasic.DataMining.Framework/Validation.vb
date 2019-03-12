@@ -65,6 +65,11 @@ Public Structure Validation
     Dim TN As Integer
     Dim FN As Integer
 
+    ''' <summary>
+    ''' 进行当前的预测鉴定分析的百分比等级，默认是0.5，即 50%
+    ''' </summary>
+    Dim Percentile As Double
+
     Public ReadOnly Property F1Score As Double
         Get
             Return FbetaScore(beta:=1)
@@ -156,5 +161,31 @@ Public Structure Validation
             .TN = TN,
             .TP = TP
         }
+    End Function
+
+    ''' <summary>
+    ''' 生ROC曲线的绘制数据
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="entity"></param>
+    ''' <param name="getValidate"></param>
+    ''' <param name="getPredict"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 在一个二分类模型中，对于所得到的连续结果，假设已确定一个阈值，比如说 0.6，
+    ''' 大于这个值的实例划归为正类，小于这个值则划到负类中。如果减小阈值，减到0.5，
+    ''' 固然能识别出更多的正类，也就是提高了识别出的正例占所有正例的比例，即TPR，
+    ''' 但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，
+    ''' 在此引入ROC。
+    ''' </remarks>
+    Public Iterator Function ROC(Of T)(entity As IEnumerable(Of T),
+                                       getValidate As Func(Of T, Double, Boolean),
+                                       getPredict As Func(Of T, Double, Boolean)) As IEnumerable(Of Validation)
+
+        For pct As Double = 0 To 1 Step 0.05
+#Disable Warning
+            Yield Validation.Calc(entity, Function(x) getValidate(x, pct), Function(x) getPredict(x, pct))
+#Enable Warning
+        Next
     End Function
 End Structure
