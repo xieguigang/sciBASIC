@@ -1,41 +1,41 @@
 ﻿#Region "Microsoft.VisualBasic::c4374328cc21ae32675da42084156e5a, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Validation.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Structure Validation
-    ' 
-    '     Function: Calc, ToDataSet, ToString
-    ' 
-    ' /********************************************************************************/
+' Structure Validation
+' 
+'     Function: Calc, ToDataSet, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,16 +47,35 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' ``灵敏度 = 真阳性人数 / (真阳性人数 + 假阴性人数) * 100%``
 ''' ``特异度 = 真阴性人数 / (真阴性人数 + 假阳性人数) * 100%``
 ''' </summary>
+''' <remarks>
+''' https://www.jianshu.com/p/f0c7c1ad9091
+''' </remarks>
 Public Structure Validation
 
     Dim Specificity As Double
+    ''' <summary>
+    ''' Recall
+    ''' </summary>
     Dim Sensibility As Double
     Dim Accuracy As Double
+    Dim Precision As Double
     Dim All As Integer
     Dim TP As Integer
     Dim FP As Integer
     Dim TN As Integer
     Dim FN As Integer
+
+    Public ReadOnly Property F1Score As Double
+        Get
+            Return FbetaScore(beta:=1)
+        End Get
+    End Property
+
+    Public ReadOnly Property FbetaScore(Optional beta# = 1) As Double
+        Get
+            Return (1 + beta ^ 2) * Precision * Sensibility / ((beta ^ 2) * Precision + Sensibility)
+        End Get
+    End Property
 
     Public Overrides Function ToString() As String
         Return Me.GetJson
@@ -67,6 +86,8 @@ Public Structure Validation
             {NameOf(Specificity), Specificity},
             {NameOf(Sensibility), Sensibility},
             {NameOf(Accuracy), Accuracy},
+            {NameOf(Precision), Precision},
+            {NameOf(F1Score), F1Score},
             {NameOf(All), All},
             {"True Positive", TP},
             {"False Positive", FP},
@@ -128,6 +149,7 @@ Public Structure Validation
             .Sensibility = TP / (TP + FN) * 100,
             .Specificity = TN / (TN + FP) * 100,
             .Accuracy = (TP + TN) / All * 100,
+            .Precision = TP / (TP + FP) * 100,
             .All = All,
             .FN = FN,
             .FP = FP,
