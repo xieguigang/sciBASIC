@@ -1,49 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::dae8da6c2598d4d08fa9d24050e9aad9, Data_science\MachineLearning\NeuralNetwork\TrainingUtils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class TrainingUtils
-    ' 
-    '         Properties: MinError, NeuronNetwork, TrainingSet, TrainingType, Truncate
-    '                     XP
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: CalculateError, TakeSnapshot, trainingImpl
-    ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class TrainingUtils
+' 
+'         Properties: MinError, NeuronNetwork, TrainingSet, TrainingType, Truncate
+'                     XP
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: CalculateError, TakeSnapshot, trainingImpl
+' 
+'         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -68,6 +68,7 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <returns></returns>
         Public Property Truncate As Double = -1
+        Public Property Selective As Boolean = True
 
         ''' <summary>
         ''' 最终得到的训练结果神经网络
@@ -167,14 +168,14 @@ Namespace NeuralNetwork
                 Dim ETA$
 
                 For i As Integer = 0 To numEpochs - 1
-                    errors = trainingImpl(dataSets, parallel, True)
+                    errors = trainingImpl(dataSets, parallel, Selective)
                     ETA = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
                     msg = $"Iterations: [{i}/{numEpochs}], errors={errors}{vbTab}learn_rate={network.LearnRate} {ETA}"
                     progress.SetProgress(tick.StepProgress, msg)
 
-                    'If errors < 1 Then
-                    '    network.LearnRate = errors / 3
-                    'End If
+                    If errors < 0.0001 Then
+                        Selective = False
+                    End If
 
                     If Not reporter Is Nothing Then
                         Call reporter(i, errors, network)
@@ -193,7 +194,7 @@ Namespace NeuralNetwork
                     ' sum
                     err = CalculateError(network, dataSet.target)
                     ' means
-                    If err / outputSize <= 0.05 Then
+                    If err / outputSize <= 0.01 Then
                         ' skip current sample
                         Call errors.Add(err)
                         Continue For
