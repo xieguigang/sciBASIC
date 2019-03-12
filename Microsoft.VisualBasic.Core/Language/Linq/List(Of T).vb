@@ -428,7 +428,8 @@ Namespace Language
         End Operator
 
         ''' <summary>
-        ''' Adds the elements of the specified collection to the end of the <see cref="List(Of T)"/>.
+        ''' Adds the elements of the specified collection to the begining of the <paramref name="list"/> <see cref="List(Of T)"/>.
+        ''' (output = <paramref name="vals"/> contract <paramref name="list"/>)
         ''' (这个操作符并不会修改所输入的两个原始序列的内容)
         ''' </summary>
         ''' <param name="vals"></param>

@@ -170,9 +170,39 @@ Namespace Components
             End Select
         End Function
 
+        ''' <summary>
+        ''' 将<see cref="byteStream"/>转换为字节流之后分割然后转换为<see cref="Long"/>之后返回
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetInt64Buffer() As Long()
+            Dim bytes As Byte() = Convert.FromBase64String(byteStream)
+            Dim int64s&() = bytes _
+                .Split(8) _
+                .Select(Function(chunk)
+                            Return BitConverter.ToInt64(chunk, Scan0)
+                        End Function) _
+                .ToArray
+
+            Return int64s
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(data As Byte()) As CDFData
             Return New CDFData With {.byteStream = data.ToBase64String}
+        End Operator
+
+        ''' <summary>
+        ''' 在进行转换的时候也需要以相同的方式进行逆变换
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(data As Long()) As CDFData
+            Return New CDFData With {
+                .byteStream = data _
+                    .SelectMany(Function(i) BitConverter.GetBytes(i)) _
+                    .ToBase64String
+            }
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

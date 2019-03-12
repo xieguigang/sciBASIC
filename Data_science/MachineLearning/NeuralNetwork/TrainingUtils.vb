@@ -167,10 +167,14 @@ Namespace NeuralNetwork
                 Dim ETA$
 
                 For i As Integer = 0 To numEpochs - 1
-                    errors = trainingImpl(dataSets, parallel)
+                    errors = trainingImpl(dataSets, parallel, True)
                     ETA = $"ETA: {tick.ETA(progress.ElapsedMilliseconds).FormatTime}"
                     msg = $"Iterations: [{i}/{numEpochs}], errors={errors}{vbTab}learn_rate={network.LearnRate} {ETA}"
                     progress.SetProgress(tick.StepProgress, msg)
+
+                    'If errors < 1 Then
+                    '    network.LearnRate = errors / 3
+                    'End If
 
                     If Not reporter Is Nothing Then
                         Call reporter(i, errors, network)
@@ -179,10 +183,23 @@ Namespace NeuralNetwork
             End Using
         End Sub
 
-        Private Function trainingImpl(dataSets As Sample(), parallel As Boolean) As Double
+        Private Function trainingImpl(dataSets As Sample(), parallel As Boolean, selective As Boolean) As Double
             Dim errors As New List(Of Double)()
+            Dim err#
+            Dim outputSize% = dataSets(Scan0).target.Length
 
             For Each dataSet As Sample In dataSets
+                If selective Then
+                    ' sum
+                    err = CalculateError(network, dataSet.target)
+                    ' means
+                    If err / outputSize <= 0.05 Then
+                        ' skip current sample
+                        Call errors.Add(err)
+                        Continue For
+                    End If
+                End If
+
                 Call network.ForwardPropagate(dataSet.status, parallel)
                 Call network.BackPropagate(dataSet.target, Truncate, parallel)
                 Call errors.Add(CalculateError(network, dataSet.target))
@@ -197,7 +214,7 @@ Namespace NeuralNetwork
             Dim progress$
 
             While [error] > minimumError AndAlso numEpochs < Integer.MaxValue
-                [error] = trainingImpl(dataSets, parallel)
+                [error] = trainingImpl(dataSets, parallel, True)
                 numEpochs += 1
                 progress = ((minimumError / [error]) * 100).ToString("F2")
 
@@ -209,6 +226,12 @@ Namespace NeuralNetwork
             End While
         End Sub
 
+        ''' <summary>
+        ''' 预测值与目标值之间的误差的绝对值之和
+        ''' </summary>
+        ''' <param name="neuronNetwork"></param>
+        ''' <param name="targets"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Shared Function CalculateError(neuronNetwork As Network, targets As Double()) As Double
             Return neuronNetwork.OutputLayer _
