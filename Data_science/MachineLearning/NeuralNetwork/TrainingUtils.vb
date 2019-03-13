@@ -194,7 +194,7 @@ Namespace NeuralNetwork
                     ' sum
                     err = CalculateError(network, dataSet.target)
                     ' means
-                    If err / outputSize <= 0.01 Then
+                    If err / outputSize <= 0.05 Then
                         ' skip current sample
                         Call errors.Add(err)
                         Continue For

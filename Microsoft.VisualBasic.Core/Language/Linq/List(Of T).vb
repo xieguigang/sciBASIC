@@ -163,6 +163,21 @@ Namespace Language
         End Property
 
         ''' <summary>
+        ''' Can accept negative number as the index value, negative value means ``<see cref="Count"/> - n``, 
+        ''' example as ``list(-1)``: means the last element in this list: ``list(list.Count -1)``
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        Default Public Overloads Property Item(index As VBInteger) As T
+            Get
+                Return Item(index.Value)
+            End Get
+            Set(value As T)
+                Item(index.Value) = value
+            End Set
+        End Property
+
+        ''' <summary>
         ''' Using a index vector expression to select/update many elements from this list collection.
         ''' </summary>
         ''' <param name="exp$">

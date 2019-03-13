@@ -106,6 +106,16 @@ Namespace Language
             End Get
         End Property
 
+        Public ReadOnly Property ValueType As Type
+            Get
+                If value Is Nothing Then
+                    Return GetType(Void)
+                Else
+                    Return value.GetType
+                End If
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function [As](Of T)() As NamedValue(Of T)
             Return New NamedValue(Of T)(name, value)
