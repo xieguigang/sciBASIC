@@ -1,0 +1,5511 @@
+[
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n1",
+        "parent": "#",
+        "text": "Language",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n2",
+        "parent": "n1",
+        "text": "Language",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n3",
+        "parent": "n2",
+        "text": "UnixBash",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n4",
+        "parent": "n3",
+        "text": "Shell",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n5",
+        "parent": "n4",
+        "text": "Text",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n6",
+        "parent": "n5",
+        "text": "Grep.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n7",
+        "parent": "#",
+        "text": "ApplicationServices",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n8",
+        "parent": "n7",
+        "text": "VBDev",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n9",
+        "parent": "n8",
+        "text": "XmlDoc",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n10",
+        "parent": "n9",
+        "text": "Serialization",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n11",
+        "parent": "n10",
+        "text": "Models",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n12",
+        "parent": "n11",
+        "text": "Member.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n13",
+        "parent": "n11",
+        "text": "Doc.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n14",
+        "parent": "n9",
+        "text": "Extensions",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n15",
+        "parent": "n14",
+        "text": "APIExtensions2.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n16",
+        "parent": "n14",
+        "text": "VBSpecific.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n17",
+        "parent": "n10",
+        "text": "NamespaceDoc.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n18",
+        "parent": "#",
+        "text": "Extensions",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n19",
+        "parent": "n18",
+        "text": "Image",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n20",
+        "parent": "n19",
+        "text": "GDI+",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n21",
+        "parent": "n20",
+        "text": "Layouts",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n22",
+        "parent": "n21",
+        "text": "ColaExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n23",
+        "parent": "n21",
+        "text": "Point2D.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n24",
+        "parent": "n19",
+        "text": "Math",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n25",
+        "parent": "n24",
+        "text": "Models",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n26",
+        "parent": "n25",
+        "text": "PolarPoint.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n27",
+        "parent": "n25",
+        "text": "Polygon.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n28",
+        "parent": "n25",
+        "text": "Line.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n29",
+        "parent": "#",
+        "text": "ComponentModel",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n30",
+        "parent": "n29",
+        "text": "Algorithm",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n31",
+        "parent": "n30",
+        "text": "base",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n32",
+        "parent": "n31",
+        "text": "Combination",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n33",
+        "parent": "n32",
+        "text": "Combination.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n34",
+        "parent": "n31",
+        "text": "SlideWindow",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n35",
+        "parent": "n34",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n36",
+        "parent": "n29",
+        "text": "DataStructures",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n37",
+        "parent": "n36",
+        "text": "Tree",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n38",
+        "parent": "n37",
+        "text": "BinaryTree",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n39",
+        "parent": "n38",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n40",
+        "parent": "n38",
+        "text": "Abstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n41",
+        "parent": "n21",
+        "text": "Abstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n42",
+        "parent": "n21",
+        "text": "Rectangle2D.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n43",
+        "parent": "n25",
+        "text": "Vector2D.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n44",
+        "parent": "n38",
+        "text": "TreeNode(Of T).vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n45",
+        "parent": "n34",
+        "text": "SlideWindow.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n46",
+        "parent": "n4",
+        "text": "tree.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n47",
+        "parent": "n4",
+        "text": "rm.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n48",
+        "parent": "n7",
+        "text": "Parallel",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n49",
+        "parent": "n48",
+        "text": "Threads",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n50",
+        "parent": "n49",
+        "text": "LQuerySchedule",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n51",
+        "parent": "n50",
+        "text": "Models.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n52",
+        "parent": "n50",
+        "text": "TaskPartitions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n53",
+        "parent": "#",
+        "text": "Serialization",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n54",
+        "parent": "n53",
+        "text": "JSON",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n55",
+        "parent": "n54",
+        "text": "Formatter",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n56",
+        "parent": "n55",
+        "text": "Strategies",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n57",
+        "parent": "n56",
+        "text": "CloseBracketStrategy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n58",
+        "parent": "n56",
+        "text": "CloseSquareBracketStrategy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n59",
+        "parent": "n56",
+        "text": "ColonCharacterStrategy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n60",
+        "parent": "n56",
+        "text": "CommaCharacterStrategy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n61",
+        "parent": "n56",
+        "text": "DefaultCharacterStrategy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n62",
+        "parent": "n56",
+        "text": "DoubleQuoteStrategy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n63",
+        "parent": "n56",
+        "text": "OpenBracketStrategy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n64",
+        "parent": "n56",
+        "text": "OpenSquareBracketStrategy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n65",
+        "parent": "n56",
+        "text": "SingleQuoteStrategy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n66",
+        "parent": "n56",
+        "text": "SkipWhileNotInStringStrategy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n67",
+        "parent": "#",
+        "text": "Text",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n68",
+        "parent": "n67",
+        "text": "Xml",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n69",
+        "parent": "n68",
+        "text": "Models",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n70",
+        "parent": "n69",
+        "text": "ValueTuples",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n71",
+        "parent": "n70",
+        "text": "NamedValues.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n72",
+        "parent": "n3",
+        "text": "FileSystem",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n73",
+        "parent": "n72",
+        "text": "PathMapper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n74",
+        "parent": "n4",
+        "text": "ls.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n75",
+        "parent": "n72",
+        "text": "File.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n76",
+        "parent": "n49",
+        "text": "Groups",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n77",
+        "parent": "n76",
+        "text": "DataGroup.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n78",
+        "parent": "n76",
+        "text": "GroupAPI.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n79",
+        "parent": "n48",
+        "text": "MMFProtocol",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n80",
+        "parent": "n79",
+        "text": "Pipeline",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n81",
+        "parent": "n80",
+        "text": "API.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n82",
+        "parent": "n80",
+        "text": "PipeBuffer.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n83",
+        "parent": "n80",
+        "text": "PipeStream.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n84",
+        "parent": "n80",
+        "text": "Pipeline.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n85",
+        "parent": "n79",
+        "text": "MapStream",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n86",
+        "parent": "n85",
+        "text": "MSWriter.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n87",
+        "parent": "n85",
+        "text": "MSReader.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n88",
+        "parent": "n7",
+        "text": "Debugger",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n89",
+        "parent": "n88",
+        "text": "Logging",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n90",
+        "parent": "n89",
+        "text": "LogFile",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n91",
+        "parent": "n90",
+        "text": "LogReader.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n92",
+        "parent": "n90",
+        "text": "LogEntry.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n93",
+        "parent": "n90",
+        "text": "MSG_TYPES.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n94",
+        "parent": "#",
+        "text": "Net",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n95",
+        "parent": "n94",
+        "text": "Tcp",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n96",
+        "parent": "n95",
+        "text": "Persistent",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n97",
+        "parent": "n96",
+        "text": "Protocols",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n98",
+        "parent": "n97",
+        "text": "POST.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n99",
+        "parent": "n96",
+        "text": "Socket",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n100",
+        "parent": "n99",
+        "text": "WorkSocket.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n101",
+        "parent": "n97",
+        "text": "Protocol.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n102",
+        "parent": "n99",
+        "text": "TcpClient.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n103",
+        "parent": "n99",
+        "text": "ServicesSocket.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n104",
+        "parent": "n18",
+        "text": "Math",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n105",
+        "parent": "n104",
+        "text": "StatisticsMathExtensions",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n106",
+        "parent": "n105",
+        "text": "Linq",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n107",
+        "parent": "n106",
+        "text": "CPOLLicense.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n108",
+        "parent": "n106",
+        "text": "EnumerableStatsCovariance.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n109",
+        "parent": "n106",
+        "text": "EnumerableStatsMedian.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n110",
+        "parent": "n106",
+        "text": "EnumerableStatsMode.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n111",
+        "parent": "n106",
+        "text": "EnumerableStatsPearson.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n112",
+        "parent": "n106",
+        "text": "EnumerableStatsRange.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n113",
+        "parent": "n106",
+        "text": "EnumerableStatsStandardDeviation.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n114",
+        "parent": "n106",
+        "text": "EnumerableStatsStandardDeviationP.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n115",
+        "parent": "n106",
+        "text": "EnumerableStatsVariance.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n116",
+        "parent": "n106",
+        "text": "EnumerableStatsVarianceP.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n117",
+        "parent": "n50",
+        "text": "LQuerySchedule.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n118",
+        "parent": "n10",
+        "text": "APIExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n119",
+        "parent": "n70",
+        "text": "ValuePair.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n120",
+        "parent": "n32",
+        "text": "Comb.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n121",
+        "parent": "n90",
+        "text": "LogFile.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n122",
+        "parent": "n79",
+        "text": "MMFSocket.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n123",
+        "parent": "n88",
+        "text": "Exception",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n124",
+        "parent": "n123",
+        "text": "ExceptionData.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n125",
+        "parent": "n8",
+        "text": "Ngen",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n126",
+        "parent": "n125",
+        "text": "Registry.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n127",
+        "parent": "n8",
+        "text": "Signature",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n128",
+        "parent": "n127",
+        "text": "CodeSign.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n129",
+        "parent": "n127",
+        "text": "VBCodeSignature.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n130",
+        "parent": "n127",
+        "text": "LicenseInfo.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n131",
+        "parent": "#",
+        "text": "CommandLine",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n132",
+        "parent": "n131",
+        "text": "Interpreters",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n133",
+        "parent": "n132",
+        "text": "View",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n134",
+        "parent": "n133",
+        "text": "CommandHelp.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n135",
+        "parent": "n30",
+        "text": "BinaryTree",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n136",
+        "parent": "n135",
+        "text": "BinaryTree.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n137",
+        "parent": "n135",
+        "text": "AVLTree.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n138",
+        "parent": "n135",
+        "text": "RBTree.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n139",
+        "parent": "n135",
+        "text": "TreeBase.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n140",
+        "parent": "n135",
+        "text": "NaiveBinaryTree.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n141",
+        "parent": "n135",
+        "text": "Enumerable.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n142",
+        "parent": "n135",
+        "text": "TreeNode.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n143",
+        "parent": "n135",
+        "text": "AVLSupports.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n144",
+        "parent": "n30",
+        "text": "DynamicProgramming",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n145",
+        "parent": "n144",
+        "text": "LCS.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n146",
+        "parent": "n144",
+        "text": "LongestCommonSubsequence.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n147",
+        "parent": "n30",
+        "text": "Levenshtein",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n148",
+        "parent": "n147",
+        "text": "DamerauLevenshteinDistance.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n149",
+        "parent": "n29",
+        "text": "DataSource",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n150",
+        "parent": "n149",
+        "text": "Property",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n151",
+        "parent": "n150",
+        "text": "GenericProperty.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n152",
+        "parent": "n29",
+        "text": "Ranges",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n153",
+        "parent": "n152",
+        "text": "Selector",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n154",
+        "parent": "n153",
+        "text": "IntTag.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n155",
+        "parent": "n153",
+        "text": "SelectorExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n156",
+        "parent": "n153",
+        "text": "NumericTagged.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n157",
+        "parent": "n29",
+        "text": "Settings",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n158",
+        "parent": "n157",
+        "text": "Inf",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n159",
+        "parent": "n158",
+        "text": "IOProvider.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n160",
+        "parent": "n29",
+        "text": "System.Collections.Generic",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n161",
+        "parent": "n160",
+        "text": "PriorityQueue",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n162",
+        "parent": "n161",
+        "text": "PairingHeap.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n163",
+        "parent": "n29",
+        "text": "ValuePair",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n164",
+        "parent": "n163",
+        "text": "TagData",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n165",
+        "parent": "n164",
+        "text": "FactorValue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n166",
+        "parent": "n164",
+        "text": "Indexing.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n167",
+        "parent": "n18",
+        "text": "IO",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n168",
+        "parent": "n167",
+        "text": "Extensions",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n169",
+        "parent": "n168",
+        "text": "StreamHelper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n170",
+        "parent": "n168",
+        "text": "SerializationIO.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n171",
+        "parent": "n167",
+        "text": "Path",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n172",
+        "parent": "n171",
+        "text": "ProgramPathSearchTool.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n173",
+        "parent": "n171",
+        "text": "TemporaryEnvironment.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n174",
+        "parent": "n171",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n175",
+        "parent": "n104",
+        "text": "Information",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n176",
+        "parent": "n175",
+        "text": "Entropy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n177",
+        "parent": "n175",
+        "text": "UncheckHelpers.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n178",
+        "parent": "n105",
+        "text": "Average.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n179",
+        "parent": "n2",
+        "text": "JavaScript",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n180",
+        "parent": "n179",
+        "text": "Linq.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n181",
+        "parent": "n2",
+        "text": "Java",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n182",
+        "parent": "n181",
+        "text": "NamespaceDoc.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n183",
+        "parent": "n2",
+        "text": "Python",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n184",
+        "parent": "n183",
+        "text": "NamespaceDoc.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n185",
+        "parent": "n1",
+        "text": "Linq",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n186",
+        "parent": "n185",
+        "text": "Vectorization",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n187",
+        "parent": "n186",
+        "text": "Strings.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n188",
+        "parent": "n1",
+        "text": "Value",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n189",
+        "parent": "n188",
+        "text": "DefaultValue",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n190",
+        "parent": "n189",
+        "text": "BooleanAssert.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n191",
+        "parent": "n131",
+        "text": "InteropService",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n192",
+        "parent": "n191",
+        "text": "SharedORM",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n193",
+        "parent": "n192",
+        "text": "API.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n194",
+        "parent": "n192",
+        "text": "Perl.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n195",
+        "parent": "n192",
+        "text": "CLI.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n196",
+        "parent": "n192",
+        "text": "CodeGenerator.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n197",
+        "parent": "n192",
+        "text": "R.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n198",
+        "parent": "n192",
+        "text": "PHP.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n199",
+        "parent": "n192",
+        "text": "VisualBasic.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n200",
+        "parent": "n131",
+        "text": "Reflection",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n201",
+        "parent": "n200",
+        "text": "Attributes",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n202",
+        "parent": "n201",
+        "text": "Argument.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n203",
+        "parent": "n201",
+        "text": "ActiveViews.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n204",
+        "parent": "n201",
+        "text": "Grouping.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n205",
+        "parent": "n201",
+        "text": "Flags.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n206",
+        "parent": "n201",
+        "text": "[Namespace].vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n207",
+        "parent": "n133",
+        "text": "ExceptionHandler.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n208",
+        "parent": "n133",
+        "text": "SDKManual.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n209",
+        "parent": "n201",
+        "text": "ExportAPI.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n210",
+        "parent": "n133",
+        "text": "ManualBuilder.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n211",
+        "parent": "n144",
+        "text": "DynamicProgramming.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n212",
+        "parent": "n144",
+        "text": "SCS.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n213",
+        "parent": "n149",
+        "text": "Repository",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n214",
+        "parent": "n213",
+        "text": "QueryCache.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n215",
+        "parent": "n36",
+        "text": "Enumerable",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n216",
+        "parent": "n215",
+        "text": "NamedValueList.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n217",
+        "parent": "n36",
+        "text": "Set",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n218",
+        "parent": "n217",
+        "text": "BadBehaviourResponses.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n219",
+        "parent": "n217",
+        "text": "StringSet.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n220",
+        "parent": "n217",
+        "text": "SetsExtension.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n221",
+        "parent": "n150",
+        "text": "NamedCollection(Of T).vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n222",
+        "parent": "n150",
+        "text": "PropertyValue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n223",
+        "parent": "n150",
+        "text": "IProperty.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n224",
+        "parent": "n150",
+        "text": "NamedValue(Of T).vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n225",
+        "parent": "n149",
+        "text": "SchemaMaps",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n226",
+        "parent": "n225",
+        "text": "BindProperty(Of T).vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n227",
+        "parent": "n213",
+        "text": "IMatched.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n228",
+        "parent": "n213",
+        "text": "Repository.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n229",
+        "parent": "n225",
+        "text": "SQL.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n230",
+        "parent": "n225",
+        "text": "Mappings.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n231",
+        "parent": "n225",
+        "text": "Schema.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n232",
+        "parent": "n37",
+        "text": "ITreeNode.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n233",
+        "parent": "n37",
+        "text": "TreeNodeBase.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n234",
+        "parent": "n36",
+        "text": "BitMap",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n235",
+        "parent": "n234",
+        "text": "HashHandle.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n236",
+        "parent": "n217",
+        "text": "SetAPI.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n237",
+        "parent": "n171",
+        "text": "CopyDirectory.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n238",
+        "parent": "n105",
+        "text": "DataSample.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n239",
+        "parent": "n153",
+        "text": "IndexSelector.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n240",
+        "parent": "n152",
+        "text": "RangeModel",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n241",
+        "parent": "n240",
+        "text": "IRanges.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n242",
+        "parent": "n240",
+        "text": "Range.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n243",
+        "parent": "n240",
+        "text": "DoubleRange.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n244",
+        "parent": "n240",
+        "text": "IntRange.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n245",
+        "parent": "n158",
+        "text": "IniFile.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n246",
+        "parent": "n158",
+        "text": "ClassMapper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n247",
+        "parent": "n157",
+        "text": "DataModels",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n248",
+        "parent": "n247",
+        "text": "ProfileTable.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n249",
+        "parent": "n161",
+        "text": "BinaryPriorityQueue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n250",
+        "parent": "n161",
+        "text": "Abstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n251",
+        "parent": "n164",
+        "text": "LineValue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n252",
+        "parent": "n18",
+        "text": "Collection",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n253",
+        "parent": "n252",
+        "text": "Linq",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n254",
+        "parent": "n253",
+        "text": "VectorAssertExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n255",
+        "parent": "n253",
+        "text": "VectorAssertor.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n256",
+        "parent": "n253",
+        "text": "NumericSequence.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n257",
+        "parent": "n253",
+        "text": "Which.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n258",
+        "parent": "n225",
+        "text": "PropertyValue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n259",
+        "parent": "n19",
+        "text": "Bitmap",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n260",
+        "parent": "n259",
+        "text": "Effects.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n261",
+        "parent": "n259",
+        "text": "Utils.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n262",
+        "parent": "n19",
+        "text": "Colors",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n263",
+        "parent": "n262",
+        "text": "CytoscapeColor.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n264",
+        "parent": "n262",
+        "text": "HSLColor.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n265",
+        "parent": "n20",
+        "text": "GDICanvas.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n266",
+        "parent": "n24",
+        "text": "GeometryMath.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n267",
+        "parent": "n24",
+        "text": "Polygon2D.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n268",
+        "parent": "n24",
+        "text": "VectorMath2D.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n269",
+        "parent": "n104",
+        "text": "Correlations",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n270",
+        "parent": "n269",
+        "text": "Scripting.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n271",
+        "parent": "n269",
+        "text": "Ranking.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n272",
+        "parent": "n18",
+        "text": "Reflection",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n273",
+        "parent": "n272",
+        "text": "Delegate",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n274",
+        "parent": "n273",
+        "text": "DataValue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n275",
+        "parent": "n272",
+        "text": "Parameters",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n276",
+        "parent": "n275",
+        "text": "Simple.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n277",
+        "parent": "n275",
+        "text": "ParamLogUtility.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n278",
+        "parent": "n185",
+        "text": "Assert",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n279",
+        "parent": "n278",
+        "text": "AssertEqualsExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n280",
+        "parent": "n278",
+        "text": "VectorAssert.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n281",
+        "parent": "n186",
+        "text": "BooleanVector.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n282",
+        "parent": "n186",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n283",
+        "parent": "n186",
+        "text": "StringVector.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n284",
+        "parent": "n189",
+        "text": "DefaultString.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n285",
+        "parent": "n189",
+        "text": "DefaultExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n286",
+        "parent": "#",
+        "text": "Scripting",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n287",
+        "parent": "n286",
+        "text": "Runtime",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n288",
+        "parent": "n287",
+        "text": "CType",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n289",
+        "parent": "n288",
+        "text": "Abstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n290",
+        "parent": "n288",
+        "text": "Narrowing.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n291",
+        "parent": "n2",
+        "text": "C",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n292",
+        "parent": "n291",
+        "text": "Vector.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n293",
+        "parent": "n181",
+        "text": "Line2D.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n294",
+        "parent": "n181",
+        "text": "Collections.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n295",
+        "parent": "n181",
+        "text": "Reflection.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n296",
+        "parent": "n186",
+        "text": "SchemaProvider.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n297",
+        "parent": "n186",
+        "text": "Vector.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n298",
+        "parent": "n186",
+        "text": "VectorShadows.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n299",
+        "parent": "n2",
+        "text": "Perl",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n300",
+        "parent": "n299",
+        "text": "die.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n301",
+        "parent": "n189",
+        "text": "Default.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n302",
+        "parent": "n288",
+        "text": "CastStringVector.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n303",
+        "parent": "n286",
+        "text": "TokenIcer",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n304",
+        "parent": "n303",
+        "text": "LangModels",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n305",
+        "parent": "n304",
+        "text": "OperatorExpression.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n306",
+        "parent": "n304",
+        "text": "PeekToken.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n307",
+        "parent": "n67",
+        "text": "StringSimilarity",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n308",
+        "parent": "n307",
+        "text": "Levenshtein",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n309",
+        "parent": "n308",
+        "text": "LevenshteinString.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n310",
+        "parent": "n68",
+        "text": "Linq",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n311",
+        "parent": "n310",
+        "text": "DeserializeHandler.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n312",
+        "parent": "n310",
+        "text": "NodeIterator.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n313",
+        "parent": "n69",
+        "text": "ListOf.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n314",
+        "parent": "n69",
+        "text": "StringValue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n315",
+        "parent": "n69",
+        "text": "Coordinate.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n316",
+        "parent": "n150",
+        "text": "DynamicProperty.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n317",
+        "parent": "n213",
+        "text": "ILocalSearchHandle.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n318",
+        "parent": "n217",
+        "text": "Set.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n319",
+        "parent": "n158",
+        "text": "Serialization.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n320",
+        "parent": "n247",
+        "text": "BindMapping.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n321",
+        "parent": "n247",
+        "text": "ModelBase.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n322",
+        "parent": "n247",
+        "text": "ProfileItem.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n323",
+        "parent": "n158",
+        "text": "Section.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n324",
+        "parent": "n161",
+        "text": "PriorityQueue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n325",
+        "parent": "n164",
+        "text": "TagData.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n326",
+        "parent": "n3",
+        "text": "ShellSyntax.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n327",
+        "parent": "n188",
+        "text": "Numeric",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n328",
+        "parent": "n327",
+        "text": "int.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n329",
+        "parent": "n327",
+        "text": "float.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n330",
+        "parent": "n48",
+        "text": "Tasks",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n331",
+        "parent": "n330",
+        "text": "Actor(Of T, V).vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n332",
+        "parent": "n288",
+        "text": "NumberConversionRoutines.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n333",
+        "parent": "n7",
+        "text": "Terminal",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n334",
+        "parent": "n333",
+        "text": "InteractiveIODevice",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n335",
+        "parent": "n334",
+        "text": "Shell.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n336",
+        "parent": "n334",
+        "text": "TerminalExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n337",
+        "parent": "n333",
+        "text": "ProgressBar",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n338",
+        "parent": "n337",
+        "text": "AbstractBar.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n339",
+        "parent": "n337",
+        "text": "AnimatedBar.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n340",
+        "parent": "n337",
+        "text": "ProgressBar.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n341",
+        "parent": "n337",
+        "text": "Program.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n342",
+        "parent": "n337",
+        "text": "SwayBar.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n343",
+        "parent": "n333",
+        "text": "Utility",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n344",
+        "parent": "n343",
+        "text": "EventProc.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n345",
+        "parent": "n343",
+        "text": "ConsolePasswordInput.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n346",
+        "parent": "n333",
+        "text": "xConsole",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n347",
+        "parent": "n346",
+        "text": "Helpers.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n348",
+        "parent": "n253",
+        "text": "SetValue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n349",
+        "parent": "n262",
+        "text": "HexColor.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n350",
+        "parent": "n171",
+        "text": "Includes.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n351",
+        "parent": "n168",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n352",
+        "parent": "n167",
+        "text": "SymLinker",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n353",
+        "parent": "n352",
+        "text": "HardLink.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n354",
+        "parent": "n352",
+        "text": "JunctionPoint.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n355",
+        "parent": "n352",
+        "text": "SymbolicLink.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n356",
+        "parent": "n104",
+        "text": "Random",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n357",
+        "parent": "n356",
+        "text": "RandomRange.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n358",
+        "parent": "n356",
+        "text": "PreciseRandom.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n359",
+        "parent": "n18",
+        "text": "Trinity",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n360",
+        "parent": "n359",
+        "text": "NLP",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n361",
+        "parent": "n360",
+        "text": "TextTokens.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n362",
+        "parent": "n104",
+        "text": "Trigonometric",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n363",
+        "parent": "n362",
+        "text": "Arctan.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n364",
+        "parent": "n362",
+        "text": "Trigonometric2.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n365",
+        "parent": "n362",
+        "text": "Trigonometric.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n366",
+        "parent": "n273",
+        "text": "DelegateFactory.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n367",
+        "parent": "n273",
+        "text": "TypeExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n368",
+        "parent": "n291",
+        "text": "RandomNumbers.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n369",
+        "parent": "n181",
+        "text": "Arrays.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n370",
+        "parent": "n183",
+        "text": "Array.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n371",
+        "parent": "n183",
+        "text": "Regexp.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n372",
+        "parent": "n183",
+        "text": "Collection.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n373",
+        "parent": "n183",
+        "text": "NamedTuple.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n374",
+        "parent": "n49",
+        "text": "ThreadPool.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n375",
+        "parent": "n54",
+        "text": "SchemaProvider",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n376",
+        "parent": "n375",
+        "text": "Markdown.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n377",
+        "parent": "n375",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n378",
+        "parent": "n375",
+        "text": "VisualBasicCode.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n379",
+        "parent": "n375",
+        "text": "Schema.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n380",
+        "parent": "n299",
+        "text": "Tools.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n381",
+        "parent": "n181",
+        "text": "JavaMath.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n382",
+        "parent": "n181",
+        "text": "LogTricks.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n383",
+        "parent": "n181",
+        "text": "MathUtils.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n384",
+        "parent": "n181",
+        "text": "MersenneTwisterFast.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n385",
+        "parent": "n291",
+        "text": "CString.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n386",
+        "parent": "n291",
+        "text": "File.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n387",
+        "parent": "n3",
+        "text": "PS1.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n388",
+        "parent": "n330",
+        "text": "IParallelTask.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n389",
+        "parent": "n330",
+        "text": "__backgroundTask(Of T).vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n390",
+        "parent": "n49",
+        "text": "BatchTasks.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n391",
+        "parent": "n49",
+        "text": "CodeThread.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n392",
+        "parent": "n49",
+        "text": "ThreadQueue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n393",
+        "parent": "n55",
+        "text": "FormatterScopeState.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n394",
+        "parent": "n55",
+        "text": "ICharacterStrategy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n395",
+        "parent": "n55",
+        "text": "JsonFormatterInternal.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n396",
+        "parent": "n55",
+        "text": "JsonFormatterStrategyContext.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n397",
+        "parent": "n67",
+        "text": "Parser",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n398",
+        "parent": "n397",
+        "text": "HtmlParser",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n399",
+        "parent": "n398",
+        "text": "HtmlStrips.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n400",
+        "parent": "n67",
+        "text": "SearchEngine",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n401",
+        "parent": "n400",
+        "text": "TextIndexing",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n402",
+        "parent": "n401",
+        "text": "TextSegment.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n403",
+        "parent": "n147",
+        "text": "ResultVisualize.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n404",
+        "parent": "n310",
+        "text": "Entity.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n405",
+        "parent": "n69",
+        "text": "Vector.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n406",
+        "parent": "n68",
+        "text": "Serialization",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n407",
+        "parent": "n406",
+        "text": "XmlComment.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n408",
+        "parent": "n68",
+        "text": "OpenXml",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n409",
+        "parent": "n408",
+        "text": "Content_Types.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n410",
+        "parent": "n310",
+        "text": "Linq.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n411",
+        "parent": "n259",
+        "text": "BitmapBuffer.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n412",
+        "parent": "n259",
+        "text": "BitmapScale.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n413",
+        "parent": "n20",
+        "text": "Interface.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n414",
+        "parent": "n262",
+        "text": "GDIColors.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n415",
+        "parent": "n171",
+        "text": "PathMatch.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n416",
+        "parent": "n3",
+        "text": "LinuxRunHelper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n417",
+        "parent": "n171",
+        "text": "Directory.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n418",
+        "parent": "n95",
+        "text": "IPTools",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n419",
+        "parent": "n418",
+        "text": "AddressEnumerator.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n420",
+        "parent": "n127",
+        "text": "LicenseMgr.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n421",
+        "parent": "n9",
+        "text": "Project.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n422",
+        "parent": "n9",
+        "text": "ProjectMember.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n423",
+        "parent": "n9",
+        "text": "ProjectNamespace.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n424",
+        "parent": "n9",
+        "text": "ProjectSpace.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n425",
+        "parent": "n9",
+        "text": "ProjectType.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n426",
+        "parent": "n7",
+        "text": "Tools",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n427",
+        "parent": "n426",
+        "text": "Win32",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n428",
+        "parent": "n427",
+        "text": "HardwareInfo.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n429",
+        "parent": "n427",
+        "text": "GetLastErrorAPI.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n430",
+        "parent": "n427",
+        "text": "TaskManager.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n431",
+        "parent": "n427",
+        "text": "PriorityClass.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n432",
+        "parent": "n426",
+        "text": "WinForm",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n433",
+        "parent": "n432",
+        "text": "ChromeUIRender.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n434",
+        "parent": "n432",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n435",
+        "parent": "n432",
+        "text": "VistaSecurity.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n436",
+        "parent": "n427",
+        "text": "Win32API.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n437",
+        "parent": "n427",
+        "text": "Win32File.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n438",
+        "parent": "n346",
+        "text": "xConsole.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n439",
+        "parent": "n3",
+        "text": "Cowsay.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n440",
+        "parent": "n150",
+        "text": "Controls.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n441",
+        "parent": "n253",
+        "text": "Iterator.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n442",
+        "parent": "n253",
+        "text": "Linq.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n443",
+        "parent": "n20",
+        "text": "FontFace.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n444",
+        "parent": "n168",
+        "text": "IO.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n445",
+        "parent": "n262",
+        "text": "ColorCube.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n446",
+        "parent": "n262",
+        "text": "ColorMap.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n447",
+        "parent": "n20",
+        "text": "Graphics2D.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n448",
+        "parent": "n24",
+        "text": "GeomTransform.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n449",
+        "parent": "n168",
+        "text": "NetFile.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n450",
+        "parent": "n269",
+        "text": "Correlations.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n451",
+        "parent": "n269",
+        "text": "Ranks.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n452",
+        "parent": "n356",
+        "text": "RandomExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n453",
+        "parent": "n272",
+        "text": "Marshal",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n454",
+        "parent": "n453",
+        "text": "Pointer(Of T).vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n455",
+        "parent": "n398",
+        "text": "Table.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n456",
+        "parent": "n327",
+        "text": "Numeric.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n457",
+        "parent": "n79",
+        "text": "WorkFlow.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n458",
+        "parent": "n330",
+        "text": "CallbackTask.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n459",
+        "parent": "n330",
+        "text": "TaskQueue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n460",
+        "parent": "n94",
+        "text": "Protocol",
+        "type": "folder"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n461",
+        "parent": "n460",
+        "text": "Streams",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n462",
+        "parent": "n461",
+        "text": "ArrayAbstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n463",
+        "parent": "n461",
+        "text": "VarArray.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n464",
+        "parent": "n453",
+        "text": "IntPtr(Of T).vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n465",
+        "parent": "n453",
+        "text": "Pointers.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n466",
+        "parent": "n453",
+        "text": "MarshalExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n467",
+        "parent": "n147",
+        "text": "LevenshteinModel.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n468",
+        "parent": "n308",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n469",
+        "parent": "n427",
+        "text": "WindowsServices.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n470",
+        "parent": "n147",
+        "text": "LevenshteinDistance.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n471",
+        "parent": "n304",
+        "text": "StackTokens(Of Tokens).vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n472",
+        "parent": "n304",
+        "text": "Func.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n473",
+        "parent": "n304",
+        "text": "Token.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n474",
+        "parent": "n330",
+        "text": "AsyncHandle.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n475",
+        "parent": "n330",
+        "text": "UpdateThread.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n476",
+        "parent": "n49",
+        "text": "ParallelExtension.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n477",
+        "parent": "n288",
+        "text": "Casting.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n478",
+        "parent": "n401",
+        "text": "TextIndexing.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n479",
+        "parent": "n330",
+        "text": "Task.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n480",
+        "parent": "n89",
+        "text": "EventLog.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n481",
+        "parent": "n461",
+        "text": "Array.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n482",
+        "parent": "n461",
+        "text": "ArrayBase.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n483",
+        "parent": "n461",
+        "text": "String.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n484",
+        "parent": "n460",
+        "text": "Reflection",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n485",
+        "parent": "n484",
+        "text": "AppMgr.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n486",
+        "parent": "n484",
+        "text": "ProtocolInvoker.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n487",
+        "parent": "n484",
+        "text": "Protocol.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n488",
+        "parent": "n484",
+        "text": "ProtocolHandler.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n489",
+        "parent": "n418",
+        "text": "IPEndPoint.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n490",
+        "parent": "n418",
+        "text": "LAN.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n491",
+        "parent": "n432",
+        "text": "MockForm.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n492",
+        "parent": "n432",
+        "text": "SingleInstanceFormEntry.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n493",
+        "parent": "n125",
+        "text": "Ngen.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n494",
+        "parent": "n200",
+        "text": "EntryPoints",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n495",
+        "parent": "n494",
+        "text": "Delegate.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n496",
+        "parent": "n20",
+        "text": "GraphicsExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n497",
+        "parent": "n334",
+        "text": "InteractiveDevice.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n498",
+        "parent": "n334",
+        "text": "HistoryStacks.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n499",
+        "parent": "n334",
+        "text": "Terminal.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n500",
+        "parent": "n343",
+        "text": "ManualPages.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n501",
+        "parent": "n343",
+        "text": "CBusyIndicator.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n502",
+        "parent": "n168",
+        "text": "PathExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n503",
+        "parent": "n69",
+        "text": "Href.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n504",
+        "parent": "n225",
+        "text": "DataSource.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n505",
+        "parent": "n215",
+        "text": "IEnumerable.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n506",
+        "parent": "n158",
+        "text": "INIProfile.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n507",
+        "parent": "n201",
+        "text": "Attribute.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n508",
+        "parent": "n494",
+        "text": "APIEntryPoint.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n509",
+        "parent": "n79",
+        "text": "ProcessLock.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n510",
+        "parent": "n333",
+        "text": "STDIO__",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n511",
+        "parent": "n510",
+        "text": "Shell.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n512",
+        "parent": "n510",
+        "text": "I_ConsoleDeviceHandle.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n513",
+        "parent": "n291",
+        "text": "CFormatProvider.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n514",
+        "parent": "n510",
+        "text": "STDIO.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n515",
+        "parent": "n234",
+        "text": "HashModel.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n516",
+        "parent": "n234",
+        "text": "HashList.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n517",
+        "parent": "n88",
+        "text": "VisualStudioPreviews.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n518",
+        "parent": "n8",
+        "text": "AssemblyInfo.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n519",
+        "parent": "n8",
+        "text": "NamespaceDoc.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n520",
+        "parent": "n191",
+        "text": "InCompatible.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n521",
+        "parent": "n200",
+        "text": "RunDll.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n522",
+        "parent": "n149",
+        "text": "DefaultAttribute.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n523",
+        "parent": "n29",
+        "text": "File",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n524",
+        "parent": "n523",
+        "text": "XmlDataModel.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n525",
+        "parent": "n152",
+        "text": "Unit.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n526",
+        "parent": "n252",
+        "text": "ByteStreamExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n527",
+        "parent": "n252",
+        "text": "IsNullOrEmptyExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n528",
+        "parent": "n104",
+        "text": "NumberEqualityComparer.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n529",
+        "parent": "n18",
+        "text": "StringHelpers",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n530",
+        "parent": "n529",
+        "text": "StringBuilders.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n531",
+        "parent": "n359",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n532",
+        "parent": "n359",
+        "text": "Expression.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n533",
+        "parent": "n359",
+        "text": "Word.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n534",
+        "parent": "n359",
+        "text": "WordClass.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n535",
+        "parent": "n18",
+        "text": "ValueTypes",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n536",
+        "parent": "n535",
+        "text": "TimeSpanScale.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n537",
+        "parent": "n94",
+        "text": "HTTP",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n538",
+        "parent": "n537",
+        "text": "ZipStream.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n539",
+        "parent": "n537",
+        "text": "Multipart.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n540",
+        "parent": "n537",
+        "text": "DataURI.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n541",
+        "parent": "n188",
+        "text": "ByRefValueExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n542",
+        "parent": "n131",
+        "text": "CLI",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n543",
+        "parent": "n542",
+        "text": "Scripting.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n544",
+        "parent": "n191",
+        "text": "Abstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n545",
+        "parent": "n191",
+        "text": "CLIAbstractor.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n546",
+        "parent": "n131",
+        "text": "Parsers",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n547",
+        "parent": "n546",
+        "text": "CLIParser.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n548",
+        "parent": "n546",
+        "text": "DictionaryParser.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n549",
+        "parent": "n191",
+        "text": "CLIBuilder.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n550",
+        "parent": "n542",
+        "text": "IIORedirectAbstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n551",
+        "parent": "n542",
+        "text": "IORedirectFile.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n552",
+        "parent": "n542",
+        "text": "ProcExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n553",
+        "parent": "n132",
+        "text": "Abstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n554",
+        "parent": "n200",
+        "text": "Grouping.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n555",
+        "parent": "n200",
+        "text": "CLITypes.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n556",
+        "parent": "n200",
+        "text": "CLIToken.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n557",
+        "parent": "n149",
+        "text": "Abstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n558",
+        "parent": "n149",
+        "text": "Tsv.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n559",
+        "parent": "n36",
+        "text": "CapacityQueue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n560",
+        "parent": "n160",
+        "text": "BucketDictionary.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n561",
+        "parent": "n36",
+        "text": "FuzzyGroup.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n562",
+        "parent": "n36",
+        "text": "Trigger.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n563",
+        "parent": "n523",
+        "text": "BufferedStream.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n564",
+        "parent": "n152",
+        "text": "Relations.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n565",
+        "parent": "n160",
+        "text": "BucketIndexOf.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n566",
+        "parent": "n163",
+        "text": "NamedTuple.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n567",
+        "parent": "n152",
+        "text": "Sequence.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n568",
+        "parent": "n152",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n569",
+        "parent": "n152",
+        "text": "RangeList.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n570",
+        "parent": "n160",
+        "text": "IndexOf.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n571",
+        "parent": "n160",
+        "text": "MapsHelper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n572",
+        "parent": "n160",
+        "text": "Dictionary(Of T, V).vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n573",
+        "parent": "n18",
+        "text": "CodeDOM",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n574",
+        "parent": "n573",
+        "text": "CodeHelper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n575",
+        "parent": "n573",
+        "text": "References.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n576",
+        "parent": "n88",
+        "text": "VisualBasicAppException.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n577",
+        "parent": "n252",
+        "text": "AnonymousTypeHelper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n578",
+        "parent": "n19",
+        "text": "PointF3D.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n579",
+        "parent": "n104",
+        "text": "NumeralSystem.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n580",
+        "parent": "n104",
+        "text": "Matrix.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n581",
+        "parent": "n104",
+        "text": "Percentage.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n582",
+        "parent": "n104",
+        "text": "ScientificNotation.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n583",
+        "parent": "n272",
+        "text": "Methods.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n584",
+        "parent": "n535",
+        "text": "RangeExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n585",
+        "parent": "n18",
+        "text": "WebServices",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n586",
+        "parent": "n585",
+        "text": "HttpGet.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n587",
+        "parent": "n286",
+        "text": "Expressions",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n588",
+        "parent": "n587",
+        "text": "Aggregate.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n589",
+        "parent": "n54",
+        "text": "AnonymousJSON.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n590",
+        "parent": "n397",
+        "text": "CharEnumerator.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n591",
+        "parent": "n67",
+        "text": "Patterns",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n592",
+        "parent": "n591",
+        "text": "Regexp.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n593",
+        "parent": "n307",
+        "text": "IEqualityComparer.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n594",
+        "parent": "n529",
+        "text": "NumericFormatHelper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n595",
+        "parent": "n537",
+        "text": "GZStream.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n596",
+        "parent": "n537",
+        "text": "sitemap.xml.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n597",
+        "parent": "n185",
+        "text": "Indexer.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n598",
+        "parent": "n185",
+        "text": "List(Of T).vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n599",
+        "parent": "n587",
+        "text": "Selector.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n600",
+        "parent": "n287",
+        "text": "BinaryOperator.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n601",
+        "parent": "n287",
+        "text": "OverloadsFunction.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n602",
+        "parent": "n287",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n603",
+        "parent": "n149",
+        "text": "Iterator.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n604",
+        "parent": "n252",
+        "text": "Enumerable.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n605",
+        "parent": "n523",
+        "text": "FileSaveHandle.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n606",
+        "parent": "n157",
+        "text": "ConfigEngine.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n607",
+        "parent": "n163",
+        "text": "GenericAbstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n608",
+        "parent": "n163",
+        "text": "Binding.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n609",
+        "parent": "n188",
+        "text": "var.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n610",
+        "parent": "n587",
+        "text": "ArrayIndex.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n611",
+        "parent": "n587",
+        "text": "StringInterpolation.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n612",
+        "parent": "n333",
+        "text": "PipelineCLI.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n613",
+        "parent": "n333",
+        "text": "PrintAsTable.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n614",
+        "parent": "n88",
+        "text": "Config.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n615",
+        "parent": "n535",
+        "text": "DateTimeHelper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n616",
+        "parent": "n591",
+        "text": "Wildcards.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n617",
+        "parent": "n537",
+        "text": "UserAgent.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n618",
+        "parent": "n585",
+        "text": "RequestBuilder.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n619",
+        "parent": "n185",
+        "text": "LanguageExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n620",
+        "parent": "n188",
+        "text": "Value.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n621",
+        "parent": "n188",
+        "text": "Pointer.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n622",
+        "parent": "n188",
+        "text": "Uid.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n623",
+        "parent": "n287",
+        "text": "Where.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n624",
+        "parent": "n54",
+        "text": "JsonFormatter.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n625",
+        "parent": "n397",
+        "text": "ParserValue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n626",
+        "parent": "n68",
+        "text": "HtmlBuilder.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n627",
+        "parent": "n68",
+        "text": "XmlEntity.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n628",
+        "parent": "n68",
+        "text": "XmlBuilder.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n629",
+        "parent": "n68",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n630",
+        "parent": "n68",
+        "text": "XmlDeclaration.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n631",
+        "parent": "n68",
+        "text": "Xmlns.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n632",
+        "parent": "n68",
+        "text": "XmlDoc.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n633",
+        "parent": "n104",
+        "text": "NumberGroups.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n634",
+        "parent": "n529",
+        "text": "RegexExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n635",
+        "parent": "n286",
+        "text": "MetaData",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n636",
+        "parent": "n635",
+        "text": "Author.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n637",
+        "parent": "n53",
+        "text": "BinaryDumping",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n638",
+        "parent": "n637",
+        "text": "StructFormatter.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n639",
+        "parent": "n637",
+        "text": "StructSerializer.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n640",
+        "parent": "n585",
+        "text": "WebResult.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n641",
+        "parent": "n397",
+        "text": "FormattedParser.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n642",
+        "parent": "n573",
+        "text": "CodeDOM.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n643",
+        "parent": "n573",
+        "text": "CodeDOMExpressions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n644",
+        "parent": "n573",
+        "text": "VBC.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n645",
+        "parent": "n252",
+        "text": "ListExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n646",
+        "parent": "n252",
+        "text": "KeyValuePair.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n647",
+        "parent": "n36",
+        "text": "LoopArray.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n648",
+        "parent": "n252",
+        "text": "Vector.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n649",
+        "parent": "n252",
+        "text": "Matrix.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n650",
+        "parent": "n88",
+        "text": "DebuggerLevels.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n651",
+        "parent": "n88",
+        "text": "DebuggerArgs.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n652",
+        "parent": "n18",
+        "text": "Doc",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n653",
+        "parent": "n652",
+        "text": "PartitionedStream.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n654",
+        "parent": "n652",
+        "text": "Text.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n655",
+        "parent": "n652",
+        "text": "XmlExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n656",
+        "parent": "n19",
+        "text": "Wmf.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n657",
+        "parent": "n19",
+        "text": "TiffWriter.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n658",
+        "parent": "n19",
+        "text": "ImageFormat.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n659",
+        "parent": "n104",
+        "text": "ScaleMaps.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n660",
+        "parent": "n36",
+        "text": "Pointer.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n661",
+        "parent": "n188",
+        "text": "Clones.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n662",
+        "parent": "n18",
+        "text": "Security",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n663",
+        "parent": "n662",
+        "text": "Md5HashProvider.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n664",
+        "parent": "n529",
+        "text": "Parser.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n665",
+        "parent": "n185",
+        "text": "Linq.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n666",
+        "parent": "n67",
+        "text": "IO",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n667",
+        "parent": "n666",
+        "text": "UnbufferedStringReader.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n668",
+        "parent": "n637",
+        "text": "Buffer.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n669",
+        "parent": "n53",
+        "text": "ConfigMappings",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n670",
+        "parent": "n669",
+        "text": "Attributes.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n671",
+        "parent": "n53",
+        "text": "Controls",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n672",
+        "parent": "n671",
+        "text": "Contrls.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n673",
+        "parent": "n666",
+        "text": "EncodingHelper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n674",
+        "parent": "n8",
+        "text": "ApplicationInfoUtils.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n675",
+        "parent": "n272",
+        "text": "Reflection.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n676",
+        "parent": "n529",
+        "text": "StrUtils.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n677",
+        "parent": "n585",
+        "text": "HTTP_RFC.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n678",
+        "parent": "n537",
+        "text": "Base64Codec.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n679",
+        "parent": "n585",
+        "text": "NetResponse.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n680",
+        "parent": "n662",
+        "text": "Md5.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n681",
+        "parent": "n529",
+        "text": "StringHelpers.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n682",
+        "parent": "n635",
+        "text": "MetaAPI.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n683",
+        "parent": "n635",
+        "text": "Type.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n684",
+        "parent": "n303",
+        "text": "ParserCommon.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n685",
+        "parent": "n303",
+        "text": "Prefix.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n686",
+        "parent": "n303",
+        "text": "StackParser.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n687",
+        "parent": "n303",
+        "text": "TokenParser.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n688",
+        "parent": "n637",
+        "text": "BinaryReader.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n689",
+        "parent": "n54",
+        "text": "JsonSerialization.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n690",
+        "parent": "n635",
+        "text": "Cite.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n691",
+        "parent": "n635",
+        "text": "Parameter.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n692",
+        "parent": "n635",
+        "text": "Namespace.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n693",
+        "parent": "n637",
+        "text": "BinaryWriter.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n694",
+        "parent": "n307",
+        "text": "Similarity.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n695",
+        "parent": "n666",
+        "text": "GB2312.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n696",
+        "parent": "n635",
+        "text": "EntryPointMetaData.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n697",
+        "parent": "n88",
+        "text": "NETDebugger.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n698",
+        "parent": "n94",
+        "text": "MIME",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n699",
+        "parent": "n698",
+        "text": "MIME.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n700",
+        "parent": "n698",
+        "text": "ContentType.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n701",
+        "parent": "n460",
+        "text": "Abstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n702",
+        "parent": "n460",
+        "text": "IVerifySession.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n703",
+        "parent": "n460",
+        "text": "RequestStream.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n704",
+        "parent": "n95",
+        "text": "StateObject.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n705",
+        "parent": "n95",
+        "text": "TcpServicesSocket.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n706",
+        "parent": "n426",
+        "text": "OSVersionInfo.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n707",
+        "parent": "n426",
+        "text": "Resources.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n708",
+        "parent": "n7",
+        "text": "LanguageHelper",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n709",
+        "parent": "n708",
+        "text": "StringResources.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n710",
+        "parent": "n662",
+        "text": "AES.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n711",
+        "parent": "n662",
+        "text": "SHA.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n712",
+        "parent": "n662",
+        "text": "RSACrypto.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n713",
+        "parent": "n662",
+        "text": "SecurityString.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n714",
+        "parent": "n48",
+        "text": "OperationTimeOut.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n715",
+        "parent": "n95",
+        "text": "TCPExtensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n716",
+        "parent": "n95",
+        "text": "TcpRequest.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n717",
+        "parent": "n48",
+        "text": "Threading.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n718",
+        "parent": "n36",
+        "text": "HashDictionary.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n719",
+        "parent": "n132",
+        "text": "InteractiveConsole.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n720",
+        "parent": "n669",
+        "text": "DynamicsConfiguration.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n721",
+        "parent": "n669",
+        "text": "ConfigurationMappings.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n722",
+        "parent": "n149",
+        "text": "DataFramework.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n723",
+        "parent": "n652",
+        "text": "LargeTextFile.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n724",
+        "parent": "n666",
+        "text": "TextFileEncodingDetector.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n725",
+        "parent": "n157",
+        "text": "SimpleConfig.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n726",
+        "parent": "n53",
+        "text": "DumpData",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n727",
+        "parent": "n726",
+        "text": "DumpData.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n728",
+        "parent": "n726",
+        "text": "DumpNode.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n729",
+        "parent": "n662",
+        "text": "TripleDES.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n730",
+        "parent": "n585",
+        "text": "WebServiceUtils.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n731",
+        "parent": "n523",
+        "text": "ITextFile.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n732",
+        "parent": "n157",
+        "text": "Settings.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n733",
+        "parent": "n132",
+        "text": "Interpreter.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n734",
+        "parent": "n200",
+        "text": "ArgumentCollection.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n735",
+        "parent": "n104",
+        "text": "Math.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n736",
+        "parent": "n542",
+        "text": "IORedirect.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n737",
+        "parent": "n708",
+        "text": "LanguageAttribute.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n738",
+        "parent": "n708",
+        "text": "LanguageHelper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n739",
+        "parent": "n7",
+        "text": "ServerModule.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n740",
+        "parent": "#",
+        "text": "My",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n741",
+        "parent": "n740",
+        "text": "Log4VB.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n742",
+        "parent": "n131",
+        "text": "CLIMapper.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n743",
+        "parent": "n131",
+        "text": "CLITools.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n744",
+        "parent": "n29",
+        "text": "Count.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n745",
+        "parent": "n29",
+        "text": "DriverModel.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n746",
+        "parent": "n29",
+        "text": "SingletonHolder.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n747",
+        "parent": "n7",
+        "text": "Utils.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n748",
+        "parent": "n94",
+        "text": "DomainName.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n749",
+        "parent": "n53",
+        "text": "Abstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n750",
+        "parent": "n1",
+        "text": "Runtime.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n751",
+        "parent": "n1",
+        "text": "API.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n752",
+        "parent": "n286",
+        "text": "Abstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n753",
+        "parent": "n286",
+        "text": "VBLanguage.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n754",
+        "parent": "n67",
+        "text": "GreekAlphabets.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n755",
+        "parent": "n29",
+        "text": "LazyLoader.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n756",
+        "parent": "n7",
+        "text": "IOHandler.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n757",
+        "parent": "n286",
+        "text": "ScriptBuilder.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n758",
+        "parent": "n740",
+        "text": "InnerQueue.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n759",
+        "parent": "n29",
+        "text": "RelayCommand.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n760",
+        "parent": "n67",
+        "text": "ASCII.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n761",
+        "parent": "n1",
+        "text": "StringHelpers.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n762",
+        "parent": "n286",
+        "text": "Actives.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n763",
+        "parent": "n67",
+        "text": "Paragraph.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n764",
+        "parent": "n1",
+        "text": "NET40_Compatible.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n765",
+        "parent": "n286",
+        "text": "ExternalCall.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n766",
+        "parent": "n7",
+        "text": "App.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n767",
+        "parent": "n7",
+        "text": "Debugger.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n768",
+        "parent": "n1",
+        "text": "NamespaceDoc.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n769",
+        "parent": "n1",
+        "text": "BaseClass.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n770",
+        "parent": "n67",
+        "text": "Splitter.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n771",
+        "parent": "n67",
+        "text": "TextEncodings.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n772",
+        "parent": "n286",
+        "text": "InputHandler.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n773",
+        "parent": "n131",
+        "text": "CliResCommon.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n774",
+        "parent": "n29",
+        "text": "TimeSpan.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n775",
+        "parent": "n94",
+        "text": "Abstract.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n776",
+        "parent": "n94",
+        "text": "wGetTools.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n777",
+        "parent": "n94",
+        "text": "DomainParser.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n778",
+        "parent": "n94",
+        "text": "PingUtility.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n779",
+        "parent": "n53",
+        "text": "ShadowsCopy.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n780",
+        "parent": "n286",
+        "text": "TextGrepScriptEngine.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n781",
+        "parent": "n7",
+        "text": "ZipLib.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n782",
+        "parent": "n131",
+        "text": "CommandLine.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n783",
+        "parent": "n18",
+        "text": "Extensions.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//Folder_16x.png",
+        "id": "n784",
+        "parent": "#",
+        "text": "My Project",
+        "type": "folder"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n785",
+        "parent": "n784",
+        "text": "AssemblyInfo.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n786",
+        "parent": "#",
+        "text": "NamespaceDoc.vb",
+        "type": "file"
+    },
+    {
+        "icon": "images//VB_16x.png",
+        "id": "n787",
+        "parent": "#",
+        "text": "LICENSE.vb",
+        "type": "file"
+    }
+]
