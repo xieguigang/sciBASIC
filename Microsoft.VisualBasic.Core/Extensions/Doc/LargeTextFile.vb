@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ceed2c4e506264b916bfa056d6fd7099, Microsoft.VisualBasic.Core\Extensions\Doc\LargeTextFile.vb"
+﻿#Region "Microsoft.VisualBasic::b6301ccfd71164d2ce589ec6b3677b6a, Microsoft.VisualBasic.Core\Extensions\Doc\LargeTextFile.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     ' Module LargeTextFile
     ' 
-    '     Function: GetLastLine, IteratesStream, IteratesTableData, Merge, Peeks
-    '               Tails
+    '     Function: FixEscapes, GetLastLine, IteratesStream, IteratesTableData, Merge
+    '               Peeks, Tails
     ' 
     ' /********************************************************************************/
 

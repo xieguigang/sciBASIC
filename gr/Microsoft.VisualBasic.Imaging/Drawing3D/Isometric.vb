@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b645dd1617b5d7ed7e3ae497b9ee6a07, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Isometric.vb"
+﻿#Region "Microsoft.VisualBasic::4d8ee3f25f15348fbc86c34100399dd6, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Isometric.vb"
 
     ' Author:
     ' 
@@ -357,7 +357,7 @@ Namespace Drawing3D
         ''' <returns></returns>
         Private Function IsPointInPoly(poly As IList(Of Point3D), x As Double, y As Double) As Boolean
             Dim c As Boolean = False
-            Dim i As int = -1
+            Dim i As VBInteger = -1
             Dim l As Integer = poly.Count
             Dim j As Integer = l - 1
 
@@ -377,7 +377,7 @@ Namespace Drawing3D
 
         Private Function IsPointInPoly(poly As Point3D(), x As Double, y As Double) As Boolean
             Dim c As Boolean = False
-            Dim i As int = -1
+            Dim i As VBInteger = -1
             Dim l As Integer = poly.Length
             Dim j As Integer = l - 1
 

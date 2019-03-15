@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa32b6a2c48c9a19436d777da05fb707, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a4ccae4ab6e4e58974e05fa0977f2300, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Extensions.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,20 @@
 
     ' Summaries:
 
+    '     Class Leaf
+    ' 
+    '         Properties: bounds, variable
+    ' 
+    '     Interface ProjectionGroup
+    ' 
+    '         Properties: bounds, groups, leaves, maxVar, minVar
+    '                     padding, stiffness
+    ' 
     '     Module Extensions
     ' 
-    '         Function: compareEvents, computeGroupBounds, makeEdgeBetween, makeEdgeTo, reduce
-    '                   removeOverlapInOneDimension
+    '         Function: compareEvents, computeGroupBounds, makeEdgeBetween, makeEdgeTo, removeOverlapInOneDimension
+    ' 
+    '         Sub: setXCentre, setYCentre
     ' 
     ' 
     ' /********************************************************************************/
@@ -44,14 +54,41 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.JavaScript
 Imports Microsoft.VisualBasic.Language.Python
-Imports number = System.Double
 
 Namespace Layouts.Cola
 
+    Public Class Leaf : Inherits JavaScriptObject
+        Public Overridable Property bounds As Rectangle2D
+        Public Overridable Property variable As Variable
+    End Class
+
+    Public Interface ProjectionGroup
+        Property bounds As Rectangle2D
+        Property padding As Double?
+        Property stiffness As Double?
+        Property leaves As List(Of Leaf)
+        Property groups As List(Of ProjectionGroup)
+        Property minVar As Variable
+        Property maxVar As Variable
+    End Interface
+
     Public Module Extensions
 
-        Public Function compareEvents(a As [Event], b As [Event]) As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub setXCentre(rect As Rectangle2D, cx As Double)
+            rect.X += (cx - rect.CenterX)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub setYCentre(rect As Rectangle2D, cy As Double)
+            rect.Y += (cy - rect.CenterY)
+        End Sub
+
+        Public Function compareEvents(a As [Event], b As [Event]) As Integer
             If (a.pos > b.pos) Then
                 Return 1
             End If
@@ -71,16 +108,15 @@ Namespace Layouts.Cola
             Return 0
         End Function
 
-
         Public Function computeGroupBounds(g As ProjectionGroup) As Rectangle2D
-            g.bounds = If(Not g.leaves Is Nothing, g.leaves.reduce(Of Rectangle2D)(Function(r As Rectangle2D, C As Leaf)
-                                                                                       Return C.bounds.Union(r)
-                                                                                   End Function, New Rectangle2D()), New Rectangle2D())
+            g.bounds = If(Not g.leaves Is Nothing, g.leaves.Reduce(Function(r As Rectangle2D, C As Leaf)
+                                                                       Return C.bounds.Union(r)
+                                                                   End Function, New Rectangle2D()), New Rectangle2D())
 
             If Not g.groups Is Nothing Then
-                g.bounds = g.groups.reduce(Of ProjectionGroup, Rectangle2D)(Function(r As Rectangle2D, C As ProjectionGroup)
-                                                                                Return computeGroupBounds(C).Union(r)
-                                                                            End Function, g.bounds)
+                g.bounds = g.groups.Reduce(Function(r As Rectangle2D, C As ProjectionGroup)
+                                               Return computeGroupBounds(C).Union(r)
+                                           End Function, g.bounds)
             End If
 
             g.bounds = g.bounds.inflate(g.padding)

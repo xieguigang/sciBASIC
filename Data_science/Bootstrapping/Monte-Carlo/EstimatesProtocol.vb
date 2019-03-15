@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0fccc1650b35351f1f79aefe193dcb9, Data_science\Bootstrapping\Monte-Carlo\EstimatesProtocol.vb"
+﻿#Region "Microsoft.VisualBasic::9764547aa85b6adc306657850c53c124, Data_science\Bootstrapping\Monte-Carlo\EstimatesProtocol.vb"
 
     ' Author:
     ' 
@@ -243,7 +243,7 @@ Namespace MonteCarlo
 
             Dim experimentObservation As VectorTagged(Of Dictionary(Of String, Double)) =
                 observation.Sampling(eigenvectors, partN, EstimatesProtocol.Observation)
-            Dim i As int = 0
+            Dim i As VBInteger = 0
 
             Call observation.params.GetJson.__DEBUG_ECHO
 

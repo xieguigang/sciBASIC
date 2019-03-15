@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbbb4af951ee7f357716c975b2a40855, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::e4464cb58333d0414f78365e8ea7192e, Microsoft.VisualBasic.Core\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -745,12 +745,12 @@ Namespace CommandLine
         ''' <param name="name">The parameter name, and its argument value should be a valid file path</param>
         ''' <param name="[default]">Default file path if the argument value is not exists</param>
         ''' <returns></returns>
-        Public Function OpenHandle(name$, Optional default$ = "") As int
+        Public Function OpenHandle(name$, Optional default$ = "") As VBInteger
             Dim file As String = Me(name)
             If String.IsNullOrEmpty(file) Then
                 file = [default]
             End If
-            Return New int(FileHandles.OpenHandle(file))
+            Return New VBInteger(FileHandles.OpenHandle(file))
         End Function
 #End Region
 

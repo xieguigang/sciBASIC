@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f532319ba203ff80910141664ccdb0f8, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Line.vb"
+﻿#Region "Microsoft.VisualBasic::0311d3217df9ea2dd3d6f0d076d03d37, Microsoft.VisualBasic.Core\Extensions\Image\Math\Models\Line.vb"
 
     ' Author:
     ' 
@@ -31,12 +31,12 @@
 
     ' Summaries:
 
-    '     Structure Line
+    '     Class Line
     ' 
     '         Properties: Length, P1, P2, X1, X2
     '                     Y1, Y2
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 

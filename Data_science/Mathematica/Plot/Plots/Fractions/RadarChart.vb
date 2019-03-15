@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::419b2c2df3ee377b16065c5c986375f8, Data_science\Mathematica\Plot\Plots\Fractions\RadarChart.vb"
+﻿#Region "Microsoft.VisualBasic::47840a27e56f235747f04ffc49223bb2, Data_science\Mathematica\Plot\Plots\Fractions\RadarChart.vb"
 
     ' Author:
     ' 
@@ -317,7 +317,7 @@ Namespace Fractions
                                     Call .AddPolygon(shape)
                                     Call .CloseAllFigures()
 
-                                    Call g.ShapeGlow(.ByRef, color.Light(0.75), shapeBorderWidth * 3)
+                                    Call g.ShapeGlow(.ByRef, color.Lighten(0.75), shapeBorderWidth * 3)
                                     Call g.FillPath(New SolidBrush(color), .ByRef)
                                     Call g.DrawPath(pen, .ByRef)
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8aa8bf036afa8b2a1a870a552c01f739, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\Sigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::39bee115913e07d535127abb9941da4f, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\SigmoidFunction.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,11 @@
 
     ' Summaries:
 
-    '     Class Sigmoid
+    '     Class SigmoidFunction
     ' 
     '         Properties: Store
     ' 
-    '         Function: [Function], Derivative, Derivative2
+    '         Function: [Function], Derivative, Derivative2, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -50,9 +50,9 @@ Namespace NeuralNetwork.Activations
     ''' <summary>
     ''' https://github.com/trentsartain/Neural-Network/blob/master/NeuralNetwork/NeuralNetwork/Network/Sigmoid.cs
     ''' </summary>
-    Public NotInheritable Class SigmoidFunction : Implements IActivationFunction
+    Public NotInheritable Class SigmoidFunction : Inherits IActivationFunction
 
-        Public ReadOnly Property Store As ActiveFunction Implements IActivationFunction.Store
+        Public Overrides ReadOnly Property Store As ActiveFunction
             Get
                 Return New ActiveFunction With {
                     .Arguments = {},
@@ -62,18 +62,22 @@ Namespace NeuralNetwork.Activations
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Derivative(x As Double) As Double Implements IActivationFunction.Derivative
+        Public Overrides Function Derivative(x As Double) As Double
             Return x * (1 - x)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function [Function](x As Double) As Double Implements IActivationFunction.Function
+        Public Overrides Function [Function](x As Double) As Double
             Return If(x < -45.0, 0.0, If(x > 45.0, 1.0, 1.0 / (1.0 + Math.Exp(-x))))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Derivative2(y As Double) As Double Implements IActivationFunction.Derivative2
+        Public Overrides Function Derivative2(y As Double) As Double
             Return Derivative(y)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{NameOf(SigmoidFunction)}()"
         End Function
     End Class
 End Namespace

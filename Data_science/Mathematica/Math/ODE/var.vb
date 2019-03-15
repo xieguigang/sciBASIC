@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5562567832f013fe749ca6a2a3391bf6, Data_science\Mathematica\Math\ODE\var.vb"
+﻿#Region "Microsoft.VisualBasic::a8c41a09ae48c0907352908ed0d7984f, Data_science\Mathematica\Math\ODE\var.vb"
 
     ' Author:
     ' 
@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Language
 ''' <summary>
 ''' Y variable in the ODE
 ''' </summary>
-Public Class var : Inherits float
+Public Class var : Inherits VBDouble
     Implements Ivar
     Implements ICloneable
     Implements IAddress(Of Integer)

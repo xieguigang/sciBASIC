@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35e2b041f79cc0f6deab9578bfd4a3c3, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6cd2f502c2bb29479d8383c99a8002d2, Microsoft.VisualBasic.Core\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -39,8 +39,10 @@
     ' 
     '     Module RandomExtensions
     ' 
-    '         Function: (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, (+2 Overloads) NextGaussian, NextTriangular
-    '                   Permutation, randf, RandomSingle, Seed
+    '         Properties: Seeds
+    ' 
+    '         Function: GetNextBetween, (+2 Overloads) GetRandomValue, NextBoolean, (+2 Overloads) NextDouble, (+2 Overloads) NextGaussian
+    '                   NextTriangular, Permutation, randf, RandomSingle, Seed
     ' 
     '         Sub: (+3 Overloads) Shuffle
     ' 
@@ -122,6 +124,12 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RandomSingle() As Single
             Return seeds.NextDouble()
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function GetNextBetween(r As Random, min#, max#) As Double
+            Return (max - min) * r.NextDouble + min
         End Function
 
         <Extension>

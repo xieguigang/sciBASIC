@@ -900,7 +900,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFSocket.vb" />
+    <Compile Include="ApplicationServices\Parallel\MMFProtocol\MMFChannel.vb" />
     <Compile Include="ApplicationServices\ServerModule.vb" />
     <Compile Include="ApplicationServices\Debugger\VisualStudioPreviews.vb" />
     <Compile Include="ApplicationServices\Debugger\Exception\ExceptionData.vb" />
@@ -918,7 +918,9 @@
     <Compile Include="CommandLine\Reflection\RunDll.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\BinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\AVLTree.vb" />
-    <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\Iterator.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\RBNode.vb" />
+    <Compile Include="ComponentModel\Algorithm\BinaryTree\RBTree\RBTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\TreeBase.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\NaiveBinaryTree.vb" />
     <Compile Include="ComponentModel\Algorithm\BinaryTree\Enumerable.vb" />
@@ -936,10 +938,13 @@
     <Compile Include="ComponentModel\Ranges\Unit.vb" />
     <Compile Include="ComponentModel\Settings\Inf\IOProvider.vb" />
     <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb" />
+    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\FactorValue.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\Indexing.vb" />
     <Compile Include="Extensions\Collection\ByteStreamExtensions.vb" />
     <Compile Include="Extensions\Collection\IsNullOrEmptyExtensions.vb" />
+    <Compile Include="Extensions\Collection\Linq\Enumeration.vb" />
+    <Compile Include="Extensions\Collection\Linq\SeqValue.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\ColaExtensions.vb" />
     <Compile Include="Extensions\Image\GDI+\Layouts\Point2D.vb" />
     <Compile Include="Extensions\Image\Math\Models\PolarPoint.vb" />
@@ -961,8 +966,11 @@
     <Compile Include="Extensions\Trinity\WordClass.vb" />
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
     <Compile Include="Language\Language\JavaScript\Linq.vb" />
+    <Compile Include="Language\Language\JavaScript\JavaScriptObject.vb" />
+    <Compile Include="Language\Language\JavaScript\UnionType.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
     <Compile Include="Language\Language\Python\NamespaceDoc.vb" />
+    <Compile Include="Language\Value\CharStream.vb" />
     <Compile Include="Net\HTTP\ZipStream.vb" />
     <Compile Include="Net\HTTP\Multipart.vb" />
     <Compile Include="Net\HTTP\DataURI.vb" />
@@ -1107,6 +1115,7 @@
     <Compile Include="Serialization\Abstract.vb" />
     <Compile Include="Serialization\JSON\AnonymousJSON.vb" />
     <Compile Include="Text\Parser\CharEnumerator.vb" />
+    <Compile Include="Text\Parser\TryParse.vb" />
     <Compile Include="Text\Patterns\Regexp.vb" />
     <Compile Include="Text\StringSimilarity\IEqualityComparer.vb" />
     <Compile Include="Extensions\StringHelpers\NumericFormatHelper.vb" />
@@ -1157,15 +1166,14 @@
     <Compile Include="ComponentModel\Settings\DataModels\ProfileItem.vb" />
     <Compile Include="ComponentModel\Settings\Inf\Section.vb" />
     <Compile Include="ApplicationServices\IOHandler.vb" />
-    <Compile Include="ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb" />
     <Compile Include="ComponentModel\ValuePair\GenericAbstract.vb" />
     <Compile Include="ComponentModel\ValuePair\Binding.vb" />
     <Compile Include="ComponentModel\ValuePair\TagData\TagData.vb" />
     <Compile Include="Language\Language\UnixBash\ShellSyntax.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\tree.vb" />
     <Compile Include="Language\Language\UnixBash\Shell\rm.vb" />
-    <Compile Include="Language\Value\Numeric\int.vb" />
-    <Compile Include="Language\Value\Numeric\float.vb" />
+    <Compile Include="Language\Value\Numeric\VBInteger.vb" />
+    <Compile Include="Language\Value\Numeric\VBDouble.vb" />
     <Compile Include="Language\Value\var.vb" />
     <Compile Include="ApplicationServices\Parallel\Tasks\Actor%28Of T, V%29.vb" />
     <Compile Include="Scripting\Expressions\ArrayIndex.vb" />

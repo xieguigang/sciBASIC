@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bddaef1607c5d729398e6b3c4accc6de, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e92735667d8db77fe838db51897c1ea5, Data_science\Mathematica\Math\Math\Quantile\Extensions.vb"
 
     ' Author:
     ' 
@@ -114,7 +114,7 @@ Namespace Quantile
                                    Optional compact_size% = 1000) As QuantileEstimationGK
             Dim estimator As New QuantileEstimationGK(epsilon, compact_size)
 
-            For Each x As Long In source
+            For Each x As Double In source
                 Call estimator.Insert(x)
             Next
 

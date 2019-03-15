@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8eaf2c35415b265934a3a49e2d470e1, Data_science\MachineLearning\Darwinism\DifferentialEvolution.vb"
+﻿#Region "Microsoft.VisualBasic::d23d775a9a165c0d414b25c99c637a66, Data_science\MachineLearning\Darwinism\DifferentialEvolution.vb"
 
     ' Author:
     ' 
@@ -164,7 +164,7 @@ Namespace Darwinism
 
             Dim bestFit# = Integer.MaxValue
             Dim fitnessFunction As Func(Of Individual, Double) = AddressOf New FitnessPool(Of Individual)(target, capacity:=PopulationSize * 100).Fitness
-            Dim i As int = Scan0
+            Dim i As VBInteger = Scan0
 
             If randomGenerator Is Nothing Then
                 randomGenerator = Function() New Random

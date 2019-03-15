@@ -1,47 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::f21617a6bd6c02a95a5068172cc7c004, Microsoft.VisualBasic.Core\Extensions\Image\Colors\GDIColors.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GDIColors
-    ' 
-    '         Properties: AllDotNetPrefixColors, ChartColors
-    ' 
-    '         Function: __getDotNetColors, (+2 Overloads) Alpha, ARGBExpression, AsDefaultColor, Average
-    '                   Dark, Equals, EuclideanDistance, HTMLColors, IsColorExpression
-    '                   IsNullOrEmpty, IsTransparent, Light, Middle, RGBExpression
-    '                   ToColor, TranslateColor
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GDIColors
+' 
+'         Properties: AllDotNetPrefixColors, ChartColors
+' 
+'         Function: __getDotNetColors, (+2 Overloads) Alpha, ARGBExpression, AsDefaultColor, Average
+'                   Dark, Equals, EuclideanDistance, HTMLColors, IsColorExpression
+'                   IsNullOrEmpty, IsTransparent, Light, Middle, RGBExpression
+'                   ToColor, TranslateColor
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -131,22 +131,24 @@ Namespace Imaging
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Light(base As Color, percent!) As Color
-            Return ControlPaint.Light(base, percent)
+        Public Function Lighten(base As Color, Optional percent! = 0.5) As Color
+            Return HSLColor.GetHSL(base).Lighten(percent, Color.White)
         End Function
 
         ''' <summary>
-        ''' Creates a new dark color object for the control from the specified color and
+        ''' Makes the specified color darker: creates a new dark color object for the control from the specified color and
         ''' darkens it by the specified percentage.
         ''' </summary>
-        ''' <param name="base">The <see cref="System.Drawing.Color"/> to be darkened.</param>
-        ''' <param name="percent!">The percentage to darken the specified <see cref="System.Drawing.Color"/>.</param>
-        ''' <returns>A <see cref="System.Drawing.Color"/> that represent the dark color on the control.</returns>
-        ''' 
+        ''' <param name="base">The <see cref="Color"/> to be darkened.</param>
+        ''' <param name="percent!">
+        ''' The percentage to darken the specified <see cref="Color"/>. By default is makes the color 50% darken.
+        ''' </param>
+        ''' <returns>A <see cref="Color"/> that represent the dark color on the control.</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Dark(base As Color, percent!) As Color
-            Return ControlPaint.Dark(base, percent)
+        Public Function Darken(base As Color, Optional percent! = 0.5) As Color
+            Dim foldChange = 1 / percent
+            Return Color.FromArgb(base.A, base.R \ foldChange, base.G \ foldChange, base.B \ foldChange)
         End Function
 
         ''' <summary>
@@ -176,29 +178,27 @@ Namespace Imaging
 #If NET_40 = 0 Then
 
         ''' <summary>
-        ''' Reads all of the color property from <see cref="Color"/> and then creates the color dictionary based on the property name.
+        ''' Reads all of the color property from <see cref="Color"/> and 
+        ''' then creates the color dictionary based on the property name.
         ''' </summary>
         ''' <returns></returns>
         Private Function __getDotNetColors() As Dictionary(Of String, Color)
-            Dim props As IEnumerable(Of PropertyInfo) =
-                GetType(Color).GetProperties(BindingFlags.Public Or BindingFlags.Static)
-            Dim getValues = From p As PropertyInfo  ' Gets all of the known name color from the Color object its shared property.
-                            In props
-                            Where p.PropertyType = GetType(Color)
-                            Let ColorValue As Color = DirectCast(p.GetValue(Nothing), Color)
-                            Select name = p.Name,
-                                ColorValue
-            Dim hash As Dictionary(Of String, Color) =
-                getValues.ToDictionary(Function(x) x.name.ToLower,
-                                       Function(x) x.ColorValue)
-            Return hash
+            ' Gets all of the known name color from 
+            ' the Color object its shared property.
+            Dim getValues = From p As PropertyInfo
+                            In GetType(Color).GetProperties(BindingFlags.Public Or BindingFlags.Static)
+                            Where p.PropertyType Is GetType(Color)
+                            Let color As Color = DirectCast(p.GetValue(Nothing), Color)
+                            Let name = Strings.LCase(p.Name)
+                            Select name, color
+
+            Return getValues.ToDictionary(Function(x) x.name, Function(x) x.color)
         End Function
 
         ''' <summary>
         ''' Key都是小写的
         ''' </summary>
-        ReadOnly __allDotNETPrefixColors As Dictionary(Of String, Color) =
-            __getDotNetColors()
+        ReadOnly __allDotNETPrefixColors As Dictionary(Of String, Color) = __getDotNetColors()
 
         ''' <summary>
         ''' Gets all of the known name color from the Color object its shared property.
@@ -251,15 +251,7 @@ Namespace Imaging
 
             Dim s As String = Regex.Match(str, rgbExprValues).Value
 
-            If String.IsNullOrEmpty(s) Then ' Color from name/known color
-                Dim key As String = str.ToLower
-
-                If __allDotNETPrefixColors.ContainsKey(key) Then
-                    Return __allDotNETPrefixColors(key)
-                Else
-                    Return Color.FromName(str)
-                End If
-            Else
+            If Not String.IsNullOrEmpty(s) Then
                 Dim tokens As String() = s.Split(","c)
 
                 If tokens.Length = 3 Then  ' rgb
@@ -275,15 +267,24 @@ Namespace Imaging
                     Dim B As Integer = CInt(Val(tokens(3)))
 
                     Return Color.FromArgb(A, R, G, B)
+                End If
+            End If
+
+            ' Color from name/known color
+            Dim key As String = str.ToLower
+
+            If __allDotNETPrefixColors.ContainsKey(key) Then
+                Return __allDotNETPrefixColors(key)
+            Else
+                ' __allDotNETPrefixColors里面已经包含有所有的颜色了
+                ' 如果不存在,则只能够返回空值了
+                If Not onFailure.IsEmpty Then
+                    Return onFailure
                 Else
-                    If Not onFailure.IsEmpty Then
-                        Return onFailure
+                    If throwEx Then
+                        Throw New Exception("Unable parsing any color information from expression: " & str)
                     Else
-                        If throwEx Then
-                            Throw New Exception("Unable parsing any color information from expression: " & str)
-                        Else
-                            Return Nothing
-                        End If
+                        Return Nothing
                     End If
                 End If
             End If
@@ -295,8 +296,11 @@ Namespace Imaging
         ''' <summary>
         ''' 这个函数会尝试用不同的模式来解析颜色表达式
         ''' </summary>
-        ''' <param name="exp$"></param>
-        ''' <returns></returns>
+        ''' <param name="exp">RGB expression/html color/ole color, etc</param>
+        ''' <returns>
+        ''' <see cref="Color.Black"/> will be return if the <paramref name="exp"/> is null or empty,
+        ''' 
+        ''' </returns>
         <Extension> Public Function TranslateColor(exp$, Optional throwEx As Boolean = True) As Color
             If exp.StringEmpty Then
                 Return Color.Black

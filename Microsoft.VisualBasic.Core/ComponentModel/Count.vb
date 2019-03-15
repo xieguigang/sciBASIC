@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed80ae1d0ca0e7020a5aaa66aa250019, Microsoft.VisualBasic.Core\ComponentModel\Count.vb"
+﻿#Region "Microsoft.VisualBasic::155d75d7892896d62416d19cd3b51339, Microsoft.VisualBasic.Core\ComponentModel\Count.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,7 @@ Namespace ComponentModel
     ''' <summary>
     ''' The object counter
     ''' </summary>
-    Public Class Counter : Inherits int
+    Public Class Counter : Inherits VBInteger
 
         ''' <summary>
         ''' Create a new integer counter start from ZERO.(新建一个计数器)

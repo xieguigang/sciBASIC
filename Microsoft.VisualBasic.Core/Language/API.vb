@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71ee759ed63d841ed4e808bcd1d165c7, Microsoft.VisualBasic.Core\Language\API.vb"
+﻿#Region "Microsoft.VisualBasic::6f306d41881417fde973bd1b5735abde, Microsoft.VisualBasic.Core\Language\API.vb"
 
     ' Author:
     ' 

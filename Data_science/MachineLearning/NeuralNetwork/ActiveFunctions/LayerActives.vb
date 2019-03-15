@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2034f0bd9422d37925f62c097a24b85f, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\LayerActives.vb"
+﻿#Region "Microsoft.VisualBasic::e2af19aa34a391560e298fd92f235ace, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\LayerActives.vb"
 
     ' Author:
     ' 
@@ -52,6 +52,13 @@ Namespace NeuralNetwork.Activations
     ''' <summary>
     ''' 每一层神经元都设立单独的激活函数
     ''' </summary>
+    ''' <remarks>
+    ''' 推荐的激活函数配置为:
+    ''' 
+    ''' + input: ``<see cref="Sigmoid"/>``
+    ''' + hidden: ``<see cref="SigmoidFunction"/>``
+    ''' + output: ``<see cref="Sigmoid"/>``
+    ''' </remarks>
     Public Class LayerActives
 
         Public Property input As IActivationFunction
@@ -92,7 +99,7 @@ Namespace NeuralNetwork.Activations
         Public Shared Function GetDefaultConfig() As DefaultValue(Of LayerActives)
             Return New LayerActives With {
                 .input = New Sigmoid,
-                .hiddens = New Sigmoid,
+                .hiddens = New SigmoidFunction,
                 .output = New Sigmoid
             }
         End Function

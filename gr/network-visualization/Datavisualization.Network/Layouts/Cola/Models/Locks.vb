@@ -1,4 +1,48 @@
-﻿Namespace Layouts.Cola
+﻿#Region "Microsoft.VisualBasic::3f877890ac65609a5b56f8a9f44e6f6f, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Locks.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Locks
+    ' 
+    '         Properties: isEmpty
+    ' 
+    '         Sub: add, apply, clear
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Namespace Layouts.Cola
 
     ''' <summary>
     ''' Descent respects a collection of locks over nodes that should not move
@@ -22,14 +66,14 @@
         ''' </summary>
         ''' <param name="id">index of node to be locked</param>
         ''' <param name="x">required position for node</param>
-        Private Sub add(id%, x As Double())
+        Public Sub add(id%, x As Double())
             Me.locks(id) = x
         End Sub
 
         ''' <summary>
         ''' clear all locks
         ''' </summary>
-        Private Sub clear()
+        Public Sub clear()
             Me.locks = New Dictionary(Of Integer, Double())()
         End Sub
 

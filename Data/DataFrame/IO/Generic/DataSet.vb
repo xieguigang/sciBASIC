@@ -1,45 +1,45 @@
-﻿#Region "Microsoft.VisualBasic::86ce0bed2e5f669ade25de3b830e00cb, Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::96a5050a6e3cb6f3b2c42fbabbfd5481, Data\DataFrame\IO\Generic\DataSet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataSet
-    ' 
-    '         Properties: ID, MyHashCode
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: __getID, Copy, (+2 Overloads) LoadDataSet, SubSet, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataSet
+' 
+'         Properties: ID, MyHashCode, Vector
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: __getID, Copy, (+2 Overloads) LoadDataSet, SubSet, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -47,6 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language.Default
 
 Namespace IO
@@ -64,6 +65,21 @@ Namespace IO
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return ID.GetHashCode
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 在进行序列化为csv表格文件的时候，这个属性将会被忽略掉
+        ''' </remarks>
+        <Ignored>
+        Public ReadOnly Property Vector As Double()
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Me.propertyTable.Values.ToArray
             End Get
         End Property
 
@@ -117,14 +133,17 @@ Namespace IO
         ''' <param name="uidMap">
         ''' 默认是使用csv文件的第一行第一个单元格中的内容作为标识符，但是有时候可能标识符不是在第一列的，则这个时候就需要对这个参数进行赋值了
         ''' </param>
+        ''' <param name="fieldNameMaps">
+        ''' [name_in_file => name_after_load]
+        ''' </param>
         ''' <returns></returns>
-        ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadDataSet(path$,
                                            Optional uidMap$ = Nothing,
+                                           Optional fieldNameMaps As Dictionary(Of String, String) = Nothing,
                                            Optional tsv As Boolean = False,
                                            Optional encoding As Encoding = Nothing) As IEnumerable(Of DataSet)
-            Return EntityObject.LoadDataSet(path, uidMap, tsv, encoding).AsDataSet
+            Return EntityObject.LoadDataSet(path, uidMap, fieldNameMaps, tsv, encoding).AsDataSet
         End Function
 
         Public Shared Function LoadDataSet(Of T As DataSet)(path$,

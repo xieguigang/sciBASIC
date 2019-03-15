@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::2801868782a9b8ef31a5f896a6505ca7, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\geom.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module Extensions
+    ' 
+    '         Function: above, below, isLeft, Ltangent_PointPolyC, nextPolyPoint
+    '                   prevPolyPoint, Rtangent_PointPolyC, tangent_PointPolyC
+    ' 
+    '         Sub: clockwiseRadialSweep
+    '         Delegate Function
+    ' 
+    ' 
+    '         Delegate Function
+    ' 
+    '             Function: intersects, isAnyPInQ, isPointInsidePoly, LLtangent_PolyPolyC, LRtangent_PolyPolyC
+    '                       polysOverlap, RLtangent_PolyPolyC, RRtangent_PolyPolyC, tangent_PolyPolyC, tangents
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
@@ -72,7 +127,7 @@ Namespace Layouts.Cola
         ''' <param name="P">a 2D point (exterior to the polygon)</param>
         ''' <param name="V">array of vertices for a 2D convex polygon</param>
         ''' <returns></returns>
-        Private Function tangent_PointPolyC(P As Point2D, V As Point2D()) As tangentPoly
+        Public Function tangent_PointPolyC(P As Point2D, V As Point2D()) As tangentPoly
             ' Rtangent_PointPolyC and Ltangent_PointPolyC require polygon to be
             ' "closed" with the first vertex duplicated at end, so V[n-1] = V[0].
             Dim Vclosed = V.ToList
@@ -92,7 +147,7 @@ Namespace Layouts.Cola
         ''' <param name="V">array of vertices for a 2D convex polygon with first
         ''' vertex duplicated as last, so V[n-1] = V[0]</param>
         ''' <returns>index "i" of rightmost tangent point V[i]</returns>
-        Private Function Rtangent_PointPolyC(P As Point2D, V As List(Of Point2D)) As Integer
+        Public Function Rtangent_PointPolyC(P As Point2D, V As List(Of Point2D)) As Integer
             Dim n = V.Count - 1
 
             ' use binary search for large convex polygons
@@ -178,7 +233,7 @@ Namespace Layouts.Cola
         '            V = array of vertices for a 2D convex polygon with first
         '                vertex duplicated as last, so V[n-1] = V[0]
         '    Return: index "i" of leftmost tangent point V[i]
-        Private Function Ltangent_PointPolyC(P As Point2D, V As List(Of Point2D)) As Integer
+        Public Function Ltangent_PointPolyC(P As Point2D, V As List(Of Point2D)) As Integer
             Dim n As Integer = V.Count - 1
             ' use binary search for large convex polygons
             Dim a As Integer
@@ -267,7 +322,7 @@ Namespace Layouts.Cola
         '            W = array of vertices for convex polygon 2 with W[n]=W[0]
         '    Output: *t1 = index of tangent point V[t1] for polygon 1
         '            *t2 = index of tangent point W[t2] for polygon 2
-        Private Function tangent_PolyPolyC(V As List(Of Point2D), W As List(Of Point2D), t1 As PointPolyC, t2 As PointPolyC, cmp1 As ComparePoints, cmp2 As ComparePoints) As BiTangent
+        Public Function tangent_PolyPolyC(V As List(Of Point2D), W As List(Of Point2D), t1 As PointPolyC, t2 As PointPolyC, cmp1 As ComparePoints, cmp2 As ComparePoints) As BiTangent
             Dim ix1 As Integer, ix2 As Integer
             ' search indices for polygons 1 and 2
             ' first get the initial vertex on each polygon
@@ -310,7 +365,7 @@ Namespace Layouts.Cola
         }
         End Function
 
-        Private Function LRtangent_PolyPolyC(V As List(Of Point2D), W As List(Of Point2D)) As BiTangent
+        Public Function LRtangent_PolyPolyC(V As List(Of Point2D), W As List(Of Point2D)) As BiTangent
             Dim rl = RLtangent_PolyPolyC(W, V)
 
             Return New BiTangent() With {
@@ -331,7 +386,7 @@ Namespace Layouts.Cola
             Return tangent_PolyPolyC(V, W, AddressOf Rtangent_PointPolyC, AddressOf Rtangent_PointPolyC, AddressOf above, AddressOf above)
         End Function
 
-        Private Function intersects(l As Line, P As Point2D()) As Point2D()
+        Public Function intersects(l As Line, P As Point2D()) As Point2D()
             Dim ints As New List(Of Point2D)
             Dim i As Integer = 1, n As Integer = P.Length
             While i < n
@@ -344,12 +399,13 @@ Namespace Layouts.Cola
             Return ints.ToArray
         End Function
 
-        Private Function tangents(V As Point2D(), W As Point2D()) As BiTangents
+        Public Function tangents(V As Point2D(), W As Point2D()) As BiTangents
             Dim m = V.Length - 1
             Dim n = W.Length - 1
             Dim bt = New BiTangents()
-            For i = 0 To m - 1
-                For j = 0 To n - 1
+
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
                     Dim v1 = V(If(i = 0, m - 1, i - 1))
                     Dim v2 = V(i)
                     Dim v3 = V(i + 1)

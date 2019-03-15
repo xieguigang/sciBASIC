@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e3de488c27d37d9d84f4fc815ad6396, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::9edc82b3a747bd847def004acbd510ba, Microsoft.VisualBasic.Core\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -135,7 +135,7 @@ Namespace ComponentModel.Ranges.Model
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' [min=xxx, max=xxx]
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>
@@ -145,7 +145,7 @@ Namespace ComponentModel.Ranges.Model
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return ToString("G2")
+            Return ToString("F2")
         End Function
 
         Public Overloads Function ToString(format As String) As String

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d95255b05ea13e5bf07abd9f849c442b, Data_science\Mathematica\Plot\Plots-statistics\VariableWidthBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::0930b797841c60d46701e8c252b648db, Data_science\Mathematica\Plot\Plots-statistics\VariableWidthBarPlot.vb"
 
     ' Author:
     ' 
@@ -82,7 +82,7 @@ Public Module VariableWidthBarPlot
         Dim X As Vector = list.Select(Function(b) b.Data.width).AsVector
         Dim Y As Vector = list.Select(Function(b) b.Data.height).AsVector.CreateAxisTicks
         Dim sumX# = X.Sum
-        Dim p As int = Scan0
+        Dim p As VBInteger = Scan0
         Dim axisPen As Pen = Stroke.TryParse(axisPenCSS).GDIObject
         Dim tickPen As Pen = Stroke.TryParse(ticksPenCSS).GDIObject
         Dim XLabelFont As Font = CSSFont.TryParse(XLabelFontCSS).GDIObject

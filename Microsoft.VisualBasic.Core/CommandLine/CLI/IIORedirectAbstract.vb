@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc18109e0949131a98d1402c90e6a5f0, Microsoft.VisualBasic.Core\CommandLine\CLI\IIORedirectAbstract.vb"
+﻿#Region "Microsoft.VisualBasic::22e29b8ac29d418051d018487c8a4fd1, Microsoft.VisualBasic.Core\CommandLine\CLI\IIORedirectAbstract.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     ' 
     '         Function: Run, Start, ToString
     ' 
-    '         Sub: __wait
+    '         Sub: wait
     ' 
     ' 
     ' /********************************************************************************/

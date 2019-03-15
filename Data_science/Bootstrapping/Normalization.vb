@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82b8a81446192d9e1e1b9c706babde62, Data_science\Bootstrapping\Normalization.vb"
+﻿#Region "Microsoft.VisualBasic::cca885a1a3aa0522f245ea5f2c38ef21, Data_science\Bootstrapping\Normalization.vb"
 
     ' Author:
     ' 
@@ -97,7 +97,7 @@ Public Module Normalization
             raw.Value.ToDictionary(
             Function(x) CSng(x.Time),
             Function(p) New PointF(CSng(p.Time), CSng(p.Y)))
-        Dim i As int = Scan0
+        Dim i As VBInteger = Scan0
         Dim preX As Value(Of Single) = intr.Value(++i).X
 
         Do While ++i < intr.Value.Length - 1

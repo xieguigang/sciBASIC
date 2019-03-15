@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6727972f3ff5b4685a77b883939bae3, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::481893c7090305a777c67dc50c42bb79, Microsoft.VisualBasic.Core\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports r = System.Text.RegularExpressions.Regex
 
-Namespace Text.HtmlParser
+Namespace Text.Parser.HtmlParser
 
     ''' <summary>
     ''' Html text document operations for a given html text

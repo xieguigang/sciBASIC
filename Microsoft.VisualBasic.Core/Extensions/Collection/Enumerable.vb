@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ea134180a40bffae99e68390d983785, Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::a3729b6eec8989cb5e5f901a6efe3ba6, Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
 
     ' Author:
     ' 
@@ -45,6 +45,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports Microsoft.VisualBasic.Text.Xml.Models.KeyValuePair
@@ -117,21 +118,26 @@ Public Module IEnumerations
         Return Dictionary
     End Function
 
-    <Extension> Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional Explicit As Boolean = True) As KeyValuePair()
-        Dim Method = If(Explicit, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From item In source Where String.Equals(item.Key, Key, Method) Select item).ToArray
+    ''' <summary>
+    ''' Text compare in case sensitive mode
+    ''' </summary>
+    ReadOnly TextCompareStrict As DefaultValue(Of StringComparison) = StringComparison.Ordinal
+
+    <Extension> Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional strict As Boolean = True) As KeyValuePair()
+        Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(strict)
+        Dim LQuery = (From item In source Where String.Equals(item.Key, Key, method) Select item).ToArray
         Return LQuery
     End Function
 
-    <Extension> Public Function FindByItemKey(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Key As String, Optional Explicit As Boolean = True) As PairItemType()
-        Dim Method = If(Explicit, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From item In source Where String.Equals(item.Key, Key, Method) Select item).ToArray
+    <Extension> Public Function FindByItemKey(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Key As String, Optional strict As Boolean = True) As PairItemType()
+        Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(strict)
+        Dim LQuery = (From item In source Where String.Equals(item.Key, Key, method) Select item).ToArray
         Return LQuery
     End Function
 
     <Extension> Public Function FindByItemValue(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Value As String, Optional strict As Boolean = True) As PairItemType()
-        Dim Method = If(strict, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
-        Dim LQuery = (From item In source Where String.Equals(item.Key, Value, Method) Select item).ToArray
+        Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(strict)
+        Dim LQuery = (From item In source Where String.Equals(item.Key, Value, method) Select item).ToArray
         Return LQuery
     End Function
 
@@ -199,7 +205,7 @@ Public Module IEnumerations
     ''' <param name="uniqueId"></param>
     ''' <returns></returns>
     <Extension> Public Function Take(Of T As INamedValue)(source As IEnumerable(Of T), uniqueId As String, Optional strict As Boolean = True) As T
-        Dim level As StringComparison = If(strict, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
+        Dim level As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(strict)
         Dim LQuery As T = LinqAPI.DefaultFirst(Of T) _
  _
             () <= From o As T
@@ -215,7 +221,7 @@ Public Module IEnumerations
     End Function
 
     <Extension> Public Function GetItem(Of T As IReadOnlyId)(source As IEnumerable(Of T), uniqueId As String, Optional caseSensitive As Boolean = True) As T
-        Dim method As StringComparison = If(caseSensitive, StringComparison.Ordinal, StringComparison.OrdinalIgnoreCase)
+        Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(caseSensitive)
         Dim LQuery = LinqAPI.DefaultFirst(Of T) _
  _
             () <= From itemObj As T

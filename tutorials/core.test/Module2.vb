@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c7ba2a870fa82d02b6a7bd87d1fc87a, vs_solutions\tutorials\core.test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::1c7ba2a870fa82d02b6a7bd87d1fc87a, tutorials\core.test\Module2.vb"
 
     ' Author:
     ' 

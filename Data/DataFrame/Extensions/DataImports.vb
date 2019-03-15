@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1c8d244e449d84c3af14612251ff89d, Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::47b8fc75da42be9cdbfd236364aa0f29, Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -79,10 +79,6 @@ Public Module DataImports
     Public Function [Imports](<Parameter("txt.Path", "The file path for the data imports text file.")> txtPath$,
                               Optional delimiter$ = ",",
                               Optional encoding As Encoding = Nothing) As File
-        If encoding Is Nothing Then
-            encoding = Encoding.Default
-        End If
-
         Dim lines As String() = txtPath.ReadAllLines(encoding)
         Dim csv As New File(ImportsData(lines, delimiter), txtPath)
         Return csv
@@ -125,10 +121,11 @@ Public Module DataImports
     ''' <param name="delimiter$"></param>
     ''' <param name="maps"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ImportsData(Of T As Class)(text$, Optional delimiter$ = ",", Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
-        Return ImportsData(text.LineTokens, delimiter) _
-            .AsDataSource(Of T)(maps:=maps)
+        Return ImportsData(text.LineTokens, delimiter).AsDataSource(Of T)(maps:=maps)
     End Function
 
     ''' <summary>

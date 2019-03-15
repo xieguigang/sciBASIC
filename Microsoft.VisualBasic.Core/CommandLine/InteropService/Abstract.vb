@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ddae0b72912f83cfa8aec30722a11992, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::d7497de54115f6639b4080343f28b85c, Microsoft.VisualBasic.Core\CommandLine\InteropService\Abstract.vb"
 
     ' Author:
     ' 
@@ -38,6 +38,10 @@
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetLastCLRException, GetLastError, RunDotNetApp, RunProgram, ToString
     ' 
+    '     Interface AppDriver
+    ' 
+    '         Properties: App
+    ' 
     '     Class CLIBuilder
     ' 
     '         Function: ToString
@@ -52,6 +56,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Diagnostics
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace CommandLine.InteropService
 

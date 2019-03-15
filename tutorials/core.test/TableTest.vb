@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::500497ebb9e98cb726d35de1eb2706ff, vs_solutions\tutorials\core.test\TableTest.vb"
+﻿#Region "Microsoft.VisualBasic::500497ebb9e98cb726d35de1eb2706ff, tutorials\core.test\TableTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20eb6a49be8a01b85cb9eda823ee0cd1, Microsoft.VisualBasic.Core\Net\DomainName.vb"
+﻿#Region "Microsoft.VisualBasic::459def7e826a7a3a22e06a13c3ffe04b, Microsoft.VisualBasic.Core\Net\DomainName.vb"
 
     ' Author:
     ' 

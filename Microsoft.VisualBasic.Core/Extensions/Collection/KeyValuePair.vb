@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0ee0b9e22aea4b707ca23e1c0459b6d, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::fabe0f5f3b838c2968cbda4a144aedf5, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -38,9 +38,9 @@
     '               EnumParser, FlatTable, (+2 Overloads) GetByKey, GroupByKey, HaveData
     '               IGrouping, IsOneOfA, IterateNameCollections, IterateNameValues, IteratesAll
     '               Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection
-    '               ParserDictionary, RemoveAndGet, ReverseMaps, Selects, (+2 Overloads) Subset
-    '               Takes, (+3 Overloads) ToDictionary, Tsv, Tuple, (+2 Overloads) Values
-    '               XMLModel
+    '               ParserDictionary, RemoveAndGet, ReverseMaps, Selects, SetOfKeyValuePairs
+    '               (+2 Overloads) Subset, Takes, (+3 Overloads) ToDictionary, Tsv, Tuple
+    '               (+2 Overloads) Values, XMLModel
     ' 
     '     Sub: SortByKey, SortByValue
     ' 
@@ -67,6 +67,12 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 Public Module KeyValuePairExtensions
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Selects(Of K, V)(table As Dictionary(Of K, V), ParamArray keys As K()) As IEnumerable
+        Return From key As K In keys Select table(key)
+    End Function
+
     <Extension>
     Public Iterator Function AsEnumerable(keys As NameObjectCollectionBase.KeysCollection) As IEnumerable(Of String)
         If Not keys Is Nothing AndAlso keys.Count > 0 Then
@@ -75,6 +81,25 @@ Public Module KeyValuePairExtensions
             Next
         End If
     End Function
+
+#Region "HashMapHelper"
+
+    '	Copyright ©  - 2017 Tangible Software Solutions Inc.
+    '	This class can be used by anyone provided that the copyright notice remains intact.
+    '
+    '	This class is used to replace calls to some Java HashMap or Hashtable methods.
+
+    <Extension>
+    Public Function SetOfKeyValuePairs(Of TKey, TValue)(dictionary As IDictionary(Of TKey, TValue)) As HashSet(Of KeyValuePair(Of TKey, TValue))
+        Dim entries As New HashSet(Of KeyValuePair(Of TKey, TValue))()
+
+        For Each keyValuePair As KeyValuePair(Of TKey, TValue) In dictionary
+            Call entries.Add(keyValuePair)
+        Next
+
+        Return entries
+    End Function
+#End Region
 
     ''' <summary>
     ''' Create a tuple for two elements

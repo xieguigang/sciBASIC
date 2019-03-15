@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c7b689e041bbd11e16644e14e0004a8, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::c3ad4b45cf7b9e0ce4cc86f48236eed1, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -77,7 +77,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <summary>
         ''' 动态属性表
         ''' </summary>
-        Dim propertyTable As Dictionary(Of String, T)
+        Protected propertyTable As Dictionary(Of String, T)
 
         ''' <summary>
         ''' Gets/sets item value by using property name.

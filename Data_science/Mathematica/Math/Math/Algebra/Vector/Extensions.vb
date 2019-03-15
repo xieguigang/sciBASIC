@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffb898ff1eee906da37e6cee1d59bab9, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d8f29b54888bb1b4d8d11e8c58acd618, Data_science\Mathematica\Math\Math\Algebra\Vector\Extensions.vb"
 
     ' Author:
     ' 
@@ -134,6 +134,7 @@ Namespace LinearAlgebra
             Return New Vector(v)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsVector(range As DoubleRange, Optional counts% = 1000) As Vector
             Return New Vector(range.Enumerate(counts))

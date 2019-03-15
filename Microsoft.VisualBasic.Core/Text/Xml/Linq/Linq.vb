@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34422d63e3fc3ebd7f5c3027ff7ab98d, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::bc3d63e9b616c9f0e2bbf504f86545d0, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,9 @@
 
     '     Module Data
     ' 
-    '         Function: GetNodeNameDefine, GetTypeName, InternalIterates, LoadUltraLargeXMLDataSet, LoadXmlDataSet
-    '                   LoadXmlDocument, NodeInstanceBuilder, PopulateXmlElementText, UltraLargeXmlNodesIterator
+    '         Function: GetNodeNameDefine, GetTypeName, GetXmlNodeDoc, InternalIterates, IteratesArrayNodes
+    '                   LoadUltraLargeXMLDataSet, LoadXmlDataSet, LoadXmlDocument, NodeInstanceBuilder, PopulateXmlElementText
+    '                   UltraLargeXmlNodesIterator
     ' 
     ' 
     ' /********************************************************************************/

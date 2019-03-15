@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8648fe83a66ddf5e41cf174952956ce4, Data_science\MachineLearning\NeuralNetwork\Models\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::6ec26e652a8355669d0deb1d2b16e9b7, Data_science\MachineLearning\NeuralNetwork\Models\Neuron.vb"
 
     ' Author:
     ' 
@@ -94,7 +94,7 @@ Namespace NeuralNetwork
         ''' 创建的神经链接是空的
         ''' </summary>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
-        Public Sub New(Optional active As IActivationFunction = Nothing, Optional id As int = Nothing)
+        Public Sub New(Optional active As IActivationFunction = Nothing, Optional id As VBInteger = Nothing)
             InputSynapses = {}
             OutputSynapses = {}
             Bias = Helpers.GetRandom()
@@ -114,7 +114,7 @@ Namespace NeuralNetwork
         ''' </summary>
         ''' <param name="inputNeurons"></param>
         ''' <param name="active"><see cref="Sigmoid"/> as default</param>
-        Public Sub New(inputNeurons As IEnumerable(Of Neuron), Optional active As IActivationFunction = Nothing, Optional guid As int = Nothing)
+        Public Sub New(inputNeurons As IEnumerable(Of Neuron), Optional active As IActivationFunction = Nothing, Optional guid As VBInteger = Nothing)
             Call Me.New(active, guid)
 
             For Each inputNeuron As Neuron In inputNeurons
@@ -198,7 +198,7 @@ Namespace NeuralNetwork
         ''' <param name="learnRate"></param>
         ''' <param name="momentum"></param>
         ''' <returns></returns>
-        Public Function UpdateWeights(learnRate As Double, momentum As Double) As Integer
+        Public Function UpdateWeights(learnRate#, momentum#) As Integer
             Dim prevDelta = BiasDelta
             BiasDelta = learnRate * Gradient
             Bias += BiasDelta + momentum * prevDelta

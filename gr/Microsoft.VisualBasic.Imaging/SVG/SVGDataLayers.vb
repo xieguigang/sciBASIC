@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d70e7be53b354c65d3207eaf822e842, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
+﻿#Region "Microsoft.VisualBasic::efcff41d9c280c4b61b333423ab0a63f, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
 
     ' Author:
     ' 
@@ -74,7 +74,7 @@ Namespace SVG
         ''' <summary>
         ''' Generates the <see cref="CSSLayer"/> index order value.
         ''' </summary>
-        Friend zlayer As int = 0
+        Friend zlayer As VBInteger = 0
 
         Default Public ReadOnly Property GetLayer(zindex As Integer) As g
             <MethodImpl(MethodImplOptions.AggressiveInlining)>

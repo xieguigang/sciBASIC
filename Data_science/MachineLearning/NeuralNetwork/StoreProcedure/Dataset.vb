@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfdebaf29830ae469d1d86478aaaf4d8, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\Dataset.vb"
+﻿#Region "Microsoft.VisualBasic::de35f932516253227251cf9391877a5e, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\Dataset.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@
     ' 
     '             Properties: items
     ' 
-    '             Function: getSize
+    '             Function: [Select], getSize
     ' 
     ' 
     ' 
@@ -62,6 +62,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text.Xml.Models
 Imports row = Microsoft.VisualBasic.Data.csv.IO.DataSet
@@ -88,7 +89,7 @@ Namespace NeuralNetwork.StoreProcedure
         ''' 属性值可能会很长,为了XML文件的美观,在这里使用element
         ''' </remarks>
         <XmlElement>
-        Public Property status As Double()
+        Public Property status As NumericVector
 
         ''' <summary>
         ''' The network expected output values
@@ -102,8 +103,11 @@ Namespace NeuralNetwork.StoreProcedure
         ''' </summary>
         ''' <param name="values">Neuron network input parameters</param>
         ''' <param name="targets">The network expected output values</param>
-        Public Sub New(values#(), targets#())
-            Me.status = values
+        Public Sub New(values#(), targets#(), Optional inputName$ = Nothing)
+            Me.status = New NumericVector With {
+                .name = inputName,
+                .vector = values
+            }
             Me.target = targets
         End Sub
 
@@ -114,7 +118,7 @@ Namespace NeuralNetwork.StoreProcedure
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"{status.AsVector.ToString} => {target.AsVector.ToString}"
+            Return $"{status.vector.AsVector.ToString} => {target.AsVector.ToString}"
         End Function
     End Class
 
@@ -128,13 +132,21 @@ Namespace NeuralNetwork.StoreProcedure
 
         <XmlElement("sample")>
         Public Property DataSamples As SampleList
+
+        ''' <summary>
+        ''' 主要是对<see cref="Sample.status"/>输入向量进行``[0, 1]``区间内的归一化操作
+        ''' </summary>
+        ''' <returns></returns>
         <XmlElement("normalization")>
         Public Property NormalizeMatrix As NormalizeMatrix
 
         Public Class SampleList : Inherits ListOf
 
-            <XmlElement>
-            Public Property items As Sample()
+            ''' <summary>
+            ''' 样本列表
+            ''' </summary>
+            ''' <returns></returns>
+            <XmlElement("sample")> Public Property items As Sample()
 
             Default Public ReadOnly Property Item(index As Integer) As Sample
                 <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -146,6 +158,14 @@ Namespace NeuralNetwork.StoreProcedure
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Protected Overrides Function getSize() As Integer
                 Return items?.Length
+            End Function
+
+            Public Iterator Function [Select](Of T)(project As Func(Of Sample, Integer, T)) As IEnumerable(Of T)
+                Dim i As VBInteger = Scan0
+
+                For Each item As Sample In items
+                    Yield project(item, ++i)
+                Next
             End Function
 
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -163,6 +183,10 @@ Namespace NeuralNetwork.StoreProcedure
             End Operator
         End Class
 
+        ''' <summary>
+        ''' 样本的矩阵大小：``[属性长度, 样本数量]``
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Size As Size
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -197,7 +221,14 @@ Namespace NeuralNetwork.StoreProcedure
                 .ToArray
         End Function
 
-        Public Iterator Function PopulateNormalizedSamples() As IEnumerable(Of Sample)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="dummyExtends%">
+        ''' This function will extends <see cref="Sample.target"/> when this parameter is greater than ZERO.
+        ''' </param>
+        ''' <returns></returns>
+        Public Iterator Function PopulateNormalizedSamples(Optional dummyExtends% = 0) As IEnumerable(Of Sample)
             Dim input#()
 
             For Each sample As Sample In DataSamples.items
@@ -205,11 +236,27 @@ Namespace NeuralNetwork.StoreProcedure
                 sample = New Sample With {
                     .ID = sample.ID,
                     .status = input,
-                    .target = sample.target
+                    .target = sample.target + createExtends(input, dummyExtends)
                 }
 
                 Yield sample
             Next
+        End Function
+
+        Private Shared Function createExtends(input As Double(), n%) As List(Of Double)
+            Dim extends As New List(Of Double)
+
+            For i As Integer = 0 To input.Length - 1
+                For j As Integer = i + 1 To input.Length - 1
+                    If extends > n - 1 Then
+                        Exit For
+                    Else
+                        extends += input(i) * input(j)
+                    End If
+                Next
+            Next
+
+            Return extends
         End Function
 
         Public Overrides Function ToString() As String

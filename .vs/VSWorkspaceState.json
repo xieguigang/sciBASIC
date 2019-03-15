@@ -1,15 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\CLI_tools",
-    "\\Microsoft.VisualBasic.Core",
-    "\\Microsoft.VisualBasic.Core\\ComponentModel",
-    "\\Microsoft.VisualBasic.Core\\ComponentModel\\Algorithm",
-    "\\Microsoft.VisualBasic.Core\\ComponentModel\\Algorithm\\BinaryTree",
-    "\\mime",
-    "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    "\\mime\\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\\Excel"
+    ""
   ],
-  "SelectedNode": "\\Microsoft.VisualBasic.Core\\CommandLine",
   "PreviewInSolutionExplorer": false
 }

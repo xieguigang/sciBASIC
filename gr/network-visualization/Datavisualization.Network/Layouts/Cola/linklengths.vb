@@ -1,41 +1,99 @@
+﻿#Region "Microsoft.VisualBasic::938eefd31ff95d1e41d8d57f39d561cd, gr\network-visualization\Datavisualization.Network\Layouts\Cola\linklengths.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Module linkLengthExtensions
+    ' 
+    '         Function: generateDirectedEdgeConstraints, getNeighbours, intersectionCount, stronglyConnectedComponents, unionCount
+    ' 
+    '         Sub: computeLinkLengths, jaccardLinkLengths, symmetricDiffLinkLengths
+    '         Class NodeIndexer
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
+Imports System.Threading
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports any = System.Object
 Imports sys = System.Math
 
 Namespace Layouts.Cola
 
-    Class linkLengthExtensions
+    Module linkLengthExtensions
 
-        ' compute the size of the union of two sets a and b
-        Private Function unionCount(a As any, b As any) As Double
-            Dim u = New Object() {}
-            For Each i As var In a.keys
-                u(i) = New Object() {}
-            Next
-            For Each i As var In b.keys
-                u(i) = New Object() {}
-            Next
-            Return [Object].keys(u).length
+        ''' <summary>
+        ''' compute the size of the union of two sets a and b
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function unionCount(a As Dictionary(Of Integer, any), b As Dictionary(Of Integer, any)) As Integer
+            Return (a.Keys.AsList + b.Keys).Distinct.Count
         End Function
 
-        ' compute the size of the intersection of two sets a and b
-        Private Function intersectionCount(a As Double(), b As Double()) As Double
+        ''' <summary>
+        ''' compute the size of the intersection of two sets a and b
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        Private Function intersectionCount(a As Dictionary(Of Integer, any), b As Dictionary(Of Integer, any)) As Integer
             Dim n = 0
-            For Each i As var In a.keys
-                If b(i) IsNot Nothing Then
+
+            For Each i As Integer In a.Keys
+                If b.ContainsKey(i) Then
                     n += 1
                 End If
             Next
+
             Return n
         End Function
 
-        Private Function getNeighbours(Of Link)(links As Link(), la As LinkAccessor(Of Link)) As any
-            Dim neighbours = New Object()() {}
+        Private Function getNeighbours(Of Link)(links As Link(), la As LinkAccessor(Of Link)) As Dictionary(Of Integer, Dictionary(Of Integer, Object))
+            Dim neighbours As New Dictionary(Of Integer, Dictionary(Of Integer, Object))
             Dim addNeighbours = Sub(u As Integer, v As Integer)
                                     If neighbours(u) Is Nothing Then
-                                        neighbours(u) = New Object() {}
+                                        neighbours(u) = New Dictionary(Of Integer, any)
                                     End If
-                                    neighbours(u)(v) = New Object() {}
+                                    neighbours(u)(v) = New Object
                                 End Sub
             links.DoEach(Sub(e)
                              Dim u = la.getSourceIndex(e), v = la.getTargetIndex(e)
@@ -53,8 +111,8 @@ Namespace Layouts.Cola
         ''' <param name="w"></param>
         ''' <param name="f"></param>
         ''' <param name="la"></param>
-        Private Sub computeLinkLengths(Of Link)(links As Link(), w As Double, f As Func(Of any, any, Double), la As LinkLengthAccessor(Of Link))
-            Dim neighbours = getNeighbours(links, la)
+        Private Sub computeLinkLengths(Of Link)(links As Link(), w As Double, f As Func(Of Dictionary(Of Integer, any), Dictionary(Of Integer, any), Double), la As LinkAccessor(Of Link))
+            Dim neighbours = getNeighbours(Of Link)(links, la)
 
             links.DoEach(Sub(l)
                              Dim a = neighbours(la.getSourceIndex(l))
@@ -71,7 +129,7 @@ Namespace Layouts.Cola
         ''' <param name="links"></param>
         ''' <param name="la"></param>
         ''' <param name="w"></param>
-        Private Sub symmetricDiffLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As Double = 1)
+        Public Sub symmetricDiffLinkLengths(Of Link)(links As Link(), la As LinkAccessor(Of Link), Optional w As Double = 1)
             computeLinkLengths(links, w, Function(a, b) Math.Sqrt(unionCount(a, b) - intersectionCount(a, b)), la)
         End Sub
 
@@ -82,30 +140,9 @@ Namespace Layouts.Cola
         ''' <param name="links"></param>
         ''' <param name="la"></param>
         ''' <param name="w"></param>
-        Private Sub jaccardLinkLengths(Of Link)(links As Link(), la As LinkLengthAccessor(Of Link), Optional w As Double = 1)
-            computeLinkLengths(links, w, Function(a, b) If(sys.Min([Object].keys(a).length, [Object].keys(b).length) < 1.1, 0, intersectionCount(a, b) / unionCount(a, b)), la)
+        Public Sub jaccardLinkLengths(Of Link)(links As Link(), la As LinkAccessor(Of Link), Optional w As Double = 1)
+            computeLinkLengths(links, w, Function(a, b) If(sys.Min(a.Keys.Count, b.Keys.Count) < 1.1, 0, intersectionCount(a, b) / unionCount(a, b)), la)
         End Sub
-
-        Public Class IConstraint
-            Public Property axis As String
-            Public Property left() As Double
-            Public Property right() As Double
-            Public Property gap() As Double
-        End Class
-
-
-        Public Interface DirectedEdgeConstraints
-            Property axis() As String
-            Property gap() As Double
-        End Interface
-
-        Public Class LinkSepAccessor(Of Link)
-            Inherits LinkAccessor(Of Link)
-
-            Public Delegate Function IGetMinSeperation(l As Link) As Double
-
-            Public Property getMinSeparation As IGetMinSeperation
-        End Class
 
         ''' <summary>
         ''' generate separation constraints for all edges unless both their source and sink are in the same strongly connected component
@@ -116,95 +153,119 @@ Namespace Layouts.Cola
         ''' <param name="axis"></param>
         ''' <param name="la"></param>
         ''' <returns></returns>
-        Private Function generateDirectedEdgeConstraints(Of Link)(n As Double, links As Link(), axis As String, la As LinkSepAccessor(Of Link)) As List(Of IConstraint)
+        Public Function generateDirectedEdgeConstraints(Of Link)(n As Double, links As Link(), axis As String, la As LinkAccessor(Of Link)) As List(Of IConstraint)
             Dim components = stronglyConnectedComponents(n, links, la)
-            Dim nodes = New Object() {}
-            components.ForEach(Sub(c, i) c.DoEach(Sub(v) nodes(v) = i))
+            Dim nodes As New List(Of Integer)
             Dim constraints As New List(Of IConstraint)
-            links.DoEach(Sub(l)
-                             Dim ui = la.getSourceIndex(l), vi = la.getTargetIndex(l), u = nodes(ui), v = nodes(vi)
-                             If u IsNot v Then
-                                 constraints.Add(New IConstraint With {
-                                  .axis = axis,
-                                  .left = ui,
-                                  .right = vi,
-                                  .gap = la.getMinSeparation(l)
-                              })
-                             End If
 
-                         End Sub)
+            Call components.ForEach(Sub(c, i)
+                                        c.DoEach(Sub(v) nodes(v) = i)
+                                    End Sub)
+            Call links.DoEach(Sub(l)
+                                  Dim ui = la.getSourceIndex(l)
+                                  Dim vi = la.getTargetIndex(l)
+                                  Dim u = nodes(ui)
+                                  Dim v = nodes(vi)
+
+                                  If u <> v Then
+                                      Dim c As New IConstraint With {
+                                          .axis = axis,
+                                          .left = ui,
+                                          .right = vi,
+                                          .gap = la.getMinSeparation(l)
+                                      }
+
+                                      Call constraints.Add(c)
+                                  End If
+                              End Sub)
+
             Return constraints
         End Function
 
-        '*
-        '     * Tarjan's strongly connected components algorithm for directed graphs
-        '     * returns an array of arrays of node indicies in each of the strongly connected components.
-        '     * a vertex not in a SCC of two or more nodes is it's own SCC.
-        '     * adaptation of https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
-        '     
-
-        Private Function stronglyConnectedComponents(Of Link)(numVertices As Double, edges As Link(), la As LinkAccessor(Of Link)) As Double()()
-            Dim nodes = New Object() {}
+        ''' <summary>
+        ''' Tarjan's strongly connected components algorithm for directed graphs
+        ''' returns an array of arrays of node indicies in each of the strongly connected components.
+        ''' a vertex not in a SCC of two or more nodes is it's own SCC.
+        ''' adaptation of https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm
+        ''' </summary>
+        ''' <typeparam name="Link"></typeparam>
+        ''' <param name="numVertices"></param>
+        ''' <param name="edges"></param>
+        ''' <param name="la"></param>
+        ''' <returns></returns>
+        Private Function stronglyConnectedComponents(Of Link)(numVertices As Integer, edges As Link(), la As LinkAccessor(Of Link)) As List(Of Integer())
+            Dim nodes As New List(Of NodeIndexer)
             Dim index = 0
-            Dim stack = New Object() {}
-            Dim components = New Object() {}
-            Dim strongConnect = Function(v)
-                                    ' Set the depth index for v to the smallest unused index
-                                    v.index = InlineAssignHelper(v.lowlink, System.Math.Max(System.Threading.Interlocked.Increment(index), index - 1))
-                                    stack.push(v)
-                                    v.onStack = True
+            Dim stack As New Stack(Of NodeIndexer)
+            Dim components As New List(Of Integer())
+            Dim strongConnect As Action(Of NodeIndexer) =
+                Sub(v As NodeIndexer)
+                    ' Set the depth index for v to the smallest unused index
+                    v.lowlink = Math.Max(Interlocked.Increment(index), index - 1)
+                    v.index = v.lowlink
+                    stack.Push(v)
+                    v.onStack = True
 
-                                    ' Consider successors of v
-                                    For Each w As Object In v.out
-                                        If w.index Is Nothing Then
-                                            ' Successor w has not yet been visited; recurse on it
-                                            strongConnect(w)
-                                            v.lowlink = Math.Min(v.lowlink, w.lowlink)
-                                        ElseIf w.onStack Then
-                                            ' Successor w is in stack S and hence in the current SCC
-                                            v.lowlink = Math.Min(v.lowlink, w.index)
-                                        End If
-                                    Next
+                    ' Consider successors of v
+                    For Each w As NodeIndexer In v.out
+                        If w.index Is Nothing Then
+                            ' Successor w has not yet been visited; recurse on it
+                            strongConnect(w)
+                            v.lowlink = sys.Min(v.lowlink, w.lowlink)
+                        ElseIf w.onStack Then
+                            ' Successor w is in stack S and hence in the current SCC
+                            v.lowlink = sys.Min(v.lowlink, CType(w.index, Integer))
+                        End If
+                    Next
 
-                                    ' If v is a root node, pop the stack and generate an SCC
-                                    If v.lowlink = v.index Then
-                                        ' start a new strongly connected component
-                                        Dim component = New Object() {}
-                                        While stack.Length
-                                            w = stack.pop()
-                                            w.onStack = False
-                                            'add w to current strongly connected component
-                                            component.push(w)
-                                            If w = v Then
-                                                Exit While
-                                            End If
-                                        End While
-                                        ' output the current strongly connected component
-                                        components.push(component.map(Function(v) v.id))
-                                    End If
+                    ' If v is a root node, pop the stack and generate an SCC
+                    If v.lowlink = v.index Then
+                        ' start a new strongly connected component
+                        Dim component As New List(Of NodeIndexer)
 
-                                End Function
-            For i As var = 0 To numVertices - 1
-                nodes.push(New With {
-                Key .id = i,
-                Key .out = New Object() {}
-            })
+                        While stack.Count > 0
+                            Dim w = stack.Pop()
+                            w.onStack = False
+                            'add w to current strongly connected component
+                            component.Add(w)
+
+                            If w Is v Then
+                                Exit While
+                            End If
+                        End While
+
+                        ' output the current strongly connected component
+                        components.Add(component.Select(Function(vi) vi.id).ToArray)
+                    End If
+
+                End Sub
+            For i As Integer = 0 To numVertices - 1
+                nodes.Add(New NodeIndexer With {
+                          .id = i,
+                          .out = New List(Of NodeIndexer)
+                          })
             Next
-            For Each e As var In edges
+
+            For Each e As Link In edges
                 Dim v = nodes(la.getSourceIndex(e))
                 Dim w = nodes(la.getTargetIndex(e))
-                v.out.push(w)
+
+                v.out.Add(w)
             Next
-            For Each v As var In nodes
+            For Each v As NodeIndexer In nodes
                 If v.index Is Nothing Then
                     strongConnect(v)
                 End If
             Next
             Return components
         End Function
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
-    End Class
+
+        Private Class NodeIndexer
+            Public index As Integer?
+            Public id As Integer
+            Public out As List(Of NodeIndexer)
+            Public lowlink As Integer
+            Public onStack As Boolean
+        End Class
+    End Module
 End Namespace

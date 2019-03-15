@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bef434b26946e143966850cc00512dec, Microsoft.VisualBasic.Core\Text\Parser\FormattedParser.vb"
+﻿#Region "Microsoft.VisualBasic::b444ddca74dd29280e23f69fbfa34375, Microsoft.VisualBasic.Core\Text\Parser\FormattedParser.vb"
 
     ' Author:
     ' 
@@ -46,10 +46,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
-Namespace Text
+Namespace Text.Parser
 
     ''' <summary>
     ''' Parser API for the well formatted documents.

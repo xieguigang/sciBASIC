@@ -331,14 +331,5 @@ Namespace HTML.CSS.Render
 
             Return path
         End Function
-
-        ''' <summary>
-        ''' Makes the specified color darker
-        ''' </summary>
-        ''' <param name="c"></param>
-        ''' <returns></returns>
-        Public Shared Function Darken(c As Color) As Color
-            Return Color.FromArgb(c.R \ 2, c.G \ 2, c.B \ 2)
-        End Function
     End Class
 End Namespace

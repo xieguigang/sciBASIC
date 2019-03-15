@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1247c4a62d7a54484e8451f8f125d9ac, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyLink.vb"
+﻿#Region "Microsoft.VisualBasic::0f76cddf9cee9bb0b01f1ae9072319d6, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyLink.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: HashKey
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: __compareTo, compareTo, ToString
+    '         Function: __compareTo, compareTo, LessThan, ToString
     ' 
     '     Module LinkHashCode
     ' 
@@ -74,6 +74,16 @@ Namespace Hierarchy
 
         Private Function __compareTo(obj As Object) As Integer Implements IComparable.CompareTo
             Return compareTo(obj)
+        End Function
+
+        Public Shared Function LessThan() As Func(Of HierarchyLink, HierarchyLink, Boolean)
+            Return Function(a, b)
+                       If a.compareTo(b) < 0 Then
+                           Return True
+                       Else
+                           Return False
+                       End If
+                   End Function
         End Function
     End Class
 

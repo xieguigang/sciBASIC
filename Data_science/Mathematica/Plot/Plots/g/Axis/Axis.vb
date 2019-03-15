@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f67db285a0bcf81d9f3ee5bca32c8d6f, Data_science\Mathematica\Plot\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::910fd1de79dd05f7823d750deb9471a8, Data_science\Mathematica\Plot\Plots\g\Axis\Axis.vb"
 
     ' Author:
     ' 
@@ -46,7 +46,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -55,7 +54,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Text.HtmlParser
+Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Namespace Graphic.Axis
 
