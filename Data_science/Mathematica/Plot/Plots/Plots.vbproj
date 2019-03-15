@@ -379,6 +379,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="VennPlot.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="3D\Device\Canvas.resx">
