@@ -95,6 +95,10 @@ Namespace Distributions
             }
         End Sub
 
+        ''' <summary>
+        ''' <see cref="DoubleRange"/> = ``[<see cref="min"/>, <see cref="max"/>]``
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRange() As DoubleRange
             Return {min, max}

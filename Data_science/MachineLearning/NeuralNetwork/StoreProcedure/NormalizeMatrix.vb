@@ -68,6 +68,11 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <returns></returns>
         Public Property names As String()
 
+        ''' <summary>
+        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.status"/> to value range ``[0, 1]``
+        ''' </summary>
+        ''' <param name="sample"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function NormalizeInput(sample As Sample) As Double()
             Static normalRange As DoubleRange = {0, 1}
@@ -75,7 +80,15 @@ Namespace NeuralNetwork.StoreProcedure
             Return sample.status _
                 .vector _
                 .Select(Function(x, i)
-                            x = matrix(i).GetRange.ScaleMapping(x, normalRange)
+                            If x > matrix(i).max Then
+                                Return 1
+                            ElseIf x < matrix(i).min Then
+                                Return 0
+                            Else
+                                x = matrix(i) _
+                                    .GetRange _
+                                    .ScaleMapping(x, normalRange)
+                            End If
 
                             If x.IsNaNImaginary Then
                                 Return matrix(i).average

@@ -92,8 +92,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
             stack.Clear()
         End Sub
 
-        Public Function GetAllNodes() As BinaryTree(Of K, V)()
-            Return stack.ToArray
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetAllNodes() As IEnumerable(Of BinaryTree(Of K, V))
+            Return stack.AsEnumerable
         End Function
     End Class
 End Namespace

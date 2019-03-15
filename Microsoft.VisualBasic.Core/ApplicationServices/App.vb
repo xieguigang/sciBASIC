@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::ff46bbde4d366754ffd74cbd158866ee, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module App
-    ' 
-    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, ExceptionLogFile
-    '                 ExecutablePath, Github, HOME, Info, InputFile
-    '                 IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp, LogErrDIR
-    '                 NanoTime, NextTempName, OutFile, PID, Platform
-    '                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
-    '                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
-    '                 StartupDirectory, StdErr, StdOut, SysTemp, UserHOME
-    '                 Version
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __cli, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
-    '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
-    '               ElapsedMilliseconds, Exit, FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
-    '               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
-    '               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
-    '               RunCLIInternal, SelfFolk, SelfFolks, Shell, TemporaryEnvironment
-    '               TraceBugs
-    ' 
-    '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
-    '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
-    '          SetBufferSize, StartGC, StopGC
-    ' 
-    ' /********************************************************************************/
+' Module App
+' 
+'     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+'                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, ExceptionLogFile
+'                 ExecutablePath, Github, HOME, Info, InputFile
+'                 IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp, LogErrDIR
+'                 NanoTime, NextTempName, OutFile, PID, Platform
+'                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
+'                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
+'                 StartupDirectory, StdErr, StdOut, SysTemp, UserHOME
+'                 Version
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __cli, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
+'               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
+'               ElapsedMilliseconds, Exit, FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
+'               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
+'               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
+'               RunCLIInternal, SelfFolk, SelfFolks, Shell, TemporaryEnvironment
+'               TraceBugs
+' 
+'     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
+'          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
+'          SetBufferSize, StartGC, StopGC
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -91,6 +91,7 @@ Imports Microsoft.VisualBasic.Parallel.Threads
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Terminal
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 Imports CLI = Microsoft.VisualBasic.CommandLine.CommandLine
 Imports DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 
@@ -710,10 +711,21 @@ Public Module App
     End Function
 
     ''' <summary>
+    ''' Get current time <see cref="Date"/> in unix time stamp format.
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property UnixTimeStamp As Long
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return DateTimeHelper.UnixTimeStamp(Now)
+        End Get
+    End Property
+
+    ''' <summary>
     ''' The time tag of the application started.(应用程序的启动的时间)
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property StartTime As Long = Now.ToBinary
+    Public ReadOnly Property StartTime As Long = UnixTimeStamp
 
     ''' <summary>
     ''' The distance of time that this application running from start and to current time.
@@ -723,7 +735,7 @@ Public Module App
     '''
     <ExportAPI("Elapsed.Milliseconds")>
     Public Function ElapsedMilliseconds() As Long
-        Dim nowLng As Long = Now.ToBinary
+        Dim nowLng As Long = App.UnixTimeStamp
         Dim d As Long = nowLng - StartTime
         Return d
     End Function
@@ -1385,7 +1397,7 @@ Public Module App
                 Let task As Func(Of Integer) = AddressOf io.Run
                 Select task
 
-            Call BatchTask(Of Integer)(Tasks, parallel, TimeInterval:=200)
+            Call BatchTask(Of Integer)(Tasks, parallel, timeInterval:=200)
         End If
 
         Return sw.ElapsedMilliseconds

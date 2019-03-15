@@ -109,6 +109,10 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public Property text As String
 
+        ''' <summary>
+        ''' 当前的这个文本标签对象所处的位置以及所占据的大小等数据
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Rectangle As RectangleF
 
         Sub New()

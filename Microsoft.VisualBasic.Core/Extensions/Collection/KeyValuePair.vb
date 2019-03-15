@@ -67,6 +67,12 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 Public Module KeyValuePairExtensions
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function Selects(Of K, V)(table As Dictionary(Of K, V), ParamArray keys As K()) As IEnumerable
+        Return From key As K In keys Select table(key)
+    End Function
+
     <Extension>
     Public Iterator Function AsEnumerable(keys As NameObjectCollectionBase.KeysCollection) As IEnumerable(Of String)
         If Not keys Is Nothing AndAlso keys.Count > 0 Then

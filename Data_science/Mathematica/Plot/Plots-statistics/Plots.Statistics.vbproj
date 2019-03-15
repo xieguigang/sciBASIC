@@ -260,6 +260,8 @@
   <ItemGroup>
     <Compile Include="BoxPlot.vb" />
     <Compile Include="BoxData.vb" />
+    <Compile Include="ROCPlot.vb" />
+    <Compile Include="VennPlot.vb" />
     <Compile Include="PCA\ScreePlot.vb" />
     <Compile Include="PCA\PC3.vb" />
     <Compile Include="TimeTrends.vb" />

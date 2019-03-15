@@ -317,7 +317,7 @@ Namespace Fractions
                                     Call .AddPolygon(shape)
                                     Call .CloseAllFigures()
 
-                                    Call g.ShapeGlow(.ByRef, color.Light(0.75), shapeBorderWidth * 3)
+                                    Call g.ShapeGlow(.ByRef, color.Lighten(0.75), shapeBorderWidth * 3)
                                     Call g.FillPath(New SolidBrush(color), .ByRef)
                                     Call g.DrawPath(pen, .ByRef)
 
