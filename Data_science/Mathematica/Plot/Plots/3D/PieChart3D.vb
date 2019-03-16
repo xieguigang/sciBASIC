@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc5c8a06d86312ec0d6d094ae571713c, Data_science\Mathematica\Plot\Plots\3D\PieChart3D.vb"
+﻿#Region "Microsoft.VisualBasic::9760b6b03ecfe763eef538707fdbacfa, Data_science\Mathematica\Plot\Plots\3D\PieChart3D.vb"
 
     ' Author:
     ' 
@@ -67,8 +67,8 @@ Namespace Plot3D
 
         <Extension>
         Public Function Plot3D(data As IEnumerable(Of FractionData), camera As Camera, Optional valueLabel As ValueLabels = ValueLabels.Percentage) As GraphicsData
-            Dim start As New float
-            Dim sweep As New float
+            Dim start As New VBDouble
+            Dim sweep As New VBDouble
             Dim alpha!
             Dim pt As PointF
             Dim centra As Point3D = camera.screen.GetCenter

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72844c690c02e44385c3a2da46722b73, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\NormalizeMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::1a1ac7347a71ed35860c76941d0a2aa1, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\NormalizeMatrix.vb"
 
     ' Author:
     ' 
@@ -68,14 +68,27 @@ Namespace NeuralNetwork.StoreProcedure
         ''' <returns></returns>
         Public Property names As String()
 
+        ''' <summary>
+        ''' Normalize the <paramref name="sample"/> inputs <see cref="Sample.status"/> to value range ``[0, 1]``
+        ''' </summary>
+        ''' <param name="sample"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function NormalizeInput(sample As Sample) As Double()
             Static normalRange As DoubleRange = {0, 1}
 
-            Return sample _
-                .status _
+            Return sample.status _
+                .vector _
                 .Select(Function(x, i)
-                            x = matrix(i).GetRange.ScaleMapping(x, normalRange)
+                            If x > matrix(i).max Then
+                                Return 1
+                            ElseIf x < matrix(i).min Then
+                                Return 0
+                            Else
+                                x = matrix(i) _
+                                    .GetRange _
+                                    .ScaleMapping(x, normalRange)
+                            End If
 
                             If x.IsNaNImaginary Then
                                 Return matrix(i).average

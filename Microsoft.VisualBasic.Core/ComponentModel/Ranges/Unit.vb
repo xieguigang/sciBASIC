@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5a894d43b06e70fd5b9d602bddc7221, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
+﻿#Region "Microsoft.VisualBasic::f2f9186ea05e3480105c72ef90a403cf, Microsoft.VisualBasic.Core\ComponentModel\Ranges\Unit.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '     Module UnitConvertorExtensions
     ' 
-    '         Function: Base, GetUnitConvertor, IndexOf, Unit
+    '         Function: Base, GetUnitConvertor, IndexOf, (+4 Overloads) Unit
     ' 
     '     Enum ByteSize
     ' 
@@ -118,6 +118,24 @@ Namespace ComponentModel.Ranges
         Public Function Unit(Of T As Structure)(value#, unitVal As T) As UnitValue(Of T)
             Return New UnitValue(Of T)(value, unitVal)
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Unit(Of T As Structure)(value&, unitVal As T) As UnitValue(Of T)
+            Return New UnitValue(Of T)(value, unitVal)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Unit(Of T As Structure)(value%, unitVal As T) As UnitValue(Of T)
+            Return New UnitValue(Of T)(value, unitVal)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Unit(Of T As Structure)(value!, unitVal As T) As UnitValue(Of T)
+            Return New UnitValue(Of T)(value, unitVal)
+        End Function
     End Module
 
     Public Enum ByteSize As Long
@@ -132,7 +150,7 @@ Namespace ComponentModel.Ranges
     ''' 
     ''' </summary>
     ''' <typeparam name="TUnit">枚举类型，基础类型必须是值等于1</typeparam>
-    Public Class UnitValue(Of TUnit As Structure) : Inherits float
+    Public Class UnitValue(Of TUnit As Structure) : Inherits VBDouble
 
         ''' <summary>
         ''' 分（d） ``10^-1``

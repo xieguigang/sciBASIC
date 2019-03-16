@@ -422,6 +422,7 @@
     <Compile Include="AprioriRules\ExportAPI.vb" />
     <Compile Include="MarginalLikelihoodAnalysis.vb" />
     <Compile Include="Abundance.vb" />
+    <Compile Include="Validation.vb" />
     <Compile Include="PeriodAnalysis\Variables.vb" />
     <Compile Include="Statistics.vb" />
     <Compile Include="PeriodAnalysis\PeriodAnalysis.vb" />

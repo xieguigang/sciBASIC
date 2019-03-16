@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5caf424e38eaec5c82e8c26cae2017d, vs_solutions\tutorials\using_cli\Program.vb"
+﻿#Region "Microsoft.VisualBasic::f5caf424e38eaec5c82e8c26cae2017d, tutorials\using_cli\Program.vb"
 
     ' Author:
     ' 

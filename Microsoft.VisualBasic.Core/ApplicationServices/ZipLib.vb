@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d531d05aafd7ea58451795acc1a03ad, Microsoft.VisualBasic.Core\ApplicationServices\ZipLib.vb"
+﻿#Region "Microsoft.VisualBasic::1b99e6b854f7e6d36dcbda2477259882, Microsoft.VisualBasic.Core\ApplicationServices\ZipLib.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0c2189bdef3088307bd20e6c9fc31c4, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::7094cb56944507a0cf4217abdbfd85bd, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\FuzzyCMeans\Algorithm\FuzzyCMeansAlgorithm.vb"
 
     ' Author:
     ' 
@@ -103,7 +103,7 @@ Namespace FuzzyCMeans
             Dim clusterCenters As List(Of Entity) = AlgorithmsUtils.MakeInitialSeeds(coordinates, numberOfClusters)
             Dim clusters As Dictionary(Of Entity, Entity)
             Dim membershipMatrix As Dictionary(Of Entity, List(Of Double)) = Nothing
-            Dim iteration As int = 0
+            Dim iteration As VBInteger = 0
             Dim ptClone As New Value(Of Entity)
             '  Dim clusterColors As New Dictionary(Of Entity, Color)()
 

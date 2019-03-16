@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2a7110f3e396d5e618b96523b582ce6, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
+﻿#Region "Microsoft.VisualBasic::221670c0806b46aba3f84e6a400ab404, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,7 @@
     '         Properties: height, Rectangle, text, width, X
     '                     Y
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
     ' 
@@ -108,7 +109,24 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public Property text As String
 
+        ''' <summary>
+        ''' 当前的这个文本标签对象所处的位置以及所占据的大小等数据
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Rectangle As RectangleF
+
+        Sub New()
+        End Sub
+
+        Sub New(label$, pos As PointF, size As SizeF)
+            Me.text = label
+            Me.Rectangle = New RectangleF(pos, size)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(label$, pos As Point, size As SizeF)
+            Call Me.New(label, pos.PointF, size)
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"{text}@({X.ToString("F2")},{Y.ToString("F2")})"

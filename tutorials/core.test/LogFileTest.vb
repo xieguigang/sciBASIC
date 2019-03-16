@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d7b7f7e893a6b2840beeac308e8d7f1, vs_solutions\tutorials\core.test\LogFileTest.vb"
+﻿#Region "Microsoft.VisualBasic::7d7b7f7e893a6b2840beeac308e8d7f1, tutorials\core.test\LogFileTest.vb"
 
     ' Author:
     ' 

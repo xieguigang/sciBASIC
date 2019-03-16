@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49dc9ae998a43b291ae48b2e684eedb0, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::49aa6dd2cbf24467b7535ceaad8bd8e3, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -51,8 +51,8 @@
     ' 
     '             Function: __getDefaultPath, __LINQ_LOAD, __loads, Contains, (+2 Overloads) Distinct
     '                       FastLoad, GetEnumerator, GetEnumerator1, IndexOf, IsNullOrEmpty
-    '                       Join, (+2 Overloads) Load, LoadTsv, Normalization, Remove
-    '                       RemoveSubRow
+    '                       Join, (+2 Overloads) Load, LoadTsv, Normalization, Parse
+    '                       Remove, RemoveSubRow
     ' 
     '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
     '                  RemoveAt
@@ -67,7 +67,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -252,6 +251,16 @@ B21,B22,B23,...
                     Select Me.Column(col)
 
                     Yield column.ToArray
+                Next
+            End Get
+        End Property
+
+        Public ReadOnly Iterator Property Comments(Optional prefix$ = "#") As IEnumerable(Of String)
+            Get
+                For Each row As RowObject In _innerTable
+                    If InStr(row.First, prefix) = 1 Then
+                        Yield row.AsLine(" ")
+                    End If
                 Next
             End Get
         End Property
@@ -712,6 +721,7 @@ B21,B22,B23,...
             Return csv
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadTsv(path$, Optional encoding As Encodings = Encodings.UTF8) As File
             Return DataImports.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function

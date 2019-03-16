@@ -149,7 +149,7 @@ Namespace Drawing2D.Colors
             Dim percentage# = value.ParseDouble
 
             Return colors _
-                .Select(Function(c) c.Dark(percentage)) _
+                .Select(Function(c) c.Darken(percentage)) _
                 .ToArray
         End Function
 

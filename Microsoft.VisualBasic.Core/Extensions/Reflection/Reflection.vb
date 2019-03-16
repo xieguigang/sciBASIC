@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cd3df138de15ae01780bace3f68965f, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::aa9a3eab7722f8a40dea9c3f0299d4c4, Microsoft.VisualBasic.Core\Extensions\Reflection\Reflection.vb"
 
     ' Author:
     ' 
@@ -38,8 +38,8 @@
     '               FullName, GetAllEnumFlags, (+3 Overloads) GetAssemblyDetails, (+2 Overloads) GetAttribute, GetDelegateInvokeEntryPoint
     '               GetDouble, GetFullName, GetInt, (+2 Overloads) GetReadWriteProperties, GetTypeElement
     '               GetTypesHelper, (+2 Overloads) GetValue, (+2 Overloads) GetVersion, IsInheritsFrom, IsModule
-    '               IsNumericType, ModuleVersion, NamespaceEntry, ResourcesSatellite, Source
-    '               Usage
+    '               IsNonParametric, IsNumericType, ModuleVersion, NamespaceEntry, ResourcesSatellite
+    '               Source, Usage
     ' 
     '     Sub: RunApp
     ' 
@@ -73,6 +73,25 @@ Public Module EmitReflection
     <Extension>
     Public Function ResourcesSatellite(assembly As Assembly) As ResourcesSatellite
         Return New ResourcesSatellite(assembly)
+    End Function
+
+    ''' <summary>
+    ''' 这个方法的调用是否是不需要任何参数的？
+    ''' </summary>
+    ''' <param name="method"></param>
+    ''' <param name="optionalAsNone"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function IsNonParametric(method As MethodInfo, Optional optionalAsNone As Boolean = False) As Boolean
+        Dim params = method.GetParameters
+
+        If params.IsNullOrEmpty Then
+            Return True
+        ElseIf optionalAsNone Then
+            Return Not params.Any(Function(p) Not p.IsOptional)
+        End If
+
+        Return False
     End Function
 
     ''' <summary>

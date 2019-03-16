@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f35a1339602b334948a9ae79bca72378, Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
+﻿#Region "Microsoft.VisualBasic::22566b33e5243497706a257bbb39cd87, Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
 
     ' Author:
     ' 

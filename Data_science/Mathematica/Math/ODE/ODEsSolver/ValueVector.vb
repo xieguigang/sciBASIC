@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffc18e4313b29faf04dba4057c29d4d0, Data_science\Mathematica\Math\ODE\ODEsSolver\ValueVector.vb"
+﻿#Region "Microsoft.VisualBasic::3b5549537e8127b8a88dd7baf4acb382, Data_science\Mathematica\Math\ODE\ODEsSolver\ValueVector.vb"
 
     ' Author:
     ' 
@@ -48,7 +48,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Public Class ValueVector : Inherits int
+Public Class ValueVector : Inherits VBInteger
 
     Public Property Y As Dictionary(Of NamedCollection(Of Double))
 

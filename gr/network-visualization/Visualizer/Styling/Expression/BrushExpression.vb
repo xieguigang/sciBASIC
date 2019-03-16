@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e03d63795288b216d7f44ea21a433b7, gr\network-visualization\Visualizer\Styling\Expression\BrushExpression.vb"
+﻿#Region "Microsoft.VisualBasic::a2d84930e3f159ee6a0920b697ec5989, gr\network-visualization\Visualizer\Styling\Expression\BrushExpression.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices

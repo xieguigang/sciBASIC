@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5ca45152f281abb32cac94bdd6cef63, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::dc94d02ea73d3b83f73a360202426e02, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -37,8 +37,8 @@
     '                     Range, SumMagnitude, Unit, Zero
     ' 
     '         Constructor: (+8 Overloads) Sub New
-    '         Function: DotProduct, Ones, Order, Product, rand
-    '                   ScaleToRange, SumMagnitudes, (+2 Overloads) ToString
+    '         Function: Abs, CumSum, DotProduct, Ones, Order
+    '                   Product, rand, ScaleToRange, SumMagnitudes, (+2 Overloads) ToString
     '         Operators: (+4 Overloads) -, (+5 Overloads) *, (+3 Overloads) /, (+2 Overloads) ^, (+4 Overloads) +
     '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >
     '                    (+3 Overloads) >=, (+2 Overloads) Or, (+2 Overloads) Xor
@@ -770,6 +770,16 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Product() As Double
             Return Me.ProductALL
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CumSum() As Vector
+            Return Math.CumSum(Me)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Abs() As Vector
+            Return Abs(Me)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

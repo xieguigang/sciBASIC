@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d11f770bb5391d4957fafeb0b988a4e, Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::76f9cb8a765aa91e449bf017515e5811, Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -46,6 +46,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
@@ -127,6 +128,7 @@ Namespace IO
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadDataSet(path$,
                                            Optional ByRef uidMap$ = Nothing,
+                                           Optional fieldNameMaps As Dictionary(Of String, String) = Nothing,
                                            Optional tsv As Boolean = False,
                                            Optional encoding As Encoding = Nothing) As IEnumerable(Of EntityObject)
 
@@ -137,12 +139,12 @@ Namespace IO
                 Dim dir$ = path.Trim("*"c)
 
                 For Each file As String In ls - l - r - ("*.csv" Or "*.tsv".When(tsv)) <= dir
-                    data += LoadDataSet(Of EntityObject)(file, uidMap, tsv, encoding:=encoding)
+                    data += LoadDataSet(Of EntityObject)(file, uidMap, fieldNameMaps, tsv, encoding:=encoding)
                 Next
 
                 Return data
             Else
-                Return LoadDataSet(Of EntityObject)(path, uidMap, tsv, encoding:=encoding)
+                Return LoadDataSet(Of EntityObject)(path, uidMap, fieldNameMaps, tsv, encoding:=encoding)
             End If
         End Function
 
@@ -254,6 +256,7 @@ Namespace IO
         ''' <returns></returns>
         Public Shared Function LoadDataSet(Of T As EntityObject)(path$,
                                                                  Optional ByRef uidMap$ = Nothing,
+                                                                 Optional fieldNameMaps As Dictionary(Of String, String) = Nothing,
                                                                  Optional tsv As Boolean = False,
                                                                  Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
             If Not path.FileExists Then
@@ -275,20 +278,22 @@ Namespace IO
                 ' 在这里do nothing
             End If
 
-            If tsv Then
-                Return path.LoadTsv(Of T)(
-                    nameMaps:={{uidMap, NameOf(EntityObject.ID)}},
-                    encoding:=encoding
-                )
-            Else
-                Return path.LoadCsv(Of T)(
-                    explicit:=False,
-                    maps:={
-                        {uidMap, NameOf(EntityObject.ID)}
-                    },
-                    encoding:=encoding
-                )
-            End If
+            With New NameMapping(fieldNameMaps)
+                Call .Add(uidMap, NameOf(EntityObject.ID))
+
+                If tsv Then
+                    Return path.LoadTsv(Of T)(
+                        nameMaps:= .ByRef,
+                        encoding:=encoding
+                    )
+                Else
+                    Return path.LoadCsv(Of T)(
+                        explicit:=False,
+                        maps:= .ByRef,
+                        encoding:=encoding
+                    )
+                End If
+            End With
         End Function
 
         Public Shared Function LoadDataSet(Of T As EntityObject)(stream As File, Optional ByRef uidMap$ = Nothing) As IEnumerable(Of T)

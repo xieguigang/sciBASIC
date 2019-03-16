@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a601e76aef37afbfcceef80194b0269d, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::e015f72d4ca5031b1595c55e9c89c563, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\StreamHelper.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module StreamHelper
     ' 
-    '     Function: CopyStream
+    '     Function: CopyStream, PopulateBlocks
     ' 
     '     Sub: Write, WriteLine
     ' 
@@ -64,7 +64,7 @@ Public Module StreamHelper
         End If
 
         Dim buffer As Byte() = New Byte(bufferSize - 1) {}
-        Dim i As int = Scan0
+        Dim i As VBInteger = Scan0
 
         With target Or DirectCast(New MemoryStream(), Stream).AsDefault
             Do While (i = stream.Read(buffer, 0, buffer.Length)) > 0

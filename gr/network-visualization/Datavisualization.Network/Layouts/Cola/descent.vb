@@ -1,4 +1,53 @@
+﻿#Region "Microsoft.VisualBasic::fa061bdc76d2d859478f307bda320119, gr\network-visualization\Datavisualization.Network\Layouts\Cola\descent.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+    '     Class Descent
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: computeStepSize, computeStress, createSquareMatrix, dotProd, offsetDir
+    '                   reduceStress, run, rungeKutta
+    ' 
+    '         Sub: computeDerivatives, computeNextPosition, copy, mApply, matrixApply
+    '              mid, rightMultiply, stepAndProject, takeDescentStep
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Threading
+Imports Microsoft.VisualBasic.Math
 
 Namespace Layouts.Cola
 
@@ -25,7 +74,7 @@ Namespace Layouts.Cola
     ' * @class Descent
     ' 
 
-    Class Descent
+    Public Class Descent
         Public threshold As Double = 0.0001
         '* Hessian Matrix
         '     * @property H {number[][][]}
@@ -81,7 +130,7 @@ Namespace Layouts.Cola
 
         Private random As Random = Math.Seeds
 
-        Public project As Func(Of Double(), Double(), Double(), Double)() = Nothing
+        Public project As Action(Of Double(), Double(), Double())() = Nothing
 
 
         Public Dmatrix As Double()()
@@ -149,15 +198,17 @@ Namespace Layouts.Cola
             End While
         End Sub
 
-        Public Shared Function createSquareMatrix(n As Double, f As Func(Of Double, Double, Double)) As Double()()
-            Dim M = New Double(n)() {}
+        Public Shared Function createSquareMatrix(n As Integer, f As Func(Of Integer, Integer, Integer)) As Double()()
+            Dim M As New List(Of Double())
+
             For i As Integer = 0 To n - 1
-                M(i) = New Double(n) {}
+                M.Add(New Double(n - 1) {})
                 For j As Integer = 0 To n - 1
                     M(i)(j) = f(i, j)
                 Next
             Next
-            Return M
+
+            Return M.ToArray
         End Function
 
         Private Function offsetDir() As Double()
@@ -166,7 +217,7 @@ Namespace Layouts.Cola
             Dim x#
 
             For i As Integer = 0 To Me.k - 1
-                u(i) = Me.random.getNextBetween(0.01, 1) - 0.5
+                u(i) = Me.random.GetNextBetween(0.01, 1) - 0.5
                 x = u(i)
                 l += x * x
             Next
@@ -196,7 +247,8 @@ Namespace Layouts.Cola
 
             For u As Integer = 0 To n - 1
                 For i = 0 To Me.k - 1
-                    Huu(i) = InlineAssignHelper(Me.g(i)(u), 0)
+                    Me.g(i)(u) = 0
+                    Huu(i) = 0
                 Next
                 For v As Integer = 0 To n - 1
                     If u = v Then
@@ -210,8 +262,11 @@ Namespace Layouts.Cola
                     While System.Math.Max(Interlocked.Decrement(maxDisplaces), maxDisplaces + 1)
                         sd2 = 0.0
                         For i = 0 To Me.k - 1
-                            Dim dx = InlineAssignHelper(d__1(i), x(i)(u) - x(i)(v))
-                            sd2 += InlineAssignHelper(d2__2(i), dx * dx)
+                            Dim dx#
+                            d__1(i) = x(i)(u) - x(i)(v)
+                            dx = d__1(i)
+                            d2__2(i) = dx * dx
+                            sd2 += d2__2(i)
                         Next
                         If sd2 > 0.000000001 Then
                             Exit While
@@ -240,11 +295,13 @@ Namespace Layouts.Cola
 
                     For i = 0 To Me.k - 1
                         Me.g(i)(u) += d__1(i) * gs
-                        Huu(i) -= InlineAssignHelper(Me.H(i)(u)(v), hs * (l3 + D__3 * (d2__2(i) - sd2) + l * sd2))
+                        Me.H(i)(u)(v) = hs * (l3 + D__3 * (d2__2(i) - sd2) + l * sd2)
+                        Huu(i) -= Me.H(i)(u)(v)
                     Next
                 Next
                 For i = 0 To Me.k - 1
-                    maxH = Math.Max(maxH, InlineAssignHelper(Me.H(i)(u)(u), Huu(i)))
+                    Me.H(i)(u)(u) = Huu(i)
+                    maxH = Math.Max(maxH, Huu(i))
                 Next
             Next
             ' Grid snap forces
@@ -370,9 +427,9 @@ Namespace Layouts.Cola
 
         Private Shared Sub mApply(m As Integer, n As Integer, f As Action(Of Integer, Integer))
             Dim i = m
-            While System.Math.Max(System.Threading.Interlocked.Decrement(i), i + 1) > 0
+            While System.Math.Max(Interlocked.Decrement(i), i + 1) > 0
                 Dim j = n
-                While System.Math.Max(System.Threading.Interlocked.Decrement(j), j + 1) > 0
+                While System.Math.Max(Interlocked.Decrement(j), j + 1) > 0
                     f(i, j)
                 End While
             End While
@@ -392,7 +449,9 @@ Namespace Layouts.Cola
             '        DEBUG 
 
             If Me.project IsNot Nothing Then
-                Me.matrixApply(Function(i, j) InlineAssignHelper(Me.e(i)(j), x0(i)(j) - r(i)(j)))
+                Me.matrixApply(Sub(i, j)
+                                   Me.e(i)(j) = x0(i)(j) - r(i)(j)
+                               End Sub)
                 Dim beta = Me.computeStepSize(Me.e)
                 beta = Math.Max(0.2, System.Math.Min(beta, 1))
                 Me.stepAndProject(x0, r, Me.e, beta)
@@ -428,7 +487,9 @@ Namespace Layouts.Cola
         End Function
 
         Private Shared Sub mid(a As Double()(), b As Double()(), m As Double()())
-            Descent.mApply(a.Length, a(0).Length, Function(i, j) InlineAssignHelper(m(i)(j), a(i)(j) + (b(i)(j) - a(i)(j)) / 2.0))
+            Descent.mApply(a.Length, a(0).Length, Sub(i, j)
+                                                      m(i)(j) = a(i)(j) + (b(i)(j) - a(i)(j)) / 2.0
+                                                  End Sub)
         End Sub
 
         Public Sub takeDescentStep(x As Double(), d As Double(), stepSize As Double)
@@ -462,9 +523,6 @@ Namespace Layouts.Cola
             End While
             Return stress
         End Function
-        Private Shared Function InlineAssignHelper(Of T)(ByRef target As T, value As T) As T
-            target = value
-            Return value
-        End Function
+
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b031b276485f7a181f983cf3f9146b2b, Data_science\Visualization\BinaryTree\NodeTrees.vb"
+﻿#Region "Microsoft.VisualBasic::21e1110d25279b69912778c6711dfe6e, Data_science\Visualization\BinaryTree\NodeTrees.vb"
 
     ' Author:
     ' 
@@ -105,7 +105,7 @@ Namespace KMeans
 
             For Each part As IGrouping(Of String, Partition) In g
                 If part.Count > 1 Then
-                    Dim i As int = 0
+                    Dim i As VBInteger = 0
 
                     For Each [sub] As Partition In part
                         Call out.Add(part.Key & $"-{__chars(++i)}", [sub].members)

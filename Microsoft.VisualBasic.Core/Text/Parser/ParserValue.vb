@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74b136ead327862e99ae3bf1465b2bdc, Microsoft.VisualBasic.Core\Text\Parser\ParserValue.vb"
+﻿#Region "Microsoft.VisualBasic::8519c474dae0675eaed9795c2967db95, Microsoft.VisualBasic.Core\Text\Parser\ParserValue.vb"
 
     ' Author:
     ' 
@@ -40,11 +40,10 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Text
+Namespace Text.Parser
 
     ''' <summary>
     ''' 

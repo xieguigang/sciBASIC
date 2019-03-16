@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f85807958e688dc8ec71964ce7b4d38e, Data\DataFrame\Linq\LinqWhere.vb"
+﻿#Region "Microsoft.VisualBasic::9b3a398844994951761706be7107ec7a, Data\DataFrame\Linq\LinqWhere.vb"
 
     ' Author:
     ' 
@@ -353,7 +353,7 @@ Namespace IO.Linq
         End Function
 
         Private Shared Function __getOperator(expr As String, ByRef opr As String) As Integer
-            Dim p As New int
+            Dim p As New VBInteger
 
             If (p = InStr(expr, "<")) > 0 Then
                 opr = "<"

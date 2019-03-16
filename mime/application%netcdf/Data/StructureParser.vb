@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd44bacb0fc3aceb2332b8344b038cc3, mime\application%netcdf\Data\StructureParser.vb"
+﻿#Region "Microsoft.VisualBasic::d7084a658eb7742c675806a90012f86e, mime\application%netcdf\Data\StructureParser.vb"
 
     ' Author:
     ' 
@@ -247,4 +247,3 @@ Module StructureParser
         Return (variables:=variables, recordStep:=recordStep)
     End Function
 End Module
-

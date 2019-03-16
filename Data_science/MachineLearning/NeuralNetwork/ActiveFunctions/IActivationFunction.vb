@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9339f6109b1a7ed806b9c3beea0edc7, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
+﻿#Region "Microsoft.VisualBasic::45e9ba5ab6a3c3ed23d7db38fbc9b73f, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,9 @@
 
     ' Summaries:
 
-    '     Interface IActivationFunction
+    '     Class IActivationFunction
     ' 
-    '         Properties: Store
     ' 
-    '         Function: [Function], Derivative, Derivative2
     ' 
     ' 
     ' /********************************************************************************/
@@ -62,9 +60,9 @@ Namespace NeuralNetwork.Activations
     ''' their inputs, should implement this interfaces.
     ''' </remarks>
     ''' 
-    Public Interface IActivationFunction
+    Public MustInherit Class IActivationFunction
 
-        ReadOnly Property Store As ActiveFunction
+        Public MustOverride ReadOnly Property Store As ActiveFunction
 
         ''' <summary>
         ''' Calculates function value.
@@ -76,7 +74,7 @@ Namespace NeuralNetwork.Activations
         '''
         ''' <remarks>The method calculates function value at point <paramref name="x"/>.</remarks>
         '''
-        Function [Function](x As Double) As Double
+        Public MustOverride Function [Function](x As Double) As Double
 
         ''' <summary>
         ''' Calculates function derivative.
@@ -88,7 +86,7 @@ Namespace NeuralNetwork.Activations
         ''' 
         ''' <remarks>The method calculates function derivative at point <paramref name="x"/>.</remarks>
         '''
-        Function Derivative(x As Double) As Double
+        Public MustOverride Function Derivative(x As Double) As Double
 
         ''' <summary>
         ''' Calculates function derivative.
@@ -108,7 +106,13 @@ Namespace NeuralNetwork.Activations
         ''' so they can save the amount of calculations using this method to calculate derivative.</note></para>
         ''' </remarks>
         ''' 
-        Function Derivative2(y As Double) As Double
+        Public MustOverride Function Derivative2(y As Double) As Double
 
-    End Interface
+        ''' <summary>
+        ''' 必须要重写这个函数来将函数对象序列化为表达式字符串文本
+        ''' </summary>
+        ''' <returns></returns>
+        Public MustOverride Overrides Function ToString() As String
+
+    End Class
 End Namespace

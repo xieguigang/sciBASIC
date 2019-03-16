@@ -75,9 +75,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -133,7 +130,6 @@
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
@@ -151,10 +147,6 @@
     <ProjectReference Include="..\..\..\..\mime\text%25html\MIME-htmls.vbproj">
       <Project>{2dd4be80-ddc3-4767-94a7-10f1c3395716}</Project>
       <Name>MIME-htmls</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Graph\Graph.vbproj">
-      <Project>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</Project>
-      <Name>Graph</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>

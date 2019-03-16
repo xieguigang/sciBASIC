@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a6d27717c0e477d1e1dbf7faba4b0b5, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::7d77bd08d9054cb6b8567d55569efd71, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -35,17 +35,17 @@
     ' 
     '     Properties: EmptyString, NonStrictCompares, StrictCompares
     ' 
-    '     Function: __json, AllEquals, CharAtOrDefault, CharString, (+3 Overloads) Count
-    '               CreateBuilder, DistinctIgnoreCase, EqualsAny, First, FormatString
-    '               FormatZero, GetBetween, GetEMails, GetStackValue, GetString
-    '               (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny, (+2 Overloads) Intersection
-    '               IsEmptyStringVector, JoinBy, LineTokens, Located, Lookup
-    '               (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString, NotEmpty
-    '               PadEnd, Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse
-    '               RNull, SaveTo, (+2 Overloads) Split, SplitBy, StringEmpty
-    '               StringHashCode, StringReplace, StringSplit, StripBlank, Strips
-    '               TextEquals, TextLast, TokenCount, TokenCountIgnoreCase, TrimNewLine
-    '               TrimNull, WildcardsLocated
+    '     Function: __json, AllEquals, (+4 Overloads) ByteString, CharAtOrDefault, CharString
+    '               (+3 Overloads) Count, CreateBuilder, DistinctIgnoreCase, EqualsAny, First
+    '               FormatString, FormatZero, GetBetween, GetEMails, GetStackValue
+    '               GetString, (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny
+    '               (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens, Located
+    '               Lookup, (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString
+    '               NotEmpty, PadEnd, Parts, RepeatString, ReplaceChars
+    '               (+2 Overloads) Reverse, RNull, SaveTo, (+2 Overloads) Split, SplitBy
+    '               StringEmpty, StringHashCode, StringReplace, StringSplit, StripBlank
+    '               Strips, TextEquals, TextLast, TokenCount, TokenCountIgnoreCase
+    '               TrimNewLine, TrimNull, WildcardsLocated
     ' 
     '     Sub: Parts, RemoveLast
     ' 
@@ -256,6 +256,30 @@ Public Module StringHelpers
     <Extension>
     Public Function CharString(chs As IEnumerable(Of Char)) As String
         Return New String(chs.ToArray)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ByteString(bytes As Byte()) As String
+        Return bytes.ByteString(0, bytes.Length)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ByteString(bytes As Byte(), index As Integer, count As Integer) As String
+        Return Encoding.UTF8.GetString(DirectCast(DirectCast(bytes, Object), Byte()), index, count)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ByteString(bytes As Byte(), encoding As String) As String
+        Return bytes.ByteString(Scan0, bytes.Length, encoding)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ByteString(bytes As Byte(), index As Integer, count As Integer, encoding As String) As String
+        Return System.Text.Encoding.GetEncoding(encoding).GetString(DirectCast(DirectCast(bytes, Object), Byte()), index, count)
     End Function
 
     '

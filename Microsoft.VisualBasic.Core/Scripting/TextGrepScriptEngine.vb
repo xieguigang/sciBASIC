@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4680cb3e575391539fa5ed5c351c78c7, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::faa7f30a7844fd960b343504efce3ed8, Microsoft.VisualBasic.Core\Scripting\TextGrepScriptEngine.vb"
 
     ' Author:
     ' 
@@ -75,6 +75,11 @@ Namespace Scripting
     ''' <returns></returns>
     ''' <remarks></remarks>
     Public Delegate Function TextGrepMethodToken(source$, args$()) As String
+    ''' <summary>
+    ''' 从目标源文本字符串之中进行字符串解析的操作
+    ''' </summary>
+    ''' <param name="source"></param>
+    ''' <returns></returns>
     Public Delegate Function TextGrepMethod(source As String) As String
 
     ''' <summary>

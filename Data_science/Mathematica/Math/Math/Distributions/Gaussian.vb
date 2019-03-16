@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4caad8d2eafb32a0fe43a0b77c8f2eb, Data_science\Mathematica\Math\Math\Distributions\Gaussian.vb"
+﻿#Region "Microsoft.VisualBasic::1459b0a1372829255e34d542316ce190, Data_science\Mathematica\Math\Math\Distributions\Gaussian.vb"
 
     ' Author:
     ' 

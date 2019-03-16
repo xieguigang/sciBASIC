@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b6f63c84f05a1517436f476a4735f98, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\MapsHelper.vb"
+﻿#Region "Microsoft.VisualBasic::97b172340e2d1666816531f6e21cd515, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\MapsHelper.vb"
 
     ' Author:
     ' 
@@ -126,15 +126,28 @@ Namespace ComponentModel
         End Function
     End Class
 
+    ''' <summary>
+    ''' 将文件之中的字段名称映射为另一个名称的帮助模块
+    ''' </summary>
     Public Class NameMapping : Inherits MapsHelper(Of String)
 
-        Shared ReadOnly emptyMaps As DefaultValue(Of Dictionary(Of String, String)) = New Dictionary(Of String, String)()
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <remarks>
+        ''' ###### 2019-03-08 因为会存在<see cref="Add"/>添加数据的过程,所以在这里应该是使用constructor新构建一个对象
+        ''' 否则会因为第二次使用<see cref="NameMapping"/>的时候因为对象引用的原因而出现错误
+        ''' </remarks>
+        Shared ReadOnly emptyMaps As New DefaultValue(Of Dictionary(Of String, String)) With {
+            .constructor = Function() New Dictionary(Of String, String)
+        }
 
         Sub New(Optional dictionary As Dictionary(Of String, String) = Nothing,
                 Optional default$ = Nothing)
             Call MyBase.New(dictionary Or emptyMaps, [default])
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key$, map$)
             Call __maps.Add(key, map)
         End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a9d5370677a016da9ce97299ccd5dab, vs_solutions\tutorials\core.test\toStringTest.vb"
+﻿#Region "Microsoft.VisualBasic::5a9d5370677a016da9ce97299ccd5dab, tutorials\core.test\toStringTest.vb"
 
     ' Author:
     ' 

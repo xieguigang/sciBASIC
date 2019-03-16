@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f9330b2b4aa82380531cd5a399c7e07, Microsoft.VisualBasic.Core\Text\StringSimilarity\Levenshtein\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::610d97d3cffd8b79b23ec74fbf14f4de, Microsoft.VisualBasic.Core\Text\StringSimilarity\Levenshtein\Extensions.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@ Namespace Text.Levenshtein
 
         <Extension> Public Sub GetMatches(Of T)(edits As DistResult, ref As T(), hyp As T(), ByRef refOUT As T(), ByRef hypOUT As T())
             Dim len As Integer = edits.DistEdits.Count("m"c)
-            Dim idx As int = Scan0
+            Dim idx As VBInteger = Scan0
             Dim iiiii As Integer = 0
 
             refOUT = New T(len - 1) {}

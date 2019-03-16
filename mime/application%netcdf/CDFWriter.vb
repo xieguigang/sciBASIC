@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9ad4f5b61c1f0d5ee361de328edd523, mime\application%netcdf\CDFWriter.vb"
+﻿#Region "Microsoft.VisualBasic::975a5b5bd23498238ad303304e7cb5d0, mime\application%netcdf\CDFWriter.vb"
 
     ' Author:
     ' 
@@ -483,4 +483,3 @@ Public Class CDFWriter : Implements IDisposable
     End Sub
 #End Region
 End Class
-

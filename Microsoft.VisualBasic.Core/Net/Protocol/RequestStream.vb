@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a38716614aab2999e8cfa50f8ecbc47e, Microsoft.VisualBasic.Core\Net\Protocol\RequestStream.vb"
+﻿#Region "Microsoft.VisualBasic::c9598ef1a44bb538e75692b226f5f0f0, Microsoft.VisualBasic.Core\Net\Protocol\RequestStream.vb"
 
     ' Author:
     ' 
@@ -164,7 +164,7 @@ Namespace Net.Protocols
             Call MyBase.New(rawStream)
 
             Dim bitChunk As Byte() = New Byte(INT64 - 1) {}
-            Dim p As int = Scan0
+            Dim p As VBInteger = Scan0
 
             Call Array.ConstrainedCopy(rawStream, ++p, bitChunk, Scan0, INT64)
             Me.ProtocolCategory = BitConverter.ToInt64(bitChunk, Scan0)
@@ -312,8 +312,8 @@ Namespace Net.Protocols
             Dim Protocol As Byte() = BitConverter.GetBytes(Me.Protocol)
             Dim BufferLength As Byte() = BitConverter.GetBytes(Me.BufferLength)
             Dim bufs As Byte() = New Byte(TotalBytes - 1) {}
-            Dim p As int = Scan0
-            Dim l As New int
+            Dim p As VBInteger = Scan0
+            Dim l As New VBInteger
 
             Call Array.ConstrainedCopy(ProtocolCategory, Scan0, bufs, p << (l = ProtocolCategory.Length), l)
             Call Array.ConstrainedCopy(___offset, Scan0, bufs, ++p, 1)

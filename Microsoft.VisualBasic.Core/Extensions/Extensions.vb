@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9e08e968b19f51897fbef1c114ea584, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e608fdc4f0bf5291f28f8fb90fe30cbd, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -39,18 +39,18 @@
     '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, AsRange
     '               (+2 Overloads) Average, CheckDuplicated, Constrain, DataCounts, DateToString
     '               DriverRun, ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching
-    '               GetHexInteger, (+2 Overloads) GetItem, (+2 Overloads) GetLength, IndexOf, InsertOrUpdate
-    '               Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, IsNullorEmpty
-    '               (+14 Overloads) IsNullOrEmpty, (+4 Overloads) Join, (+2 Overloads) JoinBy, Keys, KeysJson
-    '               Log2, (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement
-    '               MD5, ModifyValue, NormalizeXMLString, NotNull, (+2 Overloads) Offset
-    '               ParseDateTime, Range, Remove, RemoveDuplicates, RemoveFirst
-    '               (+2 Overloads) RemoveLast, RunDriver, SaveAsTabularMapping, Second, SelectFile
-    '               SeqRandom, (+2 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy, Shell
-    '               Shuffles, Slice, Split, SplitIterator, (+2 Overloads) SplitMV
-    '               StdError, TakeRandomly, Takes, ToBoolean, ToDictionary
-    '               ToNormalizedPathString, ToStringArray, ToVector, (+3 Overloads) TrimNull, (+2 Overloads) TryGetValue
-    '               Unlist, WriteAddress
+    '               GetHexInteger, (+2 Overloads) GetItem, (+2 Overloads) GetLength, GetValueOrNull, IndexOf
+    '               InsertOrUpdate, Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary
+    '               IsNullorEmpty, (+14 Overloads) IsNullOrEmpty, (+4 Overloads) Join, (+2 Overloads) JoinBy, Keys
+    '               KeysJson, Log2, (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose
+    '               MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue, NormalizeXMLString, NotNull
+    '               (+2 Overloads) Offset, ParseDateTime, Range, Remove, RemoveDuplicates
+    '               RemoveFirst, (+2 Overloads) RemoveLast, RunDriver, SaveAsTabularMapping, Second
+    '               SelectFile, SeqRandom, (+2 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy
+    '               Shell, Shuffles, Slice, Split, SplitIterator
+    '               (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes, ToBoolean
+    '               ToDictionary, ToNormalizedPathString, ToStringArray, ToVector, (+3 Overloads) TrimNull
+    '               (+3 Overloads) TryGetValue, Unlist, WriteAddress
     ' 
     '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
     '          SwapItem, SwapWith
@@ -409,6 +409,21 @@ Public Module Extensions
         Return value
     End Function
 
+    <Extension>
+    Public Function ElementAtOrNull(Of T)(array As T(), index As Integer) As T
+        If array Is Nothing Then
+            Return Nothing
+        ElseIf index < 0 Then
+            index = array.Length + index
+        End If
+
+        If index < 0 OrElse index >= array.Length Then
+            Return Nothing
+        Else
+            Return array(index)
+        End If
+    End Function
+
     <Extension> Public Function [Set](Of T)(ByRef array As T(), index As Integer, value As T) As T()
         If index < 0 Then
             Return array
@@ -474,6 +489,55 @@ Public Module Extensions
             Return False
         Else
             Return True
+        End If
+    End Function
+
+    <Extension>
+    Public Function GetValueOrNull(Of K, V)(table As IDictionary(Of K, V), key As K) As V
+        Dim refOut As V = Nothing
+        Call table.TryGetValue(key, value:=refOut)
+        Return refOut
+    End Function
+
+    ''' <summary>
+    ''' 假若不存在目标键名，则返回空值，默认值为空值
+    ''' </summary>
+    ''' <typeparam name="TKey"></typeparam>
+    ''' <typeparam name="TValue"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="keys"></param>
+    ''' <param name="[default]"></param>
+    ''' <returns></returns>
+    <Extension> Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
+                                                             keys As TKey(),
+                                                             Optional [default] As TValue = Nothing,
+                                                             Optional mute As Boolean = False,
+                                                             <CallerMemberName> Optional trace$ = Nothing) As TValue
+        ' 表示空的，或者键名是空的，都意味着键名不存在与表之中
+        ' 直接返回默认值
+        If table Is Nothing Then
+#If DEBUG Then
+            Call PrintException("Hash_table is nothing!")
+#End If
+            Return [default]
+        ElseIf keys.IsNullOrEmpty Then
+#If DEBUG Then
+            Call PrintException("Index key is nothing!")
+#End If
+            Return [default]
+        Else
+            For Each key As TKey In keys
+                If table.ContainsKey(key) Then
+                    Return table(key)
+                End If
+            Next
+
+#If DEBUG Then
+            If Not mute Then
+                Call PrintException($"missing_index:={keys.Select(AddressOf Scripting.ToString).GetJson}!", trace)
+            End If
+#End If
+            Return [default]
         End If
     End Function
 
