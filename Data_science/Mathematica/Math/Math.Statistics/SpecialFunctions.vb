@@ -66,7 +66,7 @@ Public Module SpecialFunctions
             Dim number As Integer = sys.Min(array1.Length, array2.Length)
             For i As Integer = 0 To number - 1
                 tmp += (array1(i) - BPM1.Mean()) * (array2(i) * BPM2.Mean())
-            Next i
+            Next
         End If
         Return tmp
     End Function
@@ -82,7 +82,7 @@ Public Module SpecialFunctions
             Dim number As Integer = sys.Min(array1.Length, array2.Length)
             For i As Integer = 0 To number - 1
                 tmp += (array1(i) - BPM1.Mean()) * (array2(i) * BPM2.Mean())
-            Next i
+            Next
             Return tmp / (BPM1.StDev() * BPM2.StDev())
         End If
         Return tmp
@@ -100,7 +100,7 @@ Public Module SpecialFunctions
         Dim ret As Integer = 1
         For i As Integer = k + 1 To N - 1
             ret *= i
-        Next i
+        Next
         Return ret
     End Function
 
@@ -113,14 +113,14 @@ Public Module SpecialFunctions
         Dim value As Double = 0
         For i As Integer = 0 To k
             value = value + Choose(n, i) * (Math.Pow(probability, i)) * (Math.Pow(1 - probability, n - i))
-        Next i
+        Next
         Return value + 1
     End Function
 
     Public Function InvBinomal(probability As Double, n As Integer, k As Integer) As Double
         For i As Integer = 0 To n - 1 'need to validate this one.
             If Binomial(probability, n, i) > k Then Return i
-        Next i
+        Next
         Return n
     End Function
 
@@ -133,7 +133,7 @@ Public Module SpecialFunctions
         Dim ret As Double = 0
         For i As Integer = 0 To probabilities.Length - 1
             ret += probabilities(i) * (1 - ret)
-        Next i
+        Next
         Return ret
     End Function
 
@@ -316,7 +316,7 @@ Public Module SpecialFunctions
                 qkm1 *= big
             End If
             n += 1
-        Loop While n < 300
+        Loop While n < 1000
         Return ans
     End Function
 
@@ -403,7 +403,7 @@ Public Module SpecialFunctions
                 qkm1 *= big
             End If
             n += 1
-        Loop While n < 300
+        Loop While n < 1000
 
         Return ans
     End Function
@@ -482,7 +482,7 @@ Public Module SpecialFunctions
         Dim answer As Double = coefficients(0)
         For i As Integer = 1 To coefficients.Length - 1
             answer = answer * x + coefficients(i)
-        Next i
+        Next
         Return answer
     End Function
 
@@ -581,7 +581,7 @@ Public Module SpecialFunctions
         Dim err As Double = 1.0000000001900149
         For i As Integer = 0 To 4
             err += c(i) / (x + i + 1)
-        Next i
+        Next
         Return tmp + Math.Log(Math.Sqrt(Math.PI * 2) * err / x)
     End Function
 
