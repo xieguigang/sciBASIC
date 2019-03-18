@@ -140,7 +140,7 @@ Namespace NeuralNetwork.StoreProcedure
         <XmlElement("normalization")>
         Public Property NormalizeMatrix As NormalizeMatrix
 
-        Public Class SampleList : Inherits ListOf
+        Public Class SampleList : Inherits ListOf(Of Sample)
 
             ''' <summary>
             ''' 样本列表
@@ -181,6 +181,10 @@ Namespace NeuralNetwork.StoreProcedure
                     .items = samples.ToArray
                 }
             End Operator
+
+            Protected Overrides Function getCollection() As IEnumerable(Of Sample)
+                Return items
+            End Function
         End Class
 
         ''' <summary>

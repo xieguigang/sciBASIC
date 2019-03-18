@@ -102,7 +102,7 @@ Namespace Quantile
         End Function
 
         ''' <summary>
-        ''' 
+        ''' <see cref="QuantileEstimationGK"/> for numeric vector.
         ''' </summary>
         ''' <param name="source"></param>
         ''' <param name="epsilon#"></param>
