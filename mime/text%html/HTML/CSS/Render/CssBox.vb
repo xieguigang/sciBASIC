@@ -1,80 +1,80 @@
 ﻿#Region "Microsoft.VisualBasic::f3bd638d5ef52fdbf8d01311adc14f29, mime\text%html\HTML\CSS\Render\CssBox.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class CssBox
-    ' 
-    '         Properties: ActualBackgroundColor, ActualBackgroundGradient, ActualBackgroundGradientAngle, ActualBorderBottomColor, ActualBorderBottomWidth
-    '                     ActualBorderLeftColor, ActualBorderLeftWidth, ActualBorderRightColor, ActualBorderRightWidth, ActualBorderSpacingHorizontal
-    '                     ActualBorderSpacingVertical, ActualBorderTopColor, ActualBorderTopWidth, ActualBottom, ActualColor
-    '                     ActualCornerNE, ActualCornerNW, ActualCornerSE, ActualCornerSW, ActualFont
-    '                     ActualMarginBottom, ActualMarginLeft, ActualMarginRight, ActualMarginTop, ActualPaddingBottom
-    '                     ActualPaddingLeft, ActualPaddingRight, ActualPaddingTop, ActualParentFont, ActualRight
-    '                     ActualTextIndent, ActualWordSpacing, AvailableWidth, BackgroundColor, BackgroundGradient
-    '                     BackgroundGradientAngle, BackgroundImage, BackgroundRepeat, Border, BorderBottom
-    '                     BorderBottomColor, BorderBottomStyle, BorderBottomWidth, BorderCollapse, BorderColor
-    '                     BorderLeft, BorderLeftColor, BorderLeftStyle, BorderLeftWidth, BorderRight
-    '                     BorderRightColor, BorderRightStyle, BorderRightWidth, BorderSpacing, BorderStyle
-    '                     BorderTop, BorderTopColor, BorderTopStyle, BorderTopWidth, BorderWidth
-    '                     Bounds, Boxes, ClientBottom, ClientLeft, ClientRectangle
-    '                     ClientRight, ClientTop, Color, ContainingBlock, CornerNERadius
-    '                     CornerNWRadius, CornerRadius, CornerSERadius, CornerSWRadius, Direction
-    '                     Display, EmptyCells, FirstHostingLineBox, FirstWord, Float
-    '                     Font, FontAscent, FontDescent, FontFamily, FontLineSpacing
-    '                     FontSize, FontStyle, FontVariant, FontWeight, Height
-    '                     HtmlTag, InitialContainer, IsImage, IsRounded, IsSpaceOrEmpty
-    '                     LastHostingLineBox, LastWord, Left, LineBoxes, LineHeight
-    '                     ListItemBox, ListStyle, ListStyleImage, ListStylePosition, ListStyleType
-    '                     Location, Margin, MarginBottom, MarginLeft, MarginRight
-    '                     MarginTop, Padding, PaddingBottom, PaddingLeft, PaddingRight
-    '                     PaddingTop, ParentBox, ParentLineBoxes, Position, Rectangles
-    '                     Size, Text, TextAlign, TextDecoration, TextIndent
-    '                     Top, VerticalAlign, WhiteSpace, Width, Words
-    '                     WordSpacing
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: ContainsInlinesOnly, FirstWordOccourence, (+2 Overloads) GetAttribute, GetDefaultValue, GetEmHeight
-    '                   GetFullWidth, GetIndexForList, GetMaximumBottom, GetMinimumWidth, GetNextSibling
-    '                   GetPreviousSibling, HasJustInlineSiblings, InlineAssignHelper, MarginCollapse, NoEms
-    '                   ToString
-    ' 
-    '         Sub: CreateListItemBox, GetFullWidth_WordsWith, GetMinimumWidth_BubblePadding, GetMinimumWidth_LongestWord, (+2 Overloads) InheritStyle
-    '              MeasureBounds, MeasureWordSpacing, MeasureWordsSize, OffsetRectangle, OffsetTop
-    '              Paint, PaintBackground, PaintBorder, PaintDecoration, RectanglesReset
-    '              RemoveAnonymousSpaces, (+2 Overloads) SetBounds, SetInitialContainer, UpdateWords
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class CssBox
+' 
+'         Properties: ActualBackgroundColor, ActualBackgroundGradient, ActualBackgroundGradientAngle, ActualBorderBottomColor, ActualBorderBottomWidth
+'                     ActualBorderLeftColor, ActualBorderLeftWidth, ActualBorderRightColor, ActualBorderRightWidth, ActualBorderSpacingHorizontal
+'                     ActualBorderSpacingVertical, ActualBorderTopColor, ActualBorderTopWidth, ActualBottom, ActualColor
+'                     ActualCornerNE, ActualCornerNW, ActualCornerSE, ActualCornerSW, ActualFont
+'                     ActualMarginBottom, ActualMarginLeft, ActualMarginRight, ActualMarginTop, ActualPaddingBottom
+'                     ActualPaddingLeft, ActualPaddingRight, ActualPaddingTop, ActualParentFont, ActualRight
+'                     ActualTextIndent, ActualWordSpacing, AvailableWidth, BackgroundColor, BackgroundGradient
+'                     BackgroundGradientAngle, BackgroundImage, BackgroundRepeat, Border, BorderBottom
+'                     BorderBottomColor, BorderBottomStyle, BorderBottomWidth, BorderCollapse, BorderColor
+'                     BorderLeft, BorderLeftColor, BorderLeftStyle, BorderLeftWidth, BorderRight
+'                     BorderRightColor, BorderRightStyle, BorderRightWidth, BorderSpacing, BorderStyle
+'                     BorderTop, BorderTopColor, BorderTopStyle, BorderTopWidth, BorderWidth
+'                     Bounds, Boxes, ClientBottom, ClientLeft, ClientRectangle
+'                     ClientRight, ClientTop, Color, ContainingBlock, CornerNERadius
+'                     CornerNWRadius, CornerRadius, CornerSERadius, CornerSWRadius, Direction
+'                     Display, EmptyCells, FirstHostingLineBox, FirstWord, Float
+'                     Font, FontAscent, FontDescent, FontFamily, FontLineSpacing
+'                     FontSize, FontStyle, FontVariant, FontWeight, Height
+'                     HtmlTag, InitialContainer, IsImage, IsRounded, IsSpaceOrEmpty
+'                     LastHostingLineBox, LastWord, Left, LineBoxes, LineHeight
+'                     ListItemBox, ListStyle, ListStyleImage, ListStylePosition, ListStyleType
+'                     Location, Margin, MarginBottom, MarginLeft, MarginRight
+'                     MarginTop, Padding, PaddingBottom, PaddingLeft, PaddingRight
+'                     PaddingTop, ParentBox, ParentLineBoxes, Position, Rectangles
+'                     Size, Text, TextAlign, TextDecoration, TextIndent
+'                     Top, VerticalAlign, WhiteSpace, Width, Words
+'                     WordSpacing
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: ContainsInlinesOnly, FirstWordOccourence, (+2 Overloads) GetAttribute, GetDefaultValue, GetEmHeight
+'                   GetFullWidth, GetIndexForList, GetMaximumBottom, GetMinimumWidth, GetNextSibling
+'                   GetPreviousSibling, HasJustInlineSiblings, InlineAssignHelper, MarginCollapse, NoEms
+'                   ToString
+' 
+'         Sub: CreateListItemBox, GetFullWidth_WordsWith, GetMinimumWidth_BubblePadding, GetMinimumWidth_LongestWord, (+2 Overloads) InheritStyle
+'              MeasureBounds, MeasureWordSpacing, MeasureWordsSize, OffsetRectangle, OffsetTop
+'              Paint, PaintBackground, PaintBorder, PaintDecoration, RectanglesReset
+'              RemoveAnonymousSpaces, (+2 Overloads) SetBounds, SetInitialContainer, UpdateWords
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -3023,7 +3023,7 @@ Namespace HTML.CSS.Render
             If Not (String.IsNullOrEmpty(BorderTopStyle) OrElse BorderTopStyle = CssConstants.None) Then
                 Using b As New SolidBrush(ActualBorderTopColor)
                     If BorderTopStyle = CssConstants.Inset Then
-                        b.Color = CssDrawingHelper.Darken(ActualBorderTopColor)
+                        b.Color = ActualBorderTopColor.Darken
                     End If
                     g.FillPath(b, CssDrawingHelper.GetBorderPath(CssDrawingHelper.Border.Top, Me, rectangle, isFirst, isLast))
                 End Using
@@ -3035,7 +3035,7 @@ Namespace HTML.CSS.Render
                 If Not (String.IsNullOrEmpty(BorderRightStyle) OrElse BorderRightStyle = CssConstants.None) Then
                     Using b As New SolidBrush(ActualBorderRightColor)
                         If BorderRightStyle = CssConstants.Outset Then
-                            b.Color = CssDrawingHelper.Darken(ActualBorderRightColor)
+                            b.Color = ActualBorderRightColor.Darken
                         End If
                         g.FillPath(b, CssDrawingHelper.GetBorderPath(CssDrawingHelper.Border.Right, Me, rectangle, isFirst, isLast))
                     End Using
@@ -3046,7 +3046,7 @@ Namespace HTML.CSS.Render
             If Not (String.IsNullOrEmpty(BorderBottomStyle) OrElse BorderBottomStyle = CssConstants.None) Then
                 Using b As New SolidBrush(ActualBorderBottomColor)
                     If BorderBottomStyle = CssConstants.Outset Then
-                        b.Color = CssDrawingHelper.Darken(ActualBorderBottomColor)
+                        b.Color = ActualBorderBottomColor.Darken
                     End If
                     g.FillPath(b, CssDrawingHelper.GetBorderPath(CssDrawingHelper.Border.Bottom, Me, rectangle, isFirst, isLast))
                 End Using
@@ -3057,7 +3057,7 @@ Namespace HTML.CSS.Render
                 If Not (String.IsNullOrEmpty(BorderLeftStyle) OrElse BorderLeftStyle = CssConstants.None) Then
                     Using b As New SolidBrush(ActualBorderLeftColor)
                         If BorderLeftStyle = CssConstants.Inset Then
-                            b.Color = CssDrawingHelper.Darken(ActualBorderLeftColor)
+                            b.Color = ActualBorderLeftColor.Darken
                         End If
                         g.FillPath(b, CssDrawingHelper.GetBorderPath(CssDrawingHelper.Border.Left, Me, rectangle, isFirst, isLast))
                     End Using

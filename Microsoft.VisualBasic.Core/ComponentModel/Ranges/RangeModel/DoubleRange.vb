@@ -135,7 +135,7 @@ Namespace ComponentModel.Ranges.Model
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' [min=xxx, max=xxx]
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks>

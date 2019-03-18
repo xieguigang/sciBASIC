@@ -72,7 +72,7 @@ Namespace Drawing3D.Device
                         Dim color As Color = DirectCast(.brush, SolidBrush).Color
                         Dim points As Point() = .points
 
-                        color = color.Dark(dark)
+                        color = color.Darken(dark)
                         array(i) = New Polygon With {
                             .brush = New SolidBrush(color),
                             .points = points

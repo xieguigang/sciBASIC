@@ -444,7 +444,7 @@ Public Module NetworkVisualizer
                     br = Brushes.Black
                 Else
                     br = .color
-                    br = New SolidBrush(DirectCast(br, SolidBrush).Color.Dark(0.005))
+                    br = New SolidBrush(DirectCast(br, SolidBrush).Color.Darken(0.005))
                 End If
 
                 With g.MeasureString(.label.text, .style)

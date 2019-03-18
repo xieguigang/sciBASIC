@@ -67,7 +67,8 @@ Namespace Language
     ''' <summary>
     ''' ``[name => value]`` tuple
     ''' </summary>
-    Public Class ArgumentReference : Implements INamedValue
+    Public Class ArgumentReference
+        Implements INamedValue
 
         Public name$, value
 
@@ -144,6 +145,11 @@ Namespace Language
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(arg As ArgumentReference) As (name As String, value As Object)
             Return (arg.name, arg.value)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(name As String) As ArgumentReference
+            Return New ArgumentReference With {.name = name}
         End Operator
     End Class
 

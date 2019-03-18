@@ -123,6 +123,7 @@ Public Module FisherTest
         Return px / py
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Private Function product(x As Dictionary(Of Integer, Integer)) As Double
         Return x.Select(Function(n) n.Key ^ n.Value).ProductALL
