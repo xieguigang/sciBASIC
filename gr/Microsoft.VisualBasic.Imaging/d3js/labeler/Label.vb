@@ -115,6 +115,13 @@ Namespace d3js.Layout
         ''' <returns></returns>
         Public ReadOnly Property Rectangle As RectangleF
 
+        Public ReadOnly Property location As PointF
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New PointF(X, Y)
+            End Get
+        End Property
+
         Sub New()
         End Sub
 

@@ -120,7 +120,7 @@ Public Module Scanner
     <Extension>
     Public Function DrawRegion(pixels As Vector, size As Size) As Image
         Using g = size.CreateGDIDevice
-            Dim i As int = 0
+            Dim i As VBInteger = 0
 
             For y As Integer = 0 To size.Height - 1
                 For x As Integer = 0 To size.Width - 1

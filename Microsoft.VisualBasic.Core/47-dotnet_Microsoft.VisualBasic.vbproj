@@ -971,6 +971,7 @@
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
     <Compile Include="Language\Language\Python\NamespaceDoc.vb" />
     <Compile Include="Language\Value\CharStream.vb" />
+    <Compile Include="Language\Value\UnionType.vb" />
     <Compile Include="Net\HTTP\ZipStream.vb" />
     <Compile Include="Net\HTTP\Multipart.vb" />
     <Compile Include="Net\HTTP\DataURI.vb" />
@@ -1234,7 +1235,7 @@
     <Compile Include="Language\Language\Java\LogTricks.vb" />
     <Compile Include="Language\Language\Java\MathUtils.vb" />
     <Compile Include="Language\Language\Java\MersenneTwisterFast.vb" />
-    <Compile Include="Language\Value\Uid.vb" />
+    <Compile Include="ComponentModel\Uid.vb" />
     <Compile Include="Language\Language\C\CString.vb" />
     <Compile Include="Language\Language\C\File.vb" />
     <Compile Include="Language\StringHelpers.vb" />

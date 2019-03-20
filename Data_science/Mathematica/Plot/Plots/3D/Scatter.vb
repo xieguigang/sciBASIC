@@ -1,47 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::8792908bb02d03ad3da9abed64770a6a, Data_science\Mathematica\Plot\Plots\3D\Scatter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Scatter
-    ' 
-    '         Function: (+2 Overloads) Plot
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Scatter
+' 
+'         Function: (+2 Overloads) Plot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
@@ -85,6 +86,7 @@ Namespace Plot3D
                              Optional bg$ = "white",
                              Optional padding$ = g.DefaultPadding,
                              Optional axisLabelFontCSS$ = CSSFont.Win7Normal,
+                             Optional elementLabelFont$ = CSSFont.Win10Normal,
                              Optional boxStroke$ = Stroke.StrongHighlightStroke,
                              Optional axisStroke$ = Stroke.AxisStroke,
                              Optional labX$ = "X",
@@ -95,7 +97,7 @@ Namespace Plot3D
 
             Dim list As Serial3D() = serials.ToArray
             Dim points = list _
-                .Select(Function(s) s.Points) _
+                .Select(Function(s) s.Points.Values) _
                 .IteratesALL _
                 .ToArray
             Dim font As Font = CSSFont.TryParse(axisLabelFontCSS).GDIObject
@@ -122,7 +124,7 @@ Namespace Plot3D
             ' 最后混合进入系列点
             For Each serial As Serial3D In list
 
-                Dim data As Point3D() = serial.Points
+                Dim data As NamedValue(Of Point3D)() = serial.Points
                 Dim size As New Size With {
                     .Width = serial.PointSize,
                     .Height = serial.PointSize
@@ -133,9 +135,10 @@ Namespace Plot3D
                     .Select(Function(pt)
                                 Return New ShapePoint With {
                                     .Fill = color,
-                                    .Location = pt,
+                                    .Location = pt.Value,
                                     .Size = size,
-                                    .Style = serial.Shape
+                                    .Style = serial.Shape,
+                                    .Label = pt.Name
                                 }
                             End Function)
             Next
@@ -169,7 +172,7 @@ Namespace Plot3D
                     Dim legendSize$ = $"{legendWidth},{legendWidth}"
 
                     ' 要先绘制三维图形，要不然会将图例遮住的
-                    Call model.RenderAs3DChart(g, camera, region)
+                    Call model.RenderAs3DChart(g, camera, region, CSSFont.TryParse(elementLabelFont))
                     Call g.DrawLegends(
                         topLeft:=topLeft,
                         legends:=legends,

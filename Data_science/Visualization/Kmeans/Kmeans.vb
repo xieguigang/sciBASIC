@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::911073460cc7c99465be7576201e084c, Data_science\Visualization\Kmeans\Kmeans.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module KmeansExtensions
-    ' 
-    '         Function: ClusterGroups, Scatter2D, (+2 Overloads) Scatter3D
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module KmeansExtensions
+' 
+'         Function: ClusterGroups, Scatter2D, (+2 Overloads) Scatter3D
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Driver.CSS
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Markup.HTML.CSS
 
 Namespace KMeans
@@ -210,7 +211,8 @@ Namespace KMeans
                                   Optional pointSize! = 20,
                                   Optional boxStroke$ = Stroke.StrongHighlightStroke,
                                   Optional axisStroke$ = Stroke.AxisStroke,
-                                  Optional arrowFactor$ = "2,2") As GraphicsData
+                                  Optional arrowFactor$ = "2,2",
+                                  Optional labelsQuantile# = -1) As GraphicsData
 
             Dim clusters As Dictionary(Of String, EntityClusterModel()) = clusterData.ClusterGroups
 
@@ -224,7 +226,7 @@ Namespace KMeans
 
             For Each cluster In clusters.SeqIterator
                 Dim color As Color = clusterColors(cluster)
-                Dim point3D As New List(Of Point3D)
+                Dim point3D As New List(Of NamedValue(Of Point3D))
 
                 For Each member As EntityClusterModel In (+cluster).Value
                     With keys _
@@ -234,7 +236,11 @@ Namespace KMeans
                         .ToArray
 
                         Dim point As New Point3D(.ByRef(0), .ByRef(1), .ByRef(2))
-                        point3D += point
+
+                        point3D += New NamedValue(Of Point3D) With {
+                            .Name = member.ID,
+                            .Value = point
+                        }
                     End With
                 Next
 
@@ -247,6 +253,11 @@ Namespace KMeans
                 }
             Next
 
+            ' calculate quantile
+            If labelsQuantile > 0 AndAlso labelsQuantile < 1 Then
+                serials = serials.labelSelector(labelsQuantile)
+            End If
+
             Return serials.Plot(
                 camera, bg, padding,
                 boxStroke:=boxStroke,
@@ -254,6 +265,37 @@ Namespace KMeans
                 labX:=labX, labY:=labY, labZ:=labZ,
                 arrowFactor:=arrowFactor
             )
+        End Function
+
+        <Extension>
+        Private Function labelSelector(serials As IEnumerable(Of Serial3D), labelsQuantile#) As List(Of Serial3D)
+            Dim q As QuantileEstimationGK = serials _
+                .Select(Function(s)
+                            Return s.Points.Select(Function(p) {CDbl(p.Value.X), CDbl(p.Value.Y), CDbl(p.Value.Z)}.Average)
+                        End Function) _
+                .IteratesALL _
+                .GKQuantile
+            Dim quantile# = q.Query(labelsQuantile)
+
+            serials = serials _
+                .Select(Function(s)
+                            s.Points = s.Points _
+                                .Select(Function(p)
+                                            If {p.Value.X, p.Value.Y, p.Value.Z}.Average >= quantile Then
+                                                Return p
+                                            Else
+                                                Return New NamedValue(Of Point3D) With {
+                                                    .Name = Nothing,
+                                                    .Value = p.Value
+                                                }
+                                            End If
+                                        End Function) _
+                                .AsList
+                            Return s
+                        End Function) _
+                .AsList
+
+            Return serials
         End Function
     End Module
 End Namespace

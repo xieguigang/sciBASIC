@@ -68,6 +68,13 @@ Namespace d3js.Layout
         Sub New()
         End Sub
 
+        Sub New(location As Point, r#)
+            Me.r = r
+
+            x = location.X
+            y = location.Y
+        End Sub
+
         ''' <summary>
         ''' 目标节点的绘图模型
         ''' </summary>

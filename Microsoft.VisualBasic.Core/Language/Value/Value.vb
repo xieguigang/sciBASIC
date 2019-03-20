@@ -167,7 +167,7 @@ Namespace Language
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetUnderlyingType() As Type
+        Public Overridable Function GetUnderlyingType() As Type
             Return GetType(T)
         End Function
 
