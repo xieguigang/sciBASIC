@@ -60,7 +60,7 @@ Namespace NeuralNetwork
             For Each input As SeqValue(Of String) In inputs.SeqIterator
                 Dim inputId As String = input.value
                 Dim allw = model.connections _
-                    .Where(Function(n) n.in = inputId AndAlso n.out.IsOneOfA(firstHidden)) _
+                    .Where(Function(n) n.in = inputId AndAlso n.out Like firstHidden) _
                     .Shadows!w _
                     .Abs
 

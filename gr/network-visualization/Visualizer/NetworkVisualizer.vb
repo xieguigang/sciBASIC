@@ -332,7 +332,7 @@ Public Module NetworkVisualizer
                     End If
 
                     For Each group In groups
-                        If group.Count > 2 AndAlso group.Key.IsOneOfA(hullPolygon) Then
+                        If group.Count > 2 AndAlso group.Key Like hullPolygon Then
                             Dim positions = group _
                                 .Select(Function(p) scalePos(p)) _
                                 .JarvisMatch _

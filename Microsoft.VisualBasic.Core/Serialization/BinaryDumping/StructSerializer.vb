@@ -121,16 +121,16 @@ Namespace Serialization.BinaryDumping
         ''' 
         <Extension>
         Public Function ByteToStructure(Of T As Structure)(dataBuffer As Byte()) As T
-            Dim [structure] As Object = Nothing
+            Dim struct As Object = Nothing
             Dim size As Integer = Marshal.SizeOf(GetType(T))
             Dim allocIntPtr As IntPtr = Marshal.AllocHGlobal(size)
             Try
                 Marshal.Copy(dataBuffer, 0, allocIntPtr, size)
-                [structure] = Marshal.PtrToStructure(allocIntPtr, GetType(T))
+                struct = Marshal.PtrToStructure(allocIntPtr, GetType(T))
             Finally
                 Marshal.FreeHGlobal(allocIntPtr)
             End Try
-            Return DirectCast([structure], T)
+            Return DirectCast(struct, T)
         End Function
     End Module
 End Namespace

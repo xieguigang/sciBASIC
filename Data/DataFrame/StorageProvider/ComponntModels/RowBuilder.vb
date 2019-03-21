@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::ab1665d270cd7f6e18a939e5703b35c8, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Interface ISchema
-    ' 
-    '         Properties: SchemaOridinal
-    ' 
-    '         Function: GetOrdinal
-    ' 
-    '     Class RowBuilder
-    ' 
-    '         Properties: Columns, Defaults, HaveMetaAttribute, IndexedFields, MissingFields
-    '                     NonIndexed, SchemaProvider
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __tryFill, FillData, ToString
-    ' 
-    '         Sub: IndexOf, SolveReadOnlyMetaConflicts
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Interface ISchema
+' 
+'         Properties: SchemaOridinal
+' 
+'         Function: GetOrdinal
+' 
+'     Class RowBuilder
+' 
+'         Properties: Columns, Defaults, HaveMetaAttribute, IndexedFields, MissingFields
+'                     NonIndexed, SchemaProvider
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __tryFill, FillData, ToString
+' 
+'         Sub: IndexOf, SolveReadOnlyMetaConflicts
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -167,10 +167,13 @@ Namespace StorageProvider.ComponentModels
                                             Function(field) field.Value)
             End With
 
-            With IndexedFields.Select(Function(i) i.BindProperty.Name).Indexing
+            With IndexedFields _
+                .Select(Function(i) i.BindProperty.Name) _
+                .Indexing
+
                 _MissingFields = Columns _
                     .Where(Function(field)
-                               Return Not field.BindProperty.Name.IsOneOfA(.ByRef) AndAlso Not field.IsMetaField
+                               Return Not field.BindProperty.Name Like .ByRef AndAlso Not field.IsMetaField
                            End Function) _
                     .ToArray
             End With

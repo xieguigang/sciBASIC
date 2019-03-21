@@ -255,6 +255,11 @@ Namespace Language
             Return o
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Like(o As Value(Of T), type As Type) As Boolean
+            Return o.GetUnderlyingType Is type
+        End Operator
+
         Public Shared Operator <>(value As Value(Of T), o As T) As T
             Throw New NotSupportedException
         End Operator
