@@ -1291,7 +1291,6 @@
     <Compile Include="Extensions\IO\Path\PathMatch.vb" />
     <Compile Include="Extensions\Math\NumberGroups.vb" />
     <Compile Include="Extensions\StringHelpers\RegexExtensions.vb" />
-    <Compile Include="Language\NET40_Compatible.vb" />
     <Compile Include="Language\Language\UnixBash\FileSystem\PathMapper.vb" />
     <Compile Include="Language\Language\UnixBash\LinuxRunHelper.vb" />
     <Compile Include="LICENSE.vb" />
