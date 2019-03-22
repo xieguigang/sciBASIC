@@ -280,7 +280,7 @@ Namespace SecurityString
         ''' <returns></returns>
         ''' 
         <Extension>
-        Public Function Sha256ByteString(array() As Byte, Optional delimiter$ = " "c) As String
+        Public Function Sha256ByteString(array() As Byte, Optional delimiter As Char = " "c) As String
             Dim sb As New StringBuilder
 
             For i As Integer = 0 To array.Length - 1
@@ -291,7 +291,7 @@ Namespace SecurityString
                 End If
             Next
 
-            Return sb.ToString
+            Return sb.ToString.Trim(delimiter)
         End Function
     End Module
 End Namespace
