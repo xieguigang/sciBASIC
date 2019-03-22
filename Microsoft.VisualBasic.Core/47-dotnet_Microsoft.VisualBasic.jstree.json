@@ -556,7 +556,7 @@
         "n542": "Microsoft.VisualBasic.Core/Extensions/ValueTypes",
         "n543": "Microsoft.VisualBasic.Core/Extensions/ValueTypes/TimeSpanScale.vb",
         "n544": "Microsoft.VisualBasic.Core/Language/Value/CharStream.vb",
-        "n545": "Microsoft.VisualBasic.Core/Language/Value/UnionType.vb",
+        "n545": "Microsoft.VisualBasic.Core/Language/Value/Variant.vb",
         "n546": "Microsoft.VisualBasic.Core/Net/HTTP",
         "n547": "Microsoft.VisualBasic.Core/Net/HTTP/ZipStream.vb",
         "n548": "Microsoft.VisualBasic.Core/Net/HTTP/Multipart.vb",
@@ -4618,11 +4618,11 @@
             "text": "CharStream.vb",
             "type": "file"
         },
-        "Language/Value/UnionType.vb": {
+        "Language/Value/Variant.vb": {
             "icon": "images/VB_16x.png",
             "id": "n545",
             "parent": "n198",
-            "text": "UnionType.vb",
+            "text": "Variant.vb",
             "type": "file"
         },
         "Net/HTTP": {
