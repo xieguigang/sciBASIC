@@ -971,7 +971,7 @@
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
     <Compile Include="Language\Language\Python\NamespaceDoc.vb" />
     <Compile Include="Language\Value\CharStream.vb" />
-    <Compile Include="Language\Value\UnionType.vb" />
+    <Compile Include="Language\Value\Variant.vb" />
     <Compile Include="Net\HTTP\ZipStream.vb" />
     <Compile Include="Net\HTTP\Multipart.vb" />
     <Compile Include="Net\HTTP\DataURI.vb" />
