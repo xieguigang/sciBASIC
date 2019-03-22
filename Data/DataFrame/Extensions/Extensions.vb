@@ -363,11 +363,14 @@ Public Module Extensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="dataSet"></param>
-    ''' <param name="explicit"></param>
+    ''' <param name="strict">
+    ''' If this parameter is true, which means if the property in target class <typeparamref name="T"/> is not marked
+    ''' <see cref="Column"/> attribute, then this property will be ignored.
+    ''' </param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
-                                                            Optional explicit As Boolean = False,
+                                                            Optional strict As Boolean = False,
                                                             Optional skipEmpty As Boolean = True,
                                                             Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
         Dim sheet As File_csv
@@ -384,7 +387,7 @@ Public Module Extensions
 
         Return IO.DataFrame _
             .CreateObject(file:=sheet) _
-            .AsDataSource(Of T)(explicit, maps)
+            .AsDataSource(Of T)(strict, maps)
     End Function
 
     ''' <summary>

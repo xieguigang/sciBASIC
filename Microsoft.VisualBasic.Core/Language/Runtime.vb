@@ -92,6 +92,7 @@ Namespace Language
                 If value Is Nothing Then
                     val = null
                 ElseIf value.GetType Is GetType(String) Then
+                    ' string can be a variable name
                     If (isVar Or [isNot])(value) Then
                         val = value
                     Else

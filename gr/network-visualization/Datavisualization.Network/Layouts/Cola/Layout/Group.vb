@@ -67,14 +67,14 @@ Namespace Layouts.Cola
         Property leaves As List(Of TLeaves)
     End Interface
 
-    Public Class IndexGroup : Inherits JavaScriptObject
+    Public Class IndexGroup : Inherits Node
         Implements IGroup(Of Integer, Integer)
 
         Public Property leaves As List(Of Integer) Implements IGroup(Of Integer, Integer).leaves
         Public Property groups As List(Of Integer) Implements IGroup(Of Integer, Integer).groups
-        Public Property id As Integer Implements IGroup(Of Integer, Integer).id
+        Public Overrides Property id As Integer Implements IGroup(Of Integer, Integer).id
         Public Property padding As Double
-        Public Property index As Integer
+
     End Class
 
     Public Class Group : Inherits Node

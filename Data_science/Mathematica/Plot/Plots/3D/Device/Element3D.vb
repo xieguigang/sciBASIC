@@ -190,10 +190,23 @@ Namespace Plot3D.Device
         Public Property Size As Size
         Public Property Fill As Brush
         Public Property Style As LegendStyles
+        Public Property Label As String
 
+        ''' <summary>
+        ''' Project the 3D point to the location on 2D plot canvas
+        ''' </summary>
+        ''' <param name="g">The 2D plot canvas</param>
+        ''' <returns></returns>
+        Public ReadOnly Property Point2D(g As IGraphics) As Point
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return GetPosition(g)
+            End Get
+        End Property
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub Draw(g As IGraphics, offset As PointF)
-            Dim position As Point = GetPosition(g).OffSet2D(offset)
-            Call g.DrawLegendShape(position, Size, Style, Fill)
+            Call g.DrawLegendShape(Point2D(g).OffSet2D(offset), Size, Style, Fill)
         End Sub
     End Class
 End Namespace

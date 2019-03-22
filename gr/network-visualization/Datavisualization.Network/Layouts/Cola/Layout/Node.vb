@@ -99,7 +99,7 @@ Namespace Layouts.Cola
         Implements Indexed
         Implements IGraphNode
 
-        Public Property id As Integer Implements Indexed.id
+        Public Overridable Property id As Integer Implements Indexed.id
         Public name As String
         Public routerNode As Node
         Public prev As RBTree(Of Integer, Node)

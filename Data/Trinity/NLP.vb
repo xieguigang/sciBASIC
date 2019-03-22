@@ -77,7 +77,7 @@ Public Module NLPExtensions
 
             For Each word As String In sentence.Words
 
-                If word.IsOneOfA(keywords) Then
+                If word Like keywords Then
                     one += word
                 Else
                     If one.Count > 1 Then

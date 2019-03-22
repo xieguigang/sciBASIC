@@ -1,45 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::3316140b8114baebe575a0e605535854, Data_science\Bootstrapping\Bootstrapping.Extension\EigenvectorBootstrappingExtension.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module EigenvectorBootstrappingExtension
-    ' 
-    '     Function: BinaryKMeans
-    ' 
-    ' /********************************************************************************/
+' Module EigenvectorBootstrappingExtension
+' 
+'     Function: BinaryKMeans
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Data.visualize.KMeans
@@ -71,14 +72,20 @@ Public Module EigenvectorBootstrappingExtension
         Call "Load data complete!".__DEBUG_ECHO
 
         Dim uid As New Uid
-        Dim datasets As EntityClusterModel() = strTags.Select(
-            Function(x) New EntityClusterModel With {
-                .ID = "boot" & uid.Plus,
-                .Properties = x.Value.Tag _
-                    .SeqIterator _
-                    .ToDictionary(Function(o) CStr(o.i),
-                                  Function(o) o.value)   ' 在这里使用特征向量作为属性来进行聚类操作
-        }).ToArray
+        Dim datasets As EntityClusterModel() = strTags _
+            .Select(Function(x)
+                        Return New EntityClusterModel With {
+                            .ID = "boot" & uid.Plus,
+                            .Properties = x.Value.Tag _
+                                .SeqIterator _
+                                .ToDictionary(Function(o) CStr(o.i),
+                                              Function(o)
+                                                  ' 在这里使用特征向量作为属性来进行聚类操作
+                                                  Return o.value
+                                              End Function)
+                        }
+                    End Function) _
+            .ToArray
 
         Call "Creates dataset complete!".__DEBUG_ECHO
 

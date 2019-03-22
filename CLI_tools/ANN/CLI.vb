@@ -43,6 +43,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
@@ -69,6 +70,21 @@ Module CLI
         Dim errors = debugger.getDataVariable("fitness").numerics
         Dim index = Which.Min(errors)
 
+    End Function
+
+    <ExportAPI("/input.important")>
+    <Usage("/input.important /in <ANN_model.Xml> /sample <trainingSet.Xml> [/out <factors.csv>]")>
+    Public Function ANNInputImportantFactors(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim sample$ = args <= "/sample"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.input_factors.csv"
+        Dim model As NeuralNetwork = [in].LoadXml(Of NeuralNetwork)
+        Dim trainingSet = sample.LoadXml(Of DataSet)
+
+        Return model.SumWeight(trainingSet.NormalizeMatrix.names) _
+            .ToArray _
+            .SaveTo(out) _
+            .CLICode
     End Function
 
     ''' <summary>

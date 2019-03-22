@@ -183,25 +183,6 @@ Public Module KeyValuePairExtensions
     End Function
 
     ''' <summary>
-    ''' Target <paramref name="item"/> contains in <paramref name="define"/> list.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="item">对于空值,这个函数总是返回false</param>
-    ''' <param name="define"></param>
-    ''' <returns></returns>
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function IsOneOfA(Of T)(item As T, define As Index(Of T)) As Boolean
-        ' System.ArgumentNullException: Value cannot be null.
-        ' Parameter name: key
-        If item Is Nothing Then
-            Return False
-        Else
-            Return define.IndexOf(item) > -1
-        End If
-    End Function
-
-    ''' <summary>
     ''' 函数会根据<see cref="keys"/>参数来做排序
     ''' </summary>
     ''' <typeparam name="T"></typeparam>

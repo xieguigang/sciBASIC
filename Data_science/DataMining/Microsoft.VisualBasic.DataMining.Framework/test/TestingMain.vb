@@ -1,56 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::6c20a670379a067ed419920fee28ad1f, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\TestingMain.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module TestingMain
-    ' 
-    '     Sub: Main
-    '     Class Student
-    ' 
-    '         Properties: Name
-    ' 
-    '         Function: [New], ToString
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Module TestingMain
+' 
+'     Sub: Main
+'     Class Student
+' 
+'         Properties: Name
+' 
+'         Function: [New], ToString
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm
 Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.KMeans
-Imports Microsoft.VisualBasic.DataMining.NeuralNetwork
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -98,40 +97,40 @@ Module TestingMain
 
         Pause()
 
-        Dim ann As New NeuralNetwork.Network(5, 50, 1, 0.01, , New IFuncs.SigmoidFunction)
-        Dim learn As New NeuralNetwork.TrainingUtils(ann)
-        Dim map As New Encoder(Of Char)
+        'Dim ann As New NeuralNetwork.Network(5, 50, 1, 0.01, , New IFuncs.SigmoidFunction)
+        'Dim learn As New NeuralNetwork.TrainingUtils(ann)
+        'Dim map As New Encoder(Of Char)
 
-        Call map.AddMap("A", 0)
-        Call map.AddMap("B", 0.15)
-        Call map.AddMap("C", 0.2)
-        Call map.AddMap("D", 0.3)
-        Call map.AddMap("E", 0.6)
-        Call map.AddMap("F", 0.7)
-        Call map.AddMap("G", 0.9)
-        Call map.AddMap("Z", 1)
+        'Call map.AddMap("A", 0)
+        'Call map.AddMap("B", 0.15)
+        'Call map.AddMap("C", 0.2)
+        'Call map.AddMap("D", 0.3)
+        'Call map.AddMap("E", 0.6)
+        'Call map.AddMap("F", 0.7)
+        'Call map.AddMap("G", 0.9)
+        'Call map.AddMap("Z", 1)
 
-        learn.Add({10, 20, 15, 33, 65}, {map("B")})
-        learn.Add({10, 20, 15, 33, 65}, {map("B")})
-        learn.Add({10, 20, 15, 33, 65}, {map("B")})
-        learn.Add({10, 20, 15, 33, 65}, {map("B")})
-        learn.Add({10, 20, 15, 33, 65}, {map("B")})
-        learn.Add({10, 20, 0, 33, 65}, {map("Z")})
-        learn.Add({10, 20, 0, 33, 65}, {map("Z")})
-        learn.Add({10, 20, 0, 33, 65}, {map("Z")})
-        learn.Add({10, 20, 0, 33, 65}, {map("Z")})
-        learn.Add({10, 20, 0, 33, 65}, {map("Z")})
-        learn.Add({10, 20, 0, 33, 0}, {map("D")})
-        learn.Add({3, 20, 0, 3, 0}, {map("F")})
+        'learn.Add({10, 20, 15, 33, 65}, {map("B")})
+        'learn.Add({10, 20, 15, 33, 65}, {map("B")})
+        'learn.Add({10, 20, 15, 33, 65}, {map("B")})
+        'learn.Add({10, 20, 15, 33, 65}, {map("B")})
+        'learn.Add({10, 20, 15, 33, 65}, {map("B")})
+        'learn.Add({10, 20, 0, 33, 65}, {map("Z")})
+        'learn.Add({10, 20, 0, 33, 65}, {map("Z")})
+        'learn.Add({10, 20, 0, 33, 65}, {map("Z")})
+        'learn.Add({10, 20, 0, 33, 65}, {map("Z")})
+        'learn.Add({10, 20, 0, 33, 65}, {map("Z")})
+        'learn.Add({10, 20, 0, 33, 0}, {map("D")})
+        'learn.Add({3, 20, 0, 3, 0}, {map("F")})
 
-        learn.Train()
+        'learn.Train()
 
-        map.Decode(learn.NeuronNetwork.Compute({10, 20, 15, 33, 65}).First).GetJson.__DEBUG_ECHO
-        map.Decode(learn.NeuronNetwork.Compute({10, 20, 0, 33, 65}).First).GetJson.__DEBUG_ECHO
-        map.Decode(learn.NeuronNetwork.Compute({10, 20, 0, 33, 0}).First).GetJson.__DEBUG_ECHO
-        map.Decode(learn.NeuronNetwork.Compute({3, 20, 0, 3, 0.2}).First).GetJson.__DEBUG_ECHO
+        'map.Decode(learn.NeuronNetwork.Compute({10, 20, 15, 33, 65}).First).GetJson.__DEBUG_ECHO
+        'map.Decode(learn.NeuronNetwork.Compute({10, 20, 0, 33, 65}).First).GetJson.__DEBUG_ECHO
+        'map.Decode(learn.NeuronNetwork.Compute({10, 20, 0, 33, 0}).First).GetJson.__DEBUG_ECHO
+        'map.Decode(learn.NeuronNetwork.Compute({3, 20, 0, 3, 0.2}).First).GetJson.__DEBUG_ECHO
 
-        Pause()
+        'Pause()
 
         '  Call 5.0R.Γ.__DEBUG_ECHO
         '   Call 1.6R.Γ.__DEBUG_ECHO

@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::d41875f11a2671d23d80553a8c32e7ea, Microsoft.VisualBasic.Core\Net\HTTP\GZStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GZStream
-    ' 
-    '         Function: GZipAsBase64, GZipStream, UnGzipBase64, UnGzipStream
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GZStream
+' 
+'         Function: GZipAsBase64, GZipStream, UnGzipBase64, UnGzipStream
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,14 +67,18 @@ Namespace Net.Http
         ''' <summary>
         ''' 将输入的流数据进行gzip解压缩
         ''' </summary>
+        ''' <remarks>
+        ''' 使用这个函数得到的结果需要注意进行<see cref="IDisposable.Dispose()"/>,否则很容易造成内存泄漏
+        ''' </remarks>
         ''' <param name="stream"></param>
         ''' <returns></returns>
         <Extension>
         Public Function UnGzipStream(stream As IEnumerable(Of Byte)) As MemoryStream
-            Dim ms As New MemoryStream
-            Dim gz As New GZipStream(New MemoryStream(stream.ToArray), CompressionMode.Decompress)
-            Call gz.CopyTo(ms)
-            Return ms
+            Using gz As New GZipStream(New MemoryStream(stream.ToArray), CompressionMode.Decompress)
+                Dim ms As New MemoryStream
+                Call gz.CopyTo(ms)
+                Return ms
+            End Using
         End Function
 
         ''' <summary>
@@ -85,9 +89,11 @@ Namespace Net.Http
         <Extension>
         Public Function GZipStream(stream As Stream) As MemoryStream
             Dim ms As New MemoryStream
-            Dim gz As New GZipStream(ms, CompressionMode.Compress)
-            Call stream.CopyTo(gz)
-            Return ms
+
+            Using gz As New GZipStream(ms, CompressionMode.Compress)
+                Call stream.CopyTo(gz)
+                Return ms
+            End Using
         End Function
 
         ''' <summary>

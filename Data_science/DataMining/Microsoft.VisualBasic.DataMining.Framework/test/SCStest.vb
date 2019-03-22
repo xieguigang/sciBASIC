@@ -40,7 +40,7 @@
 #End Region
 
 Imports System.IO
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.Text
 
 Module SCStest

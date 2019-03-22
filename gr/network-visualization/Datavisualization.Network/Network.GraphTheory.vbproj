@@ -422,6 +422,7 @@
     <Compile Include="Layouts\Cola\Models\Locks.vb" />
     <Compile Include="Layouts\Cola\Layout3D\Node3D.vb" />
     <Compile Include="Layouts\Cola\Layout3D\Link3D.vb" />
+    <Compile Include="Layouts\Cola\JavaScriptHelpers.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\PowerGraph.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\Configuration.vb" />
     <Compile Include="Layouts\Cola\PowerGraph\AlgorithmExtensions.vb" />

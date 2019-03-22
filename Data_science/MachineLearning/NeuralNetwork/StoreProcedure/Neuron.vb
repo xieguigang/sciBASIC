@@ -102,7 +102,7 @@ Namespace NeuralNetwork.StoreProcedure
 
     End Class
 
-    <XmlType("layer")> Public Class NeuronLayer : Inherits ListOf
+    <XmlType("layer")> Public Class NeuronLayer : Inherits ListOf(Of String)
         Implements INamedValue
 
         <XmlAttribute>
@@ -114,9 +114,13 @@ Namespace NeuralNetwork.StoreProcedure
         Protected Overrides Function getSize() As Integer
             Return neurons?.Length
         End Function
+
+        Protected Overrides Function getCollection() As IEnumerable(Of String)
+            Return neurons
+        End Function
     End Class
 
-    Public Class HiddenLayer : Inherits ListOf
+    Public Class HiddenLayer : Inherits ListOf(Of NeuronLayer)
 
         Public Property activation As ActiveFunction
         <XmlElement("layers")>
@@ -124,6 +128,10 @@ Namespace NeuralNetwork.StoreProcedure
 
         Protected Overrides Function getSize() As Integer
             Return layers.Length
+        End Function
+
+        Protected Overrides Function getCollection() As IEnumerable(Of NeuronLayer)
+            Return layers
         End Function
     End Class
 End Namespace

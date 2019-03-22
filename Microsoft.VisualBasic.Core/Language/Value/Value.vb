@@ -167,7 +167,7 @@ Namespace Language
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetUnderlyingType() As Type
+        Public Overridable Function GetUnderlyingType() As Type
             Return GetType(T)
         End Function
 
@@ -253,6 +253,11 @@ Namespace Language
         Public Shared Operator =(value As Value(Of T), o As T) As T
             value.Value = o
             Return o
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Operator Like(o As Value(Of T), type As Type) As Boolean
+            Return o.GetUnderlyingType Is type
         End Operator
 
         Public Shared Operator <>(value As Value(Of T), o As T) As T

@@ -141,7 +141,7 @@ Namespace Layouts.Cola
             'vs.ForEach(Sub(v, i) v.index = i)
 
             'indexPowerGraph.groups _
-            '    .ForEach(Sub(g)
+            '    .ForEach(Sub(g As IndexGroup)
             '                 Dim sourceInd%
 
             '                 g.index = g.id + n
@@ -200,13 +200,11 @@ Namespace Layouts.Cola
             '        .linkDistance(30) _
             '        .symmetricDiffLinkLengths(5) _
             '        .powerGraphGroups(Sub(d)
-            '                              powerGraph = d
-            '                              powerGraph.groups.DoEach(Sub(v) v.padding = grouppadding)
+            '                              PowerGraph = d
+            '                              PowerGraph.groups.DoEach(Sub(v) v.padding = grouppadding)
             '                          End Sub).start(50, 0, 100, 0, False),
-            '    .powerGraph = powerGraph
+            '    .powerGraph = PowerGraph
             '}
-
-            Throw New NotImplementedException
         End Function
 
     End Module

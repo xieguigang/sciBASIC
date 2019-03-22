@@ -300,7 +300,7 @@ Namespace IO
             Dim map As New Dictionary(Of String, String) From {
                 {uidMap Or stream(0, 0).AsDefault, NameOf(EntityObject.ID)}
             }
-            Return stream.AsDataSource(Of T)(explicit:=False, maps:=map)
+            Return stream.AsDataSource(Of T)(strict:=False, maps:=map)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
