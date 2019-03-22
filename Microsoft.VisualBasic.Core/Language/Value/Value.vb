@@ -61,8 +61,7 @@ Namespace Language
     ''' You can applying this data type into a dictionary object to makes the mathematics calculation more easily.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class Value(Of T) ': Implements ValueType
-        Implements IValueOf
+    Public Class Value(Of T) : Implements IValueOf
 
         ''' <summary>
         ''' This object have a <see cref="IValueOf.value"/> property for stores its data
@@ -142,6 +141,10 @@ Namespace Language
             Else
                 Return Value.Equals(other)
             End If
+        End Function
+
+        Public Overloads Function Equals(other As T) As Boolean
+            Return Value.Equals(other)
         End Function
 
         ''' <summary>
@@ -267,9 +270,5 @@ Namespace Language
         Public Shared Operator >=(value As Value(Of T), o As T) As T
             Throw New NotSupportedException
         End Operator
-
-        'Public Shared Operator &(o As Value(Of T)) As T
-        '    Return o.value
-        'End Operator
     End Class
 End Namespace
