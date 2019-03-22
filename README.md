@@ -131,7 +131,7 @@ Call {
  .Save($"{App.HOME}/Lorenz_system.csv")
 ```
 
-<img src="./Data_science/Mathematica/data/Lorenz_system/Lorenz_system.png" width="500px" />
+![](./Data_science/Mathematica/data/Lorenz_system/Lorenz_system.png)
 
 ## Microsoft VisualBasic Trinity Natural Language Processor
 
@@ -160,7 +160,7 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 
 |Normal|Binary|SparseGray|Grayscale|
 |------|------|----|---------|
-|<img src="./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg" width=160 height=160 />|<img src="./etc/lena/lena.binary.png" width=160 height=160 />|<img src="./etc/lena/lena.gray.png" width=160 height=160 />|<img src="./etc/lena/lena.grayscale.png" width=160 height=160 />|
+|![](./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg)|![](./etc/lena/lena.binary.png)|![](./etc/lena/lena.gray.png)|![](./etc/lena/lena.grayscale.png)|
 
 ## sciBASIC# Graphics Artist
 
@@ -170,7 +170,8 @@ Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
 + **[2D Imaging & 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/)**
 + **[Isometric 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/README.md)**
 
-<img src="./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png" width="450"> <img src="./gr/network-visualization/tumblr_inline_mqvdlydGCp1qz4rgp.png" width="400">
+![](./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png)
+![](./gr/network-visualization/tumblr_inline_mqvdlydGCp1qz4rgp.png)
 ![](./gr/build_3DEngine/images/screenshot.png)
 
 ## Microsoft VisualBasic Data Science & Data Plots System
@@ -274,7 +275,8 @@ Public Function lgamma(x As Double) As Double
         logterm + (2.5F + x) * Math.Log(xp3)
 End Function
 ```
-<img src="./Data_science/Mathematica/data/beta-PDF/beta_PDF.png" height="650px"></img>
+
+![](./Data_science/Mathematica/data/beta-PDF/beta_PDF.png)
 > https://en.wikipedia.org/wiki/Beta_distribution
 
 ###### Heatmap
@@ -398,4 +400,4 @@ BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
 
 ![](./www/data/github/xieguigang_github-vcard.png)
 
-> <img src="./etc/Copyleft.svg" height="14px" /> Copyleft 2018, [I@xieguigang.me](mailto://I@xieguigang.me) (http://sciBASIC.NET/)
+> ![](./etc/Copyleft.svg) Copyleft 2018, [I@xieguigang.me](mailto://I@xieguigang.me) (http://sciBASIC.NET/)
