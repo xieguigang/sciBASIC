@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::4a5d74bcbf37cc89aba8d9eaff9082dc, Microsoft.VisualBasic.Core\Extensions\Security\Md5.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module MD5Hash
-    ' 
-    '         Function: GetFileMd5, (+2 Overloads) GetHashCode, (+3 Overloads) GetMd5Hash, GetMd5Hash2, NewUid
-    '                   SaltValue, StringToByteArray, (+2 Overloads) ToLong, VerifyFile, VerifyMd5Hash
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module MD5Hash
+' 
+'         Function: GetFileMd5, (+2 Overloads) GetHashCode, (+3 Overloads) GetMd5Hash, GetMd5Hash2, NewUid
+'                   SaltValue, StringToByteArray, (+2 Overloads) ToLong, VerifyFile, VerifyMd5Hash
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Security.Cryptography
+Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -59,7 +60,7 @@ Namespace SecurityString
             Return GetMd5Hash(input)
         End Function
 
-        ReadOnly __hashProvider As New Md5HashProvider
+        ReadOnly hashProvider As New Md5HashProvider
 
         ''' <summary>
         ''' Calculate md5 hash value for the input string.
@@ -71,8 +72,8 @@ Namespace SecurityString
         <ExportAPI("Md5")>
         <Extension>
         Public Function GetMd5Hash(input As String) As String
-            SyncLock __hashProvider
-                Return __hashProvider.GetMd5Hash(input)
+            SyncLock hashProvider
+                Return hashProvider.GetMd5Hash(input)
             End SyncLock
         End Function
 
@@ -270,6 +271,27 @@ Namespace SecurityString
                 hash(31)
             }
             Return chars.CharString
+        End Function
+
+        ''' <summary>
+        ''' sha256 computed byte array in a readable format.
+        ''' </summary>
+        ''' <param name="array"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function Sha256ByteString(array() As Byte, Optional delimiter As Char = " "c) As String
+            Dim sb As New StringBuilder
+
+            For i As Integer = 0 To array.Length - 1
+                sb.Append($"{array(i):X2}")
+
+                If i Mod 4 = 3 Then
+                    sb.Append(delimiter)
+                End If
+            Next
+
+            Return sb.ToString.Trim(delimiter)
         End Function
     End Module
 End Namespace

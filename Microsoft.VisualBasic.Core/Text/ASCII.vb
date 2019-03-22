@@ -267,6 +267,8 @@ Namespace Text
         Public Const al% = Asc("a"c)
         Public Const zl% = Asc("z"c)
 
+        Public Const N As Integer = Asc("N"c)
+
         ''' <summary>
         ''' ASCII code for number ``0``
         ''' </summary>

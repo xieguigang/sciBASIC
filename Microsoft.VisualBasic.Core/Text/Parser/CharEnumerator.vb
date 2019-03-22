@@ -47,7 +47,7 @@ Imports Microsoft.VisualBasic.Emit.Marshal
 
 Namespace Text.Parser
 
-    Public Class CharEnumerator : Inherits Pointer(Of Char)
+    Public Class CharPtr : Inherits Pointer(Of Char)
 
         ''' <summary>
         ''' 查看还有多少字符没有被处理完
