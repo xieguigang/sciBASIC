@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e608fdc4f0bf5291f28f8fb90fe30cbd, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ade6ff8ba2a686f217a493ed1ba5bdae, Microsoft.VisualBasic.Core\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -38,19 +38,19 @@
     ' 
     '     Function: [Get], [Set], Add, (+3 Overloads) AddRange, AsRange
     '               (+2 Overloads) Average, CheckDuplicated, Constrain, DataCounts, DateToString
-    '               DriverRun, ElementAtOrDefault, FirstNotEmpty, FormatTime, FuzzyMatching
-    '               GetHexInteger, (+2 Overloads) GetItem, (+2 Overloads) GetLength, GetValueOrNull, IndexOf
-    '               InsertOrUpdate, Invoke, InvokeSet, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary
-    '               IsNullorEmpty, (+14 Overloads) IsNullOrEmpty, (+4 Overloads) Join, (+2 Overloads) JoinBy, Keys
-    '               KeysJson, Log2, (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose
-    '               MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue, NormalizeXMLString, NotNull
-    '               (+2 Overloads) Offset, ParseDateTime, Range, Remove, RemoveDuplicates
-    '               RemoveFirst, (+2 Overloads) RemoveLast, RunDriver, SaveAsTabularMapping, Second
-    '               SelectFile, SeqRandom, (+2 Overloads) Sequence, (+2 Overloads) SetValue, (+11 Overloads) ShadowCopy
-    '               Shell, Shuffles, Slice, Split, SplitIterator
-    '               (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes, ToBoolean
-    '               ToDictionary, ToNormalizedPathString, ToStringArray, ToVector, (+3 Overloads) TrimNull
-    '               (+3 Overloads) TryGetValue, Unlist, WriteAddress
+    '               DriverRun, ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty, FormatTime
+    '               FuzzyMatching, GetHexInteger, (+2 Overloads) GetItem, (+2 Overloads) GetLength, GetValueOrNull
+    '               IndexOf, InsertOrUpdate, Invoke, InvokeSet, Is_NA_UHandle
+    '               (+2 Overloads) IsNaNImaginary, IsNullorEmpty, (+14 Overloads) IsNullOrEmpty, (+4 Overloads) Join, (+2 Overloads) JoinBy
+    '               Keys, KeysJson, Log2, (+2 Overloads) LongSeq, MatrixToUltraLargeVector
+    '               MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue, NormalizeXMLString
+    '               NotNull, (+2 Overloads) Offset, ParseDateTime, Range, Remove
+    '               RemoveDuplicates, RemoveFirst, (+2 Overloads) RemoveLast, RunDriver, SaveAsTabularMapping
+    '               Second, SelectFile, SeqRandom, (+2 Overloads) Sequence, (+2 Overloads) SetValue
+    '               (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice, Split
+    '               SplitIterator, (+2 Overloads) SplitMV, StdError, TakeRandomly, Takes
+    '               ToBoolean, ToDictionary, ToNormalizedPathString, ToStringArray, ToVector
+    '               (+3 Overloads) TrimNull, (+3 Overloads) TryGetValue, Unlist, WriteAddress
     ' 
     '     Sub: Add, FillBlank, Removes, (+2 Overloads) SendMessage, Swap
     '          SwapItem, SwapWith

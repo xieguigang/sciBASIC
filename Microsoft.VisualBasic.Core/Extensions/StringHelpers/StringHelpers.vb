@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7d77bd08d9054cb6b8567d55569efd71, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::d8c51841332b43d9541547473e69df1c, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -35,17 +35,17 @@
     ' 
     '     Properties: EmptyString, NonStrictCompares, StrictCompares
     ' 
-    '     Function: __json, AllEquals, (+4 Overloads) ByteString, CharAtOrDefault, CharString
-    '               (+3 Overloads) Count, CreateBuilder, DistinctIgnoreCase, EqualsAny, First
-    '               FormatString, FormatZero, GetBetween, GetEMails, GetStackValue
-    '               GetString, (+2 Overloads) GetTagValue, GetURLs, IgnoreCase, InStrAny
-    '               (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens, Located
-    '               Lookup, (+2 Overloads) Match, Matches, MatchPattern, (+2 Overloads) MaxLengthString
-    '               NotEmpty, PadEnd, Parts, RepeatString, ReplaceChars
-    '               (+2 Overloads) Reverse, RNull, SaveTo, (+2 Overloads) Split, SplitBy
-    '               StringEmpty, StringHashCode, StringReplace, StringSplit, StripBlank
-    '               Strips, TextEquals, TextLast, TokenCount, TokenCountIgnoreCase
-    '               TrimNewLine, TrimNull, WildcardsLocated
+    '     Function: __json, AllEquals, AsciiBytes, (+4 Overloads) ByteString, CharAtOrDefault
+    '               CharString, (+3 Overloads) Count, CreateBuilder, DistinctIgnoreCase, EqualsAny
+    '               First, FormatString, FormatZero, GetBetween, GetEMails
+    '               GetStackValue, GetString, (+2 Overloads) GetTagValue, GetURLs, IgnoreCase
+    '               InStrAny, (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens
+    '               Located, Lookup, (+2 Overloads) Match, Matches, MatchPattern
+    '               (+2 Overloads) MaxLengthString, NotEmpty, PadEnd, Parts, RepeatString
+    '               ReplaceChars, (+2 Overloads) Reverse, RNull, SaveTo, (+2 Overloads) Split
+    '               SplitBy, StringEmpty, StringHashCode, StringReplace, StringSplit
+    '               StripBlank, Strips, TextEquals, TextLast, TokenCount
+    '               TokenCountIgnoreCase, TrimNewLine, TrimNull, WildcardsLocated
     ' 
     '     Sub: Parts, RemoveLast
     ' 

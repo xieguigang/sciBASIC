@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e57a991ff321768d255dbb18a43dbc5, Microsoft.VisualBasic.Core\Text\Parser\CharEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::32540340e40f011eb25715d86b4d03fe, Microsoft.VisualBasic.Core\Text\Parser\CharEnumerator.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    '     Class CharEnumerator
+    '     Class CharPtr
     ' 
     '         Properties: Remaining
     ' 
