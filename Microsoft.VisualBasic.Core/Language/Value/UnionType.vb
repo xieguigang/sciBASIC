@@ -50,6 +50,26 @@ Namespace Language
         Public Overloads Shared Widening Operator CType(b As B) As UnionType(Of A, B)
             Return New UnionType(Of A, B) With {.Value = b}
         End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator =(obj As UnionType(Of A, B), a As A) As Boolean
+            Return obj.VA.Equals(a)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator <>(obj As UnionType(Of A, B), a As A) As Boolean
+            Return Not obj = a
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator =(obj As UnionType(Of A, B), b As B) As Boolean
+            Return obj.VB.Equals(b)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Operator <>(obj As UnionType(Of A, B), b As B) As Boolean
+            Return Not obj = b
+        End Operator
     End Class
 
     Public Class UnionType(Of A, B, C) : Inherits UnionType(Of A, B)

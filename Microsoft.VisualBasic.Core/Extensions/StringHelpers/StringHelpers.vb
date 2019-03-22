@@ -180,12 +180,21 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="c$"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function RNull(c$) As Boolean
         Return c.StringEmpty OrElse
                c.TextEquals("NULL") OrElse
                c.TextEquals("NA")
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function AsciiBytes(str As String) As Byte()
+        Return Encoding.ASCII.GetBytes(str)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function AllEquals(s As IEnumerable(Of String), str$) As Boolean
         Return s.All(Function(x) x = str)
