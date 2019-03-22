@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bff09208860dccbe9372343449c10bb1, Data_science\Mathematica\Plot\Plots\3D\Device\Element3D.vb"
+﻿#Region "Microsoft.VisualBasic::478bd709db391c6012ea045dd3f7d6c8, Data_science\Mathematica\Plot\Plots\3D\Device\Element3D.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@
     ' 
     '     Class ShapePoint
     ' 
-    '         Properties: Fill, Size, Style
+    '         Properties: Fill, Label, Point2D, Size, Style
     ' 
     '         Sub: Draw
     ' 
