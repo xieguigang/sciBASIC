@@ -11,7 +11,7 @@ Imports Microsoft.VisualBasic.MIME.application.netCDF
 Public Class ANNDebugger
 
     Dim networkFrames As BinaryDataWriter
-    Dim deltaFrames As BinaryDataWriter
+    Dim biasFrames As BinaryDataWriter
     Dim errorFrames As BinaryDataWriter
     Dim timeFrames As BinaryDataWriter
 
@@ -21,9 +21,10 @@ Public Class ANNDebugger
     Dim frameTemp$
     Dim errorTemp$
     Dim timesTemp$
-    Dim deltaTemp$
+    Dim biasTemp$
 
     Dim synapses As Synapse()
+    Dim neurons As Neuron()
     Dim minErr# = 99999
     Dim snapShotTemp$
 
@@ -31,18 +32,21 @@ Public Class ANNDebugger
         frameTemp = App.GetAppSysTempFile(".bin", App.PID)
         errorTemp = App.GetAppSysTempFile(".bin", App.PID)
         timesTemp = App.GetAppSysTempFile(".bin", App.PID)
-        deltaTemp = App.GetAppSysTempFile(".bin", App.PID)
+        biasTemp = App.GetAppSysTempFile(".bin", App.PID)
         snapShotTemp = App.GetAppSysTempFile(".Xml", App.PID)
 
         networkFrames = New BinaryDataWriter(frameTemp.Open(doClear:=True))
         errorFrames = New BinaryDataWriter(errorTemp.Open(doClear:=True))
         timeFrames = New BinaryDataWriter(timesTemp.Open(doClear:=True))
-        deltaFrames = New BinaryDataWriter(deltaTemp.Open(doClear:=True))
+        biasFrames = New BinaryDataWriter(biasTemp.Open(doClear:=True))
 
         synapses = model _
             .GetSynapseGroups _
             .Select(Function(g) g.First) _
             .ToArray
+        neurons = model.InputLayer.AsList _
+            + model.HiddenLayer.GetAllNeurons _
+            + model.OutputLayer
     End Sub
 
     ''' <summary>
@@ -54,7 +58,7 @@ Public Class ANNDebugger
     Public Sub WriteFrame(iteration%, error#, model As NeuralNetwork.Network)
         Call errorFrames.Write([error])
         Call networkFrames.Write(synapses.Select(Function(s) s.Weight).ToArray)
-        Call deltaFrames.Write(synapses.Select(Function(s) s.WeightDelta).ToArray)
+        Call biasFrames.Write(neurons.Select(Function(n) n.Bias).ToArray)
         Call timeFrames.Write(App.ElapsedMilliseconds)
 
         If [error] < minErr Then
@@ -74,8 +78,8 @@ Public Class ANNDebugger
         ' 将所有的临时数据提交到临时文件之中，然后关闭文件句柄
         Call networkFrames.Flush()
         Call networkFrames.Dispose()
-        Call deltaFrames.Flush()
-        Call deltaFrames.Dispose()
+        Call biasFrames.Flush()
+        Call biasFrames.Dispose()
         Call errorFrames.Flush()
         Call errorFrames.Dispose()
         Call timeFrames.Flush()
@@ -120,11 +124,12 @@ Public Class ANNDebugger
 
     Private Sub WriteCDF(debugger As CDFWriter, network As Network)
         Dim neuronLocation = createLocationTable(network)
+        Dim hiddenLayout = network.HiddenLayer.Select(Function(l) l.Neurons.Length).JoinBy(", ")
         Dim attrs = {
             New Components.attribute With {.name = "Date", .type = CDFDataTypes.CHAR, .value = Now.ToString},
             New Components.attribute With {.name = "input_layer", .type = CDFDataTypes.CHAR, .value = network.InputLayer.Neurons.Length},
             New Components.attribute With {.name = "output_layer", .type = CDFDataTypes.CHAR, .value = network.OutputLayer.Neurons.Length},
-            New Components.attribute With {.name = "hidden_layers", .type = CDFDataTypes.CHAR, .value = network.HiddenLayer.Select(Function(l) l.Neurons.Length).JoinBy(", ")},
+            New Components.attribute With {.name = "hidden_layers", .type = CDFDataTypes.CHAR, .value = hiddenLayout},
             New Components.attribute With {.name = "synapse_edges", .type = CDFDataTypes.CHAR, .value = synapses.Length},
             New Components.attribute With {.name = "times", .type = CDFDataTypes.CHAR, .value = App.ElapsedMilliseconds},
             New Components.attribute With {.name = "ANN", .type = CDFDataTypes.CHAR, .value = network.GetType.FullName},
@@ -149,6 +154,21 @@ Public Class ANNDebugger
             Call debugger.AddVariable("active=" & active.Key, active.Value.ToString, {GetType(String).FullName})
         Next
 
+        Using reader As BinaryDataReader = biasTemp.OpenBinaryReader
+            Dim index As VBInteger = Scan0
+
+            For Each n As Neuron In neurons
+                attrs = {
+                    New Components.attribute With {
+                        .name = "location",
+                        .type = CDFDataTypes.CHAR,
+                        .value = neuronLocation(n.Guid)
+                    }
+                }
+                writeNodeBias(debugger, reader, n.Guid, ++index, attrs)
+            Next
+        End Using
+
         Using reader As BinaryDataReader = frameTemp.OpenBinaryReader
             Dim index As VBInteger = Scan0
 
@@ -162,6 +182,21 @@ Public Class ANNDebugger
                 writeWeight(debugger, reader, s.ToString, ++index, attrs)
             Next
         End Using
+    End Sub
+
+    Private Sub writeNodeBias(debugger As CDFWriter, reader As BinaryDataReader, name$, i As Integer, attrs As Components.attribute())
+        Static offsetDouble As Integer = Marshal.SizeOf(Of Double)
+
+        Dim frameOffset% = offsetDouble * neurons.Length
+        Dim popBias = Iterator Function() As IEnumerable(Of Double)
+                          Do While Not reader.EndOfStream
+                              Yield reader.ReadDouble
+                              Call reader.Seek(frameOffset, SeekOrigin.Current)
+                          Loop
+                      End Function
+
+        Call reader.Seek(offsetDouble * i, SeekOrigin.Begin)
+        Call debugger.AddVariable(name, popBias().ToArray, {GetType(Double).FullName}, attrs)
     End Sub
 
     Private Sub writeWeight(debugger As CDFWriter, reader As BinaryDataReader, name$, i As Integer, attrs As Components.attribute())
