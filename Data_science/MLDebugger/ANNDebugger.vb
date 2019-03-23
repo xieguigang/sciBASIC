@@ -1,4 +1,6 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports System.IO
+Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -84,7 +86,40 @@ Public Class ANNDebugger
         End Using
     End Sub
 
+    Private Shared Function createLocationTable(network As Network) As Func(Of String, String)
+        Dim inputLayer = network.InputLayer.Neurons.Select(Function(n) n.Guid).Indexing
+        Dim outputLayer = network.OutputLayer.Neurons.Select(Function(n) n.Guid).Indexing
+        Dim hiddens As New List(Of SeqValue(Of Index(Of String)))
+
+        For Each layer In network.HiddenLayer.SeqIterator
+            hiddens += New SeqValue(Of Index(Of String)) With {
+                .i = layer,
+                .value = layer.value _
+                    .Neurons _
+                    .Select(Function(n) n.Guid) _
+                    .Indexing
+            }
+        Next
+
+        Return Function(guid As String) As String
+                   If inputLayer.IndexOf(guid) > -1 Then
+                       Return "in"
+                   ElseIf outputLayer.IndexOf(guid) > -1 Then
+                       Return "out"
+                   Else
+                       For Each layer In hiddens
+                           If layer.value.IndexOf(guid) > -1 Then
+                               Return $"hiddens-{layer.i}"
+                           End If
+                       Next
+                   End If
+
+                   Return "NA"
+               End Function
+    End Function
+
     Private Sub WriteCDF(debugger As CDFWriter, network As Network)
+        Dim neuronLocation = createLocationTable(network)
         Dim attrs = {
             New Components.attribute With {.name = "Date", .type = CDFDataTypes.CHAR, .value = Now.ToString},
             New Components.attribute With {.name = "input_layer", .type = CDFDataTypes.CHAR, .value = network.InputLayer.Neurons.Length},
@@ -101,54 +136,76 @@ Public Class ANNDebugger
             New Components.Dimension With {.name = GetType(String).FullName, .size = 1024},
             New Components.Dimension With {.name = GetType(Long).FullName, .size = 1}
         }
-        Dim inputLayer = network.InputLayer.Neurons.Select(Function(n) n.Guid).Indexing
-        Dim outputLayer = network.OutputLayer.Neurons.Select(Function(n) n.Guid).Indexing
-        Dim hiddens As New List(Of SeqValue(Of Index(Of String)))
 
-        For Each layer In network.HiddenLayer.SeqIterator
-            hiddens += New SeqValue(Of Index(Of String)) With {
-                .i = layer,
-                .value = layer.value _
-                    .Neurons _
-                    .Select(Function(n) n.Guid) _
-                    .Indexing
-            }
-        Next
-
-        Dim getLocation = Function(guid As String) As String
-                              If inputLayer.IndexOf(guid) > -1 Then
-                                  Return "in"
-                              ElseIf outputLayer.IndexOf(guid) > -1 Then
-                                  Return "out"
-                              Else
-                                  For Each layer In hiddens
-                                      If layer.value.IndexOf(guid) > -1 Then
-                                          Return $"hiddens-{layer.i}"
-                                      End If
-                                  Next
-                              End If
-
-                              Return "NA"
-                          End Function
-
+        ' 下面的临时文件读写代码都会被单独放在函数之中
+        ' 这个样子GC可以更加容易的回收内存
         debugger.GlobalAttributes(attrs).Dimensions(dimensions)
 
-        Call debugger.AddVariable("iterations", Index.ToArray, {"index_number"})
-        Call debugger.AddVariable("fitness", errors.ToArray, {GetType(Double).FullName})
-        Call debugger.AddVariable("unixtimestamp", times.ToArray, {GetType(Long).FullName})
+        Call writeIndex(debugger)
+        Call writeErrors(debugger)
+        Call writeUnixtime(debugger)
 
         For Each active In network.Activations
             Call debugger.AddVariable("active=" & active.Key, active.Value.ToString, {GetType(String).FullName})
         Next
 
-        For Each s In synapses
-            attrs = {
+        Using reader As BinaryDataReader = frameTemp.OpenBinaryReader
+            Dim index As VBInteger = Scan0
+
+            For Each s As Synapse In synapses
+                attrs = {
                     New Components.attribute With {.name = "input", .type = CDFDataTypes.CHAR, .value = s.InputNeuron.Guid},
                     New Components.attribute With {.name = "output", .type = CDFDataTypes.CHAR, .value = s.OutputNeuron.Guid},
-                    New Components.attribute With {.name = "input_location", .type = CDFDataTypes.CHAR, .value = getLocation(s.InputNeuron.Guid)},
-                    New Components.attribute With {.name = "output_location", .type = CDFDataTypes.CHAR, .value = getLocation(s.OutputNeuron.Guid)}
+                    New Components.attribute With {.name = "input_location", .type = CDFDataTypes.CHAR, .value = neuronLocation(s.InputNeuron.Guid)},
+                    New Components.attribute With {.name = "output_location", .type = CDFDataTypes.CHAR, .value = neuronLocation(s.OutputNeuron.Guid)}
                 }
-            debugger.AddVariable(s.ToString, synapsesWeights(s.ToString).ToArray, {GetType(Double).FullName}, attrs)
-        Next
+                writeWeight(debugger, reader, s.ToString, ++index, attrs)
+            Next
+        End Using
+    End Sub
+
+    Private Sub writeWeight(debugger As CDFWriter, reader As BinaryDataReader, name$, i As Integer, attrs As Components.attribute())
+        Static offsetDouble As Integer = Marshal.SizeOf(Of Double)
+
+        Dim frameOffset% = offsetDouble * synapses.Length
+        Dim popWeights = Iterator Function() As IEnumerable(Of Double)
+                             Do While Not reader.EndOfStream
+                                 Yield reader.ReadDouble
+                                 Call reader.Seek(frameOffset, SeekOrigin.Current)
+                             Loop
+                         End Function
+
+        Call reader.Seek(offsetDouble * i, SeekOrigin.Begin)
+        Call debugger.AddVariable(name, popWeights().ToArray, {GetType(Double).FullName}, attrs)
+    End Sub
+
+    Private Sub writeUnixtime(debugger As CDFWriter)
+        With errorTemp.OpenBinaryReader _
+            .ReadAsDoubleVector _
+            .ToArray
+
+            Call debugger.AddVariable("unixtimestamp", .ByRef, {GetType(Long).FullName})
+        End With
+    End Sub
+
+    Private Sub writeIndex(debugger As CDFWriter)
+        Dim indexer = Iterator Function() As IEnumerable(Of Integer)
+                          Dim i As VBInteger = Scan0
+
+                          For Each x In errorTemp.OpenBinaryReader.ReadAsDoubleVector
+                              Yield ++i
+                          Next
+                      End Function
+
+        Call debugger.AddVariable("iterations", indexer().ToArray, {"index_number"})
+    End Sub
+
+    Private Sub writeErrors(debugger As CDFWriter)
+        With errorTemp.OpenBinaryReader _
+            .ReadAsDoubleVector _
+            .ToArray
+
+            Call debugger.AddVariable("fitness", .ByRef, {GetType(Double).FullName})
+        End With
     End Sub
 End Class
