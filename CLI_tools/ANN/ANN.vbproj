@@ -95,7 +95,6 @@
   <ItemGroup>
     <Compile Include="Config.vb" />
     <Compile Include="CLI.vb" />
-    <Compile Include="Debugger.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -153,6 +152,10 @@
     <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
       <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
       <Name>math-core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data_science\MLDebugger\MLDebugger.vbproj">
+      <Project>{ccbf36ab-506d-48a2-9150-a3762d4120ec}</Project>
+      <Name>MLDebugger</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\47-dotnet_Microsoft.VisualBasic.vbproj">
       <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
