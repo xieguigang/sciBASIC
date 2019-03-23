@@ -53,7 +53,7 @@ Public Class GifEncoder : Implements IDisposable
     ''' <param name="stream">The stream that will be written to.</param>
     ''' <param name="width">Sets the width for this gif or null to use the first frame's width.</param>
     ''' <param name="height">Sets the height for this gif or null to use the first frame's height.</param>
-    Public Sub New(stream As Stream, Optional width As System.Nullable(Of Integer) = Nothing, Optional height As System.Nullable(Of Integer) = Nothing, Optional repeatCount As System.Nullable(Of Integer) = Nothing)
+    Public Sub New(stream As Stream, Optional width As Integer? = Nothing, Optional height As Integer? = Nothing, Optional repeatCount As Integer? = Nothing)
         _stream = stream
         _width = width
         _height = height
@@ -66,14 +66,14 @@ Public Class GifEncoder : Implements IDisposable
     ''' <param name="img">The image to add</param>
     ''' <param name="x">The positioning x offset this image should be displayed at.</param>
     ''' <param name="y">The positioning y offset this image should be displayed at.</param>
-    Public Sub AddFrame(img As Image, Optional x As Integer = 0, Optional y As Integer = 0, Optional frameDelay__1 As System.Nullable(Of TimeSpan) = Nothing)
+    Public Sub AddFrame(img As Image, Optional x As Integer = 0, Optional y As Integer = 0, Optional frameDelay As TimeSpan? = Nothing)
         Using gifStream = New MemoryStream()
             img.Save(gifStream, ImageFormat.Gif)
             If _isFirstImage Then
                 ' Steal the global color table info
                 InitHeader(gifStream, img.Width, img.Height)
             End If
-            WriteGraphicControlBlock(gifStream, frameDelay__1.GetValueOrDefault(FrameDelay))
+            WriteGraphicControlBlock(gifStream, frameDelay.GetValueOrDefault(Me.FrameDelay))
             WriteImageBlock(gifStream, Not _isFirstImage, x, y, img.Width, img.Height)
         End Using
         _isFirstImage = False
