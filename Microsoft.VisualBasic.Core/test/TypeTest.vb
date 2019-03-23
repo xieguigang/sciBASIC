@@ -48,10 +48,12 @@ Module TypeTest
 
     Sub Main()
 
+        Call patternMatch()
+
 
         Call test()
 
-        Dim o As UnionType(Of String, Integer(), Char())
+        Dim o As [Variant](Of String, Integer(), Char())
 
         o = "string"
 
@@ -75,9 +77,26 @@ Module TypeTest
         Pause()
     End Sub
 
+    Sub patternMatch()
+        Dim src As [Variant](Of String(), Integer(), Byte()) = {23, 4, 2342, 42}
+
+        Select Case src
+            Case src Like GetType(String())
+                Console.WriteLine("is string")
+            Case src Like GetType(Integer())
+                Console.WriteLine("is integer")
+            Case src Like GetType(Byte())
+                Console.WriteLine("is bytes")
+            Case Else
+                Throw New Exception
+        End Select
+
+        Pause()
+    End Sub
+
     Sub test()
 
-        Dim chars As UnionType(Of Char(), Integer())
+        Dim chars As [Variant](Of Char(), Integer())
 
         chars = CharArray("Hello world!", False)
 
@@ -94,7 +113,7 @@ Module TypeTest
         Pause()
     End Sub
 
-    Public Function CharArray(s As String, ascii As Boolean) As UnionType(Of Char(), Integer())
+    Public Function CharArray(s As String, ascii As Boolean) As [Variant](Of Char(), Integer())
         If ascii Then
             Return s.Select(Function(c) AscW(c)).ToArray
         Else
