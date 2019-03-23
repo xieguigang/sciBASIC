@@ -1,3 +1,154 @@
-﻿Public Class ANNDebugger
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
+Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator.GAExtensions
+Imports Microsoft.VisualBasic.MIME.application.netCDF
 
+Public Class ANNDebugger
+
+    Dim networkFrames As BinaryDataWriter
+    Dim deltaFrames As BinaryDataWriter
+    Dim errorFrames As BinaryDataWriter
+    Dim timeFrames As BinaryDataWriter
+
+    ' index和error可能不需要临时文件，但是如果迭代的次数长达几十万次的话
+    ' 则使用临时文件会比较安全一些
+
+    Dim frameTemp$
+    Dim errorTemp$
+    Dim timesTemp$
+    Dim deltaTemp$
+
+    Dim synapses As Synapse()
+    Dim minErr# = 99999
+    Dim snapShotTemp$
+
+    Sub New(model As NeuralNetwork.Network)
+        frameTemp = App.GetAppSysTempFile(".bin", App.PID)
+        errorTemp = App.GetAppSysTempFile(".bin", App.PID)
+        timesTemp = App.GetAppSysTempFile(".bin", App.PID)
+        deltaTemp = App.GetAppSysTempFile(".bin", App.PID)
+        snapShotTemp = App.GetAppSysTempFile(".Xml", App.PID)
+
+        networkFrames = New BinaryDataWriter(frameTemp.Open(doClear:=True))
+        errorFrames = New BinaryDataWriter(errorTemp.Open(doClear:=True))
+        timeFrames = New BinaryDataWriter(timesTemp.Open(doClear:=True))
+        deltaFrames = New BinaryDataWriter(deltaTemp.Open(doClear:=True))
+
+        synapses = model _
+            .GetSynapseGroups _
+            .Select(Function(g) g.First) _
+            .ToArray
+    End Sub
+
+    ''' <summary>
+    ''' 将一个迭代的状态数据写入临时文件作为调试器的一帧
+    ''' </summary>
+    ''' <param name="iteration%"></param>
+    ''' <param name="error#"></param>
+    ''' <param name="model"></param>
+    Public Sub WriteFrame(iteration%, error#, model As NeuralNetwork.Network)
+        Call errorFrames.Write([error])
+        Call networkFrames.Write(synapses.Select(Function(s) s.Weight).ToArray)
+        Call deltaFrames.Write(synapses.Select(Function(s) s.WeightDelta).ToArray)
+        Call timeFrames.Write(App.ElapsedMilliseconds)
+
+        If [error] < minErr Then
+            minErr = [error]
+            StoreProcedure.NeuralNetwork _
+                .Snapshot(model) _
+                .GetXml _
+                .SaveTo(snapShotTemp)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 将调试器的临时数据保存到给定的CDF文件之中
+    ''' </summary>
+    ''' <param name="cdf"></param>
+    Public Sub Save(cdf As String, network As Network)
+        ' 将所有的临时数据提交到临时文件之中，然后关闭文件句柄
+        Call networkFrames.Flush()
+        Call networkFrames.Dispose()
+        Call deltaFrames.Flush()
+        Call deltaFrames.Dispose()
+        Call errorFrames.Flush()
+        Call errorFrames.Dispose()
+        Call timeFrames.Flush()
+        Call timeFrames.Dispose()
+
+        Using debugger As New CDFWriter(cdf)
+            Call WriteCDF(debugger, network)
+        End Using
+    End Sub
+
+    Private Sub WriteCDF(debugger As CDFWriter, network As Network)
+        Dim attrs = {
+            New Components.attribute With {.name = "Date", .type = CDFDataTypes.CHAR, .value = Now.ToString},
+            New Components.attribute With {.name = "input_layer", .type = CDFDataTypes.CHAR, .value = network.InputLayer.Neurons.Length},
+            New Components.attribute With {.name = "output_layer", .type = CDFDataTypes.CHAR, .value = network.OutputLayer.Neurons.Length},
+            New Components.attribute With {.name = "hidden_layers", .type = CDFDataTypes.CHAR, .value = network.HiddenLayer.Select(Function(l) l.Neurons.Length).JoinBy(", ")},
+            New Components.attribute With {.name = "synapse_edges", .type = CDFDataTypes.CHAR, .value = synapses.Length},
+            New Components.attribute With {.name = "times", .type = CDFDataTypes.CHAR, .value = App.ElapsedMilliseconds},
+            New Components.attribute With {.name = "ANN", .type = CDFDataTypes.CHAR, .value = network.GetType.FullName},
+            New Components.attribute With {.name = "Github", .type = CDFDataTypes.CHAR, .value = LICENSE.githubURL}
+        }
+        Dim dimensions = {
+            New Components.Dimension With {.name = "index_number", .size = 4},
+            New Components.Dimension With {.name = GetType(Double).FullName, .size = 8},
+            New Components.Dimension With {.name = GetType(String).FullName, .size = 1024},
+            New Components.Dimension With {.name = GetType(Long).FullName, .size = 1}
+        }
+        Dim inputLayer = network.InputLayer.Neurons.Select(Function(n) n.Guid).Indexing
+        Dim outputLayer = network.OutputLayer.Neurons.Select(Function(n) n.Guid).Indexing
+        Dim hiddens As New List(Of SeqValue(Of Index(Of String)))
+
+        For Each layer In network.HiddenLayer.SeqIterator
+            hiddens += New SeqValue(Of Index(Of String)) With {
+                .i = layer,
+                .value = layer.value _
+                    .Neurons _
+                    .Select(Function(n) n.Guid) _
+                    .Indexing
+            }
+        Next
+
+        Dim getLocation = Function(guid As String) As String
+                              If inputLayer.IndexOf(guid) > -1 Then
+                                  Return "in"
+                              ElseIf outputLayer.IndexOf(guid) > -1 Then
+                                  Return "out"
+                              Else
+                                  For Each layer In hiddens
+                                      If layer.value.IndexOf(guid) > -1 Then
+                                          Return $"hiddens-{layer.i}"
+                                      End If
+                                  Next
+                              End If
+
+                              Return "NA"
+                          End Function
+
+        debugger.GlobalAttributes(attrs).Dimensions(dimensions)
+
+        Call debugger.AddVariable("iterations", Index.ToArray, {"index_number"})
+        Call debugger.AddVariable("fitness", errors.ToArray, {GetType(Double).FullName})
+        Call debugger.AddVariable("unixtimestamp", times.ToArray, {GetType(Long).FullName})
+
+        For Each active In network.Activations
+            Call debugger.AddVariable("active=" & active.Key, active.Value.ToString, {GetType(String).FullName})
+        Next
+
+        For Each s In synapses
+            attrs = {
+                    New Components.attribute With {.name = "input", .type = CDFDataTypes.CHAR, .value = s.InputNeuron.Guid},
+                    New Components.attribute With {.name = "output", .type = CDFDataTypes.CHAR, .value = s.OutputNeuron.Guid},
+                    New Components.attribute With {.name = "input_location", .type = CDFDataTypes.CHAR, .value = getLocation(s.InputNeuron.Guid)},
+                    New Components.attribute With {.name = "output_location", .type = CDFDataTypes.CHAR, .value = getLocation(s.OutputNeuron.Guid)}
+                }
+            debugger.AddVariable(s.ToString, synapsesWeights(s.ToString).ToArray, {GetType(Double).FullName}, attrs)
+        Next
+    End Sub
 End Class

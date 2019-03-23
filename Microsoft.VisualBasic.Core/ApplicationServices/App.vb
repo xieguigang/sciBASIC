@@ -1260,12 +1260,12 @@ Public Module App
     ''' Get temp file name in app system temp directory.
     ''' </summary>
     ''' <param name="ext"></param>
-    ''' <param name="sessionID"></param>
+    ''' <param name="sessionID">It is recommended that use <see cref="App.PID"/> for this parameter.</param>
     ''' <returns></returns>
     '''
     <ExportAPI("GetTempFile.AppSys")>
     Public Function GetAppSysTempFile(Optional ext$ = ".tmp", Optional sessionID$ = "") As String
-        Dim tmp As String = App.SysTemp & "/" & __getTEMP() & ext  '  FileIO.FileSystem.GetTempFileName.Replace(".tmp", ext)
+        Dim tmp As String = App.SysTemp & "/" & __getTEMP() & ext
         tmp = GenerateTemp(tmp, sessionID)
         Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(tmp))
         tmp = FileIO.FileSystem.GetFileInfo(tmp).FullName.Replace("\", "/")
