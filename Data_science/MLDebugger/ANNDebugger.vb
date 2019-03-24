@@ -159,11 +159,8 @@ Public Class ANNDebugger
 
             For Each n As Neuron In neurons
                 attrs = {
-                    New Components.attribute With {
-                        .name = "location",
-                        .type = CDFDataTypes.CHAR,
-                        .value = neuronLocation(n.Guid)
-                    }
+                    New Components.attribute With {.name = "layer", .type = CDFDataTypes.CHAR, .value = neuronLocation(n.Guid)},
+                    New Components.attribute With {.name = "type", .type = CDFDataTypes.CHAR, .value = "neuron"}
                 }
                 writeNodeBias(debugger, reader, n.Guid, ++index, attrs)
             Next
@@ -174,10 +171,11 @@ Public Class ANNDebugger
 
             For Each s As Synapse In synapses
                 attrs = {
+                    New Components.attribute With {.name = "type", .type = CDFDataTypes.CHAR, .value = "synapse"},
                     New Components.attribute With {.name = "input", .type = CDFDataTypes.CHAR, .value = s.InputNeuron.Guid},
                     New Components.attribute With {.name = "output", .type = CDFDataTypes.CHAR, .value = s.OutputNeuron.Guid},
-                    New Components.attribute With {.name = "input_location", .type = CDFDataTypes.CHAR, .value = neuronLocation(s.InputNeuron.Guid)},
-                    New Components.attribute With {.name = "output_location", .type = CDFDataTypes.CHAR, .value = neuronLocation(s.OutputNeuron.Guid)}
+                    New Components.attribute With {.name = "input_layer", .type = CDFDataTypes.CHAR, .value = neuronLocation(s.InputNeuron.Guid)},
+                    New Components.attribute With {.name = "output_layer", .type = CDFDataTypes.CHAR, .value = neuronLocation(s.OutputNeuron.Guid)}
                 }
                 writeWeight(debugger, reader, s.ToString, ++index, attrs)
             Next
