@@ -438,25 +438,29 @@ Namespace StorageProvider.ComponentModels
         ''' <remarks>
         ''' 因为在这里使用了缓存,所以为了防止外部使用的时候意外修改缓存,在这里将这个函数的访问权限修改为仅内部使用
         ''' </remarks>
-        Friend Shared Function CreateObject(type As Type, Optional strict As Boolean = False) As SchemaProvider
+        Friend Shared Function CreateObjectInternal(type As Type, Optional strict As Boolean = False) As SchemaProvider
             Dim staticCache = SingletonHolder(Of Dictionary(Of Type, SchemaProvider)).Instance
 
             If Not staticCache.ContainsKey(type) Then
-                Dim properties = TypeSchemaProvider.GetProperties(type, strict)
-                Dim schema As New SchemaProvider With {
-                    .Columns = GetColumns(properties),
-                    .CollectionColumns = GetCollectionColumns(properties),
-                    .EnumColumns = GetEnumColumns(properties),
-                    .MetaAttributes = GetMetaAttributeColumn(properties, strict),
-                    .KeyValuePairColumns = GetKeyValuePairColumn(properties),
-                    .DeclaringType = type
-                }
-                schema._Raw = schema
-
-                staticCache(type) = schema
+                staticCache(type) = CreateObject(type, strict)
             End If
 
             Return staticCache(type)
+        End Function
+
+        Public Shared Function CreateObject(type As Type, Optional strict As Boolean = False) As SchemaProvider
+            Dim properties = TypeSchemaProvider.GetProperties(type, strict)
+            Dim schema As New SchemaProvider With {
+                .Columns = GetColumns(properties),
+                .CollectionColumns = GetCollectionColumns(properties),
+                .EnumColumns = GetEnumColumns(properties),
+                .MetaAttributes = GetMetaAttributeColumn(properties, strict),
+                .KeyValuePairColumns = GetKeyValuePairColumn(properties),
+                .DeclaringType = type
+            }
+            schema._Raw = schema
+
+            Return schema
         End Function
 
         ''' <summary>
@@ -466,7 +470,7 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="strict">是否严格解析？严格的意思就是说只解析出经过自定义属性所定义的属性为列</param>
         ''' <returns></returns>
         Public Shared Function CreateObject(Of T As Class)(strict As Boolean) As SchemaProvider
-            Return CreateObject(GetType(T), strict)
+            Return CreateObjectInternal(GetType(T), strict)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

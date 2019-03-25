@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::a3729b6eec8989cb5e5f901a6efe3ba6, Microsoft.VisualBasic.Core\Extensions\Collection\Enumerable.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module IEnumerations
-    ' 
-    '     Function: [Next], CreateDictionary, (+2 Overloads) Differ, (+2 Overloads) FindByItemKey, FindByItemValue
-    '               (+2 Overloads) GetItem, GetItems, Take, (+2 Overloads) Takes, ToDictionary
-    '               ToEntryDictionary
-    ' 
-    ' /********************************************************************************/
+' Module IEnumerations
+' 
+'     Function: [Next], CreateDictionary, (+2 Overloads) Differ, (+2 Overloads) FindByItemKey, FindByItemValue
+'               (+2 Overloads) GetItem, GetItems, Take, (+2 Overloads) Takes, ToDictionary
+'               ToEntryDictionary
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,15 +66,25 @@ Public Module IEnumerations
         Return data(random.Next(0, data.Length))
     End Function
 
-    <Extension> Public Function Differ(Of T As INamedValue, T2)(source As IEnumerable(Of T),
-                                                                ToDiffer As IEnumerable(Of T2),
-                                                                getId As Func(Of T2, String)) As String()
+    <Extension>
+    Public Iterator Function ExceptType(Of TIn, T As TIn)(src As IEnumerable(Of TIn)) As IEnumerable(Of TIn)
+        For Each element As TIn In src
+            If Not TypeOf element Is T Then
+                Yield element
+            End If
+        Next
+    End Function
+
+    <Extension>
+    Public Function Differ(Of T As INamedValue, T2)(source As IEnumerable(Of T),
+                                                    toDiffer As IEnumerable(Of T2),
+                                                    getId As Func(Of T2, String)) As String()
 
         Dim targetIndex As String() = (From item As T In source Select item.Key).ToArray
         Dim LQuery$() = LinqAPI.Exec(Of String) _
  _
             () <= From item As T2
-                  In ToDiffer
+                  In toDiffer
                   Let strId As String = getId(item)
                   Where Array.IndexOf(targetIndex, strId) = -1
                   Select strId

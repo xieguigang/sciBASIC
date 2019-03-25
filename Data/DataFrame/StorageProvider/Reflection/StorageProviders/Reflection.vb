@@ -79,7 +79,7 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         <Extension> Public Function GetDataFrameworkTypeSchema(type As Type, Optional Explicit As Boolean = True) As Dictionary(Of String, Type)
-            Dim Schema As TableSchema = TableSchema.CreateObject(type, Explicit).CopyReadDataFromObject
+            Dim Schema As TableSchema = TableSchema.CreateObjectInternal(type, Explicit).CopyReadDataFromObject
             Dim cols = LinqAPI.Exec(Of NamedValue(Of Type)) _
  _
                 () <= From columAttr As Column
@@ -117,7 +117,7 @@ Namespace StorageProvider.Reflection
         ''' 
         <Extension>
         Public Function LoadDataToObject(csv As DataFrame, type As Type, Optional explicit As Boolean = False) As IEnumerable(Of Object)
-            Dim schema As TableSchema = TableSchema.CreateObject(type, explicit).CopyWriteDataToObject
+            Dim schema As TableSchema = TableSchema.CreateObjectInternal(type, explicit).CopyWriteDataToObject
             Dim rowBuilder As New RowBuilder(schema)
             Dim parallel As Boolean = True
 
@@ -244,7 +244,7 @@ Namespace StorageProvider.Reflection
                                Optional layout As Dictionary(Of String, Integer) = Nothing) As IEnumerable(Of RowObject)
 
             Dim source As Object() = ___source.ToVector  ' 结束迭代器，防止Linq表达式重新计算
-            Dim schema As TableSchema = TableSchema.CreateObject(typeDef, strict).CopyReadDataFromObject
+            Dim schema As TableSchema = TableSchema.CreateObjectInternal(typeDef, strict).CopyReadDataFromObject
             Dim rowWriter As RowWriter = New RowWriter(schema, metaBlank, layout) _
                 .CacheIndex(source, reorderKeys)
 
