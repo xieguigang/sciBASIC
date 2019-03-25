@@ -338,26 +338,26 @@ Public Module PathExtensions
     Public Const ILLEGAL_FILENAME_CHARACTERS As String = "\/" & ILLEGAL_PATH_CHARACTERS
 
     ''' <summary>
-    ''' 将目标字符串之中的非法的字符替换为"_"符号以成为正确的文件名字符串。当参数<paramref name="OnlyASCII"/>为真的时候，意味着所有的非字母或者数字的字符都会被替换为下划线，默认为真
+    ''' 将目标字符串之中的非法的字符替换为"_"符号以成为正确的文件名字符串。当参数<paramref name="alphabetOnly"/>为真的时候，意味着所有的非字母或者数字的字符都会被替换为下划线，默认为真
     ''' </summary>
     ''' <param name="str"></param>
-    ''' <param name="OnlyASCII">当本参数为真的时候，仅26个字母，0-9数字和下划线_以及小数点可以被保留下来</param>
+    ''' <param name="alphabetOnly">当本参数为真的时候，仅26个字母，0-9数字和下划线_以及小数点可以被保留下来</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <ExportAPI("NormalizePathString")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function NormalizePathString(str$, Optional OnlyASCII As Boolean = True) As String
-        Return NormalizePathString(str, "_", OnlyASCII)
+    <Extension> Public Function NormalizePathString(str$, Optional alphabetOnly As Boolean = True) As String
+        Return NormalizePathString(str, "_", alphabetOnly)
     End Function
 
     <ExportAPI("NormalizePathString")>
-    <Extension> Public Function NormalizePathString(str$, normAs As String, Optional onlyASCII As Boolean = True) As String
+    <Extension> Public Function NormalizePathString(str$, normAs As String, Optional alphabetOnly As Boolean = True) As String
         Dim sb As New StringBuilder(str)
         For Each ch As Char In ILLEGAL_FILENAME_CHARACTERS
             Call sb.Replace(ch, normAs)
         Next
 
-        If onlyASCII Then
+        If alphabetOnly Then
             For Each ch As Char In "()[]+-~!@#$%^&=;',"
                 Call sb.Replace(ch, normAs)
             Next

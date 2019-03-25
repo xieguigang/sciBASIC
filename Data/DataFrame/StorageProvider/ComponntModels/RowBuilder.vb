@@ -139,8 +139,7 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="schema"></param>
         Public Sub IndexOf(schema As ISchema)
-            Dim setValue = New SetValue(Of StorageProvider)() _
-                .GetSet(NameOf(StorageProvider.Ordinal))
+            Dim setValue = New SetValue(Of StorageProvider)().GetSet(NameOf(StorageProvider.Ordinal))
             Dim LQuery() = LinqAPI.Exec(Of StorageProvider) _
  _
                 () <= From field As StorageProvider
@@ -219,9 +218,10 @@ Namespace StorageProvider.ComponentModels
                     Call meta.Add(x.name, x.value)
                 Next
 
-                Call SchemaProvider.MetaAttributes _
-                                   .BindProperty _
-                                   .SetValue(obj, meta, Nothing)
+                Call SchemaProvider _
+                    .MetaAttributes _
+                    .BindProperty _
+                    .SetValue(obj, meta, Nothing)
             End If
 
             Return obj

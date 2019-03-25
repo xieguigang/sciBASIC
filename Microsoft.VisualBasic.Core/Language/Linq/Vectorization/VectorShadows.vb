@@ -69,7 +69,17 @@ Namespace Language.Vectorization
         ''' 无参数的属性
         ''' </summary>
         Protected linq As DataValue(Of T)
-        Protected ReadOnly type As New VectorSchemaProvider(GetType(T))
+        Protected ReadOnly type As VectorSchemaProvider = inspectType(GetType(T))
+
+        Shared ReadOnly typeCache As New Dictionary(Of Type, VectorSchemaProvider)
+
+        Private Shared Function inspectType(type As Type) As VectorSchemaProvider
+            If Not typeCache.ContainsKey(type) Then
+                typeCache(type) = New VectorSchemaProvider(type)
+            End If
+
+            Return typeCache(type)
+        End Function
 
         Default Public Overloads Property Item(exp$) As Object
             Get

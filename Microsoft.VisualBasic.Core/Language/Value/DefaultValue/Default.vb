@@ -135,7 +135,9 @@ Namespace Language.Default
 #End Region
 
         ''' <summary>
-        ''' asset that if target value is null?
+        ''' asset that if target value is null? If this function returns true when 
+        ''' test on the object, means object value is missing or null, then default 
+        ''' value <see cref="DefaultValue"/> will be returns.
         ''' </summary>
         Dim assert As Assert(Of Object)
 

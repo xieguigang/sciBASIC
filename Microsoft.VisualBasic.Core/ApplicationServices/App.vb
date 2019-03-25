@@ -601,6 +601,15 @@ Public Module App
     End Sub
 
     ''' <summary>
+    ''' This delegate function do nothing
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property DoNothing As Action =
+        Sub()
+            ' Do Nothing
+        End Sub
+
+    ''' <summary>
     ''' 假若有些时候函数的参数要求有一个输出流，但是并不想输出任何数据的话，则可以使用这个进行输出
     ''' </summary>
     ''' <returns></returns>

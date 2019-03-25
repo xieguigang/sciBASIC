@@ -168,8 +168,18 @@ Namespace Emit.Delegates
 
         Sub New(src As IEnumerable(Of T))
             data = src.ToArray
-            properties = type.Schema(PropertyAccess.NotSure, PublicProperty, True)
+            properties = inspectType(type)
         End Sub
+
+        Shared ReadOnly typeCache As New Dictionary(Of Type, Dictionary(Of String, PropertyInfo))
+
+        Private Shared Function inspectType(type As Type) As Dictionary(Of String, PropertyInfo)
+            If Not typeCache.ContainsKey(type) Then
+                typeCache(type) = type.Schema(PropertyAccess.NotSure, PublicProperty, True)
+            End If
+
+            Return typeCache(type)
+        End Function
 
         Public Overrides Function ToString() As String
             Return type.FullName
