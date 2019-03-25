@@ -299,6 +299,10 @@ Namespace Scripting
         ''' <returns></returns>
         Public ReadOnly Property [String] As Type = GetType(String)
 
+        Public Function ToString(Of T)() As DefaultValue(Of IToString(Of T))
+            Return New IToString(Of T)(AddressOf ToString)
+        End Function
+
         ''' <summary>
         ''' Does the <paramref name="inputtype"/> type can be cast to type <paramref name="DefType"/>.
         ''' (主要为了方便减少脚本编程模块的代码)

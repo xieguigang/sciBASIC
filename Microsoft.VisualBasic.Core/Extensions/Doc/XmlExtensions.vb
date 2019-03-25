@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::2fbeae0dd8320f41c36d9387e77d0dee, Microsoft.VisualBasic.Core\Extensions\Doc\XmlExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module XmlExtensions
-    ' 
-    '     Function: CodePage, CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, GetXmlAttrValue
-    '               LoadFromXml, (+2 Overloads) LoadXml, SafeLoadXml, SaveAsXml, SetXmlEncoding
-    '               SetXmlStandalone
-    ' 
-    '     Sub: WriteXML
-    ' 
-    ' /********************************************************************************/
+' Module XmlExtensions
+' 
+'     Function: CodePage, CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, GetXmlAttrValue
+'               LoadFromXml, (+2 Overloads) LoadXml, SafeLoadXml, SaveAsXml, SetXmlEncoding
+'               SetXmlStandalone
+' 
+'     Sub: WriteXML
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,13 +52,17 @@ Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 Imports r = System.Text.RegularExpressions.Regex
 
 <Package("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>
 Public Module XmlExtensions
+
+    Public ReadOnly Property XmlParser As New DefaultValue(Of IObjectBuilder)(AddressOf LoadFromXml)
 
     ''' <summary>
     ''' 这个函数主要是用作于Linq里面的Select语句拓展的，这个函数永远也不会报错，只会返回空值
@@ -309,19 +313,31 @@ Public Module XmlExtensions
     ''' <summary>
     ''' Generate a specific type object from a xml document stream.(使用一个XML文本内容创建一个XML映射对象)
     ''' </summary>
-    ''' <typeparam name="T"></typeparam>
     ''' <param name="Xml">This parameter value is the document text of the xml file, not the file path of the xml file.(是Xml文件的文件内容而非文件路径)</param>
     ''' <param name="throwEx">Should this program throw the exception when the xml deserialization error happens?
     ''' if False then this function will returns a null value instead of throw exception.
     ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function LoadFromXml(Of T)(xml$, Optional throwEx As Boolean = True) As T
-        Using Stream As New StringReader(s:=xml)
+        Return LoadFromXml(xml, GetType(T), throwEx)
+    End Function
+
+    ''' <summary>
+    ''' Generate a specific type object from a xml document stream.(使用一个XML文本内容创建一个XML映射对象)
+    ''' </summary>
+    ''' <param name="Xml">This parameter value is the document text of the xml file, not the file path of the xml file.(是Xml文件的文件内容而非文件路径)</param>
+    ''' <param name="throwEx">Should this program throw the exception when the xml deserialization error happens?
+    ''' if False then this function will returns a null value instead of throw exception.
+    ''' (在进行Xml反序列化的时候是否抛出错误，默认抛出错误，否则返回一个空对象)</param>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    <Extension> Public Function LoadFromXml(xml$, schema As Type, Optional throwEx As Boolean = True) As Object
+        Using stream As New StringReader(s:=xml)
             Try
-                Dim type As Type = GetType(T)
-                Dim o As Object = New XmlSerializer(type).Deserialize(Stream)
-                Return DirectCast(o, T)
+                Return New XmlSerializer(schema).Deserialize(stream)
             Catch ex As Exception
                 Dim curMethod As String = MethodBase.GetCurrentMethod.GetFullName
 
