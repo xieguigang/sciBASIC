@@ -1,53 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::5d571b3e592c026eec19bbd5d23261ad, Microsoft.VisualBasic.Core\Scripting\VBLanguage.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Patterns
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class KeywordProcessor
-    ' 
-    '         Properties: Words
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: AutoEscapeVBKeyword
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Patterns
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class KeywordProcessor
+' 
+'         Properties: Words
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: AutoEscapeVBKeyword
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace Scripting.SymbolBuilder.VBLanguage
 
@@ -70,6 +71,29 @@ Namespace Scripting.SymbolBuilder.VBLanguage
         Public Const CloseType$ = "^\s*End\s((Class)|(Structure)|(Enum)|(Interface)|(Module))"
         Public Const Indents$ = "^\s+"
         Public Const Attribute$ = "<.+?>\s*"
+
+        Public Shared ReadOnly Property TypeChar As Index(Of Char) = {"!"c, "@"c, "#"c, "$"c, "%"c, "&"c, "?"c}
+
+        Public Shared Function TypeCharName(c As Char) As String
+            Select Case c
+                Case "!"c
+                    Return "Single"
+                Case "@"c
+                    Return "Decimal"
+                Case "#"c
+                    Return "Double"
+                Case "$"c
+                    Return "String"
+                Case "%"c
+                    Return "Integer"
+                Case "&"c
+                    Return "Long"
+                Case "?"c
+                    Return "Boolean"
+                Case Else
+                    Throw New InvalidExpressionException($"Character '{c}' is not a valid VB type char!")
+            End Select
+        End Function
 
     End Class
 

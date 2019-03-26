@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::786d616bfb0e39befe17a22d4a39201a, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Group.vb"
+﻿#Region "Microsoft.VisualBasic::48a41e1b72781ccd57e8ed004a5b1b9a, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Group.vb"
 
     ' Author:
     ' 
@@ -41,7 +41,7 @@
     ' 
     '     Class IndexGroup
     ' 
-    '         Properties: groups, id, index, leaves, padding
+    '         Properties: groups, id, leaves, padding
     ' 
     '     Class Group
     ' 

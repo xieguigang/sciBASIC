@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ded780981d1a60bd5a70aab3699a3673, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\Neuron.vb"
+﻿#Region "Microsoft.VisualBasic::0a081c4e0a15e5c6094a356e0f9244ef, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\Neuron.vb"
 
     ' Author:
     ' 
@@ -45,13 +45,13 @@
     ' 
     '         Properties: activation, id, neurons
     ' 
-    '         Function: getSize
+    '         Function: getCollection, getSize
     ' 
     '     Class HiddenLayer
     ' 
     '         Properties: activation, layers
     ' 
-    '         Function: getSize
+    '         Function: getCollection, getSize
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::67db8400eef0eb78532c7256ffff785d, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Reflector
-    ' 
-    '         Function: __save, Convert, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema, GetsRowData
-    '                   Load, LoadDataToObject, Save
-    '         Enum OperationTypes
-    ' 
-    '             ReadDataFromObject, WriteDataToObject
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Reflector
+' 
+'         Function: __save, Convert, ExportAsPropertyAttributes, GetDataFrameworkTypeSchema, GetsRowData
+'                   Load, LoadDataToObject, Save
+'         Enum OperationTypes
+' 
+'             ReadDataFromObject, WriteDataToObject
+' 
+' 
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports TableSchema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.SchemaProvider
 
@@ -78,7 +79,7 @@ Namespace StorageProvider.Reflection
         ''' <param name="Explicit"></param>
         ''' <returns></returns>
         <Extension> Public Function GetDataFrameworkTypeSchema(type As Type, Optional Explicit As Boolean = True) As Dictionary(Of String, Type)
-            Dim Schema As TableSchema = TableSchema.CreateObject(type, Explicit).CopyReadDataFromObject
+            Dim Schema As TableSchema = TableSchema.CreateObjectInternal(type, Explicit).CopyReadDataFromObject
             Dim cols = LinqAPI.Exec(Of NamedValue(Of Type)) _
  _
                 () <= From columAttr As Column
@@ -116,7 +117,7 @@ Namespace StorageProvider.Reflection
         ''' 
         <Extension>
         Public Function LoadDataToObject(csv As DataFrame, type As Type, Optional explicit As Boolean = False) As IEnumerable(Of Object)
-            Dim schema As TableSchema = TableSchema.CreateObject(type, explicit).CopyWriteDataToObject
+            Dim schema As TableSchema = TableSchema.CreateObjectInternal(type, explicit).CopyWriteDataToObject
             Dim rowBuilder As New RowBuilder(schema)
             Dim parallel As Boolean = True
 
@@ -154,11 +155,7 @@ Namespace StorageProvider.Reflection
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Convert(Of TClass As Class)(df As DataFrame, Optional explicit As Boolean = True) As IEnumerable(Of TClass)
-            Return df _
-                .LoadDataToObject(GetType(TClass), explicit) _
-                .Select(Function(x)
-                            Return DirectCast(x, TClass)
-                        End Function)
+            Return df.LoadDataToObject(GetType(TClass), explicit).As(Of TClass)
         End Function
 
         ''' <summary>
@@ -247,7 +244,7 @@ Namespace StorageProvider.Reflection
                                Optional layout As Dictionary(Of String, Integer) = Nothing) As IEnumerable(Of RowObject)
 
             Dim source As Object() = ___source.ToVector  ' 结束迭代器，防止Linq表达式重新计算
-            Dim schema As TableSchema = TableSchema.CreateObject(typeDef, strict).CopyReadDataFromObject
+            Dim schema As TableSchema = TableSchema.CreateObjectInternal(typeDef, strict).CopyReadDataFromObject
             Dim rowWriter As RowWriter = New RowWriter(schema, metaBlank, layout) _
                 .CacheIndex(source, reorderKeys)
 

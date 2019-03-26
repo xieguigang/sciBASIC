@@ -142,7 +142,7 @@ Namespace IO.Linq
             Dim typeDef As Type = GetType(T)
             Dim Schema As SchemaProvider =
                 SchemaProvider _
-                .CreateObject(typeDef, explicit) _
+                .CreateObjectInternal(typeDef, explicit) _
                 .CopyReadDataFromObject
 
             _fileIO = write

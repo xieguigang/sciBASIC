@@ -59,7 +59,7 @@ Public Class MappingsHelper
     ''' </param>
     ''' <returns>这个函数返回空值表名没有这个属性</returns>
     Public Shared Function ColumnName(schema As Type, propertyName$) As String
-        Dim schemaTable As SchemaProvider = SchemaProvider.CreateObject(schema)
+        Dim schemaTable As SchemaProvider = SchemaProvider.CreateObjectInternal(schema)
 
         For Each field As Field In schemaTable
             If field.BindProperty.Name = propertyName Then
@@ -76,7 +76,7 @@ Public Class MappingsHelper
     ''' <typeparam name="T"></typeparam>
     ''' <returns></returns>
     Public Shared Function PropertyNames(Of T)() As Dictionary(Of String, String)
-        Dim schemaTable = SchemaProvider.CreateObject(GetType(T))
+        Dim schemaTable = SchemaProvider.CreateObjectInternal(GetType(T))
         Dim table = schemaTable _
             .ToDictionary(Function(prop)
                               Return prop.BindProperty.Name

@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::ab1665d270cd7f6e18a939e5703b35c8, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::ad254b707545ec576dd6574bf3229322, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Interface ISchema
-' 
-'         Properties: SchemaOridinal
-' 
-'         Function: GetOrdinal
-' 
-'     Class RowBuilder
-' 
-'         Properties: Columns, Defaults, HaveMetaAttribute, IndexedFields, MissingFields
-'                     NonIndexed, SchemaProvider
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: __tryFill, FillData, ToString
-' 
-'         Sub: IndexOf, SolveReadOnlyMetaConflicts
-' 
-' 
-' /********************************************************************************/
+    '     Interface ISchema
+    ' 
+    '         Properties: SchemaOridinal
+    ' 
+    '         Function: GetOrdinal
+    ' 
+    '     Class RowBuilder
+    ' 
+    '         Properties: Columns, Defaults, HaveMetaAttribute, IndexedFields, MissingFields
+    '                     NonIndexed, SchemaProvider
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __tryFill, FillData, ToString
+    ' 
+    '         Sub: IndexOf, SolveReadOnlyMetaConflicts
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -139,8 +139,7 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="schema"></param>
         Public Sub IndexOf(schema As ISchema)
-            Dim setValue = New SetValue(Of StorageProvider)() _
-                .GetSet(NameOf(StorageProvider.Ordinal))
+            Dim setValue = New SetValue(Of StorageProvider)().GetSet(NameOf(StorageProvider.Ordinal))
             Dim LQuery() = LinqAPI.Exec(Of StorageProvider) _
  _
                 () <= From field As StorageProvider
@@ -219,9 +218,10 @@ Namespace StorageProvider.ComponentModels
                     Call meta.Add(x.name, x.value)
                 Next
 
-                Call SchemaProvider.MetaAttributes _
-                                   .BindProperty _
-                                   .SetValue(obj, meta, Nothing)
+                Call SchemaProvider _
+                    .MetaAttributes _
+                    .BindProperty _
+                    .SetValue(obj, meta, Nothing)
             End If
 
             Return obj

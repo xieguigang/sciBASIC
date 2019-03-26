@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62c2943496b0132cd5dcce5a958e738f, Microsoft.VisualBasic.Core\Net\MIME\ContentType.vb"
+﻿#Region "Microsoft.VisualBasic::05811d12baae321f2a46bf4ec36ad30a, Microsoft.VisualBasic.Core\Net\MIME\ContentType.vb"
 
     ' Author:
     ' 
@@ -36,6 +36,13 @@
     '         Properties: Details, FileExt, IsEmpty, MIMEType, Name
     ' 
     '         Function: __createObject, ToString
+    ' 
+    '     Class ContentTypeAttribute
+    ' 
+    '         Properties: Description, Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

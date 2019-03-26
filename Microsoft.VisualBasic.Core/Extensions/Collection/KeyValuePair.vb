@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fabe0f5f3b838c2968cbda4a144aedf5, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::c657ed8416b910dc5eb4f6e4e6c7f45c, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -36,11 +36,11 @@
     '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsGroups, AsNamedValueTuples
     '               AsNamedVector, AsTable, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples
     '               EnumParser, FlatTable, (+2 Overloads) GetByKey, GroupByKey, HaveData
-    '               IGrouping, IsOneOfA, IterateNameCollections, IterateNameValues, IteratesAll
-    '               Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection
-    '               ParserDictionary, RemoveAndGet, ReverseMaps, Selects, SetOfKeyValuePairs
-    '               (+2 Overloads) Subset, Takes, (+3 Overloads) ToDictionary, Tsv, Tuple
-    '               (+2 Overloads) Values, XMLModel
+    '               IGrouping, IterateNameCollections, IterateNameValues, IteratesAll, Join
+    '               KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
+    '               RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs, (+2 Overloads) Subset
+    '               Takes, (+3 Overloads) ToDictionary, Tsv, Tuple, (+2 Overloads) Values
+    '               XMLModel
     ' 
     '     Sub: SortByKey, SortByValue
     ' 

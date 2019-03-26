@@ -72,7 +72,7 @@ Namespace CommandLine.InteropService.SharedORM
         Public Overrides Function GetSourceCode() As String
             Dim vb As New StringBuilder
             Dim className$ = MyBase.exe _
-                .NormalizePathString(OnlyASCII:=True) _
+                .NormalizePathString(alphabetOnly:=True) _
                 .Replace(" ", "_")
             Dim rel$ = PathExtensions.RelativePath(App.Type.Assembly.Location.GetFullPath)
             Dim info$ = App.Type.NamespaceEntry.Description

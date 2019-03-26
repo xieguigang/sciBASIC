@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::601a2e322f2e6105f4f384bb28e1a1b4, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SeqValue.vb"
+﻿#Region "Microsoft.VisualBasic::8c626a68ae1d391c1bafe7550b380c01, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\SeqValue.vb"
 
     ' Author:
     ' 
@@ -187,4 +187,3 @@ Namespace Linq
         End Sub
     End Structure
 End Namespace
-

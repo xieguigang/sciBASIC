@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce75948f50eb07f3958071402aa033b0, CLI_tools\ANN\CLI.vb"
+﻿#Region "Microsoft.VisualBasic::8dc8c52d23a7adf20a7d60827b7b6c71, CLI_tools\ANN\CLI.vb"
 
 ' Author:
 ' 
@@ -33,7 +33,10 @@
 
 ' Module CLI
 ' 
-'     Function: ConfigTemplate, Encourage, runTrainingCommon, Train
+'     Function: ANNInputImportantFactors, ConfigTemplate, Encourage, ExportErrorCurve, MinErrorSnapshot
+'               runTrainingCommon, Train
+' 
+'     Sub: SummaryDebuggerDump
 ' 
 ' /********************************************************************************/
 
@@ -46,6 +49,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Settings.Inf
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.Debugger
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Accelerator
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.StoreProcedure
@@ -191,44 +195,19 @@ Module CLI
 
     <Extension>
     Private Function runTrainingCommon(trainer As TrainingUtils, debugCDF$, inFile$, parallel As Boolean, debug As Boolean) As TrainingUtils
-        Dim synapses = trainer _
-            .NeuronNetwork _
-            .GetSynapseGroups _
-            .Select(Function(g) g.First) _
-            .ToArray
-        Dim synapsesWeights As New Dictionary(Of String, List(Of Double))
-        Dim errors As New List(Of Double)
-        Dim index As New List(Of Integer)
-        Dim deltaTimes As New List(Of Long)
-
-        For Each s In synapses
-            synapsesWeights.Add(s.ToString, New List(Of Double))
-        Next
-
-        Dim minErr# = 99999
-        Dim minErrSnapShot$ = inFile.TrimSuffix & ".minerror_snapshot.Xml"
+        Dim debugger As New ANNDebugger(trainer.NeuronNetwork)
 
         Call Console.WriteLine(trainer.NeuronNetwork.ToString)
         Call trainer _
             .AttachReporter(Sub(i, err, model)
                                 If debug Then
-                                    Call index.Add(i)
-                                    Call errors.Add(err)
-                                    Call deltaTimes.Add(App.ElapsedMilliseconds)
-                                    Call synapses.DoEach(Sub(s)
-                                                             synapsesWeights(s.ToString).Add(s.Weight)
-                                                         End Sub)
-                                End If
-
-                                If err < minErr Then
-                                    Call trainer.TakeSnapshot.GetXml.SaveTo(minErrSnapShot)
-                                    minErr = err
+                                    Call debugger.WriteFrame(i, err, model)
                                 End If
                             End Sub) _
             .Train(parallel)
 
         If debug Then
-            Call Debugger.WriteCDF(trainer.NeuronNetwork, debugCDF, synapses, errors, index, deltaTimes, synapsesWeights)
+            Call debugger.Save(cdf:=debugCDF, network:=trainer.NeuronNetwork)
         End If
 
         Return trainer

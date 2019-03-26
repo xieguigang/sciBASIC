@@ -1,63 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::ff46bbde4d366754ffd74cbd158866ee, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::a17aa734524affcecd9e53d3f4d9e0dd, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module App
-' 
-'     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-'                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, ExceptionLogFile
-'                 ExecutablePath, Github, HOME, Info, InputFile
-'                 IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp, LogErrDIR
-'                 NanoTime, NextTempName, OutFile, PID, Platform
-'                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
-'                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
-'                 StartupDirectory, StdErr, StdOut, SysTemp, UserHOME
-'                 Version
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: __cli, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
-'               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
-'               ElapsedMilliseconds, Exit, FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
-'               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
-'               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
-'               RunCLIInternal, SelfFolk, SelfFolks, Shell, TemporaryEnvironment
-'               TraceBugs
-' 
-'     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
-'          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
-'          SetBufferSize, StartGC, StopGC
-' 
-' /********************************************************************************/
+    ' Module App
+    ' 
+    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, Desktop, ExceptionLogFile
+    '                 ExecutablePath, Github, HOME, Info, InputFile
+    '                 IsConsoleApp, IsMicrosoftPlatform, LocalData, LocalDataTemp, LogErrDIR
+    '                 NanoTime, NextTempName, OutFile, PID, Platform
+    '                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
+    '                 ProductSharedTemp, References, Running, RunTimeDirectory, StartTime
+    '                 StartupDirectory, StdErr, StdOut, SysTemp, UnixTimeStamp
+    '                 UserHOME, Version
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: __cli, __completeCLI, __getTEMP, __getTEMPhash, __isMicrosoftPlatform
+    '               __listFiles, __sysTEMP, (+2 Overloads) Argument, BugsFormatter, CLICode
+    '               ElapsedMilliseconds, Exit, FormatTime, GenerateTemp, (+2 Overloads) GetAppLocalData
+    '               GetAppSysTempFile, GetAppVariables, GetFile, GetProductSharedDIR, GetProductSharedTemp
+    '               GetTempFile, GetVariable, (+3 Overloads) LogException, NullDevice, (+10 Overloads) RunCLI
+    '               RunCLIInternal, SelfFolk, SelfFolks, Shell, TemporaryEnvironment
+    '               TraceBugs
+    ' 
+    '     Sub: __GCThreadInvoke, __removesTEMP, AddExitCleanHook, FlushMemory, Free
+    '          JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println, RunAsAdmin
+    '          SetBufferSize, StartGC, StopGC
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -599,6 +599,15 @@ Public Module App
     Public Sub SetBufferSize(size As Integer)
         _BufferSize = size
     End Sub
+
+    ''' <summary>
+    ''' This delegate function do nothing
+    ''' </summary>
+    ''' <returns></returns>
+    Public ReadOnly Property DoNothing As Action =
+        Sub()
+            ' Do Nothing
+        End Sub
 
     ''' <summary>
     ''' 假若有些时候函数的参数要求有一个输出流，但是并不想输出任何数据的话，则可以使用这个进行输出
@@ -1260,12 +1269,12 @@ Public Module App
     ''' Get temp file name in app system temp directory.
     ''' </summary>
     ''' <param name="ext"></param>
-    ''' <param name="sessionID"></param>
+    ''' <param name="sessionID">It is recommended that use <see cref="App.PID"/> for this parameter.</param>
     ''' <returns></returns>
     '''
     <ExportAPI("GetTempFile.AppSys")>
     Public Function GetAppSysTempFile(Optional ext$ = ".tmp", Optional sessionID$ = "") As String
-        Dim tmp As String = App.SysTemp & "/" & __getTEMP() & ext  '  FileIO.FileSystem.GetTempFileName.Replace(".tmp", ext)
+        Dim tmp As String = App.SysTemp & "/" & __getTEMP() & ext
         tmp = GenerateTemp(tmp, sessionID)
         Call FileIO.FileSystem.CreateDirectory(FileIO.FileSystem.GetParentPath(tmp))
         tmp = FileIO.FileSystem.GetFileInfo(tmp).FullName.Replace("\", "/")

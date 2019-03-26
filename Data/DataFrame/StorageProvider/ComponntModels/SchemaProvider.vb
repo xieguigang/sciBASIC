@@ -1,58 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::44a00b0dd12dc9150646d19268d0ea58, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SchemaProvider
-    ' 
-    '         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
-    '                     KeyValuePairColumns, MetaAttributes, Raw
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __columnType, __gets, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField
-    '                   ContainsProperty, CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, GetCollectionColumns
-    '                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
-    '                   GetMetaAttributeColumn, IEnumerable_GetEnumerator, ToString
-    ' 
-    '         Sub: Remove
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SchemaProvider
+' 
+'         Properties: CollectionColumns, Columns, DeclaringType, EnumColumns, HasMetaAttributes
+'                     KeyValuePairColumns, MetaAttributes, Raw
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __columnType, __gets, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField
+'                   ContainsProperty, CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, GetCollectionColumns
+'                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
+'                   GetMetaAttributeColumn, IEnumerable_GetEnumerator, ToString
+' 
+'         Sub: Remove
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.IO.Linq
@@ -299,23 +300,36 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         ''' <summary>
-        ''' For create object instance.(可以在读取Csv文件之中的数据之后将数据写入到这个属性之中从而将数据加载进入内存之中)
+        ''' For create object instance.
+        ''' (可以在读取Csv文件之中的数据之后将数据写入到这个属性之中从而将数据加载进入内存之中)
         ''' </summary>
         ''' <returns></returns>
         Public Function CopyWriteDataToObject() As SchemaProvider
             Return New SchemaProvider With {
-                .CollectionColumns = (From p In CollectionColumns Where p.CanWriteDataToObject Select p).ToArray,
-                .Columns = (From p In Columns Where p.CanWriteDataToObject Select p).ToArray,
-                .EnumColumns = (From p In EnumColumns Where p.CanWriteDataToObject Select p).ToArray,
-                .KeyValuePairColumns = KeyValuePairColumns.Where(Function(p) p.CanWriteDataToObject).ToArray,
+                .CollectionColumns = getWriteProvider(CollectionColumns).ToArray,
+                .Columns = getWriteProvider(Columns).ToArray,
+                .EnumColumns = getWriteProvider(EnumColumns).ToArray,
+                .KeyValuePairColumns = getWriteProvider(KeyValuePairColumns).ToArray,
                 ._Raw = Me,
-                .MetaAttributes =
-                    If(MetaAttributes IsNot Nothing AndAlso
-                       MetaAttributes.CanWriteDataToObject,
-                       MetaAttributes,
-                       Nothing),
+                .MetaAttributes = getMeta(),
                 .DeclaringType = DeclaringType
             }
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function getWriteProvider(Of T As StorageProvider)(source As IEnumerable(Of T)) As IEnumerable(Of T)
+            Return From provider As StorageProvider
+                   In source
+                   Where provider.CanWriteDataToObject
+                   Select DirectCast(provider, T)
+        End Function
+
+        Private Function getMeta() As MetaAttribute
+            If MetaAttributes IsNot Nothing AndAlso MetaAttributes.CanWriteDataToObject Then
+                Return MetaAttributes
+            Else
+                Return Nothing
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -324,17 +338,17 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         Public Function CacheOrdinal(GetOrdinal As GetOrdinal) As SchemaProvider
-            For Each Column As StorageProvider In Columns
-                Column.Ordinal = GetOrdinal(Column.Name)
+            For Each column As StorageProvider In Columns
+                column.Ordinal = GetOrdinal(column.Name)
             Next
-            For Each Column As StorageProvider In CollectionColumns
-                Column.Ordinal = GetOrdinal(Column.Name)
+            For Each column As StorageProvider In CollectionColumns
+                column.Ordinal = GetOrdinal(column.Name)
             Next
-            For Each Column As StorageProvider In EnumColumns
-                Column.Ordinal = GetOrdinal(Column.Name)
+            For Each column As StorageProvider In EnumColumns
+                column.Ordinal = GetOrdinal(column.Name)
             Next
-            For Each Column As StorageProvider In KeyValuePairColumns
-                Column.Ordinal = GetOrdinal(Column.Name)
+            For Each column As StorageProvider In KeyValuePairColumns
+                column.Ordinal = GetOrdinal(column.Name)
             Next
 
             Return Me
@@ -421,6 +435,19 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="type"></param>
         ''' <param name="strict"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 因为在这里使用了缓存,所以为了防止外部使用的时候意外修改缓存,在这里将这个函数的访问权限修改为仅内部使用
+        ''' </remarks>
+        Friend Shared Function CreateObjectInternal(type As Type, Optional strict As Boolean = False) As SchemaProvider
+            Dim staticCache = SingletonHolder(Of Dictionary(Of Type, SchemaProvider)).Instance
+
+            If Not staticCache.ContainsKey(type) Then
+                staticCache(type) = CreateObject(type, strict)
+            End If
+
+            Return staticCache(type)
+        End Function
+
         Public Shared Function CreateObject(type As Type, Optional strict As Boolean = False) As SchemaProvider
             Dim properties = TypeSchemaProvider.GetProperties(type, strict)
             Dim schema As New SchemaProvider With {
@@ -443,26 +470,19 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="strict">是否严格解析？严格的意思就是说只解析出经过自定义属性所定义的属性为列</param>
         ''' <returns></returns>
         Public Shared Function CreateObject(Of T As Class)(strict As Boolean) As SchemaProvider
-            Return CreateObject(GetType(T), strict)
+            Return CreateObjectInternal(GetType(T), strict)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function GetKeyValuePairColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As KeyValuePair()
-            Return __gets(Of KeyValuePair)(Properties, Function(type) type = ProviderIds.KeyValuePair)
+            Return __gets(Of KeyValuePair)(Properties, Function(type) type = ProviderIds.KeyValuePair).ToArray
         End Function
 
-        Private Shared Function __gets(Of T As StorageProvider)(
-                                Properties As Dictionary(Of PropertyInfo, StorageProvider),
-                                ProviderId As Func(Of ProviderIds, Boolean)) As T()
-
-            Dim LQuery As T() = LinqAPI.Exec(Of T) <=
- _
-                From [Property] As StorageProvider
-                In Properties.Values.AsParallel
-                Where ProviderId([Property].ProviderId) = True
-                Select DirectCast([Property], T)
-
-            Return LQuery
+        Private Shared Function __gets(Of T As StorageProvider)(properties As Dictionary(Of PropertyInfo, StorageProvider), providerId As Func(Of ProviderIds, Boolean)) As IEnumerable(Of T)
+            Return From [Property] As StorageProvider
+                   In properties.Values.AsParallel
+                   Where providerId([Property].ProviderId) = True
+                   Select DirectCast([Property], T)
         End Function
 
         Const DynamicsNotFound As String = "Explicit option is set TRUE, but could not found Meta attribute for the dynamics property!"
@@ -476,8 +496,7 @@ Namespace StorageProvider.ComponentModels
         ''' <param name="Properties"></param>
         ''' <returns></returns>
         Private Shared Function GetMetaAttributeColumn(Properties As Dictionary(Of PropertyInfo, StorageProvider), strict As Boolean) As MetaAttribute
-            Dim MetaAttributes As MetaAttribute =
-                __gets(Of MetaAttribute)(Properties, Function(type) type = ProviderIds.MetaAttribute).FirstOrDefault
+            Dim MetaAttributes As MetaAttribute = __gets(Of MetaAttribute)(Properties, Function(type) type = ProviderIds.MetaAttribute).FirstOrDefault
 
             If MetaAttributes Is Nothing Then
                 Dim prop As PropertyInfo = Properties.Keys.FirstOrDefault
@@ -493,35 +512,33 @@ Namespace StorageProvider.ComponentModels
                 Dim type As New Value(Of Type)(prop.DeclaringType)
 
                 If (+type).IsInheritsFrom(GetType(DynamicPropertyBase(Of ))) Then
-                    Dim metaProp As PropertyInfo =
-                        (type = (+type).BaseType).GetProperty(
-                        NameOf(DynamicPropertyBase(Of Double).Properties),
-                        BindingFlags.Public Or BindingFlags.Instance)
+                    Dim metaProp As PropertyInfo = (type = (+type).BaseType).GetProperty(NameOf(DynamicPropertyBase(Of Double).Properties), PublicProperty)
                     type = (+type).GetGenericArguments.First
-                    MetaAttributes = New MetaAttribute(
-                        New Reflection.MetaAttribute(+type),
-                        metaProp)
+                    MetaAttributes = New MetaAttribute(New Reflection.MetaAttribute(+type), metaProp)
                 End If
             End If
 
             Return MetaAttributes
         End Function
 
-        Private Shared Function GetEnumColumns(Properties As Dictionary(Of PropertyInfo, ComponentModels.StorageProvider)) As [Enum]()
-            Return __gets(Of [Enum])(Properties, Function(type) type = ProviderIds.Enum)
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function GetEnumColumns(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As [Enum]()
+            Return __gets(Of [Enum])(Properties, Function(type) type = ProviderIds.Enum).ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function GetCollectionColumns(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As CollectionColumn()
-            Return __gets(Of CollectionColumn)(Properties, Function(type) type = ProviderIds.CollectionColumn)
+            Return __gets(Of CollectionColumn)(Properties, Function(type) type = ProviderIds.CollectionColumn).ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function GetColumns(Properties As Dictionary(Of PropertyInfo, StorageProvider)) As Column()
-            Return __gets(Of Column)(Properties, AddressOf __columnType)
+            Return __gets(Of Column)(Properties, AddressOf __columnType).ToArray
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function __columnType(type As ProviderIds) As Boolean
-            Return type = Reflection.ProviderIds.Column OrElse
-                type = Reflection.ProviderIds.NullMask
+            Return type = Reflection.ProviderIds.Column OrElse type = Reflection.ProviderIds.NullMask
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of StorageProvider) Implements IEnumerable(Of StorageProvider).GetEnumerator

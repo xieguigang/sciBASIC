@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1df33e49dd42bd028ead567515dc367, mime\application%netcdf\Components\CDFData.vb"
+﻿#Region "Microsoft.VisualBasic::3bc67b5be82405a9927674f2d71b0c7b, mime\application%netcdf\Components\CDFData.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     '         Properties: byteStream, cdfDataType, chars, integers, Length
     '                     numerics, tiny_int, tiny_num
     ' 
-    '         Function: GetBuffer, ToString
+    '         Function: GetBuffer, GetInt64Buffer, ToString
     ' 
     ' 
     ' /********************************************************************************/

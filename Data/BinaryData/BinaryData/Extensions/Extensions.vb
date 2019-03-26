@@ -1,44 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::5f852cdfe68a25986407b514150125ba, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module Extensions
-    ' 
-    '     Function: OpenBinaryReader
-    ' 
-    ' /********************************************************************************/
+' Module Extensions
+' 
+'     Function: OpenBinaryReader
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Collections.Generic
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Text
@@ -63,5 +64,33 @@ Public Module Extensions
         Else
             Return New BinaryDataReader(File.OpenRead(path), encoding)
         End If
+    End Function
+
+    ''' <summary>
+    ''' 整个文件都是<see cref="Double"/>类型的值
+    ''' </summary>
+    ''' <param name="bin"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function ReadAsDoubleVector(bin As BinaryDataReader) As IEnumerable(Of Double)
+        Using bin
+            Do While Not bin.EndOfStream
+                Yield bin.ReadDouble
+            Loop
+        End Using
+    End Function
+
+    ''' <summary>
+    ''' 整个文件都是<see cref="Long"/>类型的值
+    ''' </summary>
+    ''' <param name="bin"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function ReadAsInt64Vector(bin As BinaryDataReader) As IEnumerable(Of Long)
+        Using bin
+            Do While Not bin.EndOfStream
+                Yield bin.ReadInt64
+            Loop
+        End Using
     End Function
 End Module

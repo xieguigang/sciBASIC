@@ -284,6 +284,14 @@ Namespace NeuralNetwork
             Next
         End Sub
 
+        Public Iterator Function GetAllNeurons() As IEnumerable(Of Neuron)
+            For Each layer As Layer In Me
+                For Each node As Neuron In layer
+                    Yield node
+                Next
+            Next
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{Size} hidden layers => {Layers.Select(Function(l) l.Neurons.Length).ToArray.GetJson }"
         End Function

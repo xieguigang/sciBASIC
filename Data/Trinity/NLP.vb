@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91dfb9232f7c617329088112842f55c1, Data\Trinity\NLP.vb"
+﻿#Region "Microsoft.VisualBasic::43867c5deb714515e3ef89b5ecc006ba, Data\Trinity\NLP.vb"
 
     ' Author:
     ' 

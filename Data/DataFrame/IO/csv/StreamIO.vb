@@ -66,7 +66,7 @@ Namespace IO
             Dim headers As Index(Of String) = csv.First.ToArray
             Dim scores As New List(Of (Type, Integer))
 
-            For Each schema In types.Select(AddressOf SchemaProvider.CreateObject)
+            For Each schema In types.Select(AddressOf SchemaProvider.CreateObjectInternal)
                 Dim allNames$() = schema.Properties _
                                         .Select(Function(x) x.Name) _
                                         .ToArray
