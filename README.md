@@ -245,15 +245,16 @@ The stacked barplot is a best choice for visualize the sample composition and co
 Imports Microsoft.VisualBasic.Data.ChartPlots
 
 ' Plots metagenome taxonomy profiles annotation result using barplot
-Dim taxonomy As BarDataGroup = csv.LoadBarData(
-    "./FigurePlot-Reference-Unigenes.absolute.level1.csv",
-    "Paired:c8") ' Using color brewer color profiles
+Dim file = "./FigurePlot-Reference-Unigenes.absolute.level1.csv"
+' Using color brewer color profiles
+Dim taxonomy As BarDataGroup = csv.LoadBarData(file, "Paired:c8") 
 
 Call BarPlot.Plot(
     taxonomy,
     New Size(2000, 1400),
     stacked:=True,
-    legendFont:=New Font(FontFace.BookmanOldStyle, 18)) _
+    legendFont:=New Font(FontFace.BookmanOldStyle, 18)
+) _
     .SaveAs("./FigurePlot-Reference-Unigenes.absolute.level1.png")
 ```
 

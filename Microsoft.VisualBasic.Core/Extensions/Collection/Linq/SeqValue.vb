@@ -78,7 +78,12 @@ Namespace Linq
         ''' <returns></returns>
         Public Property value As T Implements Value(Of T).IValueOf.Value
 
+        ''' <summary>
+        ''' This indexed value have no value.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return i = 0 AndAlso value Is Nothing
             End Get
@@ -109,15 +114,33 @@ Namespace Linq
             Return list
         End Operator
 
+        ''' <summary>
+        ''' Calculation of: ``<see cref="SeqValue(Of T).i"/> Mod <paramref name="n"/>``
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <param name="n"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Mod(i As SeqValue(Of T), n%) As Integer
             Return i.i Mod n
         End Operator
 
+        ''' <summary>
+        ''' Not equals to index i
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="i%"></param>
+        ''' <returns></returns>
         Public Shared Operator <>(v As SeqValue(Of T), i%) As Boolean
             Return v.i <> i
         End Operator
 
+        ''' <summary>
+        ''' Equals to index i
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <param name="i%"></param>
+        ''' <returns></returns>
         Public Shared Operator =(v As SeqValue(Of T), i%) As Boolean
             Return v.i = i
         End Operator

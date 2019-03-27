@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::011bb863e943d0f2c55e1833f3fbb66b, Data\DataFrame\IO\csv\HTMLWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module HTMLWriter
-    ' 
-    '         Function: __titleRow, (+2 Overloads) ToHTML, (+2 Overloads) ToHTMLTable
-    ' 
-    '         Sub: __contentRow
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module HTMLWriter
+' 
+'         Function: __titleRow, (+2 Overloads) ToHTML, (+2 Overloads) ToHTMLTable
+' 
+'         Sub: __contentRow
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -46,6 +46,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -55,71 +56,50 @@ Namespace IO
     <Package("Csv.HTML.Writer")>
     Public Module HTMLWriter
 
-        <Extension> Public Function ToHTML(Of T As Class)(source As IEnumerable(Of T), Optional Title As String = "", Optional describ As String = "", Optional css As String = "") As String
-            Dim csv As IO.File = source.ToCsvDoc(False)
-
-            If String.IsNullOrEmpty(describ) Then
-                describ = GetType(T).Description
-            End If
-            If String.IsNullOrEmpty(Title) Then
-                Title = $"Document for {GetType(T).FullName}"
-            End If
-
-            Return csv.ToHTML(Title, describ, css)
+        ''' <summary>
+        ''' Render target object collection as a html table
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="title"></param>
+        ''' <param name="describ"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ToHTML(Of T As Class)(source As IEnumerable(Of T), Optional title As String = "", Optional describ As String = "") As String
+            Return source.ToCsvDoc(False).ToHTMLTable(title Or GetType(T).FullName.AsDefault, describ Or GetType(T).Description.AsDefault)
         End Function
 
-        <ExportAPI("ToHTML")>
-        <Extension> Public Function ToHTML(doc As IO.File, Optional Title As String = "", Optional describ As String = "", Optional css As String = "") As String
-            If String.IsNullOrEmpty(css) Then
-                css = My.Resources.foundation
-            End If
-
-            Dim html As StringBuilder = New StringBuilder(My.Resources.HTML_Template)
-            Call html.Replace("{Title}", Title)
-            Call html.Replace("{CSS}", css)
-
-            Dim innerDoc As New StringBuilder($"<p>{describ}</p>")
-            Call innerDoc.AppendLine(doc.ToHTMLTable)
-
-            Call html.Replace("{doc}", innerDoc.ToString)
-
-            Return html.ToString
-        End Function
-
-        <Extension> Public Function ToHTMLTable(Of T As Class)(
-            source As IEnumerable(Of T),
+        <Extension>
+        Public Function ToHTMLTable(Of T As Class)(source As IEnumerable(Of T),
             Optional className$ = "",
             Optional tableID$ = Nothing,
             Optional width$ = "",
             Optional removes$() = Nothing,
-            Optional theadSpace As Boolean = False,
             Optional alt$ = Nothing) As String
 
-            Dim csv As File = source.ToCsvDoc(False)
-            Return csv.ToHTMLTable(
+            Return source.ToCsvDoc(False).ToHTMLTable(
                 className,
                 tableID,
                 width,
                 removes,
-                theadSpace,
                 alt)
         End Function
 
         ''' <summary>
         ''' 只是生成table，而非完整的html文档
         ''' </summary>
-        ''' <param name="csvTable"></param>
+        ''' <param name="table"></param>
         ''' <param name="width">100%|px</param>
         ''' <returns></returns>
         ''' 
         <ExportAPI("ToHTML.Table")>
-        <Extension> Public Function ToHTMLTable(
-            csvTable As File,
+        <Extension> Public Function ToHTMLTable(table As File,
             Optional className$ = "",
             Optional tableID$ = Nothing,
             Optional width$ = "",
+            Optional title$ = Nothing,
             Optional removes$() = Nothing,
-            Optional theadSpace As Boolean = False,
             Optional alt$ = Nothing) As String
 
             Dim innerDoc As New StringBuilder("<table", 4096)
@@ -128,7 +108,7 @@ Namespace IO
                 removes _
                 .SafeQuery _
                 .Select(Function(name)
-                            Return csvTable.Headers.IndexOf(name)
+                            Return table.Headers.IndexOf(name)
                         End Function))
 
             If Not String.IsNullOrEmpty(className) Then
@@ -142,31 +122,40 @@ Namespace IO
             End If
 
             Call innerDoc.AppendLine(">")
-            Call innerDoc.AppendLine(csvTable.Headers.__titleRow(removeList, theadSpace))          
 
-            For Each row As SeqValue(Of RowObject) In csvTable.Skip(1).SeqIterator
-                If alt.StringEmpty Then
-                    Call (+row).__contentRow(innerDoc, removeIndex, Nothing)
-                Else
-                    If row Mod 2 = 0 Then
-                        Call (+row).__contentRow(innerDoc, removeIndex, alt)
+            If Not title.StringEmpty Then
+                innerDoc.AppendLine($"<caption>{title}</caption>")
+            End If
+
+            Call innerDoc.AppendLine(table.Headers.titleRow(removeList))
+            Call innerDoc.AppendLine("<tbody>")
+
+            For Each row As SeqValue(Of RowObject) In table.Skip(1).SeqIterator
+                With row.value
+                    If alt.StringEmpty Then
+                        Call .bodyRow(innerDoc, removeIndex, Nothing)
                     Else
-                        Call (+row).__contentRow(innerDoc, removeIndex, Nothing)
+                        If row Mod 2 = 0 Then
+                            Call .bodyRow(innerDoc, removeIndex, alt)
+                        Else
+                            Call .bodyRow(innerDoc, removeIndex, Nothing)
+                        End If
                     End If
-                End If
+                End With
             Next
 
+            Call innerDoc.AppendLine("</tbody>")
             Call innerDoc.AppendLine("</table>")
 
             Return innerDoc.ToString
         End Function
 
-        <Extension> Private Function __titleRow(row As RowObject, removes As Index(Of String), theadSpace As Boolean) As String
+        <Extension> Private Function titleRow(row As RowObject, removes As Index(Of String)) As String
             Dim doc As New StringBuilder
             Dim rowText$ = row _
                 .Where(Function(t) removes(t) = -1) _
                 .Select(Function(x)
-                            Return $"<td id=""{x}""><strong>{If(theadSpace, x & "&nbsp;&nbsp;&nbsp;", x)}</strong></td>"
+                            Return $"<th id=""{x}"">{x}</th>"
                         End Function) _
                 .JoinBy("")
 
@@ -177,8 +166,8 @@ Namespace IO
             Return doc.ToString
         End Function
 
-        <Extension> Private Sub __contentRow(row As RowObject, ByRef doc As StringBuilder, removes As Index(Of Integer), alt$)
-            Dim rowText$ = row.ToArray _
+        <Extension> Private Sub bodyRow(row As RowObject, ByRef doc As StringBuilder, removes As Index(Of Integer), alt$)
+            Dim rowText$ = row _
                 .SeqIterator _
                 .Where(Function(i) removes(x:=i.i) = -1) _
                 .Select(Function(x) $"<td>{+x}</td>") _
