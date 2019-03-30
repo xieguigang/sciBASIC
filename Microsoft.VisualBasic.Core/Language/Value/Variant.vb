@@ -75,6 +75,10 @@ Namespace Language
             End Get
         End Property
 
+        Public Function [TryCast](Of T)() As T
+            Return DirectCast(Value, T)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(obj As [Variant](Of A, B)) As Type
             Return obj.GetUnderlyingType
