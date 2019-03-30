@@ -67,17 +67,15 @@ Namespace Language
     ''' <summary>
     ''' ``[name => value]`` tuple
     ''' </summary>
-    Public Class ArgumentReference
+    Public Class ArgumentReference : Inherits Value
         Implements INamedValue
-
-        Public name$, value
 
         Private Property Key As String Implements IKeyedEntity(Of String).Key
             Get
-                Return name
+                Return Name
             End Get
             Set(value As String)
-                name = value
+                Name = value
             End Set
         End Property
 
@@ -119,6 +117,11 @@ Namespace Language
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overrides Function GetUnderlyingType() As Type
+            Return ValueType
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function [As](Of T)() As NamedValue(Of T)
             Return New NamedValue(Of T)(name, value)
         End Function
@@ -134,23 +137,23 @@ Namespace Language
         ''' <param name="value">argument value</param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator =(var As ArgumentReference, value As Object) As ArgumentReference
-            var.value = value
+        Public Overloads Shared Operator =(var As ArgumentReference, value As Object) As ArgumentReference
+            var.Value = value
             Return var
         End Operator
 
-        Public Shared Operator <>(var As ArgumentReference, value As Object) As ArgumentReference
+        Public Overloads Shared Operator <>(var As ArgumentReference, value As Object) As ArgumentReference
             Throw New NotImplementedException
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Narrowing Operator CType(arg As ArgumentReference) As (name As String, value As Object)
-            Return (arg.name, arg.value)
+        Public Overloads Shared Narrowing Operator CType(arg As ArgumentReference) As (name As String, value As Object)
+            Return (arg.Name, arg.Value)
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Widening Operator CType(name As String) As ArgumentReference
-            Return New ArgumentReference With {.name = name}
+        Public Overloads Shared Widening Operator CType(name As String) As ArgumentReference
+            Return New ArgumentReference With {.Name = name}
         End Operator
     End Class
 

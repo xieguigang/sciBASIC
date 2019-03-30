@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::29118a546d4fe6ba5e820a02074fd977, Microsoft.VisualBasic.Core\Language\Value\Value.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Value
-    ' 
-    '         Properties: HasValue, Value
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: [Default], (+2 Overloads) Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault
-    '                   IsNothing, ToString
-    '         Operators: -, (+3 Overloads) +, <=, <>, =
-    '                    >=, (+2 Overloads) Like
-    '         Interface IValueOf
-    ' 
-    '             Properties: Value
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Value
+' 
+'         Properties: HasValue, Value
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: [Default], (+2 Overloads) Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault
+'                   IsNothing, ToString
+'         Operators: -, (+3 Overloads) +, <=, <>, =
+'                    >=, (+2 Overloads) Like
+'         Interface IValueOf
+' 
+'             Properties: Value
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -258,9 +259,29 @@ Namespace Language
             Return o
         End Operator
 
+        ''' <summary>
+        ''' Type match operator, this may consider inherits of base type and interface implementation.
+        ''' </summary>
+        ''' <param name="o"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Unlike this operation its behavior, the Variant type its type match operator 
+        ''' is a type exactly match operation.
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Like(o As Value(Of T), type As Type) As Boolean
-            Return o.GetUnderlyingType Is type
+            If o.GetUnderlyingType Is type Then
+                Return True
+            End If
+
+            If type.IsInterface Then
+                Return o.GetUnderlyingType.ImplementInterface(type)
+            ElseIf type.IsClass Then
+                Return o.GetUnderlyingType.IsInheritsFrom(type)
+            Else
+                Return False
+            End If
         End Operator
 
         Public Shared Operator <>(value As Value(Of T), o As T) As T
