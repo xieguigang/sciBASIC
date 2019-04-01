@@ -120,91 +120,91 @@ Namespace Layouts.Cola
         ''' <returns></returns>
         Public Function powerGraphGridLayout(graph As network, size As Double(), grouppadding As Double) As LayoutGraph
             ' compute power graph
-            'Dim indexPowerGraph As IndexPowerGraph = Nothing
+            Dim powerGraph As PowerGraph = Nothing
 
-            'Call graph.nodes.ForEach(Sub(v, i) v.index = i)
-            'Call New Layout() _
-            '    .avoidOverlaps(False) _
-            '    .nodes(graph.nodes) _
-            '    .links(graph.links) _
-            '    .powerGraphGroups(Sub(d)
-            '                          ' powerGraph对象是在这里被赋值初始化的
-            '                          indexPowerGraph = d
-            '                          indexPowerGraph.groups.DoEach(Sub(v) v.padding = grouppadding)
-            '                      End Sub)
+            Call graph.nodes.ForEach(Sub(v, i) v.index = i)
+            Call New Layout() _
+                .avoidOverlaps(False) _
+                .nodes(graph.nodes) _
+                .links(graph.links) _
+                .powerGraphGroups(Sub(d)
+                                      ' powerGraph对象是在这里被赋值初始化的
+                                      powerGraph = d
+                                      powerGraph.groups.DoEach(Sub(v) v.padding = grouppadding)
+                                  End Sub)
 
-            '' construct a flat graph with dummy nodes for the groups and edges connecting group dummy nodes to their children
-            '' power edges attached to groups are replaced with edges connected to the corresponding group dummy node
-            'Dim n = graph.nodes.Length
-            'Dim edges As New List(Of PowerEdge(Of Integer))
-            'Dim vs = graph.nodes.ToList
-            'vs.ForEach(Sub(v, i) v.index = i)
+            ' construct a flat graph with dummy nodes for the groups and edges connecting group dummy nodes to their children
+            ' power edges attached to groups are replaced with edges connected to the corresponding group dummy node
+            Dim n = graph.nodes.Length
+            Dim edges As New List(Of PowerEdge(Of Integer))
+            Dim vs = graph.nodes.ToList
+            vs.ForEach(Sub(v, i) v.index = i)
 
-            'indexPowerGraph.groups _
-            '    .ForEach(Sub(g As IndexGroup)
-            '                 Dim sourceInd%
+            powerGraph.groups _
+                .ForEach(Sub(g As IndexGroup)
+                             Dim sourceInd%
 
-            '                 g.index = g.id + n
-            '                 sourceInd = g.index
-            '                 vs.Add(g)
+                             g.index = g.id + n
+                             sourceInd = g.index
+                             vs.Add(g)
 
-            '                 If g.leaves IsNot Nothing Then
-            '                     g.leaves.ForEach(Sub(v)
-            '                                          Dim ie As New PowerEdge(Of Integer) With {
-            '                                              .source = sourceInd,
-            '                                              .target = v.index
-            '                                          }
+                             If g.leaves IsNot Nothing Then
+                                 g.leaves.ForEach(Sub(v)
+                                                      Dim ie As New PowerEdge(Of Integer) With {
+                                                          .source = sourceInd,
+                                                          .target = v.index
+                                                      }
 
-            '                                          Call edges.Add(ie)
-            '                                      End Sub)
-            '                 End If
-            '                 If g.groups IsNot Nothing Then
-            '                     g.groups.ForEach(Sub(gg)
-            '                                          Call edges.Add(New PowerEdge(Of Integer) With {
-            '                                      .source = sourceInd,
-            '                                      .target = gg.id + n
-            '                                  })
-            '                                      End Sub)
-            '                 End If
-            '             End Sub)
+                                                      Call edges.Add(ie)
+                                                  End Sub)
+                             End If
+                             If g.groups IsNot Nothing Then
+                                 g.groups.ForEach(Sub(gg)
+                                                      Call edges.Add(New PowerEdge(Of Integer) With {
+                                                  .source = sourceInd,
+                                                  .target = gg.id + n
+                                              })
+                                                  End Sub)
+                             End If
+                         End Sub)
 
-            'indexPowerGraph.powerEdges.ForEach(Sub(e)
-            '                                       Call edges.Add(New PowerEdge(Of Integer) With {
-            '                                      .source = e.source.index,
-            '                                      .target = e.target.index
-            '                                  })
-            '                                   End Sub)
+            powerGraph.powerEdges.ForEach(Sub(e)
+                                              Call edges.Add(New PowerEdge(Of Integer) With {
+                                                  .source = e.source.index,
+                                                  .target = e.target.index
+                                              })
+                                          End Sub)
 
-            '' layout the flat graph with dummy nodes and edges
-            'Call New Layout().size(size) _
-            '    .nodes(vs) _
-            '    .links(edges) _
-            '    .avoidOverlaps(False) _
-            '    .linkDistance(30) _
-            '    .symmetricDiffLinkLengths(5) _
-            '    .convergenceThreshold(0.0001) _
-            '    .start(100, 0, 0, 0, False)
+            ' layout the flat graph with dummy nodes and edges
+            Call New Layout().size(size) _
+                .nodes(vs) _
+                .links(edges) _
+                .avoidOverlaps(False) _
+                .linkDistance(30) _
+                .symmetricDiffLinkLengths(5) _
+                .convergenceThreshold(0.0001) _
+                .start(100, 0, 0, 0, False)
 
-            '' final layout taking node positions from above as starting positions
-            '' subject to group containment constraints
-            '' and then gridifying the layout
-            ''.flowLayout('y', 30)
+            ' final layout taking node positions from above as starting positions
+            ' subject to group containment constraints
+            ' and then gridifying the layout
+            '.flowLayout('y', 30)
 
-            'Return New LayoutGraph With {
-            '    .cola = New Layout().convergenceThreshold(0.001) _
-            '        .size(size) _
-            '        .avoidOverlaps(True) _
-            '        .nodes(graph.nodes) _
-            '        .links(graph.links) _
-            '        .groupCompactness(0.0001) _
-            '        .linkDistance(30) _
-            '        .symmetricDiffLinkLengths(5) _
-            '        .powerGraphGroups(Sub(d)
-            '                              PowerGraph = d
-            '                              PowerGraph.groups.DoEach(Sub(v) v.padding = grouppadding)
-            '                          End Sub).start(50, 0, 100, 0, False),
-            '    .powerGraph = PowerGraph
-            '}
+            Return New LayoutGraph With {
+                .cola = New Layout().convergenceThreshold(0.001) _
+                    .size(size) _
+                    .avoidOverlaps(True) _
+                    .nodes(graph.nodes) _
+                    .links(graph.links) _
+                    .groupCompactness(0.0001) _
+                    .linkDistance(30) _
+                    .symmetricDiffLinkLengths(5) _
+                    .powerGraphGroups(Sub(d)
+                                          PowerGraph = d
+                                          PowerGraph.groups.DoEach(Sub(v) v.padding = grouppadding)
+                                      End Sub).start(50, 0, 100, 0, False),
+                .powerGraph = PowerGraph
+            }
         End Function
 
     End Module
