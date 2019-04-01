@@ -48,14 +48,14 @@ Namespace Layouts.Cola
     ''' <typeparam name="NodeRefType">可以是节点对象类型的实例或者节点数组的下标数字值</typeparam>
     Public Class Link(Of NodeRefType)
 
-        Public Property source() As NodeRefType
-        Public Property target() As NodeRefType
+        Public Property source As NodeRefType
+        Public Property target As NodeRefType
 
         ''' <summary>
         ''' ideal length the layout should try to achieve for this link 
         ''' </summary>
         ''' <returns></returns>
-        Public Property length() As Double
+        Public Property length As Double
 
         ''' <summary>
         ''' how hard we should try to satisfy this link's ideal length
@@ -63,6 +63,10 @@ Namespace Layouts.Cola
         ''' if unspecified 1 is the default
         ''' </summary>
         ''' <returns></returns>
-        Public Property weight() As Double
+        Public Property weight As Double
+
+        Public Overrides Function ToString() As String
+            Return $"[{source}, {target}]"
+        End Function
     End Class
 End Namespace

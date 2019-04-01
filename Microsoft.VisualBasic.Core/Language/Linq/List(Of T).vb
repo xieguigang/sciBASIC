@@ -162,6 +162,15 @@ Namespace Language
             End Set
         End Property
 
+        Default Public Overloads Property Item(index As Integer?) As T
+            Get
+                Return Item(index.Value)
+            End Get
+            Set(value As T)
+                Item(index.Value) = value
+            End Set
+        End Property
+
         ''' <summary>
         ''' Can accept negative number as the index value, negative value means ``<see cref="Count"/> - n``, 
         ''' example as ``list(-1)``: means the last element in this list: ``list(list.Count -1)``

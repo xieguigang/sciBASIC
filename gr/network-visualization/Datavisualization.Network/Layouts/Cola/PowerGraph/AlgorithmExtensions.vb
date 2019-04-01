@@ -43,16 +43,17 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language
 
 Namespace Layouts.Cola
 
     Module powergraphExtensions
 
         <Extension>
-        Private Sub toGroups(m As [Module], group As IndexGroup, groups As List(Of IndexGroup))
+        Private Sub toGroups(m As [Module], group As Node, groups As List(Of Node))
             If m.isLeaf Then
                 If group.leaves Is Nothing Then
-                    group.leaves = New List(Of Integer)
+                    group.leaves = New List(Of [Variant](Of Integer, Node))
                 End If
 
                 group.leaves.Add(m.id)
@@ -61,15 +62,15 @@ Namespace Layouts.Cola
                 m.gid = groups.Count
 
                 If (Not m.isIsland OrElse m.isPredefined) Then
-                    g = New IndexGroup With {.id = m.gid}
+                    g = New Node With {.id = m.gid}
 
                     If m.isPredefined Then
                         For Each prop As String In m.definition.Keys
                             g(prop) = m.definition(prop)
                         Next
                     End If
-                    If group.groups.IsNullOrEmpty Then
-                        group.groups = New List(Of Integer)
+                    If group.groups Is Nothing Then
+                        group.groups = New List(Of [Variant](Of Integer, Node))
                     End If
 
                     group.groups.Add(m.gid)
@@ -80,7 +81,7 @@ Namespace Layouts.Cola
             End If
         End Sub
 
-        Public Sub toGroups(modules As ModuleSet, group As IndexGroup, groups As List(Of IndexGroup))
+        Public Sub toGroups(modules As ModuleSet, group As Node, groups As List(Of Node))
             Call modules.forAll(Sub(m As [Module]) m.toGroups(group, groups))
         End Sub
 
@@ -96,28 +97,33 @@ Namespace Layouts.Cola
             Return i
         End Function
 
-        Public Function getGroups(Of Link)(nodes As Node(), links As Link(), la As LinkTypeAccessor(Of Link), rootGroup As Group) As IndexPowerGraph
+        Public Function getGroups(Of Link)(nodes As Node(), links As Link(), la As LinkTypeAccessor(Of Link), rootGroup As Node) As PowerGraph
             Dim n = nodes.Length
             Dim c = New Configuration(Of Link)(n, links, la, rootGroup)
 
             While c.greedyMerge()
             End While
 
-            Dim powerEdgeIndices As New List(Of PowerEdge(Of Integer))
+            Dim powerEdgeIndices As New List(Of PowerEdge(Of [Variant](Of Integer, Node)))
             Dim powerEdges As New List(Of PowerEdge(Of Node))
             Dim g = c.getGroupHierarchy(powerEdgeIndices)
 
             powerEdgeIndices.DoEach(Sub(e)
                                         ' javascript之中，对象类型在这里发生了转换
                                         ' 将index转换为具体的node对象
-                                        Dim nodeEdge As New PowerEdge(Of Node)
-                                        Dim f = Sub([end] As String) nodeEdge([end]) = nodes(e([end]))
+                                        Dim f = Sub([end] As String)
+                                                    Dim eg = e([end])
+
+                                                    If eg Like GetType(Integer) Then
+                                                        e([end]) = nodes(CType(eg, Integer))
+                                                    End If
+                                                End Sub
 
                                         Call f("source")
                                         Call f("target")
                                     End Sub)
 
-            Return New IndexPowerGraph With {
+            Return New PowerGraph With {
                 .groups = g,
                 .powerEdges = powerEdges
             }

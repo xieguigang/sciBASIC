@@ -54,6 +54,8 @@ Module ColaTest
     Sub Main()
 
         Dim network As network = network.example
+        Dim layout = Cola.batch.powerGraphGridLayout(network, {2000, 1600}, 10)
+
 
 
         Pause()

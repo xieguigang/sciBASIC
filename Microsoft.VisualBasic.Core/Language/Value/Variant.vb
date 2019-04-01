@@ -75,6 +75,17 @@ Namespace Language
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(a As A)
+            Value = a
+        End Sub
+
+        Sub New(b As B)
+            Value = b
+        End Sub
+
         Public Function [TryCast](Of T)() As T
             Return DirectCast(Value, T)
         End Function
@@ -138,6 +149,21 @@ Namespace Language
                 Return Value
             End Get
         End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(a As A)
+            Value = a
+        End Sub
+
+        Sub New(b As B)
+            Value = b
+        End Sub
+
+        Sub New(c As C)
+            Value = c
+        End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(obj As [Variant](Of A, B, C)) As C

@@ -1,43 +1,43 @@
 ﻿#Region "Microsoft.VisualBasic::bd91b0185477cb17f4b79f63c62810fb, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\Validation.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Structure Validation
-    ' 
-    '     Properties: F1Score, FbetaScore
-    ' 
-    '     Function: Calc, ROC, ToDataSet, ToString
-    ' 
-    ' /********************************************************************************/
+' Structure Validation
+' 
+'     Properties: F1Score, FbetaScore
+' 
+'     Function: Calc, ROC, ToDataSet, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -114,7 +114,10 @@ Public Structure Validation
     ''' <param name="getValidate">得到实际的分类结果</param>
     ''' <param name="getPredict">得到预测的分类结果</param>
     ''' <returns></returns>
-    Public Shared Function Calc(Of T)(entity As IEnumerable(Of T), getValidate As Func(Of T, Boolean), getPredict As Func(Of T, Boolean)) As Validation
+    Public Shared Function Calc(Of T)(entity As IEnumerable(Of T),
+                                      getValidate As Func(Of T, Boolean),
+                                      getPredict As Func(Of T, Boolean),
+                                      Optional percentile# = 0.5) As Validation
         ' 真阳性人数
         Dim TP As Integer
         ' 假阳性人数
@@ -161,7 +164,8 @@ Public Structure Validation
             .FN = FN,
             .FP = FP,
             .TN = TN,
-            .TP = TP
+            .TP = TP,
+            .Percentile = percentile
         }
     End Function
 
@@ -170,7 +174,7 @@ Public Structure Validation
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="entity"></param>
-    ''' <param name="getValidate"></param>
+    ''' <param name="getValidate">``func x, threshold => yes/no``</param>
     ''' <param name="getPredict"></param>
     ''' <returns></returns>
     ''' <remarks>
@@ -180,13 +184,20 @@ Public Structure Validation
     ''' 但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，
     ''' 在此引入ROC。
     ''' </remarks>
-    Public Iterator Function ROC(Of T)(entity As IEnumerable(Of T),
-                                       getValidate As Func(Of T, Double, Boolean),
-                                       getPredict As Func(Of T, Double, Boolean)) As IEnumerable(Of Validation)
+    Public Shared Iterator Function ROC(Of T)(entity As IEnumerable(Of T),
+                                              getValidate As Func(Of T, Double, Boolean),
+                                              getPredict As Func(Of T, Double, Boolean),
+                                              Optional steps! = 0.01) As IEnumerable(Of Validation)
 
-        For pct As Double = 0 To 1 Step 0.05
+        Dim validate As Func(Of T, Boolean)
+        Dim predict As Func(Of T, Boolean)
+
+        For pct As Double = 0 To 1 Step steps
 #Disable Warning
-            Yield Validation.Calc(entity, Function(x) getValidate(x, pct), Function(x) getPredict(x, pct))
+            validate = Function(x) getValidate(x, pct)
+            predict = Function(x) getPredict(x, pct)
+
+            Yield Validation.Calc(entity, validate, predict, percentile:=pct)
 #Enable Warning
         Next
     End Function
