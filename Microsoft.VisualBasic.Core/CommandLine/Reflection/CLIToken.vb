@@ -105,6 +105,8 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         Public ReadOnly Property IsOptional As Boolean
 
+        Public Property Format As String
+
         ''' <summary>
         ''' 默认为参数字符串通用类型
         ''' </summary>

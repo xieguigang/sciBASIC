@@ -120,7 +120,7 @@ Namespace CommandLine.InteropService
 
             ' undefined类型需要用户自己进行处理
             For Each argum As BindProperty(Of Argv) In args.Where(Function(a) a.field.Type <> CLITypes.Undefined)
-                Dim getCLIToken As getValue = convertMethods(argum.field.Type)
+                Dim getToken As getValue = convertMethods(argum.field.Type)
                 Dim value As Object = argum.GetValue(app)
 
                 ' integer, double这些类型都用nullable类型
@@ -134,7 +134,7 @@ Namespace CommandLine.InteropService
                     argv = argum.field
                 End If
 
-                With getCLIToken(value, argv, prop)
+                With getToken(value, argv, prop)
                     ' 有些类型是会返回空字符串结果的
                     ' 例如boolean类型的数据，false的时候是返回空字符串
                     ' 所以会需要在这里判断一下
@@ -197,18 +197,33 @@ Namespace CommandLine.InteropService
         ''' <summary>
         ''' The different between the String and Path is that applying <see cref="CLIToken"/> or <see cref="CLIPath"/>.
         ''' </summary>
-        ''' <param name="value">只能是<see cref="System.String"/>类型的</param>
+        ''' <param name="value">只能是<see cref="String"/>类型的</param>
         ''' <param name="attr"></param>
         ''' <param name="prop"></param>
         ''' <returns></returns>
         Private Function pathRule(value As Object, attr As Argv, prop As PropertyInfo) As String
-            Dim path As String = DirectCast(value, String)
+            With DirectCast(value, String)
+                If Not .StringEmpty Then
+                    Return attr.formatToken(.CLIPath)
+                Else
+                    Return Nothing
+                End If
+            End With
+        End Function
 
-            If Not String.IsNullOrEmpty(path) Then
-                path = $"{attr.Name} {path.CLIPath}"
+        ''' <summary>
+        ''' 这个方法不会影响逻辑值类型
+        ''' </summary>
+        ''' <param name="attr"></param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function formatToken(attr As Argv, value As String) As String
+            If attr.Format.StringEmpty Then
+                Return $"{attr.Name} {value}"
+            Else
+                Return attr.Format.Replace("%s", value)
             End If
-
-            Return path
         End Function
 
         ''' <summary>
@@ -220,19 +235,18 @@ Namespace CommandLine.InteropService
         ''' <returns></returns>
         Private Function stringRule(value As Object, attr As Argv, prop As PropertyInfo) As String
             If prop.PropertyType.Equals(GetType(String)) Then
-                Dim str As String = Scripting.ToString(value)
-
-                If String.IsNullOrEmpty(str) Then
-                    Return ""
-                Else
-                    Return $"{attr.Name} {str.CLIToken}"
-                End If
+                With Scripting.ToString(value)
+                    If Not .StringEmpty Then
+                        Return attr.formatToken(.CLIToken)
+                    Else
+                        Return Nothing
+                    End If
+                End With
             ElseIf prop.PropertyType.IsInheritsFrom(GetType([Enum])) Then
                 Return stringEnumRule(value, attr, prop)
             Else
-                Dim str As String = Scripting.ToString(value)
-
-                Return $"{attr.Name} {str}"
+                ' 数值类型
+                Return attr.formatToken(Scripting.ToString(value))
             End If
         End Function
 
@@ -251,9 +265,9 @@ Namespace CommandLine.InteropService
             Dim enumValue As [Enum] = DirectCast(value, [Enum])
 
             If attr.Type = CLITypes.String Then
-                Return $"{attr.Name} {enumValue.Description.CLIToken}"
+                Return attr.formatToken(enumValue.Description.CLIToken)
             ElseIf attr.Type = CLITypes.Integer Then
-                Return $"{attr.Name} {Convert.ToInt32(enumValue)}"
+                Return attr.formatToken(Convert.ToInt32(enumValue))
             Else
                 Throw New InvalidCastException($"Unable cast {enumValue.GetType.FullName} enum value to such type: {attr.Type.ToString}")
             End If

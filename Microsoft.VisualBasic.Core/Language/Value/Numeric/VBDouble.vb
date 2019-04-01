@@ -51,7 +51,7 @@ Imports System.Runtime.CompilerServices
 Namespace Language
 
     ''' <summary>
-    ''' <see cref="System.Double"/>
+    ''' <see cref="Double"/>
     ''' </summary>
     Public Class VBDouble : Inherits Value(Of Double)
         Implements IComparable

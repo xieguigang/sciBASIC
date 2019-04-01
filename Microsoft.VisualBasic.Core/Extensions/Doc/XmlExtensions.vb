@@ -47,7 +47,6 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports System.Text.RegularExpressions
 Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -57,7 +56,6 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
-Imports r = System.Text.RegularExpressions.Regex
 
 <Package("Doc.Xml", Description:="Tools for read and write sbml, KEGG document, etc, xml based documents...")>
 Public Module XmlExtensions
@@ -232,18 +230,6 @@ Public Module XmlExtensions
         End Try
     End Function
 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function CodePage(xmlEncoding As XmlEncodings) As Encoding
-        Select Case xmlEncoding
-            Case XmlEncodings.GB2312
-                Return Encodings.GB2312.CodePage
-            Case XmlEncodings.UTF8
-                Return UTF8WithoutBOM
-            Case Else
-                Return Encodings.UTF16.CodePage
-        End Select
-    End Function
-
     ''' <summary>
     ''' 写入的文本文件的编码格式和XML的编码格式应该是一致的
     ''' </summary>
@@ -291,23 +277,6 @@ Public Module XmlExtensions
                 Return False
             End If
         End Try
-    End Function
-
-    <ExportAPI("Xml.GetAttribute")>
-    <Extension> Public Function GetXmlAttrValue(str As String, Name As String) As String
-        Dim m As Match = r.Match(str, Name & "\s*=\s*(("".+?"")|[^ ]*)")
-
-        If Not m.Success Then
-            Return ""
-        Else
-            str = m.Value.GetTagValue("=", trim:=True).Value
-        End If
-
-        If str.First = """"c AndAlso str.Last = """"c Then
-            str = Mid(str, 2, Len(str) - 2)
-        End If
-
-        Return str
     End Function
 
     ''' <summary>
@@ -406,39 +375,5 @@ Public Module XmlExtensions
 
             Throw New Exception("Details at file dump: " & file, ex)
         End Try
-    End Function
-
-    <Extension>
-    Public Function SetXmlEncoding(xml As String, encoding As XmlEncodings) As String
-        Dim xmlEncoding As String = Text.Xml.XmlDeclaration.XmlEncodingString(encoding)
-        Dim head As String = Regex.Match(xml, XmlDoc.XmlDeclares, RegexICSng).Value
-        Dim enc As String = Regex.Match(head, "encoding=""\S+""", RegexICSng).Value
-
-        If String.IsNullOrEmpty(enc) Then
-            enc = head.Replace("?>", $" encoding=""{xmlEncoding}""?>")
-        Else
-            enc = head.Replace(enc, $"encoding=""{xmlEncoding}""")
-        End If
-
-        xml = xml.Replace(head, enc)
-
-        Return xml
-    End Function
-
-    <Extension>
-    Public Function SetXmlStandalone(xml As String, standalone As Boolean) As String
-        Dim opt As String = Text.Xml.XmlDeclaration.XmlStandaloneString(standalone)
-        Dim head As String = Regex.Match(xml, XmlDoc.XmlDeclares, RegexICSng).Value
-        Dim enc As String = Regex.Match(head, "standalone=""\S+""", RegexICSng).Value
-
-        If String.IsNullOrEmpty(enc) Then
-            enc = head.Replace("?>", $" standalone=""{opt}""?>")
-        Else
-            enc = head.Replace(enc, $"standalone=""{opt}""")
-        End If
-
-        xml = xml.Replace(head, enc)
-
-        Return xml
     End Function
 End Module
