@@ -80,22 +80,27 @@ Namespace Scripting.SymbolBuilder
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(sb As StringBuilder)
             Script = sb
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(capacity As Integer)
             Script = New StringBuilder(capacity)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New()
             Call Me.New(capacity:=1024)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(script$)
             Call Me.New(New StringBuilder(script))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(html As XElement)
             Call Me.New(html.ToString)
         End Sub

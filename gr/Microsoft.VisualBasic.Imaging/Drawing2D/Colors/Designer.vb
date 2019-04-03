@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Drawing2D.Colors
 
@@ -166,27 +167,42 @@ Namespace Drawing2D.Colors
         Public ReadOnly Property ConsoleColors As Color() = Enums(Of ConsoleColor) _
             .Select(Function(c) c.ToString) _
             .Select(Function(exp As String)
-                        ' 2019-03-14 有些console的颜色是不存在的,所以解析会得到黑色
-                        Dim color As Color = exp.TranslateColor(False)
-
-                        If Not color.IsEmpty Then
-                            Return color
-                        Else
-                            ' 使用相近的颜色进行替代
-                            If InStr(exp, "Dark") > 0 Then
-                                exp = exp.Replace("Dark", "")
-                                color = exp.TranslateColor.Darken
-                            ElseIf InStr(exp, "Light") > 0 Then
-                                exp = exp.Replace("Light", "")
-                                color = exp.TranslateColor.Lighten
-                            Else
-                                Throw New NotImplementedException(exp)
-                            End If
-
-                            Return color
-                        End If
+                        Return exp.FromConsoleColor
                     End Function) _
             .ToArray
+
+        <Extension>
+        Private Function FromConsoleColor(exp As String) As Color
+            ' 2019-03-14 有些console的颜色是不存在的,所以解析会得到黑色
+            Dim color As Color = exp.TranslateColor(False)
+
+            If Not color.IsEmpty Then
+                Return color
+            Else
+                ' 使用相近的颜色进行替代
+                If InStr(exp, "Dark") > 0 Then
+                    exp = exp.Replace("Dark", "")
+                    color = exp.TranslateColor.Darken
+                ElseIf InStr(exp, "Light") > 0 Then
+                    exp = exp.Replace("Light", "")
+                    color = exp.TranslateColor.Lighten
+                Else
+                    Throw New NotImplementedException(exp)
+                End If
+
+                Return color
+            End If
+        End Function
+
+        ''' <summary>
+        ''' 将<see cref="System.ConsoleColor"/>枚举值转换为gdi+颜色对象
+        ''' </summary>
+        ''' <param name="color"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ConsoleColor(color As ConsoleColor) As Color
+            Return color.ToString.FromConsoleColor
+        End Function
 
         ''' <summary>
         ''' 
@@ -253,11 +269,14 @@ Namespace Drawing2D.Colors
                 AvailableInterpolates = valids
 
                 Dim colorBrewerJSON$ = My.Resources.colorbrewer.GetString(Encodings.UTF8)
-                Dim ns = Regex.Matches(colorBrewerJSON, """\d+""") _
-                    .ToArray(Function(m) m.Trim(""""c))
+                Dim ns As String() = r _
+                    .Matches(colorBrewerJSON, """\d+""", RegexOptions.Singleline) _
+                    .ToArray(Function(m)
+                                 Return m.Trim(""""c)
+                             End Function)
                 Dim sb As New StringBuilder(colorBrewerJSON)
 
-                For Each n In ns.Distinct
+                For Each n As String In ns.Distinct
                     Call sb.Replace($"""{n}""", $"""c{n}""")
                 Next
 
@@ -482,8 +501,8 @@ Namespace Drawing2D.Colors
         ''' more colors. There is also a function that converts between colors and a real valued vector.
         ''' </summary>
         ''' <param name="col">A list of colors (names or hex values) to interpolate</param>
-        ''' <param name="n%">Number of color levels. The setting n=64 is the orignal definition.</param>
-        ''' <param name="alpha%">
+        ''' <param name="n">Number of color levels. The setting n=64 is the orignal definition.</param>
+        ''' <param name="alpha">
         ''' The transparency of the color – 255 is opaque and 0 is transparent. This is useful for 
         ''' overlays of color and still being able to view the graphics that is covered.
         ''' </param>
@@ -500,7 +519,8 @@ Namespace Drawing2D.Colors
                     source:=previous,
                     target:=previous = c,
                     increment:=steps!,
-                    alpha:=alpha%)
+                    alpha:=alpha%
+                )
             Next
 
             Return out
@@ -528,9 +548,9 @@ Namespace Drawing2D.Colors
             Dim out As New List(Of Color)
 
             For f! = 0 To 1.0! Step delta!
-                Dim r% = __constraint(x.GetPoint(f))
-                Dim g% = __constraint(y.GetPoint(f))
-                Dim b% = __constraint(z.GetPoint(f))
+                Dim r% = rangeConstraint(x.GetPoint(f))
+                Dim g% = rangeConstraint(y.GetPoint(f))
+                Dim b% = rangeConstraint(z.GetPoint(f))
 
                 out += Color.FromArgb(alpha, r, g, b)
             Next
@@ -538,7 +558,12 @@ Namespace Drawing2D.Colors
             Return out
         End Function
 
-        Private Function __constraint(x!) As Integer
+        ''' <summary>
+        ''' Limit <see cref="CubicSpline"/> result in range [0, 255]
+        ''' </summary>
+        ''' <param name="x!"></param>
+        ''' <returns></returns>
+        Private Function rangeConstraint(x!) As Integer
             If x < 0! Then
                 x = 0!
             ElseIf x > 255.0! Then
