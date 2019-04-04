@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{92690464-6B13-47E8-B5DA-A683AD606AC6}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>GAF_example.neuronTest</StartupObject>
+    <StartupObject>GAF_example.Demo</StartupObject>
     <RootNamespace>GAF_example</RootNamespace>
     <AssemblyName>GAF_example</AssemblyName>
     <FileAlignment>512</FileAlignment>

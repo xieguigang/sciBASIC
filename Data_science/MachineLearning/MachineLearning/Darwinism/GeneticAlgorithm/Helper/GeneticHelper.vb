@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::77435066faa8298a69c38399a2ad244f, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\Helper\GeneticHelper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module GeneticHelper
-    ' 
-    '         Function: InitialPopulation
-    ' 
-    '         Sub: Crossover, (+2 Overloads) Mutate
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module GeneticHelper
+' 
+'         Function: InitialPopulation
+' 
+'         Sub: Crossover, (+2 Overloads) Mutate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,6 +66,8 @@ Namespace Darwinism.GAF.Helper
         '        Call New Random().NextDouble.__DEBUG_ECHO
         '    Next
         ' End With
+
+#Region "Numeric Value Mutation"
 
         ''' <summary>
         ''' Returns clone of current chromosome, which is mutated a bit
@@ -95,11 +97,27 @@ Namespace Darwinism.GAF.Helper
             ' just select random element of vector
             ' and increase or decrease it on small value
             Dim index As Integer = random.Next(v.Length)
-            Dim mutationValue# =
-                random.Next(v.Length) -
-                random.Next(v.Length)
+            Dim delta# = (v.Max - v.Min) / 10
+            Dim mutationValue# = (random.NextDouble * delta) * If(random.NextDouble >= 0.5, 1, -1)
 
             v(index) += mutationValue
+        End Sub
+#End Region
+
+        ''' <summary>
+        ''' 这个函数不是数值变化，而是位值的变化，原来的某位数值为1，则突变后为零，原来某位数值为0，则突变之后为1
+        ''' </summary>
+        ''' <param name="v%"></param>
+        ''' <param name="random"></param>
+        <Extension>
+        Public Sub ByteMutate(ByRef v%(), random As Random)
+            Dim index = random.Next(v.Length)
+
+            If v(index) = 0 Then
+                v(index) = 1
+            Else
+                v(index) = 0
+            End If
         End Sub
 
         ''' <summary>
