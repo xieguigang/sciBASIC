@@ -111,7 +111,7 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="name"></param>
         ''' <param name="value"></param>
-        Sub New(name$, value As T, Optional describ As String = Nothing)
+        Sub New(name$, Optional value As T = Nothing, Optional describ As String = Nothing)
             Me.Name = name
             Me.Value = value
             Me.Description = describ
@@ -198,6 +198,11 @@ Namespace ComponentModel.DataSourceModel
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator <>(tuple As NamedValue(Of T), compares As T) As Boolean
             Return Not tuple = compares
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Shared Narrowing Operator CType(value As NamedValue(Of T)) As T
+            Return value.Value
         End Operator
     End Structure
 End Namespace

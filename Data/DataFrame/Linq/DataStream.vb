@@ -91,8 +91,8 @@ Namespace IO.Linq
         Public ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer) Implements ISchema.SchemaOridinal
         Public ReadOnly Property Headers As IReadOnlyCollection(Of String)
 
-        Sub New(fileName$, Optional encoding As Encoding = Nothing)
-            Call Me.New(RowObject.TryParse(fileName.ReadFirstLine(encoding)))
+        Sub New(fileName$, Optional encoding As Encoding = Nothing, Optional tsv As Boolean = False)
+            Call Me.New(RowObject.TryParse(fileName.ReadFirstLine(encoding), tsv))
         End Sub
 
         Sub New(firstLineHeaders As RowObject)
@@ -122,13 +122,13 @@ Namespace IO.Linq
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function OpenHandle(fileName$, Optional encoding As Encoding = Nothing) As (schema As SchemaReader, table As IEnumerable(Of RowObject))
-            Dim schema As New SchemaReader(fileName, encoding)
+        Public Function OpenHandle(fileName$, Optional encoding As Encoding = Nothing, Optional tsv As Boolean = False) As (schema As SchemaReader, table As IEnumerable(Of RowObject))
+            Dim schema As New SchemaReader(fileName, encoding, tsv)
             Dim source As IEnumerable(Of RowObject) = fileName _
                 .IterateAllLines _
                 .Skip(1) _
                 .Select(Function(line)
-                            Return New RowObject(line)
+                            Return New RowObject(line, tsv)
                         End Function)
             Return (schema, source)
         End Function
@@ -152,10 +152,19 @@ Namespace IO.Linq
                    End Function
         End Function
 
+        ''' <summary>
+        ''' Using linq stream method for load a very large csv/tsv file.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="handle"></param>
+        ''' <param name="parallel"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function AsLinq(Of T As Class)(handle As (schema As SchemaReader, table As IEnumerable(Of RowObject)), Optional parallel As Boolean = False) As IEnumerable(Of T)
-            Dim castObject = handle.schema.CastObject(Of T)
-            Return handle.table.Populate(parallel,).Select(castObject)
+            Dim castObject As Func(Of RowObject, T) = handle.schema.CastObject(Of T)
+            Dim rows As IEnumerable(Of RowObject) = handle.table.Populate(parallel,)
+
+            Return rows.Select(castObject)
         End Function
 
         <Extension>

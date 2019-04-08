@@ -74,6 +74,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
             MyBase.New(compares, views)
         End Sub
 
+        Sub New(compares As IComparer(Of K), Optional views As Func(Of K, String) = Nothing)
+            MyBase.New(AddressOf compares.Compare, views)
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K, value As V, Optional valueReplace As Boolean = True)
             _root = Add(key, value, _root, valueReplace)

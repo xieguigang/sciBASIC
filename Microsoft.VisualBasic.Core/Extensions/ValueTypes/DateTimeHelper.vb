@@ -1,50 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::d63cd54a853a12b7706f778f74ce678c, Microsoft.VisualBasic.Core\Extensions\ValueTypes\DateTimeHelper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module DateTimeHelper
-    ' 
-    '         Properties: MonthList
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: DateSeq, FillDateZero, FromUnixTimeStamp, GetMonthInteger, IsEmpty
-    '                   UnixTimeStamp, YYMMDD
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module DateTimeHelper
+' 
+'         Properties: MonthList
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: DateSeq, FillDateZero, FromUnixTimeStamp, GetMonthInteger, IsEmpty
+'                   UnixTimeStamp, YYMMDD
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Language.C
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace ValueTypes
 
@@ -195,6 +197,29 @@ Namespace ValueTypes
             Else
                 Return False
             End If
+        End Function
+
+        Public Function ReadableElapsedTime(microtime&, Optional format$ = "%.3f%s", Optional round% = 3) As String
+            Dim unit$
+            Dim time!
+
+            If microtime >= 1000 Then
+                unit = "s"
+                time = Math.Round(microtime / 1000, round)
+
+                If time >= 60 Then
+                    unit = "min"
+                    time = Math.Round(time / 60, round)
+                End If
+
+                format = sprintf(format, time, unit)
+            Else
+                unit = "ms"
+                time = microtime
+                format = sprintf("%s%s", time, unit)
+            End If
+
+            Return format
         End Function
     End Module
 End Namespace

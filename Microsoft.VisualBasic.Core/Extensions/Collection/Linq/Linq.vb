@@ -58,6 +58,14 @@ Namespace Linq
     <Extension>
     Public Module Extensions
 
+        ''' <summary>
+        ''' Parallel helper
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="parallel"></param>
+        ''' <param name="degreeOfParallelism%"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function Populate(Of T)(source As IEnumerable(Of T), parallel As Boolean, Optional degreeOfParallelism% = -1) As IEnumerable(Of T)
             If parallel Then

@@ -198,9 +198,17 @@ RETRY:      Return BuildWebRequest(url, headers, proxy, UA).__get()
             If InStr(html, "http://www.doctorcom.com", CompareMethod.Text) > 0 Then
                 Call doctorcomError.PrintException
                 Return ""
+            Else
+                Dim time$ = ValueTypes.ReadableElapsedTime(timer.ElapsedMilliseconds)
+                Dim debug$ = $"[{url}] {title} - {Len(html)} chars in {time}"
+
+                If timer.ElapsedMilliseconds > 1000 Then
+                    Call debug.Warning
+                Else
+                    Call debug.__INFO_ECHO
+                End If
             End If
 
-            Call $"[{title}  {url}] --> sizeOf:={Len(html)} chars; response_time:={timer.ElapsedMilliseconds} ms.".__DEBUG_ECHO
 #If DEBUG Then
             Call html.SaveTo($"{App.AppSystemTemp}/{App.PID}/{url.NormalizePathString}.html")
 #End If

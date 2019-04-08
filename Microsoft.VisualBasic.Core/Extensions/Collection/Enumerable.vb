@@ -267,7 +267,7 @@ Public Module IEnumerations
             End If
         Next
 
-        If duplicates.Count > 0 Then
+        If duplicates > 0 Then
             Call $"Dictionary table build complete, but there is dulplicated keys: {duplicates.GetJson}...".Warning
         End If
 

@@ -64,33 +64,29 @@ Public Module Translation
                 If .IsNothing Then
                     Return Nothing
                 Else
-                    Return !content _
-                        .Value _
-                        .parseResult(word)
+                    Return .parseResult(word)
                 End If
             End With
         End If
     End Function
 
-    Private Function webGet(word As String) As Dictionary(Of NamedValue(Of String))
+    Private Function webGet(word As String) As String
         Dim term$ = word.UrlEncode
         Dim url$ = $"https://cn.bing.com/dict/search?q={term}&qs=n&form=Z9LH5&sp=-1&pq={term}&sc=6-10&sk=&cvid=0BC4AECB5070489794D29912A900BEF5"
         Dim headers As New Dictionary(Of String, String) From {
             {"refer", SearchEngineProvider.BingRefer},
             {"accept-language", "zh-CN,zh;q=0.9,en;q=0.8,la;q=0.7"}
         }
-        Dim meta$() = url _
+        Dim meta = url _
             .GET(headers:=headers) _
-            .Matches("<meta.+?/>", RegexICSng) _
-            .ToArray
+            .ParseHtmlMeta
         Dim parsed = meta _
-            .Select(Function(m) m.TagAttributes.ToDictionary) _
             .Where(Function(m)
-                       Return m.ContainsKey("name") AndAlso m!name = "description"
+                       Return m.Key.TextEquals("description")
                    End Function) _
             .FirstOrDefault
 
-        Return parsed
+        Return parsed.Value
     End Function
 
     <Extension>

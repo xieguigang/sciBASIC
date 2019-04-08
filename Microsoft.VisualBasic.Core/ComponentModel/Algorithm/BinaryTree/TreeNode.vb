@@ -116,6 +116,12 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End Get
         End Property
 
+        Public ReadOnly Property Members As V()
+            Get
+                Return DirectCast(Me!values, IEnumerable(Of V)).ToArray
+            End Get
+        End Property
+
         ReadOnly defaultView As New DefaultValue(Of Func(Of K, String))(Function(key) Scripting.ToString(key))
 
         ''' <summary>

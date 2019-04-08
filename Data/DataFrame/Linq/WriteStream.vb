@@ -202,6 +202,11 @@ Namespace IO.Linq
             End If
         End Function
 
+        ''' <summary>
+        ''' Write a object into the table file.
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
         Public Function Flush(obj As T) As Boolean
             If obj Is Nothing Then
                 Return False
