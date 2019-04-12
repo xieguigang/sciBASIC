@@ -374,7 +374,7 @@ Public Module StringHelpers
     ''' </summary>
     ''' <param name="s$"></param>
     ''' <param name="delimiter$"></param>
-    ''' <param name="trim$">Chars collection for <see cref="String.Trim"/> function</param>
+    ''' <param name="trim">Chars collection for <see cref="String.Trim"/> function</param>
     ''' <param name="failureNoName"></param>
     ''' <returns></returns>
     <Extension>

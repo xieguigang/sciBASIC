@@ -48,8 +48,20 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Layouts.Cola
 
+    Public Interface network
+
+        Property nodes() As Node()
+        Property links() As Link(Of Node)()
+
+    End Interface
+
     Public Class PowerGraph
-        Public Property groups As List(Of [Variant](Of Group, IndexGroup))
+        Public Property groups As List(Of Node)
         Public Property powerEdges As List(Of PowerEdge(Of Node))
+    End Class
+
+    Public Class LayoutGraph
+        Public Property cola As Layout
+        Public Property powerGraph As PowerGraph
     End Class
 End Namespace

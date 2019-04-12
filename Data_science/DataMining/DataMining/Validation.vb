@@ -174,7 +174,7 @@ Public Structure Validation
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="entity"></param>
-    ''' <param name="getValidate"></param>
+    ''' <param name="getValidate">``func x, threshold => yes/no``</param>
     ''' <param name="getPredict"></param>
     ''' <returns></returns>
     ''' <remarks>
@@ -184,14 +184,15 @@ Public Structure Validation
     ''' 但同时也将更多的负实例当作了正实例，即提高了FPR。为了形象化这一变化，
     ''' 在此引入ROC。
     ''' </remarks>
-    Public Iterator Function ROC(Of T)(entity As IEnumerable(Of T),
-                                       getValidate As Func(Of T, Double, Boolean),
-                                       getPredict As Func(Of T, Double, Boolean)) As IEnumerable(Of Validation)
+    Public Shared Iterator Function ROC(Of T)(entity As IEnumerable(Of T),
+                                              getValidate As Func(Of T, Double, Boolean),
+                                              getPredict As Func(Of T, Double, Boolean),
+                                              Optional steps! = 0.01) As IEnumerable(Of Validation)
 
         Dim validate As Func(Of T, Boolean)
         Dim predict As Func(Of T, Boolean)
 
-        For pct As Double = 0 To 1 Step 0.05
+        For pct As Double = 0 To 1 Step steps
 #Disable Warning
             validate = Function(x) getValidate(x, pct)
             predict = Function(x) getPredict(x, pct)

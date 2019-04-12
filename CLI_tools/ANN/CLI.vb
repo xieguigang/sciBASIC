@@ -196,12 +196,20 @@ Module CLI
     <Extension>
     Private Function runTrainingCommon(trainer As TrainingUtils, debugCDF$, inFile$, parallel As Boolean, debug As Boolean) As TrainingUtils
         Dim debugger As New ANNDebugger(trainer.NeuronNetwork)
+        Dim minError# = 999999
+        Dim snapshotFile$ = inFile.TrimSuffix & ".minerr.Xml"
 
         Call Console.WriteLine(trainer.NeuronNetwork.ToString)
         Call trainer _
             .AttachReporter(Sub(i, err, model)
                                 If debug Then
                                     Call debugger.WriteFrame(i, err, model)
+                                End If
+
+                                If err < minError Then
+                                    Call trainer.TakeSnapshot _
+                                        .GetXml _
+                                        .SaveTo(snapshotFile)
                                 End If
                             End Sub) _
             .Train(parallel)

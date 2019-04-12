@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::517eea9cf414097848454313612eb277, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\Configuration.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Configuration
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: allEdges, getGroupHierarchy, greedyMerge, initModulesFromGroup, merge
-    '                   nEdges, rootMerges, updateLambda
-    ' 
-    '         Sub: getEdges
-    '         Class ModuleMerge
-    ' 
-    '             Properties: a, b, id, nEdges
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Configuration
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: allEdges, getGroupHierarchy, greedyMerge, initModulesFromGroup, merge
+'                   nEdges, rootMerges, updateLambda
+' 
+'         Sub: getEdges
+'         Class ModuleMerge
+' 
+'             Properties: a, b, id, nEdges
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.JavaScript
 
 Namespace Layouts.Cola
@@ -74,7 +75,7 @@ Namespace Layouts.Cola
         ''' </summary>
         Private R As Double
 
-        Public Sub New(n As Double, edges As Link(), linkAccessor As LinkTypeAccessor(Of Link), rootGroup As Group)
+        Public Sub New(n As Double, edges As Link(), linkAccessor As LinkTypeAccessor(Of Link), rootGroup As Node)
             Me.modules = New List(Of [Module])
             Me.roots = New List(Of ModuleSet)
 
@@ -83,7 +84,7 @@ Namespace Layouts.Cola
             Else
                 Me.roots.Add(New ModuleSet())
                 For i As Integer = 0 To n - 1
-                    Me.modules(i) = New [Module](i)
+                    Me.modules.Add(New [Module](i))
                     Me.roots(0).add(Me.modules(i))
                 Next
             End If
@@ -98,11 +99,11 @@ Namespace Layouts.Cola
                          End Sub)
         End Sub
 
-        Private Function initModulesFromGroup(group As Group) As ModuleSet
+        Private Function initModulesFromGroup(group As Node) As ModuleSet
             Dim moduleSet = New ModuleSet()
             Me.roots.Add(moduleSet)
             For i As Integer = 0 To group.leaves.Count - 1
-                Dim node = group.leaves(i)
+                Dim node As Node = group.leaves(i)
                 Dim [module] = New [Module](node.id)
                 Me.modules(node.id) = [module]
                 moduleSet.add([module])
@@ -113,9 +114,9 @@ Namespace Layouts.Cola
                     ' Propagate group properties (like padding, stiffness, ...) as module definition so that the generated power graph group will inherit it
                     Dim definition = New Dictionary(Of String, Object)
 
-                    For Each prop As String In child
+                    For Each prop As String In child.VB
                         If prop <> "leaves" AndAlso prop <> "groups" Then
-                            definition(prop) = child(prop)
+                            definition(prop) = child.VB(prop)
                         End If
                     Next
 
@@ -151,9 +152,11 @@ Namespace Layouts.Cola
         Public Function merge(a As [Module], b As [Module], Optional k As Integer = 0) As [Module]
             Dim inInt = a.incoming.intersection(b.incoming)
             Dim outInt = a.outgoing.intersection(b.outgoing)
-            Dim children = New ModuleSet()
-            children.add(a)
-            children.add(b)
+            Dim children As New ModuleSet()
+
+            Call children.add(a)
+            Call children.add(b)
+
             Dim m = New [Module](Me.modules.Count, outInt, inInt, children)
             Me.modules.Add(m)
             Dim update = updateLambda(a, b, m)
@@ -166,28 +169,31 @@ Namespace Layouts.Cola
             Return m
         End Function
 
-        Private Function rootMerges(Optional k As Double = 0) As ModuleMerge()
-            Dim rs = Me.roots(k).modules()
+        Private Function rootMerges(Optional k As Integer = 0) As ModuleMerge()
+            Dim rs = Me.roots(index:=k).modules()
             Dim n = rs.Length
             Dim merges = New ModuleMerge(n * (n - 1)) {}
             Dim ctr = 0
-            Dim i As Integer = 0, i_ As Integer = n - 1
-            While i < i_
+            Dim i As Integer = 0, ends As Integer = n - 1
+
+            While i < ends
                 For j As Integer = i + 1 To n - 1
                     Dim a = rs(i)
                     Dim b = rs(j)
+
                     merges(ctr) = New ModuleMerge With {
-                    .id = ctr,
-                    .nEdges = Me.nEdges(a, b),
-                    .a = a,
-                    .b = b
-                }
+                        .id = ctr,
+                        .nEdges = Me.nEdges(a, b),
+                        .a = a,
+                        .b = b
+                    }
                     ctr += 1
                 Next
+
                 i += 1
             End While
 
-            Return merges
+            Return merges.Where(Function(m) Not m Is Nothing).ToArray
         End Function
 
         Public Class ModuleMerge
@@ -204,14 +210,17 @@ Namespace Layouts.Cola
                     Continue For
                 End If
 
-                ' find the merge that allows for the most edges to be removed.  secondary ordering based on arbitrary id (for predictability)
+                ' find the merge that allows for the most edges to be removed.  
+                ' secondary ordering based on arbitrary id (for predictability)
                 Dim ms = Me.rootMerges(i).Sort(Function(a, b) If(a.nEdges = b.nEdges, a.id - b.id, a.nEdges - b.nEdges))
                 Dim m = ms(0)
+
                 If m.nEdges >= Me.R Then
                     Continue For
+                Else
+                    Call Me.merge(m.a, m.b, i)
+                    Return True
                 End If
-                Me.merge(m.a, m.b, i)
-                Return True
             Next
 
             Return False
@@ -223,22 +232,30 @@ Namespace Layouts.Cola
             Return Me.R - inInt.count() - outInt.count()
         End Function
 
-        Public Function getGroupHierarchy(retargetedEdges As List(Of PowerEdge(Of Integer))) As List(Of IndexGroup)
-            Dim groups As New List(Of IndexGroup)
-            Dim root As New IndexGroup
+        Public Function getGroupHierarchy(retargetedEdges As List(Of PowerEdge(Of [Variant](Of Integer, Node)))) As List(Of Node)
+            Dim groups As New List(Of Node)
+            Dim root As New Node
 
             Call toGroups(Me.roots(0), root, groups)
             Call Me.allEdges() _
                 .DoEach(Sub(e)
                             Dim a = Me.modules(e.source)
                             Dim b = Me.modules(e.target)
-                            Dim from% = If(a.gid Is Nothing, e.source, groups(a.gid))
-                            Dim to% = If(b.gid Is Nothing, e.target, groups(b.gid))
-                            Dim pe As New PowerEdge(Of Integer)(from%, to%, e.type)
+                            Dim pop = Function(x As [Module]) As [Variant](Of Integer, Node)
+                                          If x.gid Is Nothing Then
+                                              Return e.source
+                                          Else
+                                              Return groups(x.gid)
+                                          End If
+                                      End Function
+                            Dim from = pop(a)
+                            Dim [to] = pop(b)
+                            Dim pe As New PowerEdge(Of [Variant](Of Integer, Node))(from, [to], e.type)
 
                             retargetedEdges.Add(pe)
                         End Sub)
-            Return groups
+
+            Return groups.AsList
         End Function
 
         Private Function allEdges() As List(Of PowerEdge(Of Integer))

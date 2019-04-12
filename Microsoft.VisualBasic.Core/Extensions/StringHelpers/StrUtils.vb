@@ -109,7 +109,10 @@ Public Module StrUtils
     ''' </summary>
     ''' <param name="s$">The string to search for a match.</param>
     ''' <param name="pattern$">The regular expression pattern to match.</param>
-    ''' <param name="opts">A bitwise combination of the enumeration values that provide options for matching.</param>
+    ''' <param name="opts">
+    ''' A bitwise combination of the enumeration values that provide options for matching.
+    ''' (如果这个参数的值是<see cref="RegexOptions.None"/>的话，则当前的这个函数不会使用正则进行查找)
+    ''' </param>
     ''' <returns>
     ''' A new string that is identical to the input string, except that the replacement
     ''' string takes the place of each matched string. If pattern is not matched in the
@@ -119,7 +122,15 @@ Public Module StrUtils
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Remove(s$, pattern$, Optional opts As RegexOptions = RegexICSng) As String
-        Return r.Replace(s, pattern, "", opts)
+        If opts = RegexOptions.None Then
+            If pattern.StringEmpty Then
+                Return s
+            Else
+                Return s.Replace(pattern, "")
+            End If
+        Else
+            Return r.Replace(s, pattern, "", opts)
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -57,7 +57,9 @@ Namespace Linq
     ''' Exposes the enumerator, which supports a simple iteration over a collection of
     ''' a specified type.To browse the .NET Framework source code for this type, see
     ''' the Reference Source.
-    ''' (使用这个的原因是系统自带的<see cref="IEnumerable(Of T)"/>在Xml序列化之中的支持不太友好)
+    ''' (使用这个的原因是系统自带的<see cref="IEnumerable(Of T)"/>在Xml序列化之中的支持不太友好，
+    ''' 实现这个接口之后可以通过<see cref="EnumerationExtensions.AsEnumerable(Of T)(Enumeration(Of T))"/>
+    ''' 拓展来转换为查询操作的数据源)
     ''' </summary>
     ''' <typeparam name="T">The type of objects to enumerate.This type parameter is covariant. That is, you
     ''' can use either the type you specified or any type that is more derived. For more

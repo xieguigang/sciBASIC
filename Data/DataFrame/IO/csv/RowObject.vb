@@ -94,9 +94,9 @@ Namespace IO
         ''' 这个构造函数会使用<see cref="Tokenizer.CharsParser"/>解析所输入的字符串为列数据的集合
         ''' </summary>
         ''' <param name="rawString">A raw string line which read from the Csv text file.</param>
-        Sub New(rawString As String)
+        Sub New(rawString$, Optional tsv As Boolean = False)
             Try
-                buffer = Tokenizer.CharsParser(rawString)
+                buffer = Tokenizer.CharsParser(rawString, delimiter:=","c Or ASCII.TAB.When(tsv))
             Catch ex As Exception
                 ex = New Exception(rawString)
                 Throw ex
@@ -382,8 +382,8 @@ Namespace IO
             Return New RowObject(row)
         End Operator
 
-        Public Shared Function TryParse(Line As String) As RowObject
-            Return CType(Line, RowObject)
+        Public Shared Function TryParse(line As String, Optional tsv As Boolean = False) As RowObject
+            Return New RowObject(line, tsv)
         End Function
 
         Public Shared Widening Operator CType(tokens As String()) As RowObject

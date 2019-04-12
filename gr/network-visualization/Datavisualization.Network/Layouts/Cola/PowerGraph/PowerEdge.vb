@@ -77,5 +77,9 @@ Namespace Layouts.Cola
             Me.target = target
             Me.type = type
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{source}, {target}]"
+        End Function
     End Class
 End Namespace

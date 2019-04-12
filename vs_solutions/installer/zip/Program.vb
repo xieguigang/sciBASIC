@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.Net.Http
 
     <ExportAPI("/compress.gzip")>
     <Usage("/compress.gzip /file <path> [/out <out.gzip>]")>
+    <Description("Compress target file in gzip format.")>
     Public Function CompressGzip(args As CommandLine) As Integer
         Dim in$ = args <= "/file"
         Dim out$ = args("/out") Or [in].ChangeSuffix("gzip")

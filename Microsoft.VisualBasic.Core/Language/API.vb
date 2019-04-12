@@ -224,5 +224,15 @@ Namespace Language
         Public Function AsString(list As Dictionary(Of String, Object)) As Dictionary(Of String, String)
             Return list.ToDictionary(Function(t) t.Key, Function(t) Scripting.ToString(t.Value))
         End Function
+
+        <Extension>
+        Public Function [As](Of A, B, T)(list As IEnumerable(Of [Variant](Of A, B))) As IEnumerable(Of T)
+            Return list.Select(Function(x) CType(x.Value, T))
+        End Function
+
+        <Extension>
+        Public Function [As](Of A, B, C, T)(list As IEnumerable(Of [Variant](Of A, B, C))) As IEnumerable(Of T)
+            Return list.Select(Function(x) CType(x.Value, T))
+        End Function
     End Module
 End Namespace

@@ -56,6 +56,8 @@ Namespace Academic
     ''' </summary>
     Public Module ProfileResult
 
+        ReadOnly htmlLink As String = HtmlStrips.Regexp("a")
+
         <Extension>
         Private Function GetTarget(a As String) As Link
             Dim attrs = a.TagAttributes.ToArray

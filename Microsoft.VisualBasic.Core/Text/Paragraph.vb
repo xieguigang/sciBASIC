@@ -49,11 +49,19 @@ Namespace Text
 
     Public Module Paragraph
 
+        ''' <summary>
+        ''' 对于空文本，这个函数返回一个空集合
+        ''' </summary>
+        ''' <param name="text$"></param>
+        ''' <param name="lineBreak%"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function Chunks(text$, lineBreak%) As IEnumerable(Of String)
-            For i As Integer = 1 To text.Length Step lineBreak
-                Yield Mid(text, i, lineBreak)
-            Next
+            If Not text.StringEmpty Then
+                For i As Integer = 1 To text.Length Step lineBreak
+                    Yield Mid(text, i, lineBreak)
+                Next
+            End If
         End Function
 
         ''' <summary>

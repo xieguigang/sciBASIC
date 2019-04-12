@@ -157,11 +157,18 @@ Namespace BarPlot
                     Dim actualHeight = bottom - top
                     Dim barWidth = dxStep
 
-                    Dim stack = If(stackReorder,
-                    sample.value.data _
-                        .SeqIterator _
-                        .OrderBy(Function(o) o.value),
-                    sample.value.data.SeqIterator)
+                    Dim stack As IEnumerable(Of SeqValue(Of Double))
+
+                    If stackReorder Then
+                        stack = sample.value _
+                            .data _
+                            .SeqIterator _
+                            .OrderBy(Function(o) o.value)
+                    Else
+                        stack = sample.value _
+                            .data _
+                            .SeqIterator
+                    End If
 
                     For Each val As SeqValue(Of Double) In stack
                         Dim topleft As New Point(x, top)
@@ -207,7 +214,7 @@ Namespace BarPlot
             bottom += 80
 
             For Each key As SeqValue(Of String) In keys.SeqIterator
-                left = leftMargins(index:=key) + dd / 2 - If(Not stacked, dxStep / 2, 0)
+                left = leftMargins(index:=key.i) + dd / 2 - If(Not stacked, dxStep / 2, 0)
 
                 ' 得到斜边的长度
                 Dim sz = g.MeasureString((+key), font)

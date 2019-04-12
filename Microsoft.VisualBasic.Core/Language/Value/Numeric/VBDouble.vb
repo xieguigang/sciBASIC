@@ -149,6 +149,16 @@ Namespace Language
             Return a.Value - b.Value
         End Operator
 
+        ''' <summary>
+        ''' 值相减
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        Public Overloads Shared Operator -(a As Double, b As VBDouble) As Double
+            Return a - b.Value
+        End Operator
+
         Public Overloads Shared Operator *(a As VBDouble, b As VBDouble) As Double
             Return a.Value * b.Value
         End Operator
