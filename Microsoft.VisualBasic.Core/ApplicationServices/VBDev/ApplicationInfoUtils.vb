@@ -65,7 +65,8 @@ Namespace ApplicationServices.Development
                 .AssemblyCopyright = GetCopyRightsDetail(assm),
                 .AssemblyTitle = GetProductTitle(assm),
                 .AssemblyDescription = GetProductDescription(assm),
-                .Guid = GetGuid(assm)
+                .Guid = GetGuid(assm),
+                .AssemblyVersion = assm.GetVersion().ToString
             }
         End Function
 

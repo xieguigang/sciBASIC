@@ -69,8 +69,8 @@ Namespace Scripting.TokenIcer
         ''' <summary>
         ''' 假若返回来的是空字符串，则说明不是注释行
         ''' </summary>
-        ''' <param name="line$"></param>
-        ''' <param name="prefix$">The prefix of the code comment character/string</param>
+        ''' <param name="line"></param>
+        ''' <param name="prefix">The prefix of the code comment character/string</param>
         ''' <returns></returns>
         <Extension>
         Public Function GetCodeComment(line$, ParamArray prefix$()) As String

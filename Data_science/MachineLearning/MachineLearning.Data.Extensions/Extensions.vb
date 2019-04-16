@@ -14,6 +14,7 @@ Public Module Extensions
     ''' <param name="data"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function GetInput(dataset As DataSet, data As row) As Double()
         Return dataset _
             .NormalizeMatrix _

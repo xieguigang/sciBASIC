@@ -133,6 +133,13 @@ Namespace Language
             }
         End Function
 
+        ''' <summary>
+        ''' Value Or Default When .... is true
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="[default]"></param>
+        ''' <param name="expression"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function [When](Of T)([default] As T, expression As Boolean) As DefaultValue(Of T)

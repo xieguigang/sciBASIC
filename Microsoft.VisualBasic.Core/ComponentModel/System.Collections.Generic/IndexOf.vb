@@ -275,6 +275,11 @@ Namespace ComponentModel.Collection
             Return New Index(Of T)(source:=objs)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(list As List(Of T)) As Index(Of T)
+            Return New Index(Of T)(source:=list)
+        End Operator
+
         ''' <summary>
         ''' Add a new key to this index object.
         ''' </summary>
