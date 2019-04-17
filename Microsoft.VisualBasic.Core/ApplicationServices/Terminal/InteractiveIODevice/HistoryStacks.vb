@@ -1,65 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::12826d208ac41a93beab4e252c673311, Microsoft.VisualBasic.Core\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class HistoryStacks
-    ' 
-    '         Properties: HistoryList
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: __getDefaultPath, __getHistory, MoveFirst, MoveLast, MoveNext
-    '                   MovePrevious, Save, ToString
-    ' 
-    '         Sub: __init, PushStack, StartInitialize
-    '         Structure History
-    ' 
-    '             Function: ToString
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class HistoryStacks
+' 
+'         Properties: HistoryList
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: __getDefaultPath, __getHistory, MoveFirst, MoveLast, MoveNext
+'                   MovePrevious, Save, ToString
+' 
+'         Sub: __init, PushStack, StartInitialize
+'         Structure History
+' 
+'             Function: ToString
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Xml.Serialization
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 Namespace Terminal
 
-    Public Class HistoryStacks : Inherits ITextFile
-        Implements ISaveHandle
+    Public Class HistoryStacks : Implements ISaveHandle
+        Implements IFileReference
 
         Dim _historyList As List(Of String)
         Dim _lsthistory As List(Of History)
@@ -78,6 +80,8 @@ Namespace Terminal
                 _lsthistory = value
             End Set
         End Property
+
+        Public Property FilePath As String Implements IFileReference.FilePath
 
         Dim LastHistory As History
 
@@ -167,13 +171,13 @@ Namespace Terminal
             Return String.Join(";  ", _historyList.Take(3).ToArray) & "......."
         End Function
 
-        Public Overrides Function Save(Optional Path As String = "", Optional encoding As System.Text.Encoding = Nothing) As Boolean
-            Path = MyBase.getPath(Path)
+        Public Function Save(Path$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Path = Path Or FilePath.When(Path.StringEmpty)
             Return Me.GetXml.SaveTo(Path, encoding)
         End Function
 
-        Protected Overrides Function __getDefaultPath() As String
-            Return FilePath
+        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(path, encoding.CodePage)
         End Function
     End Class
 End Namespace

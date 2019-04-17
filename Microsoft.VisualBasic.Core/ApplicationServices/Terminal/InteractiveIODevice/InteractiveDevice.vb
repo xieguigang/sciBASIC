@@ -53,10 +53,10 @@ Imports Microsoft.VisualBasic.Text
 Namespace Terminal
 
     Public Class InteractiveDevice : Inherits Terminal
-        Implements System.IDisposable
+        Implements IDisposable
         Implements ISaveHandle
 
-        Dim _innerBuffer As StringBuilder = New StringBuilder(2048)
+        Dim _innerBuffer As New StringBuilder(2048)
         Dim _cmdsHistory As HistoryStacks
         Dim Blanks As String
 
@@ -83,7 +83,7 @@ Namespace Terminal
                 _cmdsHistory = HistoryFile.LoadXml(Of HistoryStacks)()
             Catch ex As Exception
                 _cmdsHistory = New HistoryStacks()
-                Call _cmdsHistory.Save(HistoryFile)
+                Call _cmdsHistory.Save(HistoryFile, Encodings.UTF8)
             End Try
 
             If _cmdsHistory Is Nothing Then
@@ -216,7 +216,7 @@ EXIT_INPUT:         strCommand = HistoryCallerStack & n.KeyChar & MyBase.ReadLin
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not Me.disposedValue Then
                 If disposing Then
-                    Call Me.Save(encoding:=Encodings.UTF8)
+                    Call Me.Save(Nothing, encoding:=Encodings.UTF8)
                     ' TODO: dispose managed state (managed objects).
                 End If
 
@@ -248,11 +248,11 @@ EXIT_INPUT:         strCommand = HistoryCallerStack & n.KeyChar & MyBase.ReadLin
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public Function Save(Path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             Return _cmdsHistory.Save(Path, encoding)
         End Function
 
-        Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+        Public Function Save(Path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return Save(Path, encoding.CodePage)
         End Function
     End Class

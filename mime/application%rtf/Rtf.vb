@@ -48,7 +48,6 @@
 
 Imports System.Drawing
 Imports System.Text
-Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 
@@ -56,7 +55,7 @@ Imports Microsoft.VisualBasic.Language
 ''' Rich text format document object model.(带有格式描述信息的文本文档的对象模型)
 ''' </summary>
 ''' <remarks></remarks>
-Public Class Rtf : Inherits ITextFile
+Public Class Rtf
 
     Dim _TextBuilder As New StringBuilder(4096)
     Protected Friend __textMetaSrcCache As String
@@ -252,8 +251,7 @@ Public Class Rtf : Inherits ITextFile
         End If
     End Function
 
-    Public Overrides Function Save(Optional path As String = "", Optional Encoding As Encoding = Nothing) As Boolean
-        path = getPath(path)
+    Public Function Save(path As String, Optional Encoding As Encoding = Nothing) As Boolean
         Return __toRTF.SaveTo(path, Encoding)
     End Function
 End Class

@@ -67,10 +67,11 @@ Public Module TextDoc
     ''' <param name="ThrowEx"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function LoadTextDoc(Of T As ITextFile)(file$,
-                                                   Optional encoding As Encoding = Nothing,
-                                                   Optional parser As Func(Of String, Encoding, T) = Nothing,
-                                                   Optional ThrowEx As Boolean = True) As T
+    Public Function LoadTextDoc(Of T As IFileReference)(file$,
+                   Optional encoding As Encoding = Nothing,
+                   Optional parser As Func(Of String, Encoding, T) = Nothing,
+                   Optional ThrowEx As Boolean = True) As T
+
         If parser Is Nothing Then
             parser = AddressOf LoadXml
         End If

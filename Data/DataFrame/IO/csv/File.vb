@@ -1,67 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::63a16569e9150b84750475385b7b3be8, Data\DataFrame\IO\csv\File.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class File
-    ' 
-    '         Properties: Cell, EstimatedFileSize, Headers, Rows, Width
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
-    '                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Remove
-    '                   Save, (+2 Overloads) ToArray, TokenCounts, ToString, Transpose
-    '                   Trim
-    ' 
-    '         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
-    ' 
-    '         Operators: (+2 Overloads) +
-    '         Delegate Function
-    ' 
-    '             Properties: IsReadOnly, RowNumbers
-    ' 
-    '             Function: __getDefaultPath, __LINQ_LOAD, __loads, Contains, (+2 Overloads) Distinct
-    '                       FastLoad, GetEnumerator, GetEnumerator1, IndexOf, IsNullOrEmpty
-    '                       Join, (+2 Overloads) Load, LoadTsv, Normalization, Parse
-    '                       Remove, RemoveSubRow
-    ' 
-    '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
-    '                  RemoveAt
-    ' 
-    '             Operators: <, <=, >, >=
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class File
+' 
+'         Properties: Cell, EstimatedFileSize, Headers, Rows, Width
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: __createTableVector, AppendRange, FindAll, FindAtColumn, Generate
+'                   GenerateDocument, GetAllStringTokens, GetByLine, InsertEmptyColumnBefore, Remove
+'                   Save, (+2 Overloads) ToArray, TokenCounts, ToString, Transpose
+'                   Trim
+' 
+'         Sub: __setColumn, Append, (+3 Overloads) AppendLine, DeleteCell, RemoveRange
+' 
+'         Operators: (+2 Overloads) +
+'         Delegate Function
+' 
+'             Properties: IsReadOnly, RowNumbers
+' 
+'             Function: __getDefaultPath, __LINQ_LOAD, __loads, Contains, (+2 Overloads) Distinct
+'                       FastLoad, GetEnumerator, GetEnumerator1, IndexOf, IsNullOrEmpty
+'                       Join, (+2 Overloads) Load, LoadTsv, Normalization, Parse
+'                       Remove, RemoveSubRow
+' 
+'             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
+'                  RemoveAt
+' 
+'             Operators: <, <=, >, >=
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -75,6 +75,7 @@ Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace IO
@@ -84,9 +85,10 @@ Namespace IO
     ''' </summary>
     ''' <remarks></remarks>
     ''' 
-    <ActiveViews(File.ActiveViews)> Public Class File : Inherits ITextFile
+    <ActiveViews(File.ActiveViews)> Public Class File
         Implements IEnumerable(Of RowObject)
         Implements IList(Of RowObject)
+        Implements ISaveHandle
 
         Friend Const ActiveViews =
 "header1,header2,header3,...
@@ -388,7 +390,7 @@ B21,B22,B23,...
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return FilePath.ToFileURL
+            Return Headers.GetJson
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -407,15 +409,12 @@ B21,B22,B23,...
         ''' <returns></returns>
         Public Function Transpose() As File
             Dim buf As String()() = Me.Columns.MatrixTranspose
-
-            Return New File With {
-                .FilePath = FilePath,
-                ._innerTable =
-                    LinqAPI.MakeList(Of RowObject) <=
+            Dim tableRows = LinqAPI.MakeList(Of RowObject) <=
                         From i As Integer
                         In buf.First.Sequence
                         Select New RowObject(From line As String() In buf Select line(i))
-            }
+
+            Return New File With {._innerTable = tableRows}
         End Function
 
         ''' <summary>
@@ -594,8 +593,8 @@ B21,B22,B23,...
         ''' </summary>
         ''' <param name="Path"></param>
         ''' <remarks>当目标保存路径不存在的时候，会自动创建文件夹</remarks>
-        Public Overrides Function Save(Optional path$ = "", Optional Encoding As Encoding = Nothing) As Boolean
-            Return StreamIO.SaveDataFrame(Me, getPath(path), Encoding)
+        Public Function Save(path$, Encoding As Encoding) As Boolean Implements ISaveHandle.Save
+            Return StreamIO.SaveDataFrame(Me, path, Encoding)
         End Function
 
         ''' <summary>
@@ -680,9 +679,7 @@ B21,B22,B23,...
 
             Dim sw = Stopwatch.StartNew
             Dim lines As String() = path.MapNetFile.ReadAllLines(encoding)
-            Dim cData As File = New File With {
-                .FilePath = path
-            }
+            Dim cData As New File
 
             If Parallel Then
                 Dim cache = (From x As SeqValue(Of String) In lines.SeqIterator Select x)
@@ -714,10 +711,7 @@ B21,B22,B23,...
         ''' <remarks></remarks>
         Public Shared Function Load(Path As String, Optional encoding As Encoding = Nothing, Optional trimBlanks As Boolean = False) As File
             Dim buf As List(Of RowObject) = __loads(Path, encoding Or TextEncodings.DefaultEncoding, trimBlanks)
-            Dim csv As New File With {
-                .FilePath = Path,
-                ._innerTable = buf
-            }
+            Dim csv As New File With {._innerTable = buf}
             Return csv
         End Function
 
@@ -851,8 +845,7 @@ B21,B22,B23,...
             End If
 
             Return New File With {
-                ._innerTable = New List(Of RowObject)(dRows),
-                .FilePath = csv.FilePath
+                ._innerTable = New List(Of RowObject)(dRows)
             }
         End Function
 
@@ -1002,8 +995,8 @@ B21,B22,B23,...
             Call _innerTable.RemoveAt(index)
         End Sub
 
-        Protected Overrides Function __getDefaultPath() As String
-            Return FilePath
+        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(path, encoding.CodePage)
         End Function
 #End Region
     End Class

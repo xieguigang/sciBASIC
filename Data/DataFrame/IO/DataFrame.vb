@@ -121,7 +121,7 @@ Namespace IO
                     ' 2017-11-4 假设在原来的文件之中存在一个名字叫做ID的列
                     ' 但是在这里进行名称映射的变化的结果也是ID名字的话，
                     ' 则在这里会出现重复键名称的错误
-                    Throw New Exception(Me.FilePath, ex)
+                    Throw ex
                 End If
 
                 Call oridinal.Remove(map.Name)
@@ -305,10 +305,10 @@ Namespace IO
                                                       Return type.IsInheritsFrom(base)
                                                   End Function) Then
                                 ' 是一个值的集合
-                                Return DirectCast(c.value, IEnumerable).ToVector
+                                Return DirectCast(c.Value, IEnumerable).ToVector
                             Else
                                 ' 是一个单个的值,转换为值的集合
-                                Return New Object() {c.value}
+                                Return New Object() {c.Value}
                             End If
                         End Function) _
                 .ToArray
@@ -316,7 +316,7 @@ Namespace IO
             Dim row As IEnumerable(Of String)
 
             ' yield title row
-            Yield New RowObject(columns.Select(Function(c) c.name))
+            Yield New RowObject(columns.Select(Function(c) c.Name))
 
             For i As Integer = 0 To maxLen - 1
 #Disable Warning
@@ -406,13 +406,7 @@ Namespace IO
         ''' <param name="file"></param>
         ''' <returns></returns>
         Public Overloads Shared Function CreateObject(file As File) As DataFrame
-            Try
-                Return __createObject(file)
-            Catch ex As Exception
-                Call $"Error during read file from handle {file.FilePath.ToFileURL}".__DEBUG_ECHO
-                Call ex.PrintException
-                Throw
-            End Try
+            Return __createObject(file)
         End Function
 
         Private Shared Sub Initialize(table As List(Of RowObject), dataframe As DataFrame)
@@ -422,9 +416,7 @@ Namespace IO
         End Sub
 
         Private Shared Function __createObject(file As File) As DataFrame
-            Dim dataframe As New DataFrame With {
-                .FilePath = file.FilePath
-            }
+            Dim dataframe As New DataFrame
             Call Initialize(file._innerTable, dataframe)
             Return dataframe
         End Function
@@ -515,13 +507,12 @@ Namespace IO
         ''' <remarks></remarks>
         Public Sub CopyFrom(source As File)
             _innerTable = source._innerTable.Skip(1).AsList
-            FilePath = source.FilePath
             columnList = source._innerTable.First.AsList
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return FilePath.ToFileURL & "  // " & _innerTable(p).ToString
+            Return _innerTable(p).ToString
         End Function
 
         Public Function [Select](columnList As String()) As DataFrame
@@ -539,7 +530,6 @@ Namespace IO
 
             Return New DataFrame With {
                 .columnList = columnList.AsList,
-                .FilePath = FilePath,
                 ._innerTable = newTable
             }
         End Function
@@ -691,5 +681,37 @@ Namespace IO
         Public Function IsDBNull(i As Integer) As Boolean Implements IDataRecord.IsDBNull
             Return String.IsNullOrEmpty(current.Column(i))
         End Function
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
+            End If
+            disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
     End Class
 End Namespace
