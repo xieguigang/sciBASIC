@@ -223,6 +223,10 @@ Namespace ApplicationServices.Debugging.Logging
             Return Save(path, encoding.CodePage)
         End Function
 
+        Public Function Save() As Boolean
+            Return Save(FilePath)
+        End Function
+
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' To detect redundant calls
 
