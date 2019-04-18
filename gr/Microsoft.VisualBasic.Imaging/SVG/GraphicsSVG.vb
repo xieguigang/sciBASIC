@@ -612,6 +612,11 @@ Namespace SVG
                 .y2 = y2,
                 .style = New Stroke(pen).CSSValue
             }
+
+            If Not pen.DashStyle = DashStyle.Solid Then
+                line.DashArray = {8, 4}
+            End If
+
             Call __svgData.Add(line)
         End Sub
 
@@ -672,6 +677,13 @@ Namespace SVG
         Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
             Dim rectangle As New rect(rect) With {
                 .style = New Stroke(pen).CSSValue
+            }
+            Call __svgData.Add(rectangle)
+        End Sub
+
+        Public Overloads Sub DrawRectangle(pen As Pen, rect As Rectangle, fill As Color)
+            Dim rectangle As New rect(rect) With {
+                .style = {New Stroke(pen).CSSValue, $"fill: {fill.ToHtmlColor}"}.JoinBy("; ")
             }
             Call __svgData.Add(rectangle)
         End Sub
