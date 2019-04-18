@@ -206,7 +206,7 @@ Namespace SVG.XML
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function SaveAsXml(Optional path$ = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Private Function SaveAsXml(path$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             Return GetSVGXml.SaveTo(path, encoding)
         End Function
 
@@ -228,7 +228,7 @@ Namespace SVG.XML
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function SaveAsXml(Optional path$ = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+        Public Function SaveAsXml(path$, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return SaveAsXml(path, encoding.CodePage)
         End Function
     End Class

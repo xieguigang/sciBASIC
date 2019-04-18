@@ -296,12 +296,17 @@ Namespace Emit.Marshal
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator +(ptr As Pointer(Of T)) As SeqValue(Of T)
             Dim i% = ptr.index
+            ' move pointer forward
             ptr.index += 1
 
-            Return New SeqValue(Of T) With {
-                .i = i,
-                .value = ptr.buffer(i)
-            }
+            If ptr.EndRead Then
+                Return Nothing
+            Else
+                Return New SeqValue(Of T) With {
+                    .i = i,
+                    .value = ptr.buffer(i)
+                }
+            End If
         End Operator
 
         ''' <summary>

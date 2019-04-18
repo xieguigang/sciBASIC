@@ -68,23 +68,74 @@ Public Module PrimitiveParser
         End If
     End Function
 
-    ''' <summary>
-    ''' 用于匹配任意实数的正则表达式
-    ''' </summary>
-    Public Const NumericPattern$ = "[-]?\d*(\.\d+)?([eE][-]?\d*)?"
+#Region "text token pattern assert"
+    ' 2019-04-17 正则表达式的执行效率过低
 
     ''' <summary>
     ''' Is this token value string is a number?
     ''' </summary>
-    ''' <param name="str"></param>
     ''' <returns></returns>
     <ExportAPI("IsNumeric", Info:="Is this token value string is a number?")>
-    <Extension> Public Function IsNumeric(str$) As Boolean
-        With str.GetString(ASCII.Quot)
-            Dim s$ = r.Match(.ByRef, NumericPattern).Value
-            Return .ByRef = s
-        End With
+    <Extension> Public Function IsNumeric(num As String) As Boolean
+        Dim dotCheck As Boolean = False
+        Dim c As Char = num(Scan0)
+        Dim offset As Integer = 0
+
+        If c = "-"c OrElse c = "+"c Then
+            ' check for number sign symbol
+            '
+            ' +3.0
+            ' -3.0
+            offset = 1
+        ElseIf c = "."c Then
+            ' check for 
+            ' 
+            ' .1 (0.1)
+            offset = 1
+            dotCheck = True
+        End If
+
+        For i As Integer = offset To num.Length - 1
+            c = num(i)
+
+            If Not (c >= ZERO AndAlso c <= NINE) Then
+                If c = "."c Then
+                    If dotCheck Then
+                        Return False
+                    Else
+                        dotCheck = True
+                    End If
+                ElseIf c = "E"c OrElse c = "e"c Then
+                    Return IsInteger(num, i + 1)
+                End If
+            End If
+        Next
+
+        Return True
     End Function
+
+    Const ZERO As Char = "0"c
+    Const NINE As Char = "9"c
+
+    Public Function IsInteger(num As String, Optional offset As Integer = 0) As Boolean
+        Dim c As Char = num(Scan0)
+
+        ' check for number sign symbol
+        If c = "-"c OrElse c = "+"c Then
+            offset += 1
+        End If
+
+        For i As Integer = offset To num.Length - 1
+            c = num(i)
+
+            If Not (c >= ZERO AndAlso c <= NINE) Then
+                Return False
+            End If
+        Next
+
+        Return True
+    End Function
+#End Region
 
     ''' <summary>
     ''' <see cref="Integer"/> text parser

@@ -70,11 +70,11 @@ Namespace Language.UnixBash.FileSystem
     Public MustInherit Class File : Inherits BaseClass
         Implements ISaveHandle
 
-        Public Function Save(Optional Path As String = "", Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+        Public Function Save(Path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
             Return Save(Path, encoding.CodePage)
         End Function
 
-        Public MustOverride Function Save(Optional Path As String = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public MustOverride Function Save(Path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
 
         Public Shared Operator >(file As File, path As String) As Boolean
             Return file.Save(path, Encodings.UTF8)

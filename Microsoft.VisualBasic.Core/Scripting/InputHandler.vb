@@ -225,6 +225,7 @@ Namespace Scripting
                 {"int64", GetType(Long)},
                 {"long", GetType(Long)},
                 {"double", GetType(Double)},
+                {"single", GetType(Single)},
                 {"byte", GetType(Byte)},
                 {"date", GetType(Date)},
                 {"logfile", GetType(LogFile)},

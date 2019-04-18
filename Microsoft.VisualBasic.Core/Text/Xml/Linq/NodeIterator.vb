@@ -48,7 +48,8 @@ Namespace Text.Xml.Linq
 
     Public Module NodeIterator
 
-        Const ArrayOfTemplate$ = "<?xml version=""1.0"" encoding=""utf-16""?>
+        Friend Const XmlDeclare$ = "<?xml version=""1.0"" encoding=""utf-16""?>"
+        Friend Const ArrayOfTemplate$ = XmlDeclare & "
 <ArrayOf{0} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">
 %s
 </ArrayOf{0}>"

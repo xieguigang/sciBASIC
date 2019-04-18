@@ -161,7 +161,7 @@ Namespace FileStream.Generic
         ''' <param name="encoding">The file encoding of the exported node and edge csv file.</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Overrides Function Save(Optional outDIR$ = "", Optional encoding As Encoding = Nothing) As Boolean Implements ISaveHandle.Save
+        Public Overrides Function Save(outDIR$, encoding As Encoding) As Boolean Implements ISaveHandle.Save
             With outDIR Or App.CurrentDirectory.AsDefault
                 Call Nodes.SaveTo($"{ .ByRef}/nodes.csv", False, encoding)
                 Call Edges.SaveTo($"{ .ByRef}/network-edges.csv", False, encoding)

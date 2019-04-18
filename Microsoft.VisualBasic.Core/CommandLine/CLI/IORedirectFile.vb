@@ -223,7 +223,7 @@ Namespace CommandLine
                 Wait:=True
             )
 #End If
-            Call path.Delete
+            Call path.DeleteFile
 
             Return exitCode
         End Function

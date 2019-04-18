@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::f3e0bfd3bd571888aff6886c9c1ad273, Microsoft.VisualBasic.Core\ComponentModel\Settings\ConfigEngine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ConfigEngine
-    ' 
-    '         Properties: AllItems, FilePath, ProfileItemNode, ProfileItemType
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) [Set], __getDefaultPath, ExistsNode, GetName, GetSettings
-    '                   GetSettingsNode, Load, (+2 Overloads) Prints, Save, ToString
-    '                   View
-    ' 
-    '         Sub: Dispose
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ConfigEngine
+' 
+'         Properties: AllItems, FilePath, ProfileItemNode, ProfileItemType
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) [Set], __getDefaultPath, ExistsNode, GetName, GetSettings
+'                   GetSettingsNode, Load, (+2 Overloads) Prints, Save, ToString
+'                   View
+' 
+'         Sub: Dispose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel.Settings
 
@@ -62,7 +63,7 @@ Namespace ComponentModel.Settings
     ''' 只包含有对数据映射目标对象的属性读写，并不包含有文件数据的读写操作
     ''' </summary>
     ''' 
-    Public Class ConfigEngine : Inherits ITextFile
+    Public Class ConfigEngine : Implements ISaveHandle, IFileReference
         Implements IDisposable
 
         ''' <summary>
@@ -90,7 +91,7 @@ Namespace ComponentModel.Settings
             End Get
         End Property
 
-        Public Overrides Property FilePath As String
+        Public Property FilePath As String Implements IFileReference.FilePath
             Get
                 Return profilesData.FilePath
             End Get
@@ -297,32 +298,49 @@ Namespace ComponentModel.Settings
         End Function
 
         <ExportAPI("Save")>
-        Public Overrides Function Save(Optional FilePath As String = "", Optional Encoding As Encoding = Nothing) As Boolean
+        Public Function Save(FilePath$, Encoding As Encoding) As Boolean Implements ISaveHandle.Save
             Dim Xml As String = profilesData.GetXml
-            Return Xml.SaveTo(getPath(FilePath), Encoding)
+            Return Xml.SaveTo(FilePath Or Me.FilePath.When(FilePath.StringEmpty), Encoding)
         End Function
 
         Protected Friend Shared ReadOnly Property ProfileItemType As Type = GetType(ProfileItem)
         Protected Friend Shared ReadOnly Property ProfileItemNode As Type = GetType(ProfileNodeItem)
 
+        Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
+            Return Save(path, encoding.CodePage)
+        End Function
+
 #Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
+
         ' IDisposable
-        Protected Overrides Sub Dispose(disposing As Boolean)
-            If Not Me.disposedValue Then
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
                 If disposing Then
-                    ' TODO:  释放托管状态(托管对象)。
+                    ' TODO: dispose managed state (managed objects).
                     Call profilesData.Save()
                 End If
 
-                ' TODO:  释放非托管资源(非托管对象)并重写下面的 Finalize()。
-                ' TODO:  将大型字段设置为 null。
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
             End If
-            Me.disposedValue = True
+            disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            ' TODO: uncomment the following line if Finalize() is overridden above.
+            ' GC.SuppressFinalize(Me)
         End Sub
 #End Region
-
-        Protected Overrides Function __getDefaultPath() As String
-            Return FilePath
-        End Function
     End Class
 End Namespace

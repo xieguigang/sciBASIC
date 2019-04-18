@@ -125,7 +125,7 @@ Public Module DocumentExtensions
 
         csv = csv.First + file
 
-        Return csv.Save(path, )
+        Return csv.Save(path, Encodings.UTF8)
     End Function
 
     ''' <summary>

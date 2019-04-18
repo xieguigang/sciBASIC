@@ -92,8 +92,8 @@ Namespace Quantile
             End If
 
             Dim q1 = vector(Math.Truncate(q(0)))
-            Dim q2 = vector(Math.Truncate(q(1)))
-            Dim q3 = vector(Math.Truncate(q(2)))
+            Dim q2 = vector.ElementAtOrDefault(Math.Truncate(q(1)), vector.Last)
+            Dim q3 = vector.ElementAtOrDefault(Math.Truncate(q(2)), vector.Last)
             Dim IQR = q3 - q1
 
             Return (q1, q2, q3, IQR, New DoubleRange(vector))
