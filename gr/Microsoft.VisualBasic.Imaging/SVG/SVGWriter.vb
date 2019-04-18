@@ -83,7 +83,17 @@ Namespace SVG
                                              Optional size$ = "1440,900",
                                              Optional comments$ = Nothing,
                                              Optional desc$ = Nothing) As Boolean
-            Using file As FileStream = path.Open
+
+            ' 2019-04-18
+            '
+            ' 如果目标文件没有被事先清空的话
+            ' 会出现下面的错误，如果新文件内容要短于旧的文件内容的话
+            '
+            ' This page contains the following errors:
+            ' Error on line 6729 at column 7: Extra content at the end of the document
+            ' Below Is a rendering of the page up to the first error.
+            '
+            Using file As FileStream = path.Open(doClear:=True)
                 Call g.WriteSVG(
                     out:=file,
                     size:=size,

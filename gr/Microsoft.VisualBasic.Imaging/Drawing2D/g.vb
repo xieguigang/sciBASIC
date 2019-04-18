@@ -134,6 +134,10 @@ Namespace Drawing2D
             End Get
         End Property
 
+        ''' <summary>
+        ''' Get the image file extension name for current default image driver.
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property DriverExtensionName As String
             Get
                 Return "png" Or "svg".When(ActiveDriver = Drivers.SVG)
