@@ -719,10 +719,13 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+            ' 2019-04-18 似乎SVG的scale和gdi的scale有一些不一样
+            ' 在这里存在一个位置偏移的bug
+            ' 在这里尝试使用font size来修正
             Dim text As New XML.text With {
                 .value = s,
-                .x = point.X,
-                .y = point.Y,
+                .x = point.X + font.Size,
+                .y = point.Y + font.Size,
                 .style = New CSSFont(font).CSSValue
             }
 

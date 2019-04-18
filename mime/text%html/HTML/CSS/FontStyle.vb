@@ -301,6 +301,10 @@ Namespace HTML.CSS
 
             Call sb.Append($"font-style: {ToString(style)};")
 
+            If style = FontStyle.Bold Then
+                Call sb.Append("font-weight:bold;")
+            End If
+
             If size > 0 Then
                 sb.Append($"font-size: {size}px;")
             End If
