@@ -10,12 +10,18 @@ Namespace Text.Xml.Linq
     Public Class DataSetWriter(Of T) : Implements IDisposable
 
         Dim file As StreamWriter
-        Dim offsetLength As Integer = NodeIterator.XmlDeclare.Length
         Dim indentBlank$ = "   "
 
-        Sub New(file As String, Optional encoding As Encodings = Encodings.UTF8)
-            Me.file = file.OpenWriter(encoding)
-            Me.file.WriteLine(NodeIterator.XmlDeclare)
+        Sub New(file As String, Optional encoding As XmlEncodings = XmlEncodings.UTF8)
+            ' 20190419 因为VB.NET生成的Xml文件默认是unicode编码的
+            ' 但是文本编码默认是utf8的, 所以可能会出现下面的错误
+            ' 
+            ' System.Xml.XmlException: 'There is no Unicode byte order mark. Cannot switch to Unicode.'
+            '
+            ' 下面的两行代码是专门用来处理编码问题来避免出现上面的错误
+            '
+            Me.file = file.OpenWriter(encoding.TextEncoding)
+            Me.file.WriteLine(NodeIterator.XmlDeclare.Replace("utf-16", encoding.Description.ToLower))
             Me.file.WriteLine($"<DataSetOf{GetType(T).Name} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">")
             Me.file.WriteLine(indentBlank & "<!--")
             Me.file.WriteLine(XmlDataModel.GetTypeReferenceComment(GetType(T), 6))

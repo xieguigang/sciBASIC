@@ -612,6 +612,11 @@ Namespace SVG
                 .y2 = y2,
                 .style = New Stroke(pen).CSSValue
             }
+
+            If Not pen.DashStyle = DashStyle.Solid Then
+                line.DashArray = {8, 4}
+            End If
+
             Call __svgData.Add(line)
         End Sub
 
@@ -676,6 +681,13 @@ Namespace SVG
             Call __svgData.Add(rectangle)
         End Sub
 
+        Public Overloads Sub DrawRectangle(pen As Pen, rect As Rectangle, fill As Color)
+            Dim rectangle As New rect(rect) With {
+                .style = {New Stroke(pen).CSSValue, $"fill: {fill.ToHtmlColor}"}.JoinBy("; ")
+            }
+            Call __svgData.Add(rectangle)
+        End Sub
+
         Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
             Dim rectangle As New rect() With {
                 .x = x,
@@ -707,10 +719,13 @@ Namespace SVG
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF)
+            ' 2019-04-18 似乎SVG的scale和gdi的scale有一些不一样
+            ' 在这里存在一个位置偏移的bug
+            ' 在这里尝试使用font size来修正
             Dim text As New XML.text With {
                 .value = s,
-                .x = point.X,
-                .y = point.Y,
+                .x = point.X + font.Size,
+                .y = point.Y + font.Size,
                 .style = New CSSFont(font).CSSValue
             }
 

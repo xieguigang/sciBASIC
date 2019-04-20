@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::67dabb8464e1b96fe6903eef62a69a31, Microsoft.VisualBasic.Core\CommandLine\CLI\IORedirect.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class IORedirect
-    ' 
-    '         Properties: Bin, CLIArguments, ExitCode, HasExited, PID
-    '                     StandardOutput
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Delegate Function
-    ' 
-    ' 
-    '         Delegate Sub
-    ' 
-    '             Function: GetError, Read, ReadLine, Run, Shell
-    '                       (+3 Overloads) Start, ToString, WaitError, waitForExit, WaitForExit
-    '                       WaitOutput
-    ' 
-    '             Sub: (+2 Overloads) Dispose, errorHandler, Kill, outputHandler, Write
-    '                  (+2 Overloads) WriteLine
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class IORedirect
+' 
+'         Properties: Bin, CLIArguments, ExitCode, HasExited, PID
+'                     StandardOutput
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Delegate Function
+' 
+' 
+'         Delegate Sub
+' 
+'             Function: GetError, Read, ReadLine, Run, Shell
+'                       (+3 Overloads) Start, ToString, WaitError, waitForExit, WaitForExit
+'                       WaitOutput
+' 
+'             Sub: (+2 Overloads) Dispose, errorHandler, Kill, outputHandler, Write
+'                  (+2 Overloads) WriteLine
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Terminal.STDIO
 Imports Microsoft.VisualBasic.Terminal.STDIO__
+Imports Microsoft.VisualBasic.Text
 
 Namespace CommandLine
 
@@ -173,7 +174,7 @@ Namespace CommandLine
                        Optional displayStdOut As Boolean = True,
                        Optional displayDebug As Boolean = False)
 
-            Dim program$ = exe.GetString(""""c)
+            Dim program$ = exe.Trim(ASCII.Quot, " "c)
             Dim pInfo As New ProcessStartInfo(program, args.TrimNewLine.Trim) With {
                 .UseShellExecute = False
             }
@@ -275,9 +276,9 @@ Namespace CommandLine
 
             If displaDebug Then
                 Dim Exe As String = FileIO.FileSystem.GetFileInfo(processInfo.StartInfo.FileName).FullName.Replace("\", "/")
-                Dim argvs As String = (" " & processInfo.StartInfo.Arguments).Trim
+                Dim argvs As String = processInfo.StartInfo.Arguments
 
-                Call Console.WriteLine("   --> system(""file:""{0}""{1})", Exe, argvs)
+                Call Console.WriteLine("# ""{0}"" {1}", Exe, argvs)
             End If
 
             Try

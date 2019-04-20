@@ -74,6 +74,32 @@ Imports System.Xml.Serialization
 
 Namespace xsd
 
+    Public Class restriction
+
+        <XmlAttribute>
+        Public Property base As String
+        Public Property minInclusive As restrictionValue
+        Public Property maxInclusive As restrictionValue
+
+        <XmlElement>
+        Public Property enumeration As restrictionValue()
+        Public Property pattern As restrictionValue
+        Public Property whiteSpace As restrictionValue
+        Public Property length As restrictionValue
+    End Class
+
+    Public Class simpleType
+        <XmlAttribute>
+        Public Property name As String
+        Public Property restriction As restriction
+    End Class
+
+    Public Class restrictionValue
+
+        <XmlAttribute>
+        Public Property value As String
+    End Class
+
     Public Class include
 
         <XmlAttribute>
@@ -93,6 +119,12 @@ Namespace xsd
         Public Property attribute As attribute
     End Class
 
+    Public Class extension : Inherits complexType
+
+        <XmlAttribute>
+        Public Property base As String
+    End Class
+
     Public Class attribute
 
         <XmlAttribute> Public Property name As String
@@ -108,7 +140,8 @@ Namespace xsd
 
     Public Class sequence
 
-        Public Property element As element
+        <XmlElement>
+        Public Property element As element()
 
         Public Overrides Function ToString() As String
             Return element.ToString
@@ -121,6 +154,8 @@ Namespace xsd
         <XmlAttribute> Public Property maxOccurs As String
         <XmlAttribute> Public Property name As String
         <XmlAttribute> Public Property type As String
+        <XmlAttribute> Public Property [default] As String
+        <XmlAttribute> Public Property fixed As String
 
         Public Property annotation As annotation
 
@@ -136,5 +171,14 @@ Namespace xsd
         Public Overrides Function ToString() As String
             Return documentation
         End Function
+    End Class
+
+    Public Class schema
+
+        <XmlAttribute>
+        Public Property targetNamespace As String
+        <XmlAttribute>
+        Public Property elementFormDefault As String
+
     End Class
 End Namespace

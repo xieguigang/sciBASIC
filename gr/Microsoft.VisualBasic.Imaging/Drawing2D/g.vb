@@ -135,6 +135,16 @@ Namespace Drawing2D
         End Property
 
         ''' <summary>
+        ''' Get the image file extension name for current default image driver.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property DriverExtensionName As String
+            Get
+                Return "png" Or "svg".When(ActiveDriver = Drivers.SVG)
+            End Get
+        End Property
+
+        ''' <summary>
         ''' 用户所指定的图形引擎驱动程序类型，但是这个值会被开发人员设定的驱动程序类型的值所覆盖，
         ''' 通常情况下，默认引擎选用的是``gdi+``引擎
         ''' </summary>
