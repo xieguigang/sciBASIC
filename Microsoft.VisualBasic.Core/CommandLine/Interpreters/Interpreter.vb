@@ -283,8 +283,9 @@ Namespace CommandLine
             Else
                 ' 命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
                 If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then
+                    App.InputFile = commandName
+
                     Try
-                        App.InputFile = commandName
                         Return ExecuteFile()(path:=commandName, args:=DirectCast(argvs(Scan0), CommandLine))
                     Catch ex As Exception
                         ex = New Exception("Execute file failure!", ex)

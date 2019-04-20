@@ -220,6 +220,7 @@ Namespace Scripting
         Public ReadOnly Property Types As New SortedDictionary(Of String, Type) From {
  _
                 {"string", GetType(String)},
+                {"char", GetType(Char)},
                 {"integer", GetType(Integer)},
                 {"int32", GetType(Integer)},
                 {"int64", GetType(Long)},

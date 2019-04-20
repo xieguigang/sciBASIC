@@ -50,6 +50,8 @@ Imports System.Text
 Imports System.Xml
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Scripting.MetaData
@@ -104,6 +106,10 @@ Public Module XmlExtensions
             ' 由于在底层函数之中已经将错误给处理掉了，所以这里直接返回
             Return Nothing
         Else
+            If type.ImplementInterface(GetType(IFileReference)) Then
+                DirectCast(obj, IFileReference).FilePath = xmlFile
+            End If
+
             Return DirectCast(obj, T)
         End If
     End Function

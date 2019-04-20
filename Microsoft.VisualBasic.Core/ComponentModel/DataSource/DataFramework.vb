@@ -95,7 +95,7 @@ Namespace ComponentModel.DataSourceModel
                 If primitive Then
                     Return .Keys _
                         .Where(Function(k)
-                                   Return .ByRef(k).PropertyType.IsPrimitive
+                                   Return IsPrimitive(.ByRef(k).PropertyType)
                                End Function) _
                         .ToDictionary(Function(key) key,
                                       Function(key) .ByRef(key))
@@ -168,7 +168,7 @@ Namespace ComponentModel.DataSourceModel
 
             If primitiveType Then
                 For Each key As String In schema.Keys.ToArray
-                    If Not schema(key).PropertyType.IsPrimitive Then
+                    If Not IsPrimitive(schema(key).PropertyType) Then
                         Call schema.Remove(key)
                     End If
                 Next
