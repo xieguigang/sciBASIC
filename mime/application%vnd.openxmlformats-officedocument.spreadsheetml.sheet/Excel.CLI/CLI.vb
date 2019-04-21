@@ -198,6 +198,19 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         Return unionData.SaveTable(out).CLICode
     End Function
 
+    <ExportAPI("/fill.zero")>
+    <Usage("/fill.zero /in <dataset.csv> [/out <out.csv>]")>
+    Public Function FillZero(args As CommandLine) As Integer
+        Dim in$ = args <= "/in"
+        Dim out$ = args("/out") Or $"{[in].TrimSuffix}.fillZero.csv"
+        Dim dataset = Microsoft.VisualBasic.Data.csv.IO _
+            .DataSet _
+            .LoadDataSet([in]) _
+            .ToArray
+
+        Return dataset.SaveTo(out).CLICode
+    End Function
+
     ''' <summary>
     ''' 指定文件夹之中的csv文件按照文件名中第一个小数点前面的单词作为分组的key，进行分组合并
     ''' </summary>
