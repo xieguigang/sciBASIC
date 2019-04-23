@@ -77,15 +77,21 @@ Module CLI
     End Function
 
     <ExportAPI("/input.important")>
-    <Usage("/input.important /in <ANN_model.Xml> /sample <trainingSet.Xml> [/out <factors.csv>]")>
+    <Usage("/input.important /in <ANN_model.Xml> /sample <trainingSet.Xml/names.list.txt> [/out <factors.csv>]")>
     Public Function ANNInputImportantFactors(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
         Dim sample$ = args <= "/sample"
         Dim out$ = args("/out") Or $"{[in].TrimSuffix}.input_factors.csv"
         Dim model As NeuralNetwork = [in].LoadXml(Of NeuralNetwork)
-        Dim trainingSet = sample.LoadXml(Of DataSet)
+        Dim inputNames As String()
 
-        Return model.SumWeight(trainingSet.NormalizeMatrix.names) _
+        If sample.ExtensionSuffix.TextEquals("xml") Then
+            inputNames = sample.LoadXml(Of DataSet).NormalizeMatrix.names
+        Else
+            inputNames = sample.ReadAllLines
+        End If
+
+        Return model.SumWeight(inputNames) _
             .ToArray _
             .SaveTo(out) _
             .CLICode
