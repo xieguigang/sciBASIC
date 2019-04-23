@@ -350,6 +350,11 @@ Namespace IO
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function LoadDataSet(path$, Optional encoding As Encoding = Nothing) As IEnumerable(Of DataSet)
+            Return DataSet.LoadDataSet(path, encoding:=encoding)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Function Parse(Of T As Class)(content As String) As IEnumerable(Of T)
             Return File.Parse(content).AsDataSource(Of T)
         End Function

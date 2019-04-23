@@ -138,7 +138,7 @@
       <Project>{6ff317ff-1a81-4272-a894-bfbffb202b41}</Project>
       <Name>application.netCDF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataMining\Microsoft.VisualBasic.DataMining.Framework\Microsoft.VisualBasic.DataMining.Framework.vbproj">
+    <ProjectReference Include="..\..\DataMining\DataMining\Microsoft.VisualBasic.DataMining.Framework.vbproj">
       <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
       <Name>Microsoft.VisualBasic.DataMining.Framework</Name>
     </ProjectReference>
