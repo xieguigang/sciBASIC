@@ -557,6 +557,14 @@ Public Class BinaryDataReader
         Return TemporarySeek(0, SeekOrigin.Current)
     End Function
 
+    Public Sub TemporarySeek(offset As Integer, origin As SeekOrigin, action As Action)
+        Dim current As Long = Position
+
+        Call Seek(offset, origin)
+        Call action()
+        Call Seek(current, SeekOrigin.Begin)
+    End Sub
+
     ''' <summary>
     ''' Creates a <see cref="SeekTask"/> with the given parameters. As soon as the returned <see cref="SeekTask"/>
     ''' is disposed, the previous stream position will be restored.

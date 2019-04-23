@@ -116,6 +116,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End Get
         End Property
 
+        ''' <summary>
+        ''' Get cluster members
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Members As V()
             Get
                 Return DirectCast(Me!values, IEnumerable(Of V)).ToArray

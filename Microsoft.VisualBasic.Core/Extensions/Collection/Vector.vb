@@ -421,7 +421,11 @@ Public Module VectorExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function IndexOf(Of T)(array As T(), o As T) As Integer
-        Return System.Array.IndexOf(array, value:=o)
+        If array.IsNullOrEmpty Then
+            Return -1
+        Else
+            Return System.Array.IndexOf(array, value:=o)
+        End If
     End Function
 
     ''' <summary>

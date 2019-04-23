@@ -659,14 +659,24 @@ Public Module KeyValuePairExtensions
     End Function
 
     <Extension>
-    Public Function ToDictionary(nc As NameValueCollection) As Dictionary(Of String, String)
-        Dim hash As New Dictionary(Of String, String)
+    Public Function ToDictionary(nc As NameValueCollection, Optional allStrings As Boolean = False) As [Variant](Of Dictionary(Of String, String), Dictionary(Of String, String()))
+        If allStrings Then
+            Dim table As New Dictionary(Of String, String())
 
-        For Each key As String In nc.AllKeys
-            hash(key) = nc(key)
-        Next
+            For Each key As String In nc.AllKeys
+                table(key) = nc.GetValues(key)
+            Next
 
-        Return hash
+            Return table
+        Else
+            Dim table As New Dictionary(Of String, String)
+
+            For Each key As String In nc.AllKeys
+                table(key) = nc(key)
+            Next
+
+            Return table
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

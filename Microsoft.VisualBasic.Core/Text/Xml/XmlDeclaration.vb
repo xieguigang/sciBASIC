@@ -1,64 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::d6278acd072863b4988b7c39be91bc1f, Microsoft.VisualBasic.Core\Text\Xml\XmlDeclaration.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Enum XmlEncodings
-    ' 
-    '         GB2312, UTF16, UTF8
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Structure XmlDeclaration
-    ' 
-    '         Properties: [Default]
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: EncodingParser, ToString, XmlEncodingString, XmlStandaloneString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Enum XmlEncodings
+' 
+'         GB2312, UTF16, UTF8
+' 
+'  
+' 
+' 
+' 
+'     Structure XmlDeclaration
+' 
+'         Properties: [Default]
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: EncodingParser, ToString, XmlEncodingString, XmlStandaloneString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Language.Default
+Imports r = System.Text.RegularExpressions.Regex
 
 Namespace Text.Xml
 
     Public Enum XmlEncodings
-        UTF8
-        UTF16
-        GB2312
+        <Description("utf-8")> UTF8
+        <Description("utf-16")> UTF16
+        <Description("gb2312")> GB2312
     End Enum
 
     Public Structure XmlDeclaration
@@ -70,34 +73,33 @@ Namespace Text.Xml
         Sub New(declares As String)
             Dim s As String
 
-            s = Regex.Match(declares, "encoding=""\S+""", RegexICSng).Value
+            s = r.Match(declares, "encoding=""\S+""", RegexICSng).Value
             encoding = EncodingParser(s.GetStackValue("""", """"))
-            s = Regex.Match(declares, "standalone=""\S+""", RegexICSng).Value
+            s = r.Match(declares, "standalone=""\S+""", RegexICSng).Value
             standalone = s.GetStackValue("""", """").ParseBoolean
-            s = Regex.Match(declares, "version=""\S+""", RegexICSng).Value
+            s = r.Match(declares, "version=""\S+""", RegexICSng).Value
             version = s.GetStackValue("""", """")
         End Sub
 
-        Public Shared ReadOnly Property [Default] As XmlDeclaration =
-            New XmlDeclaration With {
-                .version = "1.0",
-                .standalone = True,
-                .encoding = XmlEncodings.UTF16
+        Public Shared ReadOnly Property [Default] As New XmlDeclaration With {
+            .version = defaultVersion1_0,
+            .standalone = True,
+            .encoding = XmlEncodings.UTF16
         }
+
+        Shared ReadOnly defaultVersion1_0 As DefaultValue(Of String) = "1.0"
 
         ''' <summary>
         ''' &lt;?xml version="{<see cref="version"/>}" encoding="{<see cref="encoding"/>}" standalone="{<see cref="standalone"/>}"?>
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            If String.IsNullOrEmpty(version) Then
-                version = "1.0"
-            End If
-            Return $"<?xml version=""{version}"" encoding=""{XmlEncodingString(encoding)}"" standalone=""{XmlStandaloneString(standalone)}""?>"
-        End Function
-
-        Public Shared Function XmlEncodingString(enc As XmlEncodings) As String
-            Return If(enc = XmlEncodings.UTF8, "utf-8", "utf-16")
+            Dim attr As New Dictionary(Of String, String) From {
+                {"version", version Or defaultVersion1_0},
+                {"encoding", encoding.Description},
+                {"standalone", XmlStandaloneString(standalone)}
+            }
+            Return $"<?xml {attr.Select(Function(a) $"{a.Key}=""{a.Value}""").JoinBy(" ")} ?>"
         End Function
 
         Public Shared Function EncodingParser(enc As String) As XmlEncodings

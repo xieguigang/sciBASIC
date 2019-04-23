@@ -145,7 +145,7 @@ B21,B22,B23,...
                 Optional trimBlanks As Boolean = False)
 
             FilePath = path
-            _innerTable = __loads(path, encoding.CodePage, trimBlanks)
+            _innerTable = loads(path, encoding.CodePage, trimBlanks)
         End Sub
 
         Sub New(source As IEnumerable(Of RowObject), path As String)
@@ -672,7 +672,7 @@ B21,B22,B23,...
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function FastLoad(path As String, Optional Parallel As Boolean = True, Optional encoding As Encoding = Nothing) As File
+        Public Shared Function FastLoad(path As String, Optional parallel As Boolean = True, Optional encoding As Encoding = Nothing) As File
             If encoding Is Nothing Then
                 encoding = Encoding.Default
             End If
@@ -681,7 +681,7 @@ B21,B22,B23,...
             Dim lines As String() = path.MapNetFile.ReadAllLines(encoding)
             Dim cData As New File
 
-            If Parallel Then
+            If parallel Then
                 Dim cache = (From x As SeqValue(Of String) In lines.SeqIterator Select x)
                 Dim Rows = (From line As SeqValue(Of String)
                             In cache.AsParallel
@@ -709,9 +709,10 @@ B21,B22,B23,...
         ''' <param name="encoding"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Public Shared Function Load(Path As String, Optional encoding As Encoding = Nothing, Optional trimBlanks As Boolean = False) As File
-            Dim buf As List(Of RowObject) = __loads(Path, encoding Or TextEncodings.DefaultEncoding, trimBlanks)
+        Public Shared Function Load(path$, Optional encoding As Encoding = Nothing, Optional trimBlanks As Boolean = False) As File
+            Dim buf As List(Of RowObject) = loads(path, encoding Or TextEncodings.DefaultEncoding, trimBlanks)
             Dim csv As New File With {._innerTable = buf}
+
             Return csv
         End Function
 
@@ -726,9 +727,8 @@ B21,B22,B23,...
         ''' <param name="path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Private Shared Function __loads(path As String, encoding As Encoding, trimBlanks As Boolean) As List(Of RowObject)
-            Dim lines As String() = path.MapNetFile.ReadAllLines(encoding)
-            Return Load(lines, trimBlanks)
+        Private Shared Function loads(path As String, encoding As Encoding, trimBlanks As Boolean) As List(Of RowObject)
+            Return Load(path.MapNetFile.ReadAllLines(encoding), trimBlanks)
         End Function
 
         ''' <summary>
@@ -747,14 +747,17 @@ B21,B22,B23,...
                 __test = Function(s) True
             End If
 
-            Dim rows As List(Of RowObject) = (From s As SeqValue(Of String)
-                                              In buf.Skip(1).SeqIterator.AsParallel
-                                              Where __test(s.value)
-                                              Select row = New RowObject(s.value),
-                                                  i = s.i
-                                              Order By i Ascending) _
-                                                   .ToList(Function(x) x.row)
-            Return first + rows
+            Dim parallelLoad = Function() As IEnumerable(Of RowObject)
+                                   Dim loader = From s As SeqValue(Of String)
+                                                In buf.Skip(1).SeqIterator.AsParallel
+                                                Where __test(s.value)
+                                                Select row = New RowObject(s.value), i = s.i
+                                                Order By i Ascending
+
+                                   Return loader.Select(Function(r) r.row)
+                               End Function
+
+            Return first + parallelLoad().AsList
         End Function
 
         ''' <summary>

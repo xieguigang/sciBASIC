@@ -101,19 +101,16 @@ Namespace CommandLine
         ''' (从给定的词组之中解析出参数的结构)
         ''' </summary>
         ''' <param name="tokens">个数为偶数的，但是假若含有开关的时候，则可能为奇数了</param>
-        ''' <param name="IncludeLogicSW">返回来的列表之中是否包含有逻辑开关</param>
+        ''' <param name="includeLogicals">返回来的列表之中是否包含有逻辑开关</param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        <Extension> Public Function CreateParameterValues(tokens$(), IncludeLogicSW As Boolean, Optional note$ = Nothing) As List(Of NamedValue(Of String))
+        <Extension> Public Function CreateParameterValues(tokens$(), includeLogicals As Boolean, Optional note$ = Nothing) As List(Of NamedValue(Of String))
             Dim list As New List(Of NamedValue(Of String))
 
             If tokens.IsNullOrEmpty Then
                 Return list
             ElseIf tokens.Length = 1 Then
-
-                If IsPossibleLogicFlag(tokens(Scan0)) AndAlso
-                    IncludeLogicSW Then
-
+                If IsPossibleLogicFlag(tokens(Scan0)) AndAlso includeLogicals Then
                     list += New NamedValue(Of String) With {
                         .Name = tokens(Scan0),
                         .Value = CStr(True),
@@ -131,7 +128,7 @@ Namespace CommandLine
 
                 If [next] = tokens.Length Then
                     ' 这个元素是开关，已经到达最后则没有了，跳出循环
-                    If IsPossibleLogicFlag(tokens(i)) AndAlso IncludeLogicSW Then
+                    If IsPossibleLogicFlag(tokens(i)) AndAlso includeLogicals Then
                         list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
 
@@ -142,7 +139,7 @@ Namespace CommandLine
 
                 ' 当前的这个元素是开关，下一个也是开关开头，则本元素肯定是一个开关
                 If IsPossibleLogicFlag(s) Then
-                    If IncludeLogicSW Then
+                    If includeLogicals Then
                         list += New NamedValue(Of String)(tokens(i), True, note)
                     End If
 
@@ -165,7 +162,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <param name="args">要求第一个对象不能够是命令的名称</param>
         ''' <returns></returns>
-        <Extension> Public Function GetLogicalFlags(args As IEnumerable(Of String), ByRef SingleValue$) As String()
+        <Extension> Public Function GetLogicalFlags(args As IEnumerable(Of String), ByRef singleValue$) As String()
             Dim tokens$() = args.SafeQuery.ToArray
 
             If tokens.IsNullOrEmpty Then
@@ -196,7 +193,7 @@ Namespace CommandLine
                     Else
 
                         If i = 0 Then
-                            SingleValue = tokens(i)
+                            singleValue = tokens(i)
                         End If
 
                     End If
@@ -330,8 +327,7 @@ Namespace CommandLine
         Public Function IsPossibleLogicFlag(obj As String) As Boolean
             If obj.Contains(" ") Then
                 Return False
-            End If
-            If IsNumeric(obj) Then
+            ElseIf IsNumeric(obj) Then
                 Return False
             End If
 
@@ -340,8 +336,7 @@ Namespace CommandLine
                 Return False
             End If
 
-            Return obj.StartsWith("-") OrElse
-                obj.StartsWith("/")
+            Return obj.StartsWith("-") OrElse obj.StartsWith("/")
         End Function
 
         ''' <summary>

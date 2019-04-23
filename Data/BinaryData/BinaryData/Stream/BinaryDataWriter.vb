@@ -173,6 +173,10 @@ Public Class BinaryDataWriter
         Return New Offset(Me)
     End Function
 
+    Public Overrides Function ToString() As String
+        Return $"[{Position}/{BaseStream.Length}] {Encoding.ToString}"
+    End Function
+
     ''' <summary>
     ''' Aligns the reader to the next given byte multiple..
     ''' </summary>

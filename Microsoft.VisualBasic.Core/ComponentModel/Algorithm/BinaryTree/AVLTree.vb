@@ -140,6 +140,11 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Find(term As K) As BinaryTree(Of K, V)
+            Return root.Find(key:=term, compares:=compares)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Remove(key As K)
             _root = Remove(key, _root)
         End Sub
