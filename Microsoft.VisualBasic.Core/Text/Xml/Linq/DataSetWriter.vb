@@ -12,7 +12,7 @@ Namespace Text.Xml.Linq
         Dim file As StreamWriter
         Dim indentBlank$ = "   "
 
-        Sub New(file As String, Optional encoding As XmlEncodings = XmlEncodings.UTF8)
+        Sub New(file As String, Optional encoding As XmlEncodings = XmlEncodings.UTF16)
             ' 20190419 因为VB.NET生成的Xml文件默认是unicode编码的
             ' 但是文本编码默认是utf8的, 所以可能会出现下面的错误
             ' 

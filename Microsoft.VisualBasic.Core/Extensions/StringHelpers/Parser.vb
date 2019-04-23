@@ -1,49 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::eb5036f3742ed4f7d079c74914c9b7ed, Microsoft.VisualBasic.Core\Extensions\StringHelpers\Parser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module PrimitiveParser
-    ' 
-    '     Properties: BooleanValues
-    ' 
-    '     Function: Eval, IsNumeric, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble
-    '               ParseInteger, ParseLong, ParseSingle
-    ' 
-    ' /********************************************************************************/
+' Module PrimitiveParser
+' 
+'     Properties: BooleanValues
+' 
+'     Function: Eval, IsNumeric, (+2 Overloads) ParseBoolean, ParseDate, ParseDouble
+'               ParseInteger, ParseLong, ParseSingle
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
@@ -98,7 +99,7 @@ Public Module PrimitiveParser
         For i As Integer = offset To num.Length - 1
             c = num(i)
 
-            If Not (c >= ZERO AndAlso c <= NINE) Then
+            If Not c Like numbers Then
                 If c = "."c Then
                     If dotCheck Then
                         Return False
@@ -107,6 +108,8 @@ Public Module PrimitiveParser
                     End If
                 ElseIf c = "E"c OrElse c = "e"c Then
                     Return IsInteger(num, i + 1)
+                Else
+                    Return False
                 End If
             End If
         Next
@@ -114,8 +117,7 @@ Public Module PrimitiveParser
         Return True
     End Function
 
-    Const ZERO As Char = "0"c
-    Const NINE As Char = "9"c
+    ReadOnly numbers As Index(Of Char) = {"0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c}
 
     Public Function IsInteger(num As String, Optional offset As Integer = 0) As Boolean
         Dim c As Char = num(Scan0)
@@ -128,7 +130,7 @@ Public Module PrimitiveParser
         For i As Integer = offset To num.Length - 1
             c = num(i)
 
-            If Not (c >= ZERO AndAlso c <= NINE) Then
+            If Not c Like numbers Then
                 Return False
             End If
         Next

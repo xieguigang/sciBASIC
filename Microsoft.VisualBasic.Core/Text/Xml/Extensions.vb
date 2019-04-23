@@ -146,7 +146,7 @@ Namespace Text.Xml
 
         <Extension>
         Public Function SetXmlEncoding(xml As String, encoding As XmlEncodings) As String
-            Dim xmlEncoding As String = Text.Xml.XmlDeclaration.XmlEncodingString(encoding)
+            Dim xmlEncoding As String = encoding.Description
             Dim head As String = r.Match(xml, XmlDoc.XmlDeclares, RegexICSng).Value
             Dim enc As String = r.Match(head, "encoding=""\S+""", RegexICSng).Value
 

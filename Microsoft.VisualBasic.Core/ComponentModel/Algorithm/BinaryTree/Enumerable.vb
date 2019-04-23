@@ -102,15 +102,5 @@ Namespace ComponentModel.Algorithm.BinaryTree
         Public Function Values(Of K, V)(nodes As IEnumerable(Of BinaryTree(Of K, V))) As IEnumerable(Of V)
             Return nodes.Select(Function(n) n.Value)
         End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function ClusterMembers(Of K, V)(node As BinaryTree(Of K, V)) As V()
-            If node Is Nothing Then
-                Return {}
-            Else
-                Return DirectCast(node!values, List(Of V)).ToArray
-            End If
-        End Function
     End Module
 End Namespace
