@@ -45,7 +45,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics.Heatmap
 
-Module Module2
+Module heatmapPlot
 
     Sub Main()
 

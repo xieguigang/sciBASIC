@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Public Module ROCPlot
 
     <Extension>
-    Public Function CreateSerial(test As Validation()) As SerialData
+    Public Function CreateSerial(test As IEnumerable(Of Validation)) As SerialData
         Return New SerialData With {
             .color = Color.Black,
             .lineType = DashStyle.Solid,
