@@ -360,12 +360,10 @@ Namespace Graphic.Axis
             End If
 
             Try
-                Do While i < max
+                Do Until i >= max
                     l.Add(i)
                     i += tick
                 Loop
-
-                Call l.Add(i)
             Catch ex As Exception
                 Dim debug As New Dictionary(Of String, Double) From {
                     {NameOf(min), min},

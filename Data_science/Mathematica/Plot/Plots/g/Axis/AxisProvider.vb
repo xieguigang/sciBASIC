@@ -88,15 +88,30 @@ Namespace Graphic.Axis
             Return AxisTicks().GetJson
         End Function
 
-        Public Shared Function TryParse(s$) As AxisProvider
+        ''' <summary>
+        ''' (min,max), tick=xxx, n=xxx
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        Public Shared Function TryParse(s As String) As AxisProvider
             Dim range As String = Regex.Match(s, "\(.+?\)").Value
             Dim tick$ = Regex.Match(s, "tick=[^,]+", RegexICSng).Value
             Dim n$ = Regex.Match(s, "n=[^,]+", RegexICSng).Value
 
+            If range.StringEmpty Then
+                ' 默认值
+                range = s
+                tick = -1
+                n = 10
+            Else
+                n = n.GetTagValue("=", trim:=True).Value
+                tick = tick.GetTagValue("=", trim:=True).Value
+            End If
+
             Return New AxisProvider With {
-                .n = n.GetTagValue("=", trim:=True).Value.ParseInteger,
+                .n = n.ParseInteger,
                 .Range = DoubleRange.op_Implicit(range),
-                .Tick = tick.GetTagValue("=", trim:=True).Value.ParseNumeric
+                .Tick = tick.ParseNumeric
             }
         End Function
 

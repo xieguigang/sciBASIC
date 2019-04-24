@@ -44,6 +44,7 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.DataMining
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
 
@@ -58,26 +59,43 @@ Public Module ROCPlot
             .Shape = LegendStyles.Triangle,
             .pts = test _
                 .Select(Function(pct)
-                            Return New PointData(1 - pct.Specificity, pct.Sensibility)
+                            Return New PointData((100 - pct.Specificity) / 100, pct.Sensibility / 100)
                         End Function) _
                 .ToArray
         }
     End Function
 
     Public Function Plot(roc As SerialData,
-                         Optional size$ = "1300,1300",
-                         Optional margin$ = g.DefaultPadding,
-                         Optional bg$ = "white") As GraphicsData
+                         Optional size$ = "2300,2300",
+                         Optional margin$ = g.DefaultUltraLargePadding,
+                         Optional bg$ = "white",
+                         Optional lineWidth! = 10,
+                         Optional fillAUC As Boolean = True,
+                         Optional AUCfillColor$ = "skyblue") As GraphicsData
 
         Dim reference As New SerialData With {
-            .color = Color.Gray,
+            .color = AUCfillColor.TranslateColor,
             .lineType = DashStyle.Dash,
             .PointSize = 5,
+            .width = lineWidth,
             .pts = {New PointData(0, 0), New PointData(1, 1)},
             .Shape = LegendStyles.Circle
         }
 
-        Dim img = Scatter.Plot({roc, reference}, size:=size, padding:=margin, bg:=bg)
+        roc.width = lineWidth
+        roc.color = AUCfillColor.TranslateColor
+
+        Dim img = Scatter.Plot(
+            {roc, reference},
+            size:=size,
+            padding:=margin,
+            bg:=bg,
+            interplot:=Splines.B_Spline,
+            xaxis:="0,1", yaxis:="0,1",
+            showLegend:=False,
+            fill:=fillAUC
+        )
+
         Return img
     End Function
 End Module
