@@ -39,7 +39,46 @@
 
 #End Region
 
+Imports System.Drawing
+Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
+Imports Microsoft.VisualBasic.DataMining
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.Driver
+
 Public Module ROCPlot
 
+    <Extension>
+    Public Function CreateSerial(test As Validation()) As SerialData
+        Return New SerialData With {
+            .color = Color.Black,
+            .lineType = DashStyle.Solid,
+            .PointSize = 5,
+            .Shape = LegendStyles.Triangle,
+            .pts = test _
+                .Select(Function(pct)
+                            Return New PointData(1 - pct.Specificity, pct.Sensibility)
+                        End Function) _
+                .ToArray
+        }
+    End Function
+
+    Public Function Plot(roc As SerialData,
+                         Optional size$ = "1300,1300",
+                         Optional margin$ = g.DefaultPadding,
+                         Optional bg$ = "white") As GraphicsData
+
+        Dim reference As New SerialData With {
+            .color = Color.Gray,
+            .lineType = DashStyle.Dash,
+            .PointSize = 5,
+            .pts = {New PointData(0, 0), New PointData(1, 1)},
+            .Shape = LegendStyles.Circle
+        }
+
+        Dim img = Scatter.Plot({roc, reference}, size:=size, padding:=margin, bg:=bg)
+        Return img
+    End Function
 End Module
 
