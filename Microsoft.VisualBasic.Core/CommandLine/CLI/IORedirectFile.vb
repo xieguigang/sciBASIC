@@ -140,7 +140,8 @@ Namespace CommandLine
                 Optional environment As IEnumerable(Of ValueTuple) = Nothing,
                 Optional FolkNew As Boolean = False,
                 Optional stdRedirect$ = "",
-                Optional stdin$ = Nothing)
+                Optional stdin$ = Nothing,
+                Optional debug As Boolean = True)
 
             If Not String.IsNullOrEmpty(stdRedirect) Then
                 _TempRedirect = stdRedirect.CLIPath
@@ -175,7 +176,9 @@ Namespace CommandLine
                 shellScript = ScriptingExtensions.Bash(file, argv, environment, FolkNew, stdin)
             End If
 
-            Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
+            If debug Then
+                Call $"""{file.ToFileURL}"" {argv}".__DEBUG_ECHO
+            End If
         End Sub
 
         ''' <summary>
