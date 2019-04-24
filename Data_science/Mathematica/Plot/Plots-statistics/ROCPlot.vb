@@ -47,26 +47,35 @@ Imports Microsoft.VisualBasic.DataMining
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 
 Public Module ROCPlot
 
     <Extension>
     Public Function CreateSerial(test As IEnumerable(Of Validation)) As SerialData
+        Dim points As New List(Of PointData)
+
+        points += New PointData(0, 0)
+        points += test _
+            .Select(Function(pct)
+                        Dim x! = (100 - pct.Specificity) / 100
+                        Dim y! = pct.Sensibility / 100
+
+                        Return New PointData(x, y)
+                    End Function)
+        points += New PointData(1, 1)
+
         Return New SerialData With {
             .color = Color.Black,
             .lineType = DashStyle.Solid,
             .PointSize = 5,
             .Shape = LegendStyles.Triangle,
-            .pts = test _
-                .Select(Function(pct)
-                            Return New PointData((100 - pct.Specificity) / 100, pct.Sensibility / 100)
-                        End Function) _
-                .ToArray
+            .pts = points.OrderBy(Function(p) p.pt.X).ToArray
         }
     End Function
 
     Public Function Plot(roc As SerialData,
-                         Optional size$ = "2300,2300",
+                         Optional size$ = "2300,2100",
                          Optional margin$ = g.DefaultUltraLargePadding,
                          Optional bg$ = "white",
                          Optional lineWidth! = 10,
