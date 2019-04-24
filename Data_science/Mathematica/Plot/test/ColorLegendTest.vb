@@ -49,7 +49,7 @@ Module ColorLegendTest
     Sub Main()
 
         Dim colors As SolidBrush() = Designer.GetColors(ColorBrewer.DivergingSchemes.RdBu9, 200).GetBrushes
-        Dim ticks = AxisScalling.CreateAxisTicks({-10.3301, 13.7566}, 20)
+        Dim ticks = AxisScalling.CreateAxisTicks(data:=New Double() {-10.3301, 13.7566}, ticks:=20)
         Dim range = ticks.Range
 
         Using g As Graphics2D = New Size(1200, 200).CreateGDIDevice
