@@ -1316,6 +1316,7 @@
     <Compile Include="Text\SearchEngine\TextIndexing\TextSegment.vb" />
     <Compile Include="ComponentModel\Algorithm\Levenshtein\ResultVisualize.vb" />
     <Compile Include="Text\Xml\Linq\Entity.vb" />
+    <Compile Include="Text\Xml\Models\ValueTuples\Extensions.vb" />
     <Compile Include="Text\Xml\Models\Vector.vb" />
     <Compile Include="Text\Xml\HtmlBuilder.vb" />
     <Compile Include="Text\Xml\XmlEntity.vb" />
