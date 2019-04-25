@@ -53,12 +53,17 @@ Imports System.Runtime.CompilerServices
 ' 
 Namespace MomentFunctions
 
-    ''' 
     ''' <summary>
+    ''' 可以利用这个模块来进行一组数据的正态分布的参数的估计
+    ''' 
     ''' @author Will_and_Sara
     ''' </summary>
     Public Class BasicProductMoments : Inherits DataSample(Of Double)
 
+        ''' <summary>
+        ''' 样本的变异程度
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property SampleVariance As Double
 
         Dim _ZAlphaForConvergence As Double = 1.96039491692453
