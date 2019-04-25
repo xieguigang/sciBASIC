@@ -122,7 +122,7 @@ Namespace Quantile
 
                 Return source.SelectByQuantile(q)
             ElseIf exp.IsPattern("\s*Q[123]\s*") Then
-                Dim level As Quartile.Levels = [Enum].Parse(GetType(Quartile.Levels), exp.Trim)
+                Dim level As QuartileLevels = [Enum].Parse(GetType(QuartileLevels), exp.Trim)
                 Return source.SelectByQuartile(name:=level)
             ElseIf exp.IsPattern("((desc)|(asc))[:]\d+") Then
                 Dim arg = exp.GetTagValue(":", trim:=True)
@@ -153,15 +153,15 @@ Namespace Quantile
         End Function
 
         <Extension>
-        Public Function SelectByQuartile(Of T)(source As Provider(Of T), name As Quartile.Levels) As IEnumerable(Of T)
+        Public Function SelectByQuartile(Of T)(source As Provider(Of T), name As QuartileLevels) As IEnumerable(Of T)
             Dim array = source.CreateArray.ToArray
             Dim quartile = array.Select(Function(o) o.x).Quartile
             Dim q#
 
             Select Case name
-                Case Levels.Q1 : q# = quartile.Q1
-                Case Levels.Q2 : q# = quartile.Q2
-                Case Levels.Q3 : q# = quartile.Q3
+                Case QuartileLevels.Q1 : q# = quartile.Q1
+                Case QuartileLevels.Q2 : q# = quartile.Q2
+                Case QuartileLevels.Q3 : q# = quartile.Q3
                 Case Else
                     Throw New NotSupportedException("???" & name.ToString)
             End Select

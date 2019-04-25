@@ -1,50 +1,50 @@
 ﻿#Region "Microsoft.VisualBasic::22566b33e5243497706a257bbb39cd87, Data_science\Mathematica\Math\Math\Quantile\Quartile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Quartile
-    ' 
-    ' 
-    '         Enum Levels
-    ' 
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Function: Outlier, Quartile
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Quartile
+' 
+' 
+'         Enum Levels
+' 
+' 
+' 
+' 
+'  
+' 
+'     Function: Outlier, Quartile
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,12 +58,6 @@ Namespace Quantile
     ''' 四分位数（Quartile）是在统计学中把所有数值由小到大排列并分成四等份够，处于三个分割点位置的数值。
     ''' </summary>
     Public Module Quartile
-
-        Public Enum Levels
-            Q1 = 1
-            Q2 = 2
-            Q3 = 3
-        End Enum
 
         ''' <summary>
         ''' + 第一四分位数 (Q1)，又称“较小四分位数”，等于该样本中所有数值由小到大排列后第25%的数字。
@@ -80,7 +74,7 @@ Namespace Quantile
         ''' 理论上,正常值范围应该是Q1到Q3范围内的值
         ''' </returns>
         <Extension>
-        Public Function Quartile(data As IEnumerable(Of Double), Optional altPosition As Boolean = False) As (Q1#, Q2#, Q3#, IQR#, range As DoubleRange)
+        Public Function Quartile(data As IEnumerable(Of Double), Optional altPosition As Boolean = False) As DataQuartile
             Dim vector = data.OrderBy(Function(x) x).ToArray
             Dim n = vector.Length
             Dim q As Vector
@@ -96,7 +90,7 @@ Namespace Quantile
             Dim q3 = vector.ElementAtOrDefault(Math.Truncate(q(2)), vector.Last)
             Dim IQR = q3 - q1
 
-            Return (q1, q2, q3, IQR, New DoubleRange(vector))
+            Return New DataQuartile(q1, q2, q3, IQR, New DoubleRange(vector))
         End Function
 
         ''' <summary>
@@ -114,7 +108,7 @@ Namespace Quantile
         ''' <param name="quartile"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function Outlier(data As Vector, quartile As (Q1#, Q2#, Q3#, IQR#, range As DoubleRange)) As (Normal As Double(), Outlier As Double())
+        Public Function Outlier(data As Vector, quartile As DataQuartile) As (normal As Double(), outlier As Double())
             With quartile
                 Dim lowerBound = .Q1 - 1.5 * .IQR
                 Dim upperBound = .Q3 + 1.5 * .IQR
