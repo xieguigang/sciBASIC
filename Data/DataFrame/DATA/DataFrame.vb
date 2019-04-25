@@ -1,55 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::6e62e39055bf28759131eaecfc8fd28d, Data\DataFrame\DATA\DataFrame.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataFrame
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: [As], Append, GetEnumerator, IEnumerable_GetEnumerator, Load
-    '                   SaveTable, ToString
-    ' 
-    '         Sub: TagFieldName
-    ' 
-    '         Operators: +
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataFrame
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: [As], Append, GetEnumerator, IEnumerable_GetEnumerator, Load
+'                   SaveTable, ToString
+' 
+'         Sub: TagFieldName
+' 
+'         Operators: +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
@@ -64,6 +65,29 @@ Namespace DATA
         ''' Row data in the csv table
         ''' </summary>
         Dim entityList As Dictionary(Of EntityObject)
+
+        Default Public Property Item(id$, property$) As String
+            Get
+                Return entityList(id)([property])
+            End Get
+            Set(value As String)
+                entityList(id)([property]) = value
+            End Set
+        End Property
+
+        Default Public Property Item([property] As String) As String()
+            Get
+                Return entityList _
+                    .Values _
+                    .Select(Function(d) d([property])) _
+                    .ToArray
+            End Get
+            Set(value As String())
+                For Each i As SeqValue(Of EntityObject) In entityList.Values.SeqIterator
+                    i.value([property]) = value.ElementAtOrDefault(i)
+                Next
+            End Set
+        End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(list As IEnumerable(Of EntityObject))
