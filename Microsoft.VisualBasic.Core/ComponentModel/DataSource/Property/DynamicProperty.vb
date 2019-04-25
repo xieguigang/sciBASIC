@@ -126,6 +126,10 @@ Namespace ComponentModel.DataSourceModel
         ''' <param name="value"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(propertyName$, value As T)
+            If propertyTable Is Nothing Then
+                propertyTable = New Dictionary(Of String, T)
+            End If
+
             Call propertyTable.Add(propertyName, value)
         End Sub
 
