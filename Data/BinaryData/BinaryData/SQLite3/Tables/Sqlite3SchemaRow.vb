@@ -55,8 +55,8 @@ Namespace ManagedSqlite.Core.Tables
         End Function
 
         Public Function ParseSchema() As Schema
-
-            Return New Schema
+            Dim columns = Sql.GetStackValue("(", ")").StringSplit("\s*,\s*")
+            Return New Schema(columns)
         End Function
 
     End Class
