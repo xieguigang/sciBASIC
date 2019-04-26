@@ -10,8 +10,7 @@ Namespace ManagedSqlite
     Public Module Extensions
 
         <Extension>
-        Public Iterator Function ExportTable(database As Sqlite3Database, tableName$) As IEnumerable(Of [Property](Of String))
-            Dim table As Sqlite3Table = database.GetTable(tableName)
+        Public Iterator Function ExportTable(table As Sqlite3Table) As IEnumerable(Of [Property](Of String))
             Dim schema = table.SchemaDefinition _
                 .ParseSchema _
                 .Columns _
@@ -30,6 +29,11 @@ Namespace ManagedSqlite
 
                 Yield rowObject
             Next
+        End Function
+
+        <Extension>
+        Public Function ExportTable(database As Sqlite3Database, tableName$) As IEnumerable(Of [Property](Of String))
+            Return database.GetTable(tableName).ExportTable
         End Function
     End Module
 End Namespace
