@@ -50,13 +50,15 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 
 Namespace ManagedSqlite.Core.Objects.Headers
+
     Public Class DatabaseHeader
+
         Public Const HeaderSize As Integer = 100
 
         ''' <summary>
         ''' SQLite format 3
         ''' </summary>
-        Private Shared ReadOnly _expectedHeader As Byte() = "SQLite format 3".Select(AddressOf Asc).Select(Function(i) CByte(i)).AsList + 0
+        Shared ReadOnly expectedHeader As Byte() = "SQLite format 3".Select(AddressOf Asc).Select(Function(i) CByte(i)).AsList + 0
 
         Public Property PageSize() As UShort
 
@@ -104,7 +106,7 @@ Namespace ManagedSqlite.Core.Objects.Headers
             ' The header is 100 bytes
             reader.CheckSize(100)
 
-            reader.CheckMagicBytes(_expectedHeader)
+            reader.CheckMagicBytes(expectedHeader)
 
             ' Read header
             Dim res As New DatabaseHeader()

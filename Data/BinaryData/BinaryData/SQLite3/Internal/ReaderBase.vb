@@ -56,8 +56,9 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 
 Namespace ManagedSqlite.Core.Internal
-    Public Class ReaderBase
-        Implements IDisposable
+
+    Public Class ReaderBase : Implements IDisposable
+
         Public ReadOnly Property Length() As Long
 
         Public ReadOnly Property Position() As Long
@@ -66,19 +67,17 @@ Namespace ManagedSqlite.Core.Internal
             End Get
         End Property
 
-        Private ReadOnly _stream As Stream
-        Private ReadOnly _binaryReader As BinaryReader
-
         Public Property TextEncoding() As SqliteEncoding
-
-        Private _encoding As Encoding
-
         Public Property PageSize() As UShort
-
         ''' <summary>
         ''' Reserved space at the end of every page
         ''' </summary>
         Public Property ReservedSpace() As Byte
+
+        ReadOnly _stream As Stream
+        ReadOnly _binaryReader As BinaryReader
+
+        Dim _encoding As Encoding
 
         Public Sub New(stream As Stream)
             _stream = stream
