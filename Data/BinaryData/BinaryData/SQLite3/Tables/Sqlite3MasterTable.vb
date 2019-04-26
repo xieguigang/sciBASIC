@@ -45,7 +45,9 @@
 Imports System.Collections.Generic
 
 Namespace ManagedSqlite.Core.Tables
+
     Friend Class Sqlite3MasterTable
+
         Public ReadOnly Property Tables() As List(Of Sqlite3SchemaRow)
 
         Public Sub New(table As Sqlite3Table)

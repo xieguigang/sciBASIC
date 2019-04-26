@@ -48,7 +48,9 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Enums
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 
 Namespace ManagedSqlite.Core.Objects
+
     Friend MustInherit Class BTreePage
+
         Public ReadOnly Property Page() As UInteger
 
         Protected Friend ReadOnly Property Reader() As ReaderBase

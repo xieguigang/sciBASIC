@@ -50,5 +50,9 @@ Namespace ManagedSqlite.Core.Tables
         Public Property RootPage() As UInteger
         Public Property Sql() As String
 
+        Public Overrides Function ToString() As String
+            Return Sql
+        End Function
+
     End Class
 End Namespace
