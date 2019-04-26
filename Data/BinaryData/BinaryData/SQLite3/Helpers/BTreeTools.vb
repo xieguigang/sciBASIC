@@ -84,7 +84,6 @@ Namespace ManagedSqlite.Core.Helpers
             ' Walk cells and yield their data
             For i As Integer = 0 To leaf.Cells.Length - 1
                 Dim cell As BTreeLeafTablePage.Cell = leaf.Cells(i)
-
                 Dim res As New BTreeCellData()
 
                 res.Cell = cell

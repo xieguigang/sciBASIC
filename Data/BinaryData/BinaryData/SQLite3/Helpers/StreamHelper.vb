@@ -61,6 +61,7 @@ Namespace ManagedSqlite.Core.Helpers
 
             While numRead > 0
                 totalRead += numRead
+
                 If totalRead = length Then
                     Exit While
                 End If
