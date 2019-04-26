@@ -316,6 +316,7 @@
     <Compile Include="SQLite3\Helpers\SqliteDataStream.vb" />
     <Compile Include="SQLite3\Helpers\StreamHelper.vb" />
     <Compile Include="SQLite3\Internal\ReaderBase.vb" />
+    <Compile Include="SQLite3\Extensions.vb" />
     <Compile Include="SQLite3\Objects\BTreeCellData.vb" />
     <Compile Include="SQLite3\Objects\BTreeInteriorTablePage.vb" />
     <Compile Include="SQLite3\Objects\BTreeLeafTablePage.vb" />

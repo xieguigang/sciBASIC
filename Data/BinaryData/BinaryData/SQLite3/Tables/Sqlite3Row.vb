@@ -51,6 +51,15 @@ Namespace ManagedSqlite.Core.Tables
         Public ReadOnly Property RowId() As Long
         Public ReadOnly Property ColumnData() As Object()
 
+        Default Public ReadOnly Property Item(field As Integer) As Object
+            Get
+                Dim value As Object = Nothing
+                Call TryGetOrdinal(field, value)
+                Return value
+            End Get
+        End Property
+
+
         Friend Sub New(table As Sqlite3Table, rowId As Long, columnData As Object())
             Me.Table = table
             Me.RowId = rowId
