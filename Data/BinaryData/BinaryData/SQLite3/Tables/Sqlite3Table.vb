@@ -93,8 +93,8 @@ Namespace ManagedSqlite.Core.Tables
 
             While reader.Position < headerSize
                 Dim columnInfo As Long = reader.ReadVarInt(null)
-
                 Dim meta As New ColumnDataMeta()
+
                 If columnInfo = 0 Then
                     meta.Type = SqliteDataType.Null
                 ElseIf columnInfo = 1 Then

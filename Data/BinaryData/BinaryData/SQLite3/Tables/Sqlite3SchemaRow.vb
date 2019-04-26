@@ -54,5 +54,10 @@ Namespace ManagedSqlite.Core.Tables
             Return Sql
         End Function
 
+        Public Function ParseSchema() As Schema
+
+            Return New Schema
+        End Function
+
     End Class
 End Namespace
