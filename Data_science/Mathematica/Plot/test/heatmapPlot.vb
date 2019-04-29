@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::24b3e6c9de38aca9c3c467096cd62014, Data\BinaryData\BinaryData\SQLite3\Helpers\StringHelper.vb"
+﻿#Region "Microsoft.VisualBasic::b9424e359c435406547ec802c827d5ff, Data_science\Mathematica\Plot\test\Module2.vb"
 
     ' Author:
     ' 
@@ -31,23 +31,45 @@
 
     ' Summaries:
 
-    '     Module StringHelper
+    ' Module Module2
     ' 
-    '         Function: ToHex
-    ' 
+    '     Sub: Main
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics.Heatmap
 
-Namespace ManagedSqlite.Core.Helpers
-    Module StringHelper
+Module heatmapPlot
 
-        <Extension>
-        Public Function ToHex(data As Byte()) As String
-            Return BitConverter.ToString(data).Replace("-", "")
-        End Function
-    End Module
-End Namespace
+    Sub Main()
+
+        Dim path = "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\images\dendrogram\heatmap.Test.csv"
+        Dim data = DataSet.LoadDataSet(path)
+        Dim experiments As New Dictionary(Of String, String) From {
+            {"T1", "red"},
+            {"T2", "red"},
+            {"T3", "red"},
+            {"T4", "red"},
+            {"K1", "blue"},
+            {"K2", "blue"},
+            {"K3", "blue"},
+            {"K4", "blue"},
+            {"average", "green"}
+        }
+
+        Call Heatmap.Plot(data, size:="3200,6000", reverseClrSeq:=True, drawScaleMethod:=DrawElements.Cols, drawClass:=(Nothing, experiments)).Save(path.TrimSuffix & ".png")
+
+        ' Call AxisScalling.CreateAxisTicks({-10.3301, 13.7566}, 20).GetJson(True).__DEBUG_ECHO
+
+        Pause()
+
+    End Sub
+
+
+End Module

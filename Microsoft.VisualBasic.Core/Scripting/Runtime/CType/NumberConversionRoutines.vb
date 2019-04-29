@@ -1,45 +1,47 @@
 ﻿#Region "Microsoft.VisualBasic::8fd356624247730ac0b79e2c04911f69, Microsoft.VisualBasic.Core\Scripting\Runtime\CType\NumberConversionRoutines.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module NumberConversionRoutines
-    ' 
-    '         Function: CDblSafe, (+2 Overloads) CIntSafe, (+2 Overloads) CShortSafe, CStrInternal, CStrSafe
-    '                   IsNumber
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module NumberConversionRoutines
+' 
+'         Function: CDblSafe, (+2 Overloads) CIntSafe, (+2 Overloads) CShortSafe, CStrInternal, CStrSafe
+'                   IsNumber
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Scripting.Runtime
 
@@ -112,7 +114,9 @@ Namespace Scripting.Runtime
         ''' 安全的将目标对象转换为字符串值
         ''' </summary>
         ''' <param name="obj"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' 如果目标是字节数组，则会被转换为base64字符串
+        ''' </returns>
         Public Function CStrSafe(obj As Object, Optional default$ = "") As String
             If obj Is Nothing Then
                 Return String.Empty
@@ -137,6 +141,12 @@ Namespace Scripting.Runtime
         Private Function CStrInternal(obj As Object, default$) As String
             Dim type As Type = obj.GetType
             Dim delg As INarrowingOperator(Of Object, String)
+
+            If type Is GetType(Byte()) OrElse type.IsInheritsFrom(GetType(IEnumerable(Of Byte))) Then
+                With CType(obj, IEnumerable(Of Byte)).ToArray
+                    Return .ToBase64String
+                End With
+            End If
 
             ' 2018-3-18 假若找不到操作符的话，函数会返回Nothing
             ' 同样也需要将这个Nothing添加进入字典之中，否则在运行linq代码的时候

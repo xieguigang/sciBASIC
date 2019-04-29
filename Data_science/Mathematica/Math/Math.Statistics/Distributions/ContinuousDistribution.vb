@@ -1,51 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::dfa30b087e13472b88cc01edc0dbd362, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ContinuousDistribution
-    ' 
-    '         Properties: PeriodOfRecord
-    ' 
-    '         Function: AndersonDarlingTest, (+2 Overloads) BootStrap, Clone, Equals, GetCDF
-    '                   GetHashCode, GetInvCDF, GetParamNames, GetParamValues, GetPDF
-    '                   Kolmogorov_SmirnovTest
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ContinuousDistribution
+' 
+'         Properties: PeriodOfRecord
+' 
+'         Function: AndersonDarlingTest, (+2 Overloads) BootStrap, Clone, Equals, GetCDF
+'                   GetHashCode, GetInvCDF, GetParamNames, GetParamValues, GetPDF
+'                   Kolmogorov_SmirnovTest
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -171,6 +169,7 @@ Namespace Distributions
             Next
             Return ParamVals
         End Function
+
         ''' <summary>
         ''' Creates a clone of the current ContinuousDistribution. </summary>
         ''' <returns> A ContinuousDistribution of the same type as the one this function is called on. </returns>
@@ -178,6 +177,7 @@ Namespace Distributions
             'create a new continuousdistribution and populate it from this using reflection.
             Dim Dist As ContinuousDistribution = Nothing
             Dim c As Type
+
             Try
                 c = Type.GetType(Me.GetType().Name)
                 Dist = CType(c.GetConstructor().NewInstance(), ContinuousDistribution)
@@ -190,13 +190,11 @@ Namespace Distributions
                             f.SetValue(Dist, f.GetInt(Me))
                         Case Else
                     End Select
-                Next f
-                'JAVA TO VB CONVERTER TODO TASK: There is no equivalent in VB to Java 'multi-catch' syntax:
-                '	Catch ClassNotFoundException Or NoSuchMethodException Or SecurityException Or InstantiationException Or IllegalAccessException Or System.ArgumentException Or InvocationTargetException ex
-                'java.util.logging.Logger.getLogger(GetType(ContinuousDistribution).Name).log(java.util.logging.Level.SEVERE, Nothing, ex)
+                Next
             Catch ex As Exception
 
             End Try
+
             Return Dist
         End Function
         Public Overrides Function Equals(dist As Object) As Boolean
@@ -207,7 +205,7 @@ Namespace Distributions
                 If thisParamValues.Length = thoseParamValues.Length Then
                     For i As Integer = 0 To thisParamValues.Length - 1
                         If thisParamValues(i) IsNot thoseParamValues(i) Then Return False
-                    Next i
+                    Next
                 Else
                     Return False
                 End If
@@ -294,7 +292,7 @@ Namespace Distributions
             Dim Random As New Random
             For i As Integer = 0 To _PeriodOfRecord - 1
                 result(i) = GetInvCDF(Random.NextDouble())
-            Next i
+            Next
             Return result
         End Function
         Public Overridable Function BootStrap(seed As Long) As Double()
@@ -302,7 +300,7 @@ Namespace Distributions
             Dim Random As New Random(seed)
             For i As Integer = 0 To _PeriodOfRecord - 1
                 result(i) = GetInvCDF(Random.NextDouble())
-            Next i
+            Next
             Return result
         End Function
     End Class

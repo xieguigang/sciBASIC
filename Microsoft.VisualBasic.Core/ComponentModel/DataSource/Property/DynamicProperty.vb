@@ -56,6 +56,7 @@ Namespace ComponentModel.DataSourceModel
     ''' <typeparam name="T"></typeparam>
     Public MustInherit Class DynamicPropertyBase(Of T)
         Implements IDynamicMeta(Of T)
+        Implements IEnumerable(Of NamedValue(Of T))
 
         ''' <summary>
         ''' The dynamics property object with specific type of value.
@@ -119,6 +120,20 @@ Namespace ComponentModel.DataSourceModel
         End Property
 
         ''' <summary>
+        ''' Add a property into the property table
+        ''' </summary>
+        ''' <param name="propertyName$"></param>
+        ''' <param name="value"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub Add(propertyName$, value As T)
+            If propertyTable Is Nothing Then
+                propertyTable = New Dictionary(Of String, T)
+            End If
+
+            Call propertyTable.Add(propertyName, value)
+        End Sub
+
+        ''' <summary>
         ''' Determines whether the System.Collections.Generic.Dictionary`2 contains the specified
         ''' key.
         ''' </summary>
@@ -178,5 +193,15 @@ Namespace ComponentModel.DataSourceModel
         Public Shared Narrowing Operator CType(dynamic As DynamicPropertyBase(Of T)) As Func(Of String, T)
             Return Function(pName$) dynamic(pName)
         End Operator
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of NamedValue(Of T)) Implements IEnumerable(Of NamedValue(Of T)).GetEnumerator
+            For Each [property] In propertyTable
+                Yield New NamedValue(Of T)([property].Key, [property].Value)
+            Next
+        End Function
+
+        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Yield GetEnumerator()
+        End Function
     End Class
 End Namespace

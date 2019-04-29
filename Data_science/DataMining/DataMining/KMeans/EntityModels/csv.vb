@@ -63,10 +63,6 @@ Namespace KMeans
         ''' <returns></returns>
         Public Property Cluster As String
 
-        Public Sub Add(key As String, n As Double)
-            Call Properties.Add(key, n)
-        End Sub
-
         Public Overrides Function ToString() As String
             Return ID
         End Function

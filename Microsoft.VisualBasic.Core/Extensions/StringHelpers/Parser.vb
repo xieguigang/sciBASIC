@@ -45,10 +45,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
-Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>
 ''' Simple type parser extension function for <see cref="String"/>

@@ -95,7 +95,7 @@ Public Module WebServiceUtils
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function isURL(url As String) As Boolean
-        Return url.InStrAny(Protocols) > -1
+        Return url.IndexOfAny({ASCII.LF, ASCII.CR}) = -1 AndAlso url.InStrAny(Protocols) = 1
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

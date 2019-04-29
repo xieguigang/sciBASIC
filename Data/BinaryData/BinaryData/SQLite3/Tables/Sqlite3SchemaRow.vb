@@ -50,5 +50,14 @@ Namespace ManagedSqlite.Core.Tables
         Public Property RootPage() As UInteger
         Public Property Sql() As String
 
+        Public Overrides Function ToString() As String
+            Return Sql
+        End Function
+
+        Public Function ParseSchema() As Schema
+            Dim columns = Sql.GetStackValue("(", ")").StringSplit("\s*,\s*")
+            Return New Schema(columns)
+        End Function
+
     End Class
 End Namespace

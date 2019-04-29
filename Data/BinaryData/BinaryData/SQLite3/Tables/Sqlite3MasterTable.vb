@@ -45,13 +45,19 @@
 Imports System.Collections.Generic
 
 Namespace ManagedSqlite.Core.Tables
+
     Friend Class Sqlite3MasterTable
+
         Public ReadOnly Property Tables() As List(Of Sqlite3SchemaRow)
+        Public ReadOnly Property Schema As Sqlite3SchemaRow
 
         Public Sub New(table As Sqlite3Table)
-            Tables = New List(Of Sqlite3SchemaRow)()
+            Tables = ParseTables(table).ToList
+            Schema = table.SchemaDefinition
+        End Sub
 
-            Dim rows As IEnumerable(Of Sqlite3Row) = table.EnumerateRows()
+        Private Iterator Function ParseTables(master As Sqlite3Table) As IEnumerable(Of Sqlite3SchemaRow)
+            Dim rows As IEnumerable(Of Sqlite3Row) = master.EnumerateRows()
 
             For Each row As Sqlite3Row In rows
                 Dim other As New Sqlite3SchemaRow()
@@ -73,8 +79,12 @@ Namespace ManagedSqlite.Core.Tables
                 row.TryGetOrdinal(4, str)
                 other.Sql = str
 
-                Tables.Add(other)
+                Yield other
             Next
-        End Sub
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return Schema.ToString
+        End Function
     End Class
 End Namespace

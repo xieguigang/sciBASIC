@@ -64,9 +64,5 @@ Namespace FileStream.Generic
                 MyBase.Properties = value
             End Set
         End Property
-
-        Public Sub Add(key As String, value As String)
-            Call Properties.Add(key, value)
-        End Sub
     End Class
 End Namespace

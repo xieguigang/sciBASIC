@@ -85,6 +85,11 @@ Public Module Extensions
         Call __initStreamIO_pointer()
     End Sub
 
+    <Extension>
+    Public Function LoadDataFrame(path As String, Optional encoding As Encoding = Nothing) As DATA.DataFrame
+        Return New DATA.DataFrame(EntityObject.LoadDataSet(path, encoding:=encoding))
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function LoadCsv(Of T As Class)(path As DefaultString) As List(Of T)

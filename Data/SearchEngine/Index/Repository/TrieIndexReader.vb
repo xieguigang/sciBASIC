@@ -37,15 +37,14 @@ Public Class TrieIndexReader : Implements IDisposable
 
         Call Seek(root, SeekOrigin.Begin)
 
-        For Each c As Char In term
+        For Each c As Integer In term.Select(AddressOf CharCode)
             current = reader.Position
-            offset = getNextOffset(Asc(c))
-            Seek(current, SeekOrigin.Begin)
+            offset = getNextOffset(c)
 
             If offset = -1 Then
                 Return -1
             Else
-                Call Seek(offset, SeekOrigin.Current)
+                Call Seek(current + offset, SeekOrigin.Begin)
             End If
         Next
 
@@ -55,6 +54,21 @@ Public Class TrieIndexReader : Implements IDisposable
         data = reader.ReadInt64
 
         Return data
+    End Function
+
+    Const max% = Asc("~"c)
+
+    ''' <summary>
+    ''' 在这里将非ASCII的字符都移动到了最后一个字符
+    ''' </summary>
+    ''' <param name="c"></param>
+    ''' <returns></returns>
+    Public Shared Function CharCode(c As Char) As Integer
+        If c >= " "c AndAlso c <= "~"c Then
+            Return Asc(c)
+        Else
+            Return max + 1
+        End If
     End Function
 
     ' offset block is pre-allocated block

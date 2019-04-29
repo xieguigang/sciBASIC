@@ -77,16 +77,16 @@ Namespace Language.UnixBash
         ''' <summary>
         ''' The search options
         ''' </summary>
-        Dim __opts As New Dictionary(Of SearchOpt.Options, SearchOpt)
+        Dim opts As New Dictionary(Of SearchOpt.Options, SearchOpt)
 
         Public Overrides Function ToString() As String
-            Return __opts.GetJson
+            Return opts.GetJson
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Clone() As Object Implements ICloneable.Clone
             Return New Search With {
-                .__opts = New Dictionary(Of SearchOpt.Options, SearchOpt)(__opts)
+                .opts = New Dictionary(Of SearchOpt.Options, SearchOpt)(opts)
             }
         End Function
 
@@ -99,7 +99,7 @@ Namespace Language.UnixBash
         Public Shared Operator -(ls As Search, l As SearchOpt) As Search
             If l.opt <> SearchOpt.Options.None Then
                 Dim clone As Search = DirectCast(ls.Clone, Search)
-                Call clone.__opts.Add(l.opt, l)
+                Call clone.opts.Add(l.opt, l)
                 Return clone
             Else
                 Return ls
@@ -108,7 +108,7 @@ Namespace Language.UnixBash
 
         Public Shared Operator <<(ls As Search, opt As SearchOptions) As Search
             If CType(opt, SearchOption) = SearchOption.SearchAllSubDirectories Then
-                ls.__opts.Add(SearchOpt.Options.Recursive, r)
+                ls.opts.Add(SearchOpt.Options.Recursive, r)
             End If
 
             Return ls
@@ -140,7 +140,7 @@ Namespace Language.UnixBash
         Public ReadOnly Property SearchType As FileIO.SearchOption
             Get
                 Dim opt As FileIO.SearchOption = FileIO.SearchOption.SearchTopLevelOnly
-                If __opts.ContainsKey(SearchOpt.Options.Recursive) Then
+                If opts.ContainsKey(SearchOpt.Options.Recursive) Then
                     Return FileIO.SearchOption.SearchAllSubDirectories
                 Else
                     Return opt
@@ -150,10 +150,10 @@ Namespace Language.UnixBash
 
         Public ReadOnly Property wildcards As String()
             Get
-                If Not __opts.ContainsKey(SearchOpt.Options.Ext) Then
+                If Not opts.ContainsKey(SearchOpt.Options.Ext) Then
                     Return Nothing
                 Else
-                    Return __opts(SearchOpt.Options.Ext) _
+                    Return opts(SearchOpt.Options.Ext) _
                         .wildcards _
                         .ToArray
                 End If
@@ -187,7 +187,7 @@ Namespace Language.UnixBash
         ''' <param name="directory"></param>
         ''' <returns></returns>
         Public Overloads Shared Operator <=(ls As Search, directory$) As IEnumerable(Of String)
-            Dim l As Boolean = ls.__opts.ContainsKey(SearchOpt.Options.LongName)
+            Dim l As Boolean = ls.opts.ContainsKey(SearchOpt.Options.LongName)
 
             If Not directory.DirectoryExists Then
                 Call $"Directory {directory} is not valid on your file system!".Warning
@@ -202,13 +202,13 @@ Namespace Language.UnixBash
             Dim list As IEnumerable(Of String)
 
             With ls
-                If .__opts.ContainsKey(SearchOpt.Options.Directory) Then
+                If .opts.ContainsKey(SearchOpt.Options.Directory) Then
                     list = directory.ListDirectory(.SearchType)
                 Else
                     list = directory.ReadDirectory(.SearchType)
                 End If
 
-                If .__opts.ContainsKey(SearchOpt.Options.Directory) Then
+                If .opts.ContainsKey(SearchOpt.Options.Directory) Then
                     If l Then
                         Return list.Where(isMatch)
                     Else

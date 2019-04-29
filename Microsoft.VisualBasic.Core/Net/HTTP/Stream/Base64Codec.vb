@@ -77,6 +77,11 @@ Namespace Net.Http
             Return (encoding Or UTF8).GetString(Convert.FromBase64String(base64))
         End Function
 
+        ''' <summary>
+        ''' 将任意的字节数据序列转换为base64字符串
+        ''' </summary>
+        ''' <param name="byts"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ToBase64String(byts As IEnumerable(Of Byte)) As String

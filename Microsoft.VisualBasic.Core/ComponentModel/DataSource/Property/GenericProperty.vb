@@ -81,5 +81,9 @@ Namespace ComponentModel.DataSourceModel
                 Properties = value.ToDictionary(Function(x) x.Name, Function(x) x.Value)
             End Set
         End Property
+
+        Public Overloads Shared Narrowing Operator CType(properties As [Property](Of T)) As Dictionary(Of String, T)
+            Return properties.Properties
+        End Operator
     End Class
 End Namespace

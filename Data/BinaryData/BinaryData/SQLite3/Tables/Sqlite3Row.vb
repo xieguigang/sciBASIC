@@ -1,53 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::19762a7bc0040a32eb21a4665f7a0eb7, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3Row.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Sqlite3Row
-    ' 
-    '         Properties: ColumnData, RowId, Table
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) TryGetOrdinal
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Sqlite3Row
+' 
+'         Properties: ColumnData, RowId, Table
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: (+2 Overloads) TryGetOrdinal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Namespace ManagedSqlite.Core.Tables
+
     Public Class Sqlite3Row
+
         Public ReadOnly Property Table() As Sqlite3Table
         Public ReadOnly Property RowId() As Long
         Public ReadOnly Property ColumnData() As Object()
+
+        Default Public ReadOnly Property Item(field As Integer) As Object
+            Get
+                Dim value As Object = Nothing
+                Call TryGetOrdinal(field, value)
+                Return value
+            End Get
+        End Property
+
 
         Friend Sub New(table As Sqlite3Table, rowId As Long, columnData As Object())
             Me.Table = table

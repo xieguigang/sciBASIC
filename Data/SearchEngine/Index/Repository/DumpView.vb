@@ -2,7 +2,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 
-Public Module DumpView
+Public Module TrieDump
 
     ReadOnly DataPadLength As Integer = Long.MinValue.ToString.Length
 
@@ -31,6 +31,10 @@ Public Module DumpView
                 ' data value
                 Call out.Write(index.ReadInt64.ToString.PadLeft(DataPadLength))
                 Call out.Write("| ")
+
+                If index.EndOfStream Then
+                    Exit For
+                End If
 
                 ' characters offset
                 For c As Integer = Asc(" "c) To Asc("~"c)

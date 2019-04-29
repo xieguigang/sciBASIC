@@ -49,6 +49,12 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Module StringBuilders
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function ToHex(data As Byte()) As String
+        Return BitConverter.ToString(data).Replace("-", "")
+    End Function
+
     ''' <summary>
     ''' 批量进行替换操作
     ''' </summary>

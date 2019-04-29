@@ -70,5 +70,11 @@ Namespace Language.Default
         Public Function TrimSuffix(path As DefaultString) As String
             Return path.DefaultValue.TrimSuffix
         End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function NormalizePathString(path As DefaultString, Optional alphabetOnly As Boolean = True) As String
+            Return path.DefaultValue.NormalizePathString(alphabetOnly)
+        End Function
     End Module
 End Namespace

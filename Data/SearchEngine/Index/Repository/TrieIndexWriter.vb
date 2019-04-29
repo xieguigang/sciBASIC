@@ -69,6 +69,11 @@ Public Class TrieIndexWriter : Implements IDisposable
     ''' </summary>
     Public Const allocateSize As Integer = 8 + (95 + 1) * 4
 
+    ''' <summary>
+    ''' 构建一个字典树索引, 这个索引文件可以实现很高的字符串索引查找效率, 但是缺点很明显, 
+    ''' 必须是完全匹配, 不支持模糊查找
+    ''' </summary>
+    ''' <param name="IOdev"></param>
     Sub New(IOdev As Stream)
         index = New BinaryDataWriter(IOdev, encoding:=Encoding.ASCII)
         ' write magic with 9 bytes
@@ -92,7 +97,7 @@ Public Class TrieIndexWriter : Implements IDisposable
     ''' <summary>
     ''' Only supports ASCII symbols
     ''' </summary>
-    ''' <param name="term"></param>
+    ''' <param name="term">如果需要大小写不敏感, 则会需要将这个参数值在传递进来之前全部转换为小写,然后查找的时候也全部转换为小写执行查找即可</param>
     ''' <param name="data">
     ''' 与当前的term所关联的数据块的位置值
     ''' </param>
@@ -100,6 +105,8 @@ Public Class TrieIndexWriter : Implements IDisposable
     Public Sub AddTerm(term As String, data As Long)
         Dim offset As Integer
         Dim current As Long
+        Dim chars As CharPtr = term
+        Dim c As Integer
 
         If Strings.Len(term) = 0 Then
             ' empty string data
@@ -109,7 +116,9 @@ Public Class TrieIndexWriter : Implements IDisposable
             Call reader.Seek(root, SeekOrigin.Begin)
         End If
 
-        For Each c As Integer In term.Select(AddressOf Asc)
+        Do While Not chars.EndRead
+            c = TrieIndexReader.CharCode(++chars)
+
             ' current is the begining location of current character block
             current = reader.Position
             offset = reader.getNextOffset(c)
@@ -129,21 +138,16 @@ Public Class TrieIndexWriter : Implements IDisposable
                 index.Position = length
                 ' write pre-allocated block
                 index.Seek(allocateSize, SeekOrigin.Current)
+                index.Seek(length, SeekOrigin.Begin)
 
-                current = index.Position
                 length += allocateSize
             Else
                 Call reader.Seek(current, SeekOrigin.Begin)
                 Call reader.Seek(offset, SeekOrigin.Current)
             End If
-        Next
+        Loop
 
-        ' End of the charaters is the data entry that associated with current term
-        index.Seek(-allocateSize, SeekOrigin.Current)
-        index.Write(data)
-        ' fill current block with zero data
-        ' index.Seek(allocateSize - 8, SeekOrigin.Current)
-        index.Flush()
+        Call index.Write(data)
     End Sub
 
 #Region "IDisposable Support"
