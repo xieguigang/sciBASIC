@@ -430,10 +430,14 @@ NULL:       If Not strict Then
             End If
 
             If a.IsGenericType AndAlso base.IsGenericType Then
+                Dim genericOfa As Type = a.GetGenericTypeDefinition
+                Dim typesOfa = a.GenericTypeArguments
+                Dim typesOfb = base.GenericTypeArguments
+
                 ' 2017-3-12
                 ' GetType(Dictionary(Of String, Double)).IsInheritsFrom(GetType(Dictionary(Of ,)))
 
-                If a.GetGenericTypeDefinition.Equals(base) Then
+                If typesOfb.Length = 0 AndAlso genericOfa.IsInheritsFrom(base, strict, depth) Then
                     Return True
                 End If
             End If
