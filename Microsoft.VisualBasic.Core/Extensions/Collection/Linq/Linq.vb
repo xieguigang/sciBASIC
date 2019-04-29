@@ -108,6 +108,22 @@ Namespace Linq
             End If
         End Function
 
+        Public Delegate Sub DoWith(Of T)(ByRef obj As T)
+
+        <Extension>
+        Public Iterator Function [With](Of T)(source As IEnumerable(Of T), doWith As DoWith(Of T)) As IEnumerable(Of T)
+            For Each x As T In source
+                doWith(x)
+                Yield x
+            Next
+        End Function
+
+        <Extension>
+        Public Function [With](Of T)(x As T, doWith As DoWith(Of T)) As T
+            doWith(x)
+            Return x
+        End Function
+
         ''' <summary>
         ''' Gets the max element its index in the collection
         ''' </summary>

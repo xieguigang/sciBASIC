@@ -965,6 +965,7 @@ Public Module App
     ''' <returns></returns>
     '''
     <ExportAPI("Bugs.Formatter")>
+    <Extension>
     Public Function BugsFormatter(ex As Exception, <CallerMemberName> Optional trace$ = "") As String
         Dim logs = ex.ToString.LineTokens
         Dim stackTrace = logs _

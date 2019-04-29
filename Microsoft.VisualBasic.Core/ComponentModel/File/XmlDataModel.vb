@@ -55,7 +55,14 @@ Namespace ComponentModel
     ''' <summary>
     ''' 这个基类型对象主要是用来生成类型全称注释方便编写XML文件加载代码功能的
     ''' </summary>
-    Public MustInherit Class XmlDataModel
+    Public MustInherit Class XmlDataModel : Implements IXmlType
+
+        ''' <summary>
+        ''' 只适合最外层面的容器类型的对象来实现
+        ''' </summary>
+        Public Interface IXmlType
+            Property TypeComment As XmlComment
+        End Interface
 
         ''' <summary>
         ''' ReadOnly, Data model type tracking use Xml Comment.
@@ -67,7 +74,7 @@ Namespace ComponentModel
         <ScriptIgnore>
         <SoapIgnore>
         <XmlAnyElement>
-        Public Property TypeComment As XmlComment
+        Public Property TypeComment As XmlComment Implements IXmlType.TypeComment
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return GetTypeReferenceComment()
@@ -81,6 +88,10 @@ Namespace ComponentModel
         Private Function GetTypeReferenceComment() As XmlComment
             Return New XmlDocument().CreateComment(GetTypeReferenceComment(Me.GetType))
         End Function
+
+        Public Shared Sub SaveTypeComment(model As IXmlType)
+            model.TypeComment = New XmlDocument().CreateComment(GetTypeReferenceComment(model.GetType))
+        End Sub
 
         ''' <summary>
         ''' 生成的注释信息是默认空了四个空格的
