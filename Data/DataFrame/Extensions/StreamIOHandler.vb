@@ -42,7 +42,6 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 
@@ -52,9 +51,16 @@ Module StreamIOHandler
     ''' 初始化函数指针，为``>>``语法提供csv流的支持
     ''' </summary>
     Public Sub __initStreamIO_pointer()
-        Call IOHandler.SetHandle(AddressOf ISaveCsv)
-        Call $"Default IO handle has been changes to {DefaultSaveDescription}...".__INFO_ECHO
+
     End Sub
+
+    Public Function ISaveDataSet(source As IEnumerable(Of DataSet), path$, encoding As Encoding) As Boolean
+        Return source.SaveTo(path, encoding:=encoding, layout:=New Dictionary(Of String, Integer) From {{NameOf(DataSet.ID), -999}})
+    End Function
+
+    Public Function ISaveDataSet(source As IEnumerable(Of EntityObject), path$, encoding As Encoding) As Boolean
+        Return source.SaveTo(path, encoding:=encoding, layout:=New Dictionary(Of String, Integer) From {{NameOf(EntityObject.ID), -999}})
+    End Function
 
     Public Function ISaveCsv(source As IEnumerable, path As String, encoding As Encoding) As Boolean
         Dim o As Object = (From x In source Select x).FirstOrDefault
