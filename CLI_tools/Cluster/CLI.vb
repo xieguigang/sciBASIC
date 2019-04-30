@@ -93,7 +93,7 @@ Module CLI
         Dim ds As IEnumerable(Of EntityClusterModel) = EntityObject _
             .LoadDataSet(inFile, args("/map") Or "Name") _
             .Where(Function(d) True = filter(d)) _
-            .AsDataSet _
+            .AsDataSet(ignores:=ignores) _
             .Select(Function(d)
                         Return EntityClusterModel.FromDataSet(d)
                     End Function) _
