@@ -78,6 +78,10 @@ Namespace ApplicationServices
             Return saveWrite.TryGetValue(type) Or defaultWriter
         End Function
 
+        Public Function IsRegister(type As Type) As Boolean
+            Return saveWrite.ContainsKey(type)
+        End Function
+
         Public Sub RegisterHandle(handle As ISave, type As Type)
             saveWrite(type) = handle
         End Sub

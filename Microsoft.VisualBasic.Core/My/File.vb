@@ -41,7 +41,7 @@ Namespace My
             End SyncLock
         End Sub
 
-        Dim __handle As Value(Of Integer) = New Value(Of Integer)(Integer.MinValue)
+        Dim handle As Value(Of Integer) = New Value(Of Integer)(Integer.MinValue)
 
         ''' <summary>
         ''' Open a file system handle
@@ -55,19 +55,19 @@ Namespace My
             End If
 
             SyncLock opendHandles
-                SyncLock __handle
-                    __handle.Value += 1
+                SyncLock handle
+                    My.File.handle.Value += 1
 
                     Dim handle As New FileHandle With {
                         .encoding = encoding.CodePage,
                         .FileName = file,
-                        .handle = __handle.Value
+                        .handle = My.File.handle.Value
                     }
 
-                    Call opendHandles.Add(__handle.Value, handle)
+                    Call opendHandles.Add(My.File.handle.Value, handle)
                     Call FileIO.FileSystem.CreateDirectory(file.ParentPath)
 
-                    Return __handle.Value
+                    Return My.File.handle.Value
                 End SyncLock
             End SyncLock
         End Function
