@@ -63,6 +63,19 @@ Namespace KMeans
         ''' <returns></returns>
         Public Property Cluster As String
 
+        ''' <summary>
+        ''' 用于生成聚类所需要的数据集，所以通过这个函数所构建的数据集对象的<see cref="Cluster"/>属性值都是空的
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        Public Shared Function FromDataSet(Of T As {INamedValue, DynamicPropertyBase(Of Double)})(data As T) As EntityClusterModel
+            Return New EntityClusterModel With {
+                .ID = data.Key,
+                .Properties = data.Properties
+            }
+        End Function
+
         Public Overrides Function ToString() As String
             Return ID
         End Function

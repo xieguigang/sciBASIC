@@ -17,7 +17,7 @@ Namespace My
             opendHandles = New Dictionary(Of Integer, FileHandle)
         End Sub
 
-        Friend Function __getHandle(path As Integer) As FileHandle
+        Friend Function GetHandle(path As Integer) As FileHandle
             If Not opendHandles.ContainsKey(path) Then
                 Throw New ObjectNotFoundException($"Path {path} pointer to a null file handle!")
             Else

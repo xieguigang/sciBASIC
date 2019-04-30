@@ -1,63 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::adeed41ba1eaafc5aead39fac5f18d11, Microsoft.VisualBasic.Core\Language\Language\UnixBash\FileSystem\File.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class File
-    ' 
-    '         Function: Save
-    '         Operators: <, >, >>
-    ' 
-    '     Structure FileHandle
-    ' 
-    '         Properties: IsDirectory, IsFile, IsHTTP
-    ' 
-    '         Function: ToString
-    ' 
-    '     Module FileHandles
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __getHandle, FileOpened, OpenHandle, OpenTemp, Wait
-    ' 
-    '         Sub: Close
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class File
+' 
+'         Function: Save
+'         Operators: <, >, >>
+' 
+'     Structure FileHandle
+' 
+'         Properties: IsDirectory, IsFile, IsHTTP
+' 
+'         Function: ToString
+' 
+'     Module FileHandles
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __getHandle, FileOpened, OpenHandle, OpenTemp, Wait
+' 
+'         Sub: Close
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -85,7 +83,7 @@ Namespace Language.UnixBash.FileSystem
         End Operator
 
         Public Shared Operator >>(file As File, path As Integer) As Boolean
-            Dim handle As FileHandle = __getHandle(path)
+            Dim handle As FileHandle = My.File.GetHandle(path)
             Return file.Save(handle.FileName, handle.encoding)
         End Operator
     End Class

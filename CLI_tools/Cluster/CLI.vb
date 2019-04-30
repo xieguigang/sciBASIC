@@ -40,6 +40,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Linq
 
@@ -82,10 +83,15 @@ Module CLI
 
         Dim inFile As String = args("/MAT")
         Dim n As Integer = args.GetInt32("/n")
-        Dim out As String = args.GetValue("/out", inFile.TrimFileExt & ".Cluster.Csv")
-        Dim ds As IEnumerable(Of EntityLDM) = EntityLDM.Load(inFile, args.GetValue("/map", "Name"))
+        Dim out As String = args("/out") Or (inFile.TrimSuffix & ".Cluster.Csv")
+        Dim ds As IEnumerable(Of EntityClusterModel) = DataSet _
+            .LoadDataSet(inFile, args("/map") Or "Name") _
+            .Select(Function(d)
+                        Return EntityClusterModel.FromDataSet(d)
+                    End Function) _
+            .ToArray
 
-        Return Kmeans(ds, n) > out
+        Return Kmeans(ds, n) >> out
     End Function
 
     '<ExportAPI("/bTree.Cluster",
