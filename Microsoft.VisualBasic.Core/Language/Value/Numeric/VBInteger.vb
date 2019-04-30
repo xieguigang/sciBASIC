@@ -46,8 +46,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.Language.UnixBash.FileSystem
 
 Namespace Language
 
@@ -109,7 +107,7 @@ Namespace Language
             ElseIf type.Equals(GetType(VBInteger)) Then
                 Return Value.CompareTo(DirectCast(obj, VBInteger).Value)
             Else
-                Throw New Exception($"Miss-match of type:  {GetType(VBInteger).FullName} --> {type.FullName}")
+                Throw New Exception($"Miss-match of type:  {GetType(VBInteger).FullName} -> {type.FullName}")
             End If
         End Function
 
@@ -274,19 +272,6 @@ Namespace Language
         Public Overloads Shared Operator +(x As VBInteger, n%) As VBInteger
             x.Value += n
             Return x
-        End Operator
-
-        'Public Overloads Shared Operator =(x As int, a As Integer) As int
-
-        'End Operator
-
-        Public Shared Operator >(source As IEnumerable, handle As VBInteger) As Boolean
-            Dim file As FileHandle = My.File.GetHandle(handle.Value)
-            Return IOHandler.DefaultHandle()(source, file.FileName, file.encoding)
-        End Operator
-
-        Public Shared Operator <(source As IEnumerable, handle As VBInteger) As Boolean
-            Throw New NotSupportedException
         End Operator
 
         ''' <summary>
