@@ -164,7 +164,8 @@ Namespace StorageProvider.ComponentModels
             Columns.Where(Function(c)
                               For Each rc In ordered
                                   If rc Is c Then
-                                      Return False ' 是前面经过重新排序的column，则不考虑了      
+                                      ' 是前面经过重新排序的column，则不考虑了      
+                                      Return False
                                   End If
                               Next
 

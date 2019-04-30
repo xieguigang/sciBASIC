@@ -516,6 +516,7 @@ Public Module Extensions
     ''' </param>
     ''' <param name="encoding"></param>
     ''' <param name="maps">``{meta_define -> custom}``</param>
+    ''' <param name="layout">可以通过这个参数来进行列顺序的重排，值越小表示排在越前面</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension> Public Function SaveTo(Of T)(source As IEnumerable(Of T),
@@ -539,8 +540,9 @@ Public Module Extensions
         Call EchoLine($"Save data to file:///{path}")
         Call EchoLine($"[CSV.Reflector] Reflector have {source.Count} lines of data to write.")
 
+        Dim objSeq = source.Select(Function(o) DirectCast(o, Object))
         Dim csv As IEnumerable(Of RowObject) = Reflector.GetsRowData(
-            source.Select(Function(o) DirectCast(o, Object)),
+            objSeq,
             GetType(T),
             strict,
             maps,
