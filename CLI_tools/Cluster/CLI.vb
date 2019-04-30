@@ -71,7 +71,7 @@ Module CLI
             End If
         End If
 
-        Return nums.ValueGroups(args.GetInt32("/n")) >> out.file
+        Return nums.ValueGroups(args.GetInt32("/n")) >> out.FileOpen
     End Function
 
     <ExportAPI("/kmeans",
@@ -91,7 +91,7 @@ Module CLI
                     End Function) _
             .ToArray
 
-        Return Kmeans(ds, n) >> out
+        Return Kmeans(ds, n) >> out.FileOpen
     End Function
 
     '<ExportAPI("/bTree.Cluster",

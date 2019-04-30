@@ -44,7 +44,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging.Logging
-Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Terminal
 
 Namespace My

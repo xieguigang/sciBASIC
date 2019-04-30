@@ -87,7 +87,7 @@ Namespace ApplicationServices.Debugging
             End If
 
             Try
-                If FileHandles.Wait(file:=logFile) Then
+                If My.File.Wait(file:=logFile) Then
                     Call FileIO.FileSystem.CreateDirectory(logFile.ParentPath)
                     Call FileIO.FileSystem.WriteAllText(logFile, log & vbCrLf, True)
                 End If

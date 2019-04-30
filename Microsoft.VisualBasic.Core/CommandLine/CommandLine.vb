@@ -750,7 +750,7 @@ Namespace CommandLine
             If String.IsNullOrEmpty(file) Then
                 file = [default]
             End If
-            Return New VBInteger(FileHandles.OpenHandle(file))
+            Return New VBInteger(My.File.OpenHandle(file))
         End Function
 #End Region
 
@@ -935,7 +935,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Overloads Shared Operator +(args As CommandLine, fs$) As Integer
             Dim path As String = args(fs)
-            Return FileHandles.OpenHandle(path)
+            Return My.File.OpenHandle(path)
         End Operator
 
         ''' <summary>

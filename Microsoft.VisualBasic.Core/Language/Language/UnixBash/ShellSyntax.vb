@@ -94,7 +94,7 @@ Namespace Language.UnixBash
         End Function
 
         Public Function DIRHandle(res As String) As Integer
-            Return FileHandles.OpenHandle(res)
+            Return My.File.OpenHandle(res)
         End Function
 #End Region
 

@@ -204,7 +204,7 @@ Namespace Language.UnixBash
         End Operator
 
         Public Shared Operator <<(grep As GrepRegx, file As Integer) As IEnumerable(Of String)
-            Return grep.__grep(FileHandles.__getHandle(file).FileName.IterateAllLines)
+            Return grep.__grep(My.File.GetHandle(file).FileName.IterateAllLines)
         End Operator
 
         Public Shared Operator >=(grep As GrepRegx, source As String) As IEnumerable(Of String)

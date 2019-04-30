@@ -618,7 +618,7 @@ Namespace Language
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >>(source As List(Of T), path As Integer) As Boolean
-            Dim file As FileHandle = __getHandle(path)
+            Dim file As FileHandle = My.File.GetHandle(path)
             Return source > file.FileName
         End Operator
 

@@ -281,7 +281,7 @@ Namespace Language
         'End Operator
 
         Public Shared Operator >(source As IEnumerable, handle As VBInteger) As Boolean
-            Dim file As FileHandle = FileHandles.__getHandle(handle.Value)
+            Dim file As FileHandle = My.File.GetHandle(handle.Value)
             Return IOHandler.DefaultHandle()(source, file.FileName, file.encoding)
         End Operator
 
