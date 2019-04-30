@@ -39,9 +39,13 @@
 
 #End Region
 
+Imports System.ComponentModel
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.KMeans
+Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 
 Module CLI
@@ -74,18 +78,22 @@ Module CLI
         Return nums.ValueGroups(args.GetInt32("/n")) >> out.FileOpen
     End Function
 
-    <ExportAPI("/kmeans",
-               Info:="Performance a kmeans clustering operation.",
-               Usage:="/kmeans /MAT <entity_matrix.Csv> /n <num_of_cluster> [/map <Name> /out <cluster.csv>]")>
+    <ExportAPI("/kmeans")>
+    <Description("Performance a kmeans clustering operation.")>
+    <Usage("/kmeans /in <entity_matrix.csv> /n <num_of_cluster> [/map <Name> /filter <column=value> /ignores <column1,column2,...> /out <cluster.csv>]")>
     Public Function ClusterDataSet(args As CommandLine.CommandLine) As Integer
-
-        Throw New Exception("Hello world!")
-
-        Dim inFile As String = args("/MAT")
+        Dim inFile As String = args("/in")
         Dim n As Integer = args.GetInt32("/n")
+        Dim filter As Func(Of EntityObject, Boolean) = args("/filter") _
+            .DefaultValue _
+            .GetTagValue("=", trim:=True) _
+            .CreateFilter
+        Dim ignores$() = args("/ignores").Split(",")
         Dim out As String = args("/out") Or (inFile.TrimSuffix & ".Cluster.Csv")
-        Dim ds As IEnumerable(Of EntityClusterModel) = DataSet _
+        Dim ds As IEnumerable(Of EntityClusterModel) = EntityObject _
             .LoadDataSet(inFile, args("/map") Or "Name") _
+            .Where(Function(d) True = filter(d)) _
+            .AsDataSet _
             .Select(Function(d)
                         Return EntityClusterModel.FromDataSet(d)
                     End Function) _

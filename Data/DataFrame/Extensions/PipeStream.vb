@@ -50,6 +50,12 @@ Public Module PipeStream
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
+    Public Function CreateFilter(filter As NamedValue(Of String)) As Func(Of EntityObject, Boolean)
+        Return EntityObject.CreateFilter(filter)
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
     Public Function DataFrame(data As IEnumerable(Of RowObject)) As Table
         Return New Table(data)
     End Function

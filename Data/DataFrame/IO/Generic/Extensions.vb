@@ -1,48 +1,49 @@
 ﻿#Region "Microsoft.VisualBasic::0315e7f49d13e42918ef0183be0ed6e9, Data\DataFrame\IO\Generic\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module Extensions
-    ' 
-    '         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
-    '                   EuclideanDistance, GroupBy, NamedMatrix, Project, (+2 Overloads) PropertyNames
-    '                   Transpose, Values, (+2 Overloads) Vector
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module Extensions
+' 
+'         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
+'                   EuclideanDistance, GroupBy, NamedMatrix, Project, (+2 Overloads) PropertyNames
+'                   Transpose, Values, (+2 Overloads) Vector
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
@@ -260,15 +261,26 @@ Namespace IO
                 .ToArray
         End Function
 
+        ''' <summary>
+        ''' 将字符串数据集转换为数值类型的数据集
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="blank">如果目标属性的值是空字符串的话，将该属性值设置为这个参数值默认的值</param>
+        ''' <param name="ignores">在转换的时候需要忽略掉的属性值</param>
+        ''' <returns></returns>
         <Extension>
-        Public Function AsDataSet(data As IEnumerable(Of EntityObject), Optional blank# = 0) As IEnumerable(Of DataSet)
-            Dim array = data.ToArray
+        Public Function AsDataSet(data As IEnumerable(Of EntityObject),
+                                  Optional ignores As Index(Of String) = Nothing,
+                                  Optional blank# = 0) As IEnumerable(Of DataSet)
+
+            Dim array As EntityObject() = data.ToArray
             Dim allKeys = array _
                 .Select(Function(x) x.Properties.Keys) _
                 .IteratesALL _
                 .Distinct _
+                .Where(Function(key) Not key Like ignores) _
                 .ToArray
-            Dim ToDouble = Function(obj As EntityObject, key$)
+            Dim toDouble = Function(obj As EntityObject, key$)
                                Return If(obj.Properties.ContainsKey(key), Val(obj(key)), blank)
                            End Function
 
@@ -278,7 +290,9 @@ Namespace IO
                                 .ID = obj.ID,
                                 .Properties = allKeys _
                                     .ToDictionary(Function(x) x,
-                                                  Function(x) ToDouble(obj, key:=x))
+                                                  Function(x)
+                                                      Return toDouble(obj, key:=x)
+                                                  End Function)
                             }
                         End Function)
         End Function
