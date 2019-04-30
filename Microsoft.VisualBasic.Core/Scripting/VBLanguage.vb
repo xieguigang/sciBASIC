@@ -72,6 +72,10 @@ Namespace Scripting.SymbolBuilder.VBLanguage
         Public Const Indents$ = "^\s+"
         Public Const Attribute$ = "<.+?>\s*"
 
+        ''' <summary>
+        ''' The VB.NET type char index
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared ReadOnly Property TypeChar As Index(Of Char) = {"!"c, "@"c, "#"c, "$"c, "%"c, "&"c, "?"c}
 
         Public Shared Function TypeCharName(c As Char) As String
