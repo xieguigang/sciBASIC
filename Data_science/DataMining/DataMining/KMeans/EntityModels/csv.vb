@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1493e16bcb101de52237f20d088f1a9, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\EntityModels\csv.vb"
+﻿#Region "Microsoft.VisualBasic::0f5ba0b0d71331b68fbda54cf46287e6, Data_science\DataMining\DataMining\KMeans\EntityModels\csv.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,7 @@
     ' 
     '         Properties: Cluster, ID
     ' 
-    '         Function: FromModel, ToModel, ToString
-    ' 
-    '         Sub: Add
+    '         Function: FromDataSet, FromModel, ToModel, ToString
     ' 
     ' 
     ' /********************************************************************************/

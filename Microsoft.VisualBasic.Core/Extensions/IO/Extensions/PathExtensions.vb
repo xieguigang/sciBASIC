@@ -1,50 +1,50 @@
-﻿#Region "Microsoft.VisualBasic::9594e92f3956920f5661adb6dd2e6ff0, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6d9b271c81f1c9fc2343adb05e1d7551, Microsoft.VisualBasic.Core\Extensions\IO\Extensions\PathExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Module PathExtensions
-' 
-'     Function: BaseName, ChangeSuffix, Delete, DIR, DirectoryExists
-'               DirectoryName, EnumerateFiles, ExtensionSuffix, FileCopy, (+2 Overloads) FileExists
-'               FileLength, FileMove, FileName, FileOpened, GetBaseName
-'               GetDirectoryFullPath, GetFile, GetFullPath, GetMostAppreancePath, ListDirectory
-'               ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList, Long2Short, (+2 Overloads) NormalizePathString
-'               ParentDirName, ParentPath, PathCombine, PathIllegal, ReadDirectory
-'               (+2 Overloads) RelativePath, SafeCopyTo, SourceCopy, SplitPath, TheFile
-'               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
-' 
-'     Sub: MkDIR
-' 
-' /********************************************************************************/
+    ' Module PathExtensions
+    ' 
+    '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
+    '               DirectoryName, EnumerateFiles, ExtensionSuffix, FileCopy, (+2 Overloads) FileExists
+    '               FileLength, FileMove, FileName, FileOpened, GetBaseName
+    '               GetDirectoryFullPath, GetFile, GetFullPath, GetMostAppreancePath, ListDirectory
+    '               ListFiles, LoadEntryList, (+3 Overloads) LoadSourceEntryList, Long2Short, (+2 Overloads) NormalizePathString
+    '               ParentDirName, ParentPath, PathCombine, PathIllegal, ReadDirectory
+    '               (+2 Overloads) RelativePath, SafeCopyTo, SourceCopy, SplitPath, TheFile
+    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    ' 
+    '     Sub: MkDIR
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

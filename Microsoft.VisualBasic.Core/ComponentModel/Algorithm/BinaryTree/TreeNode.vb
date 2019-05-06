@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d6f40f39249d756b3e4d54f50cbc486, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::95f8bbe2e7743f9bee73fe44f1fe8aac, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\BinaryTree\TreeNode.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     '     Class BinaryTree
     ' 
-    '         Properties: Key, Left, QualifiedName, Right, Value
+    '         Properties: Key, Left, Members, QualifiedName, Right
+    '                     Value
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

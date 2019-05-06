@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b24df0482912f4098bb69445df22e30e, Microsoft.VisualBasic.Core\Text\GreekAlphabets.vb"
+﻿#Region "Microsoft.VisualBasic::50606af3773d9b3a413b90aa75fbec3a, Microsoft.VisualBasic.Core\Text\GreekAlphabets.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Module GreekAlphabets
     ' 
-    '         Properties: Alphabets, lower, upper
+    '         Properties: alphabets, lower, upper
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) AlphabetUnescape, (+2 Overloads) StripGreek, unescapeInternal

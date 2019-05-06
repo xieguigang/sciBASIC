@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5b5b7c5298232075253c8ec5a0666b1, Data\BinaryData\BinaryData\SQLite3\Helpers\BTreeTools.vb"
+﻿#Region "Microsoft.VisualBasic::8b87e48927d79dbf31a5f3010c7a4181, Data\BinaryData\BinaryData\SQLite3\Helpers\BTreeTools.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,8 @@
 
     ' Summaries:
 
-    '     Class BTreeTools
+    '     Module BTreeTools
     ' 
-    '         Constructor: (+1 Overloads) Sub New
     '         Function: (+3 Overloads) WalkTableBTree
     ' 
     ' 

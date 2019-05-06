@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb56db75a2fab510a6c0ee429ad46fcb, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\PowerEdge.vb"
+﻿#Region "Microsoft.VisualBasic::4b4a45c46a6d158ec2c0c0395d08c86e, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\PowerEdge.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,7 @@
     '     Class PowerEdge
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

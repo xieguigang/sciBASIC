@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6098866adddb757781f83d4754351081, Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::14f6eba37cce671311b46ab764a7a2ab, Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '         Properties: ID
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: ContainsIDField, Copy, GetIDList, GetPropertyNames, (+4 Overloads) LoadDataSet
-    '                   readHeaders, ToString
+    '         Function: ContainsIDField, Copy, CreateFilter, GetIDList, GetPropertyNames
+    '                   (+4 Overloads) LoadDataSet, readHeaders, ToString
     ' 
     ' 
     ' /********************************************************************************/

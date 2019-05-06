@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07b083a0d6b08f3405f0ccca960faa24, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::e446d3b989c2a63959642082a089c408, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
 
     ' Author:
     ' 
@@ -35,8 +35,8 @@
     ' 
     '     Properties: HttpRequestTimeOut
     ' 
-    '     Function: [GET], __get, __httpRequest, BuildWebRequest, Get_PageContent
-    '               LogException
+    '     Function: [GET], __httpRequest, BuildWebRequest, Get_PageContent, LogException
+    '               urlGet
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8682582cbfe5c37bf3fa8af2e775057c, Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DataValue.vb"
+﻿#Region "Microsoft.VisualBasic::b30abc77680cb9b03a1d97e1db20865c, Microsoft.VisualBasic.Core\Extensions\Reflection\Delegate\DataValue.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetProperty, ToString
+    '         Function: GetProperty, inspectType, ToString
     ' 
     '         Sub: TestDEMO
     ' 

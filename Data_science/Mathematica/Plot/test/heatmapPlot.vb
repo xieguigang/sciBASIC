@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9424e359c435406547ec802c827d5ff, Data_science\Mathematica\Plot\test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::a9e7c7bc7f7f17b4c4d86ad506b46772, Data_science\Mathematica\Plot\test\heatmapPlot.vb"
 
     ' Author:
     ' 
@@ -31,7 +31,7 @@
 
     ' Summaries:
 
-    ' Module Module2
+    ' Module heatmapPlot
     ' 
     '     Sub: Main
     ' 

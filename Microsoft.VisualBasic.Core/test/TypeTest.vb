@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c51b77afc5700a358fae81d50471d531, Microsoft.VisualBasic.Core\test\TypeTest.vb"
+﻿#Region "Microsoft.VisualBasic::75917d1f7b9e3ef81aad687b788cae2e, Microsoft.VisualBasic.Core\test\TypeTest.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '     Function: CharArray
     ' 
-    '     Sub: Main, test
+    '     Sub: Main, patternMatch, test
     ' 
     ' /********************************************************************************/
 
@@ -121,4 +121,3 @@ Module TypeTest
         End If
     End Function
 End Module
-

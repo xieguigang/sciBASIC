@@ -1,52 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::6b63a9a19482bb6d0bc5fd9426ccdd06, Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
+﻿#Region "Microsoft.VisualBasic::2f36fd89760aa1072ffb92681d5a9518, Data_science\Darwinism\GeneticAlgorithm\GAF_example\Demo.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Class Demo
-' 
-'     Sub: Main
-'     Class MyVector
-' 
-'         Properties: Vector
-' 
-'         Function: clone, Crossover, Mutate, ToString
-' 
-'     Class MyVectorFitness
-' 
-'         Function: Calculate
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Class Demo
+    ' 
+    '     Sub: Main
+    '     Class MyVector
+    ' 
+    '         Properties: Vector
+    ' 
+    '         Function: clone, Crossover, Mutate, ToString
+    ' 
+    '     Class MyVectorFitness
+    ' 
+    '         Properties: Cacheable
+    ' 
+    '         Function: Calculate
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

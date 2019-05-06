@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5beb801736b6c8cba744875b5ab5def3, www\Microsoft.VisualBasic.Webservices.Bing\Translation\Translation.vb"
+﻿#Region "Microsoft.VisualBasic::2db9d059b988a989c511dd19f14d240a, www\Microsoft.VisualBasic.Webservices.Bing\Translation\Translation.vb"
 
     ' Author:
     ' 

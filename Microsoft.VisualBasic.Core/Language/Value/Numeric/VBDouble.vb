@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b46fb107a9dd14e75e54f6e063a8932d, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBDouble.vb"
+﻿#Region "Microsoft.VisualBasic::09c448bf4a9ddfcad6ea0f088265b498, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBDouble.vb"
 
     ' Author:
     ' 
@@ -38,7 +38,7 @@
     '                   ToChar, ToDateTime, ToDecimal, ToDouble, ToInt16
     '                   ToInt32, ToInt64, ToSByte, ToSingle, (+2 Overloads) ToString
     '                   ToType, ToUInt16, ToUInt32, ToUInt64
-    '         Operators: -, (+2 Overloads) *, (+2 Overloads) /, ^, (+2 Overloads) +
+    '         Operators: (+2 Overloads) -, (+2 Overloads) *, (+2 Overloads) /, ^, (+2 Overloads) +
     '                    <, <=, >, >=
     ' 
     ' 

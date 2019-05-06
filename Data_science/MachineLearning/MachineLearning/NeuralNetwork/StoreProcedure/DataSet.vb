@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27aab2a4827452527de73326f942096f, Data_science\MachineLearning\NeuralNetwork\StoreProcedure\Dataset.vb"
+﻿#Region "Microsoft.VisualBasic::0d0bbee649a0179f277a14d18229540f, Data_science\MachineLearning\MachineLearning\NeuralNetwork\StoreProcedure\DataSet.vb"
 
     ' Author:
     ' 
@@ -42,7 +42,7 @@
     ' 
     '         Properties: DataSamples, NormalizeMatrix, OutputSize, Size
     ' 
-    '         Function: createExtends, GetInput, PopulateNormalizedSamples, ToString
+    '         Function: createExtends, PopulateNormalizedSamples, ToString
     '         Class SampleList
     ' 
     '             Properties: items

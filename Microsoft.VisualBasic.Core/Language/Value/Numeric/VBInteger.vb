@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97fd242afa0f56150d084333faed5692, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBInteger.vb"
+﻿#Region "Microsoft.VisualBasic::f8ecacf552b36759cf81b824b85b5923, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBInteger.vb"
 
     ' Author:
     ' 
@@ -37,8 +37,8 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) CompareTo, Equals, (+2 Overloads) ToString
-    '         Operators: (+3 Overloads) -, (+2 Overloads) /, (+2 Overloads) +, (+4 Overloads) <, <<
-    '                    <=, (+4 Overloads) >, >=, (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
+    '         Operators: (+3 Overloads) -, (+2 Overloads) /, (+2 Overloads) +, (+3 Overloads) <, <<
+    '                    <=, (+3 Overloads) >, >=, (+2 Overloads) IsFalse, (+2 Overloads) IsTrue
     ' 
     ' 
     ' /********************************************************************************/

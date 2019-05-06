@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b7c4ca157233d8773fe0b65679d977b, gr\network-visualization\Datavisualization.Network\test\ColaTest.vb"
+﻿#Region "Microsoft.VisualBasic::c1f318d7eeaae84ad9cb8ee56dd91e4d, gr\network-visualization\Datavisualization.Network\test\ColaTest.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Module ColaTest
         End Function
     End Class
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed636567d4393d62ba0c52edd60a3557, Data_science\Bootstrapping\Topology\Inference.vb"
+﻿#Region "Microsoft.VisualBasic::ed636567d4393d62ba0c52edd60a3557, Data_science\MachineLearning\Bootstrapping\Topology\Inference.vb"
 
     ' Author:
     ' 

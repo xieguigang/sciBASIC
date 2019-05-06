@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::503ca255b511bf35dd6d3d0f09b46896, Data_science\Bootstrapping\Darwinism\DESolver.vb"
+﻿#Region "Microsoft.VisualBasic::503ca255b511bf35dd6d3d0f09b46896, Data_science\MachineLearning\Bootstrapping\Darwinism\DESolver.vb"
 
     ' Author:
     ' 

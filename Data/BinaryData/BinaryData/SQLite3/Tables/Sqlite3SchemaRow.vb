@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35e93eaee0f76bb39601df4b008bb983, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3SchemaRow.vb"
+﻿#Region "Microsoft.VisualBasic::c30d5bc0d9a6b51d3bcc22f1819c8b58, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3SchemaRow.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     '     Class Sqlite3SchemaRow
     ' 
     '         Properties: Name, RootPage, Sql, TableName, Type
+    ' 
+    '         Function: ParseSchema, ToString
     ' 
     ' 
     ' /********************************************************************************/

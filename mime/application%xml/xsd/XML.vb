@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7340c632a579006f69d81e15e3c6d5e5, mime\application%xml\xsd\XML.vb"
+﻿#Region "Microsoft.VisualBasic::062fd1e60ece0c42709904006ee49625, mime\application%xml\xsd\XML.vb"
 
     ' Author:
     ' 
@@ -31,6 +31,19 @@
 
     ' Summaries:
 
+    '     Class restriction
+    ' 
+    '         Properties: base, enumeration, length, maxInclusive, minInclusive
+    '                     pattern, whiteSpace
+    ' 
+    '     Class simpleType
+    ' 
+    '         Properties: name, restriction
+    ' 
+    '     Class restrictionValue
+    ' 
+    '         Properties: value
+    ' 
     '     Class include
     ' 
     '         Properties: schemaLocation
@@ -40,6 +53,10 @@
     '     Class complexType
     ' 
     '         Properties: attribute, name, sequence
+    ' 
+    '     Class extension
+    ' 
+    '         Properties: base
     ' 
     '     Class attribute
     ' 
@@ -55,7 +72,8 @@
     ' 
     '     Class element
     ' 
-    '         Properties: annotation, maxOccurs, minOccurs, name, type
+    '         Properties: [default], annotation, fixed, maxOccurs, minOccurs
+    '                     name, type
     ' 
     '         Function: ToString
     ' 
@@ -64,6 +82,10 @@
     '         Properties: documentation
     ' 
     '         Function: ToString
+    ' 
+    '     Class schema
+    ' 
+    '         Properties: elementFormDefault, targetNamespace
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e31421f332adb2cd4b88edd98083ae3b, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::5393f5cf24957a44e561e8abd7ed2e6b, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
     '               ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek, (+3 Overloads) TemporarySeek
     '               ToString
     ' 
-    '     Sub: Align
+    '     Sub: Align, TemporarySeek
     ' 
     ' /********************************************************************************/
 

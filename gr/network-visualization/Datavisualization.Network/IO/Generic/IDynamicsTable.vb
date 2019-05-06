@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d96a29c9027f7b06bea2de6698b9ead, gr\network-visualization\Datavisualization.Network\IO\Generic\IDynamicsTable.vb"
+﻿#Region "Microsoft.VisualBasic::2d007928d139d4b53130b8518c34e8c5, gr\network-visualization\Datavisualization.Network\IO\Generic\IDynamicsTable.vb"
 
     ' Author:
     ' 
@@ -34,8 +34,6 @@
     '     Class IDynamicsTable
     ' 
     '         Properties: Properties
-    ' 
-    '         Sub: Add
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f458502f7875d56bd912e9b0d7850df, Data_science\Bootstrapping\Darwinism\GAF\ODEs\GAFModel.vb"
+﻿#Region "Microsoft.VisualBasic::8f458502f7875d56bd912e9b0d7850df, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\ODEs\GAFModel.vb"
 
     ' Author:
     ' 

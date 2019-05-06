@@ -1,51 +1,51 @@
-﻿#Region "Microsoft.VisualBasic::4a819863d6b73607e27f3e57dd7d5558, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\layout.vb"
+﻿#Region "Microsoft.VisualBasic::d36944086f9944fff1bcc870baa8ab16, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\layout.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class Layout
-' 
-'         Function: [on], [resume], [stop], (+2 Overloads) alpha, (+2 Overloads) avoidOverlaps
-'                   (+2 Overloads) constraints, (+2 Overloads) convergenceThreshold, (+2 Overloads) defaultNodeSize, (+2 Overloads) distanceMatrix, (+2 Overloads) dragOrigin
-'                   (+2 Overloads) flowLayout, getLinkLength, getLinkType, (+2 Overloads) getSourceIndex, (+2 Overloads) getTargetIndex
-'                   (+2 Overloads) groupCompactness, (+2 Overloads) groups, (+2 Overloads) handleDisconnected, jaccardLinkLengths, (+3 Overloads) linkDistance
-'                   linkId, (+2 Overloads) links, (+2 Overloads) linkType, (+2 Overloads) nodes, powerGraphGroups
-'                   routeEdge, (+2 Overloads) size, start, symmetricDiffLinkLengths, tick
-' 
-'         Sub: (+2 Overloads) drag, (+2 Overloads) dragEnd, (+2 Overloads) dragStart, initialLayout, kick
-'              mouseOut, mouseOver, prepareEdgeRouting, separateOverlappingComponents, stopNode
-'              storeOffset, trigger, updateNodePositions
-' 
-' 
-' /********************************************************************************/
+    '     Class Layout
+    ' 
+    '         Function: [on], [resume], [stop], (+2 Overloads) alpha, (+2 Overloads) avoidOverlaps
+    '                   (+2 Overloads) constraints, (+2 Overloads) convergenceThreshold, (+2 Overloads) defaultNodeSize, (+2 Overloads) distanceMatrix, dragOrigin
+    '                   (+2 Overloads) flowLayout, getLinkLength, getLinkType, (+2 Overloads) getSourceIndex, (+2 Overloads) getTargetIndex
+    '                   (+2 Overloads) groupCompactness, (+2 Overloads) groups, (+2 Overloads) handleDisconnected, jaccardLinkLengths, (+3 Overloads) linkDistance
+    '                   linkId, (+2 Overloads) links, (+2 Overloads) linkType, (+2 Overloads) nodes, powerGraphGroups
+    '                   routeEdge, (+2 Overloads) size, start, symmetricDiffLinkLengths, tick
+    ' 
+    '         Sub: drag, dragEnd, dragStart, initialLayout, kick
+    '              mouseOut, mouseOver, prepareEdgeRouting, separateOverlappingComponents, stopNode
+    '              storeOffset, trigger, updateNodePositions
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::388ecc6686ee9520716d8440647cefed, Data_science\Bootstrapping\Monte-Carlo\CodeGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::388ecc6686ee9520716d8440647cefed, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\CodeGenerator.vb"
 
     ' Author:
     ' 

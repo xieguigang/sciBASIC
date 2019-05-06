@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32705ed3f0660ed3f17ce9a2c1ee4084, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringBuilders.vb"
+﻿#Region "Microsoft.VisualBasic::26c3c2ec1dbdcd6fa55e11b18a4a62a9, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringBuilders.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module StringBuilders
     ' 
-    '     Function: (+2 Overloads) Replace
+    '     Function: (+2 Overloads) Replace, ToHex
     ' 
     ' /********************************************************************************/
 
