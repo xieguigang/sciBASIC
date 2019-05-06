@@ -51,6 +51,11 @@ Imports System.Runtime.CompilerServices
 
 Namespace Language
 
+    ''' <summary>
+    ''' Union type of <typeparamref name="A"/> and <typeparamref name="B"/>
+    ''' </summary>
+    ''' <typeparam name="A"></typeparam>
+    ''' <typeparam name="B"></typeparam>
     Public Class [Variant](Of A, B) : Inherits Value(Of Object)
 
         Public Overrides Function GetUnderlyingType() As Type
