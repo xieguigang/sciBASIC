@@ -345,6 +345,7 @@ Public Module KeyValuePairExtensions
     <Extension>
     Public Function Values(Of T)(source As IEnumerable(Of NamedValue(Of T))) As T()
         Return source _
+            .SafeQuery _
             .Select(Function(x) x.Value) _
             .ToArray
     End Function

@@ -204,23 +204,35 @@ Public Module PrimitiveParser
     ''' <summary>
     ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
     ''' </summary>
-    ''' <returns></returns>
-    Public ReadOnly Property BooleanValues As New SortedDictionary(Of String, Boolean) From {
+    ReadOnly booleans As New SortedDictionary(Of String, Boolean) From {
  _
-            {"t", True}, {"true", True},
-            {"1", True},
-            {"y", True}, {"yes", True}, {"ok", True},
-            {"ok!", True},
-            {"success", True}, {"successful", True}, {"successfully", True}, {"succeeded", True},
-            {"right", True},
-            {"wrong", False},
-            {"failure", False}, {"failures", False},
-            {"exception", False},
-            {"error", False}, {"err", False},
-            {"f", False}, {"false", False},
-            {"0", False},
-            {"n", False}, {"no", False}
-        }
+        {"t", True}, {"true", True},
+        {"1", True},
+        {"y", True}, {"yes", True}, {"ok", True},
+        {"ok!", True},
+        {"success", True}, {"successful", True}, {"successfully", True}, {"succeeded", True},
+        {"right", True},
+        {"wrong", False},
+        {"failure", False}, {"failures", False},
+        {"exception", False},
+        {"error", False}, {"err", False},
+        {"f", False}, {"false", False},
+        {"0", False},
+        {"n", False}, {"no", False}
+    }
+
+    ''' <summary>
+    ''' 目标字符串是否可以被解析为一个逻辑值
+    ''' </summary>
+    ''' <param name="token"></param>
+    ''' <returns></returns>
+    Public Function IsBooleanFactor(token As String) As Boolean
+        If String.IsNullOrEmpty(token) Then
+            Return False
+        Else
+            Return booleans.ContainsKey(token.ToLower)
+        End If
+    End Function
 
     ''' <summary>
     ''' Convert the string value into the boolean value, this is useful to the text format configuration file into data model.
@@ -229,15 +241,17 @@ Public Module PrimitiveParser
     ''' <param name="str"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    <ExportAPI("Get.Boolean")> <Extension> Public Function ParseBoolean(str$) As Boolean
+    <ExportAPI("ParseBoolean")>
+    <Extension>
+    Public Function ParseBoolean(str$) As Boolean
         If String.IsNullOrEmpty(str) Then
             Return False
         Else
             str = str.ToLower.Trim
         End If
 
-        If BooleanValues.ContainsKey(key:=str) Then
-            Return BooleanValues(str)
+        If booleans.ContainsKey(key:=str) Then
+            Return booleans(str)
         Else
 #If DEBUG Then
             Call $"""{str}"" {NameOf([Boolean])} (null_value_definition)  ==> False".__DEBUG_ECHO
@@ -246,7 +260,9 @@ Public Module PrimitiveParser
         End If
     End Function
 
-    <Extension> <ExportAPI("Get.Boolean")> Public Function ParseBoolean(ch As Char) As Boolean
+    <ExportAPI("ParseBoolean")>
+    <Extension>
+    Public Function ParseBoolean(ch As Char) As Boolean
         If ch = ASCII.NUL Then
             Return False
         End If

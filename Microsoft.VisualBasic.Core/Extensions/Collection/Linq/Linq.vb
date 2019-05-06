@@ -100,10 +100,13 @@ Namespace Linq
         ''' <param name="source"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function SafeQuery(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
+        Public Function SafeQuery(Of T)(source As IEnumerable(Of T), <CallerMemberName> Optional trace$ = Nothing) As IEnumerable(Of T)
             If Not source Is Nothing Then
                 Return source
             Else
+#If DEBUG Then
+                Call $"Target source sequence is nothing...[{trace}]".Warning
+#End If
                 Return {}
             End If
         End Function

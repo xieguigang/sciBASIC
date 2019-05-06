@@ -120,7 +120,7 @@ Public Module HttpGet
         End If
 
         Try
-RETRY:      Return BuildWebRequest(url, headers, proxy, UA).__get()
+RETRY:      Return BuildWebRequest(url, headers, proxy, UA).urlGet()
         Catch ex As Exception When InStr(ex.Message, "(404) Not Found") > 0 AndAlso DoNotRetry404
             Return LogException(url, New Exception(url, ex))
 
@@ -177,7 +177,12 @@ RETRY:      Return BuildWebRequest(url, headers, proxy, UA).__get()
         Return webRequest
     End Function
 
-    <Extension> Private Function __get(webrequest As HttpWebRequest) As String
+    ''' <summary>
+    ''' Perform a web url query request
+    ''' </summary>
+    ''' <param name="webrequest"></param>
+    ''' <returns></returns>
+    <Extension> Private Function urlGet(webrequest As HttpWebRequest) As String
         Dim timer As Stopwatch = Stopwatch.StartNew
         Dim url As String = webrequest.RequestUri.ToString
 

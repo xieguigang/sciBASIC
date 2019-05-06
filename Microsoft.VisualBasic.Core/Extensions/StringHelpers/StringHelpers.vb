@@ -819,6 +819,13 @@ Public Module StringHelpers
         Return r.Match(input.Value, pattern, options).Value
     End Function
 
+    ''' <summary>
+    ''' Regular expression pattern text token matches
+    ''' </summary>
+    ''' <param name="input$"></param>
+    ''' <param name="pattern$"></param>
+    ''' <param name="options"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Matches(input$, pattern$, Optional options As RegexOptions = RegexICSng) As IEnumerable(Of String)

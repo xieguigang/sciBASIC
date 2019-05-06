@@ -79,12 +79,12 @@ Namespace Text
         Const Ψ$ = "psi"
         Const Ω$ = "omega"
 
-        Public ReadOnly Property Alphabets As Dictionary(Of String, String)
+        Public ReadOnly Property alphabets As Dictionary(Of String, String)
         Public ReadOnly Property upper As Dictionary(Of String, String)
         Public ReadOnly Property lower As Dictionary(Of String, String)
 
         Sub New()
-            _Alphabets = New Dictionary(Of String, String) From {
+            alphabets = New Dictionary(Of String, String) From {
                {"α", GreekAlphabets.Α}, {"Α", GreekAlphabets.Α},
                {"β", GreekAlphabets.Β}, {"Β", GreekAlphabets.Β},
                {"γ", GreekAlphabets.Γ}, {"Γ", GreekAlphabets.Γ},
@@ -111,13 +111,13 @@ Namespace Text
                {"ω", GreekAlphabets.Ω}, {"Ω", GreekAlphabets.Ω}
             }
 
-            _upper = Alphabets.Subset({
+            _upper = alphabets.Subset({
                 "Α", "Β", "Γ", "Δ", "Ε", "Ζ",
                 "Η", "Θ", "Ι", "Κ", "Λ", "Μ",
                 "Ν", "Ξ", "Ο", "Π", "Ρ", "Σ",
                 "Τ", "Υ", "Φ", "Χ", "Ψ", "Ω"
             })
-            _lower = Alphabets.Subset(Alphabets.Keys.AsSet - upper.Keys)
+            _lower = alphabets.Subset(alphabets.Keys.AsSet - upper.Keys)
         End Sub
 
         ''' <summary>
@@ -126,8 +126,8 @@ Namespace Text
         ''' <param name="s"></param>
         ''' <returns></returns>
         <Extension> Public Function StripGreek(ByRef s As StringBuilder) As StringBuilder
-            For Each key In Alphabets.Keys
-                Call s.Replace(key, Alphabets(key))
+            For Each key In alphabets.Keys
+                Call s.Replace(key, alphabets(key))
             Next
             Return s
         End Function
