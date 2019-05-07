@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c358cde0ecdb64840dc0279ec9cb31a6, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::27cec8e0d2a29a87840eac5dd1ff3937, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@
     '              (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, DrawCircle, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve
     '              (+4 Overloads) DrawEllipse, (+2 Overloads) DrawIcon, DrawIconUnstretched, (+30 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled
     '              DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath, (+4 Overloads) DrawPie
-    '              (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+6 Overloads) DrawString, EndContainer
+    '              (+2 Overloads) DrawPolygon, (+5 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+6 Overloads) DrawString, EndContainer
     '              (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
     '              (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, (+2 Overloads) FillRectangles, FillRegion
     '              (+2 Overloads) Flush, (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ReleaseHdc, ReleaseHdcInternal

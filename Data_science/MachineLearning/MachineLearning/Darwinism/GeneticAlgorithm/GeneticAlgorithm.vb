@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fe76b984b4da0ab39be163446f7f701, Data_science\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::8fe76b984b4da0ab39be163446f7f701, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\GeneticAlgorithm.vb"
 
     ' Author:
     ' 

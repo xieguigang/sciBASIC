@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6732667137e07c626d940c92d96dd15c, Data\BinaryData\BinaryData\SQLite3\Internal\ReaderBase.vb"
+﻿#Region "Microsoft.VisualBasic::0d17a10f8567b33bfffe9ee3e05642aa, Data\BinaryData\BinaryData\SQLite3\Internal\ReaderBase.vb"
 
     ' Author:
     ' 

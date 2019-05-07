@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f68ea6f97d1ff08f4cfd90651017b41a, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\KMeans\Parallel\Folks.vb"
+﻿#Region "Microsoft.VisualBasic::f68ea6f97d1ff08f4cfd90651017b41a, Data_science\DataMining\DataMining\KMeans\Parallel\Folks.vb"
 
     ' Author:
     ' 

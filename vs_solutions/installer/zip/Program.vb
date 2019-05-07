@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12b5e7e581965326c746696748dbf202, vs_solutions\installer\zip\Program.vb"
+﻿#Region "Microsoft.VisualBasic::00c626cd8267d1857d768b0f2f6869a3, vs_solutions\installer\zip\Program.vb"
 
     ' Author:
     ' 

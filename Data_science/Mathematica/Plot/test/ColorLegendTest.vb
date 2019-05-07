@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1685ad98dd313fd9b44df5d77d715d63, Data_science\Mathematica\Plot\test\ColorLegendTest.vb"
+﻿#Region "Microsoft.VisualBasic::675a967a44add44cc604a19e846f2e28, Data_science\Mathematica\Plot\test\ColorLegendTest.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39bee115913e07d535127abb9941da4f, Data_science\MachineLearning\NeuralNetwork\ActiveFunctions\SigmoidFunction.vb"
+﻿#Region "Microsoft.VisualBasic::39bee115913e07d535127abb9941da4f, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\SigmoidFunction.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6aac9e21a699ccf9c9bfb199e0c52fab, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::4c018f87874748832cdc9917698909eb, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,14 @@
 
     '     Module Extensions
     ' 
-    '         Function: CopyVector, DATA, DefaultFirst, FirstOrDefault, IteratesALL
-    '                   (+2 Overloads) JoinIterates, LastOrDefault, MaxInd, Populate, (+2 Overloads) Read
-    '                   RemoveLeft, (+2 Overloads) Removes, Repeats, SafeQuery, (+2 Overloads) SeqIterator
-    '                   (+4 Overloads) Sequence, (+4 Overloads) ToArray, ToVector, TryCatch
+    '         Function: DATA, Populate, SafeQuery, ToArray
+    '         Delegate Sub
+    ' 
+    '             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, IteratesALL
+    '                       (+2 Overloads) JoinIterates, LastOrDefault, MaxInd, (+2 Overloads) Read, RemoveLeft
+    '                       (+2 Overloads) Removes, Repeats, (+2 Overloads) SeqIterator, (+4 Overloads) Sequence, (+3 Overloads) ToArray
+    '                       ToVector, TryCatch
+    ' 
     ' 
     ' 
     ' /********************************************************************************/
@@ -100,10 +104,13 @@ Namespace Linq
         ''' <param name="source"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function SafeQuery(Of T)(source As IEnumerable(Of T)) As IEnumerable(Of T)
+        Public Function SafeQuery(Of T)(source As IEnumerable(Of T), <CallerMemberName> Optional trace$ = Nothing) As IEnumerable(Of T)
             If Not source Is Nothing Then
                 Return source
             Else
+#If DEBUG Then
+                Call $"Target source sequence is nothing...[{trace}]".Warning
+#End If
                 Return {}
             End If
         End Function

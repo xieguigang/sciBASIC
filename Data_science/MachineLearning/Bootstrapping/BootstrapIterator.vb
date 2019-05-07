@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::983a4ee2e9f4cca5c09a34b6c49a4ff9, Data_science\Bootstrapping\BootstrapIterator.vb"
+﻿#Region "Microsoft.VisualBasic::983a4ee2e9f4cca5c09a34b6c49a4ff9, Data_science\MachineLearning\Bootstrapping\BootstrapIterator.vb"
 
     ' Author:
     ' 

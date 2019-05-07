@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7b61ccb1b0514245827da2bfffa2067, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::114b2aef51a9d4ebfb6af450b2eadb2d, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -36,8 +36,8 @@
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: (+4 Overloads) AsDataSource, AsLinq, (+3 Overloads) DataFrame, GetLocusMapName, IsEmptyTable
-    '               (+3 Overloads) LoadCsv, LoadDblVector, LoadStream, LoadTsv, SaveDataSet
-    '               (+2 Overloads) SaveTable, (+7 Overloads) SaveTo, TabExport, ToCsvDoc
+    '               (+3 Overloads) LoadCsv, LoadDataFrame, LoadDblVector, LoadStream, LoadTsv
+    '               SaveDataSet, (+2 Overloads) SaveTable, (+7 Overloads) SaveTo, TabExport, ToCsvDoc
     ' 
     '     Sub: Cable, ForEach
     '     Structure __loadHelper

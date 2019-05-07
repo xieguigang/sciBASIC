@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c60abc278eb77fea31b61f8de62c95d2, Microsoft.VisualBasic.Core\CommandLine\InteropService\CLIBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::148d340e1974785080809fd0f39de3df, Microsoft.VisualBasic.Core\CommandLine\InteropService\CLIBuilder.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,8 @@
     '         Function: GetCLI, (+2 Overloads) GetPrefix, SimpleBuilder
     '         Delegate Function
     ' 
-    '             Function: booleanRule, ClearParameters, pathRule, stringEnumRule, stringRule
+    '             Function: booleanRule, ClearParameters, formatToken, pathRule, stringEnumRule
+    '                       stringRule
     ' 
     ' 
     ' 

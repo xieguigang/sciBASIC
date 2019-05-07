@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a628e0d71c467d20c820cf37ea5d79dc, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\ValueMapping.vb"
+﻿#Region "Microsoft.VisualBasic::a628e0d71c467d20c820cf37ea5d79dc, Data_science\DataMining\DataMining\ValueMapping.vb"
 
     ' Author:
     ' 

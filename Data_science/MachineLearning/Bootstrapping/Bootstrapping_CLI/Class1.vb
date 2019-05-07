@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1c4f238843c0f31c99da73fc320e5675, Data_science\Bootstrapping\Bootstrapping_CLI\Class1.vb"
+﻿#Region "Microsoft.VisualBasic::1c4f238843c0f31c99da73fc320e5675, Data_science\MachineLearning\Bootstrapping\Bootstrapping_CLI\Class1.vb"
 
     ' Author:
     ' 

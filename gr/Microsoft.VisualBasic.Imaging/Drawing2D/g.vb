@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea0b952d82b4fc57d72c49a364a82566, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::b900d1583e8eb238e00b1daf682f4ab2, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
     ' Author:
     ' 
@@ -36,7 +36,7 @@
     ' 
     '     Module g
     ' 
-    '         Properties: ActiveDriver
+    '         Properties: ActiveDriver, DriverExtensionName
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

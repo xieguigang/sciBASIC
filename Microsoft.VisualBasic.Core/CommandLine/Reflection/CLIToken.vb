@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2937b2e998da8af426272837b0712dfb, Microsoft.VisualBasic.Core\CommandLine\Reflection\CLIToken.vb"
+﻿#Region "Microsoft.VisualBasic::dc7e39b244447c07223488c5089fa330, Microsoft.VisualBasic.Core\CommandLine\Reflection\CLIToken.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     ' 
     '     Class Argv
     ' 
-    '         Properties: IsOptional, Type
+    '         Properties: Format, IsOptional, Type
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ToString

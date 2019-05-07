@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd9493fd907226905fbe9040b81a6968, Data\BinaryData\BinaryData\SQLite3\Objects\BTreePage.vb"
+﻿#Region "Microsoft.VisualBasic::47770afa704726ef24093a50a2c179f5, Data\BinaryData\BinaryData\SQLite3\Objects\BTreePage.vb"
 
     ' Author:
     ' 

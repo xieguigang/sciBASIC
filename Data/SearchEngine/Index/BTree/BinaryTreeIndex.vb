@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06b8d7a930bf197b4e66342dc12a2dd8, Data\SearchEngine\Index\BinaryTreeIndex.vb"
+﻿#Region "Microsoft.VisualBasic::bffb2faa3638e71df376c0028bee4b3d, Data\SearchEngine\Index\BTree\BinaryTreeIndex.vb"
 
     ' Author:
     ' 

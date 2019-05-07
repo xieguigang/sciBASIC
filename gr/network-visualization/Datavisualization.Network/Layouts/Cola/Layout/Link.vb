@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db5e3865a24301ae994eb32dad6f262c, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Link.vb"
+﻿#Region "Microsoft.VisualBasic::196377dd1345af1d5b8da09375929eb3, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Link.vb"
 
     ' Author:
     ' 
@@ -34,6 +34,8 @@
     '     Class Link
     ' 
     '         Properties: length, source, target, weight
+    ' 
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

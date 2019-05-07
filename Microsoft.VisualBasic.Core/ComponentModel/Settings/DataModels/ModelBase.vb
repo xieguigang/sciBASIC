@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a230aa4d946105fbf6bc1698babecda7, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ModelBase.vb"
+﻿#Region "Microsoft.VisualBasic::4e460ae58064f52b4031d38acbaac7c1, Microsoft.VisualBasic.Core\ComponentModel\Settings\DataModels\ModelBase.vb"
 
     ' Author:
     ' 
@@ -32,8 +32,6 @@
     ' Summaries:
 
     '     Interface IProfile
-    ' 
-    '         Properties: FilePath
     ' 
     '         Function: Save
     ' 

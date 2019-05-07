@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13b64f69ee082b6354897278ac5bb6bb, Data\BinaryData\BinaryData\SQLite3\Objects\ColumnDataMeta.vb"
+﻿#Region "Microsoft.VisualBasic::74f7fa33f17463108b0d1294afa4b867, Data\BinaryData\BinaryData\SQLite3\Objects\ColumnDataMeta.vb"
 
     ' Author:
     ' 

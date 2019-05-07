@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5854498b1b2852ac52ab3c95c94ea431, Data\DataFrame\IO\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::efaa02e2d12dee7f5c0b73deddafe809, Data\DataFrame\IO\DataFrame.vb"
 
     ' Author:
     ' 
@@ -46,9 +46,10 @@
     '                   GetFloat, GetGuid, GetInt16, GetInt32, GetInt64
     '                   GetName, GetOrdinal, GetOrdinalSchema, GetSchemaTable, GetString
     '                   GetValue, GetValues, IDataRecord_GetValue, IsDBNull, Load
-    '                   Parse, Read, ToString
+    '                   LoadDataSet, Parse, Read, ToString
     ' 
-    '         Sub: ChangeMapping, Close, CopyFrom, Initialize, Reset
+    '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
+    '              Reset
     ' 
     ' 
     ' /********************************************************************************/

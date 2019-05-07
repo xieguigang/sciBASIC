@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30deefa92e7d315553e5d0af3cc38feb, Microsoft.VisualBasic.Core\Language\Runtime.vb"
+﻿#Region "Microsoft.VisualBasic::04444434320a033268d79385ce850726, Microsoft.VisualBasic.Core\Language\Runtime.vb"
 
     ' Author:
     ' 
@@ -35,7 +35,7 @@
     ' 
     '         Properties: Expression, Key, ValueType
     ' 
-    '         Function: [As], ToString
+    '         Function: [As], GetUnderlyingType, ToString
     '         Operators: <>, =
     ' 
     '     Class TypeSchema

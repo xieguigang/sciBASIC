@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f4d3bf292f808f4f03e1968d229bbec, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3MasterTable.vb"
+﻿#Region "Microsoft.VisualBasic::375c106ebc99808e927a74a1ffa415ad, Data\BinaryData\BinaryData\SQLite3\Tables\Sqlite3MasterTable.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,10 @@
 
     '     Class Sqlite3MasterTable
     ' 
-    '         Properties: Tables
+    '         Properties: Schema, Tables
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: ParseTables, ToString
     ' 
     ' 
     ' /********************************************************************************/

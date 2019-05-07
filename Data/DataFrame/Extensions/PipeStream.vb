@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e2244b621c48478b253f7442723d6b9, Data\DataFrame\Extensions\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::594949555611ad51447ef6c7954543ce, Data\DataFrame\Extensions\PipeStream.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,8 @@
 
     ' Module PipeStream
     ' 
-    '     Function: AsDataSet, AsMatrix, DataFrame, LoadStream, Vectors
+    '     Function: AsDataSet, AsMatrix, CreateFilter, DataFrame, LoadStream
+    '               Vectors
     ' 
     ' /********************************************************************************/
 

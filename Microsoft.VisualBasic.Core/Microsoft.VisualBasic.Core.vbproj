@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <PropertyGroup>
-    <TargetFramework>netstandard1.6</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Description>sciBASIC.NET Framework: Core runtime for Microsoft VisualBasic 2017</Description>
     <Copyright>Copyleft (ɔ) xie.guigang@live.com</Copyright>
     <RootNamespace>Microsoft.VisualBasic</RootNamespace>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::777ebe4d70c2c01ee67919ea455ea7d1, Data_science\Bootstrapping\Darwinism\GAF\Drivers\Fitness.vb"
+﻿#Region "Microsoft.VisualBasic::777ebe4d70c2c01ee67919ea455ea7d1, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\Drivers\Fitness.vb"
 
     ' Author:
     ' 

@@ -1,44 +1,44 @@
-﻿#Region "Microsoft.VisualBasic::bc3d63e9b616c9f0e2bbf504f86545d0, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::d23ebabe712d1df46f7471ab9b7b0d96, Microsoft.VisualBasic.Core\Text\Xml\Linq\Linq.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Module Data
-' 
-'         Function: GetNodeNameDefine, GetTypeName, GetXmlNodeDoc, InternalIterates, IteratesArrayNodes
-'                   LoadUltraLargeXMLDataSet, LoadXmlDataSet, LoadXmlDocument, NodeInstanceBuilder, PopulateXmlElementText
-'                   UltraLargeXmlNodesIterator
-' 
-' 
-' /********************************************************************************/
+    '     Module Data
+    ' 
+    '         Function: GetNodeNameDefine, GetTypeName, GetXmlNodeDoc, InternalIterates, IteratesArrayNodes
+    '                   LoadUltraLargeXMLDataSet, LoadXmlDataSet, LoadXmlDocument, NodeInstanceBuilder, PopulateXmlElementText
+    '                   UltraLargeXmlNodesIterator
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d42c46fea649bf22eff2916722e15ff, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
+﻿#Region "Microsoft.VisualBasic::41a3160443828869370ccb99bbff1b09, vs_solutions\dev\VisualStudio\vbproj\Project.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     ' Class Project
     ' 
-    '     Properties: [Imports], DefaultTargets, ItemGroups, PropertyGroups, Targets
-    '                 ToolsVersion
+    '     Properties: [Imports], DefaultTargets, FilePath, ItemGroups, PropertyGroups
+    '                 Targets, ToolsVersion
     ' 
     '     Function: GetProfile, (+2 Overloads) Save, ToString
     ' 

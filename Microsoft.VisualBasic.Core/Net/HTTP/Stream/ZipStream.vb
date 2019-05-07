@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdcad2bd4be97ba4e41f9b0e3eebdcad, Microsoft.VisualBasic.Core\Net\HTTP\ZipStream.vb"
+﻿#Region "Microsoft.VisualBasic::91762bbb449e95456d3322a02d642d4e, Microsoft.VisualBasic.Core\Net\HTTP\Stream\ZipStream.vb"
 
     ' Author:
     ' 

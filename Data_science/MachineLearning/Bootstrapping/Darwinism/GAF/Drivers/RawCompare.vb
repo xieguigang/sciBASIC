@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b79ee0cc93c48735ab95bcd46053802a, Data_science\Bootstrapping\Darwinism\GAF\Drivers\RawCompare.vb"
+﻿#Region "Microsoft.VisualBasic::b79ee0cc93c48735ab95bcd46053802a, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\Drivers\RawCompare.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8c51841332b43d9541547473e69df1c, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::5042b248277af6fd540de8aff4303ef5, Microsoft.VisualBasic.Core\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -819,6 +819,13 @@ Public Module StringHelpers
         Return r.Match(input.Value, pattern, options).Value
     End Function
 
+    ''' <summary>
+    ''' Regular expression pattern text token matches
+    ''' </summary>
+    ''' <param name="input$"></param>
+    ''' <param name="pattern$"></param>
+    ''' <param name="options"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Matches(input$, pattern$, Optional options As RegexOptions = RegexICSng) As IEnumerable(Of String)

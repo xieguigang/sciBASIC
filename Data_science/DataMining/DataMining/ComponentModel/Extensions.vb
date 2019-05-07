@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54af89c3650e9c3b75ce7a2ab6af8e63, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\ComponentModel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::54af89c3650e9c3b75ce7a2ab6af8e63, Data_science\DataMining\DataMining\ComponentModel\Extensions.vb"
 
     ' Author:
     ' 

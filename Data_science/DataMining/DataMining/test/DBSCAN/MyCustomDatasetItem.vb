@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec6abcc61501be94683bb8896904ecb3, Data_science\DataMining\Microsoft.VisualBasic.DataMining.Framework\test\DBSCAN\MyCustomDatasetItem.vb"
+﻿#Region "Microsoft.VisualBasic::ec6abcc61501be94683bb8896904ecb3, Data_science\DataMining\DataMining\test\DBSCAN\MyCustomDatasetItem.vb"
 
     ' Author:
     ' 

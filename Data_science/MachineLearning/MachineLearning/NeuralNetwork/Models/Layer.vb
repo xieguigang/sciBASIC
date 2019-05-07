@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9bcd57b0cd58e8ba6b14426792552bc, Data_science\MachineLearning\NeuralNetwork\Models\Layer.vb"
+﻿#Region "Microsoft.VisualBasic::d22762a8e786cbef2a44d333e31e80d9, Data_science\MachineLearning\MachineLearning\NeuralNetwork\Models\Layer.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator, ToString
+    '         Function: GetAllNeurons, GetEnumerator, IEnumerable_GetEnumerator, ToString
     ' 
     '         Sub: BackPropagate, ForwardPropagate
     ' 

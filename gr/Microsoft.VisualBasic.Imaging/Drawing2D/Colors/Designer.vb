@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba793d1e0016d818d9b456e397378917, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::aa706f76a1323507446c9ebb7e65de29, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -37,9 +37,9 @@
     '                     MaterialPalette, Rainbow, TSF
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: __constraint, Colors, CubicSpline, FromNames, FromSchema
-    '                   GetBrushes, (+2 Overloads) GetColors, GetColorsInternal, internalFills, IsColorNameList
-    '                   SplitColorList
+    '         Function: Colors, ConsoleColor, CubicSpline, FromConsoleColor, FromNames
+    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, GetColorsInternal, internalFills
+    '                   IsColorNameList, rangeConstraint, SplitColorList
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0579945f0567678af51a9cdc97951b7, Data_science\Bootstrapping\Darwinism\GAF\Abstract\ParameterVector.vb"
+﻿#Region "Microsoft.VisualBasic::a0579945f0567678af51a9cdc97951b7, Data_science\MachineLearning\Bootstrapping\Darwinism\GAF\Abstract\ParameterVector.vb"
 
     ' Author:
     ' 

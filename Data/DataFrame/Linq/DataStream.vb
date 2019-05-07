@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e8d313950f41618f36281ca1c6437d6, Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::84b12490fe4aa27e9347bf1e1e98ab6d, Data\DataFrame\Linq\DataStream.vb"
 
     ' Author:
     ' 

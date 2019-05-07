@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e4e3602842c44e1963ea436d21283f4, Microsoft.VisualBasic.Core\Text\Xml\XmlEntity.vb"
+﻿#Region "Microsoft.VisualBasic::f7ce419f313583204ab1053bcc5e1198, Microsoft.VisualBasic.Core\Text\Xml\XmlEntity.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,8 @@
     '     Module XmlEntity
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: EscapingXmlEntity, StripInvalidUTF8Code, UnescapeHTML, UnescapingXmlEntity
+    '         Function: EscapingXmlEntity, FindAllEscapeTokens, IsXmlEntity, StripInvalidUTF8Code, UnescapeHTML
+    '                   UnescapingXmlEntity
     ' 
     ' 
     ' /********************************************************************************/
@@ -45,6 +46,9 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Web
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace Text.Xml
 
@@ -53,24 +57,70 @@ Namespace Text.Xml
     ''' </summary>
     Public Module XmlEntity
 
+        ' & 必须要放在第一个被转义
+        ReadOnly escapes As Dictionary(Of String, String)
+        ReadOnly entities As Index(Of String)
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function IsXmlEntity(token As String) As Boolean
+            Return Strings.LCase(token) Like XmlEntity.entities
+        End Function
+
+        ''' <summary>
+        ''' Find all possible xml entity escape tokens from a given text string
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function FindAllEscapeTokens(str As String) As IEnumerable(Of String)
+            Dim chars As CharPtr = str
+            Dim buffer As New List(Of Char)
+            Dim c As Char
+
+            Do While Not chars.EndRead
+                c = ++chars
+
+                If c = "&"c Then
+                    ' start a new escape
+                    buffer *= 0
+                    buffer += c
+                ElseIf c = ";"c Then
+                    If buffer > 0 Then
+                        buffer += c
+                        Yield buffer.CharString
+                        buffer *= 0
+                    End If
+                Else
+                    If buffer > 0 Then
+                        If Char.IsLetter(c) Then
+                            buffer += c
+                        Else
+                            buffer *= 0
+                        End If
+                    End If
+                End If
+            Loop
+        End Function
+
         Public Function EscapingXmlEntity(str As String) As String
-            Return New StringBuilder(str) _
-                .Replace("&", "&amp;") _
-                .Replace("""", "&quot;") _
-                .Replace("'", "&apos;") _
-                .Replace("<", "&lt;") _
-                .Replace(">", "&gt;") _
-                .ToString
+            With New StringBuilder(str)
+                For Each symbol In escapes.Keys
+                    Call .Replace(symbol, escapes(symbol))
+                Next
+
+                Return .ToString
+            End With
         End Function
 
         Public Function UnescapingXmlEntity(str As String) As String
-            Return New StringBuilder(str) _
-                .Replace("&quot;", """") _
-                .Replace("&apos;", "'") _
-                .Replace("&lt;", "<") _
-                .Replace("&gt;", ">") _
-                .Replace("&amp;", "&") _
-                .ToString
+            With New StringBuilder(str)
+                For Each escape In escapes
+                    Call .Replace(escape.Value, escape.Key)
+                Next
+
+                Return .ToString
+            End With
         End Function
 
         ReadOnly invalidUtf8Escapes$() = {
@@ -81,7 +131,20 @@ Namespace Text.Xml
         }
 
         Sub New()
-            invalidUtf8Escapes = invalidUtf8Escapes.AsList + invalidUtf8Escapes.Select(Function(c) c.ToUpper.Replace("X", "x"))
+            invalidUtf8Escapes = invalidUtf8Escapes.AsList +
+                invalidUtf8Escapes _
+                    .Select(Function(c)
+                                Return c.ToUpper.Replace("X", "x")
+                            End Function)
+
+            escapes = New Dictionary(Of String, String) From {
+                {"&", "&amp;"},
+                {"""", "&quot;"},
+                {"'", "&apos;"},
+                {"<", "&lt;"},
+                {">", "&gt;"}
+            }
+            entities = escapes.Values.ToArray
         End Sub
 
         ''' <summary>
