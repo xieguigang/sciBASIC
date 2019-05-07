@@ -716,9 +716,9 @@ Namespace CommandLine
         ''' <typeparam name="T"></typeparam>
         ''' <param name="name">The optional argument parameter name</param>
         ''' <param name="[default]">The default value for returns when the parameter is not exists in the user input.</param>
-        ''' <param name="__ctype">The custom string parser for the CLI argument value</param>
+        ''' <param name="cast">The custom string parser for the CLI argument value</param>
         ''' <returns></returns>
-        Public Function GetValue(Of T)(name$, [default] As T, Optional __ctype As Func(Of String, T) = Nothing) As T
+        Public Function GetValue(Of T)(name$, [default] As T, Optional cast As Func(Of String, T) = Nothing) As T
             If Not Me.ContainsParameter(name, False) Then
                 If GetType(T).Equals(GetType(Boolean)) Then
                     If HavebFlag(name) Then
@@ -731,11 +731,11 @@ Namespace CommandLine
 
             Dim str As String = Me(name).DefaultValue
 
-            If __ctype Is Nothing Then
+            If cast Is Nothing Then
                 Dim value As Object = InputHandler.CTypeDynamic(str, GetType(T))
                 Return DirectCast(value, T)
             Else
-                Return __ctype(str)
+                Return cast(str)
             End If
         End Function
 
@@ -745,12 +745,10 @@ Namespace CommandLine
         ''' <param name="name">The parameter name, and its argument value should be a valid file path</param>
         ''' <param name="[default]">Default file path if the argument value is not exists</param>
         ''' <returns></returns>
-        Public Function OpenHandle(name$, Optional default$ = "") As VBInteger
-            Dim file As String = Me(name)
-            If String.IsNullOrEmpty(file) Then
-                file = [default]
-            End If
-            Return New VBInteger(My.File.OpenHandle(file))
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function OpenHandle(name$, Optional default$ = "", Optional encoding As Encodings = Encodings.UTF8) As VBInteger
+            Return My.File.OpenHandle(Me(name) Or [default].AsDefault, encoding)
         End Function
 #End Region
 
