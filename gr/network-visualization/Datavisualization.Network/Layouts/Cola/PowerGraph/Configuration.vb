@@ -266,8 +266,8 @@ Namespace Layouts.Cola
 
         Shared Sub getEdges(modules As ModuleSet, es As List(Of PowerEdge(Of Integer)))
             modules.forAll(Sub(m)
-                               m.getEdges(es)
-                               Configuration(Of Link).getEdges(m.children, es)
+                               Call m.getEdges(es)
+                               Call Configuration(Of Link).getEdges(m.children, es)
                            End Sub)
         End Sub
     End Class
