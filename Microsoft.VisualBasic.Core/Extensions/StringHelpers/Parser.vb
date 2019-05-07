@@ -65,6 +65,14 @@ Public Module PrimitiveParser
         End If
     End Function
 
+    ''' <summary>
+    ''' 用于匹配任意实数的正则表达式
+    ''' </summary>
+    ''' <remarks>
+    ''' 这个表达式并不用于<see cref="IsNumeric"/>, 但是其他的模块的代码可能会需要这个通用的表达式来做一些判断
+    ''' </remarks>
+    Public Const NumericPattern$ = "[-]?\d*(\.\d+)?([eE][-]?\d*)?"
+
 #Region "text token pattern assert"
     ' 2019-04-17 正则表达式的执行效率过低
 
