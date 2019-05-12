@@ -58,6 +58,20 @@ Namespace Language
         Implements IConvertible
         Implements IEquatable(Of Double)
 
+        Public ReadOnly Property Hex As String
+            Get
+                Dim bytes As Byte() = BitConverter _
+                    .GetBytes(Value) _
+                    .Reverse _
+                    .ToArray
+                Dim h$ = bytes _
+                    .Select(Function(b) b.ToString("X2")) _
+                    .JoinBy("")
+
+                Return h
+            End Get
+        End Property
+
         Sub New(x#)
             Value = x#
         End Sub
