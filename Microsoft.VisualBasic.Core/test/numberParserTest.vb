@@ -49,6 +49,10 @@ Module numberParserTest
 
     Sub hexTest()
 
+        Dim xx As Double = Double.MaxValue
+
+        Call Console.WriteLine(xx.ToString("G17"))
+
         Dim x As VBDouble = Double.MaxValue
         Dim hex = x.Hex
 
