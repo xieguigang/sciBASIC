@@ -341,7 +341,7 @@
       <Name>hierarchical-clustering</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Graph\GraphTheory.vbproj">
-      <Project>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</Project>
+      <Project>{203bc68f-a0cd-443a-ab62-4af4110f752f}</Project>
       <Name>GraphTheory</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Math\DataFittings\DataFittings.vbproj">

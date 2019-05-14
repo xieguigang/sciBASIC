@@ -300,7 +300,7 @@ Namespace ComponentModel.Collection
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Like(item As T, indexr As Index(Of T)) As Boolean
-            If item Is Nothing Then
+            If item Is Nothing OrElse indexr Is Nothing Then
                 Return False
             Else
                 Return indexr(x:=item) > -1
