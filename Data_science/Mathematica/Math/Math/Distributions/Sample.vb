@@ -104,8 +104,9 @@ Namespace Distributions
             Return {min, max}
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return GetJson
         End Function
     End Class
 End Namespace
