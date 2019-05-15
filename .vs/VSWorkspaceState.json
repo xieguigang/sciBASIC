@@ -9,14 +9,8 @@
     "\\Microsoft.VisualBasic.Core\\ComponentModel\\Algorithm",
     "\\Microsoft.VisualBasic.Core\\ComponentModel\\Algorithm\\BinaryTree",
     "\\Microsoft.VisualBasic.Core\\ComponentModel\\System.Collections.Generic",
-    "\\Microsoft.VisualBasic.Core\\Extensions",
-    "\\Microsoft.VisualBasic.Core\\Extensions\\Collection",
-    "\\Microsoft.VisualBasic.Core\\Extensions\\Collection\\Linq",
-    "\\Microsoft.VisualBasic.Core\\Text",
-    "\\Microsoft.VisualBasic.Core\\Text\\Parser",
-    "\\Microsoft.VisualBasic.Core\\Text\\Xml",
-    "\\Microsoft.VisualBasic.Core\\Text\\Xml\\Models"
+    "\\Microsoft.VisualBasic.Core\\Extensions"
   ],
-  "SelectedNode": "\\Microsoft.VisualBasic.Core\\Text\\Xml\\Models\\ListOf.vb",
+  "SelectedNode": "\\CODE_OF_CONDUCT.md",
   "PreviewInSolutionExplorer": false
 }
