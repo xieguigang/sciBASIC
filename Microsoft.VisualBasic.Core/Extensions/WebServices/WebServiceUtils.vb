@@ -269,17 +269,32 @@ Public Module WebServiceUtils
     ''' </summary>
     ''' <param name="s"></param>
     ''' <param name="encoding"></param>
+    ''' <param name="jswhitespace">
+    ''' 空格符号默认被转义为``+``, 如果这个参数为真的话,则空格会被转义为``%20``
+    ''' </param>
     ''' <returns></returns>
-    ''' 
+    ''' <remarks>
+    ''' A extension method wrapper for <see cref="HttpUtility.UrlEncode"/>
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("URL.Encode")>
     <Extension>
-    Public Function UrlEncode(s As String, Optional encoding As Encoding = Nothing) As String
+    Public Function UrlEncode(s As String, Optional encoding As Encoding = Nothing, Optional jswhitespace As Boolean = False) As String
+        Dim component As String
+
         If encoding IsNot Nothing Then
-            Return HttpUtility.UrlEncode(s, encoding)
+            component = HttpUtility.UrlEncode(s, encoding)
         Else
-            Return HttpUtility.UrlEncode(s)
+            component = HttpUtility.UrlEncode(s)
         End If
+
+        If jswhitespace Then
+            ' 20190517 因为+号被转义为%2b,所以在这里可以直接替换
+            ' 由空格转义而得到的+符号为%20
+            component = component.Replace("+", "%20")
+        End If
+
+        Return component
     End Function
 
     <ExportAPI("URL.Encode")>

@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::f7dab0189e1b93afadb334fe6668321f, Data_science\Graph\Model\Grid.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Class Grid
-    ' 
-    '     Properties: Layout, Steps
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    '     Function: Index, ToString
-    ' 
-    ' /********************************************************************************/
+' Class Grid
+' 
+'     Properties: Layout, Steps
+' 
+'     Constructor: (+3 Overloads) Sub New
+'     Function: Index, ToString
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,15 +52,9 @@ Imports Microsoft.VisualBasic.Imaging
 Public Class Grid
 
     ReadOnly X, Y As OrderSelector(Of Double)
-    ReadOnly rect As RectangleF
 
-    Public ReadOnly Property Layout As RectangleF
-        Get
-            Return rect
-        End Get
-    End Property
-
-    Public ReadOnly Property Steps As SizeF
+    Public ReadOnly Property layout As RectangleF
+    Public ReadOnly Property steps As SizeF
 
     Sub New(size As Size, steps As SizeF)
         Call Me.New(New Rectangle(New Point, size), steps)
@@ -75,7 +69,7 @@ Public Class Grid
         Y = New OrderSelector(Of Double)(Math.seq(layout.Y, layout.Bottom, steps.Height))
 
         Me.steps = steps
-        Me.rect = layout
+        Me.layout = layout
     End Sub
 
     ''' <summary>
@@ -91,6 +85,6 @@ Public Class Grid
     End Function
 
     Public Overrides Function ToString() As String
-        Return $"{rect} @ {steps}"
+        Return $"{layout} @ {steps}"
     End Function
 End Class

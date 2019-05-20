@@ -155,7 +155,7 @@ Module CLI
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/training")>
-    <Usage("/training /samples <sample_matrix.Xml> [/config <config.ini> /parallel /GA.optimize /out <ANN.Xml>]")>
+    <Usage("/training /samples <sample_matrix.Xml> [/config <config.ini> /debug /parallel /GA.optimize /out <ANN.Xml>]")>
     Public Function Train(args As CommandLine) As Integer
         Dim in$ = args <= "/samples"
         Dim parallel As Boolean = args("/parallel")
@@ -190,7 +190,7 @@ Module CLI
             config.learnRate,
             config.momentum,
             actives
-        )
+        ) With {.Selective = config.selective.ParseBoolean}
 
         trainingHelper.NeuronNetwork.LearnRateDecay = config.learnRateDecay
         ' trainingHelper.Truncate = 20

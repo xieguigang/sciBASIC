@@ -115,19 +115,34 @@ Namespace Linq
             End If
         End Function
 
-        Public Delegate Sub DoWith(Of T)(ByRef obj As T)
+        Public Delegate Sub DoWith(Of T)(obj As T)
 
+        ''' <summary>
+        ''' <paramref name="doWith"/> each element in <paramref name="source"/> and then 
+        ''' returns the <paramref name="source"/> sequence after modify.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <param name="doWith"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Iterator Function [With](Of T)(source As IEnumerable(Of T), doWith As DoWith(Of T)) As IEnumerable(Of T)
+        Public Iterator Function [With](Of T As Class)(source As IEnumerable(Of T), doWith As DoWith(Of T)) As IEnumerable(Of T)
             For Each x As T In source
-                doWith(x)
+                Call doWith(x)
                 Yield x
             Next
         End Function
 
+        ''' <summary>
+        ''' <paramref name="doWith"/> target object <paramref name="x"/>, and then reutrns x
+        ''' </summary>
+        ''' <typeparam name="T">Only works for reference type</typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="doWith"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function [With](Of T)(x As T, doWith As DoWith(Of T)) As T
-            doWith(x)
+        Public Function [With](Of T As Class)(x As T, doWith As DoWith(Of T)) As T
+            Call doWith(x)
             Return x
         End Function
 

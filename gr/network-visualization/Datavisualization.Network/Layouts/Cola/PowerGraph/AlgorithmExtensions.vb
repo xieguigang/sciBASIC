@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::6091f1934d571ffef1a30fec7a292b78, gr\network-visualization\Datavisualization.Network\Layouts\Cola\PowerGraph\AlgorithmExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Module powergraphExtensions
-    ' 
-    '         Function: getGroups, intersection
-    ' 
-    '         Sub: (+2 Overloads) toGroups
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module powergraphExtensions
+' 
+'         Function: getGroups, intersection
+' 
+'         Sub: (+2 Overloads) toGroups
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -98,24 +98,24 @@ Namespace Layouts.Cola
         End Function
 
         Public Function getGroups(Of Link)(nodes As Node(), links As Link(), la As LinkTypeAccessor(Of Link), rootGroup As Node) As PowerGraph
-            Dim n = nodes.Length
-            Dim c = New Configuration(Of Link)(n, links, la, rootGroup)
+            Dim n As Integer = nodes.Length
+            Dim c As New Configuration(Of Link)(n, links, la, rootGroup)
 
             While c.greedyMerge()
             End While
 
             Dim powerEdgeIndices As New List(Of PowerEdge(Of [Variant](Of Integer, Node)))
             Dim powerEdges As New List(Of PowerEdge(Of Node))
-            Dim g = c.getGroupHierarchy(powerEdgeIndices)
+            Dim g As List(Of Node) = c.getGroupHierarchy(powerEdgeIndices)
 
             powerEdgeIndices.DoEach(Sub(e)
                                         ' javascript之中，对象类型在这里发生了转换
                                         ' 将index转换为具体的node对象
                                         Dim f = Sub([end] As String)
-                                                    Dim eg = e([end])
+                                                    Dim eg As [Variant](Of Integer, Node) = e([end])
 
                                                     If eg Like GetType(Integer) Then
-                                                        e([end]) = nodes(CType(eg, Integer))
+                                                        e([end]) = nodes.ElementAtOrDefault(CType(eg, Integer))
                                                     End If
                                                 End Sub
 

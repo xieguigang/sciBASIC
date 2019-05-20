@@ -77,7 +77,7 @@ Namespace Text.Xml.Models
         End Function
 
         Public Overloads Shared Operator +(xb As XmlBuilder, node As XElement) As XmlBuilder
-            Call xb.Script.AppendLine(node.ToString)
+            Call xb.script.AppendLine(node.ToString)
             Return xb
         End Operator
     End Class

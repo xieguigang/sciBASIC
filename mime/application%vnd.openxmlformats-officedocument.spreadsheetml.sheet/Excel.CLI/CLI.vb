@@ -97,7 +97,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
     ''' <param name="args"></param>
     ''' <returns></returns>
     <ExportAPI("/Cbind")>
-    <Usage("/cbind /in <a.csv> /append <b.csv> [/ID.a <default=ID> /ID.b <default=ID> /grep.ID <grep_script, default=""token <SPACE> first""> /nothing.as.empty /out <ALL.csv>]")>
+    <Usage("/cbind /in <a.csv> /append <b.csv> [/ID.a <default=ID> /ID.b <default=ID> /grep.ID <grep_script, default=""token <SPACE> first""> /unique /nothing.as.empty /out <ALL.csv>]")>
     <Description("Join of two table by a unique ID.")>
     <Argument("/in", False, CLITypes.File,
               Description:="The table for append by column, its row ID can be duplicated.")>
@@ -105,6 +105,8 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
               Description:="The target table that will be append into the table ``a``, the row ID must be unique!")>
     <Argument("/grep.ID", True, CLITypes.String, PipelineTypes.undefined, AcceptTypes:={GetType(String)},
               Description:="This argument parameter describ how to parse the ID in file ``a.csv``")>
+    <Argument("/unique", True, CLITypes.Boolean,
+              Description:="Make the id of file ``append`` be unique?")>
     <Group(Program.CsvTools)>
     Public Function cbind(args As CommandLine) As Integer
         Dim in$ = args <= "/in"
@@ -114,7 +116,7 @@ Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
         Dim IDb$ = args("/ID.b")
         Dim nothingAsEmpty As Boolean = args("/nothing.as.empty")
         Dim a = EntityObject.LoadDataSet([in], uidMap:=IDa)
-        Dim b As Contract = Contract.Load(append, uidMap:=IDb)
+        Dim b As Contract = Contract.Load(append, uidMap:=IDb, doUnique:=args("/unique"))
 
         With TextGrepScriptEngine.Compile(args("/grep.ID") Or "tokens ' ' first")
             If Not .IsDoNothing Then

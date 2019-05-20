@@ -55,7 +55,15 @@ Namespace ComponentModel.DataStructures.Tree
         Property ChildNodes() As List(Of T)
 
         ReadOnly Property FullyQualifiedName() As String
+        ''' <summary>
+        ''' Is this node have no childs
+        ''' </summary>
+        ''' <returns></returns>
         ReadOnly Property IsLeaf() As Boolean
+        ''' <summary>
+        ''' I this node have no parents
+        ''' </summary>
+        ''' <returns></returns>
         ReadOnly Property IsRoot() As Boolean
 
         Function GetRootNode() As T

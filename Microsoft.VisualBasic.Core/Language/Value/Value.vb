@@ -89,6 +89,12 @@ Namespace Language
             End Get
         End Property
 
+        Default Public ReadOnly Property Index(key As Object) As Object
+            Get
+                Return CObj(Value)(key)
+            End Get
+        End Property
+
         ''' <summary>
         ''' Retrieves the value of the current System.Nullable`1 object, or the object's
         ''' default value.

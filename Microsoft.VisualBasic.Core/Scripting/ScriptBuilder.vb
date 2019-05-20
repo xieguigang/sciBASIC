@@ -56,7 +56,7 @@ Namespace Scripting.SymbolBuilder
     ''' </summary>
     Public Class ScriptBuilder : Implements ISaveHandle
 
-        Public ReadOnly Property Script As StringBuilder
+        Public ReadOnly Property script As StringBuilder
 
         ''' <summary>
         ''' The variable in target script text should be in format like: ``{$name}``
@@ -65,7 +65,10 @@ Namespace Scripting.SymbolBuilder
         Default Public WriteOnly Property Assign(name As String) As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set
-                Call Script.Replace($"{{${name}}}", Value)
+                Dim key As String = $"{{${name}}}"
+                ' do generate key for string replacement and then
+                ' do string replacement
+                Call script.Replace(key, Value)
             End Set
         End Property
 
@@ -76,18 +79,18 @@ Namespace Scripting.SymbolBuilder
         Public ReadOnly Property Preview As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Script.ToString
+                Return script.ToString
             End Get
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(sb As StringBuilder)
-            Script = sb
+            script = sb
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(capacity As Integer)
-            Script = New StringBuilder(capacity)
+            script = New StringBuilder(capacity)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -112,7 +115,7 @@ Namespace Scripting.SymbolBuilder
         ''' <param name="value$"></param>
         ''' <returns></returns>
         Public Function Replace(key$, value$) As ScriptBuilder
-            Call Script.Replace(key, value)
+            Call script.Replace(key, value)
             Return Me
         End Function
 
@@ -123,7 +126,7 @@ Namespace Scripting.SymbolBuilder
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return Script.ToString
+            Return script.ToString
         End Function
 
         ''' <summary>
@@ -133,7 +136,7 @@ Namespace Scripting.SymbolBuilder
         ''' <param name="line$">The string to append.</param>
         ''' <returns>A reference to this instance after the append operation has completed.</returns>
         Public Function AppendLine(Optional line$ = "") As ScriptBuilder
-            Call Script.AppendLine(line)
+            Call script.AppendLine(line)
             Return Me
         End Function
 
@@ -145,7 +148,7 @@ Namespace Scripting.SymbolBuilder
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(sb As ScriptBuilder) As String
-            Return sb.Script.ToString
+            Return sb.script.ToString
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -160,7 +163,7 @@ Namespace Scripting.SymbolBuilder
         ''' <param name="s"></param>
         ''' <returns></returns>
         Public Shared Operator &(sb As ScriptBuilder, s As String) As ScriptBuilder
-            Call sb.Script.Append(s)
+            Call sb.script.Append(s)
             Return sb
         End Operator
 
@@ -171,18 +174,18 @@ Namespace Scripting.SymbolBuilder
         ''' <param name="s"></param>
         ''' <returns></returns>
         Public Shared Operator +(sb As ScriptBuilder, s As String) As ScriptBuilder
-            Call sb.Script.AppendLine(s)
+            Call sb.script.AppendLine(s)
             Return sb
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Save(path As String, encoding As Encoding) As Boolean Implements ISaveHandle.Save
-            Return Script.ToString.SaveTo(path, encoding)
+            Return script.ToString.SaveTo(path, encoding)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Save(path As String, Optional encoding As Encodings = Encodings.UTF8) As Boolean Implements ISaveHandle.Save
-            Return Script.ToString.SaveTo(path, encoding.CodePage)
+            Return script.ToString.SaveTo(path, encoding.CodePage)
         End Function
     End Class
 End Namespace

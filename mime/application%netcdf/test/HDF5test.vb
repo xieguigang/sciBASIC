@@ -55,7 +55,7 @@ Namespace edu.arizona.cs.hdf5.test
     Public Class ParseTest
         Public Shared Sub Main(args As String())
             Dim [option] As String = "hd"
-            Dim filename As String = "../../../EP388069_K40_BS1D.otu_table.biom"
+            Dim filename As String = "D:\GCModeller\src\runtime\sciBASIC#\mime\test\EP388069_K40_BS1D.otu_table.biom"
 
             If args.Length = 2 Then
                 [option] = args(0)
@@ -81,7 +81,7 @@ Namespace edu.arizona.cs.hdf5.test
                 showData = True
             End If
 
-            Dim reader As New HDF5Reader(filename, "dset")
+            Dim reader As New HDF5Reader(filename, "sample")
             reader.parseHeader()
 
             If showHeader Then

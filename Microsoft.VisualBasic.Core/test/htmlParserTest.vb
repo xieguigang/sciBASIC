@@ -44,6 +44,9 @@ Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Module htmlParserTest
 
     Sub Main()
+
+        Call UrlescapeTest()
+
         Dim page$ = "https://www.ncbi.nlm.nih.gov/nuccore/NC_014248".GET
         Dim metaInfo = page.ParseHtmlMeta
 
@@ -53,6 +56,14 @@ Module htmlParserTest
 
         Dim list = testhtml.HtmlList
         Dim disable = list.Where(Function(li) li.classList.IndexOf("disabled") > -1).FirstOrDefault
+
+
+        Pause()
+    End Sub
+
+    Sub UrlescapeTest()
+        Dim token = "Ethinyl estradiol".UrlEncode(jswhitespace:=True)
+        Dim plus = "A+B".UrlEncode
 
 
         Pause()

@@ -65,6 +65,11 @@ Namespace Serialization.JSON
     ''' </summary>
     <Package("Json.Contract")> Public Module JsonContract
 
+        ''' <summary>
+        ''' Create json text for array matrix.
+        ''' </summary>
+        ''' <param name="matrix"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function MatrixJson(matrix As Double()()) As String
             Dim rows = matrix.Select(Function(row) $"[ {row.JoinBy(", ")} ]")
@@ -86,7 +91,7 @@ Namespace Serialization.JSON
                                       Optional knownTypes As IEnumerable(Of Type) = Nothing) As String
 
             Using ms As New MemoryStream()
-                Call ms.writeJsonInternal(
+                Call ms.writeJson(
                     obj:=obj,
                     type:=type,
                     simpleDict:=simpleDict,
@@ -101,9 +106,17 @@ Namespace Serialization.JSON
             End Using
         End Function
 
+        ''' <summary>
+        ''' Write json with setting configuration
+        ''' </summary>
+        ''' <param name="output"></param>
+        ''' <param name="obj"></param>
+        ''' <param name="type"></param>
+        ''' <param name="simpleDict"></param>
+        ''' <param name="knownTypes"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Private Sub writeJsonInternal(output As Stream, obj As Object, type As Type, simpleDict As Boolean, knownTypes As IEnumerable(Of Type))
+        Private Sub writeJson(output As Stream, obj As Object, type As Type, simpleDict As Boolean, knownTypes As IEnumerable(Of Type))
             If simpleDict Then
                 Dim settings As New DataContractJsonSerializerSettings With {
                     .UseSimpleDictionaryFormat = True,
@@ -128,7 +141,7 @@ Namespace Serialization.JSON
         <Extension>
         Public Function WriteLargeJson(Of T)(obj As T, path$, Optional simpleDict As Boolean = True) As Boolean
             Using ms As FileStream = path.Open(, doClear:=True)
-                Call ms.writeJsonInternal(obj, GetType(T), simpleDict, Nothing)
+                Call ms.writeJson(obj, GetType(T), simpleDict, Nothing)
             End Using
 
             Return True
@@ -167,7 +180,8 @@ Namespace Serialization.JSON
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Create object instance from a given json text base on the template <see cref="Type"/>
+        ''' information.
         ''' </summary>
         ''' <param name="json">null -> Nothing</param>
         ''' <param name="type"></param>
@@ -240,6 +254,14 @@ Namespace Serialization.JSON
             Return json.Value.LoadJSON(Of T)(simpleDict:=simpleDict)
         End Function
 
+        ''' <summary>
+        ''' Create object instance from a json text of a given text file. 
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="file$"></param>
+        ''' <param name="encoding"></param>
+        ''' <param name="simpleDict"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function LoadJsonFile(Of T)(file$, Optional encoding As Encoding = Nothing, Optional simpleDict As Boolean = True) As T
@@ -270,9 +292,11 @@ Namespace Serialization.JSON
 
                         [date] = Date.Parse(.ByRef)
                     End With
+
                     sb.Replace(s, $"""{propertyName}"":" & [date].GetJson)
                 Else
                     [date] = Date.Parse(s.Trim(ASCII.Quot))
+
                     sb.Replace(s, [date].GetJson)
                 End If
             Next

@@ -92,19 +92,19 @@ Namespace PCA
             End If
 
             Dim pts As Entity() = Points(x, y) _
-            .SeqIterator _
-            .Select(Function(pt)
-                        Dim point As PointF = pt.value
+                .SeqIterator _
+                .Select(Function(pt)
+                            Dim point As PointF = pt.value
 
-                        Return New Entity With {
-                            .uid = getlabel(pt.i),
-                            .Properties = {
-                                point.X,
-                                point.Y
+                            Return New Entity With {
+                                .uid = getlabel(pt.i),
+                                .Properties = {
+                                    point.X,
+                                    point.Y
+                                }
                             }
-                        }
-                    End Function) _
-            .ToArray
+                        End Function) _
+                .ToArray
 
             ' 进行聚类获取得到分组
             Dim kmeans As ClusterCollection(Of Entity) = pts.ClusterDataSet(sampleGroup)

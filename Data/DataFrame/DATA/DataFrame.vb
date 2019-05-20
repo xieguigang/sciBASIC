@@ -90,8 +90,8 @@ Namespace DATA
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(list As IEnumerable(Of EntityObject))
-            entityList = list.ToDictionary
+        Sub New(list As IEnumerable(Of EntityObject), Optional doUnique As Boolean = False)
+            entityList = list.ToDictionary(replaceOnDuplicate:=doUnique)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -141,8 +141,12 @@ Namespace DATA
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function Load(path$, Optional encoding As Encodings = Encodings.Default, Optional uidMap$ = Nothing) As DataFrame
-            Return New DataFrame(EntityObject.LoadDataSet(path, uidMap:=uidMap))
+        Public Shared Function Load(path$,
+                                    Optional encoding As Encodings = Encodings.Default,
+                                    Optional uidMap$ = Nothing,
+                                    Optional doUnique As Boolean = False) As DataFrame
+
+            Return New DataFrame(EntityObject.LoadDataSet(path, uidMap:=uidMap), doUnique)
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of EntityObject) Implements IEnumerable(Of EntityObject).GetEnumerator
