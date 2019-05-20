@@ -43,10 +43,38 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports r = System.Text.RegularExpressions.Regex
+Imports System.Text.RegularExpressions
 
-Namespace Language.JavaScript
+
+Namespace My.JavaScript
 
     Public Module Linq
+
+        <Extension> Public Function test(pattern$, target$) As Boolean
+            Return r.Match(target, pattern).Success
+        End Function
+
+        <Extension> Public Sub match(text$, pattern$, ByRef a$, ByRef b$, Optional ByRef c$ = Nothing)
+            Dim parts = text.match(pattern)
+
+            a = parts.ElementAtOrNull(0)
+            b = parts.ElementAtOrNull(1)
+            c = parts.ElementAtOrNull(2)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function parseInt(s As String, Optional radix% = 10) As Integer
+            Return Convert.ToInt32(s, radix)
+        End Function
+
+        <Extension> Public Function match(text$, pattern$) As String()
+            Return r.Match(text, pattern).Captures.AsQueryable.Cast(Of String).ToArray
+        End Function
+
+        <Extension> Public Function match(text$, pattern As r) As String()
+            Return pattern.Match(text).Captures.AsQueryable.Cast(Of String).ToArray
+        End Function
 
         <Extension>
         Public Sub splice(Of T)(array As T(), index As Integer, howmany As Integer, ParamArray items As T())

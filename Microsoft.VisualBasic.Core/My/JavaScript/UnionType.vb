@@ -44,7 +44,7 @@
 
 Imports System.Runtime.CompilerServices
 
-Namespace Language.JavaScript
+Namespace My.JavaScript
 
     ''' <summary>
     ''' Union type of the value and its value generator function.

@@ -49,7 +49,7 @@ Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
-Namespace Language.JavaScript
+Namespace My.JavaScript
 
     Public Interface IJavaScriptObjectAccessor
         Default Property Accessor(name As String) As Object

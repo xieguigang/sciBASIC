@@ -1008,9 +1008,10 @@
     <Compile Include="Extensions\Trinity\Word.vb" />
     <Compile Include="Extensions\Trinity\WordClass.vb" />
     <Compile Include="Extensions\ValueTypes\TimeSpanScale.vb" />
-    <Compile Include="Language\Language\JavaScript\Linq.vb" />
-    <Compile Include="Language\Language\JavaScript\JavaScriptObject.vb" />
-    <Compile Include="Language\Language\JavaScript\UnionType.vb" />
+    <Compile Include="My\JavaScript\ES6\Map.vb" />
+    <Compile Include="My\JavaScript\Linq.vb" />
+    <Compile Include="My\JavaScript\JavaScriptObject.vb" />
+    <Compile Include="My\JavaScript\UnionType.vb" />
     <Compile Include="Language\Language\Java\NamespaceDoc.vb" />
     <Compile Include="Language\Language\Python\NamespaceDoc.vb" />
     <Compile Include="Language\Value\CharStream.vb" />
