@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::731a6e80238e7d72970534c210739b66, mime\application%netcdf\HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataTypeMessage
-    ' 
-    '         Properties: address, byteSize, isBigEndian, isLittleEndian, structureMembers
-    '                     type
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataTypeMessage
+' 
+'         Properties: address, byteSize, isBigEndian, isLittleEndian, structureMembers
+'                     type
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,6 +51,7 @@
 ' * Modified by iychoi@email.arizona.edu
 ' 
 
+Imports System.Text
 Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
 Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.BinaryReader
 
@@ -135,10 +136,14 @@ Namespace HDF5.[Structure]
 
         Private m_base As DataTypeMessage
 
+        Dim encoding As Encoding
+
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             [in].offset = address
 
             Me.m_address = address
+
+            ' common base constructor
 
             Dim tandv As Byte = [in].readByte()
             Me.m_type = (tandv And &HF)
@@ -222,7 +227,20 @@ Namespace HDF5.[Structure]
 
                 [in].setLittleEndian()
             ElseIf Me.m_type = DATATYPE_VARIABLE_LENGTH Then
-                Throw New Exception("data type variable length is not implemented")
+                ' Throw New Exception("data type variable length is not implemented")
+
+
+                Dim paddingType = [in].readInt
+                Dim charEncoding = [in].readInt
+
+                If charEncoding = 0 Then
+                    encoding = Encoding.ASCII
+                ElseIf charEncoding = 1 Then
+                    encoding = Encoding.UTF8
+                Else
+                    Throw New NotImplementedException
+                End If
+
             ElseIf Me.m_type = DATATYPE_ARRAY Then
                 Throw New Exception("data type array is not implemented")
             End If
