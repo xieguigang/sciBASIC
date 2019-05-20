@@ -117,7 +117,7 @@ Namespace HDF5.[Structure]
         Public Const DATATYPE_ARRAY As Integer = 10
 
         ''' <summary>
-        ''' ��ǰ������������ļ�֮�е���ʼλ��
+        ''' 当前的这个对象在文件之中的起始位置
         ''' </summary>
         Private m_address As Long
         Private m_type As Integer
