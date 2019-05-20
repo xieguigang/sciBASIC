@@ -222,7 +222,7 @@ Namespace HDF5.[Structure]
 
                 [in].setLittleEndian()
             ElseIf Me.m_type = DATATYPE_VARIABLE_LENGTH Then
-                Throw New Exception("data type variable length is not implemented")
+                ' Throw New Exception("data type variable length is not implemented")
             ElseIf Me.m_type = DATATYPE_ARRAY Then
                 Throw New Exception("data type array is not implemented")
             End If

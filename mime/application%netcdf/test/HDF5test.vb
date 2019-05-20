@@ -81,7 +81,7 @@ Namespace edu.arizona.cs.hdf5.test
                 showData = True
             End If
 
-            Dim reader As New HDF5Reader(filename, "dset")
+            Dim reader As New HDF5Reader(filename, "sample")
             reader.parseHeader()
 
             If showHeader Then

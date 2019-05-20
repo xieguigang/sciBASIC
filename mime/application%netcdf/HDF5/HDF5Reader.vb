@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::20157b1c1fd6d6c84ee14d2e8c98a95d, mime\application%netcdf\HDF5\HDF5Reader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class HDF5Reader
-    ' 
-    '         Properties: chunks, dataBTree, datasetName, fileName, headerSize
-    '                     layout, reader
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Sub: close, parseHeader
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class HDF5Reader
+' 
+'         Properties: chunks, dataBTree, datasetName, fileName, headerSize
+'                     layout, reader
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Sub: close, parseHeader
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,12 +70,9 @@ Namespace HDF5
             Me.m_filename = filename
             Me.m_reader = New BinaryFileReader(Me.m_filename)
             Me.m_datasetName = datasetName
-
             Me.m_layout = Nothing
             Me.m_dataTree = Nothing
-
             Me.m_chunks = New List(Of DataChunk)()
-
             Me.m_headerLength = 0
         End Sub
 
@@ -83,12 +80,9 @@ Namespace HDF5
             Me.m_filename = Nothing
             Me.m_reader = [in]
             Me.m_datasetName = datasetName
-
             Me.m_layout = Nothing
             Me.m_dataTree = Nothing
-
             Me.m_chunks = New List(Of DataChunk)()
-
             Me.m_headerLength = 0
         End Sub
 
@@ -114,6 +108,7 @@ Namespace HDF5
                         Dim chunk As DataChunk = iter.[next](Me.m_reader, sb)
                         Me.m_chunks.Add(chunk)
                     End While
+
                     Exit For
                 End If
             Next
