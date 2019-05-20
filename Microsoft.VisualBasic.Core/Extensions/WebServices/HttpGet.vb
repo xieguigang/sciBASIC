@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::e446d3b989c2a63959642082a089c408, Microsoft.VisualBasic.Core\Extensions\WebServices\HttpGet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    ' Module HttpGet
-    ' 
-    '     Properties: HttpRequestTimeOut
-    ' 
-    '     Function: [GET], __httpRequest, BuildWebRequest, Get_PageContent, LogException
-    '               urlGet
-    ' 
-    ' /********************************************************************************/
+' Module HttpGet
+' 
+'     Properties: HttpRequestTimeOut
+' 
+'     Function: [GET], __httpRequest, BuildWebRequest, Get_PageContent, LogException
+'               urlGet
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -49,6 +49,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 ''' <summary>
@@ -73,7 +74,8 @@ Public Module HttpGet
                                       Optional proxy As String = Nothing,
                                       Optional doNotRetry404 As Boolean = True,
                                       Optional UA$ = Nothing,
-                                      Optional refer$ = Nothing) As String
+                                      Optional refer$ = Nothing,
+                                      Optional ByRef is404 As Boolean = False) As String
 #Else
     ''' <summary>
     ''' Get the html page content from a website request or a html file on the local filesystem.
@@ -89,13 +91,17 @@ Public Module HttpGet
 
         Call $"GET {If(isFileUrl, url.ToFileURL, url)}".__DEBUG_ECHO
 
+        ' do status indicator reset
+        is404 = False
+
         ' 类似于php之中的file_get_contents函数,可以读取本地文件内容
         If File.Exists(url) Then
             Call "[Job DONE!]".__DEBUG_ECHO
             Return url.ReadAllText
         Else
             If isFileUrl Then
-                Call $"URL {url.ToFileURL} can not solved on your filesystem!".Warning
+                Call $"URL {url.ToFileURL} can not be solved on your filesystem!".Warning
+                is404 = True
                 Return ""
             End If
         End If
@@ -108,11 +114,11 @@ Public Module HttpGet
             headers(NameOf(refer)) = refer
         End If
 
-        Return url.__httpRequest(retry, headers, proxy, doNotRetry404, UA)
+        Return url.httpRequest(retry, headers, proxy, doNotRetry404, UA, is404)
     End Function
 
     <Extension>
-    Private Function __httpRequest(url$, retries%, headers As Dictionary(Of String, String), proxy$, DoNotRetry404 As Boolean, UA$) As String
+    Private Function httpRequest(url$, retries%, headers As Dictionary(Of String, String), proxy$, DoNotRetry404 As Boolean, UA$, ByRef is404 As Boolean) As String
         Dim retryTime As Integer = 0
 
         If String.IsNullOrEmpty(proxy) Then
@@ -122,6 +128,7 @@ Public Module HttpGet
         Try
 RETRY:      Return BuildWebRequest(url, headers, proxy, UA).urlGet()
         Catch ex As Exception When InStr(ex.Message, "(404) Not Found") > 0 AndAlso DoNotRetry404
+            is404 = True
             Return LogException(url, New Exception(url, ex))
 
         Catch ex As Exception When retryTime < retries
@@ -139,12 +146,16 @@ RETRY:      Return BuildWebRequest(url, headers, proxy, UA).urlGet()
         End Try
     End Function
 
-    Private Function LogException(url As String, ex As Exception) As String
-        Dim exMessage As String = String.Format("Unable to get the http request!" & vbCrLf &
-                                                "  Url:=[{0}]" & vbCrLf &
-                                                "  EXCEPTION ===>" & vbCrLf & ex.ToString, url)
-        Call App.LogException(exMessage, NameOf([GET]) & "::HTTP_REQUEST_EXCEPTION")
-        Return ""
+    Private Function LogException(url$, ex As Exception) As String
+        Dim exMsg As String = {
+            "Unable to get the http request!",
+           $"  Url:=[{url}]",
+            "  EXCEPTION ===>",
+            "",
+            ex.ToString
+        }.JoinBy(ASCII.LF)
+
+        Return App.LogException(exMsg, NameOf([GET]) & "::HTTP_REQUEST_EXCEPTION")
     End Function
 
     Const doctorcomError$ = "Please login your Campus Broadband Network Client at first!"

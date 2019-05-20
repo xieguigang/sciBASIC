@@ -1016,13 +1016,15 @@ Public Module App
     ''' <summary>
     ''' This is the custom message of the exception, not extract from the function <see cref="Exception.ToString()"/>
     ''' </summary>
-    ''' <param name="exMsg">This is the custom message of the exception, not extract from the function <see cref="Exception.ToString()"/></param>
-    ''' <param name="Trace"></param>
+    ''' <param name="exMsg">
+    ''' This is the custom message of the exception, not extract from the function <see cref="Exception.ToString()"/>
+    ''' </param>
+    ''' <param name="trace"></param>
     ''' <returns></returns>
     <ExportAPI("Exception.Log")>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function LogException(exMsg$, <CallerMemberName> Optional Trace$ = "") As Object
-        Return App.LogException(New Exception(exMsg), Trace)
+    Public Function LogException(exMsg$, <CallerMemberName> Optional trace$ = "") As Object
+        Return App.LogException(New Exception(exMsg), trace)
     End Function
 
     ''' <summary>
