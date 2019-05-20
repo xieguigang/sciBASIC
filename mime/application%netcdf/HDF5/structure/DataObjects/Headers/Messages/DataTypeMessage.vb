@@ -57,6 +57,53 @@ Imports BinaryReader = Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO.Bin
 
 Namespace HDF5.[Structure]
 
+    Public Enum DataTypes
+        ''' <summary>
+        ''' Fixed-Point
+        ''' </summary>
+        DATATYPE_FIXED_POINT = 0
+        ''' <summary>
+        ''' Floating-point
+        ''' </summary>
+        DATATYPE_FLOATING_POINT = 1
+        ''' <summary>
+        ''' Time
+        ''' </summary>
+        DATATYPE_TIME = 2
+        ''' <summary>
+        ''' String
+        ''' </summary>
+        DATATYPE_STRING = 3
+        ''' <summary>
+        ''' Bit field
+        ''' </summary>
+        DATATYPE_BIT_FIELD = 4
+        ''' <summary>
+        ''' Opaque
+        ''' </summary>
+        DATATYPE_OPAQUE = 5
+        ''' <summary>
+        ''' Compound
+        ''' </summary>
+        DATATYPE_COMPOUND = 6
+        ''' <summary>
+        ''' Reference
+        ''' </summary>
+        DATATYPE_REFERENCE = 7
+        ''' <summary>
+        ''' Enumerated
+        ''' </summary>
+        DATATYPE_ENUMS = 8
+        ''' <summary>
+        ''' Variable-Length
+        ''' </summary>
+        DATATYPE_VARIABLE_LENGTH = 9
+        ''' <summary>
+        ''' Array
+        ''' </summary>
+        DATATYPE_ARRAY = 10
+    End Enum
+
     ''' <summary>
     ''' The datatype message defines the datatype for each element of a dataset or 
     ''' a common datatype for sharing between multiple datasets. A datatype can 
@@ -73,55 +120,10 @@ Namespace HDF5.[Structure]
     Public Class DataTypeMessage
 
         ''' <summary>
-        ''' Fixed-Point
-        ''' </summary>
-        Public Const DATATYPE_FIXED_POINT As Integer = 0
-        ''' <summary>
-        ''' Floating-point
-        ''' </summary>
-        Public Const DATATYPE_FLOATING_POINT As Integer = 1
-        ''' <summary>
-        ''' Time
-        ''' </summary>
-        Public Const DATATYPE_TIME As Integer = 2
-        ''' <summary>
-        ''' String
-        ''' </summary>
-        Public Const DATATYPE_STRING As Integer = 3
-        ''' <summary>
-        ''' Bit field
-        ''' </summary>
-        Public Const DATATYPE_BIT_FIELD As Integer = 4
-        ''' <summary>
-        ''' Opaque
-        ''' </summary>
-        Public Const DATATYPE_OPAQUE As Integer = 5
-        ''' <summary>
-        ''' Compound
-        ''' </summary>
-        Public Const DATATYPE_COMPOUND As Integer = 6
-        ''' <summary>
-        ''' Reference
-        ''' </summary>
-        Public Const DATATYPE_REFERENCE As Integer = 7
-        ''' <summary>
-        ''' Enumerated
-        ''' </summary>
-        Public Const DATATYPE_ENUMS As Integer = 8
-        ''' <summary>
-        ''' Variable-Length
-        ''' </summary>
-        Public Const DATATYPE_VARIABLE_LENGTH As Integer = 9
-        ''' <summary>
-        ''' Array
-        ''' </summary>
-        Public Const DATATYPE_ARRAY As Integer = 10
-
-        ''' <summary>
         ''' 当前的这个对象在文件之中的起始位置
         ''' </summary>
         Private m_address As Long
-        Private m_type As Integer
+        Private m_type As DataTypes
         Private m_version As Integer
         Private m_flags As Byte()
         Private m_byteSize As Integer
@@ -146,7 +148,7 @@ Namespace HDF5.[Structure]
             ' common base constructor
 
             Dim tandv As Byte = [in].readByte()
-            Me.m_type = (tandv And &HF)
+            Me.m_type = CType(tandv And &HF, DataTypes)
             Me.m_version = ((tandv And &HF0) >> 4)
 
             Me.m_flags = [in].readBytes(3)
@@ -156,14 +158,14 @@ Namespace HDF5.[Structure]
 
             Me.m_isOK = True
 
-            If Me.m_type = DATATYPE_FIXED_POINT Then
+            If Me.m_type = DataTypes.DATATYPE_FIXED_POINT Then
                 Me.m_unsigned = ((Me.m_flags(0) And &H8) = 0)
 
                 Dim bitOffset As Short = [in].readShort()
                 Dim bitPrecision As Short = [in].readShort()
 
                 Me.m_isOK = (bitOffset = 0) AndAlso (bitPrecision Mod 8 = 0)
-            ElseIf Me.m_type = DATATYPE_FLOATING_POINT Then
+            ElseIf Me.m_type = DataTypes.DATATYPE_FLOATING_POINT Then
                 Dim bitOffset As Short = [in].readShort()
                 Dim bitPrecision As Short = [in].readShort()
                 Dim expLocation As Byte = [in].readByte()
@@ -171,27 +173,27 @@ Namespace HDF5.[Structure]
                 Dim manLocation As Byte = [in].readByte()
                 Dim manSize As Byte = [in].readByte()
                 Dim expBias As Integer = [in].readInt()
-            ElseIf Me.m_type = DATATYPE_TIME Then
+            ElseIf Me.m_type = DataTypes.DATATYPE_TIME Then
                 Dim bitPrecision As Short = [in].readShort()
                 Me.m_timeTypeByteSize = bitPrecision \ 8
-            ElseIf Me.m_type = DATATYPE_STRING Then
+            ElseIf Me.m_type = DataTypes.DATATYPE_STRING Then
                 Dim ptype As Integer = Me.m_flags(0) And &HF
-            ElseIf Me.m_type = DATATYPE_BIT_FIELD Then
+            ElseIf Me.m_type = DataTypes.DATATYPE_BIT_FIELD Then
                 Dim bitOffset As Short = [in].readShort()
                 Dim bitPrecision As Short = [in].readShort()
-            ElseIf Me.m_type = DATATYPE_OPAQUE Then
+            ElseIf Me.m_type = DataTypes.DATATYPE_OPAQUE Then
                 Dim len As Byte = Me.m_flags(0)
                 Me.m_opaqueDesc = If((len > 0), [in].readASCIIString(len).Trim(), Nothing)
-            ElseIf Me.m_type = DATATYPE_COMPOUND Then
+            ElseIf Me.m_type = DataTypes.DATATYPE_COMPOUND Then
                 Dim nmembers As Integer = (Me.m_flags(1) * 256) + Me.m_flags(0)
                 Me.m_members = New List(Of StructureMember)()
 
                 For i As Integer = 0 To nmembers - 1
                     Me.m_members.Add(New StructureMember([in], sb, [in].offset, Me.m_version, Me.m_byteSize))
                 Next
-            ElseIf Me.m_type = DATATYPE_REFERENCE Then
+            ElseIf Me.m_type = DataTypes.DATATYPE_REFERENCE Then
                 Me.m_referenceType = Me.m_flags(0) And &HF
-            ElseIf Me.m_type = DATATYPE_ENUMS Then
+            ElseIf Me.m_type = DataTypes.DATATYPE_ENUMS Then
                 ' throw new IOException( "data type enums is not implemented" );
 
                 Dim nmembers As Integer = ReadHelper.bytesToUnsignedInt(Me.m_flags(1), Me.m_flags(0))
@@ -226,7 +228,7 @@ Namespace HDF5.[Structure]
                 '    map.put(enumValue[i], enumName[i]);
 
                 [in].setLittleEndian()
-            ElseIf Me.m_type = DATATYPE_VARIABLE_LENGTH Then
+            ElseIf Me.m_type = DataTypes.DATATYPE_VARIABLE_LENGTH Then
                 ' Throw New Exception("data type variable length is not implemented")
 
 
@@ -241,7 +243,7 @@ Namespace HDF5.[Structure]
                     Throw New NotImplementedException
                 End If
 
-            ElseIf Me.m_type = DATATYPE_ARRAY Then
+            ElseIf Me.m_type = DataTypes.DATATYPE_ARRAY Then
                 Throw New Exception("data type array is not implemented")
             End If
         End Sub
@@ -264,7 +266,7 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
-        Public Overridable ReadOnly Property type() As Integer
+        Public Overridable ReadOnly Property type() As DataTypes
             Get
                 Return Me.m_type
             End Get
@@ -281,6 +283,10 @@ Namespace HDF5.[Structure]
                 Return Me.m_members
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return type.ToString
+        End Function
 
         Public Overridable Sub printValues()
             Console.WriteLine("DataTypeMessage >>>")

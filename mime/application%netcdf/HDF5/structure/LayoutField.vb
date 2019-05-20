@@ -56,8 +56,8 @@ Namespace HDF5.[Structure]
 		Private m_name As String
 		Private m_offset As Integer
 		Private m_ndims As Integer
-		Private m_dataType As Integer
-		Private m_byteLength As Integer
+        Private m_dataType As DataTypes
+        Private m_byteLength As Integer
 
 		Public Sub New(name As String, offset As Integer, ndims As Integer, dataType As Integer, byteLength As Integer)
 			Me.m_name = name
@@ -85,13 +85,13 @@ Namespace HDF5.[Structure]
 			End Get
 		End Property
 
-		Public Overridable ReadOnly Property dataType() As Integer
-			Get
-				Return Me.m_dataType
-			End Get
-		End Property
+        Public Overridable ReadOnly Property dataType() As DataTypes
+            Get
+                Return Me.m_dataType
+            End Get
+        End Property
 
-		Public Overridable ReadOnly Property byteLength() As Integer
+        Public Overridable ReadOnly Property byteLength() As Integer
 			Get
 				Return Me.m_byteLength
 			End Get

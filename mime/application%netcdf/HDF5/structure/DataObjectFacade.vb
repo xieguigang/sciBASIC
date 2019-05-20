@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::d3b1042c48efd84ecfd340894fd869a5, mime\application%netcdf\HDF5\structure\DataObjectFacade.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataObjectFacade
-    ' 
-    '         Properties: address, dataObject, layout, linkName, symbolName
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: readDataObject
-    ' 
-    '         Sub: printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataObjectFacade
+' 
+'         Properties: address, dataObject, layout, linkName, symbolName
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: readDataObject
+' 
+'         Sub: printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -142,79 +142,88 @@ Namespace HDF5.[Structure]
         Public Overridable ReadOnly Property layout() As Layout
             Get
                 If Me.m_layout Is Nothing Then
-                    Dim readLayout As New Layout()
-                    If Me.m_dataObject IsNot Nothing Then
-                        Dim msgs As List(Of ObjectHeaderMessage) = Me.m_dataObject.messages
-                        If msgs IsNot Nothing Then
-                            For Each msg As ObjectHeaderMessage In msgs
-                                If msg.headerMessageType Is ObjectHeaderMessageType.Layout Then
-                                    Dim lm As LayoutMessage = msg.layoutMessage
-
-                                    Dim numberOfDimensions As Integer = lm.numberOfDimensions
-                                    Dim chunkSize As Integer() = lm.chunkSize
-                                    Dim dataAddress As Long = lm.dataAddress
-
-                                    readLayout.numberOfDimensions = numberOfDimensions
-                                    readLayout.chunkSize = chunkSize
-                                    readLayout.dataAddress = dataAddress
-                                ElseIf msg.headerMessageType Is ObjectHeaderMessageType.Datatype Then
-                                    Dim dm As DataTypeMessage = msg.dataTypeMessage
-
-                                    If dm.type = DataTypeMessage.DATATYPE_COMPOUND Then
-                                        Dim sms As List(Of StructureMember) = dm.structureMembers
-                                        If sms IsNot Nothing Then
-                                            For Each sm As StructureMember In sms
-                                                Dim name As String = sm.name
-                                                Dim offset As Integer = sm.offset
-                                                Dim dims As Integer = sm.dims
-
-                                                Dim dataType As Integer = -1
-                                                Dim byteLength As Integer = -1
-                                                Dim dtm As DataTypeMessage = sm.message
-                                                If dtm IsNot Nothing Then
-                                                    dataType = dtm.type
-                                                    byteLength = dtm.byteSize
-                                                End If
-
-                                                readLayout.addField(name, offset, dims, dataType, byteLength)
-                                            Next
-                                        End If
-                                    End If
-                                ElseIf msg.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
-                                    Dim dm As DataspaceMessage = msg.dataspaceMessage
-
-                                    If dm IsNot Nothing Then
-                                        Dim dimensionLength As Integer() = dm.dimensionLength
-                                        Dim maxDimensionLength As Integer() = dm.maxDimensionLength
-
-                                        readLayout.dimensionLength = dimensionLength
-
-                                        'int ndims = Math.min(dimensionLength.length, maxDimensionLength.length);
-                                        'layout.setNumberOfDimensions(ndims);
-                                        readLayout.maxDimensionLength = maxDimensionLength
-                                    End If
-                                    '
-                                    '                                else if(msg.getHeaderMessageType() == ObjectHeaderMessageType.Attribute) {
-                                    '                                	AttributeMessage am = msg.getAttributeMessage();
-                                    '                                	
-                                    '                                	DataTypeMessage dm = am.getDataType();
-                                    '                                	if(dm != null) {
-                                    '                                		dm.getType()
-                                    '                                	}
-                                    '                                }
-                                    '                                
-
-                                End If
-                            Next
-                        End If
-                    End If
-                    Me.m_layout = readLayout
-                    Return readLayout
+                    Me.m_layout = readObjectLayout()
                 End If
 
                 Return Me.m_layout
             End Get
         End Property
+
+        Private Function readObjectLayout() As Layout
+            Dim readLayout As New Layout()
+
+            If Me.m_dataObject Is Nothing Then
+                Return readLayout
+            End If
+
+            Dim msgs As List(Of ObjectHeaderMessage) = Me.m_dataObject.messages
+
+            If msgs Is Nothing Then
+                Return readLayout
+            End If
+
+            For Each msg As ObjectHeaderMessage In msgs
+                If msg.headerMessageType Is ObjectHeaderMessageType.Layout Then
+                    Dim lm As LayoutMessage = msg.layoutMessage
+
+                    Dim numberOfDimensions As Integer = lm.numberOfDimensions
+                    Dim chunkSize As Integer() = lm.chunkSize
+                    Dim dataAddress As Long = lm.dataAddress
+
+                    readLayout.numberOfDimensions = numberOfDimensions
+                    readLayout.chunkSize = chunkSize
+                    readLayout.dataAddress = dataAddress
+                ElseIf msg.headerMessageType Is ObjectHeaderMessageType.Datatype Then
+                    Dim dm As DataTypeMessage = msg.dataTypeMessage
+
+                    If dm.type = DataTypes.DATATYPE_COMPOUND Then
+                        Dim sms As List(Of StructureMember) = dm.structureMembers
+                        If sms IsNot Nothing Then
+                            For Each sm As StructureMember In sms
+                                Dim name As String = sm.name
+                                Dim offset As Integer = sm.offset
+                                Dim dims As Integer = sm.dims
+
+                                Dim dataType As Integer = -1
+                                Dim byteLength As Integer = -1
+                                Dim dtm As DataTypeMessage = sm.message
+                                If dtm IsNot Nothing Then
+                                    dataType = dtm.type
+                                    byteLength = dtm.byteSize
+                                End If
+
+                                readLayout.addField(name, offset, dims, dataType, byteLength)
+                            Next
+                        End If
+                    End If
+                ElseIf msg.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
+                    Dim dm As DataspaceMessage = msg.dataspaceMessage
+
+                    If dm IsNot Nothing Then
+                        Dim dimensionLength As Integer() = dm.dimensionLength
+                        Dim maxDimensionLength As Integer() = dm.maxDimensionLength
+
+                        readLayout.dimensionLength = dimensionLength
+
+                        'int ndims = Math.min(dimensionLength.length, maxDimensionLength.length);
+                        'layout.setNumberOfDimensions(ndims);
+                        readLayout.maxDimensionLength = maxDimensionLength
+                    End If
+
+                ElseIf msg.HeaderMessageType() Is ObjectHeaderMessageType.Attribute Then
+                    Dim am As AttributeMessage = msg.attributeMessage()
+
+                    Dim dm As DataTypeMessage = am.dataType()
+                    If Not dm Is Nothing Then
+                        ' dm.type()
+                    End If
+                Else
+                        Throw New NotImplementedException
+                End If
+            Next
+
+            Return readLayout
+        End Function
 
         Public Overridable ReadOnly Property symbolName() As String
             Get
@@ -227,6 +236,10 @@ Namespace HDF5.[Structure]
                 Return Me.m_linkName
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return symbolName
+        End Function
 
         Public Overridable Sub printValues()
             Console.WriteLine("DataObjectFacade >>>")

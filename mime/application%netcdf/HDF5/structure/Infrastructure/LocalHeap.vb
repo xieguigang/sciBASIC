@@ -211,6 +211,19 @@ Namespace HDF5.[Structure]
 
             Return Me.m_data.ByteString(offset, count)
         End Function
+
+        Public Overrides Function ToString() As String
+            Return m_data.Split(4) _
+                .Select(Function(int) BitConverter.ToInt32(int, Scan0)) _
+                .Select(Function(n)
+                            If n = 0 Then
+                                Return " "c
+                            Else
+                                Return ChrW(n)
+                            End If
+                        End Function) _
+                .JoinBy("")
+        End Function
     End Class
 
 End Namespace
