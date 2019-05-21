@@ -70,6 +70,7 @@
     <Compile Include="HDF5\io\BinaryReader.vb" />
     <Compile Include="HDF5\io\ReadHelper.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\LayoutClass.vb" />
     <Compile Include="HDF5\structure\Infrastructure\BTree\BLinkTreeNode.vb" />
     <Compile Include="HDF5\structure\Infrastructure\BTree\BTreeEntry.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\ContinueMessage.vb" />
@@ -94,7 +95,7 @@
     <Compile Include="HDF5\structure\Layout.vb" />
     <Compile Include="HDF5\structure\LayoutField.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\LayoutMessage.vb" />
-    <Compile Include="HDF5\structure\LinkMessage.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\Messages\LinkMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\ObjectHeader.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\ObjectHeaderMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\ObjectHeaderMessageType.vb" />
