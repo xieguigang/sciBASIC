@@ -61,9 +61,9 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 Namespace HDF5.[Structure]
 
 
-	Public Class ObjectHeader
-		Private m_address As Long
-		Private m_version As Integer
+    Public Class ObjectHeader : Inherits HDF5Ptr
+
+        Private m_version As Integer
 		Private m_numberOfMessages As Integer
 		Private m_objectReferenceCount As Integer
 		Private m_objectHeaderSize As Integer
@@ -71,12 +71,11 @@ Namespace HDF5.[Structure]
 		Private m_headerMessages As List(Of ObjectHeaderMessage)
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+            Call MyBase.New(address)
 
-			[in].offset = address
+            [in].offset = address
 
-			Me.m_address = address
-
-			Me.m_version = [in].readByte()
+            Me.m_version = [in].readByte()
 
 			If Me.m_version = 1 Then
 
@@ -128,24 +127,17 @@ Namespace HDF5.[Structure]
 			Return count
 		End Function
 
-
         Private Sub readVersion2([in] As BinaryReader, sb As Superblock, address As Long)
 			Throw New IOException("version not implented")
 		End Sub
 
-		Public Overridable ReadOnly Property address() As Long
-			Get
-				Return Me.m_address
-			End Get
-		End Property
+        Public Overridable ReadOnly Property version() As Integer
+            Get
+                Return Me.m_version
+            End Get
+        End Property
 
-		Public Overridable ReadOnly Property version() As Integer
-			Get
-				Return Me.m_version
-			End Get
-		End Property
-
-		Public Overridable ReadOnly Property totalNumberOfHeaderMessages() As Integer
+        Public Overridable ReadOnly Property totalNumberOfHeaderMessages() As Integer
 			Get
 				Return Me.m_numberOfMessages
 			End Get

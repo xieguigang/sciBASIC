@@ -56,24 +56,39 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 
 Namespace HDF5.[Structure]
 
-    Public Class LinkMessage
-        Private m_address As Long
+    Public Class LinkMessage : Inherits HDF5Ptr
 
         Private m_version As Integer
         Private m_flags As Byte
         Private m_encoding As Byte
+
+        ''' <summary>
+        ''' This is the link class type and can be one of the following values:
+        ''' 
+        ''' +  0=hard
+        ''' +  1=soft
+        ''' + 2-63   Reserved for future HDF5 internal use.
+        ''' + 64=external
+        ''' + 65-255 Reserved, but available for user-defined link types.
+        ''' </summary>
         Private m_linkType As Integer
-        ' 0=hard, 1=soft, 64 = external
+        ''' <summary>
+        ''' This 64-bit value is an index of the link’s creation time within the group. 
+        ''' Values start at 0 when the group is created an increment by one for each 
+        ''' link added to the group. Removing a link from a group does not change 
+        ''' existing links’ creation order field.
+        '''
+        ''' This field Is present If bit 2 Of Flags Is Set.
+        ''' </summary>
         Private m_creationOrder As Long
         Private m_linkName As String
         Private m_link As String
         Private m_linkAddress As Long
 
-
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
-            [in].offset = address
+            Call MyBase.New(address)
 
-            Me.m_address = address
+            [in].offset = address
 
             Me.m_version = [in].readByte()
             Me.m_flags = [in].readByte()
@@ -106,12 +121,6 @@ Namespace HDF5.[Structure]
                 Me.m_link = [in].readASCIIString(len)
             End If
         End Sub
-
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property version() As Integer
             Get

@@ -55,6 +55,9 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 
 Namespace HDF5.[Structure]
 
+    ''' <summary>
+    ''' The Symbol Table Message
+    ''' </summary>
     Public Class GroupMessage : Inherits HDF5Ptr
 
         Private m_bTreeAddress As Long
@@ -69,17 +72,31 @@ Namespace HDF5.[Structure]
             Me.m_nameHeapAddress = ReadHelper.readO([in], sb)
         End Sub
 
+        ''' <summary>
+        ''' This value is the address of the v1 B-tree containing the symbol table 
+        ''' entries for the group.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable ReadOnly Property bTreeAddress() As Long
             Get
                 Return Me.m_bTreeAddress
             End Get
         End Property
 
+        ''' <summary>
+        ''' This value is the address of the local heap containing the link names 
+        ''' for the symbol table entries for the group.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable ReadOnly Property nameHeapAddress() As Long
             Get
                 Return Me.m_nameHeapAddress
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return $"{MyBase.ToString} {bTreeAddress} -> {nameHeapAddress}"
+        End Function
 
         Public Overridable Sub printValues()
             Console.WriteLine("GroupMessage >>>")
