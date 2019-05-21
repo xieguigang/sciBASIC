@@ -56,7 +56,6 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace HDF5.[Structure]
 
-
     Public Class Group
 
         Private Shared NESTED_OBJECTS As New List(Of DataObjectFacade)()

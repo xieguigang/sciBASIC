@@ -59,10 +59,9 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 Namespace HDF5.[Structure]
 
 
-	Public Class ObjectHeaderMessage
-		Private m_address As Long
+    Public Class ObjectHeaderMessage : Inherits HDF5Ptr
 
-		Private m_headerMessageType As ObjectHeaderMessageType
+        Private m_headerMessageType As ObjectHeaderMessageType
 		Private m_sizeOfHeaderMessageData As Integer
 		Private m_headerMessageFlags As Byte
 		Private m_groupMessage As GroupMessage
@@ -80,81 +79,75 @@ Namespace HDF5.[Structure]
 		Private m_headerMessageData As Byte()
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
-			[in].offset = address
+            Call MyBase.New(address)
 
-			Me.m_address = address
+            [in].offset = address
 
-			Dim messageTypeNo As Short = [in].readShort()
-			Me.m_headerMessageType = ObjectHeaderMessageType.[getType](messageTypeNo)
-			If Me.m_headerMessageType Is Nothing Then
-				Throw New IOException("message type no (" & messageTypeNo & ") not supported")
-			End If
-			Me.m_sizeOfHeaderMessageData = [in].readShort()
-			Me.m_headerMessageFlags = [in].readByte()
+            Dim messageTypeNo As Short = [in].readShort()
+            Me.m_headerMessageType = ObjectHeaderMessageType.[getType](messageTypeNo)
+            If Me.m_headerMessageType Is Nothing Then
+                Throw New IOException("message type no (" & messageTypeNo & ") not supported")
+            End If
+            Me.m_sizeOfHeaderMessageData = [in].readShort()
+            Me.m_headerMessageFlags = [in].readByte()
 
-			[in].skipBytes(3)
+            [in].skipBytes(3)
 
-			Me.m_headerLength = 8
+            Me.m_headerLength = 8
 
-			If (Me.m_headerMessageFlags And &H2) <> 0 Then
-				' shared
-				Throw New IOException("shared message is not implemented")
-			End If
+            If (Me.m_headerMessageFlags And &H2) <> 0 Then
+                ' shared
+                Throw New IOException("shared message is not implemented")
+            End If
 
-			If Me.m_headerMessageType Is ObjectHeaderMessageType.ObjectHeaderContinuation Then
-				Me.m_continueMessage = New ContinueMessage([in], sb, [in].offset)
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Group Then
-				Me.m_groupMessage = New GroupMessage([in], sb, [in].offset)
-					' do nothing
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.NIL Then
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
-				Me.m_dataspaceMessage = New DataspaceMessage([in], sb, [in].offset)
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.GroupNew Then
-				Throw New IOException("Group New not implemented")
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Datatype Then
-				Me.m_datatypeMessage = New DataTypeMessage([in], sb, [in].offset)
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.FillValueOld Then
-				Me.m_fillvalueoldMessage = New FillValueOldMessage([in], sb, [in].offset)
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.FillValue Then
-				Me.m_fillvalueMessage = New FillValueMessage([in], sb, [in].offset)
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Link Then
-				Me.m_linkMessage = New LinkMessage([in], sb, [in].offset)
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Layout Then
-				Me.m_layoutMessage = New LayoutMessage([in], sb, [in].offset)
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.GroupInfo Then
-				Throw New IOException("Group Info not implemented")
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.FilterPipeline Then
-				Throw New IOException("Filter Pipeline not implemented")
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Attribute Then
-				Me.m_attributeMessage = New AttributeMessage([in], sb, [in].offset)
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Comment Then
-				Throw New IOException("Comment not implemented")
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.LastModifiedOld Then
-				Throw New IOException("Last Modified Old not implemented")
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.LastModified Then
-				Me.m_lastmodifiedMessage = New LastModifiedMessage([in], sb, [in].offset)
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.AttributeInfo Then
-				Throw New IOException("Attribute Info not implemented")
-			ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.ObjectReferenceCount Then
-				Throw New IOException("Object Reference Count not implemented")
-			Else
-				Me.m_headerMessageData = [in].readBytes(Me.m_sizeOfHeaderMessageData)
-			End If
-		End Sub
+            If Me.m_headerMessageType Is ObjectHeaderMessageType.ObjectHeaderContinuation Then
+                Me.m_continueMessage = New ContinueMessage([in], sb, [in].offset)
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Group Then
+                Me.m_groupMessage = New GroupMessage([in], sb, [in].offset)
+                ' do nothing
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.NIL Then
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
+                Me.m_dataspaceMessage = New DataspaceMessage([in], sb, [in].offset)
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.GroupNew Then
+                Throw New IOException("Group New not implemented")
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Datatype Then
+                Me.m_datatypeMessage = New DataTypeMessage([in], sb, [in].offset)
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.FillValueOld Then
+                Me.m_fillvalueoldMessage = New FillValueOldMessage([in], sb, [in].offset)
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.FillValue Then
+                Me.m_fillvalueMessage = New FillValueMessage([in], sb, [in].offset)
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Link Then
+                Me.m_linkMessage = New LinkMessage([in], sb, [in].offset)
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Layout Then
+                Me.m_layoutMessage = New LayoutMessage([in], sb, [in].offset)
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.GroupInfo Then
+                Throw New IOException("Group Info not implemented")
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.FilterPipeline Then
+                Throw New IOException("Filter Pipeline not implemented")
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Attribute Then
+                Me.m_attributeMessage = New AttributeMessage([in], sb, [in].offset)
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.Comment Then
+                Throw New IOException("Comment not implemented")
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.LastModifiedOld Then
+                Throw New IOException("Last Modified Old not implemented")
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.LastModified Then
+                Me.m_lastmodifiedMessage = New LastModifiedMessage([in], sb, [in].offset)
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.AttributeInfo Then
+                Throw New IOException("Attribute Info not implemented")
+            ElseIf Me.m_headerMessageType Is ObjectHeaderMessageType.ObjectReferenceCount Then
+                Throw New IOException("Object Reference Count not implemented")
+            Else
+                Me.m_headerMessageData = [in].readBytes(Me.m_sizeOfHeaderMessageData)
+            End If
+        End Sub
 
-		Public Overridable ReadOnly Property address() As Long
-			Get
-				Return Me.m_address
-			End Get
-		End Property
+        Public Overridable ReadOnly Property headerMessageTypeNo() As Integer
+            Get
+                Return Me.m_headerMessageType.num
+            End Get
+        End Property
 
-		Public Overridable ReadOnly Property headerMessageTypeNo() As Integer
-			Get
-				Return Me.m_headerMessageType.num
-			End Get
-		End Property
-
-		Public Overridable ReadOnly Property headerMessageType() As ObjectHeaderMessageType
+        Public Overridable ReadOnly Property headerMessageType() As ObjectHeaderMessageType
 			Get
 				Return Me.m_headerMessageType
 			End Get

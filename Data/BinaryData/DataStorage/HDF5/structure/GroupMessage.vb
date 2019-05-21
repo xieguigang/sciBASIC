@@ -55,24 +55,19 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 
 Namespace HDF5.[Structure]
 
-    Public Class GroupMessage
-        Private m_address As Long
+    Public Class GroupMessage : Inherits HDF5Ptr
+
         Private m_bTreeAddress As Long
         Private m_nameHeapAddress As Long
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+            Call MyBase.New(address)
+
             [in].offset = address
 
-            Me.m_address = address
             Me.m_bTreeAddress = ReadHelper.readO([in], sb)
             Me.m_nameHeapAddress = ReadHelper.readO([in], sb)
         End Sub
-
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property bTreeAddress() As Long
             Get
