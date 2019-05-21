@@ -60,28 +60,12 @@ Namespace HDF5.[Structure]
     ''' </summary>
     Public Class GroupMessage : Inherits HDF5Ptr
 
-        Private m_bTreeAddress As Long
-        Private m_nameHeapAddress As Long
-
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
-            Call MyBase.New(address)
-
-            [in].offset = address
-
-            Me.m_bTreeAddress = ReadHelper.readO([in], sb)
-            Me.m_nameHeapAddress = ReadHelper.readO([in], sb)
-        End Sub
-
         ''' <summary>
         ''' This value is the address of the v1 B-tree containing the symbol table 
         ''' entries for the group.
         ''' </summary>
         ''' <returns></returns>
         Public Overridable ReadOnly Property bTreeAddress() As Long
-            Get
-                Return Me.m_bTreeAddress
-            End Get
-        End Property
 
         ''' <summary>
         ''' This value is the address of the local heap containing the link names 
@@ -89,10 +73,15 @@ Namespace HDF5.[Structure]
         ''' </summary>
         ''' <returns></returns>
         Public Overridable ReadOnly Property nameHeapAddress() As Long
-            Get
-                Return Me.m_nameHeapAddress
-            End Get
-        End Property
+
+        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+            Call MyBase.New(address)
+
+            [in].offset = address
+
+            Me.bTreeAddress = ReadHelper.readO([in], sb)
+            Me.nameHeapAddress = ReadHelper.readO([in], sb)
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"{MyBase.ToString} {bTreeAddress} -> {nameHeapAddress}"
@@ -101,8 +90,8 @@ Namespace HDF5.[Structure]
         Public Overridable Sub printValues()
             Console.WriteLine("GroupMessage >>>")
             Console.WriteLine("address : " & Me.m_address)
-            Console.WriteLine("btree address : " & Me.m_bTreeAddress)
-            Console.WriteLine("nameheap address : " & Me.m_nameHeapAddress)
+            Console.WriteLine("btree address : " & Me.bTreeAddress)
+            Console.WriteLine("nameheap address : " & Me.nameHeapAddress)
             Console.WriteLine("GroupMessage <<<")
         End Sub
 

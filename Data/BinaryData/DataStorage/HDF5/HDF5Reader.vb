@@ -111,19 +111,28 @@ Namespace HDF5
         Private Sub parserObject(dobj As DataObjectFacade, sb As Superblock)
             ' parse or get layout
             Dim layout As Layout = dobj.layout
+
             Me.m_layout = layout
-            ' parse btree index of the data
-            Dim dataTree As New DataBTree(layout)
-            Me.m_dataTree = dataTree
 
-            Dim iter As DataChunkIterator = dataTree.getChunkIterator(Me.reader, sb)
-            Dim chunk As DataChunk
+            If layout.IsEmpty Then
+                Dim dataGroups As New Group(reader, sb, dobj)
 
-            While iter.hasNext(Me.reader, sb)
-                chunk = iter.[next](Me.reader, sb)
-                ' read/add a new data chunk block
-                m_chunks.Add(chunk)
-            End While
+                Throw New NotImplementedException
+            Else
+                ' parse btree index of the data
+                Dim dataTree As New DataBTree(layout)
+
+                Me.m_dataTree = dataTree
+
+                Dim iter As DataChunkIterator = dataTree.getChunkIterator(Me.reader, sb)
+                Dim chunk As DataChunk
+
+                While iter.hasNext(Me.reader, sb)
+                    chunk = iter.[next](Me.reader, sb)
+                    ' read/add a new data chunk block
+                    m_chunks.Add(chunk)
+                End While
+            End If
         End Sub
 
         Public Overridable ReadOnly Property headerSize() As Long

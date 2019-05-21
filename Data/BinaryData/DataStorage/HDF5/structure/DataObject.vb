@@ -58,46 +58,41 @@ Namespace HDF5.[Structure]
 
     Public Class DataObject : Inherits HDF5Ptr
 
-        Private m_objectHeader As ObjectHeader
-        Private m_groupMessage As GroupMessage
+        Dim objectHeader As ObjectHeader
+
+        Public Overridable ReadOnly Property groupMessage() As GroupMessage
+
+        Public Overridable ReadOnly Property messages() As List(Of ObjectHeaderMessage)
+            Get
+                If Me.objectHeader IsNot Nothing Then
+                    Return Me.objectHeader.headerMessages
+                End If
+                Return Nothing
+            End Get
+        End Property
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)
 
             [in].offset = address
 
-            Me.m_objectHeader = New ObjectHeader([in], sb, address)
+            Me.objectHeader = New ObjectHeader([in], sb, address)
 
-            For Each msg As ObjectHeaderMessage In Me.m_objectHeader.headerMessages
+            For Each msg As ObjectHeaderMessage In Me.objectHeader.headerMessages
                 If msg.headerMessageType Is ObjectHeaderMessageType.Group Then
-                    Me.m_groupMessage = msg.groupMessage
+                    Me.groupMessage = msg.groupMessage
                 End If
             Next
         End Sub
 
-        Public Overridable ReadOnly Property messages() As List(Of ObjectHeaderMessage)
-            Get
-                If Me.m_objectHeader IsNot Nothing Then
-                    Return Me.m_objectHeader.headerMessages
-                End If
-                Return Nothing
-            End Get
-        End Property
-
         Public Overridable Sub printValues()
             Console.WriteLine("DataObject >>>")
             Console.WriteLine("address : " & Me.m_address)
-            If Me.m_objectHeader IsNot Nothing Then
-                Me.m_objectHeader.printValues()
+            If Me.objectHeader IsNot Nothing Then
+                Me.objectHeader.printValues()
             End If
             Console.WriteLine("DataObject <<<")
         End Sub
-
-        Public Overridable ReadOnly Property groupMessage() As GroupMessage
-            Get
-                Return m_groupMessage
-            End Get
-        End Property
     End Class
 
 End Namespace

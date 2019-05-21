@@ -75,13 +75,34 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
+        ''' <summary>
+        ''' All of the values in this <see cref="Layout"/> object is empty!
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsEmpty As Boolean
+            Get
+                Return dataAddress <= 0 AndAlso
+                    chunkSize.IsNullOrEmpty AndAlso
+                    numberOfDimensions <= 0 AndAlso
+                    dimensionLength.IsNullOrEmpty AndAlso
+                    maxDimensionLength.IsNullOrEmpty AndAlso
+                    fieldList.IsNullOrEmpty
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub addField(name As String, offset As Integer, ndims As Integer, dataType As Integer, byteLength As Integer)
             fieldList += New LayoutField(name, offset, ndims, dataType, byteLength)
         End Sub
 
         Public Overrides Function ToString() As String
-            Return fieldList.Select(Function(field) field.name).ToArray.GetJson
+            If IsEmpty Then
+                Return "null"
+            Else
+                Return fieldList _
+                    .Select(Function(field) field.name) _
+                    .GetJson
+            End If
         End Function
     End Class
 End Namespace

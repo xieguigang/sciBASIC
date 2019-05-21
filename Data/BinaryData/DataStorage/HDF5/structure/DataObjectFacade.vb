@@ -60,33 +60,40 @@ Namespace HDF5.[Structure]
 
     Public Class DataObjectFacade : Inherits HDF5Ptr
 
-        Private Shared ObjectAddressMap As New Dictionary(Of Long, DataObject)()
+        Shared ReadOnly ObjectAddressMap As New Dictionary(Of Long, DataObject)()
 
-        Private m_dataObject As DataObject
+        Dim m_layout As Layout
 
-        Private m_symbolName As String
-        Private m_linkName As String
+        Public Overridable ReadOnly Property dataObject As DataObject
+        Public Overridable ReadOnly Property symbolName As String
+        Public Overridable ReadOnly Property linkName As String
 
-        Private m_layout As Layout
+        Public Overridable ReadOnly Property layout As Layout
+            Get
+                If Me.m_layout Is Nothing Then
+                    Me.m_layout = readObjectLayout()
+                End If
+
+                Return Me.m_layout
+            End Get
+        End Property
 
         Public Sub New([in] As BinaryReader, sb As Superblock, symbolName As String, address As Long)
             Call MyBase.New(address)
 
             Dim dobj As DataObject = readDataObject([in], sb, address)
-            Me.m_dataObject = dobj
 
-            Me.m_symbolName = symbolName
-            Me.m_linkName = Nothing
-
+            Me.dataObject = dobj
+            Me.symbolName = symbolName
+            Me.linkName = Nothing
             Me.m_layout = Nothing
         End Sub
 
         Public Sub New([in] As BinaryReader, sb As Superblock, symbolName As String, linkName As String)
             Call MyBase.New(Scan0)
 
-            Me.m_symbolName = symbolName
-            Me.m_linkName = linkName
-
+            Me.symbolName = symbolName
+            Me.linkName = linkName
             Me.m_layout = Nothing
         End Sub
 
@@ -98,12 +105,6 @@ Namespace HDF5.[Structure]
             End If
             Return dobj
         End Function
-
-        Public Overridable ReadOnly Property dataObject() As DataObject
-            Get
-                Return Me.m_dataObject
-            End Get
-        End Property
 
         '
         '        public Hashtable<String, String> getAttributes(BinaryReader in, Superblock sb) throws IOException {
@@ -132,25 +133,14 @@ Namespace HDF5.[Structure]
         '        }
         '        
 
-
-        Public Overridable ReadOnly Property layout() As Layout
-            Get
-                If Me.m_layout Is Nothing Then
-                    Me.m_layout = readObjectLayout()
-                End If
-
-                Return Me.m_layout
-            End Get
-        End Property
-
         Private Function readObjectLayout() As Layout
             Dim readLayout As New Layout()
 
-            If Me.m_dataObject Is Nothing Then
+            If Me.dataObject Is Nothing Then
                 Return readLayout
             End If
 
-            Dim msgs As List(Of ObjectHeaderMessage) = Me.m_dataObject.messages
+            Dim msgs As List(Of ObjectHeaderMessage) = Me.dataObject.messages
 
             If msgs Is Nothing Then
                 Return readLayout
@@ -212,10 +202,11 @@ Namespace HDF5.[Structure]
                         ' dm.type()
                     End If
                 ElseIf msg.headerMessageType Is ObjectHeaderMessageType.Group Then
-                    Dim groups = msg.groupMessage
+                    Dim groups As GroupMessage = msg.groupMessage
 
-
-                    Throw New NotImplementedException
+                    ' 20190521 group message no layout??
+                    ' readLayout.dataAddress = groups.bTreeAddress
+                    ' Throw New NotImplementedException
                 Else
                     Throw New NotImplementedException
                 End If
@@ -223,18 +214,6 @@ Namespace HDF5.[Structure]
 
             Return readLayout
         End Function
-
-        Public Overridable ReadOnly Property symbolName() As String
-            Get
-                Return Me.m_symbolName
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property linkName() As String
-            Get
-                Return Me.m_linkName
-            End Get
-        End Property
 
         Public Overrides Function ToString() As String
             Return symbolName
@@ -245,16 +224,16 @@ Namespace HDF5.[Structure]
 
             Console.WriteLine("address : " & Me.m_address)
 
-            If Me.m_dataObject IsNot Nothing Then
-                Me.m_dataObject.printValues()
+            If Me.dataObject IsNot Nothing Then
+                Me.dataObject.printValues()
             End If
 
-            If Not String.ReferenceEquals(Me.m_symbolName, Nothing) Then
-                Console.WriteLine("symbol name : " & Me.m_symbolName)
+            If Not String.ReferenceEquals(Me.symbolName, Nothing) Then
+                Console.WriteLine("symbol name : " & Me.symbolName)
             End If
 
-            If Not String.ReferenceEquals(Me.m_linkName, Nothing) Then
-                Console.WriteLine("link name : " & Me.m_linkName)
+            If Not String.ReferenceEquals(Me.linkName, Nothing) Then
+                Console.WriteLine("link name : " & Me.linkName)
             End If
 
             Console.WriteLine("DataObjectFacade <<<")

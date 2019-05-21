@@ -60,52 +60,46 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
-
     Public Class ObjectHeader : Inherits HDF5Ptr
 
-        Private m_version As Integer
-		Private m_numberOfMessages As Integer
-		Private m_objectReferenceCount As Integer
-		Private m_objectHeaderSize As Integer
-
-		Private m_headerMessages As List(Of ObjectHeaderMessage)
+        Public Overridable ReadOnly Property version As Integer
+        Public Overridable ReadOnly Property totalNumberOfHeaderMessages As Integer
+        Public Overridable ReadOnly Property objectReferenceCount As Integer
+        Public Overridable ReadOnly Property objectHeaderSize As Integer
+        Public Overridable ReadOnly Property headerMessages As New List(Of ObjectHeaderMessage)
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)
 
             [in].offset = address
 
-            Me.m_version = [in].readByte()
+            Me.version = [in].readByte()
 
-			If Me.m_version = 1 Then
+            If Me.version = 1 Then
 
-				[in].skipBytes(1)
-				Me.m_numberOfMessages = [in].readShort()
-				Me.m_objectReferenceCount = [in].readInt()
-				Me.m_objectHeaderSize = [in].readInt()
+                [in].skipBytes(1)
 
-				[in].skipBytes(4)
+                Me.totalNumberOfHeaderMessages = [in].readShort()
+                Me.objectReferenceCount = [in].readInt()
+                Me.objectHeaderSize = [in].readInt()
 
-				readVersion1([in], sb, [in].offset, Me.m_numberOfMessages, Long.MaxValue)
-			Else
-				readVersion2([in], sb, [in].offset)
+                [in].skipBytes(4)
+
+                readVersion1([in], sb, [in].offset, Me.totalNumberOfHeaderMessages, Long.MaxValue)
+            Else
+                readVersion2([in], sb, [in].offset)
 			End If
 		End Sub
 
         Private Function readVersion1([in] As BinaryReader, sb As Superblock, address As Long, readMessages As Integer, maxBytes As Long) As Integer
+            Dim count As Integer = 0
+            Dim byteRead As Integer = 0
+            ' read messages
+            Dim messageOffset As Long = address
 
-			[in].offset = address
+            [in].offset = address
 
-			Dim count As Integer = 0
-			Dim byteRead As Integer = 0
-
-			If Me.m_headerMessages Is Nothing Then
-				Me.m_headerMessages = New List(Of ObjectHeaderMessage)()
-			End If
-
-			' read messages
-			Dim messageOffset As Long = address
-			While count < readMessages AndAlso byteRead < maxBytes
+            While count < readMessages AndAlso byteRead < maxBytes
 				Dim msg As New ObjectHeaderMessage([in], sb, messageOffset)
 
 				messageOffset += msg.headerLength + msg.sizeOfHeaderMessageData
@@ -120,9 +114,9 @@ Namespace HDF5.[Structure]
 
 					count += readVersion1([in], sb, continuationBlockFilePos, readMessages - count, cmsg.length)
 				ElseIf msg.headerMessageType IsNot ObjectHeaderMessageType.NIL Then
-					' NOT NIL
-					Me.m_headerMessages.Add(msg)
-				End If
+                    ' NOT NIL
+                    Me.headerMessages.Add(msg)
+                End If
 			End While
 			Return count
 		End Function
@@ -131,50 +125,20 @@ Namespace HDF5.[Structure]
 			Throw New IOException("version not implented")
 		End Sub
 
-        Public Overridable ReadOnly Property version() As Integer
-            Get
-                Return Me.m_version
-            End Get
-        End Property
+        Public Overridable Sub printValues()
+            Console.WriteLine("ObjectHeader >>>")
+            Console.WriteLine("address : " & Me.m_address)
+            Console.WriteLine("version : " & Me.version)
+            Console.WriteLine("number of messages : " & Me.totalNumberOfHeaderMessages)
+            Console.WriteLine("object reference count : " & Me.objectReferenceCount)
+            Console.WriteLine("object header size : " & Me.objectHeaderSize)
 
-        Public Overridable ReadOnly Property totalNumberOfHeaderMessages() As Integer
-			Get
-				Return Me.m_numberOfMessages
-			End Get
-		End Property
+            For i As Integer = 0 To Me.headerMessages.Count - 1
+                Me.headerMessages(i).printValues()
+            Next
 
-		Public Overridable ReadOnly Property objectReferenceCount() As Integer
-			Get
-				Return Me.m_objectReferenceCount
-			End Get
-		End Property
-
-		Public Overridable ReadOnly Property objectHeaderSize() As Integer
-			Get
-				Return Me.m_objectHeaderSize
-			End Get
-		End Property
-
-		Public Overridable ReadOnly Property headerMessages() As List(Of ObjectHeaderMessage)
-			Get
-				Return Me.m_headerMessages
-			End Get
-		End Property
-
-		Public Overridable Sub printValues()
-			Console.WriteLine("ObjectHeader >>>")
-			Console.WriteLine("address : " & Me.m_address)
-			Console.WriteLine("version : " & Me.m_version)
-			Console.WriteLine("number of messages : " & Me.m_numberOfMessages)
-			Console.WriteLine("object reference count : " & Me.m_objectReferenceCount)
-			Console.WriteLine("object header size : " & Me.m_objectHeaderSize)
-
-			For i As Integer = 0 To Me.m_headerMessages.Count - 1
-				Me.m_headerMessages(i).printValues()
-			Next
-
-			Console.WriteLine("ObjectHeader <<<")
-		End Sub
-	End Class
+            Console.WriteLine("ObjectHeader <<<")
+        End Sub
+    End Class
 
 End Namespace
