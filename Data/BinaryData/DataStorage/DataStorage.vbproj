@@ -64,6 +64,43 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HDF5\HDF5Reader.vb" />
+    <Compile Include="HDF5\io\BinaryFileReader.vb" />
+    <Compile Include="HDF5\io\BinaryReader.vb" />
+    <Compile Include="HDF5\io\ReadHelper.vb" />
+    <Compile Include="HDF5\structure\AttributeMessage.vb" />
+    <Compile Include="HDF5\structure\BLinkTreeNode.vb" />
+    <Compile Include="HDF5\structure\BTreeEntry.vb" />
+    <Compile Include="HDF5\structure\ContinueMessage.vb" />
+    <Compile Include="HDF5\structure\DataBTree.vb" />
+    <Compile Include="HDF5\structure\DataChunk.vb" />
+    <Compile Include="HDF5\structure\DataChunkIterator.vb" />
+    <Compile Include="HDF5\structure\DataNode.vb" />
+    <Compile Include="HDF5\structure\DataObject.vb" />
+    <Compile Include="HDF5\structure\DataObjectFacade.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\Messages\Message.vb" />
+    <Compile Include="HDF5\structure\FillValueMessage.vb" />
+    <Compile Include="HDF5\structure\FillValueOldMessage.vb" />
+    <Compile Include="HDF5\structure\Group.vb" />
+    <Compile Include="HDF5\structure\GroupBTree.vb" />
+    <Compile Include="HDF5\structure\GroupMessage.vb" />
+    <Compile Include="HDF5\structure\GroupNode.vb" />
+    <Compile Include="HDF5\structure\Infrastructure\LocalHeap.vb" />
+    <Compile Include="HDF5\structure\LastModifiedMessage.vb" />
+    <Compile Include="HDF5\structure\Layout.vb" />
+    <Compile Include="HDF5\structure\LayoutField.vb" />
+    <Compile Include="HDF5\structure\LayoutMessage.vb" />
+    <Compile Include="HDF5\structure\LinkMessage.vb" />
+    <Compile Include="HDF5\structure\ObjectHeader.vb" />
+    <Compile Include="HDF5\structure\ObjectHeaderMessage.vb" />
+    <Compile Include="HDF5\structure\ObjectHeaderMessageType.vb" />
+    <Compile Include="HDF5\structure\ObjectHeaderScratchpadFormat.vb" />
+    <Compile Include="HDF5\structure\StructureMember.vb" />
+    <Compile Include="HDF5\structure\Superblock.vb" />
+    <Compile Include="HDF5\structure\SymbolicLinkScratchpadFormat.vb" />
+    <Compile Include="HDF5\structure\SymbolTableEntry.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
