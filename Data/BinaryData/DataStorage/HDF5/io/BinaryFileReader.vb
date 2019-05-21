@@ -50,7 +50,6 @@ Imports System.IO
 
 Namespace HDF5.IO
 
-
     Public Class BinaryFileReader
         Inherits BinaryReader
 
@@ -73,8 +72,8 @@ Namespace HDF5.IO
                 Throw New System.ArgumentException("file must not be null")
             End If
 
-            Me.m_offset = 0
-            Me.m_filesize = file.Length
+            Me.offset = 0
+            Me.filesize = file.Length
             Me.m_littleEndian = True
             Me.m_maxOffset = 0
 
@@ -83,21 +82,22 @@ Namespace HDF5.IO
 
         Public Overrides Property offset() As Long
             Get
-                Return Me.m_offset
+                Return MyBase.offset
             End Get
             Set
                 If Value < 0 Then
                     Throw New ArgumentException("offset must be positive and bigger than 0")
                 End If
-                If Value > Me.m_filesize Then
+                If Value > Me.filesize Then
                     Throw New ArgumentException("offset must be positive and smaller than filesize")
                 End If
 
-                If Me.m_offset = Value Then
+                If MyBase.offset = Value Then
                     Return
                 End If
 
-                Me.m_offset = Value
+                MyBase.offset = Value
+
                 If Me.m_maxOffset < Value Then
                     Me.m_maxOffset = Value
                 End If
@@ -108,15 +108,15 @@ Namespace HDF5.IO
         End Property
 
         Public Overrides Function readByte() As Byte
-            If Me.m_offset >= Me.m_filesize Then
+            If Me.offset >= Me.filesize Then
                 Throw New IOException("file offset reached to end of file")
             End If
             Dim b As Byte = CByte(Me.randomaccessfile.ReadByte())
 
-            Me.m_offset += 1
+            MyBase.offset += 1
 
-            If Me.m_maxOffset < Me.m_offset Then
-                Me.m_maxOffset = Me.m_offset
+            If Me.m_maxOffset < Me.offset Then
+                Me.m_maxOffset = Me.offset
             End If
 
             Return b
@@ -126,8 +126,10 @@ Namespace HDF5.IO
             Try
                 Me.randomaccessfile.Close()
             Catch ex As IOException
+                Call App.LogException(ex)
+            Finally
+                MyBase.offset = 0
             End Try
-            Me.m_offset = 0
         End Sub
     End Class
 

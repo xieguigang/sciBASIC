@@ -50,10 +50,9 @@ Namespace HDF5.IO
 
     Public MustInherit Class BinaryReader : Implements IDisposable
 
-        Protected Friend m_offset As Long
-        Protected Friend m_filesize As Long
         Protected Friend m_littleEndian As Boolean
         Protected Friend m_maxOffset As Long
+        Protected filesize As Long
 
         Public MustOverride Function readByte() As Byte
 
@@ -84,17 +83,14 @@ Namespace HDF5.IO
         End Sub
 
         Public Overridable Property offset() As Long
-            Get
-                Return Me.m_offset
-            End Get
-            Set
-                Me.m_offset = Value
-            End Set
-        End Property
 
+        ''' <summary>
+        ''' The file size in bytes
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable ReadOnly Property size() As Long
             Get
-                Return Me.m_filesize
+                Return filesize
             End Get
         End Property
 
@@ -194,7 +190,7 @@ Namespace HDF5.IO
         Public Overridable Function readASCIIString() As String
             Dim sb As New StringBuilder()
 
-            For i As Long = Me.m_offset To Me.m_filesize - 1
+            For i As Long = Me.offset To Me.size - 1
                 Dim c As Char = ChrW(readByte())
                 If c = ControlChars.NullChar Then
                     Exit For
