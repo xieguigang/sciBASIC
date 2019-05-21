@@ -210,7 +210,7 @@ Namespace HDF5.[Structure]
                         readLayout.maxDimensionLength = maxDimensionLength
                     End If
 
-                ElseIf msg.HeaderMessageType() Is ObjectHeaderMessageType.Attribute Then
+                ElseIf msg.headerMessageType() Is ObjectHeaderMessageType.Attribute Then
                     Dim am As AttributeMessage = msg.attributeMessage()
 
                     Dim dm As DataTypeMessage = am.dataType()
@@ -218,7 +218,7 @@ Namespace HDF5.[Structure]
                         ' dm.type()
                     End If
                 Else
-                        Throw New NotImplementedException
+                    Throw New NotImplementedException
                 End If
             Next
 
