@@ -58,9 +58,9 @@ Namespace HDF5.[Structure]
 
     Public Class Group
 
-        Private Shared NESTED_OBJECTS As New List(Of DataObjectFacade)()
+        Shared ReadOnly NESTED_OBJECTS As New List(Of DataObjectFacade)()
 
-        Private m_facade As DataObjectFacade
+        Dim m_facade As DataObjectFacade
 
         Public Sub New([in] As BinaryReader, sb As Superblock, facade As DataObjectFacade)
             Me.m_facade = facade
@@ -74,17 +74,20 @@ Namespace HDF5.[Structure]
         Private Sub readGroup([in] As BinaryReader, sb As Superblock, bTreeAddress As Long, nameHeapAddress As Long)
             Dim nameHeap As New LocalHeap([in], sb, nameHeapAddress)
             Dim btree As New GroupBTree([in], sb, bTreeAddress)
+            Dim dobj As DataObjectFacade
+            Dim linkName As String
 
-            For Each s As SymbolTableEntry In btree.symbolTableEntries
-                Dim sname As String = nameHeap.getString(CInt(s.linkNameOffset))
-                If s.cacheType = 2 Then
-                    Dim linkName As String = nameHeap.getString(CInt(s.linkNameOffset))
-                    Dim dobj As New DataObjectFacade([in], sb, sname, linkName)
-                    NESTED_OBJECTS.Add(dobj)
+            For Each symbol As SymbolTableEntry In btree.symbolTableEntries
+                Dim sname As String = nameHeap.getString(CInt(symbol.linkNameOffset))
+
+                If symbol.cacheType = 2 Then
+                    linkName = nameHeap.getString(CInt(symbol.linkNameOffset))
+                    dobj = New DataObjectFacade([in], sb, sname, linkName)
                 Else
-                    Dim dobj As New DataObjectFacade([in], sb, sname, s.objectHeaderAddress)
-                    NESTED_OBJECTS.Add(dobj)
+                    dobj = New DataObjectFacade([in], sb, sname, symbol.objectHeaderAddress)
                 End If
+
+                Call NESTED_OBJECTS.Add(dobj)
             Next
         End Sub
 
