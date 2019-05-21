@@ -55,80 +55,51 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 
 Namespace HDF5.[Structure]
 
-    Public Class StructureMember
-        Private m_address As Long
+    Public Class StructureMember : Inherits HDF5Ptr
 
-        Private m_name As String
-        Private m_offset As Integer
-        Private m_dims As Integer
-        Private m_message As DataTypeMessage
+        Public Overridable ReadOnly Property name As String
+        Public Overridable ReadOnly Property offset As Integer
+        Public Overridable ReadOnly Property dims As Integer
+        Public Overridable ReadOnly Property message As DataTypeMessage
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long, version As Integer, byteSize As Integer)
-            Me.m_address = address
+            Call MyBase.New(address)
 
             [in].offset = address
 
-            Me.m_name = [in].readASCIIString()
+            Me.name = [in].readASCIIString()
+
             If version < 3 Then
-                [in].skipBytes(ReadHelper.padding(Me.m_name.Length + 1, 8))
-                Me.m_offset = [in].readInt()
+                [in].skipBytes(ReadHelper.padding(Me.name.Length + 1, 8))
+                Me.offset = [in].readInt()
             Else
-                Me.m_offset = CInt(ReadHelper.readVariableSizeMax([in], byteSize))
+                Me.offset = CInt(ReadHelper.readVariableSizeMax([in], byteSize))
             End If
 
             If version = 1 Then
-                Me.m_dims = [in].readByte()
+                Me.dims = [in].readByte()
+
                 [in].skipBytes(3)
                 ' ignore dimension info for now
                 [in].skipBytes(24)
             End If
 
-            Me.m_message = New DataTypeMessage([in], sb, [in].offset)
+            Me.message = New DataTypeMessage([in], sb, [in].offset)
         End Sub
 
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property name() As String
-            Get
-                Return Me.m_name
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property offset() As Integer
-            Get
-                Return Me.m_offset
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property dims() As Integer
-            Get
-                Return Me.m_dims
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property message() As DataTypeMessage
-            Get
-                Return Me.m_message
-            End Get
-        End Property
-
         Public Overrides Function ToString() As String
-            Return $"Dim {name} As {message} = [&{address}, {offset}]"
+            Return $"Dim {name} As {Message} = [&{address}, {Offset}]"
         End Function
 
         Public Overridable Sub printValues()
             Console.WriteLine("StructureMember >>>")
             Console.WriteLine("address : " & Me.m_address)
-            Console.WriteLine("name : " & Me.m_name)
-            Console.WriteLine("offset : " & Me.m_offset)
-            Console.WriteLine("m_dims : " & Me.m_dims)
+            Console.WriteLine("name : " & Me.name)
+            Console.WriteLine("offset : " & Me.offset)
+            Console.WriteLine("m_dims : " & Me.dims)
 
-            If Me.m_message IsNot Nothing Then
-                Me.m_message.printValues()
+            If Me.message IsNot Nothing Then
+                Me.message.printValues()
             End If
             Console.WriteLine("StructureMember >>>")
         End Sub

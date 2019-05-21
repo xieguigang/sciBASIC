@@ -138,6 +138,14 @@ Namespace HDF5
             End If
         End Sub
 
+        Public Overrides Function ToString() As String
+            If Not layout.IsEmpty Then
+                Return $"{reader} => {layout}"
+            Else
+                Return $"{reader} => {dataGroups}"
+            End If
+        End Function
+
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' 要检测冗余调用
 

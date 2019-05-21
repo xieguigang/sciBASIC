@@ -98,9 +98,8 @@ Namespace HDF5.[Structure]
         End Property
 
         Public Overrides Function ToString() As String
-            Return objects _
+            Return m_facade.symbolName & "\" & objects _
                 .Select(Function(o) o.symbolName) _
-                .ToArray _
                 .GetJson
         End Function
 
