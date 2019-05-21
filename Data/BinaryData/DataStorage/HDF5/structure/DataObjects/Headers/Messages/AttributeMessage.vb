@@ -60,11 +60,11 @@ Namespace HDF5.[Structure]
 
     Public Class AttributeMessage : Inherits Message
 
-        Private m_version As Integer
-        Private m_name As String
-        Private m_dataTypeMessage As DataTypeMessage
-        Private m_dataspaceMessage As DataspaceMessage
-        Private m_dataPos As Long
+        Public Overridable ReadOnly Property version As Integer
+        Public Overridable ReadOnly Property name As String
+        Public Overridable ReadOnly Property dataPos As Long
+        Public Overridable ReadOnly Property dataType As DataTypeMessage
+        Public Overridable ReadOnly Property dataSpace As DataspaceMessage
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)
@@ -75,21 +75,21 @@ Namespace HDF5.[Structure]
             Dim flags As Byte = 0
             Dim encoding As Byte = 0
             ' 0 = ascii, 1 = UTF-8
-            Me.m_version = [in].readByte()
+            Me.version = [in].readByte()
 
-            If Me.m_version = 1 Then
+            If Me.version = 1 Then
                 [in].skipBytes(1)
 
                 nameSize = [in].readShort()
                 typeSize = [in].readShort()
                 spaceSize = [in].readShort()
-            ElseIf (Me.m_version = 2) OrElse (Me.m_version = 3) Then
+            ElseIf (Me.version = 2) OrElse (Me.version = 3) Then
                 flags = [in].readByte()
                 nameSize = [in].readShort()
                 typeSize = [in].readShort()
                 spaceSize = [in].readShort()
 
-                If Me.m_version = 3 Then
+                If Me.version = 3 Then
                     encoding = [in].readByte()
                 End If
             Else
@@ -98,9 +98,11 @@ Namespace HDF5.[Structure]
 
             ' read the attribute name
             Dim filePos As Long = [in].offset
-            Me.m_name = [in].readASCIIString(nameSize)
+
+            Me.name = [in].readASCIIString(nameSize)
+
             ' read at current pos
-            If Me.m_version = 1 Then
+            If Me.version = 1 Then
                 nameSize += CShort(ReadHelper.padding(nameSize, 8))
             End If
 
@@ -115,8 +117,8 @@ Namespace HDF5.[Structure]
                 'mdt = getSharedDataObject(MessageType.Datatype).mdt;
                 Throw New IOException("shared data object is not implemented")
             Else
-                Me.m_dataTypeMessage = New DataTypeMessage([in], sb, [in].offset)
-                If Me.m_version = 1 Then
+                Me.dataType = New DataTypeMessage([in], sb, [in].offset)
+                If Me.version = 1 Then
                     typeSize += CShort(ReadHelper.padding(typeSize, 8))
                 End If
             End If
@@ -125,47 +127,18 @@ Namespace HDF5.[Structure]
             ' make it more robust for errors
             ' read the dataspace
             filePos = [in].offset
-            Me.m_dataspaceMessage = New DataspaceMessage([in], sb, [in].offset)
+            dataSpace = New DataspaceMessage([in], sb, [in].offset)
 
-            If Me.m_version = 1 Then
+            If Me.version = 1 Then
                 spaceSize += CShort(ReadHelper.padding(spaceSize, 8))
             End If
+
             [in].offset = filePos + spaceSize
             ' make it more robust for errors
             ' the data starts immediately afterward - ie in the message
             ' note this is absolute position (no
-            Me.m_dataPos = [in].offset
+            Me.dataPos = [in].offset
         End Sub
-
-        Public Overridable ReadOnly Property version() As Integer
-            Get
-                Return Me.m_version
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property name() As String
-            Get
-                Return Me.m_name
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property dataPos() As Long
-            Get
-                Return Me.m_dataPos
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property dataType() As DataTypeMessage
-            Get
-                Return Me.m_dataTypeMessage
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property dataSpace() As DataspaceMessage
-            Get
-                Return Me.m_dataspaceMessage
-            End Get
-        End Property
 
         Public Overrides Function ToString() As String
             Return $"[{MyBase.ToString}] Dim {name} As {dataType} = &{dataPos}"
@@ -174,18 +147,18 @@ Namespace HDF5.[Structure]
         Public Overridable Sub printValues()
             Console.WriteLine("AttributeMessage >>>")
             Console.WriteLine("address : " & Me.m_address)
-            Console.WriteLine("version : " & Me.m_version)
-            Console.WriteLine("name : " & Me.m_name)
+            Console.WriteLine("version : " & Me.version)
+            Console.WriteLine("name : " & Me.name)
 
-            If Me.m_dataTypeMessage IsNot Nothing Then
-                Me.m_dataTypeMessage.printValues()
+            If Me.dataType IsNot Nothing Then
+                Me.dataType.printValues()
             End If
 
-            If Me.m_dataspaceMessage IsNot Nothing Then
-                Me.m_dataspaceMessage.printValues()
+            If Me.dataSpace IsNot Nothing Then
+                Me.dataSpace.printValues()
             End If
 
-            Console.WriteLine("data pos : " & Me.m_dataPos)
+            Console.WriteLine("data pos : " & Me.dataPos)
 
             Console.WriteLine("AttributeMessage <<<")
         End Sub
