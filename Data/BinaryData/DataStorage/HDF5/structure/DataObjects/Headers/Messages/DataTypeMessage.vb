@@ -70,12 +70,8 @@ Namespace HDF5.[Structure]
     ''' named datatype) message describe a common datatype that can be Shared by 
     ''' multiple datasets In the file.
     ''' </summary>
-    Public Class DataTypeMessage
+    Public Class DataTypeMessage : Inherits HDF5Ptr
 
-        ''' <summary>
-        ''' 当前的这个对象在文件之中的起始位置
-        ''' </summary>
-        Private m_address As Long
         Private m_type As DataTypes
         Private m_version As Integer
         Private m_flags As Byte()
@@ -94,9 +90,9 @@ Namespace HDF5.[Structure]
         Dim encoding As Encoding
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
-            [in].offset = address
+            Call MyBase.New(address)
 
-            Me.m_address = address
+            [in].offset = address
 
             ' common base constructor
 
@@ -200,12 +196,6 @@ Namespace HDF5.[Structure]
                 Throw New Exception("data type array is not implemented")
             End If
         End Sub
-
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property isLittleEndian() As Boolean
             Get

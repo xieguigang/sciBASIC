@@ -5,8 +5,15 @@
     ''' </summary>
     Public MustInherit Class HDF5Ptr
 
+        ''' <summary>
+        ''' 当前的这个对象在文件之中的起始位置
+        ''' </summary>
         Protected m_address&
 
+        ''' <summary>
+        ''' 获取当前的这个对象在文件之中的起始位置
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property address As Long
             Get
                 Return m_address
