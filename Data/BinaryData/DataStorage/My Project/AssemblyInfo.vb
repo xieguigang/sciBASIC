@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 '查看程序集特性的值
 
-<Assembly: AssemblyTitle("DataStorage")>
+<Assembly: AssemblyTitle("Binary data storage provider base on netCDF/HDF5")>
 <Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("Microsoft")>
+<Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("DataStorage")>
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2019")>
+<Assembly: AssemblyCopyright("Copyright © sciBASIC.NET 2019")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
