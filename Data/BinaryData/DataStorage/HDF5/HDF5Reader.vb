@@ -59,21 +59,20 @@ Namespace HDF5
     ''' <remarks>
     ''' A VB.NET continues work of this java project: https://github.com/iychoi/HDF5HadoopReader
     ''' </remarks>
-    Public Class HDF5Reader
-
-        Private m_reader As BinaryReader
+    Public Class HDF5Reader : Implements IDisposable
 
         Private m_filename As String
-
         Private m_datasetName As String
         Private m_layout As Layout
         Private m_dataTree As DataBTree
         Private m_chunks As List(Of DataChunk)
         Private m_headerLength As Long
 
+        Public ReadOnly Property reader() As BinaryReader
+
         Public Sub New(filename As String, datasetName As String)
             Me.m_filename = filename
-            Me.m_reader = New BinaryFileReader(Me.m_filename)
+            Me.reader = New BinaryFileReader(Me.m_filename)
             Me.m_datasetName = datasetName
             Me.m_layout = Nothing
             Me.m_dataTree = Nothing
@@ -83,7 +82,7 @@ Namespace HDF5
 
         Public Sub New([in] As BinaryReader, datasetName As String)
             Me.m_filename = Nothing
-            Me.m_reader = [in]
+            Me.reader = [in]
             Me.m_datasetName = datasetName
             Me.m_layout = Nothing
             Me.m_dataTree = Nothing
@@ -92,33 +91,39 @@ Namespace HDF5
         End Sub
 
         Public Overridable Sub parseHeader()
-            Dim sb As New Superblock(Me.m_reader, 0)
+            Dim sb As New Superblock(Me.reader, 0)
             Dim rootSymbolTableEntry As SymbolTableEntry = sb.rootGroupSymbolTableEntry
-            Dim objectFacade As New DataObjectFacade(Me.m_reader, sb, "root", rootSymbolTableEntry.objectHeaderAddress)
-            Dim rootGroup As New Group(Me.m_reader, sb, objectFacade)
-
+            Dim objectFacade As New DataObjectFacade(Me.reader, sb, "root", rootSymbolTableEntry.objectHeaderAddress)
+            Dim rootGroup As New Group(Me.reader, sb, objectFacade)
             Dim objects As List(Of DataObjectFacade) = rootGroup.objects
+
             For Each dobj As DataObjectFacade In objects
                 ' compare dataset name
-                If dobj.symbolName.Equals(Me.m_datasetName, StringComparison.CurrentCultureIgnoreCase) Then
-                    Dim layout As Layout = dobj.layout
-                    Me.m_layout = layout
-
-                    Dim dataTree As New DataBTree(layout)
-                    Me.m_dataTree = dataTree
-
-                    Dim iter As DataChunkIterator = dataTree.getChunkIterator(Me.m_reader, sb)
-
-                    While iter.hasNext(Me.m_reader, sb)
-                        Dim chunk As DataChunk = iter.[next](Me.m_reader, sb)
-                        Me.m_chunks.Add(chunk)
-                    End While
-
+                If dobj.symbolName.TextEquals(Me.m_datasetName) Then
+                    Call parserObject(dobj, sb)
                     Exit For
                 End If
             Next
 
-            Me.m_headerLength = Me.m_reader.maxOffset
+            Me.m_headerLength = Me.reader.maxOffset
+        End Sub
+
+        Private Sub parserObject(dobj As DataObjectFacade, sb As Superblock)
+            ' parse or get layout
+            Dim layout As Layout = dobj.layout
+            Me.m_layout = layout
+            ' parse btree index of the data
+            Dim dataTree As New DataBTree(layout)
+            Me.m_dataTree = dataTree
+
+            Dim iter As DataChunkIterator = dataTree.getChunkIterator(Me.reader, sb)
+            Dim chunk As DataChunk
+
+            While iter.hasNext(Me.reader, sb)
+                chunk = iter.[next](Me.reader, sb)
+                ' read/add a new data chunk block
+                m_chunks.Add(chunk)
+            End While
         End Sub
 
         Public Overridable ReadOnly Property headerSize() As Long
@@ -130,12 +135,6 @@ Namespace HDF5
         Public Overridable ReadOnly Property fileName() As String
             Get
                 Return Me.m_filename
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property reader() As BinaryReader
-            Get
-                Return Me.m_reader
             End Get
         End Property
 
@@ -163,9 +162,37 @@ Namespace HDF5
             End Get
         End Property
 
-        Public Overridable Sub close()
-            Me.m_reader.close()
-        End Sub
-    End Class
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' 要检测冗余调用
 
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: 释放托管状态(托管对象)。
+                    Call Me.reader.Dispose()
+                End If
+
+                ' TODO: 释放未托管资源(未托管对象)并在以下内容中替代 Finalize()。
+                ' TODO: 将大型字段设置为 null。
+            End If
+            disposedValue = True
+        End Sub
+
+        ' TODO: 仅当以上 Dispose(disposing As Boolean)拥有用于释放未托管资源的代码时才替代 Finalize()。
+        'Protected Overrides Sub Finalize()
+        '    ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' Visual Basic 添加此代码以正确实现可释放模式。
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' 请勿更改此代码。将清理代码放入以上 Dispose(disposing As Boolean)中。
+            Dispose(True)
+            ' TODO: 如果在以上内容中替代了 Finalize()，则取消注释以下行。
+            ' GC.SuppressFinalize(Me)
+        End Sub
+#End Region
+    End Class
 End Namespace

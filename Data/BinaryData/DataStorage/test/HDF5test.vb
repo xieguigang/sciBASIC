@@ -168,8 +168,7 @@ Namespace edu.arizona.cs.hdf5.test
                 End If
             Next
 
-
-            reader.close()
+            reader.Dispose()
         End Sub
     End Class
 
