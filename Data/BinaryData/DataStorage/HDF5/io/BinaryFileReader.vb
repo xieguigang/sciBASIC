@@ -69,7 +69,7 @@ Namespace HDF5.IO
 
         Private Sub _BinaryFileReader(file As FileInfo)
             If file Is Nothing Then
-                Throw New System.ArgumentException("file must not be null")
+                Throw New ArgumentException("file must not be null")
             End If
 
             Me.offset = 0
@@ -120,6 +120,10 @@ Namespace HDF5.IO
             End If
 
             Return b
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return $"{MyBase.ToString()}  #{randomaccessfile.Name.FileName}"
         End Function
 
         Public Overrides Sub close()

@@ -54,43 +54,48 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
 Namespace HDF5
 
     ''' <summary>
-    ''' 
+    ''' 这个reader只会读取一个<see cref="datasetName"/>的数据，如果需要读取其他的dataset的话，则会需要创建多个<see cref="HDF5Reader"/>对象来进行数据的读取操作
     ''' </summary>
     ''' <remarks>
     ''' A VB.NET continues work of this java project: https://github.com/iychoi/HDF5HadoopReader
     ''' </remarks>
     Public Class HDF5Reader : Implements IDisposable
 
-        Private m_filename As String
-        Private m_datasetName As String
-        Private m_layout As Layout
-        Private m_dataTree As DataBTree
-        Private m_chunks As List(Of DataChunk)
-        Private m_headerLength As Long
+        Public ReadOnly Property reader As BinaryReader
+        Public ReadOnly Property dataGroups As Group
 
-        Public ReadOnly Property reader() As BinaryReader
+        ''' <summary>
+        ''' header length
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property headerSize As Long
+        Public ReadOnly Property fileName As String
+        Public ReadOnly Property datasetName As String
+        Public ReadOnly Property layout As Layout
+        Public ReadOnly Property dataBTree As DataBTree
+        Public ReadOnly Property chunks As List(Of DataChunk)
 
         Public Sub New(filename As String, datasetName As String)
-            Me.m_filename = filename
-            Me.reader = New BinaryFileReader(Me.m_filename)
-            Me.m_datasetName = datasetName
-            Me.m_layout = Nothing
-            Me.m_dataTree = Nothing
-            Me.m_chunks = New List(Of DataChunk)()
-            Me.m_headerLength = 0
+            Me.fileName = filename
+            Me.reader = New BinaryFileReader(filename)
+            Me.datasetName = datasetName
+            Me.layout = Nothing
+            Me.dataBTree = Nothing
+            Me.chunks = New List(Of DataChunk)()
+            Me.headerSize = 0
         End Sub
 
         Public Sub New([in] As BinaryReader, datasetName As String)
-            Me.m_filename = Nothing
+            Me.fileName = Nothing
             Me.reader = [in]
-            Me.m_datasetName = datasetName
-            Me.m_layout = Nothing
-            Me.m_dataTree = Nothing
-            Me.m_chunks = New List(Of DataChunk)()
-            Me.m_headerLength = 0
+            Me.datasetName = datasetName
+            Me.layout = Nothing
+            Me.dataBTree = Nothing
+            Me.chunks = New List(Of DataChunk)()
+            Me.headerSize = 0
         End Sub
 
-        Public Overridable Sub parseHeader()
+        Public Sub parseHeader()
             Dim sb As New Superblock(Me.reader, 0)
             Dim rootSymbolTableEntry As SymbolTableEntry = sb.rootGroupSymbolTableEntry
             Dim objectFacade As New DataObjectFacade(Me.reader, sb, "root", rootSymbolTableEntry.objectHeaderAddress)
@@ -99,30 +104,28 @@ Namespace HDF5
 
             For Each dobj As DataObjectFacade In objects
                 ' compare dataset name
-                If dobj.symbolName.TextEquals(Me.m_datasetName) Then
+                If dobj.symbolName.TextEquals(Me.datasetName) Then
                     Call parserObject(dobj, sb)
                     Exit For
                 End If
             Next
 
-            Me.m_headerLength = Me.reader.maxOffset
+            _headerSize = Me.reader.maxOffset
         End Sub
 
         Private Sub parserObject(dobj As DataObjectFacade, sb As Superblock)
             ' parse or get layout
             Dim layout As Layout = dobj.layout
 
-            Me.m_layout = layout
+            _layout = layout
 
             If layout.IsEmpty Then
-                Dim dataGroups As New Group(reader, sb, dobj)
-
-                Throw New NotImplementedException
+                _dataGroups = New Group(reader, sb, dobj)
             Else
                 ' parse btree index of the data
                 Dim dataTree As New DataBTree(layout)
 
-                Me.m_dataTree = dataTree
+                _dataBTree = dataTree
 
                 Dim iter As DataChunkIterator = dataTree.getChunkIterator(Me.reader, sb)
                 Dim chunk As DataChunk
@@ -130,52 +133,16 @@ Namespace HDF5
                 While iter.hasNext(Me.reader, sb)
                     chunk = iter.[next](Me.reader, sb)
                     ' read/add a new data chunk block
-                    m_chunks.Add(chunk)
+                    chunks.Add(chunk)
                 End While
             End If
         End Sub
-
-        Public Overridable ReadOnly Property headerSize() As Long
-            Get
-                Return Me.m_headerLength
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property fileName() As String
-            Get
-                Return Me.m_filename
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property datasetName() As String
-            Get
-                Return Me.m_datasetName
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property layout() As Layout
-            Get
-                Return Me.m_layout
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property dataBTree() As DataBTree
-            Get
-                Return Me.m_dataTree
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property chunks() As List(Of DataChunk)
-            Get
-                Return Me.m_chunks
-            End Get
-        End Property
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' 要检测冗余调用
 
         ' IDisposable
-        Protected Overridable Sub Dispose(disposing As Boolean)
+        Protected Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)。
