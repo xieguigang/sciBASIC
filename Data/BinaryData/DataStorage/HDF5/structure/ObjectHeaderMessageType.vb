@@ -53,6 +53,32 @@
 
 Namespace HDF5.[Structure]
 
+    Public Enum ObjectHeaderMessages As Integer
+        NIL = &H0
+        Dataspace = &H1
+        LinkInfo = &H2
+        Datatype = &H3
+        FillValueOld = &H4
+        FillValue = &H5
+        Link = &H6
+        ExternalDataFiles = &H7
+        DataLayout = &H8
+        Bogus = &H9
+        GroupInfo = &HA
+        DataStorageFilterPipeline = &HB
+        Attribute = &HC
+        ObjectComment = &HD
+        ObjectModificationTimeOld = &HE
+        SharedMessageTable = &HF
+        ObjectHeaderContinuation = &H10
+        SymbolTableMessage = &H11
+        ObjectModificationTime = &H12
+        BtreeKValues = &H13
+        DriverInfo = &H14
+        AttributeInfo = &H15
+        ObjectReferenceCount = &H16
+    End Enum
+
     ''' <summary>
     ''' Disk Format: Level 2A2 - Data Object Header Messages
     ''' 

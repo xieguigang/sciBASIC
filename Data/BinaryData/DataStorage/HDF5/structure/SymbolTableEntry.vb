@@ -57,8 +57,8 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 Namespace HDF5.[Structure]
 
 
-    Public Class SymbolTableEntry
-        Private m_address As Long
+    Public Class SymbolTableEntry : Inherits HDF5Ptr
+
         Private m_linkNameOffset As Long
         Private m_objectHeaderAddress As Long
         Private m_cacheType As Integer
@@ -75,10 +75,9 @@ Namespace HDF5.[Structure]
         Private m_totalSymbolTableEntrySize As Integer
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+            Call MyBase.New(address)
 
             [in].offset = address
-
-            Me.m_address = address
 
             Me.m_linkNameOffset = ReadHelper.readO([in], sb)
             Me.m_objectHeaderAddress = ReadHelper.readO([in], sb)
@@ -116,12 +115,6 @@ Namespace HDF5.[Structure]
                 Me.m_size = 32
             End If
         End Sub
-
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property linkNameOffset() As Long
             Get

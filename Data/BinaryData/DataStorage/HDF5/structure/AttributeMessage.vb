@@ -58,8 +58,8 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
-    Public Class AttributeMessage
-        Private m_address As Long
+    Public Class AttributeMessage : Inherits HDF5Ptr
+
         Private m_version As Integer
         Private m_name As String
         Private m_dataTypeMessage As DataTypeMessage
@@ -67,9 +67,9 @@ Namespace HDF5.[Structure]
         Private m_dataPos As Long
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
-            [in].offset = address
+            Call MyBase.New(address)
 
-            Me.m_address = address
+            [in].offset = address
 
             Dim nameSize As Short, typeSize As Short, spaceSize As Short
             Dim flags As Byte = 0
@@ -137,12 +137,6 @@ Namespace HDF5.[Structure]
             Me.m_dataPos = [in].offset
         End Sub
 
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property version() As Integer
             Get
                 Return Me.m_version
@@ -172,6 +166,10 @@ Namespace HDF5.[Structure]
                 Return Me.m_dataspaceMessage
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return $"[{MyBase.ToString}] Dim {name} As {dataType} = &{dataPos}"
+        End Function
 
         Public Overridable Sub printValues()
             Console.WriteLine("AttributeMessage >>>")

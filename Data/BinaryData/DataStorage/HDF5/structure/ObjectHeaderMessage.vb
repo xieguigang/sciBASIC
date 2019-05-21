@@ -177,7 +177,9 @@ Namespace HDF5.[Structure]
 			End Get
 		End Property
 
-		Public Overridable ReadOnly Property groupMessage() As GroupMessage
+#Region "message data"
+
+        Public Overridable ReadOnly Property groupMessage() As GroupMessage
 			Get
 				Return Me.m_groupMessage
 			End Get
@@ -236,6 +238,7 @@ Namespace HDF5.[Structure]
                 Return Me.m_dataspaceMessage
             End Get
         End Property
+#End Region
 
         Public Overrides Function ToString() As String
             Return headerMessageType.ToString
