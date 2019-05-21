@@ -57,25 +57,20 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 Namespace HDF5.[Structure].BTree
 
 
-    Public Class BTreeEntry
+    Public Class BTreeEntry : Inherits HDF5Ptr
 
-        Private m_address As Long
+
         Private m_key As Long
         Private m_targetAddress As Long
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+            Call MyBase.New(address)
+
             [in].offset = address
 
-            Me.m_address = address
             Me.m_key = ReadHelper.readL([in], sb)
             Me.m_targetAddress = ReadHelper.readO([in], sb)
         End Sub
-
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property targetAddress() As Long
             Get

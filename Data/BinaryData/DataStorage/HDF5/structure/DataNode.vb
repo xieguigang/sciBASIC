@@ -59,11 +59,10 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
-    Public Class DataNode
+    Public Class DataNode : Inherits HDF5Ptr
 
         Public Shared ReadOnly SIGNATURE As Byte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
 
-        Private m_address As Long
         Private m_layout As Layout
 
         Private m_level As Integer
@@ -82,11 +81,12 @@ Namespace HDF5.[Structure]
         ' track iteration; LOOK this seems fishy - why not an iterator ??
 
         Public Sub New([in] As BinaryReader, sb As Superblock, layout As Layout, address As Long)
+            Call MyBase.New(address)
 
             [in].offset = address
 
-            Me.m_address = address
             Me.m_layout = layout
+
             Dim signature__1 As Byte() = [in].readBytes(4)
 
             For i As Integer = 0 To 3
@@ -129,10 +129,14 @@ Namespace HDF5.[Structure]
             End If
         End Sub
 
-        ' this finds the first entry we dont want to skip.
-        ' entry i goes from [offset(i),offset(i+1))
-        ' we want to skip any entries we dont need, namely those where want >= offset(i+1)
-        ' so keep skipping until want < offset(i+1)
+        ''' <summary>
+        ''' this finds the first entry we dont want to skip.
+        ''' entry i goes from [offset(i),offset(i+1))
+        ''' we want to skip any entries we dont need, namely those where want >= offset(i+1)
+        ''' so keep skipping until ``want &lt; offset(i+1)``
+        ''' </summary>
+        ''' <param name="[in]"></param>
+        ''' <param name="sb"></param>
         Public Overridable Sub first([in] As BinaryReader, sb As Superblock)
             If Me.m_level = 0 Then
 
@@ -164,7 +168,15 @@ Namespace HDF5.[Structure]
             End If
         End Sub
 
-        ' LOOK - wouldnt be a bad idea to terminate if possible instead of running through all subsequent entries
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="[in]"></param>
+        ''' <param name="sb"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' LOOK - wouldnt be a bad idea to terminate if possible instead of running through all subsequent entries
+        ''' </remarks>
         Public Overridable Function hasNext([in] As BinaryReader, sb As Superblock) As Boolean
             If Me.m_level = 0 Then
                 Return (Me.m_currentEntry < Me.m_numberOfEntries)

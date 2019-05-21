@@ -56,19 +56,18 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 
 Namespace HDF5.[Structure]
 
-    Public Class DataChunk
+    Public Class DataChunk : Inherits HDF5Ptr
 
-        Private m_address As Long
         Private m_size As Integer
         Private m_filterMask As Integer
         Private m_offsets As Integer()
         Private m_filePos As Long
 
         Friend Sub New([in] As BinaryReader, sb As Superblock, address As Long, numberOfDimensions As Integer, last As Boolean)
+            Call MyBase.New(address)
 
             [in].offset = address
 
-            Me.m_address = address
             Me.m_size = [in].readInt()
             Me.m_filterMask = [in].readInt()
 
@@ -79,12 +78,6 @@ Namespace HDF5.[Structure]
 
             Me.m_filePos = If(last, -1, ReadHelper.readO([in], sb))
         End Sub
-
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property size() As Integer
             Get
