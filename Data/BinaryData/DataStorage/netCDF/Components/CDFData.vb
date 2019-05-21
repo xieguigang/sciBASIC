@@ -49,7 +49,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
-Namespace Components
+Namespace netCDF.Components
 
     ''' <summary>
     '''  存储在CDF文件之中的数据的统一接口模块

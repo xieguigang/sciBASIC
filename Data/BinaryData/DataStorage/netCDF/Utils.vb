@@ -46,68 +46,71 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Language
 
-Module Utils
+Namespace netCDF
 
-    ''' <summary>
-    ''' Throws a non-valid NetCDF exception if the statement it's true
-    ''' </summary>
-    ''' <param name="statement">statement - Throws if true</param>
-    ''' <param name="reason$">reason - Reason to throw</param>
-    Public Function notNetcdf(statement As Boolean, reason$) As Object
-        If (statement) Then
-            Throw New FormatException($"Not a valid NetCDF v3.x file: {reason}")
-        End If
+    Module Utils
 
-        Return Nothing
-    End Function
+        ''' <summary>
+        ''' Throws a non-valid NetCDF exception if the statement it's true
+        ''' </summary>
+        ''' <param name="statement">statement - Throws if true</param>
+        ''' <param name="reason$">reason - Reason to throw</param>
+        Public Function notNetcdf(statement As Boolean, reason$) As Object
+            If (statement) Then
+                Throw New FormatException($"Not a valid NetCDF v3.x file: {reason}")
+            End If
 
-    ''' <summary>
-    ''' Moves 1, 2, Or 3 bytes to next 4-byte boundary
-    ''' </summary>
-    ''' <param name="buffer">
-    ''' buffer - Buffer for the file data
-    ''' </param>
-    <Extension> Public Sub padding(buffer As BinaryDataReader)
-        If ((buffer.Position Mod 4) <> 0) Then
-            Call buffer.Seek(4 - (buffer.Position Mod 4), SeekOrigin.Current)
-        End If
-    End Sub
+            Return Nothing
+        End Function
 
-    <Extension> Public Sub writePadding(output As BinaryDataWriter)
-        Dim n As Value(Of Long) = 0
+        ''' <summary>
+        ''' Moves 1, 2, Or 3 bytes to next 4-byte boundary
+        ''' </summary>
+        ''' <param name="buffer">
+        ''' buffer - Buffer for the file data
+        ''' </param>
+        <Extension> Public Sub padding(buffer As BinaryDataReader)
+            If ((buffer.Position Mod 4) <> 0) Then
+                Call buffer.Seek(4 - (buffer.Position Mod 4), SeekOrigin.Current)
+            End If
+        End Sub
 
-        If ((n = (output.Position Mod 4)) <> 0) Then
-            For i As Integer = 1 To 4 - CLng(n)
-                Call output.Write(CByte(0))
-            Next
-        End If
-    End Sub
+        <Extension> Public Sub writePadding(output As BinaryDataWriter)
+            Dim n As Value(Of Long) = 0
 
-    <Extension>
-    Public Sub writeName(output As BinaryDataWriter, name$)
-        Call output.Write(name, BinaryStringFormat.UInt32LengthPrefix)
-        Call output.writePadding
-    End Sub
+            If ((n = (output.Position Mod 4)) <> 0) Then
+                For i As Integer = 1 To 4 - CLng(n)
+                    Call output.Write(CByte(0))
+                Next
+            End If
+        End Sub
 
-    ''' <summary>
-    ''' Reads the name
-    ''' </summary>
-    ''' <param name="buffer">
-    ''' buffer - Buffer for the file data
-    ''' </param>
-    ''' <returns>Name</returns>
-    <Extension> Public Function readName(buffer As BinaryDataReader) As String
-        ' Read name
-        Dim nameLength = buffer.ReadUInt32()
-        Dim name() = buffer.ReadChars(nameLength)
+        <Extension>
+        Public Sub writeName(output As BinaryDataWriter, name$)
+            Call output.Write(name, BinaryStringFormat.UInt32LengthPrefix)
+            Call output.writePadding
+        End Sub
 
-        ' validate name
-        ' TODO
+        ''' <summary>
+        ''' Reads the name
+        ''' </summary>
+        ''' <param name="buffer">
+        ''' buffer - Buffer for the file data
+        ''' </param>
+        ''' <returns>Name</returns>
+        <Extension> Public Function readName(buffer As BinaryDataReader) As String
+            ' Read name
+            Dim nameLength = buffer.ReadUInt32()
+            Dim name() = buffer.ReadChars(nameLength)
 
-        ' Apply padding
-        ' 数据的长度应该是4的整数倍,如果不是,则会使用0进行填充
-        Call buffer.padding()
+            ' validate name
+            ' TODO
 
-        Return New String(name)
-    End Function
-End Module
+            ' Apply padding
+            ' 数据的长度应该是4的整数倍,如果不是,则会使用0进行填充
+            Call buffer.padding()
+
+            Return New String(name)
+        End Function
+    End Module
+End Namespace

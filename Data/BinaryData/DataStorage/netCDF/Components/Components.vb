@@ -68,7 +68,7 @@
 
 Imports System.Xml.Serialization
 
-Namespace Components
+Namespace netCDF.Components
 
     ''' <summary>
     ''' ``[name => size]``
