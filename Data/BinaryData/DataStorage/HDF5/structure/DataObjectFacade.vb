@@ -211,6 +211,8 @@ Namespace HDF5.[Structure]
                     If Not dm Is Nothing Then
                         ' dm.type()
                     End If
+                ElseIf msg.headerMessageType Is ObjectHeaderMessageType.Group Then
+                    Throw New NotImplementedException
                 Else
                     Throw New NotImplementedException
                 End If

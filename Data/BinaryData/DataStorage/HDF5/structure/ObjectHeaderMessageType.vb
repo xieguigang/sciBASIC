@@ -77,12 +77,46 @@ Namespace HDF5.[Structure]
         Shared ReadOnly hash As IDictionary(Of String, ObjectHeaderMessageType) = New Dictionary(Of String, ObjectHeaderMessageType)(10)
         Shared ReadOnly mess As ObjectHeaderMessageType() = New ObjectHeaderMessageType(MAX_MESSAGE - 1) {}
 
+        ''' <summary>
+        ''' The NIL message is used to indicate a message which is to be ignored when reading 
+        ''' the header messages for a data object. [Possibly one which has been deleted for 
+        ''' some reason.]
+        ''' </summary>
         Public Shared ReadOnly NIL As New ObjectHeaderMessageType("NIL", 0)
+        ''' <summary>
+        ''' The dataspace message describes the number of dimensions (in other words, "rank") 
+        ''' and size of each dimension that the data object has. This message is only used for 
+        ''' datasets which have a simple, rectilinear, array-like layout; datasets requiring 
+        ''' a more complex layout are not yet supported.
+        ''' </summary>
         Public Shared ReadOnly SimpleDataspace As New ObjectHeaderMessageType("SimpleDataspace", 1)
+        ''' <summary>
+        ''' 
+        ''' </summary>
         Public Shared ReadOnly GroupNew As New ObjectHeaderMessageType("GroupNew", 2)
         Public Shared ReadOnly Datatype As New ObjectHeaderMessageType("Datatype", 3)
+        ''' <summary>
+        ''' The fill value message stores a single data value which is returned to the application 
+        ''' when an uninitialized data element is read from a dataset. The fill value is interpreted 
+        ''' with the same datatype as the dataset. If no fill value message is present then a fill 
+        ''' value of all zero bytes is assumed.
+        '''
+        ''' This fill value message Is deprecated In favor Of the “new” fill value message 
+        ''' (Message Type 0x0005) And Is only written To the file For forward compatibility With 
+        ''' versions Of the HDF5 Library before the 1.6.0 version. Additionally, it only appears 
+        ''' For datasets With a user-defined fill value (As opposed To the library Default fill 
+        ''' value Or an explicitly Set “undefined” fill value).
+        ''' </summary>
         Public Shared ReadOnly FillValueOld As New ObjectHeaderMessageType("FillValueOld", 4)
         Public Shared ReadOnly FillValue As New ObjectHeaderMessageType("FillValue", 5)
+        ''' <summary>
+        ''' This message encodes the information for a link in a group's object header, when the group 
+        ''' is storing its links “compactly”, or in the group’s fractal heap, when the group is storing 
+        ''' its links “densely”.
+        '''
+        ''' A group Is storing its links compactly When the fractal heap address In the Link Info 
+        ''' Message Is Set To the “undefined address” value.
+        ''' </summary>
         Public Shared ReadOnly Link As New ObjectHeaderMessageType("Link", 6)
         Public Shared ReadOnly ExternalDataFiles As New ObjectHeaderMessageType("ExternalDataFiles", 7)
         Public Shared ReadOnly Layout As New ObjectHeaderMessageType("Layout", 8)
@@ -92,7 +126,19 @@ Namespace HDF5.[Structure]
         Public Shared ReadOnly Comment As New ObjectHeaderMessageType("Comment", 13)
         Public Shared ReadOnly LastModifiedOld As New ObjectHeaderMessageType("LastModifiedOld", 14)
         Public Shared ReadOnly SharedObject As New ObjectHeaderMessageType("SharedObject", 15)
+        ''' <summary>
+        ''' The Object Header Continuation Message
+        ''' 
+        ''' The object header continuation is the location in the file of a block containing more 
+        ''' header messages for the current data object. This can be used when header blocks 
+        ''' become too large or are likely to change over time.
+        ''' </summary>
         Public Shared ReadOnly ObjectHeaderContinuation As New ObjectHeaderMessageType("ObjectHeaderContinuation", 16)
+
+        ''' <summary>
+        ''' Each "old style" group has a v1 B-tree and a local heap for storing symbol table entries, 
+        ''' which are located with this message.
+        ''' </summary>
         Public Shared ReadOnly Group As New ObjectHeaderMessageType("Group", 17)
         Public Shared ReadOnly LastModified As New ObjectHeaderMessageType("LastModified", 18)
         Public Shared ReadOnly AttributeInfo As New ObjectHeaderMessageType("AttributeInfo", 21)
