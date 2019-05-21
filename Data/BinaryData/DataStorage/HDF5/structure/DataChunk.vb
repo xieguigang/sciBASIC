@@ -58,62 +58,38 @@ Namespace HDF5.[Structure]
 
     Public Class DataChunk : Inherits HDF5Ptr
 
-        Private m_size As Integer
-        Private m_filterMask As Integer
-        Private m_offsets As Integer()
-        Private m_filePos As Long
+        Public Overridable ReadOnly Property size() As Integer
+        Public Overridable ReadOnly Property filterMask() As Integer
+        Public Overridable ReadOnly Property offsets() As Integer()
+        Public Overridable ReadOnly Property filePosition() As Long
 
         Friend Sub New([in] As BinaryReader, sb As Superblock, address As Long, numberOfDimensions As Integer, last As Boolean)
             Call MyBase.New(address)
 
             [in].offset = address
 
-            Me.m_size = [in].readInt()
-            Me.m_filterMask = [in].readInt()
+            Me.size = [in].readInt()
+            Me.filterMask = [in].readInt()
+            Me.offsets = New Integer(numberOfDimensions - 1) {}
 
-            Me.m_offsets = New Integer(numberOfDimensions - 1) {}
             For i As Integer = 0 To numberOfDimensions - 1
-                Me.m_offsets(i) = CInt([in].readLong())
+                Me.offsets(i) = CInt([in].readLong())
             Next
 
-            Me.m_filePos = If(last, -1, ReadHelper.readO([in], sb))
+            Me.filePosition = If(last, -1, ReadHelper.readO([in], sb))
         End Sub
-
-        Public Overridable ReadOnly Property size() As Integer
-            Get
-                Return Me.m_size
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property filterMask() As Integer
-            Get
-                Return Me.m_filterMask
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property offsets() As Integer()
-            Get
-                Return Me.m_offsets
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property filePosition() As Long
-            Get
-                Return Me.m_filePos
-            End Get
-        End Property
 
         Public Overridable Sub printValues()
             Console.WriteLine("DataChunk >>>")
             Console.WriteLine("address : " & Me.m_address)
-            Console.WriteLine("size : " & Me.m_size)
-            Console.WriteLine("filter mask : " & Me.m_filterMask)
-            If Me.m_offsets IsNot Nothing Then
-                For i As Integer = 0 To Me.m_offsets.Length - 1
-                    Console.WriteLine("offsets[" & i & "] : " & Me.m_offsets(i))
+            Console.WriteLine("size : " & Me.size)
+            Console.WriteLine("filter mask : " & Me.filterMask)
+            If Me.offsets IsNot Nothing Then
+                For i As Integer = 0 To Me.offsets.Length - 1
+                    Console.WriteLine("offsets[" & i & "] : " & Me.offsets(i))
                 Next
             End If
-            Console.WriteLine("file position : " & Me.m_filePos)
+            Console.WriteLine("file position : " & Me.filePosition)
 
             Console.WriteLine("DataChunk <<<")
         End Sub

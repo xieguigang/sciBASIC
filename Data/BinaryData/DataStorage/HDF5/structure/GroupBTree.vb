@@ -59,36 +59,37 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
-    Public Class GroupBTree
+    Public Class GroupBTree : Inherits HDF5Ptr
 
         Public Shared ReadOnly SIGNATURE As Byte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
 
-        Private m_address As Long
-
-        Private m_SymbolTableEntries As List(Of SymbolTableEntry)
+        Public Overridable ReadOnly Property symbolTableEntries() As List(Of SymbolTableEntry)
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+            Call MyBase.New(address)
+
             [in].offset = address
 
-            Me.m_address = address
-
-            Me.m_SymbolTableEntries = New List(Of SymbolTableEntry)()
+            Me.symbolTableEntries = New List(Of SymbolTableEntry)()
 
             Dim entryList As New List(Of BTreeEntry)()
+            Dim node As GroupNode
+
             readAllEntries([in], sb, address, entryList)
 
             For Each e As BTreeEntry In entryList
-                Dim node As New GroupNode([in], sb, e.targetAddress)
-                m_SymbolTableEntries.AddRange(node.symbols)
+                node = New GroupNode([in], sb, e.targetAddress)
+                symbolTableEntries.AddRange(node.symbols)
             Next
         End Sub
 
         Private Sub readAllEntries([in] As BinaryReader, sb As Superblock, address As Long, entryList As List(Of BTreeEntry))
             [in].offset = address
 
-            Dim signature__1 As Byte() = [in].readBytes(4)
+            Dim signature As Byte() = [in].readBytes(4)
+
             For i As Integer = 0 To 3
-                If signature__1(i) <> SIGNATURE(i) Then
+                If signature(i) <> GroupBTree.SIGNATURE(i) Then
                     Throw New IOException("signature is not valid")
                 End If
             Next
@@ -114,18 +115,12 @@ Namespace HDF5.[Structure]
             End If
         End Sub
 
-        Public Overridable ReadOnly Property symbolTableEntries() As List(Of SymbolTableEntry)
-            Get
-                Return Me.m_SymbolTableEntries
-            End Get
-        End Property
-
         Public Overridable Sub printValues()
             Console.WriteLine("GroupBTree >>>")
             Console.WriteLine("address : " & Me.m_address)
 
-            For i As Integer = 0 To Me.m_SymbolTableEntries.Count - 1
-                Me.m_SymbolTableEntries(i).printValues()
+            For i As Integer = 0 To symbolTableEntries.Count - 1
+                symbolTableEntries(i).printValues()
             Next
 
             Console.WriteLine("GroupBTree <<<")
