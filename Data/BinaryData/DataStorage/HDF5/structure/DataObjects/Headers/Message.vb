@@ -55,7 +55,10 @@ Namespace HDF5.[Structure]
     ''' header, Or a heap in the file) And the Message Data field contains the information 
     ''' needed to locate the actual information for the message.
     ''' </summary>
-    Public MustInherit Class Message
+    Public MustInherit Class Message : Inherits HDF5Ptr
 
+        Public Sub New(address As Long)
+            MyBase.New(address)
+        End Sub
     End Class
 End Namespace
