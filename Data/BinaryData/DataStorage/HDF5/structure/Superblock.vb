@@ -73,13 +73,11 @@ Namespace HDF5.[Structure]
     ''' The superblock Is composed Of the format signature, followed by a superblock version number 
     ''' And information that Is specific To Each version Of the superblock.
     ''' </summary>
-    Public Class Superblock
+    Public Class Superblock : Inherits HDF5Ptr
 
         Shared ReadOnly SUPERBLOCK_SIGNATURE As Byte() = {&H89, &H48, &H44, &H46, &HD, &HA, &H1A, &HA} _
             .Select(Function(i) CByte(i)) _
             .ToArray
-
-        Private m_address As Long
 
         Private m_formatSignature As Byte()
         Private m_versionOfSuperblock As Integer
@@ -108,9 +106,9 @@ Namespace HDF5.[Structure]
         Private m_totalSuperBlockSize As Integer
 
         Public Sub New([in] As BinaryReader, address As Long)
-            [in].offset = address
+            Call MyBase.New(address)
 
-            Me.m_address = address
+            [in].offset = address
 
             ' signature
             Me.m_formatSignature = [in].readBytes(8)
@@ -171,12 +169,6 @@ Namespace HDF5.[Structure]
         Public Overridable ReadOnly Property formatSignature() As Byte()
             Get
                 Return Me.m_formatSignature
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
             End Get
         End Property
 

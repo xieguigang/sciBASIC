@@ -48,8 +48,8 @@ Imports System.Text
 
 Namespace HDF5.IO
 
-
     Public MustInherit Class BinaryReader
+
         Protected Friend m_offset As Long
         Protected Friend m_filesize As Long
         Protected Friend m_littleEndian As Boolean
@@ -62,6 +62,20 @@ Namespace HDF5.IO
         Public Overridable ReadOnly Property maxOffset() As Long
             Get
                 Return Me.m_maxOffset
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Represents the possible endianness of binary data.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ByteOrder As ByteOrder
+            Get
+                If m_littleEndian Then
+                    Return ByteOrder.LittleEndian
+                Else
+                    Return ByteOrder.BigEndian
+                End If
             End Get
         End Property
 
@@ -91,18 +105,6 @@ Namespace HDF5.IO
         Public Overridable Sub setBigEndian()
             Me.m_littleEndian = False
         End Sub
-
-        Public Overridable ReadOnly Property littleEndian() As Boolean
-            Get
-                Return Me.m_littleEndian
-            End Get
-        End Property
-
-        Public Overridable ReadOnly Property bigEndian() As Boolean
-            Get
-                Return Not Me.m_littleEndian
-            End Get
-        End Property
 
         Public Overridable Function readBytes(n As Integer) As Byte()
             If n < 0 Then
