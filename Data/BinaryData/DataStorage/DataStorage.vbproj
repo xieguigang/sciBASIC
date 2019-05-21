@@ -71,6 +71,7 @@
     <Compile Include="HDF5\io\ReadHelper.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\LayoutClass.vb" />
+    <Compile Include="HDF5\structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb" />
     <Compile Include="HDF5\structure\Infrastructure\BTree\BLinkTreeNode.vb" />
     <Compile Include="HDF5\structure\Infrastructure\BTree\BTreeEntry.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\ContinueMessage.vb" />
