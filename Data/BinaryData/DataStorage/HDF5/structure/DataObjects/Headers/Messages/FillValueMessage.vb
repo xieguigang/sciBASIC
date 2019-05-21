@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 
 Namespace HDF5.[Structure]
 
-    Public Class FillValueMessage : Inherits HDF5Ptr
+    Public Class FillValueMessage : Inherits Message
 
         Private m_version As Integer
         Private m_spaceAllocateTime As Integer

@@ -70,7 +70,7 @@ Namespace HDF5.[Structure]
     ''' named datatype) message describe a common datatype that can be Shared by 
     ''' multiple datasets In the file.
     ''' </summary>
-    Public Class DataTypeMessage : Inherits HDF5Ptr
+    Public Class DataTypeMessage : Inherits Message
 
         Private m_type As DataTypes
         Private m_version As Integer

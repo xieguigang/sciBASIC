@@ -56,29 +56,23 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 Namespace HDF5.[Structure]
 
 
-    Public Class ContinueMessage
-        Private m_address As Long
+    Public Class ContinueMessage : Inherits Message
+
         Private m_offset As Long
         Private m_length As Long
 
         Private m_totalObjectHeaderMessageContinueSize As Integer
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+            Call MyBase.New(address)
 
             [in].offset = address
 
-            Me.m_address = address
             Me.m_offset = ReadHelper.readO([in], sb)
             Me.m_length = ReadHelper.readL([in], sb)
 
             Me.m_totalObjectHeaderMessageContinueSize = sb.sizeOfOffsets + sb.sizeOfLengths
         End Sub
-
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property offset() As Long
             Get

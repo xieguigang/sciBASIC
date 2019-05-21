@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 
 Namespace HDF5.[Structure]
 
-    Public Class LinkMessage : Inherits HDF5Ptr
+    Public Class LinkMessage : Inherits Message
 
         Private m_version As Integer
         Private m_flags As Byte

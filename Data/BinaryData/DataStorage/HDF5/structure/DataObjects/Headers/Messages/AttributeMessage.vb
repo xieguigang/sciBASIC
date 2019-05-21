@@ -58,7 +58,7 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
-    Public Class AttributeMessage : Inherits HDF5Ptr
+    Public Class AttributeMessage : Inherits Message
 
         Private m_version As Integer
         Private m_name As String

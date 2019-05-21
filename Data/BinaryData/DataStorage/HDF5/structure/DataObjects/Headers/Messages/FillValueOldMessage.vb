@@ -69,7 +69,7 @@ Namespace HDF5.[Structure]
     ''' it only appears For datasets With a user-defined fill value (As opposed To the 
     ''' library Default fill value Or an explicitly Set “undefined” fill value).
     ''' </summary>
-    Public Class FillValueOldMessage : Inherits HDF5Ptr
+    Public Class FillValueOldMessage : Inherits Message
 
         Private m_size As Integer
         Private m_value As Byte()

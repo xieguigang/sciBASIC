@@ -58,7 +58,7 @@ Namespace HDF5.[Structure]
     ''' <summary>
     ''' The Symbol Table Message
     ''' </summary>
-    Public Class GroupMessage : Inherits HDF5Ptr
+    Public Class GroupMessage : Inherits Message
 
         ''' <summary>
         ''' This value is the address of the v1 B-tree containing the symbol table 

@@ -58,8 +58,8 @@ Namespace HDF5.[Structure]
     ''' <summary>
     ''' 
     ''' </summary>
-    Public Class LayoutMessage
-        Private m_address As Long
+    Public Class LayoutMessage : Inherits Message
+
         Private m_version As Integer
         Private m_numberOfDimensions As Integer
         Private m_type As LayoutClass
@@ -69,9 +69,9 @@ Namespace HDF5.[Structure]
         Private m_dataSize As Integer
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
-            [in].offset = address
+            Call MyBase.New(address)
 
-            Me.m_address = address
+            [in].offset = address
 
             Me.m_version = [in].readByte()
 
@@ -115,12 +115,6 @@ Namespace HDF5.[Structure]
                 End If
             End If
         End Sub
-
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property version() As Integer
             Get

@@ -54,15 +54,15 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 
 Namespace HDF5.[Structure]
 
-    Public Class LastModifiedMessage
-        Private m_address As Long
+    Public Class LastModifiedMessage : Inherits Message
+
         Private m_version As Integer
         Private m_seconds As Integer
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
-            [in].offset = address
+            Call MyBase.New(address)
 
-            Me.m_address = address
+            [in].offset = address
 
             Me.m_version = [in].readByte()
 
@@ -70,12 +70,6 @@ Namespace HDF5.[Structure]
 
             Me.m_seconds = [in].readInt()
         End Sub
-
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property version() As Integer
             Get
