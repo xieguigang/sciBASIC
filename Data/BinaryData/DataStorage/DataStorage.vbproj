@@ -116,6 +116,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="netCDF\CDFWriter.vb" />
+    <Compile Include="netCDF\Components\CDFData.vb" />
+    <Compile Include="netCDF\Components\Components.vb" />
+    <Compile Include="netCDF\Components\Header.vb" />
+    <Compile Include="netCDF\Data\CDFDataTypes.vb" />
+    <Compile Include="netCDF\Data\DataReader.vb" />
+    <Compile Include="netCDF\Data\StructureParser.vb" />
+    <Compile Include="netCDF\Data\TypeExtensions.vb" />
+    <Compile Include="netCDF\Data\Xml.vb" />
+    <Compile Include="netCDF\netCDFReader.vb" />
+    <Compile Include="netCDF\ToString.vb" />
+    <Compile Include="netCDF\Utils.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
