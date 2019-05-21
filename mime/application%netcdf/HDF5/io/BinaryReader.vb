@@ -106,7 +106,7 @@ Namespace HDF5.IO
 
         Public Overridable Function readBytes(n As Integer) As Byte()
             If n < 0 Then
-                Throw New System.ArgumentException("n should be greater than 0")
+                Throw New ArgumentException("n should be greater than 0")
             End If
 
             Dim buf As Byte() = New Byte(n - 1) {}
@@ -119,7 +119,7 @@ Namespace HDF5.IO
 
         Public Overridable Sub skipBytes(n As Integer)
             If n < 0 Then
-                Throw New System.ArgumentException("n should be greater than 0")
+                Throw New ArgumentException("n should be greater than 0")
             End If
 
             For i As Integer = 0 To n - 1

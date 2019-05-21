@@ -54,14 +54,11 @@ Namespace HDF5.IO
     Public Class BinaryFileReader
         Inherits BinaryReader
 
-        Protected Friend m_randomaccessfile As FileStream
+        Protected Friend randomaccessfile As FileStream
 
         Public Sub New(filepath As String)
-            If String.ReferenceEquals(filepath, Nothing) Then
-                Throw New System.ArgumentException("filepath must not be null")
-            End If
-            If filepath.Length = 0 Then
-                Throw New System.ArgumentException("filepath must not be empty")
+            If filepath.StringEmpty Then
+                Throw New ArgumentException("filepath must not be null or empty!")
             End If
 
             _BinaryFileReader(New FileInfo(filepath))
@@ -81,7 +78,7 @@ Namespace HDF5.IO
             Me.m_littleEndian = True
             Me.m_maxOffset = 0
 
-            Me.m_randomaccessfile = New FileStream(file.FullName, FileMode.Open)
+            Me.randomaccessfile = New FileStream(file.FullName, FileMode.Open)
         End Sub
 
         Public Overrides Property offset() As Long
@@ -106,7 +103,7 @@ Namespace HDF5.IO
                 End If
 
                 ' change underlying file value
-                Me.m_randomaccessfile.Seek(Value, SeekOrigin.Begin)
+                Me.randomaccessfile.Seek(Value, SeekOrigin.Begin)
             End Set
         End Property
 
@@ -114,7 +111,7 @@ Namespace HDF5.IO
             If Me.m_offset >= Me.m_filesize Then
                 Throw New IOException("file offset reached to end of file")
             End If
-            Dim b As Byte = CByte(Me.m_randomaccessfile.ReadByte())
+            Dim b As Byte = CByte(Me.randomaccessfile.ReadByte())
 
             Me.m_offset += 1
 
@@ -127,8 +124,8 @@ Namespace HDF5.IO
 
         Public Overrides Sub close()
             Try
-                Me.m_randomaccessfile.Close()
-            Catch generatedExceptionName As IOException
+                Me.randomaccessfile.Close()
+            Catch ex As IOException
             End Try
             Me.m_offset = 0
         End Sub

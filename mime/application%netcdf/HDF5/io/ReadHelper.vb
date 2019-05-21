@@ -1,44 +1,44 @@
 ﻿#Region "Microsoft.VisualBasic::8a3fd7379763c26ee1cd872b3a9b842c, mime\application%netcdf\HDF5\io\ReadHelper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ReadHelper
-    ' 
-    '         Function: bytesToUnsignedInt, getNumBytesFromMax, padding, readL, readO
-    '                   readString8, readVariableSizeFactor, readVariableSizeMax, readVariableSizeN, readVariableSizeUnsigned
-    '                   unsignedByteToShort, unsignedIntToLong, unsignedShortToInt
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ReadHelper
+' 
+'         Function: bytesToUnsignedInt, getNumBytesFromMax, padding, readL, readO
+'                   readString8, readVariableSizeFactor, readVariableSizeMax, readVariableSizeN, readVariableSizeUnsigned
+'                   unsignedByteToShort, unsignedIntToLong, unsignedShortToInt
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,20 +51,20 @@
 
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.Structure
 
 Namespace HDF5.IO
 
+    Public Module ReadHelper
 
-    Public Class ReadHelper
-
-        Public Shared Function readO([in] As BinaryReader, sb As Superblock) As Long
+        Public Function readO([in] As BinaryReader, sb As Superblock) As Long
             If [in] Is Nothing Then
-                Throw New System.ArgumentException("in is null")
+                Throw New ArgumentException("in is null")
             End If
 
             If sb Is Nothing Then
-                Throw New System.ArgumentException("sb is null")
+                Throw New ArgumentException("sb is null")
             End If
 
             Dim sizeOfOffsets As Integer = sb.sizeOfOffsets
@@ -80,13 +80,13 @@ Namespace HDF5.IO
             Throw New IOException("size of offsets is not specified")
         End Function
 
-        Public Shared Function readL([in] As BinaryReader, sb As Superblock) As Long
+        Public Function readL([in] As BinaryReader, sb As Superblock) As Long
             If [in] Is Nothing Then
-                Throw New System.ArgumentException("in is null")
+                Throw New ArgumentException("in is null")
             End If
 
             If sb Is Nothing Then
-                Throw New System.ArgumentException("sb is null")
+                Throw New ArgumentException("sb is null")
             End If
 
             Dim sizeOfLengths As Integer = sb.sizeOfLengths
@@ -102,13 +102,13 @@ Namespace HDF5.IO
             Throw New IOException("size of lengths is not specified")
         End Function
 
-        Public Shared Function padding(dataLen As Integer, paddingSize As Integer) As Integer
+        Public Function padding(dataLen As Integer, paddingSize As Integer) As Integer
             If dataLen < 0 Then
-                Throw New System.ArgumentException("dataLen is negative")
+                Throw New ArgumentException("dataLen is negative")
             End If
 
             If paddingSize <= 0 Then
-                Throw New System.ArgumentException("dataLen is 0 or negative")
+                Throw New ArgumentException("dataLen is 0 or negative")
             End If
 
             Dim remain As Integer = dataLen Mod paddingSize
@@ -118,7 +118,7 @@ Namespace HDF5.IO
             Return remain
         End Function
 
-        Public Shared Function getNumBytesFromMax(maxNumber As Long) As Integer
+        Public Function getNumBytesFromMax(maxNumber As Long) As Integer
             Dim size As Integer = 0
             While maxNumber <> 0
                 size += 1
@@ -128,7 +128,7 @@ Namespace HDF5.IO
             Return size
         End Function
 
-        Public Shared Function readVariableSizeUnsigned([in] As BinaryReader, size As Integer) As Long
+        Public Function readVariableSizeUnsigned([in] As BinaryReader, size As Integer) As Long
             Dim vv As Long
             If size = 1 Then
                 vv = unsignedByteToShort([in].readByte())
@@ -145,12 +145,12 @@ Namespace HDF5.IO
             Return vv
         End Function
 
-        Public Shared Function readVariableSizeMax([in] As BinaryReader, maxNumber As Integer) As Long
+        Public Function readVariableSizeMax([in] As BinaryReader, maxNumber As Integer) As Long
             Dim size As Integer = getNumBytesFromMax(maxNumber)
             Return readVariableSizeUnsigned([in], size)
         End Function
 
-        Private Shared Function readVariableSizeN([in] As BinaryReader, nbytes As Integer) As Long
+        Private Function readVariableSizeN([in] As BinaryReader, nbytes As Integer) As Long
             Dim ch As Integer() = New Integer(nbytes - 1) {}
             For i As Integer = 0 To nbytes - 1
                 ch(i) = [in].readByte()
@@ -165,42 +165,43 @@ Namespace HDF5.IO
             Return result
         End Function
 
-        Public Shared Function unsignedIntToLong(i As Integer) As Long
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function unsignedIntToLong(i As Integer) As Long
             Return If((i < 0), CLng(i) + 4294967296L, CLng(i))
         End Function
 
-        Public Shared Function unsignedShortToInt(s As Short) As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function unsignedShortToInt(s As Short) As Integer
             Return (s And &HFFFF)
         End Function
 
-        Public Shared Function unsignedByteToShort(b As Byte) As Short
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function unsignedByteToShort(b As Byte) As Short
             Return CShort(b And &HFF)
         End Function
 
-        Public Shared Function bytesToUnsignedInt(upper As Byte, lower As Byte) As Integer
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function bytesToUnsignedInt(upper As Byte, lower As Byte) As Integer
             Return unsignedByteToShort(upper) * 256 + unsignedByteToShort(lower)
         End Function
 
-        Public Shared Function readString8([in] As BinaryReader) As String
+        Public Function readString8([in] As BinaryReader) As String
             Dim filePos As Long = [in].offset
-
             Dim str As String = [in].readASCIIString()
-
             Dim newFilePos As Long = [in].offset
-
             Dim readCount As Integer = CInt(newFilePos - filePos)
-
             ' skip to 8 byte boundary, note zero byte is skipped
             Dim padding As Integer = ReadHelper.padding(readCount, 8)
-            [in].skipBytes(padding)
+
+            Call [in].skipBytes(padding)
 
             Return str
         End Function
 
-        Public Shared Function readVariableSizeFactor([in] As BinaryReader, sizeFactor As Integer) As Long
+        Public Function readVariableSizeFactor([in] As BinaryReader, sizeFactor As Integer) As Long
             Dim size As Integer = CInt(Math.Truncate(Math.Pow(2, sizeFactor)))
             Return readVariableSizeUnsigned([in], size)
         End Function
-    End Class
+    End Module
 
 End Namespace
