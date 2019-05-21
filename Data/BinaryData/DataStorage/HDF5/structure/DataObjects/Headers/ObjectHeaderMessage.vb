@@ -133,7 +133,7 @@ Namespace HDF5.[Structure]
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.GroupInfo Then
                 Throw New IOException("Group Info not implemented")
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FilterPipeline Then
-                Throw New IOException("Filter Pipeline not implemented")
+                Me.filterPipelineMessage = New FilterPipelineMessage([in], sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Attribute Then
                 Me.attributeMessage = New AttributeMessage([in], sb, [in].offset)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Comment Then
