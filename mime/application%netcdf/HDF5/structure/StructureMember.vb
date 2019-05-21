@@ -116,6 +116,10 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
+        Public Overrides Function ToString() As String
+            Return $"Dim {name} As {message} = [&{address}, {offset}]"
+        End Function
+
         Public Overridable Sub printValues()
             Console.WriteLine("StructureMember >>>")
             Console.WriteLine("address : " & Me.m_address)

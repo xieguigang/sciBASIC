@@ -56,7 +56,10 @@ Imports System.Collections.Generic
 
 Namespace HDF5.[Structure]
 
-	Public Class Layout
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    Public Class Layout
 
 		Private m_dataAddress As Long
 		Private m_numberOfDimensions As Integer
