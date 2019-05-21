@@ -82,7 +82,9 @@ Namespace edu.arizona.cs.hdf5.test
             End If
 
             Dim reader As New HDF5Reader(filename, "sample")
-            reader.parseHeader()
+            ' reader.parseHeader()
+
+            Dim ids = reader.ParseDataObject("ids")
 
             If showHeader Then
                 Dim headerSize As Long = reader.headerSize

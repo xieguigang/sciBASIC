@@ -53,15 +53,19 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 Namespace HDF5.[Structure]
 
     Public Class DataBTree
-        Private m_layout As Layout
+
+        ReadOnly layout As Layout
 
         Public Sub New(layout As Layout)
-            Me.m_layout = layout
+            Me.layout = layout
         End Sub
 
-
         Public Overridable Function getChunkIterator([in] As BinaryReader, sb As Superblock) As DataChunkIterator
-            Return New DataChunkIterator([in], sb, Me.m_layout)
+            Return New DataChunkIterator([in], sb, Me.layout)
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return layout.ToString
         End Function
     End Class
 

@@ -201,14 +201,14 @@ Namespace HDF5.[Structure]
                     If Not dm Is Nothing Then
                         ' dm.type()
                     End If
-                ElseIf msg.headerMessageType Is ObjectHeaderMessageType.Group Then
-                    Dim groups As GroupMessage = msg.groupMessage
+                    ' ElseIf msg.headerMessageType Is ObjectHeaderMessageType.Group Then
+                    '    Dim groups As GroupMessage = msg.groupMessage
 
                     ' 20190521 group message no layout??
                     ' readLayout.dataAddress = groups.bTreeAddress
                     ' Throw New NotImplementedException
-                Else
-                    Throw New NotImplementedException
+                    'Else
+                    ' Throw New NotImplementedException
                 End If
             Next
 

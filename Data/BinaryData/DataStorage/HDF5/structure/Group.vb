@@ -59,11 +59,20 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace HDF5.[Structure]
 
+    ''' <summary>
+    ''' A group of <see cref="DataObjectFacade"/>
+    ''' </summary>
     Public Class Group
 
         Shared ReadOnly NESTED_OBJECTS As New List(Of DataObjectFacade)()
 
         Dim m_facade As DataObjectFacade
+
+        Public Overridable ReadOnly Property objects() As List(Of DataObjectFacade)
+            Get
+                Return NESTED_OBJECTS
+            End Get
+        End Property
 
         Public Sub New([in] As BinaryReader, sb As Superblock, facade As DataObjectFacade)
             Me.m_facade = facade
@@ -93,12 +102,6 @@ Namespace HDF5.[Structure]
                 Call NESTED_OBJECTS.Add(dobj)
             Next
         End Sub
-
-        Public Overridable ReadOnly Property objects() As List(Of DataObjectFacade)
-            Get
-                Return NESTED_OBJECTS
-            End Get
-        End Property
 
         Public Overrides Function ToString() As String
             Return m_facade.symbolName & "\" & objects _
