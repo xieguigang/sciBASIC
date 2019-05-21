@@ -91,11 +91,15 @@ Namespace HDF5.[Structure]
 			End Get
 		End Property
 
-		Public Overridable ReadOnly Property byteLength() As Integer
-			Get
-				Return Me.m_byteLength
-			End Get
-		End Property
-	End Class
+        Public Overridable ReadOnly Property byteLength() As Integer
+            Get
+                Return Me.m_byteLength
+            End Get
+        End Property
+
+        Public Overrides Function ToString() As String
+            Return $"Dim {name} As {dataType.ToString} = [&{offset}, {byteLength}]"
+        End Function
+    End Class
 
 End Namespace

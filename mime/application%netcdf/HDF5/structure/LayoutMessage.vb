@@ -55,11 +55,17 @@ Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
 
 Namespace HDF5.[Structure]
 
+    Public Enum LayoutClass As Integer
+        CompactStorage = 0
+        ContiguousStorage = 1
+        ChunkedStorage = 2
+    End Enum
+
     Public Class LayoutMessage
         Private m_address As Long
         Private m_version As Integer
         Private m_numberOfDimensions As Integer
-        Private m_type As Integer
+        Private m_type As LayoutClass
         Private m_dataAddress As Long
         Private m_continuousSize As Long
         Private m_chunkSize As Integer()
@@ -93,15 +99,15 @@ Namespace HDF5.[Structure]
                     Me.m_dataAddress = [in].offset
                 End If
             Else
-                Me.m_type = [in].readByte()
+                Me.m_type = CType(CInt([in].readByte), LayoutClass)
 
-                If Me.m_type = 0 Then
+                If Me.m_type = LayoutClass.CompactStorage Then
                     Me.m_dataSize = [in].readShort()
                     Me.m_dataAddress = [in].offset
-                ElseIf Me.m_type = 1 Then
+                ElseIf Me.m_type = LayoutClass.ContiguousStorage Then
                     Me.m_dataAddress = ReadHelper.readO([in], sb)
                     Me.m_continuousSize = ReadHelper.readL([in], sb)
-                ElseIf Me.m_type = 2 Then
+                ElseIf Me.m_type = LayoutClass.ChunkedStorage Then
                     Me.m_numberOfDimensions = [in].readByte()
                     Me.m_dataAddress = ReadHelper.readO([in], sb)
                     Me.m_chunkSize = New Integer(Me.m_numberOfDimensions - 1) {}
