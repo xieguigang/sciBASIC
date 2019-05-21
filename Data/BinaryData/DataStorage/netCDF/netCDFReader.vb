@@ -50,8 +50,8 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
 Imports Microsoft.VisualBasic.Text
 
 Namespace netCDF
@@ -271,7 +271,7 @@ Namespace netCDF
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             With New StringBuilder
-                Call netCDF.toString(Me, New IO.StringWriter(.ByRef))
+                Call netCDF.toString(Me, New System.IO.StringWriter(.ByRef))
                 Return .ToString
             End With
         End Function

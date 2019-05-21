@@ -52,7 +52,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.Structure
+Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
 
 Namespace HDF5.IO
 

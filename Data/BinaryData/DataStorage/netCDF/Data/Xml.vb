@@ -45,7 +45,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
+Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 
 Namespace netCDF
 

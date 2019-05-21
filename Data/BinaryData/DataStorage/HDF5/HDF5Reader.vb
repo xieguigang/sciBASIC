@@ -48,12 +48,17 @@
 ' * Written by iychoi@email.arizona.edu
 ' 
 
-Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
-Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.Structure
+Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
+Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
 
 Namespace HDF5
 
-
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <remarks>
+    ''' A VB.NET continues work of this java project: https://github.com/iychoi/HDF5HadoopReader
+    ''' </remarks>
     Public Class HDF5Reader
 
         Private m_reader As BinaryReader

@@ -49,7 +49,7 @@
 ' 
 
 
-Imports Microsoft.VisualBasic.MIME.application.netCDF.HDF5.IO
+Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 
 Namespace HDF5.[Structure]
 

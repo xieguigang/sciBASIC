@@ -40,9 +40,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.application.netCDF.Components
 
 Namespace netCDF
 
