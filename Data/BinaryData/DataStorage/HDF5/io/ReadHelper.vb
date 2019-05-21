@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
 
 Namespace HDF5.IO
 
-    Public Module ReadHelper
+    <HideModuleName> Public Module ReadHelper
 
         Public Function readO([in] As BinaryReader, sb As Superblock) As Long
             If [in] Is Nothing Then
