@@ -91,12 +91,12 @@ Namespace HDF5.[Structure]
 			mess(num) = Me
 		End Sub
 
-		''' <summary>
-		''' Find the MessageType that matches this name.
-		''' </summary>
-		''' <param name="name"> find DataTYpe with this name. </param>
-		''' <returns> DataType or null if no match. </returns>
-		Public Shared Overloads Function [getType](name As String) As ObjectHeaderMessageType
+        ''' <summary>
+        ''' Find the MessageType that matches this name.
+        ''' </summary>
+        ''' <param name="name"> find DataTYpe with this name. </param>
+        ''' <returns> DataType or null if no match. </returns>
+        Public Shared Overloads Function [getType](name As String) As ObjectHeaderMessageType
 			If String.ReferenceEquals(name, Nothing) Then
 				Return Nothing
 			End If

@@ -238,13 +238,18 @@ Namespace HDF5.[Structure]
 			End Get
 		End Property
 
-		Public Overridable ReadOnly Property dataspaceMessage() As DataspaceMessage
-			Get
-				Return Me.m_dataspaceMessage
-			End Get
-		End Property
+        Public Overridable ReadOnly Property dataspaceMessage() As DataspaceMessage
+            Get
+                Return Me.m_dataspaceMessage
+            End Get
+        End Property
 
-		Public Overridable Sub printValues()
+        Public Overrides Function ToString() As String
+            Return headerMessageType.ToString
+        End Function
+
+
+        Public Overridable Sub printValues()
 			Console.WriteLine("ObjectHeaderMessage >>>")
 			Console.WriteLine("address : " & Me.m_address)
 			Console.WriteLine("header message type : " & Convert.ToString(Me.m_headerMessageType))
