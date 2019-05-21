@@ -162,7 +162,7 @@ Namespace HDF5.[Structure]
 
                 ' read the values; must switch to base byte order (!)
                 If Not Me.m_base.m_littleEndian Then
-                    [in].setBigEndian()
+                    [in].SetByteOrder(ByteOrder.BigEndian)
                 End If
 
                 Dim enumValue As Integer() = New Integer(nmembers - 1) {}
@@ -176,7 +176,7 @@ Namespace HDF5.[Structure]
                 'for (int i = 0; i < nmembers; i++)
                 '    map.put(enumValue[i], enumName[i]);
 
-                [in].setLittleEndian()
+                [in].SetByteOrder(ByteOrder.LittleEndian)
             ElseIf Me.m_type = DataTypes.DATATYPE_VARIABLE_LENGTH Then
                 ' Throw New Exception("data type variable length is not implemented")
 

@@ -54,13 +54,21 @@ Namespace HDF5.IO
         Protected Friend m_maxOffset As Long
         Protected filesize As Long
 
-        Public MustOverride Function readByte() As Byte
-
-        Public MustOverride Sub close()
-
-        Public Overridable ReadOnly Property maxOffset() As Long
+        Public Overridable ReadOnly Property maxOffset As Long
             Get
                 Return Me.m_maxOffset
+            End Get
+        End Property
+
+        Public Overridable Property offset As Long
+
+        ''' <summary>
+        ''' The file size in bytes
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overridable ReadOnly Property size As Long
+            Get
+                Return filesize
             End Get
         End Property
 
@@ -82,25 +90,21 @@ Namespace HDF5.IO
             Me.m_maxOffset = 0
         End Sub
 
-        Public Overridable Property offset() As Long
+        Public MustOverride Function readByte() As Byte
 
-        ''' <summary>
-        ''' The file size in bytes
-        ''' </summary>
-        ''' <returns></returns>
-        Public Overridable ReadOnly Property size() As Long
-            Get
-                Return filesize
-            End Get
-        End Property
+        Public MustOverride Sub close()
 
-        Public Overridable Sub setLittleEndian()
-            Me.m_littleEndian = True
+        Public Sub SetByteOrder(order As ByteOrder)
+            If order = ByteOrder.BigEndian Then
+                m_littleEndian = False
+            Else
+                m_littleEndian = True
+            End If
         End Sub
 
-        Public Overridable Sub setBigEndian()
-            Me.m_littleEndian = False
-        End Sub
+        Public Overrides Function ToString() As String
+            Return $"[{offset}/{filesize}] {ByteOrder.ToString}"
+        End Function
 
         Public Overridable Function readBytes(n As Integer) As Byte()
             If n < 0 Then
@@ -114,7 +118,6 @@ Namespace HDF5.IO
             Return buf
         End Function
 
-
         Public Overridable Sub skipBytes(n As Integer)
             If n < 0 Then
                 Throw New ArgumentException("n should be greater than 0")
@@ -124,7 +127,6 @@ Namespace HDF5.IO
                 readByte()
             Next
         End Sub
-
 
         Public Overridable Function readInt() As Integer
             Dim data As Byte() = readBytes(4)
@@ -143,7 +145,6 @@ Namespace HDF5.IO
             End If
             Return temp
         End Function
-
 
         Public Overridable Function readLong() As Long
             Dim data As Byte() = readBytes(8)
@@ -171,7 +172,6 @@ Namespace HDF5.IO
             Return temp
         End Function
 
-
         Public Overridable Function readShort() As Short
             Dim data As Byte() = readBytes(2)
             Dim temp As Short = 0
@@ -185,7 +185,6 @@ Namespace HDF5.IO
             End If
             Return temp
         End Function
-
 
         Public Overridable Function readASCIIString() As String
             Dim sb As New StringBuilder()

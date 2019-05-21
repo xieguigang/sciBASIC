@@ -45,6 +45,7 @@
 ' 
 
 
+Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5
 Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
@@ -119,16 +120,16 @@ Namespace edu.arizona.cs.hdf5.test
 
             ' chunk
             Dim chunkReader As BinaryReader = reader.reader
-            chunkReader.setLittleEndian()
-
-
             Dim dataTotal As Integer = dlength(0)
             Dim readCount As Integer = 0
-
             Dim chunks As List(Of DataChunk) = reader.chunks
+
+            Call chunkReader.SetByteOrder(ByteOrder.LittleEndian)
+
             For Each chunk As DataChunk In chunks
 
                 Dim filepos As Long = chunk.filePosition
+
                 If showHeader Then
                     chunk.printValues()
                 End If

@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
+Imports Microsoft.VisualBasic.Language
 
 Namespace HDF5.[Structure]
 
@@ -17,13 +18,41 @@ Namespace HDF5.[Structure]
 
         Public ReadOnly Property version As Integer
         Public ReadOnly Property numberOfFilters As Integer
-
+        Public ReadOnly Property description As New List(Of FilterDescription)
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             MyBase.New(address)
 
             Me.version = [in].readByte()
             Me.numberOfFilters = [in].readByte
+
+            ' skip 3 reserved zero bytes
+            Dim reserved = [in].readBytes(3)
+
+            If reserved.Any(Function(b) b <> 0) Then
+                Throw New InvalidProgramException
+            End If
+
+            ' read filter descriptions
+            For i As Integer = 0 To numberOfFilters - 1
+                description += New FilterDescription([in], [in].offset)
+            Next
+        End Sub
+    End Class
+
+    Public Class FilterDescription : Inherits HDF5Ptr
+
+        ''' <summary>
+        ''' 2 bytes
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property uid As Byte()
+
+        Sub New([in] As BinaryReader, address&)
+            Call MyBase.New(address)
+
+            uid = [in].readBytes(2)
+
 
             Throw New NotImplementedException
         End Sub
