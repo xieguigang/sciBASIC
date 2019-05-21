@@ -212,6 +212,9 @@ Namespace HDF5.[Structure]
                         ' dm.type()
                     End If
                 ElseIf msg.headerMessageType Is ObjectHeaderMessageType.Group Then
+                    Dim groups = msg.groupMessage
+
+
                     Throw New NotImplementedException
                 Else
                     Throw New NotImplementedException
