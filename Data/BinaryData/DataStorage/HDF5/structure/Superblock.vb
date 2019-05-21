@@ -62,10 +62,10 @@ Namespace HDF5.[Structure]
     ''' <summary>
     ''' The superblock may begin at certain predefined offsets within the HDF5 file, allowing a 
     ''' block of unspecified content for users to place additional information at the beginning 
-    ''' (and end) of the HDF5 file without limiting the HDF5 Library��s ability to manage the 
+    ''' (and end) of the HDF5 file without limiting the HDF5 Library's ability to manage the 
     ''' objects within the file itself. This feature was designed to accommodate wrapping an 
     ''' HDF5 file in another file format or adding descriptive information to an HDF5 file without 
-    ''' requiring the modification of the actual file��s information. The superblock is located 
+    ''' requiring the modification of the actual file's information. The superblock is located 
     ''' by searching for the HDF5 format signature at byte offset 0, byte offset 512, and at 
     ''' successive locations in the file, each a multiple of two of the previous location; 
     ''' in other words, at these byte offsets: 0, 512, 1024, 2048, and so on.

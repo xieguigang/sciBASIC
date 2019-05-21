@@ -69,11 +69,9 @@ Namespace HDF5.[Structure]
     ''' addresses of objects in symbol table nodes with the names of links stored in the group's 
     ''' local heap.
     ''' </summary>
-    Public Class LocalHeap
+    Public Class LocalHeap : Inherits HDF5Ptr
 
         Shared ReadOnly LOCALHEAP_SIGNATURE As Byte() = New CharStream() From {"H"c, "E"c, "A"c, "P"c}
-
-        Private m_address As Long
 
         Private m_signature As Byte()
         Private m_version As Integer
@@ -87,8 +85,7 @@ Namespace HDF5.[Structure]
         Private m_totalLocalHeapSize As Integer
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
-
-            Me.m_address = address
+            Call MyBase.New(address)
 
             [in].offset = address
 
@@ -122,12 +119,6 @@ Namespace HDF5.[Structure]
             [in].offset = Me.m_addressOfDataSegment
             Me.m_data = [in].readBytes(CInt(Me.m_dataSegmentSize))
         End Sub
-
-        Public Overridable ReadOnly Property address() As Long
-            Get
-                Return Me.m_address
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property signature() As Byte()
             Get

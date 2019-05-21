@@ -56,10 +56,11 @@ Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 Imports Microsoft.VisualBasic.Language
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
-Namespace HDF5.[Structure]
+Namespace HDF5.[Structure].BTree
 
 
     Public Class BLinkTreeNode
+
         Public Shared ReadOnly BLINKTREENODE_SIGNATURE As Byte() = New CharStream() From {"T"c, "R"c, "E"c, "E"c}
 
         Private m_signature As Byte()

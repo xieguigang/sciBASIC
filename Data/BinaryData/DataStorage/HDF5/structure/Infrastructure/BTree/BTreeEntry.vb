@@ -54,7 +54,7 @@
 
 Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 
-Namespace HDF5.[Structure]
+Namespace HDF5.[Structure].BTree
 
 
     Public Class BTreeEntry

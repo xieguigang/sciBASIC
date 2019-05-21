@@ -70,8 +70,8 @@
     <Compile Include="HDF5\io\BinaryReader.vb" />
     <Compile Include="HDF5\io\ReadHelper.vb" />
     <Compile Include="HDF5\structure\AttributeMessage.vb" />
-    <Compile Include="HDF5\structure\BLinkTreeNode.vb" />
-    <Compile Include="HDF5\structure\BTreeEntry.vb" />
+    <Compile Include="HDF5\structure\Infrastructure\BTree\BLinkTreeNode.vb" />
+    <Compile Include="HDF5\structure\Infrastructure\BTree\BTreeEntry.vb" />
     <Compile Include="HDF5\structure\ContinueMessage.vb" />
     <Compile Include="HDF5\structure\DataBTree.vb" />
     <Compile Include="HDF5\structure\DataChunk.vb" />

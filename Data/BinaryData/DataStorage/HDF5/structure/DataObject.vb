@@ -66,8 +66,6 @@ Namespace HDF5.[Structure]
 
             [in].offset = address
 
-
-
             Me.m_objectHeader = New ObjectHeader([in], sb, address)
 
             For Each msg As ObjectHeaderMessage In Me.m_objectHeader.headerMessages
