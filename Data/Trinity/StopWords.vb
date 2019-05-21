@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf9beb4195ad2659f9115b96a81f8ab1, Data\Trinity\StopWords.vb"
+﻿#Region "Microsoft.VisualBasic::fa16a5a30499a3f43c8eeba9e906ed43, Data\Trinity\StopWords.vb"
 
     ' Author:
     ' 

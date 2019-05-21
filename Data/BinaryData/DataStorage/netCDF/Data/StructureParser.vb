@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7084a658eb7742c675806a90012f86e, mime\application%netcdf\Data\StructureParser.vb"
+﻿#Region "Microsoft.VisualBasic::7aafd242a2240fa02d83212c4e5fd9c1, Data\BinaryData\DataStorage\netCDF\Data\StructureParser.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module StructureParser
+    '     Module StructureParser
     ' 
-    '     Function: attributesList, dimensionsList, variablesList
+    '         Function: attributesList, dimensionsList, variablesList
+    ' 
     ' 
     ' /********************************************************************************/
 

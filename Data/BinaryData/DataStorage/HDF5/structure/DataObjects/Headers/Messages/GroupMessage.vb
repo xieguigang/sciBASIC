@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51552d98f89a498ff29d21fdacc19659, mime\application%netcdf\HDF5\structure\GroupMessage.vb"
+﻿#Region "Microsoft.VisualBasic::44006d9ef0d2fa1ede83ee27850a4130, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\GroupMessage.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,12 @@
 
     '     Class GroupMessage
     ' 
-    '         Properties: address, bTreeAddress, nameHeapAddress
+    '         Properties: bTreeAddress, nameHeapAddress
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
     '         Sub: printValues
     ' 
     ' 

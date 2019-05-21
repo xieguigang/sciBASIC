@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::764b210460aaa9e5487e31e496bb5c42, mime\application%netcdf\HDF5\structure\SymbolTableEntry.vb"
+﻿#Region "Microsoft.VisualBasic::b4413da21bc36da9d955bd640c1fc066, Data\BinaryData\DataStorage\HDF5\structure\SymbolTableEntry.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class SymbolTableEntry
     ' 
-    '         Properties: address, cacheType, linkNameOffset, objectHeaderAddress, objectHeaderScratchpadFormat
-    '                     scratchpadSpace, size, symbolicLinkScratchpadFormat, totalSymbolTableEntrySize
+    '         Properties: cacheType, linkNameOffset, objectHeaderAddress, objectHeaderScratchpadFormat, scratchpadSpace
+    '                     size, symbolicLinkScratchpadFormat, totalSymbolTableEntrySize
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: printValues

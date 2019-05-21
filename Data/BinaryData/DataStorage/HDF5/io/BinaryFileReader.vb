@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e90347ebea7ed9e90670a47cbabceefc, mime\application%netcdf\HDF5\io\BinaryFileReader.vb"
+﻿#Region "Microsoft.VisualBasic::5b637d269d9f278a15ab0274e7eef78b, Data\BinaryData\DataStorage\HDF5\io\BinaryFileReader.vb"
 
     ' Author:
     ' 
@@ -37,7 +37,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: readByte
+    '         Function: readByte, ToString
     ' 
     '         Sub: _BinaryFileReader, close
     ' 

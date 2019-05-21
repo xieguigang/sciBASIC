@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd4e244b1809497e042576dea7875cdf, www\Microsoft.VisualBasic.NETProtocol\HTTP\WebCrawling.vb"
+﻿#Region "Microsoft.VisualBasic::1c56186ff156609005b1bd23082d0c9a, www\Microsoft.VisualBasic.NETProtocol\HTTP\WebCrawling.vb"
 
     ' Author:
     ' 

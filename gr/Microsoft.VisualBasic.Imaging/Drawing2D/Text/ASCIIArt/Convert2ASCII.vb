@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43ff73c0f8da195bf4a129d4d56f7e97, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::bc60cc7f98f9e3c2be47533a8e999a3b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
 
     ' Author:
     ' 

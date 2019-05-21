@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82601396aeebadcc0545a04332c9e02b, mime\application%netcdf\Data\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::d8645547bb2f4c4929082432fcc1d974, Data\BinaryData\DataStorage\netCDF\Data\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,11 @@
 
     ' Summaries:
 
-    ' Module TypeExtensions
+    '     Module TypeExtensions
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: num2str, readNumber, readType, sizeof, str2num
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: num2str, readNumber, readType, sizeof, str2num
+    ' 
     ' 
     ' /********************************************************************************/
 

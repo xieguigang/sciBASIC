@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37f5da1e3a3f66aa429fee0ce77b0dc4, mime\application%netcdf\HDF5\structure\LinkMessage.vb"
+﻿#Region "Microsoft.VisualBasic::7367c84468d034f0a25c838897013588, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\LinkMessage.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class LinkMessage
     ' 
-    '         Properties: address, creationOrder, encoding, flags, link
-    '                     linkAddress, linkName, linkType, version
+    '         Properties: creationOrder, encoding, flags, link, linkAddress
+    '                     linkName, linkType, version
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: printValues

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c21d8147bcf146e82dd32739a8141a0a, mime\application%netcdf\HDF5\structure\FillValueMessage.vb"
+﻿#Region "Microsoft.VisualBasic::14aa1b5ab5374cf1d9e7a5d4c6ce9d37, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\FillValueMessage.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class FillValueMessage
     ' 
-    '         Properties: address, fillWriteTime, flags, hasFillValue, size
-    '                     spaceAllocateTime, value, version
+    '         Properties: fillWriteTime, flags, hasFillValue, size, spaceAllocateTime
+    '                     value, version
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: printValues

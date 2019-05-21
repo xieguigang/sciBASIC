@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41a1c52238a35d202e5df309c800b2a9, Data_science\Mathematica\SignalProcessing\WaveletTransform\Constructors\WaveletConstructor.vb"
+﻿#Region "Microsoft.VisualBasic::1d19fe63b279eb9a79c08775376e129b, Data_science\Mathematica\SignalProcessing\WaveletTransform\Constructors\WaveletConstructor.vb"
 
     ' Author:
     ' 

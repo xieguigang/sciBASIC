@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::013e8197f83ab76241423b1ab8ab9295, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\BitMap\HashModel.vb"
+﻿#Region "Microsoft.VisualBasic::6865bc93e0c1e1c2ed06c0102388141a, Microsoft.VisualBasic.Core\ComponentModel\DataStructures\BitMap\HashModel.vb"
 
     ' Author:
     ' 

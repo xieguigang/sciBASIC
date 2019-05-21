@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45e9ba5ab6a3c3ed23d7db38fbc9b73f, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
+﻿#Region "Microsoft.VisualBasic::56243c01bc66bfe7b1d456ab53f07120, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\IActivationFunction.vb"
 
     ' Author:
     ' 

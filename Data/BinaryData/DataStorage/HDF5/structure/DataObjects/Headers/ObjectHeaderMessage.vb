@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1f2837c1deb30371670a59166dc874f, mime\application%netcdf\HDF5\structure\ObjectHeaderMessage.vb"
+﻿#Region "Microsoft.VisualBasic::ec9d10320ccdc9b9cabaf6c432261762, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\ObjectHeaderMessage.vb"
 
     ' Author:
     ' 
@@ -31,15 +31,18 @@
 
     ' Summaries:
 
-    ' 	Class ObjectHeaderMessage
+    '     Class ObjectHeaderMessage
     ' 
-    ' 	    Properties: address, attributeMessage, continueMessage, dataspaceMessage, dataTypeMessage
-    '                  fillValueMessage, fillValueOldMessage, groupMessage, headerLength, headerMessageData
-    '                  headerMessageFlags, headerMessageType, headerMessageTypeNo, lastModifiedMessage, layoutMessage
-    '                  linkMessage, sizeOfHeaderMessageData
+    '         Properties: attributeMessage, continueMessage, dataspaceMessage, dataTypeMessage, fillValueMessage
+    '                     fillValueOldMessage, filterPipelineMessage, groupMessage, headerLength, headerMessageData
+    '                     headerMessageFlags, headerMessageType, headerMessageTypeNo, lastModifiedMessage, layoutMessage
+    '                     linkMessage, sizeOfHeaderMessageData
     ' 
-    ' 	    Constructor: (+1 Overloads) Sub New
-    ' 	    Sub: printValues
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: printValues
     ' 
     ' 
     ' /********************************************************************************/

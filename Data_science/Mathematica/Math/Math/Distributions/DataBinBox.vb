@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f731e8a2ec306cc613ea5bf811442d7, Data_science\Mathematica\Math\Math\Distributions\DataBinBox.vb"
+﻿#Region "Microsoft.VisualBasic::98e8084ef8004c4f8043df914bd66040, Data_science\Mathematica\Math\Math\Distributions\DataBinBox.vb"
 
     ' Author:
     ' 

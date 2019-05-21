@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::733846ffc8ee9def4fe1d5b86296735c, mime\application%netcdf\HDF5\structure\LastModifiedMessage.vb"
+﻿#Region "Microsoft.VisualBasic::e902cb4325a9cb1c5622ae62534b255e, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\LastModifiedMessage.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class LastModifiedMessage
     ' 
-    '         Properties: address, seconds, version
+    '         Properties: seconds, version
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: printValues

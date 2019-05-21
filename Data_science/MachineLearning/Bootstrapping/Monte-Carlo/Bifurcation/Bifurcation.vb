@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::278cbfcaa8ad58b7050bea5387555ead, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Bifurcation\Bifurcation.vb"
+﻿#Region "Microsoft.VisualBasic::1b77cc38cfaa6ce58bdf6ede328bdbaf, Data_science\MachineLearning\Bootstrapping\Monte-Carlo\Bifurcation\Bifurcation.vb"
 
     ' Author:
     ' 

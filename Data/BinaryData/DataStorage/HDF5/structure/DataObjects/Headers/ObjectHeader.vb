@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a130d643fec10050ebabc4db0c44dea, mime\application%netcdf\HDF5\structure\ObjectHeader.vb"
+﻿#Region "Microsoft.VisualBasic::e35f2fd21005452d29b70912541a29b0, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\ObjectHeader.vb"
 
     ' Author:
     ' 
@@ -31,16 +31,15 @@
 
     ' Summaries:
 
-    ' 	Class ObjectHeader
+    '     Class ObjectHeader
     ' 
-    ' 	    Properties: address, headerMessages, objectHeaderSize, objectReferenceCount, totalNumberOfHeaderMessages
-    '                  version
+    '         Properties: headerMessages, objectHeaderSize, objectReferenceCount, totalNumberOfHeaderMessages, version
     ' 
-    ' 	    Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+1 Overloads) Sub New
     ' 
-    ' 	    Function: readVersion1
+    '         Function: readVersion1
     ' 
-    ' 	    Sub: printValues, readVersion2
+    '         Sub: printValues, readVersion2
     ' 
     ' 
     ' /********************************************************************************/

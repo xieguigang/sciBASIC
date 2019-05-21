@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2d84930e3f159ee6a0920b697ec5989, gr\network-visualization\Visualizer\Styling\Expression\BrushExpression.vb"
+﻿#Region "Microsoft.VisualBasic::cc725fb54546c1d58bc7a54608faa7dc, gr\network-visualization\Visualizer\Styling\Expression\BrushExpression.vb"
 
     ' Author:
     ' 

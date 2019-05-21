@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05de739cb085fc85f552bf7dde34b415, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb"
+﻿#Region "Microsoft.VisualBasic::c2762ad3badc4447e689aa531abc5415, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\XmlDoc\Extensions\VBSpecific.vb"
 
     ' Author:
     ' 

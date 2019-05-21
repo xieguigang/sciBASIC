@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7edaba7dfd8876be5e28ed870ba7e654, tutorials\core.test\XmlBugTest.vb"
+﻿#Region "Microsoft.VisualBasic::6a05fd4bf8761d08c9ac2da83197fbb4, tutorials\core.test\XmlBugTest.vb"
 
     ' Author:
     ' 

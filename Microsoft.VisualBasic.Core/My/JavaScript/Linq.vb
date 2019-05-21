@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5b0ee3047ef1294702c1dce3a5eed22, Microsoft.VisualBasic.Core\Language\Language\JavaScript\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::07bb13fb4b1929e273c991396589819c, Microsoft.VisualBasic.Core\My\JavaScript\Linq.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,9 @@
 
     '     Module Linq
     ' 
-    '         Function: Reduce, (+2 Overloads) Sort
+    '         Function: (+2 Overloads) match, parseInt, Reduce, (+2 Overloads) Sort, test
     ' 
-    '         Sub: (+2 Overloads) splice
+    '         Sub: match, (+2 Overloads) splice
     ' 
     ' 
     ' /********************************************************************************/

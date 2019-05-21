@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a955cdaefcd464b160a3902c8bceadb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3168b9f95a7f2b1e99e14857d7b59e2f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 

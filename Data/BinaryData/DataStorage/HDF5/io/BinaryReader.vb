@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d396442c0e23d605a78385ec31baaf0d, mime\application%netcdf\HDF5\io\BinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::a64d536beddb85008499d1428c4cee65, Data\BinaryData\DataStorage\HDF5\io\BinaryReader.vb"
 
     ' Author:
     ' 
@@ -33,11 +33,12 @@
 
     '     Class BinaryReader
     ' 
-    '         Properties: bigEndian, littleEndian, maxOffset, offset, size
+    '         Properties: ByteOrder, maxOffset, offset, size
     ' 
     '         Function: (+2 Overloads) readASCIIString, readBytes, readInt, readLong, readShort
+    '                   ToString
     ' 
-    '         Sub: clearMaxOffset, setBigEndian, setLittleEndian, skipBytes
+    '         Sub: clearMaxOffset, (+2 Overloads) Dispose, SetByteOrder, skipBytes
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bea04a6b3e42f10829dc10fe10476b28, mime\application%netcdf\HDF5\structure\BTreeEntry.vb"
+﻿#Region "Microsoft.VisualBasic::8838bbefb42cf7b9c7411e621936725d, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\BTree\BTreeEntry.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class BTreeEntry
     ' 
-    '         Properties: address, key, targetAddress
+    '         Properties: key, targetAddress
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: printValues

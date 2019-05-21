@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77043be62541378aa6f09179a97a3427, Data\OCR\test\splitTest.vb"
+﻿#Region "Microsoft.VisualBasic::1515647ca552f9fe3d0b014160f76fd5, Data\OCR\test\splitTest.vb"
 
     ' Author:
     ' 

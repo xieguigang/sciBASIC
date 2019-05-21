@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a849e5d234919673e6938d8b76363248, mime\application%netcdf\HDF5\structure\Infrastructure\LocalHeap.vb"
+﻿#Region "Microsoft.VisualBasic::0f1467f0d49ea5170c7fa4a0254d226f, Data\BinaryData\DataStorage\HDF5\structure\Infrastructure\LocalHeap.vb"
 
     ' Author:
     ' 
@@ -33,12 +33,12 @@
 
     '     Class LocalHeap
     ' 
-    '         Properties: address, addressOfDataSegment, data, dataSegmentSize, offsetToHeadOfFreeList
-    '                     signature, totalLocalHeapSize, validSignature, version
+    '         Properties: addressOfDataSegment, data, dataSegmentSize, offsetToHeadOfFreeList, signature
+    '                     totalLocalHeapSize, validSignature, version
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: getString
+    '         Function: getString, ToString
     ' 
     '         Sub: printValues
     ' 

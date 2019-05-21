@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f593dae6ea18b78a2d412f8c16b7c808, Data_science\Mathematica\SignalProcessing\WaveletTransform\Constructors\Coiflets.vb"
+﻿#Region "Microsoft.VisualBasic::a72c5d3a980fb316f41d68b7e2337b73, Data_science\Mathematica\SignalProcessing\WaveletTransform\Constructors\Coiflets.vb"
 
     ' Author:
     ' 

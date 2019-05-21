@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d968b83e3a9b334b8c1a7f0d7d34db3f, www\Microsoft.VisualBasic.NETProtocol\InternetTime\InternetTime.vb"
+﻿#Region "Microsoft.VisualBasic::e248f0a8bddd63c17abae01e775dd959, www\Microsoft.VisualBasic.NETProtocol\InternetTime\InternetTime.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01b5a70dd219d474a6e435fd43200af7, mime\application%netcdf\HDF5\structure\DataChunk.vb"
+﻿#Region "Microsoft.VisualBasic::64633ddc1b8fe81f09c6993c641fcaa3, Data\BinaryData\DataStorage\HDF5\structure\DataChunk.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class DataChunk
     ' 
-    '         Properties: address, filePosition, filterMask, offsets, size
+    '         Properties: filePosition, filterMask, offsets, size
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: printValues

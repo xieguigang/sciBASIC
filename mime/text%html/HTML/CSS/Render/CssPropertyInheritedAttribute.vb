@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0f330cad5f01f7c3c576537a4d457a84, mime\text%html\HTML\CSS\Render\CssPropertyInheritedAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::7899edcaf559192549534b85ddfd869c, mime\text%html\HTML\CSS\Render\CssPropertyInheritedAttribute.vb"
 
     ' Author:
     ' 

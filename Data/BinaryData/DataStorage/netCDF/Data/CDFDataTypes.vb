@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b69ad5932da450b125b76b05707bc46, mime\application%netcdf\Data\CDFDataTypes.vb"
+﻿#Region "Microsoft.VisualBasic::e99e80578576883b7c90fca68402a788, Data\BinaryData\DataStorage\netCDF\Data\CDFDataTypes.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,11 @@
 
     ' Summaries:
 
-    ' Enum CDFDataTypes
+    '     Enum CDFDataTypes
     ' 
     ' 
     '  
+    ' 
     ' 
     ' 
     ' 

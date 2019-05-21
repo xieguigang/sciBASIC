@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9f80fab607b3c93e38264c34082becf, gr\Microsoft.VisualBasic.Imaging\GifEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::d0399b73b1b111eb4b2aec4184a6cba2, gr\Microsoft.VisualBasic.Imaging\GifEncoder.vb"
 
     ' Author:
     ' 
@@ -248,4 +248,3 @@ Public Class GifEncoder : Implements IDisposable
         _stream.Flush()
     End Sub
 End Class
-

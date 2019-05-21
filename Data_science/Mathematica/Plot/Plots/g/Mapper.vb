@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::126ceefbc420e63c58cb8d61bb89e607, Data_science\Mathematica\Plot\Plots\g\Mapper.vb"
+﻿#Region "Microsoft.VisualBasic::07f576d6802e72d1991665021af6bc1d, Data_science\Mathematica\Plot\Plots\g\Mapper.vb"
 
     ' Author:
     ' 

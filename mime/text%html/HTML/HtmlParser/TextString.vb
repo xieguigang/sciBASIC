@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ca8c4652703c90fc27c8c138d402044, mime\text%html\HTML\HtmlParser\TextString.vb"
+﻿#Region "Microsoft.VisualBasic::68d73be27d84fcce95818ece3557515d, mime\text%html\HTML\HtmlParser\TextString.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::623e21b4ee850feca30280fb0405e5b7, Data\DataFrame\IO\NetStream\StreamHelper.vb"
+﻿#Region "Microsoft.VisualBasic::358e468d33d7ef53c45d5e57acf2986b, Data\DataFrame\IO\NetStream\StreamHelper.vb"
 
     ' Author:
     ' 

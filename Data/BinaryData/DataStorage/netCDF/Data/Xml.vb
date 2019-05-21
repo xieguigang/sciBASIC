@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9c0d9c3f5def71597c214d824b5e5fa, mime\application%netcdf\Data\Xml.vb"
+﻿#Region "Microsoft.VisualBasic::66b0996955f0f90ac83217611f39b3de, Data\BinaryData\DataStorage\netCDF\Data\Xml.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    ' Class Xml
+    '     Class Xml
     ' 
-    '     Properties: dimensions, globalAttributes, recordDimension, variables, version
+    '         Properties: dimensions, globalAttributes, recordDimension, variables, version
     ' 
-    '     Function: (+2 Overloads) SaveAsXml
+    '         Function: (+2 Overloads) SaveAsXml
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc6994f13851c1b403c96876958e3854, mime\application%netcdf\HDF5\structure\AttributeMessage.vb"
+﻿#Region "Microsoft.VisualBasic::44c31e55da774766fff2acfdb9eed927, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb"
 
     ' Author:
     ' 
@@ -33,10 +33,12 @@
 
     '     Class AttributeMessage
     ' 
-    '         Properties: address, dataPos, dataSpace, dataType, name
-    '                     version
+    '         Properties: dataPos, dataSpace, dataType, name, version
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
     '         Sub: printValues
     ' 
     ' 

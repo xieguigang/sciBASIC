@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::726d563afbeaf0da8401f9111a4fb901, Data_science\Mathematica\Plot\Plots\BarPlot\RectangleStyles.vb"
+﻿#Region "Microsoft.VisualBasic::dd58267e0fab679d7baea00f2b07da31, Data_science\Mathematica\Plot\Plots\BarPlot\RectangleStyles.vb"
 
     ' Author:
     ' 

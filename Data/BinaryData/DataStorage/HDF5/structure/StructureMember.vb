@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3995e8445cbe97704732b31a020de828, mime\application%netcdf\HDF5\structure\StructureMember.vb"
+﻿#Region "Microsoft.VisualBasic::8976347b9ffd824861dd537584d5ab3b, Data\BinaryData\DataStorage\HDF5\structure\StructureMember.vb"
 
     ' Author:
     ' 
@@ -33,9 +33,12 @@
 
     '     Class StructureMember
     ' 
-    '         Properties: address, dims, message, name, offset
+    '         Properties: dims, message, name, offset
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
     '         Sub: printValues
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4300d962568c19e5921c2438f02b8c2, Data_science\MachineLearning\MLDebugger\ANNDebugger.vb"
+﻿#Region "Microsoft.VisualBasic::933210e9622935813068a61b295e3acf, Data_science\MachineLearning\MLDebugger\ANNDebugger.vb"
 
     ' Author:
     ' 
@@ -288,4 +288,3 @@ Public Class ANNDebugger
         End With
     End Sub
 End Class
-

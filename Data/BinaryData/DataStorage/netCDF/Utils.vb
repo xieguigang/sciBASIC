@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb47303dccf9af0bee237bdae60600b5, mime\application%netcdf\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::ba9b6873cf2f0d564fbadf9dc2fe6337, Data\BinaryData\DataStorage\netCDF\Utils.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,12 @@
 
     ' Summaries:
 
-    ' Module Utils
+    '     Module Utils
     ' 
-    '     Function: notNetcdf, readName
+    '         Function: notNetcdf, readName
     ' 
-    '     Sub: padding, writeName, writePadding
+    '         Sub: padding, writeName, writePadding
+    ' 
     ' 
     ' /********************************************************************************/
 

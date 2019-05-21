@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::400826ddbca9f7ab9ce313200a28cccf, mime\application%xml\xsd\elementTypes.vb"
+﻿#Region "Microsoft.VisualBasic::f0ac4a22027cb19129ffada694812cdf, mime\application%xml\xsd\elementTypes.vb"
 
     ' Author:
     ' 
@@ -52,4 +52,3 @@ Public Enum elementTypes
     <Description("date")> xs_date
     <Description("time")> xs_time
 End Enum
-

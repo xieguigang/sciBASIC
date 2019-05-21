@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37db4b133f27188cafbcc4f106baf852, mime\application%netcdf\Data\DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::462f070c73adc8af55140fad8bccaa36, Data\BinaryData\DataStorage\netCDF\Data\DataReader.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module DataReader
+    '     Module DataReader
     ' 
-    '     Function: nonRecord, record
+    '         Function: nonRecord, record
+    ' 
     ' 
     ' /********************************************************************************/
 

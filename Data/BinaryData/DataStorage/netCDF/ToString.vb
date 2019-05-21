@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92e52b147716c8e22f184e37bf616eff, mime\application%netcdf\ToString.vb"
+﻿#Region "Microsoft.VisualBasic::5f2aeac9da2411d56c7f64ebc0bbaace, Data\BinaryData\DataStorage\netCDF\ToString.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,10 @@
 
     ' Summaries:
 
-    ' Module ToStringHelper
+    '     Module ToStringHelper
     ' 
-    '     Sub: toString
+    '         Sub: toString
+    ' 
     ' 
     ' /********************************************************************************/
 

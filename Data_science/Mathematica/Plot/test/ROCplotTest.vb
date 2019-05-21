@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7fca65bbb5e33b56437910cbd122c3f, Data_science\Mathematica\Plot\test\ROCplotTest.vb"
+﻿#Region "Microsoft.VisualBasic::c69f7289e2d0dd95768872279f411e93, Data_science\Mathematica\Plot\test\ROCplotTest.vb"
 
     ' Author:
     ' 
@@ -55,4 +55,3 @@ Module ROCplotTest
         Call ROCPlot.Plot(test).Save("D:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Plot\data\ROC\identify_ROC2.png")
     End Sub
 End Module
-

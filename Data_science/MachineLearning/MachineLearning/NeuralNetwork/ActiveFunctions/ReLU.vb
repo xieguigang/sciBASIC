@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b8cdef8aeb053f8f1cc52cddaf916bd, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\ReLU.vb"
+﻿#Region "Microsoft.VisualBasic::0b47bfe62d853bbca7261d24dfc19c59, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\ReLU.vb"
 
     ' Author:
     ' 

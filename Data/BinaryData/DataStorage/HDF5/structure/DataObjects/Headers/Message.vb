@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb2f29dc7ae1e34d3df4c0d3a547ed86, mime\application%netcdf\HDF5\structure\DataObjects\Headers\Messages\Message.vb"
+﻿#Region "Microsoft.VisualBasic::c0c2e7330d59bc313cfe70a2d8a6e059, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Message.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class Message
     ' 
-    ' 
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

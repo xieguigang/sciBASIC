@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::491351bfc9558caf8ac7b7e2fb642c05, mime\application%netcdf\HDF5\structure\DataObject.vb"
+﻿#Region "Microsoft.VisualBasic::0ff1cb61bdced0dfaca27c72d8814e25, Data\BinaryData\DataStorage\HDF5\structure\DataObject.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class DataObject
     ' 
-    '         Properties: address, groupMessage, messages
+    '         Properties: groupMessage, messages
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: printValues

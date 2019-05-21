@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b478343dd39389eb90a1a3ba2fb7528, mime\application%netcdf\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::32c718a2bfae582b0e7c1cf2087fed93, Data\BinaryData\DataStorage\netCDF\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -31,16 +31,17 @@
 
     ' Summaries:
 
-    ' Class netCDFReader
+    '     Class netCDFReader
     ' 
-    '     Properties: dimensions, globalAttributes, recordDimension, variables, version
+    '         Properties: dimensions, globalAttributes, recordDimension, variables, version
     ' 
-    '     Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, Open
-    '               ToString
+    '         Function: attributeExists, dataVariableExists, (+2 Overloads) getDataVariable, getDataVariableAsString, Open
+    '                   ToString
     ' 
-    '     Sub: Print
+    '         Sub: Print
+    ' 
     ' 
     ' /********************************************************************************/
 

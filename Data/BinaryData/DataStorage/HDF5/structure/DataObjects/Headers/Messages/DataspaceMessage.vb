@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::134cd04d8fe5e0bfb735046fad059463, mime\application%netcdf\HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb"
+﻿#Region "Microsoft.VisualBasic::7079a7c876573668f44ef005bc5a2760, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,8 @@
 
     '     Class DataspaceMessage
     ' 
-    '         Properties: address, dimensionLength, flags, maxDimensionLength, numberOfDimensions
-    '                     type, version
+    '         Properties: dimensionLength, flags, maxDimensionLength, numberOfDimensions, type
+    '                     version
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: printValues

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::311aeb8a671cf1341a3f7fc0df33a715, mime\application%netcdf\HDF5\structure\ContinueMessage.vb"
+﻿#Region "Microsoft.VisualBasic::3471a655df03a64dbafa7b1a7b49aa82, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\ContinueMessage.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ContinueMessage
     ' 
-    '         Properties: address, length, offset, totalObjectHeaderMessageContinueSize
+    '         Properties: length, offset, totalObjectHeaderMessageContinueSize
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: printValues

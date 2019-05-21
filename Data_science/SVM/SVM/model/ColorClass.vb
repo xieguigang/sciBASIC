@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::839c68513195fe20a74678a90be57967, Data_science\SVM\SVM\model\ColorClass.vb"
+﻿#Region "Microsoft.VisualBasic::87c5003ac44f8c8b74c1bf521f75f530, Data_science\SVM\SVM\model\ColorClass.vb"
 
     ' Author:
     ' 

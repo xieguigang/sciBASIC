@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b07dadb0d97e3fafd959586e7b834a3, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\TestResult.vb"
+﻿#Region "Microsoft.VisualBasic::facb61ba50747eb1b37f5551b426d508, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\TestResult.vb"
 
     ' Author:
     ' 

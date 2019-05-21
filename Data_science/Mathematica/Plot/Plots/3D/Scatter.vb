@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::771c86b16ee5b6022e579d405a0a9a35, Data_science\Mathematica\Plot\Plots\3D\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::844e6fb056ffb19e58856a8bf6ff018e, Data_science\Mathematica\Plot\Plots\3D\Scatter.vb"
 
     ' Author:
     ' 
