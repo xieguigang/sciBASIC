@@ -172,6 +172,10 @@ Namespace HDF5.IO
             Return temp
         End Function
 
+        ''' <summary>
+        ''' read 2 byte integer
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Function readShort() As Short
             Dim data As Byte() = readBytes(2)
             Dim temp As Short = 0
@@ -191,6 +195,7 @@ Namespace HDF5.IO
 
             For i As Long = Me.offset To Me.size - 1
                 Dim c As Char = ChrW(readByte())
+
                 If c = ControlChars.NullChar Then
                     Exit For
                 Else

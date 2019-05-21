@@ -26,8 +26,8 @@ Namespace HDF5.[Structure]
             Me.version = [in].readByte()
             Me.numberOfFilters = [in].readByte
 
-            ' skip 3 reserved zero bytes
-            Dim reserved = [in].readBytes(3)
+            ' skip 6 reserved zero bytes
+            Dim reserved = [in].readBytes(6)
 
             If reserved.Any(Function(b) b <> 0) Then
                 Throw New InvalidProgramException
@@ -35,26 +35,103 @@ Namespace HDF5.[Structure]
 
             ' read filter descriptions
             For i As Integer = 0 To numberOfFilters - 1
-                description += New FilterDescription([in], [in].offset)
+                description += New FilterDescription([in], version, [in].offset)
             Next
         End Sub
     End Class
 
+    ''' <summary>
+    ''' The filters currently in library version 1.8.0 are listed below:
+    ''' </summary>
+    Public Enum ReservedFilters As Short
+        ''' <summary>
+        ''' Reserved
+        ''' </summary>
+        NA = 0
+        ''' <summary>
+        ''' GZIP deflate compression
+        ''' </summary>
+        deflate = 1
+        ''' <summary>
+        ''' Data element shuffling
+        ''' </summary>
+        shuffle = 2
+        ''' <summary>
+        ''' Fletcher32 checksum
+        ''' </summary>
+        fletcher32 = 3
+        ''' <summary>
+        ''' SZIP compression
+        ''' </summary>
+        szip = 4
+        ''' <summary>
+        ''' N-bit packing
+        ''' </summary>
+        nbit = 5
+        ''' <summary>
+        ''' Scale and offset encoded values
+        ''' </summary>
+        scaleoffset = 6
+    End Enum
+
     Public Class FilterDescription : Inherits HDF5Ptr
 
         ''' <summary>
-        ''' 2 bytes
+        ''' This value, often referred to as a filter identifier, is designed to be 
+        ''' a unique identifier for the filter. Values from zero through 32,767 are 
+        ''' reserved for filters supported by The HDF Group in the HDF5 Library and 
+        ''' for filters requested and supported by third parties. Filters supported 
+        ''' by The HDF Group are documented immediately below. Information on 3rd-party 
+        ''' filters can be found at The HDF Group’s Contributions page.
+        ''' 
+        ''' Values from 32768 to 65535 are reserved for non-distributed uses 
+        ''' (for example, internal company usage) or for application usage when testing 
+        ''' a feature. The HDF Group does not track or document the use of the filters 
+        ''' with identifiers from this range.
         ''' </summary>
         ''' <returns></returns>
-        Public Property uid As Byte()
+        Public Property uid As Short
+        ''' <summary>
+        ''' Each filter has an optional null-terminated ASCII name and this field holds 
+        ''' the length of the name including the null termination padded with nulls to 
+        ''' be a multiple of eight. If the filter has no name then a value of zero is 
+        ''' stored in this field.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property nameLength As Integer
+        Public Property flags As Short
+        Public Property numberOfClientDataValues As Short
 
-        Sub New([in] As BinaryReader, address&)
+        Public ReadOnly Property name As String
+        ''' <summary>
+        ''' This is an array of four-byte integers which will be passed to the filter 
+        ''' function. The Client Data Number of Values determines the number of elements
+        ''' in the array.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property clientData As Integer()
+
+        Sub New([in] As BinaryReader, version%, address&)
             Call MyBase.New(address)
 
-            uid = [in].readBytes(2)
+            If version = 1 Then
+                uid = [in].readShort
+                nameLength = [in].readShort
+                flags = [in].readShort
+                numberOfClientDataValues = [in].readShort
+                name = [in].readASCIIString
+                clientData = New Integer(numberOfClientDataValues - 1) {}
 
-
-            Throw New NotImplementedException
+                For i As Integer = 0 To numberOfClientDataValues - 1
+                    clientData(i) = [in].readInt
+                Next
+            Else
+                Throw New NotImplementedException
+            End If
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"Call {name}({clientData.Select(Function(i) CStr(i)).JoinBy(", ")})"
+        End Function
     End Class
 End Namespace
