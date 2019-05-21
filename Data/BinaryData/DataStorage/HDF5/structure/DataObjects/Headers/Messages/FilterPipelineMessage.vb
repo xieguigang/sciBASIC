@@ -2,6 +2,17 @@
 
 Namespace HDF5.[Structure]
 
+    ''' <summary>
+    ''' This message describes the filter pipeline which should be applied to 
+    ''' the data stream by providing filter identification numbers, flags, 
+    ''' a name, and client data.
+    '''
+    ''' This message may be present In the Object headers Of both dataset And 
+    ''' group objects. For datasets, it specifies the filters To apply To 
+    ''' raw data. For groups, it specifies the filters To apply To the group's 
+    ''' fractal heap. Currently, only datasets using chunked data storage use 
+    ''' the filter pipeline on their raw data.
+    ''' </summary>
     Public Class FilterPipelineMessage : Inherits Message
 
         Public ReadOnly Property version As Integer
