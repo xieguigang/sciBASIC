@@ -241,7 +241,14 @@ Namespace HDF5.[Structure]
 #End Region
 
         Public Overrides Function ToString() As String
-            Return headerMessageType.ToString
+            Select Case CType(headerMessageType.num, ObjectHeaderMessages)
+                Case ObjectHeaderMessages.SymbolTableMessage
+                    Return groupMessage.ToString
+                Case ObjectHeaderMessages.Attribute
+                    Return attributeMessage.ToString
+                Case Else
+                    Return headerMessageType.ToString
+            End Select
         End Function
 
 
