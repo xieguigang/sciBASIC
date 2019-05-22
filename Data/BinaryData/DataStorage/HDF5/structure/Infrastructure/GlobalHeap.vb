@@ -1,0 +1,57 @@
+﻿Imports System.IO
+
+Namespace HDF5.[Structure]
+
+    ''' <summary>
+    ''' Each HDF5 file has a global heap which stores various types of information 
+    ''' which is typically shared between datasets. The global heap was designed 
+    ''' to satisfy these goals:
+    ''' 
+    ''' 1. Repeated access to a heap object must be efficient without resulting in 
+    '''    repeated file I/O requests. Since global heap objects will typically be 
+    '''    shared among several datasets, it is probable that the object will be 
+    '''    accessed repeatedly.
+    ''' 2. Collections of related global heap objects should result in fewer And 
+    '''    larger I/O requests. For instance, a dataset of object references will have 
+    '''    a global heap object for each reference. Reading the entire set of object 
+    '''    references should result in a few large I/O requests instead of one small 
+    '''    I/O request for each reference.
+    ''' 3. It should be possible To remove objects from the Global heap And the resulting 
+    '''    file hole should be eligible To be reclaimed For other uses.
+    '''    
+    ''' The implementation of the heap makes use of the memory management already available
+    ''' at the file level and combines that with a new object called a collection to achieve 
+    ''' goal B. The global heap is the set of all collections. Each global heap object 
+    ''' belongs to exactly one collection, and each collection contains one or more global 
+    ''' heap objects. For the purposes of disk I/O and caching, a collection is treated as 
+    ''' an atomic object, addressing goal A.
+    '''
+    ''' When a global heap object Is deleted from a collection (which occurs when its 
+    ''' reference count falls to zero), objects located after the deleted object in the 
+    ''' collection are packed down toward the beginning of the collection, And the 
+    ''' collection's global heap object 0 is created (if possible), or its size is increased 
+    ''' to account for the recently freed space. There are no gaps between objects in each 
+    ''' collection, with the possible exception of the final space in the collection, if 
+    ''' it is not large enough to hold the header for the collection’s global heap object 0. 
+    ''' These features address goal C.
+    '''
+    ''' The HDF5 Library creates Global heap collections As needed, so there may be multiple 
+    ''' collections throughout the file. The Set Of all Of them Is abstractly called the 
+    ''' “global heap”, although they Do Not actually link To Each other, And there Is no 
+    ''' Global place In the file where you can discover all Of the collections. The collections 
+    ''' are found simply by finding a reference To one through another Object In the file. 
+    ''' For example, data Of variable-length datatype elements Is stored In the Global heap 
+    ''' And Is accessed via a Global heap ID. The format For Global heap IDs Is described at 
+    ''' the End Of this section.
+    ''' </summary>
+    Public Class GlobalHeap : Inherits HDF5Ptr
+
+        Public Sub New(address As Long)
+            MyBase.New(address)
+        End Sub
+
+        Protected Friend Overrides Sub printValues(console As TextWriter)
+            Throw New NotImplementedException()
+        End Sub
+    End Class
+End Namespace
