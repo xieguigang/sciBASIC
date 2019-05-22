@@ -201,10 +201,10 @@ Public Module KeyValuePairExtensions
     Public Function Subset(Of T)(table As Dictionary(Of String, T), keys$()) As Dictionary(Of String, T)
         Return keys _
             .Select(Function(key)
-                        Return (key:=key, Value:=table(key))
+                        Return (key:=key, val:=table(key))
                     End Function) _
             .ToDictionary(Function(o) o.key,
-                          Function(o) o.Value)
+                          Function(o) o.val)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
