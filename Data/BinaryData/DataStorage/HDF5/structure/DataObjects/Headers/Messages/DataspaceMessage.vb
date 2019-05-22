@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::19fbf423f08a6a2044419cdbfbe2d573, Data\BinaryData\DataStorage\HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataspaceMessage
-    ' 
-    '         Properties: dimensionLength, flags, maxDimensionLength, numberOfDimensions, type
-    '                     version
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataspaceMessage
+' 
+'         Properties: dimensionLength, flags, maxDimensionLength, numberOfDimensions, type
+'                     version
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
+Imports Microsoft.VisualBasic.Math
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
@@ -73,22 +74,27 @@ Namespace HDF5.[Structure]
         ''' describes version one (1) (there was no version zero (0)).
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property version As Integer
+        Public ReadOnly Property version As Integer
         ''' <summary>
         ''' Dimensionality,	this value is the number of dimensions that the data object has.
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property numberOfDimensions As Integer
+        Public ReadOnly Property numberOfDimensions As Integer
         ''' <summary>
         ''' This field is used to store flags to indicate the presence of parts of this message. 
         ''' Bit 0 (the least significant bit) is used to indicate that maximum dimensions are present. 
         ''' Bit 1 is used to indicate that permutation indices are present.
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property flags As Byte
-        Public Overridable ReadOnly Property type As Integer
-        Public Overridable ReadOnly Property dimensionLength As Integer()
-        Public Overridable ReadOnly Property maxDimensionLength As Integer()
+        Public ReadOnly Property flags As Byte
+        Public ReadOnly Property type As Integer
+        Public ReadOnly Property dimensionLength As Integer()
+        Public ReadOnly Property maxDimensionLength As Integer()
+        ''' <summary>
+        ''' 数据块总长度
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property totalLength As Long
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)
@@ -130,6 +136,14 @@ Namespace HDF5.[Structure]
                 For i As Integer = 0 To Me.numberOfDimensions - 1
                     Me.maxDimensionLength(i) = Me.dimensionLength(i)
                 Next
+            End If
+
+            If type = 2 Then
+                totalLength = 0
+            Else
+                totalLength = dimensionLength _
+                    .Select(Function(x) CLng(x)) _
+                    .ProductALL
             End If
         End Sub
 

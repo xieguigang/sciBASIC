@@ -1841,6 +1841,18 @@ Namespace Math
         End Function
 
         ''' <summary>
+        ''' 计算出所有的数的乘积
+        ''' </summary>
+        ''' <param name="[in]"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ProductALL([in] As IEnumerable(Of Long)) As Double
+            Return [in].Select(Function(x) CDbl(x)).ProductALL
+        End Function
+
+        ''' <summary>
         ''' ## Standard Deviation
         ''' 
         ''' In statistics, the standard deviation (SD, also represented by the Greek letter sigma σ or the Latin letter s) 

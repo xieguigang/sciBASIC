@@ -107,7 +107,7 @@
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Message.vb" />
-    <Compile Include="HDF5\structure\DataObjects\Headers\DataTypes.vb" />
+    <Compile Include="HDF5\types\DataTypes.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\FillValueMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\FillValueOldMessage.vb" />
     <Compile Include="HDF5\structure\Group.vb" />

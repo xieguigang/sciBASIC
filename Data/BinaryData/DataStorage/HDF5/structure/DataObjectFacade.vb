@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::b0f91e7c784c556712521ad2edfd2e9a, Data\BinaryData\DataStorage\HDF5\structure\DataObjectFacade.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataObjectFacade
-    ' 
-    '         Properties: dataObject, layout, linkName, symbolName
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: readDataObject, readObjectLayout, ToString
-    ' 
-    '         Sub: printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataObjectFacade
+' 
+'         Properties: dataObject, layout, linkName, symbolName
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: readDataObject, readObjectLayout, ToString
+' 
+'         Sub: printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -55,6 +55,7 @@
 
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
@@ -66,11 +67,11 @@ Namespace HDF5.[Structure]
 
         Dim m_layout As Layout
 
-        Public Overridable ReadOnly Property dataObject As DataObject
-        Public Overridable ReadOnly Property symbolName As String
-        Public Overridable ReadOnly Property linkName As String
+        Public ReadOnly Property dataObject As DataObject
+        Public ReadOnly Property symbolName As String
+        Public ReadOnly Property linkName As String
 
-        Public Overridable ReadOnly Property layout As Layout
+        Public ReadOnly Property layout As Layout
             Get
                 If Me.m_layout Is Nothing Then
                     Me.m_layout = readObjectLayout()
