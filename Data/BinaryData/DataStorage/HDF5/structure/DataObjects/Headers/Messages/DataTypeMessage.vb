@@ -242,7 +242,7 @@ Namespace HDF5.[Structure]
 
             If Me.m_members IsNot Nothing Then
                 For Each mem As StructureMember In Me.m_members
-                    mem.printValues()
+                    mem.printValues(console)
                 Next
             End If
             Console.WriteLine("DataTypeMessage <<<")

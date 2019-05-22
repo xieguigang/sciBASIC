@@ -10,7 +10,7 @@ Namespace HDF5
         End Sub
     End Module
 
-    Friend Interface IFileDump
+    Public Interface IFileDump
 
         Sub printValues(console As System.IO.StringWriter)
     End Interface

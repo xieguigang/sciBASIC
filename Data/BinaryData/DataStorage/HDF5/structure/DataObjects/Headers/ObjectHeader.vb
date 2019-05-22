@@ -133,7 +133,7 @@ Namespace HDF5.[Structure]
             Console.WriteLine("object header size : " & Me.objectHeaderSize)
 
             For i As Integer = 0 To Me.headerMessages.Count - 1
-                Me.headerMessages(i).printValues()
+                Me.headerMessages(i).printValues(console)
             Next
 
             Console.WriteLine("ObjectHeader <<<")

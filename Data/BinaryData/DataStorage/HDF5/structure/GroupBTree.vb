@@ -120,7 +120,7 @@ Namespace HDF5.[Structure]
             console.WriteLine("address : " & Me.m_address)
 
             For i As Integer = 0 To symbolTableEntries.Count - 1
-                symbolTableEntries(i).printValues()
+                symbolTableEntries(i).printValues(console)
             Next
 
             Console.WriteLine("GroupBTree <<<")

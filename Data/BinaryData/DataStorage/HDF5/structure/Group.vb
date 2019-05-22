@@ -114,7 +114,7 @@ Namespace HDF5.[Structure]
 
             If NESTED_OBJECTS IsNot Nothing Then
                 For Each dobj As DataObjectFacade In NESTED_OBJECTS
-                    dobj.printValues()
+                    dobj.printValues(console)
                 Next
             End If
 

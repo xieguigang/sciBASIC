@@ -1,42 +1,42 @@
 ﻿#Region "Microsoft.VisualBasic::4a7c4ce5640f37ddce496da866a8986d, Data\BinaryData\DataStorage\test\HDF5test.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ParseTest
-    ' 
-    '         Sub: Main
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ParseTest
+' 
+'         Sub: Main
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -45,6 +45,7 @@
 ' 
 
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5
 Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
@@ -128,50 +129,53 @@ Namespace edu.arizona.cs.hdf5.test
 
             Call chunkReader.SetByteOrder(ByteOrder.LittleEndian)
 
-            For Each chunk As DataChunk In chunks
+            Using text As StreamWriter = "./test.dmp".OpenWriter
 
-                Dim filepos As Long = chunk.filePosition
+                For Each chunk As DataChunk In chunks
 
-                If showHeader Then
-                    chunk.printValues()
-                End If
+                    Dim filepos As Long = chunk.filePosition
 
-                chunkReader.offset = filepos
+                    If showHeader Then
+                        DirectCast(chunk, IFileDump).printValues(console:=New System.IO.StringWriter(text))
+                    End If
 
-                If showData Then
-                    Dim dataCountPerChunk As Integer = chunk.size \ chunkSize(0)
-                    For i As Integer = 0 To dataCountPerChunk - 1
-                        Dim bytes As Byte() = chunkReader.readBytes(chunkSize(0))
+                    chunkReader.offset = filepos
 
-                        For j As Integer = 0 To fields.Count - 1
-                            Dim field As LayoutField = fields(j)
+                    If showData Then
+                        Dim dataCountPerChunk As Integer = chunk.size \ chunkSize(0)
+                        For i As Integer = 0 To dataCountPerChunk - 1
+                            Dim bytes As Byte() = chunkReader.readBytes(chunkSize(0))
 
-                            Dim offset As Integer = field.offset
-                            Dim len As Integer = field.byteLength
-                            Dim dataType As DataTypes = field.dataType
-                            Dim ndims As Integer = field.nDims
-                            Dim name As String = field.name
+                            For j As Integer = 0 To fields.Count - 1
+                                Dim field As LayoutField = fields(j)
 
-                            If dataType = DataTypes.DATATYPE_STRING Then
-                                Dim val As String = bytes.ByteString(offset, len)
-                                Console.WriteLine(name & " : " & val.Trim())
+                                Dim offset As Integer = field.offset
+                                Dim len As Integer = field.byteLength
+                                Dim dataType As DataTypes = field.dataType
+                                Dim ndims As Integer = field.nDims
+                                Dim name As String = field.name
+
+                                If dataType = DataTypes.DATATYPE_STRING Then
+                                    Dim val As String = bytes.ByteString(offset, len)
+                                    Console.WriteLine(name & " : " & val.Trim())
+                                End If
+                            Next
+
+                            readCount += 1
+
+                            If readCount >= dataTotal Then
+                                Exit For
                             End If
                         Next
+                    End If
 
-                        readCount += 1
+                    If readCount >= dataTotal Then
+                        Exit For
+                    End If
+                Next
 
-                        If readCount >= dataTotal Then
-                            Exit For
-                        End If
-                    Next
-                End If
-
-                If readCount >= dataTotal Then
-                    Exit For
-                End If
-            Next
-
-            reader.Dispose()
+                reader.Dispose()
+            End Using
         End Sub
     End Class
 
