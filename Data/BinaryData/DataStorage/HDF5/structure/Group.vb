@@ -64,9 +64,11 @@ Namespace HDF5.[Structure]
     ''' </summary>
     Public Class Group : Implements IFileDump
 
-        Shared ReadOnly NESTED_OBJECTS As New List(Of DataObjectFacade)()
-
+        ''' <summary>
+        ''' 这个folder的parent节点
+        ''' </summary>
         Dim m_facade As DataObjectFacade
+        Dim NESTED_OBJECTS As New List(Of DataObjectFacade)
 
         Public Overridable ReadOnly Property objects() As List(Of DataObjectFacade)
             Get

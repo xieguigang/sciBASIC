@@ -234,7 +234,7 @@ Namespace HDF5
             Dim reader As New HDF5Reader(Me.reader, dataSetName)
             Dim dobj As DataObjectFacade = dataGroups.objects.FirstOrDefault(Function(d) d.symbolName.TextEquals(dataSetName))
 
-            parserObject(dobj, sb:=Superblock)
+            reader._dataGroups = parserObject(dobj, sb:=Superblock, container:=reader)
             _headerSize = Me.reader.maxOffset
 
             Return reader
@@ -250,7 +250,7 @@ Namespace HDF5
             For Each dobj As DataObjectFacade In objects
                 ' compare dataset name
                 If dobj.symbolName.TextEquals(Me.datasetName) Then
-                    Call parserObject(dobj, sb)
+                    _dataGroups = parserObject(dobj, sb, Me)
                     Exit For
                 End If
             Next
@@ -258,34 +258,41 @@ Namespace HDF5
             _headerSize = Me.reader.maxOffset
         End Sub
 
-        Private Sub parserObject(dobj As DataObjectFacade, sb As Superblock)
+        ''' <summary>
+        ''' 如果是dataset，则直接返回空值，反之返回<see cref="Group"/>对象
+        ''' </summary>
+        ''' <param name="dobj"></param>
+        ''' <param name="sb"></param>
+        ''' <returns></returns>
+        Private Shared Function parserObject(dobj As DataObjectFacade, sb As Superblock, container As HDF5Reader) As Group
             ' parse or get layout
             Dim layout As Layout = dobj.layout
+            Dim reader = container.reader
 
-            _layout = layout
+            container._layout = layout
 
             If layout.IsEmpty Then
-                ' sb = New Superblock(reader, 0)
-                _dataGroups = New Group(reader, sb, dobj)
+                Return New Group(reader, sb, dobj)
             Else
                 ' parse btree index of the data
                 Dim dataTree As New DataBTree(layout)
-
-                _dataBTree = dataTree
-
-                Dim iter As DataChunkIterator = dataTree.getChunkIterator(Me.reader, sb)
+                Dim iter As DataChunkIterator = dataTree.getChunkIterator(reader, sb)
                 Dim chunk As DataChunk
 
-                While iter.hasNext(Me.reader, sb)
-                    chunk = iter.[next](Me.reader, sb)
+                container._dataBTree = dataTree
+
+                While iter.hasNext(reader, sb)
+                    chunk = iter.[next](reader, sb)
                     ' read/add a new data chunk block
-                    chunks.Add(chunk)
+                    container.chunks.Add(chunk)
                 End While
+
+                Return Nothing
             End If
-        End Sub
+        End Function
 
         Public Overrides Function ToString() As String
-            If Not layout.IsEmpty Then
+            If Not layout Is Nothing AndAlso Not layout.IsEmpty Then
                 Return $"{reader} => {layout}"
             Else
                 Return $"{reader} => {dataGroups}"

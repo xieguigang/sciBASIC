@@ -57,6 +57,9 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
+    ''' <summary>
+    ''' 所存储的数据块
+    ''' </summary>
     Public Class DataChunk : Inherits HDF5Ptr
 
         Public Overridable ReadOnly Property size() As Integer

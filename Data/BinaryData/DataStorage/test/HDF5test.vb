@@ -54,39 +54,8 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 Namespace edu.arizona.cs.hdf5.test
 
     Public Class ParseTest
-        Public Shared Sub Main(args As String())
-            Dim [option] As String = "hd"
-            Dim filename As String = "D:\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\data\EP388069_K40_BS1D.otu_table.biom"
 
-            If args.Length = 2 Then
-                [option] = args(0)
-                filename = args(1)
-            ElseIf args.Length = 1 Then
-                filename = args(0)
-            End If
-
-            If filename.Length = 0 Then
-                Console.WriteLine("Error : inputfile is necessary")
-                Return
-            End If
-
-            ' check option
-            Dim showHeader As Boolean = False
-            Dim showData As Boolean = False
-            If [option].Contains("h") Then
-                ' header
-                showHeader = True
-            End If
-            If [option].Contains("d") Then
-                ' data
-                showData = True
-            End If
-
-            Dim reader As New HDF5Reader(filename, "observation")
-            ' reader.parseHeader()
-
-            Dim ids = reader.ParseDataObject("matrix")
-
+        Private Shared Sub dumpData(reader As HDF5Reader, showHeader As Boolean, showData As Boolean)
             If showHeader Then
                 Dim headerSize As Long = reader.headerSize
                 Console.WriteLine("header size : " & headerSize)
@@ -176,6 +145,44 @@ Namespace edu.arizona.cs.hdf5.test
 
                 reader.Dispose()
             End Using
+        End Sub
+
+        Public Shared Sub Main(args As String())
+            Dim [option] As String = "hd"
+            Dim filename As String = "D:\GCModeller\src\runtime\sciBASIC#\Data\BinaryData\data\EP388069_K40_BS1D.otu_table.biom"
+
+            If args.Length = 2 Then
+                [option] = args(0)
+                filename = args(1)
+            ElseIf args.Length = 1 Then
+                filename = args(0)
+            End If
+
+            If filename.Length = 0 Then
+                Console.WriteLine("Error : inputfile is necessary")
+                Return
+            End If
+
+            ' check option
+            Dim showHeader As Boolean = False
+            Dim showData As Boolean = False
+            If [option].Contains("h") Then
+                ' header
+                showHeader = True
+            End If
+            If [option].Contains("d") Then
+                ' data
+                showData = True
+            End If
+
+            Dim reader As New HDF5Reader(filename, "observation")
+            ' reader.parseHeader()
+
+            Dim ids = reader.ParseDataObject("matrix")
+
+            Dim data = ids.ParseDataObject("data")
+
+            Call dumpData(data, True, True)
         End Sub
     End Class
 
