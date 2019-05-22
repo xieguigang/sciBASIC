@@ -107,9 +107,9 @@ Namespace HDF5.[Structure]
             End If
         End Sub
 
-        Public Overridable Sub printValues()
-            Console.WriteLine("DataspaceMessage >>>")
-            Console.WriteLine("address : " & Me.m_address)
+        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+            console.WriteLine("DataspaceMessage >>>")
+            console.WriteLine("address : " & Me.m_address)
             Console.WriteLine("version : " & Me.version)
             Console.WriteLine("number of dimensions : " & Me.numberOfDimensions)
             Console.WriteLine("flags : " & Me.flags)

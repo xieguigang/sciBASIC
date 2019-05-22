@@ -69,6 +69,7 @@
     <Compile Include="HDF5\io\BinaryFileReader.vb" />
     <Compile Include="HDF5\io\BinaryReader.vb" />
     <Compile Include="HDF5\io\ReadHelper.vb" />
+    <Compile Include="HDF5\FileDump.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\LayoutClass.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb" />

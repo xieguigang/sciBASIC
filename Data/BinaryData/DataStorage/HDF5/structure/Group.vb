@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::f6a2ec6dd98a364b46e2bff07d9e94d7, Data\BinaryData\DataStorage\HDF5\structure\Group.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class Group
-    ' 
-    '         Properties: objects
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ToString
-    ' 
-    '         Sub: printValues, readGroup
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class Group
+' 
+'         Properties: objects
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ToString
+' 
+'         Sub: printValues, readGroup
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,15 +54,15 @@
 ' 
 
 
-Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
     ''' <summary>
     ''' A group of <see cref="DataObjectFacade"/>
     ''' </summary>
-    Public Class Group
+    Public Class Group : Implements IFileDump
 
         Shared ReadOnly NESTED_OBJECTS As New List(Of DataObjectFacade)()
 
@@ -90,13 +90,13 @@ Namespace HDF5.[Structure]
             Dim linkName As String
 
             For Each symbol As SymbolTableEntry In btree.symbolTableEntries
-                Dim sname As String = nameHeap.getString(CInt(symbol.linkNameOffset))
+                Dim name As String = nameHeap.getString(CInt(symbol.linkNameOffset))
 
                 If symbol.cacheType = 2 Then
                     linkName = nameHeap.getString(CInt(symbol.linkNameOffset))
-                    dobj = New DataObjectFacade([in], sb, sname, linkName)
+                    dobj = New DataObjectFacade([in], sb, name, linkName)
                 Else
-                    dobj = New DataObjectFacade([in], sb, sname, symbol.objectHeaderAddress)
+                    dobj = New DataObjectFacade([in], sb, name, symbol.objectHeaderAddress)
                 End If
 
                 Call NESTED_OBJECTS.Add(dobj)
@@ -109,8 +109,8 @@ Namespace HDF5.[Structure]
                 .GetJson
         End Function
 
-        Public Overridable Sub printValues()
-            Console.WriteLine("Group >>>")
+        Private Sub printValues(console As System.IO.StringWriter) Implements IFileDump.printValues
+            console.WriteLine("Group >>>")
 
             If NESTED_OBJECTS IsNot Nothing Then
                 For Each dobj As DataObjectFacade In NESTED_OBJECTS
@@ -118,7 +118,7 @@ Namespace HDF5.[Structure]
                 Next
             End If
 
-            Console.WriteLine("Group <<<")
+            console.WriteLine("Group <<<")
         End Sub
     End Class
 

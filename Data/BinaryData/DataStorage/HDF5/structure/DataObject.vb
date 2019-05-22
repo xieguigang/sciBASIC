@@ -1,45 +1,45 @@
 ﻿#Region "Microsoft.VisualBasic::0ff1cb61bdced0dfaca27c72d8814e25, Data\BinaryData\DataStorage\HDF5\structure\DataObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class DataObject
-    ' 
-    '         Properties: groupMessage, messages
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class DataObject
+' 
+'         Properties: groupMessage, messages
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -51,7 +51,7 @@
 ' 
 
 
-Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
+Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
@@ -60,6 +60,11 @@ Namespace HDF5.[Structure]
 
         Dim objectHeader As ObjectHeader
 
+        ''' <summary>
+        ''' For instance, a group is an object header that contains a message that points to a 
+        ''' local heap and to a B-tree which points to symbol nodes.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable ReadOnly Property groupMessage() As GroupMessage
 
         Public Overridable ReadOnly Property messages() As List(Of ObjectHeaderMessage)
@@ -85,13 +90,15 @@ Namespace HDF5.[Structure]
             Next
         End Sub
 
-        Public Overridable Sub printValues()
-            Console.WriteLine("DataObject >>>")
-            Console.WriteLine("address : " & Me.m_address)
-            If Me.objectHeader IsNot Nothing Then
-                Me.objectHeader.printValues()
+        Protected Overrides Sub printValues(console As System.IO.StringWriter)
+            Call console.WriteLine("DataObject >>>")
+            Call console.WriteLine("address : " & Me.m_address)
+
+            If objectHeader IsNot Nothing Then
+                Call objectHeader.printValues()
             End If
-            Console.WriteLine("DataObject <<<")
+
+            Call console.WriteLine("DataObject <<<")
         End Sub
     End Class
 

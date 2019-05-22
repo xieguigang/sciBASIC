@@ -72,5 +72,8 @@ Namespace HDF5
         Public Overrides Function ToString() As String
             Return $"&{address} {Me.GetType.Name}"
         End Function
+
+        Protected Friend MustOverride Sub printValues(console As System.IO.StringWriter)
+
     End Class
 End Namespace

@@ -54,6 +54,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
+Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5
 
@@ -63,7 +64,7 @@ Namespace HDF5
     ''' <remarks>
     ''' A VB.NET continues work of this java project: https://github.com/iychoi/HDF5HadoopReader
     ''' </remarks>
-    Public Class HDF5Reader : Implements IDisposable
+    Public Class HDF5Reader : Implements IDisposable, IFileDump
 
         Public ReadOnly Property reader As BinaryReader
         Public ReadOnly Property dataGroups As Group
@@ -168,6 +169,10 @@ Namespace HDF5
                 Return $"{reader} => {dataGroups}"
             End If
         End Function
+
+        Private Sub printValues(out As System.IO.StringWriter) Implements IFileDump.printValues
+            Throw New NotImplementedException()
+        End Sub
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' 要检测冗余调用
