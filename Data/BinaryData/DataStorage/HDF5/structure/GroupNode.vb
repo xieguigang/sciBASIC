@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a9e4f3df0825b64707fbc62728e00f6, Data\BinaryData\DataStorage\HDF5\structure\GroupNode.vb"
+﻿#Region "Microsoft.VisualBasic::76bd922dfecd35c4c3cc9cda665343fb, Data\BinaryData\DataStorage\HDF5\structure\GroupNode.vb"
 
     ' Author:
     ' 
@@ -33,8 +33,7 @@
 
     '     Class GroupNode
     ' 
-    '         Properties: address, entryNumber, signature, symbols, validSignature
-    '                     version
+    '         Properties: entryNumber, signature, symbols, validSignature, version
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: printValues

@@ -1,49 +1,49 @@
-﻿#Region "Microsoft.VisualBasic::9a983f6b53c01abb812689496e64e0cf, Data\BinaryData\DataStorage\HDF5\HDF5Reader.vb"
+﻿#Region "Microsoft.VisualBasic::6f2d09f70090b50322e529710c87f8f3, Data\BinaryData\DataStorage\HDF5\HDF5Reader.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /********************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-'     Class HDF5Reader
-' 
-'         Properties: chunks, dataBTree, dataGroups, datasetName, fileName
-'                     headerSize, layout, reader
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: ToString
-' 
-'         Sub: (+2 Overloads) Dispose, parseHeader, parserObject
-' 
-' 
-' /********************************************************************************/
+    '     Class HDF5Reader
+    ' 
+    '         Properties: chunks, dataBTree, dataGroups, datasetName, fileName
+    '                     headerSize, layout, reader, Superblock
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: ParseDataObject, ToString
+    ' 
+    '         Sub: (+2 Overloads) Dispose, parseHeader, parserObject, printValues
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

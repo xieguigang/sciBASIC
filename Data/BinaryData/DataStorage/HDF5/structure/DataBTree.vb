@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4a60cf92fbcb47a32dd54684e026f90, Data\BinaryData\DataStorage\HDF5\structure\DataBTree.vb"
+﻿#Region "Microsoft.VisualBasic::52e21915f566697465f9feef9f73d72a, Data\BinaryData\DataStorage\HDF5\structure\DataBTree.vb"
 
     ' Author:
     ' 
@@ -34,7 +34,7 @@
     '     Class DataBTree
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: getChunkIterator
+    '         Function: getChunkIterator, ToString
     ' 
     ' 
     ' /********************************************************************************/
