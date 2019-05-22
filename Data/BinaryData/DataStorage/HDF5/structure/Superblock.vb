@@ -125,6 +125,7 @@ Namespace HDF5.[Structure]
 
             ' signature
             Me.formatSignature = [in].readBytes(8)
+            Me.file = file
 
             If Not Me.validFormatSignature Then
                 Throw New IOException("signature is not valid")

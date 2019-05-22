@@ -58,10 +58,33 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
+    ''' <summary>
+    ''' The dataspace message describes the number of dimensions (in other words, “rank”) and size of 
+    ''' each dimension that the data object has. This message is only used for datasets which have a 
+    ''' simple, rectilinear, array-like layout; datasets requiring a more complex layout are not yet 
+    ''' supported.
+    ''' </summary>
     Public Class DataspaceMessage : Inherits Message
 
+        ''' <summary>
+        ''' This value is used to determine the format of the Dataspace Message. When the format of 
+        ''' the information in the message is changed, the version number is incremented and can be 
+        ''' used to determine how the information in the object header is formatted. This document 
+        ''' describes version one (1) (there was no version zero (0)).
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable ReadOnly Property version As Integer
+        ''' <summary>
+        ''' Dimensionality,	this value is the number of dimensions that the data object has.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable ReadOnly Property numberOfDimensions As Integer
+        ''' <summary>
+        ''' This field is used to store flags to indicate the presence of parts of this message. 
+        ''' Bit 0 (the least significant bit) is used to indicate that maximum dimensions are present. 
+        ''' Bit 1 is used to indicate that permutation indices are present.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable ReadOnly Property flags As Byte
         Public Overridable ReadOnly Property type As Integer
         Public Overridable ReadOnly Property dimensionLength As Integer()
@@ -78,6 +101,8 @@ Namespace HDF5.[Structure]
                 Me.numberOfDimensions = [in].readByte()
                 Me.flags = [in].readByte()
                 Me.type = If(Me.numberOfDimensions = 0, 0, 1)
+
+                ' 1 + 4 reserved zero
                 [in].skipBytes(5)
             ElseIf Me.version = 2 Then
                 Me.numberOfDimensions = [in].readByte()
@@ -88,6 +113,7 @@ Namespace HDF5.[Structure]
             End If
 
             Me.dimensionLength = New Integer(Me.numberOfDimensions - 1) {}
+
             For i As Integer = 0 To Me.numberOfDimensions - 1
                 Me.dimensionLength(i) = CInt(ReadHelper.readL([in], sb))
             Next

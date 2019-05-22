@@ -196,6 +196,10 @@ Namespace HDF5.[Structure]
             End If
         End Sub
 
+        ''' <summary>
+        ''' Tostring of <see cref="type"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return type.ToString
         End Function

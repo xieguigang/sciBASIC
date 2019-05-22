@@ -9,7 +9,12 @@ Namespace HDF5
 
         Friend ReadOnly reader As BinaryReader
 
+        ''' <summary>
+        ''' Full name
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property fileName As String
+
         Public ReadOnly Property superblock As Superblock
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -64,7 +69,7 @@ Namespace HDF5
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Friend Sub addCache(data As DataObject)
-            objectAddressMap(data.address) = data
+            objectAddressMap(key:=data.address) = data
         End Sub
 
         ''' <summary>

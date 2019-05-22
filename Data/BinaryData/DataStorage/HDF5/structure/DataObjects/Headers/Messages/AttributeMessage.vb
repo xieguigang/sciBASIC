@@ -147,7 +147,13 @@ Namespace HDF5.[Structure]
             Dim value As New List(Of Object)
             Dim type As DataTypeMessage = msg.dataType
 
+            Select Case type.type
+                Case DataTypes.DATATYPE_VARIABLE_LENGTH
+                Case Else
+                    Throw New NotImplementedException(type.ToString)
+            End Select
 
+            Return value
         End Function
 
         Public Overrides Function ToString() As String
