@@ -64,30 +64,9 @@ Namespace edu.arizona.cs.hdf5.test
             Dim layout As Layout = reader.layout
 
             Dim dims As Integer = layout.numberOfDimensions
-            If showHeader Then
-                Console.WriteLine("dimensions : " & dims)
-            End If
-
             Dim chunkSize As Integer() = layout.chunkSize
             Dim dlength As Integer() = layout.dimensionLength
             Dim maxdlength As Integer() = layout.maxDimensionLength
-
-            If showHeader Then
-                For i As Integer = 0 To dims - 1
-                    If chunkSize.Length > i Then
-                        Console.WriteLine("chunk size[" & i & "] : " & chunkSize(i))
-                    End If
-
-                    If dlength.Length > i Then
-                        Console.WriteLine("dimension length[" & i & "] : " & dlength(i))
-                    End If
-
-                    If maxdlength.Length > i Then
-                        Console.WriteLine("max dimension length[" & i & "] : " & maxdlength(i))
-                    End If
-                Next
-            End If
-
             Dim fields As List(Of LayoutField) = layout.fields
 
             ' chunk
@@ -99,6 +78,8 @@ Namespace edu.arizona.cs.hdf5.test
             Call chunkReader.SetByteOrder(ByteOrder.LittleEndian)
 
             Using text As StreamWriter = "./test.dmp".OpenWriter
+
+                Call DirectCast(layout, IFileDump).printValues(text)
 
                 For Each chunk As DataChunk In chunks
 
@@ -114,6 +95,8 @@ Namespace edu.arizona.cs.hdf5.test
                         Dim dataCountPerChunk As Integer = chunk.size \ chunkSize(0)
                         For i As Integer = 0 To dataCountPerChunk - 1
                             Dim bytes As Byte() = chunkReader.readBytes(chunkSize(0))
+
+
 
                             For j As Integer = 0 To fields.Count - 1
                                 Dim field As LayoutField = fields(j)

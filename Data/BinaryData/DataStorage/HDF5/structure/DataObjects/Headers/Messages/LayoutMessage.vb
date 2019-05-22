@@ -58,17 +58,50 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 Namespace HDF5.[Structure]
 
     ''' <summary>
-    ''' 
+    ''' The Data Layout message describes how the elements of a multi-dimensional array 
+    ''' are stored in the HDF5 file.
     ''' </summary>
     Public Class LayoutMessage : Inherits Message
 
-        Public Overridable ReadOnly Property version() As Integer
+        ''' <summary>
+        ''' The version number information is used for changes in the format of the 
+        ''' data layout message and is described here:
+        ''' 
+        ''' + 0: Never used.
+        ''' + 1: Used by version 1.4 And before of the library to encode layout information. 
+        '''      Data space Is always allocated when the data set Is created.
+        ''' + 2: Used by version 1.6.x of the library to encode layout information. Data 
+        '''      space Is allocated only when it Is necessary.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property version As Integer
+        ''' <summary>
+        ''' Layout Class
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property type As LayoutClass
-        Public Overridable ReadOnly Property numberOfDimensions() As Integer
-        Public Overridable ReadOnly Property dataAddress() As Long
-        Public Overridable ReadOnly Property continuousSize() As Long
-        Public Overridable ReadOnly Property chunkSize() As Integer()
-        Public Overridable ReadOnly Property dataSize() As Integer
+        ''' <summary>
+        ''' number of Dimensions
+        ''' 
+        ''' An array has a fixed dimensionality. This field specifies the number of dimension 
+        ''' size fields later in the message. The value stored for chunked storage is 1 greater 
+        ''' than the number of dimensions in the dataset’s dataspace. For example, 2 is stored 
+        ''' for a 1 dimensional dataset.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property dimensionality As Integer
+        ''' <summary>
+        ''' For contiguous storage, this is the address of the raw data in the file. For chunked 
+        ''' storage this is the address of the v1 B-tree that is used to look up the addresses 
+        ''' of the chunks. This field is not present for compact storage. If the version for 
+        ''' this message is greater than 1, the address may have the “undefined address” value, 
+        ''' to indicate that storage has not yet been allocated for this array.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property dataAddress As Long
+        Public ReadOnly Property continuousSize As Long
+        Public ReadOnly Property chunkSize As Integer()
+        Public ReadOnly Property dataSize As Integer
 
         Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
             Call MyBase.New(address)
@@ -78,23 +111,28 @@ Namespace HDF5.[Structure]
             Me.version = [in].readByte()
 
             If Me.version < 3 Then
-                Me.numberOfDimensions = [in].readByte()
+                Me.dimensionality = [in].readByte()
                 Me.type = [in].readByte()
 
+                ' Reserved (zero) 1 + 4 = 5 bytes
                 [in].skipBytes(5)
 
-                Dim isCompact As Boolean = Me.type = 0
+                Dim isCompact As Boolean = (Me.type = LayoutClass.CompactStorage)
 
                 If Not isCompact Then
+                    ' Data AddressO (optional)
                     Me.dataAddress = ReadHelper.readO([in], sb)
                 End If
 
-                Me.chunkSize = New Integer(Me.numberOfDimensions - 1) {}
-                For i As Integer = 0 To Me.numberOfDimensions - 1
+                Me.chunkSize = New Integer(Me.dimensionality - 1) {}
+
+                For i As Integer = 0 To Me.dimensionality - 1
+                    ' Dimension n Size
                     Me.chunkSize(i) = [in].readInt()
                 Next
 
                 If isCompact Then
+                    ' Dataset Element Size (optional)
                     Me.dataSize = [in].readInt()
                     Me.dataAddress = [in].offset
                 End If
@@ -108,11 +146,11 @@ Namespace HDF5.[Structure]
                     Me.dataAddress = ReadHelper.readO([in], sb)
                     Me.continuousSize = ReadHelper.readL([in], sb)
                 ElseIf Me.type = LayoutClass.ChunkedStorage Then
-                    Me.numberOfDimensions = [in].readByte()
+                    Me.dimensionality = [in].readByte()
                     Me.dataAddress = ReadHelper.readO([in], sb)
-                    Me.chunkSize = New Integer(Me.numberOfDimensions - 1) {}
+                    Me.chunkSize = New Integer(Me.dimensionality - 1) {}
 
-                    For i As Integer = 0 To Me.numberOfDimensions - 1
+                    For i As Integer = 0 To Me.dimensionality - 1
                         Me.chunkSize(i) = [in].readInt()
                     Next
                 End If
@@ -124,7 +162,7 @@ Namespace HDF5.[Structure]
 
             console.WriteLine("address : " & Me.m_address)
             console.WriteLine("version : " & Me.version)
-            console.WriteLine("number of dimensions : " & Me.numberOfDimensions)
+            console.WriteLine("number of dimensions : " & Me.dimensionality)
             console.WriteLine("type : " & Me.type)
             console.WriteLine("data address : " & Me.dataAddress)
             console.WriteLine("continuous size : " & Me.continuousSize)
