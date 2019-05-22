@@ -105,7 +105,7 @@ Namespace edu.arizona.cs.hdf5.test
                     Dim filepos As Long = chunk.filePosition
 
                     If showHeader Then
-                        DirectCast(chunk, IFileDump).printValues(console:=New System.IO.StringWriter(text))
+                        DirectCast(chunk, IFileDump).printValues(console:=text)
                     End If
 
                     chunkReader.offset = filepos
@@ -175,7 +175,7 @@ Namespace edu.arizona.cs.hdf5.test
                 showData = True
             End If
 
-            Dim reader As New HDF5Reader(filename, "observation")
+            Dim reader As New HDF5Reader(filename, "sample")
             ' reader.parseHeader()
 
             Dim ids = reader.ParseDataObject("matrix")
