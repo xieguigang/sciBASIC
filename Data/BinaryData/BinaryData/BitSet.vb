@@ -17,11 +17,66 @@ Public Class BitSet
     Implements ICollection
     Implements ICloneable
 
-    Private bits As UInt32() = Nothing
-    Private _length As Integer = 0
-    Private Shared ONE As UInt32 = CUInt(1) << 31
-    Private _syncRoot As Object
-    Private Shared EndianFixer As Func(Of Byte(), Byte()) = Nothing
+    Shared ReadOnly ONE As UInt32 = CUInt(1) << 31
+    Shared EndianFixer As Func(Of Byte(), Byte()) = Nothing
+
+    Dim bits As UInt32() = Nothing
+    Dim _length As Integer = 0
+    Dim _syncRoot As Object
+
+    Public Property Count() As Integer Implements ICollection.Count
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return Me._length
+        End Get
+        Private Set
+            If Value > Me._length Then
+                Extend(Value - Me._length)
+            Else
+                Me._length = Math.Max(0, Value)
+            End If
+        End Set
+    End Property
+
+    Public ReadOnly Property IsSynchronized() As Boolean Implements ICollection.IsSynchronized
+        Get
+            Return False
+        End Get
+    End Property
+
+    Public ReadOnly Property SyncRoot() As Object Implements ICollection.SyncRoot
+        Get
+            If Me._syncRoot Is Nothing Then
+                Interlocked.CompareExchange(Of Object)(Me._syncRoot, New Object(), Nothing)
+            End If
+            Return _syncRoot
+        End Get
+    End Property
+
+    Default Public Property Item(index As Integer) As Boolean
+        Get
+            If index >= _length Then
+                Throw New IndexOutOfRangeException()
+            End If
+
+            Dim byteIndex As Integer = index >> 5
+            Dim bitIndex As Integer = index And &H1F
+            Return ((bits(byteIndex) << bitIndex) And ONE) <> 0
+        End Get
+        Set
+            If index >= _length Then
+                Throw New IndexOutOfRangeException()
+            End If
+
+            Dim byteIndex As Integer = index >> 5
+            Dim bitIndex As Integer = index And &H1F
+            If Value Then
+                bits(byteIndex) = bits(byteIndex) Or (ONE >> bitIndex)
+            Else
+                bits(byteIndex) = bits(byteIndex) And Not (ONE >> bitIndex)
+            End If
+        End Set
+    End Property
 
 #Region "Constructors"
 
@@ -33,16 +88,17 @@ Public Class BitSet
         End If
     End Sub
 
-    Public Sub New(srcBits As BitSet)
-        Me.InitializeFrom(srcBits.ToArray())
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub New(bits As BitSet)
+        Me.InitializeFrom(bits.ToArray())
     End Sub
 
-    Public Sub New(srcBits As BitArray)
-        Me._length = srcBits.Count
+    Public Sub New(bits As BitArray)
+        Me._length = bits.Count
         Me.bits = New UInt32(RequiredSize(Me._length) - 1) {}
 
-        For i As Integer = 0 To srcBits.Count - 1
-            Me(i) = srcBits(i)
+        For i As Integer = 0 To bits.Count - 1
+            Me(i) = bits(i)
         Next
     End Sub
 
@@ -51,16 +107,18 @@ Public Class BitSet
         InitializeFrom(bytes)
     End Sub
 
-    Public Sub New(srcBits As ICollection(Of Boolean))
-        Me.InitializeFrom(srcBits.ToArray())
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub New(bits As ICollection(Of Boolean))
+        Me.InitializeFrom(bits.ToArray())
     End Sub
 
-    Public Sub New(srcBits As ICollection(Of Byte))
-        InitializeFrom(srcBits)
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Sub New(bytes As ICollection(Of Byte))
+        InitializeFrom(bytes)
     End Sub
 
-    Public Sub New(srcBits As ICollection(Of Short))
-        Dim bytes As ICollection(Of Byte) = srcBits.SelectMany(Function(v) EndianFixer(BitConverter.GetBytes(v))).ToList()
+    Public Sub New(data As ICollection(Of Short))
+        Dim bytes As ICollection(Of Byte) = data.SelectMany(Function(v) EndianFixer(BitConverter.GetBytes(v))).ToList()
         InitializeFrom(bytes)
     End Sub
 
@@ -135,31 +193,6 @@ Public Class BitSet
 
 #End Region
 
-    Default Public Property Item(index As Integer) As Boolean
-        Get
-            If index >= _length Then
-                Throw New IndexOutOfRangeException()
-            End If
-
-            Dim byteIndex As Integer = index >> 5
-            Dim bitIndex As Integer = index And &H1F
-            Return ((bits(byteIndex) << bitIndex) And ONE) <> 0
-        End Get
-        Set
-            If index >= _length Then
-                Throw New IndexOutOfRangeException()
-            End If
-
-            Dim byteIndex As Integer = index >> 5
-            Dim bitIndex As Integer = index And &H1F
-            If Value Then
-                bits(byteIndex) = bits(byteIndex) Or (ONE >> bitIndex)
-            Else
-                bits(byteIndex) = bits(byteIndex) And Not (ONE >> bitIndex)
-            End If
-        End Set
-    End Property
-
 #Region "Interfaces implementation"
 #Region "IEnumerable"
     Public Function GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
@@ -185,46 +218,27 @@ Public Class BitSet
         Else
             Throw New ArgumentException("Array type not supported (UInt32[] or bool[] only)")
         End If
-
     End Sub
-
-    Public Property Count() As Integer Implements ICollection.Count
-        Get
-            Return Me._length
-        End Get
-        Private Set
-            If Value > Me._length Then
-                Extend(Value - Me._length)
-            Else
-                Me._length = Math.Max(0, Value)
-            End If
-        End Set
-    End Property
-
-    Public ReadOnly Property IsSynchronized() As Boolean Implements ICollection.IsSynchronized
-        Get
-            Return False
-        End Get
-    End Property
-
-    Public ReadOnly Property SyncRoot() As Object Implements ICollection.SyncRoot
-        Get
-            If Me._syncRoot Is Nothing Then
-                Interlocked.CompareExchange(Of Object)(Me._syncRoot, New Object(), Nothing)
-            End If
-            Return _syncRoot
-        End Get
-    End Property
 #End Region
+
 #Region "ICloneable"
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return New BitSet(Me)
     End Function
-    ' Not part of ICloneable, but better - returns a strongly-typed result
-    Public Function Dup() As BitSet
+
+    ''' <summary>
+    ''' Not part of ICloneable, but better - returns a strongly-typed result
+    ''' </summary>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function Duplicate() As BitSet
         Return New BitSet(Me)
     End Function
 #End Region
+
 #End Region
 
 #Region "String Conversions"
@@ -300,6 +314,7 @@ Public Class BitSet
         Return ba
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ToBinaryString(Optional setChar As Char = "1"c, Optional unsetChar As Char = "0"c) As String
         Return New String(Me.ToArray().[Select](Function(v) If(v, setChar, unsetChar)).ToArray())
     End Function
@@ -387,29 +402,29 @@ Public Class BitSet
         Return Me
     End Function
 
-    Public Function SetBits(setBits__1 As ICollection(Of Boolean), Optional destStartBit As Integer = 0, Optional srcStartBit As Integer = 0, Optional numBits As Integer = -1, Optional allowExtend As Boolean = False) As BitSet
-        If setBits__1 Is Nothing Then
+    Public Function SetBits(bits As ICollection(Of Boolean), Optional destStartBit As Integer = 0, Optional srcStartBit As Integer = 0, Optional numBits As Integer = -1, Optional allowExtend As Boolean = False) As BitSet
+        If bits Is Nothing Then
             Throw New ArgumentNullException("setBits")
         End If
         If (destStartBit < 0) OrElse (destStartBit >= Me.Count) Then
             Throw New ArgumentOutOfRangeException("destStartBit")
         End If
-        If (srcStartBit < 0) OrElse (srcStartBit >= setBits__1.Count) Then
+        If (srcStartBit < 0) OrElse (srcStartBit >= bits.Count) Then
             Throw New ArgumentOutOfRangeException("srcStartBit")
         End If
 
         Dim sBits As Boolean()
-        If TypeOf setBits__1 Is Boolean() Then
-            sBits = DirectCast(setBits__1, Boolean())
+        If TypeOf bits Is Boolean() Then
+            sBits = DirectCast(bits, Boolean())
         Else
-            sBits = setBits__1.ToArray()
+            sBits = bits.ToArray()
         End If
 
         If numBits = -1 Then
-            numBits = setBits__1.Count
+            numBits = bits.Count
         End If
-        If numBits > (setBits__1.Count - srcStartBit) Then
-            numBits = setBits__1.Count - srcStartBit
+        If numBits > (bits.Count - srcStartBit) Then
+            numBits = bits.Count - srcStartBit
         End If
 
         Dim diffSize As Integer = numBits - (Me.Count - destStartBit)
@@ -467,14 +482,17 @@ Public Class BitSet
         Return Me
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function [Xor](xor__1 As BitSet, Optional start As Integer = 0) As BitSet
         Return BinaryBitwiseOp(Function(a, b) (a Xor b), xor__1, start)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function [And](and__1 As BitSet, Optional start As Integer = 0) As BitSet
         Return BinaryBitwiseOp(Function(a, b) (a And b), and__1, start)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function [Or](or__1 As BitSet, Optional start As Integer = 0) As BitSet
         Return BinaryBitwiseOp(Function(a, b) (a Or b), or__1, start)
     End Function
@@ -494,30 +512,37 @@ Public Class BitSet
 
 #Region "Class Operators"
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator +(a As BitSet, b As BitSet) As BitSet
-        Return a.Dup().Append(b)
+        Return a.Duplicate().Append(b)
     End Operator
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator Or(a As BitSet, b As BitSet) As BitSet
-        Return a.Dup().[Or](b)
+        Return a.Duplicate().[Or](b)
     End Operator
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator And(a As BitSet, b As BitSet) As BitSet
-        Return a.Dup().[And](b)
+        Return a.Duplicate().[And](b)
     End Operator
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator Xor(a As BitSet, b As BitSet) As BitSet
-        Return a.Dup().[Xor](b)
+        Return a.Duplicate().[Xor](b)
     End Operator
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator Not(a As BitSet) As BitSet
-        Return a.Dup().[Not]()
+        Return a.Duplicate().[Not]()
     End Operator
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator <<(a As BitSet, shift As Integer) As BitSet
-        Return a.Dup().Append(New Boolean(shift - 1) {})
+        Return a.Duplicate().Append(New Boolean(shift - 1) {})
     End Operator
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator >>(a As BitSet, shift As Integer) As BitSet
         Return New BitSet(a.ToArray().Take(Math.Max(0, a.Count - shift)).ToArray())
     End Operator
@@ -533,16 +558,20 @@ Public Class BitSet
         Next
         Return True
     End Operator
+
     Public Overrides Function Equals(obj As Object) As Boolean
         If Not (TypeOf obj Is BitSet) Then
             Return False
         End If
         Return (Me Is DirectCast(obj, BitSet))
     End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function GetHashCode() As Integer
         Return Me.ToHexString().GetHashCode()
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator <>(a As BitSet, b As BitSet) As Boolean
         Return Not (a = b)
     End Operator
