@@ -58,6 +58,9 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
+    ''' <summary>
+    ''' 可能是一个dataset，也可能是一个<see cref="Group"/>
+    ''' </summary>
     Public Class DataObjectFacade : Inherits HDF5Ptr
 
         Shared ReadOnly ObjectAddressMap As New Dictionary(Of Long, DataObject)()

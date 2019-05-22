@@ -60,7 +60,7 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 Namespace HDF5.[Structure]
 
     ''' <summary>
-    ''' A group of <see cref="DataObjectFacade"/>
+    ''' A group of <see cref="DataObjectFacade"/>.（类似于文件夹）
     ''' </summary>
     Public Class Group : Implements IFileDump
 
