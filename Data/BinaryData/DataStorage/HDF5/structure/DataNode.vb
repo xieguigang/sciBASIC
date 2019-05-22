@@ -206,6 +206,10 @@ Namespace HDF5.[Structure]
                 Return Me.currentNode.[next]([in], sb)
             End If
         End Function
+
+        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+            Throw New NotImplementedException()
+        End Sub
     End Class
 
 End Namespace

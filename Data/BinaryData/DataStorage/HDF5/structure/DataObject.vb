@@ -90,12 +90,12 @@ Namespace HDF5.[Structure]
             Next
         End Sub
 
-        Protected Overrides Sub printValues(console As System.IO.StringWriter)
+        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
             Call console.WriteLine("DataObject >>>")
             Call console.WriteLine("address : " & Me.m_address)
 
             If objectHeader IsNot Nothing Then
-                Call objectHeader.printValues()
+                Call objectHeader.printValues(console)
             End If
 
             Call console.WriteLine("DataObject <<<")
