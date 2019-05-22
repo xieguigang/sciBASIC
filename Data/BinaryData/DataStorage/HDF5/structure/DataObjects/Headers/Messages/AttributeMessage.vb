@@ -142,6 +142,14 @@ Namespace HDF5.[Structure]
             Me.dataPos = [in].offset
         End Sub
 
+        Public Shared Function ReadAttrValue([in] As BinaryReader, msg As AttributeMessage, sb As Superblock) As Object
+            Dim offset = msg.dataPos
+            Dim value As New List(Of Object)
+            Dim type As DataTypeMessage = msg.dataType
+
+
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"[{MyBase.ToString}] Dim {name} As {dataType} = &{dataPos}"
         End Function

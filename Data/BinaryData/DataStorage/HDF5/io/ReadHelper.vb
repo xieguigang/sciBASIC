@@ -58,6 +58,12 @@ Namespace HDF5.IO
 
     <HideModuleName> Public Module ReadHelper
 
+        ''' <summary>
+        ''' 这个函数读取的都是整形数
+        ''' </summary>
+        ''' <param name="[in]"></param>
+        ''' <param name="sb"></param>
+        ''' <returns></returns>
         Public Function readO([in] As BinaryReader, sb As Superblock) As Long
             If [in] Is Nothing Then
                 Throw New ArgumentException("in is null")
@@ -196,6 +202,11 @@ Namespace HDF5.IO
             Return unsignedByteToShort(upper) * 256 + unsignedByteToShort(lower)
         End Function
 
+        ''' <summary>
+        ''' 读取以0结尾的字符串，然后padding对齐到8字节的整数倍的位置
+        ''' </summary>
+        ''' <param name="[in]"></param>
+        ''' <returns></returns>
         Public Function readString8([in] As BinaryReader) As String
             Dim filePos As Long = [in].offset
             Dim str As String = [in].readASCIIString()

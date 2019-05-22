@@ -77,6 +77,16 @@ Namespace HDF5.[Structure]
             End Get
         End Property
 
+        Public ReadOnly Property attributes As AttributeMessage()
+            Get
+                Return m_facade.dataObject _
+                    .messages _
+                    .Where(Function(msg) Not msg.attributeMessage Is Nothing) _
+                    .Select(Function(a) a.attributeMessage) _
+                    .ToArray
+            End Get
+        End Property
+
         Public Sub New([in] As BinaryReader, sb As Superblock, facade As DataObjectFacade)
             Dim gm As GroupMessage = facade.dataObject.groupMessage
 

@@ -45,6 +45,9 @@
 
 Namespace HDF5.[Structure]
 
+    ''' <summary>
+    ''' 对一些在HDF5文件之中的基础数据类型的枚举，例如长整型，双精度，字符串等
+    ''' </summary>
     Public Enum DataTypes
         ''' <summary>
         ''' Fixed-Point

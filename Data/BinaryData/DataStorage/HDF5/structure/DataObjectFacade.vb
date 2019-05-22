@@ -64,8 +64,6 @@ Namespace HDF5.[Structure]
     ''' </summary>
     Public Class DataObjectFacade : Inherits HDF5Ptr
 
-        Shared ReadOnly ObjectAddressMap As New Dictionary(Of Long, DataObject)()
-
         Dim m_layout As Layout
 
         Public Overridable ReadOnly Property dataObject As DataObject
@@ -102,11 +100,13 @@ Namespace HDF5.[Structure]
         End Sub
 
         Private Function readDataObject([in] As BinaryReader, sb As Superblock, address As Long) As DataObject
-            Dim dobj As DataObject = ObjectAddressMap.GetValueOrNull(address)
+            Dim dobj As DataObject = sb.file.GetCacheObject(address)
+
             If dobj Is Nothing Then
                 dobj = New DataObject([in], sb, address)
-                ObjectAddressMap(address) = dobj
+                sb.file.addCache(dobj)
             End If
+
             Return dobj
         End Function
 
@@ -166,6 +166,7 @@ Namespace HDF5.[Structure]
 
                     If dm.type = DataTypes.DATATYPE_COMPOUND Then
                         Dim sms As List(Of StructureMember) = dm.structureMembers
+
                         If sms IsNot Nothing Then
                             For Each sm As StructureMember In sms
                                 Dim name As String = sm.name
@@ -175,6 +176,7 @@ Namespace HDF5.[Structure]
                                 Dim dataType As Integer = -1
                                 Dim byteLength As Integer = -1
                                 Dim dtm As DataTypeMessage = sm.message
+
                                 If dtm IsNot Nothing Then
                                     dataType = dtm.type
                                     byteLength = dtm.byteSize
@@ -197,22 +199,6 @@ Namespace HDF5.[Structure]
                         'layout.setNumberOfDimensions(ndims);
                         readLayout.maxDimensionLength = maxDimensionLength
                     End If
-
-                ElseIf msg.headerMessageType() Is ObjectHeaderMessageType.Attribute Then
-                    Dim am As AttributeMessage = msg.attributeMessage()
-
-                    Dim dm As DataTypeMessage = am.dataType()
-                    If Not dm Is Nothing Then
-                        ' dm.type()
-                    End If
-                    ' ElseIf msg.headerMessageType Is ObjectHeaderMessageType.Group Then
-                    '    Dim groups As GroupMessage = msg.groupMessage
-
-                    ' 20190521 group message no layout??
-                    ' readLayout.dataAddress = groups.bTreeAddress
-                    ' Throw New NotImplementedException
-                    'Else
-                    ' Throw New NotImplementedException
                 End If
             Next
 

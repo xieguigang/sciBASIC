@@ -92,21 +92,22 @@ Namespace HDF5
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property headerSize As Long
-        Public ReadOnly Property fileName As String
         Public ReadOnly Property datasetName As String
         Public ReadOnly Property layout As Layout
         Public ReadOnly Property dataBTree As DataBTree
         Public ReadOnly Property chunks As List(Of DataChunk)
 
+        Dim file As HDF5File
+
         Public ReadOnly Property Superblock As Superblock
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Superblock(reader, Scan0)
+                Return New Superblock(file, Scan0)
             End Get
         End Property
 
         Public Sub New(filename As String, datasetName As String)
-            Me.fileName = filename
+            Me.file = New HDF5File(filename)
             Me.reader = New BinaryFileReader(filename)
             Me.datasetName = datasetName
             Me.layout = Nothing
@@ -117,9 +118,9 @@ Namespace HDF5
             Call parseHeader()
         End Sub
 
-        Private Sub New([in] As BinaryReader, datasetName As String)
-            Me.fileName = Nothing
-            Me.reader = [in]
+        Private Sub New(file As HDF5File, datasetName As String)
+            Me.file = file
+            Me.reader = file.reader
             Me.datasetName = datasetName
             Me.layout = Nothing
             Me.dataBTree = Nothing
@@ -127,9 +128,9 @@ Namespace HDF5
             Me.headerSize = 0
         End Sub
 
-        Friend Sub New(fileName$, dataset As DataObjectFacade)
-            Me.fileName = fileName
-            Me.reader = New BinaryFileReader(fileName)
+        Friend Sub New(file As HDF5File, dataset As DataObjectFacade)
+            Me.file = file
+            Me.reader = New BinaryFileReader(file.fileName)
             Me.datasetName = dataset.symbolName
             Me.layout = Nothing
             Me.dataBTree = Nothing
@@ -141,7 +142,7 @@ Namespace HDF5
         End Sub
 
         Public Function ParseDataObject(dataSetName As String) As HDF5Reader
-            Dim reader As New HDF5Reader(Me.reader, dataSetName)
+            Dim reader As New HDF5Reader(Me.file, dataSetName)
             Dim dobj As DataObjectFacade = dataGroups.objects.FirstOrDefault(Function(d) d.symbolName.TextEquals(dataSetName))
 
             reader._dataGroups = parserObject(dobj, sb:=Superblock, container:=reader)

@@ -56,7 +56,9 @@ Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
-
+    ''' <summary>
+    ''' 一个数据块对象
+    ''' </summary>
     Public Class DataObject : Inherits HDF5Ptr
 
         Dim objectHeader As ObjectHeader
@@ -66,9 +68,9 @@ Namespace HDF5.[Structure]
         ''' local heap and to a B-tree which points to symbol nodes.
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable ReadOnly Property groupMessage() As GroupMessage
+        Public Overridable ReadOnly Property groupMessage As GroupMessage
 
-        Public Overridable ReadOnly Property messages() As List(Of ObjectHeaderMessage)
+        Public Overridable ReadOnly Property messages As List(Of ObjectHeaderMessage)
             Get
                 If Me.objectHeader IsNot Nothing Then
                     Return Me.objectHeader.headerMessages

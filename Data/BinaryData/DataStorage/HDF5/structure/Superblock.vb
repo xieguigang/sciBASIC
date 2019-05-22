@@ -96,6 +96,8 @@ Namespace HDF5.[Structure]
         Dim reserved1 As Integer
         Dim reserved2 As Integer
 
+        Friend ReadOnly file As HDF5File
+
         Public Overridable ReadOnly Property versionOfSuperblock() As Integer
         Public Overridable ReadOnly Property versionOfFileFreeSpaceStorage() As Integer
         Public Overridable ReadOnly Property versionOfRootGroupSymbolTableEntry() As Integer
@@ -114,8 +116,10 @@ Namespace HDF5.[Structure]
         Public Overridable ReadOnly Property rootGroupSymbolTableEntry() As SymbolTableEntry
         Public Overridable ReadOnly Property totalSuperBlockSize() As Integer
 
-        Public Sub New([in] As BinaryReader, address As Long)
+        Public Sub New(file As HDF5File, address As Long)
             Call MyBase.New(address)
+
+            Dim [in] = file.reader
 
             [in].offset = address
 

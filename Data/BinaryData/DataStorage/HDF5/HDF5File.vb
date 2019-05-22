@@ -7,17 +7,24 @@ Namespace HDF5
 
     Public Class HDF5File : Implements IDisposable
 
-        ReadOnly reader As BinaryReader
-        ReadOnly fileName As String
+        Friend ReadOnly reader As BinaryReader
 
-        Public ReadOnly Property Superblock As Superblock
+        Public ReadOnly Property fileName As String
+        Public ReadOnly Property superblock As Superblock
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return New Superblock(reader, Scan0)
+                Return New Superblock(Me, Scan0)
             End Get
         End Property
 
+        ''' <summary>
+        ''' 最顶端的数据对象，可能是一个数据块也可能是一个文件夹
+        ''' </summary>
         Dim rootObjects As Dictionary(Of String, DataObjectFacade)
+        ''' <summary>
+        ''' 所读取的对象缓存: [address => <see cref="DataObject"/>]
+        ''' </summary>
+        Dim objectAddressMap As New Dictionary(Of Long, DataObject)()
 
         ''' <summary>
         ''' 根节点名称或者全路径来获取一个数据集对象
@@ -36,7 +43,7 @@ Namespace HDF5
                     .Keys _
                     .First(Function(name) name.TextEquals(rootName)) _
                     .GetValueOrDefault(rootObjects)
-                Dim reader As New HDF5Reader(fileName, obj)
+                Dim reader As New HDF5Reader(Me, obj)
 
                 For Each token As String In path.Skip(1)
                     reader = reader.ParseDataObject(dataSetName:=token)
@@ -46,22 +53,55 @@ Namespace HDF5
             End Get
         End Property
 
+        Public ReadOnly Property attributes As Dictionary(Of String, Object)
+
         Sub New(fileName As String)
             Me.reader = New BinaryFileReader(fileName)
-            Me.fileName = fileName
+            Me.fileName = fileName.GetFullPath
 
             Call parseHeader()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Friend Sub addCache(data As DataObject)
+            objectAddressMap(data.address) = data
+        End Sub
+
+        ''' <summary>
+        ''' 获取已经被缓存的数据对象，如果目标还没有被读取的话，则返回空值
+        ''' </summary>
+        ''' <param name="address"></param>
+        ''' <returns></returns>
+        Public Function GetCacheObject(address As Long) As DataObject
+            If Not objectAddressMap.ContainsKey(address) Then
+                Return Nothing
+            Else
+                Return objectAddressMap(key:=address)
+            End If
+        End Function
+
         Private Sub parseHeader()
-            Dim sb As Superblock = Me.Superblock
+            Dim sb As Superblock = Me.superblock
             Dim rootSymbolTableEntry As SymbolTableEntry = sb.rootGroupSymbolTableEntry
             Dim objectFacade As New DataObjectFacade(Me.reader, sb, "root", rootSymbolTableEntry.objectHeaderAddress)
             Dim rootGroup As New Group(Me.reader, sb, objectFacade)
             Dim objects As List(Of DataObjectFacade) = rootGroup.objects
 
+            _attributes = attributeTable(rootGroup.attributes, Me)
             rootObjects = objects.ToDictionary(Function(o) o.symbolName)
         End Sub
+
+        Public Shared Function attributeTable(attrs As AttributeMessage(), file As HDF5File) As Dictionary(Of String, Object)
+            Dim table As New Dictionary(Of String, Object)
+            Dim reader = file.reader
+            Dim sb As Superblock = file.superblock
+
+            For Each a As AttributeMessage In attrs
+                table(a.name) = AttributeMessage.ReadAttrValue(reader, a, sb)
+            Next
+
+            Return table
+        End Function
 
         Public Overrides Function ToString() As String
             Return fileName
