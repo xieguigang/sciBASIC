@@ -309,6 +309,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\FixLengthString.vb" />

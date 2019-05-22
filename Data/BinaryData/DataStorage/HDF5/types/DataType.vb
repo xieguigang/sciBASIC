@@ -11,7 +11,9 @@ Namespace HDF5.type
         Sub New([in] As BinaryReader)
             Call [in].Mark()
 
-            Dim flag As BitSet = BitSet.valueof([in].readByte)
+            Dim flag As BitSet = BitSet.ValueOf([in].readByte)
+
+            version =
 
         End Sub
     End Class

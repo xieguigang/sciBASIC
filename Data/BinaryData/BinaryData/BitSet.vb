@@ -1,4 +1,5 @@
 Imports System.Globalization
+Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports System.Threading
@@ -473,7 +474,29 @@ Public Class BitSet
         Return bb
     End Function
 
+    Shared ReadOnly TWO As BigInteger = 2
 
+    ''' <summary>
+    ''' bits to integer
+    ''' </summary>
+    ''' <param name="start%"></param>
+    ''' <param name="length%"></param>
+    ''' <returns></returns>
+    Public Function ToInteger(start%, length%) As Integer
+        If length <= 0 Then
+            Throw New InvalidProgramException($"{NameOf(length)} must be > 0!")
+        End If
+
+        Dim result As BigInteger = 0
+
+        For i As Integer = 0 To length - 1
+            If Me.Get(start + i) Then
+                result = result + BigInteger.Pow(TWO, i)
+            End If
+        Next
+
+        Return result
+    End Function
 #End Region
 
 #Region "Logical Bitwise Operations"
