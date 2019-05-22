@@ -241,6 +241,11 @@ Public Class BitSet
 
 #End Region
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function ValueOf(ParamArray bytes As Byte()) As BitSet
+        Return New BitSet(bytes)
+    End Function
+
 #Region "String Conversions"
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

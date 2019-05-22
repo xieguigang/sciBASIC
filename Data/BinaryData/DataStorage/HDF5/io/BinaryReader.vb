@@ -55,6 +55,8 @@ Namespace HDF5.IO
         Protected Friend m_maxOffset As Long
         Protected filesize As Long
 
+        Dim markedPos As Long
+
         Public Overridable ReadOnly Property maxOffset As Long
             Get
                 Return Me.m_maxOffset
@@ -101,6 +103,14 @@ Namespace HDF5.IO
             Else
                 m_littleEndian = True
             End If
+        End Sub
+
+        Public Sub Mark()
+            markedPos = offset
+        End Sub
+
+        Public Sub Reset()
+            offset = markedPos
         End Sub
 
         Public Overrides Function ToString() As String
