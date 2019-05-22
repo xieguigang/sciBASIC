@@ -104,7 +104,7 @@ Namespace HDF5
             Dim sb As Superblock = file.superblock
 
             For Each a As AttributeMessage In attrs
-                table(a.name) = AttributeMessage.ReadAttrValue(reader, a, sb)
+                table(a.name) = AttributeMessage.ReadAttrValue(a, sb)
             Next
 
             Return table

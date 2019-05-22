@@ -60,12 +60,13 @@ Namespace HDF5.device
             ' final int skipBytes = length - hdfFc.getSizeOfOffsets() - 4;
             Dim skipBytes As Integer = length - sb.sizeOfOffsets - 4
             Dim buffer = sb.file.reader
-            Dim size = buffer.offset
+            Dim size As Integer = 0
 
             ' id=4
             While size <= length
                 ' Move past the skipped bytes. TODO figure out what this is for
                 buffer.offset += skipBytes
+                size += skipBytes
 
                 Dim heapAddress As Long = device.readO(buffer, sb)
                 Dim index As Integer = buffer.readInt

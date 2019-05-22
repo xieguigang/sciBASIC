@@ -67,17 +67,40 @@ Namespace HDF5.[Structure]
         ''' <returns></returns>
         Public ReadOnly Property collectionSize As Integer
 
-        Public ReadOnly Property objects As GlobalHeapObject()
+        Public ReadOnly Property objects As New Dictionary(Of Integer, GlobalHeapObject)
 
         Public Sub New(sb As Superblock, address As Long)
             MyBase.New(address)
 
             Dim reader As BinaryReader = sb.file.reader
+            Dim headerSize As Integer = 4 + 1 + 3 + sb.sizeOfLengths
+
+            reader.Mark()
 
             signature = reader.readBytes(4)
             version = reader.readByte
-            collectionSize = reader.readInt
 
+            reader.Reset()
+            reader.offset += 8
+
+            collectionSize = device.readL(reader, sb)
+
+            reader.Reset()
+            reader.offset += headerSize
+
+            Dim size = collectionSize
+
+            While size > 8
+                Dim [object] As New GlobalHeapObject(Me, sb)
+
+                size -= reader.deltaSize
+
+                If [object].index = 0 Then
+                    Exit While
+                Else
+                    objects(key:=[object].index) = [object]
+                End If
+            End While
         End Sub
 
         Protected Friend Overrides Sub printValues(console As TextWriter)
@@ -109,5 +132,21 @@ Namespace HDF5.[Structure]
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property data As Byte()
+
+        Sub New(gh As GlobalHeap, sb As Superblock)
+            Dim reader = sb.file.reader
+
+            Call reader.Mark()
+
+            index = reader.readShort
+            references = reader.readShort
+
+            ' Skip 4 reserved bytes
+            reader.skipBytes(4)
+
+            objectSize = device.readO(reader, sb)
+            data = reader.readBytes(objectSize)
+            device.seekBufferToNextMultipleOfEight(reader)
+        End Sub
     End Class
 End Namespace

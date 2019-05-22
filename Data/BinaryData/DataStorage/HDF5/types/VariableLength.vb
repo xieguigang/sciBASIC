@@ -8,7 +8,6 @@ Namespace HDF5.type
         Public ReadOnly Property type As Integer
         Public ReadOnly Property paddingType As Integer
         Public ReadOnly Property encoding As Encoding
-        Public ReadOnly Property parent As DataType
 
         Sub New([in] As BinaryReader)
             Call MyBase.New([in])
@@ -24,8 +23,6 @@ Namespace HDF5.type
                 Case Else
                     Throw New InvalidProgramException
             End Select
-
-            parent = DataType.ReadDataType([in])
         End Sub
     End Class
 End Namespace

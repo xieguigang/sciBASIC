@@ -230,6 +230,25 @@ Namespace HDF5.device
             Dim size As Integer = CInt(Math.Truncate(Math.Pow(2, sizeFactor)))
             Return readVariableSizeUnsigned([in], size)
         End Function
+
+        ''' <summary>
+        ''' Moves the position of the <seealso cref="BinaryReader"/> to the next position aligned on
+        ''' 8 bytes. If the buffer position is already a multiple of 8 the position will
+        ''' not be changed.
+        ''' </summary>
+        ''' <param name="reader"> the buffer to be aligned </param>
+        ''' 
+        <Extension>
+        Public Sub seekBufferToNextMultipleOfEight(reader As BinaryReader)
+            Dim pos As Integer = reader.offset
+
+            If pos Mod 8 = 0 Then
+                ' Already on a 8 byte multiple
+                Return
+            Else
+                reader.offset += (8 - (pos Mod 8))
+            End If
+        End Sub
     End Module
 
 End Namespace
