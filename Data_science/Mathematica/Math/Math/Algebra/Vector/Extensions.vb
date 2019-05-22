@@ -94,7 +94,7 @@ Namespace LinearAlgebra
             Return New Vector(v.Takes(indices.ToArray))
         End Function
 
-        ReadOnly normalRange As New DefaultValue(Of DoubleRange)({0, 1})
+        ReadOnly normalRange As New [Default](Of  DoubleRange)({0, 1})
         ReadOnly random As New Random
 
         ''' <summary>

@@ -135,7 +135,7 @@ Namespace Drawing2D.Text.ASCIIArt
             End Using
         End Sub
 
-        ReadOnly defaultFont As DefaultValue(Of Font) = SystemFonts.DefaultFont
+        ReadOnly defaultFont As [Default](Of  Font) = SystemFonts.DefaultFont
 
         ''' <summary>
         ''' 将字符转换为图像

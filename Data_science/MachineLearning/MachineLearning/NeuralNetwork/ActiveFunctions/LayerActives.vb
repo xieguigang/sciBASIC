@@ -96,7 +96,7 @@ Namespace NeuralNetwork.Activations
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function GetDefaultConfig() As DefaultValue(Of LayerActives)
+        Public Shared Function GetDefaultConfig() As [Default](Of  LayerActives)
             Return New LayerActives With {
                 .input = New Sigmoid,
                 .hiddens = New SigmoidFunction,

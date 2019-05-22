@@ -68,7 +68,7 @@ Namespace StorageProvider.Reflection
             End Get
         End Property
 
-        Shared ReadOnly stringType As DefaultValue(Of Type) = GetType(String)
+        Shared ReadOnly stringType As [Default](Of  Type) = GetType(String)
 
         ''' <summary>
         ''' 在执行解析操作的时候，所有的没有被序列化的属性都将会被看作为字典元素，该字典元素的数据都存储在这个属性值之中

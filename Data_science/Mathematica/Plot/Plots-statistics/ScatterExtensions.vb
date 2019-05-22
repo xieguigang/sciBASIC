@@ -174,7 +174,7 @@ Public Module ScatterExtensions
         Return Scatter.Plot(ode.FromODEs(, ptSize, width), size, padding, bg)
     End Function
 
-    ReadOnly defaultColorSequence As DefaultValue(Of Color()) = ChartColors
+    ReadOnly defaultColorSequence As [Default](Of  Color()) = ChartColors
 
     ''' <summary>
     ''' Convert ODEs result as scatter plot serial model.

@@ -53,14 +53,14 @@ Namespace Language.Default
     ''' <summary>
     ''' <see cref="CLI"/> optional value helper data model
     ''' </summary>
-    Public Structure DefaultString : Implements IDefaultValue(Of String)
+    Public Structure DefaultString : Implements IDefault(Of String)
         Implements IsEmpty
 
         ''' <summary>
         ''' The optional argument value that read from <see cref="CLI"/> 
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property DefaultValue As String Implements IDefaultValue(Of String).DefaultValue
+        Public ReadOnly Property DefaultValue As String Implements IDefault(Of String).DefaultValue
 
         ''' <summary>
         ''' <see cref="DefaultValue"/> is empty?

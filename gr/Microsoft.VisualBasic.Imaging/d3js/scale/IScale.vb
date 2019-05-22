@@ -57,7 +57,7 @@ Namespace d3js.scale
         Public MustOverride Function domain(values As IEnumerable(Of String)) As T
         Public MustOverride Function domain(values As IEnumerable(Of Integer)) As T
 
-        Shared ReadOnly defaultRange As DefaultValue(Of IEnumerable(Of Double))
+        Shared ReadOnly defaultRange As [Default](Of  IEnumerable(Of Double))
 
         Shared Sub New()
             defaultRange = DirectCast({0#, 1.0#}, IEnumerable(Of Double)).AsDefault

@@ -142,7 +142,7 @@ Public Module TimeTrends
                          Optional legendTitleColor$ = "black",
                          Optional displayLegendBorder As Boolean = True) As GraphicsData
 
-        Static shortDateString As New DefaultValue(Of Func(Of Date, String))(Function(d) d.ToShortDateString)
+        Static shortDateString As New [Default](Of  Func(Of Date, String))(Function(d) d.ToShortDateString)
 
         Dim dates = data.OrderBy(Function(d) d.date).ToArray
         Dim timer As TimeRange = dates _

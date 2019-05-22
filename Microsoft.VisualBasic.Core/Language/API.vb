@@ -127,7 +127,7 @@ Namespace Language
             Return [Default](x, [If])
         End Function
 
-        Public Function DefaultValue(Of T)(value As T) As [Default](Of T)
+        Public Function [Default](Of  T)(value As T) As [Default](Of T)
             Return New [Default](Of T) With {
                 .value = value,
                 .assert = defaultAssert

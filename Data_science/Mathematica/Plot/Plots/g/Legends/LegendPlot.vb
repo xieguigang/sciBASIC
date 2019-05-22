@@ -265,7 +265,7 @@ Namespace Graphic.Legend
             }
             Dim color As Brush = l.color.GetBrush
 
-            Static blackTitle As DefaultValue(Of Brush) = Brushes.Black
+            Static blackTitle As [Default](Of  Brush) = Brushes.Black
 
             Call g.DrawLegendShape(
                 pos, canvas, l.style, color,

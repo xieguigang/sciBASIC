@@ -54,7 +54,7 @@ Public Module Extensions
     ''' ``Sheet1`` is the default sheet name in excel file.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Sheet1 As DefaultValue(Of String)
+    Public ReadOnly Property Sheet1 As [Default](Of  String)
         Get
             Return NameOf(Sheet1)
         End Get

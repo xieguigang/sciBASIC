@@ -73,7 +73,7 @@ Public Class File : Implements IFileReference
     Friend ReadOnly modify As New Index(Of String)
     Friend ROOT$
 
-    Dim _filePath As DefaultValue(Of String)
+    Dim _filePath As [Default](Of  String)
 
     Public Property FilePath As String Implements IFileReference.FilePath
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -54,7 +54,6 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.JavaScript
 Imports any = System.Object
 Imports number = System.Double
 
@@ -66,10 +65,10 @@ Namespace Layouts.Cola
     Public Class Layout
 
         Private _canvasSize As Integer() = {1, 1}
-        Private _linkDistance As UnionType(Of Double) = 20
+        Private _linkDistance As [Variant](Of Double, Func(Of any, Double)) = 20
         Private _defaultNodeSize As Double = 10
         Private _linkLengthCalculator As Action = Nothing
-        Private _linkType As New UnionType(Of Integer)
+        Private _linkType As New [Variant](Of Integer, Func(Of Link(Of Node), Integer))
         Private _avoidOverlaps As Boolean = False
         Private _handleDisconnected As Boolean = True
         Private _alpha As Double
@@ -92,7 +91,7 @@ Namespace Layouts.Cola
         Private _distanceMatrix As Integer()() = Nothing
         Private _descent As Descent = Nothing
         Private _directedLinkConstraints As LinkSepAccessor(Of Link(Of Node)) = Nothing
-        Private _threshold As UnionType(Of Double) = 0.01
+        Private _threshold As [Variant](Of Double, Func(Of Double)) = 0.01
         Private _visibilityGraph As any = Nothing
         Private _groupCompactness As Double = 0.000001
 
@@ -318,9 +317,9 @@ Namespace Layouts.Cola
 
         Public Function flowLayout(Optional axis As String = "y", Optional minSeparation As Func(Of Link(Of Node), Double) = Nothing) As Layout
             Me._directedLinkConstraints = New LinkSepAccessor(Of Link(Of Node)) With {
-            .axis = axis,
-           .getMinSeparation = New UnionType(Of number) With {.lambda1 = minSeparation}
-        }
+                .axis = axis,
+               .getMinSeparation = minSeparation
+            }
             Return Me
         End Function
 
@@ -429,23 +428,21 @@ Namespace Layouts.Cola
             Return Me._linkDistance
         End Function
 
-        Public Function linkDistance(x As UnionType(Of Double)) As Layout
+        Public Function linkDistance(x As [Variant](Of Double, Func(Of any, Double))) As Layout
             Me._linkDistance = x
             Me._linkLengthCalculator = Nothing
             Return Me
         End Function
 
         Public Function linkDistance(x As Func(Of Link(Of Node), Double)) As Layout
-            Me._linkDistance = New UnionType(Of number) With {
-                .lambda1 = Function(any) x(any)
-            }
+            Me._linkDistance = New Func(Of any, Double)(Function(any) x(any))
             Me._linkLengthCalculator = Nothing
 
             Return Me
         End Function
 
-        Public Function linkType(f As Func(Of Integer)) As Layout
-            Me._linkType = New UnionType(Of Integer) With {.lambda = f}
+        Public Function linkType(f As Func(Of Link(Of Node), Integer)) As Layout
+            Me._linkType = f
             Return Me
         End Function
 
@@ -458,7 +455,7 @@ Namespace Layouts.Cola
             Return Me._threshold
         End Function
 
-        Public Function convergenceThreshold(x As UnionType(Of Double)) As Layout
+        Public Function convergenceThreshold(x As [Variant](Of Double, Func(Of Double))) As Layout
             Me._threshold = x
             Return Me
         End Function
@@ -496,7 +493,7 @@ Namespace Layouts.Cola
         End Function
 
         Public Function getLinkLength(link As Link(Of Node)) As Double
-            If _linkDistance.IsLambda Then
+            If Not _linkDistance Like GetType(Double) Then
                 Return _linkDistance(link)
             Else
                 Return _linkDistance
@@ -504,7 +501,7 @@ Namespace Layouts.Cola
         End Function
 
         Private Function getLinkType(link As Link(Of Node)) As Double
-            Return If(_linkType.IsLambda, _linkType(link), 0)
+            Return If(_linkType Like GetType(Integer), 0, _linkType(link))
         End Function
 
         Private linkAccessor As New LinkTypeAccessor(Of Link(Of Node)) With {
@@ -512,7 +509,7 @@ Namespace Layouts.Cola
             .getTargetIndex = AddressOf Layout.getTargetIndex,
             .setLength = Sub(l, len) l.length = len,
             .GetLinkType = Function(l)
-                               Return If(_linkType.IsLambda, Me._linkType(l), 0)
+                               Return If(_linkType Like GetType(Integer), 0, Me._linkType(l))
                            End Function
         }
 

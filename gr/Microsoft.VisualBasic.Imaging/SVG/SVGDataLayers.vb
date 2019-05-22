@@ -182,12 +182,12 @@ Namespace SVG
 #End Region
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function innerDefaultWidth() As DefaultValue(Of Integer)
+        Private Function innerDefaultWidth() As [Default](Of  Integer)
             Return Size.Width.AsDefault(Function(n) CType(n, Integer) = 0)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function innerDefaultHeight() As DefaultValue(Of Integer)
+        Private Function innerDefaultHeight() As [Default](Of  Integer)
             Return Size.Height.AsDefault(Function(n) CType(n, Integer) = 0)
         End Function
 

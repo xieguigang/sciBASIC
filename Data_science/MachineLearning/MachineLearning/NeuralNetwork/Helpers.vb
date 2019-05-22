@@ -68,7 +68,7 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' <see cref="Sigmoid"/> as default
         ''' </summary>
-        Friend ReadOnly defaultActivation As DefaultValue(Of IActivationFunction) = New Sigmoid
+        Friend ReadOnly defaultActivation As [Default](Of  IActivationFunction) = New Sigmoid
 
         ReadOnly rand As New Random()
 

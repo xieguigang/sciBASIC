@@ -118,7 +118,7 @@ Namespace MarkDown
             Return Me.GetJson
         End Function
 
-        Public Shared Function DefaultOption() As DefaultValue(Of MarkdownOptions)
+        Public Shared Function DefaultOption() As [Default](Of  MarkdownOptions)
             Return New MarkdownOptions With {
                 .AllowEmptyLinkText = True,
                 .AutoHyperlink = True,

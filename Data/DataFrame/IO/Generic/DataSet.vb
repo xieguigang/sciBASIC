@@ -150,7 +150,7 @@ Namespace IO
                                                             Optional uidMap$ = Nothing,
                                                             Optional encoding As Encoding = Nothing) As IEnumerable(Of T)
 
-            Dim mapFrom$ = uidMap Or New DefaultValue(Of String) With {
+            Dim mapFrom$ = uidMap Or New [Default](Of  String) With {
                 .lazy = New Func(Of String)(Function() __getID(path)).AsLazy
             }
             Return path.LoadCsv(Of T)(

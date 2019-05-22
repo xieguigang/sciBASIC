@@ -1,52 +1,52 @@
 ﻿#Region "Microsoft.VisualBasic::f672e3ea5079c844581fbfae41e26950, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\Node.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class InputNode
-    ' 
-    '         Properties: fixed, height, index, width, x
-    '                     y
-    ' 
-    '     Class Node
-    ' 
-    '         Properties: bounds, fixed, fixedWeight, groups, height
-    '                     id, leaves, padding, px, py
-    '                     variable, width, x, y
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: isGroup, makeRBTree, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class InputNode
+' 
+'         Properties: fixed, height, index, width, x
+'                     y
+' 
+'     Class Node
+' 
+'         Properties: bounds, fixed, fixedWeight, groups, height
+'                     id, leaves, padding, px, py
+'                     variable, width, x, y
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: isGroup, makeRBTree, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,7 +54,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Layouts.Cola
 

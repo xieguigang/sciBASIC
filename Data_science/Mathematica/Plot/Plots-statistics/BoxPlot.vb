@@ -71,7 +71,7 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 ''' </summary>
 Public Module BoxPlot
 
-    ReadOnly Zero As DefaultValue(Of Double()) = LanguageAPI.[Default]({0R}, Function(x) TryCast(x, Double()).IsNullOrEmpty)
+    ReadOnly Zero As [Default](Of  Double()) = LanguageAPI.[Default]({0R}, Function(x) TryCast(x, Double()).IsNullOrEmpty)
 
     <Extension> Public Function Plot(data As BoxData,
                                      Optional size$ = "3000,2700",

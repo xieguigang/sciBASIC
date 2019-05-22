@@ -77,7 +77,7 @@ Namespace Drawing2D
             Next
         End Sub
 
-        Public ReadOnly BlackBrush As DefaultValue(Of Brush) = Brushes.Black
+        Public ReadOnly BlackBrush As [Default](Of  Brush) = Brushes.Black
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>

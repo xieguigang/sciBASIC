@@ -57,7 +57,7 @@ Public Module Bubble
         Return Math.Log(R + 1) + 1
     End Function
 
-    ReadOnly usingLogRadius As New DefaultValue(Of Func(Of Double, Double))(AddressOf logRadius)
+    ReadOnly usingLogRadius As New [Default](Of  Func(Of Double, Double))(AddressOf logRadius)
 
     ''' <summary>
     ''' <see cref="PointData.value"/>是Bubble的半径大小

@@ -57,7 +57,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
-Imports defaultStyle = Microsoft.VisualBasic.Language.Default.DefaultValue(Of Microsoft.VisualBasic.Data.ChartPlots.BarPlot.RectangleStyling)
+Imports defaultStyle = Microsoft.VisualBasic.Language.Default.[Default](Of  Microsoft.VisualBasic.Data.ChartPlots.BarPlot.RectangleStyling)
 
 Namespace BarPlot
 

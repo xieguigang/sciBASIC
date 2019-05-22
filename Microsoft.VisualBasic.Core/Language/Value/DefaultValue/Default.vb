@@ -78,7 +78,7 @@ Namespace Language.Default
     ''' <returns></returns>
     Public Delegate Function BinaryAssert(Of T)(x As T, y As T) As Boolean
 
-    Public Interface IDefaultValue(Of T)
+    Public Interface IDefault(Of T)
         ReadOnly Property DefaultValue As T
     End Interface
 
@@ -93,10 +93,10 @@ Namespace Language.Default
     ''' The default value
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure [Default](Of T) : Implements IDefaultValue(Of T)
+    Public Structure [Default](Of T) : Implements IDefault(Of T)
         Implements IsEmpty
 
-        Public ReadOnly Property DefaultValue As T Implements IDefaultValue(Of T).DefaultValue
+        Public ReadOnly Property DefaultValue As T Implements IDefault(Of T).DefaultValue
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If Not constructor Is Nothing Then
