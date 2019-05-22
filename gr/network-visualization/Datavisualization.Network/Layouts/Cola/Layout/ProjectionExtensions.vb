@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25ec67de070010d4034722ed57c5f120, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\ProjectionExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::34177339fe2ad9725cf13c301ece3c75, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Layout\ProjectionExtensions.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Layouts.Cola
 

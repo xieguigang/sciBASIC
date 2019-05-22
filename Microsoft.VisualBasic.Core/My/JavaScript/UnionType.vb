@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e42ae3835d2728b032cf138fb55e6a4, Microsoft.VisualBasic.Core\Language\Language\JavaScript\UnionType.vb"
+﻿#Region "Microsoft.VisualBasic::02a6b956c15a6bc900237956efeeadbb, Microsoft.VisualBasic.Core\My\JavaScript\UnionType.vb"
 
     ' Author:
     ' 

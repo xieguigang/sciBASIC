@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::005fef56bc7f18de018316c6c6db0937, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::0222fc2f0ec79395724c0da25e10cda8, Microsoft.VisualBasic.Core\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -178,7 +178,7 @@ Public Module App
     ''' <see cref="Console.OpenStandardOutput()"/> as default text output device.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property StdOut As DefaultValue(Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
+    Public ReadOnly Property StdOut As [Default](Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
 
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
@@ -921,7 +921,7 @@ Public Module App
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __getTEMP(prefix As String) As String
-        Static tmp As DefaultValue(Of String) = NameOf(tmp)
+        Static tmp As [Default](Of String) = NameOf(tmp)
         Return $"{prefix Or tmp}{App.tempCode}"
     End Function
 

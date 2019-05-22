@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d89d0f51a36cdef227a1cc5b5b678c80, Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::c80cf24ce603bc323fe813a1c5e7fa96, Data_science\MachineLearning\MachineLearning\Darwinism\Models\FitnessPool.vb"
 
     ' Author:
     ' 
@@ -63,7 +63,7 @@ Namespace Darwinism.Models
         Protected indivToString As Func(Of Individual, String)
         Protected maxCapacity%
 
-        Shared ReadOnly objToString As New DefaultValue(Of Func(Of Individual, String))(AddressOf Scripting.ToString)
+        Shared ReadOnly objToString As New [Default](Of  Func(Of Individual, String))(AddressOf Scripting.ToString)
 
         Public ReadOnly Property Cacheable As Boolean Implements Fitness(Of Individual).Cacheable
             Get

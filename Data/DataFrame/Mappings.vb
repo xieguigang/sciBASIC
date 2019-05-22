@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14901064659cafef16769d94856e7539, Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::d9eb7f3e9c445dcf4d61cee06ac718a4, Data\DataFrame\Mappings.vb"
 
     ' Author:
     ' 

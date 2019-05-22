@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6731a910ff09575ac3f4493d8948ef6, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::d0917cc622c864983be5fad5483a9be5, Microsoft.VisualBasic.Core\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -214,8 +214,8 @@ Public Module WebServiceUtils
         Return GenerateDictionary(tokens, transLower)
     End Function
 
-    ReadOnly urlEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
-    Friend ReadOnly noEscaping As DefaultValue(Of Func(Of String, String)) = New Func(Of String, String)(Function(s) s)
+    ReadOnly urlEscaping As [Default](Of Func(Of String, String)) = New Func(Of String, String)(AddressOf UrlEncode)
+    Friend ReadOnly noEscaping As [Default](Of Func(Of String, String)) = New Func(Of String, String)(Function(s) s)
 
     ''' <summary>
     ''' 生成URL请求的参数
@@ -476,7 +476,7 @@ Public Module WebServiceUtils
                                      Optional proxy$ = Nothing,
                                      Optional contentEncoding As Encodings = Encodings.UTF8) As String
 
-        Static emptyBody As New DefaultValue(Of NameValueCollection) With {
+        Static emptyBody As New [Default](Of NameValueCollection) With {
             .Value = New NameValueCollection,
             .assert = Function(c)
                           Return c Is Nothing OrElse DirectCast(c, NameValueCollection).Count = 0
@@ -643,7 +643,7 @@ Public Module WebServiceUtils
     ''' 设置默认的http请求的user-agent，默认为Google Chrome的UA字符串
     ''' </summary>
     ''' <returns></returns>
-    Public Property DefaultUA As DefaultValue(Of String) = UserAgent.GoogleChrome
+    Public Property DefaultUA As [Default](Of String) = UserAgent.GoogleChrome
 
 #If FRAMEWORD_CORE Then
     ''' <summary>

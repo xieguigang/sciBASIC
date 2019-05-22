@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4056958ab038fd823bf937492bb9153c, Data_science\Mathematica\Math\Math\Algebra\PCA.vb"
+﻿#Region "Microsoft.VisualBasic::ee26e1443fe71a82632adeac0522f63f, Data_science\Mathematica\Math\Math\Algebra\PCA.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class PCA
     ' 
-    '         Properties: CumulativeVariance, ExplainedVariance, Loadings, StandardDeviations
+    '         Properties: CumulativeVariance, Eigenvalues, ExplainedVariance, Loadings, StandardDeviations
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: (+2 Overloads) adjust, Project

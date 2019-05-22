@@ -116,9 +116,9 @@ Namespace Layouts.Cola
                        Optional children As ModuleSet = Nothing,
                        Optional definition As Dictionary(Of String, Object) = Nothing)
 
-            Static newLinkSets As New DefaultValue(Of LinkSets) With {.constructor = Function() New LinkSets}
-            Static newModuleSet As New DefaultValue(Of ModuleSet) With {.constructor = Function() New ModuleSet}
-            Static emptyTable As New DefaultValue(Of Dictionary(Of String, Object)) With {.constructor = Function() New Dictionary(Of String, Object)}
+            Static newLinkSets As New [Default](Of  LinkSets) With {.constructor = Function() New LinkSets}
+            Static newModuleSet As New [Default](Of  ModuleSet) With {.constructor = Function() New ModuleSet}
+            Static emptyTable As New [Default](Of  Dictionary(Of String, Object)) With {.constructor = Function() New Dictionary(Of String, Object)}
 
             Me.id = id
             Me.outgoing = outgoing Or newLinkSets

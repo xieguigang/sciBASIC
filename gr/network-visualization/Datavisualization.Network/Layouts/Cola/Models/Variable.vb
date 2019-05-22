@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1273744bae1c0401e7785b669e6c4422, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Variable.vb"
+﻿#Region "Microsoft.VisualBasic::7909c99f1defbbc99e82a63515792e03, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Models\Variable.vb"
 
     ' Author:
     ' 

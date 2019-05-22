@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b61fb90525a79191455dc08f6f84ebf6, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\NumericSequence.vb"
+﻿#Region "Microsoft.VisualBasic::098c1f8c9fb227e5113a6592c888e3d7, Microsoft.VisualBasic.Core\Extensions\Collection\Linq\NumericSequence.vb"
 
     ' Author:
     ' 
@@ -93,10 +93,10 @@ Namespace Linq
             Next
         End Function
 
-        Public ReadOnly OneDay As DefaultValue(Of TimeSpan) = New TimeSpan(days:=1, hours:=0, minutes:=0, seconds:=0)
-        Public ReadOnly OneHour As DefaultValue(Of TimeSpan) = New TimeSpan(hours:=1, minutes:=0, seconds:=0)
-        Public ReadOnly OneMinute As DefaultValue(Of TimeSpan) = New TimeSpan(minutes:=1, seconds:=0, hours:=0)
-        Public ReadOnly OneSecond As DefaultValue(Of TimeSpan) = New TimeSpan(seconds:=1, hours:=0, minutes:=0)
+        Public ReadOnly OneDay As [Default](Of TimeSpan) = New TimeSpan(days:=1, hours:=0, minutes:=0, seconds:=0)
+        Public ReadOnly OneHour As [Default](Of TimeSpan) = New TimeSpan(hours:=1, minutes:=0, seconds:=0)
+        Public ReadOnly OneMinute As [Default](Of TimeSpan) = New TimeSpan(minutes:=1, seconds:=0, hours:=0)
+        Public ReadOnly OneSecond As [Default](Of TimeSpan) = New TimeSpan(seconds:=1, hours:=0, minutes:=0)
 
         ''' <summary>
         ''' 

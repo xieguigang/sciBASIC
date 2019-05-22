@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a6774d21c22f965b423980033c765c9, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\LicenseInfo.vb"
+﻿#Region "Microsoft.VisualBasic::206e700a52512a3d894c76c2f45bc381, Microsoft.VisualBasic.Core\ApplicationServices\VBDev\Signature\LicenseInfo.vb"
 
     ' Author:
     ' 

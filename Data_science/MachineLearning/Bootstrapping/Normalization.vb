@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cca885a1a3aa0522f245ea5f2c38ef21, Data_science\MachineLearning\Bootstrapping\Normalization.vb"
+﻿#Region "Microsoft.VisualBasic::e6796b3d56e20a46676cbfc068e948a5, Data_science\MachineLearning\Bootstrapping\Normalization.vb"
 
     ' Author:
     ' 

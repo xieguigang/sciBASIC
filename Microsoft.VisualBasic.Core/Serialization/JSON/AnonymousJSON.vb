@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1282c9850a210f0608f163bd3742dbe9, Microsoft.VisualBasic.Core\Serialization\JSON\AnonymousJSON.vb"
+﻿#Region "Microsoft.VisualBasic::910c2f7377e4940238d177944b695acc, Microsoft.VisualBasic.Core\Serialization\JSON\AnonymousJSON.vb"
 
     ' Author:
     ' 
@@ -62,6 +62,12 @@ Namespace Serialization.JSON
             End With
         End Function
 
+        ''' <summary>
+        ''' 专门为任意字符串集合所创建的json序列化方法，在这个函数之中会自动调用ToArray后再进行json序列化
+        ''' </summary>
+        ''' <param name="array"></param>
+        ''' <param name="indent"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetJson(array As IEnumerable(Of String), Optional indent As Boolean = False) As String

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d370e759195c898bd5778a82664425ba, mime\application%json\Serializer\ExtendedDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::e28bd4de63f763a8df5c94606a903d68, mime\application%json\Serializer\ExtendedDictionary.vb"
 
     ' Author:
     ' 

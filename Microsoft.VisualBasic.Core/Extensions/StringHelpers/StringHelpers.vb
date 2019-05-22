@@ -128,7 +128,7 @@ Public Module StringHelpers
     ''' <summary>
     ''' Using <see cref="[String].Empty"/> as default value
     ''' </summary>
-    Public ReadOnly Property EmptyString As DefaultValue(Of String) = String.Empty
+    Public ReadOnly Property EmptyString As [Default](Of String) = String.Empty
 
     ''' <summary>
     ''' Replace the <see cref="vbCrLf"/> with the specific string.

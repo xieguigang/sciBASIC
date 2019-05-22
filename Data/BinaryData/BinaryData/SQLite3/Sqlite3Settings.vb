@@ -46,7 +46,7 @@ Namespace ManagedSqlite.Core
 
     Public Class Sqlite3Settings
 
-        Public Shared Function GetDefaultSettings() As DefaultValue(Of Sqlite3Settings)
+        Public Shared Function GetDefaultSettings() As [Default](Of Sqlite3Settings)
             Return New Sqlite3Settings
         End Function
     End Class

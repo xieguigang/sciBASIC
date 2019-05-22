@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf8793c1465a19196279a760bd3f84dd, Data\SearchEngine\Index\Repository\TrieIndexReader.vb"
+﻿#Region "Microsoft.VisualBasic::50dc22b947bb8c7935e09aac9aa732f5, Data\SearchEngine\Index\Repository\TrieIndexReader.vb"
 
     ' Author:
     ' 
@@ -44,7 +44,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports System.Text
@@ -196,4 +195,3 @@ Public Class TrieIndexReader : Implements IDisposable
     End Sub
 #End Region
 End Class
-

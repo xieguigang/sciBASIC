@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4a71095bc1caab3a0cf6e50927b5c5eb, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolution.vb"
+﻿#Region "Microsoft.VisualBasic::20618b45a4f5350f3398aa3f8c08cc22, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolution.vb"
 
     ' Author:
     ' 

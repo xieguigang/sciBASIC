@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e424392b2ae61f162fd3c231d9be2216, mime\text%html\MarkDown\MarkdownOptions.vb"
+﻿#Region "Microsoft.VisualBasic::35f9f796ac48e84d6fa06a11c3d28b62, mime\text%html\MarkDown\MarkdownOptions.vb"
 
     ' Author:
     ' 
@@ -118,7 +118,7 @@ Namespace MarkDown
             Return Me.GetJson
         End Function
 
-        Public Shared Function DefaultOption() As DefaultValue(Of MarkdownOptions)
+        Public Shared Function DefaultOption() As [Default](Of  MarkdownOptions)
             Return New MarkdownOptions With {
                 .AllowEmptyLinkText = True,
                 .AutoHyperlink = True,

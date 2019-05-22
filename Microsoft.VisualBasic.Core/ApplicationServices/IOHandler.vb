@@ -65,7 +65,7 @@ Namespace ApplicationServices
         Public Delegate Function ISave(obj As IEnumerable, path As String, encoding As Encoding) As Boolean
 
         ReadOnly saveWrite As New Dictionary(Of Type, ISave)
-        ReadOnly defaultWriter As New DefaultValue(Of ISave)(AddressOf SaveJSON)
+        ReadOnly defaultWriter As New [Default](Of ISave)(AddressOf SaveJSON)
 
         Public Function GetWrite(type As Type) As ISave
             Return saveWrite.TryGetValue(type) Or defaultWriter

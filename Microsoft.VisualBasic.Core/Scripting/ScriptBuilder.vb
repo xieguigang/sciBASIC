@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a86b052f4e45fe12579888db62a71ebe, Microsoft.VisualBasic.Core\Scripting\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::908470f45463846915ce79b98171a7fc, Microsoft.VisualBasic.Core\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ScriptBuilder
     ' 
-    '         Properties: Preview, Script
+    '         Properties: Preview, script
     ' 
     '         Constructor: (+5 Overloads) Sub New
     '         Function: AppendLine, Replace, (+2 Overloads) Save, ToString

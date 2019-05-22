@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb89e13d2bafbf5aaaf8fba0fcda6ae0, Data_science\Mathematica\Plot\Plots\g\ProfileGroup.vb"
+﻿#Region "Microsoft.VisualBasic::1f8ea136d1d0594faf98b3f75ae16ff3, Data_science\Mathematica\Plot\Plots\g\ProfileGroup.vb"
 
     ' Author:
     ' 

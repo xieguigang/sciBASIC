@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e1954739739f8ab4e9e507c16808f2e, Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicSplineVector.vb"
+﻿#Region "Microsoft.VisualBasic::a70a60e0f96dc80af4b696710ae48295, Data_science\Mathematica\Math\Math\Spline\CubicSpline\CubicSplineVector.vb"
 
     ' Author:
     ' 

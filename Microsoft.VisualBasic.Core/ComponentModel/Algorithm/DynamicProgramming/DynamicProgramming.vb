@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72f7818574169b6f85e9bb783135ac61, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\DynamicProgramming.vb"
+﻿#Region "Microsoft.VisualBasic::6d3749fe7721f5f6b0a7b88a99a6201d, Microsoft.VisualBasic.Core\ComponentModel\Algorithm\DynamicProgramming\DynamicProgramming.vb"
 
     ' Author:
     ' 
@@ -63,7 +63,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
             Return If(equals(a, b), 0, 1)
         End Function
 
-        Public Shared Function DefaultCost(cost As Double) As DefaultValue(Of Cost(Of T))
+        Public Shared Function DefaultCost(cost As Double) As [Default](Of Cost(Of T))
             Return New Cost(Of T) With {
                 .insert = Function(x) cost,
                 .delete = Function(x) cost,

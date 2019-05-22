@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::268cbf7f461be6f59f5089b014f4cb26, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::dfc34adee255067df02086483d4d10ce, Microsoft.VisualBasic.Core\Extensions\Math\Correlations\Correlations.vb"
 
     ' Author:
     ' 
@@ -88,7 +88,7 @@ Namespace Math.Correlations
     <Package("Correlations", Category:=APICategories.UtilityTools, Publisher:="amethyst.asuka@gcmodeller.org")>
     Public Module Correlations
 
-        ReadOnly objectEquals As New DefaultValue(Of Func(Of Object, Object, Boolean))(Function(x, y) x.Equals(y))
+        ReadOnly objectEquals As New [Default](Of Func(Of Object, Object, Boolean))(Function(x, y) x.Equals(y))
 
         ''' <summary>
         ''' The Jaccard index, also known as Intersection over Union and the Jaccard similarity coefficient 
@@ -383,7 +383,7 @@ Namespace Math.Correlations
         ''' 默认使用Pearson相似度
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property PearsonDefault As DefaultValue(Of ICorrelation) = New ICorrelation(AddressOf GetPearson)
+        Public ReadOnly Property PearsonDefault As [Default](Of ICorrelation) = New ICorrelation(AddressOf GetPearson)
 
         ''' <summary>
         ''' Pearson correlations

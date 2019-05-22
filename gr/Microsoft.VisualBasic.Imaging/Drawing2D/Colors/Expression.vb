@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae396c14467b34fb18c86a9942f1a47b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::07ca25440642878214108776f37d8e82, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
 
     ' Author:
     ' 

@@ -127,7 +127,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
             End Get
         End Property
 
-        ReadOnly defaultView As New DefaultValue(Of Func(Of K, String))(Function(key) Scripting.ToString(key))
+        ReadOnly defaultView As New [Default](Of Func(Of K, String))(Function(key) Scripting.ToString(key))
 
         ''' <summary>
         ''' 

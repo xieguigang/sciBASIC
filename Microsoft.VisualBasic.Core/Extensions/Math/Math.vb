@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::986e13a966afe2cdb775ed7946ee9a88, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::4bf1e11c369755ddfd84b073564e2d8e, Microsoft.VisualBasic.Core\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -1837,6 +1837,18 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ProductALL([in] As IEnumerable(Of Integer)) As Double
+            Return [in].Select(Function(x) CDbl(x)).ProductALL
+        End Function
+
+        ''' <summary>
+        ''' 计算出所有的数的乘积
+        ''' </summary>
+        ''' <param name="[in]"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ProductALL([in] As IEnumerable(Of Long)) As Double
             Return [in].Select(Function(x) CDbl(x)).ProductALL
         End Function
 

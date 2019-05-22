@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c68f28063f7d0086663f60d1e434d231, Data_science\Mathematica\Plot\Plots\g\Legends\LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::85de1003a7cc46c0ce5e7c3c4e1f2172, Data_science\Mathematica\Plot\Plots\g\Legends\LegendPlot.vb"
 
     ' Author:
     ' 
@@ -265,7 +265,7 @@ Namespace Graphic.Legend
             }
             Dim color As Brush = l.color.GetBrush
 
-            Static blackTitle As DefaultValue(Of Brush) = Brushes.Black
+            Static blackTitle As [Default](Of  Brush) = Brushes.Black
 
             Call g.DrawLegendShape(
                 pos, canvas, l.style, color,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e538edfa5cbfe15fb38103c2d58c8ad7, Data_science\Mathematica\Plot\Plots-statistics\TimeTrends.vb"
+﻿#Region "Microsoft.VisualBasic::31014e60f6f8af10a23b8844fddd0372, Data_science\Mathematica\Plot\Plots-statistics\TimeTrends.vb"
 
     ' Author:
     ' 
@@ -142,7 +142,7 @@ Public Module TimeTrends
                          Optional legendTitleColor$ = "black",
                          Optional displayLegendBorder As Boolean = True) As GraphicsData
 
-        Static shortDateString As New DefaultValue(Of Func(Of Date, String))(Function(d) d.ToShortDateString)
+        Static shortDateString As New [Default](Of  Func(Of Date, String))(Function(d) d.ToShortDateString)
 
         Dim dates = data.OrderBy(Function(d) d.date).ToArray
         Dim timer As TimeRange = dates _

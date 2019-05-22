@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09c448bf4a9ddfcad6ea0f088265b498, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBDouble.vb"
+﻿#Region "Microsoft.VisualBasic::a91e7d2d0e57d791c77919b590ebfbea, Microsoft.VisualBasic.Core\Language\Value\Numeric\VBDouble.vb"
 
     ' Author:
     ' 
@@ -32,6 +32,8 @@
     ' Summaries:
 
     '     Class VBDouble
+    ' 
+    '         Properties: Hex
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: CompareTo, Equals, GetTypeCode, ToBoolean, ToByte

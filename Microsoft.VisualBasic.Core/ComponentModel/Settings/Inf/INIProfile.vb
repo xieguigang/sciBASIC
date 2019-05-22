@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40933490fbc9c4f7462662b836a1d0c9, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\INIProfile.vb"
+﻿#Region "Microsoft.VisualBasic::cd7b0b8cf190022f2edd465c920b58e3, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\INIProfile.vb"
 
     ' Author:
     ' 

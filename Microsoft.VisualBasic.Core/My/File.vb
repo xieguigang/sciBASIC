@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0f23d492a0b24c8739865ff369fdb21, Microsoft.VisualBasic.Core\My\File.vb"
+﻿#Region "Microsoft.VisualBasic::02b80c6918fe4a22a9d16e6a9f216b54, Microsoft.VisualBasic.Core\My\File.vb"
 
     ' Author:
     ' 
@@ -164,5 +164,3 @@ Namespace My
         End Function
     End Module
 End Namespace
-
-

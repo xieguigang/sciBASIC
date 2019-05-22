@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4709780fadcd0b85feef965947a8696, Microsoft.VisualBasic.Core\Language\Language\Java\Line2D.vb"
+﻿#Region "Microsoft.VisualBasic::f8438b50cf0c35b3c4604bac41fcce12, Microsoft.VisualBasic.Core\Language\Language\Java\Line2D.vb"
 
     ' Author:
     ' 

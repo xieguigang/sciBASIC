@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90320efa25aa910fc6a68c36a8232b62, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::7719691df9190b6fe76aa6dcc74d8929, Microsoft.VisualBasic.Core\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' 
     '     Function: (+3 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsGroups, AsNamedValueTuples
     '               AsNamedVector, AsTable, (+3 Overloads) ContainsKey, DictionaryData, (+2 Overloads) EnumerateTuples
-    '               EnumParser, FlatTable, (+2 Overloads) GetByKey, GroupByKey, HaveData
-    '               IGrouping, IterateNameCollections, IterateNameValues, IteratesAll, Join
-    '               KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
-    '               RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs, (+2 Overloads) Subset
-    '               tableInternal, Takes, (+3 Overloads) ToDictionary, Tsv, Tuple
-    '               (+2 Overloads) Values, XMLModel
+    '               EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey
+    '               HaveData, IGrouping, IterateNameCollections, IterateNameValues, IteratesAll
+    '               Join, KeyItem, (+2 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection
+    '               ParserDictionary, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs
+    '               (+2 Overloads) Subset, tableInternal, Takes, (+3 Overloads) ToDictionary, Tsv
+    '               Tuple, (+2 Overloads) Values, XMLModel
     ' 
     '     Sub: SortByKey, SortByValue
     ' 
@@ -66,6 +66,12 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' KeyValue pair data related extensions API.
 ''' </summary>
 Public Module KeyValuePairExtensions
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function GetValueOrDefault(Of K, V)(key As K, table As Dictionary(Of K, V), Optional [default] As V = Nothing) As V
+        Return table.TryGetValue(key, [default]:=[default])
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>

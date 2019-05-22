@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3b17b21e3e8430234646838e3cebd79, www\Microsoft.VisualBasic.Webservices.Bing\BingImage.vb"
+﻿#Region "Microsoft.VisualBasic::78cb3d1f2bbe3da72b8228f7ae07ba81, www\Microsoft.VisualBasic.Webservices.Bing\BingImage.vb"
 
     ' Author:
     ' 

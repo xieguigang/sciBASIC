@@ -138,7 +138,7 @@ Public Module IEnumerations
     ''' <summary>
     ''' Text compare in case sensitive mode
     ''' </summary>
-    ReadOnly TextCompareStrict As DefaultValue(Of StringComparison) = StringComparison.Ordinal
+    ReadOnly TextCompareStrict As [Default](Of StringComparison) = StringComparison.Ordinal
 
     <Extension> Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional strict As Boolean = True) As KeyValuePair()
         Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(strict)

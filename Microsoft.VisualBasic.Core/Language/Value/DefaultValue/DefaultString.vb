@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b32d9195053339e4fc703ffe753dc179, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
+﻿#Region "Microsoft.VisualBasic::a006002e8ccec35b4058cedd168059fe, Microsoft.VisualBasic.Core\Language\Value\DefaultValue\DefaultString.vb"
 
     ' Author:
     ' 
@@ -53,14 +53,14 @@ Namespace Language.Default
     ''' <summary>
     ''' <see cref="CLI"/> optional value helper data model
     ''' </summary>
-    Public Structure DefaultString : Implements IDefaultValue(Of String)
+    Public Structure DefaultString : Implements IDefault(Of String)
         Implements IsEmpty
 
         ''' <summary>
         ''' The optional argument value that read from <see cref="CLI"/> 
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property DefaultValue As String Implements IDefaultValue(Of String).DefaultValue
+        Public ReadOnly Property DefaultValue As String Implements IDefault(Of String).DefaultValue
 
         ''' <summary>
         ''' <see cref="DefaultValue"/> is empty?
@@ -198,7 +198,7 @@ Namespace Language.Default
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator Or(arg As DefaultString, [default] As DefaultValue(Of String)) As String
+        Public Shared Operator Or(arg As DefaultString, [default] As [Default](Of String)) As String
             Return arg.DefaultValue Or [default]
         End Operator
 

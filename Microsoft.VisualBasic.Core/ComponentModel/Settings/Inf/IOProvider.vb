@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::963367975aaaa76b6373348262a0efef, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IOProvider.vb"
+﻿#Region "Microsoft.VisualBasic::7f4fd9ecd8e7b49fe63cf276c90a67b6, Microsoft.VisualBasic.Core\ComponentModel\Settings\Inf\IOProvider.vb"
 
     ' Author:
     ' 
@@ -171,7 +171,7 @@ Namespace ComponentModel.Settings.Inf
             Return DirectCast(obj, T)
         End Function
 
-        Private Function __getPath(Of T As Class)() As DefaultValue(Of String)
+        Private Function __getPath(Of T As Class)() As [Default](Of String)
             Dim path As IniMapIO = GetType(T).GetAttribute(Of IniMapIO)
 
             If path Is Nothing Then

@@ -106,7 +106,7 @@ Namespace Scripting
         }
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function StringParser(type As Type) As DefaultValue(Of Func(Of String, Object))
+        Public Function StringParser(type As Type) As [Default](Of Func(Of String, Object))
             Return New Func(Of String, Object)(Function(s$) s.CTypeDynamic(type))
         End Function
 
@@ -174,7 +174,7 @@ Namespace Scripting
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function DefaultTextParser(Of T)() As DefaultValue(Of IStringParser(Of T))
+        Public Function DefaultTextParser(Of T)() As [Default](Of IStringParser(Of T))
             Return New IStringParser(Of T)(AddressOf CTypeDynamic(Of T)).AsDefault
         End Function
 
@@ -301,7 +301,7 @@ Namespace Scripting
         ''' <returns></returns>
         Public ReadOnly Property [String] As Type = GetType(String)
 
-        Public Function ToString(Of T)() As DefaultValue(Of IToString(Of T))
+        Public Function ToString(Of T)() As [Default](Of IToString(Of T))
             Return New IToString(Of T)(AddressOf ToString)
         End Function
 

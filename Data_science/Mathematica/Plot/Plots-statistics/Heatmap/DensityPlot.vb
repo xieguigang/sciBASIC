@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef28fa2721fae0a36743b21d5f76051d, Data_science\Mathematica\Plot\Plots-statistics\Heatmap\DensityPlot.vb"
+﻿#Region "Microsoft.VisualBasic::87e89b09f7cd9f2ed4f20c07d99ab4e9, Data_science\Mathematica\Plot\Plots-statistics\Heatmap\DensityPlot.vb"
 
     ' Author:
     ' 

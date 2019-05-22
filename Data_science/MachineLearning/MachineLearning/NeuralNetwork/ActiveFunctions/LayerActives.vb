@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2af19aa34a391560e298fd92f235ace, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\LayerActives.vb"
+﻿#Region "Microsoft.VisualBasic::1e7d6929451ffe7900b28039405c0c98, Data_science\MachineLearning\MachineLearning\NeuralNetwork\ActiveFunctions\LayerActives.vb"
 
     ' Author:
     ' 
@@ -96,7 +96,7 @@ Namespace NeuralNetwork.Activations
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function GetDefaultConfig() As DefaultValue(Of LayerActives)
+        Public Shared Function GetDefaultConfig() As [Default](Of  LayerActives)
             Return New LayerActives With {
                 .input = New Sigmoid,
                 .hiddens = New SigmoidFunction,

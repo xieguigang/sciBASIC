@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82b4e9061e01288f855ac4dc1f8c1a44, Microsoft.VisualBasic.Core\test\htmlParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::07fd10d466b3e3e3a5c170394dbee05a, Microsoft.VisualBasic.Core\test\htmlParserTest.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     ' Module htmlParserTest
     ' 
-    '     Sub: Main
+    '     Sub: Main, UrlescapeTest
     ' 
     ' /********************************************************************************/
 
@@ -69,4 +69,3 @@ Module htmlParserTest
         Pause()
     End Sub
 End Module
-

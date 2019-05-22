@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2801868782a9b8ef31a5f896a6505ca7, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\geom.vb"
+﻿#Region "Microsoft.VisualBasic::9794ca1b75301709cd82a18cb5717598, gr\network-visualization\Datavisualization.Network\Layouts\Cola\Geom\geom.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Microsoft.VisualBasic.Language.JavaScript
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Layouts.Cola
 

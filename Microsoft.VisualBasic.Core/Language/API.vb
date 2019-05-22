@@ -59,7 +59,7 @@ Namespace Language
         ''' <summary>
         ''' The default value assertor. If target object assert result is nothing or empty, then this function will returns True.
         ''' </summary>
-        Friend ReadOnly defaultAssert As New DefaultValue(Of Assert(Of Object)) With {
+        Friend ReadOnly defaultAssert As New [Default](Of Assert(Of Object)) With {
             .Value = AddressOf ExceptionHandle.Default,
             .assert = Function(assert)
                           Return assert Is Nothing
@@ -83,7 +83,7 @@ Namespace Language
         'End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Empty(Of T)() As DefaultValue(Of T())
+        Public Function Empty(Of T)() As [Default](Of T())
             Return {}
         End Function
 
@@ -107,8 +107,8 @@ Namespace Language
         ''' <param name="isNothing"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function [Default](Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As DefaultValue(Of T)
-            Return New DefaultValue(Of T) With {
+        Public Function [Default](Of T)(x As T, Optional isNothing As Assert(Of Object) = Nothing) As [Default](Of T)
+            Return New [Default](Of T) With {
                 .Value = x,
                 .assert = isNothing Or defaultAssert
             }
@@ -123,12 +123,12 @@ Namespace Language
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function AsDefault(Of T)(x As T, Optional [If] As Assert(Of Object) = Nothing) As DefaultValue(Of T)
+        Public Function AsDefault(Of T)(x As T, Optional [If] As Assert(Of Object) = Nothing) As [Default](Of T)
             Return [Default](x, [If])
         End Function
 
-        Public Function DefaultValue(Of T)(value As T) As DefaultValue(Of T)
-            Return New DefaultValue(Of T) With {
+        Public Function [Default](Of  T)(value As T) As [Default](Of T)
+            Return New [Default](Of T) With {
                 .value = value,
                 .assert = defaultAssert
             }
@@ -143,13 +143,13 @@ Namespace Language
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function [When](Of T)([default] As T, expression As Boolean) As DefaultValue(Of T)
+        Public Function [When](Of T)([default] As T, expression As Boolean) As [Default](Of T)
             Return [default].AsDefault().When(expression)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function [When](Of T)([default] As T, expression As Assert(Of T)) As DefaultValue(Of T)
+        Public Function [When](Of T)([default] As T, expression As Assert(Of T)) As [Default](Of T)
             Return [default].AsDefault().When(assert:=expression)
         End Function
 

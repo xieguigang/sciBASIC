@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::104e1ebcbe472053050a12d032f716b9, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Tsv.vb"
+﻿#Region "Microsoft.VisualBasic::5860c18c5c8d6f4c93f3cd18841b1d0c, Microsoft.VisualBasic.Core\ComponentModel\DataSource\Tsv.vb"
 
     ' Author:
     ' 
@@ -159,7 +159,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <summary>
         ''' Returns the source string without any processing
         ''' </summary>
-        ReadOnly withoutProcess As New DefaultValue(Of Func(Of String, String))(Function(str) str)
+        ReadOnly withoutProcess As New [Default](Of Func(Of String, String))(Function(str) str)
 
         ''' <summary>
         ''' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74a6afded558edf2876ba3eb16023491, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
+﻿#Region "Microsoft.VisualBasic::b381ca7e2056f8d6450d2e484a024af4, Microsoft.VisualBasic.Core\ApplicationServices\Parallel\Threads\LQuerySchedule\LQuerySchedule.vb"
 
     ' Author:
     ' 
@@ -80,7 +80,7 @@ Namespace Parallel.Linq
             End Get
         End Property
 
-        Public Function DefaultConfig() As DefaultValue(Of Integer?)
+        Public Function DefaultConfig() As [Default](Of Integer?)
             Return CPU_NUMBER
         End Function
 

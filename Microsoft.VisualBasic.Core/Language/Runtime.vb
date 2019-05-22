@@ -85,7 +85,7 @@ Namespace Language
             Get
                 Dim val$
 
-                Static [isNot] As New DefaultValue(Of Assert(Of String))(Function(var) False)
+                Static [isNot] As New [Default](Of Assert(Of String))(Function(var) False)
 
                 If value Is Nothing Then
                     val = null

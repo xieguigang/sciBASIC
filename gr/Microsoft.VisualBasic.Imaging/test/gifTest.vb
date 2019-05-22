@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3de6eda2803b11da790001baf7ab7b6a, gr\Microsoft.VisualBasic.Imaging\test\gifTest.vb"
+﻿#Region "Microsoft.VisualBasic::79e35472b64eb1b4a17ef3f226248879, gr\Microsoft.VisualBasic.Imaging\test\gifTest.vb"
 
     ' Author:
     ' 
@@ -58,4 +58,3 @@ Module gifTest
         End Using
     End Sub
 End Module
-

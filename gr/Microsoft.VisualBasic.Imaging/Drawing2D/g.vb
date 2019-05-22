@@ -177,8 +177,8 @@ Namespace Drawing2D
             End If
         End Function
 
-        ReadOnly defaultSize As DefaultValue(Of Size) = New Size(3600, 2000).AsDefault(Function(size) DirectCast(size, Size).IsEmpty)
-        ReadOnly defaultPaddingValue As DefaultValue(Of Padding) = CType(DefaultPadding, Padding).AsDefault(Function(pad) DirectCast(pad, Padding).IsEmpty)
+        ReadOnly defaultSize As [Default](Of  Size) = New Size(3600, 2000).AsDefault(Function(size) DirectCast(size, Size).IsEmpty)
+        ReadOnly defaultPaddingValue As [Default](Of  Padding) = CType(DefaultPadding, Padding).AsDefault(Function(pad) DirectCast(pad, Padding).IsEmpty)
 
         ''' <summary>
         ''' Data plots graphics engine. Default: <paramref name="size"/>:=(4300, 2000), <paramref name="padding"/>:=(100,100,100,100).

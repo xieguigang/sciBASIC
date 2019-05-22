@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf9beb4195ad2659f9115b96a81f8ab1, Data\Trinity\StopWords.vb"
+﻿#Region "Microsoft.VisualBasic::fa16a5a30499a3f43c8eeba9e906ed43, Data\Trinity\StopWords.vb"
 
     ' Author:
     ' 
@@ -417,7 +417,7 @@ Public Class StopWords : Implements IEnumerable(Of String)
     ''' Using list of stop words from https://www.ranks.nl/stopwords/ as default.
     ''' </summary>
     ''' <returns></returns>
-    Public Shared ReadOnly Property DefaultStopWords As New DefaultValue(Of StopWords)(New StopWords)
+    Public Shared ReadOnly Property DefaultStopWords As New [Default](Of  StopWords)(New StopWords)
 
     Default Public ReadOnly Property Item(index As Integer) As String Implements IReadOnlyList(Of String).Item
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

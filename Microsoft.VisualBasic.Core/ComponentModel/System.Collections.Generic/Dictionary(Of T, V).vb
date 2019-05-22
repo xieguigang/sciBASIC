@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ee2054926490af25c8fc0c9a7e8e06a, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
+﻿#Region "Microsoft.VisualBasic::3eb16803ff94b94d0fb4295fc5b9b574, Microsoft.VisualBasic.Core\ComponentModel\System.Collections.Generic\Dictionary(Of T, V).vb"
 
     ' Author:
     ' 
@@ -62,12 +62,12 @@ Namespace ComponentModel.Collection
 
         ReadOnly assert As Assert(Of Object)
 
-        Default Public Overloads Property Item(key As String) As DefaultValue(Of T)
+        Default Public Overloads Property Item(key As String) As [Default](Of T)
             Get
                 Dim value As T = If(ContainsKey(key), MyBase.Item(key), Nothing)
-                Return New DefaultValue(Of T)(value, assert)
+                Return New [Default](Of T)(value, assert)
             End Get
-            Set(value As DefaultValue(Of T))
+            Set(value As [Default](Of T))
                 MyBase.Item(key) = value.DefaultValue
             End Set
         End Property

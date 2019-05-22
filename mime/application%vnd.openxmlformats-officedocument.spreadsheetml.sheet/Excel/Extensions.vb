@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4146044ae4f32158003d61b301c34f0f, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::28dacc19dd7719a9179b3303a656c592, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\Extensions.vb"
 
     ' Author:
     ' 
@@ -54,7 +54,7 @@ Public Module Extensions
     ''' ``Sheet1`` is the default sheet name in excel file.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Sheet1 As DefaultValue(Of String)
+    Public ReadOnly Property Sheet1 As [Default](Of  String)
         Get
             Return NameOf(Sheet1)
         End Get

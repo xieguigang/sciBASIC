@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35a65e957ac843c4053f5bce5fce457b, Data_science\DataMining\DataMining\FuzzyCMeans\Entity.vb"
+﻿#Region "Microsoft.VisualBasic::408325d316799f6150b78e1256f04ded, Data_science\DataMining\DataMining\FuzzyCMeans\Entity.vb"
 
     ' Author:
     ' 

@@ -301,16 +301,20 @@
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
     <Import Include="System.Data.Linq" />
     <Import Include="System.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\FixLengthString.vb" />
     <Compile Include="Extensions\MSWindows.vb" />
+    <Compile Include="BitSet.vb" />
     <Compile Include="SQLite3\Helpers\BTreeTools.vb" />
     <Compile Include="SQLite3\Helpers\ReadonlyStream.vb" />
     <Compile Include="SQLite3\Helpers\SqliteDataStream.vb" />
