@@ -66,6 +66,7 @@ Public Class BinaryDataReader
 
     Dim _byteOrder As ByteOrder
     Dim _needsReversion As Boolean
+    Dim _markedPos As Long
 
     ''' <summary>
     ''' Initializes a new instance of the <see cref="BinaryDataReader"/> class based on the specified stream and
@@ -144,6 +145,7 @@ Public Class BinaryDataReader
     ''' way the underlying <see cref="BinaryReader"/> is instantiated, it can only be specified at creation time.
     ''' </summary>
     Public Property Encoding() As Encoding
+
     ''' <summary>
     ''' Gets the length in bytes of the stream in bytes. This is a shortcut to the base stream Length property.
     ''' </summary>
@@ -174,6 +176,20 @@ Public Class BinaryDataReader
             Return BaseStream.Position >= BaseStream.Length
         End Get
     End Property
+
+    ''' <summary>
+    ''' Mark current stream buffer position
+    ''' </summary>
+    Public Sub Mark()
+        _markedPos = Position
+    End Sub
+
+    ''' <summary>
+    ''' Move the buffer back to the position that marked by <see cref="Mark"/> method.
+    ''' </summary>
+    Public Sub Reset()
+        Position = _markedPos
+    End Sub
 
     ''' <summary>
     ''' Aligns the reader to the next given byte multiple.

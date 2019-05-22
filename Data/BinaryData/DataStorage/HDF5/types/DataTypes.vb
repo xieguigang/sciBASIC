@@ -46,6 +46,12 @@
 Namespace HDF5.type
 
     ''' <summary>
+    ''' The HDF5 primitive data types model, classes representing the data types of HDF5 datasets.
+    ''' </summary>
+    Friend Class NamespaceDoc
+    End Class
+
+    ''' <summary>
     ''' 对一些在HDF5文件之中的基础数据类型的枚举，例如长整型，双精度，字符串等
     ''' </summary>
     Public Enum DataTypes
