@@ -174,12 +174,21 @@ Namespace HDF5.[Structure]
             Throw New IOException("version 2 is not implemented")
         End Sub
 
-        Public Overridable Sub printValues()
-            Console.WriteLine("Superblock >>>")
-            Console.WriteLine("address : " & Me.m_address)
-            Console.WriteLine("signature : " & (formatSignature(0) And &HFF).ToString("x") & (formatSignature(1) And &HFF).ToString("x") & (formatSignature(2) And &HFF).ToString("x") & (formatSignature(3) And &HFF).ToString("x") & (formatSignature(4) And &HFF).ToString("x") & (formatSignature(5) And &HFF).ToString("x") & (formatSignature(6) And &HFF).ToString("x") & (formatSignature(7) And &HFF).ToString("x"))
+        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+            console.WriteLine("Superblock >>>")
+            console.WriteLine("address : " & Me.m_address)
+            console.WriteLine("signature : " &
+                              (formatSignature(0) And &HFF).ToString("x") &
+                              (formatSignature(1) And &HFF).ToString("x") &
+                              (formatSignature(2) And &HFF).ToString("x") &
+                              (formatSignature(3) And &HFF).ToString("x") &
+                              (formatSignature(4) And &HFF).ToString("x") &
+                              (formatSignature(5) And &HFF).ToString("x") &
+                              (formatSignature(6) And &HFF).ToString("x") &
+                              (formatSignature(7) And &HFF).ToString("x")
+                             )
 
-            Console.WriteLine("version of super block : " & versionOfSuperblock)
+            console.WriteLine("version of super block : " & versionOfSuperblock)
             Console.WriteLine("version of file free space storage : " & versionOfFileFreeSpaceStorage)
             Console.WriteLine("version of root group symbol table entry : " & versionOfRootGroupSymbolTableEntry)
             Console.WriteLine("reserved 0 : " & reserved0)
@@ -201,9 +210,9 @@ Namespace HDF5.[Structure]
             Console.WriteLine("end of file address : " & endOfFileAddress)
             Console.WriteLine("driver information block address : " & driverInformationBlockAddress)
 
-            rootGroupSymbolTableEntry.printValues()
+            rootGroupSymbolTableEntry.printValues(console)
 
-            Console.WriteLine("total super block size : " & totalSuperBlockSize)
+            console.WriteLine("total super block size : " & totalSuperBlockSize)
             Console.WriteLine("Superblock <<<")
         End Sub
     End Class

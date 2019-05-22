@@ -106,9 +106,9 @@ Namespace HDF5.[Structure]
             Next
         End Sub
 
-        Public Overridable Sub printValues()
-            Console.WriteLine("GroupNode >>>")
-            Console.WriteLine("address : " & Me.m_address)
+        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+            console.WriteLine("GroupNode >>>")
+            console.WriteLine("address : " & Me.m_address)
             Console.WriteLine("signature : " &
                               (Me.signature(0) And &HFF).ToString("x") &
                               (Me.signature(1) And &HFF).ToString("x") &
@@ -119,7 +119,7 @@ Namespace HDF5.[Structure]
             Console.WriteLine("entry number : " & Me.entryNumber)
 
             For i As Integer = 0 To Me.symbols.Count - 1
-                symbols(i).printValues()
+                symbols(i).printValues(console)
             Next
 
             Console.WriteLine("GroupNode <<<")

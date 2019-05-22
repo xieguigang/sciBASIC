@@ -146,18 +146,18 @@ Namespace HDF5.[Structure]
             Return $"[{MyBase.ToString}] Dim {name} As {dataType} = &{dataPos}"
         End Function
 
-        Public Overridable Sub printValues()
-            Console.WriteLine("AttributeMessage >>>")
-            Console.WriteLine("address : " & Me.m_address)
+        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+            console.WriteLine("AttributeMessage >>>")
+            console.WriteLine("address : " & Me.m_address)
             Console.WriteLine("version : " & Me.version)
             Console.WriteLine("name : " & Me.name)
 
             If Me.dataType IsNot Nothing Then
-                Me.dataType.printValues()
+                Me.dataType.printValues(console)
             End If
 
             If Me.dataSpace IsNot Nothing Then
-                Me.dataSpace.printValues()
+                Me.dataSpace.printValues(console)
             End If
 
             Console.WriteLine("data pos : " & Me.dataPos)

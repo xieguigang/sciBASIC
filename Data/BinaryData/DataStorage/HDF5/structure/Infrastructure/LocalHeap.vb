@@ -73,63 +73,12 @@ Namespace HDF5.[Structure]
 
         Shared ReadOnly LOCALHEAP_SIGNATURE As Byte() = New CharStream() From {"H"c, "E"c, "A"c, "P"c}
 
-        Private m_signature As Byte()
-        Private m_version As Integer
-        Private m_reserved0 As Byte()
-        Private m_dataSegmentSize As Long
-        Private m_offsetToHeadOfFreeList As Long
-        Private m_addressOfDataSegment As Long
-
-        Private m_data As Byte()
-
-        Private m_totalLocalHeapSize As Integer
-
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
-            Call MyBase.New(address)
-
-            [in].offset = address
-
-            ' signature
-            Me.m_signature = [in].readBytes(4)
-
-            If Not Me.validSignature Then
-                Throw New IOException("signature is not valid")
-            End If
-
-            Me.m_version = [in].readByte()
-
-            If Me.m_version > 0 Then
-                Throw New IOException("version not implemented")
-            End If
-
-            Me.m_reserved0 = [in].readBytes(3)
-
-            Me.m_totalLocalHeapSize = 8
-
-            Me.m_dataSegmentSize = ReadHelper.readL([in], sb)
-            Me.m_offsetToHeadOfFreeList = ReadHelper.readL([in], sb)
-
-            Me.m_totalLocalHeapSize += sb.sizeOfLengths * 2
-
-            Me.m_addressOfDataSegment = ReadHelper.readO([in], sb)
-
-            Me.m_totalLocalHeapSize += sb.sizeOfOffsets
-
-            ' data
-            [in].offset = Me.m_addressOfDataSegment
-            Me.m_data = [in].readBytes(CInt(Me.m_dataSegmentSize))
-        End Sub
-
         Public Overridable ReadOnly Property signature() As Byte()
-            Get
-                Return Me.m_signature
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property validSignature() As Boolean
             Get
                 For i As Integer = 0 To 3
-                    If Me.m_signature(i) <> LOCALHEAP_SIGNATURE(i) Then
+                    If Me.signature(i) <> LOCALHEAP_SIGNATURE(i) Then
                         Return False
                     End If
                 Next
@@ -138,73 +87,84 @@ Namespace HDF5.[Structure]
         End Property
 
         Public Overridable ReadOnly Property version() As Integer
-            Get
-                Return Me.m_version
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property dataSegmentSize() As Long
-            Get
-                Return Me.m_dataSegmentSize
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property offsetToHeadOfFreeList() As Long
-            Get
-                Return Me.m_offsetToHeadOfFreeList
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property addressOfDataSegment() As Long
-            Get
-                Return Me.m_addressOfDataSegment
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property totalLocalHeapSize() As Integer
-            Get
-                Return Me.m_totalLocalHeapSize
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property data() As Byte()
-            Get
-                Return Me.m_data
-            End Get
-        End Property
 
-        Public Overridable Sub printValues()
-            Console.WriteLine("LocalHeap >>>")
-            Console.WriteLine("address : " & Me.m_address)
-            Console.WriteLine("signature : " & (Me.m_signature(0) And &HFF).ToString("x") & (Me.m_signature(1) And &HFF).ToString("x") & (Me.m_signature(2) And &HFF).ToString("x") & (Me.m_signature(3) And &HFF).ToString("x"))
+        Dim reserved0 As Byte()
 
-            Console.WriteLine("version : " & Me.m_version)
-            Console.WriteLine("data segment size : " & Me.m_dataSegmentSize)
-            Console.WriteLine("offset to head of free list : " & Me.m_offsetToHeadOfFreeList)
-            Console.WriteLine("address of data segment : " & Me.m_addressOfDataSegment)
+        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+            Call MyBase.New(address)
 
-            Console.WriteLine("total local heap size : " & Me.m_totalLocalHeapSize)
+            [in].offset = address
 
-            If Me.m_data IsNot Nothing Then
-                For i As Integer = 0 To Me.m_data.Length - 1
-                    Console.WriteLine("data[" & i & "] : " & Me.m_data(i))
+            ' signature
+            Me.signature = [in].readBytes(4)
+
+            If Not Me.validSignature Then
+                Throw New IOException("signature is not valid")
+            End If
+
+            Me.version = [in].readByte()
+
+            If Me.version > 0 Then
+                Throw New IOException("version not implemented")
+            End If
+
+            Me.reserved0 = [in].readBytes(3)
+            Me.totalLocalHeapSize = 8
+            Me.dataSegmentSize = ReadHelper.readL([in], sb)
+            Me.offsetToHeadOfFreeList = ReadHelper.readL([in], sb)
+            Me.totalLocalHeapSize += sb.sizeOfLengths * 2
+            Me.addressOfDataSegment = ReadHelper.readO([in], sb)
+            Me.totalLocalHeapSize += sb.sizeOfOffsets
+
+            ' data
+            [in].offset = Me.addressOfDataSegment
+
+            Me.data = [in].readBytes(CInt(Me.dataSegmentSize))
+        End Sub
+
+        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+            console.WriteLine("LocalHeap >>>")
+            console.WriteLine("address : " & Me.m_address)
+            console.WriteLine("signature : " &
+                              (Me.signature(0) And &HFF).ToString("x") &
+                              (Me.signature(1) And &HFF).ToString("x") &
+                              (Me.signature(2) And &HFF).ToString("x") &
+                              (Me.signature(3) And &HFF).ToString("x")
+                             )
+
+            console.WriteLine("version : " & Me.version)
+            console.WriteLine("data segment size : " & Me.dataSegmentSize)
+            console.WriteLine("offset to head of free list : " & Me.offsetToHeadOfFreeList)
+            console.WriteLine("address of data segment : " & Me.addressOfDataSegment)
+
+            console.WriteLine("total local heap size : " & Me.totalLocalHeapSize)
+
+            If Me.data IsNot Nothing Then
+                For i As Integer = 0 To Me.data.Length - 1
+                    console.WriteLine("data[" & i & "] : " & Me.data(i))
                 Next
             End If
 
-            Console.WriteLine("LocalHeap <<<")
+            console.WriteLine("LocalHeap <<<")
         End Sub
 
         Public Overridable Function getString(offset As Integer) As String
             Dim count As Integer = 0
-            While Me.m_data(offset + count) <> 0
+
+            While Me.data(offset + count) <> 0
                 count += 1
             End While
 
-            Return Me.m_data.ByteString(offset, count)
+            Return Me.data.ByteString(offset, count)
         End Function
 
         Public Overrides Function ToString() As String
-            Return m_data.Split(4) _
+            Return data.Split(4) _
                 .Select(Function(int) BitConverter.ToInt32(int, Scan0)) _
                 .Select(Function(n)
                             If n = 0 Then

@@ -165,34 +165,34 @@ Namespace HDF5.[Structure]
             End Select
         End Function
 
-        Public Sub printValues()
-            Console.WriteLine("ObjectHeaderMessage >>>")
-            Console.WriteLine("address : " & Me.m_address)
+        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+            console.WriteLine("ObjectHeaderMessage >>>")
+            console.WriteLine("address : " & Me.m_address)
             Console.WriteLine("header message type : " & Convert.ToString(Me.headerMessageType))
             Console.WriteLine("size of header message data : " & Me.sizeOfHeaderMessageData)
             Console.WriteLine("header message flags : " & Me.headerMessageFlags)
 
             If Me.headerMessageType Is ObjectHeaderMessageType.ObjectHeaderContinuation Then
                 Console.WriteLine("header message continue")
-                Me.continueMessage.printValues()
+                Me.continueMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Group Then
-                Me.groupMessage.printValues()
+                Me.groupMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
-                Me.dataspaceMessage.printValues()
+                Me.dataspaceMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValue Then
                 Me.fillValueMessage.printValues()
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValueOld Then
-                Me.fillValueOldMessage.printValues()
+                Me.fillValueOldMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Datatype Then
-                Me.dataTypeMessage.printValues()
+                Me.dataTypeMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Attribute Then
                 Me.attributeMessage.printValues()
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Link Then
-                Me.linkMessage.printValues()
+                Me.linkMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Layout Then
-                Me.layoutMessage.printValues()
+                Me.layoutMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.LastModified Then
-                Me.lastModifiedMessage.printValues()
+                Me.lastModifiedMessage.printValues(console)
             Else
                 Console.WriteLine("header message data : " & Convert.ToString(Me.headerMessageData))
             End If
