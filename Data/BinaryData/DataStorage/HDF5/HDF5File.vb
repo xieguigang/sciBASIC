@@ -17,20 +17,24 @@ Namespace HDF5
             End Get
         End Property
 
-        Public ReadOnly Property rootObjects As Dictionary(Of String, DataObjectFacade)
+        Dim rootObjects As Dictionary(Of String, DataObjectFacade)
 
-        Default Public ReadOnly Property GetObject(symbolName As String) As DataObjectFacade
+        Default Public ReadOnly Property GetObject(symbolName As String) As HDF5Reader
             Get
-                Return rootObjects _
+                Dim obj As DataObjectFacade = rootObjects _
                     .Keys _
                     .First(Function(name) name.TextEquals(symbolName)) _
                     .GetValueOrDefault(rootObjects)
+
+                Return New HDF5Reader(fileName, obj)
             End Get
         End Property
 
         Sub New(fileName As String)
             Me.reader = New BinaryFileReader(fileName)
-            Me.fileName = fileName.FileName
+            Me.fileName = fileName
+
+            Call parseHeader()
         End Sub
 
         Private Sub parseHeader()
@@ -40,7 +44,7 @@ Namespace HDF5
             Dim rootGroup As New Group(Me.reader, sb, objectFacade)
             Dim objects As List(Of DataObjectFacade) = rootGroup.objects
 
-            _rootObjects = objects.ToDictionary(Function(o) o.symbolName)
+            rootObjects = objects.ToDictionary(Function(o) o.symbolName)
         End Sub
 
         Public Overrides Function ToString() As String

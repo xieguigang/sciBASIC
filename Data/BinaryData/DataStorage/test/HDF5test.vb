@@ -125,8 +125,6 @@ Namespace edu.arizona.cs.hdf5.test
                         Exit For
                     End If
                 Next
-
-                reader.Dispose()
             End Using
         End Sub
 
@@ -158,7 +156,8 @@ Namespace edu.arizona.cs.hdf5.test
                 showData = True
             End If
 
-            Dim reader As New HDF5Reader(filename, "sample")
+            Dim file As New HDF5File(filename)
+            Dim reader As HDF5Reader = file!sample
             ' reader.parseHeader()
 
             Dim ids = reader.ParseDataObject("matrix")

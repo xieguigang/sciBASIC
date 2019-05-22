@@ -127,6 +127,19 @@ Namespace HDF5
             Me.headerSize = 0
         End Sub
 
+        Friend Sub New(fileName$, dataset As DataObjectFacade)
+            Me.fileName = fileName
+            Me.reader = New BinaryFileReader(fileName)
+            Me.datasetName = dataset.symbolName
+            Me.layout = Nothing
+            Me.dataBTree = Nothing
+            Me.chunks = New List(Of DataChunk)()
+            Me.headerSize = 0
+
+            _dataGroups = parserObject(dataset, sb:=Superblock, container:=Me)
+            _headerSize = reader.maxOffset
+        End Sub
+
         Public Function ParseDataObject(dataSetName As String) As HDF5Reader
             Dim reader As New HDF5Reader(Me.reader, dataSetName)
             Dim dobj As DataObjectFacade = dataGroups.objects.FirstOrDefault(Function(d) d.symbolName.TextEquals(dataSetName))
