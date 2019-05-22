@@ -47,7 +47,7 @@
 
 Imports System.Text
 
-Namespace HDF5.IO
+Namespace HDF5.device
 
     Public MustInherit Class BinaryReader : Implements IDisposable
 

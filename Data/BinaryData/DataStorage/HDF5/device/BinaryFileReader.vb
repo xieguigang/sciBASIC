@@ -48,7 +48,7 @@
 
 Imports System.IO
 
-Namespace HDF5.IO
+Namespace HDF5.device
 
     Public Class BinaryFileReader
         Inherits BinaryReader

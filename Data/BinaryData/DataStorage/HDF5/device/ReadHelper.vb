@@ -54,7 +54,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
 
-Namespace HDF5.IO
+Namespace HDF5.device
 
     <HideModuleName> Public Module ReadHelper
 

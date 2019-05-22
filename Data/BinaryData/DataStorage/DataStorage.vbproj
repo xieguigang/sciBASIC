@@ -88,9 +88,9 @@
     <Compile Include="HDF5\HDF5File.vb" />
     <Compile Include="HDF5\HDF5Ptr.vb" />
     <Compile Include="HDF5\HDF5Reader.vb" />
-    <Compile Include="HDF5\io\BinaryFileReader.vb" />
-    <Compile Include="HDF5\io\BinaryReader.vb" />
-    <Compile Include="HDF5\io\ReadHelper.vb" />
+    <Compile Include="HDF5\device\BinaryFileReader.vb" />
+    <Compile Include="HDF5\device\BinaryReader.vb" />
+    <Compile Include="HDF5\device\ReadHelper.vb" />
     <Compile Include="HDF5\FileDump.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\AttributeMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\LayoutClass.vb" />
@@ -107,6 +107,7 @@
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataspaceMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Message.vb" />
+    <Compile Include="HDF5\types\VariableLength.vb" />
     <Compile Include="HDF5\types\DataType.vb" />
     <Compile Include="HDF5\types\DataTypes.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\FillValueMessage.vb" />
