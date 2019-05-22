@@ -67,6 +67,24 @@ Imports r = System.Text.RegularExpressions.Regex
 ''' </summary>
 Public Module KeyValuePairExtensions
 
+    ''' <summary>
+    ''' 这个拓展函数主要是针对值得构建比较耗时的操作，主要应用于数据缓存场景
+    ''' </summary>
+    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="V"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="key"></param>
+    ''' <param name="lazyValue"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ComputeIfAbsent(Of K, V)(table As Dictionary(Of K, V), key As K, lazyValue As Func(Of K, V)) As V
+        If Not table.ContainsKey(key) OrElse table(key) Is Nothing Then
+            table(key) = lazyValue(key)
+        End If
+
+        Return table(key)
+    End Function
+
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function GetValueOrDefault(Of K, V)(key As K, table As Dictionary(Of K, V), Optional [default] As V = Nothing) As V

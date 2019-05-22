@@ -69,8 +69,10 @@ Namespace HDF5.[Structure]
 
         Public ReadOnly Property objects As GlobalHeapObject()
 
-        Public Sub New(reader As BinaryReader, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             MyBase.New(address)
+
+            Dim reader As BinaryReader = sb.file.reader
 
             signature = reader.readBytes(4)
             version = reader.readByte

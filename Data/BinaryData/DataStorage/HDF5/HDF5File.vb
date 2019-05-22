@@ -31,6 +31,8 @@ Namespace HDF5
         ''' </summary>
         Dim objectAddressMap As New Dictionary(Of Long, DataObject)()
 
+        Friend ReadOnly globalHeaps As New Dictionary(Of Long, GlobalHeap)
+
         ''' <summary>
         ''' 根节点名称或者全路径来获取一个数据集对象
         ''' </summary>
