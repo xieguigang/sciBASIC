@@ -21,12 +21,23 @@ Namespace HDF5
 
         Default Public ReadOnly Property GetObject(symbolName As String) As HDF5Reader
             Get
+                Dim path As String() = symbolName _
+                    .Replace("\", "/") _
+                    .Split("/"c) _
+                    .Where(Function(t) Not t.StringEmpty) _
+                    .ToArray
+                Dim rootName$ = path(Scan0)
                 Dim obj As DataObjectFacade = rootObjects _
                     .Keys _
-                    .First(Function(name) name.TextEquals(symbolName)) _
+                    .First(Function(name) name.TextEquals(rootName)) _
                     .GetValueOrDefault(rootObjects)
+                Dim reader As New HDF5Reader(fileName, obj)
 
-                Return New HDF5Reader(fileName, obj)
+                For Each token As String In path.Skip(1)
+                    reader = reader.ParseDataObject(dataSetName:=token)
+                Next
+
+                Return reader
             End Get
         End Property
 
