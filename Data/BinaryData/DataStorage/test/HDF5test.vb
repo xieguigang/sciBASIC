@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::349721c1a5243f355c5771a145e366e6, Data\BinaryData\DataStorage\test\HDF5test.vb"
+﻿#Region "Microsoft.VisualBasic::36abeefdbf3350a15d85382b83c5d4d7, Data\BinaryData\DataStorage\test\HDF5test.vb"
 
     ' Author:
     ' 
@@ -33,7 +33,7 @@
 
     '     Class ParseTest
     ' 
-    '         Sub: Main
+    '         Sub: dumpData, Main
     ' 
     ' 
     ' /********************************************************************************/
