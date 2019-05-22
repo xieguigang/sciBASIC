@@ -65,7 +65,7 @@ Namespace Text.Similarity
 
     Public Module Evaluations
 
-        ReadOnly ignoreCase As New DefaultValue(Of IEquals)(AddressOf tokenEqualsIgnoreCase)
+        ReadOnly ignoreCase As New [Default](Of IEquals)(AddressOf tokenEqualsIgnoreCase)
 
         ''' <summary>
         ''' 两个字符串之间是通过单词的排布的相似度来比较相似度的

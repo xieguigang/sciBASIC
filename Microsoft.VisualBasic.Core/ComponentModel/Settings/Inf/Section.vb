@@ -69,7 +69,7 @@ Namespace ComponentModel.Settings.Inf
         <XmlText>
         Public Property Comment As String
 
-        Shared ReadOnly emptyList As New DefaultValue(Of HashValue())(Function() {}, isLazy:=False)
+        Shared ReadOnly emptyList As New [Default](Of HashValue())(Function() {}, isLazy:=False)
 
         <XmlElement>
         Public Property Items As HashValue()

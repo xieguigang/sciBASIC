@@ -138,7 +138,7 @@ Namespace ComponentModel
         ''' ###### 2019-03-08 因为会存在<see cref="Add"/>添加数据的过程,所以在这里应该是使用constructor新构建一个对象
         ''' 否则会因为第二次使用<see cref="NameMapping"/>的时候因为对象引用的原因而出现错误
         ''' </remarks>
-        Shared ReadOnly emptyMaps As New DefaultValue(Of Dictionary(Of String, String)) With {
+        Shared ReadOnly emptyMaps As New [Default](Of Dictionary(Of String, String)) With {
             .constructor = Function() New Dictionary(Of String, String)
         }
 

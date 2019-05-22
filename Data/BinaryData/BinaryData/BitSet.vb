@@ -1,0 +1,538 @@
+Imports System.Collections
+Imports System.Collections.Generic
+Imports System.Globalization
+Imports System.Runtime.CompilerServices
+Imports System.Threading
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language.Default
+
+''' <summary>
+''' A replacement for BitArray.(BitSet in java)
+''' </summary>
+''' <remarks>
+''' https://stackoverflow.com/questions/14035687/what-is-the-c-sharp-equivalent-of-bitset-of-java#
+''' </remarks>
+Public Class BoolArray
+    Implements IEnumerable
+    Implements ICollection
+    Implements ICloneable
+    Private bits As UInt32() = Nothing
+    Private _length As Integer = 0
+    Private Shared ONE As UInt32 = CUInt(1) << 31
+    Private _syncRoot As Object
+    Private Shared EndianFixer As Func(Of Byte(), Byte()) = Nothing
+
+#Region "Constructors"
+
+    Shared Sub New()
+        If BitConverter.IsLittleEndian Then
+            EndianFixer = Function(a) a.Reverse().ToArray()
+        Else
+            EndianFixer = Function(a) a
+        End If
+    End Sub
+
+    Public Sub New(srcBits As BoolArray)
+        Me.InitializeFrom(srcBits.ToArray())
+    End Sub
+
+    Public Sub New(srcBits As BitArray)
+        Me._length = srcBits.Count
+        Me.bits = New UInt32(RequiredSize(Me._length) - 1) {}
+
+        For i As Integer = 0 To srcBits.Count - 1
+            Me(i) = srcBits(i)
+        Next
+    End Sub
+
+    Public Sub New(v As Integer)
+        Dim bytes As ICollection(Of Byte) = EndianFixer(BitConverter.GetBytes(v)).ToList()
+        InitializeFrom(bytes)
+    End Sub
+
+    Public Sub New(srcBits As ICollection(Of Boolean))
+        Me.InitializeFrom(srcBits.ToArray())
+    End Sub
+
+    Public Sub New(srcBits As ICollection(Of Byte))
+        InitializeFrom(srcBits)
+    End Sub
+
+    Public Sub New(srcBits As ICollection(Of Short))
+        Dim bytes As ICollection(Of Byte) = srcBits.SelectMany(Function(v) EndianFixer(BitConverter.GetBytes(v))).ToList()
+        InitializeFrom(bytes)
+    End Sub
+
+    Public Sub New(srcBits As ICollection(Of UShort))
+        Dim bytes As ICollection(Of Byte) = srcBits.SelectMany(Function(v) EndianFixer(BitConverter.GetBytes(v))).ToList()
+        InitializeFrom(bytes)
+    End Sub
+
+    Public Sub New(srcBits As ICollection(Of Integer))
+        Dim bytes As ICollection(Of Byte) = srcBits.SelectMany(Function(v) EndianFixer(BitConverter.GetBytes(v))).ToList()
+        InitializeFrom(bytes)
+    End Sub
+
+    Public Sub New(srcBits As ICollection(Of UInteger))
+        Dim bytes As ICollection(Of Byte) = srcBits.SelectMany(Function(v) EndianFixer(BitConverter.GetBytes(v))).ToList()
+        InitializeFrom(bytes)
+    End Sub
+
+    Public Sub New(srcBits As ICollection(Of Long))
+        Dim bytes As ICollection(Of Byte) = srcBits.SelectMany(Function(v) EndianFixer(BitConverter.GetBytes(v))).ToList()
+        InitializeFrom(bytes)
+    End Sub
+
+    Public Sub New(srcBits As ICollection(Of ULong))
+        Dim bytes As ICollection(Of Byte) = srcBits.SelectMany(Function(v) EndianFixer(BitConverter.GetBytes(v))).ToList()
+        InitializeFrom(bytes)
+    End Sub
+
+    Public Sub New(capacity As Integer, Optional defaultValue As Boolean = False)
+        Me.bits = New UInt32(RequiredSize(capacity) - 1) {}
+        Me._length = capacity
+
+        ' Only need to do this if true, because default for all bits is false
+        If defaultValue Then
+            For i As Integer = 0 To Me._length - 1
+                Me(i) = True
+            Next
+        End If
+    End Sub
+
+    Private Sub InitializeFrom(srcBits As ICollection(Of Byte))
+        Me._length = srcBits.Count * 8
+        Me.bits = New UInt32(RequiredSize(Me._length) - 1) {}
+        For i As Integer = 0 To srcBits.Count - 1
+            Dim bv As UInteger = srcBits.Skip(i).Take(1).[Single]()
+            For b As Integer = 0 To 7
+                Dim bitVal As Boolean = ((bv << b) And &H80) IsNot 0
+                Dim bi As Integer = 8 * i + b
+                Me(bi) = bitVal
+            Next
+        Next
+    End Sub
+
+    Private Sub InitializeFrom(srcBits As ICollection(Of Boolean))
+        Me._length = srcBits.Count
+        Me.bits = New UInt32(RequiredSize(Me._length) - 1) {}
+
+        Dim index As Integer = 0
+        For Each b As var In srcBits
+            Me(System.Math.Max(System.Threading.Interlocked.Increment(index), index - 1)) = b
+        Next
+    End Sub
+
+    Private Shared Function RequiredSize(bitCapacity As Integer) As Integer
+        Return (bitCapacity + 31) >> 5
+    End Function
+
+#End Region
+
+    Default Public Property Item(index As Integer) As Boolean
+        Get
+            If index >= _length Then
+                Throw New IndexOutOfRangeException()
+            End If
+
+            Dim byteIndex As Integer = index >> 5
+            Dim bitIndex As Integer = index And &H1F
+            Return ((bits(byteIndex) << bitIndex) And ONE) <> 0
+        End Get
+        Set
+            If index >= _length Then
+                Throw New IndexOutOfRangeException()
+            End If
+
+            Dim byteIndex As Integer = index >> 5
+            Dim bitIndex As Integer = index And &H1F
+            If Value Then
+                bits(byteIndex) = bits(byteIndex) Or (ONE >> bitIndex)
+            Else
+                bits(byteIndex) = bits(byteIndex) And Not (ONE >> bitIndex)
+            End If
+        End Set
+    End Property
+
+#Region "Interfaces implementation"
+#Region "IEnumerable"
+    Public Function GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+        'for (int i = 0; i < _length; i++) yield return this[i];
+        Return Me.ToArray().GetEnumerator()
+    End Function
+#End Region
+#Region "ICollection"
+    Public Sub CopyTo(array__1 As Array, index As Integer) Implements ICollection.CopyTo
+        If array__1 Is Nothing Then
+            Throw New ArgumentNullException("array")
+        End If
+        If index < 0 Then
+            Throw New ArgumentOutOfRangeException("index")
+        End If
+        If array__1.Rank <> 1 Then
+            Throw New ArgumentException("Multidimensional array not supported")
+        End If
+        If TypeOf array__1 Is UInt32() Then
+            Array.Copy(Me.bits, 0, array__1, index, (Me.Count + sizeof(UInt32) - 1) \ sizeof(UInt32))
+        ElseIf TypeOf array__1 Is Boolean() Then
+            Array.Copy(Me.ToArray(), 0, array__1, index, Me.Count)
+        Else
+            Throw New ArgumentException("Array type not supported (UInt32[] or bool[] only)")
+        End If
+
+    End Sub
+
+    Public Property Count() As Integer Implements ICollection.Count
+        Get
+            Return Me._length
+        End Get
+        Private Set
+            If Value > Me._length Then
+                Extend(Value - Me._length)
+            Else
+                Me._length = Math.Max(0, Value)
+            End If
+        End Set
+    End Property
+
+    Public ReadOnly Property IsSynchronized() As Boolean Implements ICollection.IsSynchronized
+        Get
+            Return False
+        End Get
+    End Property
+
+    Public ReadOnly Property SyncRoot() As Object Implements ICollection.SyncRoot
+        Get
+            If Me._syncRoot Is Nothing Then
+                Interlocked.CompareExchange(Of Object)(Me._syncRoot, New Object(), Nothing)
+            End If
+            Return _syncRoot
+        End Get
+    End Property
+#End Region
+#Region "ICloneable"
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return New BoolArray(Me)
+    End Function
+    ' Not part of ICloneable, but better - returns a strongly-typed result
+    Public Function Dup() As BoolArray
+        Return New BoolArray(Me)
+    End Function
+#End Region
+#End Region
+
+#Region "String Conversions"
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function ToString() As String
+        Return ToBinaryString()
+    End Function
+
+    Public Shared Function FromHexString(hex As String) As BoolArray
+        If hex Is Nothing Then
+            Throw New ArgumentNullException("hex")
+        End If
+
+        Dim bits As New List(Of Boolean)()
+        For i As Integer = 0 To hex.Length - 1
+            Dim b As Integer = Byte.Parse(hex(i).ToString(), NumberStyles.HexNumber)
+            bits.Add((b >> 3) = 1)
+            bits.Add(((b And &H7) >> 2) = 1)
+            bits.Add(((b And &H3) >> 1) = 1)
+            bits.Add((b And &H1) = 1)
+        Next
+        Dim ba As New BoolArray(bits.ToArray())
+        Return ba
+    End Function
+
+    Public Function ToHexString(Optional bitSep8 As String = Nothing, Optional bitSep128 As String = Nothing) As String
+        Dim s As String = String.Empty
+        Dim b As Integer = 0
+        Dim bbits As Boolean() = Me.ToArray()
+
+        For i As Integer = 1 To bbits.Length
+            b = (b << 1) Or (If(bbits(i - 1), 1, 0))
+            If i Mod 4 = 0 Then
+                s = s & String.Format("{0:x}", b)
+                b = 0
+            End If
+
+            If i Mod (8 * 16) = 0 Then
+                s = s & bitSep128
+            ElseIf i Mod 8 = 0 Then
+                s = s & bitSep8
+            End If
+        Next
+        Dim ebits As Integer = bbits.Length Mod 4
+        If ebits <> 0 Then
+            b = b << (4 - ebits)
+            s = s & String.Format("{0:x}", b)
+        End If
+        Return s
+    End Function
+
+    Shared ReadOnly defaultTrue As [default](Of String) = "1YyTt"
+
+    Public Shared Function FromBinaryString(bin As String, Optional trueChars As Index(Of Char) = Nothing) As BoolArray
+        If trueChars Is Nothing Then
+            trueChars = New Char() {"1"c, "Y"c, "y"c, "T"c, "t"c}
+        End If
+        If bin Is Nothing Then
+            Throw New ArgumentNullException("bin")
+        End If
+        Dim ba As New BoolArray(bin.Length)
+        For i As Integer = 0 To bin.Length - 1
+            ba(i) = bin(i).[In](trueChars)
+        Next
+        Return ba
+    End Function
+
+    Public Function ToBinaryString(Optional setChar As Char = "1"c, Optional unsetChar As Char = "0"c) As String
+        Return New String(Me.ToArray().[Select](Function(v) If(v, setChar, unsetChar)).ToArray())
+    End Function
+
+#End Region
+
+#Region "Class Methods"
+    Public Function ToArray() As Boolean()
+        Dim vbits As Boolean() = New Boolean(Me._length - 1) {}
+        For i As Integer = 0 To _length - 1
+            vbits(i) = Me(i)
+        Next
+        Return vbits
+    End Function
+
+    Public Function Append(addBits As ICollection(Of Boolean)) As BoolArray
+        Dim startPos As Integer = Me._length
+        Extend(addBits.Count)
+        Dim bitArray As Boolean() = addBits.ToArray()
+        For i As Integer = 0 To bitArray.Length - 1
+            Me(i + startPos) = bitArray(i)
+        Next
+        Return Me
+    End Function
+
+    Public Function Append(addBits As BoolArray) As BoolArray
+        Return Me.Append(addBits.ToArray())
+    End Function
+
+    Public Shared Function Concatenate(ParamArray bArrays As BoolArray()) As BoolArray
+        Return New BoolArray(bArrays.SelectMany(Function(ba) ba.ToArray()).ToArray())
+    End Function
+
+    Private Sub Extend(numBits As Integer)
+        numBits += Me._length
+        Dim reqBytes As Integer = RequiredSize(numBits)
+        If reqBytes > Me.bits.Length Then
+            Dim newBits As UInt32() = New UInt32(reqBytes - 1) {}
+            Me.bits.CopyTo(newBits, 0)
+            Me.bits = newBits
+        End If
+        Me._length = numBits
+    End Sub
+
+    Public Function [Get](index As Integer) As Boolean
+        Return Me(index)
+    End Function
+
+    Public Function GetBits(Optional startBit As Integer = 0, Optional numBits As Integer = -1) As BoolArray
+        If numBits = -1 Then
+            numBits = bits.Length
+        End If
+        Return New BoolArray(Me.ToArray().Skip(startBit).Take(numBits).ToArray())
+    End Function
+
+    Public Function Repeat(numReps As Integer) As BoolArray
+        Dim oBits As Boolean() = Me.ToArray()
+        Dim nBits As New List(Of Boolean)()
+        For i As Integer = 0 To numReps - 1
+            nBits.AddRange(oBits)
+        Next
+        Me.InitializeFrom(nBits)
+        Return Me
+    End Function
+
+    Public Function Reverse() As BoolArray
+        Dim n As Integer = Me.Count
+        For i As Integer = 0 To n \ 2 - 1
+            Dim b1 As Boolean = Me(i)
+            Me(i) = Me(n - i - 1)
+            Me(n - i - 1) = b1
+        Next
+        Return Me
+    End Function
+
+    Public Function [Set](index As Integer, v As Boolean) As BoolArray
+        Me(index) = v
+        Return Me
+    End Function
+
+    Public Function SetAll(v As Boolean) As BoolArray
+        For i As Integer = 0 To Me.Count - 1
+            Me(i) = v
+        Next
+        Return Me
+    End Function
+
+    Public Function SetBits(setBits__1 As ICollection(Of Boolean), Optional destStartBit As Integer = 0, Optional srcStartBit As Integer = 0, Optional numBits As Integer = -1, Optional allowExtend As Boolean = False) As BoolArray
+        If setBits__1 Is Nothing Then
+            Throw New ArgumentNullException("setBits")
+        End If
+        If (destStartBit < 0) OrElse (destStartBit >= Me.Count) Then
+            Throw New ArgumentOutOfRangeException("destStartBit")
+        End If
+        If (srcStartBit < 0) OrElse (srcStartBit >= setBits__1.Count) Then
+            Throw New ArgumentOutOfRangeException("srcStartBit")
+        End If
+
+        Dim sBits As Boolean()
+        If TypeOf setBits__1 Is Boolean() Then
+            sBits = DirectCast(setBits__1, Boolean())
+        Else
+            sBits = setBits__1.ToArray()
+        End If
+
+        If numBits = -1 Then
+            numBits = setBits__1.Count
+        End If
+        If numBits > (setBits__1.Count - srcStartBit) Then
+            numBits = setBits__1.Count - srcStartBit
+        End If
+
+        Dim diffSize As Integer = numBits - (Me.Count - destStartBit)
+        If diffSize > 0 Then
+            If allowExtend Then
+                Extend(diffSize)
+            Else
+                numBits = Me.Count - destStartBit
+            End If
+        End If
+        For i As Integer = 0 To numBits - 1
+            Me(destStartBit + i) = sBits(srcStartBit + i)
+        Next
+        Return Me
+    End Function
+
+    Public Function SplitEvery(numBits As Integer) As List(Of BoolArray)
+        Dim i As Integer = 0
+        Dim bitSplits As New List(Of BoolArray)()
+        While i < Me.Count
+            bitSplits.Add(Me.GetBits(i, numBits))
+            i += numBits
+        End While
+        Return bitSplits
+    End Function
+
+    Public Function ToBytes(Optional startBit As Integer = 0, Optional numBits As Integer = -1) As Byte()
+        If numBits = -1 Then
+            numBits = Me._length - startBit
+        End If
+        Dim ba As BoolArray = GetBits(startBit, numBits)
+        Dim nb As Integer = (numBits + 7) \ 8
+        Dim bb As Byte() = New Byte(nb - 1) {}
+        For i As Integer = 0 To ba.Count - 1
+            If Not ba(i) Then
+                Continue For
+            End If
+            Dim bp As Integer = 7 - (i Mod 8)
+            bb(i \ 8) = CByte(CInt(bb(i \ 8)) Or (1 << bp))
+        Next
+        Return bb
+    End Function
+
+
+#End Region
+
+#Region "Logical Bitwise Operations"
+    Public Function BinaryBitwiseOp(op As Func(Of Boolean, Boolean, Boolean), ba As BoolArray, Optional start As Integer = 0) As BoolArray
+        For i As Integer = 0 To ba.Count - 1
+            If start + i >= Me.Count Then
+                Exit For
+            End If
+            Me(start + i) = op(Me(start + i), ba(i))
+        Next
+        Return Me
+    End Function
+
+    Public Function [Xor](xor__1 As BoolArray, Optional start As Integer = 0) As BoolArray
+        Return BinaryBitwiseOp(Function(a, b) (a Xor b), xor__1, start)
+    End Function
+
+    Public Function [And](and__1 As BoolArray, Optional start As Integer = 0) As BoolArray
+        Return BinaryBitwiseOp(Function(a, b) (a And b), and__1, start)
+    End Function
+
+    Public Function [Or](or__1 As BoolArray, Optional start As Integer = 0) As BoolArray
+        Return BinaryBitwiseOp(Function(a, b) (a Or b), or__1, start)
+    End Function
+
+    Public Function [Not](Optional start As Integer = 0, Optional len As Integer = -1) As BoolArray
+        For i As Integer = start To Me.Count - 1
+
+            If Interlocked.Decrement(len) = -1 Then
+                Exit For
+            End If
+
+            Me(i) = Not Me(i)
+        Next
+        Return Me
+    End Function
+#End Region
+
+#Region "Class Operators"
+
+    Public Shared Operator +(a As BoolArray, b As BoolArray) As BoolArray
+        Return a.Dup().Append(b)
+    End Operator
+
+    Public Shared Operator Or(a As BoolArray, b As BoolArray) As BoolArray
+        Return a.Dup().[Or](b)
+    End Operator
+
+    Public Shared Operator And(a As BoolArray, b As BoolArray) As BoolArray
+        Return a.Dup().[And](b)
+    End Operator
+
+    Public Shared Operator Xor(a As BoolArray, b As BoolArray) As BoolArray
+        Return a.Dup().[Xor](b)
+    End Operator
+
+    Public Shared Operator Not(a As BoolArray) As BoolArray
+        Return a.Dup().[Not]()
+    End Operator
+
+    Public Shared Operator <<(a As BoolArray, shift As Integer) As BoolArray
+        Return a.Dup().Append(New Boolean(shift - 1) {})
+    End Operator
+
+    Public Shared Operator >>(a As BoolArray, shift As Integer) As BoolArray
+        Return New BoolArray(a.ToArray().Take(Math.Max(0, a.Count - shift)).ToArray())
+    End Operator
+
+    Public Shared Operator =(a As BoolArray, b As BoolArray) As Boolean
+        If a.Count <> b.Count Then
+            Return False
+        End If
+        For i As Integer = 0 To a.Count - 1
+            If a(i) <> b(i) Then
+                Return False
+            End If
+        Next
+        Return True
+    End Operator
+    Public Overrides Function Equals(obj As Object) As Boolean
+        If Not (TypeOf obj Is BoolArray) Then
+            Return False
+        End If
+        Return (Me Is DirectCast(obj, BoolArray))
+    End Function
+    Public Overrides Function GetHashCode() As Integer
+        Return Me.ToHexString().GetHashCode()
+    End Function
+
+    Public Shared Operator <>(a As BoolArray, b As BoolArray) As Boolean
+        Return Not (a = b)
+    End Operator
+
+#End Region
+End Class

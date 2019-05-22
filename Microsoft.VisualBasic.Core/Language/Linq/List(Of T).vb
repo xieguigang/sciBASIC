@@ -635,7 +635,7 @@ Namespace Language
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function [Default]() As DefaultValue(Of List(Of T))
+        Public Shared Function [Default]() As [Default](Of List(Of T))
             Return New List(Of T)
         End Function
 

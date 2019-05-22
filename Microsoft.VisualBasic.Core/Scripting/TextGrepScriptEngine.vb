@@ -178,7 +178,7 @@ Namespace Scripting
         ''' Source in and then source out, no changes
         ''' </summary>
         ''' <returns></returns>
-        Public Shared ReadOnly Property DoNothing As DefaultValue(Of TextGrepScriptEngine)
+        Public Shared ReadOnly Property DoNothing As [Default](Of TextGrepScriptEngine)
             Get
                 Static opNothing As New TextGrepScriptEngine With {
                     ._operations = {},

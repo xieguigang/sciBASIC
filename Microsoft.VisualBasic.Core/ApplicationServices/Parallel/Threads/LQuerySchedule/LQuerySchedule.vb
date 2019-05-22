@@ -80,7 +80,7 @@ Namespace Parallel.Linq
             End Get
         End Property
 
-        Public Function DefaultConfig() As DefaultValue(Of Integer?)
+        Public Function DefaultConfig() As [Default](Of Integer?)
             Return CPU_NUMBER
         End Function
 

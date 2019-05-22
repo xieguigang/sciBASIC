@@ -171,7 +171,7 @@ Namespace ComponentModel.Settings.Inf
             Return DirectCast(obj, T)
         End Function
 
-        Private Function __getPath(Of T As Class)() As DefaultValue(Of String)
+        Private Function __getPath(Of T As Class)() As [Default](Of String)
             Dim path As IniMapIO = GetType(T).GetAttribute(Of IniMapIO)
 
             If path Is Nothing Then

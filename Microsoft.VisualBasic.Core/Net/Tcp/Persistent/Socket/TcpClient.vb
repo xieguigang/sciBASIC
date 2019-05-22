@@ -99,7 +99,7 @@ Namespace Net.Tcp.Persistent.Socket
 
         Dim _ExceptionHandler As ExceptionHandler
 
-        Shared ReadOnly defaultHandler As New DefaultValue(Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
+        Shared ReadOnly defaultHandler As New [Default](Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
 
         Sub New(remoteDevice As TcpEndPoint, Optional ExceptionHandler As ExceptionHandler = Nothing)
             Call Me.New(remoteDevice.Address.ToString, remoteDevice.Port, ExceptionHandler)

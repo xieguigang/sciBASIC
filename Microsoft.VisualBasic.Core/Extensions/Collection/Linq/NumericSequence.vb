@@ -93,10 +93,10 @@ Namespace Linq
             Next
         End Function
 
-        Public ReadOnly OneDay As DefaultValue(Of TimeSpan) = New TimeSpan(days:=1, hours:=0, minutes:=0, seconds:=0)
-        Public ReadOnly OneHour As DefaultValue(Of TimeSpan) = New TimeSpan(hours:=1, minutes:=0, seconds:=0)
-        Public ReadOnly OneMinute As DefaultValue(Of TimeSpan) = New TimeSpan(minutes:=1, seconds:=0, hours:=0)
-        Public ReadOnly OneSecond As DefaultValue(Of TimeSpan) = New TimeSpan(seconds:=1, hours:=0, minutes:=0)
+        Public ReadOnly OneDay As [Default](Of TimeSpan) = New TimeSpan(days:=1, hours:=0, minutes:=0, seconds:=0)
+        Public ReadOnly OneHour As [Default](Of TimeSpan) = New TimeSpan(hours:=1, minutes:=0, seconds:=0)
+        Public ReadOnly OneMinute As [Default](Of TimeSpan) = New TimeSpan(minutes:=1, seconds:=0, hours:=0)
+        Public ReadOnly OneSecond As [Default](Of TimeSpan) = New TimeSpan(seconds:=1, hours:=0, minutes:=0)
 
         ''' <summary>
         ''' 

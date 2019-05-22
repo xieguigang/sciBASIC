@@ -86,7 +86,7 @@ Namespace Text.Xml
             .encoding = XmlEncodings.UTF16
         }
 
-        Shared ReadOnly defaultVersion1_0 As DefaultValue(Of String) = "1.0"
+        Shared ReadOnly defaultVersion1_0 As [Default](Of String) = "1.0"
 
         ''' <summary>
         ''' &lt;?xml version="{<see cref="version"/>}" encoding="{<see cref="encoding"/>}" standalone="{<see cref="standalone"/>}"?>

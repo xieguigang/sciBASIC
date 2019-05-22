@@ -146,7 +146,7 @@ Namespace ComponentModel.DataSourceModel
             Return props.ToDictionary(Function(x) x.Name)
         End Function
 
-        ReadOnly alwaysTrue As DefaultValue(Of Assert(Of Object)) = New Assert(Of Object)(Function() True)
+        ReadOnly alwaysTrue As [Default](Of Assert(Of Object)) = New Assert(Of Object)(Function() True)
 
         ''' <summary>
         ''' 将对象之中的所有属性值都取出来以字符串的形式生成一个字典对象

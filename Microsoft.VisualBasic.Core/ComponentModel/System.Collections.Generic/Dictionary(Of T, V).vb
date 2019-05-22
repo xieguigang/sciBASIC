@@ -62,12 +62,12 @@ Namespace ComponentModel.Collection
 
         ReadOnly assert As Assert(Of Object)
 
-        Default Public Overloads Property Item(key As String) As DefaultValue(Of T)
+        Default Public Overloads Property Item(key As String) As [Default](Of T)
             Get
                 Dim value As T = If(ContainsKey(key), MyBase.Item(key), Nothing)
-                Return New DefaultValue(Of T)(value, assert)
+                Return New [Default](Of T)(value, assert)
             End Get
-            Set(value As DefaultValue(Of T))
+            Set(value As [Default](Of T))
                 MyBase.Item(key) = value.DefaultValue
             End Set
         End Property

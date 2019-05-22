@@ -131,7 +131,7 @@ Namespace ApplicationServices
 
         Public ReadOnly Property Protocol As New Protocol(GetType(T))
         Public ReadOnly Property TcpRequest As TcpRequest
-        Public ReadOnly Property TextEncoding As DefaultValue(Of Encoding)
+        Public ReadOnly Property TextEncoding As [Default](Of Encoding)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(hostName$, remotePort%, Optional encoding As Encodings = Encodings.UTF8WithoutBOM)

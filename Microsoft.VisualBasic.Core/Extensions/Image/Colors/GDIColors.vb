@@ -345,7 +345,7 @@ Namespace Imaging
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function AsDefaultColor(color As Color) As DefaultValue(Of Color)
+        Public Function AsDefaultColor(color As Color) As [Default](Of Color)
             Return color.AsDefault(Function(c) DirectCast(c, Color).IsNullOrEmpty)
         End Function
 

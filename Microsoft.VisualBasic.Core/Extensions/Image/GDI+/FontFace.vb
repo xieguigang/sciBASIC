@@ -57,7 +57,7 @@
 Imports System.Drawing
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
-Imports DefaultFont = Microsoft.VisualBasic.Language.Default.DefaultValue(Of System.Drawing.Font)
+Imports DefaultFont = Microsoft.VisualBasic.Language.Default.Default(Of System.Drawing.Font)
 
 Namespace Imaging
 

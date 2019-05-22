@@ -145,7 +145,7 @@ Namespace ComponentModel.Collection
         ''' <param name="maps">如果是json加载，可能会出现空值的字典</param>
         ''' <param name="base%"></param>
         Sub New(maps As IDictionary(Of T, Integer), Optional base% = 0)
-            Static emptyIndex As DefaultValue(Of IDictionary(Of String, Integer)) =
+            Static emptyIndex As [Default](Of IDictionary(Of String, Integer)) =
                 New Dictionary(Of String, Integer)
 
             Me.base = base

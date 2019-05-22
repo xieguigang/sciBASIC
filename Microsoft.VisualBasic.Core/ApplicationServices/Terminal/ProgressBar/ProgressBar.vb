@@ -122,8 +122,8 @@ Namespace Terminal.ProgressBar
         ''' ###### 2017-11-6
         ''' Change from property to function to avoid bug caused application crashed
         ''' </remarks>
-        Public Shared Function DefaultTheme() As DefaultValue(Of ColorTheme)
-            Return New DefaultValue(Of ColorTheme) With {
+        Public Shared Function DefaultTheme() As [Default](Of ColorTheme)
+            Return New [Default](Of ColorTheme) With {
                 .Value = [Default](),
                 .assert = Function(t)
                               Return DirectCast(t, ColorTheme).IsEmpty

@@ -198,7 +198,7 @@ Namespace Language.Default
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Operator Or(arg As DefaultString, [default] As DefaultValue(Of String)) As String
+        Public Shared Operator Or(arg As DefaultString, [default] As [Default](Of String)) As String
             Return arg.DefaultValue Or [default]
         End Operator
 

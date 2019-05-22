@@ -130,7 +130,7 @@ Namespace Net.Tcp
             Call Me.New(remoteDevice.IPAddress, remoteDevice.Port, exceptionHandler)
         End Sub
 
-        Shared ReadOnly defaultHandler As New DefaultValue(Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
+        Shared ReadOnly defaultHandler As New [Default](Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
 
         ''' <summary>
         '''

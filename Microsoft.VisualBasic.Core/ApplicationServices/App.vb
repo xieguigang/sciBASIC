@@ -178,7 +178,7 @@ Public Module App
     ''' <see cref="Console.OpenStandardOutput()"/> as default text output device.
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property StdOut As DefaultValue(Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
+    Public ReadOnly Property StdOut As [Default](Of TextWriter) = Console.OpenStandardOutput.OpenTextWriter
 
     ''' <summary>
     ''' Get the <see cref="System.Diagnostics.Process"/> id(PID) of the current program process.
@@ -921,7 +921,7 @@ Public Module App
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __getTEMP(prefix As String) As String
-        Static tmp As DefaultValue(Of String) = NameOf(tmp)
+        Static tmp As [Default](Of String) = NameOf(tmp)
         Return $"{prefix Or tmp}{App.tempCode}"
     End Function
 

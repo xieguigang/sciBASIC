@@ -203,7 +203,7 @@ Public Module PathExtensions
         End If
     End Function
 
-    ReadOnly allKinds As New DefaultValue(Of String())({"*.*"}, Function(o) TryCast(o, String()).IsNullOrEmpty)
+    ReadOnly allKinds As New [Default](Of String())({"*.*"}, Function(o) TryCast(o, String()).IsNullOrEmpty)
 
     ''' <summary>
     ''' 使用<see cref="FileIO.FileSystem.GetFiles"/>函数枚举

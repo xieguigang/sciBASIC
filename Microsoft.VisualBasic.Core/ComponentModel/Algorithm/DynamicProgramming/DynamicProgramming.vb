@@ -63,7 +63,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
             Return If(equals(a, b), 0, 1)
         End Function
 
-        Public Shared Function DefaultCost(cost As Double) As DefaultValue(Of Cost(Of T))
+        Public Shared Function DefaultCost(cost As Double) As [Default](Of Cost(Of T))
             Return New Cost(Of T) With {
                 .insert = Function(x) cost,
                 .delete = Function(x) cost,

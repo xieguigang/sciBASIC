@@ -121,7 +121,7 @@ Namespace Net.Tcp.Persistent.Socket
             End Get
         End Property
 
-        Shared ReadOnly DefaultHandler As New DefaultValue(Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
+        Shared ReadOnly DefaultHandler As New [Default](Of ExceptionHandler)(AddressOf VBDebugger.PrintException)
 
         ''' <summary>
         ''' 消息处理的方法接口： Public Delegate Function DataResponseHandler(str As String, RemotePort As Integer) As String

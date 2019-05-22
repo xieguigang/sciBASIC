@@ -311,6 +311,7 @@
   <ItemGroup>
     <Compile Include="Extensions\FixLengthString.vb" />
     <Compile Include="Extensions\MSWindows.vb" />
+    <Compile Include="BitSet.vb" />
     <Compile Include="SQLite3\Helpers\BTreeTools.vb" />
     <Compile Include="SQLite3\Helpers\ReadonlyStream.vb" />
     <Compile Include="SQLite3\Helpers\SqliteDataStream.vb" />
