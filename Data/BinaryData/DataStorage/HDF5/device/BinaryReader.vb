@@ -139,6 +139,10 @@ Namespace HDF5.device
             Next
         End Sub
 
+        ''' <summary>
+        ''' Read 4 bytes 32 bit integer
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Function readInt() As Integer
             Dim data As Byte() = readBytes(4)
             Dim temp As Integer = 0

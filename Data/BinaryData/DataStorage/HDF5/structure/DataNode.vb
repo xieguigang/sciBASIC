@@ -53,9 +53,9 @@
 
 
 Imports System.IO
-Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
+Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Language
-Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
+Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 Namespace HDF5.[Structure]
 

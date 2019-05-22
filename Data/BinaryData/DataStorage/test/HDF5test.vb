@@ -50,7 +50,7 @@ Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5
 Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
-Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
+Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 Namespace edu.arizona.cs.hdf5.test
 

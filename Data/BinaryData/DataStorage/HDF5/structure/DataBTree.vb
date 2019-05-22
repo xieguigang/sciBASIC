@@ -48,7 +48,7 @@
 ' * Modified by iychoi@email.arizona.edu
 ' 
 
-Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
+Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 
 Namespace HDF5.[Structure]
 
