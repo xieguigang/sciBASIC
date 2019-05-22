@@ -1,46 +1,46 @@
 ﻿#Region "Microsoft.VisualBasic::b4413da21bc36da9d955bd640c1fc066, Data\BinaryData\DataStorage\HDF5\structure\SymbolTableEntry.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class SymbolTableEntry
-    ' 
-    '         Properties: cacheType, linkNameOffset, objectHeaderAddress, objectHeaderScratchpadFormat, scratchpadSpace
-    '                     size, symbolicLinkScratchpadFormat, totalSymbolTableEntrySize
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class SymbolTableEntry
+' 
+'         Properties: cacheType, linkNameOffset, objectHeaderAddress, objectHeaderScratchpadFormat, scratchpadSpace
+'                     size, symbolicLinkScratchpadFormat, totalSymbolTableEntrySize
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -52,6 +52,7 @@
 ' 
 
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 
 Namespace HDF5.[Structure]
@@ -91,7 +92,7 @@ Namespace HDF5.[Structure]
             Me.totalSymbolTableEntrySize = sb.sizeOfOffsets * 2
             Me.cacheType = [in].readInt()
             Me.reserved = [in].readInt()
-                        Me.totalSymbolTableEntrySize += 8
+            Me.totalSymbolTableEntrySize += 8
 
             If Me.cacheType = 0 Then
                 Me.scratchpadSpace = [in].readBytes(16)
@@ -120,9 +121,9 @@ Namespace HDF5.[Structure]
             End If
         End Sub
 
-        Public Overridable Sub printValues()
-            Console.WriteLine("SymbolTableEntry >>>")
-            Console.WriteLine("address : " & Me.m_address)
+        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+            console.WriteLine("SymbolTableEntry >>>")
+            console.WriteLine("address : " & Me.m_address)
             Console.WriteLine("link name offset : " & Me.linkNameOffset)
             Console.WriteLine("object header address : " & Me.objectHeaderAddress)
             Console.WriteLine("cache type : " & Me.cacheType)
@@ -151,7 +152,7 @@ Namespace HDF5.[Structure]
             ElseIf Me.cacheType = 1 Then
                 Me.objectHeaderScratchpadFormat.printValues()
             ElseIf Me.cacheType = 2 Then
-                Me.symbolicLinkScratchpadFormat.printValues()
+                Me.symbolicLinkScratchpadFormat.printValues(console)
             End If
 
             Console.WriteLine("total symbol table entry size : " & Me.totalSymbolTableEntrySize)

@@ -115,9 +115,9 @@ Namespace HDF5.[Structure]
             End If
         End Sub
 
-        Public Overridable Sub printValues()
-            Console.WriteLine("GroupBTree >>>")
-            Console.WriteLine("address : " & Me.m_address)
+        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+            console.WriteLine("GroupBTree >>>")
+            console.WriteLine("address : " & Me.m_address)
 
             For i As Integer = 0 To symbolTableEntries.Count - 1
                 symbolTableEntries(i).printValues()
