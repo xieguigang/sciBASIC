@@ -68,6 +68,7 @@ Namespace HDF5.IO
             End If
 
             Dim sizeOfOffsets As Integer = sb.sizeOfOffsets
+
             If sizeOfOffsets = 1 Then
                 Return [in].readByte()
             ElseIf sizeOfOffsets = 2 Then
@@ -77,6 +78,7 @@ Namespace HDF5.IO
             ElseIf sizeOfOffsets = 8 Then
                 Return [in].readLong()
             End If
+
             Throw New IOException("size of offsets is not specified")
         End Function
 
@@ -90,6 +92,7 @@ Namespace HDF5.IO
             End If
 
             Dim sizeOfLengths As Integer = sb.sizeOfLengths
+
             If sizeOfLengths = 1 Then
                 Return [in].readByte()
             ElseIf sizeOfLengths = 2 Then
@@ -99,6 +102,7 @@ Namespace HDF5.IO
             ElseIf sizeOfLengths = 8 Then
                 Return [in].readLong()
             End If
+
             Throw New IOException("size of lengths is not specified")
         End Function
 
@@ -112,24 +116,29 @@ Namespace HDF5.IO
             End If
 
             Dim remain As Integer = dataLen Mod paddingSize
+
             If remain <> 0 Then
                 remain = paddingSize - remain
             End If
+
             Return remain
         End Function
 
         Public Function getNumBytesFromMax(maxNumber As Long) As Integer
             Dim size As Integer = 0
+
             While maxNumber <> 0
                 size += 1
                 ' right shift with zero extension
                 maxNumber = CLng(CULng(maxNumber) >> 8)
             End While
+
             Return size
         End Function
 
         Public Function readVariableSizeUnsigned([in] As BinaryReader, size As Integer) As Long
             Dim vv As Long
+
             If size = 1 Then
                 vv = unsignedByteToShort([in].readByte())
             ElseIf size = 2 Then
@@ -142,6 +151,7 @@ Namespace HDF5.IO
             Else
                 vv = readVariableSizeN([in], size)
             End If
+
             Return vv
         End Function
 
@@ -157,6 +167,7 @@ Namespace HDF5.IO
             Next
 
             Dim result As Long = ch(nbytes - 1)
+
             For i As Integer = nbytes - 2 To 0 Step -1
                 result = result << 8
                 result += ch(i)

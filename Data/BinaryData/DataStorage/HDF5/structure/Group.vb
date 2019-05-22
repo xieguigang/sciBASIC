@@ -75,12 +75,14 @@ Namespace HDF5.[Structure]
         End Property
 
         Public Sub New([in] As BinaryReader, sb As Superblock, facade As DataObjectFacade)
-            Me.m_facade = facade
+            Dim gm As GroupMessage = facade.dataObject.groupMessage
 
-            If facade.dataObject.groupMessage IsNot Nothing Then
-                Dim gm As GroupMessage = facade.dataObject.groupMessage
-                readGroup([in], sb, gm.bTreeAddress, gm.nameHeapAddress)
+            If gm Is Nothing Then
+                Throw New InvalidProgramException("Invalid folder object!")
             End If
+
+            m_facade = facade
+            readGroup([in], sb, gm.bTreeAddress, gm.nameHeapAddress)
         End Sub
 
         Private Sub readGroup([in] As BinaryReader, sb As Superblock, bTreeAddress As Long, nameHeapAddress As Long)
