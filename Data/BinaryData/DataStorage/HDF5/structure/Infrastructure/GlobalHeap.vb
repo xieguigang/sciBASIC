@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 Namespace HDF5.[Structure]
 
@@ -46,12 +47,65 @@ Namespace HDF5.[Structure]
     ''' </summary>
     Public Class GlobalHeap : Inherits HDF5Ptr
 
-        Public Sub New(address As Long)
+        ''' <summary>
+        ''' 4 bytes (GCOL)
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property signature As Byte()
+        ''' <summary>
+        ''' 1 byte
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property version As Integer
+        ''' <summary>
+        ''' [4 bytes] This is the size in bytes of the entire collection including this field. 
+        ''' The default (and minimum) collection size is 4096 bytes which is a typical file 
+        ''' system block size. This allows for 127 16-byte heap objects plus their overhead 
+        ''' (the collection header of 16 bytes and the 16 bytes of information about each heap 
+        ''' object).
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property collectionSize As Integer
+
+        Public ReadOnly Property objects As GlobalHeapObject()
+
+        Public Sub New(reader As BinaryReader, address As Long)
             MyBase.New(address)
+
+            signature = reader.readBytes(4)
+            version = reader.readByte
+            collectionSize = reader.readInt
+
         End Sub
 
         Protected Friend Overrides Sub printValues(console As TextWriter)
             Throw New NotImplementedException()
         End Sub
+    End Class
+
+    Public Class GlobalHeapObject
+
+        ''' <summary>
+        ''' 2 bytes
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property index As Integer
+        ''' <summary>
+        ''' Reference Count
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property references As Integer
+        ''' <summary>
+        ''' This is the size of the object data stored for the object. The actual storage 
+        ''' space allocated for the object data is rounded up to a multiple of eight.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property objectSize As Integer
+        ''' <summary>
+        ''' The object data is treated as a one-dimensional array of bytes to be interpreted 
+        ''' by the caller.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property data As Byte()
     End Class
 End Namespace
