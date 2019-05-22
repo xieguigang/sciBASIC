@@ -50,10 +50,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.JavaScript
 Imports Microsoft.VisualBasic.Language.Python
+Imports Microsoft.VisualBasic.My.JavaScript
 
 Namespace Layouts.Cola
 

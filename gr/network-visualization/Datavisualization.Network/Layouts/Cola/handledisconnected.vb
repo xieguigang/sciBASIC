@@ -55,7 +55,6 @@
 
 Imports System.Threading
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
-Imports Microsoft.VisualBasic.Language.JavaScript
 Imports any = System.Object
 Imports number = System.Double
 
