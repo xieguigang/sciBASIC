@@ -19,6 +19,11 @@ Namespace HDF5
 
         Dim rootObjects As Dictionary(Of String, DataObjectFacade)
 
+        ''' <summary>
+        ''' 根节点名称或者全路径来获取一个数据集对象
+        ''' </summary>
+        ''' <param name="symbolName"></param>
+        ''' <returns></returns>
         Default Public ReadOnly Property GetObject(symbolName As String) As HDF5Reader
             Get
                 Dim path As String() = symbolName _
