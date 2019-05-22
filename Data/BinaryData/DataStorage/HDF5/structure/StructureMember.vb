@@ -54,8 +54,8 @@
 ' 
 
 
-Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
+Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
@@ -103,7 +103,7 @@ Namespace HDF5.[Structure]
             Console.WriteLine("m_dims : " & Me.dims)
 
             If Me.message IsNot Nothing Then
-                Me.message.printValues()
+                Me.message.printValues(console)
             End If
 
             Console.WriteLine("StructureMember >>>")

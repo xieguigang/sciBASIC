@@ -52,8 +52,8 @@
 
 
 
-Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
+Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure].BTree
 

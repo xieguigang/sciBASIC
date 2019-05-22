@@ -52,8 +52,8 @@
 ' 
 
 
-Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
+Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
 Namespace HDF5.[Structure]
 
@@ -150,7 +150,7 @@ Namespace HDF5.[Structure]
                                  )
 
             ElseIf Me.cacheType = 1 Then
-                Me.objectHeaderScratchpadFormat.printValues()
+                Me.objectHeaderScratchpadFormat.printValues(console)
             ElseIf Me.cacheType = 2 Then
                 Me.symbolicLinkScratchpadFormat.printValues(console)
             End If

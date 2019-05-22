@@ -180,13 +180,13 @@ Namespace HDF5.[Structure]
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
                 Me.dataspaceMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValue Then
-                Me.fillValueMessage.printValues()
+                Me.fillValueMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.FillValueOld Then
                 Me.fillValueOldMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Datatype Then
                 Me.dataTypeMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Attribute Then
-                Me.attributeMessage.printValues()
+                Me.attributeMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Link Then
                 Me.linkMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Layout Then
