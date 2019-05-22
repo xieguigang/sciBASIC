@@ -145,7 +145,6 @@ Namespace HDF5.[Structure]
         End Sub
 
         Public Shared Function ReadAttrValue([in] As BinaryReader, msg As AttributeMessage, sb As Superblock) As Object
-            Dim value As New List(Of Object)
             Dim type As DataTypeMessage = msg.dataType
             Dim len = msg.dataSpace
             Dim dataType As DataTypes = type.type
@@ -153,10 +152,10 @@ Namespace HDF5.[Structure]
             [in].offset = msg.dataPos
 
             If dataType = DataTypes.DATATYPE_VARIABLE_LENGTH Then
-                value.Add([in].readASCIIString)
-            End If
 
-            Return value
+            Else
+                Throw New NotImplementedException
+            End If
         End Function
 
         Public Overrides Function ToString() As String

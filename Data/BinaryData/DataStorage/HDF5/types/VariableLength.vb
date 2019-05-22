@@ -27,6 +27,5 @@ Namespace HDF5.type
 
             parent = DataType.ReadDataType([in])
         End Sub
-
     End Class
 End Namespace
