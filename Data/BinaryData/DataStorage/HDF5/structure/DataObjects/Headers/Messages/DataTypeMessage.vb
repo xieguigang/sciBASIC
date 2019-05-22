@@ -234,18 +234,18 @@ Namespace HDF5.[Structure]
             Return type.ToString
         End Function
 
-        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+        Protected Friend Overrides Sub printValues(console As TextWriter)
             console.WriteLine("DataTypeMessage >>>")
             console.WriteLine("address : " & Me.m_address)
-            Console.WriteLine("data type : " & Me.m_type)
-            Console.WriteLine("byteSize : " & Me.m_byteSize)
+            console.WriteLine("data type : " & Me.m_type)
+            console.WriteLine("byteSize : " & Me.m_byteSize)
 
             If Me.m_members IsNot Nothing Then
                 For Each mem As StructureMember In Me.m_members
                     mem.printValues(console)
                 Next
             End If
-            Console.WriteLine("DataTypeMessage <<<")
+            console.WriteLine("DataTypeMessage <<<")
         End Sub
 
     End Class

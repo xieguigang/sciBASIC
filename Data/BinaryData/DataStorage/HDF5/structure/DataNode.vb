@@ -207,7 +207,7 @@ Namespace HDF5.[Structure]
             End If
         End Function
 
-        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+        Protected Friend Overrides Sub printValues(console As TextWriter)
             Throw New NotImplementedException()
         End Sub
     End Class

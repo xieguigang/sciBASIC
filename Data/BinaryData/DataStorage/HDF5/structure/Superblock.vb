@@ -174,7 +174,7 @@ Namespace HDF5.[Structure]
             Throw New IOException("version 2 is not implemented")
         End Sub
 
-        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+        Protected Friend Overrides Sub printValues(console As TextWriter)
             console.WriteLine("Superblock >>>")
             console.WriteLine("address : " & Me.m_address)
             console.WriteLine("signature : " &
@@ -189,31 +189,31 @@ Namespace HDF5.[Structure]
                              )
 
             console.WriteLine("version of super block : " & versionOfSuperblock)
-            Console.WriteLine("version of file free space storage : " & versionOfFileFreeSpaceStorage)
-            Console.WriteLine("version of root group symbol table entry : " & versionOfRootGroupSymbolTableEntry)
-            Console.WriteLine("reserved 0 : " & reserved0)
-            Console.WriteLine("version of sharded header message format : " & versionOfShardedHeaderMessageFormat)
-            Console.WriteLine("size of offsets : " & sizeOfOffsets)
-            Console.WriteLine("size of lengths : " & sizeOfLengths)
-            Console.WriteLine("reserved 1 : " & reserved1)
-            Console.WriteLine("group leaf node k : " & groupLeafNodeK)
-            Console.WriteLine("group internal node k : " & groupInternalNodeK)
-            Console.WriteLine("file consistency flags : " & fileConsistencyFlags)
+            console.WriteLine("version of file free space storage : " & versionOfFileFreeSpaceStorage)
+            console.WriteLine("version of root group symbol table entry : " & versionOfRootGroupSymbolTableEntry)
+            console.WriteLine("reserved 0 : " & reserved0)
+            console.WriteLine("version of sharded header message format : " & versionOfShardedHeaderMessageFormat)
+            console.WriteLine("size of offsets : " & sizeOfOffsets)
+            console.WriteLine("size of lengths : " & sizeOfLengths)
+            console.WriteLine("reserved 1 : " & reserved1)
+            console.WriteLine("group leaf node k : " & groupLeafNodeK)
+            console.WriteLine("group internal node k : " & groupInternalNodeK)
+            console.WriteLine("file consistency flags : " & fileConsistencyFlags)
 
             If versionOfSuperblock >= 1 Then
-                Console.WriteLine("indexed storage internode k : " & indexedStorageInterNodeK)
-                Console.WriteLine("reserved 2 : " & reserved2)
+                console.WriteLine("indexed storage internode k : " & indexedStorageInterNodeK)
+                console.WriteLine("reserved 2 : " & reserved2)
             End If
 
-            Console.WriteLine("base address : " & baseAddress)
-            Console.WriteLine("address of file free space info : " & addressOfFileFreeSpaceInfo)
-            Console.WriteLine("end of file address : " & endOfFileAddress)
-            Console.WriteLine("driver information block address : " & driverInformationBlockAddress)
+            console.WriteLine("base address : " & baseAddress)
+            console.WriteLine("address of file free space info : " & addressOfFileFreeSpaceInfo)
+            console.WriteLine("end of file address : " & endOfFileAddress)
+            console.WriteLine("driver information block address : " & driverInformationBlockAddress)
 
             rootGroupSymbolTableEntry.printValues(console)
 
             console.WriteLine("total super block size : " & totalSuperBlockSize)
-            Console.WriteLine("Superblock <<<")
+            console.WriteLine("Superblock <<<")
         End Sub
     End Class
 

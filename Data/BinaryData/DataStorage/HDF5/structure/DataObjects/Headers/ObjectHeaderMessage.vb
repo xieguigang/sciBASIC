@@ -165,15 +165,15 @@ Namespace HDF5.[Structure]
             End Select
         End Function
 
-        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+        Protected Friend Overrides Sub printValues(console As TextWriter)
             console.WriteLine("ObjectHeaderMessage >>>")
             console.WriteLine("address : " & Me.m_address)
-            Console.WriteLine("header message type : " & Convert.ToString(Me.headerMessageType))
-            Console.WriteLine("size of header message data : " & Me.sizeOfHeaderMessageData)
-            Console.WriteLine("header message flags : " & Me.headerMessageFlags)
+            console.WriteLine("header message type : " & Convert.ToString(Me.headerMessageType))
+            console.WriteLine("size of header message data : " & Me.sizeOfHeaderMessageData)
+            console.WriteLine("header message flags : " & Me.headerMessageFlags)
 
             If Me.headerMessageType Is ObjectHeaderMessageType.ObjectHeaderContinuation Then
-                Console.WriteLine("header message continue")
+                console.WriteLine("header message continue")
                 Me.continueMessage.printValues(console)
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.Group Then
                 Me.groupMessage.printValues(console)
@@ -194,10 +194,10 @@ Namespace HDF5.[Structure]
             ElseIf Me.headerMessageType Is ObjectHeaderMessageType.LastModified Then
                 Me.lastModifiedMessage.printValues(console)
             Else
-                Console.WriteLine("header message data : " & Convert.ToString(Me.headerMessageData))
+                console.WriteLine("header message data : " & Convert.ToString(Me.headerMessageData))
             End If
 
-            Console.WriteLine("ObjectHeaderMessage <<<")
+            console.WriteLine("ObjectHeaderMessage <<<")
         End Sub
     End Class
 

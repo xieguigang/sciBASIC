@@ -127,7 +127,7 @@ Namespace HDF5.[Structure]
             Me.data = [in].readBytes(CInt(Me.dataSegmentSize))
         End Sub
 
-        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+        Protected Friend Overrides Sub printValues(console As TextWriter)
             console.WriteLine("LocalHeap >>>")
             console.WriteLine("address : " & Me.m_address)
             console.WriteLine("signature : " &

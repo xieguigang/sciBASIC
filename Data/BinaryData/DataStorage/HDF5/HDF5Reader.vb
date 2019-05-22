@@ -51,6 +51,7 @@
 ' * Written by iychoi@email.arizona.edu
 ' 
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
@@ -142,7 +143,7 @@ Namespace HDF5
 
         End Sub
 
-        Friend Sub printValues(console As System.IO.StringWriter) Implements IFileDump.printValues
+        Friend Sub printValues(console As TextWriter) Implements IFileDump.printValues
             Throw New NotImplementedException()
         End Sub
 
@@ -299,7 +300,7 @@ Namespace HDF5
             End If
         End Function
 
-        Private Sub printValues(out As System.IO.StringWriter) Implements IFileDump.printValues
+        Private Sub printValues(out As TextWriter) Implements IFileDump.printValues
             Throw New NotImplementedException()
         End Sub
 

@@ -124,19 +124,19 @@ Namespace HDF5.[Structure]
 			Throw New IOException("version not implented")
 		End Sub
 
-        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+        Protected Friend Overrides Sub printValues(console As TextWriter)
             console.WriteLine("ObjectHeader >>>")
             console.WriteLine("address : " & Me.m_address)
-            Console.WriteLine("version : " & Me.version)
-            Console.WriteLine("number of messages : " & Me.totalNumberOfHeaderMessages)
-            Console.WriteLine("object reference count : " & Me.objectReferenceCount)
-            Console.WriteLine("object header size : " & Me.objectHeaderSize)
+            console.WriteLine("version : " & Me.version)
+            console.WriteLine("number of messages : " & Me.totalNumberOfHeaderMessages)
+            console.WriteLine("object reference count : " & Me.objectReferenceCount)
+            console.WriteLine("object header size : " & Me.objectHeaderSize)
 
             For i As Integer = 0 To Me.headerMessages.Count - 1
                 Me.headerMessages(i).printValues(console)
             Next
 
-            Console.WriteLine("ObjectHeader <<<")
+            console.WriteLine("ObjectHeader <<<")
         End Sub
     End Class
 

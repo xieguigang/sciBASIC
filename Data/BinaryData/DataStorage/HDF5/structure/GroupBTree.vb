@@ -115,7 +115,7 @@ Namespace HDF5.[Structure]
             End If
         End Sub
 
-        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+        Protected Friend Overrides Sub printValues(console As TextWriter)
             console.WriteLine("GroupBTree >>>")
             console.WriteLine("address : " & Me.m_address)
 
@@ -123,7 +123,7 @@ Namespace HDF5.[Structure]
                 symbolTableEntries(i).printValues(console)
             Next
 
-            Console.WriteLine("GroupBTree <<<")
+            console.WriteLine("GroupBTree <<<")
         End Sub
     End Class
 

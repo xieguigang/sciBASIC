@@ -1,48 +1,48 @@
 ﻿#Region "Microsoft.VisualBasic::874524133abaab5ae7a8035fed0f8e4a, Data\BinaryData\DataStorage\HDF5\structure\ObjectHeaderScratchpadFormat.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '     Class ObjectHeaderScratchpadFormat
-    ' 
-    '         Properties: addressOfBTree, addressOfNameHeap, totalObjectHeaderScratchpadFormatSize
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ToString
-    ' 
-    '         Sub: printValues
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Class ObjectHeaderScratchpadFormat
+' 
+'         Properties: addressOfBTree, addressOfNameHeap, totalObjectHeaderScratchpadFormatSize
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ToString
+' 
+'         Sub: printValues
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -54,6 +54,7 @@
 ' 
 
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO.HDF5.IO
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.IO.BinaryReader
 
@@ -79,14 +80,14 @@ Namespace HDF5.[Structure]
             Return $"{MyBase.ToString}  btree=&{addressOfBTree}"
         End Function
 
-        Protected Friend Overrides Sub printValues(console As System.IO.StringWriter)
+        Protected Friend Overrides Sub printValues(console As TextWriter)
             console.WriteLine("ObjectHeaderScratchpadFormat >>>")
             console.WriteLine("address : " & Me.m_address)
-            Console.WriteLine("address of BTree : " & Me.addressOfBTree)
-            Console.WriteLine("address of name heap : " & Me.addressOfNameHeap)
+            console.WriteLine("address of BTree : " & Me.addressOfBTree)
+            console.WriteLine("address of name heap : " & Me.addressOfNameHeap)
 
-            Console.WriteLine("total object header scratchpad format size : " & Me.totalObjectHeaderScratchpadFormatSize)
-            Console.WriteLine("ObjectHeaderScratchpadFormat <<<")
+            console.WriteLine("total object header scratchpad format size : " & Me.totalObjectHeaderScratchpadFormatSize)
+            console.WriteLine("ObjectHeaderScratchpadFormat <<<")
         End Sub
     End Class
 
