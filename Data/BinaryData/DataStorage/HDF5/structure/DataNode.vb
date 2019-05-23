@@ -95,6 +95,7 @@ Namespace HDF5.[Structure]
             Next
 
             Dim type As Integer = [in].readByte()
+
             Me.level = [in].readByte()
             Me.numberOfEntries = [in].readShort()
 
