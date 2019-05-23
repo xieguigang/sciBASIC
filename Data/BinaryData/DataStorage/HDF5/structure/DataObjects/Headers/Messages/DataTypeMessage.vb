@@ -141,6 +141,20 @@ Namespace HDF5.[Structure]
                 Dim manLocation As Byte = [in].readByte()
                 Dim manSize As Byte = [in].readByte()
                 Dim expBias As Integer = [in].readInt()
+
+                Me.reader = New FloatingPoint With {
+                    .version = version,
+                    .bitOffset = bitOffset,
+                    .bitPrecision = bitPrecision,
+                    .byteOrder = byteOrder,
+                    .[class] = DataTypes.DATATYPE_FLOATING_POINT,
+                    .exponentBias = expBias,
+                    .exponentLocation = expLocation,
+                    .exponentSize = expSize,
+                    .mantissaLocation = manLocation,
+                    .mantissaSize = manSize,
+                    .size = byteSize
+                }
             ElseIf Me.type = DataTypes.DATATYPE_TIME Then
                 Dim bitPrecision As Short = [in].readShort()
                 Me.m_timeTypeByteSize = bitPrecision \ 8

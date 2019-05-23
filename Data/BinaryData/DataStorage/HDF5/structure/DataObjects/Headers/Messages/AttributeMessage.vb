@@ -158,13 +158,14 @@ Namespace HDF5.[Structure]
 
             sb.file.reader.offset = msg.dataPos
 
-            If dataType = DataTypes.DATATYPE_VARIABLE_LENGTH Then
-                Return VariableLengthDatasetReader.readDataSet(msg.reader, dims, sb)
-            ElseIf dataType = DataTypes.DATATYPE_FIXED_POINT Then
-                Return DatasetReader.readDataset(msg.reader, msg.dataPos, msg.dataSpace, sb, dims)
-            Else
-                Throw New NotImplementedException
-            End If
+            Select Case dataType
+                Case DataTypes.DATATYPE_VARIABLE_LENGTH
+                    Return VariableLengthDatasetReader.readDataSet(msg.reader, dims, sb)
+                Case DataTypes.DATATYPE_FIXED_POINT, DataTypes.DATATYPE_FLOATING_POINT
+                    Return DatasetReader.readDataset(msg.reader, msg.dataPos, msg.dataSpace, sb, dims)
+                Case Else
+                    Throw New NotImplementedException(dataType.ToString)
+            End Select
         End Function
 
         Public Overrides Function ToString() As String

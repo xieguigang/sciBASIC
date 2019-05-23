@@ -132,6 +132,8 @@
     <Compile Include="HDF5\structure\DataObjects\Headers\Messages\DataTypeMessage.vb" />
     <Compile Include="HDF5\structure\DataObjects\Headers\Message.vb" />
     <Compile Include="HDF5\structure\Infrastructure\GlobalHeap.vb" />
+    <Compile Include="HDF5\types\StringData.vb" />
+    <Compile Include="HDF5\types\FloatingPoint.vb" />
     <Compile Include="HDF5\types\FixedPoint.vb" />
     <Compile Include="HDF5\types\VariableLength.vb" />
     <Compile Include="HDF5\types\DataType.vb" />

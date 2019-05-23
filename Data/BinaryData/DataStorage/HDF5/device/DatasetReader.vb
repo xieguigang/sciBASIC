@@ -43,6 +43,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Data.IO.HDF5.Structure
 Imports Microsoft.VisualBasic.Data.IO.HDF5.type
 
@@ -117,26 +118,27 @@ Namespace HDF5.device
                             Throw New NotSupportedException("Unsupported signed integer type size " & fixedPoint.size & " bytes")
                     End Select
                 End If
-                'ElseIf TypeOf type Is FloatingPoint Then
-                '    Dim floatingPoint As FloatingPoint = DirectCast(type, FloatingPoint)
-                '    Dim byteOrder As ByteOrder = floatingPoint.byteOrder
+            ElseIf TypeOf type Is FloatingPoint Then
+                Dim floatingPoint As FloatingPoint = DirectCast(type, FloatingPoint)
+                Dim byteOrder As ByteOrder = floatingPoint.byteOrder
 
-                '    Select Case floatingPoint.size
-                '        Case 4
-                '            fillData(data, dimensions, Buffer.order(byteOrder).asFloatBuffer())
-                '            Exit Select
-                '        Case 8
-                '            fillData(data, dimensions, Buffer.order(byteOrder).asDoubleBuffer())
-                '            Exit Select
-                '        Case Else
-                '            Throw New HdfTypeException("Unsupported floating point type size " & floatingPoint.size & " bytes")
-                '    End Select
-                'ElseIf TypeOf type Is StringData Then
-                '    Dim stringData As StringData = DirectCast(type, StringData)
-                '    Dim stringLength As Integer = stringData.size
-                '    fillFixedLengthStringData(data, dimensions, Buffer, stringLength)
-                'Else
-                '    Throw New HdfException("DatasetReader was passed a type it cant fill. Type: " & type.[GetType]().FullName)
+                Select Case floatingPoint.size
+                    Case 4
+                        fillData(data, dimensions, buffer.asFloatBuffer(byteOrder))
+                        Exit Select
+                    Case 8
+                        fillData(data, dimensions, buffer.asDoubleBuffer(byteOrder))
+                        Exit Select
+                    Case Else
+                        Throw New NotSupportedException("Unsupported floating point type size " & floatingPoint.size & " bytes")
+                End Select
+            ElseIf TypeOf type Is StringData Then
+                Dim stringData As StringData = DirectCast(type, StringData)
+                Dim stringLength As Integer = stringData.size
+
+                fillFixedLengthStringData(data, dimensions, buffer, stringLength)
+            Else
+                Throw New NotSupportedException("DatasetReader was passed a type it cant fill. Type: " & type.TypeInfo.FullName)
             End If
 
             If isScalar Then
@@ -144,6 +146,50 @@ Namespace HDF5.device
             Else
                 Return data
             End If
+        End Function
+
+        Private Sub fillFixedLengthStringData(data As Array, dims As Integer(), buffer As Byte(), stringLength As Integer)
+            If dims.Length > 1 Then
+                For i As Integer = 0 To dims(0) - 1
+                    Dim newArray As Object = data.GetValue(i)
+
+                    fillFixedLengthStringData(newArray, dims.Skip(1).ToArray, buffer, stringLength)
+                Next
+            Else
+                Dim chunks = buffer.Split(stringLength).ToArray
+
+                For i As Integer = 0 To dims(0) - 1
+                    Dim elementBuffer = chunks(i)
+
+                    Call data.SetValue(Encoding.ASCII.GetString(elementBuffer).Trim(), i)
+                Next
+            End If
+        End Sub
+
+        <Extension>
+        Private Function asFloatBuffer(buffer As Byte(), byteOrder As ByteOrder) As Single()
+            Return buffer.Split(4) _
+                .Select(Function(chunk)
+                            If NeedsReversion(byteOrder) Then
+                                Call Array.Reverse(chunk)
+                            End If
+
+                            Return BitConverter.ToSingle(chunk, Scan0)
+                        End Function) _
+                .ToArray
+        End Function
+
+        <Extension>
+        Private Function asDoubleBuffer(buffer As Byte(), byteOrder As ByteOrder) As Double()
+            Return buffer.Split(8) _
+                .Select(Function(chunk)
+                            If NeedsReversion(byteOrder) Then
+                                Call Array.Reverse(chunk)
+                            End If
+
+                            Return BitConverter.ToDouble(chunk, Scan0)
+                        End Function) _
+                .ToArray
         End Function
 
         <Extension>
