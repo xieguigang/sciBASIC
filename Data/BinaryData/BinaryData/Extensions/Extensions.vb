@@ -70,7 +70,7 @@ End Interface
         If magic.Length <> signature.Length Then
             Return False
         Else
-            For i As Integer = 0 To magic.Length
+            For i As Integer = 0 To magic.Length - 1
                 If magic(i) <> signature(i) Then
                     Return False
                 End If
