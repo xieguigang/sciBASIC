@@ -110,9 +110,9 @@ Namespace HDF5.[Structure]
 
                 If symbol.cacheType = 2 Then
                     linkName = nameHeap.getString(CInt(symbol.linkNameOffset))
-                    dobj = New DataObjectFacade([in], sb, name, linkName)
+                    dobj = New DataObjectFacade(sb, name, linkName)
                 Else
-                    dobj = New DataObjectFacade([in], sb, name, symbol.objectHeaderAddress)
+                    dobj = New DataObjectFacade(sb, name, symbol.objectHeaderAddress)
                 End If
 
                 Call NESTED_OBJECTS.Add(dobj)

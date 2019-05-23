@@ -93,7 +93,7 @@ Namespace HDF5.[Structure]
             Me.m_layout = Nothing
         End Sub
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, symbolName As String, linkName As String)
+        Public Sub New(sb As Superblock, symbolName As String, linkName As String)
             Call MyBase.New(Scan0)
 
             Me.symbolName = symbolName

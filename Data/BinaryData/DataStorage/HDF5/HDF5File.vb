@@ -138,7 +138,7 @@ Namespace HDF5
         Private Sub parseHeader()
             Dim sb As Superblock = Me.superblock
             Dim rootSymbolTableEntry As SymbolTableEntry = sb.rootGroupSymbolTableEntry
-            Dim objectFacade As New DataObjectFacade(Me.reader, sb, "root", rootSymbolTableEntry.objectHeaderAddress)
+            Dim objectFacade As New DataObjectFacade(sb, "root", rootSymbolTableEntry.objectHeaderAddress)
             Dim rootGroup As New Group(sb, objectFacade)
             Dim objects As List(Of DataObjectFacade) = rootGroup.objects
 

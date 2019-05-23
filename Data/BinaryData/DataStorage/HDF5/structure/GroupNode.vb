@@ -96,9 +96,12 @@ Namespace HDF5.[Structure]
             Me.symbols = New List(Of SymbolTableEntry)()
 
             Dim entryPos As Long = [in].offset
+
             For i As Integer = 0 To Me.entryNumber - 1
-                Dim entry As New SymbolTableEntry([in], sb, entryPos)
+                Dim entry As New SymbolTableEntry(sb, entryPos)
+
                 entryPos += entry.size
+
                 If entry.objectHeaderAddress <> 0 Then
                     symbols.Add(entry)
                 End If

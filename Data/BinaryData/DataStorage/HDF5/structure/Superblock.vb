@@ -177,7 +177,7 @@ Namespace HDF5.[Structure]
             _endOfFileAddress = ReadHelper.readO([in], Me)
             _driverInformationBlockAddress = ReadHelper.readO([in], Me)
             _totalSuperBlockSize += _sizeOfOffsets * 4
-            _rootGroupSymbolTableEntry = New SymbolTableEntry([in], Me, [in].offset)
+            _rootGroupSymbolTableEntry = New SymbolTableEntry(Me, [in].offset)
             _totalSuperBlockSize += _rootGroupSymbolTableEntry.totalSymbolTableEntrySize
         End Sub
 
