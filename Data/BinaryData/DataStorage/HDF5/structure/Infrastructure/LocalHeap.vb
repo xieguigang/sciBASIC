@@ -95,8 +95,10 @@ Namespace HDF5.[Structure]
 
         Dim reserved0 As Byte()
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
+
+            Dim [in] As BinaryReader = sb.file.reader
 
             [in].offset = address
 

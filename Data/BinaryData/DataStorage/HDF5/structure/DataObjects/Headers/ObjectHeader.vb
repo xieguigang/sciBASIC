@@ -67,8 +67,10 @@ Namespace HDF5.[Structure]
         Public  ReadOnly Property objectHeaderSize As Integer
         Public  ReadOnly Property headerMessages As New List(Of ObjectHeaderMessage)
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
+
+            Dim [in] As BinaryReader = sb.file.reader
 
             [in].offset = address
 
@@ -87,8 +89,8 @@ Namespace HDF5.[Structure]
                 readVersion1([in], sb, [in].offset, Me.totalNumberOfHeaderMessages, Long.MaxValue)
             Else
                 readVersion2([in], sb, [in].offset)
-			End If
-		End Sub
+            End If
+        End Sub
 
         Private Function readVersion1([in] As BinaryReader, sb As Superblock, address As Long, readMessages As Integer, maxBytes As Long) As Integer
             Dim count As Integer = 0

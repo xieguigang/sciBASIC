@@ -65,8 +65,10 @@ Namespace HDF5.[Structure]
 
         Public  ReadOnly Property symbolTableEntries() As List(Of SymbolTableEntry)
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
+
+            Dim [in] As BinaryReader = sb.file.reader
 
             [in].offset = address
 
@@ -75,15 +77,17 @@ Namespace HDF5.[Structure]
             Dim entryList As New List(Of BTreeEntry)()
             Dim node As GroupNode
 
-            readAllEntries([in], sb, address, entryList)
+            Call readAllEntries(sb, address, entryList)
 
             For Each e As BTreeEntry In entryList
-                node = New GroupNode([in], sb, e.targetAddress)
+                node = New GroupNode(sb, e.targetAddress)
                 symbolTableEntries.AddRange(node.symbols)
             Next
         End Sub
 
-        Private Sub readAllEntries([in] As BinaryReader, sb As Superblock, address As Long, entryList As List(Of BTreeEntry))
+        Private Sub readAllEntries(sb As Superblock, address As Long, entryList As List(Of BTreeEntry))
+            Dim [in] As BinaryReader = sb.file.reader
+
             [in].offset = address
 
             Dim signature As Byte() = [in].readBytes(4)
@@ -110,7 +114,7 @@ Namespace HDF5.[Structure]
                 entryList.AddRange(myEntries)
             Else
                 For Each entry As BTreeEntry In myEntries
-                    readAllEntries([in], sb, entry.targetAddress, entryList)
+                    readAllEntries(sb, entry.targetAddress, entryList)
                 Next
             End If
         End Sub

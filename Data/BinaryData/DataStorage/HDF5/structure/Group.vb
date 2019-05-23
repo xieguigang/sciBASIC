@@ -89,19 +89,18 @@ Namespace HDF5.[Structure]
 
         Public Sub New(sb As Superblock, facade As DataObjectFacade)
             Dim gm As GroupMessage = facade.dataObject.groupMessage
-            Dim [in] As BinaryReader = sb.file.reader
 
             If gm Is Nothing Then
                 Throw New InvalidProgramException("Invalid folder object!")
             End If
 
             m_facade = facade
-            readGroup([in], sb, gm.bTreeAddress, gm.nameHeapAddress)
+            readGroup(sb, gm.bTreeAddress, gm.nameHeapAddress)
         End Sub
 
-        Private Sub readGroup([in] As BinaryReader, sb As Superblock, bTreeAddress As Long, nameHeapAddress As Long)
-            Dim nameHeap As New LocalHeap([in], sb, nameHeapAddress)
-            Dim btree As New GroupBTree([in], sb, bTreeAddress)
+        Private Sub readGroup(sb As Superblock, bTreeAddress As Long, nameHeapAddress As Long)
+            Dim nameHeap As New LocalHeap(sb, nameHeapAddress)
+            Dim btree As New GroupBTree(sb, bTreeAddress)
             Dim dobj As DataObjectFacade
             Dim linkName As String
 

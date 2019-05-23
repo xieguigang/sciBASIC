@@ -77,8 +77,10 @@ Namespace HDF5.[Structure]
         Public  ReadOnly Property entryNumber() As Integer
         Public  ReadOnly Property symbols() As List(Of SymbolTableEntry)
 
-        Public Sub New([in] As BinaryReader, sb As Superblock, address As Long)
+        Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
+
+            Dim [in] As BinaryReader = sb.file.reader
 
             [in].offset = address
 

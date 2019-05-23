@@ -105,7 +105,7 @@ Namespace HDF5.[Structure]
             Dim dobj As DataObject = sb.file.GetCacheObject(address)
 
             If dobj Is Nothing Then
-                dobj = New DataObject([in], sb, address)
+                dobj = New DataObject(sb, address)
                 sb.file.addCache(dobj)
             End If
 
