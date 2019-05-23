@@ -29,10 +29,6 @@ Namespace HDF5.dataset
         ''' <returns></returns>
         Public Property rawData As Byte()
 
-        Public Overrides Function data(sb As Superblock) As Object
-            Throw New NotImplementedException()
-        End Function
-
         Protected Overrides Function getBuffer(sb As Superblock) As MemoryStream
             Return New MemoryStream(rawData)
         End Function

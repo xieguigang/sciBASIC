@@ -34,9 +34,13 @@ Public Class ByteBuffer
     Dim writer As BinaryWriter
 
     Private Sub New()
-        stream = New MemoryStream()
-        reader = New BinaryReader(stream)
-        writer = New BinaryWriter(stream)
+        Call Me.New(New MemoryStream)
+    End Sub
+
+    Sub New(stream As MemoryStream)
+        Me.stream = stream
+        Me.reader = New BinaryReader(stream)
+        Me.writer = New BinaryWriter(stream)
     End Sub
 
     Protected Overrides Sub Finalize()
